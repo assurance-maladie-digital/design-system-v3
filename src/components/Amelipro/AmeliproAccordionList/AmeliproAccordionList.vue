@@ -113,7 +113,10 @@
 
 	onMounted(() => {
 		if (props.defaultItemOpened !== null) {
-			openId.value = String(props.items[props.defaultItemOpened].id)
+			const item = props.items?.[props.defaultItemOpened]
+			if (item && item.id !== undefined && item.id !== null) {
+				openId.value = `accordion-result-${item.id}`
+			}
 		}
 		hideSelectLabel()
 		setDefaultItemsPerPage()
