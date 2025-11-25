@@ -707,6 +707,28 @@ describe('SyServerTable', () => {
 		})
 	})
 
+	it('properly binds the v-model for single selection', async () => {
+		const selectedItems = [fakeItems[0].id]
+		const wrapper = mount(SyServerTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				serverItemsLength: fakeItems.length,
+				showSelect: false,
+				showSelectSingle: true,
+				modelValue: selectedItems,
+				suffix: 'single-select',
+			},
+		})
+
+		// select the second item
+		await wrapper.setProps({ modelValue: [fakeItems[1].id] })
+
+		// Check that the VDataTable has the correct model value
+		const dataTable = wrapper.findComponent({ name: 'VDataTableServer' })
+		expect(dataTable.props('modelValue')).toEqual([2])
+	})
+
 	describe('SyServerTable Checkbox selectionKey', () => {
 		it('uses custom selectionKey when provided', async () => {
 			const items = [

@@ -478,6 +478,27 @@ describe('SyTable', () => {
 		expect(headerCheckbox.exists()).toBe(true)
 	})
 
+	it('properly binds the v-model for single selection', async () => {
+		const selectedItems = [fakeItems[0].id]
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelect: false,
+				showSelectSingle: true,
+				modelValue: selectedItems,
+				suffix: 'single-select',
+			},
+		})
+
+		// select the second item
+		await wrapper.setProps({ modelValue: [fakeItems[1].id] })
+
+		// Check that the VDataTable has the correct model value
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		expect(dataTable.props('modelValue')).toEqual([2])
+	})
+
 	it('should hide a column when hideColumn is called', async () => {
 		// Create a mock for OrganizeColumns component
 		const mockOrganizeColumns = {
