@@ -46,7 +46,7 @@
 			disabled: false,
 			readonly: false,
 			required: false,
-			hideDetails: false,
+			hideDetails: 'auto',
 			density: 'default',
 			errorMessages: null,
 			warningMessages: null,
@@ -362,6 +362,10 @@
 
 :deep(.v-selection-control__input) {
 	cursor: pointer;
+}
+
+:deep(.v-label) {
+	margin-left: 8px;
 }
 
 :deep(.v-selection-control--disabled .v-selection-control__input) {

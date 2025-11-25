@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi, afterAll } from 'vitest'
 import { registerHeaderMenuKey } from '../../consts'
@@ -31,7 +30,6 @@ describe('HeaderBurgerMenu', () => {
 	it('should render the component', async () => {
 		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
-				plugins: [vuetify],
 				provide: {
 					[registerHeaderMenuKey]: () => {},
 				},
@@ -58,7 +56,6 @@ describe('HeaderBurgerMenu', () => {
 	it('should close the menu when clicking outside', async () => {
 		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
-				plugins: [vuetify],
 				provide: {
 					[registerHeaderMenuKey]: () => {},
 				},
@@ -87,7 +84,6 @@ describe('HeaderBurgerMenu', () => {
 	it('should not close the menu when clicking inside', async () => {
 		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
-				plugins: [vuetify],
 				provide: {
 					[registerHeaderMenuKey]: () => {},
 				},
@@ -115,7 +111,6 @@ describe('HeaderBurgerMenu', () => {
 	it('should listen to the button to open and close the menu', async () => {
 		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
-				plugins: [vuetify],
 				provide: {
 					[registerHeaderMenuKey]: () => {},
 				},
@@ -143,7 +138,6 @@ describe('HeaderBurgerMenu', () => {
 	it('reposition the menu when the size of the window changes', async () => {
 		const wrapper = mount(HeaderBurgerMenu, {
 			global: {
-				plugins: [vuetify],
 				provide: {
 					[registerHeaderMenuKey]: () => {},
 				},

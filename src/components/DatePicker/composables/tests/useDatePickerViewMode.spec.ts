@@ -6,131 +6,59 @@ vi.mock('vue', async () => {
 	const actual = await vi.importActual('vue')
 	return {
 		...actual,
-		watch: vi.fn((getter, callback) => {
-			// Stocker le callback pour pouvoir le déclencher manuellement dans les tests
-			watchCallback = callback
-		}),
+		watch: vi.fn(),
 	}
 })
-
-// Variable pour stocker le callback de watch
-let watchCallback: ((newValue: boolean) => void) | null = null
 
 describe('useDatePickerViewMode', () => {
 	// Mocks et setup
 	let isBirthDate = false
+	let selectedDate: Date | (Date | null)[] | null = null
 	const mockIsBirthDateGetter = vi.fn(() => isBirthDate)
+	const mockSelectedDateGetter = vi.fn(() => selectedDate)
 
 	beforeEach(() => {
 		// Réinitialiser les mocks avant chaque test
 		mockIsBirthDateGetter.mockClear()
+		mockSelectedDateGetter.mockClear()
 		isBirthDate = false
-		watchCallback = null
+		selectedDate = null
 	})
 
 	it('devrait initialiser currentViewMode à "month" si isBirthDate est false', () => {
-		const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter)
+		const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
 
 		expect(currentViewMode.value).toBe('month')
 		expect(mockIsBirthDateGetter).toHaveBeenCalled()
+		// Note: mockSelectedDateGetter n'est pas appelé car isBirthDateGetter() retourne false
+		// et l'évaluation court-circuite (false && !selectedDateGetter() n'évalue pas selectedDateGetter())
+		expect(mockSelectedDateGetter).not.toHaveBeenCalled()
 	})
 
-	it('devrait initialiser currentViewMode à "year" si isBirthDate est true', () => {
+	it('devrait initialiser currentViewMode à "year" si isBirthDate est true et aucune date sélectionnée', () => {
 		isBirthDate = true
 
-		const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter)
+		const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
 
 		expect(currentViewMode.value).toBe('year')
 		expect(mockIsBirthDateGetter).toHaveBeenCalled()
+		expect(mockSelectedDateGetter).toHaveBeenCalled()
 	})
 
-	it('devrait mettre à jour currentViewMode quand isBirthDate change', () => {
-		const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter)
+	it('devrait initialiser currentViewMode à "month" si isBirthDate est true et une date est sélectionnée', () => {
+		isBirthDate = true
+		selectedDate = new Date('2024-01-15')
 
-		// Initialement, currentViewMode devrait être 'month'
+		const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+
 		expect(currentViewMode.value).toBe('month')
-
-		// Simuler un changement de isBirthDate
-		if (watchCallback) {
-			watchCallback(true)
-		}
-
-		// Après le changement, currentViewMode devrait être 'year'
-		expect(currentViewMode.value).toBe('year')
-	})
-
-	describe('handleViewModeUpdate', () => {
-		it('devrait mettre à jour currentViewMode avec la nouvelle valeur', () => {
-			const { currentViewMode, handleViewModeUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
-
-			// Initialement, currentViewMode devrait être 'month'
-			expect(currentViewMode.value).toBe('month')
-
-			// Mettre à jour le mode d'affichage
-			handleViewModeUpdate('year')
-
-			// Après la mise à jour, currentViewMode devrait être 'year'
-			expect(currentViewMode.value).toBe('year')
-		})
-	})
-
-	describe('handleYearUpdate', () => {
-		it('ne devrait pas modifier currentViewMode si isBirthDate est false', () => {
-			const { currentViewMode, handleViewModeUpdate, handleYearUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
-
-			// Mettre à jour le mode d'affichage à 'year'
-			handleViewModeUpdate('year')
-
-			// Appeler handleYearUpdate
-			handleYearUpdate()
-
-			// currentViewMode ne devrait pas changer
-			expect(currentViewMode.value).toBe('year')
-		})
-
-		it('devrait passer à "months" si isBirthDate est true', () => {
-			isBirthDate = true
-
-			const { currentViewMode, handleYearUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
-
-			// Appeler handleYearUpdate
-			handleYearUpdate()
-
-			// currentViewMode devrait passer à 'months'
-			expect(currentViewMode.value).toBe('months')
-		})
-	})
-
-	describe('handleMonthUpdate', () => {
-		it('ne devrait pas modifier currentViewMode si isBirthDate est false', () => {
-			const { currentViewMode, handleViewModeUpdate, handleMonthUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
-
-			// Mettre à jour le mode d'affichage à 'months'
-			handleViewModeUpdate('months')
-
-			// Appeler handleMonthUpdate
-			handleMonthUpdate()
-
-			// currentViewMode ne devrait pas changer
-			expect(currentViewMode.value).toBe('months')
-		})
-
-		it('devrait passer à undefined si isBirthDate est true', () => {
-			isBirthDate = true
-
-			const { currentViewMode, handleMonthUpdate } = useDatePickerViewMode(mockIsBirthDateGetter)
-
-			// Appeler handleMonthUpdate
-			handleMonthUpdate()
-
-			// currentViewMode devrait passer à undefined
-			expect(currentViewMode.value).toBeUndefined()
-		})
+		expect(mockIsBirthDateGetter).toHaveBeenCalled()
+		expect(mockSelectedDateGetter).toHaveBeenCalled()
 	})
 
 	describe('resetViewMode', () => {
 		it('devrait réinitialiser currentViewMode à "month" si isBirthDate est false', () => {
-			const { currentViewMode, handleViewModeUpdate, resetViewMode } = useDatePickerViewMode(mockIsBirthDateGetter)
+			const { currentViewMode, handleViewModeUpdate, resetViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
 
 			// Mettre à jour le mode d'affichage à 'year'
 			handleViewModeUpdate('year')
@@ -142,10 +70,10 @@ describe('useDatePickerViewMode', () => {
 			expect(currentViewMode.value).toBe('month')
 		})
 
-		it('devrait réinitialiser currentViewMode à "year" si isBirthDate est true', () => {
+		it('devrait réinitialiser currentViewMode à "year" si isBirthDate est true et aucune date sélectionnée', () => {
 			isBirthDate = true
 
-			const { currentViewMode, handleViewModeUpdate, resetViewMode } = useDatePickerViewMode(mockIsBirthDateGetter)
+			const { currentViewMode, handleViewModeUpdate, resetViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
 
 			// Mettre à jour le mode d'affichage à 'months'
 			handleViewModeUpdate('months')
@@ -155,6 +83,113 @@ describe('useDatePickerViewMode', () => {
 
 			// currentViewMode devrait être réinitialisé à 'year'
 			expect(currentViewMode.value).toBe('year')
+		})
+
+		it('devrait réinitialiser currentViewMode à "month" si isBirthDate est true et une date est sélectionnée', () => {
+			isBirthDate = true
+			selectedDate = new Date('2024-01-15')
+
+			const { currentViewMode, handleViewModeUpdate, resetViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+
+			// Mettre à jour le mode d'affichage à 'year'
+			handleViewModeUpdate('year')
+
+			// Réinitialiser le mode d'affichage
+			resetViewMode()
+
+			// currentViewMode devrait être réinitialisé à 'month' (car une date est sélectionnée)
+			expect(currentViewMode.value).toBe('month')
+		})
+	})
+
+	describe('Navigation Regression Tests', () => {
+		it('should handle year update correctly in birth date mode', () => {
+			isBirthDate = true
+
+			const { currentViewMode, handleYearUpdate } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+
+			// Initialement en mode year
+			expect(currentViewMode.value).toBe('year')
+
+			// Simuler la sélection d'une année
+			handleYearUpdate()
+
+			// Devrait passer en mode months
+			expect(currentViewMode.value).toBe('months')
+		})
+
+		it('should handle month update correctly in birth date mode', () => {
+			isBirthDate = true
+
+			const { currentViewMode, handleYearUpdate, handleMonthUpdate } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+
+			// Passer en mode months (après sélection année)
+			handleYearUpdate()
+			expect(currentViewMode.value).toBe('months')
+
+			// Simuler la sélection d'un mois
+			handleMonthUpdate()
+
+			// Devrait passer en mode month (calendrier)
+			expect(currentViewMode.value).toBe('month')
+		})
+
+		it('should not update view mode in non-birth date mode', () => {
+			isBirthDate = false
+
+			const { currentViewMode, handleYearUpdate, handleMonthUpdate } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+
+			// Initialement en mode month
+			expect(currentViewMode.value).toBe('month')
+
+			// Les handlers ne devraient pas changer le mode en mode normal
+			handleYearUpdate()
+			expect(currentViewMode.value).toBe('month')
+
+			handleMonthUpdate()
+			expect(currentViewMode.value).toBe('month')
+		})
+
+		it('should handle complete navigation cycle correctly', () => {
+			isBirthDate = true
+
+			const { currentViewMode, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+
+			// Cycle complet : year → months → month → reset → year
+			expect(currentViewMode.value).toBe('year')
+
+			handleYearUpdate()
+			expect(currentViewMode.value).toBe('months')
+
+			handleMonthUpdate()
+			expect(currentViewMode.value).toBe('month')
+
+			// Simuler fermeture/réouverture
+			resetViewMode()
+			expect(currentViewMode.value).toBe('year')
+
+			// Vérifier que la navigation fonctionne encore
+			handleYearUpdate()
+			expect(currentViewMode.value).toBe('months')
+
+			handleMonthUpdate()
+			expect(currentViewMode.value).toBe('month')
+		})
+
+		it('should prevent VDatePicker from overriding months mode', () => {
+			isBirthDate = true
+
+			const { currentViewMode, handleYearUpdate, handleViewModeUpdate } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+
+			// Passer en mode months
+			handleYearUpdate()
+			expect(currentViewMode.value).toBe('months')
+
+			// VDatePicker essaie de forcer le mode 'month'
+			handleViewModeUpdate('month')
+
+			// Le mode devrait rester 'months' (protection contre VDatePicker)
+			expect(currentViewMode.value).toBe('months')
 		})
 	})
 })

@@ -18,7 +18,7 @@ export function doMatchPatternFn(
 			return true
 		}
 
-		const matches = value.match(pattern)
+		const matches = typeof value === 'string' && value.match(pattern)
 
 		return (
 			(matches && matches.length > 0)

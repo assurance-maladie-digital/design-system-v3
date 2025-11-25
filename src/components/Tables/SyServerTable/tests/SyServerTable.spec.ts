@@ -1,7 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeAll, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-
-import { vuetify } from '@tests/unit/setup'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
@@ -116,9 +114,6 @@ describe('SyServerTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Attendre que tous les effets asynchrones soient terminés
@@ -156,9 +151,6 @@ describe('SyServerTable', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.text()).toContain('John Doe')
@@ -178,9 +170,6 @@ describe('SyServerTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -233,9 +222,6 @@ describe('SyServerTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Attendre que le composant soit monté et les effets initiaux terminés
@@ -265,9 +251,6 @@ describe('SyServerTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -302,9 +285,6 @@ describe('SyServerTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Attendre que tous les effets asynchrones soient terminés
@@ -328,9 +308,6 @@ describe('SyServerTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -369,7 +346,6 @@ describe('SyServerTable', () => {
 				items: fakeItems,
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTableFilter: true,
 				},
@@ -403,9 +379,6 @@ describe('SyServerTable', () => {
 					},
 				],
 				items: fakeItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -453,9 +426,6 @@ describe('SyServerTable', () => {
 				],
 				items: fakeItems,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.vm.$nextTick()
@@ -482,9 +452,6 @@ describe('SyServerTable', () => {
 					},
 				],
 				items: fakeItems,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -513,9 +480,6 @@ describe('SyServerTable', () => {
 				items: fakeItems,
 				headers: headers,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		// Check that the filterItems method is exposed
@@ -533,9 +497,6 @@ describe('SyServerTable', () => {
 			attrs: {
 				items: fakeItems,
 				headers: headers,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -589,9 +550,6 @@ describe('SyServerTable', () => {
 				items: itemsWithStatus,
 				headers: [customHeader],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			slots: {
 				'filter.custom': `<div class="test-custom-filter">${customSlotText}</div>`,
 			},
@@ -620,9 +578,6 @@ describe('SyServerTable', () => {
 					showSelect: true,
 					suffix: '',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Check that the VDataTableServer has showSelect prop set to true
@@ -639,9 +594,6 @@ describe('SyServerTable', () => {
 					showSelect: false,
 					suffix: '',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Check that the VDataTableServer has showSelect prop set to false
@@ -657,9 +609,6 @@ describe('SyServerTable', () => {
 					serverItemsLength: fakeItems.length,
 					showSelect: true,
 					suffix: '',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 
@@ -684,9 +633,6 @@ describe('SyServerTable', () => {
 					modelValue: selectedItems,
 					suffix: '',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Check that the VDataTableServer has the correct model value
@@ -707,15 +653,79 @@ describe('SyServerTable', () => {
 						wrapper.setProps({ modelValue: val })
 					},
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Since toggleAllRows is not exposed, we'll test if the component renders correctly
 			// and has the expected structure for selection
 			const dataTable = wrapper.findComponent({ name: 'VDataTableServer' })
 			expect(dataTable.props('showSelect')).toBe(true)
+		})
+	})
+
+	describe('SyServerTable Checkbox selectionKey', () => {
+		it('uses custom selectionKey when provided', async () => {
+			const items = [
+				{ id: 1, uuid: 's-1', name: 'A' },
+				{ id: 2, uuid: 's-2', name: 'B' },
+			]
+
+			const wrapper = mount(SyServerTable, {
+				props: {
+					headers,
+					items,
+					serverItemsLength: items.length,
+					showSelect: true,
+					selectionKey: 'uuid',
+					suffix: '',
+				},
+			})
+
+			const dataTable = wrapper.findComponent({ name: 'VDataTableServer' })
+			const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+			expect(itemValue(items[0] as unknown as Record<string, unknown>)).toBe('s-1')
+			expect(itemValue(items[1] as unknown as Record<string, unknown>)).toBe('s-2')
+		})
+
+		it('falls back to id when selectionKey is missing on item', async () => {
+			const items = [{ id: 10, name: 'No UUID' }]
+
+			const wrapper = mount(SyServerTable, {
+				props: {
+					headers,
+					items,
+					serverItemsLength: items.length,
+					showSelect: true,
+					selectionKey: 'uuid',
+					suffix: '',
+				},
+			})
+
+			const dataTable = wrapper.findComponent({ name: 'VDataTableServer' })
+			const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+			expect(itemValue(items[0] as unknown as Record<string, unknown>)).toBe(10)
+		})
+
+		it('falls back to full object when neither selectionKey nor id are present', async () => {
+			const item = { name: 'No keys' }
+
+			const wrapper = mount(SyServerTable, {
+				props: {
+					headers,
+					items: [item],
+					serverItemsLength: 1,
+					showSelect: true,
+					selectionKey: 'uuid',
+					suffix: '',
+				},
+			})
+
+			const dataTable = wrapper.findComponent({ name: 'VDataTableServer' })
+			const itemValue = dataTable.props('itemValue') as (item: unknown) => unknown
+
+			const result = itemValue(item as unknown as Record<string, unknown>)
+			expect(result).toBe(item)
 		})
 	})
 
@@ -745,7 +755,6 @@ describe('SyServerTable', () => {
 					enableColumnControls: true,
 				},
 				global: {
-					plugins: [vuetify],
 					stubs: {
 						OrganizeColumns: mockOrganizeColumns,
 					},

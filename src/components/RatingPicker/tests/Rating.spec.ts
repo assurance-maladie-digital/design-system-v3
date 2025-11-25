@@ -1,7 +1,6 @@
 import { defineComponent } from 'vue'
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import { useRating } from '../Rating'
 
@@ -46,9 +45,6 @@ describe('useRating', () => {
 			props: {
 				label,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.props('label')).toBe(label)
@@ -62,9 +58,6 @@ describe('useRating', () => {
 		const wrapper = mount(testComponent, {
 			props: {
 				label,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -85,9 +78,6 @@ describe('useRating', () => {
 			props: {
 				label,
 				modelValue: 3, // Set modelValue to a non-default value
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

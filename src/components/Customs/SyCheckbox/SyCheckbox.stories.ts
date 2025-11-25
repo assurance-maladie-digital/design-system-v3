@@ -389,7 +389,7 @@ La propriété \`controlsIds\` permet de créer une relation sémantique entre u
 					:indeterminate="parentIndeterminate" 
 					@update:indeterminate="parentIndeterminate = $event"
 					:controls-ids="['child-1', 'child-2', 'child-3']"
-					label="Parent" 
+					label="Parent"
 				/>
 				<div style="margin-left: 24px;">
 					<SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" />

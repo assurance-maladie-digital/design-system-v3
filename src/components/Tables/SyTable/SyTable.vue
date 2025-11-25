@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, onUnmounted, nextTick, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, nextTick, onMounted, onUnmounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -79,7 +79,7 @@
 	})
 
 	// Use the table headers composable
-	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
@@ -99,11 +99,24 @@
 
 	// Use the pagination composable
 	const itemsLength = computed(() => filteredItems.value.length)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
 		options,
 		itemsLength,
-		table,
 	})
+
+	// Defines a function to handle updating the data table options
+	function onUpdateOptions(newOptions: Partial<DataOptions>) {
+		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
+			// Creates a copy of the received options
+			const rest = { ...newOptions }
+			delete (rest as Record<string, unknown>).itemsPerPage
+			// Updates the other options without modifying itemsPerPage
+			updateOptions(rest)
+			return
+		}
+		// In all other cases, simply updates the options with the new values
+		updateOptions(newOptions)
+	}
 
 	// Use the table checkbox composable
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
@@ -112,6 +125,7 @@
 		updateModelValue: (value) => {
 			model.value = value
 		},
+		selectionKey: toRef(props, 'selectionKey'),
 	})
 
 	// Use the ARIA accessibility composable
@@ -126,6 +140,9 @@
 		options,
 		uniqueTableId: uniqueTableId.value,
 	})
+
+	// Initialize generic accessibility adjustments (tabbable elements, etc.)
+	setupAccessibility()
 
 	// Timeout management for cleanup
 	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
@@ -173,15 +190,13 @@
 		timeouts.value = []
 	})
 
-	setupAccessibility()
-
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
 
 	// Provide column widths and update function to child components
 	provide('columnWidths', reactiveColumnWidths)
 	provide('updateColumnWidth', (key: string, width: number | string) => {
-		// Update both the local reactive reference and call the storage utility
+		// Update both the local reactive reference and call the storage utility (via deep watch below)
 		reactiveColumnWidths.value[key] = width
 	})
 
@@ -230,7 +245,8 @@
 			:item-value="getItemValue"
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
-			@update:options="updateOptions"
+			:show-expand="props.showExpand"
+			@update:options="onUpdateOptions"
 		>
 			<template #top>
 				<caption
@@ -249,7 +265,12 @@
 							:key="column.key"
 						>
 							<th
-								class="checkbox-column"
+								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
 							>
 								<template v-if="column.key === 'data-table-select' && props.showSelect">
 									<SyCheckbox
@@ -273,6 +294,7 @@
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
+										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
 									/>
 								</template>
@@ -288,7 +310,13 @@
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
-							<th>
+							<th
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
+							>
 								<SyTableFilter
 									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
 									:filterable="true"
@@ -334,6 +362,11 @@
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
+							:style="{
+								...(header.maxWidth ? { maxWidth: header.maxWidth as any } : {}),
+								...(header.minWidth ? { minWidth: header.minWidth as any } : {}),
+								...(header.width ? { width: header.width as any } : {}),
+							}"
 						>
 							<span class="font-weight-bold">{{ header.title }}</span>
 						</th>
@@ -345,6 +378,11 @@
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
+							:style="{
+								...(header.maxWidth ? { maxWidth: header.maxWidth as any } : {}),
+								...(header.minWidth ? { minWidth: header.minWidth as any } : {}),
+								...(header.width ? { width: header.width as any } : {}),
+							}"
 						>
 							<SyTableFilter
 								v-if="header.filterable"

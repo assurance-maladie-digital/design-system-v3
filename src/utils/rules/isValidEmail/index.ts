@@ -17,7 +17,7 @@ export function isValidEmailFn(
 			return true
 		}
 
-		return isEmailValid(value) || ruleMessage(errorMessages, 'default')
+		return (typeof value === 'string' && isEmailValid(value)) || ruleMessage(errorMessages, 'default')
 	}
 }
 

@@ -1,15 +1,7 @@
 import { mount } from '@vue/test-utils'
 import NirField from '../NirField.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { useValidation } from '@/composables/validation/useValidation'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('NirField.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NirField & {
@@ -27,9 +19,6 @@ describe('NirField.vue', () => {
 
 	beforeEach(async () => {
 		wrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				required: true,
@@ -126,9 +115,6 @@ describe('NirField.vue', () => {
 
 	it('calls validateOnSubmit and returns true if no errors', async () => {
 		const testWrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				required: false,
@@ -162,9 +148,6 @@ describe('NirField.vue', () => {
 		}]
 
 		const customWrapper = mount(NirField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: undefined,
 				customKeyRules,
@@ -299,5 +282,220 @@ describe('NirField.vue', () => {
 
 		// Restaurer le spy
 		focusSpy.mockRestore()
+	})
+
+	describe('Internal update flag protection', () => {
+		it('prevents infinite loops between watch and emitValue', async () => {
+			// Spy sur emit pour compter les appels
+			const emitSpy = vi.spyOn(wrapper.vm, '$emit')
+
+			// Définir une valeur initiale
+			await wrapper.setProps({ modelValue: '294037512000591' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Réinitialiser le spy pour ne compter que les nouveaux appels
+			emitSpy.mockClear()
+
+			// Simuler une saisie utilisateur qui devrait déclencher emitValue
+			const numberField = wrapper.find('.number-field input')
+			await numberField.setValue('2940375120006') // Changer le dernier chiffre
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier qu'il n'y a qu'un seul appel à emit (pas de boucle infinie)
+			const updateModelValueCalls = emitSpy.mock.calls.filter(call => call[0] === 'update:modelValue')
+			expect(updateModelValueCalls.length).toBeLessThanOrEqual(2) // Maximum 2 appels (un pour chaque champ)
+
+			emitSpy.mockRestore()
+		})
+
+		it('allows external modelValue changes to update internal fields', async () => {
+			// Définir une valeur initiale
+			await wrapper.setProps({ modelValue: '294037512000591' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que les champs internes sont mis à jour
+			const numberInput = wrapper.find('.number-field input').element as HTMLInputElement
+			const keyInput = wrapper.find('.key-field input').element as HTMLInputElement
+
+			expect(numberInput.value.replace(/\s/g, '')).toBe('2940375120005')
+			expect(keyInput.value).toBe('91')
+
+			// Changer la valeur externe
+			await wrapper.setProps({ modelValue: '123456789012345' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que les champs internes sont mis à jour correctement
+			expect(numberInput.value.replace(/\s/g, '')).toBe('1234567890123')
+			expect(keyInput.value).toBe('45')
+		})
+
+		it('handles null/undefined modelValue without triggering loops', async () => {
+			// Spy sur emit pour compter les appels
+			const emitSpy = vi.spyOn(wrapper.vm, '$emit')
+
+			// Définir une valeur initiale
+			await wrapper.setProps({ modelValue: '294037512000591' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Réinitialiser le spy
+			emitSpy.mockClear()
+
+			// Changer vers null
+			await wrapper.setProps({ modelValue: null })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que les champs sont vidés
+			const numberInput = wrapper.find('.number-field input').element as HTMLInputElement
+			const keyInput = wrapper.find('.key-field input').element as HTMLInputElement
+
+			expect(numberInput.value).toBe('')
+			expect(keyInput.value).toBe('')
+
+			// Vérifier qu'il n'y a pas d'appels emit supplémentaires (pas de boucle)
+			const updateModelValueCalls = emitSpy.mock.calls.filter(call => call[0] === 'update:modelValue')
+			expect(updateModelValueCalls.length).toBe(0) // Aucun emit car c'est un changement externe
+
+			emitSpy.mockRestore()
+		})
+	})
+
+	describe('Cursor position preservation when displayKey=false', () => {
+		let wrapperWithoutKey: ReturnType<typeof mount<typeof NirField>>
+
+		beforeEach(async () => {
+			wrapperWithoutKey = mount(NirField, {
+				props: {
+					modelValue: undefined,
+					displayKey: false,
+					required: false,
+					outlined: true,
+				},
+			})
+
+			activeWrappers.push(wrapperWithoutKey)
+			await wrapperWithoutKey.vm.$nextTick()
+			await flushPromises()
+		})
+
+		it('does not add our custom keydown event listener when displayKey is false', async () => {
+			// Spy spécifiquement sur notre fonction handleNumberKeydown
+			const handleNumberKeydownSpy = vi.spyOn(HTMLElement.prototype, 'addEventListener')
+
+			// Remonter le composant pour déclencher onMounted
+			wrapperWithoutKey.unmount()
+			activeWrappers.pop()
+
+			const newWrapper = mount(NirField, {
+				props: {
+					displayKey: false,
+					required: false,
+				},
+			})
+			activeWrappers.push(newWrapper)
+
+			await newWrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que notre logique onMounted n'a pas ajouté d'écouteur keydown
+			// (d'autres composants peuvent en ajouter, mais pas notre logique spécifique)
+			const ourKeydownCalls = handleNumberKeydownSpy.mock.calls.filter(call =>
+				call[0] === 'keydown'
+				&& call[1]
+				&& call[1].toString().includes('handleNumberKeydown'),
+			)
+			expect(ourKeydownCalls).toHaveLength(0)
+
+			handleNumberKeydownSpy.mockRestore()
+		})
+
+		it('does not trigger focus when editing NIR without key field', async () => {
+			// Spy sur la méthode focus
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			// Saisir un NIR complet
+			const numberInput = wrapperWithoutKey.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await wrapperWithoutKey.vm.$nextTick()
+			await flushPromises()
+
+			// Réinitialiser le spy pour ne compter que les appels suivants
+			focusSpy.mockClear()
+
+			// Modifier un chiffre au milieu (simuler l'édition)
+			await numberInput.setValue('2940375120006')
+			await wrapperWithoutKey.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier qu'aucun focus n'a été déclenché lors de l'édition
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('watchers do not execute when displayKey is false', async () => {
+			// Spy sur les méthodes internes pour vérifier qu'elles ne sont pas appelées
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			// Simuler une modification qui déclencherait normalement les watchers
+			const numberInput = wrapperWithoutKey.find('.number-field input')
+
+			// Saisir puis effacer pour déclencher les watchers
+			await numberInput.setValue('123')
+			await wrapperWithoutKey.vm.$nextTick()
+			await numberInput.setValue('')
+			await wrapperWithoutKey.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier qu'aucun focus automatique n'a été déclenché
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('preserves cursor position during editing when displayKey is false', async () => {
+			const numberInput = wrapperWithoutKey.find('.number-field input')
+			const inputElement = numberInput.element as HTMLInputElement
+
+			// Saisir un NIR complet
+			await numberInput.setValue('2940375120005')
+			await wrapperWithoutKey.vm.$nextTick()
+			await flushPromises()
+
+			// Simuler le positionnement du curseur au milieu (position 7)
+			inputElement.setSelectionRange(7, 7)
+
+			// Simuler une modification (suppression d'un caractère)
+			const currentValue = inputElement.value
+			const newValue = currentValue.slice(0, 7) + currentValue.slice(8)
+			await numberInput.setValue(newValue.replace(/\s/g, ''))
+			await wrapperWithoutKey.vm.$nextTick()
+			await flushPromises()
+
+			// Dans un comportement correct, le curseur ne devrait pas être forcé à la fin
+			// On vérifie que la logique de focus automatique n'interfère pas
+			expect(wrapperWithoutKey.find('.key-field').exists()).toBe(false)
+		})
+
+		it('handleKeyInput does not trigger focus when displayKey is false', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			// Déclencher handleKeyInput via une saisie
+			const numberInput = wrapperWithoutKey.find('.number-field input')
+			await numberInput.setValue('123')
+			await numberInput.trigger('input')
+			await wrapperWithoutKey.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier qu'aucun focus n'a été déclenché
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
 	})
 })

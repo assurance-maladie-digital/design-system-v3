@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproPatientLoginForm from '../AmeliproPatientLoginForm.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproPatientLoginForm', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPatientLoginForm, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				autoCompleteCardItems: [
 					{

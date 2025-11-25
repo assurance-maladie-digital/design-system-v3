@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { VList } from 'vuetify/components'
@@ -11,9 +10,6 @@ type ItemType = {
 describe('SySelect.vue', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SySelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		expect(wrapper.exists()).toBe(true)
@@ -26,9 +22,6 @@ describe('SySelect.vue', () => {
 		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
 		const wrapper = mount(SySelect, {
 			props: { items, modelValue: { text: 'Option 1', value: '1' } },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		await wrapper.find('.sy-select').trigger('click')
@@ -45,9 +38,6 @@ describe('SySelect.vue', () => {
 		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
 		const wrapper = mount(SySelect, {
 			props: { items },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		await wrapper.find('.sy-select').trigger('click')
@@ -63,9 +53,6 @@ describe('SySelect.vue', () => {
 		const errorMessages = ['Error 1']
 		const wrapper = mount(SySelect, {
 			props: { errorMessages, hideMessages: false },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		const message = wrapper.find('.v-messages__message')
@@ -77,9 +64,6 @@ describe('SySelect.vue', () => {
 
 	it('does not render error messages when not provided', () => {
 		const wrapper = mount(SySelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
@@ -90,9 +74,6 @@ describe('SySelect.vue', () => {
 	it('returns the correct item text using getItemText', () => {
 		const wrapper = mount(SySelect, {
 			props: { textKey: 'text' },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		const item = { text: 'Option 1', value: '1' }
@@ -105,9 +86,6 @@ describe('SySelect.vue', () => {
 
 	it('returns default text when selectedItem is null', () => {
 		const wrapper = mount(SySelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -123,9 +101,6 @@ describe('SySelect.vue', () => {
 				modelValue: { text: 'Option 1', value: '1' },
 				textKey: 'text',
 				returnObject: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -144,9 +119,6 @@ describe('SySelect.vue', () => {
 				modelValue: '1',
 				textKey: 'text',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -162,9 +134,6 @@ describe('SySelect.vue', () => {
 		const items = ['Option 1', 'Option 2'] as unknown as ItemType[]
 		const wrapper = mount(SySelect, {
 			props: { items, textKey: 'text', valueKey: 'value' },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -180,9 +149,6 @@ describe('SySelect.vue', () => {
 	it('applies the correct button class when outlined is true', () => {
 		const wrapper = mount(SySelect, {
 			props: { outlined: true },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		expect(wrapper.find('.v-field--variant-outlined').exists()).toBe(true)
@@ -193,9 +159,6 @@ describe('SySelect.vue', () => {
 	it('does not apply the outlined button class when outlined is false', () => {
 		const wrapper = mount(SySelect, {
 			props: { outlined: false },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		expect(wrapper.find('.sy-select').classes()).not.toContain('v-btn--variant-outlined')
@@ -206,9 +169,6 @@ describe('SySelect.vue', () => {
 	it('updates selectedItem when v-model changes', async () => {
 		const wrapper = mount(SySelect, {
 			props: { modelValue: { text: 'Option 1', value: '1' }, textKey: 'text' },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -225,9 +185,6 @@ describe('SySelect.vue', () => {
 		const wrapper = mount(SySelect, {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			props: { modelValue: null as any, textKey: 'text' },
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -243,9 +200,6 @@ describe('SySelect.vue', () => {
 		const wrapper = mount(SySelect, {
 			props: {
 				items: [{ text: 'Option 1', value: '1' }],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -273,9 +227,6 @@ describe('SySelect.vue', () => {
 					required: true,
 					label: 'Test Label',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -291,9 +242,6 @@ describe('SySelect.vue', () => {
 					displayAsterisk: false,
 					required: true,
 					label: 'Test Label',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -312,9 +260,6 @@ describe('SySelect.vue', () => {
 					required: false,
 					label: 'Test Label',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -332,9 +277,6 @@ describe('SySelect.vue', () => {
 				props: {
 					readonly: true,
 					items: [{ text: 'Option 1', value: '1' }],
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -359,9 +301,6 @@ describe('SySelect.vue', () => {
 					textKey: 'text',
 					returnObject: true,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -381,9 +320,6 @@ describe('SySelect.vue', () => {
 					modelValue: { text: 'Option 1', value: '1' },
 					returnObject: true,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -399,9 +335,6 @@ describe('SySelect.vue', () => {
 					modelValue: { text: 'Option 1', value: '1' },
 					returnObject: true,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -416,9 +349,6 @@ describe('SySelect.vue', () => {
 					clearable: true,
 					modelValue: { text: 'Option 1', value: '1' },
 					returnObject: true,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -441,9 +371,6 @@ describe('SySelect.vue', () => {
 					required: true,
 					label: 'Test Label',
 					modelValue: undefined,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -468,9 +395,6 @@ describe('SySelect.vue', () => {
 					modelValue: { text: 'Option 1', value: '1' },
 					returnObject: true,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -494,9 +418,6 @@ describe('SySelect.vue', () => {
 					modelValue: undefined,
 					disableErrorHandling: true,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -519,9 +440,6 @@ describe('SySelect.vue', () => {
 				props: {
 					items: [{ text: 'Option 1', value: '1' }],
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 			function findList() {
@@ -541,9 +459,6 @@ describe('SySelect.vue', () => {
 			const wrapper = mount(SySelect, {
 				props: {
 					items: [{ text: 'Option 1', value: '1' }],
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -568,9 +483,6 @@ describe('SySelect.vue', () => {
 				props: {
 					items: [{ text: 'Option 1', value: '1' }],
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -592,9 +504,6 @@ describe('SySelect.vue', () => {
 			props: {
 				items: [{ text: 'Option 1', value: '1' }],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -615,9 +524,6 @@ describe('SySelect.vue', () => {
 
 	it('use closeList method', async () => {
 		const wrapper = mount(SySelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		wrapper.vm.closeList()
@@ -631,9 +537,6 @@ describe('SySelect.vue', () => {
 			props: {
 				returnObject: false,
 				items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -656,10 +559,6 @@ describe('SySelect.vue', () => {
 				returnObject: true,
 				items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
 			},
-			global: {
-				plugins: [vuetify],
-			},
-
 			attachTo: document.body,
 		})
 
@@ -684,9 +583,6 @@ describe('SySelect.vue', () => {
 				valueKey: 'theValue',
 				items: [{ theText: 'Option 1', theValue: '1' }, { theText: 'Option 2', theValue: '2' }],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 		await wrapper.find('.sy-select').trigger('click')
@@ -710,9 +606,6 @@ describe('SySelect.vue', () => {
 				valueKey: 'theValue',
 				items: [{ theText: 'Option 1', theValue: '1' }, { theText: 'Option 2', theValue: '2' }],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -734,10 +627,6 @@ describe('SySelect.vue', () => {
 			props: {
 				items: ['Option 1', 'Option 2'] as unknown as ItemType[],
 			},
-			global: {
-				plugins: [vuetify],
-			},
-
 			attachTo: document.body,
 		})
 
@@ -760,9 +649,6 @@ describe('SySelect.vue', () => {
 				modelValue: '1',
 				clearable: true,
 				items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -790,9 +676,6 @@ describe('SySelect.vue', () => {
 					modelValue: [],
 					textKey: 'text',
 					valueKey: 'value',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -833,9 +716,6 @@ describe('SySelect.vue', () => {
 					textKey: 'text',
 					valueKey: 'value',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -867,9 +747,6 @@ describe('SySelect.vue', () => {
 					modelValue: [],
 					textKey: 'text',
 					valueKey: 'value',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -907,9 +784,6 @@ describe('SySelect.vue', () => {
 					textKey: 'text',
 					valueKey: 'value',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -936,9 +810,6 @@ describe('SySelect.vue', () => {
 					modelValue: ['1', '2'],
 					textKey: 'text',
 					valueKey: 'value',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -969,9 +840,6 @@ describe('SySelect.vue', () => {
 					textKey: 'text',
 					valueKey: 'value',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -998,9 +866,6 @@ describe('SySelect.vue', () => {
 					modelValue: ['1', 2],
 					textKey: 'text',
 					valueKey: 'value',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})

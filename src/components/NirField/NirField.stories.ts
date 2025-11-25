@@ -295,8 +295,17 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		hint: {
-			description: 'Texte d\'aide affiché sous le champ.',
+		numberHint: {
+			description: 'Texte d\'aide spécifique affiché sous le champ numéro.',
+			control: 'text',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		keyHint: {
+			description: 'Texte d\'aide spécifique affiché sous le champ clé.',
 			control: 'text',
 			table: {
 				type: {
@@ -338,6 +347,16 @@ const meta: Meta<typeof NirField> = {
 				type: {
 					summary: 'boolean',
 				},
+			},
+		},
+		customLocale: {
+			description: 'Objet permettant de surcharger les messages du composant. Clés supportées : `errorRequiredNumber`, `errorInvalidNumber`, `errorRequiredKey`, `errorInvalidKey`, `successNumberValid`, `successKeyValid`.',
+			control: 'object',
+			table: {
+				type: {
+					summary: 'Partial<typeof locales>',
+				},
+				defaultValue: { summary: '{}' },
 			},
 		},
 	},
@@ -1148,6 +1167,7 @@ Cette story montre l'utilisation du NirField dans un formulaire avec validation.
 		v-model="value"
 		label="NirField"
 		required
+		:displayKey="false"
 		showSuccessMessages
 		ref="nirField"
 	/>
@@ -1210,6 +1230,7 @@ const onSubmit = async () => {
 					label="NirField"
 					required
 					showSuccessMessages
+                    :displayKey="false"
 					ref="nirField"
 				/>
 				<v-btn
@@ -1303,4 +1324,68 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
       </div>
     `,
 	}),
+}
+
+export const WithCustomLocale: Story = {
+	args: {
+		...Default.args,
+		required: true,
+		showSuccessMessages: true,
+		customLocale: {
+			errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
+			errorInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
+			errorRequiredKey: 'La clé (2 chiffres) est requise.',
+			errorInvalidKey: 'La clé ne correspond pas au NIR saisi.',
+			successNumberValid: 'Numéro reconnu ✅',
+			successKeyValid: 'Clé correspondante ✅',
+		},
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Surcharger les messages avec customLocale
+
+Utilisez la prop \`customLocale\` pour remplacer les messages par défaut sans toucher au composant.
+
+Clés supportées :
+- \`errorRequiredNumber\`
+- \`erreurInvalidNumber\`
+- \`errorRequiredKey\`
+- \`errorInvalidKey\`
+- \`successNumberValid\`
+- \`successKeyValid\`
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <NirField
+    v-model="value"
+    required
+    show-success-messages
+    :custom-locale="{
+      errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
+      errorInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
+      errorRequiredKey: 'La clé (2 chiffres) est requise.',
+      errorInvalidKey: 'La clé ne correspond pas au NIR saisi.',
+      successNumberValid: 'Numéro reconnu ✅',
+      successKeyValid: 'Clé correspondante ✅'
+    }"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { NirField } from '@cnamts/synapse'
+import { ref } from 'vue'
+
+const value = ref('')
+</script>`,
+			},
+		],
+	},
 }

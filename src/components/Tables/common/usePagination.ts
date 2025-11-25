@@ -1,4 +1,4 @@
-import { computed, nextTick, type Ref } from 'vue'
+import { computed, nextTick, ref, type Ref } from 'vue'
 import type { DataOptions } from './types'
 
 /**
@@ -6,18 +6,17 @@ import type { DataOptions } from './types'
  *
  * @param options - Reactive reference to table options
  * @param itemsLength - Total number of items (for client-side) or serverItemsLength (for server-side)
- * @param table - Reference to the table component
  * @returns Pagination utilities and computed properties
  */
 export function usePagination({
 	options,
 	itemsLength,
-	table,
 }: {
 	options: Ref<Partial<DataOptions>>
 	itemsLength: Ref<number>
-	table: Ref<unknown>
 }) {
+	// Flag to indicate an ongoing items-per-page update cycle
+	const isUpdatingItemsPerPage = ref(false)
 	// Current page with getter/setter
 	const page = computed({
 		get: () => options.value.page || 1,
@@ -47,25 +46,16 @@ export function usePagination({
 	/**
    * Update items per page from pagination component
    */
-	function updateItemsPerPage(newItemsPerPage: number) {
-		// Create a completely new options object to force reactivity
-		const newOptions = {
+	async function updateItemsPerPage(newItemsPerPage: number) {
+		isUpdatingItemsPerPage.value = true
+		await nextTick()
+		options.value = {
 			...options.value,
 			itemsPerPage: newItemsPerPage,
-			page: 1, // Reset to first page when changing items per page
+			page: 1,
 		}
-
-		// Update options with the new object
-		options.value = newOptions
-
-		// Force a refresh of the table
-		nextTick(() => {
-			// Try to force update if the table has that method
-			const tableValue = table.value as { $forceUpdate?: () => void }
-			if (tableValue && typeof tableValue.$forceUpdate === 'function') {
-				tableValue.$forceUpdate()
-			}
-		})
+		await nextTick()
+		isUpdatingItemsPerPage.value = false
 	}
 
 	return {
@@ -73,5 +63,6 @@ export function usePagination({
 		pageCount,
 		itemsPerPageValue,
 		updateItemsPerPage,
+		isUpdatingItemsPerPage,
 	}
 }

@@ -19,6 +19,10 @@ export function isExactLengthFn(
 			return true
 		}
 
+		if (typeof value !== 'string') {
+			return ruleMessage(errorMessages, 'default', [lengthValue])
+		}
+
 		if (ignoreSpaces) {
 			value = value.replace(/\s/g, '')
 		}

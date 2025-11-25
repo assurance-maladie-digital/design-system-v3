@@ -1,5 +1,4 @@
 /* eslint-disable vue/one-component-per-file */
-import { vuetify } from '@tests/unit/setup'
 import { mount, shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
@@ -23,7 +22,6 @@ describe('DialogBox', () => {
 			const wrapper = mount(DialogBox, {
 				props: defaultProps,
 				global: {
-					plugins: [vuetify],
 					stubs: {
 						VDialog: {
 							template: '<div><slot>Test</slot></div>',
@@ -42,9 +40,6 @@ describe('DialogBox', () => {
 					...defaultProps,
 					modelValue: false,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -55,9 +50,6 @@ describe('DialogBox', () => {
 		it('becomes visible when the model value is updated', async () => {
 			const wrapper = mount(DialogBox, {
 				props: defaultProps,
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// Initially visible with modelValue: true
@@ -100,9 +92,6 @@ describe('DialogBox', () => {
 					title: '<h2>Test title</h2>',
 				},
 				props: defaultProps,
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -131,9 +120,6 @@ describe('DialogBox', () => {
 					...defaultProps,
 					hideActions: true,
 					persistent: true,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -170,9 +156,6 @@ describe('DialogBox', () => {
 					...defaultProps,
 					hideActions: true,
 					persistent: true,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -218,7 +201,6 @@ describe('DialogBox', () => {
 				setup() {
 					return {
 						dialog: true,
-
 					}
 				},
 				template: `
@@ -232,9 +214,6 @@ describe('DialogBox', () => {
                 `,
 			})
 			const wrapper = mount(testComponent, {
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -278,9 +257,6 @@ describe('DialogBox', () => {
 				`,
 			})
 			const wrapper = mount(testComponent, {
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -308,9 +284,6 @@ describe('DialogBox', () => {
 				props: {
 					modelValue: true,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -328,9 +301,6 @@ describe('DialogBox', () => {
 		it('emits a cancel event when cancel button is clicked', async () => {
 			const wrapper = mount(DialogBox, {
 				props: defaultProps,
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -346,9 +316,6 @@ describe('DialogBox', () => {
 		it('emits a confirm event when confirm button is clicked', async () => {
 			const wrapper = mount(DialogBox, {
 				props: defaultProps,
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -366,9 +333,6 @@ describe('DialogBox', () => {
 		it('getSelectableElements if this.$refs.dialogContent.$el is undefined', async () => {
 			const wrapper = shallowMount(DialogBox, {
 				props: defaultProps,
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 			// @ts-expect-error - Testing private method
@@ -383,9 +347,6 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				autofocusValidateBtn: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -406,9 +367,6 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					draggable: true,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -442,9 +400,6 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					draggable: true,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -485,9 +440,6 @@ describe('DialogBox', () => {
 					...defaultProps,
 					draggable: true,
 				},
-				global: {
-					plugins: [vuetify],
-				},
 				attachTo: document.body,
 			})
 
@@ -509,9 +461,6 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					draggable: true,
-				},
-				global: {
-					plugins: [vuetify],
 				},
 				attachTo: document.body,
 			})
@@ -539,9 +488,6 @@ describe('DialogBox', () => {
 				...defaultProps,
 				draggable: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -564,9 +510,6 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				draggable: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -593,9 +536,6 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				draggable: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -635,9 +575,6 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				draggable: true,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})

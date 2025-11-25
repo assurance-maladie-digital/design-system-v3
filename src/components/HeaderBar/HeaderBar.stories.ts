@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
-import { mdiAccountCircleOutline, mdiMagnify, mdiMenu } from '@mdi/js'
+import { mdiAccountCircleOutline, mdiMagnify } from '@mdi/js'
 import { VBtn, VListItem, VListItemTitle } from 'vuetify/components'
 import HeaderToolbar from '../HeaderToolbar/HeaderToolbar.vue'
 import LogoBrandSection from '../LogoBrandSection/LogoBrandSection.vue'
@@ -199,40 +199,39 @@ export const WithRightMenu: Story = {
 			setup() {
 				const searchIcon = mdiMagnify
 				const accountIcon = mdiAccountCircleOutline
-				const menuIcon = mdiMenu
 
-				return { args, searchIcon, accountIcon, menuIcon }
+				return { args, searchIcon, accountIcon }
 			},
 			template: `<div class="position: relative">
 				<HeaderBar v-bind="args">
-					<template #header-side="{ menuOpen }">
-						<nav class="d-none d-md-flex justify-center h-100 ga-4 pr-4">
-							<VBtn
-								variant="text"
-								:prepend-icon="searchIcon"
-								color="primary"
-								role="search"
-							>
-								Rechercher
-							</VBtn>
-							<VBtn
-								color="primary"
-								:prepend-icon="accountIcon"
-							>
-								Login
-							</VBtn>
-						</nav>
-						<VBtn
-							class="d-md-none"
-							variant="text"
-						>
-							<SyIcon
-								size="x-large"
-								:icon="menuIcon"
-								aria-label="Ouvrir le menu"
-							/>
-						</VBtn>
-					</template>
+                  <template #header-side>
+                    <nav class="d-none d-md-flex justify-center h-100 ga-4 pr-4">
+                      <VBtn
+                          variant="text"
+                          :prepend-icon="searchIcon"
+                          color="primary"
+                          role="search"
+                      >
+                        Rechercher
+                      </VBtn>
+                      <VBtn
+                          color="primary"
+                          :prepend-icon="accountIcon"
+                      >
+                        Login
+                      </VBtn>
+                    </nav>
+                    <VBtn
+                        class="d-md-none"
+                        variant="text"
+                    >
+                      <VBtn
+                          color="primary"
+                          density="comfortable"
+                          :icon="accountIcon"
+                      />
+                    </vbtn>
+                  </template>
 				</HeaderBar>
 			</div>`,
 		}
@@ -247,7 +246,7 @@ export const WithRightMenu: Story = {
 						service-title="Synapse"
 						service-subtitle="Design System"
 					>
-						<template #header-side="{ menuOpen }">
+						<template #header-side>
 							<nav class="d-none d-md-flex justify-center h-100 ga-4 pr-4">
 								<VBtn
 									variant="text"
@@ -268,11 +267,11 @@ export const WithRightMenu: Story = {
 								class="d-md-none"
 								variant="text"
 							>
-								<SyIcon
-									size="x-large"
-									:icon="mdiMenu"
-									aria-label="Ouvrir le menu"
-								/>
+								<VBtn
+                                    color="primary"
+                                    density="comfortable"
+                                    :icon="mdiAccountCircleOutline"
+                                />
 							</VBtn>
 						</template>
 					</HeaderBar>
@@ -285,7 +284,7 @@ export const WithRightMenu: Story = {
 				<script setup lang="ts">
 					import { HeaderBar, SyIcon } from '@cnamts/synapse'
 					import { VBtn } from 'vuetify/components'
-					import { mdiMagnify, mdiAccountCircleOutline, mdiMenu } from '@mdi/js'
+					import { mdiMagnify, mdiAccountCircleOutline } from '@mdi/js'
 				</script>
 				`,
 			},

@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import UploadWorkflow from '../UploadWorkflow.vue'
 import { locales as fileListLocales } from '@/components/FileList/UploadItem/locales'
@@ -28,9 +27,6 @@ describe('UploadWorkflow', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
@@ -51,9 +47,6 @@ describe('UploadWorkflow', () => {
 						title: 'Facture de soin',
 					},
 				],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -86,9 +79,6 @@ describe('UploadWorkflow', () => {
 						title: 'Facture de soin',
 					},
 				],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -134,7 +124,6 @@ describe('UploadWorkflow', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					VDialog: {
 						template: '<div><slot /></div>',
@@ -188,9 +177,6 @@ describe('UploadWorkflow', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		await wrapper.find('.file-item button').trigger('click')
@@ -227,7 +213,6 @@ describe('UploadWorkflow', () => {
 				showFilePreview: false,
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					VDialog: {
 						template: '<div><slot /></div>',

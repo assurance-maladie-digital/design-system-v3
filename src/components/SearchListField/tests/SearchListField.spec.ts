@@ -1,15 +1,8 @@
 import { mount } from '@vue/test-utils'
 import SearchListField from '../SearchListField.vue'
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createVuetify } from 'vuetify'
+import { describe, it, expect } from 'vitest'
 
 describe('SearchListField.vue', () => {
-	let vuetify
-
-	beforeEach(() => {
-		vuetify = createVuetify()
-	})
-
 	it('renders the password field', () => {
 		const wrapper = mount(SearchListField, {
 			global: {

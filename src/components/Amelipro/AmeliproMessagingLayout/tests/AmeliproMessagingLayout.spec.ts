@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import AmeliproMessagingLayout from '../AmeliproMessagingLayout.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('AmeliproMessagingLayout', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproMessagingLayout, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: [
 					{

@@ -106,11 +106,17 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="v-progress-linear__background"
+                    class="
+                      bg-ap-blue-darken-1
+                      v-progress-linear__background
+                    "
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="v-progress-linear__buffer"
+                    class="
+                      bg-ap-blue-darken-1
+                      v-progress-linear__buffer
+                    "
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -124,10 +130,12 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
+                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
+                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -157,12 +165,14 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                     </span>
                   </div>
                   <input
+                    aria-controls="menu-v-0"
                     aria-expanded="false"
                     aria-required="true"
                     autocomplete="address-level2"
                     disabled=""
                     id="the-groupId-postal-code"
                     readonly=""
+                    role="combobox"
                     size="1"
                     type="text"
                     value=""
@@ -368,11 +378,17 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="v-progress-linear__background"
+                    class="
+                      bg-ap-blue-darken-1
+                      v-progress-linear__background
+                    "
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="v-progress-linear__buffer"
+                    class="
+                      bg-ap-blue-darken-1
+                      v-progress-linear__buffer
+                    "
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -386,10 +402,12 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
+                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
+                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -419,12 +437,14 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                     </span>
                   </div>
                   <input
+                    aria-controls="menu-v-6"
                     aria-expanded="false"
                     aria-required="true"
                     autocomplete="address-level2"
                     disabled=""
                     id="the-groupId-city"
                     readonly=""
+                    role="combobox"
                     size="1"
                     type="text"
                     value=""

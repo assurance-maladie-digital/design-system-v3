@@ -1,14 +1,10 @@
 import { it, describe, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import SyTextArea from '../SyTextArea.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('SyTextArea', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				label: 'Description des symptomes',
@@ -20,9 +16,6 @@ describe('SyTextArea', () => {
 
 	it('remove the white spaces at the beginning of the text as we try to add them', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				trim: true,
@@ -38,9 +31,6 @@ describe('SyTextArea', () => {
 
 	it('does not remove the white spaces at the middle of the text', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				trim: true,
@@ -56,9 +46,6 @@ describe('SyTextArea', () => {
 
 	it('removes the white spaces at the end of the text at blur', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				trim: true,
@@ -76,9 +63,6 @@ describe('SyTextArea', () => {
 
 	it('removes the tabs with the number of spaces defined in the prop', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				replaceTabs: 2,
@@ -94,9 +78,6 @@ describe('SyTextArea', () => {
 
 	it('show an error message when the text is too long', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				maxLines: 5,
@@ -113,9 +94,6 @@ describe('SyTextArea', () => {
 
 	it('adds a line break when a line is too long', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				autoWrap: 50,
@@ -135,9 +113,6 @@ describe('SyTextArea', () => {
 
 	it('adds a line break when a line is too long 2', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				autoWrap: 50,
@@ -157,9 +132,6 @@ describe('SyTextArea', () => {
 
 	it('normalizes the text to NFC', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				normalize: true,
@@ -175,9 +147,6 @@ describe('SyTextArea', () => {
 
 	it('updates the text when the modelValue prop changes', async () => {
 		const wrapper = mount(SyTextArea, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				replaceTabs: 2,

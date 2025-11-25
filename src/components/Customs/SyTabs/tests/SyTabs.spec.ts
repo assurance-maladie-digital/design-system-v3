@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import SyTabs from '@/components/Customs/SyTabs/SyTabs.vue'
-import { vuetify } from '@tests/unit/setup'
 
 // Mock RouterLink component
 const RouterLink = {
@@ -25,7 +24,6 @@ describe('SyTabs', () => {
 			items: testItems,
 		},
 		global: {
-			plugins: [vuetify],
 			// Mock vue-router and provide RouterLink component
 			components: {
 				RouterLink,
