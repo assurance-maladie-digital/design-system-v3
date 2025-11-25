@@ -31,7 +31,11 @@
 		},
 		label: {
 			type: String,
-			default: defaultLocales.search,
+			required: true,
+		},
+		listLabel: {
+			type: String,
+			default: defaultLocales.searchListTitle,
 		},
 		locales: {
 			type: Object as PropType<typeof defaultLocales>,
@@ -101,7 +105,6 @@
 		<SyTextField
 			v-model="search"
 			:label="props.label"
-			aria-labelledby="search-label"
 			hide-details
 			color="primary"
 			:variant="outlined ? 'outlined' : 'underlined'"
@@ -118,10 +121,9 @@
 
 		<fieldset>
 			<legend
-				id="search-label"
 				class="d-sr-only"
 			>
-				{{ props.label }}
+				{{ props.listLabel }}
 			</legend>
 
 			<p
@@ -141,6 +143,10 @@
 				<li
 					v-for="item in filteredItems"
 					:key="item.label"
+					class="suggestion-item"
+					:class="{
+						'suggestion-item--selected': !!internalValue.find(el => el === (props.returnObject ? item : item.value)),
+					}"
 				>
 					<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
 					<label
@@ -174,7 +180,10 @@
 
 .list {
 	padding: 0;
+	padding-top: 8px;
 	margin: 0;
+	margin-left: 16px;
+	margin-right: 16px;
 	list-style: none;
 }
 
@@ -185,16 +194,24 @@
 	grid-gap: 8px;
 	min-height: 34px;
 	cursor: pointer;
+	transition: background-color .2s ease-in-out;
 
-	&:hover,
-	&:focus-within {
-		background-color: aqua;
+	&:hover {
+		background-color: rgba(var(--v-theme-primary), 0.08);
+	}
+
+	&:has(:focus-visible) {
+		outline: 2px solid rgba(var(--v-theme-primary));
 	}
 
 	span {
 		display: block;
 		min-width: 100%;
 	}
+}
+
+.suggestion-item--selected .label {
+	background-color: rgba(var(--v-theme-primary), 0.12);
 }
 
 </style>

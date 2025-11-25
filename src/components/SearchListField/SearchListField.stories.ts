@@ -28,6 +28,11 @@ const meta = {
 			control: 'text',
 			default: 'Rechercher',
 		},
+		listLabel: {
+			description: 'Legend pour le fieldset contenant la liste des éléments sélectionnables',
+			control: 'text',
+			default: 'Liste des éléments',
+		},
 	},
 } satisfies Meta<typeof SearchListField>
 

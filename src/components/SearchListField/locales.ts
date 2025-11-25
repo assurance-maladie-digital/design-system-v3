@@ -1,7 +1,5 @@
 export const locales = {
-	search: 'Rechercher',
 	searchListTitle: 'Liste des éléments',
-	checkboxLabel: 'Sélectionner la valeur',
 	nbItems: (count: number) => {
 		if (count === 0) {
 			return 'Aucun élément ne correspond à votre recherche'
