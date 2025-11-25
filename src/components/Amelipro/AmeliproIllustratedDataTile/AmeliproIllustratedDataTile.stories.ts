@@ -58,10 +58,10 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
-<AmeliproIllustratedDataTile
-	v-bind="args"
-/>
-		`,
+          <AmeliproIllustratedDataTile
+              v-bind="args"
+          />
+        `,
 	}),
 
 }
@@ -70,7 +70,7 @@ export const Default: Story = {
 export const AvecImage: Story = {
 	name: 'Avec image',
 	args: {
-		imgSrc: '.storybook/public/logos/logo-assurance-maladie.svg',
+		imgSrc: '/logos/logo-assurance-maladie.svg',
 		labelFirstLine: 'Assurance Maladie',
 		labelSecondLine: 'Partenaire',
 		tileWidth: '250px',
@@ -82,7 +82,7 @@ export const AvecImage: Story = {
 				name: 'Template',
 				code: `
 <AmeliproIllustratedDataTile
-  img-src=".storybook/public/logos/logo-assurance-maladie.svg"
+  img-src="/logos/logo-assurance-maladie.svg"
   label-first-line="Assurance Maladie"
   label-second-line="Partenaire"
   tile-width="250px"
@@ -93,11 +93,13 @@ export const AvecImage: Story = {
 	},
 	render: args => ({
 		components: { AmeliproIllustratedDataTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">Affichage d’une image personnalisée grâce à la prop <code>imgSrc</code>.</p>
-<AmeliproIllustratedDataTile v-bind="args" />
-`,
+          <p class="mb-2">Affichage d’une image personnalisée grâce à la prop <code>imgSrc</code>.</p>
+          <AmeliproIllustratedDataTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -128,11 +130,13 @@ export const AvecIcone: Story = {
 	},
 	render: args => ({
 		components: { AmeliproIllustratedDataTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">Affichage d’une icône grâce à la prop <code>iconName</code>.</p>
-<AmeliproIllustratedDataTile v-bind="args" />
-`,
+          <p class="mb-2">Affichage d’une icône grâce à la prop <code>iconName</code>.</p>
+          <AmeliproIllustratedDataTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -168,11 +172,14 @@ export const AvecInfosComplements: Story = {
 	},
 	render: args => ({
 		components: { AmeliproIllustratedDataTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">Affichage d’informations complémentaires sous le sous-titre grâce à la prop <code>complementaryInformation</code>.</p>
-<AmeliproIllustratedDataTile v-bind="args" />
-`,
+          <p class="mb-2">Affichage d’informations complémentaires sous le sous-titre grâce à la prop <code>complementaryInformation</code>.
+          </p>
+          <AmeliproIllustratedDataTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -205,11 +212,13 @@ export const TitreNiveauPersonnalise: Story = {
 	},
 	render: args => ({
 		components: { AmeliproIllustratedDataTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">Le niveau du titre est personnalisé grâce à la prop <code>titleLevel</code>.</p>
-<AmeliproIllustratedDataTile v-bind="args" />
-`,
+          <p class="mb-2">Le niveau du titre est personnalisé grâce à la prop <code>titleLevel</code>.</p>
+          <AmeliproIllustratedDataTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -244,10 +253,13 @@ export const AvecStylePerso: Story = {
 	},
 	render: args => ({
 		components: { AmeliproIllustratedDataTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">Le padding et la hauteur minimale sont personnalisés grâce aux props <code>tilePadding</code> et <code>tileMinHeight</code>.</p>
-<AmeliproIllustratedDataTile v-bind="args" />
-`,
+          <p class="mb-2">Le padding et la hauteur minimale sont personnalisés grâce aux props <code>tilePadding</code>
+            et <code>tileMinHeight</code>.</p>
+          <AmeliproIllustratedDataTile v-bind="args"/>
+        `,
 	}),
 }
