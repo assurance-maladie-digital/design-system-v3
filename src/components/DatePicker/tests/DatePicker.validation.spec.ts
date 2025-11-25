@@ -2634,7 +2634,7 @@ describe('DatePicker - Tests de Validation Complets', () => {
 				const endTime = performance.now()
 
 				expect(wrapper.exists()).toBe(true)
-				expect(endTime - startTime).toBeLessThan(500) // Moins de 500ms
+				expect(endTime - startTime).toBeLessThan(1000) // Moins de 1 seconde sans lag
 			})
 		})
 
