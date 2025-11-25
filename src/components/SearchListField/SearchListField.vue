@@ -1,4 +1,3 @@
-<!-- eslint-disable vuejs-accessibility/label-has-for -->
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
 	import { mdiMagnify } from '@mdi/js'
@@ -35,12 +34,7 @@
 			default: defaultLocales.search,
 		},
 		locales: {
-			type: Object as PropType<{
-				search: string
-				searchListTitle: string
-				checkboxLabel: string
-				noItems: string
-			}>,
+			type: Object as PropType<typeof defaultLocales>,
 			default: () => defaultLocales,
 		},
 	})
@@ -131,14 +125,17 @@
 			</legend>
 
 			<p
-				v-if="filteredItems.length === 0"
+				role="status"
 				class="mx-4 my-2 text-caption"
+				:class="{
+					'd-sr-only': filteredItems.length > 0,
+				}"
 			>
-				{{ locales.noItems }}
+				{{ search ? locales.nbItems(filteredItems.length) : '' }}
 			</p>
 
 			<ul
-				v-else
+				v-if="filteredItems.length > 0"
 				class="list"
 			>
 				<li
