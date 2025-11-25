@@ -1,3 +1,48 @@
+## v1.0.13 (24-11-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- NirField: add custom locale <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1451">#1451</a></td>
+      <td>- AmeliproHeader: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1214">#1214</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PhoneField: fix display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1455">#1455</a></td>
+      <td>- AmeliproFooter: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1213">#1213</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyForm: fix reset for NirField, DatePicker & SyTextField <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1456">#1456</a></td>
+      <td>- AmeliproMessagingMenuBtn: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1384">#1384</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyForm: fix reset for PhoneField & PasswordField <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1464">#1464</a></td>
+      <td>- AmeliproMenu: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1383">#1383</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckbox : fix margin <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1467">#1467</a></td>
+      <td>- AmeliproDropdownMenu: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1385">#1385</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker : date handling improvement on complexe mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1473">#1473</a></td>
+      <td>- AmeliproDropdownMenuBtn: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1387">#1387</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- AmeliproHeaderBar: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1388">#1388</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- AmeliproHeaderBrandSection: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1389">#1389</a></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.12 (12-11-2025)
 
 <table>

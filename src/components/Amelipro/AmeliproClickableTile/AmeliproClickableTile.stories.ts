@@ -60,9 +60,9 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
-	<AmeliproClickableTile
-		v-bind="args"
-	/>`,
+          <AmeliproClickableTile
+              v-bind="args"
+          />`,
 	}),
 }
 
@@ -70,7 +70,7 @@ export const Default: Story = {
 export const AvecImage: Story = {
 	name: 'Avec image',
 	args: {
-		imgSrc: '.storybook/public/logos/logo-assurance-maladie.svg',
+		imgSrc: '/logos/logo-assurance-maladie.svg',
 		tileTitle: 'Tuile avec image',
 		uniqueId: 'amelipro-tile-img',
 		imgWidth: '40px',
@@ -83,7 +83,7 @@ export const AvecImage: Story = {
 				name: 'Template',
 				code: `
 <AmeliproClickableTile
-  img-src=".storybook/public/logos/logo-assurance-maladie.svg"
+  img-src="/logos/logo-assurance-maladie.svg"
   tile-title="Tuile avec image"
   unique-id="amelipro-tile-img"
   img-width="40px"
@@ -95,11 +95,13 @@ export const AvecImage: Story = {
 	},
 	render: args => ({
 		components: { AmeliproClickableTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">Affichage d’une image à la place de l’icône grâce à la prop <code>imgSrc</code>.</p>
-<AmeliproClickableTile v-bind="args" />
-`,
+          <p class="mb-2">Affichage d’une image à la place de l’icône grâce à la prop <code>imgSrc</code>.</p>
+          <AmeliproClickableTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -128,11 +130,13 @@ export const Desactivee: Story = {
 	},
 	render: args => ({
 		components: { AmeliproClickableTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">La tuile est désactivée grâce à la prop <code>disabled</code>.</p>
-<AmeliproClickableTile v-bind="args" />
-`,
+          <p class="mb-2">La tuile est désactivée grâce à la prop <code>disabled</code>.</p>
+          <AmeliproClickableTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -161,11 +165,13 @@ export const IconeAvecBordure: Story = {
 	},
 	render: args => ({
 		components: { AmeliproClickableTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">L’icône est affichée avec une bordure grâce à la prop <code>borderedIcon</code>.</p>
-<AmeliproClickableTile v-bind="args" />
-`,
+          <p class="mb-2">L’icône est affichée avec une bordure grâce à la prop <code>borderedIcon</code>.</p>
+          <AmeliproClickableTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -194,11 +200,13 @@ export const AvecLien: Story = {
 	},
 	render: args => ({
 		components: { AmeliproClickableTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">La tuile agit comme un lien grâce à la prop <code>href</code>.</p>
-<AmeliproClickableTile v-bind="args" />
-`,
+          <p class="mb-2">La tuile agit comme un lien grâce à la prop <code>href</code>.</p>
+          <AmeliproClickableTile v-bind="args"/>
+        `,
 	}),
 }
 
@@ -227,14 +235,16 @@ export const TitrePersonnalise: Story = {
 	},
 	render: args => ({
 		components: { AmeliproClickableTile },
-		setup() { return { args } },
+		setup() {
+			return { args }
+		},
 		template: `
-<p class="mb-2">Le titre de la tuile est personnalisé via le slot <code>default</code>.</p>
-<AmeliproClickableTile v-bind="args">
-  <template #default>
-    <span style="color: #1976d2;">Titre <strong>personnalisé</strong></span>
-  </template>
-</AmeliproClickableTile>
-`,
+          <p class="mb-2">Le titre de la tuile est personnalisé via le slot <code>default</code>.</p>
+          <AmeliproClickableTile v-bind="args">
+            <template #default>
+              <span style="color: #1976d2;">Titre <strong>personnalisé</strong></span>
+            </template>
+          </AmeliproClickableTile>
+        `,
 	}),
 }

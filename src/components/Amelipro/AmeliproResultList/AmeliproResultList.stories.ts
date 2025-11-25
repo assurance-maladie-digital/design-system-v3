@@ -261,7 +261,6 @@ export const Default: Story = {
 		</AmeliproCard>
 	</template>
 </AmeliproResultList>
-<button @click="toto()"
 </div>
 		`,
 	}),
