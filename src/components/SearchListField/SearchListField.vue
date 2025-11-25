@@ -194,7 +194,7 @@
 	grid-gap: 8px;
 	min-height: 34px;
 	cursor: pointer;
-	transition: background-color .2s ease-in-out;
+	transition: background-color 0.2s ease-in-out;
 
 	&:hover {
 		background-color: rgba(var(--v-theme-primary), 0.08);
