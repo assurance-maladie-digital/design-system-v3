@@ -633,7 +633,7 @@ export const PaginationEtTri: Story = {
         unique-id="table-pagination-tri"
         :items-to-display-desktop="2"
         :items-to-display-mobile="1"
-		sort-select-default-value="name-desc"
+		sort-select-default-value="name"
         :sort-select-items="[
             { title: 'Nom croissant', value: 'asc' },
             { title: 'Nom décroissant', value: 'desc' }
@@ -672,10 +672,10 @@ const sortValue = ref('name-asc')
 
 const sortedDataList = computed(() => {
 	const list = [...(args.dataList ?? [])]
-	if (sortValue.value === 'name-asc') {
+	if (sortValue.value === 'asc') {
 		return list.sort((a, b) => (String(a.name ?? '')).localeCompare(String(b.name ?? '')))
 	}
-	if (sortValue.value === 'name-desc') {
+	if (sortValue.value === 'desc') {
 		return list.sort((a, b) => (String(b.name ?? '')).localeCompare(String(a.name ?? '')))
 	}
 	return list
@@ -693,7 +693,7 @@ function onSortAsc(event: Event, header: string) {
 
 function onSortDesc(event: Event, header: string) {
 	if (header === 'name') {
-		sortValue.value = 'name-desc'
+		sortValue.value = 'desc'
 	}
 }
 </script>`,
@@ -706,10 +706,10 @@ function onSortDesc(event: Event, header: string) {
 			const sortValue = ref('name-asc')
 			const sortedDataList = computed(() => {
 				const list = [...(args.dataList ?? [])]
-				if (sortValue.value === 'name-asc') {
+				if (sortValue.value === 'asc') {
 					return list.sort((a, b) => (String(a.name ?? '')).localeCompare(String(b.name ?? '')))
 				}
-				if (sortValue.value === 'name-desc') {
+				if (sortValue.value === 'desc') {
 					return list.sort((a, b) => (String(b.name ?? '')).localeCompare(String(a.name ?? '')))
 				}
 				return list
@@ -726,7 +726,7 @@ function onSortDesc(event: Event, header: string) {
 
 			function onSortDesc(header: string) {
 				if (header === 'name') {
-					sortValue.value = 'name-desc'
+					sortValue.value = 'desc'
 				}
 			}
 			return { args, sortedDataList, onSortChange, onSortAsc, onSortDesc }
