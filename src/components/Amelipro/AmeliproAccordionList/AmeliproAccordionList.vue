@@ -113,7 +113,10 @@
 
 	onMounted(() => {
 		if (props.defaultItemOpened !== null) {
-			openId.value = String(props.items[props.defaultItemOpened].id)
+			const item = props.items?.[props.defaultItemOpened]
+			if (item && item.id !== undefined && item.id !== null) {
+				openId.value = `accordion-result-${item.id}`
+			}
 		}
 		hideSelectLabel()
 		setDefaultItemsPerPage()
@@ -236,7 +239,7 @@
 						:card-color="groupColor"
 						:header-right-width="String(accordion.headerRightWidth)"
 						:hide-separator="hideSeparator"
-						:is-open="accordion.id === openId"
+						:is-open="`accordion-result-${accordion.id}` === openId"
 						:title-level="titleLevel"
 						:title-uppercase="titleUppercase"
 						:unique-id="`accordion-result-${accordion.id}`"
