@@ -155,7 +155,7 @@
 							hide-details
 							density="compact"
 							class="ml-2"
-							:model-value="!!internalValue.find(el => el === (props.returnObject ? item : item.label))"
+							:model-value="!!internalValue.find(el => el === (props.returnObject ? item : item.value))"
 							@update:model-value="(e: boolean)=>toggleCheckbox(item, e)"
 						/>
 						<span>
