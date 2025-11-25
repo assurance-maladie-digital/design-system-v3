@@ -73,6 +73,7 @@ export const Default: Story = {
 			},
 		],
 		'label': 'Filtrer la liste des professions',
+		'listLabel': 'Choisisser parmi la liste des professions',
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
@@ -180,6 +181,7 @@ export const WithReturnObject: Story = {
 			},
 		],
 		'label': 'Filtrer la liste des professions',
+		'listLabel': 'Choisisser parmi la liste des professions',
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {

@@ -110,6 +110,7 @@
 			:variant="outlined ? 'outlined' : 'underlined'"
 			clearable
 			tabindex="0"
+			data-test-id="search-input"
 			:bg-color="props.bgColor"
 		>
 			<template #prepend-inner>
@@ -139,10 +140,12 @@
 			<ul
 				v-if="filteredItems.length > 0"
 				class="list"
+				data-test-id="suggestions-list"
 			>
 				<li
 					v-for="item in filteredItems"
 					:key="item.label"
+					v-ripple
 					class="suggestion-item"
 					:class="{
 						'suggestion-item--selected': !!internalValue.find(el => el === (props.returnObject ? item : item.value)),
