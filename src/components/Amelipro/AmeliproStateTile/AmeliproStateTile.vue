@@ -306,9 +306,9 @@
 	flex-direction: column;
 	background-color: apTokens.$ap-white;
 
-  & span {
-    white-space: normal;
-  }
+	& span {
+		white-space: normal;
+	}
 
 	&:hover {
 		& .amelipro-state-tile__pdf-download {

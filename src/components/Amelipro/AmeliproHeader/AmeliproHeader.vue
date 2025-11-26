@@ -489,6 +489,6 @@
 :deep(.v-btn) {
 	&.text-service-title {
 		display: block;
-  }
+	}
 }
 </style>

@@ -379,8 +379,8 @@
 		}
 	}
 
-  & .amelipro-custom-btn {
-    white-space: normal;
-  }
+	& .amelipro-custom-btn {
+		white-space: normal;
+	}
 }
 </style>

@@ -145,8 +145,8 @@
 	}
 
 	.user-menu {
-    position: relative;
-    overflow-wrap: break-word;
+		position: relative;
+		overflow-wrap: break-word;
 	}
 
 	.user-menu-popover {
