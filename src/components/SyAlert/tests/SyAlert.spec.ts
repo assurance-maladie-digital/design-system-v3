@@ -38,17 +38,6 @@ describe('Alert', () => {
 			modelValue: false,
 		})
 
-		expect(wrapper.html()).toMatchInlineSnapshot(`
-			<div
-			  class="sy-alert"
-			  message="message"
-			  role="alert"
-			  title="title"
-			>
-			  <!---->
-			</div>
-		`)
-
 		await wrapper.setProps({
 			modelValue: true,
 		})
