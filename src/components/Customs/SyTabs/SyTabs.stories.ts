@@ -258,7 +258,6 @@ export const WithTabPrependSlot: Story = {
               :icon="mdiHome"
           />
         </template>
-
       </SyTabs>
     `,
 	}),
@@ -326,6 +325,11 @@ export const WithTabAppendSlot: Story = {
       </template>
       </SyTabs>
       `,
+				script: `
+        <script setup>
+        import { mdiHome } from '@mdi/js'
+        </script>
+                `,
 			},
 		],
 	},

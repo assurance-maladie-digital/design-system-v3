@@ -49,8 +49,8 @@
 		'tabs-prepend': () => unknown
 		'tabs-append': () => unknown
 		'default': () => unknown
-		'tab-prepend': (props: { item: TabItem; index: number; isActive: boolean }) => unknown
-		'tab-append': (props: { item: TabItem; index: number; isActive: boolean }) => unknown
+		'tab-prepend': (props: { item: TabItem, index: number, isActive: boolean }) => unknown
+		'tab-append': (props: { item: TabItem, index: number, isActive: boolean }) => unknown
 	}>()
 
 	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
