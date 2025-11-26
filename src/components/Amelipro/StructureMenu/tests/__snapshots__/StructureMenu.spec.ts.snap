@@ -309,6 +309,7 @@ exports[`StructureMenu > render correctly 1`] = `
               d-flex
               flex-column
               flex-sm-row
+              flex-sm-wrap
             ">
               <button
                 aria-controls="structure-panel-0"
