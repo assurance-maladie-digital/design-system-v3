@@ -473,7 +473,7 @@
 									name="tab-append"
 									:item="item"
 									:index="index"
-                  :is-active="activeItemIndex === index"
+									:is-active="activeItemIndex === index"
 								/>
 							</button>
 							<!-- Fallback button pour les onglets standards -->
