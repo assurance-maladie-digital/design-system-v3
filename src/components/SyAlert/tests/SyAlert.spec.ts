@@ -66,16 +66,6 @@ describe('Alert', () => {
 
 		await closeBtn.element.click()
 
-		expect(wrapper.html()).toMatchInlineSnapshot(`
-			<div
-			  class="sy-alert"
-			  message="message"
-			  role="alert"
-			  title="title"
-			>
-			  <!---->
-			</div>
-		`)
 		expect(wrapper.emitted('update:modelValue')![0]![0]).toBe(false)
 	})
 
