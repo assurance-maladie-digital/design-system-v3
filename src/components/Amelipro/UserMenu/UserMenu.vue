@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref } from 'vue'
+	import { computed, type PropType, ref } from 'vue'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
 	import UserMenuDetails from './UserMenuDetails/UserMenuDetails.vue'
@@ -145,7 +145,8 @@
 	}
 
 	.user-menu {
-		position: relative;
+    position: relative;
+    overflow-wrap: break-word;
 	}
 
 	.user-menu-popover {
