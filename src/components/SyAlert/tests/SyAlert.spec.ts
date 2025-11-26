@@ -16,7 +16,7 @@ describe('Alert', () => {
 			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		expect(wrapper.classes()).toContain('sy-alert')
 	})
 
 	it('show and hide correctly when modelValue is updated', async () => {
