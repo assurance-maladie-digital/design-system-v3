@@ -10,6 +10,9 @@
 	} from '@mdi/js'
 	import type { VIcon } from 'vuetify/components'
 
+	defineOptions({
+		inheritAttrs: false,
+	})
 	const show = defineModel<boolean>({
 		default: true,
 	})
@@ -60,6 +63,7 @@
 	>
 		<VAlert
 			v-model="show"
+			:role="undefined"
 			v-bind="attrs"
 			:type="props.type"
 			:closable="props.closable"
@@ -116,6 +120,10 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 @use 'sass:map';
+
+.sy-alert {
+	display: contents;
+}
 
 .alert {
 	padding: tokens.$padding-4;

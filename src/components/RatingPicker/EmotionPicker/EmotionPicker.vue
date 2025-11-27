@@ -248,7 +248,6 @@
 	font-weight: 700;
 	font-size: 1rem;
 	line-height: 150%;
-	color: tokens.$colors-text-base;
 }
 
 .sy-emotion-picker__item--active .sy-emotion-picker__item-title {

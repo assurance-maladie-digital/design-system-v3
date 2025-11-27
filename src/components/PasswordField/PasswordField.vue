@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 	import {
-		mdiEye,
-		mdiEyeOff,
+		mdiEyeOutline,
+		mdiEyeOffOutline,
 		mdiAlertCircle,
 		mdiAlert,
-		mdiCheckCircle,
+		mdiCheck,
 	} from '@mdi/js'
 	import { ref, computed, watch, nextTick } from 'vue'
 	import { config } from './config'
@@ -63,8 +63,8 @@
 	const options = useCustomizableOptions(config, props)
 	const emit = defineEmits(['update:modelValue', 'submit'])
 
-	const eyeIcon = mdiEye
-	const eyeOffIcon = mdiEyeOff
+	const eyeIcon = mdiEyeOutline
+	const eyeOffIcon = mdiEyeOffOutline
 	const showEyeIcon = ref(false)
 	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
 	const alertMessage = ref('')
@@ -133,7 +133,7 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlert
-		if (hasSuccess.value) return mdiCheckCircle
+		if (hasSuccess.value) return mdiCheck
 		return ''
 	})
 
