@@ -1,20 +1,30 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproIcon > render correctly 1`] = `
+exports[`AmeliproIcon > Snapshots > renders the component with all properties filled in 1`] = `
 <span
   class="amelipro-icon"
-  id="amelipro-icon-id"
+  id="modified-unique-id"
 >
   <span
     aria-hidden="true"
+    aria-label="Modified label"
     class="
       amelipro-custom-icon
       custom-color
+      large
+      medium
+      small
       x-large
     "
     focusable="false"
     role="img"
-    style="color: #FFFFFF;"
+    style="
+      color: #56C271;
+      border-radius: 50%;
+      border: 1px solid #0C419A;
+      height: 4rem;
+      width: auto;
+    "
   >
     <span>
       <svg
@@ -41,6 +51,23 @@ exports[`AmeliproIcon > render correctly 1`] = `
         />
       </svg>
     </span>
+  </span>
+</span>
+`;
+
+exports[`AmeliproIcon > Snapshots > renders the component with only required properties filled in 1`] = `
+<span class="amelipro-icon">
+  <span
+    aria-hidden="true"
+    class="
+      amelipro-custom-icon
+      custom-color
+    "
+    focusable="false"
+    role="img"
+    style="color: #000000;"
+  >
+    <!-- v-if -->
   </span>
 </span>
 `;
