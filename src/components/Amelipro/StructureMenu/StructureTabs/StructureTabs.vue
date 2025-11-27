@@ -115,7 +115,7 @@
 					:key="index"
 					ref="structureBtns"
 					:aria-selected="selected === index ? 'true' : 'false'"
-					class="mr-0 mr-sm-3 mb-2 mb-sm-0"
+					class="mr-0 mr-sm-3 mb-2 mb-sm-1"
 					:controls="`structure-panel-${index}`"
 					role="tab"
 					:selected="index === selected"
@@ -134,7 +134,7 @@
 			v-for="(tab, index) in tabs"
 			:id="`structure-panel-${index}`"
 			:key="index"
-			class="mt-4"
+			class="mt-3"
 			:role="tabs.length > 1 ? 'tabpanel' : undefined"
 			:tabindex="selected === index && tabs.length > 1 ? 0 : -1"
 		>
