@@ -302,7 +302,10 @@ exports[`AmeliproTable > render correctly 1`] = `
                     data-no-activator=""
                   >
                     <span
-                      class="d-sr-only"
+                      class="
+                        amelipro-btn__label
+                        d-sr-only
+                      "
                       id="amelipro-table-id-table-header-cell-0-asc-sort-btn-btn-label"
                     >
                       tri asc
@@ -384,7 +387,10 @@ exports[`AmeliproTable > render correctly 1`] = `
                     data-no-activator=""
                   >
                     <span
-                      class="d-sr-only"
+                      class="
+                        amelipro-btn__label
+                        d-sr-only
+                      "
                       id="amelipro-table-id-table-header-cell-0-desc-sort-btn-btn-label"
                     >
                       tri desc

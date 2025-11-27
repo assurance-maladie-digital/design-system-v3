@@ -35,7 +35,10 @@ exports[`UserMenu > render correctly 1`] = `
       data-no-activator=""
     >
       <span
-        class="d-sr-only"
+        class="
+          amelipro-btn__label
+          d-sr-only
+        "
         id="user-information-summary-id-open-btn-btn-label"
       >
         infos utilisateur
