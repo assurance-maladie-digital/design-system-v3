@@ -681,7 +681,7 @@ export const AutoClampFeature: Story = {
 					<div class="d-flex flex-column">
 						<h3>Démonstration de l'auto clamp dans DateTextInput</h3>
 						
-						<h4 class="mt-4">Format DD/MM/YYYY (séparateur /)</h4>
+						<h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
 						<DatePicker
 							v-model="dateSlash"
 							placeholder="Saisie avec auto clamp - séparateur /"
@@ -690,7 +690,7 @@ export const AutoClampFeature: Story = {
 							autoClamp
 						/>
 						
-						<h4 class="mt-4">Format DD-MM-YYYY (séparateur -)</h4>
+						<h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
 						<DatePicker
 							v-model="dateDash"
 							placeholder="Saisie avec auto clamp - séparateur -"
@@ -753,7 +753,7 @@ export const AutoClampFeature: Story = {
                 <h3>Démonstration de l'auto clamp dans DateTextInput</h3>
                 <div class="mb-4 mt-2">Saisissez uniquement des chiffres - les séparateurs seront ajoutés automatiquement selon le format défini</div>
                 
-                <h4 class="mb-2">Format DD/MM/YYYY (séparateur /)</h4>
+                <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
                 <DatePicker
                   v-model="dateSlash"
                   placeholder="Saisie avec auto clamp - séparateur /"
@@ -763,7 +763,7 @@ export const AutoClampFeature: Story = {
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
                 
-                <h4 class="mb-2">Format DD-MM-YYYY (séparateur -)</h4>
+                <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
                 <DatePicker
                   v-model="dateDash"
                   placeholder="Saisie avec auto clamp - séparateur -"
@@ -773,7 +773,7 @@ export const AutoClampFeature: Story = {
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
                 
-                <h4 class="mb-2">Format YYYY.MM.DD (séparateur .)</h4>
+                <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
                 <DatePicker
                   v-model="dateDot"
                   placeholder="Saisie avec auto clamp - séparateur ."
@@ -809,31 +809,31 @@ export const DifferentFormats: Story = {
 					<div class="d-flex flex-column gap-4">
 						<DatePicker
 							v-model="value1"
-							placeholder="Format DD/MM/YYYY"
+							placeholder="Format JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value2"
-							placeholder="Format MM/DD/YYYY"
+							placeholder="Format MM/JJ/AAAA"
 							format="MM/DD/YYYY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value3"
-							placeholder="Format YYYY-MM-DD"
+							placeholder="Format AAAA-MM-JJ"
 							format="YYYY-MM-DD"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value4"
-							placeholder="Format DD-MM-YY"
+							placeholder="Format JJ-MM-AA"
 							format="DD-MM-YY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value5"
-							placeholder="Format DD.MM.YYYY"
+							placeholder="Format JJ.MM.AAAA"
 							format="DD.MM.YYYY"
 							no-calendar
 						/>
@@ -873,35 +873,35 @@ export const DifferentFormats: Story = {
               <div class="d-flex flex-column gap-4 pa-4">
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format DD/MM/YYYY"
+                    placeholder="Format JJ/MM/AAAA"
                     format="DD/MM/YYYY"
                     no-calendar
                     class="py-4"
                 />
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format MM/DD/YYYY"
+                    placeholder="Format MM/JJ/AAAA"
                     format="MM/DD/YYYY"
 					no-calendar
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format YYYY-MM-DD"
+                    placeholder="Format AAAA-MM-JJ"
                     format="YYYY-MM-DD"
 					no-calendar
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value4"
-                    placeholder="Format DD-MM-YY"
+                    placeholder="Format JJ-MM-AA"
                     format="DD-MM-YY"
 					no-calendar
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value5"
-                    placeholder="Format DD.MM.YYYY"
+                    placeholder="Format JJ.MM.AAAA"
                     format="DD.MM.YYYY"
 					no-calendar
 					class="py-4"
