@@ -55,12 +55,13 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
           w-100
         ">
           <div class="
-            align-start
+            align-baseline
             d-inline-flex
+            mb-1
           ">
             <label
               class="
-                amelipro-select__label
+                amelipro-select__labels
                 mr-2
               "
               for="amelipro-accordion-list-unique-id-pagination-select"
