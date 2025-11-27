@@ -248,7 +248,7 @@
 			>
 				<label
 					:id="`${uniqueId}-label`"
-					class="mr-2 amelipro-select__labels"
+					class="mr-2 amelipro-select__label"
 					:for="uniqueId"
 					:style="labelStyles"
 				>
