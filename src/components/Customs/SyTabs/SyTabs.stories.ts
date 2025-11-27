@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 
 import SyTabs from './SyTabs.vue'
 import { ref } from 'vue'
+import { mdiHome } from '@mdi/js'
 
 // Plus d'informations sur la configuration de Storybook pour Vue:
 // https://storybook.js.org/docs/vue/writing-stories/introduction
@@ -165,7 +166,177 @@ const items = [
 }
 
 /**
- * Exemple avec slots personnalisés pour le contenu des onglets.
+ * Exemple avec slot tabs prepend
+ */
+export const WithTabsPrependSlot: Story = {
+	render: args => ({
+		components: { SyTabs },
+		setup() {
+			return { args }
+		},
+		template: `
+      <SyTabs :items="args.items">
+        <template #tabs-prepend>
+            <div class="p-4 bg-info-light rounded">
+              <p class="mr-4">Tabs prepend content</p>
+            </div>
+        </template>
+      </SyTabs>
+    `,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: ` 
+              <SyTabs :items="args.items">
+        <template #tabs-prepend>
+            <div class="p-4 bg-info-light rounded">
+                <p class="mr-4">Tabs prepend content</p>
+            </div>
+        </template>
+      </SyTabs>
+      `,
+			},
+		],
+	},
+}
+
+/**
+ * Exemple avec slot tabs append
+ */
+export const WithTabsAppendSlot: Story = {
+	render: args => ({
+		components: { SyTabs },
+		setup() {
+			return { args }
+		},
+		template: `
+      <SyTabs :items="args.items">
+        <template #tabs-append>
+            <div class="p-4 bg-info-light rounded">
+              <p class="mr-4">Tabs append content</p>
+            </div>
+        </template>
+      </SyTabs>
+    `,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: ` 
+              <SyTabs :items="args.items">
+        <template #tabs-append>
+            <div class="p-4 bg-info-light rounded">
+                <p class="mr-4">Tabs append content</p>
+            </div>
+        </template>
+      </SyTabs>
+      `,
+			},
+		],
+	},
+}
+
+/**
+ * Exemple avec slot tab prepend
+ */
+export const WithTabPrependSlot: Story = {
+	render: args => ({
+		components: { SyTabs },
+		setup() {
+			return { args, mdiHome }
+		},
+		template: `
+      <SyTabs :items="args.items">
+        <template #tab-prepend="{ item, index, isActive }">
+          <VIcon
+              v-if="index === 0"
+              class="mr-2"
+              :color="isActive ? 'primary' : 'grey'"
+              :icon="mdiHome"
+          />
+        </template>
+      </SyTabs>
+    `,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: ` 
+              <SyTabs :items="args.items">
+        <template #tab-prepend="{ item, index, isActive }">
+          <VIcon
+              v-if="index === 0"
+              class="mr-2"
+              :color="isActive ? 'primary' : 'grey'"
+              :icon="mdiHome"
+          />
+        </template>
+      </SyTabs>
+      `,
+				script: `
+<script setup>
+import { mdiHome } from '@mdi/js'
+</script>
+                `,
+			},
+		],
+	},
+}
+
+/**
+ * Exemple avec slot tab append
+ */
+export const WithTabAppendSlot: Story = {
+	render: args => ({
+		components: { SyTabs },
+		setup() {
+			return { args, mdiHome }
+		},
+		template: `
+      <SyTabs :items="args.items">
+        <template #tab-append="{ item, index, isActive }">
+          <VIcon
+              v-if="index === 0"
+              class="ml-2"
+              :color="isActive ? 'primary' : 'grey'"
+              :icon="mdiHome"
+          />
+        </template>
+      </SyTabs>
+    `,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: ` 
+              <SyTabs :items="args.items">
+        <template #tab-append="{ item, index, isActive }">
+        <VIcon
+              v-if="index === 0"
+              class="ml-2"
+              :color="isActive ? 'primary' : 'grey'"
+              :icon="mdiHome"
+          />
+      </template>
+      </SyTabs>
+      `,
+				script: `
+        <script setup>
+        import { mdiHome } from '@mdi/js'
+        </script>
+                `,
+			},
+		],
+	},
+}
+
+/**
+ * Exemple avec slot pannel
  */
 export const WithCustomContent: Story = {
 	render: args => ({
@@ -183,7 +354,7 @@ export const WithCustomContent: Story = {
         </template>
         <template #panel-1>
           <div class="p-4 bg-success-light rounded">
-            <h3 class="text-h6 font-weight-bold">Contenu personnalisé pour l'onglet 2</h3>
+            <h3 class="text-h6 font-weight-bold text-secondary">Contenu personnalisé pour l'onglet 2</h3>
             <p>Ce panneau utilise un style différent.</p>
           </div>
         </template>
@@ -204,19 +375,12 @@ export const WithCustomContent: Story = {
         </template>
         <template #panel-1>
           <div class="p-4 bg-success-light rounded">
-            <h3 class="text-h6 font-weight-bold">Contenu personnalisé pour l'onglet 2</h3>
+            <h3 class="text-h6 font-weight-bold text-secondary">Contenu personnalisé pour l'onglet 2</h3>
             <p>Ce panneau utilise un style différent.</p>
           </div>
         </template>
       </SyTabs>
       `,
-			},
-			{
-				name: 'Script',
-				code: `
-
-        `,
-
 			},
 		],
 	},

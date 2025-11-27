@@ -261,7 +261,6 @@ export const Default: Story = {
 		</AmeliproCard>
 	</template>
 </AmeliproResultList>
-<button @click="toto()"
 </div>
 		`,
 	}),
@@ -297,7 +296,7 @@ export const PaginationEtTri: Story = {
     title="Avec pagination et tri"
     :items-to-display-desktop="4"
     :items-to-display-mobile="2"
-	sort-select-default-value="name-desc"
+	sort-select-default-value="desc"
     :sort-select-items="[
       { title: 'Nom croissant', value: 'asc' },
       { title: 'Nom décroissant', value: 'desc' }

@@ -3,7 +3,8 @@ import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 import AmeliproTable from './AmeliproTable.vue'
 import type { AmeliproTableHeader } from './types'
 import type { IDataListItem } from '../types'
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
+
 const meta = {
 	argTypes: {
 		'`item-${headers[cellIndex].name}`': { description: 'Slot généré automatiquement pour chaque colonne (`name` nom de la colonne dans headers) vous devez y bind la ligne, pour permettre de renseigner autres chose que des données textuelles si besoin. Le contenu du slot apparaît seulement si la valeur de la cellule concernée est `undefined`.' },
@@ -610,10 +611,10 @@ export const PaginationEtTri: Story = {
 		uniqueId: 'table-pagination-tri',
 		itemsToDisplayDesktop: 2,
 		itemsToDisplayMobile: 1,
-		sortSelectDefaultValue: 'name-desc',
+		sortSelectDefaultValue: 'desc',
 		sortSelectItems: [
-			{ title: 'Nom croissant', value: 'name-asc' },
-			{ title: 'Nom décroissant', value: 'name-desc' },
+			{ title: 'Nom croissant', value: 'asc' },
+			{ title: 'Nom décroissant', value: 'desc' },
 		],
 		sortSelectLabel: 'Trier par',
 		sortSelectPlaceholder: 'Choisir un tri',
@@ -632,10 +633,10 @@ export const PaginationEtTri: Story = {
         unique-id="table-pagination-tri"
         :items-to-display-desktop="2"
         :items-to-display-mobile="1"
-		sort-select-default-value="name-desc"
+		sort-select-default-value="name"
         :sort-select-items="[
-            { title: 'Nom croissant', value: 'name-asc' },
-            { title: 'Nom décroissant', value: 'name-desc' }
+            { title: 'Nom croissant', value: 'asc' },
+            { title: 'Nom décroissant', value: 'desc' }
         ]"
         sort-select-label="Trier par"
         sort-select-placeholder="Choisir un tri"
@@ -671,10 +672,10 @@ const sortValue = ref('name-asc')
 
 const sortedDataList = computed(() => {
 	const list = [...(args.dataList ?? [])]
-	if (sortValue.value === 'name-asc') {
+	if (sortValue.value === 'asc') {
 		return list.sort((a, b) => (String(a.name ?? '')).localeCompare(String(b.name ?? '')))
 	}
-	if (sortValue.value === 'name-desc') {
+	if (sortValue.value === 'desc') {
 		return list.sort((a, b) => (String(b.name ?? '')).localeCompare(String(a.name ?? '')))
 	}
 	return list
@@ -692,7 +693,7 @@ function onSortAsc(event: Event, header: string) {
 
 function onSortDesc(event: Event, header: string) {
 	if (header === 'name') {
-		sortValue.value = 'name-desc'
+		sortValue.value = 'desc'
 	}
 }
 </script>`,
@@ -705,10 +706,10 @@ function onSortDesc(event: Event, header: string) {
 			const sortValue = ref('name-asc')
 			const sortedDataList = computed(() => {
 				const list = [...(args.dataList ?? [])]
-				if (sortValue.value === 'name-asc') {
+				if (sortValue.value === 'asc') {
 					return list.sort((a, b) => (String(a.name ?? '')).localeCompare(String(b.name ?? '')))
 				}
-				if (sortValue.value === 'name-desc') {
+				if (sortValue.value === 'desc') {
 					return list.sort((a, b) => (String(b.name ?? '')).localeCompare(String(a.name ?? '')))
 				}
 				return list
@@ -725,7 +726,7 @@ function onSortDesc(event: Event, header: string) {
 
 			function onSortDesc(header: string) {
 				if (header === 'name') {
-					sortValue.value = 'name-desc'
+					sortValue.value = 'desc'
 				}
 			}
 			return { args, sortedDataList, onSortChange, onSortAsc, onSortDesc }

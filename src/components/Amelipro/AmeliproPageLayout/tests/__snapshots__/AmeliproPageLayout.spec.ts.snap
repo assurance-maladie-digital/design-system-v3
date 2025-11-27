@@ -1309,6 +1309,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 <a
                   class="
                     amelipro-btn
+                    amelipro-footer__site-map-btn
+                    amelipro-footer__site-map-btn
                     elevation-0
                     text-ap-white
                     text-none
@@ -1354,6 +1356,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 <a
                   class="
                     amelipro-btn
+                    amelipro-footer__about-btn
+                    amelipro-footer__about-btn
                     elevation-0
                     text-ap-white
                     text-none
@@ -1399,6 +1403,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 <a
                   class="
                     amelipro-btn
+                    amelipro-footer__config-btn
+                    amelipro-footer__config-btn
                     elevation-0
                     text-ap-white
                     text-none
@@ -1444,6 +1450,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 <a
                   class="
                     amelipro-btn
+                    amelipro-footer__legal-notice-btn
+                    amelipro-footer__legal-notice-btn
                     elevation-0
                     text-ap-white
                     text-none
@@ -1489,6 +1497,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 <a
                   class="
                     amelipro-btn
+                    amelipro-footer__cgu-btn
+                    amelipro-footer__cgu-btn
                     elevation-0
                     text-ap-white
                     text-none
@@ -1534,6 +1544,8 @@ exports[`AmeliproPageLayout > render correctly 1`] = `
                 <a
                   class="
                     amelipro-btn
+                    amelipro-footer__a11y-btn
+                    amelipro-footer__a11y-btn
                     elevation-0
                     text-ap-white
                     text-none

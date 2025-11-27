@@ -60,7 +60,7 @@ describe('DateTextInput.vue - Range Mode', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide (JJ/MM/AAAA)')
 	})
 
 	// Test modifié pour vérifier le comportement réel du composant
