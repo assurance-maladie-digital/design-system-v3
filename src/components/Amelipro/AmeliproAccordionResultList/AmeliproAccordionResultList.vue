@@ -163,6 +163,8 @@
 		}
 	}
 
+	watch(sortSelectModel, emitSortSelectChange, { immediate: true })
+
 	// Rendre publique la méthode openClose permet à un bouton ou à un composant externe de fermer/ouvrir l'accordéon
 	defineExpose({ openClose })
 </script>
