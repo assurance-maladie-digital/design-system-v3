@@ -233,7 +233,7 @@ export const Default: Story = {
 	render: args => ({
 		components: { AmeliproCard, AmeliproAccordionFrieze },
 		setup() {
-			const items = args.items
+			const items = args.items ?? []
 
 			const slotNames = items.map((item, index) =>
 				`amelipro-accordion-frieze-id-slot-slide-${index}-item-${item.uniqueId}`,
