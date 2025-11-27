@@ -62,7 +62,7 @@ exports[`AmeliproResultList > render correctly 1`] = `
           ">
             <label
               class="
-                amelipro-select__labels
+                amelipro-select__label
                 mr-2
               "
               for="amelipro-result-unique-id-pagination-select"
