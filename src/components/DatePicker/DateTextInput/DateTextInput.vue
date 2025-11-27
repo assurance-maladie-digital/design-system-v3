@@ -54,7 +54,7 @@
 		persistentHint?: boolean
 		externalErrorMessages?: string[]
 	}>(), {
-		modelValue: null,
+		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: undefined,
