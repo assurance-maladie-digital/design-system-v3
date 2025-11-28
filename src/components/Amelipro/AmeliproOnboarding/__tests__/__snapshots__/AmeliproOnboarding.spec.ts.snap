@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproOnboarding > Snapshots > renders the component with all properties filled in 1`] = `
+<amelipro-dialog-stub
+  attach="true"
+  cancelbtnlabel="Annuler"
+  eager="true"
+  fullscreen="false"
+  hiddencancelbtn="false"
+  labelledby="modified-unique-id-title"
+  maincontentminheight="150px"
+  modelvalue="true"
+  no-click-animation=""
+  noclickoutside="false"
+  nofooter="true"
+  persistent="true"
+  uniqueid="modified-unique-id"
+  validationbtnlabel="Valider"
+  width="600px"
+></amelipro-dialog-stub>
+`;
+
+exports[`AmeliproOnboarding > Snapshots > renders the component with only required properties filled in 1`] = `
+<amelipro-dialog-stub
+  attach="false"
+  cancelbtnlabel="Annuler"
+  eager="false"
+  fullscreen="false"
+  hiddencancelbtn="false"
+  labelledby="required-unique-id-title"
+  maincontentminheight="150px"
+  modelvalue="false"
+  no-click-animation=""
+  noclickoutside="false"
+  nofooter="true"
+  persistent="false"
+  uniqueid="required-unique-id"
+  validationbtnlabel="Valider"
+  width="800px"
+></amelipro-dialog-stub>
+`;

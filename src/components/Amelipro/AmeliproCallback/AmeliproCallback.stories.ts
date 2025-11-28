@@ -221,7 +221,7 @@ export const AvecSlotDefaultContent: Story = {
     unique-id="amelipro-callback-slot"
   >
     <template #defaultContent>
-      <div style="color: #1976d2;">Contenu personnalisé via le slot <code>defaultContent</code>.</div>
+      <div style="color: #1976d2;" class="d-flex align-center">Contenu personnalisé via le slot <code>defaultContent</code>.</div>
     </template>
   </AmeliproCallback>
 </template>`,
@@ -241,7 +241,9 @@ export const AvecSlotDefaultContent: Story = {
 <p class="mb-2">Le slot <code>defaultContent</code> permet de personnaliser le contenu central de la carte.</p>
 <AmeliproCallback v-bind="args">
   <template #defaultContent>
-    <div style="color: #1976d2;">Contenu personnalisé via le slot <code>defaultContent</code>.</div>
+    <div style="color: #1976d2;" class="d-flex align-center">Contenu personnalisé via le slot
+      <code>defaultContent</code>.
+    </div>
   </template>
 </AmeliproCallback>
 `,
