@@ -1107,6 +1107,8 @@
 					:show-adjacent-months="true"
 					:show-week="props.showWeekNumber"
 					:view-mode="currentViewMode"
+					:month="currentMonth !== null ? Number(currentMonth) : undefined"
+					:year="currentYear !== null ? Number(currentYear) : undefined"
 					:max="maxDate"
 					:min="minDate"
 					:custom-rules="props.customRules"
