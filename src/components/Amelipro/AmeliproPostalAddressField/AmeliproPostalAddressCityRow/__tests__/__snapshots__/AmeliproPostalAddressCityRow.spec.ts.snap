@@ -29,9 +29,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
         id="the-groupId-postal-code-container"
       >
         <div class="
-          align-start
+          align-baseline
           amelipro-autocomplete__label-wrapper
           d-inline-flex
+          mb-1
         ">
           <label
             class="amelipro-autocomplete__label"
@@ -304,9 +305,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
         id="the-groupId-city-container"
       >
         <div class="
-          align-start
+          align-baseline
           amelipro-autocomplete__label-wrapper
           d-inline-flex
+          mb-1
         ">
           <label
             class="amelipro-autocomplete__label"
