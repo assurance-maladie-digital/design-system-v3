@@ -164,6 +164,7 @@ export const Default: Story = {
 		}),
 	],
 	parameters: {
+		controls: { exclude: ['sticky', 'prepend', 'hideWhenDown', 'menu', 'header-side', 'append'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -237,6 +238,8 @@ export const WithRightMenu: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['logo-brand-content', 'logo', 'menu', 'homeLink', 'serviceTitle', 'serviceSubtitle', 'homeAriaLabel', 'serviceTitle', 'sticky', 'prepend', 'hideWhenDown', 'append'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -362,6 +365,7 @@ export const CustomLogo: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['header-side', 'logo', 'menu', 'homeLink', 'serviceTitle', 'serviceSubtitle', 'homeAriaLabel', 'serviceTitle', 'sticky', 'prepend', 'hideWhenDown', 'append'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -449,6 +453,8 @@ export const CustomBrand: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['header-side', 'logo', 'menu', 'homeLink', 'serviceTitle', 'serviceSubtitle', 'homeAriaLabel', 'sticky', 'prepend', 'hideWhenDown', 'append'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -496,6 +502,7 @@ export const Sticky: Story = {
 		}),
 	],
 	parameters: {
+		controls: { exclude: ['header-side', 'logo-brand-content', 'logo', 'menu', 'homeLink', 'serviceTitle', 'serviceSubtitle', 'homeAriaLabel', 'serviceTitle', 'prepend', 'hideWhenDown', 'append'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -547,6 +554,7 @@ export const WithHeaderToolbar: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['prepend', 'header-side', 'append', 'menu', 'logo-brand-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -603,6 +611,7 @@ export const WithSubHeader: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['prepend', 'header-side', 'menu', 'logo-brand-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -634,7 +643,7 @@ export const WithSubHeader: Story = {
 	},
 }
 
-export const DefaultSlot: Story = {
+export const HeaderSideSlot: Story = {
 	args: {
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
@@ -664,6 +673,7 @@ export const DefaultSlot: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['prepend', 'hideWhenDown', 'sticky', 'append', 'menu', 'logo-brand-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -724,6 +734,8 @@ export const PrependSlot: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['hideWhenDown', 'sticky', 'header-side', 'append', 'menu', 'logo-brand-content'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
@@ -778,6 +790,8 @@ export const AppendSlot: Story = {
 		}
 	},
 	parameters: {
+		controls: { exclude: ['hideWhenDown', 'sticky', 'header-side', 'prepend', 'menu', 'logo-brand-content'] },
+
 		sourceCode: [
 			{
 				name: 'Template',

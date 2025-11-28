@@ -260,6 +260,8 @@ export const Default: Story = {
 
 export const CustomLinks: Story = {
 	parameters: {
+		controls: { exclude: ['ariaRightLabel', 'hideOverlay', 'handleLink', 'checkActiveLink', 'deleteActiveLink', 'activeIndex', 'highlightMenu', 'showOverlay', 'getLinkComponent', 'handleSubMenuItemClick', 'handleKeyboardEnter', 'openMenuWithKeyboard', 'handleMenuKeydown'] },
+
 		sourceCode: [
 			{
 				name: 'Template',
