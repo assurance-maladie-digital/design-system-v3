@@ -36,12 +36,14 @@
 		variant?: 'filled' | 'outlined' | 'plain' | 'underlined' | 'solo'
 		clearable?: boolean
 		counter?: boolean | number | string
-		hint?: string
+		numberHint?: string
+		keyHint?: string
 		persistentHint?: boolean
 		persistentPlaceholder?: boolean
 		disableErrorHandling?: boolean
 		nirType?: 'simple' | 'complexe'
 		withoutFieldset?: boolean
+		customLocale?: Partial<Record<keyof typeof locales, string>>
 	}>(), {
 		modelValue: undefined,
 		label: 'Identifiant d\'assuré',
@@ -71,12 +73,21 @@
 		variant: 'outlined',
 		clearable: false,
 		counter: false,
-		hint: undefined,
+		numberHint: undefined,
+		keyHint: undefined,
 		persistentHint: false,
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
 		nirType: 'simple',
 		withoutFieldset: false,
+		customLocale: () => ({
+			errorRequiredNumber: locales.errorRequiredNumber,
+			errorInvalidNumber: locales.errorInvalidNumber,
+			errorRequiredKey: locales.errorRequiredKey,
+			errorInvalidKey: locales.errorInvalidKey,
+			successNumberValid: locales.successNumberValid,
+			successKeyValid: locales.successKeyValid,
+		} as Partial<Record<keyof typeof locales, string>>),
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -121,8 +132,8 @@
 	}
 
 	const fieldWidth = computed(() => props.width || '100%')
-	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(70% - 8px)' : '0 0 calc(72% - 8px)')
-	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(29% - 8px)' : '0 0 calc(25% - 8px)')
+	const nirFieldWidth = computed(() => props.clearable ? '0 0 calc(68% - 8px)' : '0 0 calc(68% - 8px)')
+	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(32% - 8px)' : '0 0 calc(32% - 8px)')
 
 	const fieldId = useId()
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
@@ -197,7 +208,7 @@
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.errorRequiredNumber,
+					message: props.customLocale.errorRequiredNumber,
 					fieldIdentifier: props.numberLabel,
 				},
 			})
@@ -219,13 +230,13 @@
 					if (!value) return true
 					// Ne valider que si tous les caractères sont saisis
 					if (value.length < 13) {
-						return locales.erreurInvalidNumber
+						return props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 					}
 					const result = checkNIR(value, props.nirType)
-					return result === true ? true : locales.erreurInvalidNumber
+					return result ? true : props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
 				},
-				message: locales.erreurInvalidNumber,
-				successMessage: locales.successNumberValid,
+				message: props.customLocale.errorInvalidNumber,
+				successMessage: props.customLocale.successNumberValid,
 				fieldIdentifier: props.numberLabel,
 			},
 		})
@@ -248,7 +259,7 @@
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.errorRequiredKey,
+					message: props.customLocale.errorRequiredKey,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
@@ -272,8 +283,8 @@
 				type: 'custom',
 				options: {
 					validate: validateKey,
-					message: locales.errorInvalidKey,
-					successMessage: locales.successKeyValid,
+					message: props.customLocale.errorInvalidKey,
+					successMessage: props.customLocale.successKeyValid,
 					fieldIdentifier: props.keyLabel,
 				},
 			})
@@ -504,7 +515,23 @@
 	})
 
 	// Rendre le composant auto-validable dans un SyForm
-	useValidatable(validateOnSubmit)
+	useValidatable(
+		validateOnSubmit,
+		() => {
+			try {
+				numberValidation.clearValidation()
+			}
+			catch {
+				void 0
+			}
+			try {
+				keyValidation.clearValidation()
+			}
+			catch {
+				void 0
+			}
+		},
+	)
 
 	defineExpose({
 		validateOnSubmit,
@@ -560,9 +587,13 @@
 				:readonly="props.readonly"
 				:clearable="props.clearable"
 				:counter="props.counter"
+				:hint="props.numberHint || locales.numberHint"
+				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
-				:hint="props.hint || locales.numberHint"
 				class="number-field"
+				:class="{
+					'sy-hide-detail': props.hideDetails,
+				}"
 				:display-asterisk="false"
 				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
 				:show-success-messages="false"
@@ -585,7 +616,6 @@
 				:prepend-tooltip="keyTooltip && keyTooltipPosition === 'prepend' ? keyTooltip : undefined"
 				:append-tooltip="keyTooltip && keyTooltipPosition === 'append' ? keyTooltip : undefined"
 				:error="keyValidation.errors.value.length > 0"
-				:hint="props.hint || locales.keyHint"
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
@@ -595,6 +625,7 @@
 				:readonly="props.readonly"
 				:clearable="props.clearable"
 				:counter="props.counter"
+				:hint="props.keyHint || locales.keyHint"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:aria-required="ariaRequired"
@@ -603,6 +634,9 @@
 				:has-success="hasKeySuccess"
 				:aria-invalid="ariaInvalidKey"
 				class="key-field"
+				:class="{
+					'sy-hide-detail': props.hideDetails,
+				}"
 				:display-asterisk="false"
 				:aria-describedby="keyFieldErrorId + ' ' + keyFieldWarningId + ' ' + keyFieldSuccessId"
 				:show-success-messages="false"
@@ -709,11 +743,11 @@
 
 /* Styles pour le mode standard (div) */
 .nir-field:not(.nir-field--fieldset) .number-field-container {
-	flex: 0 0 calc(75% - 8px);
+	flex: 0 0 calc(68% - 8px);
 }
 
 .nir-field:not(.nir-field--fieldset) .key-field-container {
-	flex: 0 0 calc(25% - 8px);
+	flex: 0 0 calc(32% - 8px);
 }
 
 /* Styles pour le mode fieldset */
@@ -752,6 +786,10 @@
 	}
 }
 
+.sy-hide-detail {
+	padding-bottom: 6px;
+}
+
 .sy-number-errors,
 .sy-key-errors {
 	color: tokens.$colors-text-error;
@@ -766,5 +804,4 @@
 .sy-key-success {
 	color: tokens.$colors-text-success;
 }
-
 </style>

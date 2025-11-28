@@ -5,6 +5,7 @@ import SyTable from './SyTable.vue'
 import type { DataOptions, FilterType } from '../common/types'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
+import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable',
@@ -83,6 +84,13 @@ const meta = {
 			},
 			required: true,
 		},
+		showExpand: {
+			description: 'Affiche une colonne permettant d\'étendre les lignes pour afficher du contenu supplémentaire',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+			},
+		},
 		resizableColumns: {
 			description: 'Permet de redimensionner les colonnes du tableau',
 			control: { type: 'boolean' },
@@ -134,6 +142,14 @@ const meta = {
 		},
 		showSelect: {
 			description: 'Affiche des cases à cocher pour sélectionner des lignes',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+			},
+		},
+		showSelectSingle: {
+			description: 'Affiche des cases à cocher pour sélectionner une seule ligne à la fois',
 			control: { type: 'boolean' },
 			table: {
 				category: 'props',
@@ -2869,6 +2885,184 @@ export const RowSelection: Story = {
 	},
 }
 
+export const SingleRowSelection: Story = {
+	name: 'Single Row Selection',
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						v-model="selection"
+						:headers="headers"
+						:items="items"
+						show-select-single
+						show-filters
+						suffix="selection-table"
+					/>
+					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : items.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : items.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : items.find(i => JSON.stringify(i) === item)?.email }}</div>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+							title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		items: [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		options: {
+			itemsPerPage: 4,
+		},
+		caption: '',
+		suffix: 'selection-table',
+		density: 'default',
+		striped: false,
+		showSelectSingle: true,
+		showFilters: true,
+	},
+	render(args) {
+		return {
+			components: { SyTable },
+			setup() {
+				const items = ref(args.items)
+				const selection = ref([])
+				return { args, selection, items }
+			},
+			template: `
+				<div>
+					<SyTable
+						v-model:options="args.options"
+						v-model="selection"
+						v-bind="args"
+						suffix="selection-table"
+					/>
+					<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
+						<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ typeof item === 'object' ? item.lastname : args.items.find(i => JSON.stringify(i) === item)?.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ typeof item === 'object' ? item.firstname : args.items.find(i => JSON.stringify(i) === item)?.firstname }}</div>
+							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : args.items.find(i => JSON.stringify(i) === item)?.email }}</div>
+						</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
 export const ColumnControls: Story = {
 	parameters: {
 		sourceCode: [
@@ -3018,6 +3212,217 @@ export const ColumnControls: Story = {
 					v-bind="args"
 				/>
 			`,
+		}
+	},
+}
+
+export const ExpandableRows: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-expand
+						caption="Tableau complexe"
+						suffix="expand-table"
+					>
+                      <template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+                          <v-btn
+                            :append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
+                            :text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
+                            class="text-none"
+                            color="medium-emphasis"
+                            size="small"
+                            variant="text"
+                            width="105"
+                            border
+                            slim
+                            @click="toggleExpand(internalItem)"
+                          />
+                      </template>
+                
+                      <template #expanded-row="{ columns, item }">
+                        <tr>
+                          <td
+                            :colspan="columns.length"
+                            class="py-2"
+                          >
+                            <strong>Informations complémentaires :</strong>
+                             <p>Plus de détails pour {{ item.firstname }} {{ item.lastname }}.</p>
+                          </td>
+                        </tr>
+                      </template>
+                    </SyTable>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
+					
+					const options = ref({
+						itemsPerPage: 4,
+					})
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+                            title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com'
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com'
+						}
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		'items': [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+		],
+		'options': {
+			itemsPerPage: 4,
+		},
+		'caption': '',
+		'showExpand': true,
+		'suffix': 'expandable-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args, mdiChevronDown, mdiChevronUp }
+			},
+			template: `
+              <SyTable
+                  v-model:options="args.options"
+                  v-bind="args"
+                  show-expand
+                  caption="Tableau complexe"
+                  suffix="expand-table"
+              >
+                  <template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
+                    <v-btn
+                        :append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
+                        :text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
+                        class="text-none"
+                        color="medium-emphasis"
+                        size="small"
+                        variant="text"
+                        width="105"
+                        border
+                        slim
+                        @click="toggleExpand(internalItem)"
+                    />
+                  </template>
+
+                  <template #expanded-row="{ columns, item }">
+                    <tr>
+                      <td
+                          :colspan="columns.length"
+                          class="py-2"
+                      >
+                        <strong>Informations complémentaires :</strong>
+                        <p>Plus de détails pour {{ item.firstname }} {{ item.lastname }}.</p>
+                      </td>
+                    </tr>
+                  </template>
+              </SyTable>
+            `,
 		}
 	},
 }

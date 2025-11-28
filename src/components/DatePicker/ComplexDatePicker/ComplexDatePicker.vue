@@ -64,36 +64,48 @@
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
 
-	// const onUpdateMonth = (month: string) => {
-	// 	if (currentMonth.value === month) return
-	// 	currentMonth.value = month
-	// 	currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-	// 	handleMonthUpdate()
-	// 	unifyAfterCalendarUpdate()
-	// }
+	// Fonction pour mettre à jour le mois quand on navigue via les flèches
+	const onUpdateMonth = (month: string) => {
+		if (currentMonth.value === month) return
+		currentMonth.value = month
+		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+		handleMonthUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
 
-	// const onUpdateYear = (year: string) => {
-	// 	const oldYear = currentYear.value
-	// 	currentYear.value = year
-	// 	currentYearName.value = year
+	// Fonction pour mettre à jour l'année quand on navigue via les flèches
+	const onUpdateYear = (year: string) => {
+		const oldYear = currentYear.value
+		currentYear.value = year
+		currentYearName.value = year
 
-	// 	const curMonth = parseInt(currentMonth.value ?? '0', 10)
-	// 	const newYear = parseInt(year, 10)
-	// 	const prevYear = parseInt(oldYear ?? '0', 10)
+		const curMonth = parseInt(currentMonth.value ?? '0', 10)
+		const newYear = parseInt(year, 10)
+		const prevYear = parseInt(oldYear ?? '0', 10)
 
-	// 	// Bridges Dec -> Jan and Jan -> Dec when navigating years
-	// 	if (newYear > prevYear && curMonth === 11) {
-	// 		currentMonth.value = '0'
-	// 		currentMonthName.value = dayjs().month(0).format('MMMM')
-	// 	}
-	// 	else if (newYear < prevYear && curMonth === 0) {
-	// 		currentMonth.value = '11'
-	// 		currentMonthName.value = dayjs().month(11).format('MMMM')
-	// 	}
+		// Bridges Dec -> Jan and Jan -> Dec when navigating years
+		if (newYear > prevYear && curMonth === 11) {
+			currentMonth.value = '0'
+			currentMonthName.value = dayjs().month(0).format('MMMM')
+		}
+		else if (newYear < prevYear && curMonth === 0) {
+			currentMonth.value = '11'
+			currentMonthName.value = dayjs().month(11).format('MMMM')
+		}
 
-	// 	handleYearUpdate()
-	// 	unifyAfterCalendarUpdate()
-	// }
+		handleYearUpdate()
+		nextTick(() => {
+			if (isDatePickerVisible.value) {
+				customizeMonthButton()
+				markHolidayDays()
+			}
+		})
+	}
 
 	/**
 	 * Props / Emits
@@ -234,6 +246,8 @@
 
 	const textInputValue = ref('')
 	const displayFormattedDate = ref('')
+	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
+	const fieldKey = ref(0)
 	const isManualInputActive = ref(false)
 	const isFormatting = ref(false)
 	const isUpdatingFromInternal = ref(false)
@@ -387,7 +401,10 @@
 			if (typeof newValue === 'string') {
 				if (props.dateFormatReturn) {
 					const date = parseDate(newValue, returnFormat.value)
-					if (date) textInputValue.value = formatDate(date, props.format)
+					if (date) {
+						const formattedForDisplay = formatDate(date, props.format)
+						textInputValue.value = formattedForDisplay
+					}
 				}
 				else {
 					textInputValue.value = newValue
@@ -403,21 +420,38 @@
 			updateModel(formattedDate.value)
 			withInternalUpdate(() => {
 				if (Array.isArray(newValue)) {
-					if (newValue.length > 0) textInputValue.value = formatDate(newValue[0], props.format)
+					if (newValue.length > 0) {
+						const newFormattedValue = formatDate(newValue[0], props.format)
+						if (textInputValue.value !== newFormattedValue) {
+							textInputValue.value = newFormattedValue
+						}
+					}
 				}
 				else {
-					textInputValue.value = formatDate(newValue, props.format)
+					const newFormattedValue = formatDate(newValue, props.format)
+					if (textInputValue.value !== newFormattedValue) {
+						textInputValue.value = newFormattedValue
+					}
 				}
 			})
 		}
 		else {
 			updateModel(null)
 			textInputValue.value = ''
+			// Reset month/year names when clearing the date
+			const today = new Date()
+			currentMonth.value = today.getMonth().toString()
+			currentMonthName.value = dayjs(today).format('MMMM')
+			currentYear.value = today.getFullYear().toString()
+			currentYearName.value = today.getFullYear().toString()
 		}
 	})
 
 	// Handle manual typing sync → model/selection
 	watch(textInputValue, (newValue) => {
+		// En mode plage, on laisse DateTextInput + handleDateTextInputUpdate
+		// piloter la mise à jour du modèle et de selectedDates
+		if (props.displayRange) return
 		if (isUpdatingFromInternal.value) return
 		const date = parseDate(newValue, props.format)
 		if (date) {
@@ -694,6 +728,67 @@
 	})
 
 	/**
+	 * Gère les mises à jour de DateTextInput avec contrôle
+	 */
+	const handleDateTextInputUpdate = (value: DateValue) => {
+		// Ne pas traiter les mises à jour internes pour éviter les boucles
+		if (isUpdatingFromInternal.value) return
+
+		try {
+			isUpdatingFromInternal.value = true
+
+			// 1) Propager la valeur brute vers le v-model externe
+			updateModel(value)
+
+			// 2) Mettre à jour selectedDates / displayFormattedDate pour refléter la saisie manuelle
+			if (!value) {
+				selectedDates.value = null
+				displayFormattedDate.value = ''
+				return
+			}
+
+			if (Array.isArray(value) && props.displayRange) {
+				const [startStr, endStr] = value
+				const rf = returnFormat.value
+				const startDate = startStr ? parseDate(startStr, rf) || parseDate(startStr, props.format) : null
+				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
+
+				if (startDate && endDate) {
+					selectedDates.value = [startDate, endDate]
+					displayFormattedDate.value
+						= `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
+				}
+				else if (startDate) {
+					// Première date saisie uniquement
+					selectedDates.value = [startDate]
+					displayFormattedDate.value = formatDate(startDate, props.format)
+				}
+				else {
+					selectedDates.value = null
+					displayFormattedDate.value = ''
+				}
+			}
+			else if (typeof value === 'string') {
+				const rf = returnFormat.value
+				const date = parseDate(value, rf) || parseDate(value, props.format)
+				if (date) {
+					selectedDates.value = date
+					displayFormattedDate.value = formatDate(date, props.format)
+				}
+				else {
+					selectedDates.value = null
+					displayFormattedDate.value = ''
+				}
+			}
+		}
+		finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
+		}
+	}
+
+	/**
 	 * Sync from external v-model
 	 */
 	const syncFromModelValue = (newValue: DateInput | undefined) => {
@@ -710,7 +805,8 @@
 			const firstDate = Array.isArray(selectedDates.value)
 				? selectedDates.value[0]
 				: selectedDates.value
-			textInputValue.value = formatDate(firstDate, props.format)
+			const formattedForInput = formatDate(firstDate, props.format)
+			textInputValue.value = formattedForInput
 			displayFormattedDate.value = displayFormattedDateComputed.value || ''
 		}
 		validateDates()
@@ -878,8 +974,35 @@
 		return textInputValid && errors.value.length === 0
 	}
 
+	// Reset hook utilisé par SyForm.reset() via useValidatable
+	const reset = () => {
+		// 1) Nettoyer l'état de validation et d'interaction
+		clearValidation()
+		isDatePickerVisible.value = false
+		hasInteracted.value = false
+		isManualInputActive.value = false
+
+		if (props.disabled) {
+			fieldKey.value++
+			return
+		}
+
+		// 2) Réinitialiser la valeur et la sélection SANS déclencher
+		// de validation "required" interactive
+		withInternalUpdate(() => {
+			selectedDates.value = null
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+			// Synchroniser le modèle externe
+			emit('update:modelValue', null)
+		})
+
+		// 3) Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
+		fieldKey.value++
+	}
+
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		validateOnSubmit,
@@ -905,6 +1028,7 @@
 		// Expose for consumers
 		handleDateSelected,
 		resetViewMode,
+		reset,
 	})
 </script>
 
@@ -919,6 +1043,7 @@
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
+				:key="fieldKey"
 				v-model="textInputValue"
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
@@ -966,7 +1091,8 @@
 					<DateTextInput
 						v-bind="menuProps"
 						ref="dateCalendarTextInputRef"
-						v-model="textInputValue"
+						:key="fieldKey"
+						:model-value="textInputValue"
 						:label="labelWithAsterisk || ''"
 						:placeholder="props.placeholder"
 						:format="props.format"
@@ -996,6 +1122,7 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
+						@update:model-value="handleDateTextInputUpdate"
 						@click="openDatePickerOnClick"
 						@focus="openDatePickerOnFocus"
 						@blur="handleInputBlur"
@@ -1031,8 +1158,8 @@
 					:persistent-hint="props.persistentHint"
 					@update:model-value="updateDisplayFormattedDate"
 					@update:view-mode="handleViewModeUpdate"
-					@update:month="handleMonthUpdate"
-					@update:year="handleYearUpdate"
+					@update:month="onUpdateMonth"
+					@update:year="onUpdateYear"
 					@click:date="updateSelectedDates"
 					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"

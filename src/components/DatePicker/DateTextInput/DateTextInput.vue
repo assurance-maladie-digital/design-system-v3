@@ -54,7 +54,7 @@
 		persistentHint?: boolean
 		externalErrorMessages?: string[]
 	}>(), {
-		modelValue: null,
+		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: undefined,
@@ -200,6 +200,8 @@
 	const inputValue = ref('')
 	const inputRef = ref<InstanceType<typeof SyTextField> | null>(null)
 	const isFormatting = ref(false)
+	// Force re-render of SyTextField when needed (e.g., after reset)
+	const fieldKey = ref(0)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
@@ -688,6 +690,49 @@
 	 * =====================
 	 */
 	watch(inputValue, async (nv, ov) => {
+		if (props.disabled) {
+			const isEmpty = !nv || nv.trim() === '' || /^[_/\-.\s]+$/.test(nv)
+
+			if (isEmpty && ov && props.modelValue) {
+				isFormatting.value = true
+
+				const mv = props.modelValue
+
+				// --- RANGE ---
+				if (isRange.value && Array.isArray(mv) && mv.length === 2) {
+					const [start, end] = mv
+					const sd = parseDate(start, returnFormat.value)
+					const ed = parseDate(end, returnFormat.value)
+
+					if (sd && ed) {
+						initializeWithDates(sd, ed)
+						selectedDates.value = [sd, ed]
+						inputValue.value = formatRangeForDisplay(sd, ed)
+						runRules(inputValue.value)
+					}
+				}
+
+				// --- SINGLE ---
+				else {
+					const raw = typeof mv === 'string' ? mv : ''
+					const parsed = dayjs(raw, displayFormat.value, true)
+
+					if (parsed.isValid()) {
+						inputValue.value = parsed.format(displayFormat.value)
+						runRules(inputValue.value)
+					}
+					else {
+						inputValue.value = raw
+						runRules(raw)
+					}
+				}
+
+				isFormatting.value = false
+			}
+
+			return
+		}
+
 		// Prevent infinite loops but allow formatting
 		if (isFormatting.value || nv === ov || isHandlingBackspace.value || isBootstrapping.value) return
 		try {
@@ -869,7 +914,7 @@
 		}
 	})
 
-	watch(() => props.modelValue, (nv: DateValue) => {
+	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
 		if (!nv) {
 			inputValue.value = ''
@@ -940,15 +985,42 @@
 		isValidating.value = true
 		hasInteracted.value = true
 		const ok = runRules(inputValue.value)
-		if (!ok || hasError.value) return false
-		return !hasError.value
+		isValidating.value = false
+		return ok
+	}
+
+	// Reset hook utilisé par SyForm.reset() via useValidatable
+	const reset = () => {
+		// 1) Nettoyer l'état de validation et d'interaction
+		clearValidation()
+		isFocused.value = false
+		hasInteracted.value = false
+
+		if (props.disabled) {
+			fieldKey.value++
+			return
+		}
+
+		// 2) Réinitialiser la valeur sans déclencher de validation interactive
+		isFormatting.value = true
+		inputValue.value = ''
+		selectedDates.value = null
+		resetState()
+		isFormatting.value = false
+
+		// 3) Synchroniser le modèle externe
+		emitModel(null)
+
+		// 4) Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
+		fieldKey.value++
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		validateOnSubmit,
+		reset,
 		focus() {
 			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			el?.focus({ preventScroll: true })
@@ -1002,6 +1074,7 @@
 
 <template>
 	<SyTextField
+		:key="fieldKey"
 		ref="inputRef"
 		v-model="inputValue"
 		:append-icon="props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined"

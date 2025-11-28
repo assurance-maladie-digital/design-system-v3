@@ -1,0 +1,60 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproMessage > Snapshots > renders the component with all properties filled in 1`] = `
+<v-alert-stub
+  border="start"
+  bordercolor="#56C271"
+  class="
+    amelipro-message
+    bg-ap-grey-lighten-6
+    message-align-start
+    pa-0
+    px-6
+    py-3
+    text-body-1
+  "
+  closable="false"
+  closeicon="$close"
+  closelabel="$vuetify.close"
+  color="#56C271"
+  dense=""
+  density="default"
+  elevation="0"
+  iconsizes="x-small,10,small,16,default,24,large,28,x-large,32"
+  id="modified-unique-id"
+  maxwidth="500px"
+  modelvalue="false"
+  prominent="false"
+  tag="div"
+  tile="false"
+  variant="text"
+  width="100px"
+></v-alert-stub>
+`;
+
+exports[`AmeliproMessage > Snapshots > renders the component with only required properties filled in 1`] = `
+<v-alert-stub
+  class="
+    amelipro-message
+    amelipro-message__radius
+    pa-3
+    pa-sm-4
+    text-ap-white
+    text-body-1
+  "
+  closable="false"
+  closeicon="$close"
+  closelabel="$vuetify.close"
+  color="#4D547D"
+  dense=""
+  density="default"
+  elevation="0"
+  iconsizes="x-small,10,small,16,default,24,large,28,x-large,32"
+  modelvalue="true"
+  prominent="false"
+  tag="div"
+  tile="false"
+  variant="flat"
+  width="100%"
+></v-alert-stub>
+`;
