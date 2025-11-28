@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import type { IStructureTabs, StructureTab } from './types'
-	import { type PropType, computed, nextTick, ref } from 'vue'
+	import { computed, nextTick, type PropType, ref } from 'vue'
 	import StructureBtn from '../StructureBtn/StructureBtn.vue'
 	import StructureList from '../StructureList/StructureList.vue'
 	import { locales } from './locales'
@@ -109,14 +109,13 @@
 			>
 				{{ locales.label }}
 			</p>
-
-			<div class="d-flex flex-column flex-sm-row">
+			<div class="d-flex flex-column flex-sm-row flex-sm-wrap">
 				<StructureBtn
 					v-for="(item, index) in tabs"
 					:key="index"
 					ref="structureBtns"
 					:aria-selected="selected === index ? 'true' : 'false'"
-					class="mr-0 mr-sm-3 mb-2 mb-sm-0"
+					class="mr-0 mr-sm-3 mb-2 mb-sm-1"
 					:controls="`structure-panel-${index}`"
 					role="tab"
 					:selected="index === selected"
@@ -135,7 +134,7 @@
 			v-for="(tab, index) in tabs"
 			:id="`structure-panel-${index}`"
 			:key="index"
-			class="mt-4"
+			class="mt-3"
 			:role="tabs.length > 1 ? 'tabpanel' : undefined"
 			:tabindex="selected === index && tabs.length > 1 ? 0 : -1"
 		>

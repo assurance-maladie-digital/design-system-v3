@@ -52,6 +52,10 @@
 .v-btn {
 	letter-spacing: unset;
 
+	& :deep(.v-btn__content) {
+		white-space: normal !important;
+	}
+
 	& :deep(.v-btn__overlay),
 	& :deep(.v-btn__underlay) {
 		display: none !important;

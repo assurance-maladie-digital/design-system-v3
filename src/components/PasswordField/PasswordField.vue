@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 	import {
-		mdiEye,
-		mdiEyeOff,
+		mdiEyeOutline,
+		mdiEyeOffOutline,
 		mdiAlertCircle,
 		mdiAlert,
-		mdiCheckCircle,
+		mdiCheck,
 	} from '@mdi/js'
 	import { ref, computed, watch, nextTick } from 'vue'
 	import { config } from './config'
@@ -63,15 +63,18 @@
 	const options = useCustomizableOptions(config, props)
 	const emit = defineEmits(['update:modelValue', 'submit'])
 
-	const eyeIcon = mdiEye
-	const eyeOffIcon = mdiEyeOff
+	const eyeIcon = mdiEyeOutline
+	const eyeOffIcon = mdiEyeOffOutline
 	const showEyeIcon = ref(false)
 	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
 	const alertMessage = ref('')
+	// Force re-render of SyTextField when needed (e.g., after reset)
+	const fieldKey = ref(0)
 
 	const btnLabel = locales.showPassword
 
 	const password = ref<string | null>(props.modelValue)
+	const isProgrammaticChange = ref(false)
 	watch(
 		() => props.modelValue,
 		(newVal) => {
@@ -130,7 +133,7 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlert
-		if (hasSuccess.value) return mdiCheckCircle
+		if (hasSuccess.value) return mdiCheck
 		return ''
 	})
 
@@ -160,11 +163,14 @@
 		}
 	}, { immediate: true })
 
-	watch(() => password.value, () => {
-		if (props.readonly) return
-		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
-		emit('update:modelValue', password.value)
-	})
+	// Ne pas revalider automatiquement à chaque changement de valeur.
+	// La validation est gérée explicitement au blur et à la soumission.
+	watch(
+		() => password.value,
+		(newVal) => {
+			emit('update:modelValue', newVal)
+		},
+	)
 
 	function togglePasswordVisibility() {
 		showEyeIcon.value = !showEyeIcon.value
@@ -209,8 +215,32 @@
 		return isValid
 	}
 
+	// Nettoie uniquement l'état de validation (messages) sans modifier la valeur
+	const clearValidation = () => {
+		errors.value = []
+		warnings.value = []
+		successes.value = []
+	}
+
+	// Reset hook utilisé par SyForm.reset() via useValidatable
+	const reset = () => {
+		// Réinitialiser d'abord l'état de validation et d'interaction
+		clearValidation()
+		alertMessage.value = ''
+		showEyeIcon.value = false
+
+		// Réinitialiser le contenu du champ
+		isProgrammaticChange.value = true
+		password.value = null
+		emit('update:modelValue', null)
+		isProgrammaticChange.value = false
+
+		// Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
+		fieldKey.value++
+	}
+
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		showEyeIcon,
@@ -221,6 +251,8 @@
 		hasWarning,
 		hasSuccess,
 		validateOnSubmit,
+		clearValidation,
+		reset,
 	})
 </script>
 
@@ -228,6 +260,7 @@
 	<SyTextField
 		v-bind="Object.fromEntries(Object.entries(options).filter(([key]) => key !== 'btn' && key !== 'icon' && key !== 'variant'))"
 		:id="passwordFieldId"
+		:key="fieldKey"
 		v-model="password"
 		:variant-style="props.variantStyle"
 		:color="props.color"
@@ -244,7 +277,6 @@
 		:aria-invalid="hasError"
 		:aria-describedby="`${passwordFieldId}-status${props.customRules && props.customRules.length > 0 ? ' ' + passwordFieldId + '-guidelines' : ''}`"
 		:display-asterisk="props.displayAsterisk"
-		:rules="[...defaultRules, ...props.customRules]"
 		:autocomplete="props.autocompleteType"
 		class="vd-password"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"

@@ -516,6 +516,19 @@
 		}
 	})
 
+	watch(displayFormattedDate, (newValue, oldValue) => {
+		if (
+			props.disabled
+			&& !props.noCalendar
+			&& !props.useCombinedMode
+			&& !newValue
+			&& !!oldValue
+			&& props.modelValue
+		) {
+			syncFromModelValue(props.modelValue)
+		}
+	})
+
 	// Fonction pour mettre à jour displayFormattedDate quand le VDatePicker change
 	const updateDisplayFormattedDate = () => {
 		if (displayFormattedDateComputed.value) {
@@ -592,7 +605,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation)
 
 	const openDatePicker = () => {
 		if (props.disabled || props.readonly) return
