@@ -1,0 +1,179 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproStepper > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="amelipro-stepper"
+  id="modified-unique-id-container"
+>
+  <!-- desktop version -->
+  <div
+    class="amelipro-stepper__headings--desktop"
+    id="modified-unique-id-container"
+  >
+    <ol
+      class="
+        align-end
+        amelipro-stepper__list
+        d-flex
+        flex-row
+        flex-wrap
+        justify-center
+        list-style-none
+      "
+      id="modified-unique-id-step-list"
+      role="tablist"
+    >
+      <li
+        class="amelipro-stepper__item"
+        id="modified-unique-id-step-item-0"
+      >
+        <amelipro-step-btn-stub
+          disabled="false"
+          isactive="false"
+          uniqueid="modified-unique-id-step-btn-0"
+        ></amelipro-step-btn-stub>
+      </li>
+      <li
+        class="amelipro-stepper__item"
+        id="modified-unique-id-step-item-1"
+      >
+        <amelipro-step-btn-stub
+          disabled="false"
+          isactive="true"
+          uniqueid="modified-unique-id-step-btn-1"
+        ></amelipro-step-btn-stub>
+      </li>
+      <li
+        class="amelipro-stepper__item"
+        id="modified-unique-id-step-item-2"
+      >
+        <amelipro-step-btn-stub
+          disabled="false"
+          isactive="false"
+          uniqueid="modified-unique-id-step-btn-2"
+        ></amelipro-step-btn-stub>
+      </li>
+    </ol>
+  </div>
+  <div
+    class="
+      amelipro-stepper__content
+      ap-white
+    "
+    id="modified-unique-id-current-step-content"
+  ></div>
+  <div
+    class="
+      align-center
+      amelipro-stepper__actions
+      d-flex
+      flex-column
+      flex-sm-row
+      justify-sm-space-between
+      mt-4
+    "
+    id="modified-unique-id-footer"
+  >
+    <div class="
+      d-flex
+      d-sm-inline-flex
+      flex-column
+      flex-sm-row
+      next-step-btn__wrapper
+      order-sm-1
+    ">
+      <!-- v-if -->
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          amelipro-stepper__btn--next
+          order-sm-1
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="false"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="false"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-footer-next-btn"
+      ></amelipro-btn-stub>
+      <!-- v-if -->
+    </div>
+    <div class="
+      d-flex
+      flex-column
+      flex-sm-row
+      justify-start
+      w-100
+    ">
+      <div></div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AmeliproStepper > Snapshots > renders the component with only required properties filled in 1`] = `
+<div class="amelipro-stepper">
+  <!-- desktop version -->
+  <div class="amelipro-stepper__headings--desktop">
+    <ol
+      class="
+        align-end
+        amelipro-stepper__list
+        d-flex
+        flex-row
+        flex-wrap
+        list-style-none
+      "
+      role="tablist"
+    ></ol>
+  </div>
+  <div class="
+    amelipro-stepper__content
+    amelipro-stepper__content--default
+    ap-white
+  "></div>
+  <div class="
+    align-center
+    amelipro-stepper__actions
+    d-flex
+    flex-column
+    flex-sm-row
+    justify-sm-end
+    mt-4
+  ">
+    <div class="
+      d-flex
+      d-sm-inline-flex
+      flex-column
+      flex-sm-row
+      next-step-btn__wrapper
+      order-sm-1
+    ">
+      <!-- v-if -->
+      <!-- v-if -->
+      <!-- v-if -->
+    </div>
+    <div class="
+      d-flex
+      flex-column
+      flex-sm-row
+      justify-start
+      w-100
+    ">
+      <div></div>
+    </div>
+  </div>
+</div>
+`;
