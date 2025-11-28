@@ -1,17 +1,51 @@
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { VueWrapper, config, mount, shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import AmeliproSelect from '../AmeliproSelect.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { ExpectedPropOptions } from '@tests/types'
-import { type PropType } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import type { SelectItem } from '../types'
 import TestHelper from '@tests/helpers/TestHelper'
-import { VSelect } from 'vuetify/components'
 import type { ValidateOnType } from '../../types'
 import type { ValidationRule } from '@/utils/rules/types'
 import { isRequired } from '@/utils/rules/isRequired'
 
 vi.mock('@/utils/rules/isRequired', () => ({ isRequired: 'mocked-is-required' }))
+
+const VSelectStub = defineComponent({
+	name: 'VSelect',
+	props: {
+		modelValue: [String, Number, Object],
+		items: Array,
+		placeholder: String,
+		readonly: Boolean,
+		disabled: Boolean,
+		clearable: Boolean,
+		prefix: [String, Number],
+		id: String,
+		ariaRequired: [Boolean, String],
+		ariaInvalid: [Boolean, String],
+		ariaDescribedby: String,
+		hideDetails: [Boolean, String],
+		style: [String, Object],
+		rules: Array,
+		validateOn: String,
+	},
+	emits: ['update:modelValue', 'focus', 'blur'],
+	template: `
+		<div
+			class="v-select-stub"
+			:aria-required="ariaRequired"
+			:style="style"
+		>
+			<slot />
+			<slot name="append" />
+		</div>
+	`,
+})
+
+config.global.stubs = config.global.stubs || {}
+config.global.stubs.VSelect = VSelectStub
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproSelect> = {
 	ariaRequired: {
@@ -160,7 +194,7 @@ testHelper.setExpectedPropOptions(expectedPropOptions)
 
 describe('AmeliproSelect', () => {
 	let vueWrapper: VueWrapper<InstanceType<typeof AmeliproSelect>>
-	const selectWrapper = () => vueWrapper.findComponent(VSelect)
+	const selectWrapper = () => vueWrapper.findComponent(VSelectStub)
 
 	describe('Snapshots', () => {
 		testHelper.snapshots()
@@ -177,7 +211,7 @@ describe('AmeliproSelect', () => {
 					props: modifiedPropValues(),
 					slots: { labelInfo: '<div class="custom-label-info">Custom label info</div>' },
 					global: {
-						stubs: { VSelect },
+						stubs: { VSelect: VSelectStub },
 					},
 				})
 				expect(vueWrapper.find('.custom-label-info').text()).toEqual('Custom label info')
@@ -190,7 +224,7 @@ describe('AmeliproSelect', () => {
 					props: modifiedPropValues(),
 					slots: { append: '<div class="append">Append outer</div>' },
 					global: {
-						stubs: { VSelect },
+						stubs: { VSelect: VSelectStub },
 					},
 				})
 				expect(vueWrapper.find('.append').text()).toEqual('Append outer')
@@ -266,70 +300,75 @@ describe('AmeliproSelect', () => {
 	describe('Setting props should update props or attributes of inner components', () => {
 		describe('VSelect', () => {
 			beforeEach(() => {
-				vueWrapper = shallowMount(AmeliproSelect, { props: requiredPropValues() })
+				vueWrapper = shallowMount(AmeliproSelect, {
+					props: requiredPropValues(),
+					global: {
+						stubs: { VSelect: VSelectStub },
+					},
+				})
 			})
 
 			it('prop uniqueId sets prop uniqueId', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('id')).toBe(testHelper.default('uniqueId'))
+				expect(vueWrapper.findComponent(VSelectStub).props('id')).toBe(testHelper.default('uniqueId'))
 				await vueWrapper.setProps({ uniqueId: testHelper.modified('uniqueId') })
-				expect(vueWrapper.findComponent(VSelect).props('id')).toBe(testHelper.modified('uniqueId'))
+				expect(vueWrapper.findComponent(VSelectStub).props('id')).toBe(testHelper.modified('uniqueId'))
 			})
 
 			it('prop clearable sets prop clearable', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('clearable')).toBe(testHelper.default('clearable'))
+				expect(vueWrapper.findComponent(VSelectStub).props('clearable')).toBe(testHelper.default('clearable'))
 				await vueWrapper.setProps({ clearable: testHelper.modified('clearable') })
-				expect(vueWrapper.findComponent(VSelect).props('clearable')).toBe(testHelper.modified('clearable'))
+				expect(vueWrapper.findComponent(VSelectStub).props('clearable')).toBe(testHelper.modified('clearable'))
 			})
 
 			it('prop disabled sets prop disabled', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('disabled')).toBe(testHelper.default('disabled'))
+				expect(vueWrapper.findComponent(VSelectStub).props('disabled')).toBe(testHelper.default('disabled'))
 				await vueWrapper.setProps({ disabled: testHelper.modified('disabled') })
-				expect(vueWrapper.findComponent(VSelect).props('disabled')).toBe(testHelper.modified('disabled'))
+				expect(vueWrapper.findComponent(VSelectStub).props('disabled')).toBe(testHelper.modified('disabled'))
 			})
 
 			it('prop hideErrorMessage sets prop hideDetails', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('hideDetails')).toBe(testHelper.default('hideErrorMessage'))
+				expect(vueWrapper.findComponent(VSelectStub).props('hideDetails')).toBe(testHelper.default('hideErrorMessage'))
 				await vueWrapper.setProps({ hideErrorMessage: testHelper.modified('hideErrorMessage') })
-				expect(vueWrapper.findComponent(VSelect).props('hideDetails')).toBe(testHelper.modified('hideErrorMessage'))
+				expect(vueWrapper.findComponent(VSelectStub).props('hideDetails')).toBe(testHelper.modified('hideErrorMessage'))
 			})
 
 			it('prop items sets prop items', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('items')).toEqual(testHelper.default('items'))
+				expect(vueWrapper.findComponent(VSelectStub).props('items')).toEqual(testHelper.default('items'))
 				await vueWrapper.setProps({ items: testHelper.modified('items') })
-				expect(vueWrapper.findComponent(VSelect).props('items')).toEqual(testHelper.modified('items'))
+				expect(vueWrapper.findComponent(VSelectStub).props('items')).toEqual(testHelper.modified('items'))
 			})
 
 			it('prop placeholder sets prop placeholder', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('placeholder')).toBe(testHelper.default('placeholder'))
+				expect(vueWrapper.findComponent(VSelectStub).props('placeholder')).toBe(testHelper.default('placeholder'))
 				await vueWrapper.setProps({ placeholder: testHelper.modified('placeholder') })
-				expect(vueWrapper.findComponent(VSelect).props('placeholder')).toBe(testHelper.modified('placeholder'))
+				expect(vueWrapper.findComponent(VSelectStub).props('placeholder')).toBe(testHelper.modified('placeholder'))
 			})
 
 			it('prop readonly sets prop readonly', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('readonly')).toBe(testHelper.default('readonly'))
+				expect(vueWrapper.findComponent(VSelectStub).props('readonly')).toBe(testHelper.default('readonly'))
 				await vueWrapper.setProps({ readonly: testHelper.modified('readonly') })
-				expect(vueWrapper.findComponent(VSelect).props('readonly')).toBe(testHelper.modified('readonly'))
+				expect(vueWrapper.findComponent(VSelectStub).props('readonly')).toBe(testHelper.modified('readonly'))
 			})
 
 			it('prop ariaRequired sets attribute aria-required', async () => {
-				expect(vueWrapper.findComponent(VSelect).attributes('aria-required')).toBe('false')
+				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('false')
 				await vueWrapper.setProps({ ariaRequired: testHelper.modified('ariaRequired') })
-				expect(vueWrapper.findComponent(VSelect).attributes('aria-required')).toBe('true')
+				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('true')
 			})
 
 			it('props inputMinWidth & inputMaxWidth set attribute style', async () => {
-				expect(vueWrapper.findComponent(VSelect).attributes('style')).toBeUndefined()
+				expect(vueWrapper.findComponent(VSelectStub).attributes('style')).toBeUndefined()
 				await vueWrapper.setProps({
 					inputMinWidth: testHelper.modified('inputMinWidth'),
 					inputMaxWidth: testHelper.modified('inputMaxWidth'),
 				})
-				expect(vueWrapper.findComponent(VSelect).attributes('style')).toBe(`max-width: ${testHelper.modified('inputMaxWidth')}; min-width: ${testHelper.modified('inputMinWidth')};`)
+				expect(vueWrapper.findComponent(VSelectStub).attributes('style')).toBe(`max-width: ${testHelper.modified('inputMaxWidth')}; min-width: ${testHelper.modified('inputMinWidth')};`)
 			})
 
 			it('props ariaRequired & rules set prop rules', async () => {
-				expect(vueWrapper.findComponent(VSelect).props('rules')).toEqual([])
+				expect(vueWrapper.findComponent(VSelectStub).props('rules')).toEqual([])
 				await vueWrapper.setProps({ ariaRequired: testHelper.modified('ariaRequired') })
-				expect(vueWrapper.findComponent(VSelect).props('rules')).toEqual(['mocked-is-required'])
+				expect(vueWrapper.findComponent(VSelectStub).props('rules')).toEqual(['mocked-is-required'])
 			})
 		})
 	})
