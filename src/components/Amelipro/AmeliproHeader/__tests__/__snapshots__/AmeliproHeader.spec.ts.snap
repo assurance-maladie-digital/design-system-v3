@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproHeader > Snapshots > renders the component with all properties filled in 1`] = `
+<amelipro-header-bar-stub
+  homehref="/amelipro-header-infos/home-href"
+  homelink="/amelipro-header-infos/home-link"
+  innerwidth="100%"
+  servicesubtitle="Modified service sub title"
+  servicetitle="Amelipro header infos header title"
+  style="z-index: 1;"
+  themeamelipro="false"
+  uniqueid="modified-unique-id"
+></amelipro-header-bar-stub>
+`;
+
+exports[`AmeliproHeader > Snapshots > renders the component with only required properties filled in 1`] = `
+<amelipro-header-bar-stub
+  innerwidth="100%"
+  style="z-index: 1;"
+  themeamelipro="true"
+></amelipro-header-bar-stub>
+`;

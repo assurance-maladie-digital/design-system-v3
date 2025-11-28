@@ -37,7 +37,10 @@ exports[`AmeliproCopyBtn > render correctly 1`] = `
       data-no-activator=""
     >
       <span
-        class="d-sr-only"
+        class="
+          amelipro-btn__label
+          d-sr-only
+        "
         id="my-btn-id-copy-btn-btn-label"
       >
         Copier le texte
