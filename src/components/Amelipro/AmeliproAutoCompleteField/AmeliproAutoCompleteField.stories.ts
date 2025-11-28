@@ -4,7 +4,7 @@ import AmeliproAutoCompleteField from './AmeliproAutoCompleteField.vue'
 
 const meta = {
 	argTypes: {
-		'ariaRequired': { description: 'Défini le champ comme étant obligatoire' },
+		'required': { description: 'Défini le champ comme étant obligatoire' },
 		'classes': { description: 'Permet d’ajouter des classes au wrapper du composant' },
 		'disabled': { description: 'Défini le champ comme désactivé' },
 		'globalMaxWidth': { description: 'Gère la largeur maximale du composant, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
@@ -491,20 +491,20 @@ export const Required: Story = {
 		items,
 		label: 'Champ obligatoire',
 		uniqueId: 'amelipro-auto-complete-field-required',
-		ariaRequired: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<p>Le champ est obligatoire grâce à la prop <code>required</code>.</p>
 	<AmeliproAutoCompleteField
 		v-model="model"
 		:items="items"
 		unique-id="amelipro-auto-complete-field-required"
 		label="Champ obligatoire"
-		aria-required
+		required
 	/>
 </template>`,
 			},
@@ -530,7 +530,7 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+		template: `<p>Le champ est obligatoire grâce à la prop <code>required</code>.</p>
 <AmeliproAutoCompleteField
 	v-bind="args"
 	v-model="model"

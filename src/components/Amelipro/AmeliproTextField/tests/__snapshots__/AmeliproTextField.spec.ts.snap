@@ -118,7 +118,6 @@ exports[`AmeliproTextField > render correctly 1`] = `
             <!---->
             <!---->
             <input
-              aria-required="false"
               class="v-field__input"
               id="my-textfield-id"
               size="1"

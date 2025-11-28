@@ -34,8 +34,8 @@ exports[`AmeliproRadioGroup > render correctly 1`] = `
     </div>
     <div
       aria-labelledby="my-radio-group-id"
-      aria-required="false"
       class="radio-group__wrapper"
+      required="false"
       role="radiogroup"
     >
       <ul

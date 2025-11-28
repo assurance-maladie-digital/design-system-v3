@@ -137,10 +137,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <!---->
             <!---->
             <input
-              aria-required="true"
               autocomplete="address-line1"
               class="v-field__input"
               id="the-groupId-address"
+              required=""
               size="1"
               type="text"
               value="the-address"
@@ -287,10 +287,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 <!---->
                 <!---->
                 <input
-                  aria-required="true"
                   autocomplete="postal-code"
                   class="v-field__input"
                   id="the-groupId-postal-code"
+                  required=""
                   size="1"
                   type="text"
                   value="the-postalCode"
@@ -420,10 +420,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 <!---->
                 <!---->
                 <input
-                  aria-required="true"
                   autocomplete="address-level2"
                   class="v-field__input"
                   id="the-groupId-city"
+                  required=""
                   size="1"
                   type="text"
                   value="the-city"

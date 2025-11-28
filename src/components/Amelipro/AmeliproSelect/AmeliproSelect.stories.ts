@@ -2,11 +2,13 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
 import AmeliproSelect from './AmeliproSelect.vue'
 import type { SelectItem } from './types'
+// --- LabelInfo ---
+import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta = {
 	argTypes: {
 		'append': { description: 'Slot permettant d’ajouter des éléments à la suite du champs (à droite)' },
-		'ariaRequired': { description: 'Passe le select en required' },
+		'required': { description: 'Passe le select en required' },
 		'classes': { description: 'classes css à ajouter au container du composant' },
 		'clearable': { description: 'Rends le select "clearable"' },
 		'disabled': { description: 'Desactive le select' },
@@ -219,20 +221,20 @@ export const Required: Story = {
 		items,
 		label: 'Select obligatoire',
 		uniqueId: 'amelipro-select-required',
-		ariaRequired: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-  <p>Le select est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+  <p>Le select est obligatoire grâce à la prop <code>required</code>.</p>
   <AmeliproSelect
     v-model="model"
     :items="items"
     label="Select obligatoire"
     unique-id="amelipro-select-required"
-    aria-required
+    required
   />
 </template>`,
 			},
@@ -262,7 +264,7 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p class="mb-2">Le select est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+		template: `<p class="mb-2">Le select est obligatoire grâce à la prop <code>required</code>.</p>
 <AmeliproSelect v-bind="args" v-model="model" />`,
 	}),
 }
@@ -483,8 +485,6 @@ export const Horizontal: Story = {
 	}),
 }
 
-// --- LabelInfo ---
-import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 export const LabelInfo: Story = {
 	args: {
 		items,

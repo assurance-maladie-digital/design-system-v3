@@ -37,11 +37,11 @@ exports[`AmeliproIllustratedRadioGroup > Snapshots > renders the component with 
     </div>
     <div
       aria-labelledby="modified-unique-id"
-      aria-required="true"
       class="
         amelipro-illustrated-radio-group__group
         mt-2
       "
+      required="true"
       role="radiogroup"
     >
       <ul
@@ -302,11 +302,11 @@ exports[`AmeliproIllustratedRadioGroup > Snapshots > renders the component with 
     </div>
     <div
       aria-labelledby="required-unique-id"
-      aria-required="false"
       class="
         amelipro-illustrated-radio-group__group
         mt-2
       "
+      required="false"
       role="radiogroup"
     >
       <ul
