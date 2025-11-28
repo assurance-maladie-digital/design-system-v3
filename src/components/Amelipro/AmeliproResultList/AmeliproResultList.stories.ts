@@ -289,7 +289,7 @@ export const PaginationEtTri: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-  <p>Pagination et tri sont activés grâce aux props  <code>itemsToDisplayDesktop</code>, <code>itemsToDisplayMobile</code> et <code>sortSelectItems</code>. Le tri est effectif grâce à la gestion de l’événement <code>change:sort-select</code>.</p>
+  <p>Pagination et tri sont activés grâce aux props <code>itemsToDisplayDesktop</code>, <code>itemsToDisplayMobile</code> et <code>sortSelectItems</code>. Le tri est effectif grâce à la gestion de l’événement <code>change:sort-select</code>.</p>
   <AmeliproResultList
     :items="sortedItems"
     unique-id="amelipro-result-list-pagination"
