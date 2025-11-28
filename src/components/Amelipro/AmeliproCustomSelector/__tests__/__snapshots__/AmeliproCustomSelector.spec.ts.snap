@@ -149,15 +149,17 @@ exports[`AmeliproCustomSelector > Snapshots > renders the component with only re
   class="amelipro-custom-selector"
   id="required-unique-id-container"
 >
-  <div class="
-    align-center
-    amelipro-custom-selector__label-wrapper
-    d-flex
-  ">
+  <div
+    class="
+      align-center
+      amelipro-custom-selector__label-wrapper
+      d-flex
+    "
+    style="margin-bottom: 4px;"
+  >
     <p
       class="
         amelipro-custom-selector__label
-        mb-1
         text-ap-grey-darken-1
       "
       id="required-unique-id"

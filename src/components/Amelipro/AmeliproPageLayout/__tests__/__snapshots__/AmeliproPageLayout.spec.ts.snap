@@ -1,0 +1,189 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproPageLayout > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-page-layout
+    bg-ap-grey-lighten-6
+    d-flex
+    flex-column
+    w-100
+  "
+  id="modified-unique-id-container"
+>
+  <div
+    class="
+      body-content
+      d-flex
+      flex-column
+      w-100
+    "
+    id="modified-unique-id-content"
+  >
+    <nav
+      aria-label="liens d'évitement"
+      class="skip-link__nav"
+      id="modified-unique-id-focus-navigation"
+    >
+      <ul
+        class="
+          list-style-none
+          skip-link__list
+        "
+        id="modified-unique-id-focus-navigation-list"
+      >
+        <li
+          class="skip-link__item"
+          id="modified-unique-id-focus-navigation-item-main"
+        >
+          <a
+            class="
+              d-sr-only-focusable
+              pa-2
+              skip-link
+            "
+            href="#main-content"
+            id="modified-unique-id-focus-navigation-main-link"
+          >Contenu principal</a>
+        </li>
+        <li
+          class="skip-link__item"
+          id="modified-unique-id-focus-navigation-item-0"
+        >
+          <a
+            class="
+              d-sr-only-focusable
+              pa-2
+              skip-link
+            "
+            href="#modified"
+            id="modified-unique-id-focus-navigation-link-0"
+          >Modified skip link</a>
+        </li>
+      </ul>
+    </nav>
+    <div id="modified-unique-id-header-wrapper">
+      <amelipro-header-stub
+        ameliproheaderinfos="[object Object]"
+        backbtnlabel="Retour"
+        backoffice="true"
+        headertitle="Modified header title"
+        norightpart="false"
+        nosubpart="false"
+        servicename="Modified service name"
+        submenu="false"
+        submenuitems=""
+        uniqueid="modified-unique-id-header"
+        unlogged="false"
+      ></amelipro-header-stub>
+    </div>
+    <main
+      class="amelipro-main"
+      id="modified-unique-id-main"
+      role="main"
+      style="min-height: 1px;"
+    >
+      <div id="modified-unique-id-patient-banner-wrapper">
+        <amelipro-patient-banner-stub
+          birthdate="01/01/1980"
+          birthname="Patient Birth Name"
+          name="Patient Name"
+          nomoreinformation="true"
+          nopatientchange="true"
+          patientnir="1234567890123"
+          patientorganism="Organism"
+          patientstatus="Status"
+          patientsystem="System"
+          uniqueid="modified-unique-id-patient-banner"
+        ></amelipro-patient-banner-stub>
+      </div>
+      <div
+        class="
+          main-content__content
+          mx-auto
+        "
+        id="modified-unique-id-main-content"
+      ></div>
+    </main>
+    <div class="mt-auto">
+      <div id="modified-unique-id-footer-wrapper">
+        <amelipro-footer-stub
+          a11ycompliance="conforme"
+          backoffice="false"
+          configurationlabel="Configuration"
+          noa11y="false"
+          noabout="false"
+          nocgu="false"
+          noconfiguration="false"
+          nolegalnotice="false"
+          nolinka11y="false"
+          nophone="false"
+          nositemap="false"
+          phonelink="true"
+          uniqueid="modified-unique-id-footer"
+          version="1.2.3"
+        ></amelipro-footer-stub>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AmeliproPageLayout > Snapshots > renders the component with only required properties filled in 1`] = `
+<div class="
+  amelipro-page-layout
+  bg-ap-grey-lighten-6
+  d-flex
+  flex-column
+  w-100
+">
+  <div class="
+    body-content
+    d-flex
+    flex-column
+    w-100
+  ">
+    <nav
+      aria-label="liens d'évitement"
+      class="skip-link__nav"
+    >
+      <ul class="
+        list-style-none
+        skip-link__list
+      ">
+        <li class="skip-link__item">
+          <a
+            class="
+              d-sr-only-focusable
+              pa-2
+              skip-link
+            "
+            href="#main-content"
+          >Contenu principal</a>
+        </li>
+      </ul>
+    </nav>
+    <!-- v-if -->
+    <main
+      class="amelipro-main"
+      role="main"
+      style="min-height: 1px;"
+    >
+      <!-- v-if -->
+      <div
+        class="
+          main-content__content
+          mx-auto
+        "
+        style="
+          max-width: 100%;
+          padding: 30px 10px;
+        "
+      ></div>
+    </main>
+    <div class="mt-auto">
+      <!-- v-if -->
+    </div>
+  </div>
+</div>
+`;

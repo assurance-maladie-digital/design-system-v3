@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	/* eslint-disable vuejs-accessibility/label-has-for */
+/* eslint-disable vuejs-accessibility/label-has-for */
 	import type { IndexedObject, ValidateOnType } from '../types'
 	import type { InputSelect, SelectItem } from './types'
-	import { type PropType, computed, onMounted, onUnmounted, ref } from 'vue'
+	import { computed, onMounted, onUnmounted, type PropType, ref } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { ValidationRule } from '@/utils/rules/types'
 	import { convertToHex } from '@/utils/functions/convertToHex'
@@ -243,7 +243,7 @@
 			:class="selectClasses"
 		>
 			<div
-				class="d-inline-flex align-start"
+				class="d-inline-flex align-baseline mb-1"
 				:class="labelClasses"
 			>
 				<label
@@ -265,7 +265,10 @@
 					</span>
 				</label>
 
-				<slot name="labelInfo" />
+				<slot
+					class="mb-1"
+					name="labelInfo"
+				/>
 			</div>
 
 			<VSelect
@@ -345,6 +348,10 @@
 		--v-field-border-opacity: 1 !important;
 	}
 
+	& :deep(.v-field__input > input) {
+		align-self: unset;
+	}
+
 	& :deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
 		--v-field-border-width: 1px !important;
 	}
@@ -360,7 +367,6 @@
 }
 
 .amelipro-select__label {
-	margin-bottom: 4px;
 	font-size: apTokens.$font-size-xs;
 	font-weight: apTokens.$label-font-weight;
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, onUpdated, ref } from 'vue'
+	import { computed, onUpdated, type PropType, ref } from 'vue'
 	import type { AmeliproCustomSelectorItem } from './types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { IndexedObject } from '../types'
@@ -123,7 +123,7 @@
 		return false
 	})
 
-	const labelMarginBottomValue = computed<IndexedObject | undefined>(() => (props.labelMarginBottom ? { marginBottom: props.labelMarginBottom } : undefined))
+	const labelMarginBottomValue = computed<IndexedObject | undefined>(() => (props.labelMarginBottom ? { marginBottom: props.labelMarginBottom } : { marginBottom: '4px' }))
 
 	onUpdated(() => {
 		isAlreadyCheckedOnce.value = true
@@ -145,7 +145,7 @@
 			<p
 				:id="uniqueId"
 				:aria-describedby="labelDescription"
-				class="mb-1 text-ap-grey-darken-1 amelipro-custom-selector__label"
+				class="text-ap-grey-darken-1 amelipro-custom-selector__label"
 			>
 				{{ groupLabel }}
 

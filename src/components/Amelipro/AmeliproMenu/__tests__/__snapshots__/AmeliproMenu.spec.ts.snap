@@ -1,0 +1,295 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproMenu > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-menu
+    d-flex
+    justify-center
+  "
+  id="modified-unique-id-container"
+>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="Menu du service"
+    class="amelipro-menu__btn--open"
+    icon="menuSquare"
+    iconbgcolor="transparent"
+    iconcolor="ap-white"
+    iconhoverbgcolor="transparent"
+    iconhovercolor="ap-grey-lighten-5"
+    large="true"
+    medium="false"
+    small="false"
+    uniqueid="modified-unique-id-open-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <div
+    aria-label="Menu du service"
+    aria-modal="true"
+    color="ap-blue-darken-2"
+    hide-overlay=""
+    id="modified-unique-id-drawer"
+    model-value="false"
+    role="dialog"
+    temporary=""
+    width="300"
+  >
+    <div
+      class="
+        align-center
+        amelipro-menu__container
+        d-flex
+        justify-space-between
+      "
+      id="modified-unique-id-drawer-content"
+    >
+      <h2
+        class="
+          amelipro-menu__title
+          mb-0
+          pa-1
+          text-ap-white
+          text-uppercase
+        "
+        id="modified-unique-id-drawer-title"
+      >
+        Modified menu header
+      </h2>
+      <amelipro-icon-btn-stub
+        badge="false"
+        bordered="false"
+        btnlabel="Fermer le menu"
+        class="menu-btn-close"
+        iconbgcolor="transparent"
+        iconcolor="ap-white"
+        iconhoverbgcolor="transparent"
+        iconhovercolor="ap-white"
+        large="false"
+        medium="false"
+        small="false"
+        uniqueid="modified-unique-id-close-menu-btn"
+        xlarge="false"
+      ></amelipro-icon-btn-stub>
+    </div>
+    <v-divider-stub
+      class="my-2"
+      color="ap-white"
+      inset="false"
+      style="opacity: 1 !important;"
+      thickness="1px"
+      vertical="false"
+    ></v-divider-stub>
+    <ul
+      class="
+        amelipro-menu__list
+        list-style-none
+      "
+      id="modified-unique-id-list"
+    >
+      <li class="amelipro-menu__item">
+        <div>
+          <amelipro-btn-stub
+            aria-controls="modified-unique-id-niveau-2-0"
+            aria-expanded="false"
+            badge="false"
+            badgebgcolor="ap-pink"
+            badgecolor="ap-white"
+            bordered="false"
+            classes="d-flex justify-space-between w-100 menu-btn"
+            color="ap-blue-darken-2"
+            disabled="false"
+            elevation="0"
+            hovercolor="ap-blue-lighten-3"
+            hoverunderline="false"
+            iconbgcolor="transparent"
+            iconbordered="false"
+            iconfocuscolor="ap-blue-darken-2"
+            iconhovercolor="ap-blue-darken-2"
+            iconleft="false"
+            infoblock="false"
+            minheight="2.5rem"
+            size="60px"
+            text="false"
+            textcolor="ap-white"
+            textfocuscolor="ap-blue-darken-2"
+            texthovercolor="ap-blue-darken-2"
+            tile=""
+            type="button"
+            underline="false"
+            uniqueid="menu-btn__modified-menu-1"
+          ></amelipro-btn-stub>
+          <!-- v-if -->
+        </div>
+      </li>
+    </ul>
+    <v-divider-stub
+      class="my-2"
+      color="ap-white"
+      inset="false"
+      style="opacity: 1 !important;"
+      thickness="1px"
+      vertical="false"
+    ></v-divider-stub>
+    <div>
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        classes="w-100 pa-0 home-menu-btn"
+        color="ap-blue-darken-2"
+        disabled="false"
+        elevation="0"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="false"
+        href="modified-home-href"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="false"
+        textcolor="ap-white"
+        textfocuscolor="ap-blue-darken-2"
+        texthovercolor="ap-blue-darken-2"
+        tile=""
+        to="modified-home-to"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-return-home-menu-btn"
+      ></amelipro-btn-stub>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AmeliproMenu > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-menu
+    d-flex
+    justify-center
+  "
+  id="required-unique-id-container"
+>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="Menu du service"
+    class="amelipro-menu__btn--open"
+    icon="menuSquare"
+    iconbgcolor="transparent"
+    iconcolor="ap-white"
+    iconhoverbgcolor="transparent"
+    iconhovercolor="ap-grey-lighten-5"
+    large="true"
+    medium="false"
+    small="false"
+    uniqueid="required-unique-id-open-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <div
+    aria-label="Menu du service"
+    aria-modal="true"
+    color="ap-blue-darken-2"
+    hide-overlay=""
+    id="required-unique-id-drawer"
+    model-value="false"
+    role="dialog"
+    temporary=""
+    width="300"
+  >
+    <div
+      class="
+        align-center
+        amelipro-menu__container
+        d-flex
+        justify-space-between
+      "
+      id="required-unique-id-drawer-content"
+    >
+      <h2
+        class="
+          amelipro-menu__title
+          mb-0
+          pa-1
+          text-ap-white
+          text-uppercase
+        "
+        id="required-unique-id-drawer-title"
+      >
+        Titre du service
+      </h2>
+      <amelipro-icon-btn-stub
+        badge="false"
+        bordered="false"
+        btnlabel="Fermer le menu"
+        class="menu-btn-close"
+        iconbgcolor="transparent"
+        iconcolor="ap-white"
+        iconhoverbgcolor="transparent"
+        iconhovercolor="ap-white"
+        large="false"
+        medium="false"
+        small="false"
+        uniqueid="required-unique-id-close-menu-btn"
+        xlarge="false"
+      ></amelipro-icon-btn-stub>
+    </div>
+    <v-divider-stub
+      class="my-2"
+      color="ap-white"
+      inset="false"
+      style="opacity: 1 !important;"
+      thickness="1px"
+      vertical="false"
+    ></v-divider-stub>
+    <ul
+      class="
+        amelipro-menu__list
+        list-style-none
+      "
+      id="required-unique-id-list"
+    ></ul>
+    <v-divider-stub
+      class="my-2"
+      color="ap-white"
+      inset="false"
+      style="opacity: 1 !important;"
+      thickness="1px"
+      vertical="false"
+    ></v-divider-stub>
+    <div>
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        classes="w-100 pa-0 home-menu-btn"
+        color="ap-blue-darken-2"
+        disabled="false"
+        elevation="0"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="false"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="false"
+        textcolor="ap-white"
+        textfocuscolor="ap-blue-darken-2"
+        texthovercolor="ap-blue-darken-2"
+        tile=""
+        type="button"
+        underline="false"
+        uniqueid="required-unique-id-return-home-menu-btn"
+      ></amelipro-btn-stub>
+    </div>
+  </div>
+</div>
+`;
