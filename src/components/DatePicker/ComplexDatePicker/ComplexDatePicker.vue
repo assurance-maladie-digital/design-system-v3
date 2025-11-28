@@ -625,6 +625,15 @@
 			queueMicrotask(() => {
 				preventCloseOnInternalUpdate.value = false
 			})
+			// Synchroniser le mois et l'année visibles lorsque l'on franchit une limite de mois
+			const newMonth = String(date.getMonth())
+			const newYear = String(date.getFullYear())
+			if (currentMonth.value !== newMonth) {
+				onUpdateMonth(newMonth)
+			}
+			if (currentYear.value !== newYear) {
+				onUpdateYear(newYear)
+			}
 		},
 	})
 

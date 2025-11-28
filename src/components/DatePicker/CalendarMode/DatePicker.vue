@@ -228,6 +228,7 @@
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
+	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
 	const currentRangeIsValid = ref(true)
 	const getRangeValidationError = ref('')
@@ -313,8 +314,10 @@
 		try {
 			isUpdatingFromInternal.value = true
 			emit('update:modelValue', value)
-			isDatePickerVisible.value = false
-			emit('closed')
+			if (!preventCloseOnKeyboardNavigation.value) {
+				isDatePickerVisible.value = false
+				emit('closed')
+			}
 			validateDates()
 		}
 		finally {
@@ -618,7 +621,11 @@
 			return value
 		},
 		setCurrentDate: (date: Date) => {
+			preventCloseOnKeyboardNavigation.value = true
 			updateSelectedDates([date])
+			queueMicrotask(() => {
+				preventCloseOnKeyboardNavigation.value = false
+			})
 		},
 	})
 
