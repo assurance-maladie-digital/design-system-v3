@@ -871,7 +871,7 @@
 		}
 	})
 
-	watch(() => props.modelValue, (nv: DateValue) => {
+	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
 		if (!nv) {
 			inputValue.value = ''
