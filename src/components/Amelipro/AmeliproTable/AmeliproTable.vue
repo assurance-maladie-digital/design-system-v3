@@ -248,9 +248,9 @@
 			v-if="mdAndUp || hasHeaderSorting"
 			:id="`${uniqueId}-desktop`"
 			style="overflow-x: auto;"
+			class="amelipro-table__wrapper--desktop"
 		>
 			<div
-				class="amelipro-table__wrapper--desktop"
 				:style="tableWidthStyles"
 			>
 				<table
@@ -418,7 +418,7 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
 
-.amelipro-table__wrapper--desktop,
+.amelipro-table__wrapper--desktop > div,
 .amelipro-table__wrapper--mobile > div {
 	border: 1px solid apTokens.$ap-grey;
 	border-radius: 8px;
