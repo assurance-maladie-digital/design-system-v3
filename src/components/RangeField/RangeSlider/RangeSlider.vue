@@ -33,8 +33,8 @@
 			'step': 1,
 			'minLabel': 'Minimum',
 			'maxLabel': 'Maximum',
-			'thumb-color': cnamColorsTokens.blue.darken80,
-			'track-color': cnamColorsTokens.blue.lighten40,
+			'thumb-color': cnamColorsTokens.blue.base,
+			'track-color': cnamColorsTokens.blue.lighten60,
 			'track-fill-color': cnamColorsTokens.blue.lighten20,
 		},
 	)
@@ -297,6 +297,7 @@ $virtual-thumb-size: 40px;
 	height: $virtual-thumb-size;
 	transition: left 0.1s;
 	will-change: left;
+	font-weight: bold;
 
 	&::before {
 		content: '';
@@ -359,7 +360,7 @@ $virtual-thumb-size: 40px;
 	transform: translate(-50%, -50%);
 	width: var(--sy-thumb-size);
 	height: var(--sy-thumb-size);
-	background-color: var(--sy-thumb-color);
+	background-color: rgba(var(--v-theme-primary));
 	border-radius: 50%;
 	box-shadow: 0 1px 5px 0 #0000001f, 0 2px 2px 0 #00000024, 0 3px 1px -2px #0003;
 }
