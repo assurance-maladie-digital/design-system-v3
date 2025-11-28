@@ -11,7 +11,6 @@ const meta = {
 		'defaultSlide': { description: 'numéro de la slide affichée par défaut' },
 		'duration': { description: 'Durée de transition entre les slides du carrousel en secondes' },
 		'fillSlideOrientation': { description: 'Définit dans quel sens doivent être remplies les slide prend les valeur `left` ou `right`' },
-		'infiniteRotation': { description: 'Booléen permettant de faire boucler les slides du carrousel' },
 		'item': { description: 'Slots générés automatiquement pour chaque item, afin de donner le même aspect à tous les items' },
 		'items': {
 			description: 'Tableau comprenant la liste des blocs dépliants à afficher dans le carrousel',
@@ -239,16 +238,17 @@ export const Default: Story = {
 				`amelipro-accordion-frieze-id-slot-slide-${index}-item-${item.uniqueId}`,
 			)
 
-			return { items, slotNames }
+			return { slotNames, args }
 		},
 		template: `
           <AmeliproAccordionFrieze
-              :items="items"
+              v-bind="args"
+              :items="args.items"
               title="Titre du carrousel"
               unique-id="amelipro-accordion-frieze-id"
           >
             <template
-                v-for="(item, index) in items"
+                v-for="(item, index) in args.items"
                 :key="item.uniqueId"
                 v-slot:[slotNames[index]]
             >
