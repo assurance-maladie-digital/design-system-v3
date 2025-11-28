@@ -233,11 +233,14 @@ export function useFieldValidation() {
 				}
 
 				case 'notBeforeDate': {
-					if (!options.date) {
+					if (typeof options.date === 'undefined') {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -266,11 +269,14 @@ export function useFieldValidation() {
 				}
 
 				case 'notAfterDate': {
-					if (!options.date) {
+					if (typeof options.date === 'undefined') {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -299,11 +305,14 @@ export function useFieldValidation() {
 				}
 
 				case 'dateExact': {
-					if (!options.date) {
+					if (typeof options.date === 'undefined') {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
 						return {}
 					}
 					const dateValue = parseDate(value)
