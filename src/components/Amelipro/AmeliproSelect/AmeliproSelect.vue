@@ -348,7 +348,11 @@
 		--v-field-border-opacity: 1 !important;
 	}
 
-	& :deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
+  & :deep(.v-field__input > input) {
+    align-self: unset;
+  }
+
+  & :deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
 		--v-field-border-width: 1px !important;
 	}
 }
