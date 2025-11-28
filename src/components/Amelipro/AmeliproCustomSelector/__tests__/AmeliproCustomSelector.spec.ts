@@ -127,7 +127,7 @@ describe('AmeliproCustomSelector', () => {
 		})
 
 		it('prop labelMarginBottom sets style on label wrapper', async () => {
-			expect(wrapper.find('.amelipro-custom-selector__label-wrapper').attributes('style')).toBeUndefined()
+			expect(wrapper.find('.amelipro-custom-selector__label-wrapper').attributes('style')).toBe(`margin-bottom: 4px;`)
 
 			const { labelMarginBottom } = modifiedPropValues()
 			await wrapper.setProps({ labelMarginBottom })

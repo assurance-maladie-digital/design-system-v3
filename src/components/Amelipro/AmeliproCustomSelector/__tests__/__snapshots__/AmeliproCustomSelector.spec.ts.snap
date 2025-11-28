@@ -19,7 +19,6 @@ exports[`AmeliproCustomSelector > Snapshots > renders the component with all pro
       aria-describedby="Modified label description"
       class="
         amelipro-custom-selector__label
-        mb-1
         text-ap-grey-darken-1
       "
       id="modified-unique-id"
