@@ -18,8 +18,9 @@ exports[`AmeliproSelect > Snapshots > renders the component with all properties 
     w-100
   ">
     <div class="
-      align-start
+      align-baseline
       d-inline-flex
+      mb-1
       mr-md-2
       mt-md-2
     ">
@@ -133,8 +134,9 @@ exports[`AmeliproSelect > Snapshots > renders the component with only required p
     w-100
   ">
     <div class="
-      align-start
+      align-baseline
       d-inline-flex
+      mb-1
     ">
       <label
         class="

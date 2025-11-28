@@ -234,11 +234,13 @@ describe('AmeliproSelect', () => {
 
 		describe('label wrapper', () => {
 			it('prop horizontal sets attribute class', async () => {
-				expect(vueWrapper.find('.d-inline-flex.align-start').attributes('class')).toBe('d-inline-flex align-start')
+				expect(vueWrapper.find('.amelipro-select__wrapper > div').classes()).not.toContain('mt-md-2')
+				expect(vueWrapper.find('.amelipro-select__wrapper > div').classes()).not.toContain('mr-md-2')
 
 				const { horizontal } = modifiedPropValues()
 				await vueWrapper.setProps({ horizontal })
-				expect(vueWrapper.find('.d-inline-flex.align-start').attributes('class')).toBe('d-inline-flex align-start mt-md-2 mr-md-2')
+				expect(vueWrapper.find('.amelipro-select__wrapper > div').classes()).toContain('mt-md-2')
+				expect(vueWrapper.find('.amelipro-select__wrapper > div').classes()).toContain('mr-md-2')
 			})
 		})
 
