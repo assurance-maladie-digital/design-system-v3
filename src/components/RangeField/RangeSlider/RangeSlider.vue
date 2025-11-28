@@ -360,7 +360,7 @@ $virtual-thumb-size: 40px;
 	transform: translate(-50%, -50%);
 	width: var(--sy-thumb-size);
 	height: var(--sy-thumb-size);
-	background-color: rgba(var(--v-theme-primary));
+	background-color: var(--sy-thumb-color);
 	border-radius: 50%;
 	box-shadow: 0 1px 5px 0 #0000001f, 0 2px 2px 0 #00000024, 0 3px 1px -2px #0003;
 }
