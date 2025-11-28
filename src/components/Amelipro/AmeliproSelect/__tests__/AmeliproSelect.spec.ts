@@ -15,21 +15,66 @@ vi.mock('@/utils/rules/isRequired', () => ({ isRequired: 'mocked-is-required' })
 const VSelectStub = defineComponent({
 	name: 'VSelect',
 	props: {
-		modelValue: [String, Number, Object],
-		items: Array,
-		placeholder: String,
-		readonly: Boolean,
-		disabled: Boolean,
-		clearable: Boolean,
-		prefix: [String, Number],
-		id: String,
-		ariaRequired: [Boolean, String],
-		ariaInvalid: [Boolean, String],
-		ariaDescribedby: String,
-		hideDetails: [Boolean, String],
-		style: [String, Object],
-		rules: Array,
-		validateOn: String,
+		modelValue: {
+			type: [String, Number, Object],
+			default: undefined,
+		},
+		items: {
+			type: Array,
+			default: () => [],
+		},
+		placeholder: {
+			type: String,
+			default: undefined,
+		},
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		clearable: {
+			type: Boolean,
+			default: false,
+		},
+		prefix: {
+			type: [String, Number],
+			default: undefined,
+		},
+		id: {
+			type: String,
+			default: undefined,
+		},
+		ariaRequired: {
+			type: [Boolean, String],
+			default: false,
+		},
+		ariaInvalid: {
+			type: [Boolean, String],
+			default: false,
+		},
+		ariaDescribedby: {
+			type: String,
+			default: undefined,
+		},
+		hideDetails: {
+			type: [Boolean, String],
+			default: false,
+		},
+		style: {
+			type: [String, Object],
+			default: undefined,
+		},
+		rules: {
+			type: Array,
+			default: () => [],
+		},
+		validateOn: {
+			type: String,
+			default: undefined,
+		},
 	},
 	emits: ['update:modelValue', 'focus', 'blur'],
 	template: `
