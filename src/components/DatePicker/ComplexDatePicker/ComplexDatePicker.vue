@@ -982,6 +982,11 @@
 		hasInteracted.value = false
 		isManualInputActive.value = false
 
+		if (props.disabled) {
+			fieldKey.value++
+			return
+		}
+
 		// 2) Réinitialiser la valeur et la sélection SANS déclencher
 		// de validation "required" interactive
 		withInternalUpdate(() => {
