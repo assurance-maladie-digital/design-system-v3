@@ -1,6 +1,7 @@
 import { type Ref, type ComponentPublicInstance } from 'vue'
 import type { DateObjectValue } from '../types'
 import { useDateInputEditing } from './useDateInputEditing'
+import { useDateRangeInput } from './useDateRangeInput'
 
 export interface InputHandlerOptions {
 	// Configuration
@@ -56,8 +57,8 @@ export function useInputHandler(options: InputHandlerOptions) {
 		inputRef,
 	} = options
 
-	// Nous n'utilisons pas directement useDateRangeInput car nous avons implémenté
-	// des fonctions spécifiques pour gérer les cas particuliers de la saisie en mode plage
+	// Nous utilisons useDateRangeInput pour centraliser le parsing des plages,
+	// tout en conservant ici la logique de saisie spécifique (caret, complétion, cas particuliers)
 
 	// Utiliser le composable useDateInputEditing pour le formatage
 	const dateInputEditing = useDateInputEditing({
@@ -67,6 +68,13 @@ export function useInputHandler(options: InputHandlerOptions) {
 			emitInput(value)
 		},
 	})
+
+	const { parseRangeInput: parseRangeInputForSelectedDates } = useDateRangeInput(
+		format,
+		displayRange,
+		parseDate,
+		formatDate,
+	)
 
 	/**
    * Met à jour la position du curseur dans l'élément input
@@ -256,36 +264,34 @@ export function useInputHandler(options: InputHandlerOptions) {
 			formattedInput = formatted
 			newCursorPos = newPos
 		}
-
 		return { formattedInput, newCursorPos }
 	}
 
 	/**
-   * Met à jour les dates sélectionnées à partir d'une valeur formatée
-   */
+	 * Met à jour les dates sélectionnées à partir d'une valeur formatée
+	 */
 	const updateSelectedDatesFromFormattedValue = (formattedInput: string) => {
-		if (displayRange && formattedInput.includes(' - ')) {
-			const parts = formattedInput.split(' - ')
-			if (parts.length === 2) {
-				const firstDate = parseDate(parts[0], format)
-				const secondDate = parseDate(parts[1], format)
-				selectedDates.value = [firstDate, secondDate]
+		if (displayRange) {
+			const [startDate, endDate] = parseRangeInputForSelectedDates(formattedInput)
+			if (startDate && endDate) {
+				selectedDates.value = [startDate, endDate]
+			}
+			else if (startDate) {
+				selectedDates.value = [startDate, null]
+			}
+			else {
+				selectedDates.value = null
 			}
 		}
 		else {
 			const date = parseDate(formattedInput, format)
-			if (displayRange) {
-				selectedDates.value = date ? [date, null] : null
-			}
-			else {
-				selectedDates.value = date
-			}
+			selectedDates.value = date
 		}
 	}
 
 	/**
-   * Met à jour le modèle à partir des dates sélectionnées
-   */
+	 * Met à jour le modèle à partir des dates sélectionnées
+	 */
 	const updateModelFromSelectedDates = () => {
 		try {
 			isUpdatingFromInternal.value = true

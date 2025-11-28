@@ -274,4 +274,202 @@ describe('useDateRangeInput', () => {
 			expect(currentRangeIsValid.value).toBe(false)
 		})
 	})
+
+	describe('handleKeydown', () => {
+		it('devrait bloquer les caractères non numériques et non spéciaux', () => {
+			const { handleKeydown } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const preventDefault = vi.fn()
+			const input = document.createElement('input')
+			const event = {
+				key: 'a',
+				altKey: false,
+				ctrlKey: false,
+				metaKey: false,
+				preventDefault,
+				target: input,
+			} as unknown as KeyboardEvent & { target: HTMLInputElement }
+
+			handleKeydown(event)
+
+			expect(preventDefault).toHaveBeenCalledTimes(1)
+		})
+
+		it('devrait autoriser les chiffres', () => {
+			const { handleKeydown } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const preventDefault = vi.fn()
+			const input = document.createElement('input')
+			const event = {
+				key: '5',
+				altKey: false,
+				ctrlKey: false,
+				metaKey: false,
+				preventDefault,
+				target: input,
+			} as unknown as KeyboardEvent & { target: HTMLInputElement }
+
+			handleKeydown(event)
+
+			expect(preventDefault).not.toHaveBeenCalled()
+		})
+
+		it('devrait supprimer le séparateur de plage avec Backspace en mode plage', () => {
+			vi.useFakeTimers()
+			const { handleKeydown } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const preventDefault = vi.fn()
+			const input = document.createElement('input')
+			input.value = '01/01/2023 - 10/01/2023'
+			const separatorPos = '01/01/2023 - '.length
+			input.selectionStart = separatorPos
+			input.selectionEnd = separatorPos
+			const dispatchSpy = vi.spyOn(input, 'dispatchEvent')
+
+			const setSelectionRangeSpy = vi.spyOn(input, 'setSelectionRange')
+			const event = {
+				key: 'Backspace',
+				altKey: false,
+				ctrlKey: false,
+				metaKey: false,
+				preventDefault,
+				target: input,
+			} as unknown as KeyboardEvent & { target: HTMLInputElement }
+
+			handleKeydown(event)
+			vi.runAllTimers()
+
+			expect(preventDefault).toHaveBeenCalledTimes(1)
+			// L'implémentation retire uniquement le séparateur ' - ' sans ajouter d'espace
+			expect(input.value).toBe('01/01/202310/01/2023')
+			expect(dispatchSpy).toHaveBeenCalled()
+			expect(setSelectionRangeSpy).toHaveBeenCalled()
+			vi.useRealTimers()
+		})
+
+		it('ne fait rien de spécial pour Backspace si la sélection n’est pas au niveau du séparateur', () => {
+			const { handleKeydown } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const preventDefault = vi.fn()
+			const input = document.createElement('input')
+			input.value = '01/01/2023 - 10/01/2023'
+			input.selectionStart = 0
+			input.selectionEnd = 0
+			const dispatchSpy = vi.spyOn(input, 'dispatchEvent')
+			const event = {
+				key: 'Backspace',
+				altKey: false,
+				ctrlKey: false,
+				metaKey: false,
+				preventDefault,
+				target: input,
+			} as unknown as KeyboardEvent & { target: HTMLInputElement }
+
+			handleKeydown(event)
+
+			expect(preventDefault).not.toHaveBeenCalled()
+			expect(dispatchSpy).not.toHaveBeenCalled()
+		})
+
+		it('ne déclenche pas la logique spécifique plage en mode non-plage', () => {
+			const { handleKeydown } = useDateRangeInput(format, false, mockParseDate, mockFormatDate)
+			const preventDefault = vi.fn()
+			const input = document.createElement('input')
+			input.value = '01/01/2023 - 10/01/2023'
+			input.selectionStart = '01/01/2023 - '.length
+			input.selectionEnd = input.selectionStart
+			const dispatchSpy = vi.spyOn(input, 'dispatchEvent')
+			const event = {
+				key: 'Backspace',
+				altKey: false,
+				ctrlKey: false,
+				metaKey: false,
+				preventDefault,
+				target: input,
+			} as unknown as KeyboardEvent & { target: HTMLInputElement }
+
+			handleKeydown(event)
+
+			expect(preventDefault).not.toHaveBeenCalled()
+			expect(dispatchSpy).not.toHaveBeenCalled()
+		})
+	})
+
+	describe('handlePaste', () => {
+		it('ne fait rien si clipboardData est manquant', () => {
+			const { handlePaste } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const input = document.createElement('input')
+			const preventDefault = vi.fn()
+			const event = {
+				clipboardData: null,
+				preventDefault,
+				target: input,
+			} as unknown as ClipboardEvent
+
+			handlePaste(event)
+			expect(preventDefault).not.toHaveBeenCalled()
+		})
+
+		it('empêche le collage si aucun chiffre n’est présent', () => {
+			const { handlePaste } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const input = document.createElement('input')
+			const preventDefault = vi.fn()
+			const event = {
+				clipboardData: {
+					getData: vi.fn(() => 'abc'),
+				},
+				preventDefault,
+				target: input,
+			} as unknown as ClipboardEvent
+
+			handlePaste(event)
+
+			expect(preventDefault).toHaveBeenCalledTimes(1)
+			expect(input.value).toBe('')
+		})
+
+		it('filtre le texte collé et n’insère que les chiffres', () => {
+			vi.useFakeTimers()
+			const { handlePaste } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const input = document.createElement('input')
+			input.value = ''
+			input.selectionStart = 0
+			input.selectionEnd = 0
+			const preventDefault = vi.fn()
+			const event = {
+				clipboardData: {
+					getData: vi.fn(() => '01/0a/2023'),
+				},
+				preventDefault,
+				target: input,
+			} as unknown as ClipboardEvent
+			const dispatchSpy = vi.spyOn(input, 'dispatchEvent')
+
+			const setSelectionRangeSpy = vi.spyOn(input, 'setSelectionRange')
+
+			handlePaste(event)
+			vi.runAllTimers()
+
+			expect(preventDefault).toHaveBeenCalledTimes(1)
+			expect(input.value).toBe('0102023')
+			expect(dispatchSpy).toHaveBeenCalled()
+			expect(setSelectionRangeSpy).toHaveBeenCalled()
+			vi.useRealTimers()
+		})
+
+		it('ne modifie pas la valeur si le texte collé est déjà nettoyé', () => {
+			const { handlePaste } = useDateRangeInput(format, true, mockParseDate, mockFormatDate)
+			const input = document.createElement('input')
+			input.value = ''
+			const preventDefault = vi.fn()
+			const event = {
+				clipboardData: {
+					getData: vi.fn(() => '01012023'),
+				},
+				preventDefault,
+				target: input,
+			} as unknown as ClipboardEvent
+
+			handlePaste(event)
+
+			expect(preventDefault).not.toHaveBeenCalled()
+			expect(input.value).toBe('')
+		})
+	})
 })

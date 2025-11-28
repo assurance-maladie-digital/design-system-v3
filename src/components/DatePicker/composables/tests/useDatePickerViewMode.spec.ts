@@ -1,12 +1,16 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useDatePickerViewMode } from '../useDatePickerViewMode'
 
-// Mock pour watch
+// Stocke les callbacks de watch pour pouvoir les invoquer explicitement dans les tests
+const registeredWatchCallbacks: Array<(newValue: unknown, oldValue: unknown) => void> = []
+
 vi.mock('vue', async () => {
-	const actual = await vi.importActual('vue')
+	const actual = await vi.importActual<typeof import('vue')>('vue')
 	return {
 		...actual,
-		watch: vi.fn(),
+		watch: vi.fn((source: unknown, cb: (newValue: unknown, oldValue: unknown) => void) => {
+			registeredWatchCallbacks.push(cb)
+		}),
 	}
 })
 
@@ -18,11 +22,65 @@ describe('useDatePickerViewMode', () => {
 	const mockSelectedDateGetter = vi.fn(() => selectedDate)
 
 	beforeEach(() => {
+		registeredWatchCallbacks.length = 0
 		// Réinitialiser les mocks avant chaque test
 		mockIsBirthDateGetter.mockClear()
 		mockSelectedDateGetter.mockClear()
 		isBirthDate = false
 		selectedDate = null
+	})
+
+	describe('watchers', () => {
+		it('met à jour currentViewMode quand isBirthDate change (branches year/month/normal)', () => {
+			// Cas 1 : passage en birthDate sans date sélectionnée -> year
+			isBirthDate = false
+			selectedDate = null
+			const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+			// Deux watchers sont enregistrés : [isBirthDateWatcher, selectedDateWatcher]
+			const [isBirthDateWatcher] = registeredWatchCallbacks
+			// Simuler isBirthDate passant à true sans date sélectionnée
+			isBirthDate = true
+			isBirthDateWatcher(true, false)
+			expect(currentViewMode.value).toBe('year')
+
+			// Cas 2 : birthDate avec date sélectionnée -> month
+			selectedDate = new Date('2024-01-01')
+			isBirthDateWatcher(true, false)
+			expect(currentViewMode.value).toBe('month')
+
+			// Cas 3 : mode normal (isBirthDate = false) -> month
+			isBirthDate = false
+			isBirthDateWatcher(false, true)
+			expect(currentViewMode.value).toBe('month')
+		})
+
+		it('met à jour currentViewMode quand la date sélectionnée change en mode birthDate', () => {
+			isBirthDate = true
+			selectedDate = null
+			const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+			const [, selectedDateWatcher] = registeredWatchCallbacks
+
+			// newValue null -> year
+			selectedDate = null
+			selectedDateWatcher(null, undefined)
+			expect(currentViewMode.value).toBe('year')
+
+			// newValue défini -> month
+			selectedDate = new Date('2024-01-01')
+			selectedDateWatcher(selectedDate, null)
+			expect(currentViewMode.value).toBe('month')
+		})
+
+		it('ne change pas currentViewMode quand la date change en mode normal', () => {
+			isBirthDate = false
+			selectedDate = null
+			const { currentViewMode } = useDatePickerViewMode(mockIsBirthDateGetter, mockSelectedDateGetter)
+			const [, selectedDateWatcher] = registeredWatchCallbacks
+
+			// En mode normal, le watcher ne doit rien faire
+			selectedDateWatcher(new Date('2024-01-01'), null)
+			expect(currentViewMode.value).toBe('month')
+		})
 	})
 
 	it('devrait initialiser currentViewMode à "month" si isBirthDate est false', () => {

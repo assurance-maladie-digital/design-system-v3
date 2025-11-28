@@ -1,4 +1,4 @@
-import { ref, nextTick, type Ref } from 'vue'
+import { ref, nextTick, type Ref, onBeforeUnmount } from 'vue'
 
 /**
  * Composable pour personnaliser les boutons du mois et de l'année dans les composants CalendarMode
@@ -13,6 +13,12 @@ export function useMonthButtonCustomization(
 ) {
 	const monthButtonText = ref('')
 	const yearText = ref('')
+	const monthButtonObservers: MutationObserver[] = []
+
+	onBeforeUnmount(() => {
+		monthButtonObservers.forEach(observer => observer.disconnect())
+		monthButtonObservers.length = 0
+	})
 
 	/**
 	 * Retourne un nom personnalisé pour le mois en fonction de sa valeur
@@ -64,7 +70,7 @@ export function useMonthButtonCustomization(
 				return 'déc.'
 			default:
 				// Si le mois n'est pas reconnu, retourner le mois avec la première lettre en majuscule
-				return monthName
+				return monthName.charAt(0).toUpperCase() + monthName.slice(1)
 		}
 	}
 
@@ -93,20 +99,30 @@ export function useMonthButtonCustomization(
 						// Personnaliser le nom du mois avec notre fonction switch case
 						const monthText = getCustomMonthName(rawMonthText)
 
-						// Créer un bouton stylisé comme un VBtn avec une icône Material Design
-						const buttonHTML = `
-							<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary); margin-left: -12px;" data-ripple="false" aria-label="${monthText}">
-								<span class="v-btn__overlay"></span>
-								<span class="v-btn__underlay"></span>
-								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-									<span style="color: var(--v-theme-primary);">${monthText}</span> 
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-								</div>
-							</button>
+						// Styliser le bouton existant comme un VBtn avec une icône Material Design
+						const monthBtnElement = monthBtn as HTMLElement
+						monthBtnElement.classList.add(
+							'v-btn',
+							'v-btn--density-comfortable',
+							'v-btn--variant-text',
+							'v-theme--light',
+							'v-btn--size-default',
+							'custom-month-btn',
+						)
+						monthBtnElement.setAttribute('data-ripple', 'false')
+						monthBtnElement.setAttribute('aria-label', monthText)
+						monthBtnElement.style.color = 'var(--v-theme-primary)'
+						monthBtnElement.style.marginRight = '7px'
+
+						const buttonContentHTML = `
+							<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
+								<span style="color: var(--v-theme-primary);">${monthText}</span> 
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+							</div>
 						`
 
-						// Remplacer le contenu du bouton original
-						monthBtn.innerHTML = buttonHTML
+						// Remplacer le contenu du bouton original par le contenu stylisé uniquement
+						monthBtn.innerHTML = buttonContentHTML
 					})
 
 					// Personnalisation des boutons d'année pour tous les DatePickers
@@ -140,20 +156,29 @@ export function useMonthButtonCustomization(
 							displayedYear = new Date().getFullYear().toString()
 						}
 
-						// Créer un bouton stylisé pour l'année
-						const yearButtonHTML = `
-							<button class="v-btn v-btn--density-comfortable v-btn--variant-text v-theme--light v-btn--size-default" style="color: var(--v-theme-primary);" data-ripple="false" aria-label="${displayedYear}">
-								<span class="v-btn__overlay"></span>
-								<span class="v-btn__underlay"></span>
-								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-									<span style="color: var(--v-theme-primary);">${displayedYear}</span> 
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-								</div>
-							</button>
+						// Styliser le bouton existant pour l'année
+						const yearBtnElement = yearBtn as HTMLElement
+						yearBtnElement.classList.add(
+							'v-btn',
+							'v-btn--density-comfortable',
+							'v-btn--variant-text',
+							'v-theme--light',
+							'v-btn--size-default',
+							'custom-year-btn',
+						)
+						yearBtnElement.setAttribute('data-ripple', 'false')
+						yearBtnElement.setAttribute('aria-label', displayedYear)
+						yearBtnElement.style.color = 'var(--v-theme-primary)'
+
+						const yearButtonContentHTML = `
+							<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
+								<span style="color: var(--v-theme-primary);">${displayedYear}</span> 
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+							</div>
 						`
 
-						// Remplacer le contenu du bouton d'année
-						yearBtn.innerHTML = yearButtonHTML
+						// Remplacer le contenu du bouton d'année par le contenu stylisé uniquement
+						yearBtn.innerHTML = yearButtonContentHTML
 					})
 				}
 			})
@@ -174,6 +199,7 @@ export function useMonthButtonCustomization(
 						customizeMonthButton()
 					})
 					observer.observe(targetNode, { childList: true, subtree: true })
+					monthButtonObservers.push(observer)
 				})
 			}
 		})

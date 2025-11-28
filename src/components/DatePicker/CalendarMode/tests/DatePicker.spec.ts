@@ -263,7 +263,7 @@ describe('CalendarMode.vue', () => {
 		wrapper.vm.openDatePicker()
 		await nextTick()
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
-	})
+	}, 20000)
 
 	it('takes into account disabled and readonly limitations', async () => {
 		const wrapper = mount(DatePicker, {

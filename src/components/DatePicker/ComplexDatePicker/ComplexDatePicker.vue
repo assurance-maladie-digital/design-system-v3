@@ -14,7 +14,24 @@
 		type DateInput,
 		type DateValue,
 	} from '@/composables/date/useDateInitializationDayjs'
-	import { useAsteriskDisplay, useDateFormatValidation, useDatePickerViewMode, useDatePickerVisibility, useDateRangeValidation, useDateSelection, useDateValidation, useDisplayedDateString, useIconState, useInputBlurHandler, useManualDateValidation, useMonthButtonCustomization, useTodayButton } from '../composables'
+	import {
+		useAsteriskDisplay,
+		useDateFormatValidation,
+		useDatePickerState,
+		useDatePickerViewMode,
+		useDatePickerVisibility,
+		useDateRangeValidation,
+		useDateSelection,
+		useDateValidation,
+		useDisplayedDateString,
+		useIconState,
+		useInputBlurHandler,
+		useManualDateValidation,
+		useMonthButtonCustomization,
+		useTodayButton,
+		useHolidayHighlighting,
+		useCalendarKeyboardNavigation,
+	} from '../composables'
 	import dayjs from 'dayjs'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
@@ -27,7 +44,7 @@
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import { mdiCalendar } from '@mdi/js'
-	import { useHolidayDay } from '@/composables/date/useHolidayDay'
+	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 
 	dayjs.extend(customParseFormat)
@@ -243,15 +260,13 @@
 		selectedDates as Ref<DateObjectValue>,
 		props.displayRange,
 	)
-
-	const textInputValue = ref('')
-	const displayFormattedDate = ref('')
 	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
 	const isManualInputActive = ref(false)
 	const isFormatting = ref(false)
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
+	const preventCloseOnInternalUpdate = ref(false)
 
 	const { validateDateFormat, isDateComplete } = useDateFormatValidation({
 		format: props.format,
@@ -277,6 +292,27 @@
 		errors,
 		warnings,
 		successes,
+	})
+
+	const {
+		toggleDatePicker,
+		openDatePicker,
+		openDatePickerOnClick,
+		openDatePickerOnFocus,
+		openDatePickerOnIconClick,
+		handleClickOutside,
+		handleKeyboardNavigation,
+	} = useDatePickerVisibility({
+		disabled: props.disabled,
+		readonly: props.readonly,
+		textFieldActivator: props.textFieldActivator,
+		isDatePickerVisible,
+		isManualInputActive,
+		hasInteracted,
+		updateAccessibility,
+		validateDates,
+		emitClosed: () => emit('closed'),
+		emitFocus: () => emit('focus'),
 	})
 
 	const updateModel = (value: DateValue) => {
@@ -310,24 +346,6 @@
 		// 3) Re-emit upward
 		emit('date-selected', value)
 	}
-
-	// Display helpers
-	const displayFormattedDateComputed = computed(() => {
-		if (!selectedDates.value) return null
-		if (Array.isArray(selectedDates.value)) {
-			if (selectedDates.value.length >= 2)
-				return `${formatDate(selectedDates.value[0], props.format)} - ${formatDate(
-					selectedDates.value[selectedDates.value.length - 1],
-					props.format,
-				)}`
-			return formatDate(selectedDates.value[0], props.format)
-		}
-		return formatDate(selectedDates.value, props.format)
-	})
-
-	watch(displayFormattedDateComputed, (newValue) => {
-		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
-	})
 	// Watcher pour re-valider quand les customRules changent
 	watch(() => props.customRules, () => {
 		if (selectedDates.value !== null) {
@@ -356,6 +374,33 @@
 		{ immediate: true },
 	)
 
+	const {
+		textInputValue,
+		displayFormattedDate,
+		formattedDate,
+		displayFormattedFromSelectedDates,
+		syncFromModelValue,
+		syncTextInputFromSelection,
+	} = useDatePickerState({
+		selectedDates,
+		rangeBoundaryDates,
+		format: props.format,
+		dateFormatReturn: props.dateFormatReturn,
+		displayRange: props.displayRange,
+		parseDate,
+		formatDate,
+		initializeSelectedDates,
+		validateDates,
+		updateModel,
+	})
+
+	// Display helpers (centralised in useDatePickerState)
+	const displayFormattedDateComputed = displayFormattedFromSelectedDates
+
+	watch(displayFormattedDateComputed, (newValue) => {
+		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
+	})
+
 	const updateSelectedDates = (date: Date | null) => {
 		if (date !== null) {
 			const validationResult = validateField(date, props.customRules, props.customWarningRules)
@@ -369,75 +414,21 @@
 		queueMicrotask(() => validateDates(true))
 	}
 
-	// Formatted value for model
-	const formattedDate = computed<DateValue>(() => {
-		if (!selectedDates.value) return ''
-		const rf = returnFormat.value
-
-		if (props.displayRange && rangeBoundaryDates.value) {
-			return [
-				formatDate(rangeBoundaryDates.value[0], rf),
-				formatDate(rangeBoundaryDates.value[1], rf),
-			] as [string, string]
-		}
-		if (Array.isArray(selectedDates.value)) {
-			if (selectedDates.value.length >= 2)
-				return [
-					formatDate(selectedDates.value[0], rf),
-					formatDate(selectedDates.value[selectedDates.value.length - 1], rf),
-				] as [string, string]
-			return ''
-		}
-		return formatDate(selectedDates.value, rf)
-	})
-
-	watch(
-		formattedDate,
-		(newValue) => {
-			if (!newValue || newValue === '') {
-				textInputValue.value = ''
-				return
-			}
-			if (typeof newValue === 'string') {
-				if (props.dateFormatReturn) {
-					const date = parseDate(newValue, returnFormat.value)
-					if (date) {
-						const formattedForDisplay = formatDate(date, props.format)
-						textInputValue.value = formattedForDisplay
-					}
-				}
-				else {
-					textInputValue.value = newValue
-				}
-			}
-		},
-		{ immediate: true },
-	)
-
 	watch(selectedDates, (newValue) => {
 		validateDates()
 		if (newValue !== null) {
-			updateModel(formattedDate.value)
+			if (!preventCloseOnInternalUpdate.value) {
+				updateModel(formattedDate.value)
+			}
 			withInternalUpdate(() => {
-				if (Array.isArray(newValue)) {
-					if (newValue.length > 0) {
-						const newFormattedValue = formatDate(newValue[0], props.format)
-						if (textInputValue.value !== newFormattedValue) {
-							textInputValue.value = newFormattedValue
-						}
-					}
-				}
-				else {
-					const newFormattedValue = formatDate(newValue, props.format)
-					if (textInputValue.value !== newFormattedValue) {
-						textInputValue.value = newFormattedValue
-					}
-				}
+				syncTextInputFromSelection()
 			})
 		}
 		else {
 			updateModel(null)
-			textInputValue.value = ''
+			withInternalUpdate(() => {
+				syncTextInputFromSelection()
+			})
 			// Reset month/year names when clearing the date
 			const today = new Date()
 			currentMonth.value = today.getMonth().toString()
@@ -446,6 +437,34 @@
 			currentYearName.value = today.getFullYear().toString()
 		}
 	})
+
+	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
+		const cleanedInput = input.replace(/[^\d]/g, '')
+		const separator = props.format.match(/[^DMY]/)?.[0] || '/'
+		const inputBeforeCursor = input.substring(0, cursorPosition || 0)
+		const digitsBeforeCursor = inputBeforeCursor.replace(/[^\d]/g, '').length
+
+		let result = ''
+		let digitIndex = 0
+		for (let i = 0; i < props.format.length && digitIndex < cleanedInput.length; i++) {
+			const formatChar = props.format[i].toUpperCase()
+			if (['D', 'M', 'Y'].includes(formatChar)) {
+				result += cleanedInput[digitIndex]
+				digitIndex++
+			}
+			else {
+				result += separator
+			}
+		}
+
+		let newCursorPos = digitsBeforeCursor
+		for (let i = 0, digitCount = 0; i < props.format.length && digitCount < digitsBeforeCursor; i++) {
+			if (!['D', 'M', 'Y'].includes(props.format[i].toUpperCase())) newCursorPos++
+			else digitCount++
+		}
+
+		return { formatted: result, cursorPos: Math.min(newCursorPos, result.length) }
+	}
 
 	// Handle manual typing sync → model/selection
 	watch(textInputValue, (newValue) => {
@@ -530,28 +549,10 @@
 	 * Accessibility (live description during typing)
 	 */
 	const accessibilityDescription = ref(DATE_PICKER_MESSAGES.ARIA_DATE_INPUT)
-	const getDateDescription = (dateStr: string, format: string): string => {
-		if (!dateStr?.trim()) return 'Aucune date saisie'
-		const separator = format.match(/[^DMY]/)?.[0] || '/'
-		const dateParts = dateStr.split(separator)
-		const formatParts = format.split(separator)
-
-		let description = 'Date en cours de saisie: '
-		for (let i = 0; i < formatParts.length; i++) {
-			if (i >= dateParts.length) break
-			const part = dateParts[i].trim()
-			const formatPart = formatParts[i][0]?.toUpperCase()
-			if (!part || part.replace(/_/g, '').length === 0) continue
-			if (formatPart === 'D') description += `jour ${part}, `
-			else if (formatPart === 'M') description += `mois ${part}, `
-			else if (formatPart === 'Y') description += `année ${part}, `
-		}
-		return description.endsWith(', ') ? description.slice(0, -2) : description
-	}
 
 	watch(displayFormattedDate, (newValue) => {
 		if (newValue && typeof newValue === 'string') {
-			accessibilityDescription.value = getDateDescription(newValue.replace(/_/g, ' '), props.format)
+			accessibilityDescription.value = getDateDescriptionUtil(newValue.replace(/_/g, ' '), props.format)
 		}
 		else {
 			accessibilityDescription.value = 'Aucune date saisie'
@@ -559,38 +560,23 @@
 	})
 
 	/**
-	 * Holiday marking
-	 */
-	const { getJoursFeries } = useHolidayDay()
-	const markHolidayDays = () => {
-		if (!props.displayHolidayDays) return
-		nextTick(() => {
-			const year = parseInt(currentYear.value || String(new Date().getFullYear()), 10)
-			const month = parseInt(
-				currentMonth.value !== null ? currentMonth.value : String(new Date().getMonth()),
-				10,
-			)
-			const joursFeries = getJoursFeries(year)
-			const holidayDates = Array.from(joursFeries).map((dateStr) => {
-				const [day, monthStr, yearStr] = dateStr.split('/')
-				return new Date(parseInt(yearStr), parseInt(monthStr) - 1, parseInt(day))
-			})
-			const monthHolidays = holidayDates.filter(h => h.getMonth() === month && h.getFullYear() === year)
-			monthHolidays.forEach((holiday) => {
-				const day = holiday.getDate()
-				const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-				const dayElements = document.querySelectorAll(`[data-v-date="${dateStr}"]`)
-				dayElements.forEach(el => el.classList.add('holiday-day'))
-			})
-		})
-	}
-
-	/**
 	 * Mount / unmount
 	 */
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+
+	/**
+	 * Holiday marking (partagé via useHolidayHighlighting)
+	 */
+	const { markHolidayDays } = useHolidayHighlighting({
+		currentMonth,
+		currentYear,
+		isDisplayHolidayDays: () => props.displayHolidayDays,
+		rootElement: computed(
+			() => datePickerRef.value?.$el as HTMLElement | null,
+		),
+	})
 
 	onMounted(() => {
 		setupMonthButtonObserver()
@@ -601,6 +587,48 @@
 
 	onBeforeUnmount(() => {
 		document.removeEventListener('click', handleClickOutside)
+	})
+
+	useCalendarKeyboardNavigation({
+		isDatePickerVisible,
+		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		getCurrentDate: () => {
+			const value = selectedDates.value
+			if (value) {
+				const date = Array.isArray(value) ? value[0] ?? null : value
+				if (date && currentMonth.value !== null && currentYear.value !== null) {
+					const sameMonth = date.getMonth() === Number(currentMonth.value)
+					const sameYear = date.getFullYear() === Number(currentYear.value)
+					if (sameMonth && sameYear) {
+						return date
+					}
+				}
+			}
+
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
+			}
+
+			return null
+		},
+		setCurrentDate: (date: Date) => {
+			preventCloseOnInternalUpdate.value = true
+			updateSelectedDates(date)
+			queueMicrotask(() => {
+				preventCloseOnInternalUpdate.value = false
+			})
+			// Synchroniser le mois et l'année visibles lorsque l'on franchit une limite de mois
+			const newMonth = String(date.getMonth())
+			const newYear = String(date.getFullYear())
+			if (currentMonth.value !== newMonth) {
+				currentMonth.value = newMonth
+				currentMonthName.value = dayjs().month(date.getMonth()).format('MMMM')
+			}
+			if (currentYear.value !== newYear) {
+				currentYear.value = newYear
+				currentYearName.value = newYear
+			}
+		},
 	})
 
 	/**
@@ -628,6 +656,50 @@
 		emitInput: value => emit('input', value),
 		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
 	})
+
+	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
+		if (props.readonly) return
+
+		if (!props.noCalendar && handleKeyboardNavigation(event)) return
+
+		if (event.key === 'Backspace') {
+			const input = event.target
+			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) return
+			const cursorPos = input.selectionStart
+			const charBeforeCursor = input.value[cursorPos - 1]
+
+			if (!/\d/.test(charBeforeCursor)) {
+				event.preventDefault()
+				const newValue = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
+				displayFormattedDate.value = newValue
+				queueMicrotask(() => {
+					const newCursorPos = cursorPos - 2
+					input.setSelectionRange(newCursorPos, newCursorPos)
+				})
+			}
+		}
+
+		if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+			const input = event.target
+			const cursorPos = input.selectionStart || 0
+			const separator = props.format.match(/[^DMY]/)?.[0] || '/'
+
+			if (event.key === 'ArrowLeft' && cursorPos > 0) {
+				const charBeforeCursor = input.value[cursorPos - 1]
+				if (charBeforeCursor === separator) {
+					event.preventDefault()
+					input.setSelectionRange(cursorPos - 2, cursorPos - 2)
+				}
+			}
+			else if (event.key === 'ArrowRight' && cursorPos < input.value.length) {
+				const charAtCursor = input.value[cursorPos]
+				if (charAtCursor === separator) {
+					event.preventDefault()
+					input.setSelectionRange(cursorPos + 2, cursorPos + 2)
+				}
+			}
+		}
+	}
 
 	const handleInput = (eventOrValue: Event | string) => {
 		if (props.readonly) return
@@ -788,34 +860,14 @@
 		}
 	}
 
-	/**
-	 * Sync from external v-model
-	 */
-	const syncFromModelValue = (newValue: DateInput | undefined) => {
-		if (!newValue || newValue === '') {
-			selectedDates.value = null
-			textInputValue.value = ''
-			displayFormattedDate.value = ''
-			validateDates()
-			return
-		}
-
-		selectedDates.value = initializeSelectedDates(newValue, props.format, props.dateFormatReturn)
-		if (selectedDates.value) {
-			const firstDate = Array.isArray(selectedDates.value)
-				? selectedDates.value[0]
-				: selectedDates.value
-			const formattedForInput = formatDate(firstDate, props.format)
-			textInputValue.value = formattedForInput
-			displayFormattedDate.value = displayFormattedDateComputed.value || ''
-		}
-		validateDates()
-	}
-
+	// Sync from external v-model
 	watch(
 		() => props.modelValue,
 		(newValue) => {
 			if (isUpdatingFromInternal.value) {
+				if (preventCloseOnInternalUpdate.value) {
+					return
+				}
 				if (props.displayRange) {
 					if (Array.isArray(newValue) && newValue.length >= 2) {
 						isDatePickerVisible.value = false
@@ -847,102 +899,6 @@
 			}
 		},
 	)
-
-	/**
-	 * Menu / visibility & keyboard
-	 */
-	const {
-		toggleDatePicker,
-		openDatePicker,
-		openDatePickerOnClick,
-		openDatePickerOnFocus,
-		openDatePickerOnIconClick,
-		handleClickOutside,
-		handleKeyboardNavigation,
-	} = useDatePickerVisibility({
-		disabled: props.disabled,
-		readonly: props.readonly,
-		textFieldActivator: props.textFieldActivator,
-		isDatePickerVisible,
-		isManualInputActive,
-		hasInteracted,
-		updateAccessibility,
-		validateDates,
-		emitClosed: () => emit('closed'),
-		emitFocus: () => emit('focus'),
-	})
-
-	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
-		const cleanedInput = input.replace(/[^\d]/g, '')
-		const separator = props.format.match(/[^DMY]/)?.[0] || '/'
-		const inputBeforeCursor = input.substring(0, cursorPosition || 0)
-		const digitsBeforeCursor = inputBeforeCursor.replace(/[^\d]/g, '').length
-
-		let result = ''
-		let digitIndex = 0
-		for (let i = 0; i < props.format.length && digitIndex < cleanedInput.length; i++) {
-			const formatChar = props.format[i].toUpperCase()
-			if (['D', 'M', 'Y'].includes(formatChar)) {
-				result += cleanedInput[digitIndex]
-				digitIndex++
-			}
-			else {
-				result += separator
-			}
-		}
-
-		let newCursorPos = digitsBeforeCursor
-		for (let i = 0, digitCount = 0; i < props.format.length && digitCount < digitsBeforeCursor; i++) {
-			if (!['D', 'M', 'Y'].includes(props.format[i].toUpperCase())) newCursorPos++
-			else digitCount++
-		}
-
-		return { formatted: result, cursorPos: Math.min(newCursorPos, result.length) }
-	}
-
-	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
-		if (props.readonly) return
-
-		if (!props.noCalendar && handleKeyboardNavigation(event)) return
-
-		if (event.key === 'Backspace') {
-			const input = event.target
-			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) return
-			const cursorPos = input.selectionStart
-			const charBeforeCursor = input.value[cursorPos - 1]
-
-			if (!/\d/.test(charBeforeCursor)) {
-				event.preventDefault()
-				const newValue = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
-				displayFormattedDate.value = newValue
-				queueMicrotask(() => {
-					const newCursorPos = cursorPos - 2
-					input.setSelectionRange(newCursorPos, newCursorPos)
-				})
-			}
-		}
-
-		if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-			const input = event.target
-			const cursorPos = input.selectionStart || 0
-			const separator = props.format.match(/[^DMY]/)?.[0] || '/'
-
-			if (event.key === 'ArrowLeft' && cursorPos > 0) {
-				const charBeforeCursor = input.value[cursorPos - 1]
-				if (charBeforeCursor === separator) {
-					event.preventDefault()
-					input.setSelectionRange(cursorPos - 2, cursorPos - 2)
-				}
-			}
-			else if (event.key === 'ArrowRight' && cursorPos < input.value.length) {
-				const charAtCursor = input.value[cursorPos]
-				if (charAtCursor === separator) {
-					event.preventDefault()
-					input.setSelectionRange(cursorPos + 2, cursorPos + 2)
-				}
-			}
-		}
-	}
 
 	/**
 	 * Today button + labels
@@ -1145,6 +1101,8 @@
 					:show-adjacent-months="true"
 					:show-week="props.showWeekNumber"
 					:view-mode="currentViewMode"
+					:month="currentMonth !== null ? Number(currentMonth) : undefined"
+					:year="currentYear !== null ? Number(currentYear) : undefined"
 					:max="maxDate"
 					:min="minDate"
 					:custom-rules="props.customRules"
@@ -1323,5 +1281,24 @@
 
 :deep(.v-btn--variant-text .v-btn__overlay) {
 	padding: 13px;
+}
+
+/* Style de base du ::after */
+:deep(.custom-year-btn::after) {
+	background-color: #afb1b1;
+	padding: 10px 40px;
+	text-decoration: none;
+	display: inline-block;
+	margin-left: -22px !important;
+	cursor: pointer;
+	border-radius: 9999px;
+}
+
+:deep(.custom-month-btn::after) {
+	background-color: #afb1b1;
+	text-decoration: none;
+	display: inline-block;
+	cursor: pointer;
+	border-radius: 9999px !important;
 }
 </style>
