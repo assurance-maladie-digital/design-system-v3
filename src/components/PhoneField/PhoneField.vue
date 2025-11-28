@@ -55,6 +55,8 @@
 	const phoneNumber = ref(props.modelValue || '')
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const dialCode = ref<string | Record<string, any>>(props.dialCodeModel || '')
+	// Force re-render of SySelect when needed (e.g., after reset)
+	const dialSelectKey = ref(0)
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
@@ -241,6 +243,13 @@
 
 	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling || props.readonly)
 
+	// When disabling error handling, immediately clear any existing validation state
+	watch(shouldDisableErrorHandling, (disabled) => {
+		if (disabled) {
+			validation.clearValidation()
+		}
+	})
+
 	const validation = useValidation({
 		customRules: validationRules.value,
 		showSuccessMessages: true,
@@ -248,9 +257,9 @@
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
-	const hasError = computed(() => validation.hasError.value)
-	const hasWarning = computed(() => validation.hasWarning.value)
-	const hasSuccess = computed(() => validation.hasSuccess.value)
+	const hasError = computed(() => !shouldDisableErrorHandling.value && validation.hasError.value)
+	const hasWarning = computed(() => !shouldDisableErrorHandling.value && validation.hasWarning.value)
+	const hasSuccess = computed(() => !shouldDisableErrorHandling.value && validation.hasSuccess.value)
 
 	const iconColor = computed(() => {
 		if (shouldDisableErrorHandling.value) return '#222324'
@@ -260,9 +269,9 @@
 		return '#222324'
 	})
 
-	const errors = computed(() => validation.errors.value)
-	const warnings = computed(() => validation.warnings.value)
-	const successes = computed(() => validation.successes.value)
+	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
+	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
+	const successes = computed(() => shouldDisableErrorHandling.value ? [] : validation.successes.value)
 
 	const showHelpTextBelow = computed(() => {
 		// Display help text below by default if it exists
@@ -312,8 +321,28 @@
 		return !validation.hasError.value
 	}
 
+	// Reset hook used by SyForm.reset() via useValidatable
+	const reset = () => {
+		// Reset interaction state and validation FIRST to avoid triggering watchers with errors
+		onBlur.value = false
+		validation.clearValidation()
+
+		// Clear content
+		phoneNumber.value = ''
+		emit('update:modelValue', '')
+
+		// Clear dial code and restore defaults
+		dialCode.value = ''
+		emit('update:selectedDialCode', '')
+		counter.value = 10
+		phoneMask.value = '## ## ## ## ##'
+
+		// Force SySelect to be recreated to ensure internal classes are reset
+		dialSelectKey.value++
+	}
+
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, validation.clearValidation, reset)
 
 	defineExpose({
 		computedValue,
@@ -342,14 +371,15 @@
 		<div class="phone-field-container">
 			<SySelect
 				v-if="withCountryCode"
+				:key="dialSelectKey"
 				v-model="dialCode"
 				:items="dialCodeOptions"
 				:label="locales.indicatifLabel"
 				:outlined="outlinedIndicatif"
 				:required="countryCodeRequired"
 				:aria-required="countryCodeRequired"
-				:error="hasError"
-				:error-messages="errors[1]"
+				:error="!!errors[1]"
+				:error-messages="errors[1] ? [errors[1]] : []"
 				:display-asterisk="displayAsterisk"
 				:disable-error-handling="shouldDisableErrorHandling"
 				:return-object="true"
@@ -426,7 +456,10 @@
 		</div>
 		<div
 			v-if="showHelpTextBelow"
-			class="help-text-below px-4 mt-1"
+			class="help-text-below px-4"
+			:style="{
+				marginTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '-1rem',
+			}"
 			:class="{ 'text-disabled': disabled }"
 		>
 			{{ helpText }}

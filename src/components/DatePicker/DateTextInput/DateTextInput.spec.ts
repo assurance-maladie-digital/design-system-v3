@@ -35,7 +35,7 @@ describe('DateTextInput.vue', () => {
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
 
-		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide (JJ/MM/AAAA)')
 	})
 
 	it('accepts valid date format', async () => {
@@ -129,7 +129,7 @@ describe('DateTextInput.vue', () => {
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
 		const textField = wrapper.findComponent(SyTextField)
-		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide (JJ/MM/AAAA)')
 	})
 
 	it('formats input while typing', async () => {
@@ -162,7 +162,7 @@ describe('DateTextInput.vue', () => {
 		const input = wrapper.find('input')
 		await input.trigger('blur')
 		await wrapper.vm.$nextTick()
-		expect(textField.props('errorMessages')).toContain('Format de date invalide (DD/MM/YYYY)')
+		expect(textField.props('errorMessages')).toContain('Format de date invalide (JJ/MM/AAAA)')
 	})
 
 	it('formats date during input', async () => {

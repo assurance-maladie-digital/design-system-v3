@@ -1,0 +1,716 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Captcha > renders correctly in audio mode 1`] = `
+<div>
+  <div>
+    <div class="
+      align-center
+      d-flex
+      flex-row
+    ">
+      <h3 class="
+        captcha-title
+        text-textBase
+      ">
+        Vérification de sécurité
+      </h3>
+    </div>
+    <div>
+      <!-- v-if -->
+      <div>
+        <p class="
+          captcha-instructions
+          text-textSubdued
+        ">
+          Saisissez le texte que vous entendez.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="captcha">
+    <button
+      class="
+        bg-primary
+        captcha-audio
+        mt-4
+        text-none
+        v-btn
+        v-btn--block
+        v-btn--density-default
+        v-btn--elevated
+        v-btn--size-default
+        v-btn--variant-elevated
+        v-theme--light
+      "
+      style="height: 44px;"
+      type="button"
+    >
+      <span class="v-btn__overlay"></span>
+      <span class="v-btn__underlay"></span>
+      <!---->
+      <span
+        class="v-btn__content"
+        data-no-activator=""
+      >
+        <span>
+          <svg
+            aria-hidden="true"
+            fill="#fff"
+            height="16"
+            viewBox="0 -960 960 960"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z" />
+          </svg>
+          Lire l'audio
+        </span>
+      </span>
+      <!---->
+      <!---->
+    </button>
+    <div class="
+      v-sheet
+      v-theme--light
+    ">
+      <div class="
+        basic-field
+        mt-4
+        v-input
+        v-input--center-affix
+        v-input--density-default
+        v-input--horizontal
+        v-locale--is-ltr
+        v-text-field
+        v-theme--light
+      ">
+        <!---->
+        <div class="v-input__control">
+          <div class="
+            bg-white
+            v-field
+            v-field--appended
+            v-field--center-affix
+            v-field--has-background
+            v-field--prepended
+            v-field--variant-outlined
+            v-locale--is-ltr
+            v-theme--light
+          ">
+            <div class="v-field__overlay"></div>
+            <div class="v-field__loader">
+              <div
+                aria-hidden="true"
+                aria-valuemax="100"
+                aria-valuemin="0"
+                class="
+                  v-locale--is-ltr
+                  v-progress-linear
+                  v-theme--light
+                "
+                role="progressbar"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
+              >
+                <!---->
+                <div
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
+                  style="opacity: NaN;"
+                ></div>
+                <div
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
+                ></div>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="fade-transition"
+                  persisted="false"
+                >
+                  <div class="v-progress-linear__indeterminate">
+                    <div class="
+                      bg-primary
+                      long
+                      v-progress-linear__indeterminate
+                    "></div>
+                    <div class="
+                      bg-primary
+                      short
+                      v-progress-linear__indeterminate
+                    "></div>
+                  </div>
+                </transition-stub>
+                <!---->
+              </div>
+            </div>
+            <div class="v-field__prepend-inner">
+              <!---->
+              <!-- v-if -->
+              <!-- v-if -->
+            </div>
+            <div
+              class="v-field__field"
+              data-no-activator=""
+            >
+              <!---->
+              <label
+                class="
+                  v-field-label
+                  v-label
+                "
+                for="input-v-2"
+              >
+                <!---->
+                Caractères de l’audio
+              </label>
+              <!---->
+              <input
+                aria-describedby="input-v-2-messages"
+                aria-label="Caractères de l’audio"
+                autocomplete="off"
+                class="v-field__input"
+                id="input-v-2"
+                title="Caractères de l’audio"
+                type="text"
+              />
+              <!---->
+            </div>
+            <!---->
+            <div class="v-field__append-inner">
+              <!-- Keyboard-focusable clear button -->
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+              <!---->
+            </div>
+            <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
+              <div class="v-field__outline__notch">
+                <label
+                  aria-hidden="true"
+                  class="
+                    v-field-label
+                    v-field-label--floating
+                    v-label
+                  "
+                  for="input-v-2"
+                >
+                  <!---->
+                  Caractères de l’audio
+                </label>
+              </div>
+              <div class="v-field__outline__end"></div>
+              <!---->
+            </div>
+          </div>
+        </div>
+        <!---->
+        <div class="v-input__details">
+          <transition-group-stub
+            appear="false"
+            class="v-messages"
+            css="true"
+            id="input-v-2-messages"
+            name="slide-y-transition"
+            persisted="false"
+            tag="div"
+          >
+            <!---->
+          </transition-group-stub>
+          <!-- v-if -->
+          <!---->
+        </div>
+      </div>
+    </div>
+    <div class="
+      align-start
+      captcha-config
+      d-flex
+      flex-column
+      ga-2
+      pt-4
+    ">
+      <p class="
+        label-options
+        text-textSubdued
+      ">
+        Vous n'arrivez pas à lire ?
+      </p>
+      <button
+        class="
+          captcha-btn
+          text-primary
+        "
+        type="button"
+      >
+        <i
+          aria-hidden="true"
+          class="
+            0
+            0
+            0
+            0
+            0,0
+            0,0
+            0,1
+            0,1
+            10.03,17.75
+            10.43,20
+            12,18C11,18
+            12,20A8,8
+            12,4A8,8
+            12,6C13,6
+            13.57,4
+            13.97,6.25
+            14.8,6.7L16.26,5.24C15.03,4.46
+            20,12H23M6,12A6,6
+            4,12H1L5,16L9,12
+            9.2,17.3L7.74,18.76C8.97,19.54
+            M19,8L15,12H18A6,6
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-x-small
+            v-theme--light
+          "
+        ></i>
+        Changer d’audio
+      </button>
+      <button
+        class="
+          captcha-btn
+          text-primary
+        "
+        type="button"
+      >
+        <i
+          aria-hidden="true"
+          class="
+            0
+            0
+            0
+            0
+            0,0
+            0,0
+            0,0
+            0,0
+            19,3M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z
+            21,19V5A2,2
+            3,5V19A2,2
+            5,21H19A2,2
+            M19,19H5V5H19M19,3H5A2,2
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-x-small
+            v-theme--light
+          "
+        ></i>
+        Utiliser un captcha image
+      </button>
+      <p class="
+        captcha-helpdesk
+        mb-2
+        text-textSubdued
+      ">
+        Si vous êtes en incapacité de résoudre le captcha, contactez le support au
+        <a href="tel:3648">3648</a>
+        .
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Captcha > renders correctly in choice mode 1`] = `
+<div>
+  <div>
+    <div class="
+      align-center
+      d-flex
+      flex-row
+    ">
+      <h3 class="
+        captcha-title
+        text-textBase
+      ">
+        Vérification de sécurité
+      </h3>
+    </div>
+    <div>
+      <!-- v-if -->
+      <!-- v-if -->
+    </div>
+  </div>
+  <div class="captcha">
+    <div class="
+      align-start
+      captcha-config
+      d-flex
+      flex-column
+      ga-2
+      pt-4
+    ">
+      <p class="
+        label-options
+        text-textSubdued
+      ">
+        Choisissez le type de captcha de votre choix.
+      </p>
+      <button
+        class="
+          captcha-btn
+          text-primary
+        "
+        type="button"
+      >
+        <i
+          aria-hidden="true"
+          class="
+            0
+            0
+            0
+            0
+            0,0
+            0,0
+            0,0
+            0,0
+            19,3M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z
+            21,19V5A2,2
+            3,5V19A2,2
+            5,21H19A2,2
+            M19,19H5V5H19M19,3H5A2,2
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-x-small
+            v-theme--light
+          "
+        ></i>
+        captcha image
+      </button>
+      <button
+        class="
+          captcha-btn
+          text-primary
+        "
+        type="button"
+      >
+        <!-- v-if -->
+        <svg
+          aria-hidden="true"
+          fill="#0C419A"
+          height="16"
+          viewBox="0 -960 960 960"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z" />
+        </svg>
+        captcha audio
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Captcha > renders correctly in image mode 1`] = `
+<div>
+  <div>
+    <div class="
+      align-center
+      d-flex
+      flex-row
+    ">
+      <h3 class="
+        captcha-title
+        text-textBase
+      ">
+        Vérification de sécurité
+      </h3>
+    </div>
+    <div>
+      <div>
+        <p class="
+          captcha-instructions
+          text-textSubdued
+        ">
+          Saisissez les caractères affichés ci-dessous.
+        </p>
+      </div>
+      <!-- v-if -->
+    </div>
+  </div>
+  <div class="captcha">
+    <div class="mt-4">
+      <img
+        alt="Le captcha à saisir"
+        height="64"
+        src="/captcha/captcha.png"
+        width="311"
+      />
+    </div>
+    <div class="
+      v-sheet
+      v-theme--light
+    ">
+      <div class="
+        basic-field
+        mt-4
+        v-input
+        v-input--center-affix
+        v-input--density-default
+        v-input--horizontal
+        v-locale--is-ltr
+        v-text-field
+        v-theme--light
+      ">
+        <!---->
+        <div class="v-input__control">
+          <div class="
+            bg-white
+            v-field
+            v-field--appended
+            v-field--center-affix
+            v-field--has-background
+            v-field--prepended
+            v-field--variant-outlined
+            v-locale--is-ltr
+            v-theme--light
+          ">
+            <div class="v-field__overlay"></div>
+            <div class="v-field__loader">
+              <div
+                aria-hidden="true"
+                aria-valuemax="100"
+                aria-valuemin="0"
+                class="
+                  v-locale--is-ltr
+                  v-progress-linear
+                  v-theme--light
+                "
+                role="progressbar"
+                style="
+                  top: 0px;
+                  height: 0px;
+                  --v-progress-linear-height: 2px;
+                "
+              >
+                <!---->
+                <div
+                  class="
+                    bg-primary
+                    v-progress-linear__background
+                  "
+                  style="opacity: NaN;"
+                ></div>
+                <div
+                  class="
+                    bg-primary
+                    v-progress-linear__buffer
+                  "
+                  style="
+                    opacity: NaN;
+                    width: 0%;
+                  "
+                ></div>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="fade-transition"
+                  persisted="false"
+                >
+                  <div class="v-progress-linear__indeterminate">
+                    <div class="
+                      bg-primary
+                      long
+                      v-progress-linear__indeterminate
+                    "></div>
+                    <div class="
+                      bg-primary
+                      short
+                      v-progress-linear__indeterminate
+                    "></div>
+                  </div>
+                </transition-stub>
+                <!---->
+              </div>
+            </div>
+            <div class="v-field__prepend-inner">
+              <!---->
+              <!-- v-if -->
+              <!-- v-if -->
+            </div>
+            <div
+              class="v-field__field"
+              data-no-activator=""
+            >
+              <!---->
+              <label
+                class="
+                  v-field-label
+                  v-label
+                "
+                for="input-v-1"
+              >
+                <!---->
+                Caractères de l’image
+              </label>
+              <!---->
+              <input
+                aria-describedby="input-v-1-messages"
+                aria-label="Caractères de l’image"
+                autocomplete="off"
+                class="v-field__input"
+                id="input-v-1"
+                title="Caractères de l’image"
+                type="text"
+              />
+              <!---->
+            </div>
+            <!---->
+            <div class="v-field__append-inner">
+              <!-- Keyboard-focusable clear button -->
+              <!-- v-if -->
+              <!-- v-if -->
+              <!-- v-if -->
+              <!---->
+            </div>
+            <div class="v-field__outline">
+              <div class="v-field__outline__start"></div>
+              <div class="v-field__outline__notch">
+                <label
+                  aria-hidden="true"
+                  class="
+                    v-field-label
+                    v-field-label--floating
+                    v-label
+                  "
+                  for="input-v-1"
+                >
+                  <!---->
+                  Caractères de l’image
+                </label>
+              </div>
+              <div class="v-field__outline__end"></div>
+              <!---->
+            </div>
+          </div>
+        </div>
+        <!---->
+        <div class="v-input__details">
+          <transition-group-stub
+            appear="false"
+            class="v-messages"
+            css="true"
+            id="input-v-1-messages"
+            name="slide-y-transition"
+            persisted="false"
+            tag="div"
+          >
+            <!---->
+          </transition-group-stub>
+          <!-- v-if -->
+          <!---->
+        </div>
+      </div>
+    </div>
+    <div class="
+      align-start
+      captcha-config
+      d-flex
+      flex-column
+      ga-2
+      pt-4
+    ">
+      <p class="
+        label-options
+        text-textSubdued
+      ">
+        Vous n'arrivez pas à lire ?
+      </p>
+      <button
+        class="
+          captcha-btn
+          text-primary
+        "
+        type="button"
+      >
+        <i
+          aria-hidden="true"
+          class="
+            0
+            0
+            0
+            0
+            0,0
+            0,0
+            0,1
+            0,1
+            10.03,17.75
+            10.43,20
+            12,18C11,18
+            12,20A8,8
+            12,4A8,8
+            12,6C13,6
+            13.57,4
+            13.97,6.25
+            14.8,6.7L16.26,5.24C15.03,4.46
+            20,12H23M6,12A6,6
+            4,12H1L5,16L9,12
+            9.2,17.3L7.74,18.76C8.97,19.54
+            M19,8L15,12H18A6,6
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-x-small
+            v-theme--light
+          "
+        ></i>
+        Changer d’image
+      </button>
+      <button
+        class="
+          captcha-btn
+          text-primary
+        "
+        type="button"
+      >
+        <!-- v-if -->
+        <svg
+          aria-hidden="true"
+          fill="#0C419A"
+          height="16"
+          viewBox="0 -960 960 960"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z" />
+        </svg>
+        Utiliser un captcha audio
+      </button>
+      <p class="
+        captcha-helpdesk
+        mb-2
+        text-textSubdued
+      ">
+        Si vous êtes en incapacité de résoudre le captcha, contactez le support au
+        <a href="tel:3648">3648</a>
+        .
+      </p>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,197 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproMessagingLayout > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-messaging-layout
+    d-flex
+    flex-column
+    flex-md-row
+  "
+  id="modified-unique-id"
+>
+  <nav
+    aria-label="Menu messagerie"
+    class="
+      align-sm-center
+      bg-ap-blue-darken-1
+      d-block
+      d-md-block
+      d-sm-flex
+      messaging-menu
+    "
+    id="modified-unique-id-menu"
+    role="navigation"
+    style="min-width: 300px;"
+  >
+    <div class="messaging-menu__new-message">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="true"
+        class="
+          font-weight-bold
+          messaging-menu__new-message-btn
+          px-5
+        "
+        color="ap-grey-lighten-2"
+        disabled="true"
+        hovercolor="ap-grey-lighten-2"
+        hoverunderline="false"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconcolor="ap-grey"
+        iconleft="true"
+        iconname="pencilNoCircle"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="false"
+        textcolor="ap-grey"
+        type="button"
+        underline="false"
+        uniqueid="modified-unique-id-new-message-btn"
+      ></amelipro-btn-stub>
+    </div>
+    <div
+      class="
+        messaging-menu--desktop
+        w-100
+      "
+      id="modified-unique-id-messaging-menu-desktop"
+    >
+      <ul
+        class="list-style-none"
+        id="modified-unique-id-messaging-menu-list"
+      >
+        <li>
+          <amelipro-messaging-menu-btn-stub
+            active="false"
+            href="#"
+            icon="discussion"
+            label="À traiter"
+            uniqueid="modified-unique-id-menu-btn-0"
+            unreadnumber="1"
+          ></amelipro-messaging-menu-btn-stub>
+        </li>
+        <li>
+          <amelipro-messaging-menu-btn-stub
+            active="true"
+            href="#"
+            icon="horlogeFlecheDroiteNoCircle"
+            label="En cours"
+            uniqueid="modified-unique-id-menu-btn-1"
+          ></amelipro-messaging-menu-btn-stub>
+        </li>
+        <li>
+          <amelipro-messaging-menu-btn-stub
+            active="false"
+            href="#"
+            icon="ecrire"
+            label="Brouillons"
+            uniqueid="modified-unique-id-menu-btn-2"
+            unreadnumber="1"
+          ></amelipro-messaging-menu-btn-stub>
+        </li>
+        <li>
+          <amelipro-messaging-menu-btn-stub
+            active="false"
+            href="#"
+            icon="boite"
+            label="Clos"
+            uniqueid="modified-unique-id-menu-btn-3"
+            unreadnumber="1"
+          ></amelipro-messaging-menu-btn-stub>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div
+    class="
+      amelipro-messaging-layout__content
+      w-100
+    "
+    id="modified-unique-id-content"
+    style="background-color: #FFFFFF;"
+  ></div>
+</div>
+`;
+
+exports[`AmeliproMessagingLayout > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-messaging-layout
+    d-flex
+    flex-column
+    flex-md-row
+  "
+  id="required-unique-id"
+>
+  <nav
+    aria-label="Menu messagerie"
+    class="
+      align-sm-center
+      bg-ap-blue-darken-1
+      d-block
+      d-md-block
+      d-sm-flex
+      messaging-menu
+    "
+    id="required-unique-id-menu"
+    role="navigation"
+    style="min-width: 255px;"
+  >
+    <div class="messaging-menu__new-message">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="true"
+        class="
+          font-weight-bold
+          messaging-menu__new-message-btn
+          px-5
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="false"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconcolor="ap-white"
+        iconleft="true"
+        iconname="pencilNoCircle"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="false"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+        uniqueid="required-unique-id-new-message-btn"
+      ></amelipro-btn-stub>
+    </div>
+    <div
+      class="
+        messaging-menu--desktop
+        w-100
+      "
+      id="required-unique-id-messaging-menu-desktop"
+    >
+      <ul
+        class="list-style-none"
+        id="required-unique-id-messaging-menu-list"
+      ></ul>
+    </div>
+  </nav>
+  <div
+    class="
+      amelipro-messaging-layout__content
+      w-100
+    "
+    id="required-unique-id-content"
+    style="background-color: #FAFAFA;"
+  ></div>
+</div>
+`;

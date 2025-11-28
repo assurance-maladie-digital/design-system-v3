@@ -28,43 +28,43 @@ export function useMonthButtonCustomization(
 		switch (lowerMonth) {
 			case 'january':
 			case 'janvier':
-				return 'Janv.'
+				return 'janv.'
 			case 'february':
 			case 'février':
-				return 'Févr.'
+				return 'févr.'
 			case 'march':
 			case 'mars':
-				return 'Mars'
+				return 'mars'
 			case 'april':
 			case 'avril':
-				return 'Avr.'
+				return 'avr.'
 			case 'may':
 			case 'mai':
-				return 'Mai'
+				return 'mai'
 			case 'june':
 			case 'juin':
-				return 'Juin'
+				return 'juin'
 			case 'july':
 			case 'juillet':
-				return 'Juil.'
+				return 'juil.'
 			case 'august':
 			case 'août':
-				return 'Août'
+				return 'août'
 			case 'september':
 			case 'septembre':
-				return 'Sept.'
+				return 'sept.'
 			case 'october':
 			case 'octobre':
-				return 'Oct.'
+				return 'oct.'
 			case 'november':
 			case 'novembre':
-				return 'Nov.'
+				return 'nov.'
 			case 'december':
 			case 'décembre':
-				return 'Déc.'
+				return 'déc.'
 			default:
 				// Si le mois n'est pas reconnu, retourner le mois avec la première lettre en majuscule
-				return monthName.charAt(0).toUpperCase() + monthName.slice(1)
+				return monthName
 		}
 	}
 
@@ -99,7 +99,7 @@ export function useMonthButtonCustomization(
 								<span class="v-btn__overlay"></span>
 								<span class="v-btn__underlay"></span>
 								<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-									<span style="color: var(--v-theme-primary);">${monthText.charAt(0).toUpperCase() + monthText.slice(1)}</span> 
+									<span style="color: var(--v-theme-primary);">${monthText}</span> 
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
 								</div>
 							</button>

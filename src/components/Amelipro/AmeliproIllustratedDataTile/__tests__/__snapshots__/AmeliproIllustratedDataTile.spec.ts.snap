@@ -1,0 +1,148 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproIllustratedDataTile > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    d-flex
+    illustrated-data-tile
+    pt-2
+  "
+  id="modified-unique-id-container"
+  style="
+    width: 250px;
+    min-height: 300px;
+  "
+>
+  <div
+    class="
+      align-center
+      ap-white
+      d-flex
+      flex-column
+      illustrated-data-tile__wrapper
+      w-100
+    "
+    style="
+      border: 2px solid #EEEEEE !important;
+      padding: 20px;
+    "
+  >
+    <img
+      alt=""
+      class="
+        illustrated-data-tile__img
+        mx-auto
+      "
+      id="modified-unique-id-img"
+      src="modified-img-src"
+    />
+    <p
+      aria-level="3"
+      class="
+        illustrated-data-tile__label
+        mb-0
+        text-center
+      "
+      id="modified-unique-id-label"
+      role="heading"
+    >
+      <span
+        class="
+          d-block
+          illustrated-data-tile__label-line-1
+          text-center
+        "
+        id="modified-unique-id-label-line-1"
+      >
+        Modified label first line
+      </span>
+      <span
+        class="
+          d-block
+          illustrated-data-tile__label-line-2
+          text-center
+          text-uppercase
+        "
+        id="modified-unique-id-label-line-2"
+      >
+        Modified label second line
+      </span>
+    </p>
+    <p
+      class="
+        illustrated-data-tile__info
+        text-center
+      "
+      id="modified-unique-id-complementary-info"
+    >
+      <span class="d-block">
+        Complementary information label 1
+        <span class="font-weight-bold">
+          complementary-information-value-1
+        </span>
+      </span>
+      <span class="d-block">
+        Complementary information label 2
+        <span class="font-weight-bold"></span>
+      </span>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`AmeliproIllustratedDataTile > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    d-flex
+    illustrated-data-tile
+    pt-2
+  "
+  style="width: 100%;"
+>
+  <div
+    class="
+      align-center
+      ap-white
+      d-flex
+      flex-column
+      illustrated-data-tile__wrapper
+      w-100
+    "
+    style="
+      border: 2px solid #EEEEEE !important;
+      padding: 2rem 1rem;
+    "
+  >
+    <!-- v-if -->
+    <p
+      aria-level="2"
+      class="
+        illustrated-data-tile__label
+        mb-0
+        text-center
+      "
+      role="heading"
+    >
+      <span class="
+        d-block
+        illustrated-data-tile__label-line-1
+        text-center
+      ">
+        Required label first line
+      </span>
+      <span class="
+        d-block
+        illustrated-data-tile__label-line-2
+        text-center
+        text-uppercase
+      ">
+        Required label second line
+      </span>
+    </p>
+    <p class="
+      illustrated-data-tile__info
+      text-center
+    "></p>
+  </div>
+</div>
+`;

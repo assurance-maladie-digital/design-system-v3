@@ -35,7 +35,10 @@ exports[`ServiceMenu > render correctly 1`] = `
       data-no-activator=""
     >
       <span
-        class="d-sr-only"
+        class="
+          amelipro-btn__label
+          d-sr-only
+        "
         id="service-menu-id-service-menu-btn-btn-label"
       >
         Bouquet de services

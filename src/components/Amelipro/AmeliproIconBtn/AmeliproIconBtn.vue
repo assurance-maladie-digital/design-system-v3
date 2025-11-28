@@ -197,7 +197,7 @@
 		<span
 			v-if="!hasSlot && btnLabel !== undefined"
 			:id="uniqueId ? `${uniqueId}-btn-label` : undefined"
-			class="d-sr-only"
+			class="d-sr-only amelipro-btn__label"
 		>
 			{{ btnLabel }}
 		</span>

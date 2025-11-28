@@ -435,7 +435,71 @@ describe('SyTable', () => {
 		expect(dataTable.props('showSelect')).toBe(true)
 	})
 
-	it('shoulds hide a column when hideColumn is called', async () => {
+	it('hides header checkbox when showSelectSingle is true', () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelectSingle: true,
+				suffix: 'single-select',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		expect(dataTable.exists()).toBe(true)
+
+		// show-select is enabled
+		expect(dataTable.props('showSelect')).toBe(true)
+
+		// In single-select mode, the header "select all" checkbox should not be rendered
+		const headerCheckbox = wrapper.find('th.checkbox-column .v-selection-control input[type="checkbox"]')
+		expect(headerCheckbox.exists()).toBe(false)
+	})
+
+	it('shows header checkbox when showSelect is true and showSelectSingle is false', () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelect: true,
+				showSelectSingle: false,
+				suffix: 'multi-select',
+			},
+		})
+
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		expect(dataTable.exists()).toBe(true)
+
+		// Multi-select mode keeps page strategy
+		expect(dataTable.props('showSelect')).toBe(true)
+
+		// Header "select all" checkbox should be present
+		const headerCheckbox = wrapper.find('th.checkbox-column .v-selection-control input[type="checkbox"]')
+		expect(headerCheckbox.exists()).toBe(true)
+	})
+
+	it('properly binds the v-model for single selection', async () => {
+		const selectedItems = [fakeItems[0].id]
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelect: false,
+				showSelectSingle: true,
+				modelValue: selectedItems,
+				suffix: 'single-select',
+			},
+		})
+
+		// select the second item
+		await wrapper.setProps({ modelValue: [fakeItems[1].id] })
+
+		// Check that the VDataTable has the correct model value
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+		expect(dataTable.props('modelValue')).toEqual([2])
+	})
+
+	it('should hide a column when hideColumn is called', async () => {
 		// Create a mock for OrganizeColumns component
 		const mockOrganizeColumns = {
 			name: 'OrganizeColumns',

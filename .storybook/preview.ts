@@ -119,7 +119,7 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Démarrer',
-					['Accueil', 'Introduction', 'Politique de confidentialité', 'Releases', 'Créer une issue'],
+					['Accueil', 'Introduction', 'Politique de confidentialité', 'Releases', 'Signaler une anomalie', 'Enrichir le Design System'],
 					'Accessibilité',
 					[
 						'Introduction',

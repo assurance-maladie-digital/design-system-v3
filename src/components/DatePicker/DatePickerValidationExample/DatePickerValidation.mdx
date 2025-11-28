@@ -7,6 +7,7 @@ import '../../../stories/styles/shared.css';
 <div className="header">
   <h1>Documentations des règles de validation du DatePicker</h1>
   <p>Le composant DatePicker prend en charge plusieurs types de règles de validation qui permettent de contrôler les dates saisies par l'utilisateur. Cette documentation décrit toutes les règles disponibles et comment les utiliser.</p>
+  <p>Pour les règles <code>notBeforeDate</code>, <code>notAfterDate</code> et <code>dateExact</code>, lorsque la date de référence est vide (valeur <code>null</code> ou chaîne vide), la règle est ignorée pour cette validation. Le message technique « Configuration de la règle invalide » n'est affiché que si l'option <code>date</code> est totalement absente de la configuration de la règle.</p>
 </div>
 
 > Pour en savoir plus sur le système global de gestion de validation, consultez la page <a href="/?path=/docs/guide-du-dev-utiliser-le-syst%C3%A8me-de-validation--docs">Utiliser le système de validation</a>.
@@ -156,6 +157,12 @@ Vérifie que la date sélectionnée est exactement égale à une date de référ
   }]"
 />
 `}/>
+
+#### Notes sur les dates de référence dynamiques
+
+Lorsque l'option `date` d'une règle `notBeforeDate`, `notAfterDate` ou `dateExact` est fournie mais que sa valeur est vide (`null` ou chaîne vide), la règle est considérée comme inactive pour cette validation : aucun message d'erreur ou d'avertissement n'est affiché.
+
+L'erreur technique « Configuration de la règle invalide » n'est affichée que si l'option `date` est totalement absente de la configuration de la règle (par exemple `{ type: 'notBeforeDate', options: {} }`).
 
 ### 8. `custom`
 

@@ -62,7 +62,10 @@ exports[`AmeliproAccordionResultTemplate > render correctly 1`] = `
         data-no-activator=""
       >
         <span
-          class="d-sr-only"
+          class="
+            amelipro-btn__label
+            d-sr-only
+          "
           id="amelipro-accordion-result-template-unique-id-header-btn-open-close-btn-label"
         >
           Déplier

@@ -23,6 +23,16 @@ const meta = {
 			description: 'Si true, retourne l\'objet entier au lieu de la valeur',
 			control: 'boolean',
 		},
+		label: {
+			description: 'Label du champ de recherche',
+			control: 'text',
+			default: 'Rechercher',
+		},
+		listLabel: {
+			description: 'Legend pour le fieldset contenant la liste des éléments sélectionnables',
+			control: 'text',
+			default: 'Liste des éléments',
+		},
 	},
 } satisfies Meta<typeof SearchListField>
 
@@ -62,6 +72,8 @@ export const Default: Story = {
 				value: 'pharmacien',
 			},
 		],
+		'label': 'Filtrer la liste des professions',
+		'listLabel': 'Choisisser parmi la liste des professions',
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
@@ -90,6 +102,7 @@ export const Default: Story = {
   <SearchListField
    	v-model="modelValue"
 	:items="items"
+	label="Filtrer la liste des professions"
   />
   {{ modelValue }}
 </template>
@@ -167,6 +180,8 @@ export const WithReturnObject: Story = {
 				value: 'pharmacien',
 			},
 		],
+		'label': 'Filtrer la liste des professions',
+		'listLabel': 'Choisisser parmi la liste des professions',
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
@@ -198,6 +213,7 @@ export const WithReturnObject: Story = {
   <SearchListField
 	v-model="modelValue"
 	:items="items"
+	label="Filtrer la liste des professions"
 	:return-object="true"
   />
   {{ modelValue }}

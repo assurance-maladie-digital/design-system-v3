@@ -300,7 +300,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-0-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -424,7 +427,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-1-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -548,7 +554,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-2-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -672,7 +681,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-3-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -796,7 +808,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-4-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -920,7 +935,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-5-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -1044,7 +1062,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-6-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -1168,7 +1189,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-7-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -1292,7 +1316,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-8-header-btn-open-close-btn-label"
                 >
                   Déplier
@@ -1416,7 +1443,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                 data-no-activator=""
               >
                 <span
-                  class="d-sr-only"
+                  class="
+                    amelipro-btn__label
+                    d-sr-only
+                  "
                   id="accordion-result-9-header-btn-open-close-btn-label"
                 >
                   Déplier
