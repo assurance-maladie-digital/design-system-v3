@@ -7,17 +7,15 @@ exports[`AmeliproTable > Snapshots > renders the component with all properties f
 >
   <!-- v-if -->
   <div
+    class="amelipro-table__wrapper--desktop"
     id="modified-amelipro-table-id-desktop"
     style="overflow-x: auto;"
   >
-    <div
-      class="amelipro-table__wrapper--desktop"
-      style="
-        max-width: 80%;
-        width: 90%;
-        min-width: 60%;
-      "
-    >
+    <div style="
+      max-width: 80%;
+      width: 90%;
+      min-width: 60%;
+    ">
       <table
         aria-label="Modified Titre du tableau"
         class="
@@ -31,6 +29,7 @@ exports[`AmeliproTable > Snapshots > renders the component with all properties f
             <th
               class="
                 bg-ap-grey-lighten-4
+                custom-header-class
                 font-weight-semibold
               "
               id="modified-amelipro-table-id-table-header-cell-0"
@@ -42,10 +41,13 @@ exports[`AmeliproTable > Snapshots > renders the component with all properties f
                 text-align: right;
               "
             >
-              <p class="
-                d-flex
-                mb-0
-              ">
+              <p
+                aria-describedby="modified-description-id"
+                class="
+                  d-flex
+                  mb-0
+                "
+              >
                 Modified Nom
                 <amelipro-icon-btn-stub
                   badge="false"
@@ -135,7 +137,7 @@ exports[`AmeliproTable > Snapshots > renders the component with all properties f
         <tbody>
           <tr id="modified-amelipro-table-id-table-row-0">
             <td
-              class=""
+              class="custom-cells-class"
               id="modified-amelipro-table-id-table-row-0-cell-0"
               style="text-align: right;"
             >
@@ -164,7 +166,7 @@ exports[`AmeliproTable > Snapshots > renders the component with all properties f
           </tr>
           <tr id="modified-amelipro-table-id-table-row-1">
             <td
-              class=""
+              class="custom-cells-class"
               id="modified-amelipro-table-id-table-row-1-cell-0"
               style="text-align: right;"
             >
@@ -249,16 +251,14 @@ exports[`AmeliproTable > Snapshots > renders the component with only required pr
     </div>
   </div>
   <div
+    class="amelipro-table__wrapper--desktop"
     id="required-amelipro-table-id-desktop"
     style="overflow-x: auto;"
   >
-    <div
-      class="amelipro-table__wrapper--desktop"
-      style="
-        max-width: 100%;
-        width: 100%;
-      "
-    >
+    <div style="
+      max-width: 100%;
+      width: 100%;
+    ">
       <table
         aria-label="Required Titre du tableau"
         class="amelipro-table__table--desktop"
