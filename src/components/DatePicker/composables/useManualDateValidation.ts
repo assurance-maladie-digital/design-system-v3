@@ -6,6 +6,7 @@ import {
 	validateEmptyOrIncompleteDate,
 	type CustomRule,
 } from '../utils/validationUtils'
+import { useDateFormatDisplay } from './useDateFormatDisplay'
 
 /**
  * Composable pour la validation manuelle des dates saisies
@@ -46,6 +47,9 @@ export const useManualDateValidation = (options: {
 		parseDate,
 		validateField,
 	} = options
+
+	const { getDisplayFormat } = useDateFormatDisplay()
+	const displayFormat = getDisplayFormat(format)
 
 	/**
 	 * Valide une saisie manuelle de date
@@ -89,7 +93,7 @@ export const useManualDateValidation = (options: {
 		if (!date) {
 			// La date n'a pas pu être parsée
 			if (!disableErrorHandling) {
-				errors.value.push(`Format de date invalide (${format})`)
+				errors.value.push(`Format de date invalide (${displayFormat})`)
 			}
 			return false
 		}

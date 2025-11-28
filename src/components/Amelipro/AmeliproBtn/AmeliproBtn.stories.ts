@@ -86,7 +86,7 @@ export const Default: Story = {
 	},
 }
 
-export const Badge: Story = {
+export const AvecBadge: Story = {
 	args: {
 		badge: 1,
 		badgeBgColor: 'ap-pink',
@@ -317,45 +317,6 @@ export const TexteSeul: Story = {
 		setup() { return { args } },
 		template: `
 <p class="mb-2">Bouton affiché sans fond, uniquement en texte (<code>text</code>).</p>
-<AmeliproBtn v-bind="args">
-    {{ args.default }}
-</AmeliproBtn>
-        `,
-	}),
-}
-
-export const AvecBadge: Story = {
-	name: 'Avec badge',
-	args: {
-		default: 'Bouton avec badge',
-		badge: 3,
-		badgeBgColor: 'ap-pink',
-		badgeColor: 'ap-white',
-		uniqueId: 'btn-badge',
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-    <AmeliproBtn
-        badge="3"
-        badge-bg-color="ap-pink"
-        badge-color="ap-white"
-        unique-id="btn-badge"
-    >
-        Bouton avec badge
-    </AmeliproBtn>
-</template>
-                `,
-			},
-		],
-	},
-	render: args => ({
-		components: { AmeliproBtn },
-		setup() { return { args } },
-		template: `
-<p class="mb-2">Bouton avec badge (<code>badge</code>, <code>badgeBgColor</code>, <code>badgeColor</code>).</p>
 <AmeliproBtn v-bind="args">
     {{ args.default }}
 </AmeliproBtn>

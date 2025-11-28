@@ -109,6 +109,7 @@ export const iconList: IconItem[] = [
 	{ name: 'signature2' },
 	{ name: 'shieldPlus' },
 	{ name: 'delegation' },
+	{ name: 'attele' },
 	{
 		name: 'chevronLeft',
 		noBackground: true,

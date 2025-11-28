@@ -1,20 +1,19 @@
 ---
-name: Problème d'accessibilité
-about: Signalez un problème d'accessibilité ou proposez une amélioration
+name: Problème d'accessibilité majeur
+about: Signalez un problème d'accessibilité majeur ou proposez une amélioration
+title: Anomalie d'accessibilité majeure
 labels:
   - type: accessibility
+  - severity: major
 ---
 
-## Type d'issue
+## Type d'anomalie
 
-♿ Accessibilité
+♿ Anomalie d'accessibilité
 
 ### Impact
 
-<!-- Quel est l'impact sur votre projet ? -->
-
-Bloquant : <!-- Oui, Non (est-ce que le problème empêche le développement ou la mise en production ?) -->
-
+🔴 Bloquant
 
 ## Description du problème
 

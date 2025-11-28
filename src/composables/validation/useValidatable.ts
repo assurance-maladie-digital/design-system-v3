@@ -14,26 +14,37 @@ import { useValidatableComponent } from './useFormValidation'
  *   return isValid
  * }
  *
+ * const clearValidation = () => {
+ *   // Logique de nettoyage de la validation
+ * }
+ *
+ * const reset = () => {
+ *   // Logique de réinitialisation
+ * }
+ *
  * // Enregistrer le composant auprès du formulaire parent
- * useValidatable(validateOnSubmit)
+ * useValidatable(validateOnSubmit, clearValidation, reset)
  */
-export function useValidatable(validateMethod: () => Promise<boolean> | boolean) {
+export function useValidatable(
+	validateMethod: () => Promise<boolean> | boolean,
+	clearValidation?: () => void,
+	reset?: () => void,
+) {
 	const { register, unregister } = useValidatableComponent()
 	const instance = getCurrentInstance()
 
+	// Keep a stable object reference for register/unregister symmetry
+	const componentRef = { validateOnSubmit: validateMethod, clearValidation, reset }
+
 	onMounted(() => {
 		if (instance) {
-			register({
-				validateOnSubmit: validateMethod,
-			})
+			register(componentRef)
 		}
 	})
 
 	onBeforeUnmount(() => {
 		if (instance) {
-			unregister({
-				validateOnSubmit: validateMethod,
-			})
+			unregister(componentRef)
 		}
 	})
 

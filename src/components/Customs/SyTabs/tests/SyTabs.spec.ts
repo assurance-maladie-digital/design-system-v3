@@ -438,4 +438,102 @@ describe('SyTabs', () => {
 			expect(tabItems.length).toBe(testItems.length)
 		})
 	})
+
+	// Tests des slots
+	describe('Slots', () => {
+		it('doit afficher le contenu du slot tabs-prepend', () => {
+			const wrapper = createWrapper({
+				slots: {
+					'tabs-prepend': '<div data-test="tabs-prepend">prepend</div>',
+				},
+			})
+
+			const prepend = wrapper.find('[data-test="tabs-prepend"]')
+			expect(prepend.exists()).toBe(true)
+			expect(prepend.text()).toBe('prepend')
+		})
+
+		it('doit afficher le contenu du slot tabs-append', () => {
+			const wrapper = createWrapper({
+				slots: {
+					'tabs-append': '<div data-test="tabs-append">append</div>',
+				},
+			})
+
+			const append = wrapper.find('[data-test="tabs-append"]')
+			expect(append.exists()).toBe(true)
+			expect(append.text()).toBe('append')
+		})
+
+		it('doit passer correctement item, index et isActive au slot tab-prepend', async () => {
+			const wrapper = createWrapper({
+				slots: {
+					'tab-prepend': `
+						<template #default="{ item, index, isActive }">
+							<span
+								data-test="tab-prepend-slot"
+								:data-index="index"
+								:data-value="item.value"
+								:data-active="isActive"
+							/>
+						</template>
+					`,
+				},
+			})
+
+			// Vérifier l'état initial : premier onglet actif
+			let markers = wrapper.findAll('[data-test="tab-prepend-slot"]')
+			expect(markers.length).toBe(testItems.length)
+			// Premier onglet actif, les autres inactifs
+			expect(markers[0].attributes('data-active')).toBe('true')
+			for (let i = 1; i < markers.length; i++) {
+				expect(markers[i].attributes('data-active')).toBe('false')
+			}
+
+			// Changer d'onglet actif
+			const secondTab = wrapper.findAll('.sy-tabs__button')[1]
+			await secondTab.trigger('click')
+			await nextTick()
+
+			// Recalcule des marqueurs
+			markers = wrapper.findAll('[data-test="tab-prepend-slot"]')
+			expect(markers[1].attributes('data-active')).toBe('true')
+			expect(markers[0].attributes('data-active')).toBe('false')
+		})
+
+		it('doit passer correctement item, index et isActive au slot tab-append', async () => {
+			const wrapper = createWrapper({
+				slots: {
+					'tab-append': `
+						<template #default="{ item, index, isActive }">
+							<span
+								data-test="tab-append-slot"
+								:data-index="index"
+								:data-value="item.value"
+								:data-active="isActive"
+							/>
+						</template>
+					`,
+				},
+			})
+
+			// Vérifier l'état initial : premier onglet actif
+			let markers = wrapper.findAll('[data-test="tab-append-slot"]')
+			expect(markers.length).toBe(testItems.length)
+			expect(markers[0].attributes('data-active')).toBe('true')
+			for (let i = 1; i < markers.length; i++) {
+				expect(markers[i].attributes('data-active')).toBe('false')
+			}
+
+			// Changer d'onglet actif
+			const thirdTab = wrapper.findAll('.sy-tabs__button')[2]
+			await thirdTab.trigger('click')
+			await nextTick()
+
+			// Recalcule des marqueurs
+			markers = wrapper.findAll('[data-test="tab-append-slot"]')
+			expect(markers[2].attributes('data-active')).toBe('true')
+			expect(markers[0].attributes('data-active')).toBe('false')
+		})
+	})
 })

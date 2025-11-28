@@ -1,0 +1,134 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproDropdownMenu > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="dropdown-menu"
+  id="modified-unique-id"
+  style="width: 500px;"
+>
+  <amelipro-btn-stub
+    aria-controls="modified-unique-id-menu"
+    aria-expanded="false"
+    aria-haspopup="true"
+    badge="false"
+    badgebgcolor="ap-pink"
+    badgecolor="ap-white"
+    bordered="false"
+    class="
+      dropdown-menu__open-btn
+      font-weight-bold
+      text-h6
+      text-none
+      w-100
+    "
+    color="ap-white"
+    disabled="false"
+    hovercolor="ap-grey-lighten-4"
+    hoverunderline="false"
+    iconbgcolor="transparent"
+    iconbordered="false"
+    iconleft="false"
+    infoblock="false"
+    minheight="2.5rem"
+    size="60px"
+    text="false"
+    textcolor="ap-grey-darken-1"
+    type="button"
+    underline="false"
+    uniqueid="modified-unique-id-btn"
+  ></amelipro-btn-stub>
+  <ul
+    aria-label="Modified label"
+    class="
+      ap-white
+      dropdown-menu__list
+      list-style-none
+    "
+    id="modified-unique-id-menu"
+    role="menu"
+    style="display: none;"
+  >
+    <li
+      class="dropdown-menu__item"
+      role="none"
+    >
+      <amelipro-dropdown-menu-btn-stub
+        href="#"
+        label="Boîte de réception"
+        uniqueid="modified-unique-id-btn-0"
+      ></amelipro-dropdown-menu-btn-stub>
+    </li>
+    <li
+      class="dropdown-menu__item"
+      role="none"
+    >
+      <amelipro-dropdown-menu-btn-stub
+        href="#"
+        label="Brouillons"
+        uniqueid="modified-unique-id-btn-1"
+      ></amelipro-dropdown-menu-btn-stub>
+    </li>
+    <li
+      class="dropdown-menu__item"
+      role="none"
+    >
+      <amelipro-dropdown-menu-btn-stub
+        href="#"
+        label="Archives"
+        uniqueid="modified-unique-id-btn-2"
+      ></amelipro-dropdown-menu-btn-stub>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`AmeliproDropdownMenu > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="dropdown-menu"
+  id="required-unique-id"
+  style="width: 100%;"
+>
+  <amelipro-btn-stub
+    aria-controls="required-unique-id-menu"
+    aria-expanded="false"
+    aria-haspopup="true"
+    badge="false"
+    badgebgcolor="ap-pink"
+    badgecolor="ap-white"
+    bordered="false"
+    class="
+      dropdown-menu__open-btn
+      font-weight-bold
+      text-h6
+      text-none
+      w-100
+    "
+    color="ap-white"
+    disabled="false"
+    hovercolor="ap-grey-lighten-4"
+    hoverunderline="false"
+    iconbgcolor="transparent"
+    iconbordered="false"
+    iconleft="false"
+    infoblock="false"
+    minheight="2.5rem"
+    size="60px"
+    text="false"
+    textcolor="ap-grey-darken-1"
+    type="button"
+    underline="false"
+    uniqueid="required-unique-id-btn"
+  ></amelipro-btn-stub>
+  <ul
+    aria-label="Required label"
+    class="
+      ap-white
+      dropdown-menu__list
+      list-style-none
+    "
+    id="required-unique-id-menu"
+    role="menu"
+    style="display: none;"
+  ></ul>
+</div>
+`;

@@ -38,10 +38,10 @@ describe('useMonthButtonCustomization', () => {
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
-		expect(monthBtn.textContent).toContain('Janv.')
+		expect(monthBtn.textContent).toContain('janv.')
 	})
 
-	it('personnalise correctement les noms de mois (février -> Févr.)', async () => {
+	it('personnalise correctement les noms de mois (février -> févr.)', async () => {
 		monthName.value = 'février'
 		const { customizeMonthButton } = useMonthButtonCustomization(
 			isPickerVisibleGetter,
@@ -52,7 +52,7 @@ describe('useMonthButtonCustomization', () => {
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
-		expect(monthBtn.textContent).toContain('Févr.')
+		expect(monthBtn.textContent).toContain('févr.')
 	})
 
 	it('capitalise le premier caractère si le mois n\'est pas reconnu', async () => {
@@ -66,7 +66,7 @@ describe('useMonthButtonCustomization', () => {
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
-		expect(monthBtn.textContent).toContain('Pluviose')
+		expect(monthBtn.textContent).toContain('pluviose')
 	})
 
 	it('customise les boutons du mois et de l’année', async () => {
@@ -86,7 +86,7 @@ describe('useMonthButtonCustomization', () => {
 		const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
 
 		expect(monthBtn.innerHTML).toContain('<svg') // icône ajoutée
-		expect(monthBtn.textContent).toContain('Janv.') // mois transformé
+		expect(monthBtn.textContent).toContain('janv.') // mois transformé
 		expect(monthButtonText.value).toBe('janvier 2023')
 
 		expect(yearBtn.innerHTML).toContain('2023')
@@ -109,7 +109,7 @@ describe('useMonthButtonCustomization', () => {
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
 		const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
 
-		expect(monthBtn.textContent).toContain('Mars')
+		expect(monthBtn.textContent).toContain('mars')
 		expect(yearBtn.textContent).toContain('2030')
 	})
 

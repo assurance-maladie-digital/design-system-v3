@@ -49,6 +49,8 @@
 		'tabs-prepend': () => unknown
 		'tabs-append': () => unknown
 		'default': () => unknown
+		'tab-prepend': (props: { item: TabItem, index: number, isActive: boolean }) => unknown
+		'tab-append': (props: { item: TabItem, index: number, isActive: boolean }) => unknown
 	}>()
 
 	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
@@ -355,7 +357,19 @@
 									}
 								}"
 							>
+								<slot
+									name="tab-prepend"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 								{{ item.label.toUpperCase() }}
+								<slot
+									name="tab-append"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 							</RouterLink>
 							<!-- Use regular anchor for external links -->
 							<a
@@ -387,7 +401,19 @@
 									}
 								}"
 							>
+								<slot
+									name="tab-prepend"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 								{{ item.label.toUpperCase() }}
+								<slot
+									name="tab-append"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 							</a>
 							<!-- Fallback button for items without navigation -->
 							<!-- Version désactivée du RouterLink -->
@@ -406,7 +432,19 @@
 								tabindex="-1"
 								disabled
 							>
+								<slot
+									name="tab-prepend"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 								{{ item.label.toUpperCase() }}
+								<slot
+									name="tab-append"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 							</button>
 							<!-- Version désactivée du lien -->
 							<button
@@ -424,7 +462,19 @@
 								tabindex="-1"
 								disabled
 							>
+								<slot
+									name="tab-prepend"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 								{{ item.label.toUpperCase() }}
+								<slot
+									name="tab-append"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 							</button>
 							<!-- Fallback button pour les onglets standards -->
 							<button
@@ -449,7 +499,19 @@
 									}
 								}"
 							>
+								<slot
+									name="tab-prepend"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 								{{ item.label.toUpperCase() }}
+								<slot
+									name="tab-append"
+									:item="item"
+									:index="index"
+									:is-active="activeItemIndex === index"
+								/>
 							</button>
 						</li>
 					</ul>

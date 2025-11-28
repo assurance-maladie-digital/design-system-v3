@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproIcon > Snapshots > renders the component with all properties filled in 1`] = `
+<span
+  class="amelipro-icon"
+  id="modified-unique-id"
+>
+  <span
+    aria-hidden="true"
+    aria-label="Modified label"
+    class="
+      amelipro-custom-icon
+      custom-color
+      large
+      medium
+      small
+      x-large
+    "
+    focusable="false"
+    role="img"
+    style="
+      color: #56C271;
+      border-radius: 50%;
+      border: 1px solid #0C419A;
+      height: 4rem;
+      width: auto;
+    "
+  >
+    <span>
+      <svg
+        aria-hidden="true"
+        clip-rule="evenodd"
+        fill-rule="evenodd"
+        height="34"
+        image-rendering="optimizeQuality"
+        shape-rendering="geometricPrecision"
+        text-rendering="geometricPrecision"
+        viewBox="0 0 1823 1823"
+        width="34"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          class="circle-color"
+          cx="912"
+          cy="912"
+          r="912"
+        />
+        <path
+          class="shape-color"
+          d="M962 454c117 0 125 154 125 154v145s1 111-73 152c-2 10-3 20-1 30 4-2-21 146 106 165 92 15 178 57 247 120 23 23 40 186 40 186H418s-2-132 40-186c73-62 162-104 257-120 128-19 85-160 89-158 2-10 1-21-1-31 0 0-69-89-68-169 1-81 0-134 0-134s-4-190 126-190l101 36z"
+        />
+      </svg>
+    </span>
+  </span>
+</span>
+`;
+
+exports[`AmeliproIcon > Snapshots > renders the component with only required properties filled in 1`] = `
+<span class="amelipro-icon">
+  <span
+    aria-hidden="true"
+    class="
+      amelipro-custom-icon
+      custom-color
+    "
+    focusable="false"
+    role="img"
+    style="color: #000000;"
+  >
+    <!-- v-if -->
+  </span>
+</span>
+`;
