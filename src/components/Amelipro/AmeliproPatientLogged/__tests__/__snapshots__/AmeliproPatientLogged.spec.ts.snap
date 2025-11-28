@@ -932,8 +932,9 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
             w-100
           ">
             <div class="
-              align-start
+              align-baseline
               d-inline-flex
+              mb-1
             ">
               <label
                 class="

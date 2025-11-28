@@ -123,7 +123,7 @@
 		return false
 	})
 
-	const labelMarginBottomValue = computed<IndexedObject | undefined>(() => (props.labelMarginBottom ? { marginBottom: props.labelMarginBottom } : undefined))
+	const labelMarginBottomValue = computed<IndexedObject | undefined>(() => (props.labelMarginBottom ? { marginBottom: props.labelMarginBottom } : { marginBottom: '4px' }))
 
 	onUpdated(() => {
 		isAlreadyCheckedOnce.value = true
@@ -145,7 +145,7 @@
 			<p
 				:id="uniqueId"
 				:aria-describedby="labelDescription"
-				class="mb-1 text-ap-grey-darken-1 amelipro-custom-selector__label"
+				class="text-ap-grey-darken-1 amelipro-custom-selector__label"
 			>
 				{{ groupLabel }}
 

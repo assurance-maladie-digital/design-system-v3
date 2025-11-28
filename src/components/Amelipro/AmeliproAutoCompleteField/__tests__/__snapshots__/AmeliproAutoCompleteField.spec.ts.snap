@@ -17,9 +17,10 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with all 
   "
 >
   <div class="
-    align-start
+    align-baseline
     amelipro-autocomplete__label-wrapper
     d-inline-flex
+    mb-1
     mr-md-2
     mt-md-2
   ">
@@ -99,9 +100,10 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with only
   id="required-unique-id-container"
 >
   <div class="
-    align-start
+    align-baseline
     amelipro-autocomplete__label-wrapper
     d-inline-flex
+    mb-1
   ">
     <label
       class="amelipro-autocomplete__label"

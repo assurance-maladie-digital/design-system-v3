@@ -267,7 +267,7 @@
 		:style="globalFieldStyles"
 	>
 		<div
-			class="d-inline-flex align-start amelipro-autocomplete__label-wrapper"
+			class="d-inline-flex align-baseline mb-1 amelipro-autocomplete__label-wrapper"
 			:class="horizontal ? 'mt-md-2 mr-md-2' : undefined"
 		>
 			<label
@@ -290,7 +290,10 @@
 				</span>
 			</label>
 
-			<slot name="labelInfo" />
+			<slot
+				class="mb-1"
+				name="labelInfo"
+			/>
 		</div>
 
 		<VAutocomplete
@@ -375,7 +378,6 @@
 	}
 
 	.amelipro-autocomplete__label {
-		margin-bottom: 4px;
 		font-size: apTokens.$font-size-xs;
 		font-weight: apTokens.$label-font-weight;
 	}

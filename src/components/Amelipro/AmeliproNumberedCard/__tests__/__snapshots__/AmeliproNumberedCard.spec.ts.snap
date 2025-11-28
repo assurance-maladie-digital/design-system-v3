@@ -1,23 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproNumberedCard > render correctly 1`] = `
+exports[`AmeliproNumberedCard > Snapshots > renders the component with all properties filled in 1`] = `
 <ol
   class="
     amelipro-numbered-card__list
     d-flex
     flex-wrap
-    items-per-line-2
+    items-per-line-3
     justify-center
     list-style-none
   "
-  id="my-numbered-card-id"
+  id="modified-unique-id"
 >
   <li
     class="
       mb-4
       numbered-card-item__wrapper
     "
-    id="my-numbered-card-id-card-0"
+    id="modified-unique-id-card-0"
   >
     <span class="
       font-weight-regular
@@ -29,7 +29,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
           text--darken-1
           toto
         "
-        id="my-numbered-card-id-card-0-number"
+        id="modified-unique-id-card-0-number"
       >
         1
       </span>
@@ -40,26 +40,22 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
         d-flex
         w-100
       "
-      id="my-numbered-card-id-card-0-wrapper"
+      id="modified-unique-id-card-0-wrapper"
     >
       <div
         class="
           amelipro-card--numbered
           w-100
         "
-        style="
-          background-color: #FFFFFF;
-          border: 1px solid #DDDEDE;
-        "
+        style="background-color: #545859;"
       >
         <div
-          class="amelipro-card--numbered-content"
-          id="my-numbered-card-id-card-0-content"
-        >
-          <p>
-            Contenu des cartes
-          </p>
-        </div>
+          class="
+            amelipro-card--numbered-content
+            modified-content-classes
+          "
+          id="modified-unique-id-card-0-content"
+        ></div>
       </div>
     </div>
   </li>
@@ -68,7 +64,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
       mb-4
       numbered-card-item__wrapper
     "
-    id="my-numbered-card-id-card-1"
+    id="modified-unique-id-card-1"
   >
     <span class="
       font-weight-regular
@@ -80,7 +76,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
           text--darken-1
           toto
         "
-        id="my-numbered-card-id-card-1-number"
+        id="modified-unique-id-card-1-number"
       >
         2
       </span>
@@ -91,26 +87,22 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
         d-flex
         w-100
       "
-      id="my-numbered-card-id-card-1-wrapper"
+      id="modified-unique-id-card-1-wrapper"
     >
       <div
         class="
           amelipro-card--numbered
           w-100
         "
-        style="
-          background-color: #FFFFFF;
-          border: 1px solid #DDDEDE;
-        "
+        style="background-color: #545859;"
       >
         <div
-          class="amelipro-card--numbered-content"
-          id="my-numbered-card-id-card-1-content"
-        >
-          <p>
-            Contenu des cartes
-          </p>
-        </div>
+          class="
+            amelipro-card--numbered-content
+            modified-content-classes
+          "
+          id="modified-unique-id-card-1-content"
+        ></div>
       </div>
     </div>
   </li>
@@ -119,7 +111,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
       mb-4
       numbered-card-item__wrapper
     "
-    id="my-numbered-card-id-card-2"
+    id="modified-unique-id-card-2"
   >
     <span class="
       font-weight-regular
@@ -131,7 +123,7 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
           text--darken-1
           toto
         "
-        id="my-numbered-card-id-card-2-number"
+        id="modified-unique-id-card-2-number"
       >
         3
       </span>
@@ -142,28 +134,38 @@ exports[`AmeliproNumberedCard > render correctly 1`] = `
         d-flex
         w-100
       "
-      id="my-numbered-card-id-card-2-wrapper"
+      id="modified-unique-id-card-2-wrapper"
     >
       <div
         class="
           amelipro-card--numbered
           w-100
         "
-        style="
-          background-color: #FFFFFF;
-          border: 1px solid #DDDEDE;
-        "
+        style="background-color: #545859;"
       >
         <div
-          class="amelipro-card--numbered-content"
-          id="my-numbered-card-id-card-2-content"
-        >
-          <p>
-            Contenu des cartes
-          </p>
-        </div>
+          class="
+            amelipro-card--numbered-content
+            modified-content-classes
+          "
+          id="modified-unique-id-card-2-content"
+        ></div>
       </div>
     </div>
   </li>
 </ol>
+`;
+
+exports[`AmeliproNumberedCard > Snapshots > renders the component with only required properties filled in 1`] = `
+<ol
+  class="
+    amelipro-numbered-card__list
+    d-flex
+    flex-wrap
+    items-per-line-2
+    justify-center
+    list-style-none
+  "
+  id="required-unique-id"
+></ol>
 `;
