@@ -49,7 +49,6 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with all 
   </div>
   <v-autocomplete-stub
     aria-expanded="false"
-    aria-required="true"
     autocomplete="list"
     bg-color="ap-grey-lighten-2"
     class="
@@ -67,6 +66,7 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with all 
     modelvalue="modified-model-value"
     placeholder="Modified placeholder"
     readonly=""
+    required="true"
     role="combobox"
     rules="() => "modified-rules",(value) => {
     let valid;
@@ -116,7 +116,6 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with only
   </div>
   <v-autocomplete-stub
     aria-expanded="false"
-    aria-required="false"
     autocomplete="list"
     bg-color="ap-white"
     class="
@@ -131,6 +130,7 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with only
     id="required-unique-id"
     items=""
     menu-props="[object Object]"
+    required="false"
     role="combobox"
     rules=""
     variant="outlined"

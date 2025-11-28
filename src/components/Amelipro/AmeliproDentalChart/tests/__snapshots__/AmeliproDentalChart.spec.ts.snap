@@ -43,11 +43,11 @@ exports[`AmeliproDentalChart > render correctly 1`] = `
         </div>
         <div
           aria-labelledby="my-btn-id-filters"
-          aria-required="false"
           class="
             mt-2
             radio-group__wrapper
           "
+          required="false"
           role="radiogroup"
         >
           <ul

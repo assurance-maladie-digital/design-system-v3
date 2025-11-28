@@ -237,9 +237,9 @@ exports[`AmeliproCaptcha > render correctly 1`] = `
                     <!---->
                     <!---->
                     <input
-                      aria-required="true"
                       class="v-field__input"
                       id="my-captcha-id-input"
+                      required=""
                       size="1"
                       type="text"
                       value="input value"

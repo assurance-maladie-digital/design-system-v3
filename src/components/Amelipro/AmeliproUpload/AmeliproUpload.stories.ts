@@ -4,7 +4,7 @@ import { ref, watch } from 'vue'
 
 const meta = {
 	argTypes: {
-		'ariaRequired': { description: 'Défini si le champ est obligatoire' },
+		'required': { description: 'Défini si le champ est obligatoire' },
 		'change': {
 			table: { category: 'events' },
 			description: 'Événement émis au changement de la liste de fichiers par utilisation du click sur le champs, renvoie la liste de fichiers',
@@ -16,7 +16,7 @@ const meta = {
 		'fileTypeAccepted': {	description: 'Tableau de string au format MIME pour le type de fichier accepté. Exemple : application/pdf (string au format MIME)' },
 		'inputLabel': { description: 'Libellé du champ' },
 		'maxFileNumber': { description: 'Nombre maximum de fichiers autorisés' },
-		'rules': { description: 'Liste des règles supplémentaires à respecter pour valider le champ, en plus des règles par défaut. Si une règle est refusée, l’envoi du formulaire est impossible. Par défaut seule la règle `required` est appliquée (si la prop `ariaRequired` vaut `true`). ' },
+		'rules': { description: 'Liste des règles supplémentaires à respecter pour valider le champ, en plus des règles par défaut. Si une règle est refusée, l’envoi du formulaire est impossible. Par défaut seule la règle `required` est appliquée (si la prop `required` vaut `true`). ' },
 		'uniqueId': { description: 'Identifiant unique pour le champ' },
 		'value': { description: 'Liste des fichiers actuelle' },
 		'warningRules': { description: '' },

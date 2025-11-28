@@ -5,10 +5,10 @@ import AmeliproTextArea from './AmeliproTextArea.vue'
 const meta = {
 	argTypes: {
 		'append': { description: 'Permet d\'ajouter un élément juste après le champ' },
-		'ariaRequired': {
+		'required': {
 			default: false,
 			description: 'Défini que le champ est obligatoire',
-			name: 'aria-required',
+			name: 'required',
 			type: 'boolean',
 		},
 		'classes': { description: 'Classes à appliquer à la racine du composant' },
@@ -193,19 +193,19 @@ export const Required: Story = {
 	args: {
 		label: 'Champ obligatoire',
 		uniqueId: 'text-area-required',
-		ariaRequired: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<p>Le champ est obligatoire grâce à la prop <code>required</code>.</p>
 	<AmeliproTextArea
 		v-model="model"
 		label="Champ obligatoire"
 		unique-id="text-area-required"
-		aria-required
+		required
 	/>
 </template>`,
 			},
@@ -230,7 +230,7 @@ export const Required: Story = {
 			return { args, model }
 		},
 		template: `
-<p>Le champ est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+<p>Le champ est obligatoire grâce à la prop <code>required</code>.</p>
 <AmeliproTextArea
 	v-bind="args"
 	v-model="model"

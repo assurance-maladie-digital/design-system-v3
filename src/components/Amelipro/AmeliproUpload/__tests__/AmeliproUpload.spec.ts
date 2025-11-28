@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { VueWrapper, shallowMount } from '@vue/test-utils'
+import { shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproUpload from '../AmeliproUpload.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
@@ -11,7 +11,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproUpload> => ({
 
 const defaultPropValues = (): ComponentProps<typeof AmeliproUpload> => ({
 	...requiredPropValues(),
-	ariaRequired: false,
+	required: false,
 	disabled: false,
 	errorMessages: undefined,
 	errorTitle: undefined,
@@ -25,7 +25,7 @@ const defaultPropValues = (): ComponentProps<typeof AmeliproUpload> => ({
 })
 
 const modifiedPropValues = (): ComponentProps<typeof AmeliproUpload> => ({
-	ariaRequired: true,
+	required: true,
 	disabled: true,
 	errorMessages: { error: 'Modified error message' },
 	fileTypeAccepted: ['modified-type-1', 'modified-type-2'],
@@ -64,11 +64,11 @@ describe('AmeliproUpload', () => {
 			expect(wrapper.findComponent({ name: 'VFileInput' }).props('disabled')).toBe(modifiedPropValues().disabled)
 		})
 
-		it('prop ariaRequired sets attribute aria-required on VFileInput', async () => {
-			expect(wrapper.findComponent({ name: 'VFileInput' }).attributes('aria-required')).toBe(String(defaultPropValues().ariaRequired))
-			const { ariaRequired } = modifiedPropValues()
-			await wrapper.setProps({ ariaRequired })
-			expect(wrapper.findComponent({ name: 'VFileInput' }).attributes('aria-required')).toBe(String(modifiedPropValues().ariaRequired))
+		it('prop required sets attribute required on VFileInput', async () => {
+			expect(wrapper.findComponent({ name: 'VFileInput' }).attributes('required')).toBe(String(defaultPropValues().required))
+			const { required } = modifiedPropValues()
+			await wrapper.setProps({ required })
+			expect(wrapper.findComponent({ name: 'VFileInput' }).attributes('required')).toBe(String(modifiedPropValues().required))
 		})
 	})
 })

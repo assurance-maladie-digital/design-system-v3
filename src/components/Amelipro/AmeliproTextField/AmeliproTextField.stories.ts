@@ -5,10 +5,10 @@ import AmeliproTextField from './AmeliproTextField.vue'
 const meta = {
 	argTypes: {
 		'append': { description: 'Permet d\'ajouter un élément juste après le champ' },
-		'ariaRequired': {
+		'required': {
 			default: false,
 			description: 'Défini que le champ est obligatoire',
-			name: 'aria-required',
+			name: 'required',
 			type: 'boolean',
 		},
 		'classes': { description: 'Classes à appliquer à la racine du composant' },
@@ -101,7 +101,7 @@ export const Default: Story = {
 
 export const Date: Story = {
 	args: {
-		ariaRequired: true,
+		required: true,
 		label: 'Mon label',
 		maxDate: '2024-02-20',
 		minDate: '2024-01-20',
@@ -117,7 +117,7 @@ export const Date: Story = {
 <template>
 	<AmeliproTextField
 		v-model="model"
-		aria-required
+		required
 		classes="mt-2"
 		label="Mon label"
 		max-date="2024-02-20"
@@ -160,7 +160,7 @@ export const Date: Story = {
 
 export const Number: Story = {
 	args: {
-		ariaRequired: true,
+		required: true,
 		label: 'Mon label',
 		maxNumber: '10',
 		minNumber: '0',
@@ -176,7 +176,7 @@ export const Number: Story = {
 <template>
 	<AmeliproTextField
 		v-model="model"
-		aria-required
+		required
 		classes="mt-2"
 		label="Mon label"
 		max-number="10"
@@ -736,19 +736,19 @@ export const Required: Story = {
 		label: 'Champ requis',
 		modelValue: '',
 		uniqueId: 'text-required',
-		ariaRequired: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<p>Le champ est requis grâce à la prop <code>ariaRequired</code>.</p>
+	<p>Le champ est requis grâce à la prop <code>required</code>.</p>
 	<AmeliproTextField
 		v-model="model"
 		label="Champ requis"
 		unique-id="text-required"
-		aria-required
+		required
 	/>
 </template>`,
 			},
@@ -773,7 +773,7 @@ export const Required: Story = {
 			return { args, model }
 		},
 		template: `
-<p>Le champ est requis grâce à la prop <code>ariaRequired</code>.</p>
+          <p>Le champ est requis grâce à la prop <code>required</code>.</p>
 <AmeliproTextField
 	v-bind="args"
 	v-model="model"

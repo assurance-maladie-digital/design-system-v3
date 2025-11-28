@@ -1,13 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
 import AmeliproRadioGroup from './AmeliproRadioGroup.vue'
+// --- LabelInfo ---
+import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta = {
 	argTypes: {
 		'`append-${index}`': { description: 'Permet de rajouter un élément après le label des boutons radios, il y a un slot par item de la liste' },
 		'`subItem-${index}`': { description: 'Permet de rajouter un élément sous un bouton radio seulement lorsqu’il est coché (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'append': { description: 'Permet de rajouter un élément générique après le label des boutons radios' },
-		'ariaRequired': { description: 'Permet de rendre la selection obligatoire' },
+		'required': { description: 'Permet de rendre la selection obligatoire' },
 		'change:selected': { description: 'Événement émis au click sur un bouton radio retourne la valeur sélectionnée' },
 		'disabled': { description: 'Permet de désactiver le groupe de boutons radios' },
 		'error': { description: 'Permet de mettre le champ en erreur' },
@@ -199,7 +201,7 @@ export const Required: Story = {
 		groupLabel: 'Sélection obligatoire',
 		modelValue: items,
 		uniqueId: 'radio-required',
-		ariaRequired: true,
+		required: true,
 		error: true,
 	},
 	parameters: {
@@ -207,12 +209,12 @@ export const Required: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-  <p>La sélection d’un bouton est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+  <p>La sélection d’un bouton est obligatoire grâce à la prop <code>required</code>.</p>
   <AmeliproRadioGroup
     v-model="value"
     group-label="Sélection obligatoire"
     unique-id="radio-required"
-    aria-required
+    required
   />
 </template>`,
 			},
@@ -235,7 +237,7 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p class="mb-2">La sélection d’un bouton est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+		template: `<p class="mb-2">La sélection d’un bouton est obligatoire grâce à la prop <code>required</code>.</p>
 <AmeliproRadioGroup v-bind="args" v-model="model" />`,
 	}),
 }
@@ -246,7 +248,7 @@ export const RequiredErrorMessage: Story = {
 		groupLabel: 'Erreur personnalisée',
 		modelValue: items,
 		uniqueId: 'radio-errormsg',
-		ariaRequired: true,
+		required: true,
 		requiredErrorMessage: 'Veuillez sélectionner une option',
 	},
 	parameters: {
@@ -259,7 +261,7 @@ export const RequiredErrorMessage: Story = {
     v-model="value"
     group-label="Erreur personnalisée"
     unique-id="radio-errormsg"
-    aria-required
+    required
     required-error-message="Veuillez sélectionner une option"
   />
 </template>`,
@@ -518,8 +520,6 @@ export const HiddenLabel: Story = {
 	}),
 }
 
-// --- LabelInfo ---
-import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 export const LabelInfo: Story = {
 	args: {
 		groupLabel: 'Label avec info-bulle',

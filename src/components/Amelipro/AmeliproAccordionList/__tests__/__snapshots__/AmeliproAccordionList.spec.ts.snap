@@ -185,7 +185,6 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                       aria-controls="menu-v-0"
                       aria-expanded="false"
                       aria-label="Open"
-                      aria-required="false"
                       id="amelipro-accordion-result-unique-id-pagination-select"
                       inputmode="none"
                       role="combobox"

@@ -41,11 +41,11 @@ exports[`AmeliproCheckboxGroup > Snapshots > renders the component with all prop
     <div
       aria-disabled="true"
       aria-labelledby="modified-unique-id"
-      aria-required="true"
       class="
         amelipro-checkbox-group__wrapper
         mt-2
       "
+      required="true"
       role="group"
     >
       <ul
@@ -222,8 +222,8 @@ exports[`AmeliproCheckboxGroup > Snapshots > renders the component with only req
     </div>
     <div
       aria-labelledby="required-unique-id"
-      aria-required="false"
       class="amelipro-checkbox-group__wrapper"
+      required="false"
       role="group"
     >
       <ul
