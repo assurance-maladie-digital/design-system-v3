@@ -57,8 +57,8 @@ export function useInputHandler(options: InputHandlerOptions) {
 		inputRef,
 	} = options
 
-	// Nous n'utilisons pas directement useDateRangeInput car nous avons implémenté
-	// des fonctions spécifiques pour gérer les cas particuliers de la saisie en mode plage
+	// Nous utilisons useDateRangeInput pour centraliser le parsing des plages,
+	// tout en conservant ici la logique de saisie spécifique (caret, complétion, cas particuliers)
 
 	// Utiliser le composable useDateInputEditing pour le formatage
 	const dateInputEditing = useDateInputEditing({

@@ -30,6 +30,7 @@
 		useMonthButtonCustomization,
 		useTodayButton,
 		useHolidayHighlighting,
+		useCalendarKeyboardNavigation,
 	} from '../composables'
 	import dayjs from 'dayjs'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -265,6 +266,7 @@
 	const isFormatting = ref(false)
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
+	const preventCloseOnInternalUpdate = ref(false)
 
 	const { validateDateFormat, isDateComplete } = useDateFormatValidation({
 		format: props.format,
@@ -424,7 +426,9 @@
 	watch(selectedDates, (newValue) => {
 		validateDates()
 		if (newValue !== null) {
-			updateModel(formattedDate.value)
+			if (!preventCloseOnInternalUpdate.value) {
+				updateModel(formattedDate.value)
+			}
 			withInternalUpdate(() => {
 				if (Array.isArray(newValue)) {
 					if (newValue.length > 0) {
@@ -600,6 +604,28 @@
 
 	onBeforeUnmount(() => {
 		document.removeEventListener('click', handleClickOutside)
+	})
+
+	useCalendarKeyboardNavigation({
+		isDatePickerVisible,
+		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		getCurrentDate: () => {
+			const value = selectedDates.value
+			if (!value) return null
+
+			if (Array.isArray(value)) {
+				return value[0] ?? null
+			}
+
+			return value
+		},
+		setCurrentDate: (date: Date) => {
+			preventCloseOnInternalUpdate.value = true
+			updateSelectedDates(date)
+			queueMicrotask(() => {
+				preventCloseOnInternalUpdate.value = false
+			})
+		},
 	})
 
 	/**
@@ -836,6 +862,9 @@
 		() => props.modelValue,
 		(newValue) => {
 			if (isUpdatingFromInternal.value) {
+				if (preventCloseOnInternalUpdate.value) {
+					return
+				}
 				if (props.displayRange) {
 					if (Array.isArray(newValue) && newValue.length >= 2) {
 						isDatePickerVisible.value = false

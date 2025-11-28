@@ -9,7 +9,7 @@
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDateValidation, useDatePickerState, useHolidayHighlighting } from '../composables'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDateValidation, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation } from '../composables'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -602,6 +602,24 @@
 
 	onBeforeUnmount(() => {
 		document.removeEventListener('click', handleClickOutside)
+	})
+
+	useCalendarKeyboardNavigation({
+		isDatePickerVisible,
+		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		getCurrentDate: () => {
+			const value = selectedDates.value
+			if (!value) return null
+
+			if (Array.isArray(value)) {
+				return value[0] ?? null
+			}
+
+			return value
+		},
+		setCurrentDate: (date: Date) => {
+			updateSelectedDates([date])
+		},
 	})
 
 	const validateOnSubmit = () => {
