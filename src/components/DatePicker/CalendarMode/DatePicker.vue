@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance } from 'vue'
+	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance, type Ref } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useValidation } from '@/composables/validation/useValidation'
+	import { useValidation, type ValidationResult } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay } from '../composables'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDateValidation, useDatePickerState, useHolidayHighlighting } from '../composables'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { mdiCalendar } from '@mdi/js'
-	import { useHolidayDay } from '@/composables/date/useHolidayDay'
+	import type { DateObjectValue } from '../types'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -121,7 +121,7 @@
 	const { todayInString, headerDate } = useTodayButton(props)
 	const { labelWithAsterisk } = useAsteriskDisplay(props)
 
-	const selectedDates = ref<Date | Date[] | null>(
+	const selectedDates = ref<Date | (Date | null)[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
 
@@ -198,16 +198,58 @@
 			clearValidation: () => {},
 		}
 
+	const validateFieldForDateValidation = (
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
+		value: any,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
+		rules: any[] = [],
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
+		warningRules: any[] = [],
+	): ValidationResult => {
+		if (props.readonly) {
+			return {
+				hasError: false,
+				hasWarning: false,
+				hasSuccess: false,
+				state: {
+					errors: [],
+					warnings: [],
+					successes: [],
+				},
+			}
+		}
+
+		return validateField(value, rules, warningRules, []) as ValidationResult
+	}
+
 	const errorMessages = errors
 	const warningMessages = warnings
 	const successMessages = successes
-	const displayFormattedDate = ref('')
-
-	const textInputValue = ref<string>('')
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
 	const isInitialValidation = ref(true)
+	const currentRangeIsValid = ref(true)
+	const getRangeValidationError = ref('')
+
+	const { validateDates: coreValidateDates } = useDateValidation({
+		noCalendar: props.noCalendar,
+		// On garde la logique "required" spécifique à CalendarMode
+		required: false,
+		displayRange: props.displayRange,
+		disableErrorHandling: props.disableErrorHandling,
+		customRules: computed(() => props.customRules),
+		customWarningRules: computed(() => props.customWarningRules),
+		selectedDates: selectedDates as Ref<DateObjectValue>,
+		isUpdatingFromInternal,
+		currentRangeIsValid,
+		getRangeValidationError,
+		clearValidation,
+		validateField: validateFieldForDateValidation,
+		errors,
+		warnings,
+		successes,
+	})
 
 	// Fonction pour valider les dates
 	const validateDates = (forceValidation = false) => {
@@ -239,28 +281,27 @@
 			return
 		}
 		// Permettre aux custom rules de s'exécuter même sur des champs vides
-		if (!selectedDates.value && (!props.customRules || props.customRules.length === 0)) return
+		if (!selectedDates.value) {
+			if (!props.customRules || props.customRules.length === 0) return
 
-		// Préparer les dates à valider
-		const datesToValidate = Array.isArray(selectedDates.value)
-			? selectedDates.value
-			: [selectedDates.value]
-
-		// Valider chaque date
-		// Ne pas afficher d'erreurs de custom rules si on est dans le contexte du mounted initial
-		if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
-			datesToValidate.forEach((date) => {
+			if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
+				// Comportement historique : exécuter directement les règles personnalisées même si la valeur est vide
 				validateField(
-					date,
+					selectedDates.value,
 					props.customRules,
 					props.customWarningRules,
 				)
-			})
+				// Dédoublonner les messages comme auparavant
+				errors.value = [...new Set(errors.value)]
+				warnings.value = [...new Set(warnings.value)]
+				successes.value = [...new Set(successes.value)]
+			}
+			return
+		}
 
-			// Dédoublonner les messages (au cas où plusieurs dates auraient les mêmes messages)
-			errors.value = [...new Set(errors.value)]
-			warnings.value = [...new Set(warnings.value)]
-			successes.value = [...new Set(successes.value)]
+		// Ne pas afficher d'erreurs de custom rules si on est dans le contexte du mounted initial
+		if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
+			coreValidateDates(forceValidation)
 		}
 	}
 
@@ -342,49 +383,23 @@
 		props.displayRange,
 	)
 
-	// Date(s) formatée(s) en chaîne de caractères pour la valeur de retour
-	const formattedDate = computed<DateValue>(() => {
-		if (!selectedDates.value) return ''
-
-		const returnFormat = props.dateFormatReturn || props.format
-
-		// Pour les plages de dates, utiliser rangeBoundaryDates s'il est disponible
-		if (props.displayRange && rangeBoundaryDates.value) {
-			return [
-				formatDate(rangeBoundaryDates.value[0], returnFormat),
-				formatDate(rangeBoundaryDates.value[1], returnFormat),
-			] as [string, string]
-		}
-		else if (Array.isArray(selectedDates.value)) {
-			if (selectedDates.value.length >= 2) {
-				return [
-					formatDate(selectedDates.value[0], returnFormat),
-					formatDate(selectedDates.value[selectedDates.value.length - 1], returnFormat),
-				] as [string, string]
-			}
-			return ''
-		}
-
-		return formatDate(selectedDates.value, returnFormat)
+	const {
+		textInputValue,
+		displayFormattedDate,
+		formattedDate,
+		syncFromModelValue,
+	} = useDatePickerState({
+		selectedDates,
+		rangeBoundaryDates,
+		format: props.format,
+		dateFormatReturn: props.dateFormatReturn,
+		displayRange: props.displayRange,
+		parseDate,
+		formatDate,
+		initializeSelectedDates,
+		validateDates,
+		updateModel,
 	})
-
-	watch(formattedDate, (newValue) => {
-		if (!newValue || newValue === '') {
-			textInputValue.value = ''
-		}
-		else if (typeof newValue === 'string') {
-			// Si on a un format de retour différent, on doit convertir la date
-			if (props.dateFormatReturn) {
-				const date = parseDate(newValue, props.dateFormatReturn)
-				if (date) {
-					textInputValue.value = formatDate(date, props.format)
-				}
-			}
-			else {
-				textInputValue.value = newValue
-			}
-		}
-	}, { immediate: true })
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
 	const handleDateTextInputUpdate = (value: DateValue) => {
@@ -642,58 +657,12 @@
 		})
 	}
 
-	// Propriété calculée pour récupérer les jours fériés de l'année courante
-	const holidays = computed(() => {
-		// Utiliser le composable useHolidayDay pour récupérer les jours fériés
-		const { getJoursFeries } = useHolidayDay()
-
-		// Convertir l'année en nombre, utiliser l'année courante comme valeur par défaut
-		const year = parseInt(currentYear.value || new Date().getFullYear().toString(), 10)
-
-		// Récupérer les jours fériés au format DD/MM/YYYY
-		const joursFeries = getJoursFeries(year)
-
-		// Tableau pour stocker les jours fériés
-		const holidayDates: Date[] = []
-
-		// Convertir les dates du format string en objets Date
-		joursFeries.forEach((dateStr) => {
-			const [day, month, yearStr] = dateStr.split('/')
-			// Mois -1 car les mois dans Date sont indexés à partir de 0
-			holidayDates.push(new Date(parseInt(yearStr), parseInt(month) - 1, parseInt(day)))
-		})
-
-		// Retourner le tableau des jours fériés
-		return holidayDates
+	// Marquage des jours fériés partagé via le composable dédié
+	const { markHolidayDays } = useHolidayHighlighting({
+		currentMonth,
+		currentYear,
+		isDisplayHolidayDays: () => props.displayHolidayDays,
 	})
-
-	// Fonction pour marquer les jours fériés dans le calendrier
-	const markHolidayDays = () => {
-		if (!props.displayHolidayDays) return
-		// Attendre que le DOM soit mis à jour
-		nextTick(() => {
-			// Récupérer l'année et le mois courants
-			const year = parseInt(currentYear.value || new Date().getFullYear().toString(), 10)
-			// Utiliser currentMonth.value !== null pour vérifier si la valeur est définie, même si c'est 0
-			const month = parseInt(currentMonth.value !== null ? currentMonth.value : new Date().getMonth().toString(), 10)
-
-			// Récupérer les jours fériés pour ce mois
-			const monthHolidays = holidays.value.filter((holiday) => {
-				// La comparaison doit tenir compte du fait que getMonth() retourne 0-11
-				return holiday.getMonth() === month
-			})
-
-			// Pour chaque jour férié, trouver l'élément DOM correspondant et ajouter la classe
-			monthHolidays.forEach((holiday) => {
-				const day = holiday.getDate()
-				const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-				const dayElements = document.querySelectorAll(`[data-v-date="${dateStr}"]`)
-				dayElements.forEach((element) => {
-					element.classList.add('holiday-day')
-				})
-			})
-		})
-	}
 
 	// Utilisation du composable pour gérer le mode d'affichage du CalendarMode
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
@@ -752,29 +721,6 @@
 		default:
 			return
 		}
-	}
-
-	const syncFromModelValue = (newValue: DateInput | undefined) => {
-		if (!newValue || newValue === '') {
-			selectedDates.value = null
-			textInputValue.value = ''
-			displayFormattedDate.value = ''
-			validateDates()
-			return
-		}
-
-		selectedDates.value = initializeSelectedDates(newValue, props.format, props.dateFormatReturn)
-
-		if (selectedDates.value) {
-			const firstDate = Array.isArray(selectedDates.value)
-				? selectedDates.value[0]
-				: selectedDates.value
-
-			textInputValue.value = formatDate(firstDate, props.format)
-			displayFormattedDate.value = displayFormattedDateComputed.value || ''
-		}
-
-		validateDates()
 	}
 
 	watch(() => props.modelValue, (newValue) => {
