@@ -1,20 +1,41 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproContentLayout > render correctly 1`] = `
+exports[`AmeliproContentLayout > Snapshots > renders the component with all properties filled in 1`] = `
 <div
   class="
     amelipro-content-layout
     w-100
   "
-  id="my-content-layout-id-container"
-  style="background-color: #0C419A;"
+  id="modified-unique-id-container"
+  style="background-color: #123456;"
 >
   <div
     class="
       amelipro-content-layout__content
       mx-auto
     "
-    id="my-content-layout-id-content"
+    id="modified-unique-id-content"
+    style="
+      max-width: 100%;
+      padding: 24px 10px;
+    "
+  ></div>
+</div>
+`;
+
+exports[`AmeliproContentLayout > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-content-layout
+    w-100
+  "
+  style="background-color: #FFFFFF;"
+>
+  <div
+    class="
+      amelipro-content-layout__content
+      mx-auto
+    "
     style="
       max-width: 100%;
       padding: 24px 10px;
