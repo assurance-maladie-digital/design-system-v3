@@ -1,0 +1,373 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-card--multi-folding
+    mb-3
+    w-100
+  "
+  id="modified-unique-id-container"
+  style="background-color: #B33F2E;"
+>
+  <div
+    class="
+      align-start
+      amelipro-card--multi-folding-header
+      flex-column
+    "
+    id="modified-unique-id-header"
+  >
+    <div
+      class="
+        pb-2
+        w-100
+      "
+      style="
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: #B33F2E;
+      "
+    >
+      <div class="
+        align-center
+        d-flex
+        flex-column
+        flex-sm-row
+        w-100
+      ">
+        <div
+          class="amelipro-card--multi-folding-header-left"
+          style="
+            display: inline-block;
+            width: 100%;
+          "
+        >
+          <div class="d-flex">
+            <amelipro-icon-stub
+              bordered="false"
+              class="
+                d-block
+                mr-2
+              "
+              icon="triangleUp"
+              iconbgcolor="transparent"
+              iconcolor="ap-blue-darken-1"
+              large="false"
+              medium="false"
+              size="11px"
+              small="false"
+              style="margin-top: -7px;"
+              uniqueid="modified-unique-id-icon-open-close"
+              widthauto="false"
+              xlarge="false"
+            ></amelipro-icon-stub>
+            <p
+              aria-level="1"
+              class="
+                font-weight-bold
+                mb-0
+                text-h3
+                text-uppercase
+              "
+              id="modified-unique-id-title"
+              role="heading"
+            >
+              Modified title
+            </p>
+          </div>
+        </div>
+        <!-- v-if -->
+      </div>
+      <ul
+        class="
+          align-center
+          d-flex
+          flex-wrap
+          list-style-none
+          mt-1
+        "
+        id="modified-unique-id-btn-list"
+      >
+        <li class="
+          mb-2
+          mr-2
+        ">
+          <button
+            aria-controls="modified-item-id-1"
+            aria-expanded="false"
+            class="
+              align-center
+              amelipro-card--multi-folding__btn
+              classic-btn
+              d-inline-flex
+            "
+            id="modified-item-id-1-title"
+            type="button"
+          >
+            <!-- v-if -->
+            <!-- v-if -->
+            <!-- v-if -->
+            Modified item title 1
+            <!-- v-if -->
+            <!-- v-if -->
+          </button>
+        </li>
+        <li class="
+          mb-2
+          mr-2
+        ">
+          <button
+            aria-controls="modified-item-id-2"
+            aria-expanded="false"
+            class="
+              align-center
+              amelipro-card--multi-folding__btn
+              classic-btn
+              d-inline-flex
+            "
+            id="modified-item-id-2-title"
+            type="button"
+          >
+            <!-- v-if -->
+            <!-- v-if -->
+            <!-- v-if -->
+            Modified item title 2
+            <!-- v-if -->
+            <!-- v-if -->
+          </button>
+        </li>
+        <li class="
+          mb-2
+          mr-2
+        ">
+          <button
+            aria-controls="modified-item-id-3"
+            aria-expanded="true"
+            class="
+              active-btn
+              align-center
+              amelipro-card--multi-folding__btn
+              classic-btn
+              d-inline-flex
+            "
+            id="modified-item-id-3-title"
+            type="button"
+          >
+            <!-- v-if -->
+            <!-- v-if -->
+            <amelipro-icon-stub
+              bordered="false"
+              class="
+                btn-icon
+                mr-2
+              "
+              icon="modifier"
+              iconbgcolor="ap-blue-darken-1"
+              iconcolor="ap-white"
+              large="false"
+              medium="true"
+              small="false"
+              uniqueid="modified-item-id-3-icon"
+              widthauto="false"
+              xlarge="false"
+            ></amelipro-icon-stub>
+            Modified item title 3
+            <span class="d-sr-only">
+              Actif
+            </span>
+            <!-- v-if -->
+          </button>
+        </li>
+        <li class="
+          mb-2
+          mr-2
+        ">
+          <button
+            aria-controls="modified-item-id-4"
+            aria-expanded="false"
+            class="
+              align-center
+              amelipro-card--multi-folding__btn
+              classic-btn
+              d-inline-flex
+            "
+            id="modified-item-id-4-title"
+            type="button"
+          >
+            <!-- v-if -->
+            <!-- v-if -->
+            <!-- v-if -->
+            Modified item title 4
+            <!-- v-if -->
+            <!-- v-if -->
+          </button>
+        </li>
+        <li class="
+          mb-2
+          mr-2
+        ">
+          <button
+            aria-controls="modified-item-id-5"
+            aria-expanded="false"
+            class="
+              align-center
+              amelipro-card--multi-folding__btn
+              classic-btn
+              d-inline-flex
+            "
+            id="modified-item-id-5-title"
+            type="button"
+          >
+            <!-- v-if -->
+            <!-- v-if -->
+            <!-- v-if -->
+            Modified item title 5
+            <!-- v-if -->
+            <!-- v-if -->
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div id="modified-unique-id-tab-0">
+    <div
+      aria-labelledby="modified-item-id-1-title"
+      class="
+        amelipro-card--multi-folding-content
+        text-ap-grey-darken-1
+      "
+      id="modified-item-id-1"
+      role="region"
+      style="display: none;"
+    ></div>
+  </div>
+  <div id="modified-unique-id-tab-1">
+    <div
+      aria-labelledby="modified-item-id-2-title"
+      class="
+        amelipro-card--multi-folding-content
+        text-ap-grey-darken-1
+      "
+      id="modified-item-id-2"
+      role="region"
+      style="display: none;"
+    ></div>
+  </div>
+  <div id="modified-unique-id-tab-2">
+    <div
+      aria-labelledby="modified-item-id-3-title"
+      class="
+        amelipro-card--multi-folding-content
+        text-ap-grey-darken-1
+      "
+      id="modified-item-id-3"
+      role="region"
+    ></div>
+  </div>
+  <div id="modified-unique-id-tab-3">
+    <div
+      aria-labelledby="modified-item-id-4-title"
+      class="
+        amelipro-card--multi-folding-content
+        text-ap-grey-darken-1
+      "
+      id="modified-item-id-4"
+      role="region"
+      style="display: none;"
+    ></div>
+  </div>
+  <div id="modified-unique-id-tab-4">
+    <div
+      aria-labelledby="modified-item-id-5-title"
+      class="
+        amelipro-card--multi-folding-content
+        text-ap-grey-darken-1
+      "
+      id="modified-item-id-5"
+      role="region"
+      style="display: none;"
+    ></div>
+  </div>
+</div>
+`;
+
+exports[`AmeliproMultipleFoldingCard > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-card--multi-folding
+    mb-3
+    w-100
+  "
+  style="
+    background-color: #FFFFFF;
+    border: 1px solid #DDDEDE;
+  "
+>
+  <div class="
+    align-start
+    amelipro-card--multi-folding-header
+    flex-column
+  ">
+    <div class="
+      pb-2
+      w-100
+    ">
+      <div class="
+        align-center
+        d-flex
+        flex-column
+        flex-sm-row
+        w-100
+      ">
+        <div
+          class="amelipro-card--multi-folding-header-left"
+          style="
+            display: inline-block;
+            width: 100%;
+          "
+        >
+          <div class="d-flex">
+            <amelipro-icon-stub
+              bordered="false"
+              class="
+                d-block
+                mr-2
+              "
+              icon="triangleDown"
+              iconbgcolor="transparent"
+              iconcolor="ap-blue-darken-1"
+              large="false"
+              medium="false"
+              size="11px"
+              small="false"
+              style="margin-top: -7px;"
+              widthauto="false"
+              xlarge="false"
+            ></amelipro-icon-stub>
+            <p
+              aria-level="2"
+              class="
+                font-weight-bold
+                mb-0
+                text-h3
+              "
+              role="heading"
+            >
+              Required title
+            </p>
+          </div>
+        </div>
+        <!-- v-if -->
+      </div>
+      <ul class="
+        align-center
+        d-flex
+        flex-wrap
+        list-style-none
+        mt-1
+      "></ul>
+    </div>
+  </div>
+</div>
+`;
