@@ -1,0 +1,103 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StructureTabs > Snapshots > renders the component with all properties filled in 1`] = `
+<div id="modified-unique-id-container">
+  <div
+    arialabelledby="modified-unique-id-label"
+    class="
+      align-sm-center
+      align-start
+      d-flex
+      flex-column
+      flex-sm-row
+    "
+    role="tablist"
+  >
+    <p
+      class="
+        font-weight-bold
+        ma-0
+        mr-3
+      "
+      id="modified-unique-id-label"
+    >
+      Je me connecte sur :
+    </p>
+    <div class="
+      d-flex
+      flex-column
+      flex-sm-row
+      flex-sm-wrap
+    ">
+      <structure-btn-stub
+        aria-selected="false"
+        class="
+          mb-2
+          mb-sm-1
+          mr-0
+          mr-sm-3
+        "
+        controls="structure-panel-0"
+        role="tab"
+        selected="false"
+        tabindex="-1"
+        uniqueid="modified-unique-id-tab-btn-0"
+      ></structure-btn-stub>
+      <structure-btn-stub
+        aria-selected="true"
+        class="
+          mb-2
+          mb-sm-1
+          mr-0
+          mr-sm-3
+        "
+        controls="structure-panel-1"
+        role="tab"
+        selected="true"
+        tabindex="0"
+        uniqueid="modified-unique-id-tab-btn-1"
+      ></structure-btn-stub>
+    </div>
+  </div>
+  <div
+    class="mt-3"
+    id="structure-panel-0"
+    role="tabpanel"
+    tabindex="-1"
+  >
+    <!-- v-if -->
+    <structure-list-stub
+      hiddenlabel="false"
+      label="label1"
+      max-items-loaded-default="3"
+      maxstructuresloadeddefault="5"
+      modelvalue="valeur4"
+      name="structures-0"
+      structures="[object Object],[object Object]"
+      style="display: none;"
+    ></structure-list-stub>
+  </div>
+  <div
+    class="mt-3"
+    id="structure-panel-1"
+    role="tabpanel"
+    tabindex="0"
+  >
+    <structure-list-stub
+      hiddenlabel="false"
+      label="label2"
+      max-items-loaded-default="3"
+      maxstructuresloadeddefault="5"
+      modelvalue="valeur4"
+      name="structures-1"
+      structures="[object Object],[object Object]"
+    ></structure-list-stub>
+  </div>
+</div>
+`;
+
+exports[`StructureTabs > Snapshots > renders the component with only required properties filled in 1`] = `
+<div id="required-unique-id-container">
+  <!-- v-if -->
+</div>
+`;
