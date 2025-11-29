@@ -1,0 +1,56 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ServiceBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<div>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    class="
+      d-flex
+      service-btn
+      text-center
+      text-none
+    "
+    icon="modified-item-icon"
+    iconbgcolor="ap-blue-darken-1"
+    iconcolor="ap-white"
+    iconhoverbgcolor="ap-blue darken-2"
+    iconhovercolor="ap-white"
+    large="false"
+    medium="false"
+    ripple="false"
+    size="2.5rem"
+    small="false"
+    uniqueid="modified-unique-id"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`ServiceBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<div>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    class="
+      d-flex
+      service-btn
+      text-center
+      text-none
+    "
+    icon="required-item-icon"
+    iconbgcolor="required-icon-bg-color"
+    iconcolor="ap-white"
+    iconhoverbgcolor="required-icon-hover-bg-color"
+    iconhovercolor="ap-white"
+    large="false"
+    medium="false"
+    ripple="false"
+    size="2.5rem"
+    small="false"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <!-- v-if -->
+</div>
+`;

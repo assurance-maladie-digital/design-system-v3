@@ -1,0 +1,151 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ServiceMenuContent > Snapshots > renders the component with all properties filled in 1`] = `
+<nav
+  aria-label="Bouquet de services"
+  class="service-menu__nav"
+  id="modified-unique-id"
+>
+  <div class="
+    d-flex
+    flex-column
+    flex-md-nowrap
+    flex-nowrap
+    flex-sm-row
+    flex-sm-wrap
+  ">
+    <div
+      class="
+        bg-ap-blue-lighten-3
+        py-2
+        service-menu__ps
+      "
+      id="modified-unique-id-service-menu-ps"
+      style="
+        flex-basis: 50%;
+        max-width: 50%;
+        width: 50%;
+      "
+    >
+      <service-list-stub
+        items="[object Object],[object Object]"
+        servicecontact="false"
+        servicepatient="false"
+        uniqueid="modified-unique-id-ps-service-list"
+      ></service-list-stub>
+    </div>
+    <div
+      class="
+        bg-ap-white
+        py-2
+        service-menu__patient
+      "
+      id="modified-unique-id-service-menu-patient"
+      style="
+        flex-basis: 50%;
+        max-width: 50%;
+        width: 50%;
+      "
+    >
+      <div>
+        <service-list-stub
+          items="[object Object],[object Object]"
+          servicecontact="false"
+          servicepatient="true"
+          uniqueid="modified-unique-id-patient-service-list"
+        ></service-list-stub>
+        <amelipro-message-stub
+          alignstart="false"
+          borderleftmessage="false"
+          class="mt-4"
+          dark="false"
+          dismissible="false"
+          noicon="false"
+          text="true"
+          type="info"
+          uniqueid="modified-unique-id-patient-message"
+          value="true"
+          width="100%"
+        ></amelipro-message-stub>
+      </div>
+    </div>
+    <div
+      class="
+        bg-ap-white
+        py-2
+        service-menu__contact
+      "
+      id="modified-unique-id-service-menu-contact"
+      style="
+        flex-basis: 50%;
+        max-width: 50%;
+        width: 50%;
+      "
+    >
+      <service-list-stub
+        items="[object Object],[object Object]"
+        servicecontact="true"
+        servicepatient="false"
+        uniqueid="modified-unique-id-contact-service-list"
+      ></service-list-stub>
+    </div>
+  </div>
+</nav>
+`;
+
+exports[`ServiceMenuContent > Snapshots > renders the component with only required properties filled in 1`] = `
+<nav
+  aria-label="Bouquet de services"
+  class="service-menu__nav"
+  id="required-unique-id"
+>
+  <div class="
+    d-flex
+    flex-column
+    flex-md-nowrap
+    flex-nowrap
+    flex-sm-row
+    flex-sm-wrap
+  ">
+    <div
+      class="
+        bg-ap-blue-lighten-3
+        py-2
+        service-menu__ps
+      "
+      id="required-unique-id-service-menu-ps"
+      style="
+        flex-basis: 50%;
+        max-width: 50%;
+        width: 50%;
+      "
+    >
+      <service-list-stub
+        items=""
+        servicecontact="false"
+        servicepatient="false"
+        uniqueid="required-unique-id-ps-service-list"
+      ></service-list-stub>
+    </div>
+    <div
+      class="
+        bg-ap-white
+        py-2
+        service-menu__patient
+      "
+      id="required-unique-id-service-menu-patient"
+      style="
+        flex-basis: 50%;
+        max-width: 50%;
+        width: 50%;
+      "
+    >
+      <div>
+        <!-- v-if -->
+        <!-- v-if -->
+      </div>
+    </div>
+    <!-- v-if -->
+  </div>
+</nav>
+`;
