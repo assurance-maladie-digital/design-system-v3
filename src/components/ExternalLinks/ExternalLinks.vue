@@ -248,7 +248,7 @@ $list-max-height: 248px;
 	box-shadow: none !important;
 }
 
-@media only screen and (height <=340px) {
+@media only screen and (height <= 340px) {
 	.sy-external-links-btn {
 		z-index: 4 !important;
 	}
