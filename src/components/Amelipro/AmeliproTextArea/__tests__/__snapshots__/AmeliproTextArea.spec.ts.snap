@@ -18,8 +18,9 @@ exports[`AmeliproTextArea > Snapshots > renders the component with all propertie
   "
 >
   <div class="
-    align-start
+    align-baseline
     d-inline-flex
+    mb-1
     mr-md-2
     mt-md-2
   ">
@@ -46,44 +47,18 @@ exports[`AmeliproTextArea > Snapshots > renders the component with all propertie
       </span>
     </label>
   </div>
-  <v-textarea-stub
-    active="false"
+  <textarea
     aria-describedby="modified-unique-id-error"
     aria-required="true"
-    autofocus="false"
-    autogrow="true"
-    bgcolor="ap-grey-lighten-2"
+    auto-grow=""
+    bg-color="ap-grey-lighten-2"
     class="amelipro-textarea-input"
-    clearable="false"
-    clearicon="$clear"
     color="ap-blue-darken-1"
     counter="100"
-    density="default"
-    details="false"
-    direction="horizontal"
-    dirty="false"
-    disabled="true"
-    error="false"
-    errormessages=""
-    flat="false"
-    focused="false"
-    glow="false"
-    hidedetails="false"
-    hidespinbuttons="false"
-    iconcolor="false"
+    disabled=""
     id="modified-unique-id"
-    loading="false"
-    maxerrors="1"
-    messages=""
     modelvalue="Modified model value"
-    noresize="false"
-    persistentclear="false"
-    persistentcounter="false"
-    persistenthint="false"
-    persistentplaceholder="false"
     readonly=""
-    reverse="false"
-    rows="5"
     rules="() => true,(value) => {
     let valid;
     if (Array.isArray(value)) {
@@ -95,16 +70,14 @@ exports[`AmeliproTextArea > Snapshots > renders the component with all propertie
     }
     return valid || __vite_ssr_import_0__.ruleMessage(errorMessages, "default");
   }"
-    singleline="false"
     style="
       max-width: 150px;
       min-width: 50px;
       background-color: transparent;
     "
-    tile="false"
-    validateon="input"
+    validate-on="input"
     variant="outlined"
-  ></v-textarea-stub>
+  ></textarea>
 </div>
 `;
 
@@ -135,46 +108,17 @@ exports[`AmeliproTextArea > Snapshots > renders the component with only required
       <!-- v-if -->
     </label>
   </div>
-  <v-textarea-stub
-    active="false"
+  <textarea
     aria-describedby="required-unique-id-error"
     aria-required="false"
-    autofocus="false"
-    autogrow="true"
-    bgcolor="ap-white"
+    auto-grow=""
+    bg-color="ap-white"
     class="amelipro-textarea-input"
-    clearable="false"
-    clearicon="$clear"
     color="ap-blue-darken-1"
     counter="255"
-    density="default"
-    details="false"
-    direction="horizontal"
-    dirty="false"
-    disabled="false"
-    error="false"
-    errormessages=""
-    flat="false"
-    focused="false"
-    glow="false"
-    hidedetails="false"
-    hidespinbuttons="false"
-    iconcolor="false"
     id="required-unique-id"
-    loading="false"
-    maxerrors="1"
-    messages=""
-    noresize="false"
-    persistentclear="false"
-    persistentcounter="false"
-    persistenthint="false"
-    persistentplaceholder="false"
-    reverse="false"
-    rows="5"
     rules=""
-    singleline="false"
-    tile="false"
     variant="outlined"
-  ></v-textarea-stub>
+  ></textarea>
 </div>
 `;

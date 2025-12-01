@@ -112,10 +112,42 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproTextArea> => ({
 	validateOn: 'input',
 })
 
+const VTextareaStub = {
+	name: 'VTextarea',
+	inheritAttrs: false,
+	props: ['disabled', 'readonly', 'modelValue'],
+	template: `
+		<textarea
+			v-if="!$slots.append"
+			v-bind="$attrs"
+			:disabled="disabled"
+			:readonly="readonly"
+			:modelvalue="modelValue"
+		/>
+		<div v-else>
+			<textarea
+				v-bind="$attrs"
+				:disabled="disabled"
+				:readonly="readonly"
+				:modelvalue="modelValue"
+			/>
+			<slot name="append" />
+		</div>
+	`,
+}
+
 const testHelper = new TestHelper(AmeliproTextArea)
-testHelper.setExpectedPropOptions(expectedPropOptions)
+testHelper
+	.setExpectedPropOptions(expectedPropOptions)
 	.setRequiredPropValues(requiredPropValues)
 	.setModifiedPropValues(modifiedPropValues)
+	.setMountOptions({
+		global: {
+			stubs: {
+				VTextarea: VTextareaStub,
+			},
+		},
+	})
 
 describe('AmeliproTextArea', () => {
 	describe('Snapshots', () => {
@@ -129,7 +161,14 @@ describe('AmeliproTextArea', () => {
 	describe('Setting props should update attributes of inner tags', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproTextArea>>
 		beforeEach(() => {
-			vueWrapper = shallowMount(AmeliproTextArea, { props: requiredPropValues() })
+			vueWrapper = shallowMount(AmeliproTextArea, {
+				props: requiredPropValues(),
+				global: {
+					stubs: {
+						VTextarea: VTextareaStub,
+					},
+				},
+			})
 		})
 
 		it('prop uniqueId sets attribute id on root container', async () => {
@@ -150,7 +189,14 @@ describe('AmeliproTextArea', () => {
 	describe('Setting props should update props or attributes of inner components', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproTextArea>>
 		beforeEach(() => {
-			vueWrapper = shallowMount(AmeliproTextArea, { props: requiredPropValues() })
+			vueWrapper = shallowMount(AmeliproTextArea, {
+				props: requiredPropValues(),
+				global: {
+					stubs: {
+						VTextarea: VTextareaStub,
+					},
+				},
+			})
 		})
 
 		it('prop disabled sets prop disabled on VTextarea', async () => {
@@ -173,6 +219,11 @@ describe('AmeliproTextArea', () => {
 			const vueWrapper = shallowMount(AmeliproTextArea, {
 				props: requiredPropValues(),
 				slots: { labelInfo: '<div id="slot-content">Slot Content</div>' },
+				global: {
+					stubs: {
+						VTextarea: VTextareaStub,
+					},
+				},
 			})
 			expect(vueWrapper.find('#slot-content').text()).toBe('Slot Content')
 		})
@@ -180,6 +231,11 @@ describe('AmeliproTextArea', () => {
 			const vueWrapper = mount(AmeliproTextArea, {
 				props: requiredPropValues(),
 				slots: { append: '<div id="append-content">Append Content</div>' },
+				global: {
+					stubs: {
+						VTextarea: VTextareaStub,
+					},
+				},
 			})
 			expect(vueWrapper.find('#append-content').text()).toBe('Append Content')
 		})
@@ -187,13 +243,27 @@ describe('AmeliproTextArea', () => {
 
 	describe('Events', () => {
 		it('emits update:model-value on input change', async () => {
-			const vueWrapper = mount(AmeliproTextArea, { props: requiredPropValues() })
+			const vueWrapper = mount(AmeliproTextArea, {
+				props: requiredPropValues(),
+				global: {
+					stubs: {
+						VTextarea: VTextareaStub,
+					},
+				},
+			})
 			await vueWrapper.findComponent({ name: 'VTextarea' }).vm.$emit('update:modelValue', 'foo')
 			await vueWrapper.vm.$nextTick()
 			expect(vueWrapper.emitted('update:model-value')).toBeTruthy()
 		})
 		it('emits change on change event', async () => {
-			const vueWrapper = mount(AmeliproTextArea, { props: requiredPropValues() })
+			const vueWrapper = mount(AmeliproTextArea, {
+				props: requiredPropValues(),
+				global: {
+					stubs: {
+						VTextarea: VTextareaStub,
+					},
+				},
+			})
 			await vueWrapper.findComponent({ name: 'VTextarea' }).vm.$emit('change')
 			await vueWrapper.vm.$nextTick()
 			expect(vueWrapper.emitted('change')).toBeTruthy()
