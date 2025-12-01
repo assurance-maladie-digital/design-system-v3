@@ -80,7 +80,7 @@ const VSelectStub = defineComponent({
 	template: `
 		<div
 			class="v-select-stub"
-            :required="required"
+            :aria-required="required"
 			:style="style"
 		>
 			<slot />
@@ -395,10 +395,10 @@ describe('AmeliproSelect', () => {
 				expect(vueWrapper.findComponent(VSelectStub).props('readonly')).toBe(testHelper.modified('readonly'))
 			})
 
-			it('prop required sets attribute required', async () => {
-				expect(vueWrapper.findComponent(VSelectStub).attributes('required')).toBe('false')
+			it('prop ariaRequired sets attribute aria-required', async () => {
+				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('false')
 				await vueWrapper.setProps({ required: testHelper.modified('required') })
-				expect(vueWrapper.findComponent(VSelectStub).attributes('required')).toBe('true')
+				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('true')
 			})
 
 			it('props inputMinWidth & inputMaxWidth set attribute style', async () => {

@@ -294,7 +294,7 @@ export const Required: Story = {
     v-model="value"
     group-label="Sélection obligatoire"
     unique-id="custom-selector-required"
-    aria-required
+    required
     required-error-message="Veuillez sélectionner au moins une option."
   />
 </template>`,
