@@ -203,7 +203,7 @@ $list-max-height: 248px;
 	left: auto !important;
 }
 
-.sy-external-links> :deep(.v-overlay__content) {
+.sy-external-links > :deep(.v-overlay__content) {
 	border-radius: 0;
 }
 
