@@ -61,6 +61,13 @@ export default {
 		'helpDesk': {
 			description: 'Le numéro de téléphone du support pour garantir l\'accessibilité du parcours aux personnes en situation de handicap.',
 		},
+		'locale': {
+			description: 'La locale (langue) à utiliser pour la génération du captcha. Par défaut, la langue du navigateur est utilisée.',
+			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
 		'locales': {
 			description: 'Les locales à utiliser pour le composant. Voir le fichier locales.ts pour l\'exemple des clés disponibles.',
 			control: false,
