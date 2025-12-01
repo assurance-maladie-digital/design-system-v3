@@ -2,7 +2,6 @@
 
 exports[`AmeliproSelect > Snapshots > renders the component with all properties filled in 1`] = `
 <div
-  ariarequired="true"
   class="modified-classes"
   id="modified-unique-id-container"
   style="
@@ -38,11 +37,17 @@ exports[`AmeliproSelect > Snapshots > renders the component with all properties 
         "
       >
         Modified label
-        <!-- v-if -->
+        <span>
+          <span aria-hidden="true">
+            &nbsp;*
+          </span>
+          <span class="d-sr-only">
+            &nbsp;Champ obligatoire
+          </span>
+        </span>
       </label>
     </div>
     <div
-      aria-required="true"
       bg-color="ap-grey-lighten-2"
       class="
         amelipro-select
@@ -52,7 +57,7 @@ exports[`AmeliproSelect > Snapshots > renders the component with all properties 
       color="ap-blue-darken-1"
       density="compact"
       item-props="true"
-      required="false"
+      required="true"
       style="
         max-width: modified-input-max-width;
         min-width: modified-input-min-width;
@@ -94,7 +99,6 @@ exports[`AmeliproSelect > Snapshots > renders the component with only required p
       </label>
     </div>
     <div
-      aria-required="false"
       bg-color="ap-white"
       class="
         amelipro-select
