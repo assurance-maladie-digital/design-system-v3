@@ -2,6 +2,7 @@
 
 exports[`AmeliproRadioGroup > Snapshots > renders the component with all properties filled in 1`] = `
 <div
+  ariarequired="true"
   class="
     amelipro-radio-group
     pills
@@ -33,24 +34,17 @@ exports[`AmeliproRadioGroup > Snapshots > renders the component with all propert
         id="modified-unique-id"
       >
         Modified group label
-        <span
-          aria-hidden="true"
-          class="d-inline-flex"
-        >
-          &nbsp;*
-        </span>
-        <span class="d-sr-only">
-          &nbsp;Champ obligatoire
-        </span>
+        <!-- v-if -->
+        <!-- v-if -->
       </p>
     </div>
     <div
       aria-labelledby="modified-unique-id"
-      aria-required="true"
       class="
         mt-2
         radio-group__wrapper
       "
+      required="false"
       role="radiogroup"
     >
       <ul
@@ -93,7 +87,6 @@ exports[`AmeliproRadioGroup > Snapshots > renders the component with all propert
                 disabled=""
                 id="modified-unique-id-input-0"
                 name="modified-unique-id-name"
-                required=""
                 type="radio"
                 value="modified-item-value-1"
               />
@@ -137,7 +130,6 @@ exports[`AmeliproRadioGroup > Snapshots > renders the component with all propert
                 disabled=""
                 id="modified-unique-id-input-1"
                 name="modified-unique-id-name"
-                required=""
                 type="radio"
                 value="modified-item-value-2"
               />
@@ -180,7 +172,6 @@ exports[`AmeliproRadioGroup > Snapshots > renders the component with all propert
                 disabled=""
                 id="modified-unique-id-input-2"
                 name="modified-unique-id-name"
-                required=""
                 type="radio"
                 value="modified-item-value-3"
               />
@@ -234,8 +225,8 @@ exports[`AmeliproRadioGroup > Snapshots > renders the component with only requir
     </div>
     <div
       aria-labelledby="required-unique-id"
-      aria-required="false"
       class="radio-group__wrapper"
+      required="false"
       role="radiogroup"
     >
       <ul
