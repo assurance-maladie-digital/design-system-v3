@@ -145,9 +145,7 @@
 						class="sy-external-links-list-item py-2"
 						v-bind="options.listItem"
 					>
-						<div
-							class="w-100 h-100 d-flex justify-space-between align-center"
-						>
+						<div class="w-100 h-100 d-flex justify-space-between align-center">
 							<div v-bind="options.listItemTitle">
 								{{ item.text }}
 							</div>
@@ -205,7 +203,7 @@ $list-max-height: 248px;
 	left: auto !important;
 }
 
-.sy-external-links > :deep(.v-overlay__content) {
+.sy-external-links> :deep(.v-overlay__content) {
 	border-radius: 0;
 }
 
@@ -244,10 +242,13 @@ $list-max-height: 248px;
 	width: 100%;
 	font-size: 1rem;
 	font-weight: 400;
-	letter-spacing: 0.0094em;
 }
 
-@media only screen and (height <= 340px) {
+:deep(.v-btn--variant-elevated) {
+	box-shadow: none !important;
+}
+
+@media only screen and (height <=340px) {
 	.sy-external-links-btn {
 		z-index: 4 !important;
 	}
