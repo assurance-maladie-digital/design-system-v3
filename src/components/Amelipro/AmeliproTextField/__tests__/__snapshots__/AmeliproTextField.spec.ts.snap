@@ -153,8 +153,9 @@ exports[`AmeliproTextField > Snapshots > renders the component with only require
     w-100
   ">
     <div class="
-      align-start
+      align-baseline
       d-inline-flex
+      mb-1
     ">
       <label
         class="
@@ -168,46 +169,31 @@ exports[`AmeliproTextField > Snapshots > renders the component with only require
         <!-- v-if -->
       </label>
     </div>
-    <v-text-field-stub
-      active="false"
+    <div
       aria-required="false"
-      autofocus="false"
-      bgcolor="ap-white"
+      bg-color="ap-white"
       class="
         amelipro-text-field
         pt-0
+        v-text-field-stub
       "
-      clearable="false"
-      clearicon="$clear"
       color="ap-blue-darken-1"
       density="compact"
-      details="false"
-      direction="horizontal"
-      dirty="false"
-      disabled="false"
-      error="false"
-      errormessages=""
-      flat="false"
-      focused="false"
-      glow="false"
-      hidedetails="false"
-      hidespinbuttons="false"
-      iconcolor="false"
-      id="required-unique-id"
-      loading="false"
-      maxerrors="1"
-      messages=""
-      persistentclear="false"
-      persistentcounter="false"
-      persistenthint="false"
-      persistentplaceholder="false"
-      reverse="false"
-      rules=""
-      singleline="false"
-      tile="false"
-      type="text"
       variant="outlined"
-    ></v-text-field-stub>
+    >
+      <amelipro-message-stub
+        alignstart="false"
+        borderleftmessage="false"
+        dark="false"
+        dismissible="false"
+        noicon="true"
+        text="true"
+        type="error"
+        uniqueid="required-unique-id-error"
+        value="true"
+        width="100%"
+      ></amelipro-message-stub>
+    </div>
   </div>
   <!-- v-if -->
 </div>

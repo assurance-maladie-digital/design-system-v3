@@ -1,13 +1,102 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { VueWrapper, config, mount, shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproTextField from '../AmeliproTextField.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { ExpectedPropOptions } from '@tests/types'
-import type { PropType } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
 import type { ValidateOnType } from '../../types'
 import type { ValidationRule } from '@/utils/rules/types'
+
+const VTextFieldStub = defineComponent({
+	name: 'VTextField',
+	props: {
+		modelValue: {
+			type: [String, Number],
+			default: undefined,
+		},
+		placeholder: {
+			type: String,
+			default: undefined,
+		},
+		readonly: {
+			type: Boolean,
+			default: false,
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		clearable: {
+			type: Boolean,
+			default: false,
+		},
+		id: {
+			type: String,
+			default: undefined,
+		},
+		ariaRequired: {
+			type: [Boolean, String],
+			default: false,
+		},
+		ariaInvalid: {
+			type: [Boolean, String],
+			default: false,
+		},
+		ariaDescribedby: {
+			type: String,
+			default: undefined,
+		},
+		hideDetails: {
+			type: [Boolean, String],
+			default: false,
+		},
+		style: {
+			type: [String, Object],
+			default: undefined,
+		},
+		type: {
+			type: String,
+			default: 'text',
+		},
+		max: {
+			type: String,
+			default: undefined,
+		},
+		min: {
+			type: String,
+			default: undefined,
+		},
+		counter: {
+			type: [Boolean, Number, String],
+			default: undefined,
+		},
+		validateOn: {
+			type: String,
+			default: undefined,
+		},
+		rules: {
+			type: Array,
+			default: () => [],
+		},
+	},
+	emits: ['update:modelValue', 'change', 'focus', 'blur'],
+	template: `
+		<div
+			class="v-text-field-stub"
+			:aria-required="ariaRequired"
+			:style="style"
+		>
+			<slot />
+			<slot name="append" />
+			<slot name="message" />
+		</div>
+	`,
+})
+
+config.global.stubs = config.global.stubs || {}
+config.global.stubs.VTextField = VTextFieldStub
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTextField> = {
 	ariaRequired: {
