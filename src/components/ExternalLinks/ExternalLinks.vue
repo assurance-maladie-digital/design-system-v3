@@ -181,6 +181,7 @@ $list-max-height: 248px;
 	// Allow overgrow on mobile
 	max-width: none;
 	border-radius: 0 !important;
+	box-shadow: none !important;
 
 	:deep(.v-btn__content) {
 		flex-direction: inherit;
@@ -242,10 +243,6 @@ $list-max-height: 248px;
 	width: 100%;
 	font-size: 1rem;
 	font-weight: 400;
-}
-
-.v-btn--variant-elevated {
-	box-shadow: none !important;
 }
 
 @media only screen and (height <= 340px) {
