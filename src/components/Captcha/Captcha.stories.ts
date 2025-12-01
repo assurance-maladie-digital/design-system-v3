@@ -13,7 +13,7 @@ export default {
 	},
 	argTypes: {
 		'urlCreate': {
-			description: 'URL de création du captcha (retourne un JSON avec les URLs de l\'image et de l\'audio)',
+			description: 'URL de création du captcha (retourne l\'identifiant du captcha image audio).',
 			control: false,
 			table: {
 				type: { summary: 'string' },
