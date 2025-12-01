@@ -244,11 +244,11 @@ $list-max-height: 248px;
 	font-weight: 400;
 }
 
-:deep(.v-btn--variant-elevated) {
+.v-btn--variant-elevated {
 	box-shadow: none !important;
 }
 
-@media only screen and (height <= 340px) {
+@media only screen and (height <=340px) {
 	.sy-external-links-btn {
 		z-index: 4 !important;
 	}
