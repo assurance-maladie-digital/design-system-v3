@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproFilePreview from './AmeliproFilePreview.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 
 const meta = {
 	argTypes: {
@@ -62,10 +63,30 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
-<AmeliproFilePreview
+          <AmeliproFilePreview
 	v-bind="args"
 />
 		`,
 	}),
 
+}
+
+export const Info: Story = {
+	render: (args) => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return { args }
+			},
+			template: `
+              <SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
+                <template #default>La prop <strong>iframeTitle</strong> a été remplacée par
+                  <strong>pdfDisplayTitle</strong>.
+                </template>
+                </template>
+              </SyAlert>
+            `,
+		}
+	},
+	tags: ['!dev'],
 }
