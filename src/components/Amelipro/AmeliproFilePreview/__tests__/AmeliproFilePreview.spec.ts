@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import AmeliproFilePreview from '../AmeliproFilePreview.vue'
 
 describe('AmeliproFilePreview', () => {
@@ -11,7 +11,7 @@ describe('AmeliproFilePreview', () => {
 				fileName: 'file name',
 				fileSrc: 'file-src',
 				foldable: true,
-				iframeTitle: 'Modified iframe title',
+				pdfDisplayTitle: 'Modified pdf display title',
 				isOpen: true,
 				linkTitle: 'Modified link title',
 				previewHeight: 400,

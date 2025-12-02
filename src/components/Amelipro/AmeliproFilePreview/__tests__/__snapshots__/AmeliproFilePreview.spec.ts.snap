@@ -193,15 +193,14 @@ exports[`AmeliproFilePreview > render correctly 1`] = `
           border-top-color: #DDDEDE;
         "
       >
-        <iframe
-          class="amelipro-file-preview__iframe"
+        <object
+          aria-label="Modified pdf display title"
+          data="file-src"
           height="400"
-          id="pdf-preview-unique-id-iframe"
-          src="file-src"
-          title="Modified iframe title"
+          id="pdf-preview-unique-id-pdf-display"
           type="application/pdf"
           width="100%"
-        ></iframe>
+        ></object>
       </div>
     </div>
   </div>
