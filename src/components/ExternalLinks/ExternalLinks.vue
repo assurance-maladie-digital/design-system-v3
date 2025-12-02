@@ -145,9 +145,7 @@
 						class="sy-external-links-list-item py-2"
 						v-bind="options.listItem"
 					>
-						<div
-							class="w-100 h-100 d-flex justify-space-between align-center"
-						>
+						<div class="w-100 h-100 d-flex justify-space-between align-center">
 							<div v-bind="options.listItemTitle">
 								{{ item.text }}
 							</div>
@@ -183,6 +181,7 @@ $list-max-height: 248px;
 	// Allow overgrow on mobile
 	max-width: none;
 	border-radius: 0 !important;
+	box-shadow: none !important;
 
 	:deep(.v-btn__content) {
 		flex-direction: inherit;
@@ -244,7 +243,6 @@ $list-max-height: 248px;
 	width: 100%;
 	font-size: 1rem;
 	font-weight: 400;
-	letter-spacing: 0.0094em;
 }
 
 @media only screen and (height <= 340px) {
