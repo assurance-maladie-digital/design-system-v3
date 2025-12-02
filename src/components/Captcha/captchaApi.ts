@@ -59,7 +59,6 @@ export function createCaptchaImage(
 		type: 'IMAGE',
 		locale,
 	})
-
 	createCaptcha(urlCreate, body, cbsuccess, cberror)
 }
 
