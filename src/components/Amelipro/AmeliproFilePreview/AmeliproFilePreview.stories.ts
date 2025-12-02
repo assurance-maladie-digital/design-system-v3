@@ -83,7 +83,6 @@ export const Info: Story = {
                 <template #default>La prop <strong>iframeTitle</strong> a été remplacée par
                   <strong>pdfDisplayTitle</strong>.
                 </template>
-                </template>
               </SyAlert>
             `,
 		}
