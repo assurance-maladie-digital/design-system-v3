@@ -119,7 +119,7 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproTileBtn> => ({
 	label: 'Modified label',
 	labelBottom: 'Modified label bottom',
 	message: 'Modified message',
-	messageType: 'modified-message-type',
+	messageType: 'warning',
 	tileMinHeight: 'modified-tile-min-height',
 	tilePadding: 'modified-tile-padding',
 	tileWidth: 'modified-tile-width',

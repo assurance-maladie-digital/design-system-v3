@@ -19,8 +19,9 @@ exports[`AmeliproTextField > Snapshots > renders the component with all properti
     w-100
   ">
     <div class="
-      align-start
+      align-baseline
       d-inline-flex
+      mb-1
       mr-md-2
       mt-md-2
     ">
@@ -47,94 +48,36 @@ exports[`AmeliproTextField > Snapshots > renders the component with all properti
         </span>
       </label>
     </div>
-    <v-text-field-stub
-      active="false"
+    <div
       aria-required="true"
-      autofocus="false"
-      bgcolor="ap-grey-lighten-2"
+      bg-color="ap-grey-lighten-2"
       class="
         amelipro-text-field
         pt-0
+        v-text-field-stub
       "
-      clearable="true"
-      clearicon="$clear"
       color="ap-blue-darken-1"
-      counter="5"
       density="compact"
-      details="false"
-      direction="horizontal"
-      dirty="false"
-      disabled="true"
-      error="false"
-      errormessages=""
-      flat="false"
-      focused="false"
-      glow="false"
-      hidedetails="auto"
-      hidespinbuttons="false"
-      iconcolor="false"
-      id="modified-unique-id"
-      loading="false"
-      max="2099-12-31"
-      maxerrors="1"
-      messages=""
-      min="2000-01-01"
-      modelvalue="Modified model value"
-      persistentclear="false"
-      persistentcounter="false"
-      persistenthint="false"
-      persistentplaceholder="false"
-      placeholder="Modified placeholder"
-      readonly=""
-      reverse="false"
-      rules="() => true,(value) => {
-    let valid;
-    if (Array.isArray(value)) {
-      valid = value.length !== 0;
-    } else if (typeof value === "string") {
-      valid = value.trim() !== "";
-    } else {
-      valid = value !== null && value !== void 0;
-    }
-    return valid || __vite_ssr_import_0__.ruleMessage(errorMessages, "default");
-  },(value) => {
-    if (value === "" || value === void 0 || value === null) {
-      return true;
-    }
-    const valueHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(value);
-    const maxDateHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(maxNumber);
-    const valid = __vite_ssr_import_1__.ref(false);
-    if (valueHasGoodFormat && maxDateHasGoodFormat) {
-      const numberToTest = __vite_ssr_import_0__.parseToNumber(value);
-      const maxNumberAsNumber = __vite_ssr_import_0__.parseToNumber(maxNumber);
-      valid.value = Boolean(numberToTest <= maxNumberAsNumber);
-    }
-    return valid.value || \`Le nombre saisi doit être inférieur ou égal à \${__vite_ssr_import_0__.parseToFrNumberFormat(maxNumber)}.\`;
-  },(value) => {
-    if (value === "" || value === void 0 || value === null) {
-      return true;
-    }
-    const valueHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(value);
-    const minDateHasGoodFormat = __vite_ssr_import_0__.numberMatchRegex(minNumber);
-    const valid = __vite_ssr_import_1__.ref(false);
-    if (valueHasGoodFormat && minDateHasGoodFormat) {
-      const numberToTest = __vite_ssr_import_0__.parseToNumber(value);
-      const minNumberAsNumber = __vite_ssr_import_0__.parseToNumber(minNumber);
-      valid.value = Boolean(numberToTest >= minNumberAsNumber);
-    }
-    return valid.value || \`Le nombre saisi doit être supérieur ou égal à \${__vite_ssr_import_0__.parseToFrNumberFormat(minNumber)}.\`;
-  }"
-      singleline="false"
       style="
         max-width: 150px;
         min-width: 50px;
         background-color: transparent;
       "
-      tile="false"
-      type="number"
-      validateon="input"
       variant="outlined"
-    ></v-text-field-stub>
+    >
+      <amelipro-message-stub
+        alignstart="false"
+        borderleftmessage="false"
+        dark="false"
+        dismissible="false"
+        noicon="true"
+        text="true"
+        type="error"
+        uniqueid="modified-unique-id-error"
+        value="true"
+        width="100%"
+      ></amelipro-message-stub>
+    </div>
   </div>
   <!-- v-if -->
 </div>
