@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed } from 'vue'
+	import { computed, type PropType } from 'vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import type { AmeliproIllustratedRadioGroupItem } from './types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
