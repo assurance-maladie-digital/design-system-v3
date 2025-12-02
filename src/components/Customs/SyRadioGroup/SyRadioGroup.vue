@@ -1,8 +1,7 @@
 <script setup lang="ts">
 	/* eslint-disable vuejs-accessibility/label-has-for */
 	import { type PropType, computed, useSlots } from 'vue'
-	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
-	import type { AmeliproRadioGroupItem } from './types'
+	import type { SyRadioGroupItem } from './types'
 
 	const props = defineProps({
 		ariaRequired: {
@@ -38,7 +37,7 @@
 			default: false,
 		},
 		modelValue: {
-			type: Array as PropType<AmeliproRadioGroupItem[]>,
+			type: Array as PropType<SyRadioGroupItem[]>,
 			required: true,
 		},
 		pills: {
@@ -57,9 +56,9 @@
 
 	const emit = defineEmits(['update:model-value', 'change:selected'])
 
-	const currentValue = computed<AmeliproRadioGroupItem[]>({
+	const currentValue = computed<SyRadioGroupItem[]>({
 		get: () => props.modelValue,
-		set: (newValue: AmeliproRadioGroupItem[]) => {
+		set: (newValue: SyRadioGroupItem[]) => {
 			emit('update:model-value', newValue)
 		},
 	})
@@ -69,8 +68,8 @@
 		return checkedItem.length === 1 ? checkedItem[0].value : null
 	})
 
-	const emitChangeEvent = (item: AmeliproRadioGroupItem) => {
-		currentValue.value = currentValue.value.map((currentItem: AmeliproRadioGroupItem) => {
+	const emitChangeEvent = (item: SyRadioGroupItem) => {
+		currentValue.value = currentValue.value.map((currentItem: SyRadioGroupItem) => {
 			if (currentItem.value === item.value) {
 				currentItem.isChecked = true
 			}
@@ -92,7 +91,7 @@
 
 	const checkErrorCondition = computed(() => Boolean(props.ariaRequired && selectedValue.value === null && props.error))
 
-	const ariaExpandedValue = (item: AmeliproRadioGroupItem, index: number): 'true' | 'false' | undefined => {
+	const ariaExpandedValue = (item: SyRadioGroupItem, index: number): 'true' | 'false' | undefined => {
 		if (slotSubItem(index)) {
 			return selectedValue.value === item.value ? 'true' : 'false'
 		}
@@ -239,7 +238,7 @@
 			</div>
 		</div>
 
-		<AmeliproMessage
+		<VMessages
 			v-if="checkErrorCondition"
 			no-icon
 			text
@@ -249,48 +248,13 @@
 			<p class="mb-0">
 				{{ requiredErrorMessage }}
 			</p>
-		</AmeliproMessage>
+		</VMessages>
 	</div>
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/tokens.scss' as *;
 @use '@/assets/amelipro/apTokens';
-
-:global(.theme-cnam) {
-  --ap-blue-darken-1: #0c419a;
-  --ap-blue-lighten-3: #e2efff;
-  --ap-grey-darken-1: #444;
-  --ap-grey-lighten-2: #ddd;
-  --ap-grey: #999;
-  --ap-red: #c62828;
-  --ap-red-lighten4: #ffebee;
-  --ap-white: #fff;
-
-  --font-size-sm: 0.875rem;
-  --filter-padding-y: 0.25rem;
-  --filter-padding-x: 0.75rem;
-  --filter-radius: 20px;
-  --filter-font-weight: 600;
-  --label-font-weight: 600;
-}
-
-:global(.theme-ap) {
-  --ap-blue-darken-1: #0053b3;
-  --ap-blue-lighten-3: #e2efff;
-  --ap-grey-darken-1: #1a1b1b;
-  --ap-grey-lighten-2: #ddd;
-  --ap-grey: #999;
-  --ap-red: #c62828;
-  --ap-red-lighten4: #ffebee;
-  --ap-white: #fff;
-
-  --font-size-sm: 0.875rem;
-  --filter-padding-y: 0.25rem;
-  --filter-padding-x: 0.75rem;
-  --filter-radius: 20px;
-  --filter-font-weight: 600;
-  --label-font-weight: 600;
-}
 
 .margin-label {
 	@media #{apTokens.$media-up-md} {
