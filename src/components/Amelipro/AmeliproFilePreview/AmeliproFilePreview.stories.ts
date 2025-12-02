@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproFilePreview from './AmeliproFilePreview.vue'
-import SyAlert from '@/components/SyAlert/SyAlert.vue'
+import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 
 const meta = {
 	argTypes: {
@@ -74,16 +74,14 @@ export const Default: Story = {
 export const Info: Story = {
 	render: (args) => {
 		return {
-			components: { SyAlert },
+			components: { AmeliproMessage },
 			setup() {
 				return { args }
 			},
 			template: `
-              <SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
-                <template #default>La prop <strong>iframeTitle</strong> a été remplacée par
-                  <strong>pdfDisplayTitle</strong>.
-                </template>
-              </SyAlert>
+              <AmeliproMessage>
+                La prop <strong>iframeTitle</strong> a été remplacée par <strong>pdfDisplayTitle</strong>.
+              </AmeliproMessage>
             `,
 		}
 	},
