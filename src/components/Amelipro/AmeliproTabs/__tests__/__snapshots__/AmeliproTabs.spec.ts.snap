@@ -18,12 +18,11 @@ exports[`AmeliproTabs > Snapshots > renders the component with all properties fi
         aria-labelledby="modified-aria-labelledby"
         class="
           align-center
-          align-sm-end
           amelipro-tabs__btn-group__wrapper
           d-flex
           flex-column
+          flex-nowrap
           flex-sm-row
-          flex-wrap
           justify-center
           justify-sm-start
         "
@@ -106,12 +105,11 @@ exports[`AmeliproTabs > Snapshots > renders the component with only required pro
       <div
         class="
           align-center
-          align-sm-end
           amelipro-tabs__btn-group__wrapper
           d-flex
           flex-column
+          flex-nowrap
           flex-sm-row
-          flex-wrap
           justify-center
           justify-sm-start
         "

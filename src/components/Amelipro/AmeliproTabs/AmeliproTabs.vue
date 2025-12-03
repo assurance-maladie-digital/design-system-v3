@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import type { AmeliproTab, AmeliproTabsSelect } from './types'
-	import { type PropType, computed, onMounted, onUpdated, ref, watch } from 'vue'
+	import { computed, onMounted, onUpdated, type PropType, ref, watch } from 'vue'
 	import AmeliproSelect from '../AmeliproSelect/AmeliproSelect.vue'
 	import AmeliproTabBtn from './AmeliproTabBtn/AmeliproTabBtn.vue'
 	import type { SelectItem } from '../AmeliproSelect/types'
@@ -207,7 +207,7 @@
 					:id="uniqueId"
 					:aria-label="ariaLabel"
 					:aria-labelledby="ariaLabelledby"
-					class="d-flex flex-column flex-sm-row align-center align-sm-end flex-wrap justify-center justify-sm-start amelipro-tabs__btn-group__wrapper"
+					class="d-flex flex-column flex-sm-row align-center flex-nowrap justify-center justify-sm-start amelipro-tabs__btn-group__wrapper"
 					role="tablist"
 				>
 					<AmeliproTabBtn
