@@ -136,11 +136,11 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-rating-picker--center :deep(fieldset) {
 	display: flex;
 	justify-content: center;
 }
+
 .sy-rating-picker--center :deep(legend) {
 	width: 100%;
 	text-align: center;
