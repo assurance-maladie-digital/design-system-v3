@@ -40,6 +40,16 @@ const meta = {
 				},
 			},
 		},
+		center: {
+			description: 'Si le champ doit être centré dans la page.',
+			control: 'boolean',
+			default: false,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
 		readonly: {
 			description: 'Si le champ est en lecture seule.',
 			control: 'boolean',
