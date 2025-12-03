@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	/* eslint-disable vuejs-accessibility/label-has-for */
+/* eslint-disable vuejs-accessibility/label-has-for */
 	import { type PropType, computed, useSlots } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { AmeliproRadioGroupItem } from './types'
@@ -255,41 +255,44 @@
 
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
-
+.list-style-none {
+		list-style: none !important;
+	}
 :global(.theme-cnam) {
-  --ap-blue-darken-1: #0c419a;
-  --ap-blue-lighten-3: #e2efff;
-  --ap-grey-darken-1: #444;
-  --ap-grey-lighten-2: #ddd;
-  --ap-grey: #999;
-  --ap-red: #c62828;
-  --ap-red-lighten4: #ffebee;
-  --ap-white: #fff;
 
-  --font-size-sm: 0.875rem;
-  --filter-padding-y: 0.25rem;
-  --filter-padding-x: 0.75rem;
-  --filter-radius: 20px;
-  --filter-font-weight: 600;
-  --label-font-weight: 600;
+	--ap-blue-darken-1: #0C419A;
+	--ap-blue-lighten-3: #e2efff;
+	--ap-grey-darken-1: #434647;
+	--ap-grey-lighten-2: #76797a;
+	--ap-grey: #545859;
+	--ap-red: #b33f2e;
+	--ap-red-lighten4: #fdf0ee;
+	--ap-white: #fff;
+
+	--font-size-sm: 0.875rem;
+	--filter-padding-y: 0.25rem;
+	--filter-padding-x: 0.75rem;
+	--filter-radius: 20px;
+	--filter-font-weight: 600;
+	--label-font-weight: 600;
 }
 
 :global(.theme-ap) {
-  --ap-blue-darken-1: #0053b3;
-  --ap-blue-lighten-3: #e2efff;
-  --ap-grey-darken-1: #1a1b1b;
-  --ap-grey-lighten-2: #ddd;
-  --ap-grey: #999;
-  --ap-red: #c62828;
-  --ap-red-lighten4: #ffebee;
-  --ap-white: #fff;
+	--ap-blue-darken-1: #00749c;
+	--ap-blue-lighten-3: #e2efff;
+	--ap-grey-darken-1: #1a1b1b;
+	--ap-grey-lighten-2: #dddede;
+	--ap-grey: #545859;
+	--ap-red: #b33f2e;
+	--ap-red-lighten4: #ffebee;
+	--ap-white: #fff;
 
-  --font-size-sm: 0.875rem;
-  --filter-padding-y: 0.25rem;
-  --filter-padding-x: 0.75rem;
-  --filter-radius: 20px;
-  --filter-font-weight: 600;
-  --label-font-weight: 600;
+	--font-size-sm: 0.875rem;
+	--filter-padding-y: 0.25rem;
+	--filter-padding-x: 0.75rem;
+	--filter-radius: 20px;
+	--filter-font-weight: 600;
+	--label-font-weight: 600;
 }
 
 .margin-label {
@@ -304,26 +307,26 @@ input {
 	height: 0;
 	opacity: 0;
 
-	& + span {
+	&+span {
 		position: relative;
 		cursor: pointer;
 	}
 
 	&:focus {
-		& + span {
-			outline: 1px dotted apTokens.$ap-grey-darken1;
+		&+span {
+			outline: 1px dotted var(--ap-blue-darken-1);
 		}
 	}
 
 	&:disabled {
-		& + span {
+		&+span {
 			cursor: default;
 		}
 	}
 }
 
 .amelipro-radio-group.classic input {
-	& + span {
+	&+span {
 		padding-top: 0.25rem;
 		padding-bottom: 0.25rem;
 		padding-left: 2rem;
@@ -335,14 +338,14 @@ input {
 			width: 1.625rem;
 			height: 1.625rem;
 			border-radius: 50%;
-			border: 3px solid apTokens.$ap-blue-darken1;
+			border: 3px solid var(--ap-blue-darken-1);
 			background-color: transparent;
 			content: '';
 		}
 	}
 
 	&:checked {
-		& + span {
+		&+span {
 			&::after {
 				position: absolute;
 				top: 0.45rem;
@@ -350,14 +353,14 @@ input {
 				width: 0.825rem;
 				height: 0.825rem;
 				border-radius: 50%;
-				background-color: apTokens.$ap-blue-darken1;
+				background-color: var(--ap-blue-darken-1);
 				content: '';
 			}
 		}
 	}
 
 	&:disabled {
-		& + span {
+		&+span {
 			&::before {
 				opacity: 0.3;
 			}
@@ -375,24 +378,24 @@ input {
 	}
 
 	& input {
-		& + span {
-			font-size: apTokens.$font-size-sm;
-			font-weight: apTokens.$filter-font-weight;
-			padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
-			border-radius: apTokens.$filter-radius;
-			border: 1px solid apTokens.$ap-blue-darken1;
-			background-color: apTokens.$ap-white;
-			color: apTokens.$ap-blue-darken1;
+		&+span {
+			font-size: var(--font-size-sm);
+			font-weight: var(--filter-font-weight);
+			padding: var(--filter-padding-y) var(--filter-padding-x);
+			border-radius: var(--filter-radius);
+			border: 1px solid var(--ap-blue-darken-1);
+			background-color: var(--ap-white);
+			color: var(--ap-blue-darken-1);
 
 			&.radio-group__item-label-span-error {
-				background-color: apTokens.$ap-red-lighten4;
-				border-color: apTokens.$ap-red;
+				background-color: var(--ap-red-lighten4);
+				border-color: var(--ap-red);
 			}
 		}
 
 		&:checked {
-			& + span {
-				background-color: apTokens.$ap-blue-lighten3;
+			&+span {
+				background-color: var(--ap-blue-lighten3);
 
 				&::after {
 					position: absolute;
@@ -400,8 +403,8 @@ input {
 					left: 0.75rem;
 					width: 1rem;
 					height: 0.5rem;
-					border-bottom: 2px solid apTokens.$ap-blue-darken1;
-					border-left: 2px solid apTokens.$ap-blue-darken1;
+					border-bottom: 2px solid var(--ap-blue-darken-1);
+					border-left: 2px solid var(--ap-blue-darken-1);
 					transform: rotate(-50deg);
 					content: '';
 				}
@@ -409,13 +412,13 @@ input {
 		}
 
 		&:disabled {
-			& + span {
-				background-color: apTokens.$ap-grey-lighten2;
-				border-color: apTokens.$ap-grey;
+			&+span {
+				background-color: var(--ap-grey-lighten2);
+				border-color: var(--ap-grey);
 
 				&::after {
-					border-bottom-color: apTokens.$ap-grey-darken1;
-					border-left-color: apTokens.$ap-grey-darken1;
+					border-bottom-color: var(--ap-grey-darken1);
+					border-left-color: var(--ap-grey-darken1);
 				}
 			}
 		}
@@ -423,6 +426,6 @@ input {
 }
 
 .radio-group__label {
-	font-weight: apTokens.$label-font-weight;
+	font-weight: var(--label-font-weight);
 }
 </style>

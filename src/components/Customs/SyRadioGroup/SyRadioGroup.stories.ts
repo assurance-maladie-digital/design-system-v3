@@ -1,6 +1,6 @@
+import { SyRadioGroup } from '@/components'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
-import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 
 const meta = {
 	argTypes: {
@@ -47,27 +47,27 @@ type Story = StoryObj<typeof SyRadioGroup>
 const items = [
 	{
 		isChecked: false,
-		label: '1',
+		label: 'Valeur 1',
 		value: 'Valeur 1',
 	},
 	{
 		isChecked: false,
-		label: '2',
+		label: 'Valeur 2',
 		value: 'Valeur 2',
 	},
 	{
 		isChecked: true,
-		label: '3',
+		label: 'Valeur 3',
 		value: 'Valeur 3',
 	},
 	{
 		isChecked: false,
-		label: '4',
+		label: 'Valeur 4',
 		value: 'Valeur 4',
 	},
 	{
 		isChecked: false,
-		label: '5',
+		label: 'Valeur 5',
 		value: 'Valeur 5',
 	},
 ]
@@ -100,27 +100,27 @@ export const Default: Story = {
 	const items = ref([
 		{
 			isChecked: false,
-			label: '1',
+			label: 'Valeur 1',
 			value: 'Valeur 1',
 		},
 		{
 			isChecked: false,
-			label: '2',
+			label: 'Valeur 2',
 			value: 'Valeur 2',
 		},
 		{
 			isChecked: true,
-			label: '3',
+			label: 'Valeur 3',
 			value: 'Valeur 3',
 		},
 		{
 			isChecked: false,
-			label: '4',
+			label: 'Valeur 4',
 			value: 'Valeur 4',
 		},
 		{
 			isChecked: false,
-			label: '5',
+			label: 'Valeur 5',
 			value: 'Valeur 5',
 		},
 	])
