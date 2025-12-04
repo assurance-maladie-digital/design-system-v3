@@ -231,7 +231,9 @@ exports[`ErrorPage > renders correctly with undefined route 1`] = `
             Error
           </h1>
           <p>
-            Error message
+            <span>
+              Error message
+            </span>
           </p>
           <a
             class="
