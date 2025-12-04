@@ -13,7 +13,7 @@
 		if (!message)
 			return []
 
-		const regex = /\b(\d{10})\b/g
+		const regex = /\b(\d{4}|\d{10})\b/g
 		const parts: MessagePart[] = []
 		let lastIndex = 0
 		let match: RegExpExecArray | null
