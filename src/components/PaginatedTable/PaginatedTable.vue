@@ -30,6 +30,10 @@
 		},
 	})
 
+	defineOptions({
+		inheritAttrs: false,
+	})
+
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
 		default: () => ({}),
@@ -52,10 +56,22 @@
 		if (!Array.isArray(componentAttributes['headers'])) {
 			return undefined
 		}
-		return componentAttributes['headers'].map(header => ({
-			...header,
-			title: header.title ?? header.text,
-		}))
+		const headers = componentAttributes['headers'].map((header) => {
+			const sort = options.value.sortBy?.find((s) => {
+				return s.key === header.key
+			})
+			const title = header.title ?? header.text
+
+			return {
+				...header,
+				title: title,
+				headerProps: {
+					'aria-label': sort ? `${title}, trier en fonction de cette colonne` : undefined,
+					'aria-sort': sort ? (sort.order === 'asc' ? 'ascending' : 'descending') : 'none',
+				},
+			}
+		})
+		return headers
 	})
 
 	const optionsFacade = computed(() => {
@@ -71,7 +87,7 @@
 
 	const propsFacade = computed(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { 'onUpdate:options': _, ...attrs } = componentAttributes
+		const { 'onUpdate:options': _, 'caption': __, ...attrs } = componentAttributes
 
 		return {
 			...attrs,
@@ -109,14 +125,7 @@
 		const table = document.querySelector(`#${uniqueTableId.value} table`)
 		const caption = document.createElement('caption')
 		caption.classList.add('d-sr-only')
-		if (props.caption === '') {
-			caption.setAttribute('aria-label', 'Table caption')
-			caption.innerHTML = 'Table caption'
-		}
-		else {
-			caption.setAttribute('aria-label', props.caption)
-			caption.innerHTML = props.caption
-		}
+		caption.innerHTML = props.caption
 		table?.prepend(caption)
 
 		const inputs = document.querySelectorAll(`#${uniqueTableId.value} input`)
@@ -144,12 +153,12 @@
 
 		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldLabels.forEach((fieldLabel) => {
-			(fieldLabel as HTMLElement).setAttribute('aria-label', 'items per page')
+			(fieldLabel as HTMLElement).setAttribute('aria-label', 'éléments par page')
 		})
 
 		const fieldTitles = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldTitles.forEach((fieldTitle) => {
-			(fieldTitle as HTMLElement).setAttribute('title', 'items per page')
+			(fieldTitle as HTMLElement).setAttribute('title', 'éléments par page')
 		})
 
 		const th = document.querySelectorAll(`#${uniqueTableId.value} th`)
@@ -170,16 +179,6 @@
 			v-bind="propsFacade"
 			@update:options="updateOptions"
 		>
-			<template #top>
-				<div
-					v-if="props.caption"
-					class="text-subtitle-1 text-center pa-4"
-					:class="{ 'd-sr-only': props.caption === '' }"
-					:aria-label="props.caption"
-				>
-					{{ props.caption }}
-				</div>
-			</template>
 			<template
 				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"
@@ -196,16 +195,6 @@
 			color="primary"
 			@update:options="updateOptions"
 		>
-			<template #top>
-				<div
-					v-if="props.caption"
-					class="text-subtitle-1 text-center pa-4"
-					:class="{ 'd-sr-only': props.caption === '' }"
-					:aria-label="props.caption"
-				>
-					{{ props.caption }}
-				</div>
-			</template>
 			<template
 				v-for="slotName in Object.keys($slots)"
 				#[slotName]="slotProps"
