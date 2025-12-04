@@ -1,3 +1,7 @@
+## v1.0.15 (04-12-2025)
+
+Fix readme <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1559">#1559</a>
+
 ## v1.0.14 (04-12-2025)
 
 <table>
