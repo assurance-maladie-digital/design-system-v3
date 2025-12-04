@@ -2,15 +2,15 @@ import { useValidatable } from '@/composables/validation/useValidatable'
 import { useValidation } from '@/composables/validation/useValidation'
 import type { MaybeRefOrGetter } from 'vue'
 import { toValue, type ComputedRef } from 'vue'
-import { useHijriCalendarRules } from './useHijriCalendarRules'
+import { useLunarCalendarRules } from './useLunarCalendarRules'
 
-export function useHijriCalendarValidation(
+export function useLunarCalendarValidation(
 	modelValue: ComputedRef<string | undefined>,
 	label: MaybeRefOrGetter<string | undefined>,
 	minYear: MaybeRefOrGetter<number | undefined>,
 	maxYear: MaybeRefOrGetter<number | undefined>,
 ) {
-	const { rules } = useHijriCalendarRules(
+	const { rules } = useLunarCalendarRules(
 		minYear,
 		maxYear,
 	)

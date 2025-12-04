@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import HijriCalendar from './HijriCalendar.vue'
+import LunarCalendar from './LunarCalendar.vue'
 
 const meta = {
-	title: 'Composants/Formulaires/HijriCalendar',
-	component: HijriCalendar,
+	title: 'Composants/Formulaires/LunarCalendar',
+	component: LunarCalendar,
 	argTypes: {
 		modelValue: {
-			description: 'La valeur du calendrier hijri au format DD/MM/YYYY',
+			description: 'La valeur du calendrier lunaire au format DD/MM/YYYY',
 			control: { type: 'text' },
 		},
 		minYear: {
@@ -21,7 +21,7 @@ const meta = {
 	args: {
 		modelValue: '',
 	},
-} satisfies Meta<typeof HijriCalendar>
+} satisfies Meta<typeof LunarCalendar>
 
 export default meta
 type Story = StoryObj<typeof meta>

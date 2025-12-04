@@ -1,7 +1,7 @@
 import type { ValidationRule } from '@/composables/validation/useValidation'
 import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from 'vue'
 
-export function useHijriCalendarRules(minYear: MaybeRefOrGetter<number | undefined>, maxYear: MaybeRefOrGetter<number | undefined>): { rules: ComputedRef<ValidationRule[]> } {
+export function useLunarCalendarRules(minYear: MaybeRefOrGetter<number | undefined>, maxYear: MaybeRefOrGetter<number | undefined>): { rules: ComputedRef<ValidationRule[]> } {
 	const rules = computed(() => {
 		if (toValue(minYear) && toValue(maxYear)) {
 			const rule: ValidationRule = {

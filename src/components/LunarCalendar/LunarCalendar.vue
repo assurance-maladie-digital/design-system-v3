@@ -2,7 +2,7 @@
 	import { vMaska } from 'maska/vue'
 	import { computed } from 'vue'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
-	import { useHijriCalendarValidation } from './useHijriCalendarValidation'
+	import { useLunarCalendarValidation } from './useLunarCalendarValidation'
 
 	const model = defineModel<string>()
 	const mask = '##/##/####'
@@ -13,7 +13,7 @@
 		label?: string
 	}>()
 
-	const validation = useHijriCalendarValidation(
+	const validation = useLunarCalendarValidation(
 		computed(() => model.value),
 		computed(() => props.label),
 		computed(() => props.minYear),

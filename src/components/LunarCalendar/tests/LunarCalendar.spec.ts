@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import HijriCalendar from '../HijriCalendar.vue'
+import LunarCalendar from '../LunarCalendar.vue'
 import { mount } from '@vue/test-utils'
 
-describe('HijriCalendar', () => {
+describe('LunarCalendar', () => {
 	it('renders correctly', () => {
-		const wrapper = mount(HijriCalendar, {
+		const wrapper = mount(LunarCalendar, {
 			props: {
 				modelValue: '10/19/1995',
 			},
@@ -15,7 +15,7 @@ describe('HijriCalendar', () => {
 	})
 
 	it('emits update:modelValue on date change', async () => {
-		const wrapper = mount(HijriCalendar, {
+		const wrapper = mount(LunarCalendar, {
 			props: {
 				modelValue: '10/19/1995',
 			},
@@ -28,7 +28,7 @@ describe('HijriCalendar', () => {
 	})
 
 	it('autoformats date input', async () => {
-		const wrapper = mount(HijriCalendar, {
+		const wrapper = mount(LunarCalendar, {
 			props: {
 				modelValue: '',
 			},
@@ -42,7 +42,7 @@ describe('HijriCalendar', () => {
 
 	describe('rules', () => {
 		it('validates minDate rule', async () => {
-			const wrapper = mount(HijriCalendar, {
+			const wrapper = mount(LunarCalendar, {
 				props: {
 					modelValue: '10/19/1995',
 					minYear: 1996,
@@ -57,7 +57,7 @@ describe('HijriCalendar', () => {
 		})
 
 		it('validates maxDate rule', async () => {
-			const wrapper = mount(HijriCalendar, {
+			const wrapper = mount(LunarCalendar, {
 				props: {
 					modelValue: '10/19/1995',
 					maxYear: 1994,
