@@ -3,10 +3,45 @@
 	import { locales } from './locales'
 	import PageContainer from '../PageContainer/PageContainer.vue'
 
+	type MessagePart =
+		| { type: 'text'; value: string }
+		| { type: 'phone'; value: string }
+
 	// Fonction pour formater le message et ajouter des liens tel: aux numéros de téléphone
-	const formatMessage = (message: string): string => {
-		// Regex pour détecter les numéros de téléphone comme 3646
-		return message.replace(/\b(3646|\d{10})\b/g, '<a href="tel:$1">$1</a>')
+	const splitMessage = (message?: string): MessagePart[] => {
+		// Regex pour détecter les numéros de téléphone
+		if (!message)
+			return []
+
+		const regex = /\b(\d{10})\b/g
+		const parts: MessagePart[] = []
+		let lastIndex = 0
+		let match: RegExpExecArray | null
+
+		while ((match = regex.exec(message)) !== null) {
+			if (match.index > lastIndex) {
+				parts.push({
+					type: 'text',
+					value: message.slice(lastIndex, match.index),
+				})
+			}
+
+			parts.push({
+				type: 'phone',
+				value: match[1],
+			})
+
+			lastIndex = regex.lastIndex
+		}
+
+		if (lastIndex < message.length) {
+			parts.push({
+				type: 'text',
+				value: message.slice(lastIndex),
+			})
+		}
+
+		return parts
 	}
 
 	withDefaults(defineProps<{
@@ -57,10 +92,22 @@
 						{{ pageTitle }}
 					</h1>
 
-					<p
-						v-if="message"
-						v-html="formatMessage(message)"
-					/>
+					<p v-if="message">
+						<template
+							v-for="(part, index) in splitMessage(message)"
+							:key="index"
+						>
+							<span v-if="part.type === 'text'">
+								{{ part.value }}
+							</span>
+							<a
+								v-else
+								:href="`tel:${part.value}`"
+							>
+								{{ part.value }}
+							</a>
+						</template>
+					</p>
 
 					<slot name="additional-content" />
 
