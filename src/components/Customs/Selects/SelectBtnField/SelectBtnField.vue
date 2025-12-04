@@ -125,11 +125,26 @@
 		emits('update:modelValue', internalValue.value)
 	}
 
-	const focusedIndex = ref<number>(0)
+	const focusedIndex = ref<number>(-1)
+
+	/*
+	 * Get the current index of the active item
+	 * The active item depends on whether the select is multiple or not
+	 * If multiple, the active item is the focused item
+	 * If not multiple, the active item is the selected item
+	*/
+	function getCurrentIndex(): number {
+		if (props.multiple) {
+			const current = document.activeElement as HTMLElement
+			return optionsRef.value.findIndex(item => item === current)
+		}
+		else {
+			return optionsRef.value.findIndex(item => item.getAttribute('aria-selected') === 'true')
+		}
+	}
 
 	function focusPrevious(): void {
-		const current = document.activeElement as HTMLElement
-		const index = optionsRef.value.findIndex(item => item === current)
+		const index = getCurrentIndex()
 		if (index > 0) {
 			focusedIndex.value = index - 1
 			optionsRef.value[index - 1].focus()
@@ -147,8 +162,7 @@
 	}
 
 	function focusNext(): void {
-		const current = document.activeElement as HTMLElement
-		const index = optionsRef.value.findIndex(item => item === current)
+		const index = getCurrentIndex()
 		if (index < optionsRef.value.length - 1) {
 			focusedIndex.value = index + 1
 			optionsRef.value[index + 1].focus()
@@ -176,9 +190,8 @@
 	}
 
 	function handleBlur(): void {
-		// if no selection, reset the focusable item to first item
-		if ((props.multiple || !internalValue.value) && !listRef.value?.contains(document.activeElement)) {
-			focusedIndex.value = 0
+		if ((!listRef.value?.contains(document.activeElement) || !(listRef.value === document.activeElement))) {
+			focusedIndex.value = -1
 		}
 	}
 
@@ -232,7 +245,14 @@
 			:aria-multiselectable="props.multiple ? 'true' : 'false'"
 			:aria-invalid="error ? 'true' : 'false'"
 			:aria-readonly="readonly ? 'true' : 'false'"
+			:tabindex="focusedIndex === -1 ? '0' : '-1'"
 			@focusout="handleBlur"
+			@keydown.left.prevent="focusPrevious"
+			@keydown.right.prevent="focusNext"
+			@keydown.up.prevent="focusPrevious"
+			@keydown.down.prevent="focusNext"
+			@keydown.home.prevent="focusFirst"
+			@keydown.end.prevent="focusLast"
 		>
 			<li
 				v-for="(item, index) in filteredItems"
@@ -248,12 +268,6 @@
 				:aria-selected="!props.multiple ? (isSelected(item.value) ? 'true' : 'false') : undefined"
 				:aria-checked="props.multiple ? (isSelected(item.value) ? 'true' : 'false') : undefined"
 				@keydown.space.prevent="toggleItem(item)"
-				@keydown.left.prevent="focusPrevious"
-				@keydown.right.prevent="focusNext"
-				@keydown.up.prevent="focusPrevious"
-				@keydown.down.prevent="focusNext"
-				@keydown.home.prevent="focusFirst"
-				@keydown.end.prevent="focusLast"
 				@mousedown="handleMouseDown"
 				@mouseup="handleMouseUp"
 				@click="toggleItem(item)"

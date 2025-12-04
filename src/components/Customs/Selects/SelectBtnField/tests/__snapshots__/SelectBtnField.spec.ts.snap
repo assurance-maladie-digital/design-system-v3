@@ -23,12 +23,13 @@ exports[`SelectBtnField > display correctly in dark mode with an error 1`] = `
             select-btn-field__options--inline
           "
           role="listbox"
+          tabindex="0"
         >
           <li
             aria-checked="false"
             class="select-btn-field__item"
             role="option"
-            tabindex="0"
+            tabindex="-1"
           >
             <div class="select-btn-field__item-content">
               <span class="text-body-1">
@@ -104,12 +105,13 @@ exports[`SelectBtnField > display correctly with an error 1`] = `
       select-btn-field__options--error
     "
     role="listbox"
+    tabindex="0"
   >
     <li
       aria-selected="false"
       class="select-btn-field__item"
       role="option"
-      tabindex="0"
+      tabindex="-1"
     >
       <div class="select-btn-field__item-content">
         <span class="text-body-1">
@@ -214,12 +216,13 @@ exports[`SelectBtnField > display correctly with in dark mode with an hint 1`] =
             select-btn-field__options--inline
           "
           role="listbox"
+          tabindex="0"
         >
           <li
             aria-checked="false"
             class="select-btn-field__item"
             role="option"
-            tabindex="0"
+            tabindex="-1"
           >
             <div class="select-btn-field__item-content">
               <span class="text-body-1">
@@ -293,12 +296,13 @@ exports[`SelectBtnField > render correctly in multiple mode 1`] = `
       select-btn-field__options--column
     "
     role="listbox"
+    tabindex="0"
   >
     <li
       aria-checked="false"
       class="select-btn-field__item"
       role="option"
-      tabindex="0"
+      tabindex="-1"
     >
       <div class="select-btn-field__item-content">
         <span class="text-body-1">
@@ -392,6 +396,7 @@ exports[`SelectBtnField > renders correctly 1`] = `
       select-btn-field__options--column
     "
     role="listbox"
+    tabindex="0"
   ></ul>
   <!-- v-if -->
 </div>
@@ -410,12 +415,13 @@ exports[`SelectBtnField > renders correctly with props 1`] = `
       select-btn-field__options--column
     "
     role="listbox"
+    tabindex="0"
   >
     <li
       aria-selected="false"
       class="select-btn-field__item"
       role="option"
-      tabindex="0"
+      tabindex="-1"
     >
       <div class="select-btn-field__item-content">
         <span class="text-body-1">
