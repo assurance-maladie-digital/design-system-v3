@@ -214,7 +214,7 @@ export const Required: Story = {
 		modelValue: items,
 		uniqueId: 'illustrated-radio-required',
 		ariaRequired: true,
-        error:true,
+		error: true,
 	},
 	parameters: {
 		sourceCode: [

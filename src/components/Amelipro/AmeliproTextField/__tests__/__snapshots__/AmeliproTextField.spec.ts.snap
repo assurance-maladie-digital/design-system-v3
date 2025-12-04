@@ -2,6 +2,7 @@
 
 exports[`AmeliproTextField > Snapshots > renders the component with all properties filled in 1`] = `
 <div
+  ariarequired="true"
   class="modified-classes"
   id="modified-unique-id-container"
   style="
@@ -38,18 +39,11 @@ exports[`AmeliproTextField > Snapshots > renders the component with all properti
         "
       >
         Modified label
-        <span>
-          <span aria-hidden="true">
-            &nbsp;*
-          </span>
-          <span class="d-sr-only">
-            &nbsp;Champ obligatoire
-          </span>
-        </span>
+        <!-- v-if -->
       </label>
     </div>
     <div
-      aria-required="true"
+      aria-required="false"
       bg-color="ap-grey-lighten-2"
       class="
         amelipro-text-field
@@ -58,6 +52,7 @@ exports[`AmeliproTextField > Snapshots > renders the component with all properti
       "
       color="ap-blue-darken-1"
       density="compact"
+      required="false"
       style="
         max-width: 150px;
         min-width: 50px;
@@ -122,6 +117,7 @@ exports[`AmeliproTextField > Snapshots > renders the component with only require
       "
       color="ap-blue-darken-1"
       density="compact"
+      required="false"
       variant="outlined"
     >
       <amelipro-message-stub
