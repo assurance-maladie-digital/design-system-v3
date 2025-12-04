@@ -213,7 +213,7 @@ export const Required: Story = {
 		groupLabel: 'Sélection obligatoire',
 		modelValue: items,
 		uniqueId: 'illustrated-radio-required',
-		ariaRequired: true,
+		required: true,
 		error: true,
 	},
 	parameters: {
