@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
-	import { computed, ref, watchEffect } from 'vue'
+	import { computed } from 'vue'
 	import { useTheme } from 'vuetify'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { config } from './config'
@@ -46,16 +46,6 @@
 		return props.value || props.placeholder
 	})
 
-	const htmlValueRef = ref<HTMLElement | null>(null)
-
-	watchEffect(() => {
-		if (!props.renderHtmlValue || !htmlValueRef.value) {
-			return
-		}
-
-		htmlValueRef.value.innerHTML = String(itemValue.value ?? '')
-	})
-
 	const actionButtonColor = computed(() => {
 		return theme.current.value.dark ? 'white' : 'primary'
 	})
@@ -98,8 +88,8 @@
 
 				<span
 					v-else-if="renderHtmlValue"
-					ref="htmlValueRef"
 					class="text-body-1"
+					:innerHTML="itemValue"
 				/>
 
 				<span
