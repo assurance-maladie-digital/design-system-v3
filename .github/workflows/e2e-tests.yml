@@ -1,0 +1,33 @@
+name: E2E Tests
+
+on:
+  push:
+    branches:
+      - feat/add-rgaa-ci-test
+  pull_request:
+    branches:
+      - feat/add-rgaa-ci-test
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm@8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run E2E Tests
+        uses: SillyLittleTech/E2E@v1
+        with:
+          port: '4173'
+          node-version: '20'
+          build-command: 'pnpm build'
+          preview-command: 'pnpm preview'

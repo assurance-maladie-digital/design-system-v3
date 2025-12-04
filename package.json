@@ -22,6 +22,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "preview": "vite preview --port 4173",
     "build": "vue-tsc -p tsconfig.app.json && vite build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
