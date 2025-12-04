@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref, useSlots } from 'vue'
+	import { computed, type PropType, ref, useSlots } from 'vue'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproHeaderBar from './AmeliproHeaderBar/AmeliproHeaderBar.vue'
 	import type { AmeliproHeaderInfos } from './types'
@@ -489,7 +489,6 @@
 :deep(.v-btn) {
 	&.text-service-title {
 		display: block;
-		white-space: unset;
 	}
 }
 </style>

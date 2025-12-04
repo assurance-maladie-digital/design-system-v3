@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -126,7 +126,10 @@
   },
   "pnpm": {
     "overrides": {
-      "undici": "7.15.0"
+      "esbuild": "^0.25.0",
+      "undici": "7.15.0",
+      "glob": ">=10.5.0",
+      "js-yaml": ">=4.1.1"
     },
     "patchedDependencies": {
       "undici@7.15.0": "patches/undici@7.15.0.patch"

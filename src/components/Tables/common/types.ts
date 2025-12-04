@@ -90,6 +90,7 @@ export type SyTableProps = {
 	enableColumnControls?: boolean
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
+	showSelectSingle?: boolean
 	showExpand?: boolean
 	selectionKey?: string
 	multiSort?: boolean
@@ -111,6 +112,7 @@ export type SyServerTableProps = {
 	enableColumnControls?: boolean
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
+	showSelectSingle?: boolean
 	showExpand?: boolean
 	selectionKey?: string
 	multiSort?: boolean

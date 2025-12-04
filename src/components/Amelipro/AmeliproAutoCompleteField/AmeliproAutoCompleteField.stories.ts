@@ -226,7 +226,7 @@ export const MasquerErreur: Story = {
 		items,
 		label: 'Masquage du message d’erreur',
 		uniqueId: 'amelipro-auto-complete-field-hide-error',
-		rules: [v => !!v || 'Ce champ est obligatoire'],
+		ariaRequired: true,
 		hideErrorMessage: true,
 	},
 	parameters: {
@@ -240,7 +240,7 @@ export const MasquerErreur: Story = {
 		:items="items"
 		unique-id="amelipro-auto-complete-field-hide-error"
 		label="Masquage du message d’erreur"
-		:rules="[v => !!v || 'Ce champ est obligatoire']"
+		ariaRequired: true,
 		hide-error-message
 	/>
 </template>`,
@@ -594,8 +594,8 @@ export const Validation: Story = {
 		items,
 		label: 'Validation personnalisée',
 		uniqueId: 'amelipro-auto-complete-field-validation',
+		ariaRequired: true,
 		rules: [
-			v => !!v || 'Ce champ est obligatoire',
 			v => (v ? typeof v === 'string' && v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
 		],
 	},
@@ -610,8 +610,8 @@ export const Validation: Story = {
 		:items="items"
 		unique-id="amelipro-auto-complete-field-validation"
 		label="Validation personnalisée"
+		ariaRequired: true,
 		:rules="[
-			v => !!v || 'Ce champ est obligatoire',
 			v => (v ? v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
 		]"
 	/>

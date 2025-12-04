@@ -103,7 +103,9 @@ exports[`ErrorPage > renders correctly 1`] = `
             Something went wrong
           </h1>
           <p>
-            Error message
+            <span>
+              Error message
+            </span>
           </p>
           <!-- v-if -->
         </div>
@@ -229,7 +231,9 @@ exports[`ErrorPage > renders correctly with undefined route 1`] = `
             Error
           </h1>
           <p>
-            Error message
+            <span>
+              Error message
+            </span>
           </p>
           <a
             class="

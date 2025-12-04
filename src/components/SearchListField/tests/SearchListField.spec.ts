@@ -1,11 +1,22 @@
 import { mount } from '@vue/test-utils'
 import SearchListField from '../SearchListField.vue'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
+import { createVuetify } from 'vuetify'
 
 describe('SearchListField.vue', () => {
+	let vuetify
+
+	beforeEach(() => {
+		vuetify = createVuetify()
+	})
+
 	it('renders the password field', () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -24,7 +35,11 @@ describe('SearchListField.vue', () => {
 
 	it('initial state', () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -46,7 +61,11 @@ describe('SearchListField.vue', () => {
 
 	it('initial state with empty value prop', () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -68,7 +87,11 @@ describe('SearchListField.vue', () => {
 
 	it('selects an item', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -82,17 +105,21 @@ describe('SearchListField.vue', () => {
 			},
 		})
 
-		const listItem = wrapper.find('.vd-search-list .v-list-item')
-		await listItem.trigger('click')
+		const listItem = wrapper.find('[data-test-id="suggestions-list"] li')
+		await listItem.find('input[type="checkbox"]').trigger('click')
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([[[1]]])
-		expect(listItem.classes()).toContain('v-list-item--active')
+		expect(listItem.classes()).toContain('suggestion-item--selected')
 	})
 
 	it('filters items based on search input', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des fruits',
 				items: [
 					{
 						label: 'Apple',
@@ -120,7 +147,11 @@ describe('SearchListField.vue', () => {
 
 	it('clears the search field', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -144,7 +175,11 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -167,7 +202,11 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property with null search', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -190,7 +229,11 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property with multiple matching items', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -215,7 +258,11 @@ describe('SearchListField.vue', () => {
 
 	it('emitChangeEvent method', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -236,7 +283,11 @@ describe('SearchListField.vue', () => {
 
 	it('emits the update:modelValue event when an item is selected', async () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -250,7 +301,7 @@ describe('SearchListField.vue', () => {
 			},
 		})
 
-		const listItem = wrapper.find('.vd-search-list .v-list-item')
+		const listItem = wrapper.find('[data-test-id="suggestions-list"] input')
 		listItem.trigger('click')
 		await wrapper.vm.$nextTick()
 
@@ -260,7 +311,11 @@ describe('SearchListField.vue', () => {
 
 	it('renders the password field without outlined prop', () => {
 		const wrapper = mount(SearchListField, {
-			propsData: {
+			global: {
+				plugins: [vuetify],
+			},
+			props: {
+				label: 'Filtrer la liste des Items',
 				items: [
 					{
 						label: 'Item 1',
@@ -292,14 +347,18 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				propsData: {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					label: 'Filtrer la liste des Items',
 					items,
 					modelValue: [],
 					returnObject: false,
 				},
 			})
 
-			wrapper.vm.toggleSelection(items[0])
+			wrapper.find('input[type="checkbox"]').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			const emittedEvents = wrapper.emitted('update:modelValue')
@@ -320,14 +379,18 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				propsData: {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					label: 'Filtrer la liste des Items',
 					items,
 					modelValue: [],
 					returnObject: true,
 				},
 			})
 
-			wrapper.vm.toggleSelection(items[0])
+			wrapper.find('input[type="checkbox"]').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			const emittedEvents = wrapper.emitted('update:modelValue')
@@ -348,15 +411,18 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				propsData: {
+				global: {
+					plugins: [vuetify],
+				},
+				props: {
+					label: 'Filtrer la liste des Items',
 					items,
 					modelValue: [],
 					returnObject: true,
 				},
 			})
 
-			// Select first item
-			wrapper.vm.toggleSelection(items[0])
+			wrapper.find('input[type="checkbox"]').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			const emittedEvents = wrapper.emitted('update:modelValue')
@@ -368,7 +434,7 @@ describe('SearchListField.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			// Deselect first item
-			wrapper.vm.toggleSelection(items[0])
+			wrapper.find('input[type="checkbox"]').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			expect(emittedEvents![1]).toEqual([[]])

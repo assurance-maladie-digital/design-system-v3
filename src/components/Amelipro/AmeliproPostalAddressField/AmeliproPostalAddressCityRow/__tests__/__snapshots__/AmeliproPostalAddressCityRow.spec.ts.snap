@@ -29,9 +29,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
         id="the-groupId-postal-code-container"
       >
         <div class="
-          align-start
+          align-baseline
           amelipro-autocomplete__label-wrapper
           d-inline-flex
+          mb-1
         ">
           <label
             class="amelipro-autocomplete__label"
@@ -213,7 +214,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                     data-no-activator=""
                   >
                     <span
-                      class="d-sr-only"
+                      class="
+                        amelipro-btn__label
+                        d-sr-only
+                      "
                       id="the-groupId-postal-code-btn-btn-label"
                     >
                       Code Postal ouvrir la liste
@@ -301,9 +305,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
         id="the-groupId-city-container"
       >
         <div class="
-          align-start
+          align-baseline
           amelipro-autocomplete__label-wrapper
           d-inline-flex
+          mb-1
         ">
           <label
             class="amelipro-autocomplete__label"
@@ -485,7 +490,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                     data-no-activator=""
                   >
                     <span
-                      class="d-sr-only"
+                      class="
+                        amelipro-btn__label
+                        d-sr-only
+                      "
                       id="the-groupId-city-btn-btn-label"
                     >
                       Commune ouvrir la liste

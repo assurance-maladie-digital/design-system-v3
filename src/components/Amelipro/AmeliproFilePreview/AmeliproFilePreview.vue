@@ -26,7 +26,7 @@
 			type: Boolean,
 			default: false,
 		},
-		iframeTitle: {
+		pdfDisplayTitle: {
 			type: String,
 			default: 'Aperçu du fichier PDF',
 		},
@@ -100,13 +100,12 @@
 			</template>
 
 			<template #default>
-				<iframe
+				<object
 					v-if="mdAndUp"
-					:id="`${uniqueId}-iframe`"
-					class="amelipro-file-preview__iframe"
+					:id="`${uniqueId}-pdf-display`"
+					:aria-label="pdfDisplayTitle"
 					:height="previewHeight"
-					:src="fileSrc"
-					:title="iframeTitle"
+					:data="fileSrc"
 					type="application/pdf"
 					width="100%"
 				/>

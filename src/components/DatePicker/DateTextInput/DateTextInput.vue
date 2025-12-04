@@ -54,7 +54,7 @@
 		persistentHint?: boolean
 		externalErrorMessages?: string[]
 	}>(), {
-		modelValue: null,
+		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: undefined,
@@ -690,6 +690,49 @@
 	 * =====================
 	 */
 	watch(inputValue, async (nv, ov) => {
+		if (props.disabled) {
+			const isEmpty = !nv || nv.trim() === '' || /^[_/\-.\s]+$/.test(nv)
+
+			if (isEmpty && ov && props.modelValue) {
+				isFormatting.value = true
+
+				const mv = props.modelValue
+
+				// --- RANGE ---
+				if (isRange.value && Array.isArray(mv) && mv.length === 2) {
+					const [start, end] = mv
+					const sd = parseDate(start, returnFormat.value)
+					const ed = parseDate(end, returnFormat.value)
+
+					if (sd && ed) {
+						initializeWithDates(sd, ed)
+						selectedDates.value = [sd, ed]
+						inputValue.value = formatRangeForDisplay(sd, ed)
+						runRules(inputValue.value)
+					}
+				}
+
+				// --- SINGLE ---
+				else {
+					const raw = typeof mv === 'string' ? mv : ''
+					const parsed = dayjs(raw, displayFormat.value, true)
+
+					if (parsed.isValid()) {
+						inputValue.value = parsed.format(displayFormat.value)
+						runRules(inputValue.value)
+					}
+					else {
+						inputValue.value = raw
+						runRules(raw)
+					}
+				}
+
+				isFormatting.value = false
+			}
+
+			return
+		}
+
 		// Prevent infinite loops but allow formatting
 		if (isFormatting.value || nv === ov || isHandlingBackspace.value || isBootstrapping.value) return
 		try {
@@ -871,7 +914,7 @@
 		}
 	})
 
-	watch(() => props.modelValue, (nv: DateValue) => {
+	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
 		if (!nv) {
 			inputValue.value = ''
@@ -952,6 +995,11 @@
 		clearValidation()
 		isFocused.value = false
 		hasInteracted.value = false
+
+		if (props.disabled) {
+			fieldKey.value++
+			return
+		}
 
 		// 2) Réinitialiser la valeur sans déclencher de validation interactive
 		isFormatting.value = true

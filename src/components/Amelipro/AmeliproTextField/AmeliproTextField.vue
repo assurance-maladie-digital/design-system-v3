@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	/* eslint-disable vuejs-accessibility/label-has-for */
-	import { type PropType, computed, onMounted, ref } from 'vue'
+/* eslint-disable vuejs-accessibility/label-has-for */
+	import { computed, onMounted, type PropType, ref } from 'vue'
 	import type { IndexedObject, ValidateOnType } from '../types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { InputTextField } from './types'
@@ -267,7 +267,7 @@
 			:class="fieldClasses"
 		>
 			<div
-				class="d-inline-flex align-start"
+				class="d-inline-flex align-baseline mb-1"
 				:class="labelClasses"
 			>
 				<label
@@ -289,7 +289,10 @@
 					</span>
 				</label>
 
-				<slot name="labelInfo" />
+				<slot
+					class="mb-1"
+					name="labelInfo"
+				/>
 			</div>
 
 			<VTextField
@@ -372,7 +375,6 @@
 	}
 
 	.amelipro-text-field__label {
-		margin-bottom: 4px;
 		font-size: apTokens.$font-size-xs;
 		font-weight: apTokens.$label-font-weight;
 	}

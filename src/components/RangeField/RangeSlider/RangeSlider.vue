@@ -33,8 +33,8 @@
 			'step': 1,
 			'minLabel': 'Minimum',
 			'maxLabel': 'Maximum',
-			'thumb-color': cnamColorsTokens.blue.darken80,
-			'track-color': cnamColorsTokens.blue.lighten40,
+			'thumb-color': cnamColorsTokens.blue.base,
+			'track-color': cnamColorsTokens.blue.lighten60,
 			'track-fill-color': cnamColorsTokens.blue.lighten20,
 		},
 	)
@@ -297,6 +297,7 @@ $virtual-thumb-size: 40px;
 	height: $virtual-thumb-size;
 	transition: left 0.1s;
 	will-change: left;
+	font-weight: bold;
 
 	&::before {
 		content: '';

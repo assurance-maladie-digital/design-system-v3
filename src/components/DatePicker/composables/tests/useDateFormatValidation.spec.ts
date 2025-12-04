@@ -29,7 +29,7 @@ describe('useDateFormatValidation', () => {
 
 			const result = validateDateFormat('32/12/2023')
 			expect(result.isValid).toBe(false)
-			expect(result.message).toBe('Format de date invalide (DD/MM/YYYY)')
+			expect(result.message).toBe('Format de date invalide (JJ/MM/AAAA)')
 		})
 
 		it('devrait retourner isValid=true pour une date vide si non requis', () => {
@@ -78,7 +78,7 @@ describe('useDateFormatValidation', () => {
 
 			const result = validateDateFormat('25/12/2023a')
 			expect(result.isValid).toBe(false)
-			expect(result.message).toBe('Format de date invalide (DD/MM/YYYY)')
+			expect(result.message).toBe('Format de date invalide (JJ/MM/AAAA)')
 		})
 
 		it('devrait valider une date au format alternatif si dateFormatReturn est spécifié', () => {

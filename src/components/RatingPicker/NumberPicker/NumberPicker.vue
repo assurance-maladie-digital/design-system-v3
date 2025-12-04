@@ -131,6 +131,8 @@
 						@keyup.space="emitInputEvent(index); setFocus(index - 1)"
 						@keyup.right="focusNextElement(index - 1)"
 						@keyup.left="focusPrevElement(index - 1)"
+						@keyup.up="focusPrevElement(index - 1)"
+						@keyup.down="focusNextElement(index - 1)"
 					>
 						{{ index }}
 					</div>

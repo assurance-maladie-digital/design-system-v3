@@ -20,6 +20,7 @@
 		type?: CaptchaType
 		tagTitle?: string
 		helpDesk?: string | false
+		locale?: string
 		locales?: typeof defaultLocales
 	}>(), {
 		modelValue: undefined,
@@ -27,6 +28,7 @@
 		type: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
+		locale: navigator.language,
 		locales: () => defaultLocales,
 	})
 
@@ -101,6 +103,7 @@
 			:url-get-image="urlGetImage"
 			:url-get-audio="urlGetAudio"
 			:locales
+			:locale
 			@update:model-value="emitChangeTypeEvent"
 			@create-captcha:init="createCaptchaInit"
 			@create-captcha:success="createCaptchaSuccess"

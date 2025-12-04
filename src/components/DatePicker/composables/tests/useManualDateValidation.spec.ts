@@ -161,7 +161,7 @@ describe('useManualDateValidation', () => {
 		const result = validateManualInput('01/01/2023')
 
 		expect(result).toBe(false)
-		expect(errors.value).toContain('Format de date invalide (DD/MM/YYYY)')
+		expect(errors.value).toContain('Format de date invalide (JJ/MM/AAAA)')
 	})
 
 	it('devrait appeler validateField avec les règles personnalisées', () => {

@@ -378,5 +378,9 @@
 			margin-top: 2px;
 		}
 	}
+
+	& .amelipro-custom-btn {
+		white-space: normal;
+	}
 }
 </style>

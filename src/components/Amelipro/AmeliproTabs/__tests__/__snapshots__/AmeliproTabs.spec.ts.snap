@@ -1,0 +1,122 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproTabs > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="amelipro-tabs"
+  id="modified-unique-id-container"
+>
+  <div
+    class="amelipro-tabs--desktop"
+    id="modified-unique-id-desktop"
+  >
+    <div class="
+      amelipro-tabs__btn-group
+      modified-btn-group-classes
+    ">
+      <div
+        aria-label="Modified aria label"
+        aria-labelledby="modified-aria-labelledby"
+        class="
+          align-center
+          amelipro-tabs__btn-group__wrapper
+          d-flex
+          flex-column
+          flex-nowrap
+          flex-sm-row
+          justify-center
+          justify-sm-start
+        "
+        id="modified-unique-id"
+        role="tablist"
+      >
+        <amelipro-tab-btn-stub
+          class=""
+          controls="modified-unique-id-tab-panel-0"
+          disabled="false"
+          pills="true"
+          selected="false"
+          tabindex="-1"
+          uniqueid="modified-unique-id-tab-btn-0"
+        ></amelipro-tab-btn-stub>
+        <amelipro-tab-btn-stub
+          class=""
+          controls="modified-unique-id-tab-panel-1"
+          disabled="false"
+          pills="true"
+          selected="true"
+          tabindex="0"
+          uniqueid="modified-unique-id-tab-btn-1"
+        ></amelipro-tab-btn-stub>
+        <amelipro-tab-btn-stub
+          class=""
+          controls="modified-unique-id-tab-panel-2"
+          disabled="false"
+          notification="1"
+          pills="true"
+          selected="false"
+          tabindex="-1"
+          uniqueid="modified-unique-id-tab-btn-2"
+        ></amelipro-tab-btn-stub>
+      </div>
+    </div>
+    <div
+      class="
+        amelipro-tabs__tab
+        tabpanel
+      "
+      id="modified-unique-id-tab-panel-0"
+      role="tabpanel"
+      style="display: none;"
+      tabindex="-1"
+    ></div>
+    <div
+      class="
+        amelipro-tabs__tab
+        tabpanel
+      "
+      id="modified-unique-id-tab-panel-1"
+      role="tabpanel"
+      tabindex="0"
+    ></div>
+    <div
+      class="
+        amelipro-tabs__tab
+        tabpanel
+      "
+      id="modified-unique-id-tab-panel-2"
+      role="tabpanel"
+      style="display: none;"
+      tabindex="-1"
+    ></div>
+  </div>
+</div>
+`;
+
+exports[`AmeliproTabs > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="amelipro-tabs"
+  id="required-unique-id-container"
+>
+  <div
+    class="amelipro-tabs--desktop"
+    id="required-unique-id-desktop"
+  >
+    <div class="amelipro-tabs__btn-group">
+      <div
+        class="
+          align-center
+          amelipro-tabs__btn-group__wrapper
+          d-flex
+          flex-column
+          flex-nowrap
+          flex-sm-row
+          justify-center
+          justify-sm-start
+        "
+        id="required-unique-id"
+        role="tablist"
+      ></div>
+    </div>
+  </div>
+</div>
+`;

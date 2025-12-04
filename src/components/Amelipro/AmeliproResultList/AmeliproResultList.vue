@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, onMounted, onUpdated, ref, watch } from 'vue'
+	import { computed, onMounted, onUpdated, type PropType, ref, watch } from 'vue'
 	import AmeliproPagination from '../AmeliproPagination/AmeliproPagination.vue'
 	import AmeliproSelect from '../AmeliproSelect/AmeliproSelect.vue'
 	import type { IDataListItem } from '../types'
@@ -139,6 +139,8 @@
 			currentPage.value = 1
 		}
 	}
+
+	watch(sortSelectModel, emitSortSelectChange, { immediate: true })
 </script>
 
 <template>

@@ -5,15 +5,17 @@ exports[`AmeliproCustomSelector > render correctly 1`] = `
   class="amelipro-custom-selector"
   id="my-custom-selector-group-id-container"
 >
-  <div class="
-    align-center
-    amelipro-custom-selector__label-wrapper
-    d-flex
-  ">
+  <div
+    class="
+      align-center
+      amelipro-custom-selector__label-wrapper
+      d-flex
+    "
+    style="margin-bottom: 4px;"
+  >
     <p
       class="
         amelipro-custom-selector__label
-        mb-1
         text-ap-grey-darken-1
       "
       id="my-custom-selector-group-id"

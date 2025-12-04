@@ -156,6 +156,8 @@
 				@keyup.space="emitInputEvent(index); setFocus(index - 1)"
 				@keyup.right="focusNextElement(index - 1)"
 				@keyup.left="focusPrevElement(index - 1)"
+				@keyup.up="focusPrevElement(index - 1)"
+				@keyup.down="focusNextElement(index - 1)"
 			>
 				<SyIcon
 					:icon="getIcon(index - 1)"
@@ -248,7 +250,6 @@
 	font-weight: 700;
 	font-size: 1rem;
 	line-height: 150%;
-	color: tokens.$colors-text-base;
 }
 
 .sy-emotion-picker__item--active .sy-emotion-picker__item-title {

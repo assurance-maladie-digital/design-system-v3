@@ -92,7 +92,6 @@ export const Default: Story = {
 				:file-type-accepted="args.fileTypeAccepted"
 				:max-file-number="args.maxFileNumber"
 				:unique-id="args.uniqueId"
-				v-bind="args"
 			/>
 		`,
 	}),

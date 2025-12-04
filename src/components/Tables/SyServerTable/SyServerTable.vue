@@ -31,6 +31,7 @@
 		density: 'default',
 		striped: false,
 		showSelect: false,
+		showSelectSingle: false,
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
@@ -202,7 +203,13 @@
 		items: tableItems,
 		modelValue: model,
 		updateModelValue: (value) => {
-			model.value = value
+			if (props.showSelectSingle && Array.isArray(value)) {
+				// In single-select mode, always keep at most one selected value
+				model.value = value.length > 0 ? [value[0]] : []
+			}
+			else {
+				model.value = value
+			}
 		},
 		selectionKey: toRef(props, 'selectionKey'),
 	})
@@ -276,7 +283,8 @@
 			:items="processItems(displayedItems)"
 			:items-length="displayedItemsLength || 0"
 			:density="props.density"
-			:show-select="props.showSelect"
+			:show-select="props.showSelect || props.showSelectSingle"
+			:select-strategy="props.showSelectSingle ? 'single' : 'page'"
 			:item-selectable="(item) => true"
 			:item-value="getItemValue"
 			:multi-sort="props.multiSort"
@@ -308,7 +316,7 @@
 									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
 								}"
 							>
-								<template v-if="column.key === 'data-table-select' && props.showSelect">
+								<template v-if="column.key === 'data-table-select' && props.showSelect && !props.showSelectSingle">
 									<SyCheckbox
 										:model-value="slotProps.allSelected"
 										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
@@ -341,7 +349,7 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th v-if="props.showSelect" />
+						<th v-if="props.showSelect || props.showSelectSingle" />
 						<template
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"

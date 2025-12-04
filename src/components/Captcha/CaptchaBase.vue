@@ -14,6 +14,7 @@
 		urlCreate: string
 		urlGetImage: string
 		urlGetAudio: string
+		locale: string
 		locales: typeof defaultLocales
 	}>()
 
@@ -81,6 +82,7 @@
 				state.value = 'resolved'
 			},
 			onCreateCaptchaError,
+			props.locale,
 		)
 	}
 
@@ -106,6 +108,7 @@
 				state.value = 'resolved'
 			},
 			onCreateCaptchaError,
+			props.locale,
 		)
 	}
 

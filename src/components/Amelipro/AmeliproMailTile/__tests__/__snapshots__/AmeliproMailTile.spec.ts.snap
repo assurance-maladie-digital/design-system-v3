@@ -1,0 +1,98 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproMailTile > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-mail-tile
+    w-100
+  "
+  id="modified-unique-id-container"
+>
+  <div class="
+    amelipro-mail-tile__editable
+    d-flex
+    w-100
+  ">
+    <button
+      aria-label="Message lu"
+      aria-pressed="false"
+      class="
+        mail-status-btn
+        mail-status-btn--not-read
+      "
+      id="modified-unique-id-read-btn"
+      style="background-color: #E6F6FC;"
+      title="Message non lu"
+    ></button>
+    <v-btn-stub
+      block="false"
+      border="false"
+      class="
+        d-block
+        mail-btn--editable
+        text-none
+      "
+      color="ap-blue-lighten-3"
+      density="default"
+      disabled="false"
+      elevation="0"
+      exact="false"
+      flat="true"
+      href="#modified"
+      icon="false"
+      id="modified-unique-id-mail-btn"
+      loading="false"
+      replace="false"
+      ripple="false"
+      size="default"
+      slim="false"
+      stacked="false"
+      symbol="Symbol(vuetify:v-btn-toggle)"
+      tag="button"
+      tile="false"
+      variant="flat"
+    ></v-btn-stub>
+  </div>
+</div>
+`;
+
+exports[`AmeliproMailTile > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-mail-tile
+    w-100
+  "
+  id="required-unique-id-container"
+>
+  <v-btn-stub
+    block="false"
+    border="false"
+    class="
+      amelipro-mail-tile__not-editable
+      mail-btn
+      text-none
+      w-100
+    "
+    color="ap-white"
+    density="default"
+    disabled="false"
+    elevation="0"
+    exact="false"
+    flat="true"
+    href="#required"
+    icon="false"
+    id="required-unique-id-mail-btn"
+    loading="false"
+    replace="false"
+    ripple="false"
+    size="default"
+    slim="false"
+    stacked="false"
+    symbol="Symbol(vuetify:v-btn-toggle)"
+    tag="button"
+    tile="false"
+    title="Message lu"
+    variant="flat"
+  ></v-btn-stub>
+</div>
+`;
