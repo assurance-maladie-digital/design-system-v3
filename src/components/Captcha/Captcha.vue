@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
 	import volumeUp from './icons/volumeUp.vue'
-	import { computed, ref, watch } from 'vue'
+	import { computed, ref, watch, watchEffect } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -86,6 +86,27 @@
 
 	const phoneHelpDesk = computed(() => {
 		return `<a href="tel:${props.helpDesk}">${props.helpDesk}</a>`
+	})
+
+	const helpDeskHtml = computed(() => {
+		return props.locales?.helpDesk(phoneHelpDesk.value) ?? defaultLocales.helpDesk(phoneHelpDesk.value)
+	})
+
+	const imageHelpDeskRef = ref<HTMLElement | null>(null)
+	const audioHelpDeskRef = ref<HTMLElement | null>(null)
+
+	watchEffect(() => {
+		if (!props.helpDesk || !helpDeskHtml.value) {
+			return
+		}
+
+		if (imageHelpDeskRef.value) {
+			imageHelpDeskRef.value.innerHTML = helpDeskHtml.value
+		}
+
+		if (audioHelpDeskRef.value) {
+			audioHelpDeskRef.value.innerHTML = helpDeskHtml.value
+		}
 	})
 
 </script>
@@ -177,8 +198,8 @@
 
 					<p
 						v-if="props.helpDesk"
+						ref="imageHelpDeskRef"
 						class="captcha-helpdesk text-textSubdued mb-2"
-						v-html="locales?.helpDesk(phoneHelpDesk)"
 					/>
 				</div>
 			</template>
@@ -261,8 +282,8 @@
 					</CaptchaBtn>
 					<p
 						v-if="props.helpDesk"
+						ref="audioHelpDeskRef"
 						class="captcha-helpdesk text-textSubdued mb-2"
-						v-html="locales?.helpDesk(phoneHelpDesk)"
 					/>
 				</div>
 			</template>
