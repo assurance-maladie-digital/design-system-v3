@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { VueWrapper, config, mount, shallowMount } from '@vue/test-utils'
+import { config, mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproTextField from '../AmeliproTextField.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
@@ -36,7 +36,7 @@ const VTextFieldStub = defineComponent({
 			type: String,
 			default: undefined,
 		},
-		ariaRequired: {
+		required: {
 			type: [Boolean, String],
 			default: false,
 		},
@@ -85,7 +85,7 @@ const VTextFieldStub = defineComponent({
 	template: `
 		<div
 			class="v-text-field-stub"
-			:aria-required="ariaRequired"
+            :aria-required="required"
 			:style="style"
 		>
 			<slot />
@@ -99,7 +99,7 @@ config.global.stubs = config.global.stubs || {}
 config.global.stubs.VTextField = VTextFieldStub
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTextField> = {
-	ariaRequired: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -222,7 +222,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproTextField> => ({
 })
 
 const modifiedPropValues = (): ComponentProps<typeof AmeliproTextField> => ({
-	ariaRequired: true,
+	required: true,
 	classes: 'modified-classes',
 	clearable: true,
 	counter: 5,
