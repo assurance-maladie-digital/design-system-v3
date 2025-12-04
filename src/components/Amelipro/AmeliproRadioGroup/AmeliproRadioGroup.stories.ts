@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import AmeliproRadioGroup from './AmeliproRadioGroup.vue'
 // --- LabelInfo ---
 import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
+import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 
 const meta = {
 	argTypes: {
@@ -215,6 +216,7 @@ export const Required: Story = {
     group-label="Sélection obligatoire"
     unique-id="radio-required"
     required
+    :error:"true"
   />
 </template>`,
 			},
@@ -229,16 +231,24 @@ export const Required: Story = {
 		],
 	},
 	render: args => ({
-		components: { AmeliproRadioGroup },
+		components: { AmeliproRadioGroup, AmeliproBtn },
 		setup() {
 			const model = ref(args.modelValue)
 			watch(() => args.modelValue, (newValue) => {
 				model.value = newValue
 			})
-			return { args, model }
+			const deselect = () => {
+				model.value = model.value.map(item => ({
+					...item,
+					isChecked: false,
+				}))
+			}
+
+			return { args, model, deselect }
 		},
 		template: `<p class="mb-2">La sélection d’un bouton est obligatoire grâce à la prop <code>required</code>.</p>
-<AmeliproRadioGroup v-bind="args" v-model="model" />`,
+        <AmeliproRadioGroup v-bind="args" v-model="model"/>
+        <AmeliproBtn class="mt-4" @click="deselect">Tout désélectionner</AmeliproBtn>`,
 	}),
 }
 
@@ -250,6 +260,7 @@ export const RequiredErrorMessage: Story = {
 		uniqueId: 'radio-errormsg',
 		required: true,
 		requiredErrorMessage: 'Veuillez sélectionner une option',
+		error: true,
 	},
 	parameters: {
 		sourceCode: [
@@ -262,6 +273,7 @@ export const RequiredErrorMessage: Story = {
     group-label="Erreur personnalisée"
     unique-id="radio-errormsg"
     required
+    :error="true"
     required-error-message="Veuillez sélectionner une option"
   />
 </template>`,
@@ -277,16 +289,24 @@ export const RequiredErrorMessage: Story = {
 		],
 	},
 	render: args => ({
-		components: { AmeliproRadioGroup },
+		components: { AmeliproRadioGroup, AmeliproBtn },
 		setup() {
 			const model = ref(args.modelValue)
 			watch(() => args.modelValue, (newValue) => {
 				model.value = newValue
 			})
-			return { args, model }
+
+			const deselect = () => {
+				model.value = model.value.map(item => ({
+					...item,
+					isChecked: false,
+				}))
+			}
+			return { args, model, deselect }
 		},
 		template: `<p class="mb-2">Message d’erreur personnalisé via la prop <code>requiredErrorMessage</code>.</p>
-<AmeliproRadioGroup v-bind="args" v-model="model" />`,
+        <AmeliproRadioGroup v-bind="args" v-model="model"/>
+        <AmeliproBtn class="mt-4" @click="deselect">Tout désélectionner</AmeliproBtn>`,
 	}),
 }
 

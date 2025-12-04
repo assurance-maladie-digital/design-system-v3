@@ -40,6 +40,10 @@
 			type: Number,
 			default: -1,
 		},
+		center: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -92,7 +96,12 @@
 </script>
 
 <template>
-	<div class="sy-rating-picker">
+	<div
+		class="sy-rating-picker"
+		:class="{
+			'sy-rating-picker--center': props.center,
+		}"
+	>
 		<component
 			:is="ratingComponent"
 			:model-value="internalValue"
@@ -125,3 +134,16 @@
 		</template>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+.sy-rating-picker--center :deep(fieldset) {
+	display: flex;
+	justify-content: center;
+}
+
+.sy-rating-picker--center :deep(legend) {
+	width: 100%;
+	text-align: center;
+}
+
+</style>
