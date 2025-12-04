@@ -4,8 +4,8 @@
 	import PageContainer from '../PageContainer/PageContainer.vue'
 
 	type MessagePart =
-		| { type: 'text'; value: string }
-		| { type: 'phone'; value: string }
+		| { type: 'text', value: string }
+		| { type: 'phone', value: string }
 
 	// Fonction pour formater le message et ajouter des liens tel: aux numéros de téléphone
 	const splitMessage = (message?: string): MessagePart[] => {
