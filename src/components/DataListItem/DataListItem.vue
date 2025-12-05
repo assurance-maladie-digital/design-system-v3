@@ -89,7 +89,7 @@
 				<span
 					v-else-if="renderHtmlValue"
 					class="text-body-1"
-					:innerHTML="itemValue"
+					v-html="itemValue"
 				/>
 
 				<span
