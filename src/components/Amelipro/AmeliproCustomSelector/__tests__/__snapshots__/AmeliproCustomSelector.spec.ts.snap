@@ -1,9 +1,152 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproCustomSelector > render correctly 1`] = `
+exports[`AmeliproCustomSelector > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  aria-labelledby="modified-unique-id"
+  class="amelipro-custom-selector"
+  id="modified-unique-id-container"
+  role="radiogroup"
+>
+  <div
+    class="
+      align-center
+      amelipro-custom-selector__label-wrapper
+      d-flex
+    "
+    style="margin-bottom: 20px;"
+  >
+    <p
+      aria-describedby="Modified label description"
+      class="
+        amelipro-custom-selector__label
+        text-ap-grey-darken-1
+      "
+      id="modified-unique-id"
+    >
+      Modified group label
+      <span
+        aria-hidden="true"
+        class="d-inline-flex"
+      >
+        &nbsp;*
+      </span>
+      <span class="d-sr-only">
+        &nbsp;Champ obligatoire
+      </span>
+    </p>
+  </div>
+  <div class="
+    amelipro-custom-selector__group
+    d-flex
+    flex-wrap
+    justify-start
+  ">
+    <div class="
+      amelipro-custom-selector__item
+      d-block
+      item-per-line-2
+      item-spacing
+    ">
+      <label
+        class="d-block"
+        for="modified-unique-id-input-0"
+        id="modified-unique-id-label-0"
+      >
+        <input
+          aria-checked="false"
+          disabled=""
+          id="modified-unique-id-input-0"
+          name="modified-unique-id-name"
+          type="radio"
+          value="modified-item-value-1"
+        />
+        <span
+          class="
+            d-block
+            select-item
+            text-ap-grey-darken-1
+            text-body-1
+          "
+          id="modified-unique-id-label-text-0"
+        >
+          modified item label 1
+        </span>
+      </label>
+    </div>
+    <div class="
+      amelipro-custom-selector__item
+      d-block
+      item-per-line-2
+      item-spacing
+    ">
+      <label
+        class="d-block"
+        for="modified-unique-id-input-1"
+        id="modified-unique-id-label-1"
+      >
+        <input
+          aria-checked="false"
+          disabled=""
+          id="modified-unique-id-input-1"
+          name="modified-unique-id-name"
+          type="radio"
+          value="modified-item-value-2"
+        />
+        <span
+          class="
+            d-block
+            select-item
+            text-ap-grey-darken-1
+            text-body-1
+          "
+          id="modified-unique-id-label-text-1"
+        >
+          modified item label 2
+        </span>
+      </label>
+    </div>
+    <div class="
+      amelipro-custom-selector__item
+      d-block
+      item-per-line-2
+      item-spacing
+    ">
+      <label
+        class="d-block"
+        for="modified-unique-id-input-2"
+        id="modified-unique-id-label-2"
+      >
+        <input
+          aria-checked="true"
+          checked=""
+          disabled=""
+          id="modified-unique-id-input-2"
+          name="modified-unique-id-name"
+          type="radio"
+          value="modified-item-value-3"
+        />
+        <span
+          class="
+            d-block
+            select-item
+            text-ap-grey-darken-1
+            text-body-1
+          "
+          id="modified-unique-id-label-text-2"
+        >
+          modified item label 3
+        </span>
+      </label>
+    </div>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproCustomSelector > Snapshots > renders the component with only required properties filled in 1`] = `
 <div
   class="amelipro-custom-selector"
-  id="my-custom-selector-group-id-container"
+  id="required-unique-id-container"
 >
   <div
     class="
@@ -18,15 +161,15 @@ exports[`AmeliproCustomSelector > render correctly 1`] = `
         amelipro-custom-selector__label
         text-ap-grey-darken-1
       "
-      id="my-custom-selector-group-id"
+      id="required-unique-id"
     >
-      Libellé du groupe
+      Required group label
       <!-- v-if -->
       <!-- v-if -->
     </p>
   </div>
   <div
-    aria-labelledby="my-custom-selector-group-id"
+    aria-labelledby="required-unique-id"
     class="amelipro-custom-selector__group"
     role="group"
   >
@@ -36,150 +179,7 @@ exports[`AmeliproCustomSelector > render correctly 1`] = `
       justify-start
       list-style-none
       w-100
-    ">
-      <li class="
-        amelipro-custom-selector__item
-        d-block
-        item-spacing
-      ">
-        <div
-          aria-checked="true"
-          aria-disabled="true"
-          class="
-            checkbox-input
-            d-block
-          "
-          id="my-custom-selector-group-id-input-0"
-          role="checkbox"
-          tabindex="-1"
-        >
-          <span
-            class="
-              d-block
-              select-item
-              text-ap-grey-darken-1
-              text-body-1
-            "
-            id="my-custom-selector-group-id-label-text-0"
-          >
-            1
-          </span>
-        </div>
-      </li>
-      <li class="
-        amelipro-custom-selector__item
-        d-block
-        item-spacing
-      ">
-        <div
-          aria-checked="false"
-          aria-disabled="true"
-          class="
-            checkbox-input
-            d-block
-          "
-          id="my-custom-selector-group-id-input-1"
-          role="checkbox"
-          tabindex="-1"
-        >
-          <span
-            class="
-              d-block
-              select-item
-              text-ap-grey-darken-1
-              text-body-1
-            "
-            id="my-custom-selector-group-id-label-text-1"
-          >
-            2
-          </span>
-        </div>
-      </li>
-      <li class="
-        amelipro-custom-selector__item
-        d-block
-        item-spacing
-      ">
-        <div
-          aria-checked="false"
-          class="
-            checkbox-input
-            d-block
-          "
-          id="my-custom-selector-group-id-input-2"
-          role="checkbox"
-          tabindex="0"
-        >
-          <span
-            class="
-              d-block
-              select-item
-              text-ap-grey-darken-1
-              text-body-1
-            "
-            id="my-custom-selector-group-id-label-text-2"
-          >
-            3
-          </span>
-        </div>
-      </li>
-      <li class="
-        amelipro-custom-selector__item
-        d-block
-        item-spacing
-      ">
-        <div
-          aria-checked="false"
-          class="
-            checkbox-input
-            d-block
-          "
-          id="my-custom-selector-group-id-input-3"
-          role="checkbox"
-          tabindex="0"
-        >
-          <span
-            class="
-              d-block
-              select-item
-              text-ap-grey-darken-1
-              text-body-1
-            "
-            id="my-custom-selector-group-id-label-text-3"
-          >
-            4
-          </span>
-        </div>
-      </li>
-      <li class="
-        amelipro-custom-selector__item
-        d-block
-        item-spacing
-      ">
-        <div
-          aria-checked="false"
-          class="
-            checkbox-input
-            d-block
-          "
-          id="my-custom-selector-group-id-input-4"
-          role="checkbox"
-          tabindex="0"
-        >
-          <span
-            class="
-              d-block
-              select-item
-              text-ap-grey-darken-1
-              text-body-1
-            "
-            id="my-custom-selector-group-id-label-text-4"
-          >
-            5
-          </span>
-        </div>
-      </li>
-    </ul>
+    "></ul>
   </div>
   <!-- v-if -->
 </div>
