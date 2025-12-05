@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SelectBtnField from './SelectBtnField.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
-import { VBtn, VThemeProvider } from 'vuetify/components'
+import { VBtn } from 'vuetify/components'
 import { ref } from 'vue'
 
 const meta = {
@@ -813,87 +813,6 @@ export const readonly: Story = {
 				</div>
 			`,
 		}
-	},
-}
-
-export const DarkMode: Story = {
-	args: {
-		modelValue: null,
-		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
-		],
-	},
-	render: (args) => {
-		return {
-			components: { SelectBtnField, VThemeProvider },
-			setup() {
-				return { args }
-			},
-			template: `
-				<VThemeProvider class="pa-10" theme="dark" with-background>
-					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-					<SelectBtnField
-						v-model="args.modelValue"
-						:items="args.items"
-						aria-labelledby="contact-method"
-					/>
-				</VThemeProvider>
-			`,
-		}
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<VThemeProvider class="pa-10" theme="dark" with-background>
-		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-		<SelectBtnField
-			v-model="value"
-			:items="items"
-			aria-labelledby="contact-method"
-		/>
-	</VThemeProvider>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-	import { SelectBtnField } from '@cnamts/synapse'
-	import { VThemeProvider } from 'vuetify/components'
-	import { ref } from 'vue'
-
-	const value = ref([])
-	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
-	]
-</script>
-				`,
-			},
-		],
 	},
 }
 
