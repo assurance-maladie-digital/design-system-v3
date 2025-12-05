@@ -1,0 +1,241 @@
+import {Meta} from '@storybook/blocks';
+import '../../styles/shared.css';
+
+<Meta title="Accessibilité/Audit/Exemptions – dérogations"/>
+
+<style>
+{
+  `
+    /* Variables CSS basées sur les couleurs exactes du thème CNAM */
+    :root {
+      --primary-color: #0c419a; /* primary: cnamColorsTokens.blue.base */
+      --primary-light: #3d67ae; /* blue.lighten20 */
+      --secondary-color: #006386; /* secondary: cnamColorsTokens.cyan.darken40 */
+      --accent-color: #00a5df; /* accent: cnamColorsTokens.cyan.base */
+      --error-color: #b33f2e; /* error: cnamColorsTokens.orange.darken20 */
+      --info-color: #0c419a; /* info: cnamColorsTokens.blue.base */
+      --success-color: #004439; /* success: cnamColorsTokens.turquoise.darken60 */
+      --warning-color: #906b15; /* warning: cnamColorsTokens.yellow.darken60 */
+      --text-color: #020d1f; /* blue.darken80 */
+      --background-light: #f8f9fc; /* blue.lighten97 */
+      --card-shadow: 0 4px 12px rgba(12, 65, 154, 0.05);
+      --transition-speed: 0.3s;
+      --border-radius: 8px;
+    }
+    
+    /* Styles globaux */
+    .rgaa-container {
+      font-family: 'Roboto', sans-serif;
+      color: var(--text-color);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .section-title {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(12, 65, 154, 0.2);
+    }
+    
+    .info-box {
+      background-color: var(--background-light);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--card-shadow);
+    }
+
+    .info-box h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+
+    .highlight-list {
+      margin: 1rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .highlight-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .link-card {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      transition: all var(--transition-speed) ease;
+      box-shadow: var(--card-shadow);
+    }
+
+    .link-buttons {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  `
+}
+</style>
+
+<div className="rgaa-container">
+  <div className="header">
+    <h1>Exemptions et dérogations dans un audit RGAA</h1>
+    <p>Comprendre les cas prévus par le référentiel et leurs bonnes pratiques d'application</p>
+  </div>
+
+  <div className="info-box">
+    <h3>🔍 Contexte</h3>
+    <p>
+      Le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> fixe les
+      obligations d'accessibilité des sites et services en ligne des organismes publics et de
+      certains organismes privés.
+    </p>
+    <p>
+      Le référentiel prévoit des cas d'exemption et de dérogation (par exemple pour certains
+      contenus de tiers ou en cas de charge disproportionnée). Dans la pratique, ces possibilités
+      sont cependant souvent mal comprises ou utilisées de manière trop large, ce qui fausse la
+      perception réelle du niveau d'accessibilité d'un service.
+    </p>
+  </div>
+
+  <h2 className="section-title">Exemptions « contenus de tiers » : ce que dit le RGAA</h2>
+  <p>
+    Le RGAA prévoit une exemption possible pour certains contenus dits « de tiers ». Cette
+    exemption est strictement encadrée&nbsp;:
+  </p>
+  <ul className="highlight-list">
+    <li>
+      <strong>Seuls sont exemptés</strong> les contenus ni financés, ni développés par l'organisme
+      concerné, et qui ne sont pas sous son contrôle.
+    </li>
+    <li>
+      Concrètement, l'organisme ne doit ni avoir payé pour ce contenu, ni pouvoir décider de son
+      intégration ou non sur le site.
+    </li>
+  </ul>
+  <p>
+    Dès lors qu'un organisme commande, achète, intègre ou peut retirer un contenu tiers de son
+    service, ce contenu ne peut plus être considéré comme totalement extérieur à sa sphère de
+    responsabilité et l'exemption ne s'applique plus.
+  </p>
+
+  <h2 className="section-title">Problèmes observés : erreurs et abus d'interprétation</h2>
+  <div className="info-box">
+    <p>
+      Dans de nombreux audits et déclarations d'accessibilité, on observe des usages trop larges ou
+      erronés de cette exemption « contenus de tiers », avec plusieurs cas récurrents&nbsp;:
+    </p>
+    <ul className="highlight-list">
+      <li>
+        Des composants achetés à des tiers (widgets, solutions clés en main, etc.) sont déclarés
+        comme « contenus de tiers » alors qu'ils sont <strong>financés</strong> par l'organisme, ce
+        qui va à l'encontre du texte du RGAA.
+      </li>
+      <li>
+        Des éléments que l'organisme peut choisir de ne pas intégrer sont présentés comme
+        « hors de contrôle »&nbsp;: gestionnaires de cookies (par exemple certaines bannières ou
+        scripts), formulaires, chatbots, lecteurs vidéo, solutions d'analytics, etc. Dans ces cas,
+        l'organisme a pourtant la main sur l'intégration ou non de ces fonctionnalités.
+      </li>
+      <li>
+        Plus largement, tout contenu ou composant que l'organisme décide d'intégrer à son site,
+        même fourni par un prestataire externe, reste sous sa responsabilité du point de vue de
+        l'accessibilité.
+      </li>
+    </ul>
+    <p>
+      Ces interprétations trop larges conduisent à exclure artificiellement une partie significative
+      du périmètre réel de l'audit, et peuvent donner un <strong>taux de conformité trompeur</strong>
+      par rapport à l'expérience vécue par les personnes en situation de handicap.
+    </p>
+  </div>
+
+  <h2 className="section-title">Dérogation pour « charge disproportionnée »</h2>
+  <p>
+    Le RGAA prévoit également la possibilité d'invoquer une
+    <strong>dérogation pour charge disproportionnée</strong>
+    lorsque rendre accessible un contenu ou une fonctionnalité serait manifestement trop coûteux
+    ou compromettrait la mission de l'organisme.
+  </p>
+  <p>Cette dérogation est toutefois encadrée par plusieurs exigences fortes&nbsp;:</p>
+  <ul className="highlight-list">
+    <li>
+      La dérogation doit être <strong>justifiée de manière documentée</strong> (ressources
+      disponibles, coûts, bénéfices attendus, fréquence d'utilisation du contenu, etc.).
+    </li>
+    <li>
+      Lorsque certains contenus ne sont pas rendus accessibles, une
+      <strong>alternative accessible</strong>
+      doit être prévue et clairement indiquée.
+    </li>
+    <li>
+      La dérogation ne doit pas devenir une solution de facilité pour laisser de côté des contenus
+      importants ou très utilisés.
+    </li>
+  </ul>
+  <div className="info-box">
+    <p>
+      Dans les audits observés, les justifications de charge disproportionnée sont souvent trop
+      vagues (« de nombreux contenus inaccessibles », « coût trop élevé »…) et ne précisent ni
+      l'analyse coût/bénéfice, ni les alternatives proposées aux usagers. Le risque est alors de
+      sous-estimer l'impact réel sur l'accessibilité du service.
+    </p>
+  </div>
+
+  <h2 className="section-title">Qui est concerné et quelles bonnes pratiques adopter&nbsp;?</h2>
+  <p>
+    La bonne application des exemptions et dérogations engage l'ensemble des acteurs de la chaîne
+    numérique&nbsp;:
+  </p>
+  <ul className="highlight-list">
+    <li>
+      <strong>Organismes publics et privés soumis au RGAA</strong>&nbsp;: accepter un taux de
+      conformité <em>sincère</em>, même s'il n'est pas maximal, plutôt que de chercher à le « gonfler
+      » en excluant abusivement des contenus tiers ou en multipliant les dérogations.
+    </li>
+    <li>
+      <strong>Sociétés spécialisées en accessibilité et auditeurs</strong>&nbsp;: appliquer
+      strictement les règles du RGAA, expliciter clairement le périmètre de l'audit, et documenter
+      les cas d'exemption ou de dérogation.
+    </li>
+    <li>
+      <strong>DINUM et instances de coordination</strong>&nbsp;: diffuser des recommandations
+      partagées permettant d'harmoniser les pratiques entre auditeurs, notamment sur la notion de
+      contenu de tiers et sur l'évaluation de la charge disproportionnée.
+    </li>
+    <li>
+      <strong>Pouvoirs publics</strong> (Gouvernement, Parlement, autorités de contrôle)&nbsp;:
+      renforcer les dispositifs de suivi, de contrôle et, le cas échéant, de sanction, pour
+      encourager une mise en conformité effective des services numériques.
+    </li>
+  </ul>
+
+  <h2 className="section-title">Conclusion</h2>
+  <div className="info-box">
+    <p>
+      Les exemptions et dérogations prévues par le RGAA répondent à des cas précis et doivent
+      rester l'exception. Mal appliquées, elles permettent d'afficher des taux de conformité élevés
+      sans garantir une accessibilité réelle pour les personnes handicapées.
+    </p>
+    <p>
+      Une démarche rigoureuse, transparente et honnête consiste à&nbsp;:
+    </p>
+    <ul className="highlight-list">
+      <li>assumer le périmètre réel de l'audit&nbsp;;</li>
+      <li>exiger l'accessibilité des composants intégrés, y compris lorsqu'ils proviennent de tiers&nbsp;;</li>
+      <li>motiver sérieusement toute dérogation pour charge disproportionnée&nbsp;;</li>
+      <li>prévoir et documenter des alternatives accessibles lorsque nécessaire.</li>
+    </ul>
+    <p>
+      Utilisées de cette façon, les exemptions et dérogations restent compatibles avec l'objectif
+      central du RGAA&nbsp;: garantir à toutes et tous un accès effectif aux services numériques
+      publics et aux services privés concernés.
+    </p>
+  </div>
+</div>
+
