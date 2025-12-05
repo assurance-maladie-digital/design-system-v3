@@ -1,5 +1,5 @@
 import type { ExpectedPropOptions } from '@tests/types'
-import { RouterLinkStub, VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { mount, RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import AmeliproFilePreview from '../AmeliproFilePreview.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
@@ -28,7 +28,7 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproFilePreview> = {
 		type: Boolean,
 		default: false,
 	},
-	iframeTitle: {
+	pdfDisplayTitle: {
 		type: String,
 		default: 'Aperçu du fichier PDF',
 	},
@@ -65,7 +65,7 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproFilePreview> => ({
 	fileName: 'The file name',
 	fileSrc: 'the-file-src',
 	foldable: true,
-	pdfDisplayTitle: 'Modified pdf display title',
+	pdfDisplayTitle: 'The pdf title',
 	isOpen: true,
 	linkTitle: 'The link title',
 	previewHeight: 400,
@@ -160,20 +160,20 @@ describe('AmeliproFilePreview', () => {
 			})
 		})
 
-		describe('iframe', () => {
+		describe('pdf display', () => {
 			it('prop fileSrc sets attribute src', async () => {
-				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('src')).toBe('required-file-src')
+				expect(vueWrapper.find('.amelipro-file-preview__pdf-display').attributes('data')).toBe('required-file-src')
 
 				await vueWrapper.setProps({ fileSrc: 'new-file-src' })
-				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('src')).toBe('new-file-src')
+				expect(vueWrapper.find('.amelipro-file-preview__pdf-display').attributes('data')).toBe('new-file-src')
 			})
 
-			it('prop iframeTitle sets attribute title', async () => {
-				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('title')).toBe('Aperçu du fichier PDF')
+			it('prop pdfDisplayTitle sets attribute title', async () => {
+				expect(vueWrapper.find('.amelipro-file-preview__pdf-display').attributes('aria-label')).toBe('Aperçu du fichier PDF')
 
-				const { iframeTitle } = modifiedPropValues()
-				await vueWrapper.setProps({ iframeTitle })
-				expect(vueWrapper.find('.amelipro-file-preview__iframe').attributes('title')).toBe('The iframe title')
+				const { pdfDisplayTitle } = modifiedPropValues()
+				await vueWrapper.setProps({ pdfDisplayTitle })
+				expect(vueWrapper.find('.amelipro-file-preview__pdf-display').attributes('aria-label')).toBe('The pdf title')
 			})
 		})
 
@@ -230,14 +230,14 @@ describe('AmeliproFilePreview', () => {
 			expect(vueWrapper.find('.amelipro-file-preview__header-right').exists()).toBe(false)
 		})
 
-		it('iframe visibility', async () => {
+		it('pdf display visibility', async () => {
 			displayWrapper.vm.setMdAndUp(true)
 			await vueWrapper.vm.$nextTick()
-			expect(vueWrapper.find('.amelipro-file-preview__iframe').exists()).toBe(true)
+			expect(vueWrapper.find('.amelipro-file-preview__pdf-display').exists()).toBe(true)
 
 			displayWrapper.vm.setMdAndUp(false)
 			await vueWrapper.vm.$nextTick()
-			expect(vueWrapper.find('.amelipro-file-preview__iframe').exists()).toBe(false)
+			expect(vueWrapper.find('.amelipro-file-preview__pdf-display').exists()).toBe(false)
 		})
 
 		it('download file link visibility', async () => {
