@@ -1,0 +1,105 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UserMenu > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="user-menu"
+  id="modified-unique-id"
+>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="infos utilisateur"
+    icon="plus"
+    iconbgcolor="ap-blue-darken-1"
+    iconcolor="ap-white"
+    iconhoverbgcolor="ap-blue-darken-2"
+    iconhovercolor="ap-white"
+    large="false"
+    medium="false"
+    size="2rem"
+    small="false"
+    uniqueid="modified-unique-id-open-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <v-menu-stub
+    activator="modified-unique-id-open-btn"
+    activatorprops="[object Object]"
+    attach="#modified-unique-id"
+    closedelay="250"
+    closeonback="true"
+    closeoncontentclick="false"
+    contained="false"
+    disabled="false"
+    disableinitialfocus="false"
+    eager="false"
+    locationstrategy="connected"
+    maxwidth="366px"
+    minwidth="366px"
+    modelvalue="false"
+    noclickanimation="false"
+    opendelay="300"
+    openonhover="false"
+    origin="auto"
+    persistent="false"
+    scrim="false"
+    scrollstrategy="reposition"
+    sticktotarget="false"
+    submenu="false"
+    transition="slide-y-transition"
+    width="366px"
+    zindex="2000"
+  ></v-menu-stub>
+</div>
+`;
+
+exports[`UserMenu > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="user-menu"
+  id="required-unique-id"
+>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="infos utilisateur"
+    icon="utilisateur"
+    iconbgcolor="ap-blue-darken-1"
+    iconcolor="ap-white"
+    iconhoverbgcolor="ap-blue-darken-2"
+    iconhovercolor="ap-white"
+    large="false"
+    medium="false"
+    size="2rem"
+    small="false"
+    uniqueid="required-unique-id-open-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <v-menu-stub
+    activator="required-unique-id-open-btn"
+    activatorprops="[object Object]"
+    attach="#required-unique-id"
+    closedelay="250"
+    closeonback="true"
+    closeoncontentclick="false"
+    contained="false"
+    disabled="false"
+    disableinitialfocus="false"
+    eager="false"
+    locationstrategy="connected"
+    maxwidth="366px"
+    minwidth="366px"
+    modelvalue="false"
+    noclickanimation="false"
+    opendelay="300"
+    openonhover="false"
+    origin="auto"
+    persistent="false"
+    scrim="false"
+    scrollstrategy="reposition"
+    sticktotarget="false"
+    submenu="false"
+    transition="slide-y-transition"
+    width="366px"
+    zindex="2000"
+  ></v-menu-stub>
+</div>
+`;
