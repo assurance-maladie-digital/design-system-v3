@@ -65,7 +65,7 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproFilePreview> => ({
 	fileName: 'The file name',
 	fileSrc: 'the-file-src',
 	foldable: true,
-	iframeTitle: 'The iframe title',
+	pdfDisplayTitle: 'Modified pdf display title',
 	isOpen: true,
 	linkTitle: 'The link title',
 	previewHeight: 400,

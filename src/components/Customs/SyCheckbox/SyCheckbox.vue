@@ -214,7 +214,7 @@
 
 		// Create messageId for checkboxes with IDs
 		if (props.id) {
-			return `${props.id}-messages`
+			return `${props.id}`
 		}
 		return undefined
 	})
