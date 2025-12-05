@@ -125,7 +125,7 @@
 		const table = document.querySelector(`#${uniqueTableId.value} table`)
 		const caption = document.createElement('caption')
 		caption.classList.add('d-sr-only')
-		caption.innerHTML = props.caption
+		caption.textContent = props.caption
 		table?.prepend(caption)
 
 		const inputs = document.querySelectorAll(`#${uniqueTableId.value} input`)
