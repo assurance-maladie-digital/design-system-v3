@@ -8,14 +8,16 @@
 	const mask = '##/##/####'
 
 	const props = defineProps<{
+		label?: string
+		successMessages?: string
 		maxYear?: number
 		minYear?: number
-		label?: string
 	}>()
 
 	const validation = useLunarCalendarValidation(
 		computed(() => model.value),
 		computed(() => props.label),
+		computed(() => props.successMessages),
 		computed(() => props.minYear),
 		computed(() => props.maxYear),
 	)
@@ -28,7 +30,8 @@
 		v-maska="mask"
 		:label="props.label"
 		:error-messages="validation.errors.value"
-		:show-success-messages="false"
+		:show-success-messages="props.successMessages !== undefined"
+		:success-messages="validation.successes.value"
 		@blur="validation.validate()"
 	/>
 </template>

@@ -7,17 +7,19 @@ import { useLunarCalendarRules } from './useLunarCalendarRules'
 export function useLunarCalendarValidation(
 	modelValue: ComputedRef<string | undefined>,
 	label: MaybeRefOrGetter<string | undefined>,
+	successMessage: MaybeRefOrGetter<string | undefined>,
 	minYear: MaybeRefOrGetter<number | undefined>,
 	maxYear: MaybeRefOrGetter<number | undefined>,
 ) {
 	const { rules } = useLunarCalendarRules(
+		successMessage,
 		minYear,
 		maxYear,
 	)
 
 	const validation = useValidation({
 		customRules: rules.value,
-		showSuccessMessages: false,
+		showSuccessMessages: successMessage !== undefined,
 		fieldIdentifier: toValue(label),
 	})
 
