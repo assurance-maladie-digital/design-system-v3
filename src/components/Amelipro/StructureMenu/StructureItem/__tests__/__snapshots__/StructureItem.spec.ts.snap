@@ -1,0 +1,143 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StructureItem > Snapshots > renders the component with all properties filled in 1`] = `
+<label
+  class="
+    mb-4
+    pointer
+    structure-item
+    w-100
+  "
+  for="modified-unique-id"
+  id="modified-unique-id-label"
+>
+  <input
+    checked=""
+    id="modified-unique-id"
+    name="Modified group name"
+    type="radio"
+    value="modified-value"
+  />
+  <span class="
+    bg-ap-blue-lighten-3
+    d-flex
+    flex-column
+    hover-style
+    px-2
+    px-sm-4
+    py-2
+    rounded
+    selected-border
+    w-100
+  ">
+    <!-- v-if -->
+    <span class="
+      align-md-center
+      d-flex
+    ">
+      <amelipro-icon-stub
+        bordered="true"
+        class="mr-4"
+        icon="localisation"
+        iconbgcolor="ap-white"
+        iconcolor="#01B9F5"
+        large="false"
+        medium="false"
+        small="false"
+        uniqueid="modified-unique-id-icon"
+        widthauto="false"
+        xlarge="true"
+      ></amelipro-icon-stub>
+      <span
+        class="
+          align-md-center
+          d-flex
+          flex-column
+          flex-md-row
+          justify-md-space-between
+          w-100
+        "
+        id="modified-unique-id-structure-infos"
+      >
+        <b>
+          modified-address
+        </b>
+        <span>
+          <!-- v-if -->
+          AM/FINESS : modified-unique-id-number
+        </span>
+      </span>
+    </span>
+  </span>
+</label>
+`;
+
+exports[`StructureItem > Snapshots > renders the component with only required properties filled in 1`] = `
+<label
+  class="
+    mb-4
+    pointer
+    structure-item
+    w-100
+  "
+  for="required-unique-id"
+  id="required-unique-id-label"
+>
+  <input
+    id="required-unique-id"
+    name="Required group name"
+    type="radio"
+    value="required-value"
+  />
+  <span class="
+    bg-ap-grey-lighten-4
+    d-flex
+    flex-column
+    hover-style
+    px-2
+    px-sm-4
+    py-2
+    rounded
+    w-100
+  ">
+    <!-- v-if -->
+    <span class="
+      align-md-center
+      d-flex
+    ">
+      <amelipro-icon-stub
+        bordered="true"
+        class="mr-4"
+        icon="localisation"
+        iconbgcolor="ap-white"
+        iconcolor="#01B9F5"
+        large="false"
+        medium="false"
+        small="false"
+        uniqueid="required-unique-id-icon"
+        widthauto="false"
+        xlarge="true"
+      ></amelipro-icon-stub>
+      <span
+        class="
+          align-md-center
+          d-flex
+          flex-column
+          flex-md-row
+          justify-md-space-between
+          w-100
+        "
+        id="required-unique-id-structure-infos"
+      >
+        <b>
+          required-address
+        </b>
+        <span>
+          <!-- v-if -->
+          AM/FINESS : required-unique-id-number
+        </span>
+      </span>
+    </span>
+  </span>
+</label>
+`;
