@@ -7,13 +7,26 @@
 	const model = defineModel<string>()
 	const mask = '##/##/####'
 
-	const props = defineProps<{
-		label?: string
+	const props = withDefaults(defineProps<{
+		label: string
 		successMessages?: string
 		required?: boolean
 		maxYear?: number
 		minYear?: number
-	}>()
+		placeholder?: string
+		isClearable?: boolean
+		displayPrependIcon?: boolean
+		displayAppendIcon?: boolean
+	}>(), {
+		successMessages: undefined,
+		required: false,
+		maxYear: undefined,
+		minYear: undefined,
+		placeholder: undefined,
+		isClearable: false,
+		displayAppendIcon: false,
+		displayPrependIcon: true,
+	})
 
 	const validation = useLunarCalendarValidation(
 		computed(() => model.value),
@@ -34,6 +47,11 @@
 		:error-messages="validation.errors.value"
 		:show-success-messages="props.successMessages !== undefined"
 		:success-messages="validation.successes.value"
+		:has-success="validation.successes.value.length > 0"
+		:placeholder
+		:is-clearable
+		:append-icon="props.displayAppendIcon ? 'calendar' : undefined"
+		:prepend-icon="props.displayPrependIcon ? 'calendar' : undefined"
 		@blur="validation.validate()"
 	/>
 </template>
