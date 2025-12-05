@@ -1,0 +1,102 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ServiceMenu > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="service-menu"
+  id="modified-unique-id-container"
+>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="Bouquet de services"
+    class="service-menu__btn"
+    icon="modified-icon"
+    iconbgcolor="ap-blue-darken-1"
+    iconcolor="ap-white"
+    iconhoverbgcolor="ap-blue-darken-2"
+    iconhovercolor="ap-white"
+    large="false"
+    medium="false"
+    size="2rem"
+    small="false"
+    uniqueid="modified-unique-id-service-menu-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <div
+    class="service-menu__wrapper"
+    id="modified-unique-id-service-menu"
+  >
+    <div
+      attach="#modified-unique-id-service-menu"
+      class="v-menu-mock"
+      closeoncontentclick="false"
+      eager="true"
+      maxheight="520px"
+      maxwidth="900px"
+      minwidth="900px"
+      modelvalue="true"
+      scrollstrategy="reposition"
+      transition="slide-y-transition"
+    >
+      <service-menu-content-stub
+        messagetodisplay="Modified message to display"
+        servicescontact="[object Object],[object Object]"
+        servicespatient="[object Object],[object Object]"
+        servicesps="[object Object],[object Object]"
+        uniqueid="modified-unique-id-content-desktop"
+      ></service-menu-content-stub>
+    </div>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`ServiceMenu > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="service-menu"
+  id="required-unique-id-container"
+>
+  <amelipro-icon-btn-stub
+    badge="false"
+    bordered="false"
+    btnlabel="Bouquet de services"
+    class="service-menu__btn"
+    icon="applications"
+    iconbgcolor="ap-blue-darken-1"
+    iconcolor="ap-white"
+    iconhoverbgcolor="ap-blue-darken-2"
+    iconhovercolor="ap-white"
+    large="false"
+    medium="false"
+    size="2rem"
+    small="false"
+    uniqueid="required-unique-id-service-menu-btn"
+    xlarge="false"
+  ></amelipro-icon-btn-stub>
+  <div
+    class="service-menu__wrapper"
+    id="required-unique-id-service-menu"
+  >
+    <div
+      attach="#required-unique-id-service-menu"
+      class="v-menu-mock"
+      closeoncontentclick="false"
+      eager="true"
+      maxheight="520px"
+      maxwidth="900px"
+      minwidth="900px"
+      modelvalue="false"
+      scrollstrategy="reposition"
+      transition="slide-y-transition"
+    >
+      <service-menu-content-stub
+        servicescontact=""
+        servicespatient=""
+        servicesps=""
+        uniqueid="required-unique-id-content-desktop"
+      ></service-menu-content-stub>
+    </div>
+  </div>
+  <!-- v-if -->
+</div>
+`;

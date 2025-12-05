@@ -75,11 +75,11 @@ describe('SelectBtnField', () => {
 			},
 		})
 
-		await wrapper.find('.v-btn').trigger('click')
+		await wrapper.find('[role="option"]').trigger('click')
 
 		expect(wrapper.emitted()).toHaveProperty('update:modelValue')
 
-		await wrapper.find('.v-btn').trigger('click')
+		await wrapper.find('[role="option"]').trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([['test'], [null]])
 	})
@@ -107,9 +107,9 @@ describe('SelectBtnField', () => {
 			},
 		})
 
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(3) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(3)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([
 			[['test2']],
@@ -168,10 +168,10 @@ describe('SelectBtnField', () => {
 			},
 		})
 
-		await wrapper.find('li:nth-child(1) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(3) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
+		await wrapper.find('li:nth-child(1)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(3)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([
 			[['test1']],
@@ -221,8 +221,8 @@ describe('SelectBtnField', () => {
 
 		const wrapper = mount(DarkMode)
 
-		wrapper.find('li:nth-child(1) .v-btn').trigger('click')
-		wrapper.find('li:nth-child(2) .v-btn').trigger('click')
+		wrapper.find('li:nth-child(1)[role="option"]').trigger('click')
+		wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
@@ -287,7 +287,7 @@ describe('SelectBtnField', () => {
 			},
 		})
 
-		await wrapper.find('.v-btn').trigger('click')
+		await wrapper.find('[role="option"]').trigger('click')
 		expect(wrapper.emitted()).not.toHaveProperty('update:modelValue')
 	})
 })

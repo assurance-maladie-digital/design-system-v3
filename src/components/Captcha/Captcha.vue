@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
 	import volumeUp from './icons/volumeUp.vue'
-	import { computed, ref, watch } from 'vue'
+	import { computed, ref, watch, watchEffect } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -20,6 +20,7 @@
 		type?: CaptchaType
 		tagTitle?: string
 		helpDesk?: string | false
+		locale?: string
 		locales?: typeof defaultLocales
 	}>(), {
 		modelValue: undefined,
@@ -27,6 +28,7 @@
 		type: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
+		locale: navigator.language,
 		locales: () => defaultLocales,
 	})
 
@@ -86,6 +88,27 @@
 		return `<a href="tel:${props.helpDesk}">${props.helpDesk}</a>`
 	})
 
+	const helpDeskHtml = computed(() => {
+		return props.locales?.helpDesk(phoneHelpDesk.value) ?? defaultLocales.helpDesk(phoneHelpDesk.value)
+	})
+
+	const imageHelpDeskRef = ref<HTMLElement | null>(null)
+	const audioHelpDeskRef = ref<HTMLElement | null>(null)
+
+	watchEffect(() => {
+		if (!props.helpDesk || !helpDeskHtml.value) {
+			return
+		}
+
+		if (imageHelpDeskRef.value) {
+			imageHelpDeskRef.value.innerHTML = helpDeskHtml.value
+		}
+
+		if (audioHelpDeskRef.value) {
+			audioHelpDeskRef.value.innerHTML = helpDeskHtml.value
+		}
+	})
+
 </script>
 
 <template>
@@ -101,6 +124,7 @@
 			:url-get-image="urlGetImage"
 			:url-get-audio="urlGetAudio"
 			:locales
+			:locale
 			@update:model-value="emitChangeTypeEvent"
 			@create-captcha:init="createCaptchaInit"
 			@create-captcha:success="createCaptchaSuccess"
@@ -174,8 +198,8 @@
 
 					<p
 						v-if="props.helpDesk"
+						ref="imageHelpDeskRef"
 						class="captcha-helpdesk text-textSubdued mb-2"
-						v-html="locales?.helpDesk(phoneHelpDesk)"
 					/>
 				</div>
 			</template>
@@ -258,8 +282,8 @@
 					</CaptchaBtn>
 					<p
 						v-if="props.helpDesk"
+						ref="audioHelpDeskRef"
 						class="captcha-helpdesk text-textSubdued mb-2"
-						v-html="locales?.helpDesk(phoneHelpDesk)"
 					/>
 				</div>
 			</template>

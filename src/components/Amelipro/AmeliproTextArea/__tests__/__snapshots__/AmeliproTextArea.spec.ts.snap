@@ -1,13 +1,94 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproTextArea > render correctly 1`] = `
+exports[`AmeliproTextArea > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-textarea
+    d-flex
+    flex-column
+    flex-md-row
+    modified-classes
+  "
+  id="modified-unique-id-container"
+  style="
+    margin-bottom: 12px;
+    max-width: 300px;
+    min-width: 100px;
+    width: 200px;
+  "
+>
+  <div class="
+    align-baseline
+    d-inline-flex
+    mb-1
+    mr-md-2
+    mt-md-2
+  ">
+    <label
+      class="
+        amelipro-textarea__label
+        mr-2
+      "
+      for="modified-unique-id"
+      id="modified-unique-id-label"
+      style="
+        max-width: 120px;
+        min-width: 60px;
+      "
+    >
+      Modified label
+      <span>
+        <span aria-hidden="true">
+          &nbsp;*
+        </span>
+        <span class="d-sr-only">
+          &nbsp;Champ obligatoire
+        </span>
+      </span>
+    </label>
+  </div>
+  <textarea
+    aria-describedby="modified-unique-id-error"
+    aria-required="true"
+    auto-grow=""
+    bg-color="ap-grey-lighten-2"
+    class="amelipro-textarea-input"
+    color="ap-blue-darken-1"
+    counter="100"
+    disabled=""
+    id="modified-unique-id"
+    modelvalue="Modified model value"
+    readonly=""
+    rules="() => true,(value) => {
+    let valid;
+    if (Array.isArray(value)) {
+      valid = value.length !== 0;
+    } else if (typeof value === "string") {
+      valid = value.trim() !== "";
+    } else {
+      valid = value !== null && value !== void 0;
+    }
+    return valid || __vite_ssr_import_0__.ruleMessage(errorMessages, "default");
+  }"
+    style="
+      max-width: 150px;
+      min-width: 50px;
+      background-color: transparent;
+    "
+    validate-on="input"
+    variant="outlined"
+  ></textarea>
+</div>
+`;
+
+exports[`AmeliproTextArea > Snapshots > renders the component with only required properties filled in 1`] = `
 <div
   class="
     amelipro-textarea
     d-flex
     flex-column
   "
-  id="my-textarea-id-container"
+  id="required-unique-id-container"
   style="margin-bottom: 12px;"
 >
   <div class="
@@ -20,163 +101,24 @@ exports[`AmeliproTextArea > render correctly 1`] = `
         amelipro-textarea__label
         mr-2
       "
-      for="my-textarea-id"
-      id="my-textarea-id-label"
+      for="required-unique-id"
+      id="required-unique-id-label"
     >
-      Mon label
+      Required label
       <!-- v-if -->
     </label>
   </div>
-  <div class="
-    amelipro-textarea-input
-    v-input
-    v-input--density-default
-    v-input--horizontal
-    v-locale--is-ltr
-    v-text-field
-    v-textarea
-    v-textarea--auto-grow
-    v-textarea--no-resize
-    v-theme--light
-  ">
-    <!---->
-    <div class="v-input__control">
-      <div class="
-        bg-ap-white
-        v-field
-        v-field--has-background
-        v-field--no-label
-        v-field--variant-outlined
-        v-locale--is-ltr
-        v-theme--light
-      ">
-        <div class="v-field__overlay"></div>
-        <div class="v-field__loader">
-          <div
-            aria-hidden="true"
-            aria-valuemax="100"
-            aria-valuemin="0"
-            class="
-              v-locale--is-ltr
-              v-progress-linear
-              v-theme--light
-            "
-            role="progressbar"
-            style="
-              top: 0px;
-              height: 0px;
-              --v-progress-linear-height: 2px;
-            "
-          >
-            <!---->
-            <div
-              class="
-                bg-ap-blue-darken-1
-                v-progress-linear__background
-              "
-              style="opacity: NaN;"
-            ></div>
-            <div
-              class="
-                bg-ap-blue-darken-1
-                v-progress-linear__buffer
-              "
-              style="
-                opacity: NaN;
-                width: 0%;
-              "
-            ></div>
-            <transition-stub
-              appear="false"
-              css="true"
-              name="fade-transition"
-              persisted="false"
-            >
-              <div class="v-progress-linear__indeterminate">
-                <div class="
-                  bg-ap-blue-darken-1
-                  long
-                  v-progress-linear__indeterminate
-                "></div>
-                <div class="
-                  bg-ap-blue-darken-1
-                  short
-                  v-progress-linear__indeterminate
-                "></div>
-              </div>
-            </transition-stub>
-            <!---->
-          </div>
-        </div>
-        <!---->
-        <div
-          class="v-field__field"
-          data-no-activator=""
-        >
-          <!---->
-          <!---->
-          <!---->
-          <textarea
-            aria-describedby="my-textarea-id-error"
-            aria-required="false"
-            class="v-field__input"
-            id="my-textarea-id"
-            rows="5"
-          ></textarea>
-          <textarea
-            aria-hidden="true"
-            class="
-              v-field__input
-              v-textarea__sizer
-            "
-            id="my-textarea-id-sizer"
-            readonly=""
-          ></textarea>
-          <!---->
-        </div>
-        <!---->
-        <!---->
-        <div class="v-field__outline">
-          <div class="v-field__outline__start"></div>
-          <!---->
-          <div class="v-field__outline__end"></div>
-          <!---->
-        </div>
-      </div>
-    </div>
-    <!---->
-    <div
-      aria-live="polite"
-      class="v-input__details"
-      id="my-textarea-id-messages"
-      role="alert"
-    >
-      <transition-group-stub
-        appear="false"
-        class="v-messages"
-        css="true"
-        name="slide-y-transition"
-        persisted="false"
-        tag="div"
-      >
-        <!---->
-      </transition-group-stub>
-      <!---->
-      <span></span>
-      <transition-stub
-        appear="false"
-        css="true"
-        name="slide-y-transition"
-        persisted="false"
-      >
-        <div
-          class="v-counter"
-          style="display: none;"
-        >
-          0 / 255
-        </div>
-      </transition-stub>
-    </div>
-  </div>
+  <textarea
+    aria-describedby="required-unique-id-error"
+    aria-required="false"
+    auto-grow=""
+    bg-color="ap-white"
+    class="amelipro-textarea-input"
+    color="ap-blue-darken-1"
+    counter="255"
+    id="required-unique-id"
+    rules=""
+    variant="outlined"
+  ></textarea>
 </div>
 `;

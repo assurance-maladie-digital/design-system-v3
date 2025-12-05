@@ -12,138 +12,66 @@ exports[`SelectBtnField > display correctly in dark mode with an error 1`] = `
     <div>
       <div class="select-btn-field">
         <ul
+          aria-invalid="true"
           aria-label="Test"
+          aria-multiselectable="true"
+          aria-orientation="horizontal"
+          aria-readonly="false"
           class="
-            d-flex
-            flex-wrap
-            select-btn-field-toggle
-            text-primary
-            v-btn-group
-            v-btn-group--density-default
-            v-btn-group--horizontal
-            v-btn-toggle
-            v-theme--dark
+            select-btn-field__options
+            select-btn-field__options--error
+            select-btn-field__options--inline
           "
+          role="listbox"
+          tabindex="0"
         >
-          <li class="select-list-item">
-            <button
-              activeclass="text-white"
-              aria-expanded="true"
-              class="
-                align-items-center
-                d-flex
-                elevation-0
-                justify-start
-                mr-0
-                mr-2
-                py-2
-                text-error
-                v-btn
-                v-btn--density-default
-                v-btn--flat
-                v-btn--size-default
-                v-btn--variant-outlined
-                v-theme--dark
-              "
-              label=""
-              style="
-                height: auto;
-                min-height: 40px;
-              "
-              type="button"
-              value="test1"
-            >
-              <span class="v-btn__overlay"></span>
-              <span class="v-btn__underlay"></span>
-              <!---->
-              <span
-                class="v-btn__content"
-                data-no-activator=""
-              >
-                <span class="text-body-1">
-                  Test 1
-                </span>
-                <i
-                  aria-hidden="true"
-                  aria-label="Sélectionné"
-                  class="
-                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-                    flex-shrink-0
-                    mdi
-                    ml-1
-                    notranslate
-                    text-white
-                    v-icon
-                    v-icon--size-default
-                    v-theme--dark
-                  "
-                  role="img"
-                  style="visibility: hidden;"
-                ></i>
+          <li
+            aria-checked="false"
+            class="select-btn-field__item"
+            role="option"
+            tabindex="-1"
+          >
+            <div class="select-btn-field__item-content">
+              <span class="text-body-1">
+                Test 1
               </span>
-              <!---->
-              <!---->
-            </button>
+              <i
+                aria-hidden="true"
+                class="
+                  M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                  mdi
+                  notranslate
+                  v-icon
+                  v-icon--size-default
+                  v-theme--dark
+                "
+                style="visibility: hidden;"
+              ></i>
+            </div>
           </li>
-          <li class="select-list-item">
-            <button
-              activeclass="text-white"
-              aria-expanded="true"
-              class="
-                align-items-center
-                d-flex
-                elevation-0
-                justify-start
-                mr-0
-                mr-2
-                py-2
-                text-error
-                v-btn
-                v-btn--density-default
-                v-btn--flat
-                v-btn--size-default
-                v-btn--variant-outlined
-                v-theme--dark
-              "
-              label=""
-              style="
-                height: auto;
-                min-height: 40px;
-              "
-              type="button"
-              value="test2"
-            >
-              <span class="v-btn__overlay"></span>
-              <span class="v-btn__underlay"></span>
-              <!---->
-              <span
-                class="v-btn__content"
-                data-no-activator=""
-              >
-                <span class="text-body-1">
-                  Test 2
-                </span>
-                <i
-                  aria-hidden="true"
-                  aria-label="Sélectionné"
-                  class="
-                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-                    flex-shrink-0
-                    mdi
-                    ml-1
-                    notranslate
-                    text-white
-                    v-icon
-                    v-icon--size-default
-                    v-theme--dark
-                  "
-                  role="img"
-                  style="visibility: hidden;"
-                ></i>
+          <li
+            aria-checked="false"
+            class="select-btn-field__item"
+            role="option"
+            tabindex="-1"
+          >
+            <div class="select-btn-field__item-content">
+              <span class="text-body-1">
+                Test 2
               </span>
-              <!---->
-              <!---->
-            </button>
+              <i
+                aria-hidden="true"
+                class="
+                  M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                  mdi
+                  notranslate
+                  v-icon
+                  v-icon--size-default
+                  v-theme--dark
+                "
+                style="visibility: hidden;"
+              ></i>
+            </div>
           </li>
         </ul>
         <p class="
@@ -164,205 +92,92 @@ exports[`SelectBtnField > display correctly in dark mode with an error 1`] = `
 `;
 
 exports[`SelectBtnField > display correctly with an error 1`] = `
-<div class="
-  form-input
-  select-btn-field
-">
+<div class="select-btn-field">
   <ul
+    aria-invalid="true"
     aria-label="Test"
+    aria-multiselectable="false"
+    aria-orientation="vertical"
+    aria-readonly="false"
     class="
-      d-flex
-      d-flex
-      flex-column
-      flex-wrap
-      select-btn-field-toggle
-      text-primary
-      v-btn-group
-      v-btn-group--density-default
-      v-btn-group--horizontal
-      v-btn-toggle
-      v-theme--light
+      select-btn-field__options
+      select-btn-field__options--column
+      select-btn-field__options--error
     "
+    role="listbox"
+    tabindex="0"
   >
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          text-error
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value="test"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-selected="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          text-error
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value="test2"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test 2
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-selected="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test 2
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          text-error
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value="test3"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test 3
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-selected="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test 3
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
   </ul>
   <p class="
@@ -391,136 +206,65 @@ exports[`SelectBtnField > display correctly with in dark mode with an hint 1`] =
     <div>
       <div class="select-btn-field">
         <ul
+          aria-invalid="false"
           aria-label="Test"
+          aria-multiselectable="true"
+          aria-orientation="horizontal"
+          aria-readonly="false"
           class="
-            d-flex
-            flex-wrap
-            select-btn-field-toggle
-            text-primary
-            v-btn-group
-            v-btn-group--density-default
-            v-btn-group--horizontal
-            v-btn-toggle
-            v-theme--dark
+            select-btn-field__options
+            select-btn-field__options--inline
           "
+          role="listbox"
+          tabindex="0"
         >
-          <li class="select-list-item">
-            <button
-              activeclass="text-white"
-              aria-expanded="true"
-              class="
-                align-items-center
-                d-flex
-                elevation-0
-                justify-start
-                mr-0
-                mr-2
-                py-2
-                v-btn
-                v-btn--density-default
-                v-btn--flat
-                v-btn--size-default
-                v-btn--variant-outlined
-                v-theme--dark
-              "
-              label=""
-              style="
-                height: auto;
-                min-height: 40px;
-              "
-              type="button"
-              value="test1"
-            >
-              <span class="v-btn__overlay"></span>
-              <span class="v-btn__underlay"></span>
-              <!---->
-              <span
-                class="v-btn__content"
-                data-no-activator=""
-              >
-                <span class="text-body-1">
-                  Test 1
-                </span>
-                <i
-                  aria-hidden="true"
-                  aria-label="Sélectionné"
-                  class="
-                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-                    flex-shrink-0
-                    mdi
-                    ml-1
-                    notranslate
-                    text-white
-                    v-icon
-                    v-icon--size-default
-                    v-theme--dark
-                  "
-                  role="img"
-                  style="visibility: hidden;"
-                ></i>
+          <li
+            aria-checked="false"
+            class="select-btn-field__item"
+            role="option"
+            tabindex="-1"
+          >
+            <div class="select-btn-field__item-content">
+              <span class="text-body-1">
+                Test 1
               </span>
-              <!---->
-              <!---->
-            </button>
+              <i
+                aria-hidden="true"
+                class="
+                  M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                  mdi
+                  notranslate
+                  v-icon
+                  v-icon--size-default
+                  v-theme--dark
+                "
+                style="visibility: hidden;"
+              ></i>
+            </div>
           </li>
-          <li class="select-list-item">
-            <button
-              activeclass="text-white"
-              aria-expanded="true"
-              class="
-                align-items-center
-                d-flex
-                elevation-0
-                justify-start
-                mr-0
-                mr-2
-                py-2
-                v-btn
-                v-btn--density-default
-                v-btn--flat
-                v-btn--size-default
-                v-btn--variant-outlined
-                v-theme--dark
-              "
-              label=""
-              style="
-                height: auto;
-                min-height: 40px;
-              "
-              type="button"
-              value="test2"
-            >
-              <span class="v-btn__overlay"></span>
-              <span class="v-btn__underlay"></span>
-              <!---->
-              <span
-                class="v-btn__content"
-                data-no-activator=""
-              >
-                <span class="text-body-1">
-                  Test 2
-                </span>
-                <i
-                  aria-hidden="true"
-                  aria-label="Sélectionné"
-                  class="
-                    M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-                    flex-shrink-0
-                    mdi
-                    ml-1
-                    notranslate
-                    text-white
-                    v-icon
-                    v-icon--size-default
-                    v-theme--dark
-                  "
-                  role="img"
-                  style="visibility: hidden;"
-                ></i>
+          <li
+            aria-checked="false"
+            class="select-btn-field__item"
+            role="option"
+            tabindex="-1"
+          >
+            <div class="select-btn-field__item-content">
+              <span class="text-body-1">
+                Test 2
               </span>
-              <!---->
-              <!---->
-            </button>
+              <i
+                aria-hidden="true"
+                class="
+                  M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+                  mdi
+                  notranslate
+                  v-icon
+                  v-icon--size-default
+                  v-theme--dark
+                "
+                style="visibility: hidden;"
+              ></i>
+            </div>
           </li>
         </ul>
         <p class="
@@ -540,202 +284,91 @@ exports[`SelectBtnField > display correctly with in dark mode with an hint 1`] =
 `;
 
 exports[`SelectBtnField > render correctly in multiple mode 1`] = `
-<div class="
-  form-input
-  select-btn-field
-">
+<div class="select-btn-field">
   <ul
+    aria-invalid="false"
     aria-label="Test"
+    aria-multiselectable="true"
+    aria-orientation="vertical"
+    aria-readonly="false"
     class="
-      d-flex
-      d-flex
-      flex-column
-      flex-wrap
-      select-btn-field-toggle
-      text-primary
-      v-btn-group
-      v-btn-group--density-default
-      v-btn-group--horizontal
-      v-btn-toggle
-      v-theme--light
+      select-btn-field__options
+      select-btn-field__options--column
     "
+    role="listbox"
+    tabindex="0"
   >
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value="test"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-checked="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value=""
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test 2
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-checked="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test 2
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value="test3"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test 3
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-checked="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test 3
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
   </ul>
   <p class="
@@ -752,224 +385,109 @@ exports[`SelectBtnField > render correctly in multiple mode 1`] = `
 `;
 
 exports[`SelectBtnField > renders correctly 1`] = `
-<div class="
-  form-input
-  select-btn-field
-">
-  <ul class="
-    d-flex
-    d-flex
-    flex-column
-    flex-wrap
-    select-btn-field-toggle
-    text-primary
-    v-btn-group
-    v-btn-group--density-default
-    v-btn-group--horizontal
-    v-btn-toggle
-    v-theme--light
-  "></ul>
+<div class="select-btn-field">
+  <ul
+    aria-invalid="false"
+    aria-multiselectable="false"
+    aria-orientation="vertical"
+    aria-readonly="false"
+    class="
+      select-btn-field__options
+      select-btn-field__options--column
+    "
+    role="listbox"
+    tabindex="0"
+  ></ul>
   <!-- v-if -->
 </div>
 `;
 
 exports[`SelectBtnField > renders correctly with props 1`] = `
-<div class="
-  form-input
-  select-btn-field
-">
+<div class="select-btn-field">
   <ul
+    aria-invalid="false"
     aria-label="Test"
+    aria-multiselectable="false"
+    aria-orientation="vertical"
+    aria-readonly="false"
     class="
-      d-flex
-      d-flex
-      flex-column
-      flex-wrap
-      select-btn-field-toggle
-      text-primary
-      v-btn-group
-      v-btn-group--density-default
-      v-btn-group--horizontal
-      v-btn-toggle
-      v-theme--light
+      select-btn-field__options
+      select-btn-field__options--column
     "
+    role="listbox"
+    tabindex="0"
   >
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value="test"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-selected="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value=""
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test 2
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-selected="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test 2
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
-    <li class="select-list-item">
-      <button
-        activeclass="text-white"
-        aria-expanded="true"
-        class="
-          align-items-center
-          d-flex
-          elevation-0
-          justify-start
-          mr-0
-          mr-0
-          py-2
-          v-btn
-          v-btn--density-default
-          v-btn--flat
-          v-btn--size-default
-          v-btn--variant-outlined
-          v-theme--light
-        "
-        label=""
-        style="
-          height: auto;
-          min-height: 40px;
-        "
-        type="button"
-        value="test3"
-      >
-        <span class="v-btn__overlay"></span>
-        <span class="v-btn__underlay"></span>
-        <!---->
-        <span
-          class="v-btn__content"
-          data-no-activator=""
-        >
-          <span class="text-body-1">
-            Test 3
-          </span>
-          <i
-            aria-hidden="true"
-            aria-label="Sélectionné"
-            class="
-              M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
-              flex-shrink-0
-              mdi
-              ml-1
-              notranslate
-              text-white
-              v-icon
-              v-icon--size-default
-              v-theme--light
-            "
-            role="img"
-            style="visibility: hidden;"
-          ></i>
+    <li
+      aria-selected="false"
+      class="select-btn-field__item"
+      role="option"
+      tabindex="-1"
+    >
+      <div class="select-btn-field__item-content">
+        <span class="text-body-1">
+          Test 3
         </span>
-        <!---->
-        <!---->
-      </button>
+        <i
+          aria-hidden="true"
+          class="
+            M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z
+            mdi
+            notranslate
+            v-icon
+            v-icon--size-default
+            v-theme--light
+          "
+          style="visibility: hidden;"
+        ></i>
+      </div>
     </li>
   </ul>
   <p class="

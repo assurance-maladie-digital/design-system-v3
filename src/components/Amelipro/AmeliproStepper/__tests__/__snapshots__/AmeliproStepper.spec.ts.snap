@@ -15,8 +15,8 @@ exports[`AmeliproStepper > Snapshots > renders the component with all properties
         align-end
         amelipro-stepper__list
         d-flex
+        flex-nowrap
         flex-row
-        flex-wrap
         justify-center
         list-style-none
       "
@@ -132,8 +132,8 @@ exports[`AmeliproStepper > Snapshots > renders the component with only required 
         align-end
         amelipro-stepper__list
         d-flex
+        flex-nowrap
         flex-row
-        flex-wrap
         list-style-none
       "
       role="tablist"
