@@ -103,7 +103,7 @@
 					@click="dismissAlert"
 				>
 					<VIcon
-						size="medium"
+						size="large"
 					>
 						{{ mdiClose }}
 					</VIcon>
