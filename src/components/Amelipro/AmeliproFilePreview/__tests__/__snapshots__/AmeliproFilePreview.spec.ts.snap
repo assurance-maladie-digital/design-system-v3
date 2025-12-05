@@ -1,208 +1,39 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproFilePreview > render correctly 1`] = `
-<div id="pdf-preview-unique-id-container">
-  <div
-    class="
-      amelipro-accordion
-      amelipro-accordion--opened
-      mb-4
-      w-100
-    "
+exports[`AmeliproFilePreview > Snapshots > renders the component with all properties filled in 1`] = `
+<div id="test-id-container">
+  <amelipro-accordion-stub
+    accordiontitle="The card title"
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
     classes="amelipro-file-preview"
-    id="pdf-preview-unique-id-container"
-    style="
-      background-color: #FFFFFF;
-      border: 1px solid #DDDEDE;
-    "
-  >
-    <div
-      class="
-        align-center
-        amelipro-accordion__header
-        d-flex
-        flex-column
-        flex-sm-row
-        w-100
-      "
-      id="pdf-preview-unique-id-header"
-    >
-      <div
-        class="btn-wrapper"
-        style="margin-right: 10px;"
-      >
-        <p
-          aria-level="2"
-          class="
-            font-weight-semibold
-            mb-0
-            text-h3
-          "
-          id="pdf-preview-unique-idtitle"
-          role="heading"
-        >
-          <button
-            aria-controls="pdf-preview-unique-id"
-            aria-expanded="true"
-            class="
-              accordion-btn
-              align-center
-              d-inline-flex
-              font-weight-semibold
-              text-ap-grey-darken-1
-              text-left
-            "
-            id="pdf-preview-unique-id-header-btn-open-close"
-            type="button"
-          >
-            <span
-              class="
-                accordion-icon
-                amelipro-icon
-                mr-2
-              "
-              id="pdf-preview-unique-id-icon"
-            >
-              <span
-                aria-hidden="true"
-                class="
-                  amelipro-custom-icon
-                  custom-color
-                "
-                focusable="false"
-                role="img"
-                style="
-                  color: #0C419A;
-                  height: 11px;
-                  width: 11px;
-                "
-              >
-                <span>
-                  <svg
-                    aria-hidden="true"
-                    style="enable-background:new 0 0 42 42;"
-                    version="1.1"
-                    viewBox="0 0 42 42"
-                    x="0px"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    y="0px"
-                  >
-                    <polygon
-                      class="shape-color"
-                      points="21,2.8 0,39.2 42,39.2 "
-                    />
-                  </svg>
-                </span>
-              </span>
-            </span>
-            Modified card title
-          </button>
-        </p>
-      </div>
-      <div
-        class="right-slot"
-        style="
-          width: calc(50% - 10px);
-          margin-left: 10px;
-        "
-      >
-        <div
-          class="
-            amelipro-file-preview__header-right
-            d-flex
-            justify-end
-          "
-          id="pdf-preview-unique-id-header-right"
-        >
-          <a
-            class="
-              align-center
-              amelipro-file-preview__header__link
-              d-flex
-              font-weight-semibold
-              text-h6
-            "
-            download="file name"
-            href="file-src"
-            id="pdf-preview-unique-id-download-link"
-            title="Modified link title"
-          >Modified download btn text <span
-            class="
-              amelipro-icon
-              ml-2
-            "
-            id="pdf-preview-unique-id-icon-desktop"
-          ><span
-            aria-hidden="true"
-            class="
-              amelipro-custom-icon
-              custom-color
-              large
-            "
-            focusable="false"
-            role="img"
-            style="
-              color: #FFFFFF;
-              border-radius: 50%;
-              border: 1px solid #FFFFFF;
-            "
-          ><span>
-		<svg
-            aria-hidden="true"
-            style="enable-background:new 0 0 34 34;"
-            viewBox="0 0 34 34"
-            x="0px"
-            xml:space="preserve"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink"
-            y="0px"
-          >
-			<ellipse
-            class="circle-color"
-            cx="17"
-            cy="17"
-            rx="17"
-            ry="16.9"
-          />
-			<g class="shape-color">
-				<path d="M17.5,14.7h-1.9v4.7h1.9c0.5,0,0.9-0.4,0.9-0.9v-2.8C18.4,15.1,18,14.7,17.5,14.7z" />
-				<path d="M11.9,14.7H10v1.9h1.9c0.5,0,0.9-0.4,0.9-0.9C12.8,15.1,12.4,14.7,11.9,14.7z" />
-				<path d="M25,11.9H9c-1,0-1.9,0.8-1.9,1.9v6.5c0,1,0.9,1.9,1.9,1.9H25c1,0,1.9-0.8,1.9-1.9v-6.5 C26.9,12.7,26,11.9,25,11.9z M11.9,17.5H10v2.8H9v-4.7v-1.9h2.8c1,0,1.9,0.8,1.9,1.9C13.7,16.7,12.9,17.5,11.9,17.5z M19.4,18.4 c0,1-0.8,1.9-1.9,1.9h-2.8v-6.5h2.8c1,0,1.9,0.8,1.9,1.9V18.4z M25,14.7h-3.8v1.9H24v0.9h-2.8v2.8h-0.9v-6.5H25V14.7z" />
-			</g>
-		</svg></span></span></span></a>
-        </div>
-      </div>
-    </div>
-    <div
-      aria-labelledby="pdf-preview-unique-idtitle"
-      class="amelipro-accordion__wrapper"
-      id="pdf-preview-unique-id"
-      role="region"
-    >
-      <div
-        class="
-          amelipro-accordion__content
-          text-ap-grey-darken-1
-          w-100
-        "
-        style="
-          border-top-width: 1px;
-          border-top-style: solid;
-          border-top-color: #DDDEDE;
-        "
-      >
-        <object
-          aria-label="Modified pdf display title"
-          data="file-src"
-          height="400"
-          id="pdf-preview-unique-id-pdf-display"
-          type="application/pdf"
-          width="100%"
-        ></object>
-      </div>
-    </div>
-  </div>
+    headerrightwidth="50%"
+    hideseparator="false"
+    isopen="true"
+    titlelevel="2"
+    titleuppercase="false"
+    uniqueid="test-id"
+  ></amelipro-accordion-stub>
+</div>
+`;
+
+exports[`AmeliproFilePreview > Snapshots > renders the component with only required properties filled in 1`] = `
+<div id="required-unique-id-container">
+  <amelipro-card-stub
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
+    cardtitle="Required card title"
+    classes="amelipro-file-preview"
+    divider="true"
+    headerrightwidth="50%"
+    id="required-unique-id"
+    nocardheader="false"
+    rightpart="false"
+    rightpartwidth="25%"
+    titlecolor="ap-grey-darken-1"
+    titlelevel="2"
+  ></amelipro-card-stub>
 </div>
 `;

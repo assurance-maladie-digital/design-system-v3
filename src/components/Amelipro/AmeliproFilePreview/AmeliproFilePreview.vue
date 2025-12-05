@@ -103,6 +103,7 @@
 				<object
 					v-if="mdAndUp"
 					:id="`${uniqueId}-pdf-display`"
+					class="amelipro-file-preview__pdf-display"
 					:aria-label="pdfDisplayTitle"
 					:height="previewHeight"
 					:data="fileSrc"
