@@ -12,10 +12,38 @@ export function useTableOptions({
 }: {
 	options: Ref<Partial<DataOptions>>
 }) {
+	// Helper to avoid emitting update:options when filters have not really changed
+	function areFiltersEqual(a: FilterOption[] = [], b: FilterOption[] = []): boolean {
+		if (a === b) return true
+		if (a.length !== b.length) return false
+
+		for (let i = 0; i < a.length; i++) {
+			const fa = a[i]
+			const fb = b[i]
+
+			if (fa.key !== fb.key || fa.type !== fb.type) {
+				return false
+			}
+
+			// Shallow value comparison via JSON stringification to detect effective changes
+			if (JSON.stringify(fa.value) !== JSON.stringify(fb.value)) {
+				return false
+			}
+		}
+
+		return true
+	}
+
 	// Computed for filters with getter/setter
 	const filters = computed({
 		get: () => options.value.filters || [],
 		set: (newFilters: FilterOption[]) => {
+			const currentFilters = options.value.filters || []
+			if (areFiltersEqual(currentFilters, newFilters)) {
+				// Do not touch options if filters are effectively the same
+				return
+			}
+
 			options.value = {
 				...options.value,
 				filters: newFilters,
