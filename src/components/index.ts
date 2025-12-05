@@ -65,7 +65,7 @@ export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
 export { default as Captcha } from './Captcha/Captcha.vue'
 export { default as SyForm } from './Customs/SyForm/SyForm.vue'
-export { default as SyRadioGroup } from './Amelipro/AmeliproRadioGroup/AmeliproRadioGroup.vue'
+export { default as SyRadioGroup } from './Customs/SyRadioGroup/SyRadioGroup.vue'
 
 // ===========================
 // Tableaux
