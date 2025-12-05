@@ -6,6 +6,7 @@ describe('LunarCalendar', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(LunarCalendar, {
 			props: {
+				label: 'Date de naissance',
 				modelValue: '10/19/1995',
 			},
 		})
@@ -17,6 +18,7 @@ describe('LunarCalendar', () => {
 	it('emits update:modelValue on date change', async () => {
 		const wrapper = mount(LunarCalendar, {
 			props: {
+				label: 'Date de naissance',
 				modelValue: '10/19/1995',
 			},
 		})
@@ -30,6 +32,7 @@ describe('LunarCalendar', () => {
 	it('autoformats date input', async () => {
 		const wrapper = mount(LunarCalendar, {
 			props: {
+				label: 'Date de naissance',
 				modelValue: '',
 			},
 		})
@@ -46,6 +49,7 @@ describe('LunarCalendar', () => {
 				props: {
 					modelValue: '10/19/1995',
 					minYear: 1996,
+					label: 'Date de naissance',
 				},
 			})
 
@@ -59,6 +63,7 @@ describe('LunarCalendar', () => {
 		it('validates maxDate rule', async () => {
 			const wrapper = mount(LunarCalendar, {
 				props: {
+					label: 'Date de naissance',
 					modelValue: '10/19/1995',
 					maxYear: 1994,
 				},
