@@ -8,11 +8,13 @@ export function useLunarCalendarValidation(
 	modelValue: ComputedRef<string | undefined>,
 	label: MaybeRefOrGetter<string | undefined>,
 	successMessage: MaybeRefOrGetter<string | undefined>,
+	required: MaybeRefOrGetter<boolean | undefined>,
 	minYear: MaybeRefOrGetter<number | undefined>,
 	maxYear: MaybeRefOrGetter<number | undefined>,
 ) {
 	const { rules } = useLunarCalendarRules(
 		successMessage,
+		required,
 		minYear,
 		maxYear,
 	)

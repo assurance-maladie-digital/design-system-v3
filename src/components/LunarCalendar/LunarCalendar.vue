@@ -10,6 +10,7 @@
 	const props = defineProps<{
 		label?: string
 		successMessages?: string
+		required?: boolean
 		maxYear?: number
 		minYear?: number
 	}>()
@@ -18,6 +19,7 @@
 		computed(() => model.value),
 		computed(() => props.label),
 		computed(() => props.successMessages),
+		computed(() => props.required),
 		computed(() => props.minYear),
 		computed(() => props.maxYear),
 	)

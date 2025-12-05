@@ -19,6 +19,7 @@ const meta = {
 		},
 	},
 	args: {
+		label: 'Date de naissance',
 		modelValue: '',
 	},
 } satisfies Meta<typeof LunarCalendar>
@@ -51,5 +52,12 @@ export const WithMaxYearOnly: Story = {
 	args: {
 		modelValue: '12/12/1445',
 		maxYear: 1450,
+	},
+}
+
+export const required: Story = {
+	args: {
+		modelValue: '',
+		required: true,
 	},
 }

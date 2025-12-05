@@ -3,10 +3,21 @@ import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from 'vue'
 
 export function useLunarCalendarRules(
 	successMessage: MaybeRefOrGetter<string | undefined>,
+	required: MaybeRefOrGetter<boolean | undefined>,
 	minYear: MaybeRefOrGetter<number | undefined>,
 	maxYear: MaybeRefOrGetter<number | undefined>,
 ): { rules: ComputedRef<ValidationRule[]> } {
 	const rules = computed(() => {
+		if (toValue(required)) {
+			const requiredRule: ValidationRule = {
+				type: 'required',
+				options: {
+					message: 'Ce champ est requis.',
+					successMessage: toValue(successMessage),
+				},
+			}
+			return [requiredRule]
+		}
 		if (toValue(minYear) && toValue(maxYear)) {
 			const rule: ValidationRule = {
 				type: 'custom',
