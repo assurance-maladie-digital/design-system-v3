@@ -6,7 +6,7 @@
 	import { locales } from './locales'
 
 	const props = defineProps({
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -63,7 +63,7 @@
 		emit('change:selected', item.value)
 	}
 
-	const checkErrorCondition = computed<boolean>(() => props.ariaRequired && selectedValue.value === null && props.error)
+	const checkErrorCondition = computed<boolean>(() => props.required && selectedValue.value === null && props.error)
 </script>
 
 <template>
@@ -83,14 +83,14 @@
 					{{ groupLabel }}
 
 					<span
-						v-if="ariaRequired"
+						v-if="required"
 						aria-hidden="true"
 						class="d-inline-flex"
 					>
 						&nbsp;*
 					</span>
 					<span
-						v-if="ariaRequired"
+						v-if="required"
 						class="d-sr-only"
 					>
 						&nbsp;Champ obligatoire
@@ -102,7 +102,7 @@
 
 			<div
 				:aria-labelledby="uniqueId"
-				:aria-required="ariaRequired"
+				:required="required"
 				class="mt-2 amelipro-illustrated-radio-group__group"
 				role="radiogroup"
 			>
@@ -128,7 +128,7 @@
 								:checked="item.isChecked"
 								:disabled="item.disabled || disabled"
 								:name="`${uniqueId}-name`"
-								:required="ariaRequired"
+								:required="required"
 								type="radio"
 								:value="item.value"
 								@input="emitChangeEvent(item)"

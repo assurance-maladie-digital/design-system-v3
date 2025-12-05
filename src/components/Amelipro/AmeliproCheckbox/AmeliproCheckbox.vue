@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref, watch } from 'vue'
+	import { computed, type PropType, ref, watch } from 'vue'
 	import type { AmeliproCheckboxItem } from './types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 
 	const props = defineProps({
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -72,8 +72,8 @@
 		}
 	}
 
-	const error = computed<string>(() => (isAlreadyCheckedOnce.value === true && props.ariaRequired === true && currentValue.value === false ? props.requiredErrorMessage : ''))
-	const checkErrorCondition = computed<boolean>(() => (isAlreadyCheckedOnce.value === true && props.ariaRequired === true && currentValue.value === false))
+	const error = computed<string>(() => (isAlreadyCheckedOnce.value === true && props.required === true && currentValue.value === false ? props.requiredErrorMessage : ''))
+	const checkErrorCondition = computed<boolean>(() => (isAlreadyCheckedOnce.value === true && props.required === true && currentValue.value === false))
 
 	watch(() => props.errorDefault, (newErrorDefaultValue: boolean) => {
 		isAlreadyCheckedOnce.value = newErrorDefaultValue
@@ -89,7 +89,7 @@
 				:aria-describedby="checkErrorCondition ? `${uniqueId}-error ` + checkbox.description : checkbox.description"
 				:aria-disabled="disabled"
 				:aria-invalid="checkErrorCondition ? 'true' : undefined"
-				:aria-required="ariaRequired ? 'true' : undefined"
+				:required="required ? 'true' : undefined"
 				class="mr-0 d-inline-flex flex-row align-center text-body-1 amelipro-checkbox-input"
 				:class="{
 					'amelipro-switch': isSwitch,
@@ -110,14 +110,14 @@
 					</slot>
 
 					<span
-						v-if="ariaRequired"
+						v-if="required"
 						aria-hidden="true"
 						class="d-inline-flex"
 					>
 						&nbsp;*
 					</span>
 					<span
-						v-if="ariaRequired"
+						v-if="required"
 						class="d-sr-only"
 					>
 						&nbsp;Champ obligatoire

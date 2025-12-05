@@ -189,7 +189,6 @@ exports[`AmeliproTable > render correctly 1`] = `
                       aria-controls="menu-v-0"
                       aria-expanded="false"
                       aria-label="Open"
-                      aria-required="false"
                       id="amelipro-table-id-pagination-select"
                       inputmode="none"
                       role="combobox"

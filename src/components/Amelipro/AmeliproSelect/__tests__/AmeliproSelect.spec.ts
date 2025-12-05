@@ -1,4 +1,4 @@
-import { VueWrapper, config, mount, shallowMount } from '@vue/test-utils'
+import { config, mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import AmeliproSelect from '../AmeliproSelect.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
@@ -47,7 +47,7 @@ const VSelectStub = defineComponent({
 			type: String,
 			default: undefined,
 		},
-		ariaRequired: {
+		required: {
 			type: [Boolean, String],
 			default: false,
 		},
@@ -80,7 +80,7 @@ const VSelectStub = defineComponent({
 	template: `
 		<div
 			class="v-select-stub"
-			:aria-required="ariaRequired"
+            :aria-required="required"
 			:style="style"
 		>
 			<slot />
@@ -93,7 +93,7 @@ config.global.stubs = config.global.stubs || {}
 config.global.stubs.VSelect = VSelectStub
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproSelect> = {
-	ariaRequired: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -195,7 +195,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproSelect> => ({
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproSelect> => ({
-	ariaRequired: true,
+	required: true,
 	classes: 'modified-classes',
 	clearable: true,
 	disabled: true,
@@ -283,11 +283,11 @@ describe('AmeliproSelect', () => {
 		})
 
 		describe('main div', () => {
-			it('prop ariaRequired sets display of span', async () => {
+			it('prop required sets display of span', async () => {
 				expect(vueWrapper.findAll('.amelipro-select__label span').length).toBe(0)
 
-				const { ariaRequired } = modifiedPropValues()
-				await vueWrapper.setProps({ ariaRequired })
+				const { required } = modifiedPropValues()
+				await vueWrapper.setProps({ required })
 				expect(vueWrapper.findAll('.amelipro-select__label span').length).toBe(3)
 			})
 
@@ -397,7 +397,7 @@ describe('AmeliproSelect', () => {
 
 			it('prop ariaRequired sets attribute aria-required', async () => {
 				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('false')
-				await vueWrapper.setProps({ ariaRequired: testHelper.modified('ariaRequired') })
+				await vueWrapper.setProps({ required: testHelper.modified('required') })
 				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('true')
 			})
 
@@ -410,9 +410,9 @@ describe('AmeliproSelect', () => {
 				expect(vueWrapper.findComponent(VSelectStub).attributes('style')).toBe(`max-width: ${testHelper.modified('inputMaxWidth')}; min-width: ${testHelper.modified('inputMinWidth')};`)
 			})
 
-			it('props ariaRequired & rules set prop rules', async () => {
+			it('props required & rules set prop rules', async () => {
 				expect(vueWrapper.findComponent(VSelectStub).props('rules')).toEqual([])
-				await vueWrapper.setProps({ ariaRequired: testHelper.modified('ariaRequired') })
+				await vueWrapper.setProps({ required: testHelper.modified('required') })
 				expect(vueWrapper.findComponent(VSelectStub).props('rules')).toEqual(['mocked-is-required'])
 			})
 		})
@@ -453,7 +453,7 @@ describe('AmeliproSelect', () => {
 		it('computes bgColor correctly based on props', () => {
 			vueWrapper = mount(AmeliproSelect, {
 				props: {
-					ariaRequired: true,
+					required: true,
 					bgWhite: true,
 					disabled: true,
 					items: [{ title: 'option 1', value: 'Option1' }],

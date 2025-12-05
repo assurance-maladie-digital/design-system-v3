@@ -1053,7 +1053,6 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
                         aria-controls="menu-v-12"
                         aria-expanded="false"
                         aria-label="Open"
-                        aria-required="false"
                         id="test-id-select"
                         inputmode="none"
                         role="combobox"

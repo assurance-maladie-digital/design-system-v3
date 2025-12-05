@@ -177,7 +177,7 @@
 				<AmeliproTextField
 					v-model="currentValue.fieldValue"
 					v-maska="mask"
-					aria-required
+					required
 					classes="mt-6"
 					clearable
 					:counter="13"

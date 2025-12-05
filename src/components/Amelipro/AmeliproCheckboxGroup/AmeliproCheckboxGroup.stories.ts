@@ -8,7 +8,7 @@ const meta = {
 		'`append-${index}`': { description: 'Permet de rajouter un élément après le label des checkbox, il y a un slot par item de la liste' },
 		'`subItem-${index}`': { description: 'Permet de rajouter un élément sous une checkbox seulement lorsqu’elle est cochée (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'append': { description: 'Permet de rajouter un élément après les label de toutes les checkbox' },
-		'ariaRequired': { description: 'Permet de rendre la selection obligatoire' },
+		'required': { description: 'Permet de rendre la selection obligatoire' },
 		'change:selected': { description: 'Événement émis au click sur une checkbox retourne les items sélectionnés' },
 		'disabled': { description: 'Permet de désactiver la CheckboxGroup' },
 		'fullHorizontal': { description: 'Permet d’afficher le checkboxGroup ainsi que le label à l’horizontal' },
@@ -35,7 +35,7 @@ const meta = {
 		'multipleRequired': { description: 'Permet de rendre la selection multiple obligatoire' },
 		'multipleRequiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props multipleRequired est active' },
 		'pills': { description: 'Change le style du groupe de checkbox ' },
-		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props ariaRequired est active' },
+		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props required est active' },
 		'subItem': { description: 'Permet de rajouter un élément sous toutes checkbox seulement lorsqu’elle sont cochées (existe seulement si les props horizontal et fullHorizontal sont à false)' },
 		'uniqueId': { description: 'Id unique du groupe de checkbox' },
 		'update:model-value': { description: 'Événement émis au changement du v-model' },
@@ -236,20 +236,20 @@ export const Required: Story = {
 		groupLabel: 'Groupe obligatoire',
 		modelValue: baseItems,
 		uniqueId: 'checkbox-group-required',
-		ariaRequired: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<p>La sélection d’au moins une option est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<p>La sélection d’au moins une option est obligatoire grâce à la prop <code>required</code>.</p>
 	<AmeliproCheckboxGroup
 		v-model="value"
 		group-label="Groupe obligatoire"
 		unique-id="checkbox-group-required"
 		:model-value="items"
-		aria-required
+		required
 	/>
 </template>`,
 			},
@@ -276,7 +276,8 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p class="mb-2">La sélection d’au moins une option est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+		template: `<p class="mb-2">La sélection d’au moins une option est obligatoire grâce à la prop
+          <code>required</code>.</p>
 <AmeliproCheckboxGroup 
 	v-bind="args" 
 	v-model="model" 

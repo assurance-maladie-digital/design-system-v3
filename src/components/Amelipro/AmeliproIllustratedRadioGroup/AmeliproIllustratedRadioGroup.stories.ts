@@ -6,7 +6,7 @@ import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 
 const meta = {
 	argTypes: {
-		'ariaRequired': { description: 'Permet de rendre la selection obligatoire' },
+		'required': { description: 'Permet de rendre la selection obligatoire' },
 		'change:selected': { description: 'Événement émis au click sur un bouton radio retourne la valeur sélectionnée' },
 		'disabled': { description: 'Permet de désactiver le groupe de boutons radios' },
 		'error': { description: 'Permet de mettre le champ en erreur' },
@@ -213,7 +213,7 @@ export const Required: Story = {
 		groupLabel: 'Sélection obligatoire',
 		modelValue: items,
 		uniqueId: 'illustrated-radio-required',
-		ariaRequired: true,
+		required: true,
 		error: true,
 	},
 	parameters: {
@@ -221,12 +221,12 @@ export const Required: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-  <p>La sélection d’un bouton est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+  <p>La sélection d’un bouton est obligatoire grâce à la prop <code>required</code>.</p>
   <AmeliproIllustratedRadioGroup
     v-model="value"
     group-label="Sélection obligatoire"
     unique-id="illustrated-radio-required"
-    aria-required
+    required
     error
   />
 </template>`,
@@ -256,7 +256,7 @@ export const Required: Story = {
 			}
 			return { args, model, deselect }
 		},
-		template: `<p class="mb-2">La sélection d’un bouton est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+		template: `<p class="mb-2">La sélection d’un bouton est obligatoire grâce à la prop <code>required</code>.</p>
         <AmeliproIllustratedRadioGroup v-bind="args" v-model="model"/>
         <AmeliproBtn class="mt-4" @click="deselect">Tout désélectionner</AmeliproBtn>`,
 	}),

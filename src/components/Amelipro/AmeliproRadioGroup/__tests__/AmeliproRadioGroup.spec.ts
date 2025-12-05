@@ -1,4 +1,4 @@
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { AmeliproMessage } from '@/components'
 import AmeliproRadioGroup from '../AmeliproRadioGroup.vue'
@@ -9,7 +9,7 @@ import { type PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproRadioGroup> = {
-	ariaRequired: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -67,7 +67,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproRadioGroup> => ({
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproRadioGroup> => ({
-	ariaRequired: true,
+	required: true,
 	disabled: true,
 	error: true,
 	fullHorizontal: true,
@@ -216,7 +216,7 @@ describe('AmeliproRadioGroup', () => {
 			await vueWrapper.setProps({ disabled: true })
 			expect(spanWrappers.at(0)?.attributes('class')).toBe('text-ap-grey')
 
-			await vueWrapper.setProps({ ariaRequired: true, disabled: false, error: true, modelValue: reset })
+			await vueWrapper.setProps({ required: true, disabled: false, error: true, modelValue: reset })
 			expect(spanWrappers.at(0)?.attributes('class')).toBe('text-ap-red radio-group__item-label-span-error')
 		})
 
@@ -229,7 +229,7 @@ describe('AmeliproRadioGroup', () => {
 			await vueWrapper.setProps({ disabled: true })
 			expect(spanWrappers.at(0)?.attributes('class')).toBe('text-ap-grey-darken-1')
 
-			await vueWrapper.setProps({ ariaRequired: true, disabled: false, error: true, modelValue: reset })
+			await vueWrapper.setProps({ required: true, disabled: false, error: true, modelValue: reset })
 			expect(spanWrappers.at(0)?.attributes('class')).toBe('text-ap-red radio-group__item-label-span-error')
 		})
 	})
@@ -315,7 +315,7 @@ describe('AmeliproRadioGroup', () => {
 			let componentWrapper = vueWrapper.findComponent(AmeliproMessage)
 			expect(componentWrapper.exists()).toBe(false)
 
-			await vueWrapper.setProps({ ariaRequired: true, error: true, modelValue: reset })
+			await vueWrapper.setProps({ required: true, error: true, modelValue: reset })
 			await vueWrapper.vm.$nextTick()
 
 			expect(inputFinder().at(0)?.attributes('aria-describedby')).toBe('required-unique-id-error')

@@ -5,7 +5,7 @@ import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta = {
 	argTypes: {
-		'ariaRequired': { description: 'Permet de rendre la selection obligatoire d’au moins une option' },
+		'required': { description: 'Permet de rendre la selection obligatoire d’au moins une option' },
 		'change:selected': { description: 'Événement émis au click sur une checkbox/bouton radio retourne le ou les éléments sélectionnés selon si la property unique est activé ou non et un identifiant pour le groupe' },
 		'disabled': { description: 'Permet de désactiver le CustomSelector' },
 		'groupLabel': { description: 'Label du groupe de checkbox/boutons radios' },
@@ -29,7 +29,7 @@ const meta = {
 		},
 		'multipleRequired': { description: 'Permet de rendre la selection multiple obligatoire' },
 		'multipleRequiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props multipleRequired est active' },
-		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props ariaRequired est active' },
+		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props required est active' },
 		'unique': { description: 'Pour avoir seulement un item sélectionnable ' },
 		'uniqueId': { description: 'Id unique du groupe de checkbox/boutons radios' },
 		'update:model-value': { description: 'Événement émis au changement du v-model' },
@@ -281,7 +281,7 @@ export const Required: Story = {
 		groupLabel: 'Sélection obligatoire',
 		modelValue: items,
 		uniqueId: 'custom-selector-required',
-		ariaRequired: true,
+		required: true,
 		requiredErrorMessage: 'Veuillez sélectionner au moins une option.',
 	},
 	parameters: {
@@ -289,12 +289,12 @@ export const Required: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-  <p>La sélection d’au moins une option est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+  <p>La sélection d’au moins une option est obligatoire grâce à la prop <code>required</code>.</p>
   <AmeliproCustomSelector
     v-model="value"
     group-label="Sélection obligatoire"
     unique-id="custom-selector-required"
-    aria-required
+    required
     required-error-message="Veuillez sélectionner au moins une option."
   />
 </template>`,
@@ -318,7 +318,8 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p class="mb-2">La sélection d’au moins une option est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+		template: `<p class="mb-2">La sélection d’au moins une option est obligatoire grâce à la prop
+          <code>required</code>.</p>
 <AmeliproCustomSelector v-bind="args" v-model="model" />`,
 	}),
 }

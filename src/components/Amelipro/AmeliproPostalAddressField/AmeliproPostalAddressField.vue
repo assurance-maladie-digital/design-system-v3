@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	/* eslint-disable vuejs-accessibility/label-has-for */
+/* eslint-disable vuejs-accessibility/label-has-for */
 	import type { InputPostalAddressAutoCompleteList, InputPostalAddressField, InputPostalAddressGroup } from './types'
-	import { type PropType, computed, onMounted, ref, watch } from 'vue'
+	import { computed, onMounted, type PropType, ref, watch } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import AmeliproPostalAddressCityRow from './AmeliproPostalAddressCityRow/AmeliproPostalAddressCityRow.vue'
 	import type { InputPostalAddressAutoCompleteItem } from './AmeliproPostalAddressCityRow/types'
@@ -15,7 +15,7 @@
 			type: Array as PropType<ValidationRule[]>,
 			default: () => [],
 		},
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -120,7 +120,7 @@
 			...props.addressRules,
 		]
 
-		if (props.ariaRequired) {
+		if (props.required) {
 			rules.push(isRequired)
 		}
 
@@ -193,7 +193,7 @@
 		>
 			{{ groupLabel }}
 
-			<span v-if="ariaRequired">
+			<span v-if="required">
 				<span aria-hidden="true">
 					&nbsp;*
 				</span>
@@ -213,7 +213,7 @@
 			>
 				N° et nom de la voie
 
-				<span v-if="ariaRequired">
+				<span v-if="required">
 					<span aria-hidden="true">
 						*
 					</span>
@@ -230,7 +230,7 @@
 				v-model="internalAddressValue"
 				:aria-describedby="displayAddressError ? `${uniqueId}-address-error` : undefined"
 				:aria-invalid="displayAddressError ? true : undefined"
-				:aria-required="ariaRequired"
+				:required="required"
 				autocomplete="address-line1"
 				:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 				class="pt-0"
@@ -267,7 +267,7 @@
 			ref="cityRow"
 			v-model:city="internalCityValue"
 			v-model:postal-code="internalPostalCodeValue"
-			:aria-required="ariaRequired"
+			:required="required"
 			:auto-complete-list="autoCompleteList"
 			:city-rules="cityRules"
 			:disabled="disabled"
