@@ -103,7 +103,7 @@
 					@click="dismissAlert"
 				>
 					<VIcon
-						size="small"
+						size="large"
 					>
 						{{ mdiClose }}
 					</VIcon>
@@ -160,8 +160,11 @@
 	line-height: 0;
 	text-transform: none;
 	font-weight: bold;
-	font-size: 0.75rem;
 	letter-spacing: normal;
+
+	span {
+		font-size: 14px;
+	}
 
 	&:focus-visible {
 		outline: solid 2px black !important;
