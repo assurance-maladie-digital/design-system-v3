@@ -3,7 +3,6 @@ import { defineComponent, onMounted, ref, toRef, type Ref } from 'vue'
 import useTrack from '../useTrack'
 import { describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 describe('useTrack', () => {
 	it('should return the track object', async () => {
@@ -40,11 +39,7 @@ describe('useTrack', () => {
 			</div>`,
 		})
 
-		const wrapper = mount(TestElement, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(TestElement)
 
 		await wrapper.find('div.track').trigger('click', {
 			clientX: 30,
@@ -105,11 +100,7 @@ describe('useTrack', () => {
 			</div>`,
 		})
 
-		const wrapper = mount(TestElement, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(TestElement)
 
 		await wrapper.find('div.track').trigger('click', {
 			clientX: 33,
@@ -160,11 +151,7 @@ describe('useTrack', () => {
 			</div>`,
 		})
 
-		const wrapper = mount(TestElement, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(TestElement)
 
 		await wrapper.find('div.track').trigger('click', {
 			clientX: 121,
@@ -224,9 +211,6 @@ describe('useTrack', () => {
 		})
 
 		const wrapper = mount(TestElement, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				disable: true,
 			},
@@ -291,11 +275,7 @@ describe('useTrack', () => {
 			</div>`,
 		})
 
-		const wrapper = mount(TestElement, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(TestElement)
 
 		await wrapper.find('div.track').trigger('click', {
 			clientX: 90,

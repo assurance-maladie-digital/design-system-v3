@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import FileUpload from '../FileUpload.vue'
@@ -15,20 +14,13 @@ describe('FileUpload', () => {
 	})
 
 	it('renders correctly', () => {
-		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(FileUpload)
 
 		expect(wrapper.text()).toMatchSnapshot()
 	})
 
 	it('renders correctly in multiple mode', () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				multiple: true,
 				modelValue: [file, file],
@@ -40,9 +32,6 @@ describe('FileUpload', () => {
 
 	it('renders correctly with only one extension allowed', () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				allowedExtensions: ['pdf'],
 				modelValue: [file],
@@ -54,9 +43,6 @@ describe('FileUpload', () => {
 
 	it('change the style when dragging', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [], // Ajouter la prop modelValue obligatoire
 			},
@@ -74,9 +60,6 @@ describe('FileUpload', () => {
 
 	it('accepts the drop of a file with the correct extension', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 				allowedExtensions: ['pdf'],
@@ -97,9 +80,6 @@ describe('FileUpload', () => {
 
 	it('accepts the drop of many files', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 				multiple: true,
@@ -127,9 +107,6 @@ describe('FileUpload', () => {
 
 	it('rejects the drop of a file with the wrong extension', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 				allowedExtensions: ['pdf'],
@@ -153,9 +130,6 @@ describe('FileUpload', () => {
 		const jpgFile: File = new File([''], 'filename.jpg', { type: 'image/jpeg' })
 
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				multiple: true,
 				modelValue: [pdfFile],
@@ -184,9 +158,6 @@ describe('FileUpload', () => {
 
 	it('rejects the drop of a file that is too big', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 				fileSizeMax: 1,
@@ -207,9 +178,6 @@ describe('FileUpload', () => {
 
 	it('do nothing if no file is dropped', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 			},
@@ -227,9 +195,6 @@ describe('FileUpload', () => {
 
 	it('allow any extension if allowedExtensions is empty', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 				allowedExtensions: [],
@@ -250,9 +215,6 @@ describe('FileUpload', () => {
 
 	it('do nothing if the field is disabled', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 				disabled: true,
@@ -271,9 +233,6 @@ describe('FileUpload', () => {
 
 	it('if many files are dropped in single mode, only the first one is kept', async () => {
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [],
 			},
@@ -296,9 +255,6 @@ describe('FileUpload', () => {
 		const file1 = new File([''], 'filename1.jpg', { type: 'image/jpeg' })
 		const file2 = new File([''], 'filename2.jpg', { type: 'image/jpeg' })
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [file1],
 			},
@@ -316,9 +272,6 @@ describe('FileUpload', () => {
 		const file1 = new File([''], 'filename1.jpg', { type: 'image/jpeg' })
 		const file2 = new File([''], 'filename2.jpg', { type: 'image/jpeg' })
 		const wrapper = mount(FileUpload, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: [file1],
 				multiple: true,

@@ -1,0 +1,39 @@
+import {Meta, Story} from '@storybook/addon-docs/blocks';
+import * as ComponentStories from './SignalerUneAnomalie.stories.ts';
+import '../styles/shared.css';
+
+<Meta of={ComponentStories}/>
+
+<div className="header">
+    <h1>Signaler une anomalie</h1>
+</div>
+
+## Introduction
+
+Les anomalies sont un moyen essentiel d'améliorer le Design System de la CNAM.
+Lorsque vous constatez une anomalie, vous pouvez la signaler ici, l'équipe du Studio Design l'examinera et prendra les mesures appropriées.
+Ce guide vous explique comment rédiger correctement une anomalie.
+
+<Story of={ComponentStories.InfoIntro}/>
+
+## Créer une anomalie
+
+<Story of={ComponentStories.AnomalieGraphique}/>
+
+<Story of={ComponentStories.AnomalieFonctionnelle}/>
+
+<Story of={ComponentStories.AnomalieAccessibilite}/>
+
+<Story of={ComponentStories.AnomalieDocumentaire}/>
+
+## Bonnes pratiques
+
+<Story of={ComponentStories.InfoPratiques}/>
+
+1. **Soyez précis** : Donnez autant de détails pertinents que possible
+2. **Un problème par issue** : Ne mélangez pas plusieurs problèmes dans une seule issue
+3. **Utilisez les labels** : Ajoutez les labels appropriés pour faciliter le tri et la priorisation
+4. **Vérifiez les doublons** : Avant de créer une nouvelle issue, vérifiez si elle n'existe pas déjà en cherchant dans
+les [rapports existants](https://github.com/assurance-maladie-digital/design-system-v3/issues)
+5. **Soyez constructif** : Restez professionnel et focalisé sur la résolution du problème
+6. **Vérifiez la version du package utilisé** : Le bug est-il toujours présent dans la dernière version du package concerné ?

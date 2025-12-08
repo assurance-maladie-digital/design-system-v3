@@ -1037,27 +1037,27 @@ export const DifferentFormats: Story = {
 					<div class="d-flex flex-column gap-4">
 						<DatePicker
 							v-model="value1"
-							placeholder="Format DD/MM/YYYY"
+							placeholder="Format JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 						/>
 						<DatePicker
 							v-model="value2"
-							placeholder="Format MM/DD/YYYY"
+							placeholder="Format MM/JJ/AAAA"
 							format="MM/DD/YYYY"
 						/>
 						<DatePicker
 							v-model="value3"
-							placeholder="Format YYYY-MM-DD"
+							placeholder="Format AAAA-MM-JJ"
 							format="YYYY-MM-DD"
 						/>
 						<DatePicker
 							v-model="value4"
-							placeholder="Format DD-MM-YY"
+							placeholder="Format JJ-MM-AA"
 							format="DD-MM-YY"
 						/>
 						<DatePicker
 							v-model="value5"
-							placeholder="Format DD.MM.YYYY"
+							placeholder="Format JJ.MM.AAAA"
 							format="DD.MM.YYYY"
 						/>
 					</div>
@@ -1096,13 +1096,13 @@ export const DifferentFormats: Story = {
               <div class="d-flex flex-column gap-4 pa-4">
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format DD/MM/YYYY"
+                    placeholder="Format JJ/MM/AAAA"
                     format="DD/MM/YYYY"
                     class="py-4"
                 />
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format MM/DD/YYYY"
+                    placeholder="Format MM/JJ/AAAA"
                     format="MM/DD/YYYY"
 					class="py-4"
                 />
@@ -1141,14 +1141,14 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value1 }}</span>
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format DD/MM/YYYY, retour par défaut"
+                    placeholder="Format JJ/MM/AAAA, retour par défaut"
                     format="DD/MM/YYYY"
                 />
 
                 <span class="mb-4">Date de retour : {{ value2 }}</span>
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format DD/MM/YYYY, retour MM/DD/YYYY"
+                    placeholder="Format JJ/MM/AAAA, retour MM/DD/YYYY"
                     format="DD/MM/YYYY"
                     date-format-return="MM/DD/YYYY"
                 />
@@ -1156,7 +1156,7 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value3 }}</span>
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
+                    placeholder="Format JJ/MM/AAAA, retour YYYY-MM-DD"
                     format="DD/MM/YYYY"
                     date-format-return="YYYY-MM-DD"
                 />
@@ -1212,14 +1212,14 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value1 }}</span>
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format DD/MM/YYYY, retour par défaut"
+                    placeholder="Format JJ/MM/AAAA, retour par défaut"
                     format="DD/MM/YYYY"
                 />
 
                 <span class="mb-4">Date de retour : {{ value2 }}</span>
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format DD/MM/YYYY, retour MM/DD/YYYY"
+                    placeholder="Format JJ/MM/AAAA, retour MM/DD/YYYY"
                     format="DD/MM/YYYY"
 					date-format-return="MM/DD/YYYY"
                 />
@@ -1228,7 +1228,7 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value3 }}</span>
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format DD/MM/YYYY, retour YYYY-MM-DD"
+                    placeholder="Format JJ/MM/AAAA, retour YYYY-MM-DD"
                     format="DD/MM/YYYY"
 					date-format-return="YYYY-MM-DD"
                 />

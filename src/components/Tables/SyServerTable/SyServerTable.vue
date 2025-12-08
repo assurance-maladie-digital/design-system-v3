@@ -31,6 +31,7 @@
 		density: 'default',
 		striped: false,
 		showSelect: false,
+		showSelectSingle: false,
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
@@ -80,7 +81,7 @@
 	})
 
 	// Use the table headers composable
-	const { headers, displayHeaders, getEnhancedHeader } = useTableHeaders({
+	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
@@ -91,11 +92,24 @@
 
 	// Use the pagination composable with displayedItemsLength (stable during refetch)
 	const itemsLength = computed(() => displayedItemsLength.value)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
 		options,
 		itemsLength,
-		table,
 	})
+
+	// Defines a function to handle updating the data table options
+	function onUpdateOptions(newOptions: Partial<DataOptions>) {
+		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
+			// Creates a copy of the received options
+			const rest = { ...newOptions }
+			delete (rest as Record<string, unknown>).itemsPerPage
+			// Updates the other options without modifying itemsPerPage
+			updateOptions(rest)
+			return
+		}
+		// In all other cases, simply updates the options with the new values
+		updateOptions(newOptions)
+	}
 
 	// Create a computed property for items to ensure reactivity
 	// Bind to displayedItems so it is always an array
@@ -189,8 +203,15 @@
 		items: tableItems,
 		modelValue: model,
 		updateModelValue: (value) => {
-			model.value = value
+			if (props.showSelectSingle && Array.isArray(value)) {
+				// In single-select mode, always keep at most one selected value
+				model.value = value.length > 0 ? [value[0]] : []
+			}
+			else {
+				model.value = value
+			}
 		},
+		selectionKey: toRef(props, 'selectionKey'),
 	})
 
 	// Use the ARIA accessibility composable
@@ -262,12 +283,14 @@
 			:items="processItems(displayedItems)"
 			:items-length="displayedItemsLength || 0"
 			:density="props.density"
-			:show-select="props.showSelect"
+			:show-select="props.showSelect || props.showSelectSingle"
+			:select-strategy="props.showSelectSingle ? 'single' : 'page'"
 			:item-selectable="(item) => true"
 			:item-value="getItemValue"
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
-			@update:options="updateOptions"
+			:show-expand="props.showExpand"
+			@update:options="onUpdateOptions"
 		>
 			<template #top>
 				<caption
@@ -286,9 +309,14 @@
 							:key="column.key"
 						>
 							<th
-								class="checkbox-column"
+								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
 							>
-								<template v-if="column.key === 'data-table-select' && props.showSelect">
+								<template v-if="column.key === 'data-table-select' && props.showSelect && !props.showSelectSingle">
 									<SyCheckbox
 										:model-value="slotProps.allSelected"
 										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
@@ -310,6 +338,7 @@
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
+										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
 									/>
 								</template>
@@ -320,12 +349,18 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th v-if="props.showSelect" />
+						<th v-if="props.showSelect || props.showSelectSingle" />
 						<template
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key"
 						>
-							<th>
+							<th
+								:style="{
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+								}"
+							>
 								<!-- Check if the column is filterable based on the headers prop -->
 								<SyTableFilter
 									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"

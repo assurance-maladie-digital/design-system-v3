@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproHeader from './AmeliproHeader.vue'
+import { fn } from '@storybook/test'
 
 const meta: Meta<typeof AmeliproHeader> = {
 	argTypes: {
@@ -118,6 +119,7 @@ const meta: Meta<typeof AmeliproHeader> = {
 		'backBtnLabel': { description: 'Label du bouton de retour' },
 		'backBtnTo': { description: 'Route pour le bouton de retour, elle doit renvoyer à la page précédente, s’il n’y a pas de page précédente connue, elle doit renvoyer à la page d’Accueil Amelipro' },
 		'backoffice': { description: 'Définit si nous somme sur une page de backoffice' },
+		'click-logo': { description: 'Evénement émit au click sur le logo, utilisable si les properties `homeHref` et `homeLink` ne sont pas définies' },
 		'headerTitle': { description: 'Titre de site venant remplacer le logo Amelipro' },
 		'homeHref': { description: 'Lien pour le bouton de retour vers l’accueil Amelipro' },
 		'homeLink': { description: 'Route pour le bouton de retour vers l’accueil Amelipro' },
@@ -392,7 +394,9 @@ const ameliproHeaderInfos = {
 export const Default: Story = {
 	args: {
 		ameliproHeaderInfos,
-		uniqueId: 'amelipro-header-id',
+		'uniqueId': 'amelipro-header-id',
+		'onClick-logo': fn(),
+		'onBack-btn-click': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -650,7 +654,9 @@ export const Default: Story = {
 		template: `
 <p class="mb-2">Header complet avec toutes les informations, menus et structures (version connectée).</p>
 <AmeliproHeader
-    v-bind="args"
+	v-bind="args"
+	@click-logo="args['onClick-logo']"
+	@back-btn-click="args['onBack-btn-click']"
 />
 		`,
 	}),
@@ -658,9 +664,10 @@ export const Default: Story = {
 
 export const notLogged: Story = {
 	args: {
-		noSubPart: true,
-		uniqueId: 'amelipro-header-not-logged-id',
-		unlogged: true,
+		'noSubPart': true,
+		'uniqueId': 'amelipro-header-not-logged-id',
+		'unlogged': true,
+		'onClick-logo': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -691,7 +698,8 @@ export const notLogged: Story = {
 		template: `
 <p class="mb-2">Header en version déconnectée, sans sous-partie.</p>
 <AmeliproHeader
-    v-bind="args"
+	v-bind="args"
+	lick-logo="args['onClick-logo']"
 />
         `,
 	}),
@@ -699,10 +707,11 @@ export const notLogged: Story = {
 
 export const other: Story = {
 	args: {
-		headerTitle: 'Titre du site',
-		noSubPart: true,
-		serviceSubTitle: 'Sous-titre',
-		uniqueId: 'amelipro-header-other-id',
+		'headerTitle': 'Titre du site',
+		'noSubPart': true,
+		'serviceSubTitle': 'Sous-titre',
+		'uniqueId': 'amelipro-header-other-id',
+		'onClick-logo': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -738,7 +747,8 @@ export const other: Story = {
 		template: `
 <p class="mb-2">Header avec titre personnalisé, sous-titre et slot <code>rightPart</code> utilisé.</p>
 <AmeliproHeader
-    v-bind="args"
+	v-bind="args"
+	lick-logo="args['onClick-logo']"
 >
     <template #rightPart>
         [Slot: rightPart]

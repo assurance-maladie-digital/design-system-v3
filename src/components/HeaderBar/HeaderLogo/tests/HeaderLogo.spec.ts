@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import HeaderLogo from '../HeaderLogo.vue'
@@ -15,9 +14,6 @@ describe('HeaderLogo', () => {
 		window.happyDOM.setInnerWidth(600)
 
 		const mobileWrapper = mount(HeaderLogo, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -35,9 +31,6 @@ describe('HeaderLogo', () => {
 		window.happyDOM.setInnerWidth(1200)
 
 		const desktopWrapper = mount(HeaderLogo, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -58,9 +51,6 @@ describe('HeaderLogo', () => {
 
 	it('sould display the service and the logo aria-label', async () => {
 		const wrapper = mount(HeaderLogo, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				ariaLabel: 'Test aria label',
 				serviceTitle: 'Test service title',
@@ -77,9 +67,6 @@ describe('HeaderLogo', () => {
 
 	it('should render only the serviceTitle slot when set', async () => {
 		const wrapper = mount(HeaderLogo, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				serviceTitle: 'Test service title',
 			},
@@ -97,9 +84,7 @@ describe('HeaderLogo', () => {
 	it('render a router-link when homeLink is set with `to`', async () => {
 		const wrapper = mount(HeaderLogo, {
 			global: {
-				plugins: [vuetify],
-				stubs: ['RouterLink'],
-			},
+				stubs: ['RouterLink'] },
 			props: {
 				homeLink: {
 					to: '/',
@@ -113,9 +98,6 @@ describe('HeaderLogo', () => {
 
 	it('render a div when there there is no `RouterLink` component registered', async () => {
 		const wrapper = mount(HeaderLogo, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				homeLink: {
 					to: '/',
@@ -128,9 +110,6 @@ describe('HeaderLogo', () => {
 
 	it('render a div when the homeLink properties `to` and `href` are both set to `undefined`', async () => {
 		const wrapper = mount(HeaderLogo, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				homeLink: {
 					to: undefined,

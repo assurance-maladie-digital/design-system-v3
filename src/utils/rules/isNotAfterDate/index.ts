@@ -15,6 +15,10 @@ export function isNotAfterDateFn(
 			return true
 		}
 
+		if (typeof value !== 'string') {
+			return ruleMessage(errorMessages, 'default')
+		}
+
 		const formattedValue = formatDate(parseDate(date))
 
 		return (

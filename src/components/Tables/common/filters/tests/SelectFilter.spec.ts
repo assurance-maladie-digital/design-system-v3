@@ -1,17 +1,9 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 
 import SelectFilter from '../SelectFilter.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import type { FilterType } from '../../types'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('SelectFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof SelectFilter>>
@@ -28,7 +20,6 @@ describe('SelectFilter.vue', () => {
 	beforeEach(() => {
 		wrapper = mount(SelectFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SySelect: {
 						template: '<div class="sy-select-stub" data-testid="sy-select" :label="label" :items="items" :clearable="clearable" :density="density" :hideDetails="hideDetails"></div>',
@@ -148,7 +139,6 @@ describe('SelectFilter.vue', () => {
 		}
 		const newWrapper = mount(SelectFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SySelect: {
 						template: '<div class="sy-select-stub" data-testid="sy-select"></div>',
@@ -191,7 +181,6 @@ describe('SelectFilter.vue', () => {
 		}
 		const newWrapper = mount(SelectFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SySelect: {
 						template: '<div class="sy-select-stub" data-testid="sy-select"></div>',

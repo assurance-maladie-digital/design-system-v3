@@ -19,6 +19,10 @@ export function isMinLengthFn(
 			return true
 		}
 
+		if (typeof value !== 'string') {
+			return ruleMessage(errorMessages, 'default', [min])
+		}
+
 		if (ignoreSpaces) {
 			value = value.replace(/\s/g, '')
 		}

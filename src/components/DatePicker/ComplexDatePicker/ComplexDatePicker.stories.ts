@@ -793,7 +793,7 @@ export const WithDateFormatReturn: Story = {
 					<div class="d-flex flex-column">
 						<DatePicker
 							v-model="date"
-							placeholder="Format d'affichage: DD/MM/YYYY, Format de retour: YYYY-MM-DD"
+							placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
 							format="DD/MM/YYYY"
 							dateFormatReturn="YYYY-MM-DD"
 							class="mb-4"
@@ -828,7 +828,7 @@ export const WithDateFormatReturn: Story = {
               <div class="d-flex flex-column pa-4">
                 <DatePicker
                   v-model="date"
-                  placeholder="Format d'affichage: DD/MM/YYYY, Format de retour: YYYY-MM-DD"
+                  placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
                   format="DD/MM/YYYY"
                   dateFormatReturn="YYYY-MM-DD"
                   class="mb-4"
@@ -960,8 +960,8 @@ export const CustomDateFormat: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Format YYYY.MM.DD"
-						format="YYYY.MM.DD"
+						placeholder="Format AAAA.MM.JJ"
+						format="AAAA.MM.JJ"
 						useCombinedMode
 					/>
 				</template>
@@ -981,7 +981,7 @@ export const CustomDateFormat: Story = {
 		],
 	},
 	args: {
-		placeholder: 'Format YYYY.MM.DD',
+		placeholder: 'Format AAAA.MM.JJ',
 		format: 'YYYY.MM.DD',
 		useCombinedMode: true,
 	},
@@ -1307,7 +1307,7 @@ export const AutoClampFeature: Story = {
 					<div class="d-flex flex-column">
 						<h3>Démonstration de l'auto clamp avec différents formats</h3>
 						
-						<h4 class="mt-4">Format DD/MM/YYYY (séparateur /)</h4>
+						<h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
 						<DatePicker
 							v-model="dateSlash"
 							placeholder="Saisie avec auto clamp - séparateur /"
@@ -1316,7 +1316,7 @@ export const AutoClampFeature: Story = {
 							autoClamp
 						/>
 						
-						<h4 class="mt-4">Format DD-MM-YYYY (séparateur -)</h4>
+						<h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
 						<DatePicker
 							v-model="dateDash"
 							placeholder="Saisie avec auto clamp - séparateur -"
@@ -1325,7 +1325,7 @@ export const AutoClampFeature: Story = {
 							autoClamp
 						/>
 						
-						<h4 class="mt-4">Format YYYY.MM.DD (séparateur .)</h4>
+						<h4 class="mt-4">Format AAAA.MM.JJ (séparateur .)</h4>
 						<DatePicker
 							v-model="dateDot"
 							placeholder="Saisie avec auto clamp - séparateur ."
@@ -1366,7 +1366,7 @@ export const AutoClampFeature: Story = {
                 <h3>Démonstration de l'auto clamp avec différents formats</h3>
                 <div class="mb-4 mt-2">Saisissez uniquement des chiffres - les séparateurs seront ajoutés automatiquement selon le format défini</div>
                 
-                <h4 class="mb-2">Format DD/MM/YYYY (séparateur /)</h4>
+                <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
                 <DatePicker
                   v-model="dateSlash"
                   placeholder="Saisie avec auto clamp - séparateur /"
@@ -1376,7 +1376,7 @@ export const AutoClampFeature: Story = {
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
                 
-                <h4 class="mb-2">Format DD-MM-YYYY (séparateur -)</h4>
+                <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
                 <DatePicker
                   v-model="dateDash"
                   placeholder="Saisie avec auto clamp - séparateur -"
@@ -1386,7 +1386,7 @@ export const AutoClampFeature: Story = {
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
                 
-                <h4 class="mb-2">Format YYYY.MM.DD (séparateur .)</h4>
+                <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
                 <DatePicker
                   v-model="dateDot"
                   placeholder="Saisie avec auto clamp - séparateur ."

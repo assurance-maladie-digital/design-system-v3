@@ -1,17 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 
 import DateFilter from '../DateFilter.vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { FilterType } from '../../types'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('DateFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof DateFilter>>
@@ -21,7 +13,6 @@ describe('DateFilter.vue', () => {
 	beforeEach(() => {
 		wrapper = mount(DateFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					DatePicker: {
 						template: '<div class="date-picker-stub" data-testid="date-picker" :label="label" :clearable="clearable" :density="density" :hideDetails="hideDetails" :format="format"></div>',
@@ -116,7 +107,6 @@ describe('DateFilter.vue', () => {
 		const headerWithoutKey = { title: 'Test Date' }
 		const newWrapper = mount(DateFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					DatePicker: {
 						template: '<div class="date-picker-stub" data-testid="date-picker"></div>',
@@ -154,7 +144,6 @@ describe('DateFilter.vue', () => {
 		const emptyHeader = {}
 		const newWrapper = mount(DateFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					DatePicker: {
 						template: '<div class="date-picker-stub" data-testid="date-picker"></div>',

@@ -1,7 +1,6 @@
 /* eslint-disable vue/one-component-per-file */
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import FilterSideBar from '../FilterSideBar.vue'
 import { defineComponent } from 'vue'
@@ -52,7 +51,6 @@ describe('FilterSideBar', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(TestComponent, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -77,7 +75,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -108,7 +105,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -130,7 +126,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -168,7 +163,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -189,7 +183,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -224,7 +217,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -273,7 +265,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -322,7 +313,6 @@ describe('FilterSideBar', () => {
 				],
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},

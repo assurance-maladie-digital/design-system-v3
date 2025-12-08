@@ -1,0 +1,74 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproTileBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="
+    amelipro-tile-btn
+    text-none
+  "
+  density="default"
+  disabled="true"
+  elevation="1"
+  exact="false"
+  flat="false"
+  height="auto"
+  href="modified-href"
+  icon="false"
+  id="modified-unique-id"
+  loading="false"
+  minheight="modified-tile-min-height"
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="
+    background-color: #DDDEDE !important;
+    border: 2px solid #DDDEDE !important;
+    color: #1A1B1B !important;
+  "
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  tile="false"
+  to="modified-to"
+  variant="elevated"
+  width="modified-tile-width"
+></v-btn-stub>
+`;
+
+exports[`AmeliproTileBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="
+    amelipro-tile-btn
+    text-none
+  "
+  density="default"
+  disabled="false"
+  elevation="1"
+  exact="false"
+  flat="false"
+  height="auto"
+  icon="false"
+  loading="false"
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="
+    background-color: #FFFFFF;
+    border: 2px solid #FFFFFF !important;
+    color: #1A1B1B;
+    padding: 2rem 1.5rem;
+  "
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  tile="false"
+  variant="elevated"
+  width="100%"
+></v-btn-stub>
+`;

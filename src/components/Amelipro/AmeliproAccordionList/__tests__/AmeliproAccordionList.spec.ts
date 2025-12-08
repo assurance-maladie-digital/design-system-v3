@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
 import AmeliproAccordionList from '../AmeliproAccordionList.vue'
 
 describe('AmeliproAccordionList', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproAccordionList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: [
 					{ id: 0 },

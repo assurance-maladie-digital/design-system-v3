@@ -1,0 +1,43 @@
+import {Meta, Story} from '@storybook/addon-docs/blocks';
+import * as ComponentStories from './EnrichirLeDesignSystem.stories.ts';
+import '../styles/shared.css';
+
+<Meta title="Démarrer/Enrichir le Design System"/>
+
+<div className="header">
+    <h1>Enrichir le Design System</h1>
+</div>
+
+## Introduction
+
+Le Design System de l'Assurance Maladie est un projet vivant qui évolue constamment pour répondre aux besoins des utilisateurs et aux avancées technologiques.<br/>
+Votre contribution est essentielle pour garantir que le Design System reste pertinent, accessible et efficace.<br/>
+Toute demande ne sera pas nécessairement intégrée, mais chaque suggestion est examinée avec attention par l'équipe du Studio Design.
+
+<Story of={ComponentStories.InfoIntro}/>
+
+<a id="exigences" />
+## Exigences requises pour acceptation d'un nouveau composant ou d'une nouvelle fonctionnalité
+
+1. Être **conforme aux exigences de la charte graphique** de la CNAM (tokens associés).
+2. Avoir un **intérêt d'usage pour plusieurs produits** de l'Assurance Maladie (une justification métier peut être demandée).
+3. Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants de la bibliothèque Vuetify**.
+4. Avoir un **intérêt d'usage ou de pertinence** par rapport aux **composants existant du Design System**.
+5. Doit permettre la **responsivité**.
+6. Doit permettre le **respect du Référentiel général d'amélioration de l'accessibilité** (RGAA).
+7. Doit permettre aux produits utilisateurs du composant de respecter des **bonnes pratiques d’éco-conception**.
+8. Doit permettre la **maintenabilité du composant**.
+9. Ne doit pas engendrer de **conflit** ou **régression** avec l'existant.
+10. Doit se conformer aux **exigences techniques** du Design System et à son bon fonctionnement sur le Starter Kit (VueJS 3, version des plugins...).
+
+## Créer une nouvelle demande
+
+<Story of={ComponentStories.Optimisation}/>
+
+<Story of={ComponentStories.AjoutFonctionnalite}/>
+
+<Story of={ComponentStories.DeclinaisonFonctionnalite}/>
+
+<Story of={ComponentStories.CreationComposant}/>
+
+<Story of={ComponentStories.IntegrationComposant}/>

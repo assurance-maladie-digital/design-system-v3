@@ -1,6 +1,6 @@
 import { toValue, type Ref } from 'vue'
 import type { DataOptions, DataTableHeaders } from './types'
-import { LocalStorageUtility } from '@/utils'
+import { LocalStorageUtility } from '@/utils/localStorageUtility'
 
 export type TableOptions = {
 	options?: Partial<DataOptions>

@@ -1,16 +1,8 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import NumberFilter from '../NumberFilter.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import type { FilterType } from '../../types'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('NumberFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NumberFilter>>
@@ -26,7 +18,6 @@ describe('NumberFilter.vue', () => {
 	beforeEach(() => {
 		wrapper = mount(NumberFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTextField: {
 						template: '<div class="sy-text-field-stub" data-testid="sy-text-field" :label="label" :type="type" :clearable="clearable" :density="density" :hideDetails="hideDetails"></div>',
@@ -137,7 +128,6 @@ describe('NumberFilter.vue', () => {
 		const headerWithoutKey = { title: 'Test Number' }
 		const newWrapper = mount(NumberFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTextField: {
 						template: '<div class="sy-text-field-stub" data-testid="sy-text-field"></div>',
@@ -244,7 +234,6 @@ describe('NumberFilter.vue', () => {
 		// Create a wrapper with actual debounce time
 		const debounceWrapper = mount(NumberFilter, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					SyTextField: {
 						template: '<div class="sy-text-field-stub" data-testid="sy-text-field"></div>',

@@ -1,15 +1,7 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import LangBtn from '../LangBtn.vue'
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import ISO6391 from 'iso-639-1'
-
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 
 describe('LangBtn', () => {
 	let wrapper: VueWrapper
@@ -25,9 +17,6 @@ describe('LangBtn', () => {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
@@ -37,9 +26,6 @@ describe('LangBtn', () => {
 		wrapper = mount(LangBtn, {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('Français')
@@ -51,9 +37,6 @@ describe('LangBtn', () => {
 				modelValue: 'co',
 				availableLanguages: ['fr', 'co', 'es'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('corsu')
 	})
@@ -63,9 +46,6 @@ describe('LangBtn', () => {
 			props: {
 				modelValue: 'fr',
 				availableLanguages: ['fr', 'co', 'es'],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -82,9 +62,6 @@ describe('LangBtn', () => {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
 				modelValue: 'es',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -107,9 +84,6 @@ describe('LangBtn', () => {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -129,9 +103,6 @@ describe('LangBtn', () => {
 				hideDownArrow: true,
 				availableLanguages: ['fr', 'co', 'es'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		expect(wrapper.find('.v-icon').exists()).toBe(false)
 	})
@@ -142,9 +113,6 @@ describe('LangBtn', () => {
 				hideDownArrow: false,
 				availableLanguages: ['fr', 'co', 'es'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		expect(wrapper.find('.v-icon').exists()).toBe(true)
 	})
@@ -153,9 +121,6 @@ describe('LangBtn', () => {
 		wrapper = mount(LangBtn, {
 			props: {
 				availableLanguages: '*',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -176,9 +141,6 @@ describe('LangBtn', () => {
 		wrapper = mount(LangBtn, {
 			props: {
 				availableLanguages: languages,
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})
@@ -205,9 +167,6 @@ describe('LangBtn', () => {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const button = wrapper.find('.vd-lang-btn')
@@ -220,9 +179,6 @@ describe('LangBtn', () => {
 				ariaLabel: 'Language selection',
 				availableLanguages: ['fr', 'co', 'es'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const button = wrapper.find('.vd-lang-btn')
@@ -234,9 +190,6 @@ describe('LangBtn', () => {
 			props: {
 				modelValue: 'unknown',
 				availableLanguages: ['fr', 'co', 'es'],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -254,9 +207,6 @@ describe('LangBtn', () => {
 				modelValue: 'xx',
 				availableLanguages: ['xx'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('xx')
@@ -269,9 +219,6 @@ describe('LangBtn', () => {
 		wrapper = mount(LangBtn, {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -289,9 +236,6 @@ describe('LangBtn', () => {
 		wrapper = mount(LangBtn, {
 			props: {
 				availableLanguages: ['fr', 'co', 'es'],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 			attachTo: document.body,
 		})

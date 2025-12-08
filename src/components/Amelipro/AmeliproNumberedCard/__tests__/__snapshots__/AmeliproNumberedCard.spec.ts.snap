@@ -1,0 +1,171 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproNumberedCard > Snapshots > renders the component with all properties filled in 1`] = `
+<ol
+  class="
+    amelipro-numbered-card__list
+    d-flex
+    flex-wrap
+    items-per-line-3
+    justify-center
+    list-style-none
+  "
+  id="modified-unique-id"
+>
+  <li
+    class="
+      mb-4
+      numbered-card-item__wrapper
+    "
+    id="modified-unique-id-card-0"
+  >
+    <span class="
+      font-weight-regular
+      number
+    ">
+      <span
+        class="
+          ap-blue--text
+          text--darken-1
+          toto
+        "
+        id="modified-unique-id-card-0-number"
+      >
+        1
+      </span>
+    </span>
+    <div
+      class="
+        amelipro-card--numbered-wrapper
+        d-flex
+        w-100
+      "
+      id="modified-unique-id-card-0-wrapper"
+    >
+      <div
+        class="
+          amelipro-card--numbered
+          w-100
+        "
+        style="background-color: #545859;"
+      >
+        <div
+          class="
+            amelipro-card--numbered-content
+            modified-content-classes
+          "
+          id="modified-unique-id-card-0-content"
+        ></div>
+      </div>
+    </div>
+  </li>
+  <li
+    class="
+      mb-4
+      numbered-card-item__wrapper
+    "
+    id="modified-unique-id-card-1"
+  >
+    <span class="
+      font-weight-regular
+      number
+    ">
+      <span
+        class="
+          ap-blue--text
+          text--darken-1
+          toto
+        "
+        id="modified-unique-id-card-1-number"
+      >
+        2
+      </span>
+    </span>
+    <div
+      class="
+        amelipro-card--numbered-wrapper
+        d-flex
+        w-100
+      "
+      id="modified-unique-id-card-1-wrapper"
+    >
+      <div
+        class="
+          amelipro-card--numbered
+          w-100
+        "
+        style="background-color: #545859;"
+      >
+        <div
+          class="
+            amelipro-card--numbered-content
+            modified-content-classes
+          "
+          id="modified-unique-id-card-1-content"
+        ></div>
+      </div>
+    </div>
+  </li>
+  <li
+    class="
+      mb-4
+      numbered-card-item__wrapper
+    "
+    id="modified-unique-id-card-2"
+  >
+    <span class="
+      font-weight-regular
+      number
+    ">
+      <span
+        class="
+          ap-blue--text
+          text--darken-1
+          toto
+        "
+        id="modified-unique-id-card-2-number"
+      >
+        3
+      </span>
+    </span>
+    <div
+      class="
+        amelipro-card--numbered-wrapper
+        d-flex
+        w-100
+      "
+      id="modified-unique-id-card-2-wrapper"
+    >
+      <div
+        class="
+          amelipro-card--numbered
+          w-100
+        "
+        style="background-color: #545859;"
+      >
+        <div
+          class="
+            amelipro-card--numbered-content
+            modified-content-classes
+          "
+          id="modified-unique-id-card-2-content"
+        ></div>
+      </div>
+    </div>
+  </li>
+</ol>
+`;
+
+exports[`AmeliproNumberedCard > Snapshots > renders the component with only required properties filled in 1`] = `
+<ol
+  class="
+    amelipro-numbered-card__list
+    d-flex
+    flex-wrap
+    items-per-line-2
+    justify-center
+    list-style-none
+  "
+  id="required-unique-id"
+></ol>
+`;

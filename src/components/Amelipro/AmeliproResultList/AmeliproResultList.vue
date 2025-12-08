@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, onMounted, onUpdated, ref, watch } from 'vue'
+	import { computed, onMounted, onUpdated, type PropType, ref, watch } from 'vue'
 	import AmeliproPagination from '../AmeliproPagination/AmeliproPagination.vue'
 	import AmeliproSelect from '../AmeliproSelect/AmeliproSelect.vue'
 	import type { IDataListItem } from '../types'
@@ -48,6 +48,10 @@
 			type: Boolean,
 			default: true,
 		},
+		sortSelectDefaultValue: {
+			type: [Number, String] as PropType<number | string>,
+			default: undefined,
+		},
 		sortSelectItems: {
 			type: Array as PropType<SelectItem[]>,
 			default: () => [],
@@ -83,7 +87,7 @@
 	} = usePagination(props.items, props.itemsToDisplayDesktop, props.itemsToDisplayMobile)
 
 	const paginationSelectModel = ref(itemToDisplay.value)
-	const sortSelectModel = ref()
+	const sortSelectModel = ref(props.sortSelectDefaultValue)
 
 	watch(() => props.items, () => {
 		updatePagination(props.items, paginationSelectModel.value)
@@ -135,6 +139,8 @@
 			currentPage.value = 1
 		}
 	}
+
+	watch(sortSelectModel, emitSortSelectChange, { immediate: true })
 </script>
 
 <template>

@@ -1,16 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import SelectBtnField from '../SelectBtnField.vue'
 
 describe('SelectBtnField', () => {
 	it('renders correctly', () => {
-		const wrapper = mount(SelectBtnField, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(SelectBtnField)
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
@@ -34,9 +29,6 @@ describe('SelectBtnField', () => {
 						value: 'test3',
 					},
 				],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -64,9 +56,6 @@ describe('SelectBtnField', () => {
 				],
 				multiple: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
@@ -84,16 +73,13 @@ describe('SelectBtnField', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
-		await wrapper.find('.v-btn').trigger('click')
+		await wrapper.find('[role="option"]').trigger('click')
 
 		expect(wrapper.emitted()).toHaveProperty('update:modelValue')
 
-		await wrapper.find('.v-btn').trigger('click')
+		await wrapper.find('[role="option"]').trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([['test'], [null]])
 	})
@@ -119,14 +105,11 @@ describe('SelectBtnField', () => {
 				],
 				multiple: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(3) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(3)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([
 			[['test2']],
@@ -157,9 +140,6 @@ describe('SelectBtnField', () => {
 				error: true,
 				errorMessages: ['Test'],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
@@ -186,15 +166,12 @@ describe('SelectBtnField', () => {
 				],
 				multiple: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
-		await wrapper.find('li:nth-child(1) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(3) .v-btn').trigger('click')
-		await wrapper.find('li:nth-child(2) .v-btn').trigger('click')
+		await wrapper.find('li:nth-child(1)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(3)[role="option"]').trigger('click')
+		await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([
 			[['test1']],
@@ -242,14 +219,10 @@ describe('SelectBtnField', () => {
 			},
 		}
 
-		const wrapper = mount(DarkMode, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(DarkMode)
 
-		wrapper.find('li:nth-child(1) .v-btn').trigger('click')
-		wrapper.find('li:nth-child(2) .v-btn').trigger('click')
+		wrapper.find('li:nth-child(1)[role="option"]').trigger('click')
+		wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
@@ -290,11 +263,7 @@ describe('SelectBtnField', () => {
 			},
 		}
 
-		const wrapper = mount(DarkMode, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(DarkMode)
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
@@ -316,12 +285,9 @@ describe('SelectBtnField', () => {
 				],
 				readonly: true,
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
-		await wrapper.find('.v-btn').trigger('click')
+		await wrapper.find('[role="option"]').trigger('click')
 		expect(wrapper.emitted()).not.toHaveProperty('update:modelValue')
 	})
 })

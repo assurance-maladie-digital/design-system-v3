@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { ref, nextTick, type Ref } from 'vue'
+import { ref, nextTick, type Ref, defineComponent } from 'vue'
+import { mount } from '@vue/test-utils'
 import { useMonthButtonCustomization } from '../useMonthButtonCustomization'
 
 describe('useMonthButtonCustomization', () => {
@@ -7,6 +8,30 @@ describe('useMonthButtonCustomization', () => {
 	// Définir explicitement le type pour éviter les erreurs de compatibilité
 	let monthName: Ref<string | null>
 	let yearName: Ref<string | null>
+
+	const mountUseMonthButtonCustomization = (options?: {
+		isVisibleGetter?: () => boolean
+		month?: Ref<string | null>
+		year?: Ref<string | null>
+	}) => {
+		const exposed = {} as ReturnType<typeof useMonthButtonCustomization>
+		const TestComponent = defineComponent({
+			setup() {
+				Object.assign(
+					exposed,
+					useMonthButtonCustomization(
+						options?.isVisibleGetter ?? isPickerVisibleGetter,
+						options?.month ?? monthName,
+						options?.year ?? yearName,
+					),
+				)
+				return () => null
+			},
+		})
+
+		const wrapper = mount(TestComponent)
+		return { exposed, wrapper }
+	}
 
 	beforeEach(() => {
 		// Réinitialiser les refs pour chaque test avec le type exact attendu par le composable
@@ -29,40 +54,31 @@ describe('useMonthButtonCustomization', () => {
 	// Test de l'affichage des mois personnalisés via les noms de mois fournis
 	it('personnalise correctement les noms de mois (janvier -> Janv.)', async () => {
 		monthName.value = 'janvier'
-		const { customizeMonthButton } = useMonthButtonCustomization(
-			isPickerVisibleGetter,
-			monthName,
-		)
+		const { exposed } = mountUseMonthButtonCustomization()
 
-		await customizeMonthButton()
+		await exposed.customizeMonthButton()
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
-		expect(monthBtn.textContent).toContain('Janv.')
+		expect(monthBtn.textContent).toContain('janv.')
 	})
 
-	it('personnalise correctement les noms de mois (février -> Févr.)', async () => {
+	it('personnalise correctement les noms de mois (février -> févr.)', async () => {
 		monthName.value = 'février'
-		const { customizeMonthButton } = useMonthButtonCustomization(
-			isPickerVisibleGetter,
-			monthName,
-		)
+		const { exposed } = mountUseMonthButtonCustomization()
 
-		await customizeMonthButton()
+		await exposed.customizeMonthButton()
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
-		expect(monthBtn.textContent).toContain('Févr.')
+		expect(monthBtn.textContent).toContain('févr.')
 	})
 
 	it('capitalise le premier caractère si le mois n\'est pas reconnu', async () => {
 		monthName.value = 'pluviose'
-		const { customizeMonthButton } = useMonthButtonCustomization(
-			isPickerVisibleGetter,
-			monthName,
-		)
+		const { exposed } = mountUseMonthButtonCustomization()
 
-		await customizeMonthButton()
+		await exposed.customizeMonthButton()
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
@@ -72,22 +88,17 @@ describe('useMonthButtonCustomization', () => {
 	it('customise les boutons du mois et de l’année', async () => {
 		// S'assurer que monthName est null pour ce test
 		monthName.value = null
+		const { exposed } = mountUseMonthButtonCustomization()
 
-		const { customizeMonthButton, monthButtonText } = useMonthButtonCustomization(
-			isPickerVisibleGetter,
-			monthName,
-			yearName,
-		)
-
-		await customizeMonthButton()
+		await exposed.customizeMonthButton()
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
 		const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
 
 		expect(monthBtn.innerHTML).toContain('<svg') // icône ajoutée
-		expect(monthBtn.textContent).toContain('Janv.') // mois transformé
-		expect(monthButtonText.value).toBe('janvier 2023')
+		expect(monthBtn.textContent).toContain('janv.') // mois transformé
+		expect(exposed.monthButtonText.value).toBe('janvier 2023')
 
 		expect(yearBtn.innerHTML).toContain('2023')
 		expect(yearBtn.innerHTML).toContain('<svg')
@@ -96,28 +107,23 @@ describe('useMonthButtonCustomization', () => {
 	it('utilise monthName et yearName si fournis', async () => {
 		monthName.value = 'mars'
 		yearName.value = '2030'
+		const { exposed } = mountUseMonthButtonCustomization()
 
-		const { customizeMonthButton } = useMonthButtonCustomization(
-			isPickerVisibleGetter,
-			monthName,
-			yearName,
-		)
-
-		await customizeMonthButton()
+		await exposed.customizeMonthButton()
 		await nextTick()
 
 		const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
 		const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
 
-		expect(monthBtn.textContent).toContain('Mars')
+		expect(monthBtn.textContent).toContain('mars')
 		expect(yearBtn.textContent).toContain('2030')
 	})
 
 	it('observe les changements du DOM et personnalise automatiquement', async () => {
-		const { setupMonthButtonObserver } = useMonthButtonCustomization(() => true)
+		const { exposed } = mountUseMonthButtonCustomization({ isVisibleGetter: () => true })
 		const spy = vi.spyOn(document, 'querySelectorAll')
 
-		setupMonthButtonObserver()
+		exposed.setupMonthButtonObserver()
 		await nextTick()
 
 		expect(spy).toHaveBeenCalledWith('.v-date-picker-controls')

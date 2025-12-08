@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { type DOMWrapper, mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-
 import DataList from '../DataList.vue'
 import type { DataListItem } from '../types'
 
@@ -23,9 +21,6 @@ const items = [
 describe('DataList', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: items,
 			},
@@ -44,9 +39,6 @@ describe('DataList', () => {
 
 	it('renders correctly with a title', () => {
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: items,
 				listTitle: 'Informations',
@@ -59,9 +51,6 @@ describe('DataList', () => {
 
 	it('renders correctly with an empty list', () => {
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: [],
 			},
@@ -79,9 +68,6 @@ describe('DataList', () => {
 		listWithIcon[1].icon = 'mdiTest'
 
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: listWithIcon,
 				icons: {
@@ -102,9 +88,6 @@ describe('DataList', () => {
 		listWithClass[1].class = 'custom-class'
 
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: listWithClass,
 			},
@@ -120,9 +103,6 @@ describe('DataList', () => {
 
 	it('renders loading state correctly', async () => {
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: items,
 				loading: true,
@@ -151,9 +131,6 @@ describe('DataList', () => {
 		listWithAction[1].action = 'Edit'
 
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: listWithAction,
 			},
@@ -170,9 +147,6 @@ describe('DataList', () => {
 		listWithAction[2].action = 'Edit'
 
 		const wrapper = mount(DataList, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: listWithAction,
 			},

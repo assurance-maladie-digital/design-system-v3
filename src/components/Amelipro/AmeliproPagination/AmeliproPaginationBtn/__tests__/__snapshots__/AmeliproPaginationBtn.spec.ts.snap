@@ -1,0 +1,56 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproPaginationBtn > Snapshots > renders the component with all properties filled in 1`] = `
+<amelipro-btn-stub
+  aria-current="page"
+  badge="false"
+  badgebgcolor="ap-pink"
+  badgecolor="ap-white"
+  bordered="false"
+  classes="amelipro-pagination__btn"
+  color="ap-blue-darken-1"
+  disabled="false"
+  hovercolor="ap-blue-darken-1"
+  hoverunderline="false"
+  href="modified-href"
+  iconbgcolor="transparent"
+  iconbordered="false"
+  iconleft="false"
+  infoblock="false"
+  minheight="2.5rem"
+  size="60px"
+  text="false"
+  textcolor="ap-white"
+  texthovercolor="ap-white"
+  title="page active"
+  to="modified-to"
+  type="button"
+  underline="false"
+  uniqueid="modified-unique-id"
+></amelipro-btn-stub>
+`;
+
+exports[`AmeliproPaginationBtn > Snapshots > renders the component with only required properties filled in 1`] = `
+<amelipro-btn-stub
+  badge="false"
+  badgebgcolor="ap-pink"
+  badgecolor="ap-white"
+  bordered="false"
+  classes="amelipro-pagination__btn"
+  color="ap-white"
+  disabled="false"
+  hovercolor="ap-blue-darken-1"
+  hoverunderline="false"
+  iconbgcolor="transparent"
+  iconbordered="false"
+  iconleft="false"
+  infoblock="false"
+  minheight="2.5rem"
+  size="60px"
+  text="false"
+  textcolor="ap-blue-darken-1"
+  texthovercolor="ap-white"
+  type="button"
+  underline="false"
+></amelipro-btn-stub>
+`;

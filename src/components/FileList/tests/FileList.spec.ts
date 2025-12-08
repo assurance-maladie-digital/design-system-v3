@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import FileList from '../FileList.vue'
-import { vuetify } from '@tests/unit/setup'
 import { locales } from '../UploadItem/locales'
 
 describe('FileList', () => {
@@ -20,9 +19,6 @@ describe('FileList', () => {
 						state: 'initial',
 					},
 				],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 		expect(wrapper.findAll('.file-item').length).toBe(2)
@@ -74,9 +70,6 @@ describe('FileList', () => {
 					},
 				],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const item1 = wrapper.findAll('.file-item').at(0)
@@ -125,9 +118,6 @@ describe('FileList', () => {
 			props: {
 				uploadList: [fileItem1, fileItem2],
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		const item1 = wrapper.findAll('.file-item').at(0)
@@ -161,9 +151,6 @@ describe('FileList', () => {
 						state: 'initial',
 					},
 				],
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

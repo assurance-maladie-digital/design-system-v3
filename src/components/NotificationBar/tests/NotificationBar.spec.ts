@@ -5,7 +5,6 @@ import NotificationBar from '../NotificationBar.vue'
 import { type Notification } from '@/components/NotificationBar/types'
 import { useNotificationService } from '@/services/NotificationService'
 import { nextTick, type Ref, ref } from 'vue'
-import { vuetify } from '@tests/unit/setup'
 import { VDefaultsProvider } from 'vuetify/components'
 
 vi.mock('@/services/NotificationService')
@@ -46,11 +45,7 @@ describe('NotificationBar.vue', () => {
 			timeout: -1,
 			icon: null,
 		}
-		const wrapper = mount(NotificationBar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NotificationBar)
 		wrapper.vm.openNotification(notification)
 		await nextTick()
 		expect(wrapper.vm.isNotificationVisible).toBe(true)
@@ -77,11 +72,7 @@ describe('NotificationBar.vue', () => {
 		})
 
 		// Setup component
-		mount(NotificationBar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		mount(NotificationBar)
 
 		// Call the clearQueue method
 		notificationServiceMock.clearQueue()
@@ -108,9 +99,6 @@ describe('NotificationBar.vue', () => {
 		}
 		const wrapper = shallowMount(NotificationBar, {
 			props: { notification },
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		wrapper.vm.openNotification(notification)
 
@@ -129,9 +117,6 @@ describe('NotificationBar.vue', () => {
 		}
 		const wrapper = mount(NotificationBar, {
 			props: { notification },
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		wrapper.vm.openNotification(notification)
 
@@ -160,11 +145,7 @@ describe('NotificationBar.vue', () => {
 		} as const satisfies Notification
 		notificationServiceMock.notificationQueue.value = [notification1, notification2]
 
-		const wrapper = mount(NotificationBar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NotificationBar)
 
 		wrapper.vm.showNextNotification()
 		await nextTick()
@@ -186,9 +167,6 @@ describe('NotificationBar.vue', () => {
 		}
 		const wrapper = mount(NotificationBar, {
 			props: { notification },
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		wrapper.vm.openNotification(notification)
 
@@ -207,9 +185,6 @@ describe('NotificationBar.vue', () => {
 		}
 		const wrapper = mount(NotificationBar, {
 			props: { notification },
-			global: {
-				plugins: [vuetify],
-			},
 			slots: {
 				action: '<div>Action Slot</div>',
 			},
@@ -230,9 +205,6 @@ describe('NotificationBar.vue', () => {
 		}
 		const wrapper = mount(NotificationBar, {
 			props: { notification },
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		wrapper.vm.openNotification(notification)
 
@@ -250,9 +222,6 @@ describe('NotificationBar.vue', () => {
 		}
 		const wrapper = mount(NotificationBar, {
 			props: { notification },
-			global: {
-				plugins: [vuetify],
-			},
 		})
 		wrapper.vm.openNotification(notification)
 
@@ -341,11 +310,7 @@ describe('NotificationBar.vue', () => {
 	it('should handle empty notification queue', async () => {
 		notificationServiceMock.notificationQueue.value = []
 
-		const wrapper = mount(NotificationBar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NotificationBar)
 
 		wrapper.vm.showNextNotification()
 
@@ -380,11 +345,7 @@ describe('NotificationBar.vue', () => {
 			icon: null,
 		}]
 
-		const wrapper = mount(NotificationBar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NotificationBar)
 
 		const provider = wrapper.findComponent(VDefaultsProvider)
 		expect(provider.element.parentElement.textContent).toContain('Test message')

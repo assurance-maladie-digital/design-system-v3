@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 import CookiesSelection from '../CookiesSelection.vue'
 
 const cookiesList = {
@@ -35,9 +34,6 @@ const cookiesList = {
 describe('CookiesSelection', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(CookiesSelection, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				items: cookiesList,
 			},
@@ -52,9 +48,6 @@ describe('CookiesSelection', () => {
 
 	it('sets global preferences', async () => {
 		const wrapper = mount(CookiesSelection, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: cookiesList,
 			},
@@ -84,9 +77,6 @@ describe('CookiesSelection', () => {
 
 	it('sets preferences for each category', async () => {
 		const wrapper = mount(CookiesSelection, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: cookiesList,
 			},
@@ -127,9 +117,6 @@ describe('CookiesSelection', () => {
 
 	it('requires all categories to be set', async () => {
 		const wrapper = mount(CookiesSelection, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: cookiesList,
 				modelValue: undefined,
@@ -164,9 +151,6 @@ describe('CookiesSelection', () => {
 
 	it('displays the cookie description as a scoped slot', () => {
 		const wrapper = mount(CookiesSelection, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				items: cookiesList,
 			},

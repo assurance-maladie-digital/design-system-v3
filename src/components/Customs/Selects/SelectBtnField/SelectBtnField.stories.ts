@@ -24,10 +24,20 @@ const meta = {
 		items: {
 			control: { Array },
 			default: [],
+			description: 'Liste des éléments sélectionnables',
+			table: {
+				type: { summary: 'SelectBtnItem[]' },
+			},
 		},
 		label: {
+			description: 'Valeur utilisée pour l’attribut aria-label, préfèrer l’utilisation de aria-labelledby pour respecter les impératifs d’accessibilité',
 			control: { type: 'text' },
-			default: null,
+			default: undefined,
+		},
+		ariaLabelledby: {
+			description: 'Identifiant (id) de l’élément qui étiquette ce champ',
+			control: { type: 'text' },
+			default: undefined,
 		},
 		multiple: {
 			control: { type: 'boolean' },
@@ -53,36 +63,6 @@ const meta = {
 			control: { type: 'boolean' },
 			default: false,
 		},
-		vuetifyOptions: {
-			control: { type: 'object' },
-			description: 'Options pour personnaliser les composants Vuetify utilisés en interne.',
-			table: {
-				type: {
-					summary: 'object',
-					detail: `{
-	btnToggle: 'VBtnToggle',
-	btn: 'VBtn',
-	spacer: 'VSpacer',
-	icon: 'VIcon'
-}`,
-				},
-				defaultValue: {
-					summary: 'config',
-					detail: ` {
-	btn: {
-		height: 'auto',
-		minHeight: '40px',
-		activeClass: 'text-white',
-		class: 'py-2 d-flex align-items-center',
-	},
-	icon: {
-		class: 'text-white flex-shrink-0 ml-1',
-	},
-}`,
-				},
-				category: 'props',
-			},
-		},
 	},
 } satisfies Meta<typeof SelectBtnField>
 
@@ -97,14 +77,15 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<div style="max-width: 400px">
+		<h2 id="contact-method">Choisissez votre moyen de contact :</h2>
 		<SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
 		/>
 	</div>
 </template>
-                `,
+				`,
 			},
 			{
 				name: 'Script',
@@ -149,7 +130,6 @@ export const Default: Story = {
 				value: 'sms',
 			},
 		],
-		label: 'Moyen de contact',
 		multiple: false,
 		inline: false,
 		hint: undefined,
@@ -165,6 +145,7 @@ export const Default: Story = {
 			},
 			template: `
 				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
                     <SelectBtnField
 						v-model="args.modelValue"
 						:items="args.items"
@@ -175,6 +156,7 @@ export const Default: Story = {
 						:error="args.error"
 						:error-messages="args.errorMessages"
 						:readonly="args.readonly"
+						aria-labelledby="contact-method"
 					/>
 				</div>
             `,
@@ -189,15 +171,16 @@ export const Multiple: Story = {
 				name: 'Template',
 				code: `<template>
 	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 	   <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
 			multiple
 		/>
 	</div>
 </template>
-                `,
+				`,
 			},
 			{
 				name: 'Script',
@@ -241,7 +224,6 @@ export const Multiple: Story = {
 				value: 'sms',
 			},
 		],
-		label: 'Moyen de contact',
 		multiple: true,
 	},
 	render: (args) => {
@@ -252,11 +234,12 @@ export const Multiple: Story = {
 			},
 			template: `
 			<div style="max-width: 400px">
+				<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 				<SelectBtnField
 					v-model="args.modelValue"
 					:items="args.items"
-					label="Moyen de contact"
 					:multiple="args.multiple"
+					aria-labelledby="contact-method"
 				/>
 			</div>
             `,
@@ -271,15 +254,16 @@ export const inline: Story = {
 				name: 'Template',
 				code: `<template>
 	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6" >Choisissez votre moyen de contact :</h2>
 	   <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
 			inline
 		/>
 	</div>
 </template>
-                `,
+				`,
 			},
 			{
 				name: 'Script',
@@ -323,7 +307,6 @@ export const inline: Story = {
 				value: 'sms',
 			},
 		],
-		label: 'Moyen de contact',
 		inline: true,
 	},
 	render: (args) => {
@@ -334,11 +317,12 @@ export const inline: Story = {
 			},
 			template: `
 				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="args.modelValue"
 						:items="args.items"
-						label="Moyen de contact"
 						:inline="args.inline"
+						aria-labelledby="contact-method"
 					/>
 				</div>
             `,
@@ -353,10 +337,11 @@ export const itemUnique: Story = {
 				name: 'Template',
 				code: `<template>
 	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 	   <SelectBtnField
 			v-model="args.modelValue"
 			:items="args.items"
-			label="Moyen de contact"
+			aria-labelledby="contact-method"
 			multiple
 		/>
 	</div>
@@ -384,10 +369,10 @@ export const itemUnique: Story = {
 			value: 'sms',
 		},
         {
-				text: 'Autre',
-				value: 'other',
-				unique: true
-			}
+			text: 'Autre',
+			value: 'other',
+			unique: true
+		}
 	]
 </script>
                 `,
@@ -415,7 +400,6 @@ export const itemUnique: Story = {
 				unique: true,
 			},
 		],
-		label: 'Moyen de contact',
 		multiple: true,
 	},
 	render: (args) => {
@@ -426,11 +410,12 @@ export const itemUnique: Story = {
 			},
 			template: `
 				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="args.modelValue"
 						:items="args.items"
-						label="Moyen de contact"
 						:multiple="args.multiple"
+						aria-labelledby="contact-method"
 					/>
 				</div>
             `,
@@ -445,15 +430,16 @@ export const messageAide: Story = {
 				name: 'Template',
 				code: `<template>
 	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 	   <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
 			hint="Par défaut, le moyen de contact est l’email."
 		/>
 	</div>
 </template>
-                `,
+				`,
 			},
 			{
 				name: 'Script',
@@ -497,7 +483,6 @@ export const messageAide: Story = {
 				value: 'sms',
 			},
 		],
-		label: 'Moyen de contact',
 		hint: 'Par défaut, le moyen de contact est l’email.',
 	},
 	render: (args) => {
@@ -508,10 +493,11 @@ export const messageAide: Story = {
 			},
 			template: `
 				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="args.modelValue"
 						:items="args.items"
-						label="Moyen de contact"
+						aria-labelledby="contact-method"
 						:hint="args.hint"
 					/>
 				</div>
@@ -527,11 +513,12 @@ export const erreur: Story = {
 				name: 'Template',
 				code: `<template>
 	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 		<SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
-			v-model:error="true"
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
+			v-model:error="error"
 		/>
 		<VBtn
 			color="primary"
@@ -542,14 +529,14 @@ export const erreur: Story = {
 		</VBtn>      
 	</div> 
 </template>
-                `,
+				`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-     import { SelectBtnField } from '@cnamts/synapse'
+    import { SelectBtnField } from '@cnamts/synapse'
     import { ref } from 'vue'
-		const value = ref([])
+	const value = ref([])
 	const error = ref(true)
 	const items = [
 		{
@@ -590,7 +577,6 @@ export const erreur: Story = {
 				value: 'sms',
 			},
 		],
-		label: 'Moyen de contact',
 		error: true,
 	},
 	render: (args) => {
@@ -608,10 +594,11 @@ export const erreur: Story = {
 			},
 			template: `
 				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="value"
 						:items="args.items"
-						label="Moyen de contact"
+						aria-labelledby="contact-method"
 						v-model:error="error"
 					/>
 					<VBtn
@@ -634,12 +621,13 @@ export const messageErreur: Story = {
 				name: 'Template',
 				code: `<template>
 	<div style="max-width: 400px">
-        <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
-			label="Moyen de contact"
-			v-model:error="true"
-		    v-model:error-messages="Le champ est requis."
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
+		<SelectBtnField
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
+			v-model:error="error"
+			v-model:error-messages="errorMessages"
 		/>
 		<VBtn
 			color="primary"
@@ -648,16 +636,16 @@ export const messageErreur: Story = {
 		>
 			Réinitialiser
 		</VBtn>       
-    </div>
+	</div>
 </template>
-            `,
+			`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
- import { SelectBtnField } from '@cnamts/synapse'
+import { SelectBtnField } from '@cnamts/synapse'
 import { ref } from 'vue'
-    const value = ref([])
+const value = ref([])
 const error = ref(true)
 const errorMessages = ref(['Le champ est requis.'])
 const items = [
@@ -702,7 +690,6 @@ const items = [
 				value: 'sms',
 			},
 		],
-		label: 'Moyen de contact',
 		error: true,
 		errorMessages: [
 			'Le champ est requis.',
@@ -725,10 +712,11 @@ const items = [
 			},
 			template: `
 				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="value"
 						:items="args.items"
-						label="Moyen de contact"
+						aria-labelledby="contact-method"
 						v-model:error="error"
 						v-model:error-messages="errorMessages"
 					/>
@@ -744,6 +732,90 @@ const items = [
 		}
 	},
 }
+
+export const readonly: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
+		<SelectBtnField
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
+			readonly
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	 import { SelectBtnField } from '@cnamts/synapse'
+	import { ref } from 'vue'
+	const value = ref(['email'])
+	const items = [
+		{
+			text: 'Email',
+			value: 'email',
+		},
+		{
+			text: 'Courrier',
+			value: 'courrier',
+		},
+		{
+			text: 'SMS',
+			value: 'sms',
+		},
+	]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: ['email'],
+		items: [
+			{
+				text: 'Email',
+				value: 'email',
+			},
+			{
+				text: 'Courrier',
+				value: 'courrier',
+			},
+			{
+				text: 'SMS',
+				value: 'sms',
+			},
+		],
+		label: 'Moyen de contact',
+		readonly: true,
+	},
+	render: (args) => {
+		return {
+			components: { SelectBtnField },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
+					<SelectBtnField
+						v-model="args.modelValue"
+						:items="args.items"
+						aria-labelledby="contact-method"
+						:readonly="args.readonly"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const Info: Story = {
 	render: (args) => {
 		return {

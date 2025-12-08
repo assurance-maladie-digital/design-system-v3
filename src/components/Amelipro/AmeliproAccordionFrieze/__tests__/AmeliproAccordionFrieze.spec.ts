@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
-import { vuetify } from '@tests/unit/setup'
 import AmeliproAccordionFrieze from '../AmeliproAccordionFrieze.vue'
 
 describe('AmeliproAccordionFrieze', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproAccordionFrieze, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				defaultOpenedAccordion: '1',
 				defaultSlide: 1,

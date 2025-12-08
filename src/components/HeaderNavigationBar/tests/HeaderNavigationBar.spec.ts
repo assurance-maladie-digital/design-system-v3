@@ -1,5 +1,4 @@
 import HeaderBurgerMenu from '@/components/HeaderBar/HeaderBurgerMenu/HeaderBurgerMenu.vue'
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import HeaderNavbar from '../HeaderNavigationBar.vue'
@@ -21,7 +20,6 @@ describe('HeaderNavigationBar', () => {
 
 		const wrapper = mount(HeaderNavbar, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 					RouterLink: true, // Stub pour éviter l'avertissement de résolution de composant
@@ -64,7 +62,6 @@ describe('HeaderNavigationBar', () => {
 
 		const wrapper = mount(HeaderNavbar, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 					RouterLink: true, // Stub pour éviter l'avertissement de résolution de composant
@@ -99,7 +96,6 @@ describe('HeaderNavigationBar', () => {
 
 		const wrapper = mount(HeaderNavbar, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 					RouterLink: true,

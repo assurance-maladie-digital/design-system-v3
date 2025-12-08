@@ -1,15 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import NumberPicker from '../NumberPicker.vue'
 
 describe('NumberPicker', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(NumberPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				label: 'Pourriez-vous donner une note ?',
 			},
@@ -25,11 +21,7 @@ describe('NumberPicker', () => {
 	})
 
 	it('emits an event when a number is selected', async () => {
-		const wrapper = mount(NumberPicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NumberPicker)
 
 		await wrapper.findAll('[role="radio"]')!.at(3)!.trigger('click')
 
@@ -38,9 +30,6 @@ describe('NumberPicker', () => {
 
 	it('change the displayed value when the modelValue is updated', async () => {
 		const wrapper = mount(NumberPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: 3,
 			},
@@ -59,11 +48,7 @@ describe('NumberPicker', () => {
 		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
 		window.happyDOM.setInnerWidth(600)
 
-		const wrapper = mount(NumberPicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NumberPicker)
 		await wrapper.vm.$nextTick()
 
 		const select = wrapper.find('.sy-select')

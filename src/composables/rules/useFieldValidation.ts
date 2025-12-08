@@ -171,7 +171,15 @@ export function useFieldValidation() {
 					)
 
 				case 'notWeekend': {
-					const dateValue = new Date(value)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+
+					const dateValue = parseDate(value)
+					if (!dateValue) {
+						return { error: 'Date invalide' }
+					}
+
 					return createValidationResult(
 						!(dateValue.getDay() === 0 || dateValue.getDay() === 6),
 						options.message || options.warningMessage || `${identifier} ne peut pas être un jour de weekend.`,
@@ -179,7 +187,15 @@ export function useFieldValidation() {
 				}
 
 				case 'notBeforeToday': {
-					const dateValue = new Date(value)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+
+					const dateValue = parseDate(value)
+					if (!dateValue) {
+						return { error: 'Date invalide' }
+					}
+
 					// Réinitialiser l'heure à minuit pour ne comparer que les dates
 					dateValue.setHours(0, 0, 0, 0)
 
@@ -194,7 +210,15 @@ export function useFieldValidation() {
 				}
 
 				case 'notAfterToday': {
-					const dateValue = new Date(value)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+
+					const dateValue = parseDate(value)
+					if (!dateValue) {
+						return { error: 'Date invalide' }
+					}
+
 					// Réinitialiser l'heure à minuit pour ne comparer que les dates
 					dateValue.setHours(0, 0, 0, 0)
 
@@ -209,11 +233,14 @@ export function useFieldValidation() {
 				}
 
 				case 'notBeforeDate': {
-					if (!options.date) {
+					if (typeof options.date === 'undefined') {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -242,11 +269,14 @@ export function useFieldValidation() {
 				}
 
 				case 'notAfterDate': {
-					if (!options.date) {
+					if (typeof options.date === 'undefined') {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -275,11 +305,14 @@ export function useFieldValidation() {
 				}
 
 				case 'dateExact': {
-					if (!options.date) {
+					if (typeof options.date === 'undefined') {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -313,7 +346,14 @@ export function useFieldValidation() {
 
 				case 'isHolidayDay': {
 					const { isHolidayDay } = useHolidayDay()
-					const dateValue = new Date(value)
+					if (value === null || value === undefined || value === '') {
+						return {}
+					}
+
+					const dateValue = parseDate(value)
+					if (!dateValue) {
+						return { error: 'Date invalide' }
+					}
 
 					return createValidationResult(
 						!isHolidayDay(dateValue),

@@ -31,7 +31,8 @@
 		:variant="buttonVariant"
 		:theme="buttonTheme"
 		:color="buttonColor"
-		:class="['sy-back-btn', 'text-none', buttonClasses, `bg-${buttonBgColor}`]"
+		:class="['sy-back-btn', 'text-none', buttonClasses]"
+		:style="{ backgroundColor: buttonBgColor }"
 	>
 		<slot name="icon">
 			<VIcon

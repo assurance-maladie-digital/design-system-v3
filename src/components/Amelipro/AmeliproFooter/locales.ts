@@ -5,7 +5,6 @@ export const locales = {
 	a11yLabel: (complianceLabel: string): string => `Accessibilité\xa0: ${complianceLabel}`,
 	aboutLabel: 'À propos',
 	cguLabel: 'CGU',
-	configurationLabel: 'Configuration',
 	contactLabel: 'Nous contacter',
 	imgSrc: imgUrl,
 	legalNoticeLabel: 'Mentions légales',

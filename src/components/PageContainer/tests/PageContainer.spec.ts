@@ -1,16 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import PageContainer from '../PageContainer.vue'
 
 describe('PageContainer', () => {
 	it('render correctly', async () => {
-		const wrapper = mount(PageContainer, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(PageContainer)
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
@@ -19,9 +14,6 @@ describe('PageContainer', () => {
 		const wrapper = mount(PageContainer, {
 			slots: {
 				default: 'slot content',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
@@ -33,9 +25,6 @@ describe('PageContainer', () => {
 			props: {
 				spacing: 'sm',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.vm.spacingClass).toBe('py-10 px-4')
@@ -45,9 +34,6 @@ describe('PageContainer', () => {
 		const wrapper = mount(PageContainer, {
 			props: {
 				size: 'md',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

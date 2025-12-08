@@ -1,5 +1,10 @@
 pnpm run lint:fix
 
+# Lint uniquement les fichiers modifiés dans le commit
+#files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|jsx|ts|tsx|vue)$' | tr '\n' ' ')
+#if [ -n "$files" ]; then
+#    pnpm exec eslint --fix $files
+#fi
 
 local_branch_name="$(git rev-parse --abbrev-ref HEAD)"
 

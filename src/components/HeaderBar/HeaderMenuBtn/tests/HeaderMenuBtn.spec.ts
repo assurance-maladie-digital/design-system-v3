@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import HeaderMenuBtn from '../HeaderMenuBtn.vue'
@@ -7,9 +6,6 @@ import locals from '../locals'
 describe('HeaderMenuBtn', () => {
 	it('should render the component', async () => {
 		const wrapper = mount(HeaderMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: false,
 			},
@@ -26,9 +22,6 @@ describe('HeaderMenuBtn', () => {
 
 	it('emit an event when the button is clicked', async () => {
 		const wrapper = mount(HeaderMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: false,
 			},
@@ -44,9 +37,6 @@ describe('HeaderMenuBtn', () => {
 
 	it('focus when the focus exposed function is called', async () => {
 		const wrapper = mount(HeaderMenuBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: false,
 			},

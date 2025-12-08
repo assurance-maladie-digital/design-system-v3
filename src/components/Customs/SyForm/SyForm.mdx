@@ -45,9 +45,7 @@ Vous pouvez implémenter des règles de validation personnalisées et accéder a
 
 ## Sans validation automatique
 
-Si vous souhaitez gérer vous-même la validation, vous pouvez désactiver la validation automatique.
-
-<Canvas of={SyFormStories.WithoutAutoValidation} />
+Si vous souhaitez gérer vous-même la validation, vous pouvez désactiver la validation automatique en passant `validate-on-submit="false"`.
 
 <Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport SyForm from "@cnamts/synapse"\nimport SyTextField from "@cnamts/synapse"\n\nconst name = ref("")\nconst email = ref("")\n\nconst onSubmit = () => {\n  // La validation ne se fait pas automatiquement\n  alert("Soumission du formulaire sans validation automatique. Vous devez gérer la validation manuellement.")\n}\n</script>\n\n<template>\n  <SyForm :validate-on-submit="false" @submit="onSubmit">\n    <div class="d-flex flex-column gap-4">\n      <SyTextField v-model="name" label="Nom" required />\n      <SyTextField v-model="email" label="Email" required :rules="[v => /.+@.+/.test(v) || \'E-mail invalide\']" />\n      <v-btn type="submit" color="primary">Soumettre</v-btn>\n    </div>\n  </SyForm>\n</template>'} />
 

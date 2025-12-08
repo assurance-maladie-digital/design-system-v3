@@ -1,7 +1,5 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-
-import { vuetify } from '@tests/unit/setup'
 import { registerSubMenuKey } from '../../conts'
 import HeaderSubMenu from '../HeaderSubMenu.vue'
 
@@ -18,7 +16,6 @@ describe('HeaderSubMenu', () => {
 				default: '<ul><li><a>Test 1</a></li></ul>',
 			},
 			global: {
-				plugins: [vuetify],
 				provide: {
 					[registerSubMenuKey]: registerSubMenu,
 				},
@@ -52,9 +49,6 @@ describe('HeaderSubMenu', () => {
 			slots: {
 				title: '<h2>Sub menu title</h2>',
 				default: '<ul><li><a>Test 1</a></li></ul>',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 

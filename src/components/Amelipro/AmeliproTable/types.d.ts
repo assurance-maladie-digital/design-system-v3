@@ -14,6 +14,17 @@ export interface AmeliproTableHeader {
 	width: string
 	maxWidth: string
 	descriptionId?: string
+	sort?: IHeaderSort
+}
+
+export interface ISortBtn {
+	label: string
+	disabled: boolean
+}
+
+export interface IHeaderSort {
+	ascendant?: ISortBtn
+	descendant?: ISortBtn
 }
 
 export interface AmeliproCurrentPage {

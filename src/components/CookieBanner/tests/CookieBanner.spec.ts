@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import CookieBanner from '../CookieBanner.vue'
-import { vuetify } from '@tests/unit/setup'
 describe('CookieBanner', () => {
 	it('renders correctly', () => {
-		const wrapper = mount(CookieBanner, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(CookieBanner)
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
@@ -19,7 +14,6 @@ describe('CookieBanner', () => {
 
 		const wrapper = mount(CookieBanner, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -33,7 +27,6 @@ describe('CookieBanner', () => {
 	it('emit a reject event when the reject btn is clicked', async () => {
 		const wrapper = mount(CookieBanner, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -48,7 +41,6 @@ describe('CookieBanner', () => {
 	it('emit a accept event when the accept btn is clicked', async () => {
 		const wrapper = mount(CookieBanner, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -63,7 +55,6 @@ describe('CookieBanner', () => {
 	it('does not close the dialog when the customize button is clicked and do not show the cookie form', async () => {
 		const wrapper = mount(CookieBanner, {
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},
@@ -111,7 +102,6 @@ describe('CookieBanner', () => {
 				},
 			},
 			global: {
-				plugins: [vuetify],
 				stubs: {
 					Teleport: true,
 				},

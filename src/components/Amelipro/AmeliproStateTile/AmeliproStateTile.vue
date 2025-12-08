@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed } from 'vue'
+	import { computed, type PropType } from 'vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import { AmeliproStateTileTypes } from './AmeliproStateTileTypes'
 	import type { IndexedObject } from '../types'
@@ -305,7 +305,10 @@
 	display: flex;
 	flex-direction: column;
 	background-color: apTokens.$ap-white;
-	white-space: normal;
+
+	& span {
+		white-space: normal;
+	}
 
 	&:hover {
 		& .amelipro-state-tile__pdf-download {

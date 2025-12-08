@@ -1,35 +1,20 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { indicatifs } from '../indicatifs'
 
-const vuetify = createVuetify({
-	components,
-	directives,
-})
 describe('PhoneField', () => {
 	afterEach(() => {
 		vi.clearAllMocks()
 		document.body.innerHTML = ''
 	})
 	it('renders correctly with default props', () => {
-		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(PhoneField)
 		expect(wrapper.exists()).toBe(true)
 	})
 
 	it('emits update:modelValue and change events on phone input', async () => {
-		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(PhoneField)
 		const input = wrapper.find('input')
 		await input.setValue('1234567890')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
@@ -38,9 +23,6 @@ describe('PhoneField', () => {
 
 	it('cleans spaces from phone number before validation', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				modelValue: '01 23 45 67 89',
@@ -55,9 +37,6 @@ describe('PhoneField', () => {
 
 	it('validates phone number and country code on blur', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				modelValue: '',
@@ -76,9 +55,6 @@ describe('PhoneField', () => {
 
 	it('applies default phone mask correctly', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: { modelValue: '0619123456' },
 		})
 		expect(wrapper.vm.computedValue).toBe('06 19 12 34 56')
@@ -86,9 +62,6 @@ describe('PhoneField', () => {
 
 	it('renders SySelect when withCountryCode is true', () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: { withCountryCode: true },
 		})
 		expect(wrapper.findComponent({ name: 'SySelect' }).exists()).toBe(true)
@@ -96,9 +69,6 @@ describe('PhoneField', () => {
 
 	it('validates country code when countryCodeRequired is true', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 				countryCodeRequired: true,
@@ -117,9 +87,6 @@ describe('PhoneField', () => {
 
 	it('updates phone mask and counter when dialCode changes', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: { withCountryCode: true },
 		})
 		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
@@ -130,9 +97,6 @@ describe('PhoneField', () => {
 
 	it('validates phone number with country code on blur', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				countryCodeRequired: true,
@@ -154,9 +118,6 @@ describe('PhoneField', () => {
 	it('uses only custom indicatifs when useCustomIndicatifsOnly is true', () => {
 		const customIndicatifs = [{ code: '+99', abbreviation: 'XX', country: 'Testland', phoneLength: 10 }]
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				useCustomIndicatifsOnly: true,
 				customIndicatifs,
@@ -168,9 +129,6 @@ describe('PhoneField', () => {
 
 	it('validates phone number with valid country code on blur', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				countryCodeRequired: true,
@@ -191,9 +149,6 @@ describe('PhoneField', () => {
 
 	it('renders VTextField with outlined variant when outlined prop is true', () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				outlined: true,
 			},
@@ -205,9 +160,6 @@ describe('PhoneField', () => {
 
 	it('renders VTextField with underlined variant when outlined prop is false', () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				outlined: false,
 			},
@@ -221,9 +173,6 @@ describe('PhoneField', () => {
 		const dialCodeModelValue = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
 
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 				dialCodeModel: dialCodeModelValue,
@@ -257,9 +206,6 @@ describe('PhoneField', () => {
 
 	it('formats phone number correctly', () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '0123456789',
 			},
@@ -270,9 +216,6 @@ describe('PhoneField', () => {
 
 	it('emits update:selectedDialCode when dialCode changes', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 			},
@@ -289,9 +232,6 @@ describe('PhoneField', () => {
 
 	it('validates phone number on submit', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				modelValue: '',
@@ -308,9 +248,6 @@ describe('PhoneField', () => {
 
 	it('validates phone number successfully on submit with valid input', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				modelValue: '0123456789',
@@ -324,11 +261,7 @@ describe('PhoneField', () => {
 	})
 
 	it('exposes necessary properties and methods', () => {
-		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(PhoneField)
 
 		expect(wrapper.vm.computedValue).toBeDefined()
 		expect(wrapper.vm.dialCode).toBeDefined()
@@ -343,9 +276,6 @@ describe('PhoneField', () => {
 
 	it('updates validation rules when counter changes', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 				modelValue: '0123456789',
@@ -362,9 +292,6 @@ describe('PhoneField', () => {
 
 	it('handles disabled state correctly', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				disabled: true,
 				withCountryCode: true,
@@ -380,9 +307,6 @@ describe('PhoneField', () => {
 
 	it('handles readonly state correctly', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				readonly: true,
 				withCountryCode: true,
@@ -398,9 +322,6 @@ describe('PhoneField', () => {
 
 	it('verifies SyTextField and SySelect props are correctly passed', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 				dialCodeModel: { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' },
@@ -424,9 +345,6 @@ describe('PhoneField', () => {
 
 	it('updates dialCode when dialCodeModel changes after mount', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 			},
@@ -469,9 +387,6 @@ describe('PhoneField', () => {
 		}
 
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 				dialCodeModel: indicatifSansDisplayText,
@@ -502,9 +417,6 @@ describe('PhoneField', () => {
 
 	it('should display helpText below by default when helpText is provided', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				required: true,
@@ -523,9 +435,6 @@ describe('PhoneField', () => {
 
 	it('should display helpText below even when field has valid value', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '01 23 45 67 89',
 				required: true,
@@ -543,9 +452,6 @@ describe('PhoneField', () => {
 
 	it('should not display helpText below when helpText is not provided', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				required: true,
@@ -565,9 +471,6 @@ describe('PhoneField', () => {
 
 	it('should apply default autocomplete attributes correctly', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				withCountryCode: true,
@@ -587,9 +490,6 @@ describe('PhoneField', () => {
 
 	it('should apply custom autocomplete attributes when provided', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				withCountryCode: true,
@@ -611,9 +511,6 @@ describe('PhoneField', () => {
 
 	it('should verify autocomplete attributes are present in the actual DOM', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				withCountryCode: true,
@@ -639,9 +536,6 @@ describe('PhoneField', () => {
 
 	it('should apply autocomplete to phone field only when no country code', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: '',
 				withCountryCode: false,
@@ -665,9 +559,6 @@ describe('PhoneField', () => {
 		expect(franceIndicatif).toBeDefined()
 
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				withCountryCode: true,
 				dialCodeModel: franceIndicatif,
@@ -698,9 +589,6 @@ describe('PhoneField', () => {
 
 	it('disables error handling when readonly is true', async () => {
 		const wrapper = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				modelValue: '',
@@ -716,9 +604,6 @@ describe('PhoneField', () => {
 
 		expect(wrapper.vm.hasError).toBe(false)
 		const wrapperNotReadonly = mount(PhoneField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				required: true,
 				modelValue: '',
@@ -739,9 +624,6 @@ describe('PhoneField', () => {
 
 		beforeEach(() => {
 			wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					withCountryCode: true,
 					displayFormat: 'code',
@@ -793,9 +675,6 @@ describe('PhoneField', () => {
 		it('initializes with a default dialCode object', async () => {
 			const defaultDialCode = { code: '+44', abbreviation: 'UK', country: 'United Kingdom', phoneLength: 11, mask: '#### ### ####' }
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					withCountryCode: true,
 					dialCodeModel: defaultDialCode,
@@ -816,9 +695,6 @@ describe('PhoneField', () => {
 
 		it('initializes with a default dialCode string', async () => {
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					withCountryCode: true,
 					dialCodeModel: '+33',
@@ -836,9 +712,6 @@ describe('PhoneField', () => {
 	describe('Error handling', () => {
 		it('displays error messages by default when validation fails', async () => {
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: '',
@@ -861,9 +734,6 @@ describe('PhoneField', () => {
 
 		it('initializes with disableErrorHandling prop', async () => {
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: '',
@@ -882,9 +752,6 @@ describe('PhoneField', () => {
 	describe('Form validation', () => {
 		it('validates as part of a form submission', async () => {
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: '',
@@ -903,9 +770,6 @@ describe('PhoneField', () => {
 
 		it('validates country code as part of form submission', async () => {
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					required: true,
 					modelValue: '0123456789',
@@ -932,9 +796,6 @@ describe('PhoneField', () => {
 		it('merges custom indicatifs with standard ones by default', () => {
 			const customIndicatifs = [{ code: '+999', abbreviation: 'XX', country: 'Test Country', phoneLength: 8, mask: '## ## ## ##' }]
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					customIndicatifs,
 					withCountryCode: true,
@@ -949,9 +810,6 @@ describe('PhoneField', () => {
 		it('uses only custom indicatifs when useCustomIndicatifsOnly is true', () => {
 			const customIndicatifs = [{ code: '+999', abbreviation: 'XX', country: 'Test Country', phoneLength: 8, mask: '## ## ## ##' }]
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					customIndicatifs,
 					useCustomIndicatifsOnly: true,
@@ -967,9 +825,6 @@ describe('PhoneField', () => {
 		it('updates phone mask and counter based on selected custom indicatif', async () => {
 			const customIndicatifs = [{ code: '+999', abbreviation: 'XX', country: 'Test Country', phoneLength: 8, mask: '## ## ## ##' }]
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					customIndicatifs,
 					withCountryCode: true,
@@ -989,9 +844,6 @@ describe('PhoneField', () => {
 	describe('Fieldset rendering', () => {
 		it('renders with fieldset and legend by default', () => {
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					// withoutFieldset par défaut est false
 				},
@@ -1010,9 +862,6 @@ describe('PhoneField', () => {
 
 		it('renders without fieldset and legend when withoutFieldset is true', () => {
 			const wrapper = mount(PhoneField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					withoutFieldset: true,
 				},

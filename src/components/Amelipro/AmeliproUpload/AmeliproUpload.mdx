@@ -1,0 +1,38 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+
+import * as AmeliproUploadStories from './AmeliproUpload.stories';
+
+<Meta of={AmeliproUploadStories} />
+
+# AmeliproUpload
+
+L’élément `AmeliproUpload` est utilisé pour transmettre des fichiers
+
+<Canvas of={AmeliproUploadStories.Default}  />
+
+## API
+
+<Controls of={AmeliproUploadStories.Default} />
+
+## Usages
+
+Les téléchargements comprennent les actions de chargement de fichiers sur amelipro et les services.
+Afin de faciliter la vie aux utilisateurs, nous préconisons l’utilisation du composant drag & drop (glisser-déposer) une fonctionnalité efficace et
+intuitive qui bénéficie de la puissance du Multi-Touch sur les appareils mobile, mais aussi agréable à utiliser quel que soit
+l’appareil.
+
+L’option glisser-déposer doit être assez compréhensible afin de ne pas perturber l’utilisateur. La zone de chargement des
+fichiers doit toujours afficher un texte d’aide pour expliquer l’interaction “glisser-déposer” et proposer une alternative
+plus conventionnelle pour réaliser le chargement (bouton).
+
+La gestion des fichiers chargés (possibilité de supprimer et de joindre un document à nouveau) ainsi que la gestion des
+erreurs doivent être clairs et guider l’utilisateur pendant la réalisation de la tâche. Par défaut le dernier document
+chargé est affiché en premier et en cas d’erreur, celle-ci doit s’afficher juste au-dessus des documents chargés.
+
+La hauteur de l’espace de chargement s’adapte en fonction du nombre de documents, cependant l’affichage est limité
+à 10 documents maximum.
+L’espace de chargement a un effet de survol lors du glissement des documents, pour aider les utilisateurs à mieux comprendre
+l’interaction. Informez sur le poids des fichiers ainsi que sur les formats possibles afin d’éviter les erreurs.
+
+
+

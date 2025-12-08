@@ -1,0 +1,145 @@
+import { Meta, Source } from '@storybook/blocks';
+
+<Meta title="Guide Du Dev/SyForm/Avec Vos Composants" />
+
+<div className="header">
+  <h1>Etendre le système à vos propres composants</h1>
+  <p>Vous pouvez facilement intégrer vos propres composants personnalisés au système de validation en cascade. Voici comment procéder :</p>
+</div>
+
+## Étendre le système à vos propres composants
+
+Vous pouvez facilement intégrer vos propres composants personnalisés au système de validation en cascade. Voici comment procéder :
+
+### 1. Importer le composable useValidatable
+
+<Source dark code={`
+// Dans votre composant personnalisé
+import { useValidatable } from '@cnamts/synapse'
+`} />
+
+### 2. Créer une méthode de validation
+
+<Source dark code={`
+// Définir une méthode qui retourne true si valide, false sinon
+const validateOnSubmit = () => {
+  // Votre logique de validation ici
+  if (props.required && !model.value) {
+    hasError.value = true
+    errorMessage.value = 'Ce champ est requis'
+    return false
+  }
+  
+  // Autres règles de validation
+  if (props.minLength && model.value.length < props.minLength) {
+    hasError.value = true
+    errorMessage.value = 'Longueur minimum non respectée'
+    return false
+  }
+  
+  // Si tout est valide
+  hasError.value = false
+  errorMessage.value = ''
+  return true
+}
+`} />
+
+### 3. Enregistrer le composant dans le système
+
+<Source dark code={`
+// Appeler useValidatable avec votre méthode de validation
+useValidatable(validateOnSubmit)
+
+// Exposer la méthode pour permettre les appels manuels
+defineExpose({
+  validateOnSubmit,
+  // autres méthodes et propriétés...
+})
+`} />
+
+### 4. Complet exemple d'implémentation
+
+<Source dark code={`
+<script setup lang="ts">
+
+const props = defineProps({
+  modelValue: [String, Number],
+  label: String,
+  required: Boolean,
+  disabled: Boolean,
+  // autres props...
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+// État local
+const hasError = ref(false)
+const errorMessage = ref('')
+
+// Modèle
+const model = computed({
+  get: () => props.modelValue,
+  set: (val) => emit('update:modelValue', val)
+})
+
+// Méthode de validation
+const validateOnSubmit = () => {
+  // Ne pas valider en mode readonly
+  if (props.disabled) return true
+  
+  // Validation de base
+  if (props.required && !model.value) {
+    hasError.value = true
+    errorMessage.value = 'Ce champ est requis'
+    return false
+  }
+  
+  // Réussite
+  hasError.value = false
+  errorMessage.value = ''
+  return true
+}
+
+// Intégration au système de validation
+useValidatable(validateOnSubmit)
+
+// Exposer les méthodes nécessaires
+defineExpose({
+  validateOnSubmit
+})
+</script>
+
+<template>
+  <div class="custom-field" :class="{ 'has-error': hasError }">
+    <label v-if="label">
+      {{ label }}
+      <span v-if="required" class="required-asterisk">*</span>
+    </label>
+    
+    <input
+      v-model="model"
+      :disabled="disabled"
+      :aria-required="required"
+      :aria-invalid="hasError"
+    />
+    
+    <div v-if="hasError" class="error-message" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+</template>
+`} />
+
+### 5. Utilisation dans un SyForm
+
+Une fois votre composant créé, il s'intégrera automatiquement dans n'importe quel `SyForm` :
+
+<Source dark code={`
+<template>
+  <SyForm @submit="onSubmit">
+    <MonComposantPersonnalise v-model="data.field1" required />
+    <SyTextField v-model="data.field2" required />
+    <v-btn type="submit">Soumettre</v-btn>
+  </SyForm>
+</template>
+`} />

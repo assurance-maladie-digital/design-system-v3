@@ -1,0 +1,318 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproFooter > Snapshots > renders the component with all properties filled in 1`] = `
+<footer
+  class="
+    amelipro-footer
+    bg-ap-blue-darken-2
+    d-block
+    justify-center
+    px-8
+    py-3
+    w-100
+  "
+  id="modified-unique-id-container"
+  role="contentinfo"
+  style="position: relative;"
+>
+  <div
+    class="
+      align-center
+      amelipro-footer__content
+      d-flex
+      justify-center
+    "
+    id="modified-unique-id-content"
+    style="width: 100%;"
+  >
+    <!-- v-if -->
+    <!-- v-if -->
+    <!-- v-if -->
+    <p
+      class="
+        amelipro-footer__backoffice-text
+        font-weight-bold
+        mb-0
+        text-ap-white
+        text-center
+      "
+      id="modified-unique-id-backoffice-text"
+    >
+      CNAM - Modified back office text - Version Modified version
+    </p>
+  </div>
+  <!-- v-if -->
+</footer>
+`;
+
+exports[`AmeliproFooter > Snapshots > renders the component with only required properties filled in 1`] = `
+<footer
+  class="
+    amelipro-footer
+    bg-ap-blue-darken-2
+    d-block
+    justify-center
+    px-8
+    py-3
+    w-100
+  "
+  role="contentinfo"
+  style="position: relative;"
+>
+  <div
+    class="
+      align-center
+      amelipro-footer__content
+      d-flex
+      flex-row
+      justify-space-between
+    "
+    style="width: 100%;"
+  >
+    <p class="
+      font-weight-bold
+      footer-version
+      mb-0
+      mr-4
+      text-ap-white
+      text-caption
+    ">
+      X.X.X
+    </p>
+    <div class="
+      amelipro-footer__contact
+      mr-4
+      mt-1
+    ">
+      <amelipro-btn-stub
+        badge="false"
+        badgebgcolor="ap-pink"
+        badgecolor="ap-white"
+        bordered="false"
+        class="
+          amelipro-footer__contact__link
+          text-ap-white
+          text-decoration-none
+        "
+        color="ap-blue-darken-1"
+        disabled="false"
+        hovercolor="ap-blue-darken-2"
+        hoverunderline="false"
+        href="tel:3608"
+        iconbgcolor="transparent"
+        iconbordered="false"
+        iconleft="false"
+        infoblock="false"
+        minheight="2.5rem"
+        size="60px"
+        text="true"
+        textcolor="ap-white"
+        type="button"
+        underline="false"
+      ></amelipro-btn-stub>
+    </div>
+    <ul class="
+      align-center
+      amelipro-footer__list
+      d-flex
+      flex-wrap
+      justify-end
+      list-style-none
+      mt-2
+      mt-sm-0
+    ">
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <amelipro-btn-stub
+          badge="false"
+          badgebgcolor="ap-pink"
+          badgecolor="ap-white"
+          bordered="false"
+          class="
+            amelipro-footer__site-map-btn
+            text-none
+          "
+          color="ap-white"
+          disabled="false"
+          hovercolor="ap-white"
+          hoverunderline="true"
+          iconbgcolor="transparent"
+          iconbordered="false"
+          iconleft="false"
+          infoblock="false"
+          minheight="2.5rem"
+          size="60px"
+          text="true"
+          textcolor="ap-white"
+          type="button"
+          underline="false"
+        ></amelipro-btn-stub>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <amelipro-btn-stub
+          badge="false"
+          badgebgcolor="ap-pink"
+          badgecolor="ap-white"
+          bordered="false"
+          class="
+            amelipro-footer__about-btn
+            text-none
+          "
+          color="ap-white"
+          disabled="false"
+          hovercolor="ap-white"
+          hoverunderline="true"
+          iconbgcolor="transparent"
+          iconbordered="false"
+          iconleft="false"
+          infoblock="false"
+          minheight="2.5rem"
+          size="60px"
+          text="true"
+          textcolor="ap-white"
+          type="button"
+          underline="false"
+        ></amelipro-btn-stub>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <amelipro-btn-stub
+          badge="false"
+          badgebgcolor="ap-pink"
+          badgecolor="ap-white"
+          bordered="false"
+          class="
+            amelipro-footer__config-btn
+            text-none
+          "
+          color="ap-white"
+          disabled="false"
+          hovercolor="ap-white"
+          hoverunderline="true"
+          iconbgcolor="transparent"
+          iconbordered="false"
+          iconleft="false"
+          infoblock="false"
+          minheight="2.5rem"
+          size="60px"
+          text="true"
+          textcolor="ap-white"
+          type="button"
+          underline="false"
+        ></amelipro-btn-stub>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <amelipro-btn-stub
+          badge="false"
+          badgebgcolor="ap-pink"
+          badgecolor="ap-white"
+          bordered="false"
+          class="
+            amelipro-footer__legal-notice-btn
+            text-none
+          "
+          color="ap-white"
+          disabled="false"
+          hovercolor="ap-white"
+          hoverunderline="true"
+          iconbgcolor="transparent"
+          iconbordered="false"
+          iconleft="false"
+          infoblock="false"
+          minheight="2.5rem"
+          size="60px"
+          text="true"
+          textcolor="ap-white"
+          type="button"
+          underline="false"
+        ></amelipro-btn-stub>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <amelipro-btn-stub
+          badge="false"
+          badgebgcolor="ap-pink"
+          badgecolor="ap-white"
+          bordered="false"
+          class="
+            amelipro-footer__cgu-btn
+            text-none
+          "
+          color="ap-white"
+          disabled="false"
+          hovercolor="ap-white"
+          hoverunderline="true"
+          iconbgcolor="transparent"
+          iconbordered="false"
+          iconleft="false"
+          infoblock="false"
+          minheight="2.5rem"
+          size="60px"
+          text="true"
+          textcolor="ap-white"
+          type="button"
+          underline="false"
+        ></amelipro-btn-stub>
+      </li>
+      <li class="
+        footer-list-item
+        pa-2
+      ">
+        <amelipro-btn-stub
+          badge="false"
+          badgebgcolor="ap-pink"
+          badgecolor="ap-white"
+          bordered="false"
+          class="
+            amelipro-footer__a11y-btn
+            text-none
+          "
+          color="ap-white"
+          disabled="false"
+          hovercolor="ap-white"
+          hoverunderline="true"
+          iconbgcolor="transparent"
+          iconbordered="false"
+          iconleft="false"
+          infoblock="false"
+          minheight="2.5rem"
+          size="60px"
+          text="true"
+          textcolor="ap-white"
+          type="button"
+          underline="false"
+        ></amelipro-btn-stub>
+      </li>
+    </ul>
+    <!-- v-if -->
+  </div>
+  <div class="
+    align-center
+    d-none
+    flex-column
+    footer-version--mobile
+  ">
+    <p class="
+      font-weight-bold
+      mb-0
+      mt-2
+      text-ap-white
+      text-caption
+    ">
+      X.X.X
+    </p>
+  </div>
+</footer>
+`;

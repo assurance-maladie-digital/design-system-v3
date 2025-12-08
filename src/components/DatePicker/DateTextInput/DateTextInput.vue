@@ -5,8 +5,8 @@
 		useDateFormatValidation,
 		useDateValidation,
 		useDateInputEditing,
-		useManualDateValidation,
 		useDateAutoClamp,
+		useDateTextField,
 	} from '../composables'
 	import { ref, computed, watch, nextTick, onMounted, toRefs } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
@@ -50,9 +50,11 @@
 		autoClamp?: boolean
 		isValidateOnBlur?: boolean
 		density?: 'default' | 'comfortable' | 'compact'
+		hint?: string
+		persistentHint?: boolean
 		externalErrorMessages?: string[]
 	}>(), {
-		modelValue: null,
+		modelValue: undefined,
 		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: undefined,
@@ -75,6 +77,8 @@
 		autoClamp: true,
 		isValidateOnBlur: true,
 		density: 'default',
+		hint: undefined,
+		persistentHint: false,
 		externalErrorMessages: () => [],
 	})
 
@@ -196,6 +200,9 @@
 	const inputValue = ref('')
 	const inputRef = ref<InstanceType<typeof SyTextField> | null>(null)
 	const isFormatting = ref(false)
+	// Force re-render of SyTextField when needed (e.g., after reset)
+	const fieldKey = ref(0)
+	const isValidating = ref(false)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
@@ -205,23 +212,6 @@
 		updateDisplayValue,
 		updateAriaLabel,
 		accessiblePlaceholders: true,
-	})
-
-	const { validateManualInput } = useManualDateValidation({
-		format: displayFormat.value,
-		required: required.value,
-		disableErrorHandling: props.disableErrorHandling,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		customRules: props.customRules as any,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		customWarningRules: props.customWarningRules as any,
-		hasInteracted,
-		errors,
-		clearValidation,
-		validateDateFormat: validateDateFormatForSingleOrRange,
-		isDateComplete: (val: string) => val.length >= displayFormat.value.length,
-		parseDate,
-		validateField: safeValidateField,
 	})
 
 	/**
@@ -519,19 +509,45 @@
 	 * Small helpers to DRY (Don't Repeat Yourself 🥸) logic
 	 * =====================
 	 */
-	function clampIfNeeded(raw: string): string {
-		if (!props.autoClamp || !raw) return raw
-		if (isRange.value && raw.includes(' - ')) {
-			const [rawStartDate = '', rawEndDate = ''] = raw.split(' - ').map(dateText => dateText.trim())
-			const startDateValidation = rawStartDate ? autoClampDate(rawStartDate, displayFormat.value) : { adjusted: false, clampedDate: rawStartDate }
-			const endDateValidation = rawEndDate ? autoClampDate(rawEndDate, displayFormat.value) : { adjusted: false, clampedDate: rawEndDate }
-			const formattedStartDate = startDateValidation.clampedDate || ''
-			const formattedEndDate = endDateValidation.clampedDate || ''
-			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : formattedStartDate
-		}
-		const dateValidationResult = autoClampDate(raw, displayFormat.value)
-		return dateValidationResult.clampedDate
-	}
+	const { clampIfNeeded, validateManualInput, validateOnSubmit, reset } = useDateTextField({
+		autoClamp: props.autoClamp,
+		isRange,
+		displayFormat,
+		autoClampDate,
+		manualValidation: {
+			required: required.value,
+			disableErrorHandling: props.disableErrorHandling,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			customRules: props.customRules as any,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			customWarningRules: props.customWarningRules as any,
+			hasInteracted,
+			errors,
+			clearValidation,
+			validateDateFormat: validateDateFormatForSingleOrRange,
+			isDateComplete: (val: string) => val.length >= displayFormat.value.length,
+			parseDate,
+			validateField: safeValidateField,
+		},
+		submit: {
+			isValidating,
+			hasInteracted,
+			inputValue,
+			runRules,
+		},
+		reset: {
+			clearValidation,
+			isFocused,
+			hasInteracted,
+			isDisabled: () => props.disabled,
+			fieldKey,
+			isFormatting,
+			inputValue,
+			selectedDates,
+			resetState,
+			emitModel,
+		},
+	})
 
 	function toReturnFormat(date: Date): string {
 		return formatDate(date, returnFormat.value)
@@ -684,6 +700,49 @@
 	 * =====================
 	 */
 	watch(inputValue, async (nv, ov) => {
+		if (props.disabled) {
+			const isEmpty = !nv || nv.trim() === '' || /^[_/\-.\s]+$/.test(nv)
+
+			if (isEmpty && ov && props.modelValue) {
+				isFormatting.value = true
+
+				const mv = props.modelValue
+
+				// --- RANGE ---
+				if (isRange.value && Array.isArray(mv) && mv.length === 2) {
+					const [start, end] = mv
+					const sd = parseDate(start, returnFormat.value)
+					const ed = parseDate(end, returnFormat.value)
+
+					if (sd && ed) {
+						initializeWithDates(sd, ed)
+						selectedDates.value = [sd, ed]
+						inputValue.value = formatRangeForDisplay(sd, ed)
+						runRules(inputValue.value)
+					}
+				}
+
+				// --- SINGLE ---
+				else {
+					const raw = typeof mv === 'string' ? mv : ''
+					const parsed = dayjs(raw, displayFormat.value, true)
+
+					if (parsed.isValid()) {
+						inputValue.value = parsed.format(displayFormat.value)
+						runRules(inputValue.value)
+					}
+					else {
+						inputValue.value = raw
+						runRules(raw)
+					}
+				}
+
+				isFormatting.value = false
+			}
+
+			return
+		}
+
 		// Prevent infinite loops but allow formatting
 		if (isFormatting.value || nv === ov || isHandlingBackspace.value || isBootstrapping.value) return
 		try {
@@ -865,7 +924,7 @@
 		}
 	})
 
-	watch(() => props.modelValue, (nv: DateValue) => {
+	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
 		if (!nv) {
 			inputValue.value = ''
@@ -931,20 +990,12 @@
 	})
 
 	/** expose */
-	const isValidating = ref(false)
-	function validateOnSubmit() {
-		isValidating.value = true
-		hasInteracted.value = true
-		const ok = runRules(inputValue.value)
-		if (!ok || hasError.value) return false
-		return !hasError.value
-	}
-
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		validateOnSubmit,
+		reset,
 		focus() {
 			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			el?.focus({ preventScroll: true })
@@ -998,6 +1049,7 @@
 
 <template>
 	<SyTextField
+		:key="fieldKey"
 		ref="inputRef"
 		v-model="inputValue"
 		:append-icon="props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined"
@@ -1024,7 +1076,9 @@
 		:aria-label="ariaLabel || props.placeholder"
 		:is-validate-on-blur="props.isValidateOnBlur"
 		:density="props.density"
-		:title="props.title || undefined"
+		:title="props.title || props.placeholder || undefined"
+		:hint="props.hint"
+		:persistent-hint="props.persistentHint"
 		@focus="onFocus"
 		@blur="onBlur"
 		@keydown="handleKeydown"

@@ -1,0 +1,89 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproDisclosure > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="
+    amelipro-disclosure
+    mb-3
+    w-100
+  "
+  id="modified-unique-id-container"
+>
+  <amelipro-btn-stub
+    aria-controls="modified-unique-id"
+    aria-expanded="false"
+    badge="false"
+    badgebgcolor="ap-pink"
+    badgecolor="ap-white"
+    bordered="false"
+    class="
+      amelipro-disclosure__btn
+      text-none
+    "
+    color="ap-blue-darken-1"
+    disabled="false"
+    hovercolor="ap-blue-darken-2"
+    hoverunderline="true"
+    iconbgcolor="transparent"
+    iconbordered="false"
+    iconleft="false"
+    infoblock="false"
+    minheight="2.5rem"
+    size="60px"
+    text="true"
+    textcolor="ap-white"
+    type="button"
+    underline="false"
+    uniqueid="modified-unique-id-open-close-btn"
+  ></amelipro-btn-stub>
+  <div
+    class="amelipro-disclosure__content"
+    id="modified-unique-id"
+    style="display: none;"
+  ></div>
+</div>
+`;
+
+exports[`AmeliproDisclosure > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class="
+    amelipro-disclosure
+    mb-3
+    w-100
+  "
+  id="required-unique-id-container"
+>
+  <amelipro-btn-stub
+    aria-controls="required-unique-id"
+    aria-expanded="false"
+    badge="false"
+    badgebgcolor="ap-pink"
+    badgecolor="ap-white"
+    bordered="false"
+    class="
+      amelipro-disclosure__btn
+      text-none
+    "
+    color="ap-blue-darken-1"
+    disabled="false"
+    hovercolor="ap-blue-darken-2"
+    hoverunderline="true"
+    iconbgcolor="transparent"
+    iconbordered="false"
+    iconleft="false"
+    infoblock="false"
+    minheight="2.5rem"
+    size="60px"
+    text="true"
+    textcolor="ap-white"
+    type="button"
+    underline="false"
+    uniqueid="required-unique-id-open-close-btn"
+  ></amelipro-btn-stub>
+  <div
+    class="amelipro-disclosure__content"
+    id="required-unique-id"
+    style="display: none;"
+  ></div>
+</div>
+`;

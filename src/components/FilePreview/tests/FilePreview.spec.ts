@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { VueWrapper, mount } from '@vue/test-utils'
 
 import FilePreview from '../FilePreview.vue'
-import { vuetify } from '@tests/unit/setup'
 import { locales } from '../locales'
 
 const testFileImg = {
@@ -23,11 +22,7 @@ describe('FilePreview', async () => {
 	global.URL.createObjectURL = vi.fn()
 
 	beforeEach(() => {
-		wrapper = mount(FilePreview, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		wrapper = mount(FilePreview)
 	})
 
 	it('renders correctly with an image', async () => {

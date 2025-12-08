@@ -1,0 +1,83 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproPagination > Snapshots > renders the component with all properties filled in 1`] = `
+<nav
+  aria-label="pagination"
+  class="
+    align-center
+    amelipro-pagination
+    d-flex
+    justify-center
+  "
+  id="modified-unique-id-container"
+>
+  <ol
+    class="
+      amelipro-pagination__list
+      d-flex
+      list-style-none
+    "
+    id="modified-unique-id-list"
+  >
+    <li class="amelipro-pagination__item">
+      <amelipro-pagination-btn-stub
+        isactive="false"
+        uniqueid="modified-unique-id-first"
+      ></amelipro-pagination-btn-stub>
+    </li>
+    <!-- v-if -->
+    <li class="amelipro-pagination__item">
+      <amelipro-pagination-btn-stub
+        isactive="true"
+        uniqueid="modified-unique-id-middle-0"
+      ></amelipro-pagination-btn-stub>
+    </li>
+    <li class="amelipro-pagination__item">
+      <amelipro-pagination-btn-stub
+        isactive="false"
+        uniqueid="modified-unique-id-middle-1"
+      ></amelipro-pagination-btn-stub>
+    </li>
+    <li class="amelipro-pagination__item">
+      <amelipro-pagination-btn-stub
+        isactive="false"
+        title="page suivante"
+        uniqueid="modified-unique-id-next"
+      ></amelipro-pagination-btn-stub>
+    </li>
+    <li class="amelipro-pagination__item">
+      <amelipro-pagination-btn-stub
+        isactive="false"
+        uniqueid="modified-unique-id-last"
+      ></amelipro-pagination-btn-stub>
+    </li>
+  </ol>
+</nav>
+`;
+
+exports[`AmeliproPagination > Snapshots > renders the component with only required properties filled in 1`] = `
+<nav
+  aria-label="pagination"
+  class="
+    align-center
+    amelipro-pagination
+    d-flex
+    justify-center
+  "
+>
+  <ol class="
+    amelipro-pagination__list
+    d-flex
+    list-style-none
+  ">
+    <li class="amelipro-pagination__item">
+      <amelipro-pagination-btn-stub isactive="true"></amelipro-pagination-btn-stub>
+    </li>
+    <!-- v-if -->
+    <!-- v-if -->
+    <li class="amelipro-pagination__item">
+      <amelipro-pagination-btn-stub isactive="false"></amelipro-pagination-btn-stub>
+    </li>
+  </ol>
+</nav>
+`;

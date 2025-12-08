@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, onMounted, onUpdated, ref, watch } from 'vue'
+	import { onMounted, onUpdated, type PropType, ref, watch } from 'vue'
 	import AmeliproAccordionTemplate from '../AmeliproAccordion/AmeliproAccordionTemplate/AmeliproAccordionTemplate.vue'
 	import AmeliproPagination from '../AmeliproPagination/AmeliproPagination.vue'
 	import AmeliproSelect from '../AmeliproSelect/AmeliproSelect.vue'
@@ -61,6 +61,10 @@
 			type: String,
 			default: 'Nb lignes/page',
 		},
+		sortSelectDefaultValue: {
+			type: [Number, String] as PropType<number | string>,
+			default: undefined,
+		},
 		sortSelectItems: {
 			type: Array as PropType<SelectItem[]>,
 			default: () => [],
@@ -105,11 +109,14 @@
 	} = usePagination(props.items, props.itemsToDisplayDesktop, props.itemsToDisplayMobile)
 
 	const paginationSelectModel = ref(itemToDisplay.value)
-	const sortSelectModel = ref()
+	const sortSelectModel = ref(props.sortSelectDefaultValue)
 
 	onMounted(() => {
 		if (props.defaultItemOpened !== null) {
-			openId.value = String(props.items[props.defaultItemOpened].id)
+			const item = props.items?.[props.defaultItemOpened]
+			if (item && item.id !== undefined && item.id !== null) {
+				openId.value = `accordion-result-${item.id}`
+			}
 		}
 		hideSelectLabel()
 		setDefaultItemsPerPage()
@@ -126,8 +133,10 @@
 		}
 	})
 
+	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select', 'open-close'])
 	const openClose = (id: number): void => {
 		openId.value = openId.value === String(id) ? null : String(id)
+		emit('open-close', id, openId.value)
 	}
 
 	const hideSelectLabel = (): void => {
@@ -137,7 +146,6 @@
 		}
 	}
 
-	const emit = defineEmits(['click', 'change:sort-select', 'change:pagination-select'])
 	const emitClickEvent = (newCurrentPage: number): void => {
 		emit('click')
 		if (newCurrentPage !== null && newCurrentPage !== undefined) {
@@ -161,6 +169,8 @@
 			currentPage.value = 1
 		}
 	}
+
+	watch(sortSelectModel, emitSortSelectChange, { immediate: true })
 
 	// Rendre publique la méthode openClose permet à un bouton ou à un composant externe de fermer/ouvrir l'accordéon
 	defineExpose({ openClose })

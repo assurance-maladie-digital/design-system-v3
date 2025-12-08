@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import SyTable from '../../SyTable/SyTable.vue'
@@ -71,9 +70,6 @@ describe('SyTable - filterByRange', () => {
 
 	it('filter by max date', async () => {
 		const wrapper = mount(SyTable, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				headers,
 				items,
@@ -104,9 +100,6 @@ describe('SyTable - filterByRange', () => {
 
 	it('filter by min date', async () => {
 		const wrapper = mount(SyTable, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				headers,
 				items,
@@ -137,9 +130,6 @@ describe('SyTable - filterByRange', () => {
 
 	it('filter by min and max date', async () => {
 		const wrapper = mount(SyTable, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				headers,
 				items,
@@ -173,9 +163,6 @@ describe('SyTable - filterByRange', () => {
 
 	it('updates the items when date changes', async () => {
 		const wrapper = mount(SyTable, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				headers,
 				items,

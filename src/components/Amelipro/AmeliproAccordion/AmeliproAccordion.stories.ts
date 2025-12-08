@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproAccordion from './AmeliproAccordion.vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	argTypes: {
@@ -26,10 +27,11 @@ type Story = StoryObj<typeof AmeliproAccordion>
 
 export const Default: Story = {
 	args: {
-		accordionTitle: 'Mon titre',
-		default: '[Slot: default]',
-		headerRight: '[Slot: headerRight]',
-		uniqueId: 'amelipro-accordion-unique-id',
+		'accordionTitle': 'Mon titre',
+		'default': '[Slot: default]',
+		'headerRight': '[Slot: headerRight]',
+		'uniqueId': 'amelipro-accordion-unique-id',
+		'onOpen-close': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -69,6 +71,7 @@ export const Default: Story = {
 <AmeliproAccordion
 	class="w-100"
 	v-bind="args"
+	@open-close="args['onOpen-close']"
 >
 	<template #default>
 		{{ args.default }}

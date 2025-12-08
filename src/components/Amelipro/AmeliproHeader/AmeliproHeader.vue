@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref, useSlots } from 'vue'
+	import { computed, type PropType, ref, useSlots } from 'vue'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproHeaderBar from './AmeliproHeaderBar/AmeliproHeaderBar.vue'
 	import type { AmeliproHeaderInfos } from './types'
@@ -122,9 +122,10 @@
 	const signatureInfos = computed(() => props.ameliproHeaderInfos?.signatureInfos || undefined)
 	const hasNotificationMenu = computed((): boolean => Boolean(slots.notificationMenu))
 
-	const emit = defineEmits(['back-btn-click'])
+	const emit = defineEmits(['back-btn-click', 'click-logo'])
 
 	const backBtnEvent = (): void => emit('back-btn-click')
+	const clickLogoEvent = (): void => emit('click-logo')
 
 	const logout = (): void => {
 		if (props.ameliproHeaderInfos?.userMenuInfos?.logout) {
@@ -183,6 +184,7 @@
 		style="z-index: 1;"
 		:theme-amelipro="(ameliproHeaderInfos && ameliproHeaderInfos.headerTitle) || headerTitle ? false : true"
 		:unique-id="uniqueId"
+		@click-logo="clickLogoEvent"
 	>
 		<template #default>
 			<slot
@@ -487,7 +489,6 @@
 :deep(.v-btn) {
 	&.text-service-title {
 		display: block;
-		white-space: unset;
 	}
 }
 </style>

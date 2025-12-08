@@ -51,6 +51,21 @@ Le composant permet de cacher ou réorganiser l'ordre des colonnes en utilisant 
 
 Le composant permet de sélectionner des lignes individuellement ou en masse. Vous pouvez activer la sélection en utilisant la prop `show-select`.
 
+Par défaut, la clé utilisée pour identifier chaque ligne lors de la sélection est `id`. Si vos éléments ne possèdent pas de propriété `id`, la valeur sélectionnée correspondra à l'objet complet de la ligne.
+
+Vous pouvez personnaliser cette clé avec la prop `selection-key` pour indiquer quel champ utiliser (ex: `userId`).
+
+Exemple d'utilisation :
+<Source dark code={`
+<SyServerTable
+  v-model="selected"
+  :items="users"
+  :headers="headers"
+  show-select
+  selection-key="userId"
+/>
+`}/>
+
 ### Slot item
 Le composant permet de personnaliser l'affichage des contenus en utilisant le slot `item`. Vous pouvez définir la structure de chaque contenu en fonction de vos besoins.
 

@@ -3,12 +3,16 @@ import { provide, inject, ref, type InjectionKey, type Ref } from 'vue'
 // Type pour les composants pouvant être validés
 export interface ValidatableComponent {
 	validateOnSubmit: () => Promise<boolean> | boolean
+	clearValidation?: () => void
+	reset?: () => void
 }
 
 // Clé d'injection pour le registre des composants validables
 const ValidatableComponentsKey: InjectionKey<{
 	register: (component: ValidatableComponent) => void
 	unregister: (component: ValidatableComponent) => void
+	clearAll: () => void
+	resetAll: () => void
 	components: Ref<ValidatableComponent[]>
 }> = Symbol('ValidatableComponents')
 
@@ -29,23 +33,55 @@ export function useFormValidation() {
 
 	// Fonction pour supprimer un composant validable du registre
 	const unregister = (component: ValidatableComponent) => {
-		const index = validatableComponents.value.indexOf(component)
+		// Prefer direct reference removal
+		let index = validatableComponents.value.indexOf(component)
+		// Fallback: locate by matching validateOnSubmit reference
+		if (index === -1) {
+			index = validatableComponents.value.findIndex(c => c.validateOnSubmit === component.validateOnSubmit)
+		}
 		if (index !== -1) {
 			validatableComponents.value.splice(index, 1)
 		}
+	}
+
+	// Fonction pour nettoyer les validations de tous les composants enregistrés
+	const clearAll = () => {
+		if (validatableComponents.value.length === 0) return
+		validatableComponents.value.forEach((component) => {
+			try {
+				component.clearValidation?.()
+			}
+			catch {
+				// no-op: un composant peut ne pas implémenter clearValidation
+			}
+		})
+	}
+
+	const resetAll = () => {
+		if (validatableComponents.value.length === 0) return
+		validatableComponents.value.forEach((component) => {
+			try {
+				component.reset?.()
+			}
+			catch {
+				// no-op: un composant peut ne pas implémenter reset
+			}
+		})
 	}
 
 	// Fournir le registre aux composants enfants
 	provide(ValidatableComponentsKey, {
 		register,
 		unregister,
+		clearAll,
+		resetAll,
 		components: validatableComponents,
 	})
 
 	/**
-	 * Valide tous les composants enfants enregistrés
-	 * @returns Promise<boolean> - true si tous les composants sont valides
-	 */
+     * Valide tous les composants enfants enregistrés
+     * @returns Promise<boolean> - true si tous les composants sont valides
+     */
 	const validateAll = async (): Promise<boolean> => {
 		if (validatableComponents.value.length === 0) {
 			return true
@@ -65,6 +101,8 @@ export function useFormValidation() {
 	return {
 		validateAll,
 		validatableComponents,
+		clearAll,
+		resetAll,
 	}
 }
 
@@ -73,19 +111,19 @@ export function useFormValidation() {
  * @returns Fonction pour s'enregistrer et se désinscrire du formulaire parent
  */
 export function useValidatableComponent() {
-	// Récupérer le registre du formulaire parent
 	const formRegistry = inject(ValidatableComponentsKey, null)
-
-	// Si le composant n'est pas dans un formulaire avec useFormValidation, ne rien faire
 	if (!formRegistry) {
 		return {
 			register: () => {},
 			unregister: () => {},
+			clearAll: () => {},
+			resetAll: () => {},
 		}
 	}
-
 	return {
 		register: formRegistry.register,
 		unregister: formRegistry.unregister,
+		clearAll: formRegistry.clearAll,
+		resetAll: formRegistry.resetAll,
 	}
 }

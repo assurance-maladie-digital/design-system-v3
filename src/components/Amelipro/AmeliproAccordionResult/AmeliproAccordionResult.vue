@@ -29,10 +29,12 @@
 		},
 	})
 
+	const emit = defineEmits(['open-close'])
 	const opened = ref(props.isOpen)
 
 	const openClose = (): void => {
 		opened.value = !opened.value
+		emit('open-close', props.uniqueId, opened.value)
 	}
 
 	// Rendre publique la méthode openClose permet à un bouton ou à un composant externe de fermer/ouvrir l'accordéon

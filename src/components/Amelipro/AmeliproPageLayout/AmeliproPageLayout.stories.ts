@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproPageLayout from './AmeliproPageLayout.vue'
+import { fn } from '@storybook/test'
 
 const meta = {
 	argTypes: {
@@ -125,6 +126,7 @@ const meta = {
 		configurationTarget?: string;
 		configurationTo?: RouteLocationRaw;
 		configurationHref?: string;
+		configurationLabel?: string;
 		noLegalNotice?: boolean;
 		legalNoticeTarget?: string;
 		legalNoticeTo?: RouteLocationRaw;
@@ -163,6 +165,7 @@ const meta = {
 			},
 		},
 		'back-btn-click': { description: 'Événement émis lorsque l’utilisateur clique sur le bouton retour présent dans le header.', type: 'void' },
+		'click-logo': { description: 'Evénement émit au click sur le logo, utilisable si les properties `homeHref` et `homeLink` ne sont pas définies sur le header et que le slot `header` n\'est pas utilisé' },
 		'click:patient-change': { description: 'Événement émis au clic sur le bouton changer de patient dans le bandeau patient.', type: 'void' },
 		'customMainContent': { description: 'Permet de personnaliser la partie contenu principal pour les page différentes du format classique' },
 		'footer': { description: 'Slot pour ajouter le footer.' },
@@ -446,13 +449,15 @@ const ameliproFooterInfos = {
 
 export const Default: Story = {
 	args: {
-		ameliproPageLayoutInfos: {
+		'ameliproPageLayoutInfos': {
 			ameliproFooterInfos,
 			ameliproHeaderInfos,
 			ameliproPatientBannerInfos,
 			displayPatientBanner: true,
 		},
-		uniqueId: 'amelipro-page-layout-id',
+		'uniqueId': 'amelipro-page-layout-id',
+		'onClick-logo': fn(),
+		'onBack-btn-click': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -740,6 +745,8 @@ export const Default: Story = {
 		template: `
 			<AmeliproPageLayout
 				v-bind="args"
+				@click-logo="args['onClick-logo']"
+				@back-btn-click="args['onBack-btn-click']"
 			/>
 		`,
 	}),

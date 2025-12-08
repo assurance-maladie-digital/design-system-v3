@@ -2,7 +2,6 @@ import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 import BackToTopBtn from '../BackToTopBtn.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('BackToTopBtn', () => {
 	afterEach(() => {
@@ -11,20 +10,13 @@ describe('BackToTopBtn', () => {
 	})
 
 	it('renders correctly', () => {
-		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(BackToTopBtn)
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders correctly when nudgeBottom and nudgeRight are set to invalid values', () => {
 		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				nudgeBottom: '',
 				nudgeRight: '',
@@ -39,9 +31,6 @@ describe('BackToTopBtn', () => {
 		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
 
 		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -76,9 +65,6 @@ describe('BackToTopBtn', () => {
 			props: {
 				target: 'test-target',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -106,9 +92,6 @@ describe('BackToTopBtn', () => {
 		vi.spyOn(window, 'scrollY', 'get').mockReturnValue(0)
 
 		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			attachTo: document.body,
 		})
 
@@ -138,11 +121,7 @@ describe('BackToTopBtn', () => {
 	})
 
 	it('scrolls to the top when the button is clicked', async () => {
-		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(BackToTopBtn)
 
 		const scrollToSpy = vi
 			.spyOn(window, 'scrollTo')
@@ -155,9 +134,6 @@ describe('BackToTopBtn', () => {
 
 	it('scrolls to the top when the button is clicked and the target is a custom element', async () => {
 		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				target: 'test',
 			},
@@ -176,9 +152,6 @@ describe('BackToTopBtn', () => {
 
 	it('scrolls to the top when the button is clicked and the target is a custom element that does not exist', async () => {
 		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				target: 'test',
 			},
@@ -196,11 +169,7 @@ describe('BackToTopBtn', () => {
 	})
 
 	it('remove the scroll event listener when the component is destroyed', async () => {
-		const wrapper = mount(BackToTopBtn, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(BackToTopBtn)
 
 		const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener')
 

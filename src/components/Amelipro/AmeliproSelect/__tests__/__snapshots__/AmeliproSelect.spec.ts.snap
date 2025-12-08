@@ -1,0 +1,117 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproSelect > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="modified-classes"
+  id="modified-unique-id-container"
+  style="
+    margin-bottom: 12px;
+    max-width: modified-global-max-width;
+    min-width: modified-global-min-width;
+  "
+>
+  <div class="
+    amelipro-select__wrapper
+    d-flex
+    flex-column
+    flex-md-row
+    w-100
+  ">
+    <div class="
+      align-baseline
+      d-inline-flex
+      mb-1
+      mr-md-2
+      mt-md-2
+    ">
+      <label
+        class="
+          amelipro-select__label
+          mr-2
+        "
+        for="modified-unique-id"
+        id="modified-unique-id-label"
+        style="
+          max-width: modified-label-max-width;
+          min-width: modified-label-min-width;
+        "
+      >
+        Modified label
+        <span>
+          <span aria-hidden="true">
+            &nbsp;*
+          </span>
+          <span class="d-sr-only">
+            &nbsp;Champ obligatoire
+          </span>
+        </span>
+      </label>
+    </div>
+    <div
+      aria-required="true"
+      bg-color="ap-grey-lighten-2"
+      class="
+        amelipro-select
+        pt-0
+        v-select-stub
+      "
+      color="ap-blue-darken-1"
+      density="compact"
+      item-props="true"
+      style="
+        max-width: modified-input-max-width;
+        min-width: modified-input-min-width;
+      "
+      variant="outlined"
+    ></div>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproSelect > Snapshots > renders the component with only required properties filled in 1`] = `
+<div
+  class=""
+  id="required-unique-id-container"
+  style="margin-bottom: 12px;"
+>
+  <div class="
+    amelipro-select__wrapper
+    d-flex
+    flex-column
+    w-100
+  ">
+    <div class="
+      align-baseline
+      d-inline-flex
+      mb-1
+    ">
+      <label
+        class="
+          amelipro-select__label
+          mr-2
+        "
+        for="required-unique-id"
+        id="required-unique-id-label"
+      >
+        Required label
+        <!-- v-if -->
+      </label>
+    </div>
+    <div
+      aria-required="false"
+      bg-color="ap-white"
+      class="
+        amelipro-select
+        pt-0
+        v-select-stub
+      "
+      color="ap-blue-darken-1"
+      density="compact"
+      item-props="true"
+      variant="outlined"
+    ></div>
+  </div>
+  <!-- v-if -->
+</div>
+`;

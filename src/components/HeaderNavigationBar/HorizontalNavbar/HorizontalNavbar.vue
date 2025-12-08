@@ -47,8 +47,11 @@
 	const route = instance?.appContext.config.globalProperties.$route as RouteLocationNormalizedLoaded | null || null
 	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
 
-	// État pour suivre l'élément actif
-	const activeTab = ref<number>(0)
+	// Chemin courant réactif (prend router.currentRoute si dispo)
+	const currentPath = computed<string | null>(() => router?.currentRoute?.value?.path ?? route?.path ?? (typeof window !== 'undefined' ? window.location.pathname : null))
+
+	// État pour suivre l'élément actif (-1 signifie aucun onglet actif)
+	const activeTab = ref<number>(-1)
 	const activeItemIndex = ref<number>(-1)
 
 	// Convertir les items de navigation en format TabItem pour SyTabs
@@ -71,18 +74,16 @@
 			return false
 		}
 
-		// Si l'élément est explicitement activé par un clic ou initialisé
-		if (activeItemIndex.value === index) {
-			return true
-		}
+		// Ne pas court-circuiter sur l'état interne; recalculer toujours à partir de la route courante
 
 		// Pour les liens internes (router-link)
-		if (item.to && route) {
+		const pathNow = currentPath.value
+		if (item.to && pathNow) {
 			// Gestion des objets de route
 			if (typeof item.to === 'object') {
 				// Comparer avec le chemin de la route actuelle
 				const path = item.to.path || ''
-				const isActiveRoute = route.path === path
+				const isActiveRoute = pathNow === path
 				if (isActiveRoute) activeItemIndex.value = index
 				return isActiveRoute
 			}
@@ -90,7 +91,7 @@
 			// Gestion des chaînes de caractères
 			if (typeof item.to === 'string') {
 				// Comparer exactement ou vérifier si c'est un sous-chemin
-				const isActiveRoute = route.path === item.to || (item.to !== '/' && route.path.startsWith(item.to))
+				const isActiveRoute = pathNow === item.to || (item.to !== '/' && pathNow.startsWith(item.to))
 				if (isActiveRoute) activeItemIndex.value = index
 				return isActiveRoute
 			}
@@ -174,10 +175,10 @@
 			}
 		}
 
-		// Si aucun élément n'est actif, sélectionner le premier par défaut
-		if (!foundActiveItem && props.items.length > 0) {
-			activeItemIndex.value = 0
-			activeTab.value = 0
+		// Si aucun élément n'est actif, aucun onglet ne doit être sélectionné
+		if (!foundActiveItem) {
+			activeItemIndex.value = -1
+			activeTab.value = -1
 		}
 
 		return { activeTab: activeTab.value, activeItemIndex: activeItemIndex.value }
@@ -189,20 +190,26 @@
 	})
 
 	// Surveiller les changements de route pour mettre à jour l'élément actif
-	watch(() => route?.path, () => {
+	watch(() => currentPath.value, () => {
 		// Si route est undefined, ne rien faire
-		if (!route) return
+		if (!currentPath.value) return
 		if (Array.isArray(props.items)) {
 			// Reset activeItemIndex
 			activeItemIndex.value = -1
 
 			// Trouver l'élément actif basé sur la nouvelle route
+			let found = false
 			for (let i = 0; i < props.items.length; i++) {
 				if (isActive(props.items[i], i)) {
 					activeItemIndex.value = i
 					activeTab.value = i
+					found = true
 					break
 				}
+			}
+			if (!found) {
+				activeItemIndex.value = -1
+				activeTab.value = -1
 			}
 		}
 	})

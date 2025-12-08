@@ -21,6 +21,7 @@ const meta = {
 		'click-phone': { description: 'Événement émis au click sur le bouton contact si phoneLink est à false' },
 		'config-event': { description: 'Événement émis au click sur le bouton configuration', type: 'void' },
 		'configurationHref': { description: 'Href du bouton configuration' },
+		'configurationLabel': { description: 'Libellé du bouton configuration' },
 		'configurationTarget': { description: 'Target du bouton configuration (seulement si configurationHref est renseigné)' },
 		'configurationTo': { description: 'Route du bouton configuration' },
 		'legal-notice-event': { description: 'Événement émis au click sur le bouton mentions légales', type: 'void' },

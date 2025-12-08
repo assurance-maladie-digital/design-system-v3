@@ -1,0 +1,117 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UserMenuDetails > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="user-menu-details"
+  id="modified-unique-id-container"
+>
+  <p
+    class="
+      font-weight-bold
+      mb-0
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__name
+    "
+    id="modified-unique-id-user-name"
+  >
+    Modified user name
+  </p>
+  <p
+    class="
+      font-weight-bold
+      mb-0
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__profil
+    "
+    id="modified-unique-id-profile"
+  >
+    Modified profil
+  </p>
+  <p
+    class="
+      font-weight-bold
+      mb-0
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__denomination
+    "
+    id="modified-unique-id-denomination"
+  >
+    Modified denomination
+  </p>
+  <p
+    class="
+      mb-0
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__rpps
+    "
+    id="modified-unique-id-rpps"
+  >
+    N° RPPS : modified-rpps
+  </p>
+  <p
+    class="
+      mb-0
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__adeli
+    "
+    id="modified-unique-id-adeli"
+  >
+    N° ADELI : modified-adeli
+  </p>
+  <p
+    class="
+      mb-0
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__am
+    "
+    id="modified-unique-id-am"
+  >
+    N° AM : modified-am
+  </p>
+  <p
+    class="
+      mb-0
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__finess
+    "
+    id="modified-unique-id-finess"
+  >
+    N° FINESS : modified-finess
+  </p>
+  <p
+    class="
+      mb-2
+      text-ap-grey-darken-1
+      text-body-2
+      user-menu-details__mail
+    "
+    id="modified-unique-id-email"
+  >
+    modified-email@test.fr
+  </p>
+  <p
+    class="mb-0"
+    id="modified-unique-id-address-line-1"
+  >
+    12
+    bis
+    rue
+    de la Paix
+  </p>
+  <p
+    class="mb-0"
+    id="modified-unique-id-address-line-2"
+  >
+    75001 Paris
+  </p>
+</div>
+`;
+
+exports[`UserMenuDetails > Snapshots > renders the component with only required properties filled in 1`] = `<!-- v-if -->`;

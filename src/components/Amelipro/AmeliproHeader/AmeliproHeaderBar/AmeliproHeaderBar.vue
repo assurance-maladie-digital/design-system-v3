@@ -53,6 +53,8 @@
 	const slots = useSlots()
 	const showNavigationBar = computed((): boolean => Boolean(slots['navigation-bar-content']))
 	const showSpacer = computed((): boolean => (Boolean(slots.default) || isMobileVersion.value))
+	const emit = defineEmits(['click-logo'])
+	const clickLogoEvent = (): void => emit('click-logo')
 </script>
 
 <template>
@@ -81,6 +83,7 @@
 						:service-title="serviceTitle"
 						:theme-amelipro="themeAmelipro"
 						:unique-id="uniqueId ? `${uniqueId}-brand-section` : undefined"
+						@click-logo="clickLogoEvent"
 					/>
 
 					<VSpacer

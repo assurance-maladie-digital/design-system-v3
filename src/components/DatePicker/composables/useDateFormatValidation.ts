@@ -2,6 +2,7 @@ import { computed, type Ref } from 'vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { useDateFormatDisplay } from './useDateFormatDisplay'
 
 // Initialiser le plugin dayjs nécessaire pour la validation des formats de date
 dayjs.extend(customParseFormat)
@@ -25,6 +26,8 @@ export const useDateFormatValidation = (options: {
 	disableErrorHandling?: boolean
 }) => {
 	const { format, dateFormatReturn, required = false, hasInteracted, disableErrorHandling = false } = options
+	const { getDisplayFormat } = useDateFormatDisplay()
+	const displayFormat = getDisplayFormat(format)
 
 	/**
    * Valide le format d'une chaîne de date
@@ -43,7 +46,7 @@ export const useDateFormatValidation = (options: {
 		if (!/^[\d/.-]*$/.test(dateStr)) {
 			return {
 				isValid: disableErrorHandling,
-				message: disableErrorHandling ? '' : `Format de date invalide (${format})`,
+				message: disableErrorHandling ? '' : `Format de date invalide (${displayFormat})`,
 			}
 		}
 
@@ -53,7 +56,7 @@ export const useDateFormatValidation = (options: {
 		if (!isValid) {
 			return {
 				isValid: disableErrorHandling,
-				message: disableErrorHandling ? '' : `Format de date invalide (${format})`,
+				message: disableErrorHandling ? '' : `Format de date invalide (${displayFormat})`,
 			}
 		}
 

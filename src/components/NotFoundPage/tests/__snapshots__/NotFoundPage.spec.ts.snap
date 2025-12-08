@@ -112,7 +112,9 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
             Page non trouvée
           </h1>
           <p>
-            Cette page n’existe pas ou a été déplacée.
+            <span>
+              Cette page n’existe pas ou a été déplacée.
+            </span>
           </p>
           <p class="mt-4">
             Votre identifiant de support est
@@ -257,7 +259,9 @@ exports[`NotFoundPage > renders correctly 1`] = `
             Page non trouvée
           </h1>
           <p>
-            Cette page n’existe pas ou a été déplacée.
+            <span>
+              Cette page n’existe pas ou a été déplacée.
+            </span>
           </p>
           <!-- v-if -->
         </div>

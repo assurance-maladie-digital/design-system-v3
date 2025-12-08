@@ -1,17 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-
-import { vuetify } from '@tests/unit/setup'
 import { locales } from '../locales'
 import NotFoundPage from '../NotFoundPage.vue'
 
 describe('NotFoundPage', () => {
 	it('renders correctly', () => {
-		const wrapper = mount(NotFoundPage, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NotFoundPage)
 
 		expect(wrapper.text()).toContain(locales.code)
 		expect(wrapper.text()).toContain(locales.message)
@@ -24,11 +18,7 @@ describe('NotFoundPage', () => {
 			'',
 			'/not-found?support_id=1234567890123456789',
 		)
-		const wrapper = mount(NotFoundPage, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(NotFoundPage)
 
 		await wrapper.vm.$nextTick()
 

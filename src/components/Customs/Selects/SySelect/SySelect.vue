@@ -3,8 +3,8 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiInformation, mdiMenuDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, onMounted, computed, nextTick, type PropType } from 'vue'
+	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
+	import { ref, watch, watchEffect, onMounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -138,6 +138,7 @@
 	const labelRef = ref<HTMLElement | null>(null)
 	const list = ref<VList | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
+	const htmlItemRefs = ref<HTMLElement[]>([])
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
@@ -297,6 +298,23 @@
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		return (item as Record<string, any>)[props.textKey]
 	}
+
+	watchEffect(() => {
+		if (!props.allowHtml) {
+			return
+		}
+
+		htmlItemRefs.value.forEach((el, index) => {
+			const item = formattedItems.value[index]
+			if (!el || !item) {
+				return
+			}
+
+			// getItemText already returns the correct HTML string for the item
+			// We assign it to innerHTML to preserve the previous rendering behavior
+			el.innerHTML = String(getItemText(item) ?? '')
+		})
+	})
 
 	const getPlainItemText = (item: unknown) => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -816,7 +834,7 @@
 						v-if="hasError"
 						class="mr-6"
 						color="error"
-						:icon="mdiInformation"
+						:icon="mdiAlertCircle"
 						:decorative="false"
 						label="Information"
 						role="img"
@@ -839,7 +857,7 @@
 					</button>
 					<SyIcon
 						class="arrow"
-						:icon="mdiMenuDown"
+						:icon="mdiChevronDown"
 						:decorative="true"
 					/>
 				</template>
@@ -904,8 +922,8 @@
 				<VListItemTitle>
 					<span
 						v-if="allowHtml"
+						ref="htmlItemRefs"
 						class="item-text"
-						v-html="getItemText(item)"
 					/>
 					<span
 						v-else

@@ -1,14 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { expect, describe, it } from 'vitest'
 import HeaderToolbar from '../HeaderToolbar.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('HeaderToolbar', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				leftMenu: [
 					{
@@ -33,9 +29,6 @@ describe('HeaderToolbar', () => {
 
 	it('returns a link component with href', () => {
 		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				leftMenu: [
 					{
@@ -52,9 +45,6 @@ describe('HeaderToolbar', () => {
 
 	it('returns a link component with to', () => {
 		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				leftMenu: [
 					{
@@ -70,22 +60,14 @@ describe('HeaderToolbar', () => {
 	})
 
 	it('hides the overlay', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(HeaderToolbar)
 
 		await wrapper.vm.hideOverlay()
 		expect(wrapper.vm.showOverlay).toBe(false)
 	})
 
 	it('toggles the overlay when handleLink is called', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(HeaderToolbar)
 
 		await wrapper.vm.handleLink(1)
 		expect(wrapper.vm.showOverlay).toBe(true)
@@ -95,22 +77,14 @@ describe('HeaderToolbar', () => {
 	})
 
 	it('sets the active link correctly', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(HeaderToolbar)
 
 		await wrapper.vm.checkActiveLink(1)
 		expect(wrapper.vm.activeIndex).toBe(1)
 	})
 
 	it('should set showOverlay to true when handleLink is called', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(HeaderToolbar)
 
 		await wrapper.vm.handleLink(1)
 		await wrapper.vm.checkActiveLink(1)
@@ -120,11 +94,7 @@ describe('HeaderToolbar', () => {
 	})
 
 	it('hides the overlay when hideOverlay is called', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(HeaderToolbar)
 
 		wrapper.vm.showOverlay = true
 		await wrapper.vm.hideOverlay()
@@ -133,11 +103,7 @@ describe('HeaderToolbar', () => {
 	})
 
 	it('should set showOverlay to false when handleLink is called', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(HeaderToolbar)
 
 		await wrapper.vm.handleLink(0)
 		await wrapper.vm.checkActiveLink(0)
@@ -148,9 +114,6 @@ describe('HeaderToolbar', () => {
 
 	it('should set highlightMenu to false when handleLink is called', async () => {
 		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				leftMenu: [
 					{
@@ -183,11 +146,7 @@ describe('HeaderToolbar', () => {
 	})
 
 	it('should set activeIndex to -1 when deleteActiveLink is called', async () => {
-		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(HeaderToolbar)
 
 		await wrapper.vm.deleteActiveLink()
 
@@ -196,9 +155,6 @@ describe('HeaderToolbar', () => {
 
 	it('should set highlightMenu to false when activeSelected is equal to Professionnel de santé', async () => {
 		const wrapper = mount(HeaderToolbar, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				leftMenu: [
 					{

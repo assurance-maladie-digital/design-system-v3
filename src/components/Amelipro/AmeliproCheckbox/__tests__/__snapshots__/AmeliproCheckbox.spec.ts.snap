@@ -1,0 +1,88 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AmeliproCheckbox > Snapshots > renders the component with all properties filled in 1`] = `
+<div id="modified-unique-id-container">
+  <div class="
+    align-center
+    amelipro-checkbox
+    d-flex
+  ">
+    <div
+      aria-checked="true"
+      aria-describedby="Modified checkbox description"
+      aria-disabled="true"
+      aria-required="true"
+      class="
+        align-center
+        amelipro-checkbox-input
+        d-inline-flex
+        flex-row
+        mr-0
+        text-body-1
+      "
+      id="modified-unique-id"
+      role="checkbox"
+      tabindex="-1"
+    >
+      <span
+        class="
+          checkbox-label
+          text-ap-grey
+        "
+        id="modified-unique-id-label-text"
+      >
+        Modified checkbox label
+        <span
+          aria-hidden="true"
+          class="d-inline-flex"
+        >
+          &nbsp;*
+        </span>
+        <span class="d-sr-only">
+          &nbsp;Champ obligatoire
+        </span>
+      </span>
+    </div>
+  </div>
+  <!-- v-if -->
+</div>
+`;
+
+exports[`AmeliproCheckbox > Snapshots > renders the component with only required properties filled in 1`] = `
+<div id="required-unique-id-container">
+  <div class="
+    align-center
+    amelipro-checkbox
+    d-flex
+  ">
+    <div
+      aria-checked="false"
+      aria-disabled="false"
+      class="
+        align-center
+        amelipro-checkbox-input
+        d-inline-flex
+        flex-row
+        mr-0
+        text-body-1
+      "
+      id="required-unique-id"
+      role="checkbox"
+      tabindex="0"
+    >
+      <span
+        class="
+          checkbox-label
+          text-ap-grey-darken-1
+        "
+        id="required-unique-id-label-text"
+      >
+        Required checkbox label
+        <!-- v-if -->
+        <!-- v-if -->
+      </span>
+    </div>
+  </div>
+  <!-- v-if -->
+</div>
+`;

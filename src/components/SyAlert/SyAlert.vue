@@ -10,6 +10,9 @@
 	} from '@mdi/js'
 	import type { VIcon } from 'vuetify/components'
 
+	defineOptions({
+		inheritAttrs: false,
+	})
 	const show = defineModel<boolean>({
 		default: true,
 	})
@@ -60,6 +63,7 @@
 	>
 		<VAlert
 			v-model="show"
+			:role="undefined"
 			v-bind="attrs"
 			:type="props.type"
 			:closable="props.closable"
@@ -99,7 +103,7 @@
 					@click="dismissAlert"
 				>
 					<VIcon
-						size="small"
+						size="large"
 					>
 						{{ mdiClose }}
 					</VIcon>
@@ -116,6 +120,10 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 @use 'sass:map';
+
+.sy-alert {
+	display: contents;
+}
 
 .alert {
 	padding: tokens.$padding-4;
@@ -152,8 +160,11 @@
 	line-height: 0;
 	text-transform: none;
 	font-weight: bold;
-	font-size: 0.75rem;
 	letter-spacing: normal;
+
+	span {
+		font-size: 14px;
+	}
 
 	&:focus-visible {
 		outline: solid 2px black !important;

@@ -1,4 +1,3 @@
-import { vuetify } from '@tests/unit/setup'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import SyTable from '../../SyTable/SyTable.vue'
@@ -14,9 +13,6 @@ describe('Resize columns functionality', () => {
 					],
 					resizableColumns: true,
 					suffix: 'resize-test',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 
@@ -53,9 +49,6 @@ describe('Resize columns functionality', () => {
 					],
 					resizableColumns: true,
 					suffix: 'resize-test',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 
@@ -95,9 +88,6 @@ describe('Resize columns functionality', () => {
 					resizableColumns: true,
 					suffix: 'resize-test',
 				},
-				global: {
-					plugins: [vuetify],
-				},
 			})
 
 			// mock current width of the columns
@@ -133,9 +123,6 @@ describe('Resize columns functionality', () => {
 					],
 					resizableColumns: true,
 					suffix: 'resize-test',
-				},
-				global: {
-					plugins: [vuetify],
 				},
 			})
 

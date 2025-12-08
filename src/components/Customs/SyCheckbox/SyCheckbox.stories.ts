@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 import { ref, watch } from 'vue'
+import { fn } from '@storybook/test'
 
 // Interface pour typer correctement le composant SyCheckbox avec sa méthode validateOnSubmit
 interface SyCheckboxInstance {
@@ -108,6 +109,10 @@ export const Default: Story = {
 				code: `<SyCheckbox v-model="checked" label="Case à cocher" />`,
 			},
 		],
+	},
+	args: {
+		'onUpdate:modelValue': fn(),
+		'onUpdate:indeterminate': fn(),
 	},
 	render: args => ({
 		components: { SyCheckbox },
@@ -384,7 +389,7 @@ La propriété \`controlsIds\` permet de créer une relation sémantique entre u
 					:indeterminate="parentIndeterminate" 
 					@update:indeterminate="parentIndeterminate = $event"
 					:controls-ids="['child-1', 'child-2', 'child-3']"
-					label="Parent" 
+					label="Parent"
 				/>
 				<div style="margin-left: 24px;">
 					<SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" />

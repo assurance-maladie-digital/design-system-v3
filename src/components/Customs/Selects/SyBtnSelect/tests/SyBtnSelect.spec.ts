@@ -1,14 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import SyBtnSelect from '../SyBtnSelect.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('SyBtnSelect', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				primaryInfo: 'John Doe',
 			},
@@ -20,9 +16,6 @@ describe('SyBtnSelect', () => {
 
 	it('shows secondaryInfo if provided', () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				primaryInfo: 'John Doe',
 				secondaryInfo: 'Additional Info',
@@ -34,9 +27,6 @@ describe('SyBtnSelect', () => {
 
 	it('emits "update:modelValue" when an item is selected', async () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: null,
 				menuItems: [
@@ -64,9 +54,6 @@ describe('SyBtnSelect', () => {
 
 	it('toggles the menu open and closed', async () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				primaryInfo: 'John Doe',
 			},
@@ -84,9 +71,6 @@ describe('SyBtnSelect', () => {
 
 	it('formats menu items correctly', () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				primaryInfo: 'John Doe',
 				menuItems: ['Option 1', 'Option 2'],
@@ -102,9 +86,6 @@ describe('SyBtnSelect', () => {
 
 	it('updates selectedItem when modelValue changes', async () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				modelValue: 'initial-value',
 				primaryInfo: 'John Doe',
@@ -119,9 +100,6 @@ describe('SyBtnSelect', () => {
 
 	it('renders the primaryInfo in a span when isMobileVersion and hideIcon are true', async () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				primaryInfo: 'John Doe',
 				isMobileView: true,
@@ -136,9 +114,6 @@ describe('SyBtnSelect', () => {
 
 	it('does not render the span if isMobileVersion is false', () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				primaryInfo: 'John Doe',
 				isMobileView: false,
@@ -152,9 +127,6 @@ describe('SyBtnSelect', () => {
 
 	it('does not render the span if hideIcon is false', () => {
 		const wrapper = mount(SyBtnSelect, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				primaryInfo: 'John Doe',
 				isMobileView: true,

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
 import AmeliproIllustratedRadioGroup from './AmeliproIllustratedRadioGroup.vue'
 import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
+import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 
 const meta = {
 	argTypes: {
@@ -42,7 +43,7 @@ const items = [
 	{
 		icon: 'vaccination',
 		iconDefaultColor: 'ap-yellow',
-		isChecked: false,
+		isChecked: true,
 		label: '1',
 		value: 'Valeur 1',
 	},
@@ -106,7 +107,7 @@ export const Default: Story = {
 		{
 			icon: 'vaccination',
 			iconDefaultColor: 'ap-yellow',
-			isChecked: false,
+			isChecked: true,
 			label: '1',
 			value: 'Valeur 1',
 		},
@@ -213,6 +214,7 @@ export const Required: Story = {
 		modelValue: items,
 		uniqueId: 'illustrated-radio-required',
 		ariaRequired: true,
+		error: true,
 	},
 	parameters: {
 		sourceCode: [
@@ -240,16 +242,23 @@ export const Required: Story = {
 		],
 	},
 	render: args => ({
-		components: { AmeliproIllustratedRadioGroup },
+		components: { AmeliproIllustratedRadioGroup, AmeliproBtn },
 		setup() {
 			const model = ref(args.modelValue)
 			watch(() => args.modelValue, (newValue) => {
 				model.value = newValue
 			})
-			return { args, model }
+			const deselect = () => {
+				model.value = model.value.map(item => ({
+					...item,
+					isChecked: false,
+				}))
+			}
+			return { args, model, deselect }
 		},
 		template: `<p class="mb-2">La sélection d’un bouton est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
-<AmeliproIllustratedRadioGroup v-bind="args" v-model="model" />`,
+        <AmeliproIllustratedRadioGroup v-bind="args" v-model="model"/>
+        <AmeliproBtn class="mt-4" @click="deselect">Tout désélectionner</AmeliproBtn>`,
 	}),
 }
 

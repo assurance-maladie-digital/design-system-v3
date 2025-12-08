@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
 
 import StarsPicker from '../StarsPicker.vue'
 import { VIcon } from 'vuetify/components'
@@ -9,9 +8,6 @@ import { mdiStarOutline, mdiStar } from '@mdi/js'
 describe('StarsPicker', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(StarsPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				label: 'Pourriez-vous donner une note ?',
 			},
@@ -21,11 +17,7 @@ describe('StarsPicker', () => {
 	})
 
 	it('emits an event when a number is selected', async () => {
-		const wrapper = mount(StarsPicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(StarsPicker)
 
 		await wrapper.findAll('[role="radio"]')!.at(3)!.trigger('click')
 
@@ -34,9 +26,6 @@ describe('StarsPicker', () => {
 
 	it('change the displayed value when the modelValue is updated', async () => {
 		const wrapper = mount(StarsPicker, {
-			global: {
-				plugins: [vuetify],
-			},
 			propsData: {
 				modelValue: 3,
 			},
@@ -56,11 +45,7 @@ describe('StarsPicker', () => {
 	})
 
 	it('change the style of the stars on hover', async () => {
-		const wrapper = mount(StarsPicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(StarsPicker)
 
 		const buttons = wrapper.findAll('[role="radio"]')
 		await buttons.at(3)!.trigger('mouseover')
@@ -75,11 +60,7 @@ describe('StarsPicker', () => {
 	})
 
 	it('change the style of the stars on focus', async () => {
-		const wrapper = mount(StarsPicker, {
-			global: {
-				plugins: [vuetify],
-			},
-		})
+		const wrapper = mount(StarsPicker)
 
 		const buttons = wrapper.findAll('[role="radio"]')
 		await buttons.at(3)!.trigger('focus')

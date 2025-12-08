@@ -1,34 +1,44 @@
 import { Meta, Source } from '@storybook/addon-docs/blocks';
 import '../styles/shared.css';
 
-<Meta title="Guide Du Dev/Utiliser le système de validation"/>
+<Meta title="Guide Du Dev/Guide Technique - Système de Validation & Règles"/>
 
 
 <div className="header">
-  <h1>Utiliser le système de validation</h1>
-  <p>Ce guide décrit comment utiliser le système de validation de formulaires du Design System pour créer des validations flexibles et intuitives. </p>
+  <h1>Guide Technique</h1>
+  <h2>Système de Validation & Règles</h2>
+  <p>Ce guide technique explique le fonctionnement interne du système de validation, la création de règles personnalisées et les cas d'usage avancés.</p>
+  
+  <div className="guide-links">
+    <p>📖 <strong>Guides complémentaires :</strong></p>
+    <ul>
+      <li><a href="?path=/docs/guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs">Guide des Formulaires - SyForm & Validation Automatique</a> (approche recommandée)</li>
+    </ul>
+  </div>
 </div>
 
-## Introduction
+## Architecture du système
 
 Le système de validation repose sur deux composables principaux :
-- `useFieldValidation` : Gère la création des règles de validation
-- `useValidation` : Gère l'état de validation et l'affichage des messages
 
-## Les 3 types de validation
+### `useFieldValidation`
+- **Rôle** : Génère et exécute les règles de validation
+- **Usage** : Création de règles personnalisées, validation de champs individuels
+- **Retour** : Fonctions de validation prêtes à l'emploi
 
-Notre système supporte trois types de retours de validation :
-
-1. **Erreurs** (rouge 🔴) : Bloquent la soumission du formulaire
-2. **Avertissements** (orange 🟠) : Informent l'utilisateur sans bloquer
-3. **Succès** (vert 🟢) : Confirment la validité du champ
+### `useValidation` 
+- **Rôle** : Gère l'état de validation et l'affichage des messages
+- **Usage** : Intégration dans les composants, gestion des états d'erreur/warning/succès
+- **Retour** : État réactif et méthodes de validation
 
 ### Priorité des validations
 
-Les validations suivent un ordre de priorité :
-1. Si une erreur est présente, elle est affichée en priorité
-2. S'il n'y a pas d'erreur mais des avertissements, ils sont affichés
-3. S'il n'y a ni erreur ni avertissement, les messages de succès sont affichés
+Le système suit une hiérarchie stricte :
+1. **Erreurs** 🔴 → Bloquent la soumission, priorité absolue
+2. **Avertissements** 🟠 → Informent sans bloquer, priorité moyenne  
+3. **Succès** 🟢 → Encouragent l'utilisateur, priorité faible
+
+> **Note** : Cette hiérarchie est automatiquement gérée par `useValidation`
 
 ## Structure des types
 
@@ -79,11 +89,9 @@ interface RuleOptions {
 }
 `}/>
 
-## Exemple complet d'utilisation
+## Validation manuelle avec useValidation
 
-### Avec un input simple
-
-Voici un exemple complet montrant les différentes possibilités de validation :
+Quand SyForm ne suffit pas (composants tiers, logique complexe), utilisez directement `useValidation` :
 
 <Source dark code={`
 <script lang="ts" setup>
@@ -175,139 +183,128 @@ const validate = () => {
 </template>
 `}/>
 
-### Avec SyTextField
+## Création de règles personnalisées
 
-Le `SyTextField` intègre nativement notre système de validation. Voici un exemple complet :
+Pour créer vos propres règles de validation, utilisez le type `custom` :
+
+### Règle simple avec validation booléenne
 
 <Source dark code={`
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { SyTextField } from '@cnamts/synapse'
-
-const password = ref('')
-
-// Règles d'erreur (bloquantes)
-const rules = [
-  { 
-    type: 'required',
-    options: { message: 'Le mot de passe est requis' }
-  },
-  { 
-    type: 'minLength',
-    options: { length: 6, message: 'Le mot de passe doit contenir au moins 6 caractères' }
+const passwordStrengthRule = {
+  type: 'custom',
+  options: {
+    validate: (value: string) => {
+      const hasNumber = /\d/.test(value);
+      const hasUpper = /[A-Z]/.test(value);
+      const hasLower = /[a-z]/.test(value);
+      const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+      
+      // Retourne true si valide, false sinon
+      return hasNumber && hasUpper && hasLower && hasSpecial;
+    },
+    message: 'Le mot de passe doit contenir au moins un chiffre, une majuscule, une minuscule et un caractère spécial',
+    successMessage: 'Mot de passe sécurisé ✓'
   }
-]
-
-// Règles d'avertissement (non-bloquantes)
-const warningRules = [
-  {
-    type: 'minLength',
-    options: { 
-      length: 8,
-      warningMessage: 'Un mot de passe de 8 caractères minimum est recommandé'
-    }
-  }
-]
-
-// Règles de succès (messages positifs)
-const successRules = [
-  {
-    type: 'minLength',
-    options: { 
-      length: 12,
-      successMessage: 'Excellent ! Votre mot de passe est très sécurisé'
-    }
-  }
-]
-</script>
-
-<template>
-  <SyTextField
-    v-model="password"
-    label="Mot de passe"
-    type="password"
-    :customRules="rules"
-    :customWarningRules="warningRules"
-    :customSuccessRules="successRules"
-    placeholder="Entrez votre mot de passe"
-  />
-</template>
+};
 `}/>
 
-Le composant affichera automatiquement :
-- Une icône et un message d'erreur en rouge si le champ est vide ou contient moins de 6 caractères
-- Une icône et un message d'avertissement en orange si le mot de passe fait entre 6 et 8 caractères
-- Une icône et un message de succès en vert si le mot de passe fait 12 caractères ou plus
-
-### Validation personnalisée avec SyTextField
-
-Voici un exemple plus avancé avec une validation personnalisée :
+### Règle avancée avec message conditionnel
 
 <Source dark code={`
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { SyTextField } from '
-import '../styles/shared.css';@cnamts/synapse'
-
-const email = ref('')
-
-// Règle personnalisée pour vérifier le domaine ameli.fr
-const rules = [
-  { 
-    type: 'required',
-    options: { message: 'L\'email est requis' }
-  },
-  { 
-    type: 'email',
-    options: { message: 'Format d\'email invalide' }
-  },
-  {
-    type: 'custom',
-    options: {
-      validate: (value: string) => {
-        if (!value.endsWith('@ameli.fr')) {
-          return 'L\'email doit être un email ameli.fr'
-        }
-        return true
+const emailDomainRule = {
+  type: 'custom',
+  options: {
+    validate: (value: string) => {
+      if (!value) return true; // Laisser 'required' gérer les champs vides
+      
+      if (!value.includes('@')) {
+        return 'Format d\'email invalide';
       }
-    }
+      
+      const [localPart, domain] = value.split('@');
+      
+      if (!domain) {
+        return 'Domaine manquant dans l\'email';
+      }
+      
+      if (!domain.endsWith('.fr')) {
+        return 'Seuls les domaines .fr sont autorisés';
+      }
+      
+      if (domain === 'ameli.fr' && !/^[a-z]+\.[a-z]+$/.test(localPart)) {
+        return 'Format ameli.fr requis : prenom.nom@ameli.fr';
+      }
+      
+      return true; // Validation réussie
+    },
+    fieldIdentifier: 'Email professionnel'
   }
-]
-
-// Règle d'avertissement pour le format prénom.nom
-const warningRules = [
-  {
-    type: 'custom',
-    options: {
-      validate: (value: string) => {
-        const [localPart] = value.split('@')
-        if (!/^[a-z]+\.[a-z]+$/.test(localPart)) {
-          return 'Format recommandé : prenom.nom@ameli.fr'
-        }
-        return true
-      },
-      isWarning: true
-    }
-  }
-]
-</script>
-
-<template>
-  <SyTextField
-    v-model="email"
-    label="Email professionnel"
-    :customRules="rules"
-    :customWarningRules="warningRules"
-    placeholder="prenom.nom@ameli.fr"
-  />
-</template>
+};
 `}/>
 
-Dans cet exemple :
-- Le champ est invalide si l'email n'est pas au format @ameli.fr
-- Un avertissement s'affiche si l'email ne suit pas le format prenom.nom
-- La validation se fait automatiquement à la perte du focus
-- Les icônes et couleurs sont gérées automatiquement par le composant
+### Règle avec état externe et réactivité
+
+<Source dark code={`
+// Règle qui dépend d'un état externe (ex: liste d'utilisateurs existants)
+const userList = ref(['jean.dupont', 'marie.martin', 'pierre.durand']);
+
+const uniqueUsernameRule = computed(() => ({
+  type: 'custom',
+  options: {
+    validate: (value: string) => {
+      if (!value) return true;
+      
+      const normalizedValue = value.toLowerCase().trim();
+      
+      if (userList.value.includes(normalizedValue)) {
+        return 'Ce nom d\'utilisateur est déjà pris';
+      }
+      
+      return true;
+    },
+    message: 'Nom d\'utilisateur indisponible',
+    successMessage: 'Nom d\'utilisateur disponible ✓'
+  }
+}));
+
+// Usage avec computed pour la réactivité
+const usernameRules = computed(() => [
+  { type: 'required', options: { message: 'Nom d\'utilisateur requis' } },
+  { type: 'minLength', options: { length: 3, message: 'Minimum 3 caractères' } },
+  uniqueUsernameRule.value // Règle réactive
+]);
+`}/>
+
+### Règles asynchrones (validation serveur)
+
+<Source dark code={`
+const asyncEmailRule = {
+  type: 'custom',
+  options: {
+    validate: async (value: string) => {
+      if (!value || !value.includes('@')) return true;
+      
+      try {
+        // Simulation d'un appel API
+        const response = await fetch(\`/api/check-email?email=\${encodeURIComponent(value)}\`);
+        const result = await response.json();
+        
+        if (!result.available) {
+          return 'Cette adresse email est déjà utilisée';
+        }
+        
+        return true;
+      } catch (error) {
+        // En cas d'erreur réseau, on ne bloque pas
+        console.warn('Impossible de vérifier l\'email:', error);
+        return true;
+      }
+    },
+    message: 'Email déjà utilisé',
+    successMessage: 'Email disponible'
+  }
+};
+`}/>
 
 ## Règles de validation disponibles
 
@@ -347,6 +344,11 @@ Le composable `useValidation` retourne plusieurs méthodes utiles :
 3. **Avertissements utiles** : Utilisez les warnings pour des recommandations non-bloquantes
 4. **Messages de succès** : Encouragez les bonnes pratiques avec des messages positifs
 5. **Identifiants de champs** : Utilisez `fieldIdentifier` pour des messages contextuels
+
+> **⚠️ Important — Ordre des règles :** placez toujours `required` en dernier dans la liste de vos règles !
+> Les règles sont évaluées dans l'ordre de leur déclaration, et la validation s'arrête dès qu'une erreur est rencontrée.
+> Si `required` est positionné en premier et que l'utilisateur saisit une valeur (même invalide), la validation s'arrêtera immédiatement.
+> En revanche, en le plaçant en dernier, si une autre règle échoue avant, l'utilisateur obtiendra le message d'erreur le plus pertinent.
 
 ## Exemple de validation personnalisée
 

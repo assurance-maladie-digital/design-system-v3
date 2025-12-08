@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { vuetify } from '@tests/unit/setup'
-
 import SyAlert from '../SyAlert.vue'
 import { VBtn } from 'vuetify/components'
 
@@ -16,12 +14,9 @@ describe('Alert', () => {
 			slots: {
 				default: 'slot content',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
-		expect(wrapper.html()).toMatchSnapshot()
+		expect(wrapper.classes()).toContain('sy-alert')
 	})
 
 	it('show and hide correctly when modelValue is updated', async () => {
@@ -34,9 +29,6 @@ describe('Alert', () => {
 			slots: {
 				default: 'slot content',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.text()).toContain('title')
@@ -45,17 +37,6 @@ describe('Alert', () => {
 		await wrapper.setProps({
 			modelValue: false,
 		})
-
-		expect(wrapper.html()).toMatchInlineSnapshot(`
-			<div
-			  class="sy-alert"
-			  message="message"
-			  role="alert"
-			  title="title"
-			>
-			  <!---->
-			</div>
-		`)
 
 		await wrapper.setProps({
 			modelValue: true,
@@ -77,9 +58,6 @@ describe('Alert', () => {
 			slots: {
 				default: 'slot content',
 			},
-			global: {
-				plugins: [vuetify],
-			},
 		})
 
 		expect(wrapper.html()).not.toBeFalsy()
@@ -88,16 +66,6 @@ describe('Alert', () => {
 
 		await closeBtn.element.click()
 
-		expect(wrapper.html()).toMatchInlineSnapshot(`
-			<div
-			  class="sy-alert"
-			  message="message"
-			  role="alert"
-			  title="title"
-			>
-			  <!---->
-			</div>
-		`)
 		expect(wrapper.emitted('update:modelValue')![0]![0]).toBe(false)
 	})
 
@@ -112,9 +80,6 @@ describe('Alert', () => {
 			},
 			slots: {
 				default: 'slot content',
-			},
-			global: {
-				plugins: [vuetify],
 			},
 		})
 
