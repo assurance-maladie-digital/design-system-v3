@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { VueWrapper, config, mount, shallowMount } from '@vue/test-utils'
+import { config, mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproTextField from '../AmeliproTextField.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
@@ -36,7 +36,7 @@ const VTextFieldStub = defineComponent({
 			type: String,
 			default: undefined,
 		},
-        required: {
+		required: {
 			type: [Boolean, String],
 			default: false,
 		},
@@ -99,7 +99,7 @@ config.global.stubs = config.global.stubs || {}
 config.global.stubs.VTextField = VTextFieldStub
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTextField> = {
-    required: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -222,7 +222,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproTextField> => ({
 })
 
 const modifiedPropValues = (): ComponentProps<typeof AmeliproTextField> => ({
-    required: true,
+	required: true,
 	classes: 'modified-classes',
 	clearable: true,
 	counter: 5,
