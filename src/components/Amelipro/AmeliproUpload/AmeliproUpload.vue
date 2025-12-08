@@ -23,7 +23,7 @@
 	}
 
 	const props = defineProps({
-		ariaRequired: {
+    required: {
 			type: Boolean,
 			default: false,
 		},
@@ -359,7 +359,7 @@
 	const validationRules = computed<ValidationRule[]>(() => {
 		const rules = [...props.rules]
 
-		if (props.ariaRequired) {
+    if (props.required) {
 			rules.push(isRequiredFn(props.errorMessages))
 		}
 
@@ -410,7 +410,7 @@
 	// }
 
 	// --- Watchers ---
-	watch(() => props.ariaRequired, () => {
+watch(() => props.required, () => {
 		internalValidate()
 	})
 
@@ -477,7 +477,7 @@
 				:accept="fileTypeAccepted.join(',')"
 				:aria-describedby="describedby"
 				:aria-invalid="hasError"
-				:aria-required="ariaRequired"
+        :required="required"
 				:clearable="false"
 				density="compact"
 				:disabled="disabled"
@@ -510,7 +510,7 @@
 								class="text-body-1 upload-input-text text-left text-ap-grey-darken-1 amelipro-upload__text"
 							>
 								{{ inputLabel }}
-								<span v-if="ariaRequired">
+								<span v-if="required">
 									<span aria-hidden="true">
 										&nbsp;*
 									</span>

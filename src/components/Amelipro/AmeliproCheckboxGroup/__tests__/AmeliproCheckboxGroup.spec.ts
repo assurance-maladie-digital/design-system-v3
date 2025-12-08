@@ -10,7 +10,7 @@ import TestHelper from '@tests/helpers/TestHelper'
 import { attachToApp } from '@tests/helpers/utils'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproCheckboxGroup> = {
-	ariaRequired: {
+    required: {
 		type: Boolean,
 		default: false,
 	},
@@ -78,7 +78,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproCheckboxGroup> => (
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproCheckboxGroup> => ({
-	ariaRequired: true,
+    required: true,
 	disabled: true,
 	fullHorizontal: true,
 	groupLabel: 'Modified group label',
@@ -266,7 +266,7 @@ describe('AmeliproCheckboxGroup', () => {
 			await vueWrapper.setProps({ disabled: true })
 			expect(labelWrappers.at(0)?.attributes('class')).toContain('text-ap-grey')
 
-			await vueWrapper.setProps({ disabled: false, ariaRequired: true })
+            await vueWrapper.setProps({disabled: false, required: true})
 			await vueWrapper.findAll('.amelipro-checkbox-group__item-input').at(1)?.trigger('click')
 			await vueWrapper.findAll('.amelipro-checkbox-group__item-input').at(2)?.trigger('click')
 			expect(labelWrappers.at(1)?.attributes('class')).toContain('checkbox-label text-ap-red amelipro-checkbox-group__item-label-span-error')
@@ -280,7 +280,7 @@ describe('AmeliproCheckboxGroup', () => {
 			await vueWrapper.setProps({ disabled: true })
 			expect(labelWrappers.at(0)?.attributes('class')).toContain('text-ap-grey-darken-1')
 
-			await vueWrapper.setProps({ disabled: false, ariaRequired: true })
+            await vueWrapper.setProps({disabled: false, required: true})
 			await vueWrapper.findAll('.amelipro-checkbox-group__item-input').at(1)?.trigger('click')
 			await vueWrapper.findAll('.amelipro-checkbox-group__item-input').at(2)?.trigger('click')
 			expect(labelWrappers.at(0)?.attributes('class')).toContain('checkbox-label text-ap-red amelipro-checkbox-group__item-label-span-error')
@@ -371,7 +371,7 @@ describe('AmeliproCheckboxGroup', () => {
 			let componentWrapper = vueWrapper.findComponent(AmeliproMessage)
 			expect(componentWrapper.exists()).toBe(false)
 
-			await vueWrapper.setProps({ ariaRequired: true })
+            await vueWrapper.setProps({required: true})
 
 			inputWrappers.at(1)?.trigger('input')
 			inputWrappers.at(2)?.trigger('input')

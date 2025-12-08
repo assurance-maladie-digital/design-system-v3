@@ -187,7 +187,6 @@ exports[`AmeliproResultList > render correctly 1`] = `
                       aria-controls="menu-v-0"
                       aria-expanded="false"
                       aria-label="Open"
-                      aria-required="false"
                       id="amelipro-result-unique-id-pagination-select"
                       inputmode="none"
                       role="combobox"

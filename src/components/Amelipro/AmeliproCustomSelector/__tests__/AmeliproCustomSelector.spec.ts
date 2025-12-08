@@ -8,7 +8,7 @@ import type { PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproCustomSelector> = {
-	ariaRequired: {
+    required: {
 		type: Boolean,
 		default: false,
 	},
@@ -66,7 +66,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproCustomSelector> => 
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproCustomSelector> => ({
-	ariaRequired: true,
+    required: true,
 	disabled: true,
 	groupLabel: 'Modified group label',
 	itemsPerLine: 2,
@@ -142,11 +142,11 @@ describe('AmeliproCustomSelector', () => {
 			expect(wrapper.find('.amelipro-custom-selector__label').text()).toContain(testHelper.modified('groupLabel'))
 		})
 
-		it('prop ariaRequired sets aria-required on group', async () => {
-			expect(wrapper.find('.amelipro-custom-selector__group').attributes('aria-required')).toBeUndefined()
-			const { ariaRequired } = modifiedPropValues()
-			await wrapper.setProps({ ariaRequired })
-			expect(wrapper.find('.amelipro-custom-selector__group').attributes('aria-required')).toBe('true')
+        it('prop required sets required on group', async () => {
+            expect(wrapper.find('.amelipro-custom-selector__group').attributes('aria-required')).toBeUndefined()
+            const {required} = modifiedPropValues()
+            await wrapper.setProps({required})
+            expect(wrapper.find('.amelipro-custom-selector__group').attributes('aria-required')).toBe('true')
 		})
 
 		it('prop disabled sets aria-disabled on group', async () => {

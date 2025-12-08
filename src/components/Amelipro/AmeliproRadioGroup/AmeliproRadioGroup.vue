@@ -5,7 +5,7 @@
 	import type { AmeliproRadioGroupItem } from './types'
 
 	const props = defineProps({
-		ariaRequired: {
+    required: {
 			type: Boolean,
 			default: false,
 		},
@@ -90,7 +90,7 @@
 		return Boolean(slots[`subItem-${index}`] || slots.subItem)
 	}
 
-	const checkErrorCondition = computed(() => Boolean(props.ariaRequired && selectedValue.value === null && props.error))
+  const checkErrorCondition = computed(() => Boolean(props.required && selectedValue.value === null && props.error))
 
 	const ariaExpandedValue = (item: AmeliproRadioGroupItem, index: number): 'true' | 'false' | undefined => {
 		if (slotSubItem(index)) {
@@ -134,14 +134,14 @@
 					</slot>
 
 					<span
-						v-if="ariaRequired"
+              v-if="required"
 						aria-hidden="true"
 						class="d-inline-flex"
 					>
 						&nbsp;*
 					</span>
 					<span
-						v-if="ariaRequired"
+              v-if="required"
 						class="d-sr-only"
 					>
 						&nbsp;Champ obligatoire
@@ -153,7 +153,7 @@
 
 			<div
 				:aria-labelledby="uniqueId"
-				:aria-required="ariaRequired"
+        :aria-required="required"
 				class="radio-group__wrapper"
 				:class="{
 					'mt-1 mt-md-0': fullHorizontal && !pills,
@@ -196,7 +196,7 @@
 									:checked="item.isChecked"
 									:disabled="item.disabled || disabled"
 									:name="`${uniqueId}-name`"
-									:required="ariaRequired"
+                  :required="required"
 									type="radio"
 									:value="item.value"
 									@input="emitChangeEvent(item)"
