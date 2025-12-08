@@ -2,9 +2,11 @@
 	import { ref } from 'vue'
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
 
-	const props = defineProps<{
-		validateOnSubmit?: boolean
-	}>()
+	const props = withDefaults(defineProps<{
+		validateOnSubmit: boolean
+	}>(), {
+		validateOnSubmit: true,
+	})
 
 	const emit = defineEmits<{
 		(e: 'submit', value: { isValid: boolean }): void
@@ -15,6 +17,7 @@
 	const form = ref<InstanceType<typeof import('vuetify/components').VForm> | null>(null)
 
 	const { validateAll, clearAll, resetAll } = useFormValidation()
+	const isValid = ref<boolean>(true)
 
 	// Methode de validation globale qui combine Vuetify et nos composants personnalises
 	const validate = async () => {
@@ -45,7 +48,9 @@
 		const customComponentsValid = await validateAll()
 
 		// Le formulaire est valide si les deux sont valides
-		return vuetifyValid && customComponentsValid
+		isValid.value = vuetifyValid && customComponentsValid
+
+		return isValid.value
 	}
 
 	const reset = () => {
@@ -54,6 +59,7 @@
 		// Reset field values and validations for Vuetify form
 		form.value?.reset()
 		form.value?.resetValidation()
+		isValid.value = true
 		// Notify consumers so they can clear external models (e.g., v-model refs)
 		emit('reset')
 	}
@@ -63,6 +69,7 @@
 		// Clear Vuetify internal validation state
 		form.value?.resetValidation()
 		// Clear custom components validation states registered in the form
+		isValid.value = true
 		clearAll()
 	}
 
@@ -88,9 +95,13 @@
 <template>
 	<v-form
 		ref="form"
-		@submit.prevent
-		@submit="handleSubmit"
+		@submit.prevent="handleSubmit"
 	>
-		<slot />
+		<slot
+			:is-valid="isValid"
+			:validate="validate"
+			:reset="reset"
+			:clear="clearValidation"
+		/>
 	</v-form>
 </template>
