@@ -1,184 +1,41 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproErrorTemplate > render correctly 1`] = `
+exports[`AmeliproErrorTemplate > Snapshots > renders the component with all properties filled in 1`] = `
 <div
   class="amelipro-error-template"
-  id="error-template-unique-id-container"
+  id="modified-unique-id-container"
 >
-  <div
-    class="
-      amelipro-card
-      amelipro-error-template__card
-      d-flex
-      flex-column
-      flex-md-row
-      w-100
-    "
-    id="error-template-unique-id-card-container"
-    style="
-      background-color: #FFFFFF;
-      border: 1px solid #DDDEDE;
-    "
-  >
-    <div
-      class="amelipro-card__left-part"
-      id="error-template-unique-id-card-left-part"
-      style="width: 100%;"
-    >
-      <div
-        class="
-          amelipro-card__header
-          w-100
-        "
-        id="error-template-unique-id-card-header"
-      >
-        <div class="
-          align-sm-center
-          amelipro-card__header-content
-          d-flex
-          flex-column
-          flex-sm-row
-          w-100
-        ">
-          <div
-            class="amelipro-card__header-slot-wrapper--left"
-            id="error-template-unique-id-card-header-left-part"
-            style="width: 100%;"
-          >
-            <h1
-              class="
-                amelipro-error-template__title
-                font-weight-semibold
-                mb-4
-                text-uppercase
-              "
-              id="error-template-unique-id-title"
-            >
-              Modified title
-            </h1>
-          </div>
-          <!-- v-if -->
-        </div>
-      </div>
-      <div
-        class="amelipro-card__content"
-        id="error-template-unique-id-card-content"
-      >
-        <div
-          class="
-            align-center
-            amelipro-error-template__content
-            d-flex
-            flex-column
-          "
-          id="error-template-unique-id-content"
-        >
-          <img
-            alt=""
-            class="
-              amelipro-error-template__img
-              mx-4
-              my-2
-            "
-            id="error-template-unique-id-img"
-            max-width="350"
-            min-width="300"
-            src="modified-custom-img-url"
-            width="350"
-          />
-          <h2
-            class="
-              amelipro-error-template-content-title
-              font-weight-semibold
-              text-ap-parme-darken-1
-            "
-            id="error-template-unique-id-content-title"
-          >
-            Modified content title
-          </h2>
-          My Button
-          <a
-            class="
-              amelipro-btn
-              amelipro-error-template-content-btn
-              amelipro-error-template-content-btn
-              elevation-0
-              mt-2
-              mt-2
-              text-ap-blue-darken-1
-              text-none
-              text-none
-              v-btn
-              v-btn--density-default
-              v-btn--flat
-              v-btn--size-default
-              v-btn--variant-text
-              v-theme--light
-            "
-            href="#modified-btn-href"
-            id="error-template-unique-id-content-btn"
-            style="
-              height: auto;
-              min-height: auto;
-              padding: 0px;
-            "
-            type="button"
-          ><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span>
-            
-          <!----><span
-            class="v-btn__content"
-            data-no-activator=""
-          ><span class="
-            align-center
-            amelipro-custom-btn
-            d-flex
-            flex-row
-          ">Modified custom btn text <span
-            class="
-              amelipro-btn__icon--right
-              amelipro-icon
-              d-block
-            "
-            id="error-template-unique-id-content-btn-icon"
-          ><span
-            class="amelipro-external-icon"
-            style="
-              background-color: transparent;
-              border-radius: 50%;
-              color: #00749C;
-              padding: 0px;
-              height: 1.5rem;
-              width: 1.5rem;
-            "
-          ><i
-            aria-hidden="true"
-            class="
-              M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
-              mdi
-              notranslate
-              text-ap-blue-darken-1
-              v-icon
-              v-theme--light
-            "
-            style="
-              font-size: 100%;
-              height: 100%;
-              width: 100%;
-              display: block;
-            "
-          ></i></span></span>
-            
-          <!-- v-if --></span></span>
-            
-          <!---->
-            
-          <!---->
-          </a>
-          <!-- v-if -->
-        </div>
-      </div>
-    </div>
-    <!-- v-if -->
-  </div>
+  <amelipro-card-stub
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
+    classes="amelipro-error-template__card"
+    divider="false"
+    headerrightwidth="50%"
+    nocardheader="false"
+    rightpart="false"
+    rightpartwidth="25%"
+    titlecolor="ap-grey-darken-1"
+    titlelevel="2"
+    uniqueid="modified-unique-id-card"
+  ></amelipro-card-stub>
+</div>
+`;
+
+exports[`AmeliproErrorTemplate > Snapshots > renders the component with only required properties filled in 1`] = `
+<div class="amelipro-error-template">
+  <amelipro-card-stub
+    bordercolor="ap-grey-lighten-2"
+    bordered="true"
+    cardcolor="ap-white"
+    classes="amelipro-error-template__card"
+    divider="false"
+    headerrightwidth="50%"
+    nocardheader="false"
+    rightpart="false"
+    rightpartwidth="25%"
+    titlecolor="ap-grey-darken-1"
+    titlelevel="2"
+  ></amelipro-card-stub>
 </div>
 `;
