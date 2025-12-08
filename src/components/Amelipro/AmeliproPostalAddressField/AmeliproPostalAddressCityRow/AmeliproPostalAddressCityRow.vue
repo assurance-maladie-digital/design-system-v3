@@ -469,7 +469,7 @@
 
 	> div {
 		width: unset !important;
-		flex: 0 0 auto !important;
+    flex: 0 0 auto;
 	}
 }
 </style>
