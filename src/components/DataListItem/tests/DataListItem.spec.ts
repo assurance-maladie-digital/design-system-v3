@@ -69,7 +69,7 @@ describe('DataListItem', () => {
 
 		const elValue = wrapper.find('.sy-data-list-item-value span')
 
-		expect(elValue.text()).toBe('renderHtmlValue est obsolète. Merci de vous référer à la documentation pour connaître l’API recommandée.')
+		expect(elValue.text()).toBe('Paul Dupont')
 	})
 
 	it('renders correctly value in a chip', () => {
