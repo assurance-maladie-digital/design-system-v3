@@ -570,7 +570,12 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
       </div>
     </div>
   </div>
-  <!-- v-if -->
-  <!-- v-if -->
+  <div class="
+    d-flex
+    error-messages
+  ">
+    <!-- v-if -->
+    <!-- v-if -->
+  </div>
 </div>
 `;
