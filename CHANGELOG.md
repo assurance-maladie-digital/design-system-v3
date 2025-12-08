@@ -1,3 +1,119 @@
+## v1.0.15 (04-12-2025)
+
+Fix readme <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1559">#1559</a>
+
+## v1.0.14 (04-12-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- ErrorPage: renforce security (delete potential v-html injection) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1556">#1556</a></td>
+      <td>- AmeliproRadioGroup: improve stories <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1549">#1549</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- RatingPicker: add center prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1551">#1551</a></td>
+      <td>- AmeliproTabs: fix display when a lot of tabs <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1553">#1553</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Captcha: add component 
+            <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1230">#1230</a>
+            <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1544">#1544</a>
+       </td>
+      <td>- Add TU for components: AmeliproTabBtn / AmeliproTabs / AmeliproTextArea / AmeliproTextField / AmeliproTileBtn / AmeliproTooltips / AmeliproTransmission <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1431">#1431</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckbox: improve accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1545">#1545</a></td>
+      <td>- AmeliproFilePreview: fix download bug on Firefox <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1547">#1547</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ExternalLink: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1542">#1542</a></td>
+      <td>- Add TU for components:  AmeliproRadioGroup / AmeliproSelect / AmeliproStateTile / AmeliproStatus / AmeliproStepBtn / AmeliproStepper <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1432">#1432</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- RangeField: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1534">#1534</a></td>
+      <td>- AmeliproAutoCompleteField: improve component with ariaRequired prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1533">#1533</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix reset on disabled <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1516">#1516</a></td>
+      <td>- Improve display on components AmeliproCustomSelector / AmeliproSelect / AmeliproCallback <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1519">#1519</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- RatingPicker: add missing keyboard navigation events <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1510">#1510</a></td>
+      <td>- Add TU for components: AmeliproNumberedCard / AmeliproOnboarding / AmeliproPageLayout / AmeliproPagination / AmeliproPaginationBtn / AmeliproPatientBanner <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1433">#1433</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix validation rules with empty date <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1521">#1521</a></td>
+      <td>- AmeliproAccordionFreeze: improve stories <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1514">#1514</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SearchListField: improve accessibility after audit <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1499">#1499</a></td>
+      <td>- Icons: add attele icon <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1524">#1524</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PasswordField: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1520">#1520</a></td>
+      <td>- Improve display (long content) for components : AmeliproStructureMenu / AmeliproHeader / AmeliproButton / UserMenu / AmeliproStateTile <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1513">#1513</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix custom rules in combinated mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1515">#1515</a></td>
+      <td>- AmeliproAccordionGroup: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1463">#1463</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- RatingPicker: fix texts color <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1517">#1517</a></td>
+      <td>- AmeliproMessagingLayout: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1409">#1409</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve validation messages <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1483">#1483</a></td>
+      <td>- AmeliproMessage: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1408">#1408</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAlert: fix duplicated alert role <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1501">#1501</a></td>
+      <td>- AmeliproIconBtn: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1391">#1391</a></td>
+    </tr>
+     <tr style="vertical-align: top;">
+      <td>- SyTabs : add tab-prepend and tab-append slots <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1511">#1511</a></td>
+      <td>- AmeliproMailTile: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1407">#1407</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable / SyServerTable : add show-select-single prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1484">#1484</a></td>
+      <td>- AmeliproLogoAM: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1406">#1406</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: update some packages 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1508">#1508</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1507">#1507</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1506">#1506</a>
+      </td>
+      <td>- AmeliproIllustratedRadioGroup: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1393">#1393</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix error icon <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1491">#1491</a></td>
+      <td>- AmeliproIllustratedDataTile: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1392">#1392</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- AmeliproIcon: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1390">#1390</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- Fix sorting on some components <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1497">#1497</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- AmeliproAccordionResult: fix first item opening<a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1502">#1502</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- Documentation: fix images display for some stories<a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1492">#1492</a></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.13 (24-11-2025)
 
 <table>

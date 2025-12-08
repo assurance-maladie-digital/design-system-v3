@@ -1,13 +1,14 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
-	import volumeUp from './icons/volumeUp.vue'
-	import { computed, ref, watch } from 'vue'
+	import { ref, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
 	import CaptchaForm from './CaptchaForm.vue'
+	import CaptchaHelpdesk from './CaptchaHelpdesk.vue'
 	import CaptchaImg from './CaptchaImg.vue'
 	import CaptchaInformation from './CaptchaInformation.vue'
+	import volumeUp from './icons/volumeUp.vue'
 	import { locales as defaultLocales } from './locales'
 	import { type CaptchaType, type StateType } from './types'
 
@@ -20,6 +21,7 @@
 		type?: CaptchaType
 		tagTitle?: string
 		helpDesk?: string | false
+		locale?: string
 		locales?: typeof defaultLocales
 	}>(), {
 		modelValue: undefined,
@@ -27,6 +29,7 @@
 		type: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
+		locale: navigator.language,
 		locales: () => defaultLocales,
 	})
 
@@ -82,10 +85,6 @@
 		}
 	}
 
-	const phoneHelpDesk = computed(() => {
-		return `<a href="tel:${props.helpDesk}">${props.helpDesk}</a>`
-	})
-
 </script>
 
 <template>
@@ -101,6 +100,7 @@
 			:url-get-image="urlGetImage"
 			:url-get-audio="urlGetAudio"
 			:locales
+			:locale
 			@update:model-value="emitChangeTypeEvent"
 			@create-captcha:init="createCaptchaInit"
 			@create-captcha:success="createCaptchaSuccess"
@@ -172,10 +172,9 @@
 						{{ locales.image.change }}
 					</CaptchaBtn>
 
-					<p
-						v-if="props.helpDesk"
-						class="captcha-helpdesk text-textSubdued mb-2"
-						v-html="locales?.helpDesk(phoneHelpDesk)"
+					<CaptchaHelpdesk
+						:phone-number="props.helpDesk"
+						:localized-message="locales.helpDesk"
 					/>
 				</div>
 			</template>
@@ -256,10 +255,9 @@
 					>
 						{{ locales.audio.change }}
 					</CaptchaBtn>
-					<p
-						v-if="props.helpDesk"
-						class="captcha-helpdesk text-textSubdued mb-2"
-						v-html="locales?.helpDesk(phoneHelpDesk)"
+					<CaptchaHelpdesk
+						:phone-number="props.helpDesk"
+						:localized-message="locales.helpDesk"
 					/>
 				</div>
 			</template>
@@ -310,16 +308,6 @@
 	align-items: center;
 	gap: tokens.$gap-2;
 	letter-spacing: 0%;
-}
-
-.captcha-helpdesk {
-	max-width: 300px;
-	font-size: 0.875rem;
-}
-
-.captcha-helpdesk :deep(a) {
-	color: rgb(var(--v-theme-primary));
-	font-weight: 700;
 }
 
 </style>

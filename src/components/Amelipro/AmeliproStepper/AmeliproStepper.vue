@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, onMounted, reactive, ref, watch } from 'vue'
+	import { computed, onMounted, type PropType, reactive, ref, watch } from 'vue'
 	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
@@ -129,7 +129,7 @@
 		>
 			<ol
 				:id="uniqueId ? `${uniqueId}-step-list` : undefined"
-				class="list-style-none d-flex flex-row align-end flex-wrap amelipro-stepper__list"
+				class="list-style-none d-flex flex-row align-end flex-nowrap amelipro-stepper__list"
 				:class="{ 'justify-center': centered }"
 				role="tablist"
 			>

@@ -107,6 +107,7 @@ export const Default: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
+						caption="Liste des utilisateurs"
 					/>
 				</template>
 				`,
@@ -222,7 +223,7 @@ export const Default: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
+		caption: 'Liste des utilisateurs',
 		options: {
 			itemsPerPage: 4,
 		},
@@ -235,12 +236,12 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="pa-4">
-				<PaginatedTable
-					v-model:options="args.options"
-					:items="args.items"
-					:headers="args.headers"
-					:caption="args.caption"
-				/>
+					<PaginatedTable
+						v-model:options="args.options"
+						:items="args.items"
+						:headers="args.headers"
+						:caption="args.caption"
+					/>
 				</div>
 			`,
 		}
@@ -258,6 +259,7 @@ export const SortBy: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
+						caption="Liste des utilisateurs"
 					/>
 				</template>
 				`,
@@ -373,7 +375,7 @@ export const SortBy: Story = {
 				email: 'agate.roy@exemple.com',
 			},
 		],
-		caption: '',
+		caption: 'Liste des utilisateurs',
 		options: {
 			sortBy: [{ key: 'lastname', order: 'desc' }],
 		},
@@ -412,6 +414,7 @@ export const TableServer: Story = {
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
 						suffix="api-example"
+						caption="Liste des utilisateurs"
 						@update:options="fetchData"
 					/>
 				</template>
@@ -521,7 +524,7 @@ export const TableServer: Story = {
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		caption: '',
+		caption: 'Liste des utilisateurs',
 	},
 	render: (args) => {
 		return {
@@ -633,11 +636,13 @@ export const ManyTables: Story = {
 						<PaginatedTable
 							suffix="table1"
 							:items="itemsTable1"
+							caption="Liste des utilisateurs"
 						/>
 						<hr class="my-4">
 						<PaginatedTable
 							suffix="table2"
 							:items="itemsTable2"
+							caption="Liste des utilisateurs"
 						/>
 					</div>
 				</template>
@@ -695,7 +700,7 @@ export const ManyTables: Story = {
 			itemsPerPage: 5,
 			page: 1,
 		},
-		caption: '',
+		caption: 'Liste des utilisateurs',
 	},
 	render: (args) => {
 		return {

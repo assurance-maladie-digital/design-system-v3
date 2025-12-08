@@ -1,4 +1,4 @@
-import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
+import {Controls, Canvas, Meta, Story} from '@storybook/blocks';
 import * as CaptchaStories from './Captcha.stories';
 
 <Meta of={CaptchaStories} />
@@ -46,16 +46,16 @@ import * as CaptchaStories from './Captcha.stories';
 
 ## Context d'utilisation
 
-Le composant Captcha permet d'intéragir avec l'api d'OBS [Live Identity Captcha](https://www.orange-business.com/fr/solutions/securite/live-identity-captcha) (directement ou indirectement).
+Le composant Captcha permet d'interagir avec l'api d'OBS <a href="https://www.orange-business.com/fr/solutions/securite/live-identity-captcha" target="_blank" rel="noopener noreferrer">Live Identity Captcha</a>.
 
-Pour implementer le composant avec l'api OBS, se referer à la documentation suivante : [la documentation et le postman de l'api d'OBS version 1.16](https://gitlab.cnqd.cnamts.fr/captcha/capt_postman/-/tree/v1.16).
+Pour implémenter le composant avec l'api OBS, se référer à <a href="http://pad-st.cnamts.fr/pad-ddst/catalogue/products.html?product=captcha&division=dait" target="_blank" rel="noopener noreferrer">la documentation DDST</a>.
 
 ### Détails d'implementation
 
 Les api Captcha d'OBS sont exposées en https.
 
 Pour les appels réalisés depuis un back-end, il est nécessaire d'ajouter le root CA (autorité de certifications racine) au niveau du truststore du serveur hébergeant ce back-end.
-Pour la production et la pré-production, le root CA "DigiCert Global Root CA" est accessible (voir informations de sécurité) depuis le site : [https://captcha.liveidentity.com/documentation](https://captcha.liveidentity.com/documentation).
+Pour la production et la pré-production, le root CA "DigiCert Global Root CA" est accessible (voir informations de sécurité) depuis le site : <a href="https://captcha.liveidentity.com/documentation" target="_blank" rel="noopener noreferrer">https://captcha.liveidentity.com/documentation</a>.
 
 De plus, les api Captcha d'OBS sont externes / non hébergées par la CNAM.
 Il est donc nécessaire :
