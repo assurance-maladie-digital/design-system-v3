@@ -387,30 +387,32 @@
 				/>
 			</div>
 		</div>
-		<AmeliproMessage
-			v-if="displayPostalCodeError && mdAndUp"
-			class="mb-0"
-			no-icon
-			text
-			type="error"
-			:unique-id="`${uniqueId}-postal-code-error`"
-		>
-			<p class="mb-0">
-				{{ inputPostalCodeField.errorMessages[0] }}
-			</p>
-		</AmeliproMessage>
-		<AmeliproMessage
-			v-if="displayCityError"
-			class="mb-0"
-			no-icon
-			text
-			type="error"
-			:unique-id="`${uniqueId}-city-error`"
-		>
-			<p class="mb-0">
-				{{ inputCityField.errorMessages[0] }}
-			</p>
-		</AmeliproMessage>
+		<div class="error-messages d-flex">
+			<AmeliproMessage
+				v-if="displayPostalCodeError && mdAndUp"
+				:unique-id="`${uniqueId}-postal-code-error`"
+				class="mb-0"
+				no-icon
+				text
+				type="error"
+			>
+				<p class="mb-0">
+					{{ inputPostalCodeField.errorMessages[0] }}
+				</p>
+			</AmeliproMessage>
+			<AmeliproMessage
+				v-if="displayCityError"
+				:unique-id="`${uniqueId}-city-error`"
+				class="mb-0"
+				no-icon
+				text
+				type="error"
+			>
+				<p class="mb-0">
+					{{ inputCityField.errorMessages[0] }}
+				</p>
+			</AmeliproMessage>
+		</div>
 	</div>
 </template>
 
@@ -418,8 +420,8 @@
 @use '@/assets/amelipro/apTokens';
 
 .postal-code-field {
-	min-width: 120px;
-	width: 120px;
+	min-width: 140px;
+	width: 140px;
 
 	& :deep(.v-field__outline) {
 		border-color: v-bind(inputPostalCodeBorderStyle);
@@ -459,6 +461,15 @@
 
 	& :deep(.v-field--disabled) {
 		opacity: 1 !important;
+	}
+}
+
+.error-messages {
+	gap: 20px;
+
+	> div {
+		width: unset !important;
+		flex: 0 0 auto !important;
 	}
 }
 </style>
