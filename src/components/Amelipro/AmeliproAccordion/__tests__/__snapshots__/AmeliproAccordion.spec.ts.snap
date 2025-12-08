@@ -1,124 +1,31 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AmeliproAccordion > render correctly 1`] = `
-<div
-  class="
-    amelipro-accordion
-    mb-4
-    w-100
-  "
-  id="amelipro-accordion-unique-id-container"
-  style="
-    background-color: #FFFFFF;
-    border: 1px solid #DDDEDE;
-  "
->
-  <div
-    class="
-      align-center
-      amelipro-accordion__header
-      d-flex
-      flex-column
-      flex-sm-row
-      w-100
-    "
-    id="amelipro-accordion-unique-id-header"
-  >
-    <div
-      class="btn-wrapper"
-      style="width: 100%;"
-    >
-      <p
-        aria-level="2"
-        class="
-          font-weight-semibold
-          mb-0
-          text-h3
-        "
-        id="amelipro-accordion-unique-idtitle"
-        role="heading"
-      >
-        <button
-          aria-controls="amelipro-accordion-unique-id"
-          aria-expanded="false"
-          class="
-            accordion-btn
-            align-center
-            d-inline-flex
-            font-weight-semibold
-            text-ap-grey-darken-1
-            text-left
-          "
-          id="amelipro-accordion-unique-id-header-btn-open-close"
-          type="button"
-        >
-          <span
-            class="
-              accordion-icon
-              amelipro-icon
-              mr-2
-            "
-            id="amelipro-accordion-unique-id-icon"
-          >
-            <span
-              aria-hidden="true"
-              class="
-                amelipro-custom-icon
-                custom-color
-              "
-              focusable="false"
-              role="img"
-              style="
-                color: #0C419A;
-                height: 11px;
-                width: 11px;
-              "
-            >
-              <span>
-                <svg
-                  aria-hidden="true"
-                  style="enable-background:new 0 0 42 42;"
-                  version="1.1"
-                  viewBox="0 0 42 42"
-                  x="0px"
-                  xml:space="preserve"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  y="0px"
-                >
-                  <polygon
-                    class="shape-color"
-                    points="21,39.2 42,2.8 0,2.8 "
-                  />
-                </svg>
-              </span>
-            </span>
-          </span>
-          titre accordion
-        </button>
-      </p>
-    </div>
-    <!-- v-if -->
-  </div>
-  <div
-    aria-labelledby="amelipro-accordion-unique-idtitle"
-    class="amelipro-accordion__wrapper"
-    id="amelipro-accordion-unique-id"
-    role="region"
-    style="display: none;"
-  >
-    <div
-      class="
-        amelipro-accordion__content
-        text-ap-grey-darken-1
-        w-100
-      "
-      style="
-        border-top-width: 1px;
-        border-top-style: solid;
-        border-top-color: #DDDEDE;
-      "
-    ></div>
-  </div>
-</div>
+exports[`AmeliproAccordion > Snapshots > renders the component with all properties filled in 1`] = `
+<amelipro-accordion-template-stub
+  accordiontitle="Modified accordion title"
+  bordercolor="modified-border-color"
+  bordered="false"
+  cardcolor="modified-card-color"
+  headerrightwidth="modified-header-right-width"
+  hideseparator="true"
+  isopen="true"
+  titlelevel="3"
+  titleuppercase="true"
+  uniqueid="modified-unique-id"
+></amelipro-accordion-template-stub>
+`;
+
+exports[`AmeliproAccordion > Snapshots > renders the component with only required properties filled in 1`] = `
+<amelipro-accordion-template-stub
+  accordiontitle="Required accordion title"
+  bordercolor="ap-grey-lighten-2"
+  bordered="true"
+  cardcolor="ap-white"
+  headerrightwidth="50%"
+  hideseparator="false"
+  isopen="false"
+  titlelevel="2"
+  titleuppercase="false"
+  uniqueid="required-unique-id"
+></amelipro-accordion-template-stub>
 `;
