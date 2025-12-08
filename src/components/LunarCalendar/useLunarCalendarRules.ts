@@ -8,6 +8,7 @@ export function useLunarCalendarRules(
 	maxYear: MaybeRefOrGetter<number | undefined>,
 ): { rules: ComputedRef<ValidationRule[]> } {
 	const rules = computed(() => {
+		const rules: ValidationRule[] = []
 		if (toValue(required)) {
 			const requiredRule: ValidationRule = {
 				type: 'required',
@@ -16,8 +17,20 @@ export function useLunarCalendarRules(
 					successMessage: toValue(successMessage),
 				},
 			}
-			return [requiredRule]
+			rules.push(requiredRule)
 		}
+		rules.push({
+			type: 'custom',
+			options: {
+				validate: (value: string) => {
+					// Validate format DD/MM/YYYY
+					const regex = /^\d{2}\/\d{2}\/\d{4}$/
+					return regex.test(value)
+				},
+				message: 'La date est invalide.',
+				successMessage: toValue(successMessage),
+			},
+		})
 		if (toValue(minYear) && toValue(maxYear)) {
 			const rule: ValidationRule = {
 				type: 'custom',
@@ -33,7 +46,7 @@ export function useLunarCalendarRules(
 					successMessage: toValue(successMessage),
 				},
 			}
-			return [rule]
+			rules.push(rule)
 		}
 		else if (toValue(minYear)) {
 			const rule: ValidationRule = {
@@ -50,7 +63,7 @@ export function useLunarCalendarRules(
 					successMessage: toValue(successMessage),
 				},
 			}
-			return [rule]
+			rules.push(rule)
 		}
 		else if (toValue(maxYear)) {
 			const rule: ValidationRule = {
@@ -67,11 +80,9 @@ export function useLunarCalendarRules(
 					successMessage: toValue(successMessage),
 				},
 			}
-			return [rule]
+			rules.push(rule)
 		}
-		else {
-			return []
-		}
+		return rules
 	})
 	return { rules: rules }
 }
