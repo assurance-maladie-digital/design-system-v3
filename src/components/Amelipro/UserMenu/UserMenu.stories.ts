@@ -1,4 +1,4 @@
-import type {Meta, StoryObj} from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3'
 import UserMenu from './UserMenu.vue'
 
 const meta = {
