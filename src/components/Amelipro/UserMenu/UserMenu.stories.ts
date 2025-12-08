@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type {Meta, StoryObj} from '@storybook/vue3'
 import UserMenu from './UserMenu.vue'
 
 const meta = {
@@ -125,9 +125,9 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
-<UserMenu
-	v-bind="args"
-/>
+          <div style="display: flex; justify-content: center">
+            <UserMenu v-bind="args"/>
+          </div>
 		`,
 	}),
 }
