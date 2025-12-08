@@ -62,7 +62,20 @@
 				:icons="props.icons"
 				class="ma-4"
 				@click:item-action="emitItemAction(index, $event)"
-			/>
+			>
+				<template
+					v-if="$slots.item"
+					#item="{ item, index: itemIndex, itemValue }"
+				>
+					<slot
+						name="item"
+						:item="item"
+						:index="itemIndex"
+						:item-value="itemValue"
+						:data-list-index="index"
+					/>
+				</template>
+			</DataList>
 		</li>
 	</ul>
 </template>
