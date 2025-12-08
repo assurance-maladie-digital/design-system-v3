@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { extractRangeParts as extractRangePartsUtil, hasRangeSeparator as hasRangeSeparatorUtil, isValidDateRange } from '../utils/dateFormattingUtils'
 
 // Initialiser les plugins dayjs
 dayjs.extend(customParseFormat)
@@ -28,18 +29,14 @@ export function useDateRangeInput(
 	 * Vérifie si une chaîne de caractères contient un séparateur de plage
 	 */
 	const hasRangeSeparator = (value: string): boolean => {
-		return value.includes(rangeSeparator)
+		return hasRangeSeparatorUtil(value, rangeSeparator)
 	}
 
 	/**
 	 * Extrait les deux parties d'une plage de dates
 	 */
 	const extractRangeParts = (value: string): [string, string] => {
-		const parts = value.split(rangeSeparator)
-		return [
-			parts[0]?.trim() || '',
-			parts[1]?.trim() || '',
-		]
+		return extractRangePartsUtil(value, rangeSeparator)
 	}
 
 	/**
@@ -235,8 +232,7 @@ export function useDateRangeInput(
 	 * Vérifie si une plage de dates est valide (la date de début est antérieure à la date de fin)
 	 */
 	const isValidRange = (startDate: Date | null, endDate: Date | null): boolean => {
-		if (!startDate || !endDate) return true
-		return startDate.getTime() <= endDate.getTime()
+		return isValidDateRange(startDate, endDate)
 	}
 
 	/**
