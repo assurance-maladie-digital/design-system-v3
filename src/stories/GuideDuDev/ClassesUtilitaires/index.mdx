@@ -96,6 +96,16 @@ console.log(parseDate('15/01/2023').toISOString()) // '2023-01-15T00:00:00.000Z'
 console.log(parseDate('2023-01-15').toISOString()) // '2023-01-15T00:00:00.000Z'
 `}/>
 
+### formatNir
+
+Formate un numéro de sécurité sociale (NIR) pour le rendre plus lisible en ajoutant des espaces à des positions fixes.
+
+<Source dark code={`import { formatNir } from '@cnamts/synpase'
+
+console.log(formatNir('1234567890123'))   // '1 23 45 67 890 123'
+console.log(formatNir('123456789012345')) // '1 23 45 67 890 123 45'
+`}/>
+
 ## Utilitaires de validation
 
 ### propValidator
