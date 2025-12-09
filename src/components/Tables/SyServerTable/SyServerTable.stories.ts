@@ -33,14 +33,14 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
-		headers: {
+		'headers': {
 			description: 'Liste des colonnes du tableau (voir : https://vuetifyjs.com/en/api/v-data-table/#props-headers)',
 			control: { type: 'object' },
 			table: {
 				category: 'props',
 			},
 		},
-		items: {
+		'items': {
 			description: 'Liste des éléments à afficher dans le tableau',
 			control: { type: 'object' },
 			table: {
@@ -50,7 +50,7 @@ const meta = {
 				},
 			},
 		},
-		density: {
+		'density': {
 			description: 'Définit la densité du tableau',
 			control: { type: 'select' },
 			options: ['default', 'comfortable', 'compact'],
@@ -59,7 +59,7 @@ const meta = {
 				type: { summary: 'string', detail: `'default' | 'comfortable' | 'compact'` },
 			},
 		},
-		striped: {
+		'striped': {
 			description: 'Affiche les lignes du tableau avec un fond rayé',
 			control: { type: 'boolean' },
 			table: {
@@ -67,7 +67,7 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
-		options: {
+		'options': {
 			description: 'Options de configuration du tableau',
 			name: 'v-model:options',
 			control: { type: 'object' },
@@ -76,7 +76,7 @@ const meta = {
 				type: { summary: 'DataOptions', detail: '{ page: number, itemsPerPage: number, sortBy: SortOptions[], groupBy?: SortOptions[], multiSort?: boolean, mustSort?: boolean, filters?: FilterOption[] }' },
 			},
 		},
-		itemsPerPageOptions: {
+		'itemsPerPageOptions': {
 			description: 'Limite les options disponibles dans le sélecteur "itemsPerPage"',
 			control: { type: 'object' },
 			table: {
@@ -85,15 +85,15 @@ const meta = {
 				defaultValue: { summary: 'undefined' },
 			},
 		},
-		serverItemsLength: {
+		'serverItemsLength': {
 			description: 'Nombre total d\'éléments à afficher',
 			control: { type: 'number' },
 		},
-		saveState: {
+		'saveState': {
 			description: 'Permet d\'activer ou non la sauvegarde des options (pagination, tris, ordre des colonnes) du tableau dans le localStorage. Par défaut, cette fonctionnalité est activée.',
 			control: { type: 'boolean' },
 		},
-		suffix: {
+		'suffix': {
 			description: 'Suffixe permettant de gérer individuellement le stockage des options d\'un tableau d\'une page à l\'autre. Ce prop est obligatoire pour garantir un stockage unique pour chaque tableau.',
 			control: { type: 'text' },
 			table: {
@@ -102,18 +102,18 @@ const meta = {
 			},
 			required: true,
 		},
-		caption: {
+		'caption': {
 			description: 'Texte de la légende du tableau',
 			control: { type: 'text' },
 		},
-		showExpand: {
+		'showExpand': {
 			description: 'Affiche une colonne permettant d\'étendre les lignes pour afficher du contenu supplémentaire',
 			control: { type: 'boolean' },
 			table: {
 				category: 'props',
 			},
 		},
-		resizableColumns: {
+		'resizableColumns': {
 			description: 'Permet de redimensionner les colonnes du tableau',
 			control: { type: 'boolean' },
 			table: {
@@ -121,7 +121,7 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
-		multiSort: {
+		'multiSort': {
 			description: 'Permet de trier sur plusieurs colonnes simultanément. Lorsque activé, des indicateurs numériques apparaissent à côté des icônes de tri pour montrer l\'ordre de priorité.',
 			control: { type: 'boolean' },
 			table: {
@@ -132,7 +132,7 @@ const meta = {
 				},
 			},
 		},
-		mustSort: {
+		'mustSort': {
 			description: 'Force au moins une colonne à être toujours triée. Si désactivé, toutes les colonnes peuvent être non triées.',
 			control: { type: 'boolean' },
 			table: {
@@ -143,7 +143,7 @@ const meta = {
 				},
 			},
 		},
-		enableColumnControls: {
+		'enableColumnControls': {
 			description: 'Allow the users to re-organize the columns',
 			table: {
 				defaultValue: {
@@ -154,7 +154,7 @@ const meta = {
 			},
 			control: { type: 'boolean' },
 		},
-		showSelect: {
+		'showSelect': {
 			description: 'Affiche des cases à cocher pour sélectionner des lignes',
 			control: { type: 'boolean' },
 			table: {
@@ -162,7 +162,7 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
-		showSelectSingle: {
+		'showSelectSingle': {
 			description: 'Affiche des cases à cocher pour sélectionner une seule ligne à la fois',
 			control: { type: 'boolean' },
 			table: {
@@ -170,13 +170,32 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
-		selectionKey: {
+		'selectionKey': {
 			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
 			control: { type: 'text' },
 			table: {
 				category: 'props',
 				type: { summary: 'string' },
 				defaultValue: { summary: 'undefined (fallback: id | objet complet)' },
+			},
+		},
+		'header.<columnKey>': {
+			description: 'Slot permettant de personnaliser le rendu de l\'en-tête d\'une colonne spécifique. Remplacer `<columnKey>` par la clé de la colonne souhaitée.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: {
+					summary: 'slot',
+					detail: `{
+						column: HeaderColumn,
+						headers: HeaderColumn[][],
+						columns: HeaderColumn[],
+						locales: Record<string, string | ((...args: any[]) => string)>,
+						sortBy: DataOptions['sortBy'],
+						someSelected: boolean,
+						allSelected: boolean
+					}`,
+				},
 			},
 		},
 	},
