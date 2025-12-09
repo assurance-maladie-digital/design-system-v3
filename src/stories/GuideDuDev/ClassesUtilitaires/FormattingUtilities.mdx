@@ -282,6 +282,26 @@ export default {
 </script>
 `}/>
 
+## formatNir
+
+Cette fonction formate un numéro de sécurité sociale (NIR) pour le rendre plus lisible en ajoutant des espaces à des positions fixes.
+
+### Importation
+
+<Source dark code={`import { formatNir } from '@cnamts/synpase'
+`}/>
+
+### Utilisation
+
+<Source dark code={`// NIR sans clé
+formatNir('1234567890123')
+// '1 23 45 67 890 123'
+
+// NIR avec clé
+formatNir('123456789012345')
+// '1 23 45 67 890 123 45'
+`}/>
+
 ## Bonnes pratiques
 
 - Utilisez `formatDate` pour l'affichage des dates à l'utilisateur
