@@ -731,7 +731,6 @@
 			}
 		}
 
-		// Cas non-plage ou saisie encore incomplète : garder la validation simple
 		validateDates()
 	}
 
