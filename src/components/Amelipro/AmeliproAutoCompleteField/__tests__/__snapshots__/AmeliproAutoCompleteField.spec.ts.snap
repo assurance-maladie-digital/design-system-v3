@@ -49,6 +49,7 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with all 
   </div>
   <v-autocomplete-stub
     aria-expanded="false"
+    aria-required="true"
     autocomplete="list"
     bg-color="ap-grey-lighten-2"
     class="
@@ -116,6 +117,7 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with only
   </div>
   <v-autocomplete-stub
     aria-expanded="false"
+    aria-required="false"
     autocomplete="list"
     bg-color="ap-white"
     class="
