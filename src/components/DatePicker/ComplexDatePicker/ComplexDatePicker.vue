@@ -401,16 +401,21 @@
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
 	})
 
-	const updateSelectedDates = (date: Date | null) => {
-		if (date !== null) {
-			const validationResult = validateField(date, props.customRules, props.customWarningRules)
+	const updateSelectedDates = (
+		input: Date | Date[] | string | string[] | null | undefined,
+	) => {
+		// Conserver la validation existante uniquement pour les sélections unitaires via le calendrier
+		if (input instanceof Date) {
+			const validationResult = validateField(input, props.customRules, props.customWarningRules)
 			if (validationResult.hasError) {
 				errors.value = validationResult.state.errors
 				return
 			}
 		}
-		dateSelectionResult.updateSelectedDates(date)
-		// Validate immediately to surface messages
+
+		// Déléguer entièrement la mise à jour (y compris les plages) au composable
+		dateSelectionResult.updateSelectedDates(input)
+		// Valider immédiatement pour afficher les messages
 		queueMicrotask(() => validateDates(true))
 	}
 
@@ -717,19 +722,17 @@
 		if (props.displayRange && typeof eventOrValue === 'string') {
 			if (eventOrValue.includes(' - ')) {
 				const [startDateStr = '', endDateStr = ''] = eventOrValue.split(' - ').map(s => s.trim())
+				// Ne déléguer au composable que lorsque les deux dates sont complètes
 				if (startDateStr && endDateStr && !endDateStr.includes('_')) {
-					const startDate = parseDate(startDateStr, props.format)
-					const endDate = parseDate(endDateStr, props.format)
-					if (startDate && endDate) {
-						selectedDates.value = [startDate, endDate]
-						validateDates()
-					}
+					// Laisser useDateSelection générer toutes les dates intermédiaires
+					updateSelectedDates(eventOrValue)
+					return
 				}
 			}
 		}
-		else {
-			validateDates()
-		}
+
+		// Cas non-plage ou saisie encore incomplète : garder la validation simple
+		validateDates()
 	}
 
 	/**
