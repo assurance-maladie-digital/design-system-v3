@@ -138,6 +138,8 @@
 
 	:deep(.v-overlay__content) {
 		top: 40px;
+    left: 50% !important;
+    transform: translate(-50%);
 		z-index: 8;
 		border-radius: 4px;
 	}
