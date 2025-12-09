@@ -171,7 +171,7 @@ export const CustomValidation: Story = {
 		},
 		template: `
       <div>
-        <SyForm ref="form" v-bind="args" @submit="submitForm">
+        <SyForm ref="form" v-bind="args" @submit="submitForm" :validate-on-submit="false">
           <div class="d-flex flex-column gap-4">
             <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
             <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
@@ -199,7 +199,7 @@ export const CustomValidation: Story = {
 				code: `
 <template>
   <div>
-    <SyForm ref="form" @submit="onSubmit">
+    <SyForm ref="form" @submit="onSubmit" :validate-on-submit="false">
       <div class="d-flex flex-column gap-4">
         <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
         <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
