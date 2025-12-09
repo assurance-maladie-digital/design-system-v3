@@ -15,6 +15,20 @@ export default {
 			description: 'Active ou désactive la validation automatique lors de la soumission',
 			defaultValue: true,
 		},
+		default: {
+			description: 'Contenu du formulaire, généralement des champs de formulaire comme SyTextField, SySelect, etc.',
+			table: {
+				type: {
+					summary: `
+						{
+							'isValid': boolean,
+							'validate': () => Promise<boolean>,
+							'reset': () => void,
+							'clear': () => void
+					}`,
+				},
+			},
+		},
 	},
 	parameters: {
 		docs: {
@@ -41,9 +55,8 @@ export const Basic: Story = {
 				{ type: 'required', options: { message: 'L\'email est obligatoire' } },
 			]
 
-			const submitForm = async () => {
-				const isValid = await form.value?.validate()
-				if (isValid) {
+			const submitForm = async (e: { isValid: boolean }) => {
+				if (e.isValid) {
 					alert('Formulaire valide !')
 				}
 				else {
@@ -65,16 +78,13 @@ export const Basic: Story = {
       </SyForm>
     `,
 	}),
-	args: {
-		validateOnSubmit: true,
-	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
-      <SyForm ref="form" v-bind="args" @submit="submitForm">
+      <SyForm ref="form" @submit="onSubmit">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="name" label="Nom" required class="mb-2" />
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
@@ -138,9 +148,8 @@ export const CustomValidation: Story = {
 				{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
 			])
 
-			const submitForm = async () => {
-				const isValid = await form.value?.validate()
-				if (isValid) {
+			const submitForm = async (e: { isValid: boolean }) => {
+				if (e.isValid) {
 					alert('Inscription réussie !')
 				}
 				else {
@@ -162,7 +171,7 @@ export const CustomValidation: Story = {
 		},
 		template: `
       <div>
-        <SyForm ref="form" v-bind="args" @submit="submitForm">
+        <SyForm ref="form" v-bind="args" @submit="submitForm" :validate-on-submit="false">
           <div class="d-flex flex-column gap-4">
             <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
             <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
@@ -190,7 +199,7 @@ export const CustomValidation: Story = {
 				code: `
 <template>
   <div>
-    <SyForm ref="form" @submit="onSubmit">
+    <SyForm ref="form" @submit="onSubmit" :validate-on-submit="false">
       <div class="d-flex flex-column gap-4">
         <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
         <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
@@ -287,9 +296,8 @@ export const MixedFields: Story = {
 				{ text: 'Italie', value: 'it' },
 			]
 
-			const submitForm = async () => {
-				const isValid = await form.value?.validate()
-				if (isValid) {
+			const submitForm = async (e: { isValid: boolean }) => {
+				if (e.isValid) {
 					alert(`Formulaire valide ! Données: ${JSON.stringify(formData.value)}`)
 				}
 				else {
@@ -318,7 +326,7 @@ export const MixedFields: Story = {
 				name: 'Template',
 				code: `
 <template>
-      <SyForm ref="form" v-bind="args" @submit="submitForm">
+      <SyForm ref="form" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="formData.name" label="Nom complet" required class="mb-2" />
           <SyTextField v-model="formData.email" label="Email" :customRules="emailCustomRules" class="mb-2" />
@@ -337,16 +345,16 @@ export const MixedFields: Story = {
 		<script setup lang="ts">
 
 			const formData = ref({
-			name: '',
-			email: '',
-			country: '',
+				name: '',
+				email: '',
+				country: '',
 			})
 
 			const countries = [
-			{ text: 'France', value: 'fr' },
-			{ text: 'Allemagne', value: 'de' },
-			{ text: 'Espagne', value: 'es' },
-			{ text: 'Italie', value: 'it' },
+				{ text: 'France', value: 'fr' },
+				{ text: 'Allemagne', value: 'de' },
+				{ text: 'Espagne', value: 'es' },
+				{ text: 'Italie', value: 'it' },
 			]
 
 			const emailCustomRules = [
@@ -360,10 +368,10 @@ export const MixedFields: Story = {
 				{ type: 'required', options: { message: "L'email est obligatoire" } },
 			]
 
-			const onSubmit = (event: { isValid: boolean }) => {
-			if (event.isValid) {
-				alert('Formulaire valide ! Données: ' + JSON.stringify(formData.value))
-			}
+			const submitForm = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert('Formulaire valide ! Données: ' + JSON.stringify(formData.value))
+				}
 			}
 		</script>
 `,
@@ -386,9 +394,8 @@ export const Reset: Story = {
 				{ type: 'required', options: { message: 'L\'email est obligatoire' } },
 			]
 
-			const submitForm = async () => {
-				const isValid = await form.value?.validate()
-				if (isValid) {
+			const submitForm = async (e: { isValid: boolean }) => {
+				if (e.isValid) {
 					alert('Formulaire valide !')
 				}
 				else {
@@ -416,16 +423,13 @@ export const Reset: Story = {
       </SyForm>
     `,
 	}),
-	args: {
-		validateOnSubmit: true,
-	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
-      <SyForm ref="form" v-bind="args" @submit="submitForm" @reset="onFormReset">
+      <SyForm ref="form" @submit="submitForm" @reset="onFormReset">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="name" label="Nom" required class="mb-2" />
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
