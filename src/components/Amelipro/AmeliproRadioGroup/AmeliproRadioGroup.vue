@@ -255,12 +255,13 @@
 
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
-.list-style-none {
-		list-style: none !important;
-	}
-:global(.theme-cnam) {
 
-	--ap-blue-darken-1: #0C419A;
+.list-style-none {
+	list-style: none !important;
+}
+
+:global(.theme-cnam) {
+	--ap-blue-darken-1: #0c419a;
 	--ap-blue-lighten-3: #e2efff;
 	--ap-grey-darken-1: #434647;
 	--ap-grey-lighten-2: #76797a;
@@ -268,7 +269,6 @@
 	--ap-red: #b33f2e;
 	--ap-red-lighten4: #fdf0ee;
 	--ap-white: #fff;
-
 	--font-size-sm: 0.875rem;
 	--filter-padding-y: 0.25rem;
 	--filter-padding-x: 0.75rem;
@@ -286,7 +286,6 @@
 	--ap-red: #b33f2e;
 	--ap-red-lighten4: #ffebee;
 	--ap-white: #fff;
-
 	--font-size-sm: 0.875rem;
 	--filter-padding-y: 0.25rem;
 	--filter-padding-x: 0.75rem;
@@ -307,26 +306,26 @@ input {
 	height: 0;
 	opacity: 0;
 
-	&+span {
+	& + span {
 		position: relative;
 		cursor: pointer;
 	}
 
 	&:focus {
-		&+span {
+		& + span {
 			outline: 1px dotted var(--ap-blue-darken-1);
 		}
 	}
 
 	&:disabled {
-		&+span {
+		& + span {
 			cursor: default;
 		}
 	}
 }
 
 .amelipro-radio-group.classic input {
-	&+span {
+	& + span {
 		padding-top: 0.25rem;
 		padding-bottom: 0.25rem;
 		padding-left: 2rem;
@@ -345,7 +344,7 @@ input {
 	}
 
 	&:checked {
-		&+span {
+		& + span {
 			&::after {
 				position: absolute;
 				top: 0.45rem;
@@ -360,7 +359,7 @@ input {
 	}
 
 	&:disabled {
-		&+span {
+		& + span {
 			&::before {
 				opacity: 0.3;
 			}
@@ -378,7 +377,7 @@ input {
 	}
 
 	& input {
-		&+span {
+		& + span {
 			font-size: var(--font-size-sm);
 			font-weight: var(--filter-font-weight);
 			padding: var(--filter-padding-y) var(--filter-padding-x);
@@ -394,7 +393,7 @@ input {
 		}
 
 		&:checked {
-			&+span {
+			& + span {
 				background-color: var(--ap-blue-lighten3);
 
 				&::after {
@@ -412,7 +411,7 @@ input {
 		}
 
 		&:disabled {
-			&+span {
+			& + span {
 				background-color: var(--ap-grey-lighten2);
 				border-color: var(--ap-grey);
 

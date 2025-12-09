@@ -1,54 +1,34 @@
 <script lang="ts" setup>
-/* ============================================================
-   IMPORTS
-============================================================ */
-	import { computed, ref, watch } from 'vue'
+
+	import { computed, nextTick, onMounted, ref, watch } from 'vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
 
-	/* ============================================================
-   PROPS & EMITS
-============================================================ */
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: boolean | null
-
-			/* Affichage */
 			label?: string
 			displayAsterisk?: boolean
-
-			/* Accessibilité */
+			indeterminate?: boolean
 			ariaLabel?: string
 			ariaLabelledby?: string
 			title?: string
-
-			/* Apparence Vuetify */
 			color?: string
 			disabled?: boolean
 			readonly?: boolean
 			hideDetails?: boolean | 'auto'
 			density?: 'default' | 'comfortable' | 'compact'
-
-			/* Options générées automatiquement */
 			options?: Array<{ label: string, value: PropertyKey }>
-
-			/* Champs */
 			name?: string
 			id?: string
 			required?: boolean
-
-			/* Messages externes */
 			errorMessages?: string[] | null
 			warningMessages?: string[] | null
 			successMessages?: string[] | null
-
-			/* Règles personnalisées */
 			customRules?: ValidationRule[]
 			customWarningRules?: ValidationRule[]
 			customSuccessRules?: ValidationRule[]
-
-			/* Validation */
 			showSuccessMessages?: boolean
 			isValidateOnBlur?: boolean
 			disableErrorHandling?: boolean
@@ -57,60 +37,58 @@
 			modelValue: false,
 			label: undefined,
 			displayAsterisk: false,
-
+			indeterminate: false,
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			title: undefined,
-
 			color: 'primary',
 			disabled: false,
 			readonly: false,
 			hideDetails: 'auto',
 			density: 'default',
-
 			options: () => [],
-
 			name: undefined,
 			id: undefined,
 			required: false,
-
 			errorMessages: null,
 			warningMessages: null,
 			successMessages: null,
-
 			customRules: () => [],
 			customWarningRules: () => [],
 			customSuccessRules: () => [],
-
 			showSuccessMessages: true,
 			isValidateOnBlur: false,
 			disableErrorHandling: false,
 		},
 	)
 
-	const emit = defineEmits(['update:modelValue', 'change'])
-
-	/* ============================================================
-   v-model
-============================================================ */
+	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
 	const model = computed({
-		get: () => props.modelValue,
-		set: (value) => {
+		get() {
+			return props.modelValue
+		},
+		set(value) {
+			if (internalIndeterminate.value) {
+				internalIndeterminate.value = false
+				emit('update:indeterminate', false)
+			}
 			emit('update:modelValue', value)
 			emit('change', value)
 		},
 	})
 
-	/* ============================================================
-   LABEL COMPUTÉ
-============================================================ */
+	watch(() => props.indeterminate, (val) => {
+		internalIndeterminate.value = val
+	})
+
 	const generatedLabel = computed(() =>
 		(props.label || '') + (props.displayAsterisk ? '*' : ''),
 	)
 
-	/* ============================================================
-   VALIDATION
-============================================================ */
+	const internalIndeterminate = ref(props.indeterminate)
+
+	// Initialisation du composable de validation
+	// Variable pour suivre si le formulaire a été soumis
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
@@ -122,12 +100,12 @@
 		disableErrorHandling: props.disableErrorHandling,
 	})
 
-	/* Sync des messages externes */
-	watch(() => props.errorMessages, v => (validation.errors.value = v || []), { immediate: true })
-	watch(() => props.warningMessages, v => (validation.warnings.value = v || []), { immediate: true })
-	watch(() => props.successMessages, v => (validation.successes.value = v || []), { immediate: true })
+	// Synchronisation des messages externes
+	watch(() => props.errorMessages, value => (validation.errors.value = value || []), { immediate: true })
+	watch(() => props.warningMessages, value => (validation.warnings.value = value || []), { immediate: true })
+	watch(() => props.successMessages, value => (validation.successes.value = value || []), { immediate: true })
 
-	/* Règle required automatique */
+	// Construction des règles de validation
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{
@@ -140,8 +118,7 @@
 			: [],
 	)
 
-	/* Fonction de validation */
-	const validateField = (value: unknown) => {
+	const validateField = (value: boolean | null) => {
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
@@ -165,7 +142,6 @@
 		if (props.isValidateOnBlur) validateField(model.value)
 	}
 
-	/* Re-valider lors des changements */
 	watch(model, (newValue) => {
 		if (!props.isValidateOnBlur) {
 			const valid = validateField(newValue)
@@ -173,20 +149,15 @@
 		}
 	})
 
+	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)
 
-	/* ============================================================
-   EXPOSITION
-============================================================ */
 	defineExpose({
 		validation,
 		validateOnSubmit,
 		checkErrorOnBlur,
 	})
 
-	/* ============================================================
-   COMPUTED POUR LE TEMPLATE
-============================================================ */
 	const hasError = computed(() => validation.hasError.value)
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value)
@@ -194,11 +165,62 @@
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
+
+	const ariaChecked = computed(() => {
+		return model.value ? 'true' : 'false'
+	})
+
+	// Propriétés ARIA personnalisées pour éviter les conflits
+	const messageId = computed(() => {
+		// Don't create messageId if aria-labelledby is provided
+		if (props.ariaLabelledby) {
+			return undefined
+		}
+
+		if (props.id) {
+			return `${props.id}`
+		}
+		return undefined
+	})
+
+	const removeAriaAttributesForRadio = () => {
+		nextTick(() => {
+			// Pour aria-disabled sur les radios
+			const radioInputsDisabled = document.querySelectorAll(
+				'input[type="radio"][aria-disabled="false"]',
+			)
+			radioInputsDisabled.forEach((input) => {
+				input.removeAttribute('aria-disabled')
+			})
+
+			// Observer les futurs changements
+			const observer = new MutationObserver((mutations) => {
+				mutations.forEach(() => {
+					const newRadioInputsDisabled = document.querySelectorAll(
+						'input[type="radio"][aria-disabled="false"]',
+					)
+					newRadioInputsDisabled.forEach((input) => {
+						input.removeAttribute('aria-disabled')
+					})
+				})
+			})
+
+			observer.observe(document.body, {
+				subtree: true,
+				childList: true,
+				attributes: true,
+				attributeFilter: ['aria-disabled'],
+			})
+		})
+	}
+
+	// Appliquer la correction lors du montage du composant
+	onMounted(() => {
+		removeAriaAttributesForRadio()
+	})
+
 </script>
 
-<!-- ============================================================
-	TEMPLATE
-	============================================================ -->
 <template>
 	<v-radio-group
 		:id="props.id"
@@ -213,9 +235,10 @@
 		:readonly="props.readonly"
 		:hide-details="props.hideDetails"
 		:density="props.density"
-
 		:error="hasError"
 		:error-messages="errors"
+		:aria-checked="ariaChecked"
+		:aria-describedby="messageId"
 		:messages="
 			hasError ? errors :
 			hasWarning ? warnings :
@@ -224,7 +247,6 @@
 
 		@blur="checkErrorOnBlur"
 	>
-		<!-- Radios générées automatiquement -->
 		<v-radio
 			v-for="opt in props.options"
 			:key="opt.value"
@@ -232,25 +254,34 @@
 			:label="opt.label"
 			:disabled="props.disabled"
 		/>
-
-		<!-- Radios personnalisées via slot -->
-		<slot />
-
-		<!-- Accessibilité (message caché screen-reader) -->
+		<template
+			v-if="$slots.label"
+			#label
+		>
+			<slot name="label" />
+		</template>
+		<template
+			v-if="$slots.default"
+			#default
+		>
+			<slot />
+		</template>
 		<span
-			v-if="props.required && !props.ariaLabel && !props.ariaLabelledby"
+			v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
+			:id="messageId"
 			class="d-sr-only"
 		>
-			{{ locales.labelledbyMessage }} {{ generatedLabel }}.
+			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '') }}</span>.
 		</span>
 	</v-radio-group>
 </template>
 
-<!-- ============================================================
-	STYLES
-	============================================================ -->
 <style scoped>
 :deep(.v-selection-control--error .v-selection-control__input) {
-  color: rgb(var(--v-theme-error));
+	color: rgb(var(--v-theme-error));
+}
+
+.sb-show-main.sb-main-centered #storybook-root {
+	margin: none !important;
 }
 </style>
