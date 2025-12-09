@@ -897,10 +897,6 @@
 			if (visible) {
 				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
 				resetViewMode()
-				// En mode plage, reconstruire systématiquement la plage complète à partir
-				// du modèle externe lors de l'ouverture, afin de restaurer le
-				// surlignage complet dans le calendrier même si selectedDates a été
-				// réduit aux seules bornes ailleurs.
 				if (props.displayRange && props.modelValue) {
 					if (Array.isArray(props.modelValue) && props.modelValue.length >= 2) {
 						const [startStr, endStr] = props.modelValue
