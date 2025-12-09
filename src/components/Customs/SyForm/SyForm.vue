@@ -3,7 +3,7 @@
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
 
 	const props = withDefaults(defineProps<{
-		validateOnSubmit: boolean
+		validateOnSubmit?: boolean
 	}>(), {
 		validateOnSubmit: true,
 	})
