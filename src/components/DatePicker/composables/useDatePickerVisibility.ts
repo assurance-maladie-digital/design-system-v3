@@ -30,8 +30,6 @@ export const useDatePickerVisibility = (options: {
 		readonly = false,
 		textFieldActivator = false,
 		isDatePickerVisible,
-		isManualInputActive,
-		hasInteracted,
 		updateAccessibility,
 		validateDates,
 		emitClosed,
@@ -86,8 +84,6 @@ export const useDatePickerVisibility = (options: {
 		}
 		// Always emit the focus event
 		emitFocus()
-		isManualInputActive.value = true
-		hasInteracted.value = true
 	}
 
 	/**

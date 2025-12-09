@@ -854,8 +854,7 @@
 					}
 				}
 				else {
-					selectedDates.value = null
-					if (props.modelValue !== null) emitModel(null)
+					// Ne pas effacer selectedDates ici : tant que le champ n'est pas réellement vidé (cas déjà géré plus haut dans le watcher), on conserve la dernière sélection valide pour que le surlignage de la plage reste visible dans le calendrier.
 				}
 
 				emit('input', result.formattedValue)

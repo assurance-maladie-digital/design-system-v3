@@ -273,15 +273,26 @@ export function useInputHandler(options: InputHandlerOptions) {
 	const updateSelectedDatesFromFormattedValue = (formattedInput: string) => {
 		if (displayRange) {
 			const [startDate, endDate] = parseRangeInputForSelectedDates(formattedInput)
+			// Ne jamais effacer la sélection existante tant que l'utilisateur
+			// n'a pas réellement vidé le champ. Si la saisie est non vide mais
+			// ne permet pas encore d'extraire une date valide, on conserve
+			// selectedDates tel quel pour garder le surlignage de la dernière
+			// plage valide dans le calendrier.
 			if (startDate && endDate) {
-				selectedDates.value = [startDate, endDate]
+				// Générer toutes les dates intermédiaires pour que le calendrier
+				// affiche bien l'intégralité de la plage (et pas uniquement les
+				// bornes de début/fin).
+				const allDates = generateDateRange(startDate, endDate)
+				selectedDates.value = allDates
 			}
 			else if (startDate) {
 				selectedDates.value = [startDate, null]
 			}
-			else {
+			else if (!formattedInput || formattedInput.trim() === '') {
 				selectedDates.value = null
 			}
+			// Sinon : saisie non vide mais encore invalide/incomplète →
+			// ne pas toucher à selectedDates.
 		}
 		else {
 			const date = parseDate(formattedInput, format)
