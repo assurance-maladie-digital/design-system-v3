@@ -435,7 +435,10 @@ describe('useInputHandler', () => {
 		})
 
 		updateSelectedDatesFromFormattedValue('invalid')
-		expect(selectedDates.value).toBeNull()
+		// En mode plage, une valeur invalide mais non vide ne doit plus effacer
+		// la sélection existante : on conserve la dernière plage valide pour que
+		// le surlignage reste visible dans le calendrier.
+		expect(selectedDates.value).toEqual([expect.any(Date), null])
 	})
 
 	it('updateSelectedDatesFromFormattedValue in single mode sets a single Date or null', () => {

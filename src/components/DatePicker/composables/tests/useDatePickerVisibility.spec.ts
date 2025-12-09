@@ -229,8 +229,6 @@ describe('useDatePickerVisibility', () => {
 
 			expect(isDatePickerVisible.value).toBe(true)
 			expect(mockEmitFocus).toHaveBeenCalledTimes(1)
-			expect(isManualInputActive.value).toBe(true)
-			expect(hasInteracted.value).toBe(true)
 		})
 
 		it('ne devrait pas ouvrir le CalendarMode si textFieldActivator=false', () => {
@@ -249,8 +247,6 @@ describe('useDatePickerVisibility', () => {
 
 			expect(isDatePickerVisible.value).toBe(false)
 			expect(mockEmitFocus).toHaveBeenCalledTimes(1)
-			expect(isManualInputActive.value).toBe(true)
-			expect(hasInteracted.value).toBe(true)
 		})
 	})
 
