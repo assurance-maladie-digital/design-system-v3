@@ -143,7 +143,7 @@
 	}
 
 	.user-menu {
-    position: relative;
+		position: relative;
 		overflow-wrap: break-word;
 	}
 
