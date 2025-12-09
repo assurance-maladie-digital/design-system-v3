@@ -138,14 +138,12 @@
 
 	:deep(.v-overlay__content) {
 		top: 40px;
-		left: 50% !important;
-		transform: translateX(-50%);
 		z-index: 8;
 		border-radius: 4px;
 	}
 
 	.user-menu {
-		position: relative;
+    position: relative;
 		overflow-wrap: break-word;
 	}
 
