@@ -5,7 +5,7 @@ import { ref, watch } from 'vue'
 const meta = {
 	argTypes: {
 		'addressRules': { description: 'Liste des règles à respecter pour valider le champ' },
-        'required': {description: 'Défini que le groupe de champs est obligatoire'},
+		'required': { description: 'Défini que le groupe de champs est obligatoire' },
 		'autoCompleteList': {
 			description: 'Liste de villes et codes postaux pour l’autocomplétion',
 			table: {
@@ -53,7 +53,7 @@ type Story = StoryObj<typeof AmeliproPostalAddressField>
 
 export const Default: Story = {
 	args: {
-        required: true,
+		required: true,
 		autoCompleteList: [
 			{
 				city: 'Nantes',

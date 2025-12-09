@@ -5,7 +5,7 @@ import AmeliproTextArea from './AmeliproTextArea.vue'
 const meta = {
 	argTypes: {
 		'append': { description: 'Permet d\'ajouter un élément juste après le champ' },
-        'required': {
+		'required': {
 			default: false,
 			description: 'Défini que le champ est obligatoire',
 			name: 'aria-required',
@@ -193,7 +193,7 @@ export const Required: Story = {
 	args: {
 		label: 'Champ obligatoire',
 		uniqueId: 'text-area-required',
-        required: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [

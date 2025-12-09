@@ -5,7 +5,7 @@
 	import { ref } from 'vue'
 
 	interface IAmeliproUploadProps {
-		ariaRequired?: boolean
+    required?: boolean
 		disabled?: boolean
 		errorMessages?: ErrorMessages
 		fileTypeAccepted: string[]
@@ -39,7 +39,7 @@
 	})
 
 	const dataSetC = (): IAmeliproUploadProps => ({
-		ariaRequired: true,
+    required: true,
 		errorMessages,
 		fileTypeAccepted: ['application/pdf', 'image/jpeg'],
 		maxFileNumber: 5,
@@ -73,9 +73,9 @@
 			</button>
 			-
 			<label><input
-				v-model="dataTest.ariaRequired"
+          v-model="dataTest.required"
 				type="checkbox"
-			> ariaRequired</label>
+      > required</label>
 		</p>
 		<div class="component-wrapper">
 			<AmeliproUpload

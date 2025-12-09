@@ -6,7 +6,7 @@ describe('AmeliproPostalAddressField', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPostalAddressField, {
 			props: {
-                required: true,
+				required: true,
 				uniqueId: 'the-groupId',
 				groupLabel: 'the-groupLabel',
 				modelValue: {

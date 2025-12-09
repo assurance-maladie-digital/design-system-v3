@@ -23,7 +23,7 @@
 	}
 
 	const props = defineProps({
-    required: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -359,7 +359,7 @@
 	const validationRules = computed<ValidationRule[]>(() => {
 		const rules = [...props.rules]
 
-    if (props.required) {
+		if (props.required) {
 			rules.push(isRequiredFn(props.errorMessages))
 		}
 
@@ -410,7 +410,7 @@
 	// }
 
 	// --- Watchers ---
-watch(() => props.required, () => {
+	watch(() => props.required, () => {
 		internalValidate()
 	})
 
@@ -477,7 +477,7 @@ watch(() => props.required, () => {
 				:accept="fileTypeAccepted.join(',')"
 				:aria-describedby="describedby"
 				:aria-invalid="hasError"
-        :required="required"
+				:required="required"
 				:clearable="false"
 				density="compact"
 				:disabled="disabled"

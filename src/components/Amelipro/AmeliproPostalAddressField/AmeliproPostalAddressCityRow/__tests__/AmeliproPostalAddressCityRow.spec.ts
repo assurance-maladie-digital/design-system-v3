@@ -6,7 +6,7 @@ describe('AmeliproPostalAddressCityRow', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPostalAddressCityRow, {
 			props: {
-                required: true,
+				required: true,
 				autoCompleteList: [
 					{
 						city: 'Nantes',

@@ -4,7 +4,7 @@ import AmeliproAutoCompleteField from './AmeliproAutoCompleteField.vue'
 
 const meta = {
 	argTypes: {
-        'required': {description: 'Défini le champ comme étant obligatoire'},
+		'required': { description: 'Défini le champ comme étant obligatoire' },
 		'classes': { description: 'Permet d’ajouter des classes au wrapper du composant' },
 		'disabled': { description: 'Défini le champ comme désactivé' },
 		'globalMaxWidth': { description: 'Gère la largeur maximale du composant, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
@@ -226,7 +226,7 @@ export const MasquerErreur: Story = {
 		items,
 		label: 'Masquage du message d’erreur',
 		uniqueId: 'amelipro-auto-complete-field-hide-error',
-        required: true,
+		required: true,
 		hideErrorMessage: true,
 	},
 	parameters: {
@@ -491,7 +491,7 @@ export const Required: Story = {
 		items,
 		label: 'Champ obligatoire',
 		uniqueId: 'amelipro-auto-complete-field-required',
-        required: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
@@ -530,7 +530,7 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-        template: `<p>Le champ est obligatoire grâce à la prop <code>required</code>.</p>
+		template: `<p>Le champ est obligatoire grâce à la prop <code>required</code>.</p>
 <AmeliproAutoCompleteField
 	v-bind="args"
 	v-model="model"
@@ -594,7 +594,7 @@ export const Validation: Story = {
 		items,
 		label: 'Validation personnalisée',
 		uniqueId: 'amelipro-auto-complete-field-validation',
-        required: true,
+		required: true,
 		rules: [
 			v => (v ? typeof v === 'string' && v.startsWith('B') : true) || 'La valeur doit commencer par "B"',
 		],

@@ -6,7 +6,7 @@ import type { SelectItem } from './types'
 const meta = {
 	argTypes: {
 		'append': { description: 'Slot permettant d’ajouter des éléments à la suite du champs (à droite)' },
-        'required': {description: 'Passe le select en required'},
+		'required': { description: 'Passe le select en required' },
 		'classes': { description: 'classes css à ajouter au container du composant' },
 		'clearable': { description: 'Rends le select "clearable"' },
 		'disabled': { description: 'Desactive le select' },
@@ -219,7 +219,7 @@ export const Required: Story = {
 		items,
 		label: 'Select obligatoire',
 		uniqueId: 'amelipro-select-required',
-        required: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
@@ -262,7 +262,7 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-        template: `<p class="mb-2">Le select est obligatoire grâce à la prop <code>required</code>.</p>
+		template: `<p class="mb-2">Le select est obligatoire grâce à la prop <code>required</code>.</p>
 <AmeliproSelect v-bind="args" v-model="model" />`,
 	}),
 }

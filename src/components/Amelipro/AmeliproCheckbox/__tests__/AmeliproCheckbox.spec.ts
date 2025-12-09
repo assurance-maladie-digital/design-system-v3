@@ -10,7 +10,7 @@ import TestHelper from '@tests/helpers/TestHelper'
 import { attachToApp } from '@tests/helpers/utils'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproCheckbox> = {
-    required: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -59,7 +59,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproCheckbox> => ({
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproCheckbox> => ({
-    required: true,
+	required: true,
 	checkbox: {
 		description: 'Modified checkbox description',
 		label: 'Modified checkbox label',
@@ -146,7 +146,7 @@ describe('AmeliproCheckbox', () => {
 			let componentWrapper = wrapper.findComponent(AmeliproMessage)
 			expect(componentWrapper.exists()).toBe(false)
 
-            await wrapper.setProps({required: true})
+			await wrapper.setProps({ required: true })
 			await wrapper.find('[role="checkbox"]').trigger('click')
 			await wrapper.find('[role="checkbox"]').trigger('click')
 			componentWrapper = wrapper.findComponent(AmeliproMessage)
@@ -165,7 +165,7 @@ describe('AmeliproCheckbox', () => {
 			expect(elementWrapper.exists()).toBe(true)
 			expect(elementWrapper.attributes('class')).toContain('text-ap-grey')
 
-            await wrapper.setProps({disabled: false, required: true})
+			await wrapper.setProps({ disabled: false, required: true })
 			await wrapper.find('[role="checkbox"]').trigger('click')
 			await wrapper.find('[role="checkbox"]').trigger('click')
 			expect(elementWrapper.exists()).toBe(true)

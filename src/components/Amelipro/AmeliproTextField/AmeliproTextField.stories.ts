@@ -5,10 +5,10 @@ import AmeliproTextField from './AmeliproTextField.vue'
 const meta = {
 	argTypes: {
 		'append': { description: 'Permet d\'ajouter un élément juste après le champ' },
-        'required': {
+		'required': {
 			default: false,
 			description: 'Défini que le champ est obligatoire',
-            name: 'required',
+			name: 'required',
 			type: 'boolean',
 		},
 		'classes': { description: 'Classes à appliquer à la racine du composant' },
@@ -101,7 +101,7 @@ export const Default: Story = {
 
 export const Date: Story = {
 	args: {
-        required: true,
+		required: true,
 		label: 'Mon label',
 		maxDate: '2024-02-20',
 		minDate: '2024-01-20',
@@ -160,7 +160,7 @@ export const Date: Story = {
 
 export const Number: Story = {
 	args: {
-        required: true,
+		required: true,
 		label: 'Mon label',
 		maxNumber: '10',
 		minNumber: '0',
@@ -736,7 +736,7 @@ export const Required: Story = {
 		label: 'Champ requis',
 		modelValue: '',
 		uniqueId: 'text-required',
-        required: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [

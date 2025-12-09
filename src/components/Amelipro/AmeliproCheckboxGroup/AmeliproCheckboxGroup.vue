@@ -4,7 +4,7 @@
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 
 	const props = defineProps({
-    required: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -97,7 +97,7 @@
 		return undefined
 	}
 
-  const isSingleRequiredErrorMessage = () => props.required === true && currentValue.value.filter(item => item.isChecked).length < 1
+	const isSingleRequiredErrorMessage = () => props.required === true && currentValue.value.filter(item => item.isChecked).length < 1
 	const isMultipleRequiredErrorMessage = () => props.multipleRequired === true && currentValue.value.filter(item => item.isChecked).length < 2
 
 	const error = computed<string>(() => {
@@ -149,14 +149,14 @@
 					</slot>
 
 					<span
-              v-if="required || multipleRequired"
+						v-if="required || multipleRequired"
 						aria-hidden="true"
 						class="d-inline-flex"
 					>
 						&nbsp;*
 					</span>
 					<span
-              v-if="required || multipleRequired"
+						v-if="required || multipleRequired"
 						class="d-sr-only"
 					>
 						&nbsp;Champ obligatoire
@@ -171,7 +171,7 @@
 				:aria-disabled="disabled ? true : undefined"
 				:aria-invalid="checkErrorCondition ? true : undefined"
 				:aria-labelledby="uniqueId"
-        :required="required"
+				:required="required"
 				class="amelipro-checkbox-group__wrapper"
 				:class="{
 					'mt-1 mt-md-0': fullHorizontal && !pills,

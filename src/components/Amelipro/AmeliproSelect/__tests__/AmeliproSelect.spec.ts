@@ -47,7 +47,7 @@ const VSelectStub = defineComponent({
 			type: String,
 			default: undefined,
 		},
-        required: {
+		required: {
 			type: [Boolean, String],
 			default: false,
 		},
@@ -93,7 +93,7 @@ config.global.stubs = config.global.stubs || {}
 config.global.stubs.VSelect = VSelectStub
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproSelect> = {
-    required: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -195,7 +195,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproSelect> => ({
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproSelect> => ({
-    required: true,
+	required: true,
 	classes: 'modified-classes',
 	clearable: true,
 	disabled: true,
@@ -283,11 +283,11 @@ describe('AmeliproSelect', () => {
 		})
 
 		describe('main div', () => {
-            it('prop required sets display of span', async () => {
+			it('prop required sets display of span', async () => {
 				expect(vueWrapper.findAll('.amelipro-select__label span').length).toBe(0)
 
-                const {required} = modifiedPropValues()
-                await vueWrapper.setProps({required})
+				const { required } = modifiedPropValues()
+				await vueWrapper.setProps({ required })
 				expect(vueWrapper.findAll('.amelipro-select__label span').length).toBe(3)
 			})
 
@@ -395,10 +395,10 @@ describe('AmeliproSelect', () => {
 				expect(vueWrapper.findComponent(VSelectStub).props('readonly')).toBe(testHelper.modified('readonly'))
 			})
 
-            it('prop required sets attribute required', async () => {
-                expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('false')
-                await vueWrapper.setProps({required: testHelper.modified('required')})
-                expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('true')
+			it('prop required sets attribute required', async () => {
+				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('false')
+				await vueWrapper.setProps({ required: testHelper.modified('required') })
+				expect(vueWrapper.findComponent(VSelectStub).attributes('aria-required')).toBe('true')
 			})
 
 			it('props inputMinWidth & inputMaxWidth set attribute style', async () => {
@@ -410,9 +410,9 @@ describe('AmeliproSelect', () => {
 				expect(vueWrapper.findComponent(VSelectStub).attributes('style')).toBe(`max-width: ${testHelper.modified('inputMaxWidth')}; min-width: ${testHelper.modified('inputMinWidth')};`)
 			})
 
-            it('props required & rules set prop rules', async () => {
+			it('props required & rules set prop rules', async () => {
 				expect(vueWrapper.findComponent(VSelectStub).props('rules')).toEqual([])
-                await vueWrapper.setProps({required: testHelper.modified('required')})
+				await vueWrapper.setProps({ required: testHelper.modified('required') })
 				expect(vueWrapper.findComponent(VSelectStub).props('rules')).toEqual(['mocked-is-required'])
 			})
 		})
@@ -453,7 +453,7 @@ describe('AmeliproSelect', () => {
 		it('computes bgColor correctly based on props', () => {
 			vueWrapper = mount(AmeliproSelect, {
 				props: {
-                    required: true,
+					required: true,
 					bgWhite: true,
 					disabled: true,
 					items: [{ title: 'option 1', value: 'Option1' }],
