@@ -165,6 +165,8 @@ const meta = {
 				defaultValue: { summary: 'undefined (fallback: id | objet complet)' },
 			},
 		},
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'header.<columnKey>': {
 			description: 'Slot permettant de personnaliser le rendu de l\'en-tête d\'une colonne spécifique. Remplacer `<columnKey>` par la clé de la colonne souhaitée.',
 			control: undefined,
@@ -4245,6 +4247,7 @@ export const SlotHeader: Story = {
 				email: 'camille.rousseau@exemple.com',
 			},
 		],
+		'suffix': 'slot-header-table',
 		'onUpdate:options': fn(),
 	},
 	render: (args) => {
