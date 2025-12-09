@@ -137,9 +137,9 @@
 	}
 
 	:deep(.v-overlay__content) {
-		top: 40px;
-		left: -200px;
-		transform-origin: left top 0;
+    top:40px;
+    left: 50% !important;
+    transform: translateX(-50%);
 		z-index: 8;
 		border-radius: 4px;
 	}
