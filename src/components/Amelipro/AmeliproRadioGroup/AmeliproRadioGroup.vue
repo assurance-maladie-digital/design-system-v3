@@ -256,44 +256,6 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
 
-.list-style-none {
-	list-style: none !important;
-}
-
-:global(.theme-cnam) {
-	--ap-blue-darken-1: #0c419a;
-	--ap-blue-lighten-3: #e2efff;
-	--ap-grey-darken-1: #434647;
-	--ap-grey-lighten-2: #76797a;
-	--ap-grey: #545859;
-	--ap-red: #b33f2e;
-	--ap-red-lighten4: #fdf0ee;
-	--ap-white: #fff;
-	--font-size-sm: 0.875rem;
-	--filter-padding-y: 0.25rem;
-	--filter-padding-x: 0.75rem;
-	--filter-radius: 20px;
-	--filter-font-weight: 600;
-	--label-font-weight: 600;
-}
-
-:global(.theme-ap) {
-	--ap-blue-darken-1: #00749c;
-	--ap-blue-lighten-3: #e2efff;
-	--ap-grey-darken-1: #1a1b1b;
-	--ap-grey-lighten-2: #dddede;
-	--ap-grey: #545859;
-	--ap-red: #b33f2e;
-	--ap-red-lighten4: #ffebee;
-	--ap-white: #fff;
-	--font-size-sm: 0.875rem;
-	--filter-padding-y: 0.25rem;
-	--filter-padding-x: 0.75rem;
-	--filter-radius: 20px;
-	--filter-font-weight: 600;
-	--label-font-weight: 600;
-}
-
 .margin-label {
 	@media #{apTokens.$media-up-md} {
 		margin-top: 3px;
@@ -313,7 +275,7 @@ input {
 
 	&:focus {
 		& + span {
-			outline: 1px dotted var(--ap-blue-darken-1);
+			outline: 1px dotted apTokens.$ap-grey-darken1;
 		}
 	}
 
@@ -337,7 +299,7 @@ input {
 			width: 1.625rem;
 			height: 1.625rem;
 			border-radius: 50%;
-			border: 3px solid var(--ap-blue-darken-1);
+			border: 3px solid apTokens.$ap-blue-darken1;
 			background-color: transparent;
 			content: '';
 		}
@@ -352,7 +314,7 @@ input {
 				width: 0.825rem;
 				height: 0.825rem;
 				border-radius: 50%;
-				background-color: var(--ap-blue-darken-1);
+				background-color: apTokens.$ap-blue-darken1;
 				content: '';
 			}
 		}
@@ -378,23 +340,23 @@ input {
 
 	& input {
 		& + span {
-			font-size: var(--font-size-sm);
-			font-weight: var(--filter-font-weight);
-			padding: var(--filter-padding-y) var(--filter-padding-x);
-			border-radius: var(--filter-radius);
-			border: 1px solid var(--ap-blue-darken-1);
-			background-color: var(--ap-white);
-			color: var(--ap-blue-darken-1);
+			font-size: apTokens.$font-size-sm;
+			font-weight: apTokens.$filter-font-weight;
+			padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
+			border-radius: apTokens.$filter-radius;
+			border: 1px solid apTokens.$ap-blue-darken1;
+			background-color: apTokens.$ap-white;
+			color: apTokens.$ap-blue-darken1;
 
 			&.radio-group__item-label-span-error {
-				background-color: var(--ap-red-lighten4);
-				border-color: var(--ap-red);
+				background-color: apTokens.$ap-red-lighten4;
+				border-color: apTokens.$ap-red;
 			}
 		}
 
 		&:checked {
 			& + span {
-				background-color: var(--ap-blue-lighten3);
+				background-color: apTokens.$ap-blue-lighten3;
 
 				&::after {
 					position: absolute;
@@ -402,8 +364,8 @@ input {
 					left: 0.75rem;
 					width: 1rem;
 					height: 0.5rem;
-					border-bottom: 2px solid var(--ap-blue-darken-1);
-					border-left: 2px solid var(--ap-blue-darken-1);
+					border-bottom: 2px solid apTokens.$ap-blue-darken1;
+					border-left: 2px solid apTokens.$ap-blue-darken1;
 					transform: rotate(-50deg);
 					content: '';
 				}
@@ -412,12 +374,12 @@ input {
 
 		&:disabled {
 			& + span {
-				background-color: var(--ap-grey-lighten2);
-				border-color: var(--ap-grey);
+				background-color: apTokens.$ap-grey-lighten2;
+				border-color: apTokens.$ap-grey;
 
 				&::after {
-					border-bottom-color: var(--ap-grey-darken1);
-					border-left-color: var(--ap-grey-darken1);
+					border-bottom-color: apTokens.$ap-grey-darken1;
+					border-left-color: apTokens.$ap-grey-darken1;
 				}
 			}
 		}
@@ -425,6 +387,6 @@ input {
 }
 
 .radio-group__label {
-	font-weight: var(--label-font-weight);
+	font-weight: apTokens.$label-font-weight;
 }
 </style>
