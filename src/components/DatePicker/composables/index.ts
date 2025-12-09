@@ -4,6 +4,7 @@
 export { useDateInputEditing } from './useDateInputEditing'
 export { useDateRangeInput } from './useDateRangeInput'
 export { useDateAutoClamp } from './useDateAutoClamp'
+export { useDateTextField } from './useDateTextField'
 
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'
@@ -22,3 +23,6 @@ export { useTodayButton } from './useTodayButton'
 export { useWeekendDays } from './useWeekendDays'
 export { useMonthButtonCustomization } from './useMonthButtonCustomization'
 export { useAsteriskDisplay } from './useAsteriskDisplay'
+export { useDatePickerState } from './useDatePickerState'
+export { useHolidayHighlighting } from './useHolidayHighlighting'
+export * from './useCalendarKeyboardNavigation'
