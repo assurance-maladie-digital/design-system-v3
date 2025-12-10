@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
 import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup/SyRadioGroup.vue'
+import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SyRadioGroup> = {
 	title: 'Composants/Formulaires/SyRadioGroup',
@@ -52,12 +53,13 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		label: 'Choisissez une option',
-		options: [
+		'label': 'Choisissez une option',
+		'options': [
 			{ label: 'Option A', value: 'a' },
 			{ label: 'Option B', value: 'b' },
 			{ label: 'Option C', value: 'c' },
 		],
+		'onUpdate:modelValue': fn(),
 	},
 
 	render: args => ({
@@ -68,6 +70,120 @@ export const Default: Story = {
 		},
 		template: `
       <SyRadioGroup v-model="selected" v-bind="args" />
+    `,
+	}),
+}
+
+export const ValidationRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyRadioGroup
+    v-model="selected"
+    :options="options"
+    label="Choisissez une option"
+    :custom-rules="rules"
+    :is-validate-on-blur="false"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const selected = ref(null)
+
+const options = [
+  { label: 'Option A', value: 'A' },
+  { label: 'Option B', value: 'B' },
+]
+
+const rules = [
+  {
+    type: 'custom',
+    options: {
+      message: 'Vous devez sélectionner une option.',
+      validate: (value) => value != null,
+    },
+  },
+]
+</script>`,
+			},
+			{
+				name: 'Script',
+				code: `
+// Composition API
+export default {
+  setup() {
+    const selected = ref(null)
+
+    const options = [
+      { label: 'Option A', value: 'A' },
+      { label: 'Option B', value: 'B' },
+    ]
+
+    const rules = [
+      {
+        type: 'custom',
+        options: {
+          message: 'Vous devez sélectionner une option.',
+          validate: (value) => value != null,
+        },
+      },
+    ]
+
+    return {
+      selected,
+      options,
+      rules,
+    }
+  }
+}`,
+			},
+		],
+		docs: {
+			description: {
+				story: `
+### Groupe de boutons radio avec validation personnalisée  
+Ce groupe de boutons radio utilise une validation personnalisée pour vérifier qu'une option est sélectionnée.
+        `,
+			},
+		},
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref(null)
+
+			return {
+				args,
+				selected,
+				options: [
+					{ label: 'Option A', value: 'A' },
+					{ label: 'Option B', value: 'B' },
+				],
+				rules: [
+					{
+						type: 'custom',
+						options: {
+							message: 'Vous devez sélectionner une option.',
+							validate: (value: string | null) => value != null,
+						},
+					},
+				],
+			}
+		},
+		template: `
+      <SyRadioGroup
+        v-model="selected"
+        :options="options"
+        label="Choisissez une option"
+        :custom-rules="rules"
+        :is-validate-on-blur="false"
+      />
     `,
 	}),
 }
@@ -242,4 +358,38 @@ Le composant SyRadioGroup prend en charge différentes densités pour s'adapter 
       </div>
     `,
 	}),
+}
+
+export const Readonly: Story = {
+	args: {
+		readonly: true,
+		options: [
+			{ label: 'Option A', value: 'a' },
+		],
+	},
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref('a')
+			return { args, selected }
+		},
+		template: `<SyRadioGroup v-model="selected" v-bind="args" label="Radio en lecture seule" />`,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyRadioGroup v-model="selected" v-bind="args" label="Radio en lecture seule" />`,
+			},
+		],
+		docs: {
+			description: {
+				story: `
+### VRadio en lecture seule
+Ce button radio est en lecture seule et ne peut pas être modifiée par l'utilisateur, mais elle n'est pas visuellement désactivée comme la version disabled.
+				`,
+			},
+		},
+	},
+
 }

@@ -7,10 +7,9 @@
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: boolean | null
+			modelValue?: PropertyKey | null
 			label?: string
 			displayAsterisk?: boolean
-			indeterminate?: boolean
 			ariaLabel?: string
 			ariaLabelledby?: string
 			title?: string
@@ -34,10 +33,9 @@
 			disableErrorHandling?: boolean
 		}>(),
 		{
-			modelValue: false,
+			modelValue: null,
 			label: undefined,
 			displayAsterisk: false,
-			indeterminate: false,
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			title: undefined,
@@ -62,30 +60,20 @@
 		},
 	)
 
-	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
+	const emit = defineEmits(['update:modelValue', 'change'])
 	const model = computed({
 		get() {
 			return props.modelValue
 		},
 		set(value) {
-			if (internalIndeterminate.value) {
-				internalIndeterminate.value = false
-				emit('update:indeterminate', false)
-			}
 			emit('update:modelValue', value)
 			emit('change', value)
 		},
 	})
 
-	watch(() => props.indeterminate, (val) => {
-		internalIndeterminate.value = val
-	})
-
 	const generatedLabel = computed(() =>
 		(props.label || '') + (props.displayAsterisk ? '*' : ''),
 	)
-
-	const internalIndeterminate = ref(props.indeterminate)
 
 	// Initialisation du composable de validation
 	// Variable pour suivre si le formulaire a été soumis
@@ -118,8 +106,20 @@
 			: [],
 	)
 
-	const validateField = (value: boolean | null) => {
+	const validateField = (value: PropertyKey | null) => {
 		if (props.readonly) {
+			validation.clearValidation()
+			return true
+		}
+
+		if (value === null && !props.required) {
+			validation.clearValidation()
+			return true
+		}
+
+		if (value != null && props.customRules.every(rule =>
+			rule.type === 'custom',
+		)) {
 			validation.clearValidation()
 			return true
 		}
@@ -139,23 +139,28 @@
 	}
 
 	const checkErrorOnBlur = () => {
-		if (props.isValidateOnBlur) validateField(model.value)
+		validateField(model.value)
 	}
 
 	watch(model, (newValue) => {
 		if (!props.isValidateOnBlur) {
-			const valid = validateField(newValue)
-			if (valid) validation.clearValidation()
+			// Si le formulaire a été soumis et que la valeur change, on valide à nouveau
+			if (isSubmitted.value) {
+				const isValid = validateField(newValue)
+				if (isValid) {
+					// La validation a réussi, effacer les erreurs
+					validation.clearValidation()
+				}
+			}
+			else {
+				// Comportement normal (hors soumission)
+				const isValid = validateField(newValue)
+				// Si la validation réussit, s'assurer que les erreurs sont effacées
+				if (isValid && validation.hasError.value) {
+					validation.clearValidation()
+				}
+			}
 		}
-	})
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
-
-	defineExpose({
-		validation,
-		validateOnSubmit,
-		checkErrorOnBlur,
 	})
 
 	const hasError = computed(() => validation.hasError.value)
@@ -219,6 +224,30 @@
 		removeAriaAttributesForRadio()
 	})
 
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
+
+	const toggleMixed = () => {
+		if (!props.readonly && !props.disabled) {
+			if (model.value) {
+				// Émettre l'événement update:modelValue directement
+				emit('update:modelValue', false)
+				emit('change', false)
+			}
+			else {
+				// Émettre l'événement update:modelValue directement
+				emit('update:modelValue', true)
+				emit('change', true)
+			}
+		}
+	}
+
+	defineExpose({
+		validation,
+		validateOnSubmit,
+		checkErrorOnBlur,
+	})
+
 </script>
 
 <template>
@@ -239,12 +268,11 @@
 		:error-messages="errors"
 		:aria-checked="ariaChecked"
 		:aria-describedby="messageId"
-		:messages="
-			hasError ? errors :
+		:messages="hasError ? errors :
 			hasWarning ? warnings :
 			(hasSuccess && props.showSuccessMessages ? successes : [])
 		"
-
+		@click="toggleMixed"
 		@blur="checkErrorOnBlur"
 	>
 		<v-radio
@@ -271,7 +299,8 @@
 			:id="messageId"
 			class="d-sr-only"
 		>
-			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '') }}</span>.
+			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
+			}}</span>.
 		</span>
 	</v-radio-group>
 </template>
