@@ -132,13 +132,21 @@
 		return '2px'
 	})
 
-	watchEffect(() => {
-		if (!themeIcon.value || !themeIconContainerRef.value) {
-			return
-		}
+	function stringToSvgNode(svgString: string): SVGElement | null {
+		const parser = new DOMParser()
+		const doc = parser.parseFromString(svgString, 'image/svg+xml')
+		const svg = doc.querySelector('svg')
+		return svg ? svg.cloneNode(true) as SVGElement : null
+	}
 
-		// Assign the SVG markup to innerHTML to preserve existing rendering behavior
-		themeIconContainerRef.value.innerHTML = String(themeIcon.value)
+	watchEffect(() => {
+		if (!themeIcon.value || !themeIconContainerRef.value) return
+		// Nettoyer l'ancien contenu
+		themeIconContainerRef.value.innerHTML = ''
+		const svgNode = stringToSvgNode(themeIcon.value)
+		if (svgNode) {
+			themeIconContainerRef.value.appendChild(svgNode)
+		}
 	})
 </script>
 
