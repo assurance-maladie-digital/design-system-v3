@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
 import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
-import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SyRadioGroup> = {
 	title: 'Composants/Formulaires/SyRadioGroup',
@@ -53,13 +52,13 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		'label': 'Choisissez une option',
-		'options': [
+		label: 'Choisissez une option',
+		options: [
 			{ label: 'Option A', value: 'a' },
 			{ label: 'Option B', value: 'b' },
 			{ label: 'Option C', value: 'c' },
 		],
-		'onUpdate:modelValue': fn(),
+		showSuccessMessages: false,
 	},
 
 	render: args => ({
@@ -84,7 +83,7 @@ export const ValidationRules: Story = {
   <SyRadioGroup
     v-model="selected"
     :options="options"
-    label="Choisissez une option"
+    label="Options"
     :custom-rules="rules"
     :is-validate-on-blur="false"
   />
@@ -179,8 +178,8 @@ Ce groupe de boutons radio utilise une validation personnalisée pour vérifier 
 		template: `
       <SyRadioGroup
         v-model="selected"
+		label="Options"
         :options="options"
-        label="Choisissez une option"
         :custom-rules="rules"
         :is-validate-on-blur="false"
       />
@@ -240,15 +239,15 @@ export const CustomColors: Story = {
 				name: 'Template',
 				code: `
 <div>
-        <SyRadioGroup v-model="value1" color="primary" label="Couleur primaire (par défaut)" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+        <SyRadioGroup v-model="value1" color="primary" label="Couleur primaire (par défaut)" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false"
         />
-        <SyRadioGroup v-model="value2" color="secondary" label="Couleur secondaire" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+        <SyRadioGroup v-model="value2" color="secondary" label="Couleur secondaire" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false"
         />
-        <SyRadioGroup v-model="value3" color="success" label="Couleur succès" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+        <SyRadioGroup v-model="value3" color="success" label="Couleur succès" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false"
         />
-		  <SyRadioGroup v-model="value4" color="error" label="Couleur erreur" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  <SyRadioGroup v-model="value4" color="error" label="Couleur erreur" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false"
         />
-		  <SyRadioGroup v-model="value5" color="warning" label="Couleur avertissement" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  <SyRadioGroup v-model="value5" color="warning" label="Couleur avertissement" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false"
         />
       </div>
 	`,
@@ -275,15 +274,15 @@ Le composant SyRadioGroup peut être personnalisé avec différentes couleurs po
 		},
 		template: `
 			<div>
-        <SyRadioGroup v-model="value1" color="primary" label="Couleur primaire (par défaut)" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+        <SyRadioGroup v-model="value1" color="primary" label="Couleur primaire (par défaut)" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false" 
         />
-        <SyRadioGroup v-model="value2" color="secondary" label="Couleur secondaire" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+        <SyRadioGroup v-model="value2" color="secondary" label="Couleur secondaire" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"  :show-success-messages="false" 
         />
-        <SyRadioGroup v-model="value3" color="success" label="Couleur succès" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+        <SyRadioGroup v-model="value3" color="success" label="Couleur succès" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false" 
         />
-		  <SyRadioGroup v-model="value4" color="error" label="Couleur erreur" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  <SyRadioGroup v-model="value4" color="error" label="Couleur erreur" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false" 
         />
-		  <SyRadioGroup v-model="value5" color="warning" label="Couleur avertissement" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  <SyRadioGroup v-model="value5" color="warning" label="Couleur avertissement" :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" :show-success-messages="false" 
         />
       </div>
 		`,
@@ -302,18 +301,21 @@ export const DifferentDensities: Story = {
           density="default"
           label="Default density"
           :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  :show-success-messages="false" 
         />
         <SyRadioGroup
           v-model="val2"
           density="comfortable"
           label="Comfortable"
           :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  :show-success-messages="false" 
         />
         <SyRadioGroup
           v-model="val3"
           density="compact"
           label="Compact"
           :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  :show-success-messages="false" 
         />
       </div>`,
 			},
@@ -342,18 +344,21 @@ Le composant SyRadioGroup prend en charge différentes densités pour s'adapter 
           density="default"
           label="Default density"
           :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  :show-success-messages="false" 
         />
         <SyRadioGroup
           v-model="val2"
           density="comfortable"
           label="Comfortable"
           :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  :show-success-messages="false" 
         />
         <SyRadioGroup
           v-model="val3"
           density="compact"
           label="Compact"
           :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"
+		  :show-success-messages="false" 
         />
       </div>
     `,
