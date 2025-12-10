@@ -5,6 +5,7 @@ exports[`AmeliproDialog > Snapshots > renders the component with all properties 
   absolute="false"
   activatorprops="[object Object]"
   attach="false"
+  capturefocus="true"
   class=""
   closeonback="true"
   closeoncontentclick="false"
@@ -25,6 +26,7 @@ exports[`AmeliproDialog > Snapshots > renders the component with all properties 
   scrollstrategy="none"
   sticktotarget="false"
   transition="[object Object]"
+  viewportmargin="12"
   width="700px"
   zindex="2400"
 ></v-dialog-stub>
@@ -35,6 +37,7 @@ exports[`AmeliproDialog > Snapshots > renders the component with only required p
   absolute="false"
   activatorprops="[object Object]"
   attach="false"
+  capturefocus="true"
   class="dialog-radius"
   closeonback="true"
   closeoncontentclick="false"
@@ -55,6 +58,7 @@ exports[`AmeliproDialog > Snapshots > renders the component with only required p
   scrollstrategy="none"
   sticktotarget="false"
   transition="[object Object]"
+  viewportmargin="12"
   width="800px"
   zindex="2400"
 ></v-dialog-stub>

@@ -156,7 +156,6 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               </div>
             </div>
             <div class="v-field__prepend-inner">
-              <!---->
               <!-- v-if -->
               <!-- v-if -->
             </div>
@@ -166,11 +165,13 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-2"
+                id="input-v-2-label"
               >
                 <!---->
                 Caractères de l’audio
@@ -179,6 +180,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               <input
                 aria-describedby="input-v-2-messages"
                 aria-label="Caractères de l’audio"
+                aria-labelledby="input-v-2-label"
                 autocomplete="off"
                 class="v-field__input"
                 id="input-v-2"
@@ -193,7 +195,6 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               <!-- v-if -->
               <!-- v-if -->
               <!-- v-if -->
-              <!---->
             </div>
             <div class="v-field__outline">
               <div class="v-field__outline__start"></div>
@@ -549,7 +550,6 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               </div>
             </div>
             <div class="v-field__prepend-inner">
-              <!---->
               <!-- v-if -->
               <!-- v-if -->
             </div>
@@ -559,11 +559,13 @@ exports[`Captcha > renders correctly in image mode 1`] = `
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-1"
+                id="input-v-1-label"
               >
                 <!---->
                 Caractères de l’image
@@ -572,6 +574,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               <input
                 aria-describedby="input-v-1-messages"
                 aria-label="Caractères de l’image"
+                aria-labelledby="input-v-1-label"
                 autocomplete="off"
                 class="v-field__input"
                 id="input-v-1"
@@ -586,7 +589,6 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               <!-- v-if -->
               <!-- v-if -->
               <!-- v-if -->
-              <!---->
             </div>
             <div class="v-field__outline">
               <div class="v-field__outline__start"></div>
