@@ -107,19 +107,14 @@
 	)
 
 	const validateField = (value: PropertyKey | null) => {
+		// const stringValue = value != null ? String(value) : null
+
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
 		}
 
 		if (value === null && !props.required) {
-			validation.clearValidation()
-			return true
-		}
-
-		if (value != null && props.customRules.every(rule =>
-			rule.type === 'custom',
-		)) {
 			validation.clearValidation()
 			return true
 		}
@@ -162,7 +157,6 @@
 			}
 		}
 	})
-
 	const hasError = computed(() => validation.hasError.value)
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value)
@@ -227,21 +221,6 @@
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)
 
-	const toggleMixed = () => {
-		if (!props.readonly && !props.disabled) {
-			if (model.value) {
-				// Émettre l'événement update:modelValue directement
-				emit('update:modelValue', false)
-				emit('change', false)
-			}
-			else {
-				// Émettre l'événement update:modelValue directement
-				emit('update:modelValue', true)
-				emit('change', true)
-			}
-		}
-	}
-
 	defineExpose({
 		validation,
 		validateOnSubmit,
@@ -272,8 +251,6 @@
 			hasWarning ? warnings :
 			(hasSuccess && props.showSuccessMessages ? successes : [])
 		"
-		@click="toggleMixed"
-		@blur="checkErrorOnBlur"
 	>
 		<v-radio
 			v-for="opt in props.options"
@@ -281,6 +258,7 @@
 			:value="opt.value"
 			:label="opt.label"
 			:disabled="props.disabled"
+			@blur="checkErrorOnBlur"
 		/>
 		<template
 			v-if="$slots.label"

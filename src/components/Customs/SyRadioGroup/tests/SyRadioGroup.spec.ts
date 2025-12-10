@@ -96,13 +96,9 @@ describe('SyRadioGroup', () => {
 	it('should handle custom validation rules', async () => {
 		const customRule = {
 			type: 'custom',
-			validator: (value: string | null) => {
-				console.log('validator value :' + value)
-				return value === 'OK'
-			},
-
+			validator: (value: unknown) => value === 'OK', // type générique unknown
 			options: {
-				message: 'Value must be OK',
+				message: 'Vous devez sélectionner une option.',
 				fieldIdentifier: 'Custom Radio',
 			},
 		}
@@ -110,51 +106,29 @@ describe('SyRadioGroup', () => {
 		const wrapper = mount(SyRadioGroup, {
 			props: {
 				'modelValue': null,
+				'required': true,
 				'customRules': [customRule],
 				'isValidateOnBlur': false,
 				'options': [
 					{ label: 'Non', value: 'NO' },
 					{ label: 'Oui', value: 'OK' },
+					{ label: 'Peut-être', value: 42 }, // exemple valeur non-string
 				],
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 			},
 		})
 
-		// Trouver le radio "OK" dans le DOM du composant
-		// const radioOk = wrapper.find('input[value="OK"]')
-		// console.log(radioOk.html())
+		// Validation initiale : aucune option sélectionnée
+		const isValidInitial = await wrapper.vm.validateOnSubmit()
+		expect(isValidInitial).toBe(false)
+		expect(wrapper.vm.validation.errors.value).toContain('Vous devez sélectionner une option.')
 
-		// // Simuler le clic utilisateur
-		// await radioOk.trigger('click')
-		// await nextTick()
-		// // Vérifier que l'événement v-model a été émis
-		// console.log(wrapper.emitted())
-		// expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-		// expect(wrapper.emitted('update:modelValue')![0]).toEqual(['OK'])
+		// Sélectionner l’option correcte
+		await wrapper.setProps({ modelValue: 'OK' })
 
-		// // Validation après mise à jour
-		// const isValidAfterCheck = await wrapper.vm.validateOnSubmit()
-		// expect(isValidAfterCheck).toBe(true)
-
-		// Vérifier l'état initial
-		expect(wrapper.props('modelValue')).toBe(null)
-
-		// Simuler la validation du formulaire
-		const isValid = await wrapper.vm.validateOnSubmit()
-		await wrapper.vm.$nextTick()
-
-		// La validation devrait échouer car la case n'est pas cochée
-		expect(isValid).toBe(false)
-
-		// Cocher la case
-		const test = await wrapper.setProps({ modelValue: 'OK' })
-		console.log(test)
-
-		// Simuler à nouveau la validation du formulaire
-		const isValidAfterCheck = await wrapper.vm.validateOnSubmit()
-		await wrapper.vm.$nextTick()
-		console.log(isValidAfterCheck)
-		// La validation devrait réussir maintenant
-		expect(isValidAfterCheck).toBe(true)
+		// Validation après sélection
+		const isValidCorrect = await wrapper.vm.validateOnSubmit()
+		expect(isValidCorrect).toBe(true)
+		expect(wrapper.vm.validation.errors.value).toHaveLength(0)
 	})
 })
