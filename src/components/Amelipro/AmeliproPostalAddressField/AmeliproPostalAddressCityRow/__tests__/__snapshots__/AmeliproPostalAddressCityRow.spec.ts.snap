@@ -59,6 +59,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
             v-input
             v-input--center-affix
             v-input--density-compact
+            v-input--dirty
             v-input--disabled
             v-input--horizontal
             v-input--readonly
@@ -333,6 +334,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
             v-input
             v-input--center-affix
             v-input--density-compact
+            v-input--dirty
             v-input--disabled
             v-input--horizontal
             v-input--readonly

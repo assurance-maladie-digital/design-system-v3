@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	/* eslint-disable vuejs-accessibility/label-has-for */
-	import { type PropType, computed, onMounted, ref } from 'vue'
+  import {type PropType, computed, onMounted, ref, watch} from 'vue'
 	import AmeliproAutoCompleteField from '../../AmeliproAutoCompleteField/AmeliproAutoCompleteField.vue'
 	import AmeliproMessage from '../../AmeliproMessage/AmeliproMessage.vue'
 	import type { AutoCompleteItem } from '../../AmeliproAutoCompleteField/types'
@@ -65,15 +65,13 @@
 		get: (): string | InputPostalAddressAutoCompleteItem => props.city || '',
 		set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
 			emit('update:city', newValue)
-			setInternalValue('postalCode', newValue, false)
 		},
 	})
 
 	const postalCodeValue = computed({
 		get: (): string | InputPostalAddressAutoCompleteItem => props.postalCode || '',
 		set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
-			emit('update:postalCode', newValue)
-			setInternalValue('city', newValue, false)
+      emit('update:postalCode', newValue)
 		},
 	})
 
@@ -87,44 +85,34 @@
 		return false
 	}
 
-	const setInternalValue = (autocomplete?: string, newValue?: string | InputPostalAddressAutoCompleteItem, handleBoth = true): void => {
-		if (props.autoCompleteList.length > 0) {
-			if (autocomplete === 'city' && !compareFields(cityValue.value, newValue || postalCodeValue.value)) {
-				if (handleBoth) {
-					cityValue.value = newValue || postalCodeValue.value
-				}
-				else {
-					emit('update:city', newValue || postalCodeValue.value)
-				}
-			}
+  const setInternalValue = (
+      field: 'city' | 'postalCode',
+      newValue: string | InputPostalAddressAutoCompleteItem
+  ) => {
+    if (field === 'city') {
+      if (!compareFields(cityValue.value, newValue)) {
+        cityValue.value = newValue
+        emit('update:city', newValue)
+      }
+    } else {
+      if (!compareFields(postalCodeValue.value, newValue)) {
+        postalCodeValue.value = newValue
+        emit('update:postalCode', newValue)
+      }
+    }
 
-			if (autocomplete === 'postalCode' && !compareFields(postalCodeValue.value, newValue || cityValue.value)) {
-				if (handleBoth) {
-					postalCodeValue.value = newValue || cityValue.value
-				}
-				else {
-					emit('update:postalCode', newValue || cityValue.value)
-				}
-			}
-		}
-
-		if (postalCodeFocused.value) {
-			postalCodeFocused.value = false
-		}
-
-		if (cityFocused.value) {
-			cityFocused.value = false
-		}
-	}
+    postalCodeFocused.value = false
+    cityFocused.value = false
+  }
 
 	type eventType = 'blur' | 'change' | 'update:error'
-	const emit = defineEmits(['blur', 'change', 'update:city', 'update:postalCode', 'update:error'])
-	const emitEvent = (eventName: eventType, autocomplete?: string): void => {
-		if (typeof event === 'object') {
-			setInternalValue(autocomplete)
-		}
-		emit(eventName, { city: cityValue.value, postalCode: postalCodeValue.value })
-	}
+  const emit = defineEmits(['blur', 'change', 'update:city', 'update:postalCode', 'update:error'])
+  const emitEvent = (eventName: eventType, field?: 'city' | 'postalCode') => {
+    if (field) {
+      setInternalValue(field, field === 'city' ? cityValue.value : postalCodeValue.value)
+    }
+    emit(eventName, {city: cityValue.value, postalCode: postalCodeValue.value})
+  }
 
 	const inputRules = (ruleKey: 'cityRules' | 'postalCodeRules'): ValidationRule[] => {
 		const rules = [
@@ -222,6 +210,55 @@
 
 		return borderColor
 	})
+  const normalizeValue = (
+      val: string | InputPostalAddressAutoCompleteItem | null | undefined,
+      mode: 'city' | 'postalCode'
+  ) => {
+    if (!val) {
+      return {city: '', postalCode: '', toString: () => ''}
+    }
+
+    if (typeof val === 'string') {
+      return {
+        city: mode === 'city' ? val : '',
+        postalCode: mode === 'postalCode' ? val : '',
+        toString: () => val
+      }
+    }
+
+    const city = val.city ?? ''
+    const postalCode = val.postalCode ?? ''
+
+    return {
+      city,
+      postalCode,
+      toString: () => (mode === 'city' ? (city ? `${city} (${postalCode})` : '') : postalCode)
+    }
+  }
+
+
+  const cityValueLocal = ref(normalizeValue(props.city, 'city'))
+  const postalCodeValueLocal = ref(normalizeValue(props.postalCode, 'postalCode'))
+
+  watch(cityValueLocal, newVal => {
+    const normalized = normalizeValue(newVal, 'city')
+
+    if (postalCodeValueLocal.value.postalCode !== normalized.postalCode) {
+      postalCodeValueLocal.value = normalizeValue(normalized, 'postalCode')
+    }
+
+    emit('update:city', normalized)
+  }, {deep: true})
+
+  watch(postalCodeValueLocal, newVal => {
+    const normalized = normalizeValue(newVal, 'postalCode')
+
+    if (cityValueLocal.value.city !== normalized.city) {
+      cityValueLocal.value = normalizeValue(normalized, 'city')
+    }
+
+    emit('update:postalCode', normalized)
+  }, {deep: true})
 
 	onMounted(() => {
 		// remove the native label of VTextField because we have our own one
@@ -242,7 +279,7 @@
 			>
 				<AmeliproAutoCompleteField
 					ref="inputPostalCodeField"
-					v-model="postalCodeValue"
+          v-model="postalCodeValueLocal"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -284,7 +321,7 @@
 				<VTextField
 					:id="`${uniqueId}-postal-code`"
 					ref="inputPostalCodeField"
-					v-model="postalCodeValue"
+          v-model="postalCodeValueLocal"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -323,7 +360,7 @@
 			>
 				<AmeliproAutoCompleteField
 					ref="inputCityField"
-					v-model="cityValue"
+          v-model="cityValueLocal"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -365,7 +402,7 @@
 				<VTextField
 					:id="`${uniqueId}-city`"
 					ref="inputCityField"
-					v-model="cityValue"
+          v-model="cityValueLocal"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
 					:aria-required="ariaRequired"
