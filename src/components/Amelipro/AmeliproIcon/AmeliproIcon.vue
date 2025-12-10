@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import type { IndexedObject } from '../types'
-	import { computed } from 'vue'
+	import { computed, ref, watchEffect } from 'vue'
 	import { convertToHex } from '@/utils/functions/convertToHex'
 	import { icons } from '@/assets/amelipro/icons'
 
@@ -64,6 +64,7 @@
 	})
 
 	const themeIcon = computed<string | undefined>(() => (props.icon ? icons[props.icon] : undefined))
+	const themeIconContainerRef = ref<HTMLElement | null>(null)
 
 	const currentIconColor = computed<string>(() => convertToHex(props.iconColor))
 	const currentIconBgColor = computed<string>(() => convertToHex(props.iconBgColor))
@@ -130,6 +131,15 @@
 
 		return '2px'
 	})
+
+	watchEffect(() => {
+		if (!themeIcon.value || !themeIconContainerRef.value) {
+			return
+		}
+
+		// Assign the SVG markup to innerHTML to preserve existing rendering behavior
+		themeIconContainerRef.value.innerHTML = String(themeIcon.value)
+	})
 </script>
 
 <template>
@@ -154,7 +164,7 @@
 		>
 			<span
 				v-if="themeIcon"
-				v-html="themeIcon"
+				ref="themeIconContainerRef"
 			/>
 		</span>
 
