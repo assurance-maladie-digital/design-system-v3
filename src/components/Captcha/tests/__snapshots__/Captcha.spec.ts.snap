@@ -117,17 +117,11 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -141,12 +135,10 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -156,6 +148,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               </div>
             </div>
             <div class="v-field__prepend-inner">
+              <!---->
               <!-- v-if -->
               <!-- v-if -->
             </div>
@@ -165,25 +158,22 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
             >
               <!---->
               <label
-                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
-                for="input-v-2"
-                id="input-v-2-label"
+                for="input-v-1"
               >
                 <!---->
                 Caractères de l’audio
               </label>
               <!---->
               <input
-                aria-describedby="input-v-2-messages"
+                aria-describedby="input-v-1-messages"
                 aria-label="Caractères de l’audio"
-                aria-labelledby="input-v-2-label"
                 autocomplete="off"
                 class="v-field__input"
-                id="input-v-2"
+                id="input-v-1"
                 title="Caractères de l’audio"
                 type="text"
               />
@@ -195,6 +185,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               <!-- v-if -->
               <!-- v-if -->
               <!-- v-if -->
+              <!---->
             </div>
             <div class="v-field__outline">
               <div class="v-field__outline__start"></div>
@@ -206,7 +197,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                     v-field-label--floating
                     v-label
                   "
-                  for="input-v-2"
+                  for="input-v-1"
                 >
                   <!---->
                   Caractères de l’audio
@@ -223,7 +214,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
             appear="false"
             class="v-messages"
             css="true"
-            id="input-v-2-messages"
+            id="input-v-1-messages"
             name="slide-y-transition"
             persisted="false"
             tag="div"
@@ -511,17 +502,11 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               >
                 <!---->
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__background
-                  "
+                  class="v-progress-linear__background"
                   style="opacity: NaN;"
                 ></div>
                 <div
-                  class="
-                    bg-primary
-                    v-progress-linear__buffer
-                  "
+                  class="v-progress-linear__buffer"
                   style="
                     opacity: NaN;
                     width: 0%;
@@ -535,12 +520,10 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                 >
                   <div class="v-progress-linear__indeterminate">
                     <div class="
-                      bg-primary
                       long
                       v-progress-linear__indeterminate
                     "></div>
                     <div class="
-                      bg-primary
                       short
                       v-progress-linear__indeterminate
                     "></div>
@@ -550,6 +533,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               </div>
             </div>
             <div class="v-field__prepend-inner">
+              <!---->
               <!-- v-if -->
               <!-- v-if -->
             </div>
@@ -559,25 +543,22 @@ exports[`Captcha > renders correctly in image mode 1`] = `
             >
               <!---->
               <label
-                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
-                for="input-v-1"
-                id="input-v-1-label"
+                for="input-v-0"
               >
                 <!---->
                 Caractères de l’image
               </label>
               <!---->
               <input
-                aria-describedby="input-v-1-messages"
+                aria-describedby="input-v-0-messages"
                 aria-label="Caractères de l’image"
-                aria-labelledby="input-v-1-label"
                 autocomplete="off"
                 class="v-field__input"
-                id="input-v-1"
+                id="input-v-0"
                 title="Caractères de l’image"
                 type="text"
               />
@@ -589,6 +570,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               <!-- v-if -->
               <!-- v-if -->
               <!-- v-if -->
+              <!---->
             </div>
             <div class="v-field__outline">
               <div class="v-field__outline__start"></div>
@@ -600,7 +582,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                     v-field-label--floating
                     v-label
                   "
-                  for="input-v-1"
+                  for="input-v-0"
                 >
                   <!---->
                   Caractères de l’image
@@ -617,7 +599,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
             appear="false"
             class="v-messages"
             css="true"
-            id="input-v-1-messages"
+            id="input-v-0-messages"
             name="slide-y-transition"
             persisted="false"
             tag="div"
