@@ -29,6 +29,10 @@ dev/Playground.vue
 *.sln
 *.sw?
 
+# ENV
+.env
+.env.local
+
 # Tests coverage
 **/tests/**/coverage
 
