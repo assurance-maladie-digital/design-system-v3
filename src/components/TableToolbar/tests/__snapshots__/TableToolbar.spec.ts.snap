@@ -13,6 +13,7 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
     v-locale--is-ltr
     v-theme--light
     v-toolbar
+    v-toolbar--collapse-start
     v-toolbar--density-default
     v-toolbar--flat
   "
@@ -243,6 +244,7 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
     v-locale--is-ltr
     v-theme--light
     v-toolbar
+    v-toolbar--collapse-start
     v-toolbar--density-default
     v-toolbar--flat
   "
@@ -451,6 +453,7 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
     v-locale--is-ltr
     v-theme--light
     v-toolbar
+    v-toolbar--collapse-start
     v-toolbar--density-default
     v-toolbar--flat
   "
@@ -681,6 +684,7 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
     v-locale--is-ltr
     v-theme--light
     v-toolbar
+    v-toolbar--collapse-start
     v-toolbar--density-default
     v-toolbar--flat
   "
@@ -911,6 +915,7 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
     v-locale--is-ltr
     v-theme--light
     v-toolbar
+    v-toolbar--collapse-start
     v-toolbar--density-default
     v-toolbar--flat
   "
@@ -1133,6 +1138,7 @@ exports[`TableToolbar > should render 1`] = `
     v-locale--is-ltr
     v-theme--light
     v-toolbar
+    v-toolbar--collapse-start
     v-toolbar--density-default
     v-toolbar--flat
   "

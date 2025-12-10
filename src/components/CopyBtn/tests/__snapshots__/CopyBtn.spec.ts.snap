@@ -27,6 +27,7 @@ exports[`CopyBtn > renders correctly 1`] = `
     scrim="false"
     scrollstrategy="reposition"
     sticktotarget="false"
+    viewportmargin="12"
     zindex="2000"
   ></v-tooltip-stub>
 </div>

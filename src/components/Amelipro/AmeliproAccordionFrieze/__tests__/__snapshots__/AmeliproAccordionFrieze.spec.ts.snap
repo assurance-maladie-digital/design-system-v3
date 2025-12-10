@@ -59,24 +59,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
             role="img"
             style="color: #0C419A;"
           >
-            <span>
-              <svg
-                aria-hidden="true"
-                style="enable-background:new 0 0 14.8 24;"
-                version="1.1"
-                viewBox="0 0 14.8 24"
-                x="0px"
-                xml:space="preserve"
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                y="0px"
-              >
-                <path
-                  class="shape-color"
-                  d="M0,2.8L9.2,12L0,21.2L2.8,24l12-12L2.8,0L0,2.8z"
-                />
-              </svg>
-            </span>
+            <span></span>
           </span>
         </span>
       </span>
@@ -168,24 +151,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -241,24 +207,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -329,24 +278,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -402,24 +334,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -475,24 +390,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -548,24 +446,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -621,24 +502,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -694,24 +558,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -782,24 +629,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -855,24 +685,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -928,24 +741,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -1001,24 +797,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -1074,24 +853,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -1147,24 +909,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
                       width: 10px;
                     "
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 42 42;"
-                        version="1.1"
-                        viewBox="0 0 42 42"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <polygon
-                          class="shape-color"
-                          points="21,39.2 42,2.8 0,2.8 "
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
