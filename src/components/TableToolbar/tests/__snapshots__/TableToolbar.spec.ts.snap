@@ -125,17 +125,20 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-1"
+                id="input-v-1-label"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
+                aria-labelledby="input-v-1-label"
                 class="v-field__input"
                 id="input-v-1"
                 size="1"
@@ -171,7 +174,6 @@ exports[`TableToolbar > renders correctly when all the item are displayed 1`] = 
               </div>
             </transition-stub>
             <div class="v-field__append-inner">
-              <!---->
               <i
                 aria-hidden="true"
                 class="
@@ -359,17 +361,20 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-1"
+                id="input-v-1-label"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
+                aria-labelledby="input-v-1-label"
                 class="v-field__input"
                 disabled=""
                 id="input-v-1"
@@ -380,7 +385,6 @@ exports[`TableToolbar > renders correctly when loading 1`] = `
             </div>
             <!---->
             <div class="v-field__append-inner">
-              <!---->
               <i
                 aria-hidden="true"
                 class="
@@ -565,17 +569,20 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-1"
+                id="input-v-1-label"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
+                aria-labelledby="input-v-1-label"
                 class="v-field__input"
                 id="input-v-1"
                 size="1"
@@ -611,7 +618,6 @@ exports[`TableToolbar > renders correctly when the screen width <= 600px 1`] = `
               </div>
             </transition-stub>
             <div class="v-field__append-inner">
-              <!---->
               <i
                 aria-hidden="true"
                 class="
@@ -796,17 +802,20 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-1"
+                id="input-v-1-label"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
+                aria-labelledby="input-v-1-label"
                 class="v-field__input"
                 id="input-v-1"
                 size="1"
@@ -842,7 +851,6 @@ exports[`TableToolbar > renders correctly with content slot 1`] = `
               </div>
             </transition-stub>
             <div class="v-field__append-inner">
-              <!---->
               <i
                 aria-hidden="true"
                 class="
@@ -1019,17 +1027,20 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-1"
+                id="input-v-1-label"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
+                aria-labelledby="input-v-1-label"
                 class="v-field__input"
                 id="input-v-1"
                 size="1"
@@ -1065,7 +1076,6 @@ exports[`TableToolbar > renders correctly with no items 1`] = `
               </div>
             </transition-stub>
             <div class="v-field__append-inner">
-              <!---->
               <i
                 aria-hidden="true"
                 class="
@@ -1251,17 +1261,20 @@ exports[`TableToolbar > should render 1`] = `
             >
               <!---->
               <label
+                aria-hidden="false"
                 class="
                   v-field-label
                   v-label
                 "
                 for="input-v-1"
+                id="input-v-1-label"
               >
                 <!---->
                 Rechercher
               </label>
               <!---->
               <input
+                aria-labelledby="input-v-1-label"
                 class="v-field__input"
                 id="input-v-1"
                 size="1"
@@ -1297,7 +1310,6 @@ exports[`TableToolbar > should render 1`] = `
               </div>
             </transition-stub>
             <div class="v-field__append-inner">
-              <!---->
               <i
                 aria-hidden="true"
                 class="

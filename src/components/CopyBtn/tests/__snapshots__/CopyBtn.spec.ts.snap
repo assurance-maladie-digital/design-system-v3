@@ -24,6 +24,7 @@ exports[`CopyBtn > renders correctly 1`] = `
     openonclick="true"
     openonhover="false"
     origin="auto"
+    persistent="false"
     scrim="false"
     scrollstrategy="reposition"
     sticktotarget="false"

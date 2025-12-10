@@ -904,13 +904,12 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
                       <input
                         aria-controls="menu-v-13"
                         aria-expanded="false"
-                        aria-label="Open"
+                        aria-labelledby="test-id-select-label"
                         aria-required="false"
                         id="test-id-select"
                         inputmode="none"
                         role="combobox"
                         size="1"
-                        title="Open"
                         type="text"
                         value=""
                       />
@@ -932,7 +931,6 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
                         v-theme--light
                       "
                     ></i>
-                    <!---->
                   </div>
                   <div class="v-field__outline">
                     <div class="v-field__outline__start"></div>
