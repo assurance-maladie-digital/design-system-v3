@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup/SyRadioGroup.vue'
+import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 import { fn } from '@storybook/test'
 
 const meta: Meta<typeof SyRadioGroup> = {
