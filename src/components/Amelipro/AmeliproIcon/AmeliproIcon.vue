@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import type { IndexedObject } from '../types'
-	import { computed } from 'vue'
+	import { computed, ref, watchEffect } from 'vue'
 	import { convertToHex } from '@/utils/functions/convertToHex'
 	import { icons } from '@/assets/amelipro/icons'
 
@@ -64,6 +64,7 @@
 	})
 
 	const themeIcon = computed<string | undefined>(() => (props.icon ? icons[props.icon] : undefined))
+	const themeIconContainerRef = ref<HTMLElement | null>(null)
 
 	const currentIconColor = computed<string>(() => convertToHex(props.iconColor))
 	const currentIconBgColor = computed<string>(() => convertToHex(props.iconBgColor))
@@ -130,6 +131,23 @@
 
 		return '2px'
 	})
+
+	function stringToSvgNode(svgString: string): SVGElement | null {
+		const parser = new DOMParser()
+		const doc = parser.parseFromString(svgString, 'image/svg+xml')
+		const svg = doc.querySelector('svg')
+		return svg ? svg.cloneNode(true) as SVGElement : null
+	}
+
+	watchEffect(() => {
+		if (!themeIcon.value || !themeIconContainerRef.value) return
+		// Nettoyer l'ancien contenu
+		themeIconContainerRef.value.innerHTML = ''
+		const svgNode = stringToSvgNode(themeIcon.value)
+		if (svgNode) {
+			themeIconContainerRef.value.appendChild(svgNode)
+		}
+	})
 </script>
 
 <template>
@@ -154,7 +172,7 @@
 		>
 			<span
 				v-if="themeIcon"
-				v-html="themeIcon"
+				ref="themeIconContainerRef"
 			/>
 		</span>
 

@@ -168,6 +168,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <input
                     aria-controls="menu-v-0"
                     aria-expanded="false"
+                    aria-labelledby="the-groupId-postal-code-label"
                     aria-required="true"
                     autocomplete="address-level2"
                     disabled=""
@@ -262,8 +263,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                 </button>
                 <i
-                  aria-hidden="false"
-                  aria-label="Open"
+                  aria-hidden="true"
                   class="
                     mdi
                     mdi-menu-down
@@ -276,9 +276,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   "
                   role="button"
                   tabindex="-1"
-                  title="Open"
                 ></i>
-                <!---->
               </div>
               <div class="v-field__outline">
                 <div class="v-field__outline__start"></div>
@@ -444,6 +442,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <input
                     aria-controls="menu-v-6"
                     aria-expanded="false"
+                    aria-labelledby="the-groupId-city-label"
                     aria-required="true"
                     autocomplete="address-level2"
                     disabled=""
@@ -538,8 +537,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                 </button>
                 <i
-                  aria-hidden="false"
-                  aria-label="Open"
+                  aria-hidden="true"
                   class="
                     mdi
                     mdi-menu-down
@@ -552,9 +550,7 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   "
                   role="button"
                   tabindex="-1"
-                  title="Open"
                 ></i>
-                <!---->
               </div>
               <div class="v-field__outline">
                 <div class="v-field__outline__start"></div>

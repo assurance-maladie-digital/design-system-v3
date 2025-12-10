@@ -137,6 +137,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <!---->
             <!---->
             <input
+              aria-labelledby="the-groupId-address-label"
               aria-required="true"
               autocomplete="address-line1"
               class="v-field__input"
@@ -287,6 +288,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 <!---->
                 <!---->
                 <input
+                  aria-labelledby="the-groupId-postal-code-label"
                   aria-required="true"
                   autocomplete="postal-code"
                   class="v-field__input"
@@ -420,6 +422,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 <!---->
                 <!---->
                 <input
+                  aria-labelledby="the-groupId-city-label"
                   aria-required="true"
                   autocomplete="address-level2"
                   class="v-field__input"
@@ -558,6 +561,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <!---->
             <!---->
             <input
+              aria-labelledby="the-groupId-additional-info-label"
               autocomplete="address-line2"
               class="v-field__input"
               id="the-groupId-additional-info"

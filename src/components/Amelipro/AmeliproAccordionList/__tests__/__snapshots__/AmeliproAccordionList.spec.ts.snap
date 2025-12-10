@@ -173,6 +173,17 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                     class="v-field__input"
                     data-no-activator=""
                   >
+                    <select hidden="">
+                      <option value="5"></option>
+                      <option
+                        selected=""
+                        value="10"
+                      ></option>
+                      <option value="20"></option>
+                      <option value="30"></option>
+                      <option value="50"></option>
+                      <option value="100"></option>
+                    </select>
                     <!---->
                     <!---->
                     <div class="v-select__selection">
@@ -182,15 +193,14 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                       </span>
                     </div>
                     <input
-                      aria-controls="menu-v-0"
+                      aria-controls="menu-v-1"
                       aria-expanded="false"
-                      aria-label="Open"
+                      aria-labelledby="amelipro-accordion-result-unique-id-pagination-select-label"
                       aria-required="false"
                       id="amelipro-accordion-result-unique-id-pagination-select"
                       inputmode="none"
                       role="combobox"
                       size="1"
-                      title="Open"
                       type="text"
                       value="10"
                     />
@@ -212,7 +222,6 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                       v-theme--light
                     "
                   ></i>
-                  <!---->
                 </div>
                 <div class="v-field__outline">
                   <div class="v-field__outline__start"></div>
@@ -313,24 +322,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -449,24 +441,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -585,24 +560,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -721,24 +679,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -857,24 +798,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -993,24 +917,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -1129,24 +1036,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -1265,24 +1155,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -1401,24 +1274,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
@@ -1537,24 +1393,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                         width: 11px;
                       "
                     >
-                      <span>
-                        <svg
-                          aria-hidden="true"
-                          style="enable-background:new 0 0 42 42;"
-                          version="1.1"
-                          viewBox="0 0 42 42"
-                          x="0px"
-                          xml:space="preserve"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          y="0px"
-                        >
-                          <polygon
-                            class="shape-color"
-                            points="21,39.2 42,2.8 0,2.8 "
-                          />
-                        </svg>
-                      </span>
+                      <span></span>
                     </span>
                   </span>
                   undefined
