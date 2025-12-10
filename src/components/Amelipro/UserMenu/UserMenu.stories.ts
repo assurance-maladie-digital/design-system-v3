@@ -125,7 +125,7 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
-          <div style="display: flex; justify-content: center">
+          <div style="display: flex; justify-content: center; height: 400px;">
             <UserMenu v-bind="args"/>
           </div>
 		`,
