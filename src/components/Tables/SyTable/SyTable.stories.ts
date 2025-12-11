@@ -3808,6 +3808,237 @@ export const SlotHeaders: Story = {
 	},
 }
 
+export const SlotHeader: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						:headers="headers"
+						:items="items"
+					>
+						<template #header.lastname>
+							<span class="text-primary font-weight-bold">
+								Nom de famille
+							</span>
+						</template>
+					</SyTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'lastname',
+						},
+						{
+							title: 'Prénom',
+							key: 'firstname',
+						},
+						{
+                            title: 'Email',
+							value: 'email',
+						},
+					])
+						
+					const items = ref([
+						{
+							firstname: 'Virginie',
+							lastname: 'Beauchesne',
+							email: 'virginie.beauchesne@example.com',
+						},
+						{
+							firstname: 'Simone',
+							lastname: 'Bellefeuille',
+							email: 'simone.bellefeuille@example.com',
+						},
+						{
+							firstname: 'Étienne',
+							lastname: 'Salois',
+							email: 'etienne.salois@example.com',
+						},
+						{
+							firstname: 'Thierry',
+							lastname: 'Bobu',
+							email: 'thierry.bobu@example.com',
+						},
+						{
+							firstname: 'Bernadette',
+							lastname: 'Langelier',
+							email: 'bernadette.langelier@exemple.com',
+						},
+						{
+							firstname: 'Agate',
+							lastname: 'Roy',
+							email: 'agate.roy@exemple.com',
+						},
+						{
+                            firstname: 'Théo',
+							lastname: 'Garnier',
+							email: 'theo.garnier@exemple.com',
+						},
+						{
+                            firstname: 'Clara',
+							lastname: 'Moreau',
+							email: 'clara.moreau@exemple.com',
+						},
+						{
+							firstname: 'Lucas',
+							lastname: 'Lefebvre',
+							email: 'lucas.lefebre@exemple.com',
+						},
+						{
+							firstname: 'Emma',
+							lastname: 'Dubois',
+							email: 'emma.dubois@exemple.com',
+						},
+						{
+							firstname: 'Julien',
+							lastname: 'Martin',
+							email: 'julien.martin@exemple.com',
+						},
+						{
+							firstname: 'Sophie',
+							lastname: 'Bernard',
+							email: 'sophie.bernard@exemple.com',
+						},
+						{
+							firstname: 'Antoine',
+							lastname: 'Lemoine',
+							email: 'antoine.lemoine@exemple.com',
+						},
+						{
+							firstname: 'Camille',
+							lastname: 'Rousseau',
+							email: 'camille.rousseau@exemple.com',
+						},
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'lastname',
+			},
+			{
+				title: 'Prénom',
+				key: 'firstname',
+			},
+			{
+				title: 'Email',
+				value: 'email',
+			},
+		],
+		'items': [
+			{
+				firstname: 'Virginie',
+				lastname: 'Beauchesne',
+				email: 'virginie.beauchesne@example.com',
+			},
+			{
+				firstname: 'Simone',
+				lastname: 'Bellefeuille',
+				email: 'simone.bellefeuille@example.com',
+			},
+			{
+				firstname: 'Étienne',
+				lastname: 'Salois',
+				email: 'etienne.salois@example.com',
+			},
+			{
+				firstname: 'Thierry',
+				lastname: 'Bobu',
+				email: 'thierry.bobu@example.com',
+			},
+			{
+				firstname: 'Bernadette',
+				lastname: 'Langelier',
+				email: 'bernadette.langelier@exemple.com',
+			},
+			{
+				firstname: 'Agate',
+				lastname: 'Roy',
+				email: 'agate.roy@exemple.com',
+			},
+			{
+				firstname: 'Théo',
+				lastname: 'Garnier',
+				email: 'theo.garnier@exemple.com',
+			},
+			{
+				firstname: 'Clara',
+				lastname: 'Moreau',
+				email: 'clara.moreau@exemple.com',
+			},
+			{
+				firstname: 'Lucas',
+				lastname: 'Lefebvre',
+				email: 'lucas.lefebre@exemple.com',
+			},
+			{
+				firstname: 'Emma',
+				lastname: 'Dubois',
+				email: 'emma.dubois@exemple.com',
+			},
+			{
+				firstname: 'Julien',
+				lastname: 'Martin',
+				email: 'julien.martin@exemple.com',
+			},
+			{
+				firstname: 'Sophie',
+				lastname: 'Bernard',
+				email: 'sophie.bernard@exemple.com',
+			},
+			{
+				firstname: 'Antoine',
+				lastname: 'Lemoine',
+				email: 'antoine.lemoine@exemple.com',
+			},
+			{
+				firstname: 'Camille',
+				lastname: 'Rousseau',
+				email: 'camille.rousseau@exemple.com',
+			},
+		],
+		'suffix': 'slot-header-table',
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					v-bind="args"
+				>
+					<template #header.lastname>
+						<span class="text-primary font-weight-bold">
+							Nom de famille
+						</span>
+					</template>
+				</SyTable>
+			`,
+		}
+	},
+}
+
 export const ItemsPerPageOptions: Story = {
 	parameters: {
 		sourceCode: [
@@ -4036,237 +4267,6 @@ export const ItemsPerPageOptions: Story = {
 					v-model:options="args.options"
 					v-bind="args"
 				/>
-			`,
-		}
-	},
-}
-
-export const SlotHeader: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SyTable
-						:headers="headers"
-						:items="items"
-					>
-						<template #header.lastname>
-							<span class="text-primary font-weight-bold">
-								Nom de famille
-							</span>
-						</template>
-					</SyTable>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyTable } from '@cnamts/synapse'
-					
-					const headers = ref([
-						{
-							title: 'Nom',
-							key: 'lastname',
-						},
-						{
-							title: 'Prénom',
-							key: 'firstname',
-						},
-						{
-                            title: 'Email',
-							value: 'email',
-						},
-					])
-						
-					const items = ref([
-						{
-							firstname: 'Virginie',
-							lastname: 'Beauchesne',
-							email: 'virginie.beauchesne@example.com',
-						},
-						{
-							firstname: 'Simone',
-							lastname: 'Bellefeuille',
-							email: 'simone.bellefeuille@example.com',
-						},
-						{
-							firstname: 'Étienne',
-							lastname: 'Salois',
-							email: 'etienne.salois@example.com',
-						},
-						{
-							firstname: 'Thierry',
-							lastname: 'Bobu',
-							email: 'thierry.bobu@example.com',
-						},
-						{
-							firstname: 'Bernadette',
-							lastname: 'Langelier',
-							email: 'bernadette.langelier@exemple.com',
-						},
-						{
-							firstname: 'Agate',
-							lastname: 'Roy',
-							email: 'agate.roy@exemple.com',
-						},
-						{
-                            firstname: 'Théo',
-							lastname: 'Garnier',
-							email: 'theo.garnier@exemple.com',
-						},
-						{
-                            firstname: 'Clara',
-							lastname: 'Moreau',
-							email: 'clara.moreau@exemple.com',
-						},
-						{
-							firstname: 'Lucas',
-							lastname: 'Lefebvre',
-							email: 'lucas.lefebre@exemple.com',
-						},
-						{
-							firstname: 'Emma',
-							lastname: 'Dubois',
-							email: 'emma.dubois@exemple.com',
-						},
-						{
-							firstname: 'Julien',
-							lastname: 'Martin',
-							email: 'julien.martin@exemple.com',
-						},
-						{
-							firstname: 'Sophie',
-							lastname: 'Bernard',
-							email: 'sophie.bernard@exemple.com',
-						},
-						{
-							firstname: 'Antoine',
-							lastname: 'Lemoine',
-							email: 'antoine.lemoine@exemple.com',
-						},
-						{
-							firstname: 'Camille',
-							lastname: 'Rousseau',
-							email: 'camille.rousseau@exemple.com',
-						},
-					])
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headers': [
-			{
-				title: 'Nom',
-				key: 'lastname',
-			},
-			{
-				title: 'Prénom',
-				key: 'firstname',
-			},
-			{
-				title: 'Email',
-				value: 'email',
-			},
-		],
-		'items': [
-			{
-				firstname: 'Virginie',
-				lastname: 'Beauchesne',
-				email: 'virginie.beauchesne@example.com',
-			},
-			{
-				firstname: 'Simone',
-				lastname: 'Bellefeuille',
-				email: 'simone.bellefeuille@example.com',
-			},
-			{
-				firstname: 'Étienne',
-				lastname: 'Salois',
-				email: 'etienne.salois@example.com',
-			},
-			{
-				firstname: 'Thierry',
-				lastname: 'Bobu',
-				email: 'thierry.bobu@example.com',
-			},
-			{
-				firstname: 'Bernadette',
-				lastname: 'Langelier',
-				email: 'bernadette.langelier@exemple.com',
-			},
-			{
-				firstname: 'Agate',
-				lastname: 'Roy',
-				email: 'agate.roy@exemple.com',
-			},
-			{
-				firstname: 'Théo',
-				lastname: 'Garnier',
-				email: 'theo.garnier@exemple.com',
-			},
-			{
-				firstname: 'Clara',
-				lastname: 'Moreau',
-				email: 'clara.moreau@exemple.com',
-			},
-			{
-				firstname: 'Lucas',
-				lastname: 'Lefebvre',
-				email: 'lucas.lefebre@exemple.com',
-			},
-			{
-				firstname: 'Emma',
-				lastname: 'Dubois',
-				email: 'emma.dubois@exemple.com',
-			},
-			{
-				firstname: 'Julien',
-				lastname: 'Martin',
-				email: 'julien.martin@exemple.com',
-			},
-			{
-				firstname: 'Sophie',
-				lastname: 'Bernard',
-				email: 'sophie.bernard@exemple.com',
-			},
-			{
-				firstname: 'Antoine',
-				lastname: 'Lemoine',
-				email: 'antoine.lemoine@exemple.com',
-			},
-			{
-				firstname: 'Camille',
-				lastname: 'Rousseau',
-				email: 'camille.rousseau@exemple.com',
-			},
-		],
-		'suffix': 'slot-header-table',
-		'onUpdate:options': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { SyTable },
-			setup() {
-				return { args }
-			},
-			template: `
-				<SyTable
-					v-model:options="args.options"
-					v-bind="args"
-				>
-					<template #header.lastname>
-						<span class="text-primary font-weight-bold">
-							Nom de famille
-						</span>
-					</template>
-				</SyTable>
 			`,
 		}
 	},
