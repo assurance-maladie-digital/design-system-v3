@@ -1,4 +1,4 @@
-import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import { Controls, Canvas, Meta, Source, Story } from '@storybook/blocks';
 import * as DataList from './DataList.stories';
 
 <Meta of={DataList} />
@@ -8,9 +8,7 @@ import * as DataList from './DataList.stories';
   <p>L’élément `DataList` est utilisé pour afficher une liste d’informations.</p>
 </div>
 
-> **Attention**  
-> La propriété `renderHtmlValue` est dépréciée car elle repose sur `v-html` et peut exposer votre application à des failles **XSS**.  
-> Utilisez à la place le slot `item` de `DataList` (ou le slot `value` de `DataListItem`) pour rendre du HTML de manière contrôlée depuis le composant parent.
+<Story of={DataList.InfoIntro}/>
 
 <Canvas of={DataList.Default} />
 

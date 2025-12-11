@@ -1,6 +1,7 @@
 import DataList from './DataList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { mdiAccount, mdiCalendar, mdiInformationOutline } from '@mdi/js'
+import SyAlert from '../../components/SyAlert/SyAlert.vue'
 
 const meta: Meta<typeof DataList> = {
 	title: 'Composants/Données/DataList',
@@ -22,7 +23,7 @@ const meta: Meta<typeof DataList> = {
 		headingLoading: { control: 'boolean' },
 		renderHtmlValue: {
 			control: 'boolean',
-			description: '@deprecated Utiliser un slot (par exemple "item") pour rendre du HTML plutôt qu\'une string interprétée via v-html.',
+			description: '<b>@deprecated</b> Utiliser un slot (par exemple "item") pour rendre du HTML plutôt qu\'une string interprétée via v-html.',
 		},
 	},
 }
@@ -987,4 +988,24 @@ export const Customisation: Story = {
 			`,
 		}
 	},
+}
+
+export const InfoIntro = {
+	render: () => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return {}
+			},
+			template: `
+			  <SyAlert type="info" variant="tonal" :closable="false">
+				<template #default>
+				 La propriété <b>renderHtmlValue</b> est dépréciée car elle repose sur v-html et peut exposer votre application à des failles XSS.
+Utilisez à la place le slot item de DataList (ou le slot value de DataListItem) pour rendre du HTML de manière contrôlée depuis le composant parent.
+				</template>
+			  </SyAlert>
+			`,
+		}
+	},
+	tags: ['!dev'],
 }
