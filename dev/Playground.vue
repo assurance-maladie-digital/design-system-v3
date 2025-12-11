@@ -137,7 +137,7 @@ const validateVuetifyForm = async () => {
 			v-model="vuetifyEmail"
 			label="Email (mode Vuetify)"
 			use-vuetify-validation
-			:custom-rules="dsEmailRules"
+			:rules="vuetifyEmailRules"
 			type="email"
 			variant="outlined"
 			hint="Validation gérée uniquement par Vuetify (rules)"
