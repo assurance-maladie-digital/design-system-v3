@@ -14,6 +14,9 @@
 		chip?: boolean
 		icon?: string
 		row?: boolean
+		/**
+		 * @deprecated Utiliser le slot "value" pour rendre du HTML dans le template parent.
+		 */
 		renderHtmlValue?: boolean
 	}>(), {
 		label: '',
@@ -25,6 +28,10 @@
 		row: false,
 		renderHtmlValue: false,
 	})
+
+	if (import.meta.env.DEV && props.renderHtmlValue) {
+		console.warn('[DataListItem] La prop "renderHtmlValue" est dépréciée. Utilisez le slot "value" pour rendre du HTML en toute sécurité.')
+	}
 
 	const emits = defineEmits(['click:action'])
 
@@ -89,8 +96,9 @@
 				<span
 					v-else-if="renderHtmlValue"
 					class="text-body-1"
-					v-html="itemValue"
-				/>
+				>
+					renderHtmlValue est obsolète. Merci de vous référer à la documentation pour connaître l’API recommandée.
+				</span>
 
 				<span
 					v-else
