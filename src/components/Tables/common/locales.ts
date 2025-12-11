@@ -35,4 +35,5 @@ export const locales = {
 	sortDescending: 'Tri décroissant',
 	sortNone: 'Aucun tri',
 	sortOther: 'Tri personnalisé',
+	sortOrder: (order: number) => `Ordre de tri: ${order}`,
 }

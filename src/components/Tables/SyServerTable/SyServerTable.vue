@@ -340,7 +340,17 @@
 										:column="column"
 										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
-									/>
+									>
+										<template
+											v-for="slotName in Object.keys($slots)"
+											#[slotName]="currentSlotProps"
+										>
+											<slot
+												:name="slotName"
+												v-bind="currentSlotProps ?? {}"
+											/>
+										</template>
+									</TableHeader>
 								</template>
 							</th>
 						</template>
