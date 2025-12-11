@@ -39,11 +39,12 @@ export const createVuetifyInstance = () => createVuetify({
 				colors: {
 					...cnamLightTheme,
 					...cnamDarkTheme,
+					...createFlattenTheme(cnamContextualTokens),
+					...createFlattenTheme(cnamColorsTokens),
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
 					'font-family': cnamFontsTokens.family.primary,
-					...createFlattenTheme(cnamContextualTokens),
 					...createFontVariables(cnamFontsTokens),
 				},
 			},
