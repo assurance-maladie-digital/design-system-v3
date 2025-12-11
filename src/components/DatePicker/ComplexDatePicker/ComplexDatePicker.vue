@@ -324,44 +324,68 @@
 	const handleDateSelected = (value: DateValue) => {
 		if (props.readonly) return
 
-		// 1) Update v-model
 		updateModel(value)
 
-		// 2) Sync internal selection
 		if (value === null) {
 			selectedDates.value = null
 		}
 		else if (Array.isArray(value)) {
-			const dateObjects = value
-				.map(dateStr => parseDate(dateStr, returnFormat.value))
-				.filter(Boolean) as Date[]
-			selectedDates.value = dateObjects
+			if (props.displayRange) {
+				const [startStr, endStr] = value
+				const rf = returnFormat.value
+				const startDate = startStr ? parseDate(startStr, rf) || parseDate(startStr, props.format) : null
+				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
+
+				if (startDate && endDate) {
+					// Utiliser useDateSelection pour générer la plage complète
+					dateSelectionResult.updateSelectedDates([startDate, endDate])
+				}
+				else if (startDate) {
+					dateSelectionResult.updateSelectedDates([startDate])
+				}
+				else {
+					selectedDates.value = null
+				}
+			}
+			else {
+				const dateObjects = value
+					.map(dateStr => parseDate(dateStr, returnFormat.value))
+					.filter(Boolean) as Date[]
+				selectedDates.value = dateObjects
+			}
 		}
 		else {
 			const dateObject = parseDate(value, returnFormat.value)
 			selectedDates.value = dateObject
 		}
 
-		// 3) Re-emit upward
 		emit('date-selected', value)
 	}
+
 	// Watcher pour re-valider quand les customRules changent
-	watch(() => props.customRules, () => {
-		if (selectedDates.value !== null) {
-			// Retarder légèrement pour s'assurer que les computed sont mis à jour
-			setTimeout(() => {
-				clearValidation()
-				const datesToValidate = Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value]
-				datesToValidate.forEach((date) => {
-					validateField(
-						date,
-						props.customRules,
-						props.customWarningRules,
-					)
-				})
-			}, 5)
-		}
-	}, { deep: true })
+	watch(
+		() => props.customRules,
+		() => {
+			if (selectedDates.value !== null) {
+				// Retarder légèrement pour s'assurer que les computed sont mis à jour
+				setTimeout(() => {
+					clearValidation()
+					const datesToValidate = Array.isArray(selectedDates.value)
+						? selectedDates.value
+						: [selectedDates.value]
+					datesToValidate.forEach((date) => {
+						validateField(
+							date,
+							props.customRules,
+							props.customWarningRules,
+						)
+					})
+				}, 5)
+			}
+		},
+		{ deep: true },
+	)
+
 	// Range handling
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 	const dateSelectionResult = useDateSelection(parseDate, selectedDates, props.format, props.displayRange)
@@ -748,7 +772,8 @@
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
 					if (startDate && endDate) {
-						selectedDates.value = [startDate, endDate]
+						// Utiliser useDateSelection pour ne pas perdre les jours intermédiaires
+						dateSelectionResult.updateSelectedDates([startDate, endDate])
 						validateDates()
 					}
 				}
@@ -853,13 +878,14 @@
 				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
 
 				if (startDate && endDate) {
-					selectedDates.value = [startDate, endDate]
+					// Utiliser useDateSelection pour générer aussi les dates intermédiaires
+					dateSelectionResult.updateSelectedDates([startDate, endDate])
 					displayFormattedDate.value
 						= `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
 				}
 				else if (startDate) {
 					// Première date saisie uniquement
-					selectedDates.value = [startDate]
+					dateSelectionResult.updateSelectedDates([startDate])
 					displayFormattedDate.value = formatDate(startDate, props.format)
 				}
 				else {
@@ -907,7 +933,14 @@
 				}
 				return
 			}
-			withInternalUpdate(() => syncFromModelValue(newValue))
+			withInternalUpdate(() => {
+				syncFromModelValue(newValue)
+				// En mode range, si le modèle externe fournit seulement les bornes (jour deb - jour fin),
+				// utiliser useDateSelection pour régénérer la plage complète
+				if (props.displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
+					dateSelectionResult.updateSelectedDates(selectedDates.value as Date[])
+				}
+			})
 		},
 		{ immediate: true },
 	)
@@ -917,6 +950,12 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (visible) {
+				if (props.displayRange && rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
+					const [start, end] = rangeBoundaryDates.value
+					if (start && end) {
+						dateSelectionResult.updateSelectedDates([start, end])
+					}
+				}
 				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
 				resetViewMode()
 				nextTick(() => {
@@ -945,9 +984,6 @@
 		currentYearName.value = todayYear
 	}
 
-	/**
-	 * Public API
-	 */
 	const validateOnSubmit = (): boolean => {
 		if (props.noCalendar) {
 			return dateTextInputRef.value?.validateOnSubmit() || false
@@ -1008,7 +1044,7 @@
 		emitBlur: emitBlurEvent,
 		validateDateFormat,
 		displayFormattedDate,
-		// Expose for consumers
+		// Expose
 		handleDateSelected,
 		resetViewMode,
 		reset,
@@ -1017,7 +1053,6 @@
 
 <template>
 	<div class="date-picker-container">
-		<!-- Hidden live region text holder (kept for potential a11y tooling) -->
 		<span
 			v-if="false"
 			ref="accessibilityDescriptionRef"
