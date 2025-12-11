@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
 import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
+import SyForm from '../SyForm/SyForm.vue'
+import { VBtn } from 'vuetify/components'
 
 const meta: Meta<typeof SyRadioGroup> = {
 	title: 'Composants/Formulaires/SyRadioGroup',
@@ -104,7 +106,7 @@ const rules = [
     type: 'custom',
     options: {
       message: 'Vous devez sélectionner une option.',
-      validate: (value) => value != null,
+      validate: (value) => value != 'A',
     },
   },
 ]
@@ -128,7 +130,7 @@ export default {
         type: 'custom',
         options: {
           message: 'Vous devez sélectionner une option.',
-          validate: (value) => value != null,
+          validate: (value) => value != 'A',
         },
       },
     ]
@@ -169,7 +171,7 @@ Ce groupe de boutons radio utilise une validation personnalisée pour vérifier 
 						type: 'custom',
 						options: {
 							message: 'Vous devez sélectionner une option.',
-							validate: (value: string | null) => value != null,
+							validate: (value: string | null) => value != 'A',
 						},
 					},
 				],
@@ -198,13 +200,46 @@ export const Required: Story = {
 	},
 
 	render: args => ({
-		components: { SyRadioGroup },
+		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
-			const selected = ref('a')
+			const selected = ref(null)
 			return { args, selected }
 		},
 		template: `
+		<SyForm ref="form" @submit="onSubmit">
       <SyRadioGroup v-model="selected" required v-bind="args" />
+	   <v-btn type="submit" class="mt-2" color="primary" class="mr-2">Valider</v-btn>
+	  </SyForm>
+    `,
+	}),
+}
+
+export const formValidation: Story = {
+	args: {
+		label: 'Choisissez une option (obligatoire)',
+		required: true,
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref(null)
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert('Inscription réussie !')
+				}
+			}
+			return { args, selected, onSubmit }
+		},
+		template: `
+		<SyForm ref="form" @submit="onSubmit">
+      <SyRadioGroup v-model="selected" required v-bind="args" />
+	   <v-btn type="submit" class="mt-2" color="primary" class="mr-2">Valider</v-btn>
+	  </SyForm>
     `,
 	}),
 }

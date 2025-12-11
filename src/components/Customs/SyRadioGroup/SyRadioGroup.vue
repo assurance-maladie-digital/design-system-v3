@@ -124,7 +124,6 @@
 			[...defaultRules.value, ...props.customRules],
 			props.customWarningRules,
 		)
-
 		return !result.hasError
 	}
 
@@ -166,7 +165,7 @@
 	const successes = computed(() => validation.successes.value)
 
 	const ariaChecked = computed(() => {
-		return model.value ? 'true' : 'false'
+		return model.value != null ? 'true' : 'false'
 	})
 
 	// Propriétés ARIA personnalisées pour éviter les conflits
