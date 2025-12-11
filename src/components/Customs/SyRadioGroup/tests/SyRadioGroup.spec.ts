@@ -96,8 +96,9 @@ describe('SyRadioGroup', () => {
 	it('should handle custom validation rules', async () => {
 		const customRule = {
 			type: 'custom',
-			validator: (value: unknown) => value === 'OK', // type générique unknown
 			options: {
+				// La fonction de validation personnalisée doit être définie dans options.validate
+				validate: (value: unknown) => value === 'OK', // type générique unknown
 				message: 'Vous devez sélectionner une option.',
 				fieldIdentifier: 'Custom Radio',
 			},
