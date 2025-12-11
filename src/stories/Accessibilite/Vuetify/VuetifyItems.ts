@@ -477,7 +477,8 @@ export const VuetifyItems = [
 				],
 
 				solution: [{
-					name: 'En étude',
+					name: 'SyRadioGroup',
+					href: '/?path=/docs/composants-formulaires-syradiogroup--docs',
 				}],
 			},
 			{

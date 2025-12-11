@@ -92,7 +92,7 @@ export const ValidationRules: Story = {
 <script setup>
 import { ref } from 'vue'
 
-const selected = ref(null)
+const selected = ref('A')
 
 const options = [
   { label: 'Option A', value: 'A' },
@@ -116,7 +116,7 @@ const rules = [
 // Composition API
 export default {
   setup() {
-    const selected = ref(null)
+    const selected = ref('A')
 
     const options = [
       { label: 'Option A', value: 'A' },
@@ -155,7 +155,7 @@ Ce groupe de boutons radio utilise une validation personnalisée pour vérifier 
 	render: args => ({
 		components: { SyRadioGroup },
 		setup() {
-			const selected = ref(null)
+			const selected = ref('A')
 
 			return {
 				args,
@@ -200,11 +200,11 @@ export const Required: Story = {
 	render: args => ({
 		components: { SyRadioGroup },
 		setup() {
-			const selected = ref(null)
+			const selected = ref('a')
 			return { args, selected }
 		},
 		template: `
-      <SyRadioGroup v-model="selected" v-bind="args" />
+      <SyRadioGroup v-model="selected" required v-bind="args" />
     `,
 	}),
 }

@@ -245,7 +245,6 @@
 		:density="props.density"
 		:error="hasError"
 		:error-messages="errors"
-		:aria-checked="ariaChecked"
 		:aria-describedby="messageId"
 		:messages="hasError ? errors :
 			hasWarning ? warnings :
@@ -258,6 +257,7 @@
 			:value="opt.value"
 			:label="opt.label"
 			:disabled="props.disabled"
+			:aria-checked="ariaChecked"
 			@blur="checkErrorOnBlur"
 		/>
 		<template
