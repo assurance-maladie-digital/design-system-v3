@@ -1,20 +1,11 @@
 import { mount } from '@vue/test-utils'
 import SearchListField from '../SearchListField.vue'
-import { describe, it, expect, beforeEach } from 'vitest'
-import { createVuetify } from 'vuetify'
+import { describe, it, expect } from 'vitest'
 
 describe('SearchListField.vue', () => {
-	let vuetify
-
-	beforeEach(() => {
-		vuetify = createVuetify()
-	})
 
 	it('renders the password field', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -35,9 +26,6 @@ describe('SearchListField.vue', () => {
 
 	it('initial state', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -61,9 +49,6 @@ describe('SearchListField.vue', () => {
 
 	it('initial state with empty value prop', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -87,9 +72,6 @@ describe('SearchListField.vue', () => {
 
 	it('selects an item', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -115,9 +97,6 @@ describe('SearchListField.vue', () => {
 
 	it('filters items based on search input', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Filtrer la liste des fruits',
 				items: [
@@ -147,9 +126,6 @@ describe('SearchListField.vue', () => {
 
 	it('clears the search field', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -175,9 +151,7 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
+
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -202,9 +176,7 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property with null search', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
+
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -229,9 +201,7 @@ describe('SearchListField.vue', () => {
 
 	it('filteredItems computed property with multiple matching items', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
+
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -258,9 +228,7 @@ describe('SearchListField.vue', () => {
 
 	it('emitChangeEvent method', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
+
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -283,9 +251,7 @@ describe('SearchListField.vue', () => {
 
 	it('emits the update:modelValue event when an item is selected', async () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
+
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -311,9 +277,7 @@ describe('SearchListField.vue', () => {
 
 	it('renders the password field without outlined prop', () => {
 		const wrapper = mount(SearchListField, {
-			global: {
-				plugins: [vuetify],
-			},
+
 			props: {
 				label: 'Filtrer la liste des Items',
 				items: [
@@ -347,9 +311,6 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					label: 'Filtrer la liste des Items',
 					items,
@@ -379,9 +340,6 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					label: 'Filtrer la liste des Items',
 					items,
@@ -411,9 +369,6 @@ describe('SearchListField.vue', () => {
 			]
 
 			const wrapper = mount(SearchListField, {
-				global: {
-					plugins: [vuetify],
-				},
 				props: {
 					label: 'Filtrer la liste des Items',
 					items,
