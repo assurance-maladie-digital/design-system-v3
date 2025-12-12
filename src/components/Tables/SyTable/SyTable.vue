@@ -263,7 +263,6 @@
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
 					<tr class="headers">
-						{{ slotProps.columns }}
 						<template
 							v-for="column in slotProps.columns"
 							:key="column.key!"
