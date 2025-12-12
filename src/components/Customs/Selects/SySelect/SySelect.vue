@@ -427,6 +427,12 @@
 		return undefined
 	})
 
+	const menuTarget = computed<HTMLElement | undefined>(() => {
+		const rootEl = textInput.value?.$el as HTMLElement | undefined
+		if (!rootEl) return undefined
+		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
+	})
+
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
 	})
@@ -750,6 +756,8 @@
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function initializeActivatorProps(activatorProps: Record<string, any>) {
 		return {
+			...activatorProps,
+			onClick: undefined,
 			// the ref is needed by Vuetify to position the menu and by us for accessibility
 			ref: (el) => {
 				textInput.value = el
@@ -764,6 +772,10 @@
 		v-model="isOpen"
 		transition="slide-y-transition"
 		max-height="300px"
+		location="bottom"
+		origin="top"
+		offset="4"
+		:target="menuTarget"
 	>
 		<template #activator="{ props: activatorProps }">
 			<VTextField
@@ -876,7 +888,6 @@
 			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:style="{
 				minWidth: `${textInput?.$el.offsetWidth}px`,
-				marginTop: props.hideMessages ? '0' : '-22px',
 			}"
 			bg-color="white"
 			tabindex="0"
