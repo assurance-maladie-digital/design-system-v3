@@ -962,9 +962,9 @@
 @use '@/assets/tokens';
 
 .sy-select-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 
 .sy-select {

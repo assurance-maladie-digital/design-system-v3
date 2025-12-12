@@ -755,9 +755,9 @@
 // }
 
 .sy-textfield-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 
 .warning-field {
