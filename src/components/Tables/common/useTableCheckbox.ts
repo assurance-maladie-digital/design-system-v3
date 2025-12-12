@@ -1,11 +1,12 @@
 import type { MaybeRefOrGetter } from 'vue'
 import { toRef } from 'vue'
+import type { Items } from './types'
 
 interface UseTableCheckboxOptions {
 	/**
 	 * The items to be displayed in the table
 	 */
-	items: MaybeRefOrGetter<Record<string, unknown>[]>
+	items: MaybeRefOrGetter<Items>
 	/**
 	 * The model value for selected items
 	 */
@@ -27,7 +28,7 @@ export function useTableCheckbox(options: UseTableCheckboxOptions) {
 	/**
 	 * Function to get a unique identifier for each item
 	 */
-	const getItemValue = (item: Record<string, unknown>) => {
+	const getItemValue = (item: Items[0]) => {
 		// 1) If a custom selectionKey is provided and exists on item, use it
 		const key = (typeof selectionKeyRef?.value === 'function'
 			? (selectionKeyRef.value as unknown as () => string | undefined)()
@@ -36,7 +37,7 @@ export function useTableCheckbox(options: UseTableCheckboxOptions) {
 			return item[key]
 		}
 		// 2) Otherwise, if the item has an id field, use that
-		if (item.id !== undefined) {
+		if ('id' in item && item.id !== undefined) {
 			return item.id
 		}
 		// Otherwise, return the full object instead of a JSON string
