@@ -55,6 +55,7 @@
 
 	const reset = () => {
 		// Reset custom components values
+		clearAll()
 		resetAll()
 		// Reset field values and validations for Vuetify form
 		form.value?.reset()
@@ -71,6 +72,14 @@
 		// Clear custom components validation states registered in the form
 		isValid.value = true
 		clearAll()
+	}
+
+	const handleReset = () => {
+		clearAll()
+		resetAll()
+		form.value?.resetValidation()
+		isValid.value = true
+		emit('reset')
 	}
 
 	// Gestion de la soumission du formulaire
@@ -96,6 +105,7 @@
 	<v-form
 		ref="form"
 		@submit.prevent="handleSubmit"
+		@reset="handleReset"
 	>
 		<slot
 			:is-valid="isValid"
