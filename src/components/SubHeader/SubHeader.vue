@@ -26,9 +26,7 @@
 		loading?: boolean
 		renderHtmlValue?: boolean
 		renderFixedHeight?: boolean
-		backgroundColor?: string
 	}>(), {
-		backgroundColor: undefined,
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
 		backBtnAccessibleName: undefined,
