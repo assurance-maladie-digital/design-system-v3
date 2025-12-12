@@ -21,7 +21,8 @@
 			<h2>Format standard (DD/MM/YYYY)</h2>
 			<ComplexDatePicker
 				v-model="standardDate"
-				placeholder="Date standard"
+				label="Date standard"
+				placeholder="15/03/2024"
 				format="DD/MM/YYYY"
 				class="date-picker"
 			/>
@@ -34,7 +35,8 @@
 			<h2>Format américain (MM/DD/YYYY)</h2>
 			<ComplexDatePicker
 				v-model="americanDate"
-				placeholder="Date américaine"
+				label="Date américaine"
+				placeholder="03/15/2024"
 				format="MM/DD/YYYY"
 				class="date-picker"
 			/>
@@ -47,7 +49,8 @@
 			<h2>Format ISO (YYYY-MM-DD)</h2>
 			<ComplexDatePicker
 				v-model="isoDate"
-				placeholder="Date ISO"
+				label="Date ISO"
+				placeholder="2024-03-15"
 				format="YYYY-MM-DD"
 				class="date-picker"
 			/>
@@ -60,7 +63,8 @@
 			<h2>Format avec séparateur point (DD.MM.YYYY)</h2>
 			<ComplexDatePicker
 				v-model="dotDate"
-				placeholder="Date avec points"
+				label="Date avec points"
+				placeholder="15.03.2024"
 				format="DD.MM.YYYY"
 				class="date-picker"
 			/>
@@ -73,7 +77,8 @@
 			<h2>Champ requis</h2>
 			<ComplexDatePicker
 				v-model="requiredDate"
-				placeholder="Date requise"
+				label="Date requise"
+				placeholder="Veuillez sélectionner une date *"
 				format="DD/MM/YYYY"
 				required
 				class="date-picker"
@@ -87,7 +92,8 @@
 			<h2>Plage de dates</h2>
 			<ComplexDatePicker
 				v-model="dateRange"
-				placeholder="Plage de dates"
+				label="Plage de dates"
+				placeholder="01/01/2024 au 31/12/2024"
 				format="DD/MM/YYYY"
 				display-range
 				class="date-picker"
@@ -101,7 +107,8 @@
 			<h2>Date de naissance (année d'abord)</h2>
 			<ComplexDatePicker
 				v-model="birthDate"
-				placeholder="Date de naissance"
+				label="Date de naissance"
+				placeholder="25/12/1990"
 				format="DD/MM/YYYY"
 				is-birth-date
 				class="date-picker"
@@ -115,7 +122,8 @@
 			<h2>Format d'affichage vs format de retour</h2>
 			<ComplexDatePicker
 				v-model="formattedDate"
-				placeholder="Date avec format de retour"
+				label="Date avec format de retour"
+				placeholder="Affichage: 15/03/2024, Retour: 2024-03-15"
 				format="DD/MM/YYYY"
 				date-format-return="YYYY-MM-DD"
 				class="date-picker"
