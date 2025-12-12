@@ -164,9 +164,9 @@
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
 
-	const ariaChecked = computed(() => {
-		return model.value != null ? 'true' : 'false'
-	})
+	const getAriaChecked = (value: PropertyKey) => {
+		return model.value === value ? 'true' : 'false'
+	}
 
 	// Propriétés ARIA personnalisées pour éviter les conflits
 	const messageId = computed(() => {
@@ -254,9 +254,9 @@
 			v-for="opt in props.options"
 			:key="opt.value"
 			:value="opt.value"
+			role="radio"
 			:label="opt.label"
-			:disabled="props.disabled"
-			:aria-checked="ariaChecked"
+			:aria-checked="getAriaChecked(opt.value)"
 			@blur="checkErrorOnBlur"
 		/>
 		<template
