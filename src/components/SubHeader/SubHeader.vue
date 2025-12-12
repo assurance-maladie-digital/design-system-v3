@@ -26,7 +26,9 @@
 		loading?: boolean
 		renderHtmlValue?: boolean
 		renderFixedHeight?: boolean
+		backgroundColor?: string
 	}>(), {
+		backgroundColor: undefined,
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
 		backBtnAccessibleName: undefined,
@@ -168,6 +170,7 @@
 <style lang="scss" scoped>
 .vd-sub-header {
 	overflow-x: auto;
+	border-radius: 0 0 32px 32px;
 }
 
 .vd-sub-header-back-btn {
