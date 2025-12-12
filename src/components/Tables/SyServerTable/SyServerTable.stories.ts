@@ -2741,7 +2741,7 @@ export const ServerFilterByPeriod: Story = {
 								if (!value) return true
 
 								else if (type === 'period') {
-									function formatDate(date: string): Date | null {
+									const formatDate = (date: string): Date | null => {
 										if (!date) return null
 										const parsedDate = dayjs(date, 'DD/MM/YYYY')
 										return parsedDate.isValid() ? parsedDate.toDate() : null
@@ -4184,8 +4184,7 @@ export const ResizableColumns: Story = {
 				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
-					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(options.value)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -5006,8 +5005,7 @@ export const ColumnControls: StoryObj<typeof SyServerTable> = {
 				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
-					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(options.value)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -6362,6 +6360,242 @@ export const ItemsPerPageOptions: Story = {
 					v-bind="args"
 					@update:options="fetchData"
 				/>
+			</div>
+			`,
+		}
+	},
+}
+
+export const ComplexItemsDisplay: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:items="items"
+						:headers="headers"
+						:server-items-length="totalItems"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-default"
+						@update:options="fetchData"
+					>
+						<template #[\`item.period\`]="{ item }">
+							<span>
+								Depuis le {{ item.period.start }} jusqu'au {{ item.period.end }}
+							</span>
+						</template>
+					</SyServerTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+					
+					interface Item {
+						title: string
+						period: {
+							start: string
+							end: string
+						}
+						status: string
+					}
+				
+					interface DataObj {
+						items: Item[]
+						total: number
+					}
+				
+					const totalItems = ref(0)
+					const items = ref<Item[]>([])
+					const state = ref(StateEnum.IDLE)
+				
+					const options = ref({
+						itemsPerPage: 5,
+						sortBy: [{ key: 'title', order: 'asc' }],
+						page: 1,
+					})
+				
+					const headers = [
+						{ title: 'Titre', key: 'title' },
+						{ title: 'Période', key: 'period' },
+						{ title: 'Statut', key: 'status' },
+					]
+				
+					const fetchData = async (): Promise<void> => {
+						const { items: fetchedItems, total } = await getDataFromApi(options.value)
+						items.value = fetchedItems
+						totalItems.value = total
+					}
+				
+					const wait = async (ms: number) => {
+						return new Promise(resolve => setTimeout(resolve, ms))
+					}
+				
+					const getDataFromApi = async ({ sortBy, page, itemsPerPage, filters }: DataOptions): Promise<DataObj> => {
+						state.value = StateEnum.PENDING
+						await wait(1000)
+				
+						return new Promise((resolve) => {
+							let items: Item[] = getItems()
+							const total = items.length
+				
+							if (sortBy && sortBy.length > 0) {
+								items = items.sort((a, b) => {
+									const key = sortBy[0].key
+									const order = sortBy[0].order === 'asc' ? 1 : -1
+				
+									return a[key] > b[key] ? order : -order
+								})
+							}
+				
+							if (itemsPerPage > 0) {
+								items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							}
+				
+							resolve({ items, total })
+							state.value = StateEnum.RESOLVED
+						})
+					}
+				
+					const getItems = (): Item[] => {
+						return [
+							{ title: 'Projet Alpha', period: { start: '2023-01-01', end: '2023-06-30' }, status: 'En cours' },
+							{ title: 'Projet Beta', period: { start: '2022-05-15', end: '2022-12-15' }, status: 'Terminé' },
+							{ title: 'Projet Gamma', period: { start: '2023-03-01', end: '2023-09-30' }, status: 'En cours' },
+							{ title: 'Projet Delta', period: { start: '2021-11-01', end: '2022-04-30' }, status: 'Terminé' },
+							{ title: 'Projet Epsilon', period: { start: '2023-07-01', end: '2023-12-31' }, status: 'À venir' },
+							{ title: 'Projet Zeta', period: { start: '2022-02-01', end: '2022-08-31' }, status: 'Terminé' },
+						]
+					}
+					
+					  // Initialize data
+		  			fetchData()
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			sortBy: [{ key: 'title', order: 'asc' }],
+			page: 1,
+		},
+		'headers': [
+			{ title: 'Titre', key: 'title' },
+			{ title: 'Période', key: 'period' },
+			{ title: 'Statut', key: 'status' },
+		],
+		'caption': '',
+		'serverItemsLength': 6,
+		'suffix': 'server-default',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				type Item = {
+					title: string
+					period: {
+						start: string
+						end: string
+					}
+					status: string
+				}
+
+				const totalItems = ref(0)
+				const items = ref<Item[]>([])
+				const state = ref(StateEnum.IDLE)
+
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
+				const fetchData = async (): Promise<void> => {
+					const { items: fetchedItems, total } = await getDataFromApi(options.value as DataOptions)
+					items.value = fetchedItems
+					totalItems.value = total
+				}
+
+				const wait = async (ms: number) => {
+					return new Promise(resolve => setTimeout(resolve, ms))
+				}
+
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<{ items: Item[], total: number }> => {
+					state.value = StateEnum.PENDING
+					await wait(1000)
+
+					return new Promise((resolve) => {
+						let items = getItems()
+						const total = items.length
+
+						if (sortBy && sortBy.length > 0) {
+							items = items.sort((a, b) => {
+								const key = sortBy[0].key
+								const order = sortBy[0].order === 'asc' ? 1 : -1
+
+								return a[key] > b[key] ? order : -order
+							})
+						}
+
+						if (itemsPerPage > 0) {
+							items = items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						}
+
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getItems = () => {
+					return [
+						{ title: 'Projet Alpha', period: { start: '2023-01-01', end: '2023-06-30' }, status: 'En cours' },
+						{ title: 'Projet Beta', period: { start: '2022-05-15', end: '2022-12-15' }, status: 'Terminé' },
+						{ title: 'Projet Gamma', period: { start: '2023-03-01', end: '2023-09-30' }, status: 'En cours' },
+						{ title: 'Projet Delta', period: { start: '2021-11-01', end: '2022-04-30' }, status: 'Terminé' },
+						{ title: 'Projet Epsilon', period: { start: '2023-07-01', end: '2023-12-31' }, status: 'À venir' },
+						{ title: 'Projet Zeta', period: { start: '2022-02-01', end: '2022-08-31' }, status: 'Terminé' },
+					]
+				}
+
+				// Initialize data
+				fetchData()
+
+				return { args, items, state, fetchData, options, totalItems, StateEnum }
+			},
+			template: `
+			<div>
+				<SyServerTable
+					v-model:options="options"
+					:items="items"
+					:server-items-length="totalItems"
+					:loading="state === StateEnum.PENDING"
+					v-bind="args"
+					suffix="server-complex-item"
+					@update:options="fetchData"
+				>
+					<template #[\`item.period\`]="{ item }">
+						<span>
+							Depuis le {{ item.period.start }} jusqu'au {{ item.period.end }}
+						</span>
+					</template>
+				</SyServerTable>
 			</div>
 			`,
 		}

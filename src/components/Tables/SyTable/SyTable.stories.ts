@@ -4271,3 +4271,124 @@ export const ItemsPerPageOptions: Story = {
 		}
 	},
 }
+
+export const ComplexItemsDisplay: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						:headers="headers"
+						:items="items"
+						suffix="items-per-page-options-table"
+					>
+						<template #[\`item.period\`]="{ item }">
+							Depuis le {{ item.period.start }} jusqu'au {{ item.period.end }}
+						</template>
+					</SyTable>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					
+					const headers = ref([
+						{
+							title: 'Titre',
+							key: 'title',
+						},
+						{
+							title: 'Période',
+							key: 'period',
+						},
+					])
+						
+					const items = ref([
+						{
+							title: 'Projet Alpha',
+							period: {
+								start: '01/01/2023',
+								end: '30/06/2023',
+							},
+						},
+						{
+							title: 'Projet Beta',
+							period: {
+								start: '15/02/2023',
+								end: '15/08/2023',
+							},
+						},
+						{
+							title: 'Projet Gamma',
+							period: {
+								start: '01/03/2023',
+								end: '31/12/2023',
+							},
+						},
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		headers: [
+			{
+				title: 'Titre',
+				key: 'title',
+			},
+			{
+				title: 'Période',
+				key: 'period',
+			},
+		],
+		items: [
+			{
+				title: 'Projet Alpha',
+				period: {
+					start: '01/01/2023',
+					end: '30/06/2023',
+				},
+			},
+			{
+				title: 'Projet Beta',
+				period: {
+					start: '15/02/2023',
+					end: '15/08/2023',
+				},
+			},
+			{
+				title: 'Projet Gamma',
+				period: {
+					start: '01/03/2023',
+					end: '31/12/2023',
+				},
+			},
+		],
+		caption: 'Périodes des projets en cours',
+		suffix: 'items-display-cell-table',
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyTable
+					v-bind="args"
+				>
+					<template #[\`item.period\`]="{ item }">
+						Depuis le {{ item.period.start }} jusqu'au {{ item.period.end }}
+					</template>
+				</SyTable>
+			`,
+		}
+	},
+}

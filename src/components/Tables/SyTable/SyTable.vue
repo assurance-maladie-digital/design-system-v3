@@ -5,7 +5,6 @@
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
-	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableProps } from '../common/tableProps'
@@ -86,12 +85,8 @@
 		filterInputConfig: props.filterInputConfig,
 	})
 
-	// Create a reactive reference for items
-	const itemsRef = computed(() => props.items)
-
-	// Use the table items composable
 	const { filteredItems } = useTableItems({
-		items: itemsRef,
+		items: computed(() => props.items),
 		headers,
 		filters,
 		options,
@@ -245,7 +240,7 @@
 			color="primary"
 			:headers="displayHeaders"
 			v-bind="propsFacade"
-			:items="processItems(filteredItems)"
+			:items="filteredItems"
 			:density="props.density"
 			:show-select="props.showSelect || props.showSelectSingle"
 			:select-strategy="props.showSelectSingle ? 'single' : 'page'"
@@ -270,7 +265,7 @@
 					<tr class="headers">
 						<template
 							v-for="column in slotProps.columns"
-							:key="column.key"
+							:key="column.key!"
 						>
 							<th
 								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
@@ -326,7 +321,7 @@
 						<th v-if="props.showSelect || props.showSelectSingle" />
 						<template
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
-							:key="column.key"
+							:key="column.key!"
 						>
 							<th
 								:style="{
