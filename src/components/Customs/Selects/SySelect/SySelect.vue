@@ -397,7 +397,7 @@
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return props.errorMessages.length > 0 || hasError.value
+		return props.errorMessages.length > 0 || hasError.value || Boolean(isRequired.value)
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -767,16 +767,18 @@
 	}
 </script>
 
+
 <template>
-	<VMenu
-		v-model="isOpen"
-		transition="slide-y-transition"
-		max-height="300px"
-		location="bottom"
-		origin="top"
-		offset="4"
-		:target="menuTarget"
-	>
+	<div class="sy-select-container">
+		<VMenu
+			v-model="isOpen"
+			transition="slide-y-transition"
+			max-height="300px"
+			location="bottom"
+			origin="top"
+			offset="4"
+			:target="menuTarget"
+		>
 		<template #activator="{ props: activatorProps }">
 			<VTextField
 				:id="inputId"
@@ -945,14 +947,15 @@
 				</VListItemTitle>
 			</VListItem>
 		</VList>
-	</VMenu>
+		</VMenu>
 
-	<div
-		v-if="showHelpTextBelow"
-		class="help-text-below px-4 mt-1"
-		:class="{ 'text-disabled': props.disabled }"
-	>
-		{{ props.helpText }}
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-4 mt-1"
+			:class="{ 'text-disabled': props.disabled }"
+		>
+			{{ props.helpText }}
+		</div>
 	</div>
 </template>
 
@@ -960,6 +963,11 @@
 @use '@/assets/tokens';
 
 .sy-select {
+	display: flex;
+	flex-direction: column;
+}
+
+.sy-select-container {
 	display: flex;
 	flex-direction: column;
 }

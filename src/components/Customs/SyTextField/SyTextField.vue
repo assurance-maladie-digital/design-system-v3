@@ -547,63 +547,64 @@
 </script>
 
 <template>
-	<VTextField
-		:id="props.id"
-		ref="syTextFieldRef"
-		v-model="model"
-		:autocomplete="props.autocomplete"
-		:active="props.isActive"
-		:title="accessibleLabel"
-		:aria-label="accessibleLabel"
-		:aria-required="props.required ? 'true' : undefined"
-		:base-color="props.baseColor"
-		:bg-color="props.bgColor"
-		:center-affix="props.centerAffix"
-		:color="props.color"
-		:counter-value="props.counterValue"
-		:density="props.density"
-		:direction="props.direction"
-		:dirty="props.isDirty"
-		:disabled="props.disabled"
-		:error="hasError"
-		:error-messages="errors"
-		:flat="props.isFlat"
-		:focused="props.isFocused"
-		:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
-		:hint="showHelpTextAsMessage ? props.helpText : props.hint"
-		:label="labelWithAsterisk"
-		:loading="props.loading"
-		:max-errors="props.maxErrors"
-		:max-width="props.maxWidth"
-		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
-		:min-width="props.minWidth"
-		:name="props.name"
-		:persistent-clear="props.displayPersistentClear"
-		:persistent-counter="props.displayPersistentCounter"
-		:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
-		:persistent-placeholder="props.displayPersistentPlaceholder"
-		:placeholder="props.placeholder"
-		:prefix="props.prefix"
-		:readonly="props.readonly"
-		:reverse="props.isReversed"
-		:role="props.role"
-		:rounded="props.rounded"
-		:single-line="props.isOnSingleLine"
-		:suffix="props.suffix"
-		:theme="props.theme"
-		:tile="props.isTiled"
-		:type="props.type"
-		:variant="props.variantStyle"
-		:width="props.width"
-		v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
-		:class="{
-			'error-field': hasError,
-			'warning-field': hasWarning,
-			'success-field': hasSuccess,
-			'basic-field': !hasError && !hasWarning && !hasSuccess
-		}"
-		@blur="checkErrorOnBlur"
-	>
+	<div class="sy-text-field-container">
+		<VTextField
+			:id="props.id"
+			ref="syTextFieldRef"
+			v-model="model"
+			:autocomplete="props.autocomplete"
+			:active="props.isActive"
+			:title="accessibleLabel"
+			:aria-label="accessibleLabel"
+			:aria-required="props.required ? 'true' : undefined"
+			:base-color="props.baseColor"
+			:bg-color="props.bgColor"
+			:center-affix="props.centerAffix"
+			:color="props.color"
+			:counter-value="props.counterValue"
+			:density="props.density"
+			:direction="props.direction"
+			:dirty="props.isDirty"
+			:disabled="props.disabled"
+			:error="hasError"
+			:error-messages="errors"
+			:flat="props.isFlat"
+			:focused="props.isFocused"
+			:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
+			:label="labelWithAsterisk"
+			:loading="props.loading"
+			:max-errors="props.maxErrors"
+			:max-width="props.maxWidth"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:min-width="props.minWidth"
+			:name="props.name"
+			:persistent-clear="props.displayPersistentClear"
+			:persistent-counter="props.displayPersistentCounter"
+			:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
+			:persistent-placeholder="props.displayPersistentPlaceholder"
+			:placeholder="props.placeholder"
+			:prefix="props.prefix"
+			:readonly="props.readonly"
+			:reverse="props.isReversed"
+			:role="props.role"
+			:rounded="props.rounded"
+			:single-line="props.isOnSingleLine"
+			:suffix="props.suffix"
+			:theme="props.theme"
+			:tile="props.isTiled"
+			:type="props.type"
+			:variant="props.variantStyle"
+			:width="props.width"
+			v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
+			:class="{
+				'error-field': hasError,
+				'warning-field': hasWarning,
+				'success-field': hasSuccess,
+				'basic-field': !hasError && !hasWarning && !hasSuccess
+			}"
+			@blur="checkErrorOnBlur"
+		>
 		<!-- Prepend -->
 		<template
 			v-if="props.prependIcon || props.prependTooltip"
@@ -729,17 +730,16 @@
 			</slot>
 		</template>
 
-		<template #details>
-			<slot name="details" />
-			<div
-				v-if="showHelpTextBelow"
-				class="help-text-below px-4 mt-1"
-				:class="{ 'text-disabled': props.disabled }"
-			>
-				{{ props.helpText }}
-			</div>
-		</template>
-	</VTextField>
+		</VTextField>
+
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-4 mt-1"
+			:class="{ 'text-disabled': props.disabled }"
+		>
+			{{ props.helpText }}
+		</div>
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -833,6 +833,11 @@
 	:deep(.v-icon__svg) {
 		fill: rgb(0 0 0 / 70%);
 	}
+}
+
+.sy-text-field-container {
+	display: flex;
+	flex-direction: column;
 }
 
 .help-text-below {
