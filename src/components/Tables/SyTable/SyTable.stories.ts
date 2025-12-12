@@ -4272,7 +4272,7 @@ export const ItemsPerPageOptions: Story = {
 	},
 }
 
-export const ItemsDisplayCell: Story = {
+export const ComplexItemsDisplay: Story = {
 	parameters: {
 		sourceCode: [
 			{
