@@ -397,7 +397,7 @@
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return props.errorMessages.length > 0 || hasError.value
+		return props.errorMessages.length > 0 || hasError.value || Boolean(isRequired.value)
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -425,6 +425,12 @@
 		}
 		// No width specified, return undefined for auto-sizing
 		return undefined
+	})
+
+	const menuTarget = computed<HTMLElement | undefined>(() => {
+		const rootEl = textInput.value?.$el as HTMLElement | undefined
+		if (!rootEl) return undefined
+		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -750,6 +756,8 @@
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function initializeActivatorProps(activatorProps: Record<string, any>) {
 		return {
+			...activatorProps,
+			onClick: undefined,
 			// the ref is needed by Vuetify to position the menu and by us for accessibility
 			ref: (el) => {
 				textInput.value = el
@@ -764,6 +772,10 @@
 		v-model="isOpen"
 		transition="slide-y-transition"
 		max-height="300px"
+		location="bottom"
+		offset="4"
+		origin="top"
+		:target="menuTarget"
 	>
 		<template #activator="{ props: activatorProps }">
 			<VTextField
@@ -875,8 +887,7 @@
 			:aria-multiselectable="props.multiple ? 'true' : undefined"
 			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 			:style="{
-				minWidth: `${textInput?.$el.offsetWidth}px`,
-				marginTop: props.hideMessages ? '0' : '-22px',
+				minWidth: `${textInput?.$el.offsetWidth}px`
 			}"
 			bg-color="white"
 			tabindex="0"
