@@ -605,131 +605,130 @@
 			}"
 			@blur="checkErrorOnBlur"
 		>
-		<!-- Prepend -->
-		<template
-			v-if="props.prependIcon || props.prependTooltip"
-			#prepend
-		>
-			<slot name="prepend">
-				<template v-if="props.prependTooltip">
-					<VTooltip
-						:text="props.prependTooltip"
-						:location="props.tooltipLocation"
-					>
-						<template #activator="{ props: tooltipProps }">
-							<SyIcon
-								v-bind="tooltipProps"
-								:label="props.label ? `${props.label} - info` : 'Info'"
-								:color="appendInnerIconColor"
-								:icon="ICONS.info"
-								role="button"
-								:decorative="false"
-							/>
-						</template>
-					</VTooltip>
-				</template>
-				<SyIcon
-					v-else-if="props.prependIcon && !props.noIcon"
-					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
-					:color="appendInnerIconColor"
-					:icon="ICONS[props.prependIcon]"
-					:role="disableClickButton ? 'presentation' : 'button'"
-					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-					:decorative="disableClickButton"
-					:tabindex="disableClickButton ? undefined : '0'"
-					@click="handlePrependIconClick"
-					@keydown.enter.prevent="handlePrependIconClick"
-					@keydown.space.prevent="handlePrependIconClick"
-				/>
-			</slot>
-		</template>
+			<!-- Prepend -->
+			<template
+				v-if="props.prependIcon || props.prependTooltip"
+				#prepend
+			>
+				<slot name="prepend">
+					<template v-if="props.prependTooltip">
+						<VTooltip
+							:text="props.prependTooltip"
+							:location="props.tooltipLocation"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<SyIcon
+									v-bind="tooltipProps"
+									:label="props.label ? `${props.label} - info` : 'Info'"
+									:color="appendInnerIconColor"
+									:icon="ICONS.info"
+									role="button"
+									:decorative="false"
+								/>
+							</template>
+						</VTooltip>
+					</template>
+					<SyIcon
+						v-else-if="props.prependIcon && !props.noIcon"
+						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
+						:color="appendInnerIconColor"
+						:icon="ICONS[props.prependIcon]"
+						:role="disableClickButton ? 'presentation' : 'button'"
+						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+						:decorative="disableClickButton"
+						:tabindex="disableClickButton ? undefined : '0'"
+						@click="handlePrependIconClick"
+						@keydown.enter.prevent="handlePrependIconClick"
+						@keydown.space.prevent="handlePrependIconClick"
+					/>
+				</slot>
+			</template>
 
-		<!-- Append -->
-		<template
-			v-if="props.appendIcon || props.appendTooltip"
-			#append
-		>
-			<slot name="append">
-				<template v-if="props.appendTooltip">
-					<VTooltip
-						:text="props.appendTooltip"
-						:location="props.tooltipLocation"
-					>
-						<template #activator="{ props: tooltipProps }">
-							<SyIcon
-								v-bind="tooltipProps"
-								:label="props.label ? `${props.label} - info` : 'Info'"
-								:color="appendInnerIconColor"
-								:icon="ICONS.info"
-								role="button"
-								:decorative="false"
-							/>
-						</template>
-					</VTooltip>
-				</template>
-				<SyIcon
-					v-else-if="props.appendIcon && !props.noIcon"
-					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
-					:color="appendInnerIconColor"
-					:icon="ICONS[props.appendIcon]"
-					:role="disableClickButton ? 'presentation' : 'button'"
-					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-					:decorative="disableClickButton"
-					:tabindex="disableClickButton ? undefined : '0'"
-					@click="handleAppendIconClick"
-					@keydown.enter.prevent="handleAppendIconClick"
-					@keydown.space.prevent="handleAppendIconClick"
-				/>
-			</slot>
-		</template>
+			<!-- Append -->
+			<template
+				v-if="props.appendIcon || props.appendTooltip"
+				#append
+			>
+				<slot name="append">
+					<template v-if="props.appendTooltip">
+						<VTooltip
+							:text="props.appendTooltip"
+							:location="props.tooltipLocation"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<SyIcon
+									v-bind="tooltipProps"
+									:label="props.label ? `${props.label} - info` : 'Info'"
+									:color="appendInnerIconColor"
+									:icon="ICONS.info"
+									role="button"
+									:decorative="false"
+								/>
+							</template>
+						</VTooltip>
+					</template>
+					<SyIcon
+						v-else-if="props.appendIcon && !props.noIcon"
+						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
+						:color="appendInnerIconColor"
+						:icon="ICONS[props.appendIcon]"
+						:role="disableClickButton ? 'presentation' : 'button'"
+						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+						:decorative="disableClickButton"
+						:tabindex="disableClickButton ? undefined : '0'"
+						@click="handleAppendIconClick"
+						@keydown.enter.prevent="handleAppendIconClick"
+						@keydown.space.prevent="handleAppendIconClick"
+					/>
+				</slot>
+			</template>
 
-		<!-- Prepend inner -->
-		<template #prepend-inner>
-			<slot name="prepend-inner">
-				<SyIcon
-					v-if="props.prependInnerIcon && !props.noIcon"
-					:icon="ICONS[props.prependInnerIcon]"
-					role="presentation"
-					:decorative="true"
-				/>
-				<VDivider
-					v-if="props.showDivider"
-					class="mt-4 pa-1"
-					v-bind="dividerProps"
-					vertical
-				/>
-			</slot>
-		</template>
+			<!-- Prepend inner -->
+			<template #prepend-inner>
+				<slot name="prepend-inner">
+					<SyIcon
+						v-if="props.prependInnerIcon && !props.noIcon"
+						:icon="ICONS[props.prependInnerIcon]"
+						role="presentation"
+						:decorative="true"
+					/>
+					<VDivider
+						v-if="props.showDivider"
+						class="mt-4 pa-1"
+						v-bind="dividerProps"
+						vertical
+					/>
+				</slot>
+			</template>
 
-		<!-- Append inner -->
-		<template #append-inner>
-			<slot name="append-inner">
-				<!-- Keyboard-focusable clear button -->
-				<VBtn
-					v-if="showClear"
-					class="v-btn v-btn--density-compact mr-1"
-					:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
-					:title="props.label ? `Vider ${props.label}` : 'Vider'"
-					:icon="mdiClose"
-					variant="text"
-					@click="clearField"
-				/>
-				<SyIcon
-					v-if="validationIcon && !props.appendInnerIcon"
-					:icon="validationIcon"
-					role="presentation"
-					:decorative="true"
-				/>
-				<SyIcon
-					v-if="props.appendInnerIcon && !props.noIcon"
-					:color="appendInnerIconColor"
-					role="presentation"
-					:icon="ICONS[props.appendInnerIcon]"
-					:decorative="true"
-				/>
-			</slot>
-		</template>
-
+			<!-- Append inner -->
+			<template #append-inner>
+				<slot name="append-inner">
+					<!-- Keyboard-focusable clear button -->
+					<VBtn
+						v-if="showClear"
+						class="v-btn v-btn--density-compact mr-1"
+						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
+						:title="props.label ? `Vider ${props.label}` : 'Vider'"
+						:icon="mdiClose"
+						variant="text"
+						@click="clearField"
+					/>
+					<SyIcon
+						v-if="validationIcon && !props.appendInnerIcon"
+						:icon="validationIcon"
+						role="presentation"
+						:decorative="true"
+					/>
+					<SyIcon
+						v-if="props.appendInnerIcon && !props.noIcon"
+						:color="appendInnerIconColor"
+						role="presentation"
+						:icon="ICONS[props.appendInnerIcon]"
+						:decorative="true"
+					/>
+				</slot>
+			</template>
 		</VTextField>
 
 		<div
