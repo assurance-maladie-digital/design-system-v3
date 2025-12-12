@@ -2741,7 +2741,7 @@ export const ServerFilterByPeriod: Story = {
 								if (!value) return true
 
 								else if (type === 'period') {
-									function formatDate(date: string): Date | null {
+									const formatDate = (date: string): Date | null => {
 										if (!date) return null
 										const parsedDate = dayjs(date, 'DD/MM/YYYY')
 										return parsedDate.isValid() ? parsedDate.toDate() : null
@@ -4184,8 +4184,7 @@ export const ResizableColumns: Story = {
 				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
-					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(options.value)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -5006,8 +5005,7 @@ export const ColumnControls: StoryObj<typeof SyServerTable> = {
 				}, { deep: true })
 
 				const fetchData = async (): Promise<void> => {
-					// @ts-expect-error - fetchData is not defined
-					const { items, total } = await getDataFromApi(options.value)
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
 					users.value = items
 					totalUsers.value = total
 				}
@@ -6508,8 +6506,17 @@ export const ComplexItemsDisplay: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
+				type Item = {
+					title: string
+					period: {
+						start: string
+						end: string
+					}
+					status: string
+				}
+
 				const totalItems = ref(0)
-				const items = ref([])
+				const items = ref<Item[]>([])
 				const state = ref(StateEnum.IDLE)
 
 				const options = ref({ ...args.options })
@@ -6530,7 +6537,7 @@ export const ComplexItemsDisplay: Story = {
 					return new Promise(resolve => setTimeout(resolve, ms))
 				}
 
-				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions) => {
+				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<{ items: Item[], total: number }> => {
 					state.value = StateEnum.PENDING
 					await wait(1000)
 
