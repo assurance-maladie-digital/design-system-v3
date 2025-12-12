@@ -3,7 +3,6 @@ import SearchListField from '../SearchListField.vue'
 import { describe, it, expect } from 'vitest'
 
 describe('SearchListField.vue', () => {
-
 	it('renders the password field', () => {
 		const wrapper = mount(SearchListField, {
 			props: {
