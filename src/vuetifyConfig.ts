@@ -53,11 +53,12 @@ export const createVuetifyInstance = () => createVuetify({
 				colors: {
 					...paLightTheme,
 					...paDarkTheme,
+					...createFlattenTheme(paContextualTokens),
+					...createFlattenTheme(cnamColorsTokens),
 				},
 				variables: {
 					'border-color': paColorsTokens.grey.base,
 					'font-family': paFontsTokens.family.primary,
-					...createFlattenTheme(paContextualTokens),
 					...createFontVariables(paFontsTokens),
 				},
 			},
@@ -66,10 +67,11 @@ export const createVuetifyInstance = () => createVuetify({
 				colors: {
 					...apLightTheme,
 					...apDarkTheme,
+					...createFlattenTheme(apContextualTokens),
+					...createFlattenTheme(cnamColorsTokens),
 				},
 				variables: {
 					'font-family': '"Arial", sans-serif',
-					...createFlattenTheme(apContextualTokens),
 				},
 			},
 		},
