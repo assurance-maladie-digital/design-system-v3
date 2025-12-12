@@ -302,3 +302,13 @@ export const vuetify = createVuetify({
 })
 
 config.global.plugins = [vuetify]
+
+// Déclaration de la balise personnalisée "v-button" pour les tests
+// afin d'éviter l'avertissement "Failed to resolve component: v-button"
+// sans modifier le composant PasswordField.
+config.global.stubs = {
+	...(config.global.stubs || {}),
+	'v-button': {
+		template: '<button><slot /></button>',
+	},
+}

@@ -1,6 +1,10 @@
+/* eslint-disable vue/one-component-per-file */
+import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
-import { ref, nextTick, type ComponentPublicInstance } from 'vue'
+import { ref, nextTick, defineComponent, type ComponentPublicInstance } from 'vue'
 import { useCalendarKeyboardNavigation } from '../useCalendarKeyboardNavigation'
+
+// Vue Test Util fournit une instance active pour onMounted / onBeforeUnmount
 
 describe('useCalendarKeyboardNavigation', () => {
 	it('attaches and detaches keydown listener based on visibility', async () => {
@@ -12,12 +16,19 @@ describe('useCalendarKeyboardNavigation', () => {
 		const addEventListenerSpy = vi.spyOn(document, 'addEventListener')
 		const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener')
 
-		useCalendarKeyboardNavigation({
-			isDatePickerVisible,
-			datePickerRef,
-			getCurrentDate,
-			setCurrentDate,
+		const TestComponent = defineComponent({
+			setup() {
+				useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef,
+					getCurrentDate,
+					setCurrentDate,
+				})
+				return () => null
+			},
 		})
+
+		mount(TestComponent)
 
 		// When the date picker becomes visible, a keydown listener should be attached
 		isDatePickerVisible.value = true
@@ -68,12 +79,21 @@ describe('useCalendarKeyboardNavigation', () => {
 			}
 		})
 
-		const { attachListeners } = useCalendarKeyboardNavigation({
-			isDatePickerVisible,
-			datePickerRef,
-			getCurrentDate,
-			setCurrentDate,
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const { attachListeners: attachListenersInner } = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef,
+					getCurrentDate,
+					setCurrentDate,
+				})
+				attachListeners = attachListenersInner
+				return () => null
+			},
 		})
+
+		mount(TestComponent)
 
 		attachListeners()
 		expect(addEventListenerSpy).toHaveBeenCalled()
@@ -109,12 +129,21 @@ describe('useCalendarKeyboardNavigation', () => {
 			}
 		})
 
-		const { attachListeners } = useCalendarKeyboardNavigation({
-			isDatePickerVisible,
-			datePickerRef,
-			getCurrentDate,
-			setCurrentDate,
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef,
+					getCurrentDate,
+					setCurrentDate,
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
 		})
+
+		mount(TestComponent)
 
 		attachListeners()
 		expect(addEventListenerSpy).toHaveBeenCalled()
@@ -152,12 +181,21 @@ describe('useCalendarKeyboardNavigation', () => {
 			}
 		})
 
-		const { attachListeners } = useCalendarKeyboardNavigation({
-			isDatePickerVisible,
-			datePickerRef,
-			getCurrentDate,
-			setCurrentDate,
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef,
+					getCurrentDate,
+					setCurrentDate,
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
 		})
+
+		mount(TestComponent)
 
 		attachListeners()
 		expect(savedListener).toBeTruthy()
@@ -193,12 +231,21 @@ describe('useCalendarKeyboardNavigation', () => {
 			}
 		})
 
-		const { attachListeners } = useCalendarKeyboardNavigation({
-			isDatePickerVisible,
-			datePickerRef,
-			getCurrentDate,
-			setCurrentDate,
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef,
+					getCurrentDate,
+					setCurrentDate,
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
 		})
+
+		mount(TestComponent)
 
 		attachListeners()
 		expect(savedListener).toBeTruthy()
