@@ -59,7 +59,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
             v-input
             v-input--center-affix
             v-input--density-compact
-            v-input--dirty
             v-input--disabled
             v-input--horizontal
             v-input--readonly
@@ -75,10 +74,8 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
               class="
                 bg-ap-grey-lighten-2
                 v-field
-                v-field--active
                 v-field--appended
                 v-field--center-affix
-                v-field--dirty
                 v-field--disabled
                 v-field--has-background
                 v-field--no-label
@@ -161,11 +158,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                   <!-- teleport start -->
                   <!-- teleport end -->
-                  <div class="v-autocomplete__selection">
-                    <span class="v-autocomplete__selection-text">
-                      <!---->
-                    </span>
-                  </div>
                   <input
                     aria-controls="menu-v-0"
                     aria-expanded="false"
@@ -334,7 +326,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
             v-input
             v-input--center-affix
             v-input--density-compact
-            v-input--dirty
             v-input--disabled
             v-input--horizontal
             v-input--readonly
@@ -350,10 +341,8 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
               class="
                 bg-ap-grey-lighten-2
                 v-field
-                v-field--active
                 v-field--appended
                 v-field--center-affix
-                v-field--dirty
                 v-field--disabled
                 v-field--has-background
                 v-field--no-label
@@ -436,11 +425,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                   <!-- teleport start -->
                   <!-- teleport end -->
-                  <div class="v-autocomplete__selection">
-                    <span class="v-autocomplete__selection-text">
-                      <!---->
-                    </span>
-                  </div>
                   <input
                     aria-controls="menu-v-6"
                     aria-expanded="false"
@@ -568,12 +552,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
       </div>
     </div>
   </div>
-  <div class="
-    d-flex
-    error-messages
-  ">
-    <!-- v-if -->
-    <!-- v-if -->
-  </div>
+  <!-- v-if -->
 </div>
 `;

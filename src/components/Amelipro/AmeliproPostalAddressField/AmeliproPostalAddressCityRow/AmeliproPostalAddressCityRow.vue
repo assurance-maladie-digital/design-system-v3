@@ -87,7 +87,7 @@
 
   const setInternalValue = (
       field: 'city' | 'postalCode',
-      newValue: string | InputPostalAddressAutoCompleteItem
+      newValue: string | InputPostalAddressAutoCompleteItem,
   ) => {
     if (field === 'city') {
       if (!compareFields(cityValue.value, newValue)) {
@@ -211,56 +211,93 @@
 		return borderColor
 	})
   const normalizeValue = (
-      val: string | InputPostalAddressAutoCompleteItem | null | undefined,
-      mode: 'city' | 'postalCode'
-  ) => {
-    if (!val) {
+      val?: string | InputPostalAddressAutoCompleteItem,
+      mode: 'city' | 'postalCode' = 'city'
+  ): LocalValue => {
+    if (!val || typeof val === 'string') {
       return {city: '', postalCode: '', toString: () => ''}
-    }
-
-    if (typeof val === 'string') {
-      return {
-        city: mode === 'city' ? val : '',
-        postalCode: mode === 'postalCode' ? val : '',
-        toString: () => val
-      }
     }
 
     const city = val.city ?? ''
     const postalCode = val.postalCode ?? ''
-
     return {
       city,
       postalCode,
-      toString: () => (mode === 'city' ? (city ? `${city} (${postalCode})` : '') : postalCode)
+      toString: () => (mode === 'city' ? `${city} (${postalCode})` : postalCode),
     }
   }
 
+  type LocalValue = { city: string; postalCode: string; toString: () => string }
 
-  const cityValueLocal = ref(normalizeValue(props.city, 'city'))
-  const postalCodeValueLocal = ref(normalizeValue(props.postalCode, 'postalCode'))
+  const postalCodeValueLocal = ref<LocalValue>(normalizeValue(props.postalCode, 'postalCode'))
+  const cityValueLocal = ref<LocalValue>(normalizeValue(props.city, 'city'))
 
-  watch(cityValueLocal, newVal => {
+  const postalCodeVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
+    get() {
+      const val = postalCodeValueLocal.value
+      return val.city || val.postalCode ? val : undefined
+    },
+    set(val) {
+      postalCodeValueLocal.value = normalizeValue(val, 'postalCode')
+    }
+  })
+
+  const cityVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
+    get() {
+      const val = cityValueLocal.value
+      return val.city || val.postalCode ? val : undefined
+    },
+    set(val) {
+      cityValueLocal.value = normalizeValue(val, 'city')
+    }
+  })
+
+  watch(cityValueLocal, (newVal) => {
     const normalized = normalizeValue(newVal, 'city')
 
-    if (postalCodeValueLocal.value.postalCode !== normalized.postalCode) {
+    emit(
+        'update:city',
+        normalized.city
+            ? {city: normalized.city, postalCode: normalized.postalCode}
+            : undefined
+    )
+
+    if (!normalized.city) {
+      return
+    }
+
+    if (
+        postalCodeValueLocal.value &&
+        postalCodeValueLocal.value.postalCode !== normalized.postalCode
+    ) {
       postalCodeValueLocal.value = normalizeValue(normalized, 'postalCode')
     }
-
-    emit('update:city', normalized)
   }, {deep: true})
 
-  watch(postalCodeValueLocal, newVal => {
+  watch(postalCodeValueLocal, (newVal) => {
     const normalized = normalizeValue(newVal, 'postalCode')
 
-    if (cityValueLocal.value.city !== normalized.city) {
-      cityValueLocal.value = normalizeValue(normalized, 'city')
+    emit(
+        'update:postalCode',
+        normalized.postalCode
+            ? {city: normalized.city, postalCode: normalized.postalCode}
+            : undefined
+    )
+
+    if (!normalized.postalCode) {
+      return
     }
 
-    emit('update:postalCode', normalized)
+    if (
+        cityValueLocal.value &&
+        cityValueLocal.value.city !== normalized.city
+    ) {
+      cityValueLocal.value = normalizeValue(normalized, 'city')
+    }
   }, {deep: true})
 
-	onMounted(() => {
+
+  onMounted(() => {
 		// remove the native label of VTextField because we have our own one
 		document.querySelectorAll(`label[for="${props.uniqueId}-city"]`)[1]?.remove()
 		document.querySelectorAll(`label[for="${props.uniqueId}-postal-code"]`)[1]?.remove()
@@ -279,7 +316,7 @@
 			>
 				<AmeliproAutoCompleteField
 					ref="inputPostalCodeField"
-          v-model="postalCodeValueLocal"
+          v-model="postalCodeVModel"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -321,7 +358,7 @@
 				<VTextField
 					:id="`${uniqueId}-postal-code`"
 					ref="inputPostalCodeField"
-          v-model="postalCodeValueLocal"
+          v-model="postalCodeVModel"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -360,7 +397,7 @@
 			>
 				<AmeliproAutoCompleteField
 					ref="inputCityField"
-          v-model="cityValueLocal"
+          v-model="cityVModel"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -402,7 +439,7 @@
 				<VTextField
 					:id="`${uniqueId}-city`"
 					ref="inputCityField"
-          v-model="cityValueLocal"
+          v-model="cityVModel"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -424,32 +461,38 @@
 				/>
 			</div>
 		</div>
-		<div class="error-messages d-flex">
-			<AmeliproMessage
-				v-if="displayPostalCodeError && mdAndUp"
-				:unique-id="`${uniqueId}-postal-code-error`"
-				class="mb-0"
-				no-icon
-				text
-				type="error"
-			>
-				<p class="mb-0">
-					{{ inputPostalCodeField.errorMessages[0] }}
-				</p>
-			</AmeliproMessage>
-			<AmeliproMessage
-				v-if="displayCityError"
-				:unique-id="`${uniqueId}-city-error`"
-				class="mb-0"
-				no-icon
-				text
-				type="error"
-			>
-				<p class="mb-0">
-					{{ inputCityField.errorMessages[0] }}
-				</p>
-			</AmeliproMessage>
-		</div>
+    <div class="error-messages"
+         v-if="displayPostalCodeError || displayCityError"
+    >
+      <div class="error-col">
+        <AmeliproMessage
+            v-if="displayPostalCodeError && mdAndUp"
+            :unique-id="`${uniqueId}-postal-code-error`"
+            class="mb-0"
+            no-icon
+            text
+            type="error"
+        >
+          <p class="mb-0">{{ inputPostalCodeField.errorMessages[0] }}</p>
+        </AmeliproMessage>
+      </div>
+
+      <div
+          class="error-col"
+          :style="{ marginLeft: !displayPostalCodeError ? '130px' : '0' }"
+      >
+        <AmeliproMessage
+            v-if="displayCityError"
+            :unique-id="`${uniqueId}-city-error`"
+            class="mb-0"
+            no-icon
+            text
+            type="error"
+        >
+          <p class="mb-0">{{ inputCityField.errorMessages[0] }}</p>
+        </AmeliproMessage>
+      </div>
+    </div>
 	</div>
 </template>
 
@@ -502,11 +545,8 @@
 }
 
 .error-messages {
-	gap: 20px;
-
-	> div {
-		width: unset !important;
-		flex: 0 0 auto;
-	}
+  display: flex;
+  gap: 22px;
 }
+
 </style>

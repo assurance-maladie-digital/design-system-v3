@@ -201,7 +201,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
           v-input
           v-input--center-affix
           v-input--density-compact
-          v-input--dirty
           v-input--horizontal
           v-locale--is-ltr
           v-text-field
@@ -212,9 +211,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <div class="
               bg-ap-white
               v-field
-              v-field--active
               v-field--center-affix
-              v-field--dirty
               v-field--has-background
               v-field--no-label
               v-field--variant-outlined
@@ -295,7 +292,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   id="the-groupId-postal-code"
                   size="1"
                   type="text"
-                  value="the-postalCode"
                 />
                 <!---->
               </div>
@@ -335,7 +331,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
           v-input
           v-input--center-affix
           v-input--density-compact
-          v-input--dirty
           v-input--horizontal
           v-locale--is-ltr
           v-text-field
@@ -346,9 +341,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <div class="
               bg-ap-white
               v-field
-              v-field--active
               v-field--center-affix
-              v-field--dirty
               v-field--has-background
               v-field--no-label
               v-field--variant-outlined
@@ -429,7 +422,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   id="the-groupId-city"
                   size="1"
                   type="text"
-                  value="the-city"
                 />
                 <!---->
               </div>
@@ -448,13 +440,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
         </div>
       </div>
     </div>
-    <div class="
-      d-flex
-      error-messages
-    ">
-      <!-- v-if -->
-      <!-- v-if -->
-    </div>
+    <!-- v-if -->
   </div>
   <!-- third line group -->
   <div class="
