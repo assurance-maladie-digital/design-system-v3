@@ -51,6 +51,28 @@ export const Default: Story = {
 				name: 'Template',
 				code: `  <SyRadioGroup v-model="selected" v-bind="args" />`,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+				import { ref } from 'vue'
+				import { SyRadioGroup } from '@cnamts/synapse'
+
+				const selected = ref('A')
+
+				const options = [
+					{ label: 'Option A', value: 'A' },
+					{ label: 'Option B', value: 'B' },
+					{ label: 'Option C', value: 'C' },
+
+				]
+
+				return {
+					selected,
+					options,
+					}
+
+				</script>`,
+			},
 		],
 	},
 	args: {
@@ -60,7 +82,7 @@ export const Default: Story = {
 			{ label: 'Option B', value: 'b' },
 			{ label: 'Option C', value: 'c' },
 		],
-		showSuccessMessages: false,
+		showSuccessMessages: true,
 	},
 
 	render: args => ({
@@ -71,120 +93,6 @@ export const Default: Story = {
 		},
 		template: `
       <SyRadioGroup v-model="selected" v-bind="args" />
-    `,
-	}),
-}
-
-export const ValidationRules: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyRadioGroup
-    v-model="selected"
-    :options="options"
-    label="Options"
-    :custom-rules="rules"
-    :is-validate-on-blur="false"
-  />
-</template>
-
-<script setup>
-import { ref } from 'vue'
-
-const selected = ref('A')
-
-const options = [
-  { label: 'Option A', value: 'A' },
-  { label: 'Option B', value: 'B' },
-]
-
-const rules = [
-  {
-    type: 'custom',
-    options: {
-      message: 'Vous devez sélectionner une option.',
-      validate: (value) => value != 'A',
-    },
-  },
-]
-</script>`,
-			},
-			{
-				name: 'Script',
-				code: `
-// Composition API
-export default {
-  setup() {
-    const selected = ref('A')
-
-    const options = [
-      { label: 'Option A', value: 'A' },
-      { label: 'Option B', value: 'B' },
-    ]
-
-    const rules = [
-      {
-        type: 'custom',
-        options: {
-          message: 'Vous devez sélectionner une option.',
-          validate: (value) => value != 'A',
-        },
-      },
-    ]
-
-    return {
-      selected,
-      options,
-      rules,
-    }
-  }
-}`,
-			},
-		],
-		docs: {
-			description: {
-				story: `
-### Groupe de boutons radio avec validation personnalisée  
-Ce groupe de boutons radio utilise une validation personnalisée pour vérifier qu'une option est sélectionnée.
-        `,
-			},
-		},
-	},
-
-	render: args => ({
-		components: { SyRadioGroup },
-		setup() {
-			const selected = ref('A')
-
-			return {
-				args,
-				selected,
-				options: [
-					{ label: 'Option A', value: 'A' },
-					{ label: 'Option B', value: 'B' },
-				],
-				rules: [
-					{
-						type: 'custom',
-						options: {
-							message: 'Vous devez sélectionner une option.',
-							validate: (value: string | null) => value != 'A',
-						},
-					},
-				],
-			}
-		},
-		template: `
-      <SyRadioGroup
-        v-model="selected"
-		label="Options"
-        :options="options"
-        :custom-rules="rules"
-        :is-validate-on-blur="false"
-      />
     `,
 	}),
 }
@@ -212,6 +120,25 @@ export const Required: Story = {
 	  </SyForm>
     `,
 	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyForm ref="form" @submit="onSubmit">
+      				<SyRadioGroup v-model="selected" required v-bind="args" />
+	   				<v-btn type="submit" class="mt-2" color="primary" class="mr-2">Valider</v-btn>
+	  				</SyForm>`,
+			},
+		],
+		docs: {
+			description: {
+				story: `
+### Radio button obligatoire
+Ce radio bouton est marqué comme obligatoire, ce qui déclenchera une validation si elle n'est pas cochée.
+				`,
+			},
+		},
+	},
 }
 
 export const formValidation: Story = {
@@ -222,6 +149,8 @@ export const formValidation: Story = {
 			{ label: 'Option A', value: 'a' },
 			{ label: 'Option B', value: 'b' },
 		],
+		showSuccessMessages: true,
+
 	},
 
 	render: args => ({
@@ -242,9 +171,56 @@ export const formValidation: Story = {
 	  </SyForm>
     `,
 	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyForm ref="form" @submit="onSubmit">
+      <SyRadioGroup v-model="selected" required v-bind="args" />
+	   <v-btn type="submit" class="mt-2" color="primary" class="mr-2">Valider</v-btn>
+	  </SyForm>`,
+			},
+		],
+		docs: {
+			description: {
+				story: `
+### Radio button avec validation au moment de la soumission
+utilise des règles de validation personnalisées et valide le formulaire lors de la soumission .Le bouton de soumission déclenche la validation et affiche un message de succès si le bouton est cliqué	`,
+			},
+		},
+	},
 }
 
 export const Disabled: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `  <SyRadioGroup v-model="selected" disabled v-bind="args" />`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+				import { ref } from 'vue'
+				import { SyRadioGroup } from '@cnamts/synapse'
+
+				const selected = ref('A')
+
+				const options = [
+					{ label: 'Option A', value: 'A' },
+					{ label: 'Option B', value: 'B' },
+
+				]
+
+				return {
+					selected,
+					options,
+					}
+
+				</script>`,
+			},
+		],
+	},
 	args: {
 		label: 'Radio-group désactivé',
 		disabled: true,
@@ -432,4 +408,96 @@ Ce button radio est en lecture seule et ne peut pas être modifiée par l'utilis
 		},
 	},
 
+}
+
+export const CustomRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+				<SyRadioGroup
+					v-model="selected"
+					:options="options"
+					label="Options"
+					:custom-warning-rules="rules"
+					:is-validate-on-blur="false"
+					
+				/>
+				</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const selected = ref('A')
+
+const options = [
+	{ label: 'Option A', value: 'A' },
+	{ label: 'Option B', value: 'B' },
+]
+
+const rules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string | null) => {
+				if (value !== 'A') {
+					return 'Vous devez sélectionner l’option A'
+				}
+				return true
+			},
+			fieldIdentifier: 'option',
+		},
+	},
+]
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref('A')
+
+			const options = [
+				{ label: 'Option A', value: 'A' },
+				{ label: 'Option B', value: 'B' },
+			]
+
+			const rules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string | null) => {
+							if (value !== 'A') {
+								return 'Vous devez sélectionner l’option A'
+							}
+							return true
+						},
+					},
+				},
+			]
+			return {
+				args,
+				selected,
+				options,
+				rules,
+			}
+		},
+		template: `
+			<SyRadioGroup
+				v-model="selected"
+				label="Options"
+				:options="options"
+			    :custom-warning-rules="rules"
+				:is-validate-on-blur="false"
+				
+			/>
+    `,
+	}),
 }

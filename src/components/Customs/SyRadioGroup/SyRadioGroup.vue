@@ -232,6 +232,11 @@
 	<v-radio-group
 		:id="props.id"
 		v-model="model"
+		:class="{
+			'warning-field': hasWarning && !hasError,
+			'success-field': hasSuccess && !hasError && !hasWarning,
+			'error-field': hasError,
+		}"
 		:label="generatedLabel"
 		:name="props.name"
 		:aria-label="props.ariaLabel"
@@ -289,5 +294,27 @@
 
 .sb-show-main.sb-main-centered #storybook-root {
 	margin: none !important;
+}
+
+.warning-field {
+  :deep(.v-messages__message) {
+    color: rgb(var(--v-theme-warning)) !important;
+  }
+
+  :deep(.v-selection-control__input) {
+    color: rgb(var(--v-theme-warning));
+  }
+}
+
+.error-field {
+  :deep(.v-messages__message) {
+    color: rgb(var(--v-theme-error)) !important;
+  }
+}
+
+.success-field {
+  :deep(.v-messages__message) {
+    color: rgb(var(--v-theme-success)) !important;
+  }
 }
 </style>
