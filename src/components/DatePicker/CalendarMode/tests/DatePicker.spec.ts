@@ -7,7 +7,7 @@ type DatePickerInstance = InstanceType<typeof DatePicker>
 
 describe('DatePicker', () => {
 	const mountComponent = (props: Record<string, unknown> = {}) => mount(DatePicker, {
-		props,
+		props: { label: 'Date Field', ...props },
 	})
 
 	it('renders the calendar mode activator input by default', () => {

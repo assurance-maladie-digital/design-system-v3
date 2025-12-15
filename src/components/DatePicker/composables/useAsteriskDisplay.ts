@@ -17,8 +17,7 @@ export const useAsteriskDisplay = (
 
 	// Ajoute l'astérisque au label si nécessaire
 	const labelWithAsterisk = computed(() => {
-		// Assertion de type pour indiquer que props[labelProp] est de type string | undefined
-		const label = props[labelProp] as string | undefined
+		const label = props[labelProp] as string
 		return isShouldDisplayAsterisk.value && label
 			? `${label} *`
 			: label
