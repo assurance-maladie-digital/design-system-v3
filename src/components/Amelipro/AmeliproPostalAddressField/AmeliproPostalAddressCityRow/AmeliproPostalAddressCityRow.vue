@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	/* eslint-disable vuejs-accessibility/label-has-for */
-  import {type PropType, computed, onMounted, ref, watch} from 'vue'
+	import { type PropType, computed, onMounted, ref, watch } from 'vue'
 	import AmeliproAutoCompleteField from '../../AmeliproAutoCompleteField/AmeliproAutoCompleteField.vue'
 	import AmeliproMessage from '../../AmeliproMessage/AmeliproMessage.vue'
 	import type { AutoCompleteItem } from '../../AmeliproAutoCompleteField/types'
@@ -60,58 +60,58 @@
 
 	const { mdAndUp } = useDisplay()
 
-  const normalizeValue = (
-      val?: string | InputPostalAddressAutoCompleteItem,
-      mode: 'city' | 'postalCode' = 'city'
-  ): LocalValue => {
-    if (!val || typeof val === 'string') {
-      return {city: '', postalCode: '', toString: () => ''}
-    }
+	const normalizeValue = (
+		val?: string | InputPostalAddressAutoCompleteItem,
+		mode: 'city' | 'postalCode' = 'city',
+	): LocalValue => {
+		if (!val || typeof val === 'string') {
+			return { city: '', postalCode: '', toString: () => '' }
+		}
 
-    const city = val.city ?? ''
-    const postalCode = val.postalCode ?? ''
-    return {
-      city,
-      postalCode,
-      toString: () => (mode === 'city' ? `${city} (${postalCode})` : postalCode),
-    }
-  }
+		const city = val.city ?? ''
+		const postalCode = val.postalCode ?? ''
+		return {
+			city,
+			postalCode,
+			toString: () => (mode === 'city' ? `${city} (${postalCode})` : postalCode),
+		}
+	}
 
-  type LocalValue = { city: string; postalCode: string; toString: () => string }
+	type LocalValue = { city: string, postalCode: string, toString: () => string }
 
-  // v-model
-  const postalCodeValue = computed({
-    get: (): string | InputPostalAddressAutoCompleteItem => props.postalCode || '',
-    set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
-      emit('update:postalCode', newValue)
-    },
-  })
-  const cityValue = computed({
-    get: (): string | InputPostalAddressAutoCompleteItem => props.city || '',
-    set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
-      emit('update:city', newValue)
-    },
-  })
-  const postalCodeValueLocal = ref<LocalValue>(normalizeValue(props.postalCode, 'postalCode'))
-  const cityValueLocal = ref<LocalValue>(normalizeValue(props.city, 'city'))
-  const postalCodeVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
-    get() {
-      const val = postalCodeValueLocal.value
-      return val.city || val.postalCode ? val : undefined
-    },
-    set(val) {
-      postalCodeValueLocal.value = normalizeValue(val, 'postalCode')
-    }
-  })
-  const cityVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
-    get() {
-      const val = cityValueLocal.value
-      return val.city || val.postalCode ? val : undefined
-    },
-    set(val) {
-      cityValueLocal.value = normalizeValue(val, 'city')
-    }
-  })
+	// v-model
+	const postalCodeValue = computed({
+		get: (): string | InputPostalAddressAutoCompleteItem => props.postalCode || '',
+		set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
+			emit('update:postalCode', newValue)
+		},
+	})
+	const cityValue = computed({
+		get: (): string | InputPostalAddressAutoCompleteItem => props.city || '',
+		set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
+			emit('update:city', newValue)
+		},
+	})
+	const postalCodeValueLocal = ref<LocalValue>(normalizeValue(props.postalCode, 'postalCode'))
+	const cityValueLocal = ref<LocalValue>(normalizeValue(props.city, 'city'))
+	const postalCodeVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
+		get() {
+			const val = postalCodeValueLocal.value
+			return val.city || val.postalCode ? val : undefined
+		},
+		set(val) {
+			postalCodeValueLocal.value = normalizeValue(val, 'postalCode')
+		},
+	})
+	const cityVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
+		get() {
+			const val = cityValueLocal.value
+			return val.city || val.postalCode ? val : undefined
+		},
+		set(val) {
+			cityValueLocal.value = normalizeValue(val, 'city')
+		},
+	})
 
 	const compareFields = (oldValue: string | InputPostalAddressAutoCompleteItem, newValue: string | InputPostalAddressAutoCompleteItem) => {
 		if (typeof oldValue === 'string' && typeof newValue === 'string') {
@@ -123,34 +123,35 @@
 		return false
 	}
 
-  const setInternalValue = (
-      field: 'city' | 'postalCode',
-      newValue: string | InputPostalAddressAutoCompleteItem,
-  ) => {
-    if (field === 'city') {
-      if (!compareFields(cityValue.value, newValue)) {
-        cityValue.value = newValue
-        emit('update:city', newValue)
-      }
-    } else {
-      if (!compareFields(postalCodeValue.value, newValue)) {
-        postalCodeValue.value = newValue
-        emit('update:postalCode', newValue)
-      }
-    }
+	const setInternalValue = (
+		field: 'city' | 'postalCode',
+		newValue: string | InputPostalAddressAutoCompleteItem,
+	) => {
+		if (field === 'city') {
+			if (!compareFields(cityValue.value, newValue)) {
+				cityValue.value = newValue
+				emit('update:city', newValue)
+			}
+		}
+		else {
+			if (!compareFields(postalCodeValue.value, newValue)) {
+				postalCodeValue.value = newValue
+				emit('update:postalCode', newValue)
+			}
+		}
 
-    postalCodeFocused.value = false
-    cityFocused.value = false
-  }
+		postalCodeFocused.value = false
+		cityFocused.value = false
+	}
 
 	type eventType = 'blur' | 'change' | 'update:error'
-  const emit = defineEmits(['blur', 'change', 'update:city', 'update:postalCode', 'update:error'])
-  const emitEvent = (eventName: eventType, field?: 'city' | 'postalCode') => {
-    if (field) {
-      setInternalValue(field, field === 'city' ? cityValue.value : postalCodeValue.value)
-    }
-    emit(eventName, {city: cityValue.value, postalCode: postalCodeValue.value})
-  }
+	const emit = defineEmits(['blur', 'change', 'update:city', 'update:postalCode', 'update:error'])
+	const emitEvent = (eventName: eventType, field?: 'city' | 'postalCode') => {
+		if (field) {
+			setInternalValue(field, field === 'city' ? cityValue.value : postalCodeValue.value)
+		}
+		emit(eventName, { city: cityValue.value, postalCode: postalCodeValue.value })
+	}
 
 	const inputRules = (ruleKey: 'cityRules' | 'postalCodeRules'): ValidationRule[] => {
 		const rules = [
@@ -249,52 +250,51 @@
 		return borderColor
 	})
 
-  watch(cityValueLocal, (newVal) => {
-    const normalized = normalizeValue(newVal, 'city')
+	watch(cityValueLocal, (newVal) => {
+		const normalized = normalizeValue(newVal, 'city')
 
-    emit(
-        'update:city',
-        normalized.city
-            ? {city: normalized.city, postalCode: normalized.postalCode}
-            : undefined
-    )
+		emit(
+			'update:city',
+			normalized.city
+				? { city: normalized.city, postalCode: normalized.postalCode }
+				: undefined,
+		)
 
-    if (!normalized.city) {
-      return
-    }
+		if (!normalized.city) {
+			return
+		}
 
-    if (
-        postalCodeValueLocal.value &&
-        postalCodeValueLocal.value.postalCode !== normalized.postalCode
-    ) {
-      postalCodeValueLocal.value = normalizeValue(normalized, 'postalCode')
-    }
-  }, {deep: true})
+		if (
+			postalCodeValueLocal.value
+			&& postalCodeValueLocal.value.postalCode !== normalized.postalCode
+		) {
+			postalCodeValueLocal.value = normalizeValue(normalized, 'postalCode')
+		}
+	}, { deep: true })
 
-  watch(postalCodeValueLocal, (newVal) => {
-    const normalized = normalizeValue(newVal, 'postalCode')
+	watch(postalCodeValueLocal, (newVal) => {
+		const normalized = normalizeValue(newVal, 'postalCode')
 
-    emit(
-        'update:postalCode',
-        normalized.postalCode
-            ? {city: normalized.city, postalCode: normalized.postalCode}
-            : undefined
-    )
+		emit(
+			'update:postalCode',
+			normalized.postalCode
+				? { city: normalized.city, postalCode: normalized.postalCode }
+				: undefined,
+		)
 
-    if (!normalized.postalCode) {
-      return
-    }
+		if (!normalized.postalCode) {
+			return
+		}
 
-    if (
-        cityValueLocal.value &&
-        cityValueLocal.value.city !== normalized.city
-    ) {
-      cityValueLocal.value = normalizeValue(normalized, 'city')
-    }
-  }, {deep: true})
+		if (
+			cityValueLocal.value
+			&& cityValueLocal.value.city !== normalized.city
+		) {
+			cityValueLocal.value = normalizeValue(normalized, 'city')
+		}
+	}, { deep: true })
 
-
-  onMounted(() => {
+	onMounted(() => {
 		// remove the native label of VTextField because we have our own one
 		document.querySelectorAll(`label[for="${props.uniqueId}-city"]`)[1]?.remove()
 		document.querySelectorAll(`label[for="${props.uniqueId}-postal-code"]`)[1]?.remove()
@@ -313,7 +313,7 @@
 			>
 				<AmeliproAutoCompleteField
 					ref="inputPostalCodeField"
-          v-model="postalCodeVModel"
+					v-model="postalCodeVModel"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -355,7 +355,7 @@
 				<VTextField
 					:id="`${uniqueId}-postal-code`"
 					ref="inputPostalCodeField"
-          v-model="postalCodeVModel"
+					v-model="postalCodeVModel"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -394,7 +394,7 @@
 			>
 				<AmeliproAutoCompleteField
 					ref="inputCityField"
-          v-model="cityVModel"
+					v-model="cityVModel"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -436,7 +436,7 @@
 				<VTextField
 					:id="`${uniqueId}-city`"
 					ref="inputCityField"
-          v-model="cityVModel"
+					v-model="cityVModel"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
 					:aria-required="ariaRequired"
@@ -458,38 +458,43 @@
 				/>
 			</div>
 		</div>
-    <div class="error-messages"
-         v-if="displayPostalCodeError || displayCityError"
-    >
-      <div class="error-col">
-        <AmeliproMessage
-            v-if="displayPostalCodeError && mdAndUp"
-            :unique-id="`${uniqueId}-postal-code-error`"
-            class="mb-0"
-            no-icon
-            text
-            type="error"
-        >
-          <p class="mb-0">{{ inputPostalCodeField.errorMessages[0] }}</p>
-        </AmeliproMessage>
-      </div>
+		<div
+			v-if="displayPostalCodeError || displayCityError"
+			class="error-messages"
+		>
+			<div class="error-col">
+				<AmeliproMessage
+					v-if="displayPostalCodeError && mdAndUp"
+					:unique-id="`${uniqueId}-postal-code-error`"
+					class="mb-0"
+					no-icon
+					text
+					type="error"
+				>
+					<p class="mb-0">
+						{{ inputPostalCodeField.errorMessages[0] }}
+					</p>
+				</AmeliproMessage>
+			</div>
 
-      <div
-          class="error-col"
-          :style="{ marginLeft: !displayPostalCodeError ? '130px' : '0' }"
-      >
-        <AmeliproMessage
-            v-if="displayCityError"
-            :unique-id="`${uniqueId}-city-error`"
-            class="mb-0"
-            no-icon
-            text
-            type="error"
-        >
-          <p class="mb-0">{{ inputCityField.errorMessages[0] }}</p>
-        </AmeliproMessage>
-      </div>
-    </div>
+			<div
+				class="error-col"
+				:style="{ marginLeft: !displayPostalCodeError ? '130px' : '0' }"
+			>
+				<AmeliproMessage
+					v-if="displayCityError"
+					:unique-id="`${uniqueId}-city-error`"
+					class="mb-0"
+					no-icon
+					text
+					type="error"
+				>
+					<p class="mb-0">
+						{{ inputCityField.errorMessages[0] }}
+					</p>
+				</AmeliproMessage>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -542,8 +547,8 @@
 }
 
 .error-messages {
-  display: flex;
-  gap: 22px;
+	display: flex;
+	gap: 22px;
 }
 
 </style>
