@@ -5,7 +5,6 @@
 export const DATE_PICKER_MESSAGES = {
 	// Labels et placeholders
 	LABEL_DEFAULT: 'Date',
-	PLACEHOLDER_DEFAULT: 'Sélectionner une date',
 
 	// Messages d'erreur
 	ERROR_REQUIRED: 'La date est requise.',

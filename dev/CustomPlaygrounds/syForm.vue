@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import SyForm from '@/components/Customs/SyForm/SyForm.vue'
-import NirField from '@/components/NirField/NirField.vue'
-import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-import PasswordField from '@/components/PasswordField/PasswordField.vue'
-import PhoneField from '@/components/PhoneField/PhoneField.vue'
-import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+	import { ref } from 'vue'
+	import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+	import NirField from '@/components/NirField/NirField.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import PasswordField from '@/components/PasswordField/PasswordField.vue'
+	import PhoneField from '@/components/PhoneField/PhoneField.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
 	// Définir un type pour la ref du formulaire avec la méthode validate
 	interface FormRef {
@@ -113,13 +113,13 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 			<DatePicker
 				v-model="date"
 				required
-				placeholder="Sélectionner une date"
+				label="Sélectionner une date"
 				format="DD/MM/YYYY"
 			/>
 			<DatePicker
 				v-model="date1"
 				required
-				placeholder="Sélectionner une date"
+				label="Sélectionner une date"
 				format="DD/MM/YYYY"
 			/>
 			<SyCheckbox

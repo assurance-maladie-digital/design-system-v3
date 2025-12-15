@@ -31,7 +31,7 @@
 		placeholder?: string
 		format?: string
 		dateFormatReturn?: string
-		label?: string
+		label: string
 		required?: boolean
 		disabled?: boolean
 		readonly?: boolean
@@ -55,10 +55,9 @@
 		externalErrorMessages?: string[]
 	}>(), {
 		modelValue: undefined,
-		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		placeholder: undefined,
 		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: undefined,
-		label: undefined,
 		required: false,
 		disabled: false,
 		readonly: false,
@@ -1061,7 +1060,7 @@
 		}"
 		:disabled="props.disabled"
 		:error-messages="errorMessages"
-		:label="props.label || ''"
+		:label="props.label"
 		:placeholder="props.placeholder"
 		:no-icon="props.noIcon"
 		:prepend-icon="props.displayIcon && props.displayPrependIcon && !props.displayAppendIcon ? 'calendar' : undefined"
@@ -1072,11 +1071,10 @@
 		:bg-color="props.bgColor"
 		color="primary"
 		:is-clearable="!props.readonly"
-		:display-persistent-placeholder="true"
-		:aria-label="ariaLabel || props.placeholder"
+		:aria-label="ariaLabel"
 		:is-validate-on-blur="props.isValidateOnBlur"
 		:density="props.density"
-		:title="props.title || props.placeholder || undefined"
+		:title="props.title"
 		:hint="props.hint"
 		:persistent-hint="props.persistentHint"
 		@focus="onFocus"
