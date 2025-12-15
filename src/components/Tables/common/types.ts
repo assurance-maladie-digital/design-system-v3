@@ -21,6 +21,8 @@ export interface FilterOption {
 	type: FilterType
 }
 
+export type Items = (Record<string, unknown> | object)[]
+
 export interface DataOptions {
 	page: number
 	itemsPerPage: number
@@ -78,7 +80,7 @@ export type TableColumnHeader = {
 
 // Component-specific props interfaces
 export type SyTableProps = {
-	items?: Record<string, unknown>[]
+	items?: Items
 	suffix: string
 	saveState?: boolean
 	caption?: string
@@ -100,7 +102,7 @@ export type SyTableProps = {
 
 export type SyServerTableProps = {
 	serverItemsLength: number
-	items?: Record<string, unknown>[]
+	items?: Items
 	suffix: string
 	saveState?: boolean
 	caption?: string

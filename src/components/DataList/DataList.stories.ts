@@ -1,6 +1,7 @@
 import DataList from './DataList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { mdiAccount, mdiCalendar, mdiInformationOutline } from '@mdi/js'
+import SyAlert from '../../components/SyAlert/SyAlert.vue'
 
 const meta: Meta<typeof DataList> = {
 	title: 'Composants/Données/DataList',
@@ -20,6 +21,10 @@ const meta: Meta<typeof DataList> = {
 		loading: { control: 'boolean' },
 		itemsNumberLoading: { control: 'number' },
 		headingLoading: { control: 'boolean' },
+		renderHtmlValue: {
+			control: 'boolean',
+			description: '<b>@deprecated</b> Utiliser un slot (par exemple "item") pour rendre du HTML plutôt qu\'une string interprétée via v-html.',
+		},
 	},
 }
 
@@ -118,7 +123,6 @@ export const Default: Story = {
 						:loading="args.loading"
 						:items-number-loading="args.itemsNumberLoading"
 						:heading-loading="args.headingLoading"
-						:render-html-value="args.renderHtmlValue"
 					/>
 				</div>
 			`,
@@ -209,7 +213,6 @@ export const Row: Story = {
 						:loading="args.loading"
 						:items-number-loading="args.itemsNumberLoading"
 						:heading-loading="args.headingLoading"
-						:render-html-value="args.renderHtmlValue"
 					/>
 				</div>
 			`,
@@ -300,7 +303,6 @@ export const Title: Story = {
 						:loading="args.loading"
 						:items-number-loading="args.itemsNumberLoading"
 						:heading-loading="args.headingLoading"
-						:render-html-value="args.renderHtmlValue"
 					/>
 				</div>
 			`,
@@ -573,7 +575,7 @@ export const Chips: Story = {
 			},
 			template: `
 				<div class="pa-4">
-                    <DataList 
+					<DataList 
 						v-bind="args" 
 						:items="args.items"
 					/>
@@ -593,9 +595,23 @@ export const HtmlValue: Story = {
 				<template>
 					<DataList 
 						:items="items"
-						item-width="auto"
-						render-html-value
-					/>
+					>
+						<template #item="{ item, index, itemValue }">
+							<span
+								v-if="item.key === 'Adresse'"
+								class="text-body-1"
+							>
+								<b>{{ itemValue }}</b><br>
+								75020 Paris
+							</span>
+							<span
+								v-else
+								class="text-body-1"
+							>
+								{{ itemValue }}
+							</span>
+						</template>
+					</DataList>
 				</template>
 				`,
 			},
@@ -604,7 +620,7 @@ export const HtmlValue: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DataList } from '@cnamts/synapse'
-										
+					
 					const items = [
 						{
 							key: 'Nom',
@@ -616,7 +632,7 @@ export const HtmlValue: Story = {
 						},
 						{
 							key: 'Adresse',
-							value: '<b>50 Avenue du Professeur André Lemierre</b><br>75020 Paris'
+							value: '50 Avenue du Professeur André Lemierre'
 						}
 					]
 				</script>
@@ -636,10 +652,9 @@ export const HtmlValue: Story = {
 			},
 			{
 				key: 'Adresse',
-				value: '<b>50 Avenue du Professeur André Lemierre</b><br>75020 Paris',
+				value: '50 Avenue du Professeur André Lemierre',
 			},
 		],
-		renderHtmlValue: true,
 	},
 	render: (args) => {
 		return {
@@ -649,11 +664,26 @@ export const HtmlValue: Story = {
 			},
 			template: `
 				<div class="pa-4">
-                    <DataList 
+					<DataList 
 						v-bind="args" 
 						:items="args.items"
-						:render-html-value="args.renderHtmlValue"
-					/>
+					>
+						<template #item="{ item, index, itemValue }">
+							<span
+								v-if="item.key === 'Adresse'"
+								class="text-body-1"
+							>
+								<b>{{ itemValue }}</b><br>
+								75020 Paris
+							</span>
+							<span
+								v-else
+								class="text-body-1"
+							>
+								{{ itemValue }}
+							</span>
+						</template>
+					</DataList>
 				</div>
 			`,
 		}
@@ -662,7 +692,7 @@ export const HtmlValue: Story = {
 
 export const Loading: Story = {
 	parameters: {
-		controls: { exclude: ['icons', 'titleClass', 'row', 'placeholder', 'renderHtmlValue', 'listTitle', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
+		controls: { exclude: ['icons', 'listTitle', 'titleClass', 'row', 'placeholder', 'title', 'click:item-action', 'width', 'minWidth', 'maxWidth'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -683,7 +713,7 @@ export const Loading: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DataList } from '@cnamts/synapse'
-										
+					
 					const items = [
 						{
 							key: 'Nom',
@@ -731,7 +761,7 @@ export const Loading: Story = {
 			},
 			template: `
 				<div class="pa-4">
-                    <DataList 
+					<DataList 
 						v-bind="args" 
 						:items="args.items"
 						:items-number-loading="args.itemsNumberLoading"
@@ -958,4 +988,24 @@ export const Customisation: Story = {
 			`,
 		}
 	},
+}
+
+export const InfoIntro = {
+	render: () => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return {}
+			},
+			template: `
+			  <SyAlert type="info" variant="tonal" :closable="false">
+				<template #default>
+				 La propriété <b>renderHtmlValue</b> est dépréciée car elle repose sur v-html et peut exposer votre application à des failles XSS.
+Utilisez à la place le slot item de DataList (ou le slot value de DataListItem) pour rendre du HTML de manière contrôlée depuis le composant parent.
+				</template>
+			  </SyAlert>
+			`,
+		}
+	},
+	tags: ['!dev'],
 }

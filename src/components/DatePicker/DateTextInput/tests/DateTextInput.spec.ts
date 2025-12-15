@@ -4,12 +4,13 @@ import DateTextInput from '../DateTextInput.vue'
 import SyTextField from '../../../Customs/SyTextField/SyTextField.vue'
 
 describe('DateTextInput.clean', () => {
-	const mountComponent = (props: Record<string, unknown> = {}) => mount(DateTextInput, {
-		props,
+	const mountComponent = (props: Record<string, unknown>) => mount(DateTextInput, {
+		props: { label: 'Date', ...props },
 	})
 
 	it('renders a single-date text field by default', () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -19,6 +20,7 @@ describe('DateTextInput.clean', () => {
 
 	it('emits update:model-value with the typed date in single mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -34,6 +36,7 @@ describe('DateTextInput.clean', () => {
 
 	it('formats modelValue according to dateFormatReturn in single mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			dateFormatReturn: 'YYYY-MM-DD',
 		})
@@ -50,6 +53,7 @@ describe('DateTextInput.clean', () => {
 
 	it('validates on submit for required single date', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			required: true,
 		})
@@ -68,6 +72,7 @@ describe('DateTextInput.clean', () => {
 
 	it('emits a range model for a valid date range', async () => {
 		const wrapper = mountComponent({
+			label: 'Plage de dates',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 		})
@@ -89,6 +94,7 @@ describe('DateTextInput.clean', () => {
 
 	it('keeps the range separator when only the start date is entered', async () => {
 		const wrapper = mountComponent({
+			label: 'Plage de dates',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 		})
@@ -107,6 +113,7 @@ describe('DateTextInput.clean', () => {
 
 	it('shows an error message for invalid single date format on blur', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			required: false,
 		})
@@ -123,6 +130,7 @@ describe('DateTextInput.clean', () => {
 
 	it('shows required error message when empty and required in single mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			required: true,
 		})
@@ -139,6 +147,7 @@ describe('DateTextInput.clean', () => {
 
 	it('shows an error when end date is before start date in range mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Plage de dates',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 		})
@@ -155,6 +164,7 @@ describe('DateTextInput.clean', () => {
 
 	it('reset clears input value and validation messages', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			required: true,
 		})
@@ -182,6 +192,7 @@ describe('DateTextInput.clean', () => {
 
 	it('emits date-selected when a valid single date is selected', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -200,6 +211,7 @@ describe('DateTextInput.clean', () => {
 
 	it('emits focus and blur events from the text field', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -213,6 +225,7 @@ describe('DateTextInput.clean', () => {
 
 	it('still shows validation errors when readonly with invalid input', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			readonly: true,
 			required: true,
@@ -230,6 +243,7 @@ describe('DateTextInput.clean', () => {
 
 	it('formats range modelValue according to dateFormatReturn in range mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Plage de dates',
 			format: 'DD/MM/YYYY',
 			dateFormatReturn: 'YYYY-MM-DD',
 			displayRange: true,
@@ -252,6 +266,7 @@ describe('DateTextInput.clean', () => {
 
 	it('applies pasted single date into the input', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -269,6 +284,7 @@ describe('DateTextInput.clean', () => {
 
 	it('does not validate on blur when isValidateOnBlur is false but validateOnSubmit still applies', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			required: true,
 			isValidateOnBlur: false,
@@ -291,6 +307,7 @@ describe('DateTextInput.clean', () => {
 
 	it('restores single date from modelValue when disabled and input is cleared', async () => {
 		const wrapper = mountComponent({
+			label: 'Date',
 			format: 'DD/MM/YYYY',
 			modelValue: '01/01/2025',
 			disabled: true,
@@ -312,6 +329,7 @@ describe('DateTextInput.clean', () => {
 
 	it('restores range from modelValue when disabled and input is cleared', async () => {
 		const wrapper = mountComponent({
+			label: 'Plage de dates',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 			modelValue: ['01/01/2025', '10/01/2025'],

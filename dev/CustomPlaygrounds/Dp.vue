@@ -23,7 +23,7 @@
 
 			<DatePicker
 				v-model="standardDate"
-				placeholder="Date standard"
+				label="Date standard"
 				format="DD/MM/YYYY"
 				class="date-picker"
 				required
@@ -32,7 +32,7 @@
 			<h3>Calendar: </h3>
 			<DatePicker
 				v-model="standardDate"
-				placeholder="Date standard"
+				label="Date standard"
 				format="DD/MM/YYYY"
 				required
 				class="date-picker"
@@ -41,7 +41,7 @@
 
 			<DatePicker
 				v-model="standardDate"
-				placeholder="Date standard"
+				label="Date standard"
 				format="DD/MM/YYYY"
 				class="date-picker"
 				required
@@ -56,7 +56,7 @@
 			<h2>Format américain (MM/DD/YYYY)</h2>
 			<DatePicker
 				v-model="americanDate"
-				placeholder="Date américaine"
+				label="Date américaine"
 				format="MM/DD/YYYY"
 				class="date-picker"
 				use-combined-mode
@@ -70,7 +70,7 @@
 			<h2>Format ISO (YYYY-MM-DD)</h2>
 			<DatePicker
 				v-model="isoDate"
-				placeholder="Date ISO"
+				label="Date ISO"
 				format="YYYY-MM-DD"
 				class="date-picker"
 				use-combined-mode
@@ -84,7 +84,7 @@
 			<h2>Format avec séparateur point (DD.MM.YYYY)</h2>
 			<DatePicker
 				v-model="dotDate"
-				placeholder="Date avec points"
+				label="Date avec points"
 				format="DD.MM.YYYY"
 				class="date-picker"
 				use-combined-mode
@@ -98,7 +98,7 @@
 			<h2>Champ requis</h2>
 			<DatePicker
 				v-model="requiredDate"
-				placeholder="Date requise"
+				label="Date requise"
 				format="DD/MM/YYYY"
 				required
 				class="date-picker"
@@ -114,7 +114,7 @@
 			<h3>use-combined-mode</h3>
 			<DatePicker
 				v-model="dateRange"
-				placeholder="Plage de dates"
+				label="Plage de dates"
 				format="DD/MM/YYYY"
 				display-range
 				use-combined-mode
@@ -123,7 +123,7 @@
 			<h3>no-calendar</h3>
 			<DatePicker
 				v-model="dateRange"
-				placeholder="Date standard"
+				label="Date standard"
 				format="DD/MM/YYYY"
 				class="date-picker"
 				no-calendar
@@ -132,7 +132,7 @@
 			<h3>Calendar range</h3>
 			<DatePicker
 				v-model="dateRange"
-				placeholder="Date standard"
+				label="Date standard"
 				format="DD/MM/YYYY"
 				class="date-picker"
 				display-range
@@ -146,7 +146,7 @@
 			<h2>Date de naissance (année d'abord)</h2>
 			<DatePicker
 				v-model="birthDate"
-				placeholder="Date de naissance"
+				label="Date de naissance"
 				format="DD/MM/YYYY"
 				is-birth-date
 				class="date-picker"
@@ -161,7 +161,7 @@
 			<h2>Format d'affichage vs format de retour</h2>
 			<DatePicker
 				v-model="formattedDate"
-				placeholder="Date avec format de retour"
+				label="Date avec format de retour"
 				format="DD/MM/YYYY"
 				date-format-return="YYYY-MM-DD"
 				class="date-picker"

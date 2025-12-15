@@ -90,17 +90,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -114,12 +108,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-ap-blue-darken-1
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-ap-blue-darken-1
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -137,7 +129,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <!---->
             <!---->
             <input
-              aria-labelledby="the-groupId-address-label"
               aria-required="true"
               autocomplete="address-line1"
               class="v-field__input"
@@ -238,17 +229,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__background
-                    "
+                    class="v-progress-linear__background"
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__buffer
-                    "
+                    class="v-progress-linear__buffer"
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -262,12 +247,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
-                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
-                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -285,7 +268,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 <!---->
                 <!---->
                 <input
-                  aria-labelledby="the-groupId-postal-code-label"
                   aria-required="true"
                   autocomplete="postal-code"
                   class="v-field__input"
@@ -368,17 +350,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__background
-                    "
+                    class="v-progress-linear__background"
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__buffer
-                    "
+                    class="v-progress-linear__buffer"
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -392,12 +368,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
-                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
-                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -415,7 +389,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 <!---->
                 <!---->
                 <input
-                  aria-labelledby="the-groupId-city-label"
                   aria-required="true"
                   autocomplete="address-level2"
                   class="v-field__input"
@@ -500,17 +473,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -524,12 +491,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-ap-blue-darken-1
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-ap-blue-darken-1
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -547,7 +512,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <!---->
             <!---->
             <input
-              aria-labelledby="the-groupId-additional-info-label"
               autocomplete="address-line2"
               class="v-field__input"
               id="the-groupId-additional-info"

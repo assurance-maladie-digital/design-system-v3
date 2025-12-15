@@ -119,7 +119,7 @@
 <template>
 	<DatePicker
 		v-model="modelValue"
-		:label="header.title"
+		:label="header.title || 'Sélectionner une date'"
 		:clearable="inputConfig?.clearable ?? clearable"
 		:density="inputConfig?.density ?? density"
 		:hide-details="inputConfig?.hideDetails ?? hideDetails"
