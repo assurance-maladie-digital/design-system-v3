@@ -11,7 +11,7 @@
 		mdiAlertCircle,
 		mdiCalendar,
 	} from '@mdi/js'
-	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
+	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -185,6 +185,20 @@
 		set(value) {
 			emit('update:modelValue', value)
 		},
+	})
+
+	const attrs = useAttrs()
+
+	const forwardedAttrs = computed(() => {
+		const filteredAttrs = Object.fromEntries(
+			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
+		) as Record<string, unknown>
+
+		if (!('validate-on' in filteredAttrs) && 'rules' in filteredAttrs && props.isValidateOnBlur) {
+			filteredAttrs['validate-on'] = 'blur lazy'
+		}
+
+		return filteredAttrs
 	})
 
 	const isBlurred = ref(false)
@@ -596,7 +610,7 @@
 			:type="props.type"
 			:variant="props.variantStyle"
 			:width="props.width"
-			v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
+			v-bind="forwardedAttrs"
 			:class="{
 				'error-field': hasError,
 				'warning-field': hasWarning,
