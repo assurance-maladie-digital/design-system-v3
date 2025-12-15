@@ -60,20 +60,58 @@
 
 	const { mdAndUp } = useDisplay()
 
-	// v-model
-	const cityValue = computed({
-		get: (): string | InputPostalAddressAutoCompleteItem => props.city || '',
-		set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
-			emit('update:city', newValue)
-		},
-	})
+  const normalizeValue = (
+      val?: string | InputPostalAddressAutoCompleteItem,
+      mode: 'city' | 'postalCode' = 'city'
+  ): LocalValue => {
+    if (!val || typeof val === 'string') {
+      return {city: '', postalCode: '', toString: () => ''}
+    }
 
-	const postalCodeValue = computed({
-		get: (): string | InputPostalAddressAutoCompleteItem => props.postalCode || '',
-		set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
+    const city = val.city ?? ''
+    const postalCode = val.postalCode ?? ''
+    return {
+      city,
+      postalCode,
+      toString: () => (mode === 'city' ? `${city} (${postalCode})` : postalCode),
+    }
+  }
+
+  type LocalValue = { city: string; postalCode: string; toString: () => string }
+
+  // v-model
+  const postalCodeValue = computed({
+    get: (): string | InputPostalAddressAutoCompleteItem => props.postalCode || '',
+    set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
       emit('update:postalCode', newValue)
-		},
-	})
+    },
+  })
+  const cityValue = computed({
+    get: (): string | InputPostalAddressAutoCompleteItem => props.city || '',
+    set: (newValue: string | InputPostalAddressAutoCompleteItem): void => {
+      emit('update:city', newValue)
+    },
+  })
+  const postalCodeValueLocal = ref<LocalValue>(normalizeValue(props.postalCode, 'postalCode'))
+  const cityValueLocal = ref<LocalValue>(normalizeValue(props.city, 'city'))
+  const postalCodeVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
+    get() {
+      const val = postalCodeValueLocal.value
+      return val.city || val.postalCode ? val : undefined
+    },
+    set(val) {
+      postalCodeValueLocal.value = normalizeValue(val, 'postalCode')
+    }
+  })
+  const cityVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
+    get() {
+      const val = cityValueLocal.value
+      return val.city || val.postalCode ? val : undefined
+    },
+    set(val) {
+      cityValueLocal.value = normalizeValue(val, 'city')
+    }
+  })
 
 	const compareFields = (oldValue: string | InputPostalAddressAutoCompleteItem, newValue: string | InputPostalAddressAutoCompleteItem) => {
 		if (typeof oldValue === 'string' && typeof newValue === 'string') {
@@ -210,47 +248,6 @@
 
 		return borderColor
 	})
-  const normalizeValue = (
-      val?: string | InputPostalAddressAutoCompleteItem,
-      mode: 'city' | 'postalCode' = 'city'
-  ): LocalValue => {
-    if (!val || typeof val === 'string') {
-      return {city: '', postalCode: '', toString: () => ''}
-    }
-
-    const city = val.city ?? ''
-    const postalCode = val.postalCode ?? ''
-    return {
-      city,
-      postalCode,
-      toString: () => (mode === 'city' ? `${city} (${postalCode})` : postalCode),
-    }
-  }
-
-  type LocalValue = { city: string; postalCode: string; toString: () => string }
-
-  const postalCodeValueLocal = ref<LocalValue>(normalizeValue(props.postalCode, 'postalCode'))
-  const cityValueLocal = ref<LocalValue>(normalizeValue(props.city, 'city'))
-
-  const postalCodeVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
-    get() {
-      const val = postalCodeValueLocal.value
-      return val.city || val.postalCode ? val : undefined
-    },
-    set(val) {
-      postalCodeValueLocal.value = normalizeValue(val, 'postalCode')
-    }
-  })
-
-  const cityVModel = computed<string | InputPostalAddressAutoCompleteItem | undefined>({
-    get() {
-      const val = cityValueLocal.value
-      return val.city || val.postalCode ? val : undefined
-    },
-    set(val) {
-      cityValueLocal.value = normalizeValue(val, 'city')
-    }
-  })
 
   watch(cityValueLocal, (newVal) => {
     const normalized = normalizeValue(newVal, 'city')
