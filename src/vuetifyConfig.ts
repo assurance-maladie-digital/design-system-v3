@@ -54,7 +54,7 @@ export const createVuetifyInstance = () => createVuetify({
 				colors: {
 					...paLightTheme,
 					...paDarkTheme,
-					...createFlattenTheme(cnamColorsTokens),
+					...createFlattenTheme(paColorsTokens),
 				},
 				variables: {
 					'border-color': paColorsTokens.grey.base,
