@@ -74,10 +74,8 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
               class="
                 bg-ap-grey-lighten-2
                 v-field
-                v-field--active
                 v-field--appended
                 v-field--center-affix
-                v-field--dirty
                 v-field--disabled
                 v-field--has-background
                 v-field--no-label
@@ -152,11 +150,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                   <!-- teleport start -->
                   <!-- teleport end -->
-                  <div class="v-autocomplete__selection">
-                    <span class="v-autocomplete__selection-text">
-                      <!---->
-                    </span>
-                  </div>
                   <input
                     aria-expanded="false"
                     aria-required="true"
@@ -341,10 +334,8 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
               class="
                 bg-ap-grey-lighten-2
                 v-field
-                v-field--active
                 v-field--appended
                 v-field--center-affix
-                v-field--dirty
                 v-field--disabled
                 v-field--has-background
                 v-field--no-label
@@ -419,11 +410,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                   <!-- teleport start -->
                   <!-- teleport end -->
-                  <div class="v-autocomplete__selection">
-                    <span class="v-autocomplete__selection-text">
-                      <!---->
-                    </span>
-                  </div>
                   <input
                     aria-expanded="false"
                     aria-required="true"
@@ -552,7 +538,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
       </div>
     </div>
   </div>
-  <!-- v-if -->
   <!-- v-if -->
 </div>
 `;
