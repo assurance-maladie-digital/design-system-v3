@@ -38,6 +38,7 @@
 		disableErrorHandling?: boolean
 		bgColor?: string
 		autocompleteType?: 'current-password' | 'new-password'
+		useVuetifyValidation?: boolean
 	} & CustomizableOptions>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
@@ -59,6 +60,7 @@
 		disableErrorHandling: false,
 		bgColor: 'white',
 		autocompleteType: 'current-password',
+		useVuetifyValidation: false,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -128,7 +130,7 @@
 			required: props.required,
 			isValidateOnBlur: props.isValidateOnBlur,
 			showSuccessMessages: props.showSuccessMessages,
-			disableErrorHandling: props.disableErrorHandling,
+			disableErrorHandling: props.disableErrorHandling || props.useVuetifyValidation,
 			label: props.label || 'password',
 			customRules: props.customRules,
 			customWarningRules: props.customWarningRules,
@@ -198,6 +200,11 @@
 
 	const validateOnSubmit = (): boolean => {
 		if (props.readonly) return true // Retourner true au lieu de undefined
+		if (props.useVuetifyValidation) {
+			// En mode Vuetify, on laisse VForm gérer la validation
+			emit('submit')
+			return true
+		}
 		const isValid = controllerValidateOnSubmit()
 		if (isValid) {
 			emit('submit')
@@ -223,7 +230,9 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
+	if (!props.useVuetifyValidation) {
+		useValidatable(validateOnSubmit, clearValidation, reset)
+	}
 
 	defineExpose({
 		showEyeIcon,
@@ -262,6 +271,8 @@
 		:display-asterisk="props.displayAsterisk"
 		:autocomplete="props.autocompleteType"
 		class="vd-password"
+		:disable-form-registration="true"
+		:use-vuetify-validation="props.useVuetifyValidation"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
 		@blur="validateOnBlur"
 		@keydown="handleKeydown"

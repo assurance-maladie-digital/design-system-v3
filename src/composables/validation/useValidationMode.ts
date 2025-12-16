@@ -3,6 +3,7 @@ import { useValidatable } from './useValidatable'
 
 interface ValidationModeProps {
 	useVuetifyValidation?: boolean
+	disableFormRegistration?: boolean
 }
 
 export function useValidationMode(props: ValidationModeProps) {
@@ -15,6 +16,7 @@ export function useValidationMode(props: ValidationModeProps) {
 		reset?: () => void,
 	) => {
 		if (!isDsMode.value) return
+		if (props.disableFormRegistration) return
 		useValidatable(validateMethod, clearValidation, reset)
 	}
 

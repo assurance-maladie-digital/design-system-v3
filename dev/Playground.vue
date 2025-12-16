@@ -86,7 +86,14 @@ const validateVuetifyForm = async () => {
                 fieldIdentifier: 'password',
             },
         },
+
+        
     ]
+
+    const passwordRules = [
+  (v: string) => !!v || 'Le mot de passe est obligatoire',
+  (v: string) => v.length >= 8 || 'Le mot de passe doit contenir au moins 8 caractères',
+]
 </script>
 
 <template>
@@ -164,6 +171,17 @@ const validateVuetifyForm = async () => {
 			hint="Validation gérée uniquement par Vuetify (rules)"
 			persistent-hint
 			/>
+      <PasswordField
+        v-model="password"
+        label="Mot de passe"
+        :required="true"
+        :custom-rules="customRules"
+        :custom-warning-rules="customWarningRules"
+        :custom-success-rules="customSuccessRules"
+        :show-success-messages="true"
+        :display-asterisk="true"
+        :is-validate-on-blur="true"
+    />
         </div>
 
         <div class="form-actions">
@@ -205,6 +223,12 @@ const validateVuetifyForm = async () => {
 			hint="Validation gérée uniquement par Vuetify (rules)"
 			persistent-hint
 			/>
+      <PasswordField
+        v-model="password"
+        label="Mot de passe"
+        :use-vuetify-validation="true"
+        :rules="passwordRules"
+    />
         </div>
 
         <div class="form-actions">

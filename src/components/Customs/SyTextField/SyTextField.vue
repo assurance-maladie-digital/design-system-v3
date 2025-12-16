@@ -91,6 +91,7 @@
 			autocomplete?: string
 			helpText?: string
 			useVuetifyValidation?: boolean
+			disableFormRegistration?: boolean
 		}>(),
 		{
 			modelValue: undefined,
@@ -161,6 +162,7 @@
 			autocomplete: 'off',
 			helpText: '',
 			useVuetifyValidation: false,
+			disableFormRegistration: false,
 		},
 	)
 
@@ -606,6 +608,7 @@
 			:persistent-counter="props.displayPersistentCounter"
 			:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
 			:persistent-placeholder="props.displayPersistentPlaceholder"
+			:disable-form-registration="true"
 			:placeholder="props.placeholder"
 			:prefix="props.prefix"
 			:readonly="props.readonly"
