@@ -215,6 +215,9 @@
 	// Appliquer la correction lors du montage du composant
 	onMounted(() => {
 		removeAriaAttributesForRadio()
+		if (!props.isValidateOnBlur) {
+			validateField(model.value)
+		}
 	})
 
 	// Intégration avec le système de validation du formulaire
@@ -248,7 +251,7 @@
 		:hide-details="props.hideDetails"
 		:density="props.density"
 		:error="hasError"
-		:error-messages="errors"
+		:error-messages="hasError ? errors : undefined"
 		:aria-describedby="messageId"
 		:messages="hasError ? errors :
 			hasWarning ? warnings :
