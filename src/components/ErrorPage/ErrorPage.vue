@@ -114,7 +114,7 @@
 					<slot name="action">
 						<VBtn
 							v-if="!hideBtn && btnText && (btnLink || btnHref)"
-							:to="btnLink"
+							:to="btnHref ? undefined : btnLink"
 							:href="btnHref"
 							color="primary"
 							class="mt-6"
