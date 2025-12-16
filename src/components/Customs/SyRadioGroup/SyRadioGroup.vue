@@ -215,7 +215,7 @@
 	// Appliquer la correction lors du montage du composant
 	onMounted(() => {
 		removeAriaAttributesForRadio()
-		if (!props.isValidateOnBlur) {
+		if (!props.isValidateOnBlur && !props.required) {
 			validateField(model.value)
 		}
 	})
