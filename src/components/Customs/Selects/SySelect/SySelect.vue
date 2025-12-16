@@ -8,6 +8,8 @@
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { type ValidationRule } from '@/composables/validation/useValidation'
+	import { useFieldValidationController } from '@/composables/validation/useFieldValidationController'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
@@ -38,7 +40,7 @@
 			default: 'Sélectionnez une option',
 		},
 		errorMessages: {
-			type: [String, Array] as PropType<string | readonly string[]>,
+			type: Array as PropType<string[] | null>,
 			default: () => [],
 		},
 		required: {
@@ -388,16 +390,47 @@
 		})
 	})
 
+	// Règle de base pour la contrainte "requis"
+	const defaultRules = computed<ValidationRule[]>(() => props.required
+		? [{
+			type: 'required',
+			options: {
+				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				fieldIdentifier: props.label,
+			},
+		}]
+		: [],
+	)
+
+	// Contrôleur de validation partagé
+	const {
+		errors,
+		validateOnSubmit: controllerValidateOnSubmit,
+	} = useFieldValidationController<SelectItemValueType | SelectItemArrayType>({
+		// selectedItem contient toujours la valeur actuelle (simple ou multiple)
+		value: selectedItem as unknown as typeof selectedItem,
+		props,
+		baseRules: defaultRules.value,
+	})
+
+	// Erreurs affichées dans le champ : messages externes en priorité, sinon erreurs internes
+	const displayedErrors = computed(() => {
+		if (props.disableErrorHandling) return []
+		const externalErrors = props.errorMessages ?? []
+		if (externalErrors.length > 0) return externalErrors
+		return errors.value
+	})
+
 	const isRequired = computed(() => {
 		if (props.disableErrorHandling) return false
 		if (props.readonly) return
-		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
+		return (props.required || (props.errorMessages?.length ?? 0) > 0) && !selectedItem.value
 	})
 
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return props.errorMessages.length > 0 || hasError.value
+		return (props.errorMessages?.length ?? 0) > 0 || hasError.value
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -559,7 +592,8 @@
 				hasError.value = false
 			}
 			else {
-				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+				const externalErrorsCount = props.errorMessages?.length ?? 0
+				hasError.value = (!selectedItem.value && isRequired.value) || externalErrorsCount > 0
 			}
 		}
 		else {
@@ -569,7 +603,8 @@
 
 	watch(() => props.errorMessages, (newValue) => {
 		if (!props.disableErrorHandling) {
-			hasError.value = newValue.length > 0
+			const count = newValue?.length ?? 0
+			hasError.value = count > 0
 		}
 	})
 
@@ -730,18 +765,24 @@
 
 	// Méthode de validation pour l'enregistrement avec le système de validation du formulaire
 	const validateOnSubmit = (): boolean => {
-		// Si en mode readonly ou si la gestion d'erreur est désactivée, toujours valide
+		// Laisser le contrôleur partagé exécuter la validation DS
+		const controllerResult = controllerValidateOnSubmit()
+
+		// Comportement existant : en readonly ou quand la gestion d'erreur est désactivée, toujours valide
 		if (props.readonly || props.disableErrorHandling) {
 			return true
 		}
 
-		// Vérifier si une valeur est sélectionnée quand le champ est requis
-		const isValid = !isRequired.value
+		// Vérifier si une valeur est sélectionnée quand le champ est requis (logique historique)
+		const isValidByRequired = !isRequired.value
 
-		// Mettre à jour l'état d'erreur
-		hasError.value = !isValid || props.errorMessages.length > 0
+		// Mettre à jour l'état d'erreur pour l'UI (icône, styles),
+		// en tenant compte des erreurs externes
+		const externalErrorsCount = props.errorMessages?.length ?? 0
+		hasError.value = !isValidByRequired || externalErrorsCount > 0
 
-		return isValid
+		// Pour SyForm, on se base sur le résultat du contrôleur (qui intègre disabled, readonly, etc.)
+		return controllerResult
 	}
 
 	// Intégration avec le système de validation du formulaire
@@ -789,7 +830,7 @@
 					:disabled="disabled"
 					:label="labelWithAsterisk"
 					:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-					:error-messages="props.disableErrorHandling ? [] : errorMessages"
+					:error-messages="displayedErrors"
 					:variant="outlined ? 'outlined' : 'underlined'"
 					:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 					:bg-color="props.bgColor"

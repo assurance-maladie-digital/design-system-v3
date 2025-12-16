@@ -1,256 +1,246 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-import PasswordField from '@/components/PasswordField/PasswordField.vue'
-import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
-// Champs pour le formulaire en mode Design System (DS)
-const dsEmail = ref('')
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+import PasswordField from '@/components/PasswordField/PasswordField.vue'
+
+type SelectItem = { text: string; value: string }
+
+const selectItems: SelectItem[] = [
+  { text: 'Adrien', value: 'Adrien' },
+  { text: 'Axel', value: 'Axel' },
+  { text: 'Baptiste', value: 'Baptiste' },
+  { text: 'Clement', value: 'Clement' },
+  { text: 'Corentin', value: 'Corentin' },
+  { text: 'Damien', value: 'Damien' },
+  { text: 'David', value: 'David' },
+  { text: 'Eloi', value: 'Eloi' },
+  { text: 'Louis', value: 'Louis' },
+  { text: 'Valentin', value: 'Valentin' },
+]
+
+const password = ref('tr')
+
 const dsFormRef = ref<InstanceType<typeof SyForm> | null>(null)
 const dsFormValid = ref<boolean | null>(null)
-  const password = ref('tr')
+
+const dsEmail = ref('')
+const dsSelect = ref<string | null>(null)
 
 const dsEmailRules = [
-  { type: 'email', options: { message: "L'email n'est pas valide" } },
   { type: 'required', options: { message: "L'email est obligatoire" } },
+  { type: 'email', options: { message: "L'email n'est pas valide" } },
 ]
 
 const validateDsForm = async () => {
   if (!dsFormRef.value) return
-  const isValid = await dsFormRef.value.validate()
-  dsFormValid.value = isValid
+  dsFormValid.value = await dsFormRef.value.validate()
 }
 
-// Champs pour le formulaire en mode Vuetify natif
-const vuetifyEmail = ref('')
 const vuetifyFormRef = ref<any | null>(null)
 const vuetifyFormValid = ref<boolean | null>(null)
 
-// Règles Vuetify classiques: (value) => true | string
+const vuetifyEmail = ref('')
+const vuetifySelect = ref<string | null>(null)
+
 const vuetifyEmailRules = [
   (v: string) => !!v || "L'email est obligatoire",
   (v: string) => /.+@.+\..+/.test(v) || "L'email n'est pas valide",
 ]
 
+const vuetifySelectRules = [
+  (v: string) => !!v || 'Il faut sélectionner quelque chose',
+  (v: string) => v.length >= 5 || 'Minimum 5 caractères',
+]
+
+const passwordRules = [
+  (v: string) => !!v || 'Le mot de passe est obligatoire',
+  (v: string) => v.length >= 8 || 'Minimum 8 caractères',
+]
+
 const validateVuetifyForm = async () => {
   if (!vuetifyFormRef.value) return
   const result = await vuetifyFormRef.value.validate()
-  vuetifyFormValid.value =
-    typeof result === 'boolean' ? result : result.valid
+  vuetifyFormValid.value = typeof result === 'boolean' ? result : result.valid
 }
 
-// Règles personnalisées pour la validation du mot de passe
-    const customRules = [
-        {
-            type: 'custom',
-            options: {
-                validate: (value: string) => {
-                    if (!value || value.length < 8) {
-                        return 'Le mot de passe doit contenir au moins 8 caractères'
-                    }
-                    return true
-                },
-                fieldIdentifier: 'password',
-            },
-        },
-    ]
-    
-    const customWarningRules = [
-        {
-            type: 'custom',
-            options: {
-                validate: (value: string) => {
-                    if (!value || !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
-                        return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux (ex: ! @ &)'
-                    }
-                    return true
-                },
-                fieldIdentifier: 'password',
-            },
-        },
-    ]
-    
-    const customSuccessRules = [
-        {
-            type: 'custom',
-            options: {
-                validate: (value: string) => {
-                    if (value && value.length >= 12
-                        && /[A-Z]/.test(value)
-                        && /[0-9]/.test(value)
-                        && /[!@#$%^&*(),.?":{}|<>]/.test(value)) {
-                        return 'Mot de passe très sécurisé !'
-                    }
-                    return true
-                },
-                fieldIdentifier: 'password',
-            },
-        },
+const customPasswordRules = [
+  {
+    type: 'custom',
+    options: {
+      fieldIdentifier: 'password',
+      validate: (value: string) =>
+        value && value.length >= 8
+          ? true
+          : 'Le mot de passe doit contenir au moins 8 caractères',
+    },
+  },
+]
 
-        
-    ]
+const customPasswordWarningRules = [
+  {
+    type: 'custom',
+    options: {
+      fieldIdentifier: 'password',
+      validate: (value: string) =>
+        /[!@#$%^&*(),.?":{}|<>]/.test(value)
+          ? true
+          : 'Ajoutez des caractères spéciaux pour plus de sécurité',
+    },
+  },
+]
 
-    const passwordRules = [
-  (v: string) => !!v || 'Le mot de passe est obligatoire',
-  (v: string) => v.length >= 8 || 'Le mot de passe doit contenir au moins 8 caractères',
+const customPasswordSuccessRules = [
+  {
+    type: 'custom',
+    options: {
+      fieldIdentifier: 'password',
+      validate: (value: string) =>
+        value &&
+        value.length >= 12 &&
+        /[A-Z]/.test(value) &&
+        /[0-9]/.test(value) &&
+        /[!@#$%^&*(),.?":{}|<>]/.test(value)
+          ? 'Mot de passe très sécurisé !'
+          : true,
+    },
+  },
 ]
 </script>
 
+
+
 <template>
   <div class="playground-container">
-    <h1>SyTextField Validation Playground</h1>
-
+    <h1>Validation Playground</h1>
     <div class="demo-section">
       <h2>1. SyForm + validation Design System</h2>
-      <p>
-        Ce formulaire utilise le système de validation du Design System (règles custom + SyForm).
-      </p>
 
-      <SyForm
-        ref="dsFormRef"
-        class="playground-form"
-      >
+      <SyForm ref="dsFormRef" class="playground-form">
         <div class="form-row">
-              <PasswordField
-        v-model="password"
-        label="Mot de passe"
-        :required="true"
-        :custom-rules="customRules"
-        :custom-warning-rules="customWarningRules"
-        :custom-success-rules="customSuccessRules"
-        :show-success-messages="true"
-        :display-asterisk="true"
-        :is-validate-on-blur="true"
-    />
+          <PasswordField
+            v-model="password"
+            label="Mot de passe"
+            required
+            :custom-rules="customPasswordRules"
+            :custom-warning-rules="customPasswordWarningRules"
+            :custom-success-rules="customPasswordSuccessRules"
+            show-success-messages
+            display-asterisk
+            is-validate-on-blur
+          />
+
           <SyTextField
             v-model="dsEmail"
-            label="Email (mode DS)"
-            :custom-rules="dsEmailRules"
+            label="Email (DS)"
             required
-            help-text="Validation gérée par useValidation + SyForm"
+            :custom-rules="dsEmailRules"
+            help-text="Validation gérée par SyForm"
+          />
+
+          <SySelect
+            v-model="dsSelect"
+            :items="selectItems"
+            label="Option"
+            required
+            display-asterisk
           />
         </div>
 
         <div class="form-actions">
-          <VBtn
-            color="primary"
-            @click="validateDsForm"
-          >
-            Valider (SyForm)
+          <VBtn color="primary" @click="validateDsForm">
+            Valider (DS)
           </VBtn>
         </div>
       </SyForm>
 
       <div class="value-display">
-        <p><strong>Valeur email (DS) :</strong> {{ dsEmail || 'Non définie' }}</p>
-        <p><strong>Résultat SyForm.validate() :</strong>
+        <p><strong>Email :</strong> {{ dsEmail || '—' }}</p>
+        <p><strong>Résultat :</strong>
           <span v-if="dsFormValid === null">(non évalué)</span>
           <span v-else>{{ dsFormValid ? 'valide' : 'invalide' }}</span>
         </p>
       </div>
     </div>
-
     <div class="demo-section">
-      <h2>2. Formulaire Vuetify natif + custom-rules</h2>
-      <p>
-        Ce formulaire utilise la validation de Vuetify mais avec les custom donc pas d'erreurs (pas gere) :
-      </p>
-
-      <VForm
-        ref="vuetifyFormRef"
-        class="playground-form"
-      >
+      <h2>2. Vuetify natif + custom-rules DS</h2>
+      <VForm ref="vuetifyFormRef" class="playground-form">
         <div class="form-row">
-			<SyTextField
-			v-model="vuetifyEmail"
-			label="Email (mode Vuetify)"
-			use-vuetify-validation
-			:custom-rules="dsEmailRules"
-			type="email"
-			variant="outlined"
-			hint="Validation gérée uniquement par Vuetify (rules)"
-			persistent-hint
-			/>
-      <PasswordField
-        v-model="password"
-        label="Mot de passe"
-        :required="true"
-        :custom-rules="customRules"
-        :custom-warning-rules="customWarningRules"
-        :custom-success-rules="customSuccessRules"
-        :show-success-messages="true"
-        :display-asterisk="true"
-        :is-validate-on-blur="true"
-    />
+          <SyTextField
+            v-model="vuetifyEmail"
+            label="Email (Vuetify)"
+            use-vuetify-validation
+            :custom-rules="dsEmailRules"
+            type="email"
+            variant="outlined"
+          />
+
+          <PasswordField
+            v-model="password"
+            label="Mot de passe"
+            :custom-rules="customPasswordRules"
+            :custom-warning-rules="customPasswordWarningRules"
+            :custom-success-rules="customPasswordSuccessRules"
+            show-success-messages
+            display-asterisk
+            is-validate-on-blur
+          />
+
+          <SySelect
+            v-model="vuetifySelect"
+            :items="selectItems"
+            required
+          />
         </div>
 
         <div class="form-actions">
-          <VBtn
-            color="primary"
-            @click="validateVuetifyForm"
-          >
+          <VBtn color="primary" @click="validateVuetifyForm">
             Valider (Vuetify)
           </VBtn>
         </div>
       </VForm>
-
-      <div class="value-display">
-        <p><strong>Valeur email (Vuetify) :</strong> {{ vuetifyEmail || 'Non définie' }}</p>
-        <p><strong>Résultat VForm.validate() (Vuetify rules) :</strong>
-          <span v-if="vuetifyFormValid === null">(non évalué)</span>
-          <span v-else>{{ vuetifyFormValid ? 'valide' : 'invalide' }}</span>
-        </p>
-      </div>
     </div>
-	    <div class="demo-section">
-      <h2>2. Formulaire Vuetify natif + vuetifyRules</h2>
-      <p>
-        Ce formulaire utilise uniquement les composants Vuetify mais avec les vuetifyRules doncgestion habituelle de vuetify :
-      </p>
+    <div class="demo-section">
+      <h2>3. Vuetify natif + rules Vuetify</h2>
 
-      <VForm
-        ref="vuetifyFormRef"
-        class="playground-form"
-      >
+      <VForm ref="vuetifyFormRef" class="playground-form">
         <div class="form-row">
-			<SyTextField
-			v-model="vuetifyEmail"
-			label="Email (mode Vuetify)"
-			use-vuetify-validation
-			:rules="vuetifyEmailRules"
-			type="email"
-			variant="outlined"
-			hint="Validation gérée uniquement par Vuetify (rules)"
-			persistent-hint
-			/>
-      <PasswordField
-        v-model="password"
-        label="Mot de passe"
-        :use-vuetify-validation="true"
-        :rules="passwordRules"
-    />
+          <SyTextField
+            v-model="vuetifyEmail"
+            label="Email"
+            use-vuetify-validation
+            :rules="vuetifyEmailRules"
+            variant="outlined"
+          />
+
+          <PasswordField
+            v-model="password"
+            use-vuetify-validation
+            :rules="passwordRules"
+            label="Mot de passe"
+          />
+
+          <SySelect
+            v-model="vuetifySelect"
+            :items="selectItems"
+            label="Select"
+            use-vuetify-validation
+            :rules="vuetifySelectRules"
+          />
         </div>
 
         <div class="form-actions">
-          <VBtn
-            color="primary"
-            @click="validateVuetifyForm"
-          >
+          <VBtn color="primary" @click="validateVuetifyForm">
             Valider (Vuetify)
           </VBtn>
         </div>
       </VForm>
-
-      <div class="value-display">
-        <p><strong>Valeur email (Vuetify) :</strong> {{ vuetifyEmail || 'Non définie' }}</p>
-        <p><strong>Résultat VForm.validate() (Vuetify rules) :</strong>
-          <span v-if="vuetifyFormValid === null">(non évalué)</span>
-          <span v-else>{{ vuetifyFormValid ? 'valide' : 'invalide' }}</span>
-        </p>
-      </div>
     </div>
   </div>
 </template>
+
 
 <style scoped lang="scss">
 .playground-container {

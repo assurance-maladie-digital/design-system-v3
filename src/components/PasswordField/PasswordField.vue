@@ -277,7 +277,7 @@
 					class="mr-2"
 				/>
 				<!-- Utiliser un vrai élément button plutôt qu'une icône avec role="button" -->
-				<v-button
+				<v-btn
 					type="button"
 					class="password-toggle-button"
 					:aria-label="btnLabel"
@@ -293,7 +293,7 @@
 						color="rgb(0 0 0 / 70%)"
 						:aria-hidden="true"
 					/>
-				</v-button>
+				</v-btn>
 			</div>
 			<div
 				:id="`${passwordFieldId}-status`"

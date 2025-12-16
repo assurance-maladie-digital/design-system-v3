@@ -9,14 +9,14 @@ dist-ssr
 types/
 
 # Playground
-**/dev/Playground.vue
+# **/dev/Playground.vue
 
 # Logs
 logs
 *.log
 
 # Dev
-dev/Playground.vue
+# dev/Playground.vue
 
 # Editor directories and files
 .vscode/*
