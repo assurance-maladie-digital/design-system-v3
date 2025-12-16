@@ -376,11 +376,9 @@
 	})
 
 	const hasSelectionToClear = computed(() => {
-		if (props.multiple) {
-			return Array.isArray(selectedItem.value) && selectedItem.value.length > 0
-		}
-
-		return selectedItem.value !== null && selectedItem.value !== undefined
+		return props.multiple
+			? (((selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
+			: selectedItem.value != null
 	})
 
 	const labelWithAsterisk = computed(() => {
