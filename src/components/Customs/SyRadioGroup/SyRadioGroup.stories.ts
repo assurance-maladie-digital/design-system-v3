@@ -50,7 +50,7 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-                  <SyRadioGroup v-model="selected" v-bind="args" />
+                  <SyRadioGroup v-model="selected" />
                 `,
 			},
 			{
@@ -127,9 +127,30 @@ export const Required: Story = {
 				name: 'Template',
 				code: `
                 <SyForm ref="form" @submit="onSubmit">
-      			  <SyRadioGroup v-model="selected" required v-bind="args" />
+      			  <SyRadioGroup v-model="selected" required />
 	   			  <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
 	  			</SyForm>`,
+			},
+			{
+				name: 'Script',
+				code: `
+              <script setup lang="ts">
+                import { ref } from 'vue'
+                import { SyRadioGroup } from '@cnamts/synapse'
+
+                const selected = ref('A')
+
+                const options = [
+                    { label: 'Option A', value: 'A' },
+                    { label: 'Option B', value: 'B' },
+                    { label: 'Option C', value: 'C' },
+                ]
+                return {
+                    selected,
+                    options,
+                }
+             </script>
+            `,
 			},
 		],
 	},
@@ -144,7 +165,6 @@ export const formValidation: Story = {
 			{ label: 'Option B', value: 'b' },
 		],
 		showSuccessMessages: true,
-
 	},
 
 	render: args => ({
@@ -170,9 +190,30 @@ export const formValidation: Story = {
 			{
 				name: 'Template',
 				code: `<SyForm ref="form" @submit="onSubmit">
-                  <SyRadioGroup v-model="selected" required v-bind="args" />
+                  <SyRadioGroup v-model="selected" required />
                   <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
                 </SyForm>`,
+			},
+			{
+				name: 'Script',
+				code: `
+              <script setup lang="ts">
+                import { ref } from 'vue'
+                import { SyForm, SyRadioGroup } from '@cnamts/synapse'
+
+                const selected = ref('A')
+
+                const options = [
+                    { label: 'Option A', value: 'A' },
+                    { label: 'Option B', value: 'B' },
+                    { label: 'Option C', value: 'C' },
+                ]
+                return {
+                    selected,
+                    options,
+                }
+             </script>
+            `,
 			},
 		],
 	},
@@ -183,7 +224,7 @@ export const Disabled: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyRadioGroup v-model="selected" disabled v-bind="args" />`,
+				code: `<SyRadioGroup v-model="selected" disabled />`,
 			},
 			{
 				name: 'Script',
@@ -228,7 +269,6 @@ export const Disabled: Story = {
 }
 
 export const CustomColors: Story = {
-
 	parameters: {
 		sourceCode: [
 			{
@@ -430,7 +470,30 @@ export const Readonly: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyRadioGroup v-model="selected" v-bind="args" label="Radio en lecture seule" />`,
+				code: `<SyRadioGroup 
+                  v-model="selected" 
+                  label="Radio en lecture seule" 
+                  readonly
+                />`,
+			},
+			{
+				name: 'Script',
+				code: `
+              <script setup lang="ts">
+                import { ref } from 'vue'
+                import { SyRadioGroup } from '@cnamts/synapse'
+
+                const selected = ref('A')
+
+                const options = [
+                    { label: 'Option A', value: 'A' },
+                ]
+                return {
+                    selected,
+                    options,
+                }
+             </script>
+            `,
 			},
 		],
 		docs: {
@@ -458,7 +521,6 @@ export const CustomRules: Story = {
 					label="Options"
 					:custom-warning-rules="rules"
 					:is-validate-on-blur="false"
-					
 				/>
 				</template>`,
 			},
@@ -531,7 +593,6 @@ const rules = [
 				:options="options"
 			    :custom-warning-rules="rules"
 				:is-validate-on-blur="false"
-				
 			/>
     `,
 	}),
