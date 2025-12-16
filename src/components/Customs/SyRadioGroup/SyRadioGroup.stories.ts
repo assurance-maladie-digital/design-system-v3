@@ -55,7 +55,7 @@ export const Default: Story = {
 			},
 			{
 				name: 'Script',
-            code: `
+				code: `
               <script setup lang="ts">
                 import { ref } from 'vue'
                 import { SyRadioGroup } from '@cnamts/synapse'
