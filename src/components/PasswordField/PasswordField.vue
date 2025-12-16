@@ -124,21 +124,10 @@
 		clearValidation,
 	} = useFieldValidationController<string | null>({
 		value: password,
-		props: {
-			readonly: props.readonly,
-			disabled: props.disabled,
-			required: props.required,
-			isValidateOnBlur: props.isValidateOnBlur,
-			showSuccessMessages: props.showSuccessMessages,
-			disableErrorHandling: props.disableErrorHandling || props.useVuetifyValidation,
-			label: props.label || 'password',
-			customRules: props.customRules,
-			customWarningRules: props.customWarningRules,
-			customSuccessRules: props.customSuccessRules,
-			errorMessages: props.errorMessages,
-			warningMessages: props.warningMessages,
-			successMessages: props.successMessages,
-		},
+		// Pass the reactive props object directly so the controller stays in sync
+		// with external message props (error/warning/success) and flags.
+		// FieldValidationProps is a subset of PasswordField props.
+		props,
 		baseRules: defaultRules.value,
 	})
 

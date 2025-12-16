@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import PasswordField from '../PasswordField.vue'
 import { describe, it, expect } from 'vitest'
 
@@ -89,6 +90,7 @@ describe('PasswordField.vue', () => {
 		expect(messages[0].text()).toBe('Attention: mot de passe court')
 
 		await wrapper.setProps({ warningMessages: [] })
+		await nextTick()
 		const successMessages = wrapper.findAll('.v-messages__message')
 		expect(successMessages.length).toBe(1)
 		expect(successMessages[0].text()).toBe('Mot de passe valide')

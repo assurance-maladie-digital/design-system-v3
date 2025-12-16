@@ -8,6 +8,8 @@ export interface FieldValidationProps {
 	isValidateOnBlur?: boolean
 	showSuccessMessages?: boolean
 	disableErrorHandling?: boolean
+	// When true (Vuetify native mode), the controller should not handle errors/successes
+	useVuetifyValidation?: boolean
 	label?: string
 	customRules?: ValidationRule[]
 	customWarningRules?: ValidationRule[]
@@ -31,7 +33,7 @@ export function useFieldValidationController<T>(options: UseFieldValidationContr
 	const internalWarningMessages = ref<string[]>([])
 	const internalSuccessMessages = ref<string[]>([])
 
-	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling)
+	const shouldDisableErrorHandling = computed(() => Boolean(props.disableErrorHandling || props.useVuetifyValidation))
 
 	const validation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
