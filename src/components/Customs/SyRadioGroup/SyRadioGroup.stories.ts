@@ -130,14 +130,6 @@ export const Required: Story = {
 	  				</SyForm>`,
 			},
 		],
-		docs: {
-			description: {
-				story: `
-### Radio button obligatoire
-Ce radio bouton est marqué comme obligatoire, ce qui déclenchera une validation si elle n'est pas cochée.
-				`,
-			},
-		},
 	},
 }
 
@@ -175,19 +167,12 @@ export const formValidation: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyForm ref="form" @submit="onSubmit">
+				code: ` <SyForm ref="form" @submit="onSubmit">
       <SyRadioGroup v-model="selected" required v-bind="args" />
 	   <v-btn type="submit" class="mt-2" color="primary" class="mr-2">Valider</v-btn>
 	  </SyForm>`,
 			},
 		],
-		docs: {
-			description: {
-				story: `
-### Radio button avec validation au moment de la soumission
-utilise des règles de validation personnalisées et valide le formulaire lors de la soumission .Le bouton de soumission déclenche la validation et affiche un message de succès si le bouton est cliqué	`,
-			},
-		},
 	},
 }
 
