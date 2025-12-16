@@ -24,7 +24,6 @@
 		subTitleAccessibleName?: string
 		dataListGroupItems?: DataListGroupItems | undefined
 		loading?: boolean
-		renderHtmlValue?: boolean
 		renderFixedHeight?: boolean
 	}>(), {
 		hideBackBtn: false,
@@ -36,7 +35,6 @@
 		subTitleAccessibleName: undefined,
 		dataListGroupItems: undefined,
 		loading: false,
-		renderHtmlValue: false,
 		renderFixedHeight: false,
 	})
 
@@ -45,7 +43,10 @@
 
 	const backArrowIcon = ref(mdiKeyboardBackspace)
 
-	const emit = defineEmits(['click:list-item', 'back'])
+	const emit = defineEmits<{
+		(e: 'click:list-item', value: DataListActionEvent): void
+		(e: 'back'): void
+	}>()
 
 	function emitItemAction(eventValue: DataListActionEvent) {
 		emit('click:list-item', eventValue)
@@ -74,7 +75,7 @@
 					v-if="loading"
 					max-height="28"
 					type="button"
-					color="secondary"
+					color="primary"
 					class="vd-subheader-loading mb-4"
 				/>
 				<VBtn
@@ -154,11 +155,14 @@
 						v-if="dataListGroupItems"
 						:items="dataListGroupItems"
 						:loading="loading"
-						:render-html-value="renderHtmlValue"
 						item-width="auto"
 						:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
 						@click:list-item="emitItemAction"
-					/>
+					>
+						<template #value="{ item }">
+							<span v-html="item.value" />
+						</template>
+					</DataListGroup>
 				</VThemeProvider>
 			</slot>
 		</div>
@@ -184,8 +188,6 @@
 .vd-data-list-group :deep(.vd-data-list) {
 	max-width: 200px;
 
-	// Apply margin right to avoid empty
-	// space on smaller screens
 	&:not(:last-child) {
 		margin-right: 80px !important;
 	}
