@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import PasswordField from '@/components/PasswordField/PasswordField.vue'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 // Champs pour le formulaire en mode Design System (DS)
 const dsEmail = ref('')
 const dsFormRef = ref<InstanceType<typeof SyForm> | null>(null)
 const dsFormValid = ref<boolean | null>(null)
+  const password = ref('tr')
 
 const dsEmailRules = [
   { type: 'email', options: { message: "L'email n'est pas valide" } },
@@ -36,6 +38,55 @@ const validateVuetifyForm = async () => {
   vuetifyFormValid.value =
     typeof result === 'boolean' ? result : result.valid
 }
+
+// Règles personnalisées pour la validation du mot de passe
+    const customRules = [
+        {
+            type: 'custom',
+            options: {
+                validate: (value: string) => {
+                    if (!value || value.length < 8) {
+                        return 'Le mot de passe doit contenir au moins 8 caractères'
+                    }
+                    return true
+                },
+                fieldIdentifier: 'password',
+            },
+        },
+    ]
+    
+    const customWarningRules = [
+        {
+            type: 'custom',
+            options: {
+                validate: (value: string) => {
+                    if (!value || !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+                        return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux (ex: ! @ &)'
+                    }
+                    return true
+                },
+                fieldIdentifier: 'password',
+            },
+        },
+    ]
+    
+    const customSuccessRules = [
+        {
+            type: 'custom',
+            options: {
+                validate: (value: string) => {
+                    if (value && value.length >= 12
+                        && /[A-Z]/.test(value)
+                        && /[0-9]/.test(value)
+                        && /[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+                        return 'Mot de passe très sécurisé !'
+                    }
+                    return true
+                },
+                fieldIdentifier: 'password',
+            },
+        },
+    ]
 </script>
 
 <template>
@@ -53,6 +104,17 @@ const validateVuetifyForm = async () => {
         class="playground-form"
       >
         <div class="form-row">
+              <PasswordField
+        v-model="password"
+        label="Mot de passe"
+        :required="true"
+        :custom-rules="customRules"
+        :custom-warning-rules="customWarningRules"
+        :custom-success-rules="customSuccessRules"
+        :show-success-messages="true"
+        :display-asterisk="true"
+        :is-validate-on-blur="true"
+    />
           <SyTextField
             v-model="dsEmail"
             label="Email (mode DS)"

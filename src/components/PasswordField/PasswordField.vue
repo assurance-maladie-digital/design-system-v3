@@ -9,7 +9,8 @@
 	import { ref, computed, watch, nextTick } from 'vue'
 	import { config } from './config'
 	import { locales } from './locales'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { type ValidationRule } from '@/composables/validation/useValidation'
+	import { useFieldValidationController } from '@/composables/validation/useFieldValidationController'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import type { ColorType } from '@/components/Customs/SyTextField/types'
@@ -109,26 +110,35 @@
 		return rules
 	})
 
-	// Initialisation du composable de validation
-	const { errors, warnings, successes, validateField } = !props.readonly
-		? useValidation({
-			customRules: defaultRules.value,
-			warningRules: props.customWarningRules || [],
-			successRules: props.customSuccessRules || [],
+	const {
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+		validateOnBlur,
+		validateOnSubmit: controllerValidateOnSubmit,
+		clearValidation,
+	} = useFieldValidationController<string | null>({
+		value: password,
+		props: {
+			readonly: props.readonly,
+			disabled: props.disabled,
+			required: props.required,
+			isValidateOnBlur: props.isValidateOnBlur,
 			showSuccessMessages: props.showSuccessMessages,
-			fieldIdentifier: props.label || 'password',
 			disableErrorHandling: props.disableErrorHandling,
-		})
-		: {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			validateField: () => {},
-		}
-
-	const hasError = computed(() => errors.value.length > 0)
-	const hasWarning = computed(() => warnings.value.length > 0)
-	const hasSuccess = computed(() => successes.value.length > 0 && props.showSuccessMessages)
+			label: props.label || 'password',
+			customRules: props.customRules,
+			customWarningRules: props.customWarningRules,
+			customSuccessRules: props.customSuccessRules,
+			errorMessages: props.errorMessages,
+			warningMessages: props.warningMessages,
+			successMessages: props.successMessages,
+		},
+		baseRules: defaultRules.value,
+	})
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
@@ -143,25 +153,6 @@
 		if (hasSuccess.value) return 'success'
 		return 'rgb(0 0 0 / 100%)'
 	})
-
-	// Synchronisation des messages externes
-	watch(() => props.errorMessages, (newVal) => {
-		if (newVal) {
-			errors.value = newVal
-		}
-	}, { immediate: true })
-
-	watch(() => props.warningMessages, (newVal) => {
-		if (newVal) {
-			warnings.value = newVal
-		}
-	}, { immediate: true })
-
-	watch(() => props.successMessages, (newVal) => {
-		if (newVal) {
-			successes.value = newVal
-		}
-	}, { immediate: true })
 
 	// Ne pas revalider automatiquement à chaque changement de valeur.
 	// La validation est gérée explicitement au blur et à la soumission.
@@ -207,19 +198,11 @@
 
 	const validateOnSubmit = (): boolean => {
 		if (props.readonly) return true // Retourner true au lieu de undefined
-		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
-		const isValid = errors.value.length === 0
+		const isValid = controllerValidateOnSubmit()
 		if (isValid) {
 			emit('submit')
 		}
 		return isValid
-	}
-
-	// Nettoie uniquement l'état de validation (messages) sans modifier la valeur
-	const clearValidation = () => {
-		errors.value = []
-		warnings.value = []
-		successes.value = []
 	}
 
 	// Reset hook utilisé par SyForm.reset() via useValidatable
@@ -280,7 +263,7 @@
 		:autocomplete="props.autocompleteType"
 		class="vd-password"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
-		@blur="props.isValidateOnBlur && !props.readonly ? validateField(password, [...defaultRules, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || []) : () => {}"
+		@blur="validateOnBlur"
 		@keydown="handleKeydown"
 	>
 		<template #append-inner>
