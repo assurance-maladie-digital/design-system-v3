@@ -5,10 +5,9 @@
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
-	import { processItems } from '../common/formatters'
 	import { locales } from '../common/locales'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, SyServerTableProps } from '../common/types'
+	import type { DataOptions, Items, SyServerTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
@@ -87,9 +86,6 @@
 		filterInputConfig: props.filterInputConfig,
 	})
 
-	// Create a reactive reference for items
-	const itemsRef = computed<Record<string, unknown>[]>(() => displayedItems.value)
-
 	// Use the pagination composable with displayedItemsLength (stable during refetch)
 	const itemsLength = computed(() => displayedItemsLength.value)
 	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
@@ -113,10 +109,10 @@
 
 	// Create a computed property for items to ensure reactivity
 	// Bind to displayedItems so it is always an array
-	const tableItems = computed<Record<string, unknown>[]>(() => displayedItems.value)
+	const tableItems = computed<Items>(() => displayedItems.value)
 
 	// Keep last non-undefined items to avoid clearing the table during refetches
-	const lastNonUndefinedItems = ref<Record<string, unknown>[]>([])
+	const lastNonUndefinedItems = ref<Items>([])
 	const isRefetching = ref(false)
 	watch(() => props.items, (newVal) => {
 		if (Array.isArray(newVal)) {
@@ -129,7 +125,7 @@
 		}
 	}, { immediate: true })
 
-	const displayedItems = computed<Record<string, unknown>[]>(() => {
+	const displayedItems = computed<Items>(() => {
 		return Array.isArray(props.items) ? props.items : lastNonUndefinedItems.value
 	})
 
@@ -221,7 +217,7 @@
 		setupAria,
 	} = useTableAria({
 		table,
-		items: itemsRef,
+		items: computed(() => displayedItems.value),
 		totalItemsCount: itemsLength,
 		options,
 		uniqueTableId: uniqueTableId.value,
@@ -280,7 +276,7 @@
 			v-model="model"
 			:headers="displayHeaders"
 			color="primary"
-			:items="processItems(displayedItems)"
+			:items="displayedItems"
 			:items-length="displayedItemsLength || 0"
 			:density="props.density"
 			:show-select="props.showSelect || props.showSelectSingle"
@@ -306,7 +302,7 @@
 					<tr class="headers">
 						<template
 							v-for="column in slotProps.columns"
-							:key="column.key"
+							:key="column.key!"
 						>
 							<th
 								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
@@ -340,7 +336,17 @@
 										:column="column"
 										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
-									/>
+									>
+										<template
+											v-for="slotName in Object.keys($slots)"
+											#[slotName]="currentSlotProps"
+										>
+											<slot
+												:name="slotName"
+												v-bind="currentSlotProps ?? {}"
+											/>
+										</template>
+									</TableHeader>
 								</template>
 							</th>
 						</template>
@@ -352,7 +358,7 @@
 						<th v-if="props.showSelect || props.showSelectSingle" />
 						<template
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
-							:key="column.key"
+							:key="column.key!"
 						>
 							<th
 								:style="{

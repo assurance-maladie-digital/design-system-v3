@@ -4,7 +4,8 @@ import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
 describe('ComplexDatePicker.clean', () => {
-	const mountComponent = (props: Record<string, unknown> = {}) => mount(ComplexDatePicker, {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const mountComponent = (props: any = { label: 'Test' }) => mount(ComplexDatePicker, {
 		props,
 	})
 
@@ -19,6 +20,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('renders in text-only mode when noCalendar=true', () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			noCalendar: true,
 		})
 
@@ -29,6 +31,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('emits update:modelValue when a valid date is typed (single mode)', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -44,6 +47,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('respects disabled and readonly props when opening the calendar', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			disabled: true,
 		})
@@ -61,6 +65,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('handleDateSelected updates model, selection and emits event in single mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -80,6 +85,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('handleDateSelected updates model, selection and emits event in range mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 		})
@@ -98,6 +104,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('initializes from external modelValue with dateFormatReturn in single mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			dateFormatReturn: 'YYYY-MM-DD',
 			modelValue: '2025-01-02',
@@ -113,6 +120,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('initializes selection correctly from range modelValue in range mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 			modelValue: ['01/01/2025', '10/01/2025'],
@@ -128,6 +136,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('formatDateInput formats raw digits according to the format and computes cursor position', () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -138,6 +147,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('opens calendar when textFieldActivator is true and input is clicked', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			textFieldActivator: true,
 		})
@@ -151,6 +161,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('toggles calendar visibility with Enter key on the input', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -163,6 +174,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('does not open calendar with Enter key when readonly', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			readonly: true,
 		})
@@ -176,6 +188,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('emits closed when handleClickOutside is called while open', () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -189,6 +202,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('updates internal month and year when VDatePicker emits updates', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 		})
 
@@ -209,6 +223,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('validateOnSubmit returns false when required and empty in text-only mode', () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			noCalendar: true,
 			required: true,
 			format: 'DD/MM/YYYY',
@@ -220,6 +235,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('validateOnSubmit returns true when a valid value is present in text-only mode', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			noCalendar: true,
 			required: true,
 			format: 'DD/MM/YYYY',
@@ -243,6 +259,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('validateOnSubmit returns false when required and empty in calendar mode', () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			required: true,
 			format: 'DD/MM/YYYY',
 		})
@@ -255,6 +272,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('validateDates flags an error when end date is before start date in range mode', () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 		})
@@ -272,6 +290,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('validateDates does not flag an error for an incomplete range when not forced', () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			format: 'DD/MM/YYYY',
 			displayRange: true,
 		})
@@ -289,6 +308,7 @@ describe('ComplexDatePicker.clean', () => {
 
 	it('reset clears selection, errors and closes the calendar', async () => {
 		const wrapper = mountComponent({
+			label: 'Date Field',
 			required: true,
 			format: 'DD/MM/YYYY',
 		})

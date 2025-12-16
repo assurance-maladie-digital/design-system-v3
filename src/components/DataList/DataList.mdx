@@ -1,4 +1,4 @@
-import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import { Controls, Canvas, Meta, Source, Story } from '@storybook/blocks';
 import * as DataList from './DataList.stories';
 
 <Meta of={DataList} />
@@ -7,6 +7,8 @@ import * as DataList from './DataList.stories';
   <h1>DataList</h1>
   <p>L’élément `DataList` est utilisé pour afficher une liste d’informations.</p>
 </div>
+
+<Story of={DataList.InfoIntro}/>
 
 <Canvas of={DataList.Default} />
 

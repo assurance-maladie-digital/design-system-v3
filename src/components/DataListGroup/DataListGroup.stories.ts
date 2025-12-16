@@ -14,7 +14,10 @@ const meta: Meta<typeof DataListGroup> = {
 		icons: { control: 'object' },
 		itemWidth: { control: 'text' },
 		loading: { control: 'boolean' },
-		renderHtmlValue: { control: 'boolean' },
+		renderHtmlValue: {
+			control: 'boolean',
+			description: '@deprecated Utiliser un slot (par exemple "item") pour rendre du HTML plutôt qu\'une string interprétée via v-html.',
+		},
 	},
 }
 
@@ -131,7 +134,6 @@ export const Default: Story = {
 		icons: undefined,
 		itemWidth: '200px',
 		loading: false,
-		renderHtmlValue: false,
 	},
 	render: (args) => {
 		return {
@@ -147,7 +149,6 @@ export const Default: Story = {
 						:icons="args.icons"
 						:item-width="args.itemWidth"
 						:loading="args.loading"
-						:render-html-value="args.renderHtmlValue"
 					/>
 				</div>
 			`,
@@ -735,8 +736,23 @@ export const HtmlValue: Story = {
 				<template>
 					<DataListGroup 
 						:items="items" 
-						render-html-value
-					/>
+					>
+						<template #item="{ item, dataListIndex, index, itemValue }">
+							<span
+								v-if="item.key === 'Adresse'"
+								class="text-body-1"
+							>
+								<b>{{ itemValue }}</b><br>
+								75020 Paris
+							</span>
+							<span
+								v-else
+								class="text-body-1"
+							>
+								{{ itemValue }}
+							</span>
+						</template>
+					</DataListGroup>
 				</template>
 				`,
 			},
@@ -782,8 +798,8 @@ export const HtmlValue: Story = {
 							items: [
 								{
 									key: 'Adresse',
-									value: '<b>50 Avenue du Professeur André Lemierre</b><br>75020 Paris'
-								},
+									value: '50 Avenue du Professeur André Lemierre',
+								}
 							],
 						},
 					]
@@ -830,12 +846,11 @@ export const HtmlValue: Story = {
 				items: [
 					{
 						key: 'Adresse',
-						value: '<b>50 Avenue du Professeur André Lemierre</b><br>75020 Paris',
+						value: '50 Avenue du Professeur André Lemierre',
 					},
 				],
 			},
 		],
-		renderHtmlValue: true,
 	},
 	render: (args) => {
 		return {
@@ -845,11 +860,26 @@ export const HtmlValue: Story = {
 			},
 			template: `
 				<div class="pa-4">
-                    <DataListGroup 
+					<DataListGroup 
 						v-bind="args" 
 						:items="args.items"
-						:render-html-value="args.renderHtmlValue"
-					/>
+					>
+						<template #item="{ item, dataListIndex, index, itemValue }">
+							<span
+								v-if="item.key === 'Adresse'"
+								class="text-body-1"
+							>
+								<b>{{ itemValue }}</b><br>
+								75020 Paris
+							</span>
+							<span
+								v-else
+								class="text-body-1"
+							>
+								{{ itemValue }}
+							</span>
+						</template>
+					</DataListGroup>
 				</div>
 			`,
 		}

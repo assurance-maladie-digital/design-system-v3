@@ -31,7 +31,7 @@
 
 	const props = withDefaults(defineProps<{
 		modelValue?: DateInput
-		label?: string
+		label: string
 		placeholder?: string
 		format?: string
 		dateFormatReturn?: string
@@ -43,9 +43,9 @@
 		displayIcon?: boolean
 		displayAppendIcon?: boolean
 		displayPrependIcon?: boolean
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		customRules?: { type: string, options: any }[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		customWarningRules?: { type: string, options: any }[]
 		disabled?: boolean
 		noIcon?: boolean
@@ -75,8 +75,7 @@
 		persistentHint?: boolean
 	}>(), {
 		modelValue: undefined,
-		label: DATE_PICKER_MESSAGES.LABEL_DEFAULT,
-		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		placeholder: undefined,
 		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: '',
 		isBirthDate: false,
@@ -931,7 +930,7 @@
 				:show-week-number="props.showWeekNumber"
 				:is-birth-date="props.isBirthDate || props.birthDate"
 				:text-field-activator="props.textFieldActivator"
-				:title="props.title || props.placeholder || undefined"
+				:title="props.title"
 				:period="period"
 				:auto-clamp="props.autoClamp"
 				:label="props.label"
@@ -973,9 +972,8 @@
 						:disabled="props.disabled"
 						:disable-click-button="false"
 						:readonly="true"
-						:label="labelWithAsterisk || ''"
+						:label="labelWithAsterisk"
 						:placeholder="props.placeholder"
-						:display-persistent-placeholder="true"
 						:no-icon="props.noIcon"
 						:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 						:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
@@ -987,7 +985,7 @@
 						:display-asterisk="props.displayAsterisk"
 						:is-clearable="!props.readonly"
 						:auto-clamp="props.autoClamp"
-						:title="props.title || props.placeholder || undefined"
+						:title="props.title"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
 						@click="openDatePickerOnClick"

@@ -9,6 +9,7 @@ export { LocalStorageUtility } from './localStorageUtility'
 export { calcHumanFileSize } from './calcHumanFileSize'
 export { convertToUnit } from './convertToUnit'
 export { formatDate } from './formatDate'
+export { formatNir } from './formatNir/formatNir'
 export { parseDate } from './parseDate'
 
 // ===========================

@@ -205,13 +205,22 @@
 		class="v-data-table-header__content d-flex align-center h-100 w-100"
 		:class="alignClass"
 	>
-		<div
-			class="col-title"
-			:class="[textAlignClass, headerClassRaw]"
-			:style="[{ width: '100%' }, headerStyle]"
+		<slot
+			:name="`header.${column.key}`"
+			v-bind="{
+				column,
+				locales,
+				...headerParams,
+			}"
 		>
-			{{ column.title }}
-		</div>
+			<div
+				class="col-title"
+				:class="[textAlignClass, headerClassRaw]"
+				:style="[{ width: '100%' }, headerStyle]"
+			>
+				{{ column.title }}
+			</div>
+		</slot>
 		<div
 			v-if="header!.sortable"
 			class="sort-container d-flex align-center"
@@ -227,7 +236,7 @@
 			<div
 				v-if="sortOrderIndex"
 				class="sort-order-indicator text-primary ml-0 mr-2"
-				:title="`Sort order: ${sortOrderIndex}`"
+				:title="locales.sortOrder(sortOrderIndex)"
 			>
 				{{ sortOrderIndex }}
 			</div>

@@ -164,7 +164,7 @@
 				<DatePicker
 					ref="startDatePickerRef"
 					v-model="startDate"
-					placeholder="Date de début"
+					label="Date de début"
 					:custom-rules="startDateRules"
 					required
 					@update:model-value="validateEndDate"
@@ -177,7 +177,7 @@
 				<DatePicker
 					ref="endDatePickerRef"
 					v-model="endDate"
-					placeholder="Date de fin"
+					label="Date de fin"
 					:custom-rules="endDateRules"
 					required
 					@update:model-value="validateStartDate"
