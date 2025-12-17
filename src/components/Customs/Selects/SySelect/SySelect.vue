@@ -375,6 +375,12 @@
 		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
 	})
 
+	const hasSelectionToClear = computed(() => {
+		return props.multiple
+			? (((selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
+			: selectedItem.value != null
+	})
+
 	const labelWithAsterisk = computed(() => {
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
@@ -853,7 +859,7 @@
 							role="img"
 						/>
 						<button
-							v-if="props.clearable && selectedItemText"
+							v-if="props.clearable && hasSelectionToClear"
 							type="button"
 							class="sy-select__clear-button"
 							:style="{ right: hasError ? '62px' : '42px' }"
