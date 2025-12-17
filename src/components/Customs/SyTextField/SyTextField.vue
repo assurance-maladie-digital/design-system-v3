@@ -178,12 +178,15 @@
 		'append-icon-click',
 	])
 
+	const lastEmittedModelValue = ref(props.modelValue)
+
 	const model = computed({
 		get() {
 			return props.modelValue
 		},
 		set(value) {
 			emit('update:modelValue', value)
+			lastEmittedModelValue.value = value
 		},
 	})
 
@@ -282,7 +285,10 @@
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
 		validateField(model.value ?? null)
-		emit('update:modelValue', model.value)
+		if (model.value !== lastEmittedModelValue.value) {
+			emit('update:modelValue', model.value)
+			lastEmittedModelValue.value = model.value
+		}
 	}
 
 	watch(model, (newValue) => {
