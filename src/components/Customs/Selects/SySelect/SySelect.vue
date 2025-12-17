@@ -1090,6 +1090,8 @@
 }
 
 :deep(.v-field__input input) {
+	position: absolute;
+	z-index: -1;
 	text-overflow: ellipsis;
 }
 
