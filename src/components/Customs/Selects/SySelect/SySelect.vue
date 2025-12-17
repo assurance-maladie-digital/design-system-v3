@@ -763,6 +763,7 @@
 	function initializeActivatorProps(activatorProps: Record<string, any>) {
 		return {
 			...activatorProps,
+			onKeydown: undefined,
 			onClick: undefined,
 			// the ref is needed by Vuetify to position the menu and by us for accessibility
 			ref: (el) => {

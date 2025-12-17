@@ -26,11 +26,13 @@ describe('useSySelectKeyboard', () => {
 			add: vi.fn(),
 			remove: vi.fn(),
 		},
+		setAttribute: vi.fn(),
+		focus: vi.fn(),
 	}
 
 	const mockAllItems = [
-		{ classList: { remove: vi.fn() } },
-		{ classList: { remove: vi.fn() } },
+		{ classList: { remove: vi.fn() }, setAttribute: vi.fn(), focus: vi.fn() },
+		{ classList: { remove: vi.fn() }, setAttribute: vi.fn(), focus: vi.fn() },
 	]
 
 	beforeEach(() => {
