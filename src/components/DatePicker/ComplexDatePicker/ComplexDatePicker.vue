@@ -422,6 +422,28 @@
 			withInternalUpdate(() => {
 				syncTextInputFromSelection()
 			})
+
+			let baseDate: Date | null = null
+			if (Array.isArray(newValue)) {
+				baseDate = (newValue.find(date => date instanceof Date) as Date | null) ?? null
+			}
+			else {
+				baseDate = newValue
+			}
+			if (baseDate) {
+				const monthIndex = baseDate.getMonth()
+				const yearString = baseDate.getFullYear().toString()
+				currentMonth.value = monthIndex.toString()
+				currentMonthName.value = dayjs(baseDate).format('MMMM')
+				currentYear.value = yearString
+				currentYearName.value = yearString
+			}
+			if (isDatePickerVisible.value) {
+				nextTick(() => {
+					customizeMonthButton()
+					markHolidayDays()
+				})
+			}
 		}
 		else {
 			updateModel(null)
@@ -434,6 +456,12 @@
 			currentMonthName.value = dayjs(today).format('MMMM')
 			currentYear.value = today.getFullYear().toString()
 			currentYearName.value = today.getFullYear().toString()
+			if (isDatePickerVisible.value) {
+				nextTick(() => {
+					customizeMonthButton()
+					markHolidayDays()
+				})
+			}
 		}
 	})
 
