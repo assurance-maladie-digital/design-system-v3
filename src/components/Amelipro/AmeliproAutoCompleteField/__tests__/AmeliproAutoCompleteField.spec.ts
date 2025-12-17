@@ -1,4 +1,4 @@
-import { type VueWrapper, shallowMount } from '@vue/test-utils'
+import { shallowMount, type VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproAutoCompleteField from '../AmeliproAutoCompleteField.vue'
 import type { AutoCompleteItem } from '../types'
@@ -10,7 +10,7 @@ import type { ValidateOnType } from '../../types'
 import type { ValidationRule } from '@/utils/rules/types'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproAutoCompleteField> = {
-	ariaRequired: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -123,7 +123,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproAutoCompleteField> 
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproAutoCompleteField> => ({
-	ariaRequired: true,
+	required: true,
 	classes: 'modified-classes',
 	disabled: true,
 	globalMaxWidth: 'modified-global-max-width',
@@ -263,14 +263,14 @@ describe('AmeliproAutoCompleteField', () => {
 				expect(vueWrapper.find('.amelipro-autocomplete__label').attributes('style')).toBe('max-width: modified-label-max-width; min-width: modified-label-min-width;')
 			})
 
-			it('props label & ariaRequired set label content', async () => {
+			it('props label & required set label content', async () => {
 				expect(vueWrapper.find('.amelipro-autocomplete__label').text()).toBe('Required label')
 
-				const { label, ariaRequired } = modifiedPropValues()
+				const { label, required } = modifiedPropValues()
 				await vueWrapper.setProps({ label })
 				expect(vueWrapper.find('.amelipro-autocomplete__label').text()).toBe('Modified label')
 
-				await vueWrapper.setProps({ ariaRequired })
+				await vueWrapper.setProps({ required })
 				expect(vueWrapper.find('.amelipro-autocomplete__label').text()).toBe('Modified label   *   Champ obligatoire')
 			})
 		})

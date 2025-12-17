@@ -890,7 +890,6 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
                       <!---->
                       <input
                         aria-label="Open"
-                        aria-required="false"
                         id="test-id-select"
                         inputmode="none"
                         size="1"

@@ -1,5 +1,5 @@
 import { AmeliproIcon, AmeliproMessage } from '@/components'
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproIllustratedRadioGroup from '../AmeliproIllustratedRadioGroup.vue'
 import type { AmeliproIllustratedRadioGroupItem } from '../types'
@@ -9,7 +9,7 @@ import type { PropType } from 'vue'
 import TestHelper from '@tests/helpers/TestHelper'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproIllustratedRadioGroup> = {
-	ariaRequired: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -72,7 +72,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproIllustratedRadioGro
 
 // Valeurs pour les props "modified"
 const modifiedPropValues = (): ComponentProps<typeof AmeliproIllustratedRadioGroup> => ({
-	ariaRequired: true,
+	required: true,
 	disabled: true,
 	error: true,
 	groupLabel: 'Modified group label',
@@ -139,14 +139,14 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__label').attributes('id')).toBe('modified-unique-id')
 			})
 
-			it('prop ariaRequired & groupLabel sets label content', async () => {
+			it('prop required & groupLabel sets label content', async () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__label').text()).toBe('Required group label')
 
-				const { ariaRequired, groupLabel } = modifiedPropValues()
+				const { required, groupLabel } = modifiedPropValues()
 				await vueWrapper.setProps({ groupLabel })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__label').text()).toBe('Modified group label')
 
-				await vueWrapper.setProps({ ariaRequired })
+				await vueWrapper.setProps({ required })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__label').text()).toBe('Modified group label   *   Champ obligatoire')
 			})
 		})
@@ -164,12 +164,12 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__group').attributes('aria-labelledby')).toBe('modified-unique-id')
 			})
 
-			it('prop ariaRequired sets attribute aria-required', async () => {
-				expect(vueWrapper.find('.amelipro-illustrated-radio-group__group').attributes('aria-required')).toBe('false')
+			it('prop required sets attribute required', async () => {
+				expect(vueWrapper.find('.amelipro-illustrated-radio-group__group').attributes('required')).toBe('false')
 
-				const { ariaRequired } = modifiedPropValues()
-				await vueWrapper.setProps({ ariaRequired })
-				expect(vueWrapper.find('.amelipro-illustrated-radio-group__group').attributes('aria-required')).toBe('true')
+				const { required } = modifiedPropValues()
+				await vueWrapper.setProps({ required })
+				expect(vueWrapper.find('.amelipro-illustrated-radio-group__group').attributes('required')).toBe('true')
 			})
 		})
 
@@ -257,11 +257,11 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('aria-checked')).toBe('true')
 			})
 
-			it('props ariaRequired, error & uniqueId set attribute aria-describedby', async () => {
+			it('props required, error & uniqueId set attribute aria-describedby', async () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('aria-describedby')).toBeUndefined()
 
-				const { ariaRequired, error, uniqueId } = modifiedPropValues()
-				await vueWrapper.setProps({ ariaRequired, error })
+				const { required, error, uniqueId } = modifiedPropValues()
+				await vueWrapper.setProps({ required, error })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('aria-describedby')).toBe('required-unique-id-error')
 
 				await vueWrapper.setProps({ uniqueId })
@@ -303,11 +303,11 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('name')).toBe('modified-unique-id-name')
 			})
 
-			it('prop ariaRequired sets attribute required', async () => {
+			it('prop required sets attribute required', async () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('required')).toBeUndefined()
 
-				const { ariaRequired } = modifiedPropValues()
-				await vueWrapper.setProps({ ariaRequired })
+				const { required } = modifiedPropValues()
+				await vueWrapper.setProps({ required })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('required')).toBe('')
 			})
 
@@ -438,11 +438,11 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				vueWrapper = shallowMount(AmeliproIllustratedRadioGroup, { props: requiredPropValues() })
 			})
 
-			it('props ariaRequired, error & modelValue set AmeliproMessage visibility', async () => {
+			it('props required, error & modelValue set AmeliproMessage visibility', async () => {
 				expect(vueWrapper.findComponent(AmeliproMessage).exists()).toBe(false)
 
-				const { ariaRequired, error, modelValue } = modifiedPropValues()
-				await vueWrapper.setProps({ ariaRequired, error })
+				const { required, error, modelValue } = modifiedPropValues()
+				await vueWrapper.setProps({ required, error })
 				expect(vueWrapper.findComponent(AmeliproMessage).exists()).toBe(true)
 
 				await vueWrapper.setProps({ modelValue, error: false })
@@ -450,8 +450,8 @@ describe('AmeliproIllustratedRadioGroup', () => {
 			})
 
 			it('prop uniqueId sets prop uniqueId', async () => {
-				const { ariaRequired, error, uniqueId } = modifiedPropValues()
-				await vueWrapper.setProps({ ariaRequired, error })
+				const { required, error, uniqueId } = modifiedPropValues()
+				await vueWrapper.setProps({ required, error })
 
 				expect(vueWrapper.findComponent(AmeliproMessage).props('uniqueId')).toBe(`${testHelper.default('uniqueId')}-error`)
 

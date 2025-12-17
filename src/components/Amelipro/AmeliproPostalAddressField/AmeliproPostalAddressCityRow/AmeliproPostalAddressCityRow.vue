@@ -13,7 +13,7 @@
 	import { useDisplay } from 'vuetify'
 
 	const props = defineProps({
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -158,7 +158,7 @@
 			...props[ruleKey],
 		]
 
-		if (props.ariaRequired) {
+		if (props.required) {
 			rules.push(isRequired)
 		}
 
@@ -316,7 +316,7 @@
 					v-model="postalCodeVModel"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
-					:aria-required="ariaRequired"
+					:required="required"
 					autocomplete="address-level2"
 					:disabled="disabled"
 					hide-error-message
@@ -342,7 +342,7 @@
 					:for="`${uniqueId}-postal-code`"
 				>
 					Code postal&nbsp;:&nbsp;
-					<span v-if="ariaRequired">
+					<span v-if="required">
 						<span aria-hidden="true">
 							*
 						</span>
@@ -358,7 +358,7 @@
 					v-model="postalCodeVModel"
 					:aria-describedby="displayPostalCodeError ? `${uniqueId}-postal-code-error` : undefined"
 					:aria-invalid="displayPostalCodeError ? true : undefined"
-					:aria-required="ariaRequired"
+					:required="required"
 					autocomplete="postal-code"
 					:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 					class="pt-0"
@@ -397,7 +397,7 @@
 					v-model="cityVModel"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
-					:aria-required="ariaRequired"
+					:required="required"
 					autocomplete="address-level2"
 					:disabled="disabled"
 					hide-error-message
@@ -424,7 +424,7 @@
 					:for="`${uniqueId}-city`"
 				>
 					Commune&nbsp;:&nbsp;
-					<span v-if="ariaRequired">
+					<span v-if="required">
 						<span aria-hidden="true">
 							*
 						</span>
@@ -439,7 +439,7 @@
 					v-model="cityVModel"
 					:aria-describedby="displayCityError ? `${uniqueId}-city-error` : undefined"
 					:aria-invalid="displayCityError ? true : undefined"
-					:aria-required="ariaRequired"
+					:required="required"
 					autocomplete="address-level2"
 					:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 					class="pt-0"

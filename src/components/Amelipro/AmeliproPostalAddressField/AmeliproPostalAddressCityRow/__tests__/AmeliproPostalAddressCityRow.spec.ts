@@ -1,12 +1,12 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import AmeliproPostalAddressCityRow from '../AmeliproPostalAddressCityRow.vue'
 
 describe('AmeliproPostalAddressCityRow', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPostalAddressCityRow, {
 			props: {
-				ariaRequired: true,
+				required: true,
 				autoCompleteList: [
 					{
 						city: 'Nantes',

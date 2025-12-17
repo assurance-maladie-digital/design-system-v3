@@ -67,6 +67,7 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with all 
     modelvalue="modified-model-value"
     placeholder="Modified placeholder"
     readonly=""
+    required="true"
     role="combobox"
     rules="() => "modified-rules",(value) => {
     let valid;
@@ -131,6 +132,7 @@ exports[`AmeliproAutoCompleteField > Snapshots > renders the component with only
     id="required-unique-id"
     items=""
     menu-props="[object Object]"
+    required="false"
     role="combobox"
     rules=""
     variant="outlined"

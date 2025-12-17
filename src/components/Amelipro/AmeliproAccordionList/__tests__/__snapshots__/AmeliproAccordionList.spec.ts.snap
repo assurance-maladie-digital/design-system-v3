@@ -175,7 +175,6 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
                     </div>
                     <input
                       aria-label="Open"
-                      aria-required="false"
                       id="amelipro-accordion-result-unique-id-pagination-select"
                       inputmode="none"
                       size="1"
