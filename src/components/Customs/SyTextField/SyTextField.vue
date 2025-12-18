@@ -732,7 +732,9 @@
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiClose"
 						variant="text"
-						@click="clearField"
+						@click.stop="clearField"
+						@keydown.enter.stop
+						@keydown.space.stop
 					/>
 					<SyIcon
 						v-if="validationIcon && !props.appendInnerIcon"
