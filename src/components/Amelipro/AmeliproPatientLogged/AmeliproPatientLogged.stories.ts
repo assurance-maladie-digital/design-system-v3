@@ -5,7 +5,8 @@ import { ref, watch } from 'vue'
 
 const meta = {
 	argTypes: {
-		'btnMoreInfo': { description: 'Affiche le bouton plus d\'informations' },
+        'btnMoreInfo': {description: 'Affiche le bouton plus d\'informations'},
+        'isRestrictedData': {description: 'affiche la liste des bénéficiaires sans séléction possible'},
 		'click': { description: 'Evénement émis au click sur le bouton changer de patient' },
 		'click:info': { description: 'Evénement émis au click sur le bouton informations' },
 		'click:more-info': { description: 'Evénement émis au click sur le bouton plus d\'informations' },
@@ -97,7 +98,8 @@ type Story = StoryObj<typeof AmeliproPatientLogged>
 export const Default: Story = {
 	args: {
 		'btnMoreInfo': true,
-		'doctorTooltipRed': true,
+        'doctorTooltipRed': true,
+        'isRestrictedData': false,
 		'patientInfos': {
 			ame: 'oui',
 			birthdate: '09/11/1992 (32 ans)',
