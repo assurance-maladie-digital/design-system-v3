@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproTileBtn from './AmeliproTileBtn.vue'
-import AmeliproTooltips from "../AmeliproTooltips/AmeliproTooltips.vue";
+import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta = {
 	argTypes: {
@@ -175,7 +175,7 @@ export const tooltip: Story = {
     name: 'Avec tooltip',
     args: {
         imgSrc: '/amelipro/img/tile-example.svg',
-        label: 'Label',
+        label: 'Label du bouton',
         tileMinHeight: '100%',
         uniqueId: 'tile-btn-tooltip',
     },
