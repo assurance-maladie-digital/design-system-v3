@@ -18,10 +18,25 @@ export function isNotAfterTodayFn(
 		if (!value) {
 			return true
 		}
+		const today = formatDate(dayjs())
 
-		return (
-			(typeof value === 'string' && !isDateAfter(formatDate(dayjs()), value)) || ruleMessage(errorMessages, 'default')
-		)
+		if (value instanceof Date) {
+			const formattedValue = formatDate(dayjs(value))
+
+			return (
+				!isDateAfter(today, formattedValue)
+				|| ruleMessage(errorMessages, 'default')
+			)
+		}
+
+		if (typeof value === 'string') {
+			return (
+				!isDateAfter(today, value)
+				|| ruleMessage(errorMessages, 'default')
+			)
+		}
+
+		return ruleMessage(errorMessages, 'default')
 	}
 }
 

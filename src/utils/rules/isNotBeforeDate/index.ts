@@ -3,6 +3,7 @@ import { defaultErrorMessages } from './locales'
 import { isDateBefore } from '../../functions/validation/isDateBefore'
 import { formatDate } from '@/utils/formatDate'
 import { parseDate } from '@/utils/parseDate'
+import dayjs from 'dayjs'
 import { ruleMessage } from '@/utils/ruleMessage'
 
 /** Check that the value is not after the specified date (DD/MM/YYYY format) */
@@ -15,11 +16,20 @@ export function isNotBeforeDateFn(
 			return true
 		}
 
+		const formattedValue = formatDate(parseDate(date))
+
+		if (value instanceof Date) {
+			const formattedInput = formatDate(dayjs(value))
+
+			return (
+				!isDateBefore(date, formattedInput)
+				|| ruleMessage(errorMessages, 'default', [formattedValue])
+			)
+		}
+
 		if (typeof value !== 'string') {
 			return ruleMessage(errorMessages, 'default')
 		}
-
-		const formattedValue = formatDate(parseDate(date))
 
 		return (
 			!isDateBefore(date, value)

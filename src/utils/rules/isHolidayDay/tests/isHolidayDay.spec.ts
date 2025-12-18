@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { isHolidayDay } from '../index'
+import { isHolidayDay, isHolidayDayFn } from '../index'
 
 // Mock du composable useHolidayDay
 // => du coup on ne teste plus la vrai fonction isHolidayDay mais son mock !
@@ -41,5 +41,17 @@ describe('isHolidayDay', () => {
 		expect(isHolidayDay(new Date('2025-01-01'))).toBe('La date ne peut pas être un jour férié.')
 		expect(isHolidayDay(new Date('2025-07-14'))).toBe('La date ne peut pas être un jour férié.')
 		expect(isHolidayDay(new Date('2025-12-25'))).toBe('La date ne peut pas être un jour férié.')
+	})
+
+	it('devrait retourner un message d\'erreur si le type de valeur n\'est pas supporté', () => {
+		expect(isHolidayDay(123)).toBe('La date ne peut pas être un jour férié.')
+	})
+
+	it('devrait permettre de définir un message d\'erreur personnalisé via isHolidayDayFn', () => {
+		const rule = isHolidayDayFn({
+			default: 'Veuillez sélectionner une journée non fériée.',
+		})
+
+		expect(rule('01/01/2025')).toBe('Veuillez sélectionner une journée non fériée.')
 	})
 })

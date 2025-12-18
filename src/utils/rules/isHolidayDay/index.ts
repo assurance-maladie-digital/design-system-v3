@@ -26,7 +26,11 @@ export function isHolidayDayFn(
 		const { isHolidayDay } = useHolidayDay()
 
 		// On retourne true si ce n'est PAS un jour férié, sinon on retourne le message d'erreur
-		return ((typeof value === 'string' || value instanceof Date) && !isHolidayDay(value)) || ruleMessage(errorMessages, 'default')
+		if (typeof value === 'string' || value instanceof Date) {
+			return (!isHolidayDay(value)) || ruleMessage(errorMessages, 'default')
+		}
+
+		return ruleMessage(errorMessages, 'default')
 	}
 }
 

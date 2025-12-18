@@ -88,7 +88,7 @@ isNotAfterTodayFn(
 	errorMessages?: {
 		default: string;
 	}
-): (value: string) => true | string;
+): (value: string | Date) => true | string;
 
 `} />
 
@@ -99,7 +99,7 @@ isNotAfterTodayFn(
 
 ### Valeurs de retour
 
-Retourne une fonction qui prend en paramètre une chaîne de caractères représentant une date et retourne `true` si la date n'est pas postérieure à la date du jour, sinon retourne un message d'erreur.
+Retourne une fonction qui prend en paramètre une chaîne de caractères ou un objet `Date` représentant une date et retourne `true` si la date n'est pas postérieure à la date du jour, sinon retourne un message d'erreur.
 
 ## Exemples
 

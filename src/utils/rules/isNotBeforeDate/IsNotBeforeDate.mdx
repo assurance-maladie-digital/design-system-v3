@@ -72,7 +72,7 @@ isNotBeforeDateFn(
 	errorMessages?: {
 		default?: (date: string) => string;
 	}
-): (value: string) => true | string;
+): (value: string | Date) => true | string;
 
 `} />
 
@@ -84,7 +84,7 @@ isNotBeforeDateFn(
 
 ### Valeurs de retour
 
-Retourne une fonction de validation utilisable dans un champs de formulaire Vuetify qui permet de vérifier si la date passée en paramètre n'est pas antérieure à la date de référence.
+Retourne une fonction de validation utilisable dans un champs de formulaire Vuetify qui accepte une chaîne de caractères ou un objet `Date` représentant une date et permet de vérifier que cette date n'est pas antérieure à la date de référence.
 
 ## Exemples
 

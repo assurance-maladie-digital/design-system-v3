@@ -1,5 +1,6 @@
 import { formatDate } from '@/utils/formatDate'
 import { parseDate } from '@/utils/parseDate'
+import dayjs from 'dayjs'
 import { ruleMessage } from '@/utils/ruleMessage'
 import { isDateAfter } from '../../functions/validation/isDateAfter'
 import type { ValidationResult, ValidationRule, Value } from '../types'
@@ -15,11 +16,20 @@ export function isNotAfterDateFn(
 			return true
 		}
 
+		const formattedValue = formatDate(parseDate(date))
+
+		if (value instanceof Date) {
+			const formattedInput = formatDate(dayjs(value))
+
+			return (
+				!isDateAfter(date, formattedInput)
+				|| ruleMessage(errorMessages, 'default', [formattedValue])
+			)
+		}
+
 		if (typeof value !== 'string') {
 			return ruleMessage(errorMessages, 'default')
 		}
-
-		const formattedValue = formatDate(parseDate(date))
 
 		return (
 			!isDateAfter(date, value)

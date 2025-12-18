@@ -53,10 +53,20 @@ const customRule = isHolidayDayFn({
 
 ## Fonctionnement
 
-Cette règle utilise le composable `useHolidayDay` pour déterminer si une date est un jour férié en France. La règle retourne :
+Cette règle utilise le composable `useHolidayDay` pour déterminer si une date est un jour férié en France. La valeur peut être une chaîne de caractères (format `DD/MM/YYYY`) ou un objet `Date`. La règle retourne :
 
 - `true` si la valeur est vide ou si la date n'est pas un jour férié
-- Un message d'erreur si la date est un jour férié
+- Un message d'erreur si la date est un jour férié ou si le type de valeur n'est pas supporté
+
+## API
+
+```ts
+isHolidayDayFn(
+  errorMessages?: {
+    default: string;
+  }
+): (value: string | Date) => true | string;
+```
 
 ## Jours fériés pris en compte
 
