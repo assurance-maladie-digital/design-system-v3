@@ -1,30 +1,39 @@
 <script setup lang="ts">
-	defineOptions({
-		name: 'DeclarationAccessibilityPage',
-	})
+	import { computed } from 'vue'
 
 	interface VerifiedPage {
 		name: string
 		url?: string
 	}
 
-	withDefaults(defineProps<{
+	interface DefenderContact {
+		name: string
+		address: string
+		postalCode: string
+	}
+
+	type ConformityLevel = 'non' | 'partiellement' | 'totalement' 
+
+	type EvaluationMethod = 'auto-evaluation' | 'audit-interne' | 'audit-externe'
+
+	interface DeclarationAccessibilityPageProps {
 		entityName: string
 		schemaUrl?: string
 		actionsRealisedUrl?: string
 		planActionsUrl?: string
 		siteName: string
 		siteUrl: string
-		conformityLevel: 'non' | 'partiellement' | 'totalement'
+		conformityLevel: ConformityLevel
+		rgaaVersion?: string
 		auditEntity?: string
+		auditDate?: string
+		evaluationMethod?: EvaluationMethod
 		rgaaCriteriaRespectedPercent?: number | null
 		siteConformityPercent?: number | null
 		auditGridUrl?: string
 		contactEmail: string
 		contactPhone?: string
-		defenderName?: string
-		defenderAddress?: string
-		defenderPostalCode?: string
+		defender?: DefenderContact
 		nonConformities?: string[]
 		exemptions?: string[]
 		nonObligatoryContents?: string[]
@@ -34,33 +43,93 @@
 		testEnvironments?: string[]
 		accessibilityTools?: string[]
 		verifiedPages?: VerifiedPage[]
-	}>(), {
-		schemaUrl: '',
-		actionsRealisedUrl: '',
-		planActionsUrl: '',
-		auditEntity: '',
+	}
+
+	const props = withDefaults(defineProps<DeclarationAccessibilityPageProps>(), {
+		rgaaVersion: '4',
+		evaluationMethod: 'auto-evaluation',
 		rgaaCriteriaRespectedPercent: null,
 		siteConformityPercent: null,
-		auditGridUrl: '',
-		contactPhone: '',
-		defenderName: 'Défenseur des droits',
-		defenderAddress: 'Libre réponse 71120',
-		defenderPostalCode: '75342 Paris CEDEX 07',
+		defender: () => ({
+			name: 'Défenseur des droits',
+			address: 'Libre réponse 71120',
+			postalCode: '75342 Paris CEDEX 07',
+		}),
 		nonConformities: () => [],
 		exemptions: () => [],
 		nonObligatoryContents: () => [],
-		declarationDate: '',
-		updateDate: '',
 		technologies: () => [],
 		testEnvironments: () => [],
 		accessibilityTools: () => [],
 		verifiedPages: () => [],
 	})
+
+	const hasItems = <T>(items?: T[] | null): items is T[] =>
+		Array.isArray(items) && items.length > 0
+
+	const formatDate = (date?: string) => {
+		if (!date) {
+			return ''
+		}
+
+		const parsedDate = new Date(date)
+		if (Number.isNaN(parsedDate.getTime())) {
+			return date
+		}
+
+		return new Intl.DateTimeFormat('fr-FR').format(parsedDate)
+	}
+
+	const conformityLabel = computed(() => {
+		if (props.conformityLevel === 'totalement') {
+			return 'totalement conforme'
+		}
+
+		if (props.conformityLevel === 'partiellement') {
+			return 'partiellement conforme'
+		}
+
+		return 'non conforme'
+	})
+
+	const evaluationMethodLabel = computed(() => {
+		if (props.evaluationMethod === 'audit-interne') {
+			return "un audit interne"
+		}
+
+		if (props.evaluationMethod === 'audit-externe') {
+			return "un audit externe"
+		}
+
+		return "une auto-évaluation"
+	})
+
+	const phoneHref = computed(() => {
+		if (!props.contactPhone) {
+			return undefined
+		}
+
+		const normalized = props.contactPhone.replace(/\s+/g, '')
+		if (!normalized) {
+			return undefined
+		}
+
+		return `tel:${normalized}`
+	})
+
+	const hasTestResults = computed(
+		() =>
+			!!props.auditEntity ||
+			props.rgaaCriteriaRespectedPercent !== null ||
+			props.siteConformityPercent !== null ||
+			!!props.auditGridUrl,
+	)
 </script>
 
 <template>
 	<div class="accessibility-statement">
 		<section class="engagement">
+			<h2>Engagement d'accessibilité</h2>
 			<p>
 				<strong>{{ entityName }}</strong> s'engage à rendre ses sites internet, intranet, extranet et ses progiciels accessibles (et ses applications mobiles et mobilier urbain numérique) conformément à l'article 47 de la loi n°2005-102 du 11 février 2005.
 			</p>
@@ -69,54 +138,59 @@
 
 			<ul>
 				<li v-if="schemaUrl">
-					Schéma pluriannuel de mise en accessibilité 2022-2024 <a :href="schemaUrl">[url]</a> ;
+					<a :href="schemaUrl">Schéma pluriannuel de mise en accessibilité 2022-2024</a> ;
 				</li>
 				<li v-if="actionsRealisedUrl">
-					Actions réalisées en 2020-2021 <a :href="actionsRealisedUrl">[url]</a> ;
+					<a :href="actionsRealisedUrl">Actions réalisées en 2020-2021</a> ;
 				</li>
 				<li v-if="planActionsUrl">
-					Plan d'actions 2022-2024 <a :href="planActionsUrl">[url]</a>.
+					<a :href="planActionsUrl">Plan d'actions 2022-2024</a>.
 				</li>
 			</ul>
 
-			<p>Cette déclaration d'accessibilité s'applique à <a :href="siteUrl">{{ siteUrl }}</a>.</p>
+			<p>Cette déclaration d'accessibilité s'applique à <a :href="siteUrl" :title="siteUrl">{{ siteName }}</a>.</p>
 		</section>
 
 		<section class="conformity">
 			<h2>État de conformité</h2>
 			<p>
-				<a :href="siteUrl">{{ siteName }}</a> est <strong>{{ conformityLevel }}</strong> conforme avec le référentiel général d'amélioration de l'accessibilité (RGAA), version 4 en raison des non-conformités et des dérogations énumérées ci-dessous.
+				<a :href="siteUrl">{{ siteName }}</a> est <strong>{{ conformityLabel }}</strong> au référentiel général d'amélioration de l'accessibilité (RGAA), version {{ rgaaVersion }}, en raison des non-conformités et des dérogations énumérées ci-dessous.
 			</p>
 		</section>
 
 		<section
-			v-if="auditEntity || rgaaCriteriaRespectedPercent !== null"
+			v-if="hasTestResults"
 			class="test-results"
 		>
 			<h2>Résultats des tests</h2>
-			<p>
-				L'audit de conformité réalisé par {{ auditEntity }} révèle que :
+			<p v-if="auditEntity">
+				L'audit de conformité réalisé par {{ auditEntity }}
+				<span v-if="auditDate"> le {{ formatDate(auditDate) }}</span>
+				révèle que :
+			</p>
+			<p v-else>
+				Les tests de conformité réalisés conformément au RGAA version {{ rgaaVersion }} révèlent que :
 			</p>
 			<ul>
 				<li v-if="rgaaCriteriaRespectedPercent !== null">
-					{{ rgaaCriteriaRespectedPercent }}% des critères du RGAA version 4 sont respectés ;
+					{{ rgaaCriteriaRespectedPercent }}% des critères du RGAA version {{ rgaaVersion }} sont respectés ;
 				</li>
 				<li v-if="siteConformityPercent !== null">
 					Le taux moyen de conformité du site s'élève à {{ siteConformityPercent }}% ;
 				</li>
 				<li v-if="auditGridUrl">
-					Accès à la grille d'audit RGAA <a :href="auditGridUrl">[url]</a> pour télécharger la grille d'audit.
+					<a :href="auditGridUrl">Accéder à la grille d'audit RGAA</a> pour télécharger la grille d'audit.
 				</li>
 			</ul>
 		</section>
 
 		<section class="non-accessible-content">
-			<h2 v-if="nonConformities && nonConformities.length > 0">
+			<h2 v-if="hasItems(nonConformities)">
 				Contenus non accessibles
 			</h2>
 
 			<div
-				v-if="nonConformities && nonConformities.length > 0"
+				v-if="hasItems(nonConformities)"
 				class="non-conformities"
 			>
 				<h3>Non-conformités</h3>
@@ -131,7 +205,7 @@
 			</div>
 
 			<div
-				v-if="exemptions && exemptions.length > 0"
+				v-if="hasItems(exemptions)"
 				class="exemptions"
 			>
 				<h3>Dérogations pour charge disproportionnée</h3>
@@ -146,7 +220,7 @@
 			</div>
 
 			<div
-				v-if="nonObligatoryContents && nonObligatoryContents.length > 0"
+				v-if="hasItems(nonObligatoryContents)"
 				class="non-obligatory-contents"
 			>
 				<h3>Contenus non soumis à l'obligation d'accessibilité</h3>
@@ -162,18 +236,23 @@
 		</section>
 
 		<section
-			v-if="declarationDate || technologies.length > 0 || testEnvironments.length > 0 || accessibilityTools.length > 0 || verifiedPages.length > 0"
+			v-if="declarationDate || hasItems(technologies) || hasItems(testEnvironments) || hasItems(accessibilityTools) || hasItems(verifiedPages)"
 			class="declaration-establishment"
 		>
 			<h2>Établissement de cette déclaration d'accessibilité</h2>
 
 			<p v-if="declarationDate || updateDate">
-				Cette déclaration a été établie le {{ declarationDate }}.
-				<span v-if="updateDate"> Elle a été mise à jour le {{ updateDate }}.</span>
+				<span v-if="declarationDate">
+					Cette déclaration a été établie le {{ formatDate(declarationDate) }} à partir de {{ evaluationMethodLabel }} réalisée conformément au référentiel RGAA version {{ rgaaVersion }}.
+				</span>
+				<span v-else>
+					Cette déclaration a été établie à partir de {{ evaluationMethodLabel }} réalisée conformément au référentiel RGAA version {{ rgaaVersion }}.
+				</span>
+				<span v-if="updateDate"> Elle a été mise à jour le {{ formatDate(updateDate) }}.</span>
 			</p>
 
 			<div
-				v-if="technologies && technologies.length > 0"
+				v-if="hasItems(technologies)"
 				class="technologies"
 			>
 				<h3>Technologies utilisées pour la réalisation du site</h3>
@@ -188,7 +267,7 @@
 			</div>
 
 			<div
-				v-if="testEnvironments && testEnvironments.length > 0"
+				v-if="hasItems(testEnvironments)"
 				class="test-environments"
 			>
 				<h3>Environnement de test</h3>
@@ -204,7 +283,7 @@
 			</div>
 
 			<div
-				v-if="accessibilityTools && accessibilityTools.length > 0"
+				v-if="hasItems(accessibilityTools)"
 				class="accessibility-tools"
 			>
 				<h3>Outils pour évaluer l'accessibilité</h3>
@@ -219,7 +298,7 @@
 			</div>
 
 			<div
-				v-if="verifiedPages && verifiedPages.length > 0"
+				v-if="hasItems(verifiedPages)"
 				class="verified-pages"
 			>
 				<h3>Pages du site ayant fait l'objet de la vérification de conformité</h3>
@@ -247,7 +326,7 @@
 					Envoyer un message à <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
 				</li>
 				<li v-if="contactPhone">
-					Contacter par téléphone : <a :href="`tel:${contactPhone}`">{{ contactPhone }}</a>
+					Contacter par téléphone : <a :href="phoneHref">{{ contactPhone }}</a>
 				</li>
 			</ul>
 		</section>
@@ -268,9 +347,9 @@
 				<li>
 					Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) :
 					<address>
-						{{ defenderName }}<br>
-						{{ defenderAddress }}<br>
-						{{ defenderPostalCode }}
+						{{ defender.name }}<br>
+						{{ defender.address }}<br>
+						{{ defender.postalCode }}
 					</address>
 				</li>
 			</ul>
@@ -312,7 +391,7 @@
 }
 
 .accessibility-statement a {
-	color: var(--v-primary);
+	color: rgb(var(--v-theme-primary));
 	text-decoration: underline;
 }
 
@@ -328,14 +407,5 @@
 	margin-top: 1.25rem;
 	margin-bottom: 0.75rem;
 	font-weight: 500;
-}
-
-a {
-	color: rgb(var(--v-theme-primary)) !important;
-	text-decoration: none !important;
-}
-
-a:hover {
-	text-decoration: none;
 }
 </style>
