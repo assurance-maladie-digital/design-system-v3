@@ -21,7 +21,7 @@ describe('isDateValid', () => {
 	it('returns true when the value is a valid Date object', () => {
 		expect(isDateValid(validDateObject)).toBe(true)
 	})
-	
+
 	it('returns an error when the value type is not supported', () => {
 		expect(typeof isDateValid(123 as unknown as string)).toBe('string')
 	})
