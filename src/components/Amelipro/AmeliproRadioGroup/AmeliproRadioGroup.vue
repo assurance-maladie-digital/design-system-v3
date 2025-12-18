@@ -257,39 +257,37 @@
 @use '@/assets/amelipro/apTokens';
 
 :global(.theme-cnam) {
-  --ap-blue-darken-1: #0c419a;
-  --ap-blue-lighten-3: #e2efff;
-  --ap-grey-darken-1: #444;
-  --ap-grey-lighten-2: #ddd;
-  --ap-grey: #999;
-  --ap-red: #c62828;
-  --ap-red-lighten4: #ffebee;
-  --ap-white: #fff;
-
-  --font-size-sm: 0.875rem;
-  --filter-padding-y: 0.25rem;
-  --filter-padding-x: 0.75rem;
-  --filter-radius: 20px;
-  --filter-font-weight: 600;
-  --label-font-weight: 600;
+	--ap-blue-darken-1: #0c419a;
+	--ap-blue-lighten-3: #e2efff;
+	--ap-grey-darken-1: #444;
+	--ap-grey-lighten-2: #ddd;
+	--ap-grey: #999;
+	--ap-red: #c62828;
+	--ap-red-lighten4: #ffebee;
+	--ap-white: #fff;
+	--font-size-sm: 0.875rem;
+	--filter-padding-y: 0.25rem;
+	--filter-padding-x: 0.75rem;
+	--filter-radius: 20px;
+	--filter-font-weight: 600;
+	--label-font-weight: 600;
 }
 
 :global(.theme-ap) {
-  --ap-blue-darken-1: #0053b3;
-  --ap-blue-lighten-3: #e2efff;
-  --ap-grey-darken-1: #1a1b1b;
-  --ap-grey-lighten-2: #ddd;
-  --ap-grey: #999;
-  --ap-red: #c62828;
-  --ap-red-lighten4: #ffebee;
-  --ap-white: #fff;
-
-  --font-size-sm: 0.875rem;
-  --filter-padding-y: 0.25rem;
-  --filter-padding-x: 0.75rem;
-  --filter-radius: 20px;
-  --filter-font-weight: 600;
-  --label-font-weight: 600;
+	--ap-blue-darken-1: #0053b3;
+	--ap-blue-lighten-3: #e2efff;
+	--ap-grey-darken-1: #1a1b1b;
+	--ap-grey-lighten-2: #ddd;
+	--ap-grey: #999;
+	--ap-red: #c62828;
+	--ap-red-lighten4: #ffebee;
+	--ap-white: #fff;
+	--font-size-sm: 0.875rem;
+	--filter-padding-y: 0.25rem;
+	--filter-padding-x: 0.75rem;
+	--filter-radius: 20px;
+	--filter-font-weight: 600;
+	--label-font-weight: 600;
 }
 
 .margin-label {
