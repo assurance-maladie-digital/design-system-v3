@@ -24,17 +24,19 @@ Il permet de choisir **une seule valeur** parmi une liste d’options.
 		},
 	},
 	argTypes: {
-		modelValue: { control: false },
-		label: { control: 'text', description: 'Label du groupe' },
-		options: { control: 'object', description: 'Liste des options du radio-group' },
-		disabled: { control: 'boolean', description: 'Désactive le groupe' },
-		readonly: { control: 'boolean', description: 'Lecture seule' },
-		required: { control: 'boolean', description: 'Indique que la sélection est obligatoire' },
-		color: {
+		'modelValue': { control: false },
+		'onUpdate:modelValue': { action: 'update:modelValue' },
+		'onChange': { action: 'change' },
+		'label': { control: 'text', description: 'Label du groupe' },
+		'options': { control: 'object', description: 'Liste des options du radio-group' },
+		'disabled': { control: 'boolean', description: 'Désactive le groupe' },
+		'readonly': { control: 'boolean', description: 'Lecture seule' },
+		'required': { control: 'boolean', description: 'Indique que la sélection est obligatoire' },
+		'color': {
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 		},
-		density: {
+		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 		},
