@@ -60,6 +60,7 @@ export { default as SelectBtnField } from './Customs/Selects/SelectBtnField/Sele
 export { default as SyBtnSelect } from './Customs/Selects/SyBtnSelect/SyBtnSelect.vue'
 export { default as SyCheckbox } from './Customs/SyCheckbox/SyCheckbox.vue'
 export { default as SyInputSelect } from './Customs/Selects/SyInputSelect/SyInputSelect.vue'
+export { default as SyAutocomplete } from './Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 export { default as SySelect } from './Customs/Selects/SySelect/SySelect.vue'
 export { default as SyTextArea } from './SyTextArea/SyTextArea.vue'
 export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
