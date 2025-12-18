@@ -31,7 +31,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	 * @param index Index de l'élément à activer
 	 * @param options Options supplémentaires
 	 */
-	const setActiveDescendant = (index: number, options: { scrollIntoView?: boolean } = { scrollIntoView: true }) => {
+	const setActiveDescendant = (index: number) => {
 		// Vérifier si l'index est valide
 		if (index >= 0 && index < formattedItems.value.length) {
 			// Mettre à jour l'ID pour ARIA
@@ -43,14 +43,6 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 			nextTick(() => {
 				const element = document.getElementById(`option-${index}`)
 				if (element) {
-					// Faire défiler l'élément en vue si demandé
-					if (options.scrollIntoView) {
-						element.scrollIntoView({ block: 'nearest' })
-					}
-
-					// Appliquer la classe de focus visuel
-					element.classList.add('keyboard-focused')
-
 					// Supprimer le focus visuel des autres éléments
 					const allItems = document.querySelectorAll('.v-list-item')
 					allItems.forEach((item) => {
@@ -58,6 +50,11 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 							item.classList.remove('keyboard-focused')
 						}
 					})
+
+					element.setAttribute('tabindex', '0')
+					element.focus()
+					element.classList.add('keyboard-focused')
+					element.scrollIntoView({ block: 'nearest' })
 				}
 			})
 		}
@@ -78,6 +75,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		nextTick(() => {
 			const allItems = document.querySelectorAll('.v-list-item')
 			allItems.forEach((item) => {
+				item.setAttribute('tabindex', '-1')
 				item.classList.remove('keyboard-focused')
 			})
 		})
