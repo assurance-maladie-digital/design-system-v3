@@ -12,7 +12,7 @@
 		postalCode: string
 	}
 
-	type ConformityLevel = 'non' | 'partiellement' | 'totalement' 
+	type ConformityLevel = 'non' | 'partiellement' | 'totalement'
 
 	type EvaluationMethod = 'auto-evaluation' | 'audit-interne' | 'audit-externe'
 
@@ -94,14 +94,14 @@
 
 	const evaluationMethodLabel = computed(() => {
 		if (props.evaluationMethod === 'audit-interne') {
-			return "un audit interne"
+			return 'un audit interne'
 		}
 
 		if (props.evaluationMethod === 'audit-externe') {
-			return "un audit externe"
+			return 'un audit externe'
 		}
 
-		return "une auto-évaluation"
+		return 'une auto-évaluation'
 	})
 
 	const phoneHref = computed(() => {
@@ -119,10 +119,10 @@
 
 	const hasTestResults = computed(
 		() =>
-			!!props.auditEntity ||
-			props.rgaaCriteriaRespectedPercent !== null ||
-			props.siteConformityPercent !== null ||
-			!!props.auditGridUrl,
+			!!props.auditEntity
+			|| props.rgaaCriteriaRespectedPercent !== null
+			|| props.siteConformityPercent !== null
+			|| !!props.auditGridUrl,
 	)
 </script>
 
@@ -148,7 +148,12 @@
 				</li>
 			</ul>
 
-			<p>Cette déclaration d'accessibilité s'applique à <a :href="siteUrl" :title="siteUrl">{{ siteName }}</a>.</p>
+			<p>
+				Cette déclaration d'accessibilité s'applique à <a
+					:href="siteUrl"
+					:title="siteUrl"
+				>{{ siteName }}</a>.
+			</p>
 		</section>
 
 		<section class="conformity">
