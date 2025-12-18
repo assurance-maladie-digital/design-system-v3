@@ -31,6 +31,8 @@
 			showSuccessMessages?: boolean
 			isValidateOnBlur?: boolean
 			disableErrorHandling?: boolean
+			fullHorizontal?: boolean
+			horizontal?: boolean
 		}>(),
 		{
 			modelValue: null,
@@ -57,6 +59,9 @@
 			showSuccessMessages: true,
 			isValidateOnBlur: false,
 			disableErrorHandling: false,
+			fullHorizontal: false,
+			horizontal: false,
+
 		},
 	)
 
@@ -232,62 +237,99 @@
 </script>
 
 <template>
-	<v-radio-group
-		:id="props.id"
-		v-model="model"
-		:class="{
-			'warning-field': hasWarning && !hasError,
-			'success-field': hasSuccess && !hasError && !hasWarning,
-			'error-field': hasError,
+	<fieldset
+		class="radio-group-wrapper"
+		:class="{ 'radio-group--horizontal': props.fullHorizontal,
+			'radio-group--stacked': !props.fullHorizontal
+
 		}"
-		:label="generatedLabel"
-		:name="props.name"
-		:aria-label="props.ariaLabel"
-		:aria-labelledby="props.ariaLabelledby"
-		:title="props.title"
-		:color="props.color"
-		:disabled="props.disabled"
-		:readonly="props.readonly"
-		:hide-details="props.hideDetails"
-		:density="props.density"
-		:error="hasError"
-		:error-messages="hasError ? errors : undefined"
-		:aria-describedby="messageId"
-		:messages="hasError ? errors :
-			hasWarning ? warnings :
-			(hasSuccess && props.showSuccessMessages ? successes : [])
-		"
 	>
-		<v-radio
-			v-for="opt in props.options"
-			:key="opt.value"
-			:value="opt.value"
-			role="radio"
-			:label="opt.label"
-			:aria-checked="getAriaChecked(opt.value)"
-			@blur="checkErrorOnBlur"
-		/>
-		<template
-			v-if="$slots.label"
-			#label
+		<!-- POUUR ACCESSIBILITÉ -->
+		<legend class="sr-only">
+			{{ generatedLabel }}
+		</legend>
+
+		<!-- VISUELEMENT -->
+		<div
+			v-if="props.label"
+			class="radio-group-label"
+			:class="{ 'label-inline': props.fullHorizontal }"
 		>
-			<slot name="label" />
-		</template>
-		<template
-			v-if="$slots.default"
-			#default
-		>
-			<slot />
-		</template>
-		<span
-			v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
-			:id="messageId"
-			class="d-sr-only"
-		>
-			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
-			}}</span>.
-		</span>
-	</v-radio-group>
+			{{ generatedLabel }}
+		</div>
+
+		<div class="radio-group-content">
+			<v-radio-group
+				id="props.id"
+				v-model="model"
+				:inline="props.horizontal || props.fullHorizontal"
+				:class="{
+					'warning-field': hasWarning && !hasError,
+					'success-field': hasSuccess && !hasError && !hasWarning,
+					'error-field': hasError,
+				}"
+				:name="props.name"
+				:aria-label="props.ariaLabel"
+				:aria-labelledby="props.ariaLabelledby"
+				:title="props.title"
+				:color="props.color"
+				:disabled="props.disabled"
+				:readonly="props.readonly"
+				:hide-details="props.hideDetails"
+				:density="props.density"
+				:error="hasError"
+				:error-messages="hasError ? errors : undefined"
+				:aria-describedby="messageId"
+				:messages="hasError ? errors : hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : [])"
+			>
+				<div
+					v-for="opt in props.options"
+					:key="opt.value"
+					class="radio-item-wrapper"
+				>
+					<v-radio
+						:key="opt.value"
+						:value="opt.value"
+						role="radio"
+						:label="opt.label"
+						:aria-checked="getAriaChecked(opt.value)"
+						@blur="checkErrorOnBlur"
+					/>
+
+					<!-- on affiche le subItem seulement si le bouton radio est coché -->
+					<div
+						v-if="model === opt.value"
+						class="radio-subitem"
+					>
+						<slot
+							name="subItem"
+							:item="opt"
+						/>
+					</div>
+				</div>
+				<template
+					v-if="$slots.label"
+					#label
+				>
+					<slot name="label" />
+				</template>
+				<template
+					v-if="$slots.default"
+					#default
+				>
+					<slot />
+				</template>
+				<span
+					v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
+					:id="messageId"
+					class="d-sr-only"
+				>
+					{{ locales.labelledbyMessage }}
+					<span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '') }}</span>.
+				</span>
+			</v-radio-group>
+		</div>
+	</fieldset>
 </template>
 
 <style scoped>
@@ -320,4 +362,57 @@
 		color: rgb(var(--v-theme-success)) !important;
 	}
 }
+
+.radio-group-wrapper {
+border: none; /* ou border: 0; */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.radio-group--horizontal {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.radio-group-label {
+  font-weight: 500;
+  white-space: nowrap;
+  min-width: 140px;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+.radio-group-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* subiitem  */
+.radio-subitem {
+  margin-left: 2rem;
+  margin-top: 0.25rem;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+/* Supprimer le focus ring par défaut */
+.radio-group-content :deep(.v-radio input:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Accessible hidden */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
 </style>

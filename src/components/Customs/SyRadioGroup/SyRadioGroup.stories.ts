@@ -97,6 +97,117 @@ export const Default: Story = {
     `,
 	}),
 }
+export const horizontal: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+                  <SyRadioGroup horizontal v-model="selected" />
+                `,
+			},
+			{
+				name: 'Script',
+				code: `
+              <script setup lang="ts">
+                import { ref } from 'vue'
+                import { SyRadioGroup } from '@cnamts/synapse'
+
+                const selected = ref('A')
+
+                const options = [
+                    { label: 'Option A', value: 'A' },
+                    { label: 'Option B', value: 'B' },
+                    { label: 'Option C', value: 'C' },
+                ]
+                return {
+                    selected,
+                    options,
+                }
+             </script>
+            `,
+			},
+		],
+	},
+	args: {
+		horizontal: true,
+		label: 'Choisissez une option',
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+			{ label: 'Option C', value: 'c' },
+		],
+		showSuccessMessages: true,
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref('a')
+			return { args, selected }
+		},
+		template: `
+      <SyRadioGroup v-model="selected" v-bind="args" />
+    `,
+	}),
+}
+
+export const fullHorizontal: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+                  <SyRadioGroup full-horizontal v-model="selected" />
+                `,
+			},
+			{
+				name: 'Script',
+				code: `
+              <script setup lang="ts">
+                import { ref } from 'vue'
+                import { SyRadioGroup } from '@cnamts/synapse'
+
+                const selected = ref('A')
+
+                const options = [
+                    { label: 'Option A', value: 'A' },
+                    { label: 'Option B', value: 'B' },
+                    { label: 'Option C', value: 'C' },
+                ]
+                return {
+                    selected,
+                    options,
+                }
+             </script>
+            `,
+			},
+		],
+	},
+	args: {
+		fullHorizontal: true,
+		label: 'Choisissez une option',
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+			{ label: 'Option C', value: 'c' },
+		],
+		showSuccessMessages: true,
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref('a')
+			return { args, selected }
+		},
+		template: `
+		<div style="display: flex; align-items: center;">
+      <SyRadioGroup v-model="selected" v-bind="args" />
+	  </div>
+    `,
+	}),
+}
 
 export const Required: Story = {
 	args: {
@@ -596,4 +707,62 @@ const rules = [
 			/>
     `,
 	}),
+}
+
+export const WithSubItem: Story = {
+	args: {
+		label: 'Choisissez une option',
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+			{ label: 'Option C', value: 'c' },
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref(null)
+			return { args, selected }
+		},
+		template: `
+        <SyRadioGroup v-model="selected" v-bind="args">
+          <template #subItem="{ item }">
+            <span>Subitem pour {{ item.label }}</span>
+          </template>
+        </SyRadioGroup>
+    
+    `,
+	}),
+
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+  <SyRadioGroup v-model="selected">
+    <template #subItem="{ item }">
+      <span>Subitem pour {{ item.label }}</span>
+    </template>
+  </SyRadioGroup>
+ `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const selected = ref(null)
+
+const options = [
+  { label: 'Option A', value: 'a' },
+  { label: 'Option B', value: 'b' },
+  { label: 'Option C', value: 'c' },
+]
+</script>`,
+			},
+		],
+	},
 }
