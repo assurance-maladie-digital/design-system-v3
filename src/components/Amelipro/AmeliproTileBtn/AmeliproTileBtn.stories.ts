@@ -172,33 +172,33 @@ export const Desactivee: Story = {
 
 // --- Tuile bouton avec tooltip ---
 export const tooltip: Story = {
-    name: 'Avec tooltip',
-    args: {
-        imgSrc: '/amelipro/img/tile-example.svg',
-        label: 'Label du bouton',
-        tileMinHeight: '100%',
-        uniqueId: 'tile-btn-tooltip',
-    },
-    parameters: {
-        sourceCode: [
-            {
-                name: 'Template',
-                code: `
+	name: 'Avec tooltip',
+	args: {
+		imgSrc: '/amelipro/img/tile-example.svg',
+		label: 'Label du bouton',
+		tileMinHeight: '100%',
+		uniqueId: 'tile-btn-tooltip',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
 <AmeliproTileBtn
   img-src="/amelipro/img/tile-example.svg"
   label="Bouton désactivé"
   tile-min-height="100%"
   unique-id="tile-btn-disabled"
 />`,
-            },
-        ],
-    },
-    render: args => ({
-        components: {AmeliproTileBtn, AmeliproTooltips},
-        setup() {
-            return {args}
-        },
-        template: `
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTileBtn, AmeliproTooltips },
+		setup() {
+			return { args }
+		},
+		template: `
           <p>Le slot <code>labelInfo</code> permet d'ajouter une tooltip à droite du titre du bouton.</p>
 
           <AmeliproTileBtn v-bind="args">
@@ -210,7 +210,7 @@ export const tooltip: Story = {
             </template>
           </AmeliproTileBtn>
         `,
-    }),
+	}),
 }
 
 // --- Tuile bouton avec message informatif ---
