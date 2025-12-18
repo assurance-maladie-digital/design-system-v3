@@ -35,7 +35,10 @@ export function isDateValidFn(
 			return true
 		}
 		if (typeof validationResult === 'string') {
-			return ruleMessage(errorMessages, validationResult)
+			if (Object.prototype.hasOwnProperty.call(errorMessages, validationResult)) {
+				return ruleMessage(errorMessages, validationResult)
+			}
+			return ruleMessage(errorMessages, 'default')
 		}
 		return ruleMessage(errorMessages, 'default')
 	}
