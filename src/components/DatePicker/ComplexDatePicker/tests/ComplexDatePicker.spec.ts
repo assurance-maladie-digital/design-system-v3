@@ -110,9 +110,12 @@ describe('ComplexDatePicker.clean', () => {
 
 		expect(wrapper.vm.selectedDates).not.toBeNull()
 
-		const selectedDates = wrapper.vm.selectedDates as Date[]
-		const baseDate = selectedDates[0]
-		expect(wrapper.vm.currentMonth).toBe(String(baseDate.getMonth()))
+		const selection = wrapper.vm.selectedDates as Date | (Date | null)[]
+		const baseDate = Array.isArray(selection)
+			? (selection.find(date => date instanceof Date) as Date | undefined)
+			: selection
+		expect(baseDate).toBeInstanceOf(Date)
+		expect(wrapper.vm.currentMonth).toBe(String((baseDate as Date).getMonth()))
 		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
