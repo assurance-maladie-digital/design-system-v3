@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/blocks'
+import { Meta, Source } from '@storybook/blocks'
 
 <Meta title="Guide du dev/Règles De Validation/isHolidayDay" />
 <style>
@@ -31,32 +31,44 @@ import { Meta } from '@storybook/blocks'
 
 ## Utilisation
 
-```ts
+<Source dark code={`
 import { isHolidayDay } from '@/utils/isHolidayDay'
 
 const rules = [
   isHolidayDay,
 ]
-```
+`} />
+
 
 ## Personnalisation des messages d'erreur
 
 Vous pouvez personnaliser le message d'erreur en utilisant la fonction `isHolidayDayFn` :
 
-```ts
+
+<Source dark code={`
 import { isHolidayDayFn } from '@/utils/isHolidayDay'
 
 const customRule = isHolidayDayFn({
   default: 'Veuillez sélectionner une date qui n\'est pas un jour férié.',
 })
-```
+`} />
 
 ## Fonctionnement
 
-Cette règle utilise le composable `useHolidayDay` pour déterminer si une date est un jour férié en France. La règle retourne :
+Cette règle utilise le composable `useHolidayDay` pour déterminer si une date est un jour férié en France. La valeur peut être une chaîne de caractères (format `DD/MM/YYYY`) ou un objet `Date`. La règle retourne :
 
 - `true` si la valeur est vide ou si la date n'est pas un jour férié
-- Un message d'erreur si la date est un jour férié
+- Un message d'erreur si la date est un jour férié ou si le type de valeur n'est pas supporté
+
+## API
+
+<Source dark code={`
+isHolidayDayFn(
+  errorMessages?: {
+    default: string;
+  }
+): (value: string | Date) => true | string;
+`} />
 
 ## Jours fériés pris en compte
 

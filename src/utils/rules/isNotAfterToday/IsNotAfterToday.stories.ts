@@ -60,15 +60,17 @@ export const CustomMessage: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
+				const model = ref('31/12/2999')
 				const messages = {
 					default: 'The date must not be after today.',
 				}
 				const dateRule = isNotAfterTodayFn(messages)
 
-				return { dateRule }
+				return { dateRule, model }
 			},
 			template: `
 				<VTextField
+					v-model="model"
 					:rules="[dateRule]"
 					label="Date"
 					variant="outlined"
@@ -84,12 +86,14 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<script setup lang="ts">
 					import { VTextField } from 'vuetify/components'
+					import { ref } from 'vue'
 					import { isNotAfterTodayFn } from '@cnamts/synapse'
-				
+
 					const messages = {
 						default: 'The date must not be after today.',
 					}
 					const dateRule = isNotAfterTodayFn(messages)
+					const model = ref('31/12/2999')
 				</script>
 				`,
 			},
@@ -98,9 +102,11 @@ export const CustomMessage: StoryObj<unknown> = {
 				code: `
 				<template>
 					<VTextField
+						v-model="model"
 						:rules="[dateRule]"
 						label="Date"
 						variant="outlined"
+						validate-on="eager blur"
 					/>
 				</template>
 				`,
