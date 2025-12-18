@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref } from 'vue'
-	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
-	import type { IndexedObject } from '../types'
-	import type { RouteLocationRaw } from 'vue-router'
-	import { convertToHex } from '@/utils/functions/convertToHex'
+import {type PropType, type ComponentPublicInstance, computed, ref, nextTick, onMounted, watch, shallowRef} from 'vue'
+import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
+import type {IndexedObject} from '../types'
+import type {RouteLocationRaw} from 'vue-router'
+import {convertToHex} from '@/utils/functions/convertToHex'
 
 	const props = defineProps({
 		alignTopStyle: {
@@ -95,8 +95,12 @@
 		},
 	})
 
-	const hover = ref(false)
-	const focus = ref(false)
+const hover = ref(false)
+const focus = ref(false)
+const button = shallowRef<ComponentPublicInstance | null>(null)
+const labelText = ref<HTMLElement | null>(null);
+const labelInfo = ref<HTMLElement | null>(null);
+const labelStyle = ref({});
 
 	const tileStyles = computed<IndexedObject>(() => {
 		const btnStyles: IndexedObject = {
@@ -126,6 +130,35 @@
 
 		return btnStyles
 	})
+
+const updateLabelPadding = () => {
+  nextTick(() => {
+    if (!labelText.value || !labelInfo.value) {
+      labelStyle.value = {paddingRight: '0px'};
+      return;
+    }
+    const btn = button.value?.$?.subTree?.el as HTMLElement
+    const btnWidth = btn?.getBoundingClientRect().width ?? 0
+
+    const styles = getComputedStyle(btn);
+    const textWidth = labelText.value.offsetWidth;
+
+    const paddingLeft = parseFloat(styles.paddingLeft);
+    const paddingRight = parseFloat(styles.paddingRight);
+    const horizontalPadding = paddingLeft + paddingRight;
+
+    const minGap = 8;
+    const labelPaddingRight = 36;
+
+    const availableWidth = btnWidth - horizontalPadding - minGap;
+
+    labelStyle.value = {
+      paddingRight: textWidth >= availableWidth
+          ? `${labelPaddingRight}px`
+          : '0px',
+    };
+  });
+};
 
 	const imgStyles = computed<IndexedObject>(() => {
 		const styles: IndexedObject = { width: props.imgWidth }
@@ -162,11 +195,19 @@
 
 	const emit = defineEmits(['click'])
 	const emitClickEvent = () => emit('click', props.uniqueId)
+
+onMounted(() => {
+  updateLabelPadding();
+});
+
+watch([labelText, labelInfo], () => updateLabelPadding());
+
 </script>
 
 <template>
 	<VBtn
 		:id="uniqueId"
+    ref="button"
 		class="amelipro-tile-btn text-none"
 		:disabled="disabled"
 		:elevation="1"
@@ -186,9 +227,18 @@
 		<span v-if="alignTopStyle || complementaryInfoLine1 || complementaryInfoLine2 || message">
 			<span
 				:id="uniqueId ? `${uniqueId}-text` : undefined"
+        ref="labelText"
 				class="d-block text-h5 text-center font-weight-bold amelipro-tile-btn__content"
+        :style="labelStyle"
 			>
 				{{ label }}
+        				<span
+                    v-if="$slots.labelInfo"
+                    ref="labelInfo"
+                    class="amelipro-tile-btn__label-info"
+                >
+					<slot name="labelInfo"/>
+				</span>
 
 				<span
 					v-if="labelBottom"
@@ -262,9 +312,18 @@
 		<span
 			v-if="!complementaryInfoLine1 && !complementaryInfoLine2 && !alignTopStyle && !message"
 			:id="uniqueId ? `${uniqueId}-text` : undefined"
+      ref="labelText"
 			class="d-block text-h5 text-center font-weight-bold amelipro-tile-btn__content"
+      :style="labelStyle"
 		>
 			{{ label }}
+      <span
+          v-if="$slots.labelInfo"
+          ref="labelInfo"
+          class="amelipro-tile-btn__label-info"
+      >
+				<slot name="labelInfo"/>
+			</span>
 
 			<span
 				v-if="labelBottom"
@@ -356,5 +415,24 @@
 	position: absolute;
 	bottom: 0;
 	right: 10px;
+}
+
+.amelipro-tile-btn__content {
+  white-space: normal;
+}
+
+.amelipro-tile-btn__label {
+  display: inline-block;
+  word-break: break-word;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.amelipro-tile-btn__label-info {
+  position: absolute;
+  top: 44px;
+  transform: translateY(-50%);
+  right: 22px;
 }
 </style>
