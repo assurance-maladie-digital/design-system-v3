@@ -717,6 +717,7 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
               Allocation de solidarité aux personnes âgées
             </span>
           </p>
+          <!-- v-if -->
         </div>
         <button
           class="
