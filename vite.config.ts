@@ -101,9 +101,6 @@ export default defineConfig({
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
 			external: ['vue', /vuetify/],
-			input: {
-				main: resolve(__dirname, 'src/main.ts'),
-			},
 			output: {
 				globals: {
 					'vue': 'Vue',
