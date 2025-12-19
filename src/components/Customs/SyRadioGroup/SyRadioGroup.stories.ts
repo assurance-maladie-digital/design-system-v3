@@ -52,7 +52,11 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-                  <SyRadioGroup v-model="selected" />
+                  <SyRadioGroup
+                    v-model="selected"
+                    label="Choisissez une option"
+                    :options="options"
+                  />
                 `,
 			},
 			{
@@ -62,18 +66,14 @@ export const Default: Story = {
                 import { ref } from 'vue'
                 import { SyRadioGroup } from '@cnamts/synapse'
 
-                const selected = ref('A')
+                const selected = ref('a')
 
                 const options = [
-                    { label: 'Option A', value: 'A' },
-                    { label: 'Option B', value: 'B' },
-                    { label: 'Option C', value: 'C' },
+                    { label: 'Option A', value: 'a' },
+                    { label: 'Option B', value: 'b' },
+                    { label: 'Option C', value: 'c' },
                 ]
-                return {
-                    selected,
-                    options,
-                }
-             </script>
+              </script>
             `,
 			},
 		],
@@ -129,27 +129,34 @@ export const Required: Story = {
 				name: 'Template',
 				code: `
                 <SyForm ref="form" @submit="onSubmit">
-      			  <SyRadioGroup v-model="selected" required />
-	   			  <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
-	  			</SyForm>`,
+      			  <SyRadioGroup
+      			    v-model="selected"
+      			    label="Choisissez une option (obligatoire)"
+      			    :options="options"
+      			    required
+      			  />
+      			  <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
+      			</SyForm>`,
 			},
 			{
 				name: 'Script',
 				code: `
               <script setup lang="ts">
                 import { ref } from 'vue'
-                import { SyRadioGroup } from '@cnamts/synapse'
+                import { VBtn } from 'vuetify/components'
+                import { SyForm, SyRadioGroup } from '@cnamts/synapse'
 
-                const selected = ref('A')
+                const selected = ref<string | null>(null)
 
                 const options = [
-                    { label: 'Option A', value: 'A' },
-                    { label: 'Option B', value: 'B' },
-                    { label: 'Option C', value: 'C' },
+                    { label: 'Option A', value: 'a' },
+                    { label: 'Option B', value: 'b' },
                 ]
-                return {
-                    selected,
-                    options,
+
+                const onSubmit = (event: { isValid: boolean }) => {
+                    if (event.isValid) {
+                        alert('Formulaire valide !')
+                    }
                 }
              </script>
             `,
@@ -191,28 +198,36 @@ export const formValidation: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyForm ref="form" @submit="onSubmit">
-                  <SyRadioGroup v-model="selected" required />
-                  <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
-                </SyForm>`,
+				code: `
+                <SyForm ref="form" @submit="onSubmit">
+      			  <SyRadioGroup
+      			    v-model="selected"
+      			    label="Choisissez une option (obligatoire)"
+      			    :options="options"
+      			    required
+      			  />
+      			  <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
+      			</SyForm>`,
 			},
 			{
 				name: 'Script',
 				code: `
               <script setup lang="ts">
                 import { ref } from 'vue'
+                import { VBtn } from 'vuetify/components'
                 import { SyForm, SyRadioGroup } from '@cnamts/synapse'
 
-                const selected = ref('A')
+                const selected = ref<string | null>(null)
 
                 const options = [
-                    { label: 'Option A', value: 'A' },
-                    { label: 'Option B', value: 'B' },
-                    { label: 'Option C', value: 'C' },
+                    { label: 'Option A', value: 'a' },
+                    { label: 'Option B', value: 'b' },
                 ]
-                return {
-                    selected,
-                    options,
+
+                const onSubmit = (event: { isValid: boolean }) => {
+                    if (event.isValid) {
+                        alert('Formulaire valide !')
+                    }
                 }
              </script>
             `,
@@ -226,26 +241,30 @@ export const Disabled: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyRadioGroup v-model="selected" disabled />`,
+				code: `
+                <SyRadioGroup
+                  v-model="selected"
+                  disabled
+                  label="Radio-group désactivé"
+                  :options="options"
+                />
+              `,
 			},
 			{
 				name: 'Script',
-				code: `<script setup lang="ts">
-				import { ref } from 'vue'
-				import { SyRadioGroup } from '@cnamts/synapse'
+				code: `
+              <script setup lang="ts">
+                import { ref } from 'vue'
+                import { SyRadioGroup } from '@cnamts/synapse'
 
-				const selected = ref('A')
+                const selected = ref('a')
 
-				const options = [
-					{ label: 'Option A', value: 'A' },
-					{ label: 'Option B', value: 'B' },
-				]
-
-				return {
-					selected,
-					options,
-					}
-				</script>`,
+                const options = [
+                    { label: 'Option A', value: 'a' },
+                    { label: 'Option B', value: 'b' },
+                ]
+              </script>
+            `,
 			},
 		],
 	},
@@ -288,7 +307,7 @@ export const CustomColors: Story = {
                       v-model="value2" 
                       color="secondary" 
                       label="Couleur secondaire" 
-                      :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
+                      :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"  
                       :show-success-messages="false"
                     />
                     <SyRadioGroup 
@@ -314,6 +333,19 @@ export const CustomColors: Story = {
                     />
                 </div>
 	`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const value1 = ref('a')
+const value2 = ref('a')
+const value3 = ref('a')
+const value4 = ref('a')
+const value5 = ref('a')
+</script>`,
 			},
 		],
 		docs: {
@@ -407,6 +439,17 @@ export const DifferentDensities: Story = {
                     />
                 </div>`,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const val1 = ref<string | null>(null)
+const val2 = ref<string | null>(null)
+const val3 = ref<string | null>(null)
+</script>`,
+			},
 		],
 		docs: {
 			description: {
@@ -475,6 +518,7 @@ export const Readonly: Story = {
 				code: `<SyRadioGroup 
                   v-model="selected" 
                   label="Radio en lecture seule" 
+                  :options="options"
                   readonly
                 />`,
 			},
@@ -485,15 +529,11 @@ export const Readonly: Story = {
                 import { ref } from 'vue'
                 import { SyRadioGroup } from '@cnamts/synapse'
 
-                const selected = ref('A')
+                const selected = ref('a')
 
                 const options = [
-                    { label: 'Option A', value: 'A' },
+                    { label: 'Option A', value: 'a' },
                 ]
-                return {
-                    selected,
-                    options,
-                }
              </script>
             `,
 			},
