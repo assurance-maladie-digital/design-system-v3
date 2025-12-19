@@ -330,7 +330,7 @@
 					>
 						<li
 							v-for="(item, index) in Array.isArray(items) ? items : []"
-							:key="index"
+							:key="item.label || index"
 							class="sy-tabs__item"
 							role="presentation"
 						>
