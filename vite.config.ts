@@ -66,7 +66,7 @@ function generateVuetifyGlobals() {
 export default defineConfig({
 	plugins: [
 		dts({
-			exclude: ['**/*.stories.ts', '**/*.spec.ts'],
+			exclude: ['**/*.stories.ts', '**/*.spec.ts', 'src/stories/**'],
 			entryRoot: 'src',
 			outDir: 'dist',
 			tsconfigPath: 'tsconfig.app.json',
@@ -101,6 +101,9 @@ export default defineConfig({
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
 			external: ['vue', /vuetify/],
+			input: {
+				main: resolve(__dirname, 'src/main.ts'),
+			},
 			output: {
 				globals: {
 					'vue': 'Vue',
