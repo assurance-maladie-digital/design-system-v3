@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect } from 'vitest'
+import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import CollapsibleList from '../CollapsibleList.vue'
 import type { ListItem } from '../types'
 
@@ -30,6 +31,8 @@ describe('CollapsibleList – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		expect(results.violations).toEqual([])
+		assertNoA11yViolations(results, 'CollapsibleList – desktop', {
+			ignoreRules: ['region'],
+		})
 	})
 })

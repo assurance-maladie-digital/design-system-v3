@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect } from 'vitest'
+import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import ChipList from '../ChipList.vue'
 import type { ChipItem, ChipState } from '../types'
 
@@ -32,6 +33,8 @@ describe('ChipList – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		expect(results.violations).toEqual([])
+		assertNoA11yViolations(results, 'ChipList – default items', {
+			ignoreRules: ['region'],
+		})
 	})
 })

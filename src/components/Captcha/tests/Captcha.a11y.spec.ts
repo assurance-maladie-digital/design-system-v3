@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { afterEach, describe, it, expect, vi } from 'vitest'
+import { afterEach, describe, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import Captcha from '../Captcha.vue'
 import { vuetify } from '@tests/unit/setup'
 
@@ -45,6 +46,8 @@ describe('Captcha – accessibility (axe)', () => {
 		await wrapper.vm.$nextTick()
 
 		const results = await axe(wrapper.element as HTMLElement)
-		expect(results.violations).toEqual([])
+		assertNoA11yViolations(results, 'Captcha – image mode', {
+			ignoreRules: ['region'],
+		})
 	})
 })

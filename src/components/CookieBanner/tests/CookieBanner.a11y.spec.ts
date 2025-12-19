@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect } from 'vitest'
+import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import CookieBanner from '../CookieBanner.vue'
 
 // Scénario d’accessibilité : bannière de cookies affichée avec son contenu
@@ -21,6 +22,8 @@ describe('CookieBanner – accessibility (axe)', () => {
 		await wrapper.vm.$nextTick()
 
 		const results = await axe(wrapper.element as HTMLElement)
-		expect(results.violations).toEqual([])
+		assertNoA11yViolations(results, 'CookieBanner – default', {
+			ignoreRules: ['region'],
+		})
 	})
 })

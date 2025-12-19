@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { afterEach, describe, it, expect, vi } from 'vitest'
+import { afterEach, describe, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import BackToTopBtn from '../BackToTopBtn.vue'
 
 // Scénario d’accessibilité : bouton affiché après défilement de la page,
@@ -31,6 +32,6 @@ describe('BackToTopBtn – accessibility (axe)', () => {
 		await wrapper.vm.$nextTick()
 
 		const results = await axe(wrapper.element as HTMLElement)
-		expect(results.violations).toEqual([])
+		assertNoA11yViolations(results, 'BackToTopBtn – visible after scroll')
 	})
 })

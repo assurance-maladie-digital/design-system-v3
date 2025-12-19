@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect } from 'vitest'
+import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import BackBtn from '@/components/BackBtn/BackBtn.vue'
 
 describe('BackBtn accessibility (axe)', () => {
@@ -14,6 +15,6 @@ describe('BackBtn accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		expect(results.violations).toEqual([])
+		assertNoA11yViolations(results, 'BackBtn – default state')
 	})
 })

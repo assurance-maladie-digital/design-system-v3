@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect } from 'vitest'
+import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import ContextualMenu from '../ContextualMenu.vue'
 import type { MenuItem } from '../types'
 
@@ -24,6 +25,6 @@ describe('ContextualMenu – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		expect(results.violations).toEqual([])
+		assertNoA11yViolations(results, 'ContextualMenu – default items')
 	})
 })
