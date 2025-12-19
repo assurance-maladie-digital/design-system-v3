@@ -192,7 +192,7 @@ import '../../styles/shared.css';
 
 <div className="info-section">
   <h2>🌟 Objectif</h2>
-  <p>L'objectif du pré-audit est d'atteindre en semi-autonomie un premier palier de conformité de votre service web avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
+  <p>L'objectif du pré-audit est d'atteindre en semi-autonomie un premier palier de conformité de votre service web avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. La procédure se fait en autonomie par l'équipe de développement du produit. Le relevé des non-conformités relève de la responsabilité de l’équipe de développement, ce kit étant conçu pour guider l’auto-évaluation.</p>
   
   <p>Pour prouver ce palier et être éligible à la demande d'audit complet vous devez compléter <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">ce fichier</a> qui mentionne les exigences requises par la vérification assistée des outils automatisés et la vérification manuelle.</p>
 </div>
@@ -227,9 +227,9 @@ import '../../styles/shared.css';
 
 <div className="info-section">
   <h2>👤 Vérification manuelle</h2>
-  
-  <p>L'objectif est de vérifier chacun des 8 points suivants pour chaque page de l'échantillon de test.</p>
-  
+
+  <p>L'objectif est de vérifier chacun des 8 points suivants pour chaque page de l'échantillon de test. Nous recommandons vivement, au préalable, de naviguer sur la totalité de la page via le lecteur d'écran car il s'agit d'un moyen concret de vérifier si le code sémantique et la navigation au clavier sont réellement conformes. Vous pouvez consulter notre <a href="/?path=/docs/accessibilité-kit-de-pré-audit-outils-lecteurs-d-écran--docs">mode d'emploi sur les lecteurs d'écran</a>.</p>
+
   <div className="alert">
     <p><strong>Notation :</strong> Au sein de la check-list, il faudra choisir entre <span className="highlight">"Conforme"</span>, <span className="highlight">"Non conforme"</span>, <span className="highlight">"Non applicable"</span>, <span className="highlight">"Dérogé"</span> ou <span className="highlight">"Non testé"</span> pour chacun des critères.</p>
     <p>Il est possible d'ajouter un commentaire pour expliciter les erreurs relevées, des recommandations ou d'éventuelles questions.</p>
@@ -238,153 +238,207 @@ import '../../styles/shared.css';
 
 <div className="verification-card">
   <h3>⌨️ 1. Navigation au clavier</h3>
-  
-  <p>Testez que toutes les parties de votre site sont entièrement navigables à l'aide du clavier (touche Tab pour se déplacer, Shift+Tab pour revenir en arrière, Entrée pour activer un élément, Espace pour les actions interactives comme les boutons).</p>
-  
-  <h4>Vérification manuelle :</h4>
-  <ul className="verification-steps">
-    <li>Naviguez sur toutes les sections du site uniquement avec le clavier.</li>
-    <li>Testez tous les éléments interactifs : menus, formulaires, liens, boutons, carrousels, fenêtres modales, etc.</li>
-    <li>Assurez-vous que les menus déroulants s'ouvrent avec le clavier et que vous pouvez accéder à tous les champs de formulaire et boutons sans difficulté.</li>
-    <li>Vérifiez qu'aucun piège au clavier n'existe (boucle, etc.)</li>
-  </ul>
-  
+
+  <h4>Objectif</h4>
+  <p>S'assurer que toutes les parties sont entièrement navigables au clavier</p>
+  <h4>Méthode de test</h4>
+  <ol>
+    <li>Naviguer via la touche Tab pour se déplacer, Shift+Tab pour revenir en arrière, Entrée/Espace/Flèches/etc. en fonction des composants.</li>
+    <li>Tester tous les éléments interactifs : menus, menus déroulants, formulaires, liens, boutons, carrousels, fenêtres modales, etc. Concernant le comportement clavier pour les composants d'interface, se renseigner via les <a href="https://www.w3.org/WAI/ARIA/apg/patterns/">patterns du W3C</a>.</li>
+    <li>S'assurer que l'ordre de tabulation est cohérent.</li>
+    <li>S'assurer que le focus du clavier reste visible et possède un contraste minimum de 3:1.</li>
+    <li>Vérifier qu'aucun piège au clavier n'existe (boucle, etc.).</li>
+  </ol>
+  <h4>Outil éventuel</h4>
+  <p>Aucun</p>
+
   <div className="alert">
-    <p><strong>Exemple :</strong> Vérifiez si un utilisateur peut remplir un formulaire de contact en utilisant uniquement les touches de tabulation.</p>
+    <p><strong>Exemple :</strong> </p>
+    <ul>
+      <li>Vérifiez si un utilisateur peut remplir un formulaire de contact en utilisant uniquement les touches de tabulation.</li>
+      <li>S'assurer que la navigation via les touches de tabulation reste uniquement au sein de la boîte de dialogue.</li>
+    </ul>
   </div>
 </div>
 
 <div className="verification-card">
   <h3>📺 2. Éléments visuels et déclenchements automatiques</h3>
-  
-  <p>Vérifiez que les animations, transitions et autres éléments visuels peuvent être arrêtés, mis en pause ou désactivés par l'utilisateur.</p>
-  
-  <h4>Vérification manuelle :</h4>
-  <ul className="verification-steps">
-    <li>Identifiez tous les éléments qui bougent, clignotent ou se mettent à jour automatiquement sur votre site.</li>
-    <li>Vérifiez que ces éléments peuvent être arrêtés ou mis en pause par l'utilisateur.</li>
-    <li>Assurez-vous qu'aucun contenu ne clignote plus de trois fois par seconde (risque de crises d'épilepsie).</li>
-  </ul>
-  
+
+  <h4>Objectif</h4>
+  <p>Vérifier que les animations, transitions et autres éléments visuels peuvent être arrêtés, mis en pause ou désactivés par l'utilisateur.</p>
+  <h4>Méthode de test</h4>
+  <ol>
+    <li>Identifier tous les éléments animés, qui clignotent ou se mettent à jour automatiquement sur votre site.</li>
+    <li>Vérifier que ces éléments peuvent être arrêtés ou mis en pause par l'utilisateur.</li>
+    <li>S'assurer que la durée du mouvement est inférieure ou égale à 5 secondes s'il n'existe aucun moyen d'arrêter ou de masquer le contenu.</li>
+  </ol>
+  <h4>Outil éventuel</h4>
+  <p>Aucun</p>
+
   <div className="alert">
-    <p><strong>Exemple :</strong> Un carrousel d'images doit pouvoir être arrêté ou ralenti par l'utilisateur.</p>
+    <p><strong>Exemple :</strong> Un carrousel d'images doit pouvoir être arrêté par l'utilisateur.</p>
   </div>
 </div>
 
 <div className="verification-card">
-  <h3>🔗 3. Pertinence des liens et des boutons</h3>
-  
-  <p>Le texte des liens et des boutons doit être explicite, clair et contextuel, en évitant les termes génériques comme "Cliquez ici" ou "En savoir plus".</p>
-  
-  <h4>Vérification manuelle :</h4>
-  <ul className="verification-steps">
-    <li>Parcourez tous les liens et boutons du site.</li>
-    <li>Vérifiez que chaque lien ou bouton a un intitulé qui décrit clairement sa fonction ou sa destination.</li>
-    <li>Assurez-vous que les liens vers des documents téléchargeables indiquent le format et la taille du fichier.</li>
-  </ul>
-  
+  <h3>🔗 3. Pertinence des libellés et textes alternatifs</h3>
+
+  <h4>Objectif</h4>
+  <p>Les libellés et textes alternatifs des images, liens, boutons doivent être explicite, clair et contextuel, en évitant les termes génériques comme "Logo", "Cliquez ici" ou "En savoir plus".</p>
+  <h4>Méthode de test</h4>
+  <ol>
+    <li>Inspecter les images porteuses d'information et s'assurer qu'elles contiennent un alt pertinent (ou legend pour les balises picture)</li>
+    <li>À l'inverse, s'assurer que seules les images de décoration sont ignorées par les technologies d'assistance (ex: aria-hidden="true")</li>
+    <li>Vérifier que chaque lien ou bouton a un intitulé qui décrit clairement sa fonction ou sa destination.</li>
+  </ol>
+  <h4>Outil éventuel</h4>
+  <p>Pour les images, le plugin Assistant RGAA permet de mettre en évidence les images considérées avec ou sans alternative textuelle (catégorie 1). La catégorie 6 du même plugin permet de mettre en évidence les liens et liens images.</p>
+
   <div className="alert">
-    <p><strong>Exemple :</strong> Au lieu de "Cliquez ici", préférez "Télécharger le formulaire d'inscription (PDF, 1,2 Mo)".</p>
+    <p><strong>Exemple :</strong></p>
+    <ul>
+      <li>Au lieu de "Cliquez ici", préférer "Télécharger le formulaire d'inscription (PDF, 1,2 Mo)"</li>
+      <li>Pour une image d'un graphique présentant des données, l'attribut alt pourrait être : <code>alt="Graphique montrant l'évolution des ventes de 2019 à 2023 avec une augmentation de 20% en 2023"</code></li>
+      <li>Ajouter un <code>`<span class="sr-only">Fermer le panier</span>`</code> au sein du bouton de l'icône croix de la boîte de dialogue.</li>
+    </ul>
   </div>
 </div>
 
 <div className="verification-card">
   <h3>📝 4. Formulaires</h3>
-  
+
+  <h4>Objectif</h4>
   <p>Assurez-vous que tous les éléments d'un formulaire sont accessibles et compréhensibles pour les utilisateurs, y compris ceux qui utilisent des technologies d'assistance (lecteurs d'écran, commandes vocales, etc.).</p>
-  
-  <h4>Vérification manuelle :</h4>
-  
+
+  <h4>Méthode de test :</h4>
+
   <div className="verification-steps">
     <h5>1. Labels associés aux champs</h5>
-    <ul>
-      <li>Vérifiez que chaque champ de formulaire a un label explicite et associé correctement, en utilisant les balises <code>&lt;label&gt;</code> avec l'attribut <code>for</code> correspondant à l'<code>id</code> du champ de saisie.</li>
-      <li>Consultez <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2">le critère RGAA 11.2</a> pour en savoir plus sur la pertinence d'une étiquette associée à un champ de formulaire.</li>
-    </ul>
+    <ol>
+      <li>Vérifier que chaque champ de formulaire a un label explicite et associé correctement, en utilisant les balises <code>&lt;label&gt;</code> avec l'attribut <code>for</code> correspondant à l'<code>id</code> du champ de saisie. Ce label ne devra pas disparaître au remplissage.</li>
+      <li>Consulter <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.2">le critère RGAA 11.2</a> pour en savoir plus sur la pertinence d'une étiquette associée à un champ de formulaire.</li>
+      <li>S'assurer que les étiquettes de champ sont accolées au champ, immédiatement au-dessous ou à droite pour les champ de type `checkbox` ou `radio`, immédiatement au-dessus ou à gauche pour les autres (cas d'un sens de lecture de langue de gauche à droite).</li>
+    </ol>
     <div className="alert">
       <p><strong>Exemple :</strong> Pour un champ de saisie de nom, assurez-vous qu'il est bien associé à un label : <code>&lt;label for="nom"&gt;Nom :&lt;/label&gt; &lt;input type="text" id="nom"&gt;</code>.</p>
     </div>
-    
-    <h5>2. Messages d'erreur et validation</h5>
-    <ul>
-      <li>Vérifiez que des messages d'erreur sont clairement associés aux champs en cas de saisie incorrecte.</li>
-      <li>Testez que ces messages d'erreur sont visibles, compréhensibles et bien positionnés.</li>
-      <li>Vérifiez également qu'ils sont annoncés par le lecteur d'écran.</li>
-    </ul>
-    
-    <h5>3. Groupes de champs et aide contextuelle</h5>
-    <ul>
-      <li>Vérifiez que les champs sont regroupés de manière logique, avec des titres ou des instructions claires pour chaque section.</li>
-      <li>Assurez-vous que des indices ou des descriptions contextuelles sont fournis pour aider l'utilisateur.</li>
-    </ul>
-    
-    <h5>4. Focus visuel</h5>
-    <ul>
-      <li>Testez que le focus visuel est bien visible lorsqu'un utilisateur navigue au clavier entre les champs du formulaire.</li>
-    </ul>
+
+    <h5>2. Aide à la saisie, messages d'erreur et validation</h5>
+    <ol>
+      <li>S'assurer que l'indication de champ obligatoire est visible et qu'il existe un attribut `required` (ou `aria-requied="true"`).</li>
+      <li>Vérifier que les aides à la saisie et messages d'erreur sont clairement associés aux champs en cas de saisie incorrecte (annoncé au lecteur d'écran via un `aria-describedby` + ajout de la balise `aria-invalid="true"`).</li>
+      <li>Tester que ces messages d'erreur sont visibles, compréhensibles et bien positionnés. Si nécessaire, le message d'erreur devra posséder une suggestion.</li>
+    </ol>
+
+    <h5>3. Groupes de champs</h5>
+    <ol>
+      <li>Vérifier que les champs de même nature sont regroupés via un `fieldset` ou un `role="group"` (par exemple, champs de type `checkbox` ou `radio`, numéro de sécurité social en 2 champs, etc.)</li>
+      <li>S'assurer qu'une légende existe et est pertinente (`legend` si `fielset`; `aria-label` ou `aria-describedby` si `role="group"`).</li>
+    </ol>
+
+    <h5>4. Retour après soumission du formulaire</h5>
+    <ol>
+      <li>Tester la soumission du formulaire et vérifier le comportement en cas de succès. L'utilisateur doit être informé (changement de page, message de statut, etc.).</li>
+      <li>Tester la soumission du formulaire et vérifier le comportement en cas d'erreur. L'utilisateur devra être redirigé, soit vers le premier champ en erreur, soit sur un message d'erreur global situé tout en haut du formulaire.</li>
+    </ol>
+
+    <h5>5. Remplissage automatique</h5>
+    <ol>
+      <li>Inspecter les champs de formulaire afin de vérifier la présence de l'attribut `autocomplete` et sa pertinence (s'appuyer sur la <a href="https://accessibilite.numerique.gouv.fr/methode/glossaire/#liste-des-valeurs-possibles-pour-l-attribut-autocomplete">liste des valeurs possibles pour l’attribut autocomplete du site officiel <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr></a>)</li>
+      <li>Tester la soumission du formulaire et vérifier le comportement en cas d'erreur. L'utilisateur devra être redirigé, soit vers le premier champ en erreur, soit sur un message d'erreur global situé tout en haut du formulaire.</li>
+    </ol>
   </div>
+
+  <h4>Outil éventuel</h4>
+  <p>Utilisation du lecteur d'écran pour vérifier la navigation et l'accessibilité des formulaires, tel que l'indication du caractère obligatoire du champ, la liaison du champ aux aides à la saisie ainsi qu'aux messages d'erreurs, le comportement à la soumission du formulaire, etc.</p>
 </div>
 
 <div className="verification-card">
-  <h3>📃 5. Tableaux accessibles</h3>
-  
-  <p>Vérifiez que les tableaux de données sont bien structurés avec des balises <code>&lt;th&gt;</code> pour les en-têtes et des descriptions de colonnes et lignes claires, permettant une navigation facile pour les utilisateurs de lecteurs d'écran.</p>
-  
-  <h4>Vérification manuelle :</h4>
-  <ul className="verification-steps">
-    <li>Identifiez tous les tableaux de données sur le site.</li>
-    <li>Vérifiez que les cellules d'en-tête sont correctement marquées avec des balises <code>&lt;th&gt;</code> et non des balises <code>&lt;td&gt;</code> stylisées.</li>
+  <h3>📃 5. Tableaux</h3>
+
+  <h4>Objectif</h4>
+  <p>Vérifier que les tableaux de données sont bien structurés</p>
+  <h4>Méthode de test</h4>
+  <ol>
+    <li>S'assurer que les titres des tableaux de données sont sémantiquement rattachés au tableau et sont pertinents.</li>
+    <li>S'assurer que tableaux de données complexes (en-têtes n'étant pas qu'en une seule ligne ou une seule colonne) possèdent un résumé pertinent.</li>
+    <li>Vérifiez que les cellules d'en-tête sont correctement déclarées avec des balises <code>&lt;th&gt;</code> et non des balises <code>&lt;td&gt;</code> stylisées.</li>
     <li>Assurez-vous que les tableaux complexes ont des attributs <code>scope</code> ou des associations entre cellules d'en-tête et cellules de données.</li>
-  </ul>
-  
+  </ol>
+  <h4>Outil éventuel</h4>
+  <p>Inspecteur de code</p>
+
   <div className="alert">
-    <p><strong>Exemple :</strong> Pour un tableau listant des produits avec leurs prix, assurez-vous que les en-têtes de colonnes ("Produit", "Prix", etc.) sont marquées avec des balises <code>&lt;th&gt;</code> et non des balises <code>&lt;td&gt;</code> stylisées.</p>
+    <p><strong>Exemple :</strong> </p>
+    <ul>
+      <li>Le tableau a un titre visible pertinent "Effectif et densité de professionnels de santé libéraux par région - 2016 à 2023" qui est rattaché sémantiquement au tableau via la balise `caption` (ou l'attribut `aria-labelledby`).</li>
+      <li>Les en-têtes de colonnes des tableaux utilisent des balises `th` avec l'attribut `scope="col"`.</li>
+    </ul>
   </div>
 </div>
 
 <div className="verification-card">
-  <h3>📬 6. Langue de la page</h3>
-  
-  <p>Vérifiez que la langue du contenu principal de la page est correctement définie avec l’attribut `lang` dans l'élément `<html>`, ce qui permet aux technologies d’assistance de prononcer le texte dans la langue correcte.</p>
-  
-  <h4>Vérification manuelle :</h4>
-  <ul className="verification-steps">
+  <h3>📬 6. Langue</h3>
+  <h4>Objectif</h4>
+  <p>Permettre aux lecteurs d’écran d’utiliser la bonne prononciation.</p>
+  <h4>Méthode de test</h4>
+  <ol>
     <li>Inspectez le code source de la page (clic droit > "Inspecter" dans le navigateur) et vérifiez que l’attribut `lang="fr"` (ou la langue correspondante) est bien présent dans l’élément `<html>`. S’il s’agit d’une autre langue, elle doit être pertinente ([voir documentation MDN sur l’attribut lang](https://developer.mozilla.org/fr/docs/Web/HTML/Global_attributes/lang))</li>
-    <li>Exemple : Si votre site est en français, l'élément `<html>` devrait être : `<html lang="fr">`.</li>
-  </ul>
+    <li>Repérer les mots/phrases dans une autre langue au sein de la page et vérifier l'existence et la valeur de l’attribut <code>lang</code>.</li>
+  </ol>
+  <h4>Outil éventuel</h4>
+  <p>Inspecteur de code</p>
+
+  <div className="alert">
+    <p><strong>Exemple :</strong> Si votre site est en français, l'élément `<html>` devrait être : `<html lang="fr">`.</p>
+  </div>
 </div>
 
 <div className="verification-card">
-  <h3>📄 7. Titre de la page</h3>
-  
-  <p>Le titre de chaque page (`<title>`) doit être descriptif, unique et pertinent par rapport au contenu de la page.</p>
-  
-  <h4>Vérification manuelle :</h4>
-  <ul className="verification-steps">
-    <li>Ouvrez chaque page du site et lisez le titre affiché dans l'onglet du navigateur.</li>
-    <li>Vérifiez que le titre est spécifique à la page (par exemple, "Page d'accueil" pour la page d'accueil, "Contactez-nous" pour la page de contact).</li>
-    <li>Exemple : Le titre de la page sur un annuaire pourrait être "Annuaire - [Nom du service]" et non "Page 1".</li>
-  </ul>
+  <h3>📄 7. Titre de la page et hiérarchie des titres</h3>
+
+  <h4>Objectif</h4>
+  <p>Vérifier que la page possède un titre descriptif, unique et pertinent. De plus, s'assurer que la structure des titres au sein de la page est cohérente.</p>
+  <h4>Méthode de test</h4>
+  <ol>
+    <li>Identifier si le titre affiché dans l'onglet du navigateur est pertinent.</li>
+    <li>Le contenu de la page devra avoir au moins un titre.</li>
+    <li>Analyser les balises de <code>h1</code> à <code>h6</code> en vérifiant la pertinence et la structure (aucun saut de niveau).</li>
+    <li>S'assurer que les titres sont sémantiquement correctes (présence d'une balise <code>hx</code> ou balises <code>role="heading" aria-level="x"</code></li>
+  </ol>
+  <h4>Outil éventuel</h4>
+  <p>Extension HeadingsMap (<a href="/?path=/docs/accessibilité-kit-de-pré-audit-outils-introduction--docs">voir la page des outils</a>)</p>
+
+  <div className="alert">
+    <p><strong>Exemple :</strong></p>
+    <ul>
+      <li>Le titre de la page sur un annuaire pourrait être "Annuaire (page 1 sur 5) - [Nom du service]" et non "Page 1".</li>
+      <li>Les titres "Logement", "Véhicule" et "Emploi" doivent être un sous-niveau du titre "Aides financières".</li>
+    </ul>
+  </div>
 </div>
 
 <div className="verification-card">
-  <h3>📹 8. Accès aux contenus multimédia</h3>
-  
-  <p>Vérifiez que les vidéos et autres contenus multimédia sont accessibles, notamment en fournissant des sous-titres, des transcriptions ou d’autres alternatives textuelles.</p>
-  
-  <h4>Vérification manuelle :</h4>
-  <ul className="verification-steps">
-    <li>Testez les vidéos du site pour vérifier si elles proposent des sous-titres ou des transcriptions disponibles.</li>
-    <li>Assurez-vous que les lecteurs vidéo permettent l’activation des sous-titres et que ces derniers sont synchronisés avec le contenu audio.</li>
-    <li>Exemple : Si une vidéo présente une interview, vérifiez qu’une transcription complète ou des sous-titres sont fournis pour les utilisateurs sourds ou malentendants.</li>
-  </ul>
+  <h3>📹 8. Contenus multimédia</h3>
+
+  <h4>Objectif</h4>
+  <p>Vérifier que les vidéos et autres contenus multimédia temporels possèdent, si nécessaire, une transcription textuelle, une audiodescription synchronisée et/ou des sous-titres synchronisés. Concernant les médias non temporels, s'assurer qu'ils possèdent une alternative ou sont accessibles par le clavier et tout dispositif de pointage.</p>
+  <h4>Méthode de test</h4>
+  <ol>
+    <li>Écouter les vidéos sans regarder l’écran et statuer sur la pertinence de l'audiodescription.</li>
+    <li>Lire une vidéo avec sous-titres activés et statuer sur leur pertinence.</li>
+    <li>Vérifier que toute transcription textuelle exprime tout ce qui est retranscrit oralement et suivent la chronologie du média.</li>
+    <li>S'assurer que tout son déclenché automatiquement peut, soit être stoppé, soit contrôlé indépendemment du volume, soit possède une durée inféreure ou égale à 3 secondes.</li>
+  </ol>
+  <h4>Outil éventuel</h4>
+  <p>Aucun</p>
 </div>
 
 <div className="info-section">
   <h2>💬 Conclusion</h2>
-  
+
   <p>En suivant ces vérifications manuelles et automatisées, vous pourrez atteindre un premier niveau de conformité d'accessibilité pour votre service web. N'hésitez pas à documenter vos résultats et à solliciter de l'aide si nécessaire.</p>
-  
+
   <div className="alert">
     <p><strong>Rappel :</strong> Complétez <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">le fichier de check-list</a> pour chaque page de votre échantillon afin de prouver votre niveau de conformité.</p>
   </div>
