@@ -1,4 +1,4 @@
-import { VueWrapper, config, mount, shallowMount } from '@vue/test-utils'
+import { config, mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import AmeliproSelect from '../AmeliproSelect.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'

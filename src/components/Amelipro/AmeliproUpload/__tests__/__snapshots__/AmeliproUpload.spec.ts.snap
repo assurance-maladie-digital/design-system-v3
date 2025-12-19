@@ -57,7 +57,6 @@ exports[`AmeliproUpload > Snapshots > renders the component with all properties 
       showsize="false"
       singleline="false"
       tile="false"
-      truncatelength="22"
       variant="filled"
     ></v-file-input-stub>
   </div>
@@ -157,7 +156,6 @@ exports[`AmeliproUpload > Snapshots > renders the component with only required p
       showsize="false"
       singleline="false"
       tile="false"
-      truncatelength="22"
       variant="filled"
     ></v-file-input-stub>
   </div>

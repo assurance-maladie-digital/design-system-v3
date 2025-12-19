@@ -250,7 +250,7 @@
 			v-model="inputValue"
 			:aria-describedby="displayError ? undefined : errorId"
 			:aria-invalid="displayError ? true : undefined"
-			:aria-required="required"
+			:required="required"
 			auto-grow
 			:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 			class="amelipro-textarea-input"

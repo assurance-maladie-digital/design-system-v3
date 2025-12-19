@@ -49,7 +49,6 @@ exports[`AmeliproTextArea > Snapshots > renders the component with all propertie
   </div>
   <textarea
     aria-describedby="modified-unique-id-error"
-    aria-required="true"
     auto-grow=""
     bg-color="ap-grey-lighten-2"
     class="amelipro-textarea-input"
@@ -59,6 +58,7 @@ exports[`AmeliproTextArea > Snapshots > renders the component with all propertie
     id="modified-unique-id"
     modelvalue="Modified model value"
     readonly=""
+    required=""
     rules="() => true,(value) => {
     let valid;
     if (Array.isArray(value)) {
@@ -110,7 +110,6 @@ exports[`AmeliproTextArea > Snapshots > renders the component with only required
   </div>
   <textarea
     aria-describedby="required-unique-id-error"
-    aria-required="false"
     auto-grow=""
     bg-color="ap-white"
     class="amelipro-textarea-input"

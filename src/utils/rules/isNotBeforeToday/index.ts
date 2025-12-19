@@ -18,10 +18,25 @@ export function isNotBeforeTodayFn(
 		if (!value) {
 			return true
 		}
+		const today = formatDate(dayjs())
 
-		return (
-			(typeof value === 'string' && !isDateBefore(formatDate(dayjs()), value)) || ruleMessage(errorMessages, 'default')
-		)
+		if (value instanceof Date) {
+			const formattedValue = formatDate(dayjs(value))
+
+			return (
+				!isDateBefore(today, formattedValue)
+				|| ruleMessage(errorMessages, 'default')
+			)
+		}
+
+		if (typeof value === 'string') {
+			return (
+				!isDateBefore(today, value)
+				|| ruleMessage(errorMessages, 'default')
+			)
+		}
+
+		return ruleMessage(errorMessages, 'default')
 	}
 }
 

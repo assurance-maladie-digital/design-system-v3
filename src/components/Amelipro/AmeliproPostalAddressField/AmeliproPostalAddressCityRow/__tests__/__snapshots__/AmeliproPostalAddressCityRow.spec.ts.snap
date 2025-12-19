@@ -74,10 +74,8 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
               class="
                 bg-ap-grey-lighten-2
                 v-field
-                v-field--active
                 v-field--appended
                 v-field--center-affix
-                v-field--dirty
                 v-field--disabled
                 v-field--has-background
                 v-field--no-label
@@ -107,17 +105,11 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__background
-                    "
+                    class="v-progress-linear__background"
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__buffer
-                    "
+                    class="v-progress-linear__buffer"
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -131,12 +123,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
-                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
-                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -160,20 +150,13 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                   <!-- teleport start -->
                   <!-- teleport end -->
-                  <div class="v-autocomplete__selection">
-                    <span class="v-autocomplete__selection-text">
-                      <!---->
-                    </span>
-                  </div>
                   <input
-                    aria-controls="menu-v-0"
                     aria-expanded="false"
                     autocomplete="address-level2"
                     disabled=""
                     id="the-groupId-postal-code"
                     readonly=""
                     required=""
-                    role="combobox"
                     size="1"
                     type="text"
                     value=""
@@ -350,10 +333,8 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
               class="
                 bg-ap-grey-lighten-2
                 v-field
-                v-field--active
                 v-field--appended
                 v-field--center-affix
-                v-field--dirty
                 v-field--disabled
                 v-field--has-background
                 v-field--no-label
@@ -383,17 +364,11 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__background
-                    "
+                    class="v-progress-linear__background"
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__buffer
-                    "
+                    class="v-progress-linear__buffer"
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -407,12 +382,10 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
-                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
-                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -436,20 +409,13 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
                   <!---->
                   <!-- teleport start -->
                   <!-- teleport end -->
-                  <div class="v-autocomplete__selection">
-                    <span class="v-autocomplete__selection-text">
-                      <!---->
-                    </span>
-                  </div>
                   <input
-                    aria-controls="menu-v-6"
                     aria-expanded="false"
                     autocomplete="address-level2"
                     disabled=""
                     id="the-groupId-city"
                     readonly=""
                     required=""
-                    role="combobox"
                     size="1"
                     type="text"
                     value=""
@@ -570,7 +536,6 @@ exports[`AmeliproPostalAddressCityRow > render correctly 1`] = `
       </div>
     </div>
   </div>
-  <!-- v-if -->
   <!-- v-if -->
 </div>
 `;

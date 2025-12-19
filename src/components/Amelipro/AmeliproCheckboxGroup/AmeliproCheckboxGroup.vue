@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, onUpdated, ref, useSlots } from 'vue'
+	import { computed, onUpdated, type PropType, ref, useSlots } from 'vue'
 	import type { AmeliproCheckboxGroupItem } from './types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 

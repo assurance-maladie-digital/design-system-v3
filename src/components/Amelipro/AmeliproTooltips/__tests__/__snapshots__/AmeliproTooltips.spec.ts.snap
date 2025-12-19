@@ -29,7 +29,6 @@ exports[`AmeliproTooltips > Snapshots > renders the component with all propertie
     right=""
     scrim="false"
     scrollstrategy="reposition"
-    sticktotarget="false"
     zindex="2000"
   ></v-tooltip-stub>
 </div>
@@ -64,7 +63,6 @@ exports[`AmeliproTooltips > Snapshots > renders the component with only required
     right=""
     scrim="false"
     scrollstrategy="reposition"
-    sticktotarget="false"
     zindex="2000"
   ></v-tooltip-stub>
 </div>

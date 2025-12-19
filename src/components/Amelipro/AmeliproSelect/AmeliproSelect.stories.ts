@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
 import AmeliproSelect from './AmeliproSelect.vue'
 import type { SelectItem } from './types'
+// --- LabelInfo ---
+import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta = {
 	argTypes: {
@@ -483,8 +485,6 @@ export const Horizontal: Story = {
 	}),
 }
 
-// --- LabelInfo ---
-import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'
 export const LabelInfo: Story = {
 	args: {
 		items,

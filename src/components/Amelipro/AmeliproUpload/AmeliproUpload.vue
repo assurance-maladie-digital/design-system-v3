@@ -3,8 +3,22 @@
 /* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
 	import type { ErrorBucket, Registrable } from './types'
 	import type { ErrorMessages, ValidationRule } from '@/utils/rules/types'
-	import { type PropType, computed, getCurrentInstance, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-	import { fileUploadDuplicationRule, fileUploadFormatRule, fileUploadMaxFileNumberRule } from '@/utils/amelipro/rules/uploadFile'
+	import {
+		computed,
+		getCurrentInstance,
+		inject,
+		nextTick,
+		onBeforeUnmount,
+		onMounted,
+		type PropType,
+		ref,
+		watch,
+	} from 'vue'
+	import {
+		fileUploadDuplicationRule,
+		fileUploadFormatRule,
+		fileUploadMaxFileNumberRule,
+	} from '@/utils/amelipro/rules/uploadFile'
 	import AmeliproChips from '../AmeliproChips/AmeliproChips.vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'

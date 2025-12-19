@@ -1,4 +1,4 @@
-import { DOMWrapper, type VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { DOMWrapper, mount, shallowMount, type VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproCheckboxGroup from '../AmeliproCheckboxGroup.vue'
 import type { AmeliproCheckboxGroupItem } from '../types'

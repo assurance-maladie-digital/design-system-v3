@@ -773,7 +773,7 @@ export const Required: Story = {
 			return { args, model }
 		},
 		template: `
-<p>Le champ est requis grâce à la prop <code>required</code>.</p>
+          <p>Le champ est requis grâce à la prop <code>required</code>.</p>
 <AmeliproTextField
 	v-bind="args"
 	v-model="model"

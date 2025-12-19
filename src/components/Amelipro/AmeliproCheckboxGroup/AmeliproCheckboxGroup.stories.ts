@@ -276,7 +276,8 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p class="mb-2">La sélection d’au moins une option est obligatoire grâce à la prop <code>required</code>.</p>
+		template: `<p class="mb-2">La sélection d’au moins une option est obligatoire grâce à la prop
+          <code>required</code>.</p>
 <AmeliproCheckboxGroup 
 	v-bind="args" 
 	v-model="model" 

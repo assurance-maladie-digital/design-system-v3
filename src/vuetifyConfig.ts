@@ -18,6 +18,7 @@ import {
 	apContextualTokens,
 	apLightTheme,
 	apDarkTheme,
+	apColorsTokens,
 } from './designTokens'
 import { createFlattenTheme, createFontVariables } from './designTokens/utils'
 import { fr } from 'vuetify/locale'
@@ -39,12 +40,13 @@ export const createVuetifyInstance = () => createVuetify({
 				colors: {
 					...cnamLightTheme,
 					...cnamDarkTheme,
+					...createFlattenTheme(cnamColorsTokens),
 				},
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
 					'font-family': cnamFontsTokens.family.primary,
-					...createFlattenTheme(cnamContextualTokens),
 					...createFontVariables(cnamFontsTokens),
+					...createFlattenTheme(cnamContextualTokens),
 				},
 			},
 			pa: {
@@ -52,12 +54,13 @@ export const createVuetifyInstance = () => createVuetify({
 				colors: {
 					...paLightTheme,
 					...paDarkTheme,
+					...createFlattenTheme(paColorsTokens),
 				},
 				variables: {
 					'border-color': paColorsTokens.grey.base,
 					'font-family': paFontsTokens.family.primary,
-					...createFlattenTheme(paContextualTokens),
 					...createFontVariables(paFontsTokens),
+					...createFlattenTheme(paContextualTokens),
 				},
 			},
 			ap: {
@@ -65,6 +68,7 @@ export const createVuetifyInstance = () => createVuetify({
 				colors: {
 					...apLightTheme,
 					...apDarkTheme,
+					...createFlattenTheme(apColorsTokens),
 				},
 				variables: {
 					'font-family': '"Arial", sans-serif',

@@ -1,4 +1,4 @@
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { AmeliproMessage } from '@/components'
 import AmeliproRadioGroup from '../AmeliproRadioGroup.vue'

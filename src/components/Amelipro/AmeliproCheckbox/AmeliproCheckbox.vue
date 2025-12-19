@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref, watch } from 'vue'
+	import { computed, type PropType, ref, watch } from 'vue'
 	import type { AmeliproCheckboxItem } from './types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 

@@ -90,17 +90,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -114,12 +108,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-ap-blue-darken-1
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-ap-blue-darken-1
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -200,7 +192,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
           v-input
           v-input--center-affix
           v-input--density-compact
-          v-input--dirty
           v-input--horizontal
           v-locale--is-ltr
           v-text-field
@@ -211,9 +202,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <div class="
               bg-ap-white
               v-field
-              v-field--active
               v-field--center-affix
-              v-field--dirty
               v-field--has-background
               v-field--no-label
               v-field--variant-outlined
@@ -240,17 +229,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__background
-                    "
+                    class="v-progress-linear__background"
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__buffer
-                    "
+                    class="v-progress-linear__buffer"
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -264,12 +247,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
-                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
-                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -293,7 +274,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   required=""
                   size="1"
                   type="text"
-                  value="the-postalCode"
                 />
                 <!---->
               </div>
@@ -333,7 +313,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
           v-input
           v-input--center-affix
           v-input--density-compact
-          v-input--dirty
           v-input--horizontal
           v-locale--is-ltr
           v-text-field
@@ -344,9 +323,7 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             <div class="
               bg-ap-white
               v-field
-              v-field--active
               v-field--center-affix
-              v-field--dirty
               v-field--has-background
               v-field--no-label
               v-field--variant-outlined
@@ -373,17 +350,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                 >
                   <!---->
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__background
-                    "
+                    class="v-progress-linear__background"
                     style="opacity: NaN;"
                   ></div>
                   <div
-                    class="
-                      bg-ap-blue-darken-1
-                      v-progress-linear__buffer
-                    "
+                    class="v-progress-linear__buffer"
                     style="
                       opacity: NaN;
                       width: 0%;
@@ -397,12 +368,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   >
                     <div class="v-progress-linear__indeterminate">
                       <div class="
-                        bg-ap-blue-darken-1
                         long
                         v-progress-linear__indeterminate
                       "></div>
                       <div class="
-                        bg-ap-blue-darken-1
                         short
                         v-progress-linear__indeterminate
                       "></div>
@@ -426,7 +395,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
                   required=""
                   size="1"
                   type="text"
-                  value="the-city"
                 />
                 <!---->
               </div>
@@ -445,7 +413,6 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
         </div>
       </div>
     </div>
-    <!-- v-if -->
     <!-- v-if -->
   </div>
   <!-- third line group -->
@@ -506,17 +473,11 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
             >
               <!---->
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__background
-                "
+                class="v-progress-linear__background"
                 style="opacity: NaN;"
               ></div>
               <div
-                class="
-                  bg-ap-blue-darken-1
-                  v-progress-linear__buffer
-                "
+                class="v-progress-linear__buffer"
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -530,12 +491,10 @@ exports[`AmeliproPostalAddressField > render correctly 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
-                    bg-ap-blue-darken-1
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
-                    bg-ap-blue-darken-1
                     short
                     v-progress-linear__indeterminate
                   "></div>

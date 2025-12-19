@@ -1,0 +1,33 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as LunarCalendarStories from './LunarCalendar.stories';
+
+<Meta of={LunarCalendarStories} />
+
+<div className="header">
+  <h1>LunarCalendar</h1>
+  <p>Le composant `LunarCalendar` permet la saisie de dates selon le calendrier lunaire avec validation automatique et formatage.</p>
+  <p>Il hérite des props et fonctionnalités du composant `SyTextField` de Synapse.</p>
+</div>
+
+<Canvas of={LunarCalendarStories.Default} />
+
+# API
+
+<Controls of={LunarCalendarStories.Default} />
+
+# Exemples d'utilisation
+
+## Avec contraintes d'années
+
+<Canvas of={LunarCalendarStories.WithYearConstraints} />
+
+Limitation de la saisie entre deux années spécifiques.
+
+## Avec année minimale seulement
+
+<Canvas of={LunarCalendarStories.WithMinYearOnly} />
+
+## Avec année maximale seulement
+
+<Canvas of={LunarCalendarStories.WithMaxYearOnly} />
+

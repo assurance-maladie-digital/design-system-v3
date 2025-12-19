@@ -327,7 +327,6 @@ exports[`ExternalLinks > renders correctly 1`] = `
     persistent="false"
     scrim="false"
     scrollstrategy="reposition"
-    sticktotarget="false"
     submenu="false"
     transition="fade-transition"
     zindex="4"

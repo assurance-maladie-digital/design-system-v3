@@ -55,16 +55,56 @@ Si vous souhaitez gérer vous-même la validation, vous pouvez désactiver la va
 
 ## Événements
 
-| Nom | Description | Signature |
-|-----|-------------|-----------|
-| `submit` | Émis lors de la soumission du formulaire | `(event: { isValid: boolean }) => void` |
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Signature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>submit</code></td>
+      <td>Émis lors de la soumission du formulaire. Le payload contient le résultat de la validation.</td>
+      <td><code>(payload: &#123; isValid: boolean &#125;) =&gt; void</code></td>
+    </tr>
+    <tr>
+      <td><code>reset</code></td>
+      <td>Émis lors de la réinitialisation du formulaire (appel explicite de <code>reset()</code> ou bouton <code>type="reset"</code>).</td>
+      <td><code>() =&gt; void</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Méthodes exposées
 
-| Nom | Description | Signature |
-|-----|-------------|-----------|
-| `validate` | Valide tous les composants du formulaire | `() => Promise<boolean>` |
-| `reset` | Réinitialise tous les composants du formulaire | `() => void` |
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Signature</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>validate</code></td>
+      <td>Valide tous les composants du formulaire (Vuetify + composants personnalisés) et met à jour l’état interne de validation.</td>
+      <td><code>() =&gt; Promise&lt;boolean&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code>reset</code></td>
+      <td>Réinitialise tous les composants du formulaire et émet l’événement <code>reset</code>.</td>
+      <td><code>() =&gt; void</code></td>
+    </tr>
+    <tr>
+      <td><code>clearValidation</code></td>
+      <td>Efface uniquement les états de validation (messages d’erreur, etc.) sans modifier les valeurs des champs.</td>
+      <td><code>() =&gt; void</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Le système de validation en cascade
 

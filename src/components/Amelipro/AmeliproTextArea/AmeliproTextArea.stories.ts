@@ -8,7 +8,7 @@ const meta = {
 		'required': {
 			default: false,
 			description: 'Défini que le champ est obligatoire',
-			name: 'aria-required',
+			name: 'required',
 			type: 'boolean',
 		},
 		'classes': { description: 'Classes à appliquer à la racine du composant' },

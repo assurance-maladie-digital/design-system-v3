@@ -1,4 +1,4 @@
-import { type VueWrapper, shallowMount } from '@vue/test-utils'
+import { shallowMount, type VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproAutoCompleteField from '../AmeliproAutoCompleteField.vue'
 import type { AutoCompleteItem } from '../types'

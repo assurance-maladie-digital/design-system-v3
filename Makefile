@@ -30,7 +30,7 @@ check-package-manager:
 
 install: check-package-manager ## Installe les dépendances du projet
 	@echo "${BLUE}Installation des dépendances...${NC}"
-	@$(PACKAGE_MANAGER) install
+	@$(PACKAGE_MANAGER) install --frozen-lockfile
 
 dev: check-package-manager ## Lance le serveur de développement
 	@echo "${BLUE}Démarrage du serveur de développement...${NC}"

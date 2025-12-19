@@ -130,7 +130,7 @@
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: DateInput
-			label?: string
+			label: string
 			placeholder?: string
 			format?: string
 			dateFormatReturn?: string
@@ -173,7 +173,7 @@
 		}>(),
 		{
 			modelValue: undefined,
-			placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+			placeholder: undefined,
 			format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 			dateFormatReturn: '',
 			isBirthDate: false,
@@ -203,7 +203,6 @@
 			displayAsterisk: false,
 			period: () => ({ min: '', max: '' }),
 			autoClamp: false,
-			label: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
 			isValidateOnBlur: true,
 			density: 'default',
 			hint: undefined,
@@ -1004,7 +1003,7 @@
 				:class="[getMessageClasses(), 'label-hidden-on-focus']"
 				:date-format-return="props.dateFormatReturn"
 				:format="props.format"
-				:label="labelWithAsterisk || ''"
+				:label="labelWithAsterisk"
 				:placeholder="props.placeholder"
 				:required="props.required"
 				:custom-rules="props.customRules"
@@ -1023,7 +1022,7 @@
 				:external-error-messages="errorMessages"
 				:display-asterisk="props.displayAsterisk"
 				:is-validate-on-blur="props.isValidateOnBlur"
-				:title="props.title || props.placeholder || undefined"
+				:title="props.title"
 				:hint="props.hint"
 				:persistent-hint="props.persistentHint"
 				@focus="emit('focus')"
@@ -1049,14 +1048,14 @@
 						ref="dateCalendarTextInputRef"
 						:key="fieldKey"
 						:model-value="textInputValue"
-						:label="labelWithAsterisk || ''"
+						:label="labelWithAsterisk"
 						:placeholder="props.placeholder"
 						:format="props.format"
 						:date-format-return="props.dateFormatReturn"
 						:required="props.required"
 						:disabled="props.disabled"
 						:readonly="props.readonly"
-						:title="props.title || props.placeholder || undefined"
+						:title="props.title"
 						:is-outlined="props.isOutlined"
 						:display-icon="props.displayIcon"
 						:display-append-icon="props.displayAppendIcon"
@@ -1069,7 +1068,6 @@
 						:show-success-messages="props.showSuccessMessages"
 						:bg-color="props.bgColor"
 						:display-range="props.displayRange"
-						:display-persistent-placeholder="true"
 						:is-validate-on-blur="props.isValidateOnBlur"
 						:external-error-messages="errorMessages"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"

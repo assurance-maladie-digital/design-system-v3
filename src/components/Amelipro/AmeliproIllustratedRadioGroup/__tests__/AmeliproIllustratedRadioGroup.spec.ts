@@ -1,5 +1,5 @@
 import { AmeliproIcon, AmeliproMessage } from '@/components'
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproIllustratedRadioGroup from '../AmeliproIllustratedRadioGroup.vue'
 import type { AmeliproIllustratedRadioGroupItem } from '../types'

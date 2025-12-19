@@ -132,7 +132,19 @@
 					:class="getItemClass(index, item.class)"
 					class="sy-data-list-item text-body-1"
 					@click:action="emit('click:item-action', index)"
-				/>
+				>
+					<template
+						v-if="$slots.item"
+						#value="{ itemValue }"
+					>
+						<slot
+							name="item"
+							:item="item"
+							:index="index"
+							:item-value="itemValue"
+						/>
+					</template>
+				</DataListItem>
 			</dl>
 		</component>
 	</VFadeTransition>
