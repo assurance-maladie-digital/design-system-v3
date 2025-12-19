@@ -29,9 +29,17 @@ export function assertNoA11yViolations(
 		})),
 	)
 
-	const first = violations[0]
+	const summary = violations
+		.map((v, index) => {
+			const targets = v.nodes
+				.slice(0, 3)
+				.map(n => n.target.join(' '))
+				.join(' | ')
+			return `${index + 1}. ${v.id} (${v.impact ?? 'unknown'}) – ${v.help} [targets: ${targets}]`
+		})
+		.join('\n')
+
 	throw new Error(
-		`[a11y][${context}] ${violations.length} violation(s) axe. `
-		+ `Ex: ${first.id} (${first.impact}) – ${first.help}`,
+		`[a11y][${context}] ${violations.length} violation(s) axe:\n${summary}`,
 	)
 }
