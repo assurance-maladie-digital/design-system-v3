@@ -5,7 +5,6 @@ import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import Captcha from '../Captcha.vue'
-import { vuetify } from '@tests/unit/setup'
 
 // Scénario d’accessibilité : captcha en mode image, avec les URLs configurées
 // et l’initialisation asynchrone terminée avant l’audit axe.
@@ -29,9 +28,6 @@ describe('Captcha – accessibility (axe)', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
