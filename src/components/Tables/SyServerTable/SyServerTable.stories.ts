@@ -209,6 +209,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -439,6 +442,9 @@ export const Default: Story = {
 
 export const ServerSortBy: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -669,6 +675,9 @@ export const ServerSortBy: Story = {
 
 export const ServerMultiSort: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -983,6 +992,9 @@ export const ServerMultiSort: Story = {
 
 export const ServerFilterByText: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1263,6 +1275,9 @@ export const ServerFilterByText: Story = {
 
 export const ServerFilterByNumber: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1557,6 +1572,9 @@ export const ServerFilterByNumber: Story = {
 
 export const ServerFilterBySelect: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1873,6 +1891,9 @@ export const ServerFilterBySelect: Story = {
 
 export const ServerFilterBySelectMultiple: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2213,6 +2234,9 @@ export const ServerFilterBySelectMultiple: Story = {
 
 export const ServerFilterByExacteDate: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2501,6 +2525,9 @@ export const ServerFilterByExacteDate: Story = {
 
 export const ServerFilterByPeriod: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2806,6 +2833,9 @@ export const ServerFilterByPeriod: Story = {
 
 export const CustomFilterSlot: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3189,6 +3219,9 @@ export const CustomFilterSlot: Story = {
 
 export const CustomFilterInputs: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3486,6 +3519,9 @@ export const CustomFilterInputs: Story = {
 
 export const ManyServerTables: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3775,6 +3811,9 @@ export const ManyServerTables: Story = {
 
 export const DataAlignment: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -4031,6 +4070,9 @@ export const DataAlignment: Story = {
 
 export const ResizableColumns: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -4263,6 +4305,9 @@ export const ResizableColumns: Story = {
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -4558,6 +4603,9 @@ fetchData()
 export const SingleRowSelection: Story = {
 	name: 'Single Row Selection',
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -4852,6 +4900,9 @@ fetchData()
 
 export const ColumnControls: StoryObj<typeof SyServerTable> = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -5083,6 +5134,9 @@ export const ColumnControls: StoryObj<typeof SyServerTable> = {
 
 export const ExpandableRows: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -5374,6 +5428,9 @@ export const ExpandableRows: Story = {
 
 export const SlotItem: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -5635,6 +5692,9 @@ export const SlotItem: Story = {
 
 export const SlotHeaders: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -5892,6 +5952,9 @@ export const SlotHeaders: Story = {
 
 export const SlotHeader: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -6135,6 +6198,9 @@ export const SlotHeader: Story = {
 
 export const ItemsPerPageOptions: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -6368,6 +6434,9 @@ export const ItemsPerPageOptions: Story = {
 
 export const ComplexItemsDisplay: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

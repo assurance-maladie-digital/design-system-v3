@@ -51,6 +51,9 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	args: {},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -82,6 +85,9 @@ export const Disabled: Story = {
 		],
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -128,6 +134,9 @@ export const WithVModel: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -185,6 +194,9 @@ export const WithTabsPrependSlot: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -222,6 +234,9 @@ export const WithTabsAppendSlot: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -262,6 +277,9 @@ export const WithTabPrependSlot: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -310,6 +328,9 @@ export const WithTabAppendSlot: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -362,6 +383,9 @@ export const WithCustomContent: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -398,6 +422,9 @@ export const ManyTabs: Story = {
 		})),
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -439,6 +466,9 @@ export const CustomTheme: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -503,6 +533,9 @@ export const WithTabConfirmation: Story = {
     `,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

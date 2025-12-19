@@ -32,6 +32,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -88,6 +91,9 @@ const items = [
 
 export const MobileView: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -136,6 +142,9 @@ const items = ['Option 1', 'Option 2']
 
 export const WithSlotPrependIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -194,6 +203,9 @@ const items = ['Option 1', 'Option 2']
 
 export const WithSlotAppendIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -249,6 +261,9 @@ const items = ['Option 1', 'Option 2']
 
 export const WithIconOnly: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -306,6 +321,9 @@ const items = ['Option 1', 'Option 2']
 
 export const WithLogoutItemSlot: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -364,6 +382,9 @@ const items = ['Option 1', 'Option 2']
 
 export const WithCustomKeys: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -429,6 +450,9 @@ const menuItems = [
 
 export const WithMultipleSlots: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -493,6 +517,9 @@ const menuItems = ['Option 1', 'Option 2']
 
 export const WithCustomStyles: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -556,6 +583,9 @@ const items = ['Option 1', 'Option 2']
 
 export const WithStyledOptions: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

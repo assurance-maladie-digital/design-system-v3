@@ -83,6 +83,9 @@ export const Default: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -297,6 +300,9 @@ export const Populated: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -477,6 +483,9 @@ export const WithScroll: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -836,6 +845,9 @@ export const Generated: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

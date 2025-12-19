@@ -118,6 +118,9 @@ export const WithObjectContent: Story = {
 
 export const CustomColors: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				language: 'vue',
@@ -195,6 +198,9 @@ export const CustomColors: Story = {
 
 export const CustomHeadingLevel: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				language: 'vue',

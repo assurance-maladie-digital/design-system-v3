@@ -171,6 +171,9 @@ export const Indeterminate: Story = {
 		template: `<SyCheckbox v-model="checked" :indeterminate="indeterminate" v-bind="args" label="Case à cocher indéterminée" />`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -204,6 +207,9 @@ Cette case à cocher est dans un état indéterminé, généralement utilisé lo
 
 export const WithControlsIds: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

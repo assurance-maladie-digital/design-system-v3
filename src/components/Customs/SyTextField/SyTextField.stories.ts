@@ -1161,6 +1161,9 @@ export const WithTooltips: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: 'Exemple de champ avec des tooltips d\'information. Les icônes d\'information apparaissent automatiquement lorsque les props prependTooltip et/ou appendTooltip sont renseignées. La position des tooltips peut être contrôlée avec la prop tooltipLocation.',

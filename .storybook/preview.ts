@@ -151,7 +151,7 @@ const preview: Preview = {
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Guide Du Dev', [
 						'Installation',
-						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes',],
+						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes'],
 						'Configuration du thème',
 						'Correspondance composants PAG',
 						'Règles De Validation',
@@ -222,6 +222,16 @@ const preview: Preview = {
 					value: '#56c271',
 				},
 			],
+		},
+		a11y: {
+			config: {
+				rules: [
+					{
+						id: 'color-contrast',
+						enabled: false,
+					},
+				],
+			},
 		},
 	},
 }

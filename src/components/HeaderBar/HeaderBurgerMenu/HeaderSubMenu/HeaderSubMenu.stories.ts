@@ -93,6 +93,9 @@ export const Default: Story = {
 		}, 1000)
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
