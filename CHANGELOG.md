@@ -1,3 +1,44 @@
+## v1.0.16 (22-12-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Optimise global lib size <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1656">#1656</a></td>
+      <td>- AmeliProTileBtn: add tooltip on label <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1650">#1650</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTabs: improve key binding with item label <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1655">#1655</a></td>
+      <td>- AmeliproPostalField: fix errors display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1569">#1569</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyRadioGroup: add component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1577">#1577</a></td>
+      <td>- AmeliproIcon: fix v-html security issue <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1583">#1583</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: add derogations information for accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1562">#1562</a></td>
+      <td>- AmeliproStepper: fix tabs display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1564">#1564</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Utils: improve date rules <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1644">#1644</a></td>
+      <td>- Rename aria-required prop in required on some components <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1535">#1535</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix keyboard navigation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1641">#1641</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix clear on calendar mode + months/years sync in combined mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1642">#1642</a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.15 (04-12-2025)
 
 Fix readme <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1559">#1559</a>
