@@ -43,6 +43,11 @@ describe('ComplexDatePicker.clean', () => {
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[0][0]).toBe('01/01/2025')
+
+		const selectedDate = wrapper.vm.selectedDates as Date
+		expect(selectedDate).toBeInstanceOf(Date)
+		expect(wrapper.vm.currentMonth).toBe(String(selectedDate.getMonth()))
+		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
 	it('respects disabled and readonly props when opening the calendar', async () => {
@@ -81,6 +86,10 @@ describe('ComplexDatePicker.clean', () => {
 		expect(emittedSelected && emittedSelected[0][0]).toBe('01/01/2025')
 
 		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+
+		const selectedDate = wrapper.vm.selectedDates as Date
+		expect(wrapper.vm.currentMonth).toBe(String(selectedDate.getMonth()))
+		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
 	it('handleDateSelected updates model, selection and emits event in range mode', async () => {
@@ -100,6 +109,14 @@ describe('ComplexDatePicker.clean', () => {
 		expect(emittedSelected).toBeTruthy()
 
 		expect(wrapper.vm.selectedDates).not.toBeNull()
+
+		const selection = wrapper.vm.selectedDates as Date | (Date | null)[]
+		const baseDate = Array.isArray(selection)
+			? (selection.find(date => date instanceof Date) as Date | undefined)
+			: selection
+		expect(baseDate).toBeInstanceOf(Date)
+		expect(wrapper.vm.currentMonth).toBe(String((baseDate as Date).getMonth()))
+		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
 	it('initializes from external modelValue with dateFormatReturn in single mode', async () => {

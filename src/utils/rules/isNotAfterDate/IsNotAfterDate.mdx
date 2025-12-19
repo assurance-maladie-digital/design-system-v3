@@ -72,7 +72,7 @@ isNotAfterDateFn(
 	errorMessages?: {
 		default: (date: string) => string;
 	}
-): (value: string) => true | string;
+): (value: string | Date) => true | string;
 
 `} />
 
@@ -84,7 +84,7 @@ isNotAfterDateFn(
 
 ### Valeurs de retour
 
-Retourne une fonction de validation qui vérifie si la date passée en paramètre n'est pas postérieure à la date de référence.
+Retourne une fonction de validation qui accepte une chaîne de caractères ou un objet `Date` représentant une date et vérifie que cette date n'est pas postérieure à la date de référence.
 
 ## Exemples
 

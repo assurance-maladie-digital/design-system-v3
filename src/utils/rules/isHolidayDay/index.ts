@@ -1,4 +1,3 @@
-import { ruleMessage } from '@/utils/ruleMessage'
 import { useHolidayDay } from '@/composables/date/useHolidayDay'
 import type {
 	ErrorMessages,
@@ -7,6 +6,7 @@ import type {
 	Value,
 } from '@/utils/rules/types'
 import { defaultErrorMessages } from './locales'
+import { validateDateValue } from '../validateDateValue'
 
 /**
  * Vérifie qu'une date n'est pas un jour férié
@@ -17,16 +17,14 @@ export function isHolidayDayFn(
 	errorMessages: ErrorMessages = defaultErrorMessages,
 ): ValidationRule {
 	return (value: Value): ValidationResult => {
-		// Si la valeur est vide, on considère que c'est valide
-		if (!value) {
-			return true
-		}
-
 		// Utiliser le composable pour vérifier si la date est un jour férié
 		const { isHolidayDay } = useHolidayDay()
-
 		// On retourne true si ce n'est PAS un jour férié, sinon on retourne le message d'erreur
-		return ((typeof value === 'string' || value instanceof Date) && !isHolidayDay(value)) || ruleMessage(errorMessages, 'default')
+		return validateDateValue(
+			value,
+			formatted => !isHolidayDay(formatted),
+			{ errorMessages },
+		)
 	}
 }
 

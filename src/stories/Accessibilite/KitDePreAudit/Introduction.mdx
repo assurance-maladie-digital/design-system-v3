@@ -132,18 +132,25 @@ import '../../styles/shared.css';
 
 <div className="info-section">
   <h2>🌟 Objectif</h2>
-  <p>L'objectif du pré-audit est d'obtenir un premier avis sur le taux de conformité de votre service web avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. La procédure se fait en autonomie par l'équipe de développement.</p>
-  
+  <p>L'objectif du pré-audit est d'obtenir un premier avis sur le taux de conformité de votre service web, avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>, sans viser l'exhaustivité ni un score parfait. La procédure se fait en autonomie par l'équipe de développement du produit. Le relevé des non-conformités relève de la responsabilité de l’équipe de développement, ce kit étant conçu pour guider l’auto-évaluation.</p>
+
   <p>La restitution consiste à s'assurer que toutes les exigences du pré-audit sont remplies et que vous ayez un minimum d'erreur en lançant les tests automatisés avec Tanaguru.</p>
-  
+
+  <p>Les résultats observés par le pré-audit sont souvent partiels et doivent être considérés comme un point de départ et non comme une évaluation finale. Lors d'un audit suivi du pré-audit, nous observons un taux minimum compris entre 30% et 50%. Un contre-audit pourra être proposé après application des correctifs relevés par l'audit.</p>
+
+  <p>L'enjeu est d'identifier un maximum de non conformités en phase pré-audit afin de réduire le nombre de correctifs en phase audit. Ce kit met aussi à disposition des outils et des tutoriels pour vous accompagner dans cette démarche.</p>
+
   <div className="alert">
-    <p><strong>Note :</strong> Vous pouvez nous solliciter pour un accompagnement si vous rencontrez des difficultés techniques à résoudre les non-conformités relevées par Tanaguru.</p>
+    <p><strong>Note :</strong> Vous pouvez nous solliciter pour un accompagnement si vous rencontrez des difficultés techniques à résoudre les non-conformités, relevées par Tanaguru en phase automatique ou par l'équipe en phase manuelle.</p>
   </div>
 </div>
 
 <div className="section-container">
   <h2>Environnement de test</h2>
-  
+  <p>Il est important de tester votre service dans un environnement similaire à celui utilisé par les utilisateurs finaux. L'environnement de test sera le même pour chacune des phrases (pré-audit, audit, contre-audit) et devra être stable. Aucune nouvelle fonctionnalité ne doit être développée entre chaque phase. Seules les corrections liées aux écarts d’accessibilité identifiés doivent être réalisées, afin de garantir la cohérence et la comparabilité des résultats.</p>
+
+  <p>Le produit devra mettre à disposition un environnement adéquat pour l'audit qui, selon le public ciblé par le produit, pourra être un environnement de bureau ou mobile.</p>
+
   <div className="environment-grid">
     <div className="resource-card">
       <h3>💻 Environnement principal</h3>
@@ -154,7 +161,7 @@ import '../../styles/shared.css';
         <li>Lecteur d'écran : NVDA (dernière version)</li>
       </ul>
     </div>
-    
+
     <div className="resource-card">
       <h3>📱 Environnement mobile</h3>
       <p>Si l'outil cible un public utilisant des terminaux mobile :</p>
@@ -169,7 +176,7 @@ import '../../styles/shared.css';
 
 <div className="section-container">
   <h2>Livrable</h2>
-  
+
   <p> A l'issue du pré-audit, nous attendons les éléments suivants :</p>
 
   <div className="resources-grid">
@@ -177,12 +184,12 @@ import '../../styles/shared.css';
     <h3>Contexte du projet</h3>
     <p>Détails sur les responsabilités et les parties prenantes.</p>
   </div>
-  
+
   <div className="resource-card">
     <h3>Résultat de l'échantillon de test</h3>
     <p>Analyse des pages testées.</p>
   </div>
-  
+
   <div className="resource-card">
     <h3>Résultat du pré-audit manuel</h3>
     <p>Complété avec un onglet par page.</p>
@@ -193,5 +200,5 @@ import '../../styles/shared.css';
   <h2>Annexes</h2>
     <p>Pour chaque page testée, il sera demandé de restituer un rapport Tanaguru complet.</p>
 </div>
-  
+
 </div>

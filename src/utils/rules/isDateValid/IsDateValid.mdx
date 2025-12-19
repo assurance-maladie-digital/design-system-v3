@@ -27,7 +27,7 @@ import * as IsDateValidStories from './IsDateValid.stories';
 
 <div className="header">
   <h1>Règle de validation `isDateValid`</h1>
-  <p>La règle de validation `isDateValid` permet de vérifier si une chaîne de caractères est une date au format *DD/MM/YYYY*. </p>
+  <p>La règle de validation `isDateValid` permet de vérifier si une valeur (chaîne de caractères ou objet `Date`) correspond à une date au format *DD/MM/YYYY*. </p>
 </div>
 
 ## Usage
@@ -90,7 +90,7 @@ isDateValidFn(
 		monthNotMatch: string;
 		notALeapYear: string;
 	}
-): (value: string) => true | string;
+): (value: string | Date) => true | string;
 `} />
 
 ### Arguments

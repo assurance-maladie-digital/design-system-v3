@@ -208,7 +208,7 @@
 
 	const showClear = computed(() => {
 		if (!props.isClearable) return false
-		if (props.readonly || props.disabled) return false
+		if (props.disabled) return false
 		return model.value !== undefined && model.value !== null && String(model.value) !== '' && String(model.value) !== '__/__/____'
 	})
 
@@ -732,7 +732,9 @@
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiClose"
 						variant="text"
-						@click="clearField"
+						@click.stop="clearField"
+						@keydown.enter.stop
+						@keydown.space.stop
 					/>
 					<SyIcon
 						v-if="validationIcon && !props.appendInnerIcon"
