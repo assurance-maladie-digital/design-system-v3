@@ -1,0 +1,37 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/blocks';
+import * as SyRadioGroupStories from "./SyRadioGroup.stories";
+
+<Meta of={SyRadioGroupStories} />
+
+<div className="header">
+  <h1>SyRadioGroup</h1>
+  <p>Le composant `SyRadioGroup` est une case à cocher qui étend le composant `VRadio` de Vuetify, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
+</div>
+
+Il étend les fonctionnalités de base de Vuetify avec :
+
+- Un système de validation avancé
+- Des états visuels (erreur, avertissement, succès)
+
+<Canvas of={SyRadioGroupStories.Default} />
+
+# API
+
+<Controls of={SyRadioGroupStories.Default} />
+
+## Validation
+
+Le composant supporte trois types de validation :
+- Règles d'erreur standard (`customRules`)
+- Règles d'avertissement (`customWarningRules`)
+- Règles de succès (`customSuccessRules`)
+
+### États visuels :
+
+La case à cocher adapte automatiquement son apparence selon son état :
+- Rouge pour les erreurs
+- Orange pour les avertissements
+- Vert pour les succès
+
+
+<a href="/?path=/docs/guide-du-dev-guide-de-validation-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>
