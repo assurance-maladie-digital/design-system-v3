@@ -391,7 +391,7 @@
 					:disabled="disabled"
 					:allow-html="displayFormat === 'code-abbreviation' || displayFormat === 'abbreviation'"
 					:autocomplete="autocompleteCountryCode"
-					class="custom-select mr-4"
+					class="custom-select mr-0 mr-sm-4"
 					text-key="displayText"
 					plain-text-key="plainDisplayText"
 					value-key="code"
