@@ -80,7 +80,7 @@
 @use '@/assets/amelipro/apTokens';
 
 .breadcrumb__btn {
-  border-radius: 2px !important;
+	border-radius: 2px !important;
 }
 
 .breadcrumb__separator {
