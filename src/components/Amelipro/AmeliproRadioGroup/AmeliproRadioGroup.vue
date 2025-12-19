@@ -255,6 +255,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
+
 .margin-label {
 	@media #{apTokens.$media-up-md} {
 		margin-top: 3px;
