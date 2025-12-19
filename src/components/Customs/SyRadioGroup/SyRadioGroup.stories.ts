@@ -562,6 +562,7 @@ export const CustomRules: Story = {
 					:options="options"
 					label="Options"
 					:custom-warning-rules="rules"
+					:custom-success-rules="successRules"
 					:is-validate-on-blur="false"
 				/>
 				</template>`,
@@ -579,7 +580,7 @@ const options = [
 	{ label: 'Option B', value: 'B' },
 ]
 
-const rules = [
+const warningRules = [
 	{
 		type: 'custom',
 		options: {
@@ -589,6 +590,17 @@ const rules = [
 				}
 				return true
 			},
+			fieldIdentifier: 'option',
+		},
+	},
+]
+
+const successRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string | null) => value === 'A',
+			successMessage: 'Option A sélectionnée',
 			fieldIdentifier: 'option',
 		},
 	},
@@ -608,7 +620,7 @@ const rules = [
 				{ label: 'Option B', value: 'B' },
 			]
 
-			const rules = [
+			const warningRules = [
 				{
 					type: 'custom',
 					options: {
@@ -621,11 +633,22 @@ const rules = [
 					},
 				},
 			]
+
+			const successRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string | null) => value === 'A',
+						successMessage: 'Option A sélectionnée',
+					},
+				},
+			]
 			return {
 				args,
 				selected,
 				options,
-				rules,
+				warningRules,
+				successRules,
 			}
 		},
 		template: `
@@ -633,7 +656,8 @@ const rules = [
 				v-model="selected"
 				label="Options"
 				:options="options"
-			    :custom-warning-rules="rules"
+			    :custom-warning-rules="warningRules"
+				:custom-success-rules="successRules"
 				:is-validate-on-blur="false"
 			/>
     `,

@@ -123,6 +123,7 @@
 			value,
 			[...defaultRules.value, ...props.customRules],
 			props.customWarningRules,
+			props.customSuccessRules,
 		)
 		return !result.hasError
 	}
