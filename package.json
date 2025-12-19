@@ -29,7 +29,7 @@
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
     "lint:fix": "eslint \"src/**/*.{ts,vue}\" --fix && stylelint \"src/**/*.{css,scss,vue}\" --fix",
     "test:unit": "vitest run",
-    "test:a11y": "vitest run --dir tests/unit/accessibility",
+    "test:a11y": "vitest run a11y.spec.ts",
     "prepare": "husky",
     "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
   },
