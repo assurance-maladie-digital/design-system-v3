@@ -33,7 +33,47 @@
       <td></td>
     </tr>
     <tr style="vertical-align: top;">
+      <td>- SySelect: fix display with chips and multiple props <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1634">#1634</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix clear with chips prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1624">#1624</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
       <td>- DatePicker: fix clear on calendar mode + months/years sync in combined mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1642">#1642</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve isNotBeforeToday rule  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1639">#1639</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ErrorPage: fix btnLink prop  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1635">#1635</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: prevent duplicate modelValue emission on blur  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1630">#1630</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: fix validate-on handling  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1610">#1610</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: allow to not show the placeholder <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1609">#1609</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Tokens: allow colors in template class (not css only) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1597">#1597</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect/SyTextField: fix dropdown + helpText display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1604">#1604</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: manage objet instance  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1585">#1585</a></td>
       <td></td>
     </tr>
   </tbody>
