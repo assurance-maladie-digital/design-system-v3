@@ -1,0 +1,135 @@
+import SyRadioGroup from '../SyRadioGroup.vue'
+import { mount } from '@vue/test-utils'
+import { describe, it, expect } from 'vitest'
+import { nextTick } from 'vue'
+
+describe('SyRadioGroup', () => {
+	it('should render correctly', () => {
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				label: 'Test radio group',
+				options: [
+					{ label: 'A', value: 'A' },
+					{ label: 'B', value: 'B' },
+				],
+			},
+		})
+
+		expect(wrapper.find('.v-radio-group').exists()).toBe(true)
+		expect(wrapper.text()).toContain('Test radio group')
+		expect(wrapper.findAll('input[type="radio"]').length).toBe(2)
+	})
+	it('should handle v-model correctly', async () => {
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				'modelValue': null,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'options': [
+					{ label: 'Option A', value: 'A' },
+					{ label: 'Option B', value: 'B' },
+
+				],
+			},
+		})
+
+		// Sélectionner la première option
+		await wrapper.find('input[type="radio"]').setValue(true)
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['A'])
+		expect(wrapper.emitted('change')?.[0]).toEqual(['A'])
+	})
+
+	it('should handle validation correctly', async () => {
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				'modelValue': null,
+				'label': 'Required Radio',
+				'required': true,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'options': [
+					{ label: 'X', value: 'X' },
+				],
+			},
+		})
+
+		// Valider le champ directement via la méthode exposée
+		const isValid = await wrapper.vm.validateOnSubmit()
+		expect(isValid).toBe(false)
+
+		// Vérifier que le message d'erreur est présent
+		await nextTick()
+		const errorMessages = wrapper.findAll('.v-messages__message')
+		expect(errorMessages.length).toBeGreaterThan(0)
+		expect(errorMessages[0].text()).toContain('Required Radio est requis')
+
+		// Sélectionner l'option
+		const radioX = wrapper.find('input[value="X"]')
+		await radioX.setValue(true)
+		await nextTick()
+
+		// Valider à nouveau
+		const isValidAfter = await wrapper.vm.validateOnSubmit()
+		expect(isValidAfter).toBe(true)
+		expect(wrapper.vm.modelValue).toBe('X')
+	})
+
+	it('should handle readonly and disabled states', async () => {
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				modelValue: null,
+				readonly: true,
+				options: [{ label: 'X', value: 'X' }],
+			},
+		})
+
+		// Cliquer sur radio button en lecture seule ne devrait pas changer sa valeur
+		await wrapper.find('.v-radio-group').trigger('click')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+
+		// Tester l'état désactivé
+		await wrapper.setProps({ readonly: false, disabled: true })
+		await wrapper.find('.v-radio-group').trigger('click')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+	})
+
+	it('should handle custom validation rules', async () => {
+		const customRule = {
+			type: 'custom',
+			options: {
+				// La fonction de validation personnalisée doit être définie dans options.validate
+				validate: (value: unknown) => value === 'OK', // type générique unknown
+				message: 'Vous devez sélectionner une option.',
+				fieldIdentifier: 'Custom Radio',
+			},
+		}
+
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				'modelValue': null,
+				'required': true,
+				'customRules': [customRule],
+				'isValidateOnBlur': false,
+				'options': [
+					{ label: 'Non', value: 'NO' },
+					{ label: 'Oui', value: 'OK' },
+					{ label: 'Peut-être', value: 42 }, // exemple valeur non-string
+				],
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+			},
+		})
+
+		// Validation initiale : aucune option sélectionnée
+		const isValidInitial = await wrapper.vm.validateOnSubmit()
+		expect(isValidInitial).toBe(false)
+		expect(wrapper.vm.validation.errors.value).toContain('Vous devez sélectionner une option.')
+
+		// Sélectionner l’option correcte
+		await wrapper.setProps({ modelValue: 'OK' })
+
+		// Validation après sélection
+		const isValidCorrect = await wrapper.vm.validateOnSubmit()
+		expect(isValidCorrect).toBe(true)
+		expect(wrapper.vm.validation.errors.value).toHaveLength(0)
+	})
+})
