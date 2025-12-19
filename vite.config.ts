@@ -66,7 +66,7 @@ function generateVuetifyGlobals() {
 export default defineConfig({
 	plugins: [
 		dts({
-			exclude: ['**/*.stories.ts', '**/*.spec.ts'],
+			exclude: ['**/*.stories.ts', '**/*.spec.ts', 'src/stories/**'],
 			entryRoot: 'src',
 			outDir: 'dist',
 			tsconfigPath: 'tsconfig.app.json',
