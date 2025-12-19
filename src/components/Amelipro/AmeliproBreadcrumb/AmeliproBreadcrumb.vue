@@ -79,6 +79,10 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokens';
 
+.breadcrumb__btn {
+  border-radius: 2px !important;
+}
+
 .breadcrumb__separator {
 	display: block;
 	width: 0;
