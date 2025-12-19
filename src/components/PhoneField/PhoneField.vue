@@ -369,9 +369,11 @@
 			{{ locales.label }}
 		</legend>
 		<div class="phone-field-container">
-			<div class="phone-field-country">
+			<div
+				v-if="withCountryCode"
+				class="phone-field-country"
+			>
 				<SySelect
-					v-if="withCountryCode"
 					:key="dialSelectKey"
 					v-model="dialCode"
 					:items="dialCodeOptions"
