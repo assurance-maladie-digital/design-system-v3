@@ -1,0 +1,77 @@
+import '../styles/shared.css';
+import '../styles/accessibility-guide.css';
+
+export const AccessibilityGuideLayout = ({ componentName, iconSrc, apgHref, apgLabel, children }) => (
+  <div className="accessibility-guide">
+    <div className="header">
+      <h1>Guide d'Accessibilité du Composant {componentName}</h1>
+    </div>
+
+    <div className="intro-section">
+      {iconSrc && (
+        <img
+          src={iconSrc}
+          alt="Icône d'accessibilité"
+          className="accessibility-icon"
+        />
+      )}
+      <p className="intro-text">
+        Le composant {componentName} a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C
+        {apgHref && (
+          <>
+            , notamment le modèle{' '}
+            <a href={apgHref} target="_blank" rel="noopener noreferrer">
+              {apgLabel || 'WAI-ARIA Authoring Practices'}
+            </a>
+          </>
+        )}
+        . Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience
+        utilisateur inclusive.
+      </p>
+    </div>
+
+    {children}
+  </div>
+);
+
+export const CriteriaSection = ({ title = "Critères d'accessibilité respectés", children }) => (
+  <div className="criteria-section">
+    <h2>{title}</h2>
+    {children}
+  </div>
+);
+
+export const CriteriaCard = ({ icon, title, children }) => (
+  <div className="criteria-card">
+    <div className="criteria-header">
+      {icon && <span className="criteria-icon">{icon}</span>}
+      <h3>{title}</h3>
+    </div>
+    {children}
+  </div>
+);
+
+export const DemoSection = ({ componentName, children }) => (
+  <div className="demo-section">
+    <h2>Démonstration interactive</h2>
+    <p>
+      Explorez ci-dessous un exemple de {componentName} entièrement accessible. Essayez de naviguer en utilisant
+      uniquement votre clavier pour tester l'accessibilité.
+    </p>
+    {children}
+  </div>
+);
+
+export const BestPracticesSection = ({ title = "Bonnes pratiques d'utilisation", children }) => (
+  <div className="best-practices">
+    <h2>{title}</h2>
+    {children}
+  </div>
+);
+
+export const ResourcesSection = ({ title = 'Ressources supplémentaires', children }) => (
+  <div className="resources-section">
+    <h2>{title}</h2>
+    {children}
+  </div>
+);
