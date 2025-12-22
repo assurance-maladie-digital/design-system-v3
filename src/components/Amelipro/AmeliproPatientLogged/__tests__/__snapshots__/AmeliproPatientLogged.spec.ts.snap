@@ -2,6 +2,7 @@
 
 exports[`AmeliproPatientLogged > render correctly 1`] = `
 <div
+  btnmoreinfo="true"
   class="
     amelipro-card
     d-flex
@@ -719,55 +720,7 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
           </p>
           <!-- v-if -->
         </div>
-        <button
-          class="
-            amelipro-btn
-            d-block
-            d-block
-            elevation-0
-            more-info-btn
-            more-info-btn
-            text-ap-blue-darken-1
-            text-left
-            text-left
-            text-none
-            text-none
-            v-btn
-            v-btn--density-default
-            v-btn--flat
-            v-btn--size-default
-            v-btn--variant-text
-            v-theme--light
-          "
-          id="test-id-btn-more-info"
-          style="
-            height: auto;
-            min-height: auto;
-            padding: 0px;
-          "
-          type="button"
-        >
-          <span class="v-btn__overlay"></span>
-          <span class="v-btn__underlay"></span>
-          <!---->
-          <span
-            class="v-btn__content"
-            data-no-activator=""
-          >
-            <span class="
-              align-center
-              amelipro-custom-btn
-              d-flex
-              flex-row
-            ">
-              test Plus d'informations
-              <!-- v-if -->
-              <!-- v-if -->
-            </span>
-          </span>
-          <!---->
-          <!---->
-        </button>
+        <!-- v-if -->
         <div
           class="mt-4"
           id="test-id-select-container"

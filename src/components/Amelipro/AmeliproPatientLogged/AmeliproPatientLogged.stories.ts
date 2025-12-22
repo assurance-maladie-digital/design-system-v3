@@ -5,11 +5,11 @@ import { ref, watch } from 'vue'
 
 const meta = {
 	argTypes: {
-        'btnPostalAddress': {description: 'Affiche le bouton adresse postale'},
+		'btnPostalAddress': { description: 'Affiche le bouton adresse postale' },
 		'isRestrictedData': { description: 'affiche la liste des bénéficiaires sans séléction possible' },
 		'click': { description: 'Evénement émis au click sur le bouton changer de patient' },
 		'click:info': { description: 'Evénement émis au click sur le bouton informations' },
-        'click:postal-address': {description: 'Evénement émis au click sur le bouton adresse postale'},
+		'click:postal-address': { description: 'Evénement émis au click sur le bouton adresse postale' },
 		'click:pdf': { description: 'Evénement émis au click sur le bouton pdf' },
 		'default': { description: 'Espace libre avant le bouton informations supplémentaire au cas où il y aurait besoin de lignes supplémentaires' },
 		'doctor': { description: 'Slot permettant de remplacer le contenu de la ligne médecin traitant au besoin' },
@@ -97,7 +97,7 @@ type Story = StoryObj<typeof AmeliproPatientLogged>
 
 export const Default: Story = {
 	args: {
-        'btnPostalAddress': true,
+		'btnPostalAddress': true,
 		'doctorTooltipRed': true,
 		'isRestrictedData': false,
 		'patientInfos': {
@@ -135,7 +135,7 @@ export const Default: Story = {
 		'uniqueId': 'test-id',
 		'onClick': fn(),
 		'onClick:info': fn(),
-        'onClick:postal-address': fn(),
+		'onClick:postal-address': fn(),
 		'onClick:pdf': fn(),
 	},
 	parameters: {

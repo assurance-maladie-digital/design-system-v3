@@ -12,7 +12,7 @@
 	import type { SelectItem } from '../AmeliproSelect/types'
 
 	const props = defineProps({
-    btnPostalAddress: {
+		btnPostalAddress: {
 			type: Boolean,
 			default: false,
 		},
@@ -44,7 +44,7 @@
 				firstName: 'Prénom',
 				fund: 'Caisse',
 				fundDialogTitle: 'Coordonnées de l\'organisme de rattachement du patient',
-        postalAddress: 'Adresse postale',
+				postalAddress: 'Adresse postale',
 				mtm: 'Modulation MT',
 				name: 'Nom',
 				nir: 'NIR',
@@ -96,7 +96,7 @@
 	const exemptionDialog = ref(false)
 	const fundDialog = ref(false)
 
-  const emit = defineEmits(['click', 'click:info', 'click:postal-address', 'click:pdf', 'update:model-value'])
+	const emit = defineEmits(['click', 'click:info', 'click:postal-address', 'click:pdf', 'update:model-value'])
 	const selectValue = computed({
 		get: (): SelectItem | number | string | undefined => props.modelValue,
 		set: (newValue: SelectItem | number | string | undefined): void => {
@@ -107,7 +107,7 @@
 	const emitClick = () => emit('click', `${props.uniqueId}-btn`, selectValue.value)
 	const emitClickInfo = () => emit('click:info', `${props.uniqueId}-info-btn`)
 	const emitClickPdf = () => emit('click:pdf', `${props.uniqueId}-pdf-btn`)
-  const emitClickPostalAddress = () => emit('click:postal-address', `${props.uniqueId}-btn-postal-address`)
+	const emitClickPostalAddress = () => emit('click:postal-address', `${props.uniqueId}-btn-postal-address`)
 </script>
 
 <template>
@@ -482,16 +482,16 @@
 
 			<slot
 				v-if="!isRestrictedData"
-        name="postalAdress"
+				name="postalAdress"
 			>
 				<AmeliproBtn
-            v-if="btnPostalAddress"
-            class="d-block text-none text-left postal-address-btn"
+					v-if="btnPostalAddress"
+					class="d-block text-none text-left postal-address-btn"
 					text
-            :unique-id="`${uniqueId}-postal-address-info`"
-            @click="emitClickPostalAddress"
+					:unique-id="`${uniqueId}-postal-address-info`"
+					@click="emitClickPostalAddress"
 				>
-          {{ labels.postalAddress }}
+					{{ labels.postalAddress }}
 				</AmeliproBtn>
 			</slot>
 
