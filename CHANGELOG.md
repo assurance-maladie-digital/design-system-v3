@@ -1,3 +1,130 @@
+## v1.0.16 (22-12-2025)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Optimise global lib size <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1656">#1656</a></td>
+      <td>- AmeliProTileBtn: add tooltip on label <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1650">#1650</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTabs: improve key binding with item label <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1655">#1655</a></td>
+      <td>- AmeliproPostalField: fix errors display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1569">#1569</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyRadioGroup: add component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1577">#1577</a></td>
+      <td>- AmeliproIcon: fix v-html security issue <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1583">#1583</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: add derogations information for accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1562">#1562</a></td>
+      <td>- AmeliproStepper: fix tabs display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1564">#1564</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Utils: improve date rules <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1644">#1644</a></td>
+      <td>- Rename aria-required prop in required on some components <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1535">#1535</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix keyboard navigation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1641">#1641</a></td>
+      <td>- UserMenu: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1567">#1567</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix display with chips and multiple props <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1634">#1634</a></td>
+      <td>- AmeliproCaptcha / AmeliproUpload / AmeliproTable: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1570">#1570</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix clear with chips prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1624">#1624</a></td>
+      <td>- AmeliproBreadcrumb / AmeliproMultipleFoldingCard / AmeliproCustomSelector / AmeliproAccordion: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1460">#1460</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix clear on calendar mode + months/years sync in combined mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1642">#1642</a></td>
+      <td>- AmeliproBadge / AmeliproContentLayout / AmeliproErrorTemplate / AmeliproFilePreview: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1452">#1452</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve isNotBeforeToday rule  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1639">#1639</a></td>
+      <td>- StructureBtn / StructureItem / StructureList / StructureMenu / StructureTabs: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1429">#1429</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ErrorPage: fix btnLink prop  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1635">#1635</a></td>
+      <td>- ServiceBtn / ServiceList / ServiceMenu / ServiceMenuContent / UserInformationSummary / UserMenu / UserMenuDetails: add TU <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1430">#1430</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: prevent duplicate modelValue emission on blur  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1630">#1630</a></td>
+      <td>- PatientLogged: Add isRestrictedData prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1647">#1647</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: fix validate-on handling  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1610">#1610</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: allow to not show the placeholder <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1609">#1609</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Tokens: allow colors in template class (not css only) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1597">#1597</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect/SyTextField: fix dropdown + helpText display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1604">#1604</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: manage objet instance  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1600">#1600</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyForm: fix reset event  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1602">#1602</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DataListItem: fix renderHtmlValue prop (security)  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1573">#1573</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable / SyServerTable: add header.xxx slot <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1578">#1578</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Utils: add formatNir function <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1576">#1576</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Add LunarCalendar component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1550">#1550</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyForm: add props on default slot <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1575">#1575</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DataPicker: fix range input on complexe mode / improve keyboard navigation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1540">#1540</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Captcha / SySelect: remove v-html 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1565">#1565</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1557">#1557</a>
+       </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAlert: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1546">#1546</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PaginatedTable / SelectBtnField: improve accessibility 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1560">#1560</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1543">#1543</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.15 (04-12-2025)
 
 Fix readme <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1559">#1559</a>
