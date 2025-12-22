@@ -221,7 +221,7 @@
 		margin: 0;
 		min-height: 28px;
 		height: auto;
-		background: rgba(white, var(--v-border-opacity));
+		background-color: #e6e6e6 !important;
 	}
 }
 </style>
