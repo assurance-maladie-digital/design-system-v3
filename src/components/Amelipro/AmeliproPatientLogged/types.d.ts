@@ -38,7 +38,7 @@ export interface IPatientInfoLabels {
 	firstName: string
 	fund: string
 	fundDialogTitle: string
-    postalAddress: string
+	postalAddress: string
 	mtm: string
 	name: string
 	nir: string
