@@ -173,48 +173,50 @@
 					:menu-open
 				/>
 			</div>
-			<div class="inner-header">
-				<slot
-					name="menu"
-					:menu-open
-				/>
-				<div class="header-logo pl-xl-0 pl-md-14 pl-4">
+			<div class="global-container">
+				<div class="inner-header">
 					<slot
-						name="logo"
-						:menu-open
-						:home-aria-label
-						:service-title
-						:service-subtitle
-					>
-						<HeaderLogo
-							:aria-label="homeAriaLabel"
-							:service-title="serviceTitle"
-							:service-subtitle="serviceSubtitle"
-							:home-link
-						>
-							<template
-								#brand-content
-							>
-								<slot
-									name="logo-brand-content"
-									:menu-open
-									:home-aria-label
-									:service-title
-									:service-subtitle
-									:home-link
-								/>
-							</template>
-						</HeaderLogo>
-					</slot>
-				</div>
-				<div
-					v-if="$slots['header-side']"
-					class="header-side"
-				>
-					<slot
-						name="header-side"
+						name="menu"
 						:menu-open
 					/>
+					<div class="header-logo pl-xl-0 pl-md-14 pl-4">
+						<slot
+							name="logo"
+							:menu-open
+							:home-aria-label
+							:service-title
+							:service-subtitle
+						>
+							<HeaderLogo
+								:aria-label="homeAriaLabel"
+								:service-title="serviceTitle"
+								:service-subtitle="serviceSubtitle"
+								:home-link
+							>
+								<template
+									#brand-content
+								>
+									<slot
+										name="logo-brand-content"
+										:menu-open
+										:home-aria-label
+										:service-title
+										:service-subtitle
+										:home-link
+									/>
+								</template>
+							</HeaderLogo>
+						</slot>
+					</div>
+					<div
+						v-if="$slots['header-side']"
+						class="header-side"
+					>
+						<slot
+							name="header-side"
+							:menu-open
+						/>
+					</div>
 				</div>
 			</div>
 			<div
@@ -233,14 +235,16 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss' as *;
 @use './consts' as *;
+.global-container{
+	background-color: $neutral-white;
 
+}
 .header {
 	position: relative;
 	z-index: 1;
 }
 
 .sticky-header {
-	background-color: $neutral-white;
 	width: 100%;
 	z-index: 1000;
 }

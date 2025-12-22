@@ -159,8 +159,16 @@
 						:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
 						@click:list-item="emitItemAction"
 					>
-						<template #value="{ item }">
-							<span v-html="item.value" />
+						<template
+							v-if="$slots.item"
+							#item="{ item, index, itemValue }"
+						>
+							<slot
+								name="item"
+								:item="item"
+								:index="index"
+								:item-value="itemValue"
+							/>
 						</template>
 					</DataListGroup>
 				</VThemeProvider>
