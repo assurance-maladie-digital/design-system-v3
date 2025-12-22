@@ -279,14 +279,14 @@
 				:aria-invalid="displayError ? true : undefined"
 				:required="required"
 				:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
-				class="pt-0 amelipro-select"
-				:clearable="clearable"
-				color="ap-blue-darken-1"
-				density="compact"
-				:disabled="disabled"
-				:error="displayError"
-				:hide-details="hideErrorMessage || fullWidthErrorMsg"
-				:item-props="true"
+        class="pt-0 amelipro-select"
+        :menu-props="{ contentClass: 'amelipro-select-menu' }"
+        :clearable="clearable"
+        density="compact"
+        :disabled="disabled"
+        :error="displayError"
+        :hide-details="hideErrorMessage || fullWidthErrorMsg"
+        :item-props="true"
 				:items="items"
 				:placeholder="placeholder"
 				:readonly="readonly"
@@ -334,7 +334,7 @@
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @use '@/assets/amelipro/apTokens';
 
 .v-select {
@@ -366,6 +366,20 @@
 	}
 }
 
+.amelipro-select-menu {
+  .v-list-item--active > .v-list-item__overlay {
+    background-color: apTokens.$ap-blue-lighten3 !important;
+  }
+
+  .v-list-item--active .v-list-item-title {
+    color: apTokens.$ap-blue-darken1 !important;
+  }
+
+  .v-list-item--active:hover > .v-list-item__overlay {
+    background-color: apTokens.$ap-grey-lighten4 !important;
+  }
+}
+
 .amelipro-select__label {
 	font-size: apTokens.$font-size-xs;
 	font-weight: apTokens.$label-font-weight;
@@ -376,4 +390,5 @@
 		line-height: 1.5rem;
 	}
 }
+
 </style>
