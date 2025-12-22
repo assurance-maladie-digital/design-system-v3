@@ -367,17 +367,22 @@
 }
 
 .amelipro-select-menu {
-	.v-list-item--active > .v-list-item__overlay {
-		background-color: apTokens.$ap-blue-lighten3 !important;
-	}
 
-	.v-list-item--active .v-list-item-title {
-		color: apTokens.$ap-blue-darken1 !important;
-	}
+  .v-list-item--active > .v-list-item__overlay {
+    background-color: apTokens.$ap-blue-lighten3 !important;
+    opacity: 1;
+  }
 
-	.v-list-item--active:hover > .v-list-item__overlay {
-		background-color: apTokens.$ap-grey-lighten4 !important;
-	}
+  .v-list-item--active:hover > .v-list-item__overlay {
+    filter: brightness(0.98);
+  }
+
+  .v-list-item--active .v-list-item-title,
+  .v-list-item--active .v-list-item-subtitle {
+    color: apTokens.$ap-blue-darken1 !important;
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .amelipro-select__label {
