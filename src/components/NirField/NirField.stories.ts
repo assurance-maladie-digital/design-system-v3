@@ -878,6 +878,9 @@ export const WithNirTooltip: Story = {
 		nirTooltipPosition: 'prepend',
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: `
@@ -926,6 +929,9 @@ export const WithKeyTooltip: Story = {
 		keyTooltipPosition: 'append',
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: `

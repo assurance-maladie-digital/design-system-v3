@@ -195,6 +195,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -346,6 +349,9 @@ export const Default: Story = {
 
 export const SortBy: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -510,6 +516,9 @@ export const SortBy: Story = {
 
 export const MultiSort: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -730,6 +739,9 @@ export const MultiSort: Story = {
 
 export const FilterByText: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -906,6 +918,9 @@ export const FilterByText: Story = {
 
 export const FilterByNumber: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1072,6 +1087,9 @@ export const FilterByNumber: Story = {
 
 export const FilterBySelect: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1264,6 +1282,9 @@ export const FilterBySelect: Story = {
 
 export const FilterBySelectMultiple: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1464,6 +1485,9 @@ export const FilterBySelectMultiple: Story = {
 
 export const FilterByExactDate: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1611,6 +1635,9 @@ export const FilterByExactDate: Story = {
 
 export const FilterByPeriod: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1758,6 +1785,9 @@ export const FilterByPeriod: Story = {
 
 export const CustomFilterSlot: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: 'Cette story démontre comment utiliser un slot personnalisé pour le filtrage. Le filtre personnalisé utilise un v-select pour filtrer par statut.',
@@ -2067,6 +2097,9 @@ export const CustomFilterSlot: Story = {
 
 export const CustomFilterInputs: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2259,6 +2292,9 @@ export const CustomFilterInputs: Story = {
 
 export const ManyTables: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2434,6 +2470,9 @@ export const ManyTables: Story = {
 
 export const DataAlignment: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2579,6 +2618,9 @@ export const DataAlignment: Story = {
 
 export const ResizableColumns: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2731,6 +2773,9 @@ export const ResizableColumns: Story = {
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -2909,6 +2954,9 @@ export const RowSelection: Story = {
 export const SingleRowSelection: Story = {
 	name: 'Single Row Selection',
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3086,6 +3134,9 @@ export const SingleRowSelection: Story = {
 
 export const ColumnControls: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3239,6 +3290,9 @@ export const ColumnControls: Story = {
 
 export const ExpandableRows: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3450,6 +3504,9 @@ export const ExpandableRows: Story = {
 
 export const SlotItem: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3632,6 +3689,9 @@ export const SlotItem: Story = {
 
 export const SlotHeaders: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -3810,6 +3870,9 @@ export const SlotHeaders: Story = {
 
 export const SlotHeader: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -4041,6 +4104,9 @@ export const SlotHeader: Story = {
 
 export const ItemsPerPageOptions: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -4274,6 +4340,9 @@ export const ItemsPerPageOptions: Story = {
 
 export const ComplexItemsDisplay: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

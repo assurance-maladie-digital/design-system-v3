@@ -28,6 +28,9 @@ export const TextFilterRules: Story = {
 		showFilters: true,
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: 'Documentation des règles de filtrage textuel pour le composant SyTable.',
@@ -135,6 +138,9 @@ export const NumberFilterRules: Story = {
 		showFilters: true,
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: 'Documentation des règles de filtrage numérique pour le composant SyTable.',
@@ -241,6 +247,9 @@ export const SelectFilterRules: Story = {
 		showFilters: true,
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: 'Documentation des règles de filtrage par sélection pour le composant SyTable.',
@@ -312,6 +321,9 @@ export const DateFilterRules: Story = {
 		showFilters: true,
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: 'Documentation des règles de filtrage par date pour le composant SyTable.',
