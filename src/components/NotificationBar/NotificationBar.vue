@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useNotificationService } from '@/services/NotificationService'
-	import { mdiAlertCircleOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
+	import { mdiAlertOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
 	import { computed, getCurrentInstance, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import defaultOptions from './config'
@@ -45,7 +45,7 @@
 	const iconMapping: Record<string, string> = {
 		info: mdiInformationOutline,
 		success: mdiCheckCircleOutline,
-		warning: mdiAlertCircleOutline,
+		warning: mdiAlertOutline,
 		error: mdiAlertOctagonOutline,
 	}
 

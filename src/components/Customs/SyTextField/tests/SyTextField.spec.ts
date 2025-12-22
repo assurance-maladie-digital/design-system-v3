@@ -1,11 +1,11 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { VIcon } from 'vuetify/components'
 
 import SyTextField from '../SyTextField.vue'
 import type { IconType } from '../types'
 
-describe('SyTextField.vue', () => {
+describe('SyTextField', () => {
 	let wrapper: ReturnType<typeof mount<typeof SyTextField>>
 
 	beforeEach(() => {
@@ -116,6 +116,36 @@ describe('SyTextField.vue', () => {
 		await appendIcon.trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted('append-icon-click')).toBeTruthy()
+	})
+
+	it('does not propagate click from clear button to parent container', async () => {
+		const onClickParent = vi.fn()
+
+		const wrapper = mount({
+			components: { SyTextField },
+			template: `
+				<div data-testid="parent" @click="onClickParent">
+					<SyTextField
+						is-clearable
+						label="Test Field"
+						model-value="foo"
+					/>
+				</div>
+			`,
+			setup() {
+				return { onClickParent }
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		const clearButton = wrapper.find('button[aria-label="Vider Test Field"]')
+		expect(clearButton.exists()).toBe(true)
+
+		await clearButton.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		expect(onClickParent).not.toHaveBeenCalled()
 	})
 
 	it('shows validation error message', async () => {

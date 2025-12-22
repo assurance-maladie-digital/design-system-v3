@@ -1,0 +1,73 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`UserInformationSummary > Snapshots > renders the component with all properties filled in 1`] = `
+<div
+  class="user-information-summary"
+  id="modified-unique-id-container"
+>
+  <p
+    class="
+      font-weight-bold
+      mb-0
+      text-body-2
+      user-information-summary__name
+    "
+    id="modified-unique-id-user-name"
+  >
+    Modified user name
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__denomination
+    "
+    id="modified-unique-id-denomination"
+  >
+    Modified denomination
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__specialty
+    "
+    id="modified-unique-id-specialty"
+  >
+    Modified specialty
+  </p>
+  <!-- v-if -->
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__office
+    "
+    id="modified-unique-id-office"
+  >
+    Modified office
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__address-1
+    "
+    id="modified-unique-id-address-line-1"
+  >
+    modified-address-line-1
+  </p>
+  <p
+    class="
+      mb-0
+      text-body-2
+      user-information-summary__address-2
+    "
+    id="modified-unique-id-address-line-2"
+  >
+    modified-address-line-2
+  </p>
+</div>
+`;
+
+exports[`UserInformationSummary > Snapshots > renders the component with only required properties filled in 1`] = `<!-- v-if -->`;

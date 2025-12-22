@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, onMounted, computed, nextTick, type PropType } from 'vue'
+	import { ref, watch, watchEffect, onMounted, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -138,6 +138,7 @@
 	const labelRef = ref<HTMLElement | null>(null)
 	const list = ref<VList | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
+	const htmlItemRefs = ref<HTMLElement[]>([])
 
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
@@ -298,6 +299,23 @@
 		return (item as Record<string, any>)[props.textKey]
 	}
 
+	watchEffect(() => {
+		if (!props.allowHtml) {
+			return
+		}
+
+		htmlItemRefs.value.forEach((el, index) => {
+			const item = formattedItems.value[index]
+			if (!el || !item) {
+				return
+			}
+
+			// getItemText already returns the correct HTML string for the item
+			// We assign it to innerHTML to preserve the previous rendering behavior
+			el.innerHTML = String(getItemText(item) ?? '')
+		})
+	})
+
 	const getPlainItemText = (item: unknown) => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const itemObj = item as Record<string, any>
@@ -357,6 +375,12 @@
 		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
 	})
 
+	const hasSelectionToClear = computed(() => {
+		return props.multiple
+			? (((selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
+			: selectedItem.value != null
+	})
+
 	const labelWithAsterisk = computed(() => {
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
@@ -407,6 +431,12 @@
 		}
 		// No width specified, return undefined for auto-sizing
 		return undefined
+	})
+
+	const menuTarget = computed<HTMLElement | undefined>(() => {
+		const rootEl = textInput.value?.$el as HTMLElement | undefined
+		if (!rootEl) return undefined
+		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -732,6 +762,9 @@
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function initializeActivatorProps(activatorProps: Record<string, any>) {
 		return {
+			...activatorProps,
+			onKeydown: undefined,
+			onClick: undefined,
 			// the ref is needed by Vuetify to position the menu and by us for accessibility
 			ref: (el) => {
 				textInput.value = el
@@ -742,193 +775,204 @@
 </script>
 
 <template>
-	<VMenu
-		v-model="isOpen"
-		transition="slide-y-transition"
-		max-height="300px"
-	>
-		<template #activator="{ props: activatorProps }">
-			<VTextField
-				:id="inputId"
-				v-model="selectedItemText"
-				v-click-outside="closeList"
-				v-rgaa-svg-fix="true"
-				:title="$attrs['aria-label'] || labelWithAsterisk"
-				color="primary"
-				:disabled="disabled"
-				:label="labelWithAsterisk"
+	<div class="sy-select-container">
+		<VMenu
+			v-model="isOpen"
+			transition="slide-y-transition"
+			max-height="300px"
+			location="bottom"
+			offset="4"
+			origin="top"
+			:target="menuTarget"
+		>
+			<template #activator="{ props: activatorProps }">
+				<VTextField
+					:id="inputId"
+					v-model="selectedItemText"
+					v-click-outside="closeList"
+					v-rgaa-svg-fix="true"
+					:title="$attrs['aria-label'] || labelWithAsterisk"
+					color="primary"
+					:disabled="disabled"
+					:label="labelWithAsterisk"
+					:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+					:error-messages="props.disableErrorHandling ? [] : errorMessages"
+					:variant="outlined ? 'outlined' : 'underlined'"
+					:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+					:bg-color="props.bgColor"
+					:density="props.density"
+					:active="hasChips || isOpen"
+					readonly
+					:hide-details="props.hideMessages && !showHelpTextAsMessage"
+					:hint="showHelpTextAsMessage ? props.helpText : ''"
+					:persistent-hint="!!showHelpTextAsMessage"
+					:autocomplete="props.autocomplete"
+					class="sy-select"
+					:class="{ 'sy-select--clearable': props.clearable }"
+					:width="calculatedWidth"
+					:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
+					v-bind="{
+						...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
+						...initializeActivatorProps(activatorProps),
+					}"
+					@click="toggleMenu"
+					@keydown.enter.prevent="handleEnterKey"
+					@keydown.space.prevent="handleSpaceKey"
+					@keydown.down.prevent="handleDownKey"
+					@keydown.up.prevent="handleUpKey"
+					@keydown.esc.prevent="handleEscapeKey"
+					@keydown.home.prevent="handleHomeKey"
+					@keydown.end.prevent="handleEndKey"
+					@keydown.page-up.prevent="handlePageUpKey"
+					@keydown.page-down.prevent="handlePageDownKey"
+					@keydown.tab="handleTabKey"
+					@keydown="(e) => {
+						// Handle printable characters for keyboard navigation
+						if (!e.ctrlKey && !e.altKey && !e.metaKey) {
+							handleCharacterKey(e.key)
+						}
+					}"
+				>
+					<div
+						v-if="hasChips"
+						class="d-flex flex-wrap gap-1"
+					>
+						<VChip
+							v-for="item in selectedItem"
+							:key="props.returnObject ? item[props.valueKey] : item"
+							size="small"
+							class="ma-1"
+							closable
+							:close-label="`Supprimer ${getChipText(item)}`"
+							@click:close="removeChip(item)"
+						>
+							{{ getChipText(item) }}
+						</VChip>
+					</div>
+					<template #append-inner>
+						<SyIcon
+							v-if="hasError"
+							class="mr-6"
+							color="error"
+							:icon="mdiAlertCircle"
+							:decorative="false"
+							label="Information"
+							role="img"
+						/>
+						<button
+							v-if="props.clearable && hasSelectionToClear"
+							type="button"
+							class="sy-select__clear-button"
+							:style="{ right: hasError ? '62px' : '42px' }"
+							:aria-label="locales.clear"
+							@keydown.enter.prevent="$event => selectItem(null, $event)"
+							@keydown.space.prevent="$event => selectItem(null, $event)"
+							@click.stop.prevent="$event => selectItem(null, $event)"
+						>
+							<SyIcon
+								class="sy-select__clear-icon"
+								:icon="mdiCloseCircle"
+								:decorative="true"
+							/>
+						</button>
+						<SyIcon
+							class="arrow"
+							:icon="mdiChevronDown"
+							:decorative="true"
+						/>
+					</template>
+				</VTextField>
+				<span
+					ref="labelRef"
+					class="hidden-label"
+				>{{ label }}</span>
+			</template>
+			<VList
+				:id="uniqueMenuId"
+				ref="list"
+				class="v-list"
+				role="listbox"
+				:aria-multiselectable="props.multiple ? 'true' : undefined"
 				:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-				:error-messages="props.disableErrorHandling ? [] : errorMessages"
-				:variant="outlined ? 'outlined' : 'underlined'"
-				:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
-				:bg-color="props.bgColor"
-				:density="props.density"
-				:active="hasChips || isOpen"
-				readonly
-				:hide-details="props.hideMessages && !showHelpTextAsMessage"
-				:hint="showHelpTextAsMessage ? props.helpText : ''"
-				:persistent-hint="!!showHelpTextAsMessage"
-				:autocomplete="props.autocomplete"
-				class="sy-select"
-				:class="{ 'sy-select--clearable': props.clearable }"
-				:width="calculatedWidth"
-				:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
-				v-bind="{
-					...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
-					...initializeActivatorProps(activatorProps),
+				:style="{
+					minWidth: `${textInput?.$el.offsetWidth}px`
 				}"
-				@click="toggleMenu"
+				bg-color="white"
+				tabindex="0"
+				:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
+				@keydown.esc.prevent="closeList"
+				@keydown.tab="handleTabKey"
 				@keydown.enter.prevent="handleEnterKey"
-				@keydown.space.prevent="handleSpaceKey"
 				@keydown.down.prevent="handleDownKey"
 				@keydown.up.prevent="handleUpKey"
-				@keydown.esc.prevent="handleEscapeKey"
 				@keydown.home.prevent="handleHomeKey"
 				@keydown.end.prevent="handleEndKey"
 				@keydown.page-up.prevent="handlePageUpKey"
 				@keydown.page-down.prevent="handlePageDownKey"
-				@keydown.tab="handleTabKey"
-				@keydown="(e) => {
-					// Handle printable characters for keyboard navigation
-					if (!e.ctrlKey && !e.altKey && !e.metaKey) {
-						handleCharacterKey(e.key)
-					}
-				}"
+				@click.stop
 			>
-				<div
-					v-if="hasChips"
-					class="d-flex flex-wrap gap-1"
+				<VListItem
+					v-for="(item, index) in formattedItems"
+					:id="`option-${index}`"
+					:key="index"
+					:ref="'options-' + index"
+					role="option"
+					class="v-list-item"
+					:aria-selected="isItemSelected(item) ? 'true' : 'false'"
+					tabindex="-1"
+					:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
+					@click.stop="(event) => selectItem(item, event)"
 				>
-					<VChip
-						v-for="item in selectedItem"
-						:key="props.returnObject ? item[props.valueKey] : item"
-						size="small"
-						class="ma-1"
-						closable
-						:close-label="`Supprimer ${getChipText(item)}`"
-						@click:close="removeChip(item)"
+					<template
+						v-if="props.multiple && !isDefaultOption(item)"
+						#prepend
 					>
-						{{ getChipText(item) }}
-					</VChip>
-				</div>
-				<template #append-inner>
-					<SyIcon
-						v-if="hasError"
-						class="mr-6"
-						color="error"
-						:icon="mdiAlertCircle"
-						:decorative="false"
-						label="Information"
-						role="img"
-					/>
-					<button
-						v-if="props.clearable && selectedItemText"
-						type="button"
-						class="sy-select__clear-button"
-						:style="{ right: hasError ? '62px' : '42px' }"
-						:aria-label="locales.clear"
-						@keydown.enter.prevent="$event => selectItem(null, $event)"
-						@keydown.space.prevent="$event => selectItem(null, $event)"
-						@click.stop.prevent="$event => selectItem(null, $event)"
-					>
-						<SyIcon
-							class="sy-select__clear-icon"
-							:icon="mdiCloseCircle"
-							:decorative="true"
+						<SyCheckbox
+							:model-value="isItemSelected(item)"
+							density="compact"
+							hide-details
+							color="primary"
+							class="mt-0 pt-0 mr-1"
+							:title="getItemText(item)"
+							:aria-label="getItemText(item)"
+							@click.stop="(event) => selectItem(item, event)"
 						/>
-					</button>
-					<SyIcon
-						class="arrow"
-						:icon="mdiChevronDown"
-						:decorative="true"
-					/>
-				</template>
-			</VTextField>
-			<span
-				ref="labelRef"
-				class="hidden-label"
-			>{{ label }}</span>
-		</template>
-		<VList
-			:id="uniqueMenuId"
-			ref="list"
-			class="v-list"
-			role="listbox"
-			:aria-multiselectable="props.multiple ? 'true' : undefined"
-			:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-			:style="{
-				minWidth: `${textInput?.$el.offsetWidth}px`,
-				marginTop: props.hideMessages ? '0' : '-22px',
-			}"
-			bg-color="white"
-			tabindex="0"
-			:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
-			@keydown.esc.prevent="closeList"
-			@keydown.tab="handleTabKey"
-			@keydown.enter.prevent="handleEnterKey"
-			@keydown.down.prevent="handleDownKey"
-			@keydown.up.prevent="handleUpKey"
-			@keydown.home.prevent="handleHomeKey"
-			@keydown.end.prevent="handleEndKey"
-			@keydown.page-up.prevent="handlePageUpKey"
-			@keydown.page-down.prevent="handlePageDownKey"
-			@click.stop
-		>
-			<VListItem
-				v-for="(item, index) in formattedItems"
-				:id="`option-${index}`"
-				:key="index"
-				:ref="'options-' + index"
-				role="option"
-				class="v-list-item"
-				:aria-selected="isItemSelected(item) ? 'true' : 'false'"
-				tabindex="-1"
-				:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
-				@click.stop="(event) => selectItem(item, event)"
-			>
-				<template
-					v-if="props.multiple && !isDefaultOption(item)"
-					#prepend
-				>
-					<SyCheckbox
-						:model-value="isItemSelected(item)"
-						density="compact"
-						hide-details
-						color="primary"
-						class="mt-0 pt-0 mr-1"
-						:title="getItemText(item)"
-						:aria-label="getItemText(item)"
-						@click.stop="(event) => selectItem(item, event)"
-					/>
-				</template>
-				<VListItemTitle>
-					<span
-						v-if="allowHtml"
-						class="item-text"
-						v-html="getItemText(item)"
-					/>
-					<span
-						v-else
-						class="item-text"
-					>
-						{{ getItemText(item) }}
-					</span>
-				</VListItemTitle>
-			</VListItem>
-		</VList>
-	</VMenu>
+					</template>
+					<VListItemTitle>
+						<span
+							v-if="allowHtml"
+							ref="htmlItemRefs"
+							class="item-text"
+						/>
+						<span
+							v-else
+							class="item-text"
+						>
+							{{ getItemText(item) }}
+						</span>
+					</VListItemTitle>
+				</VListItem>
+			</VList>
+		</VMenu>
 
-	<div
-		v-if="showHelpTextBelow"
-		class="help-text-below px-4 mt-1"
-		:class="{ 'text-disabled': props.disabled }"
-	>
-		{{ props.helpText }}
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-4 mt-1"
+			:class="{ 'text-disabled': props.disabled }"
+		>
+			{{ props.helpText }}
+		</div>
 	</div>
 </template>
 
 <style scoped lang="scss">
 @use '@/assets/tokens';
+
+.sy-select-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
 
 .sy-select {
 	display: flex;
@@ -1047,6 +1091,8 @@
 }
 
 :deep(.v-field__input input) {
+	position: absolute;
+	z-index: -1;
 	text-overflow: ellipsis;
 }
 

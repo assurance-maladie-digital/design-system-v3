@@ -59,19 +59,21 @@ export const CustomMessage: StoryObj<unknown> = {
 		return {
 			components: { VTextField },
 			setup() {
+				const date = ref('31/11/1993')
 				const dateValid = isDateValidFn({
 					default: 'The date you entered is invalid',
 					wrongFormat: 'The format you entered is invalid',
 					monthNotMatch: 'The day you entered exceeds the number of days in the corresponding month',
 					notALeapYear: 'The day you entered is invalid because the corresponding year is not a leap year',
 				})
-				return { dateValid }
+				return { date, dateValid }
 			},
 			template: `
 				<VTextField
+					v-model="date"
 					:rules="[dateValid]"
 					label="Date"
-					validate-on="blur"
+					validate-on="eager blur"
 					variant="outlined"
 				/>
 			`,
@@ -86,7 +88,7 @@ export const CustomMessage: StoryObj<unknown> = {
 					import { VTextField } from 'vuetify/components'
 					import { isDateValidFn } from '@cnamts/synapse'
 					
-					const isDateValidCustom = isDateValid({
+					const isDateValidCustom = isDateValidFn({
 						default: 'The date you entered is invalid',
 						wrongFormat: 'The format you entered is invalid',
 						monthNotMatch: 'The day you entered exceeds the number of days in the corresponding month',
@@ -102,7 +104,7 @@ export const CustomMessage: StoryObj<unknown> = {
 					<VTextField
 						:rules="[isDateValidCustom]"
 						label="Date"
-						validate-on="blur"
+						validate-on="eager blur"
 						variant="outlined"
 					/>
 				</template>

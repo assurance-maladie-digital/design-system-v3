@@ -5,7 +5,7 @@
 	import type { IndexedObject } from '../types'
 
 	const props = defineProps({
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -98,7 +98,7 @@
 		}
 	}
 
-	const isSingleRequiredErrorMessage = computed(() => props.ariaRequired === true && (currentValue.value.filter(item => item.isChecked).length < 1))
+	const isSingleRequiredErrorMessage = computed(() => props.required === true && (currentValue.value.filter(item => item.isChecked).length < 1))
 	const isMultipleRequiredErrorMessage = computed(() => props.multipleRequired === true && !props.unique && (currentValue.value.filter(item => item.isChecked).length < 2))
 	const error = computed<string>(() => {
 		if (isAlreadyCheckedOnce.value === true) {
@@ -150,7 +150,7 @@
 				{{ groupLabel }}
 
 				<span
-					v-if="ariaRequired || multipleRequired"
+					v-if="required || multipleRequired"
 					aria-hidden="true"
 					class="d-inline-flex"
 				>
@@ -158,7 +158,7 @@
 				</span>
 
 				<span
-					v-if="ariaRequired || multipleRequired"
+					v-if="required || multipleRequired"
 					class="d-sr-only"
 				>
 					&nbsp;Champ obligatoire
@@ -213,7 +213,7 @@
 			:aria-disabled="disabled ? true : undefined"
 			:aria-invalid="checkErrorCondition ? true : undefined"
 			:aria-labelledby="uniqueId"
-			:aria-required="ariaRequired || multipleRequired ? true : undefined"
+			:required="required || multipleRequired ? true : undefined"
 			class="amelipro-custom-selector__group"
 			role="group"
 		>

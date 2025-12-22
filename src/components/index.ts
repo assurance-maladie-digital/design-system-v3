@@ -47,6 +47,7 @@ export { default as UserMenuBtn } from './UserMenuBtn/UserMenuBtn.vue'
 export { default as DatePicker } from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 export { default as DiacriticPicker } from './DiacriticPicker/DiacriticPicker.vue'
 export { default as FileUpload } from './FileUpload/FileUpload.vue'
+export { default as LunarCalendar } from './LunarCalendar/LunarCalendar.vue'
 export { default as NirField } from './NirField/NirField.vue'
 export * from './NirField/nirValidation'
 export { default as PasswordField } from './PasswordField/PasswordField.vue'
@@ -65,6 +66,7 @@ export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
 export { default as Captcha } from './Captcha/Captcha.vue'
 export { default as SyForm } from './Customs/SyForm/SyForm.vue'
+export { default as SyRadioGroup } from './Customs/SyRadioGroup/SyRadioGroup.vue'
 
 // ===========================
 // Tableaux

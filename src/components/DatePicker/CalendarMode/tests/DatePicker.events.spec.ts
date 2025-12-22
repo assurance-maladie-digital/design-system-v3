@@ -9,6 +9,7 @@ describe('CalendarMode.vue - Events', () => {
 	beforeEach(() => {
 		wrapper = mount(DatePicker, {
 			props: {
+				label: 'Date Field',
 				modelValue: '',
 				format: 'DD/MM/YYYY',
 			},
@@ -55,6 +56,7 @@ describe('CalendarMode.vue - Events', () => {
 		// Créer un composant avec disablePickerInteraction à true
 		const wrapperWithDisabledPicker = mount(DatePicker, {
 			props: {
+				label: 'Date Field',
 				modelValue: '',
 				format: 'DD/MM/YYYY',
 				disablePickerInteraction: true,
@@ -112,6 +114,7 @@ describe('CalendarMode.vue - Events', () => {
 	it('accepte différents formats de date', async () => {
 		const wrapperWithDashFormat = mount(DatePicker, {
 			props: {
+				label: 'Date Field',
 				modelValue: '',
 				format: 'YYYY-MM-DD',
 			},
@@ -133,6 +136,7 @@ describe('CalendarMode.vue - Events', () => {
 	it('accepte les plages de dates en entrée', async () => {
 		const wrapperWithRange = mount(DatePicker, {
 			props: {
+				label: 'Date Field',
 				modelValue: ['01/01/2023', '05/01/2023'],
 				format: 'DD/MM/YYYY',
 				displayRange: true,
@@ -156,6 +160,7 @@ describe('CalendarMode.vue - Events', () => {
 
 		const wrapperWithRules = mount(DatePicker, {
 			props: {
+				label: 'Date Field',
 				modelValue: '',
 				format: 'DD/MM/YYYY',
 				customRules: [customRule],

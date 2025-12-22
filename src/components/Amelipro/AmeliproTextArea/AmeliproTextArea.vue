@@ -9,7 +9,7 @@
 	import { isRequired } from '@/utils/rules/isRequired'
 
 	const props = defineProps({
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -108,7 +108,7 @@
 			...props.rules,
 		]
 
-		if (props.ariaRequired) {
+		if (props.required) {
 			rules.push(isRequired)
 		}
 
@@ -227,7 +227,7 @@
 			>
 				{{ label }}
 
-				<span v-if="ariaRequired">
+				<span v-if="required">
 					<span aria-hidden="true">
 						&nbsp;*
 					</span>
@@ -250,7 +250,7 @@
 			v-model="inputValue"
 			:aria-describedby="displayError ? undefined : errorId"
 			:aria-invalid="displayError ? true : undefined"
-			:aria-required="ariaRequired"
+			:required="required"
 			auto-grow
 			:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 			class="amelipro-textarea-input"

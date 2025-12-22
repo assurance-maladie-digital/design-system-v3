@@ -46,11 +46,11 @@ exports[`AmeliproRadioGroup > Snapshots > renders the component with all propert
     </div>
     <div
       aria-labelledby="modified-unique-id"
-      aria-required="true"
       class="
         mt-2
         radio-group__wrapper
       "
+      required="true"
       role="radiogroup"
     >
       <ul
@@ -234,8 +234,8 @@ exports[`AmeliproRadioGroup > Snapshots > renders the component with only requir
     </div>
     <div
       aria-labelledby="required-unique-id"
-      aria-required="false"
       class="radio-group__wrapper"
+      required="false"
       role="radiogroup"
     >
       <ul

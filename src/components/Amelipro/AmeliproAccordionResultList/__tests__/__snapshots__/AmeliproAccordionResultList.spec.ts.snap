@@ -124,17 +124,11 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                   >
                     <!---->
                     <div
-                      class="
-                        bg-ap-blue-darken-1
-                        v-progress-linear__background
-                      "
+                      class="v-progress-linear__background"
                       style="opacity: NaN;"
                     ></div>
                     <div
-                      class="
-                        bg-ap-blue-darken-1
-                        v-progress-linear__buffer
-                      "
+                      class="v-progress-linear__buffer"
                       style="
                         opacity: NaN;
                         width: 0%;
@@ -148,12 +142,10 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     >
                       <div class="v-progress-linear__indeterminate">
                         <div class="
-                          bg-ap-blue-darken-1
                           long
                           v-progress-linear__indeterminate
                         "></div>
                         <div class="
-                          bg-ap-blue-darken-1
                           short
                           v-progress-linear__indeterminate
                         "></div>
@@ -183,13 +175,9 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                       </span>
                     </div>
                     <input
-                      aria-controls="menu-v-0"
-                      aria-expanded="false"
                       aria-label="Open"
-                      aria-required="false"
                       id="amelipro-accordion-list-unique-id-pagination-select"
                       inputmode="none"
-                      role="combobox"
                       size="1"
                       title="Open"
                       type="text"
@@ -326,24 +314,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -453,24 +424,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -580,24 +534,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -707,24 +644,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -834,24 +754,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -961,24 +864,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -1088,24 +974,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -1215,24 +1084,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -1342,24 +1194,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>
@@ -1469,24 +1304,7 @@ exports[`AmeliproAccordionResultList > render correctly 1`] = `
                     role="img"
                     style="color: #00749C;"
                   >
-                    <span>
-                      <svg
-                        aria-hidden="true"
-                        style="enable-background:new 0 0 24.1 14.9;"
-                        version="1.1"
-                        viewBox="0 0 24.1 14.9"
-                        x="0px"
-                        xml:space="preserve"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                        y="0px"
-                      >
-                        <path
-                          class="shape-color"
-                          d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"
-                        />
-                      </svg>
-                    </span>
+                    <span></span>
                   </span>
                 </span>
               </span>

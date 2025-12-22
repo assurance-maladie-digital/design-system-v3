@@ -11,7 +11,7 @@
 		mdiAlertCircle,
 		mdiCalendar,
 	} from '@mdi/js'
-	import { computed, onMounted, ref, watch, nextTick, type ComponentPublicInstance } from 'vue'
+	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from './types'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -178,20 +178,37 @@
 		'append-icon-click',
 	])
 
+	const lastEmittedModelValue = ref(props.modelValue)
+
 	const model = computed({
 		get() {
 			return props.modelValue
 		},
 		set(value) {
 			emit('update:modelValue', value)
+			lastEmittedModelValue.value = value
 		},
+	})
+
+	const attrs = useAttrs()
+
+	const forwardedAttrs = computed(() => {
+		const filteredAttrs = Object.fromEntries(
+			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
+		) as Record<string, unknown>
+
+		if (!('validate-on' in filteredAttrs) && 'rules' in filteredAttrs && props.isValidateOnBlur) {
+			filteredAttrs['validate-on'] = 'blur lazy'
+		}
+
+		return filteredAttrs
 	})
 
 	const isBlurred = ref(false)
 
 	const showClear = computed(() => {
 		if (!props.isClearable) return false
-		if (props.readonly || props.disabled) return false
+		if (props.disabled) return false
 		return model.value !== undefined && model.value !== null && String(model.value) !== '' && String(model.value) !== '__/__/____'
 	})
 
@@ -268,7 +285,10 @@
 	const checkErrorOnBlur = () => {
 		isBlurred.value = true
 		validateField(model.value ?? null)
-		emit('update:modelValue', model.value)
+		if (model.value !== lastEmittedModelValue.value) {
+			emit('update:modelValue', model.value)
+			lastEmittedModelValue.value = model.value
+		}
 	}
 
 	watch(model, (newValue) => {
@@ -547,199 +567,204 @@
 </script>
 
 <template>
-	<VTextField
-		:id="props.id"
-		ref="syTextFieldRef"
-		v-model="model"
-		:autocomplete="props.autocomplete"
-		:active="props.isActive"
-		:title="accessibleLabel"
-		:aria-label="accessibleLabel"
-		:aria-required="props.required ? 'true' : undefined"
-		:base-color="props.baseColor"
-		:bg-color="props.bgColor"
-		:center-affix="props.centerAffix"
-		:color="props.color"
-		:counter-value="props.counterValue"
-		:density="props.density"
-		:direction="props.direction"
-		:dirty="props.isDirty"
-		:disabled="props.disabled"
-		:error="hasError"
-		:error-messages="errors"
-		:flat="props.isFlat"
-		:focused="props.isFocused"
-		:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
-		:hint="showHelpTextAsMessage ? props.helpText : props.hint"
-		:label="labelWithAsterisk"
-		:loading="props.loading"
-		:max-errors="props.maxErrors"
-		:max-width="props.maxWidth"
-		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
-		:min-width="props.minWidth"
-		:name="props.name"
-		:persistent-clear="props.displayPersistentClear"
-		:persistent-counter="props.displayPersistentCounter"
-		:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
-		:persistent-placeholder="props.displayPersistentPlaceholder"
-		:placeholder="props.placeholder"
-		:prefix="props.prefix"
-		:readonly="props.readonly"
-		:reverse="props.isReversed"
-		:role="props.role"
-		:rounded="props.rounded"
-		:single-line="props.isOnSingleLine"
-		:suffix="props.suffix"
-		:theme="props.theme"
-		:tile="props.isTiled"
-		:type="props.type"
-		:variant="props.variantStyle"
-		:width="props.width"
-		v-bind="Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk'))"
-		:class="{
-			'error-field': hasError,
-			'warning-field': hasWarning,
-			'success-field': hasSuccess,
-			'basic-field': !hasError && !hasWarning && !hasSuccess
-		}"
-		@blur="checkErrorOnBlur"
-	>
-		<!-- Prepend -->
-		<template
-			v-if="props.prependIcon || props.prependTooltip"
-			#prepend
+	<div class="sy-textfield-container">
+		<VTextField
+			:id="props.id"
+			ref="syTextFieldRef"
+			v-model="model"
+			:autocomplete="props.autocomplete"
+			:active="props.isActive"
+			:title="accessibleLabel"
+			:aria-label="accessibleLabel"
+			:aria-required="props.required ? 'true' : undefined"
+			:base-color="props.baseColor"
+			:bg-color="props.bgColor"
+			:center-affix="props.centerAffix"
+			:color="props.color"
+			:counter-value="props.counterValue"
+			:density="props.density"
+			:direction="props.direction"
+			:dirty="props.isDirty"
+			:disabled="props.disabled"
+			:error="hasError"
+			:error-messages="errors"
+			:flat="props.isFlat"
+			:focused="props.isFocused"
+			:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
+			:label="labelWithAsterisk"
+			:loading="props.loading"
+			:max-errors="props.maxErrors"
+			:max-width="props.maxWidth"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:min-width="props.minWidth"
+			:name="props.name"
+			:persistent-clear="props.displayPersistentClear"
+			:persistent-counter="props.displayPersistentCounter"
+			:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
+			:persistent-placeholder="props.displayPersistentPlaceholder"
+			:placeholder="props.placeholder"
+			:prefix="props.prefix"
+			:readonly="props.readonly"
+			:reverse="props.isReversed"
+			:role="props.role"
+			:rounded="props.rounded"
+			:single-line="props.isOnSingleLine"
+			:suffix="props.suffix"
+			:theme="props.theme"
+			:tile="props.isTiled"
+			:type="props.type"
+			:variant="props.variantStyle"
+			:width="props.width"
+			v-bind="forwardedAttrs"
+			:class="{
+				'error-field': hasError,
+				'warning-field': hasWarning,
+				'success-field': hasSuccess,
+				'basic-field': !hasError && !hasWarning && !hasSuccess
+			}"
+			@blur="checkErrorOnBlur"
 		>
-			<slot name="prepend">
-				<template v-if="props.prependTooltip">
-					<VTooltip
-						:text="props.prependTooltip"
-						:location="props.tooltipLocation"
-					>
-						<template #activator="{ props: tooltipProps }">
-							<SyIcon
-								v-bind="tooltipProps"
-								:label="props.label ? `${props.label} - info` : 'Info'"
-								:color="appendInnerIconColor"
-								:icon="ICONS.info"
-								role="button"
-								:decorative="false"
-							/>
-						</template>
-					</VTooltip>
-				</template>
-				<SyIcon
-					v-else-if="props.prependIcon && !props.noIcon"
-					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
-					:color="appendInnerIconColor"
-					:icon="ICONS[props.prependIcon]"
-					:role="disableClickButton ? 'presentation' : 'button'"
-					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-					:decorative="disableClickButton"
-					:tabindex="disableClickButton ? undefined : '0'"
-					@click="handlePrependIconClick"
-					@keydown.enter.prevent="handlePrependIconClick"
-					@keydown.space.prevent="handlePrependIconClick"
-				/>
-			</slot>
-		</template>
-
-		<!-- Append -->
-		<template
-			v-if="props.appendIcon || props.appendTooltip"
-			#append
-		>
-			<slot name="append">
-				<template v-if="props.appendTooltip">
-					<VTooltip
-						:text="props.appendTooltip"
-						:location="props.tooltipLocation"
-					>
-						<template #activator="{ props: tooltipProps }">
-							<SyIcon
-								v-bind="tooltipProps"
-								:label="props.label ? `${props.label} - info` : 'Info'"
-								:color="appendInnerIconColor"
-								:icon="ICONS.info"
-								role="button"
-								:decorative="false"
-							/>
-						</template>
-					</VTooltip>
-				</template>
-				<SyIcon
-					v-else-if="props.appendIcon && !props.noIcon"
-					:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
-					:color="appendInnerIconColor"
-					:icon="ICONS[props.appendIcon]"
-					:role="disableClickButton ? 'presentation' : 'button'"
-					:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-					:decorative="disableClickButton"
-					:tabindex="disableClickButton ? undefined : '0'"
-					@click="handleAppendIconClick"
-					@keydown.enter.prevent="handleAppendIconClick"
-					@keydown.space.prevent="handleAppendIconClick"
-				/>
-			</slot>
-		</template>
-
-		<!-- Prepend inner -->
-		<template #prepend-inner>
-			<slot name="prepend-inner">
-				<SyIcon
-					v-if="props.prependInnerIcon && !props.noIcon"
-					:icon="ICONS[props.prependInnerIcon]"
-					role="presentation"
-					:decorative="true"
-				/>
-				<VDivider
-					v-if="props.showDivider"
-					class="mt-4 pa-1"
-					v-bind="dividerProps"
-					vertical
-				/>
-			</slot>
-		</template>
-
-		<!-- Append inner -->
-		<template #append-inner>
-			<slot name="append-inner">
-				<!-- Keyboard-focusable clear button -->
-				<VBtn
-					v-if="showClear"
-					class="v-btn v-btn--density-compact mr-1"
-					:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
-					:title="props.label ? `Vider ${props.label}` : 'Vider'"
-					:icon="mdiClose"
-					variant="text"
-					@click="clearField"
-				/>
-				<SyIcon
-					v-if="validationIcon && !props.appendInnerIcon"
-					:icon="validationIcon"
-					role="presentation"
-					:decorative="true"
-				/>
-				<SyIcon
-					v-if="props.appendInnerIcon && !props.noIcon"
-					:color="appendInnerIconColor"
-					role="presentation"
-					:icon="ICONS[props.appendInnerIcon]"
-					:decorative="true"
-				/>
-			</slot>
-		</template>
-
-		<template #details>
-			<slot name="details" />
-			<div
-				v-if="showHelpTextBelow"
-				class="help-text-below px-4 mt-1"
-				:class="{ 'text-disabled': props.disabled }"
+			<!-- Prepend -->
+			<template
+				v-if="props.prependIcon || props.prependTooltip"
+				#prepend
 			>
-				{{ props.helpText }}
-			</div>
-		</template>
-	</VTextField>
+				<slot name="prepend">
+					<template v-if="props.prependTooltip">
+						<VTooltip
+							:text="props.prependTooltip"
+							:location="props.tooltipLocation"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<SyIcon
+									v-bind="tooltipProps"
+									:label="props.label ? `${props.label} - info` : 'Info'"
+									:color="appendInnerIconColor"
+									:icon="ICONS.info"
+									role="button"
+									:decorative="false"
+								/>
+							</template>
+						</VTooltip>
+					</template>
+					<SyIcon
+						v-else-if="props.prependIcon && !props.noIcon"
+						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
+						:color="appendInnerIconColor"
+						:icon="ICONS[props.prependIcon]"
+						:role="disableClickButton ? 'presentation' : 'button'"
+						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+						:decorative="disableClickButton"
+						:tabindex="disableClickButton ? undefined : '0'"
+						@click="handlePrependIconClick"
+						@keydown.enter.prevent="handlePrependIconClick"
+						@keydown.space.prevent="handlePrependIconClick"
+					/>
+				</slot>
+			</template>
+
+			<!-- Append -->
+			<template
+				v-if="props.appendIcon || props.appendTooltip"
+				#append
+			>
+				<slot name="append">
+					<template v-if="props.appendTooltip">
+						<VTooltip
+							:text="props.appendTooltip"
+							:location="props.tooltipLocation"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<SyIcon
+									v-bind="tooltipProps"
+									:label="props.label ? `${props.label} - info` : 'Info'"
+									:color="appendInnerIconColor"
+									:icon="ICONS.info"
+									role="button"
+									:decorative="false"
+								/>
+							</template>
+						</VTooltip>
+					</template>
+					<SyIcon
+						v-else-if="props.appendIcon && !props.noIcon"
+						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
+						:color="appendInnerIconColor"
+						:icon="ICONS[props.appendIcon]"
+						:role="disableClickButton ? 'presentation' : 'button'"
+						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
+						:decorative="disableClickButton"
+						:tabindex="disableClickButton ? undefined : '0'"
+						@click="handleAppendIconClick"
+						@keydown.enter.prevent="handleAppendIconClick"
+						@keydown.space.prevent="handleAppendIconClick"
+					/>
+				</slot>
+			</template>
+
+			<!-- Prepend inner -->
+			<template #prepend-inner>
+				<slot name="prepend-inner">
+					<SyIcon
+						v-if="props.prependInnerIcon && !props.noIcon"
+						:icon="ICONS[props.prependInnerIcon]"
+						role="presentation"
+						:decorative="true"
+					/>
+					<VDivider
+						v-if="props.showDivider"
+						class="mt-4 pa-1"
+						v-bind="dividerProps"
+						vertical
+					/>
+				</slot>
+			</template>
+
+			<!-- Append inner -->
+			<template #append-inner>
+				<slot name="append-inner">
+					<!-- Keyboard-focusable clear button -->
+					<VBtn
+						v-if="showClear"
+						class="v-btn v-btn--density-compact mr-1"
+						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
+						:title="props.label ? `Vider ${props.label}` : 'Vider'"
+						:icon="mdiClose"
+						variant="text"
+						@click.stop="clearField"
+						@keydown.enter.stop
+						@keydown.space.stop
+					/>
+					<SyIcon
+						v-if="validationIcon && !props.appendInnerIcon"
+						:icon="validationIcon"
+						role="presentation"
+						:decorative="true"
+					/>
+					<SyIcon
+						v-if="props.appendInnerIcon && !props.noIcon"
+						:color="appendInnerIconColor"
+						role="presentation"
+						:icon="ICONS[props.appendInnerIcon]"
+						:decorative="true"
+					/>
+				</slot>
+			</template>
+
+			<template #details>
+				<slot name="details" />
+			</template>
+		</VTextField>
+
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-4 mt-1"
+			:class="{ 'text-disabled': props.disabled }"
+		>
+			{{ props.helpText }}
+		</div>
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -750,6 +775,12 @@
 // :deep(textarea.v-field__input::placeholder) {
 // 	opacity: 0;
 // }
+
+.sy-textfield-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
 
 .warning-field {
 	:deep(.v-input__details > .v-icon),

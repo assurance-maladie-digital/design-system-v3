@@ -24,6 +24,10 @@
 			type: Boolean,
 			default: false,
 		},
+		isRestrictedData: {
+			type: Boolean,
+			default: false,
+		},
 		labels: {
 			type: Object as PropType<IPatientInfoLabels>,
 			default: () => ({
@@ -76,6 +80,16 @@
 			return props.patientInfos.nir
 		}
 		return undefined
+	})
+
+	const otherBeneficiaries = computed<string | undefined>(() => {
+		const items = props.patientInfos.selectItems
+
+		if (!items || !items.length) {
+			return undefined
+		}
+
+		return items.map(item => item.title).join(', ')
 	})
 
 	const doctorDialog = ref(false)
@@ -453,11 +467,23 @@
 						{{ patientInfos.mtm }}
 					</span>
 				</p>
+
+				<p
+					v-if="isRestrictedData && otherBeneficiaries"
+				>
+					{{ labels.selectLabel }}
+					<span class="font-weight-bold">
+						{{ otherBeneficiaries }}
+					</span>
+				</p>
 			</div>
 
 			<slot />
 
-			<slot name="moreInfo">
+			<slot
+				v-if="!isRestrictedData"
+				name="moreInfo"
+			>
 				<AmeliproBtn
 					v-if="btnMoreInfo"
 					class="d-block text-none text-left more-info-btn"
@@ -470,7 +496,7 @@
 			</slot>
 
 			<AmeliproSelect
-				v-if="patientInfos.selectItems"
+				v-if="patientInfos.selectItems && !isRestrictedData"
 				v-model="selectValue"
 				classes="mt-4"
 				:items="patientInfos.selectItems"

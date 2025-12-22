@@ -5,8 +5,8 @@
 		useDateFormatValidation,
 		useDateValidation,
 		useDateInputEditing,
-		useManualDateValidation,
 		useDateAutoClamp,
+		useDateTextField,
 	} from '../composables'
 	import { ref, computed, watch, nextTick, onMounted, toRefs } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
@@ -31,7 +31,7 @@
 		placeholder?: string
 		format?: string
 		dateFormatReturn?: string
-		label?: string
+		label: string
 		required?: boolean
 		disabled?: boolean
 		readonly?: boolean
@@ -55,10 +55,9 @@
 		externalErrorMessages?: string[]
 	}>(), {
 		modelValue: undefined,
-		placeholder: DATE_PICKER_MESSAGES.PLACEHOLDER_DEFAULT,
+		placeholder: undefined,
 		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
 		dateFormatReturn: undefined,
-		label: undefined,
 		required: false,
 		disabled: false,
 		readonly: false,
@@ -202,6 +201,7 @@
 	const isFormatting = ref(false)
 	// Force re-render of SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
+	const isValidating = ref(false)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
@@ -211,23 +211,6 @@
 		updateDisplayValue,
 		updateAriaLabel,
 		accessiblePlaceholders: true,
-	})
-
-	const { validateManualInput } = useManualDateValidation({
-		format: displayFormat.value,
-		required: required.value,
-		disableErrorHandling: props.disableErrorHandling,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		customRules: props.customRules as any,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		customWarningRules: props.customWarningRules as any,
-		hasInteracted,
-		errors,
-		clearValidation,
-		validateDateFormat: validateDateFormatForSingleOrRange,
-		isDateComplete: (val: string) => val.length >= displayFormat.value.length,
-		parseDate,
-		validateField: safeValidateField,
 	})
 
 	/**
@@ -525,19 +508,45 @@
 	 * Small helpers to DRY (Don't Repeat Yourself 🥸) logic
 	 * =====================
 	 */
-	function clampIfNeeded(raw: string): string {
-		if (!props.autoClamp || !raw) return raw
-		if (isRange.value && raw.includes(' - ')) {
-			const [rawStartDate = '', rawEndDate = ''] = raw.split(' - ').map(dateText => dateText.trim())
-			const startDateValidation = rawStartDate ? autoClampDate(rawStartDate, displayFormat.value) : { adjusted: false, clampedDate: rawStartDate }
-			const endDateValidation = rawEndDate ? autoClampDate(rawEndDate, displayFormat.value) : { adjusted: false, clampedDate: rawEndDate }
-			const formattedStartDate = startDateValidation.clampedDate || ''
-			const formattedEndDate = endDateValidation.clampedDate || ''
-			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : formattedStartDate
-		}
-		const dateValidationResult = autoClampDate(raw, displayFormat.value)
-		return dateValidationResult.clampedDate
-	}
+	const { clampIfNeeded, validateManualInput, validateOnSubmit, reset } = useDateTextField({
+		autoClamp: props.autoClamp,
+		isRange,
+		displayFormat,
+		autoClampDate,
+		manualValidation: {
+			required: required.value,
+			disableErrorHandling: props.disableErrorHandling,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			customRules: props.customRules as any,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			customWarningRules: props.customWarningRules as any,
+			hasInteracted,
+			errors,
+			clearValidation,
+			validateDateFormat: validateDateFormatForSingleOrRange,
+			isDateComplete: (val: string) => val.length >= displayFormat.value.length,
+			parseDate,
+			validateField: safeValidateField,
+		},
+		submit: {
+			isValidating,
+			hasInteracted,
+			inputValue,
+			runRules,
+		},
+		reset: {
+			clearValidation,
+			isFocused,
+			hasInteracted,
+			isDisabled: () => props.disabled,
+			fieldKey,
+			isFormatting,
+			inputValue,
+			selectedDates,
+			resetState,
+			emitModel,
+		},
+	})
 
 	function toReturnFormat(date: Date): string {
 		return formatDate(date, returnFormat.value)
@@ -980,41 +989,6 @@
 	})
 
 	/** expose */
-	const isValidating = ref(false)
-	function validateOnSubmit() {
-		isValidating.value = true
-		hasInteracted.value = true
-		const ok = runRules(inputValue.value)
-		isValidating.value = false
-		return ok
-	}
-
-	// Reset hook utilisé par SyForm.reset() via useValidatable
-	const reset = () => {
-		// 1) Nettoyer l'état de validation et d'interaction
-		clearValidation()
-		isFocused.value = false
-		hasInteracted.value = false
-
-		if (props.disabled) {
-			fieldKey.value++
-			return
-		}
-
-		// 2) Réinitialiser la valeur sans déclencher de validation interactive
-		isFormatting.value = true
-		inputValue.value = ''
-		selectedDates.value = null
-		resetState()
-		isFormatting.value = false
-
-		// 3) Synchroniser le modèle externe
-		emitModel(null)
-
-		// 4) Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
-		fieldKey.value++
-	}
-
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit, clearValidation, reset)
 
@@ -1086,7 +1060,7 @@
 		}"
 		:disabled="props.disabled"
 		:error-messages="errorMessages"
-		:label="props.label || ''"
+		:label="props.label"
 		:placeholder="props.placeholder"
 		:no-icon="props.noIcon"
 		:prepend-icon="props.displayIcon && props.displayPrependIcon && !props.displayAppendIcon ? 'calendar' : undefined"
@@ -1097,11 +1071,10 @@
 		:bg-color="props.bgColor"
 		color="primary"
 		:is-clearable="!props.readonly"
-		:display-persistent-placeholder="true"
-		:aria-label="ariaLabel || props.placeholder"
+		:aria-label="ariaLabel"
 		:is-validate-on-blur="props.isValidateOnBlur"
 		:density="props.density"
-		:title="props.title || props.placeholder || undefined"
+		:title="props.title"
 		:hint="props.hint"
 		:persistent-hint="props.persistentHint"
 		@focus="onFocus"

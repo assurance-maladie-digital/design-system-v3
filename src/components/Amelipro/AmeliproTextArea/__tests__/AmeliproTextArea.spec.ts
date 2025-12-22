@@ -1,4 +1,4 @@
-import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, VueWrapper } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproTextArea from '../AmeliproTextArea.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
@@ -9,7 +9,7 @@ import type { ValidateOnType } from '../../types'
 import type { ValidationRule } from '@/utils/rules/types'
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTextArea> = {
-	ariaRequired: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -92,7 +92,7 @@ const requiredPropValues = (): ComponentProps<typeof AmeliproTextArea> => ({
 })
 
 const modifiedPropValues = (): ComponentProps<typeof AmeliproTextArea> => ({
-	ariaRequired: true,
+	required: true,
 	classes: 'modified-classes',
 	counter: 100,
 	disabled: true,
