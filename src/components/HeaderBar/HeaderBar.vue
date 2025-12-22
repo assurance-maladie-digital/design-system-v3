@@ -180,7 +180,7 @@
 					name="menu"
 					:menu-open
 				/>
-				<div class="header-logo pl-xl-0 pl-md-14 pl-4">
+				<div class="header-logo pl-md-14 pl-4">
 					<slot
 						name="logo"
 						:menu-open
