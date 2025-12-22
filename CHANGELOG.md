@@ -54,7 +54,7 @@
     </tr>
     <tr style="vertical-align: top;">
       <td>- SyTextField: prevent duplicate modelValue emission on blur  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1630">#1630</a></td>
-      <td></td>
+      <td>- PatientLogged: Add isRestrictedData prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1647">#1647</a></td>
     </tr>
     <tr style="vertical-align: top;">
       <td>- SyTextField: fix validate-on handling  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1610">#1610</a></td>
@@ -73,7 +73,7 @@
       <td></td>
     </tr>
     <tr style="vertical-align: top;">
-      <td>- SyTable/SyServerTable: manage objet instance  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1585">#1585</a></td>
+      <td>- SyTable/SyServerTable: manage objet instance  <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1600">#1600</a></td>
       <td></td>
     </tr>
     <tr style="vertical-align: top;">
