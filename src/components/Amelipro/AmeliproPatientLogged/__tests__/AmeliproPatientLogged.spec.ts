@@ -7,6 +7,7 @@ describe('AmeliproPatientLogged', () => {
 		const wrapper = mount(AmeliproPatientLogged, {
 			props: {
 				btnPostalAddress: true,
+                btnPrevention: true,
 				doctorTooltipRed: true,
 				errorMessage: true,
 				labels: {
@@ -25,6 +26,7 @@ describe('AmeliproPatientLogged', () => {
 					fund: ',test Caisse',
 					fundDialogTitle: 'test Coordonnées de l\'organisme de rattachement du patient',
 					postalAddress: 'Adresse postale',
+                    prevention: 'Prévention',
 					mtm: 'test Modulation MT',
 					name: 'test Nom',
 					nir: 'test NIR',

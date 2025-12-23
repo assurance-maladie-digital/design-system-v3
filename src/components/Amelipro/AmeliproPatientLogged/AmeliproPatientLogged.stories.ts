@@ -5,7 +5,8 @@ import { ref, watch } from 'vue'
 
 const meta = {
 	argTypes: {
-		'btnPostalAddress': { description: 'Affiche le bouton adresse postale' },
+        'btnPostalAddress': {description: 'Affiche le bouton adresse postale'},
+        'btnPrevention': {description: 'Affiche le bouton prévention'},
 		'isRestrictedData': { description: 'affiche la liste des bénéficiaires sans séléction possible' },
 		'click': { description: 'Evénement émis au click sur le bouton changer de patient' },
 		'click:info': { description: 'Evénement émis au click sur le bouton informations' },
@@ -97,9 +98,10 @@ type Story = StoryObj<typeof AmeliproPatientLogged>
 
 export const Default: Story = {
 	args: {
-		'btnPostalAddress': true,
+        'btnPostalAddress': true,
+        'btnPrevention': true,
 		'doctorTooltipRed': true,
-		'isRestrictedData': false,
+        'isRestrictedData': false,
 		'patientInfos': {
 			ame: 'oui',
 			birthdate: '09/11/1992 (32 ans)',
@@ -229,6 +231,7 @@ export const Default: Story = {
 	@click:infos="args['onClick:infos']"
     @click:postal-address="args['onClick:postal-address']"
 	@click:pdf="args['onClick:pdf']"
+    style="width: 350px !important;"
 >
 	<template #doctorDialog>
 		<p>
