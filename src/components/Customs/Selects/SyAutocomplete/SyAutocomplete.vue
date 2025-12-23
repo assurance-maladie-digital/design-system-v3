@@ -35,8 +35,9 @@
 			default: '',
 		},
 		fetchItems: {
-			type: Function as PropType<(query: string) => Promise<ItemType[]>>,
-			required: true,
+			type: Function as PropType<((query: string) => Promise<ItemType[]>) | undefined>,
+			required: false,
+			default: undefined,
 		},
 		minChars: {
 			type: Number,
@@ -259,6 +260,14 @@
 		return internalItems.value.find((i: ItemType) => i[props.valueKey] === item)?.[props.textKey] as string || ''
 	}
 
+	const getChipKey = (item: unknown) => {
+		if (props.returnObject && typeof item === 'object' && item) {
+			const key = (item as Record<string, unknown>)[props.valueKey]
+			return (typeof key === 'string' || typeof key === 'number') ? key : String(key)
+		}
+		return (typeof item === 'string' || typeof item === 'number') ? item : String(item)
+	}
+
 	const removeChip = (item: unknown) => {
 		if (!Array.isArray(selectedItem.value)) return
 		const selectedArray = [...selectedItem.value]
@@ -293,6 +302,16 @@
 			return
 		}
 
+		if (!props.fetchItems) {
+			const normalizedQuery = trimmed.toLowerCase()
+			internalItems.value = (props.items ?? []).filter((item) => {
+				const itemTextValue = getItemText(item)
+				const itemText = itemTextValue != null ? String(itemTextValue).toLowerCase() : ''
+				return itemText.includes(normalizedQuery)
+			})
+			return
+		}
+
 		if (props.cache && cacheMap.value.has(trimmed)) {
 			internalItems.value = cacheMap.value.get(trimmed) ?? []
 			return
@@ -321,6 +340,11 @@
 	}
 
 	const scheduleFetch = (query: string) => {
+		if (props.debounceMs <= 0) {
+			performFetch(query)
+			return
+		}
+
 		if (debounceTimer.value != null) {
 			window.clearTimeout(debounceTimer.value)
 		}
@@ -468,8 +492,14 @@
 
 	watch(searchValue, (newValue) => {
 		emit('update:search', newValue)
-		if (isOpen.value) {
-			scheduleFetch(newValue)
+		const trimmed = newValue.trim()
+		if (trimmed.length >= props.minChars) {
+			if (!isOpen.value) {
+				toggleMenu(true)
+			}
+			else {
+				scheduleFetch(newValue)
+			}
 		}
 	})
 
@@ -756,7 +786,7 @@
 					>
 						<VChip
 							v-for="item in selectedItem"
-							:key="props.returnObject ? item[props.valueKey] : item"
+							:key="getChipKey(item)"
 							size="small"
 							class="ma-1"
 							closable
@@ -826,6 +856,18 @@
 				@keydown.page-down.prevent="handlePageDownKey"
 				@click.stop
 			>
+				<VListItem
+					v-if="isLoading"
+					:key="'loading'"
+					role="option"
+					class="v-list-item"
+					:aria-selected="'false'"
+					tabindex="-1"
+				>
+					<VListItemTitle>
+						<span class="item-text">Chargement...</span>
+					</VListItemTitle>
+				</VListItem>
 				<VListItem
 					v-if="isNoDataVisible"
 					:key="'no-data'"

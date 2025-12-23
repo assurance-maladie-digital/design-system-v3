@@ -53,15 +53,14 @@ const allPeople = [
 
 export const Default: Story = {
 	args: {
-		'items': [],
-		'minChars': 2,
-		'debounceMs': 250,
-		'cache': true,
-		'required': false,
-		'clearable': true,
-		'returnObject': true,
-		'onUpdate:modelValue': fn(),
-		'onUpdate:search': fn(),
+		items: allPeople,
+		minChars: 2,
+		debounceMs: 250,
+		cache: true,
+		required: false,
+		clearable: true,
+		returnObject: true,
+		// Listeners are attached explicitly in template so they don't override v-model bindings.
 	},
 	render: (args) => {
 		return {
@@ -69,12 +68,10 @@ export const Default: Story = {
 			setup() {
 				const value = ref(null)
 				const search = ref('')
-				const fetchItems = async (query: string) => {
-					await new Promise(r => setTimeout(r, 300))
-					return allPeople.filter(p => p.text.toLowerCase().includes(query.toLowerCase()))
-				}
+				const onUpdateModelValue = fn()
+				const onUpdateSearch = fn()
 
-				return { args, value, search, fetchItems }
+				return { args, value, search, onUpdateModelValue, onUpdateSearch }
 			},
 			template: `
 				<div class="pa-4">
@@ -82,9 +79,10 @@ export const Default: Story = {
 						v-model="value"
 						v-model:search="search"
 						v-bind="args"
-						:fetch-items="fetchItems"
 						label="Rechercher une personne"
 						help-text="Saisissez au moins 2 caractères"
+						@update:model-value="onUpdateModelValue"
+						@update:search="onUpdateSearch"
 					/>
 					<div class="mt-4 text-caption">Valeur: {{ value }}</div>
 					<div class="mt-1 text-caption">Search: {{ search }}</div>

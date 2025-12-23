@@ -72,7 +72,7 @@ describe('SyAutocomplete.vue', () => {
 
 		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
 		expect(listItems.some(li => li.text().includes('ABC'))).toBe(true)
-		expect(listItems.some(li => li.text().includes('AB'))).toBe(false)
+		expect(listItems.some(li => li.text().trim() === 'AB')).toBe(false)
 
 		wrapper.unmount()
 		vi.useRealTimers()
