@@ -720,22 +720,6 @@
 		}
 	})
 
-	const getIcon = () => {
-		if (props.noCalendar || props.disableErrorHandling) {
-			return
-		}
-		switch (true) {
-		case errorMessages.value.length > 0:
-			return 'error'
-		case warningMessages.value.length > 0:
-			return 'warning'
-		case successMessages.value.length > 0:
-			return 'success'
-		default:
-			return
-		}
-	}
-
 	watch(() => props.modelValue, (newValue) => {
 		if (isUpdatingFromInternal.value) {
 			if (props.displayRange) {
@@ -964,7 +948,6 @@
 						ref="dateCalendarTextInputRef"
 						v-model="displayFormattedDate"
 						:append-icon="displayIcon && displayAppendIcon ? 'calendar' : undefined"
-						:append-inner-icon="getIcon()"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
 						:error-messages="errorMessages"
 						:warning-messages="warningMessages"

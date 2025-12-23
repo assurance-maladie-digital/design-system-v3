@@ -24,7 +24,6 @@
 		useDateSelection,
 		useDateValidation,
 		useDisplayedDateString,
-		useIconState,
 		useInputBlurHandler,
 		useManualDateValidation,
 		useMonthButtonCustomization,
@@ -816,17 +815,6 @@
 	})
 
 	/**
-	 * Icon state
-	 */
-	const { getIcon } = useIconState({
-		noCalendar: props.noCalendar,
-		disableErrorHandling: props.disableErrorHandling,
-		errorMessages,
-		warningMessages,
-		successMessages,
-	})
-
-	/**
 	 * Gère les mises à jour de DateTextInput avec contrôle
 	 */
 	const handleDateTextInputUpdate = (value: DateValue) => {
@@ -1099,7 +1087,6 @@
 						:is-validate-on-blur="props.isValidateOnBlur"
 						:external-error-messages="errorMessages"
 						:class="[getMessageClasses(), 'label-hidden-on-focus']"
-						:append-inner-icon="getIcon"
 						:auto-clamp="props.autoClamp"
 						:density="props.density"
 						:hint="props.hint"
@@ -1149,7 +1136,9 @@
 					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 				>
 					<template #title>
-						Sélectionnez une date
+						<span class="date-picker-title">
+							Sélectionnez une date
+						</span>
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
@@ -1185,6 +1174,16 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+
+.date-picker-title {
+	display: block;
+	text-transform: lowercase;
+	font-size: 0.875rem;
+
+	&::first-letter {
+		text-transform: uppercase;
+	}
+}
 
 /* Disable ripple effect on month and year buttons */
 :deep(.v-date-picker-controls__month-btn),
@@ -1326,5 +1325,9 @@
 	display: inline-block;
 	cursor: pointer;
 	border-radius: 9999px !important;
+}
+
+:deep(.v-picker__body .v-btn--active .v-btn__overlay) {
+	opacity: 0;
 }
 </style>

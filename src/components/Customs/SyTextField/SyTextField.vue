@@ -302,15 +302,16 @@
 
 	const hasError = computed(() => validation.hasError.value || props.hasError)
 	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
-	const hasSuccess = computed(() => (validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess)
+	const hasSuccess = computed(() => ((validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess) && props.showSuccessMessages)
 
 	const errors = computed(() => [...validation.errors.value, ...(props.errorMessages || [])])
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
 
-	const appendInnerIconColor = computed(() => {
-		if (props.appendInnerIcon === 'error') return 'error'
-		if (props.appendInnerIcon === 'success') return 'success'
+	const iconColor = computed(() => {
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
 		return 'rgba(0, 0, 0, 1)'
 	})
 
@@ -325,7 +326,7 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return ICONS['error']
 		if (hasWarning.value) return ICONS['warning']
-		if (hasSuccess.value) return ICONS['success']
+		if (hasSuccess.value && props.showSuccessMessages) return ICONS['success']
 		return null
 	})
 
@@ -640,7 +641,7 @@
 								<SyIcon
 									v-bind="tooltipProps"
 									:label="props.label ? `${props.label} - info` : 'Info'"
-									:color="appendInnerIconColor"
+									:color="iconColor"
 									:icon="ICONS.info"
 									role="button"
 									:decorative="false"
@@ -651,7 +652,7 @@
 					<SyIcon
 						v-else-if="props.prependIcon && !props.noIcon"
 						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
-						:color="appendInnerIconColor"
+						:color="iconColor"
 						:icon="ICONS[props.prependIcon]"
 						:role="disableClickButton ? 'presentation' : 'button'"
 						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
@@ -679,7 +680,7 @@
 								<SyIcon
 									v-bind="tooltipProps"
 									:label="props.label ? `${props.label} - info` : 'Info'"
-									:color="appendInnerIconColor"
+									:color="iconColor"
 									:icon="ICONS.info"
 									role="button"
 									:decorative="false"
@@ -690,7 +691,7 @@
 					<SyIcon
 						v-else-if="props.appendIcon && !props.noIcon"
 						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
-						:color="appendInnerIconColor"
+						:color="iconColor"
 						:icon="ICONS[props.appendIcon]"
 						:role="disableClickButton ? 'presentation' : 'button'"
 						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
@@ -727,7 +728,7 @@
 					<!-- Keyboard-focusable clear button -->
 					<VBtn
 						v-if="showClear"
-						class="v-btn v-btn--density-compact mr-1"
+						class="v-btn v-btn--density-compact mr-1 text-iconBase"
 						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiClose"
@@ -744,7 +745,7 @@
 					/>
 					<SyIcon
 						v-if="props.appendInnerIcon && !props.noIcon"
-						:color="appendInnerIconColor"
+						:color="iconColor"
 						role="presentation"
 						:icon="ICONS[props.appendInnerIcon]"
 						:decorative="true"
