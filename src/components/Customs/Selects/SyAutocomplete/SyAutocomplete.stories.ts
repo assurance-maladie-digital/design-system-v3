@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
+import { VBtn, VForm } from 'vuetify/components'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 
@@ -239,6 +240,41 @@ export const Required: Story = {
 }
 
 export const RequiredWithAsterisk: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						:items="items"
+						required
+						display-asterisk
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+				
+					const value = ref(null)
+					const search = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: allPeople,
 		required: true,
@@ -271,6 +307,43 @@ export const RequiredWithAsterisk: Story = {
 }
 
 export const MultipleSelection: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						:items="items"
+						multiple
+						:chips="false"
+						return-object
+						clearable
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+				
+					const value = ref([])
+					const search = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: allPeople,
 		minChars: 1,
@@ -305,6 +378,43 @@ export const MultipleSelection: Story = {
 }
 
 export const MultipleSelectionWithChips: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						:items="items"
+						multiple
+						chips
+						return-object
+						clearable
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+				
+					const value = ref([])
+					const search = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: allPeople,
 		minChars: 1,
@@ -340,6 +450,40 @@ export const MultipleSelectionWithChips: Story = {
 }
 
 export const Disabled: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						:items="items"
+						disabled
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+				
+					const value = ref(null)
+					const search = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: allPeople,
 		disabled: true,
@@ -372,6 +516,44 @@ export const Disabled: Story = {
 }
 
 export const AllowHtml: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						:items="items"
+						text-key="text"
+						plain-text-key="plain"
+						value-key="value"
+						allow-html
+						return-object
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+				
+					const value = ref(null)
+					const search = ref('')
+					const items = [
+						{ text: '<abbr title="France">FR</abbr> - France', plain: 'FR - France', value: 'FR' },
+						{ text: '<abbr title="Allemagne">DE</abbr> - Allemagne', plain: 'DE - Allemagne', value: 'DE' },
+						{ text: '<abbr title="Espagne">ES</abbr> - Espagne', plain: 'ES - Espagne', value: 'ES' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: [
 			{ text: '<abbr title="France">FR</abbr> - France', plain: 'FR - France', value: 'FR' },
@@ -410,14 +592,143 @@ export const AllowHtml: Story = {
 	},
 }
 
-export const NoDataText: Story = {
+export const withCustomError: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						:items="items"
+						:error-messages="errorMessages"
+					/>
+					<VBtn @click="triggerError">
+						Trigger Error
+					</VBtn>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
+				
+					const value = ref(null)
+					const search = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+					]
+				
+					const errorMessages = ref<string[]>([])
+					const triggerError = () => {
+						errorMessages.value = ['This is a test error message']
+					}
+				</script>
+				`,
+			},
+		],
+	},
 	args: {
 		items: allPeople,
 		minChars: 1,
 		debounceMs: 250,
 		cache: true,
+		clearable: true,
 		returnObject: true,
-		noDataText: 'Aucun résultat pour cette recherche',
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete, VBtn },
+			setup() {
+				const value = ref(null)
+				const search = ref('')
+				const errorMessages = ref([])
+				const triggerError = () => {
+					// @ts-expect-error test error message
+					errorMessages.value = ['This is a test error message']
+				}
+				return { args, value, search, errorMessages, triggerError }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						v-bind="args"
+						:error-messages="errorMessages"
+						label="Rechercher une personne"
+					/>
+					<div class="mt-4 text-caption">Valeur: {{ value }}</div>
+				</div>
+				<div class="px-4">
+					<VBtn @click="triggerError">
+						Trigger Error
+					</VBtn>
+				</div>
+			`,
+		}
+	},
+}
+
+export const withCustomKey: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						:items="items"
+						text-key="customKey"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+				
+					const value = ref(null)
+					const search = ref('')
+					const items = [
+						{ customKey: 'Choix 1', value: '1' },
+						{ customKey: 'Choix 2', value: '2' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ customKey: 'Choix 1', value: '1' },
+			{ customKey: 'Choix 2', value: '2' },
+		],
+		minChars: 1,
+		debounceMs: 0,
+		cache: false,
+		textKey: 'customKey',
+		valueKey: 'value',
+		returnObject: true,
+		clearable: true,
 	},
 	render: (args) => {
 		return {
@@ -433,9 +744,118 @@ export const NoDataText: Story = {
 						v-model="value"
 						v-model:search="search"
 						v-bind="args"
-						label="Rechercher une personne"
-						:items="[]"
+						label="Choix"
 					/>
+					<div class="mt-4 text-caption">Valeur: {{ value }}</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const FormValidation: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		docs: {
+			description: {
+				story: 'Exemple d\'utilisation du SyAutocomplete dans un formulaire.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <VForm @submit.prevent="submitForm">
+    <SyAutocomplete
+      v-model="formData.person"
+      v-model:search="search"
+      :items="items"
+      label="Personne"
+      required
+      display-asterisk
+      class="mb-4"
+    />
+    <VBtn
+      type="submit"
+      color="primary"
+      class="mt-4"
+    >
+      Soumettre
+    </VBtn>
+  </VForm>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const formData = ref({
+  person: null,
+})
+
+const search = ref('')
+
+const items = [
+  { text: 'Adrien', value: 'Adrien' },
+  { text: 'Axel', value: 'Axel' },
+]
+
+const submitForm = () => {
+  console.log('Formulaire soumis:', formData.value)
+}
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: allPeople,
+		label: 'Personne',
+		required: true,
+		displayAsterisk: true,
+		minChars: 1,
+		debounceMs: 250,
+		cache: true,
+		returnObject: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete, VBtn, VForm },
+			setup() {
+				const formData = ref({
+					person: null,
+				})
+				const search = ref('')
+				const submitForm = () => {
+					console.log('Formulaire soumis:', formData.value)
+				}
+				return { args, formData, search, submitForm }
+			},
+			template: `
+				<div class="pa-4">
+					<VForm @submit.prevent="submitForm">
+						<SyAutocomplete
+							v-model="formData.person"
+							v-model:search="search"
+							v-bind="args"
+							class="mb-4"
+						/>
+						<VBtn
+							type="submit"
+							color="primary"
+							class="mt-4"
+						>
+							Soumettre
+						</VBtn>
+					</VForm>
 				</div>
 			`,
 		}
