@@ -41,7 +41,7 @@
 		},
 		minChars: {
 			type: Number,
-			default: 2,
+			default: 1,
 		},
 		debounceMs: {
 			type: Number,
@@ -307,7 +307,12 @@
 			internalItems.value = (props.items ?? []).filter((item) => {
 				const itemTextValue = getItemText(item)
 				const itemText = itemTextValue != null ? String(itemTextValue).toLowerCase() : ''
-				return itemText.includes(normalizedQuery)
+				if (!itemText) return false
+				if (itemText.startsWith(normalizedQuery)) return true
+				// Also match if any word starts with the query
+				return itemText
+					.split(/\s+/)
+					.some(word => word.startsWith(normalizedQuery))
 			})
 			return
 		}
@@ -500,6 +505,17 @@
 			else {
 				scheduleFetch(newValue)
 			}
+		}
+		else {
+			// Reset results when query is too short (or cleared)
+			if (debounceTimer.value != null) {
+				window.clearTimeout(debounceTimer.value)
+				debounceTimer.value = null
+			}
+			// Invalidate any in-flight request
+			requestId.value++
+			emitLoading(false)
+			internalItems.value = [...props.items]
 		}
 	})
 

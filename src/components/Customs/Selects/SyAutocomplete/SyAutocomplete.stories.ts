@@ -87,7 +87,7 @@ export const Default: Story = {
 	},
 	args: {
 		items: allPeople,
-		minChars: 2,
+		minChars: 1,
 		debounceMs: 250,
 		cache: true,
 		required: false,
@@ -112,7 +112,7 @@ export const Default: Story = {
 						v-model:search="search"
 						v-bind="args"
 						label="Rechercher une personne"
-						help-text="Saisissez au moins 2 caractères"
+						help-text="Saisissez au moins 1 caractère"
 						@update:model-value="onUpdateModelValue"
 						@update:search="onUpdateSearch"
 					/>
@@ -161,8 +161,8 @@ export const HelpText: Story = {
 	},
 	args: {
 		items: allPeople,
-		helpText: 'Veuillez saisir au moins 2 caractères',
-		minChars: 2,
+		helpText: 'Veuillez saisir au moins 1 caractère',
+		minChars: 1,
 		debounceMs: 250,
 		cache: true,
 		clearable: true,
@@ -211,7 +211,7 @@ export const Required: Story = {
 	args: {
 		items: allPeople,
 		required: true,
-		minChars: 2,
+		minChars: 1,
 		debounceMs: 250,
 		cache: true,
 		returnObject: true,
@@ -244,7 +244,7 @@ export const RequiredWithAsterisk: Story = {
 		items: allPeople,
 		required: true,
 		displayAsterisk: true,
-		minChars: 2,
+		minChars: 1,
 		debounceMs: 250,
 		cache: true,
 		returnObject: true,
@@ -274,7 +274,7 @@ export const RequiredWithAsterisk: Story = {
 export const MultipleSelectionWithChips: Story = {
 	args: {
 		items: allPeople,
-		minChars: 2,
+		minChars: 1,
 		debounceMs: 250,
 		cache: true,
 		multiple: true,
@@ -297,7 +297,7 @@ export const MultipleSelectionWithChips: Story = {
 						v-model:search="search"
 						v-bind="args"
 						label="Rechercher une personne"
-						help-text="Saisissez au moins 2 caractères"
+						help-text="Saisissez au moins 1 caractère"
 					/>
 					<div class="mt-4 text-caption">Valeur: {{ value }}</div>
 				</div>
@@ -310,7 +310,7 @@ export const Disabled: Story = {
 	args: {
 		items: allPeople,
 		disabled: true,
-		minChars: 2,
+		minChars: 1,
 		debounceMs: 250,
 		cache: true,
 		clearable: true,
@@ -380,7 +380,7 @@ export const AllowHtml: Story = {
 export const NoDataText: Story = {
 	args: {
 		items: allPeople,
-		minChars: 2,
+		minChars: 1,
 		debounceMs: 250,
 		cache: true,
 		returnObject: true,
