@@ -620,7 +620,6 @@
 		handleSpaceKey,
 		handleDownKey,
 		handleUpKey,
-		handleCharacterKey,
 		handleEscapeKey,
 		handleHomeKey,
 		handleEndKey,
@@ -634,6 +633,7 @@
 		toggleMenu,
 		selectItem,
 		getItemText,
+		focusOptions: false,
 	})
 
 	const setupAriaAttributes = () => {
@@ -774,11 +774,6 @@
 					@keydown.page-up.prevent="handlePageUpKey"
 					@keydown.page-down.prevent="handlePageDownKey"
 					@keydown.tab="handleTabKey"
-					@keydown="(e) => {
-						if (!e.ctrlKey && !e.altKey && !e.metaKey) {
-							handleCharacterKey(e.key)
-						}
-					}"
 				>
 					<div
 						v-if="hasChips"

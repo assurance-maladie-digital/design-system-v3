@@ -10,6 +10,7 @@ export interface UseSySelectKeyboardOptions {
 	toggleMenu: (skipInitialFocus?: boolean) => void
 	selectItem: (item: ItemType | null | undefined, event?: Event) => void
 	getItemText: (item: unknown) => unknown
+	focusOptions?: boolean
 }
 
 export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
@@ -19,6 +20,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		toggleMenu,
 		selectItem,
 		getItemText,
+		focusOptions = true,
 	} = options
 
 	// État central pour le focus et la navigation
@@ -51,8 +53,10 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 						}
 					})
 
-					element.setAttribute('tabindex', '0')
-					element.focus()
+					if (focusOptions) {
+						element.setAttribute('tabindex', '0')
+						element.focus()
+					}
 					element.classList.add('keyboard-focused')
 					element.scrollIntoView({ block: 'nearest' })
 				}
