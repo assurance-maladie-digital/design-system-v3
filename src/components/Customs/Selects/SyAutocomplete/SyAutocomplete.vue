@@ -3,7 +3,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import { computed, nextTick, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
+	import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
 	import { useSySelectKeyboard } from '../SySelect/composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -177,6 +177,7 @@
 	const list = ref<VListComponent | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
+	const nativeInputEl = ref<HTMLInputElement | null>(null)
 
 	const menuTarget = computed<HTMLElement | undefined>(() => {
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
@@ -500,10 +501,19 @@
 		const trimmed = newValue.trim()
 		if (trimmed.length >= props.minChars) {
 			if (!isOpen.value) {
+				clearActiveDescendant()
 				toggleMenu(true)
+				nextTick(() => {
+					setActiveDescendant(0)
+				})
 			}
 			else {
 				scheduleFetch(newValue)
+				// Reset active option to the first item when results are refreshed by typing
+				clearActiveDescendant()
+				nextTick(() => {
+					setActiveDescendant(0)
+				})
 			}
 		}
 		else {
@@ -632,6 +642,7 @@
 	const {
 		activeDescendantId,
 		setActiveDescendant,
+		clearActiveDescendant,
 		handleEnterKey,
 		handleSpaceKey,
 		handleDownKey,
@@ -651,6 +662,160 @@
 		getItemText,
 		focusOptions: false,
 	})
+
+	const getNativeInputElement = () => {
+		return (textInput.value?.$el?.querySelector('input') as HTMLInputElement | null) ?? null
+	}
+
+	const focusInputElement = () => {
+		const input = getNativeInputElement()
+		if (input) input.focus()
+	}
+
+	const focusActiveOptionElement = () => {
+		if (!activeDescendantId.value) return
+		nextTick(() => {
+			const element = document.getElementById(activeDescendantId.value)
+			if (!element) return
+			const allItems = document.querySelectorAll('.v-list-item')
+			allItems.forEach((item) => {
+				item.setAttribute('tabindex', '-1')
+			})
+			element.setAttribute('tabindex', '0')
+			;(element as HTMLElement).focus()
+		})
+	}
+
+	const handleListEscapeKey = () => {
+		closeList()
+		nextTick(() => {
+			focusInputElement()
+		})
+	}
+
+	const handleInputDownKey = () => {
+		if (!isOpen.value) {
+			clearActiveDescendant()
+			toggleMenu(true)
+			nextTick(() => {
+				setActiveDescendant(0)
+				focusActiveOptionElement()
+			})
+			return
+		}
+		handleDownKey()
+		focusActiveOptionElement()
+	}
+
+	const handleInputUpKey = () => {
+		if (!isOpen.value) {
+			clearActiveDescendant()
+			toggleMenu(true)
+			nextTick(() => {
+				setActiveDescendant(0)
+				focusActiveOptionElement()
+			})
+			return
+		}
+		handleUpKey()
+		focusActiveOptionElement()
+	}
+
+	const handleListDownKey = () => {
+		if (!isOpen.value) {
+			clearActiveDescendant()
+			toggleMenu(true)
+			nextTick(() => {
+				setActiveDescendant(0)
+				focusActiveOptionElement()
+			})
+			return
+		}
+		handleDownKey()
+		focusActiveOptionElement()
+	}
+
+	const handleListUpKey = () => {
+		if (!isOpen.value) {
+			clearActiveDescendant()
+			toggleMenu(true)
+			nextTick(() => {
+				setActiveDescendant(0)
+				focusActiveOptionElement()
+			})
+			return
+		}
+		handleUpKey()
+		focusActiveOptionElement()
+	}
+
+	const onNativeInputKeydown = (event: KeyboardEvent) => {
+		// Arrow navigation should work like Vuetify Autocomplete: from input, ArrowDown/Up opens the menu
+		// and moves focus into the options. We handle ArrowDown/Up regardless of open state.
+		if (event.key === 'ArrowDown') {
+			event.preventDefault()
+			handleInputDownKey()
+			return
+		}
+		if (event.key === 'ArrowUp') {
+			event.preventDefault()
+			handleInputUpKey()
+			return
+		}
+
+		// Only intercept other navigation keys when the menu is open so typing/cursor navigation remains normal while closed.
+		if (!isOpen.value) return
+
+		switch (event.key) {
+		case 'Home':
+			event.preventDefault()
+			handleHomeKey()
+			break
+		case 'End':
+			event.preventDefault()
+			handleEndKey()
+			break
+		case 'PageUp':
+			event.preventDefault()
+			handlePageUpKey()
+			break
+		case 'PageDown':
+			event.preventDefault()
+			handlePageDownKey()
+			break
+		case 'Enter':
+			event.preventDefault()
+			handleEnterKey()
+			break
+		case 'Escape':
+			event.preventDefault()
+			handleEscapeKey()
+			nextTick(() => {
+				focusInputElement()
+			})
+			break
+		default:
+			break
+		}
+	}
+
+	const attachNativeKeydownListener = () => {
+		const el = getNativeInputElement()
+		if (!el) return
+		if (nativeInputEl.value === el) return
+
+		if (nativeInputEl.value) {
+			nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown)
+		}
+		nativeInputEl.value = el
+		nativeInputEl.value.addEventListener('keydown', onNativeInputKeydown)
+	}
+
+	const detachNativeKeydownListener = () => {
+		if (!nativeInputEl.value) return
+		nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown)
+		nativeInputEl.value = null
+	}
 
 	const setupAriaAttributes = () => {
 		if (!textInput.value || !textInput.value.$el) return
@@ -731,7 +896,20 @@
 			setupAriaAttributes()
 			setTimeout(setupAriaAttributes, 100)
 			setTimeout(setupAriaAttributes, 300)
+			attachNativeKeydownListener()
 		})
+	})
+
+	watchEffect(() => {
+		// When the activator VTextField instance changes, reattach the listener.
+		void textInput.value
+		nextTick(() => {
+			attachNativeKeydownListener()
+		})
+	})
+
+	onBeforeUnmount(() => {
+		detachNativeKeydownListener()
 	})
 
 	defineExpose({
@@ -782,8 +960,6 @@
 					@click="toggleMenu"
 					@keydown.enter.prevent="handleEnterKey"
 					@keydown.space.prevent="handleSpaceKey"
-					@keydown.down.prevent="handleDownKey"
-					@keydown.up.prevent="handleUpKey"
 					@keydown.esc.prevent="handleEscapeKey"
 					@keydown.home.prevent="handleHomeKey"
 					@keydown.end.prevent="handleEndKey"
@@ -856,11 +1032,11 @@
 				bg-color="white"
 				tabindex="0"
 				:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
-				@keydown.esc.prevent="closeList"
+				@keydown.esc.prevent="handleListEscapeKey"
 				@keydown.tab="handleTabKey"
 				@keydown.enter.prevent="handleEnterKey"
-				@keydown.down.prevent="handleDownKey"
-				@keydown.up.prevent="handleUpKey"
+				@keydown.down.prevent="handleListDownKey"
+				@keydown.up.prevent="handleListUpKey"
 				@keydown.home.prevent="handleHomeKey"
 				@keydown.end.prevent="handleEndKey"
 				@keydown.page-up.prevent="handlePageUpKey"

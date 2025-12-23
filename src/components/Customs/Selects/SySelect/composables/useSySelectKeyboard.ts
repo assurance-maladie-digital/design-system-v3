@@ -200,8 +200,10 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 		else {
 			// Utiliser lastFocusedIndex comme point de départ (pas l'item sélectionné)
-			const currentIndex = lastFocusedIndex.value >= 0 ? lastFocusedIndex.value : 0
-			const nextIndex = Math.min(currentIndex + 1, formattedItems.value.length - 1)
+			const currentIndex = lastFocusedIndex.value
+			const nextIndex = currentIndex < 0
+				? 0
+				: Math.min(currentIndex + 1, formattedItems.value.length - 1)
 			setActiveDescendant(nextIndex)
 		}
 	}

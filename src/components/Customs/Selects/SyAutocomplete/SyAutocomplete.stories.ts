@@ -112,7 +112,6 @@ export const Default: Story = {
 						v-model:search="search"
 						v-bind="args"
 						label="Rechercher une personne"
-						help-text="Saisissez au moins 1 caractère"
 						@update:model-value="onUpdateModelValue"
 						@update:search="onUpdateSearch"
 					/>
