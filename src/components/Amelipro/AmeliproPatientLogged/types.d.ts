@@ -39,7 +39,7 @@ export interface IPatientInfoLabels {
 	fund: string
 	fundDialogTitle: string
 	postalAddress: string
-    prevention: string
+	prevention: string
 	mtm: string
 	name: string
 	nir: string

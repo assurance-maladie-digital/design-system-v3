@@ -224,7 +224,10 @@ export const Default: Story = {
 			})
 			return { args, model }
 		},
-		template: `<AmeliproPatientLogged
+        template: `
+          <div style="display: flex; justify-content: center;">
+
+            <AmeliproPatientLogged
 	v-bind="args"
 	v-model="model"
 	@click="args['onClick']"
@@ -250,6 +253,7 @@ export const Default: Story = {
 			Contenu du slot "fundDialog"
 		</p>
 	</template>
-</AmeliproPatientLogged>`,
+            </AmeliproPatientLogged>
+          </div>`,
 	}),
 }
