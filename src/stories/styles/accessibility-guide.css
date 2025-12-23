@@ -1,0 +1,153 @@
+.accessibility-guide {
+	font-family:
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		Roboto,
+		Oxygen,
+		Ubuntu,
+		Cantarell,
+		'Open Sans',
+		'Helvetica Neue',
+		sans-serif;
+	max-width: 1200px;
+	margin-top: 10px;
+	padding: 2rem;
+	color: #333;
+	line-height: 1.6;
+}
+
+.intro-section {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	margin: 2rem 0;
+	padding: 1.5rem;
+	background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+	border-radius: 12px;
+}
+
+.accessibility-icon {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+}
+
+.intro-text {
+	font-size: 1.1rem;
+	margin: 0;
+}
+
+.criteria-section {
+	margin: 3rem 0;
+}
+
+.criteria-section h2 {
+	font-size: 1.8rem;
+	margin-bottom: 1.5rem;
+	color: #2c3e50;
+	border-bottom: 2px solid #e0e0e0;
+	padding-bottom: 0.5rem;
+}
+
+.criteria-card {
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgb(0 0 0 / 5%), 0 1px 3px rgb(0 0 0 / 10%);
+	padding: 1.5rem;
+	margin-top: 1.5rem !important;
+	margin-bottom: 1.5rem !important;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.criteria-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.criteria-icon {
+	font-size: 1.8rem;
+	margin-right: 0.5rem !important;
+	margin-left: 0.5rem !important;
+}
+
+.criteria-header h3 {
+	margin: 0;
+	font-size: 1.4rem;
+	color: #1976d2;
+	margin-top: 0.5rem !important;
+	margin-bottom: 0.5rem !important;
+}
+
+.criteria-card ul {
+	margin: 0;
+	padding-left: 1.5rem;
+}
+
+.criteria-card li {
+	margin-bottom: 0.5rem;
+}
+
+.criteria-card strong {
+	color: #455a64;
+}
+
+.criteria-card code {
+	background-color: #f5f5f5;
+	padding: 0.2rem 0.4rem;
+	border-radius: 4px;
+	font-size: 0.9rem;
+	color: #e91e63;
+}
+
+.demo-section {
+	margin: 3rem 0;
+	padding: 2rem;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	margin-top: 1.5rem !important;
+	margin-bottom: 1.5rem !important;
+}
+
+.best-practices {
+	margin: 3rem 0;
+	padding: 1.5rem;
+	background-color: #e8f5e9;
+	border-left: 4px solid #4caf50;
+	border-radius: 4px;
+	margin-top: 1.5rem !important;
+	margin-bottom: 1.5rem !important;
+}
+
+.best-practices h2 {
+	color: #2e7d32;
+	margin-top: 0;
+}
+
+.resources-section {
+	margin: 3rem 0;
+}
+
+.resources-section a {
+	color: #1976d2;
+	text-decoration: none;
+	border-bottom: 1px dotted;
+	transition: color 0.2s ease;
+}
+
+.resources-section a:hover {
+	color: #0d47a1;
+}
+
+@media (width <= 768px) {
+	.intro-section {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.accessibility-icon {
+		margin-bottom: 1rem;
+	}
+}

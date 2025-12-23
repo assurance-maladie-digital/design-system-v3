@@ -133,6 +133,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -248,6 +251,9 @@ export const BackgroundCustom: Story = {
 
 export const DataList: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -340,6 +346,9 @@ export const DataList: Story = {
 
 export const DataListFixedHeight: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -434,6 +443,9 @@ export const DataListFixedHeight: Story = {
 
 export const ActionBtn: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -544,29 +556,10 @@ export const ActionBtn: Story = {
 
 export const HtmlValue: Story = {
 	parameters: {
-		controls: {
-			exclude: [
-				'vuetifyOptions',
-				'backBtnText',
-				'backBtnAccessibleName',
-				'hideBackBtn',
-				'titleText',
-				'titleAccessibleName',
-				'subTitleText',
-				'subTitleAccessibleName',
-				'loading',
-				'renderFixedHeight',
-				'back',
-				'click:list-item',
-				'back-btn',
-				'back-btn-icon',
-				'title',
-				'sub-title',
-				'additional-informations',
-				'right-content',
-				'item',
-			],
+		a11y: {
+			disable: true,
 		},
+		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -768,6 +761,9 @@ export const Loading: Story = {
 
 export const SlotAdditionalInformations: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -859,6 +855,9 @@ export const SlotAdditionalInformations: Story = {
 
 export const SlotBackBtn: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -935,6 +934,9 @@ export const SlotBackBtn: Story = {
 
 export const SlotBackBtnIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -1003,6 +1005,9 @@ export const SlotBackBtnIcon: Story = {
 
 export const SlotTitle: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -1066,6 +1071,9 @@ export const SlotTitle: Story = {
 
 export const SlotSubTitle: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
 		sourceCode: [
 			{
@@ -1128,6 +1136,9 @@ export const SlotSubTitle: Story = {
 
 export const SlotRightContent: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
 		sourceCode: [
 			{

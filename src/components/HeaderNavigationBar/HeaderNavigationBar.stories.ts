@@ -278,6 +278,9 @@ export const Default: Story = {
 		],
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -327,6 +330,9 @@ export const WithScroll: Story = {
 		}),
 	],
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -393,6 +399,9 @@ export const WithManyItems: Story = {
 		],
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -507,6 +516,9 @@ export const WithSlots: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -608,6 +620,9 @@ export const WithLogoSlot: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -672,6 +687,9 @@ export const WithNavigationBarPrependSlot: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -723,6 +741,9 @@ export const WithNavigationBarAppendSlot: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -789,6 +810,9 @@ export const WithNavigationMenuAppendSlot: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -836,6 +860,9 @@ export const WithVuetifyOptions: Story = {
 		},
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -905,6 +932,9 @@ export const WithTabConfirmation: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

@@ -12,7 +12,7 @@
 	import type { SelectItem } from '../AmeliproSelect/types'
 
 	const props = defineProps({
-		btnMoreInfo: {
+		btnPostalAddress: {
 			type: Boolean,
 			default: false,
 		},
@@ -21,6 +21,10 @@
 			default: false,
 		},
 		errorMessage: {
+			type: Boolean,
+			default: false,
+		},
+		isRestrictedData: {
 			type: Boolean,
 			default: false,
 		},
@@ -40,7 +44,7 @@
 				firstName: 'Prénom',
 				fund: 'Caisse',
 				fundDialogTitle: 'Coordonnées de l\'organisme de rattachement du patient',
-				moreInfo: 'Plus d\'informations',
+				postalAddress: 'Adresse postale',
 				mtm: 'Modulation MT',
 				name: 'Nom',
 				nir: 'NIR',
@@ -78,11 +82,21 @@
 		return undefined
 	})
 
+	const otherBeneficiaries = computed<string | undefined>(() => {
+		const items = props.patientInfos.selectItems
+
+		if (!items || !items.length) {
+			return undefined
+		}
+
+		return items.map(item => item.title).join(', ')
+	})
+
 	const doctorDialog = ref(false)
 	const exemptionDialog = ref(false)
 	const fundDialog = ref(false)
 
-	const emit = defineEmits(['click', 'click:info', 'click:more-info', 'click:pdf', 'update:model-value'])
+	const emit = defineEmits(['click', 'click:info', 'click:postal-address', 'click:pdf', 'update:model-value'])
 	const selectValue = computed({
 		get: (): SelectItem | number | string | undefined => props.modelValue,
 		set: (newValue: SelectItem | number | string | undefined): void => {
@@ -93,7 +107,7 @@
 	const emitClick = () => emit('click', `${props.uniqueId}-btn`, selectValue.value)
 	const emitClickInfo = () => emit('click:info', `${props.uniqueId}-info-btn`)
 	const emitClickPdf = () => emit('click:pdf', `${props.uniqueId}-pdf-btn`)
-	const emitClickMoreInfo = () => emit('click:more-info', `${props.uniqueId}-btn-more-info`)
+	const emitClickPostalAddress = () => emit('click:postal-address', `${props.uniqueId}-btn-postal-address`)
 </script>
 
 <template>
@@ -453,24 +467,36 @@
 						{{ patientInfos.mtm }}
 					</span>
 				</p>
+
+				<p
+					v-if="isRestrictedData && otherBeneficiaries"
+				>
+					{{ labels.selectLabel }}
+					<span class="font-weight-bold">
+						{{ otherBeneficiaries }}
+					</span>
+				</p>
 			</div>
 
 			<slot />
 
-			<slot name="moreInfo">
+			<slot
+				v-if="!isRestrictedData"
+				name="postalAdress"
+			>
 				<AmeliproBtn
-					v-if="btnMoreInfo"
-					class="d-block text-none text-left more-info-btn"
+					v-if="btnPostalAddress"
+					class="d-block text-none text-left postal-address-btn"
 					text
-					:unique-id="`${uniqueId}-btn-more-info`"
-					@click="emitClickMoreInfo"
+					:unique-id="`${uniqueId}-postal-address-info`"
+					@click="emitClickPostalAddress"
 				>
-					{{ labels.moreInfo }}
+					{{ labels.postalAddress }}
 				</AmeliproBtn>
 			</slot>
 
 			<AmeliproSelect
-				v-if="patientInfos.selectItems"
+				v-if="patientInfos.selectItems && !isRestrictedData"
 				v-model="selectValue"
 				classes="mt-4"
 				:items="patientInfos.selectItems"
@@ -507,7 +533,7 @@
 	text-align: left;
 }
 
-.more-info-btn,
+.postal-address-btn,
 .patient-change-btn {
 	white-space: normal;
 }

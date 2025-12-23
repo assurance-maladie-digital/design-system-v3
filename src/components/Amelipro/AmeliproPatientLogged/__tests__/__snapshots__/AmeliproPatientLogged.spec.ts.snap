@@ -717,6 +717,7 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
               Allocation de solidarité aux personnes âgées
             </span>
           </p>
+          <!-- v-if -->
         </div>
         <button
           class="
@@ -724,8 +725,8 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
             d-block
             d-block
             elevation-0
-            more-info-btn
-            more-info-btn
+            postal-address-btn
+            postal-address-btn
             text-ap-blue-darken-1
             text-left
             text-left
@@ -738,7 +739,7 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
             v-btn--variant-text
             v-theme--light
           "
-          id="test-id-btn-more-info"
+          id="test-id-postal-address-info"
           style="
             height: auto;
             min-height: auto;
@@ -759,7 +760,7 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
               d-flex
               flex-row
             ">
-              test Plus d'informations
+              Adresse postale
               <!-- v-if -->
               <!-- v-if -->
             </span>
@@ -890,7 +891,6 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
                       <!---->
                       <input
                         aria-label="Open"
-                        aria-required="false"
                         id="test-id-select"
                         inputmode="none"
                         size="1"

@@ -8,7 +8,7 @@ import type { ValidationRule } from 'vuetify'
 import type { ErrorBucket } from '../types'
 
 const expectedPropOptions = {
-	ariaRequired: {
+	required: {
 		type: Boolean,
 		default: false,
 	},
@@ -68,7 +68,7 @@ const requiredPropValues = () => ({
 })
 
 const modifiedPropValues = () => ({
-	ariaRequired: true,
+	required: true,
 	disabled: true,
 	errorMessages: { error: 'Modified error message' },
 	errorTitle: 'Modified error title',
@@ -169,12 +169,12 @@ describe('AmeliproUpload', () => {
 				expect(tag().text()).toContain(testHelper.modified('inputLabel'))
 			})
 
-			// ariaRequired change text
-			it('prop ariaRequired adds required text to label', async () => {
+			// required change text
+			it('prop required adds required text to label', async () => {
 				expect(tag().text()).not.toContain('Champ obligatoire')
 
-				const { ariaRequired } = modifiedPropValues()
-				await wrapper.setProps({ ariaRequired })
+				const { required } = modifiedPropValues()
+				await wrapper.setProps({ required })
 				expect(tag().text()).toContain('Champ obligatoire')
 			})
 		})
@@ -227,12 +227,12 @@ describe('AmeliproUpload', () => {
 				expect(fileInput().attributes('aria-invalid')).toBe('true')
 			})
 
-			it('prop ariaRequired sets attribue aria-required', async () => {
-				expect(fileInput().attributes('aria-required')).toBe('false')
+			it('prop required sets attribue required', async () => {
+				expect(fileInput().attributes('required')).toBe('false')
 
-				const { ariaRequired } = modifiedPropValues()
-				await wrapper.setProps({ ariaRequired })
-				expect(fileInput().attributes('aria-required')).toBe('true')
+				const { required } = modifiedPropValues()
+				await wrapper.setProps({ required })
+				expect(fileInput().attributes('required')).toBe('true')
 			})
 		})
 

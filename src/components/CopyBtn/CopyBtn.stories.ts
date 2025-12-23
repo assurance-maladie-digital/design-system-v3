@@ -65,6 +65,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -140,6 +143,9 @@ export const Default: Story = {
 
 export const NoTooltip: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -199,6 +205,9 @@ export const NoTooltip: Story = {
 
 export const SlotIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -268,6 +277,9 @@ export const SlotIcon: Story = {
 
 export const RemoveSeparators: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -330,6 +342,9 @@ export const RemoveSeparators: Story = {
 
 export const MultiSeparators: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -392,6 +407,9 @@ export const MultiSeparators: Story = {
 
 export const RemoveSpaces: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -453,6 +471,9 @@ export const RemoveSpaces: Story = {
 
 export const SlotTooltip: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

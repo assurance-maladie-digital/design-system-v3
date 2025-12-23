@@ -1,4 +1,6 @@
 import { ruleMessage } from '@/utils/ruleMessage'
+import { formatDate } from '@/utils/formatDate'
+import dayjs from 'dayjs'
 import type {
 	ValidationRule,
 	ValidationResult,
@@ -18,14 +20,27 @@ export function isDateValidFn(
 		if (!value) {
 			return true
 		}
-
-		const validationResult = typeof value === 'string' && checkIfDateValid(value)
-		const errorMessage
-			= typeof validationResult === 'string'
-				? ruleMessage(errorMessages, validationResult)
-				: true
-
-		return errorMessage || ruleMessage(errorMessages, 'default')
+		let validationResult: string | true | false
+		if (value instanceof Date) {
+			const formatted = formatDate(dayjs(value))
+			validationResult = checkIfDateValid(formatted)
+		}
+		else if (typeof value === 'string') {
+			validationResult = checkIfDateValid(value)
+		}
+		else {
+			return ruleMessage(errorMessages, 'default')
+		}
+		if (validationResult === true) {
+			return true
+		}
+		if (typeof validationResult === 'string') {
+			if (Object.prototype.hasOwnProperty.call(errorMessages, validationResult)) {
+				return ruleMessage(errorMessages, validationResult)
+			}
+			return ruleMessage(errorMessages, 'default')
+		}
+		return ruleMessage(errorMessages, 'default')
 	}
 }
 

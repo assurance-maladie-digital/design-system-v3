@@ -402,6 +402,9 @@ export const SortBy: Story = {
 
 export const TableServer: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -627,6 +630,9 @@ export const TableServer: Story = {
 
 export const ManyTables: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

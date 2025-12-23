@@ -1,12 +1,12 @@
 import { mount } from '@vue/test-utils'
-import { expect, describe, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import AmeliproPostalAddressField from '../AmeliproPostalAddressField.vue'
 
 describe('AmeliproPostalAddressField', () => {
 	it('render correctly', async () => {
 		const wrapper = mount(AmeliproPostalAddressField, {
 			props: {
-				ariaRequired: true,
+				required: true,
 				uniqueId: 'the-groupId',
 				groupLabel: 'the-groupLabel',
 				modelValue: {

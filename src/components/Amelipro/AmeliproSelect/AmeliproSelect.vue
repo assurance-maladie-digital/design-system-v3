@@ -9,7 +9,7 @@
 	import { isRequired } from '@/utils/rules/isRequired'
 
 	const props = defineProps({
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -123,7 +123,7 @@
 		const rules = [
 			...props.rules,
 		]
-		if (props.ariaRequired) {
+		if (props.required) {
 			rules.push(isRequired)
 		}
 		return rules
@@ -254,7 +254,7 @@
 				>
 					{{ label }}
 
-					<span v-if="ariaRequired">
+					<span v-if="required">
 						<span aria-hidden="true">
 							&nbsp;*
 						</span>
@@ -277,11 +277,11 @@
 				v-model="inputValue"
 				:aria-describedby="displayError ? errorId : undefined"
 				:aria-invalid="displayError ? true : undefined"
-				:aria-required="ariaRequired"
+				:required="required"
 				:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 				class="pt-0 amelipro-select"
+				:menu-props="{ contentClass: 'amelipro-select-menu' }"
 				:clearable="clearable"
-				color="ap-blue-darken-1"
 				density="compact"
 				:disabled="disabled"
 				:error="displayError"
@@ -374,6 +374,42 @@
 .v-list {
 	& :deep(.v-list-item) .v-list-item__title {
 		line-height: 1.5rem;
+	}
+}
+</style>
+
+<style lang="scss">
+@use '@/assets/amelipro/apTokens';
+
+.amelipro-select-menu {
+	.v-list-item--active .v-list-item__overlay,
+	.v-list-item--selected .v-list-item__overlay,
+	.v-list-item[aria-selected='true'] .v-list-item__overlay {
+		background-color: apTokens.$ap-blue-lighten3 !important;
+		opacity: 1;
+	}
+
+	.v-list-item--active:hover .v-list-item__overlay,
+	.v-list-item--selected:hover .v-list-item__overlay,
+	.v-list-item[aria-selected='true']:hover .v-list-item__overlay {
+		filter: brightness(0.98);
+	}
+
+	.v-list-item--active .v-list-item-title,
+	.v-list-item--active .v-list-item-subtitle,
+	.v-list-item--active .v-list-item__title,
+	.v-list-item--active .v-list-item__subtitle,
+	.v-list-item--selected .v-list-item-title,
+	.v-list-item--selected .v-list-item-subtitle,
+	.v-list-item--selected .v-list-item__title,
+	.v-list-item--selected .v-list-item__subtitle,
+	.v-list-item[aria-selected='true'] .v-list-item-title,
+	.v-list-item[aria-selected='true'] .v-list-item-subtitle,
+	.v-list-item[aria-selected='true'] .v-list-item__title,
+	.v-list-item[aria-selected='true'] .v-list-item__subtitle {
+		color: apTokens.$ap-blue-darken1 !important;
+		position: relative;
+		z-index: 1;
 	}
 }
 </style>

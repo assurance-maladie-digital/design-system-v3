@@ -5,10 +5,11 @@ import { ref, watch } from 'vue'
 
 const meta = {
 	argTypes: {
-		'btnMoreInfo': { description: 'Affiche le bouton plus d\'informations' },
+		'btnPostalAddress': { description: 'Affiche le bouton adresse postale' },
+		'isRestrictedData': { description: 'affiche la liste des bénéficiaires sans séléction possible' },
 		'click': { description: 'Evénement émis au click sur le bouton changer de patient' },
 		'click:info': { description: 'Evénement émis au click sur le bouton informations' },
-		'click:more-info': { description: 'Evénement émis au click sur le bouton plus d\'informations' },
+		'click:postal-address': { description: 'Evénement émis au click sur le bouton adresse postale' },
 		'click:pdf': { description: 'Evénement émis au click sur le bouton pdf' },
 		'default': { description: 'Espace libre avant le bouton informations supplémentaire au cas où il y aurait besoin de lignes supplémentaires' },
 		'doctor': { description: 'Slot permettant de remplacer le contenu de la ligne médecin traitant au besoin' },
@@ -37,7 +38,7 @@ const meta = {
 						firstName: string
 						fund: string
 						fundDialogTitle: string
-						moreInfo: string
+						postalAddress: string
 						mtm: string
 						name: string
 						nir: string
@@ -96,8 +97,9 @@ type Story = StoryObj<typeof AmeliproPatientLogged>
 
 export const Default: Story = {
 	args: {
-		'btnMoreInfo': true,
+		'btnPostalAddress': true,
 		'doctorTooltipRed': true,
+		'isRestrictedData': false,
 		'patientInfos': {
 			ame: 'oui',
 			birthdate: '09/11/1992 (32 ans)',
@@ -133,7 +135,7 @@ export const Default: Story = {
 		'uniqueId': 'test-id',
 		'onClick': fn(),
 		'onClick:info': fn(),
-		'onClick:more-info': fn(),
+		'onClick:postal-address': fn(),
 		'onClick:pdf': fn(),
 	},
 	parameters: {
@@ -142,7 +144,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<AmeliproPatientLogged
 	v-model="myModel"
-	:btn-more-info="true"
+	:postal-address-info="true"
 	:doctor-tooltip-red="true"
 	:patient-infos="{
 		ame: 'oui',
@@ -225,7 +227,7 @@ export const Default: Story = {
 	v-model="model"
 	@click="args['onClick']"
 	@click:infos="args['onClick:infos']"
-	@click:more-infos="args['onClick:more-infos']"
+    @click:postal-address="args['onClick:postal-address']"
 	@click:pdf="args['onClick:pdf']"
 >
 	<template #doctorDialog>

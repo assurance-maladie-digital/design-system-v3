@@ -3,8 +3,22 @@
 /* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
 	import type { ErrorBucket, Registrable } from './types'
 	import type { ErrorMessages, ValidationRule } from '@/utils/rules/types'
-	import { type PropType, computed, getCurrentInstance, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-	import { fileUploadDuplicationRule, fileUploadFormatRule, fileUploadMaxFileNumberRule } from '@/utils/amelipro/rules/uploadFile'
+	import {
+		computed,
+		getCurrentInstance,
+		inject,
+		nextTick,
+		onBeforeUnmount,
+		onMounted,
+		type PropType,
+		ref,
+		watch,
+	} from 'vue'
+	import {
+		fileUploadDuplicationRule,
+		fileUploadFormatRule,
+		fileUploadMaxFileNumberRule,
+	} from '@/utils/amelipro/rules/uploadFile'
 	import AmeliproChips from '../AmeliproChips/AmeliproChips.vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
@@ -23,7 +37,7 @@
 	}
 
 	const props = defineProps({
-		ariaRequired: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -359,7 +373,7 @@
 	const validationRules = computed<ValidationRule[]>(() => {
 		const rules = [...props.rules]
 
-		if (props.ariaRequired) {
+		if (props.required) {
 			rules.push(isRequiredFn(props.errorMessages))
 		}
 
@@ -410,7 +424,7 @@
 	// }
 
 	// --- Watchers ---
-	watch(() => props.ariaRequired, () => {
+	watch(() => props.required, () => {
 		internalValidate()
 	})
 
@@ -477,7 +491,7 @@
 				:accept="fileTypeAccepted.join(',')"
 				:aria-describedby="describedby"
 				:aria-invalid="hasError"
-				:aria-required="ariaRequired"
+				:required="required"
 				:clearable="false"
 				density="compact"
 				:disabled="disabled"
@@ -510,7 +524,7 @@
 								class="text-body-1 upload-input-text text-left text-ap-grey-darken-1 amelipro-upload__text"
 							>
 								{{ inputLabel }}
-								<span v-if="ariaRequired">
+								<span v-if="required">
 									<span aria-hidden="true">
 										&nbsp;*
 									</span>

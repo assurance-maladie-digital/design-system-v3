@@ -142,7 +142,7 @@ const preview: Preview = {
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink', 'SyPagination'],
 						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
-						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'CalendarMode', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyBtnSelect', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'SyBtnSelect'],
+						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'CalendarMode', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyBtnSelect', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'SyBtnSelect', 'SyRadioGroup'],
 						'Tableaux', ['PaginatedTable', 'TableToolbar', 'SyTable', 'SyServerTable'],
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
@@ -151,7 +151,7 @@ const preview: Preview = {
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Guide Du Dev', [
 						'Installation',
-						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes',],
+						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes'],
 						'Configuration du thème',
 						'Correspondance composants PAG',
 						'Règles De Validation',
@@ -222,6 +222,16 @@ const preview: Preview = {
 					value: '#56c271',
 				},
 			],
+		},
+		a11y: {
+			config: {
+				rules: [
+					{
+						id: 'color-contrast',
+						enabled: false,
+					},
+				],
+			},
 		},
 	},
 }

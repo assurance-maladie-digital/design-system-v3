@@ -5,7 +5,7 @@ import AmeliproCheckbox from './AmeliproCheckbox.vue'
 const meta = {
 	argTypes: {
 		'append': { description: 'Permet de rajouter un élément après le label' },
-		'ariaRequired': { description: 'Permet de rendre la selection obligatoire' },
+		'required': { description: 'Permet de rendre la selection obligatoire' },
 		'checkbox': {
 			description: 'Objet qui permet de générer la checkbox',
 			table: {
@@ -25,7 +25,7 @@ const meta = {
 		'label': { description: 'Permet de renseigner un label personnalisé' },
 		'labelLeft': { description: 'Positionne le label à gauche de la case à cocher' },
 		'modelValue': { description: 'Etat de la checkbox' },
-		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props ariaRequired est active' },
+		'requiredErrorMessage': { description: 'Message d’erreur affiché lorsque la props required est active' },
 		'uniqueId': { description: 'Id unique de la checkbox' },
 		'update:model-value': { description: 'Événement émit au changement de la valeur de la checkbox' },
 	},
@@ -225,19 +225,19 @@ export const Required: Story = {
 			value: 'required',
 		},
 		uniqueId: 'checkbox-required',
-		ariaRequired: true,
+		required: true,
 	},
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<p>La sélection est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+	<p>La sélection est obligatoire grâce à la prop <code>required</code>.</p>
 	<AmeliproCheckbox
 		v-model="isChecked"
 		:checkbox="checkbox"
 		unique-id="checkbox-required"
-		aria-required
+		required
 	/>
 </template>`,
 			},
@@ -252,7 +252,7 @@ export const Required: Story = {
 			})
 			return { args, model }
 		},
-		template: `<p class="mb-2">La sélection est obligatoire grâce à la prop <code>ariaRequired</code>.</p>
+		template: `<p class="mb-2">La sélection est obligatoire grâce à la prop <code>required</code>.</p>
 <AmeliproCheckbox v-bind="args" v-model="model" />`,
 	}),
 }
@@ -264,7 +264,7 @@ export const ErrorDefault: Story = {
 			value: 'error-default',
 		},
 		uniqueId: 'checkbox-error-default',
-		ariaRequired: true,
+		required: true,
 		errorDefault: true,
 	},
 	parameters: {
@@ -277,7 +277,7 @@ export const ErrorDefault: Story = {
 		v-model="isChecked"
 		:checkbox="checkbox"
 		unique-id="checkbox-error-default"
-		aria-required
+		required
 		error-default
 	/>
 </template>`,
@@ -305,7 +305,7 @@ export const CustomErrorMessage: Story = {
 			value: 'custom-error',
 		},
 		uniqueId: 'checkbox-custom-error',
-		ariaRequired: true,
+		required: true,
 		requiredErrorMessage: 'Veuillez cocher cette case pour continuer',
 	},
 	parameters: {
@@ -318,7 +318,7 @@ export const CustomErrorMessage: Story = {
 		v-model="isChecked"
 		:checkbox="checkbox"
 		unique-id="checkbox-custom-error"
-		aria-required
+		required
 		required-error-message="Veuillez cocher cette case pour continuer"
 	/>
 </template>`,

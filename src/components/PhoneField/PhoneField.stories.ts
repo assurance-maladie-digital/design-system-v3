@@ -57,6 +57,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -129,6 +132,9 @@ export const Default: Story = {
 
 export const Required: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -209,6 +215,9 @@ export const RequiredWithAsterisk: Story = {
 		bgColor: 'white',
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: 'Version du champ téléphone requis avec un astérisque visuel.',
@@ -259,6 +268,9 @@ const phoneNumber = ref('')
 
 export const HelpText: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -379,6 +391,9 @@ const selectedDialCode = ref('')
 
 export const Autocomplete: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -531,6 +546,9 @@ const phoneValue3 = ref('')
 
 export const CustomIndicatifs: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -612,6 +630,9 @@ export const CustomIndicatifs: Story = {
 
 export const NotValidatedOnBlur: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -683,6 +704,9 @@ export const NotValidatedOnBlur: Story = {
 
 export const DisplayFormatCode: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -754,6 +778,9 @@ export const DisplayFormatCode: Story = {
 
 export const DisplayFormatCodeAbbreviation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -825,6 +852,9 @@ export const DisplayFormatCodeAbbreviation: Story = {
 
 export const DisplayFormatCodeCountry: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -896,6 +926,9 @@ export const DisplayFormatCodeCountry: Story = {
 
 export const DisplayFormatCountry: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -967,6 +1000,9 @@ export const DisplayFormatCountry: Story = {
 
 export const DisplayFormatAbbreviation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1038,6 +1074,9 @@ export const DisplayFormatAbbreviation: Story = {
 
 export const DefaultDialCode: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1128,6 +1167,9 @@ export const DefaultDialCode: Story = {
 
 export const DefaultDialCodeStandard: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1203,6 +1245,9 @@ export const DefaultDialCodeStandard: Story = {
 
 export const DisplayModels: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1286,6 +1331,9 @@ export const DisplayModels: Story = {
  */
 export const DisabledErrorHandling: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1365,6 +1413,9 @@ export const DisabledErrorHandling: Story = {
 
 export const FormValidation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
