@@ -11,6 +11,8 @@ export interface UseSySelectKeyboardOptions {
 	selectItem: (item: ItemType | null | undefined, event?: Event) => void
 	getItemText: (item: unknown) => unknown
 	focusOptions?: boolean
+	restoreOnOpen?: boolean
+	initialFocusIndex?: number
 }
 
 export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
@@ -21,6 +23,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		selectItem,
 		getItemText,
 		focusOptions = true,
+		restoreOnOpen = true,
+		initialFocusIndex = 0,
 	} = options
 
 	// État central pour le focus et la navigation
@@ -342,14 +346,21 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		if (open) {
 			// À l'ouverture, restaurer le dernier focus ou initialiser au premier élément
 			nextTick(() => {
-				if (lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length) {
+				if (
+					restoreOnOpen
+					&& lastFocusedIndex.value >= 0
+					&& lastFocusedIndex.value < formattedItems.value.length
+				) {
 					// Restaurer le dernier focus
 					setActiveDescendant(lastFocusedIndex.value)
+					return
 				}
-				else {
-					// Initialiser au premier élément
-					setActiveDescendant(0)
-				}
+
+				const safeInitialIndex = Math.min(
+					Math.max(initialFocusIndex, 0),
+					Math.max(formattedItems.value.length - 1, 0),
+				)
+				setActiveDescendant(safeInitialIndex)
 			})
 		}
 		else {

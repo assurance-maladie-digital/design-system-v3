@@ -178,6 +178,7 @@
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
 	const nativeInputEl = ref<HTMLInputElement | null>(null)
+	const isInputFocused = ref(false)
 
 	const menuTarget = computed<HTMLElement | undefined>(() => {
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
@@ -267,6 +268,36 @@
 			return (typeof key === 'string' || typeof key === 'number') ? key : String(key)
 		}
 		return (typeof item === 'string' || typeof item === 'number') ? item : String(item)
+	}
+
+	const getMultipleSelectionText = () => {
+		if (!props.multiple || props.chips) return ''
+		if (!Array.isArray(selectedItem.value) || selectedItem.value.length === 0) return ''
+		return selectedItem.value.map(item => getChipText(item)).filter(Boolean).join(', ')
+	}
+
+	const textFieldModel = computed({
+		get: () => {
+			if (props.multiple && !props.chips && searchValue.value.trim().length === 0) {
+				return getMultipleSelectionText()
+			}
+			return searchValue.value
+		},
+		set: (value: string) => {
+			searchValue.value = value
+		},
+	})
+
+	const handleInputFocus = () => {
+		isInputFocused.value = true
+	}
+
+	const handleInputBlur = () => {
+		isInputFocused.value = false
+		if (props.multiple && !props.chips) {
+			// When leaving the field, show the selected values instead of any transient search.
+			searchValue.value = ''
+		}
 	}
 
 	const removeChip = (item: unknown) => {
@@ -661,6 +692,8 @@
 		selectItem,
 		getItemText,
 		focusOptions: false,
+		restoreOnOpen: false,
+		initialFocusIndex: 0,
 	})
 
 	const getNativeInputElement = () => {
@@ -750,6 +783,22 @@
 	}
 
 	const onNativeInputKeydown = (event: KeyboardEvent) => {
+		if (
+			event.key === 'Backspace'
+			&& props.multiple
+			&& Array.isArray(selectedItem.value)
+			&& selectedItem.value.length > 0
+			&& searchValue.value.trim().length === 0
+		) {
+			event.preventDefault()
+			const last = selectedItem.value[selectedItem.value.length - 1]
+			removeChip(last)
+			nextTick(() => {
+				focusInputElement()
+			})
+			return
+		}
+
 		// Arrow navigation should work like Vuetify Autocomplete: from input, ArrowDown/Up opens the menu
 		// and moves focus into the options. We handle ArrowDown/Up regardless of open state.
 		if (event.key === 'ArrowDown') {
@@ -931,7 +980,7 @@
 			<template #activator="{ props: activatorProps }">
 				<VTextField
 					:id="inputId"
-					v-model="searchValue"
+					v-model="textFieldModel"
 					v-click-outside="closeList"
 					v-rgaa-svg-fix="true"
 					:title="$attrs['aria-label'] || labelWithAsterisk"
@@ -958,6 +1007,8 @@
 						...initializeActivatorProps(activatorProps),
 					}"
 					@click="toggleMenu"
+					@focus="handleInputFocus"
+					@blur="handleInputBlur"
 					@keydown.enter.prevent="handleEnterKey"
 					@keydown.space.prevent="handleSpaceKey"
 					@keydown.esc.prevent="handleEscapeKey"

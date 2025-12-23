@@ -270,6 +270,40 @@ export const RequiredWithAsterisk: Story = {
 	},
 }
 
+export const MultipleSelection: Story = {
+	args: {
+		items: allPeople,
+		minChars: 1,
+		debounceMs: 250,
+		cache: true,
+		multiple: true,
+		chips: false,
+		clearable: true,
+		returnObject: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const value = ref([])
+				const search = ref('')
+				return { args, value, search }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="value"
+						v-model:search="search"
+						v-bind="args"
+						label="Rechercher une personne"
+					/>
+					<div class="mt-4 text-caption">Valeur: {{ value }}</div>
+				</div>
+			`,
+		}
+	},
+}
+
 export const MultipleSelectionWithChips: Story = {
 	args: {
 		items: allPeople,
