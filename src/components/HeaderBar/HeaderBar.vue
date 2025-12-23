@@ -235,10 +235,11 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens.scss' as *;
 @use './consts' as *;
-.global-container{
-	background-color: $neutral-white;
 
+.global-container {
+	background-color: $neutral-white;
 }
+
 .header {
 	position: relative;
 	z-index: 1;
