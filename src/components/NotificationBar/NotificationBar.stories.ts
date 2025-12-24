@@ -66,12 +66,12 @@ export const Default: Story = (args) => {
 		components: { NotificationBar, VBtn },
 		setup() {
 			const { addNotification } = useNotificationService()
-
+			const argsType = args.type || 'info'
 			const envoyerNotification = (message: string) => {
 				const notification: Notification = {
 					id: Date.now().toString(),
 					message,
-					type: args.type || 'info',
+					type: argsType,
 					timeout: -1,
 				}
 				addNotification(notification)
@@ -79,6 +79,7 @@ export const Default: Story = (args) => {
 
 			return {
 				args,
+				argsType,
 				envoyerNotification,
 			}
 		},
@@ -89,7 +90,7 @@ export const Default: Story = (args) => {
             />
             <VBtn
                 color="primary"
-                @click="envoyerNotification('Ceci est une notification de type : ', args.type)"
+                @click="envoyerNotification('Ceci est une notification de type : ' + argsType)"
                 class="ma-6"
             >
               Afficher la notification
@@ -101,7 +102,6 @@ export const Default: Story = (args) => {
 
 Default.args = {
 	closeBtnText: 'Fermer',
-	bottom: false,
 	rounded: 4,
 }
 
@@ -163,7 +163,6 @@ Success.parameters = {
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
 					close-btn-text="Fermer"
-					bottom
 				>
 				<VBtn
 					color="success"
@@ -213,7 +212,6 @@ Warning.parameters = {
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
 					close-btn-text="Fermer"
-					bottom
 				/>
 				<VBtn
 					color="warning"
@@ -263,7 +261,6 @@ Error.parameters = {
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
 					close-btn-text="Fermer"
-					bottom
 				/>
 				<VBtn
 					color="error"
@@ -363,7 +360,6 @@ CustomCloseBtnText.parameters = {
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
 					close-btn-text="Masquer"
-					bottom
 				/>
 				<VBtn
 					color="primary"
@@ -414,7 +410,6 @@ Customization.parameters = {
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
 					close-btn-text="closeBtnText"
-					bottom
 					rounded="pill"
 				/>
 				<VBtn
