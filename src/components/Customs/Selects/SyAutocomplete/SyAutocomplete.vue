@@ -179,6 +179,7 @@
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
 	const nativeInputEl = ref<HTMLInputElement | null>(null)
+	const fieldRootEl = ref<HTMLElement | null>(null)
 	const isInputFocused = ref(false)
 	const isOpeningWithArrow = ref(false)
 	const forceFirstOption = ref(false)
@@ -492,6 +493,10 @@
 			}
 
 			emit('update:modelValue', [...selectedArray])
+			// After a selection in multiple mode, reset the search so the field can
+			// display the selected values (non-chips) or stay ready for the next query (chips).
+			searchValue.value = ''
+			emit('update:search', '')
 			isOpen.value = true
 			return
 		}
@@ -716,6 +721,10 @@
 		return (textInput.value?.$el?.querySelector('input') as HTMLInputElement | null) ?? null
 	}
 
+	const getFieldRootElement = () => {
+		return (textInput.value?.$el as HTMLElement | undefined) ?? null
+	}
+
 	const focusInputElement = () => {
 		const input = getNativeInputElement()
 		if (input) input.focus()
@@ -915,7 +924,60 @@
 			break
 		case 'Enter':
 			event.preventDefault()
+			event.stopPropagation()
+			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
 			handleEnterKey()
+			break
+		case 'Escape':
+			event.preventDefault()
+			handleEscapeKey()
+			nextTick(() => {
+				focusInputElement()
+			})
+			break
+		default:
+			break
+		}
+	}
+
+	const onFieldRootKeydown = (event: KeyboardEvent) => {
+		const input = getNativeInputElement()
+		if (input && event.target === input) return
+
+		if (event.key === 'ArrowDown') {
+			event.preventDefault()
+			event.stopPropagation()
+			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
+			handleInputDownKey()
+			ensureNativeInputFocus()
+			return
+		}
+		if (event.key === 'ArrowUp') {
+			event.preventDefault()
+			event.stopPropagation()
+			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
+			handleInputUpKey()
+			ensureNativeInputFocus()
+			return
+		}
+
+		if (!isOpen.value) return
+
+		switch (event.key) {
+		case 'Enter':
+			event.preventDefault()
+			event.stopPropagation()
+			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
+			handleEnterKey()
+			ensureNativeInputFocus()
+			break
+		case ' ':
+		case 'Spacebar':
+			event.preventDefault()
+			event.stopPropagation()
+			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
+			handleSpaceKey()
+			ensureNativeInputFocus()
 			break
 		case 'Escape':
 			event.preventDefault()
@@ -941,10 +1003,28 @@
 		nativeInputEl.value.addEventListener('keydown', onNativeInputKeydown, true)
 	}
 
+	const attachFieldRootKeydownListener = () => {
+		const el = getFieldRootElement()
+		if (!el) return
+		if (fieldRootEl.value === el) return
+
+		if (fieldRootEl.value) {
+			fieldRootEl.value.removeEventListener('keydown', onFieldRootKeydown, true)
+		}
+		fieldRootEl.value = el
+		fieldRootEl.value.addEventListener('keydown', onFieldRootKeydown, true)
+	}
+
 	const detachNativeKeydownListener = () => {
 		if (!nativeInputEl.value) return
 		nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown, true)
 		nativeInputEl.value = null
+	}
+
+	const detachFieldRootKeydownListener = () => {
+		if (!fieldRootEl.value) return
+		fieldRootEl.value.removeEventListener('keydown', onFieldRootKeydown, true)
+		fieldRootEl.value = null
 	}
 
 	const setupAriaAttributes = () => {
@@ -1054,6 +1134,7 @@
 			setTimeout(setupAriaAttributes, 100)
 			setTimeout(setupAriaAttributes, 300)
 			attachNativeKeydownListener()
+			attachFieldRootKeydownListener()
 		})
 	})
 
@@ -1062,11 +1143,13 @@
 		void textInput.value
 		nextTick(() => {
 			attachNativeKeydownListener()
+			attachFieldRootKeydownListener()
 		})
 	})
 
 	onBeforeUnmount(() => {
 		detachNativeKeydownListener()
+		detachFieldRootKeydownListener()
 	})
 
 	defineExpose({
