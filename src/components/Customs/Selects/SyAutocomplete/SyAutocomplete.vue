@@ -752,13 +752,7 @@
 			const element = listElement.querySelector(`#${CSS.escape(activeDescendantId.value)}`)
 			if (!element) return
 
-			const allItems = listElement.querySelectorAll('.v-list-item')
-			allItems.forEach((item) => {
-				item.setAttribute('tabindex', '-1')
-				item.classList.remove('keyboard-focused')
-			})
-			// Keep focus on the input (combobox pattern). Only reflect the active option visually.
-			element.classList.add('keyboard-focused')
+			// Keep DOM focus on the input (combobox pattern). Only scroll the active option into view.
 			;(element as HTMLElement).scrollIntoView({ block: 'nearest' })
 		})
 	}
@@ -1316,12 +1310,13 @@
 					:ref="'options-' + index"
 					role="option"
 					class="v-list-item"
-					:aria-selected="isItemSelected(item) ? 'true' : 'false'"
+					:aria-current="`${optionIdPrefix}option-${index}` === activeDescendantId ? 'true' : undefined"
+					:aria-selected="props.multiple
+						? (isItemSelected(item) ? 'true' : 'false')
+						: (`${optionIdPrefix}option-${index}` === activeDescendantId || isItemSelected(item) ? 'true' : 'false')"
 					tabindex="-1"
-					:class="{
-						active: isItemSelected(item) || `${optionIdPrefix}option-${index}` === activeDescendantId,
-						'v-list-item--active': isItemSelected(item) || `${optionIdPrefix}option-${index}` === activeDescendantId,
-					}"
+					:active="isItemSelected(item) || `${optionIdPrefix}option-${index}` === activeDescendantId"
+					:class="{ 'keyboard-focused': `${optionIdPrefix}option-${index}` === activeDescendantId }"
 					@click.stop="(event) => selectItem(item, event)"
 				>
 					<template
@@ -1444,5 +1439,10 @@
 	visibility: hidden;
 	position: absolute;
 	white-space: nowrap;
+}
+
+.keyboard-focused {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -2px;
 }
 </style>
