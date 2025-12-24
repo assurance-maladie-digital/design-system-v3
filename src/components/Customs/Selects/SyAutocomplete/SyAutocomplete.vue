@@ -161,6 +161,7 @@
 	const uniqueMenuId = ref(props.menuId === 'sy-autocomplete-menu'
 		? `sy-autocomplete-menu-${Math.random().toString(36).substring(7)}`
 		: props.menuId)
+	const optionIdPrefix = computed(() => `${uniqueMenuId.value}-`)
 
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const searchValue = ref(props.search)
@@ -179,6 +180,10 @@
 	const htmlItemRefs = ref<HTMLElement[]>([])
 	const nativeInputEl = ref<HTMLInputElement | null>(null)
 	const isInputFocused = ref(false)
+	const isOpeningWithArrow = ref(false)
+	const forceFirstOption = ref(false)
+	const openedByTyping = ref(false)
+	const pendingFocusIndex = ref<number | null>(null)
 
 	const menuTarget = computed<HTMLElement | undefined>(() => {
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
@@ -290,6 +295,7 @@
 
 	const handleInputFocus = () => {
 		isInputFocused.value = true
+		ensureNativeInputFocus()
 	}
 
 	const handleInputBlur = () => {
@@ -391,17 +397,30 @@
 		}, props.debounceMs)
 	}
 
+	const openMenu = (skipInitialFocus = false) => {
+		if (props.readonly) return
+		if (isOpen.value) return
+		isOpen.value = true
+		scheduleFetch(searchValue.value)
+		ensureNativeInputFocus()
+		if (!skipInitialFocus) {
+			nextTick(() => {
+				setActiveDescendant(0)
+			})
+		}
+	}
+
+	const closeMenu = () => {
+		isOpen.value = false
+	}
+
 	const toggleMenu = (skipInitialFocus = false) => {
 		if (props.readonly) return
-		isOpen.value = !isOpen.value
 		if (isOpen.value) {
-			scheduleFetch(searchValue.value)
-			if (!skipInitialFocus) {
-				nextTick(() => {
-					setActiveDescendant(0)
-				})
-			}
+			closeMenu()
+			return
 		}
+		openMenu(skipInitialFocus)
 	}
 
 	const closeList = (event?: Event) => {
@@ -410,7 +429,7 @@
 		if (props.multiple && listElement && listElement.contains(target)) {
 			return
 		}
-		isOpen.value = false
+		closeMenu()
 	}
 
 	const clearSelection = (event?: Event) => {
@@ -530,21 +549,17 @@
 	watch(searchValue, (newValue) => {
 		emit('update:search', newValue)
 		const trimmed = newValue.trim()
+		pendingFocusIndex.value = null
 		if (trimmed.length >= props.minChars) {
 			if (!isOpen.value) {
 				clearActiveDescendant()
-				toggleMenu(true)
-				nextTick(() => {
-					setActiveDescendant(0)
-				})
+				openedByTyping.value = true
+				openMenu(true)
 			}
 			else {
 				scheduleFetch(newValue)
 				// Reset active option to the first item when results are refreshed by typing
 				clearActiveDescendant()
-				nextTick(() => {
-					setActiveDescendant(0)
-				})
 			}
 		}
 		else {
@@ -691,6 +706,7 @@
 		toggleMenu,
 		selectItem,
 		getItemText,
+		optionIdPrefix,
 		focusOptions: false,
 		restoreOnOpen: false,
 		initialFocusIndex: 0,
@@ -705,18 +721,41 @@
 		if (input) input.focus()
 	}
 
+	const ensureNativeInputFocus = () => {
+		focusInputElement()
+		nextTick(() => {
+			focusInputElement()
+			requestAnimationFrame(() => {
+				focusInputElement()
+				setTimeout(() => {
+					focusInputElement()
+				}, 0)
+			})
+		})
+	}
+
 	const focusActiveOptionElement = () => {
 		if (!activeDescendantId.value) return
 		nextTick(() => {
-			const element = document.getElementById(activeDescendantId.value)
+			const listElement = list.value?.$el as HTMLElement | undefined
+			if (!listElement) return
+
+			const element = listElement.querySelector(`#${CSS.escape(activeDescendantId.value)}`)
 			if (!element) return
-			const allItems = document.querySelectorAll('.v-list-item')
+
+			const allItems = listElement.querySelectorAll('.v-list-item')
 			allItems.forEach((item) => {
 				item.setAttribute('tabindex', '-1')
+				item.classList.remove('keyboard-focused')
 			})
-			element.setAttribute('tabindex', '0')
-			;(element as HTMLElement).focus()
+			// Keep focus on the input (combobox pattern). Only reflect the active option visually.
+			element.classList.add('keyboard-focused')
+			;(element as HTMLElement).scrollIntoView({ block: 'nearest' })
 		})
+	}
+
+	const ensureFirstOptionFocused = () => {
+		setActiveDescendant(0)
 	}
 
 	const handleListEscapeKey = () => {
@@ -728,61 +767,116 @@
 
 	const handleInputDownKey = () => {
 		if (!isOpen.value) {
+			isOpeningWithArrow.value = true
+			forceFirstOption.value = true
 			clearActiveDescendant()
-			toggleMenu(true)
+			openMenu(true)
 			nextTick(() => {
-				setActiveDescendant(0)
-				focusActiveOptionElement()
+				ensureFirstOptionFocused()
+				requestAnimationFrame(() => {
+					ensureFirstOptionFocused()
+					setTimeout(() => {
+						ensureFirstOptionFocused()
+					}, 0)
+				})
+				isOpeningWithArrow.value = false
+				setTimeout(() => {
+					forceFirstOption.value = false
+				}, 150)
 			})
+			return
+		}
+		if (isOpeningWithArrow.value) return
+		// Vuetify-like behavior: after typing/filtering we may clear the active option.
+		// The next ArrowDown should activate the first (filtered) option.
+		if (!activeDescendantId.value) {
+			if (formattedItems.value.length > 0) {
+				setActiveDescendant(0)
+			}
+			else {
+				pendingFocusIndex.value = 0
+			}
 			return
 		}
 		handleDownKey()
-		focusActiveOptionElement()
 	}
+
+	watch(
+		() => formattedItems.value.length,
+		(newLength) => {
+			if (!isOpen.value) return
+			if (pendingFocusIndex.value == null) return
+			if (newLength <= 0) return
+			setActiveDescendant(Math.min(pendingFocusIndex.value, newLength - 1))
+			pendingFocusIndex.value = null
+		},
+	)
 
 	const handleInputUpKey = () => {
 		if (!isOpen.value) {
+			isOpeningWithArrow.value = true
+			forceFirstOption.value = true
 			clearActiveDescendant()
-			toggleMenu(true)
+			openMenu(true)
 			nextTick(() => {
-				setActiveDescendant(0)
-				focusActiveOptionElement()
+				ensureFirstOptionFocused()
+				requestAnimationFrame(() => {
+					ensureFirstOptionFocused()
+					setTimeout(() => {
+						ensureFirstOptionFocused()
+					}, 0)
+				})
+				isOpeningWithArrow.value = false
+				setTimeout(() => {
+					forceFirstOption.value = false
+				}, 150)
 			})
 			return
 		}
+		if (isOpeningWithArrow.value) return
 		handleUpKey()
-		focusActiveOptionElement()
 	}
 
 	const handleListDownKey = () => {
 		if (!isOpen.value) {
 			clearActiveDescendant()
-			toggleMenu(true)
+			openMenu(true)
 			nextTick(() => {
 				setActiveDescendant(0)
-				focusActiveOptionElement()
 			})
 			return
 		}
 		handleDownKey()
-		focusActiveOptionElement()
 	}
 
 	const handleListUpKey = () => {
 		if (!isOpen.value) {
 			clearActiveDescendant()
-			toggleMenu(true)
+			openMenu(true)
 			nextTick(() => {
 				setActiveDescendant(0)
-				focusActiveOptionElement()
 			})
 			return
 		}
 		handleUpKey()
-		focusActiveOptionElement()
 	}
 
 	const onNativeInputKeydown = (event: KeyboardEvent) => {
+		if (event.key === 'ArrowDown') {
+			event.preventDefault()
+			event.stopPropagation()
+			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
+			handleInputDownKey()
+			return
+		}
+		if (event.key === 'ArrowUp') {
+			event.preventDefault()
+			event.stopPropagation()
+			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
+			handleInputUpKey()
+			return
+		}
+
 		if (
 			event.key === 'Backspace'
 			&& props.multiple
@@ -796,19 +890,6 @@
 			nextTick(() => {
 				focusInputElement()
 			})
-			return
-		}
-
-		// Arrow navigation should work like Vuetify Autocomplete: from input, ArrowDown/Up opens the menu
-		// and moves focus into the options. We handle ArrowDown/Up regardless of open state.
-		if (event.key === 'ArrowDown') {
-			event.preventDefault()
-			handleInputDownKey()
-			return
-		}
-		if (event.key === 'ArrowUp') {
-			event.preventDefault()
-			handleInputUpKey()
 			return
 		}
 
@@ -854,15 +935,15 @@
 		if (nativeInputEl.value === el) return
 
 		if (nativeInputEl.value) {
-			nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown)
+			nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown, true)
 		}
 		nativeInputEl.value = el
-		nativeInputEl.value.addEventListener('keydown', onNativeInputKeydown)
+		nativeInputEl.value.addEventListener('keydown', onNativeInputKeydown, true)
 	}
 
 	const detachNativeKeydownListener = () => {
 		if (!nativeInputEl.value) return
-		nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown)
+		nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown, true)
 		nativeInputEl.value = null
 	}
 
@@ -889,6 +970,24 @@
 				ariaManager.updateInputState(inputElement, newValue, uniqueMenuId.value, activeDescendantId.value)
 			}
 		})
+
+		if (newValue) {
+			ensureNativeInputFocus()
+		}
+
+		if (!newValue) {
+			openedByTyping.value = false
+		}
+
+		if (newValue) {
+			nextTick(() => {
+				// Ensure we always have an active option when opening (SySelect-like behavior)
+				if (!openedByTyping.value && !activeDescendantId.value) {
+					setActiveDescendant(0)
+				}
+				openedByTyping.value = false
+			})
+		}
 	})
 
 	watch(activeDescendantId, (newValue) => {
@@ -898,11 +997,20 @@
 			if (!inputElement) return
 			if (newValue) {
 				inputElement.setAttribute('aria-activedescendant', newValue)
+				focusActiveOptionElement()
 			}
 			else {
 				inputElement.removeAttribute('aria-activedescendant')
 			}
 		})
+
+		// If the menu was opened via ArrowDown/ArrowUp, keep the first option active during a short window.
+		if (forceFirstOption.value && isOpen.value) {
+			const expectedId = `${optionIdPrefix.value}option-0`
+			if (newValue && newValue !== expectedId) {
+				setActiveDescendant(0)
+			}
+		}
 	})
 
 	watch(hasError, (newValue) => {
@@ -1120,14 +1228,17 @@
 				</VListItem>
 				<VListItem
 					v-for="(item, index) in formattedItems"
-					:id="`option-${index}`"
+					:id="`${optionIdPrefix}option-${index}`"
 					:key="index"
 					:ref="'options-' + index"
 					role="option"
 					class="v-list-item"
 					:aria-selected="isItemSelected(item) ? 'true' : 'false'"
 					tabindex="-1"
-					:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
+					:class="{
+						active: isItemSelected(item) || `${optionIdPrefix}option-${index}` === activeDescendantId,
+						'v-list-item--active': isItemSelected(item) || `${optionIdPrefix}option-${index}` === activeDescendantId,
+					}"
 					@click.stop="(event) => selectItem(item, event)"
 				>
 					<template

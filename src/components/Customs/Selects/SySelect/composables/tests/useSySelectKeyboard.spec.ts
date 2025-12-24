@@ -12,8 +12,8 @@ describe('useSySelectKeyboard', () => {
 	]
 
 	// Mocks des fonctions et refs
-	let isOpen: ReturnType<typeof ref<boolean>>
-	let formattedItems: ReturnType<typeof ref<ItemType[]>>
+	let isOpen: Ref<boolean>
+	let formattedItems: Ref<ItemType[]>
 	let toggleMenu: ReturnType<typeof vi.fn>
 	let selectItem: ReturnType<typeof vi.fn>
 	let getItemText: ReturnType<typeof vi.fn>
@@ -40,8 +40,8 @@ describe('useSySelectKeyboard', () => {
 		vi.clearAllMocks()
 
 		// Configurer les refs et mocks
-		isOpen = ref<boolean>(false)
-		formattedItems = ref<ItemType[]>([...mockItems])
+		isOpen = ref(false)
+		formattedItems = ref([...mockItems])
 		toggleMenu = vi.fn()
 		selectItem = vi.fn()
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- generic type
@@ -53,11 +53,12 @@ describe('useSySelectKeyboard', () => {
 
 		// Initialiser le composable
 		keyboard = useSySelectKeyboard({
-			isOpen: isOpen as Ref<boolean>,
-			formattedItems: formattedItems as Ref<ItemType[]>,
+			isOpen,
+			formattedItems,
 			toggleMenu,
 			selectItem,
 			getItemText,
+			optionIdPrefix: 'test-',
 		})
 	})
 
@@ -66,8 +67,8 @@ describe('useSySelectKeyboard', () => {
 		it('définit correctement activeDescendantId pour un index valide', async () => {
 			keyboard.setActiveDescendant(1)
 			await nextTick()
-			expect(keyboard.activeDescendantId.value).toBe('option-1')
-			expect(document.getElementById).toHaveBeenCalledWith('option-1')
+			expect(keyboard.activeDescendantId.value).toBe('test-option-1')
+			expect(document.getElementById).toHaveBeenCalledWith('test-option-1')
 			expect(mockElement.scrollIntoView).toHaveBeenCalledWith({ block: 'nearest' })
 			expect(mockElement.classList.add).toHaveBeenCalledWith('keyboard-focused')
 		})
@@ -171,21 +172,21 @@ describe('useSySelectKeyboard', () => {
 			isOpen.value = true
 			await nextTick()
 
-			expect(keyboard.activeDescendantId.value).toBe('option-0')
+			expect(keyboard.activeDescendantId.value).toBe('test-option-0')
 		})
 
 		it('sélectionne l\'élément suivant si le menu est ouvert', () => {
 			isOpen.value = true
 			keyboard.setActiveDescendant(1)
 			keyboard.handleDownKey()
-			expect(keyboard.activeDescendantId.value).toBe('option-2')
+			expect(keyboard.activeDescendantId.value).toBe('test-option-2')
 		})
 
 		it('ne dépasse pas la limite des éléments disponibles', () => {
 			isOpen.value = true
 			keyboard.setActiveDescendant(mockItems.length - 1)
 			keyboard.handleDownKey()
-			expect(keyboard.activeDescendantId.value).toBe(`option-${mockItems.length - 1}`)
+			expect(keyboard.activeDescendantId.value).toBe(`test-option-${mockItems.length - 1}`)
 		})
 	})
 
@@ -200,14 +201,14 @@ describe('useSySelectKeyboard', () => {
 			await nextTick()
 
 			// Comportement RGAA correct : flèche haut ouvre et va au premier élément
-			expect(keyboard.activeDescendantId.value).toBe('option-0')
+			expect(keyboard.activeDescendantId.value).toBe('test-option-0')
 		})
 
 		it('sélectionne l\'élément précédent si le menu est ouvert', () => {
 			isOpen.value = true
 			keyboard.setActiveDescendant(2)
 			keyboard.handleUpKey()
-			expect(keyboard.activeDescendantId.value).toBe('option-1')
+			expect(keyboard.activeDescendantId.value).toBe('test-option-1')
 		})
 
 		it('reste au premier élément si on est déjà au premier (pas de bouclage)', () => {
@@ -215,7 +216,7 @@ describe('useSySelectKeyboard', () => {
 			keyboard.setActiveDescendant(0)
 			keyboard.handleUpKey()
 			// Ne doit pas boucler, doit rester au premier élément
-			expect(keyboard.activeDescendantId.value).toBe('option-0')
+			expect(keyboard.activeDescendantId.value).toBe('test-option-0')
 		})
 	})
 
@@ -224,7 +225,7 @@ describe('useSySelectKeyboard', () => {
 			// Menu déjà ouvert, pas besoin d'attendre nextTick
 			isOpen.value = true
 			keyboard.handleCharacterKey('b')
-			expect(keyboard.activeDescendantId.value).toBe('option-1') // Banana
+			expect(keyboard.activeDescendantId.value).toBe('test-option-1') // Banana
 		})
 
 		it('ouvre le menu si fermé et trouve un élément correspondant', async () => {
@@ -236,7 +237,7 @@ describe('useSySelectKeyboard', () => {
 			isOpen.value = true
 			await nextTick()
 
-			expect(keyboard.activeDescendantId.value).toBe('option-2') // Cherry
+			expect(keyboard.activeDescendantId.value).toBe('test-option-2') // Cherry
 		})
 
 		it('ne fait rien si aucun élément ne correspond', () => {
@@ -255,7 +256,7 @@ describe('useSySelectKeyboard', () => {
 
 			// Définir un élément actif
 			keyboard.setActiveDescendant(1)
-			expect(keyboard.activeDescendantId.value).toBe('option-1')
+			expect(keyboard.activeDescendantId.value).toBe('test-option-1')
 
 			// Réinitialiser les mocks pour vérifier les appels après la fermeture
 			vi.clearAllMocks()
