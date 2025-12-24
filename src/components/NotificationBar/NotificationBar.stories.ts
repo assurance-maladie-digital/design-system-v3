@@ -89,7 +89,7 @@ export const Default: Story = (args) => {
             />
             <VBtn
                 color="primary"
-                @click="envoyerNotification('Ceci est une notification')"
+                @click="envoyerNotification('Ceci est une notification de type : ', args.type)"
                 class="ma-6"
             >
               Afficher la notification
@@ -362,7 +362,6 @@ CustomCloseBtnText.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
 					close-btn-text="Masquer"
 					bottom
 					:rounded="pill"
