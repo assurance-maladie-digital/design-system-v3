@@ -113,7 +113,6 @@ Default.parameters = {
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
 					close-btn-text="Fermer"
-					bottom
 				/>
 				<VBtn
 					color="primary"
@@ -163,7 +162,7 @@ Success.parameters = {
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
 					close-btn-text="Fermer"
-				>
+				/>
 				<VBtn
 					color="success"
 					@click="envoyerNotification('Ceci est une notification de succès')"
