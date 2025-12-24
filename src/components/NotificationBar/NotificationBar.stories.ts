@@ -364,7 +364,6 @@ CustomCloseBtnText.parameters = {
 				<NotificationBar
 					close-btn-text="Masquer"
 					bottom
-					:rounded="pill"
 				/>
 				<VBtn
 					color="primary"
