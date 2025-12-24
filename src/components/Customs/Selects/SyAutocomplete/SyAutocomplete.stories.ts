@@ -883,37 +883,40 @@ export const WithApiCall: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { onMounted, ref } from 'vue'
+					import { ref } from 'vue'
 					import { SyAutocomplete } from '@cnamts/synapse'
 				
 					const value = ref(null)
 					const search = ref('')
 					const items = ref([])
 				
-					onMounted(async () => {
-						const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2')
-						const data = await response.json()
-						items.value = (Array.isArray(data) ? data : [])
-							.slice(0, 50)
-							.map((country) => ({
-								text: country?.name?.common ?? 'Inconnu',
-								value: country?.cca2 ?? (country?.name?.common ?? 'Inconnu'),
-							}))
-					})
+					const allCountries = [
+						{ text: 'France', value: 'FR' },
+						{ text: 'Finlande', value: 'FI' },
+						{ text: 'Allemagne', value: 'DE' },
+						{ text: 'Espagne', value: 'ES' },
+						{ text: 'Italie', value: 'IT' },
+						{ text: 'Portugal', value: 'PT' },
+						{ text: 'Belgique', value: 'BE' },
+						{ text: 'Suisse', value: 'CH' },
+						{ text: 'Maroc', value: 'MA' },
+						{ text: 'Tunisie', value: 'TN' },
+						{ text: 'Alg e9rie', value: 'DZ' },
+						{ text: 'Cameroun', value: 'CM' },
+						{ text: 'Comores', value: 'KM' },
+					]
+				
+					items.value = allCountries
 				
 					const fetchItems = async (query: string) => {
-						const url = 'https://restcountries.com/v3.1/name/' + encodeURIComponent(query)
-						const response = await fetch(url)
-						if (!response.ok) {
+						const trimmed = query.trim().toLowerCase()
+						if (trimmed.length < 2) {
 							return []
 						}
-						const data = await response.json()
-						return (Array.isArray(data) ? data : [])
+						await new Promise(resolve => setTimeout(resolve, 250))
+						return allCountries
+							.filter(country => country.text.toLowerCase().startsWith(trimmed))
 							.slice(0, 10)
-							.map((country: any) => ({
-								text: country?.name?.common ?? 'Inconnu',
-								value: country?.cca2 ?? (country?.name?.common ?? 'Inconnu'),
-							}))
 					}
 				</script>
 				`,
@@ -935,57 +938,39 @@ export const WithApiCall: Story = {
 		return {
 			components: { SyAutocomplete },
 			setup() {
-				type CountryApiItem = {
-					name?: {
-						common?: string
-					}
-					cca2?: string
-				}
-
 				const value = ref(null)
 				const search = ref('')
 				const items = ref<{ text: string, value: string }[]>([])
 				const onUpdateModelValue = fn()
 				const onUpdateSearch = fn()
-
-				const loadCountries = async () => {
-					try {
-						const response = await fetch('https://restcountries.com/v3.1/all?fields=name,cca2')
-						if (!response.ok) {
-							return
-						}
-						const data: unknown = await response.json()
-						items.value = (Array.isArray(data) ? (data as CountryApiItem[]) : [])
-							.slice(0, 50)
-							.map(country => ({
-								text: country?.name?.common ?? 'Inconnu',
-								value: country?.cca2 ?? (country?.name?.common ?? 'Inconnu'),
-							}))
-					}
-					catch (error) {
-						console.error(error)
-					}
-				}
-				void loadCountries()
+				const allCountries: { text: string, value: string }[] = [
+					{ text: 'France', value: 'FR' },
+					{ text: 'Finlande', value: 'FI' },
+					{ text: 'Allemagne', value: 'DE' },
+					{ text: 'Espagne', value: 'ES' },
+					{ text: 'Italie', value: 'IT' },
+					{ text: 'Portugal', value: 'PT' },
+					{ text: 'Belgique', value: 'BE' },
+					{ text: 'Suisse', value: 'CH' },
+					{ text: 'Maroc', value: 'MA' },
+					{ text: 'Tunisie', value: 'TN' },
+					{ text: 'Alg e9rie', value: 'DZ' },
+					{ text: 'Cameroun', value: 'CM' },
+					{ text: 'Comores', value: 'KM' },
+				]
+				items.value = allCountries
 
 				const fetchItems = async (query: string) => {
 					try {
 						const trimmed = query.trim()
-						if (trimmed.length < 1) {
+						if (trimmed.length < (args.minChars ?? 2)) {
 							return []
 						}
-						const url = `https://restcountries.com/v3.1/name/${encodeURIComponent(trimmed)}?fields=name,cca2`
-						const response = await fetch(url)
-						if (!response.ok) {
-							return []
-						}
-						const data: unknown = await response.json()
-						return (Array.isArray(data) ? (data as CountryApiItem[]) : [])
+						await new Promise(resolve => setTimeout(resolve, 250))
+						const normalizedQuery = trimmed.toLowerCase()
+						return allCountries
+							.filter(country => country.text.toLowerCase().startsWith(normalizedQuery))
 							.slice(0, 10)
-							.map(country => ({
-								text: country?.name?.common ?? 'Inconnu',
-								value: country?.cca2 ?? (country?.name?.common ?? 'Inconnu'),
-							}))
 					}
 					catch (error) {
 						console.error(error)
