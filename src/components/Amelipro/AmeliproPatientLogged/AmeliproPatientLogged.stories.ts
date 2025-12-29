@@ -9,8 +9,14 @@ const meta = {
 		'btnPrevention': { description: 'Affiche le bouton prévention' },
 		'isRestrictedData': { description: 'affiche la liste des bénéficiaires sans séléction possible' },
 		'click': { description: 'Evénement émis au click sur le bouton changer de patient' },
-		'click:info': { description: 'Evénement émis au click sur le bouton informations' },
-		'click:postal-address': { description: 'Evénement émis au click sur le bouton adresse postale' },
+        'click:info': {description: 'Evénement émis au click sur le bouton informations'},
+        'click:copy': {description: 'Evénement émis au click sur le bouton copier le texte'},
+        'click:postal-address': {description: 'Evénement émis au click sur le bouton adresse postale'},
+        'click:prevention': {description: 'Evénement émis au click sur le bouton prévention'},
+        'click:fund-dialog': {description: 'Evénement émis au click sur le bouton caisse'},
+        'click:doctor-dialog': {description: 'Evénement émis au click sur le bouton MT'},
+        'click:beneficiary-change': {description: 'Evénement émis au changement de bénéficiaire'},
+        'click:patient-change': {description: 'Evénement émis au click sur le bouton changement de patient'},
 		'click:pdf': { description: 'Evénement émis au click sur le bouton pdf' },
 		'default': { description: 'Espace libre avant le bouton informations supplémentaire au cas où il y aurait besoin de lignes supplémentaires' },
 		'doctor': { description: 'Slot permettant de remplacer le contenu de la ligne médecin traitant au besoin' },
@@ -136,8 +142,14 @@ export const Default: Story = {
 		},
 		'uniqueId': 'test-id',
 		'onClick': fn(),
-		'onClick:info': fn(),
-		'onClick:postal-address': fn(),
+        'onClick:info': fn(),
+        'onClick:copy': fn(),
+        'onClick:postal-address': fn(),
+        'onClick:prevention': fn(),
+        'onClick:fund-dialog': fn(),
+        'onClick:doctor-dialog': fn(),
+        'onClick:beneficiary-change': fn(),
+        'onClick:patient-change': fn(),
 		'onClick:pdf': fn(),
 	},
 	parameters: {
@@ -231,8 +243,14 @@ export const Default: Story = {
 	v-bind="args"
 	v-model="model"
 	@click="args['onClick']"
-	@click:infos="args['onClick:infos']"
+    @click:infos="args['onClick:infos']"
+    @click:copy="args['onClick:copy']"
     @click:postal-address="args['onClick:postal-address']"
+    @click:prevention="args['onClick:prevention']"
+    @click:fund-dialog="args['onClick:fund-dialog']"
+    @click:doctor-dialog="args['onClick:doctor-dialog']"
+    @click:beneficiary-change="args['onClick:beneficiary-change']"
+    @click:patient-change="args['onClick:patient-change']"
 	@click:pdf="args['onClick:pdf']"
     style="width: 350px !important;"
 >
