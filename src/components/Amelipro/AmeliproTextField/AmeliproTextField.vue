@@ -390,11 +390,10 @@
 		}
 	}
 
-  // Chrome and edge browser
-  /* stylelint-disable-next-line property-no-vendor-prefix */
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .amelipro-text-field :deep(input[type='date']) {
-      display: block !important;
-    }
-  }
+	// Chrome and edge browser
+	@supports (-webkit-appearance: none) {
+		.amelipro-text-field :deep(input[type='date']) {
+			display: block !important;
+		}
+	}
 </style>
