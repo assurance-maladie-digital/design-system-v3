@@ -389,4 +389,11 @@
 			opacity: 1 !important;
 		}
 	}
+
+  // Chrome and edge browser
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .amelipro-text-field :deep(input[type="date"]) {
+      display: block !important;
+    }
+  }
 </style>
