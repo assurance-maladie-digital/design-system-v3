@@ -83,13 +83,12 @@
 		},
 	})
 
-  const isSecondaryBtnProps = {
-    bordered: true,
-    color: 'ap-white',
-    hoverColor: 'ap-blue-lighten-3',
-    textColor: 'ap-blue-darken-1',
-  }
-
+	const isSecondaryBtnProps = {
+		bordered: true,
+		color: 'ap-white',
+		hoverColor: 'ap-blue-lighten-3',
+		textColor: 'ap-blue-darken-1',
+	}
 
 	const vitalCardBtnText = computed(() => (props.autoCompleteCardItems ? 'Lire carte virtuelle' : 'Lire la carte'))
 
@@ -162,7 +161,7 @@
 					class="w-100"
 					:disabled="disableBtnAppVitalCard"
 					:unique-id="`${uniqueId}-vital-card-app-btn`"
-          v-bind="noVitalCard ? undefined : isSecondaryBtnProps"
+					v-bind="noVitalCard ? undefined : isSecondaryBtnProps"
 					@click="clickVitalCardApp"
 				>
 					Lire appli carte vitale
