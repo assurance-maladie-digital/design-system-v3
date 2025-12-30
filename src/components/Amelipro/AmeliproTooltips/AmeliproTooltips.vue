@@ -33,7 +33,7 @@
 			type: String,
 			default: 'aide',
 		},
-    tooltipBg: {
+		tooltipBg: {
 			type: String,
 			default: 'ap-white',
 		},
@@ -53,12 +53,12 @@
 
 	const show = ref(false)
 
-  const emit = defineEmits(['click'])
+	const emit = defineEmits(['click'])
 
 	const tooltipTextStyle = computed<IndexedObject>(() => ({ color: convertToHex(props.tooltipTextColor) }))
 	const tooltipBgStyle = computed<string>(() => `bg-${props.tooltipBg}`)
 
-  const emitClick = () => emit('click', `${props.uniqueId}-btn`)
+	const emitClick = () => emit('click', `${props.uniqueId}-btn`)
 </script>
 
 <template>
@@ -95,7 +95,7 @@
 						v-bind="tooltipProps"
 						@touchend="show = false"
 						@touchstart="show = true"
-            @click="emitClick"
+						@click="emitClick"
 					/>
 				</slot>
 			</template>

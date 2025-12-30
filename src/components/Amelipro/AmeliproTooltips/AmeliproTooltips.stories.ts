@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import {fn} from '@storybook/test'
+import { fn } from '@storybook/test'
 import AmeliproTooltips from './AmeliproTooltips.vue'
 
 const meta = {
@@ -15,8 +15,8 @@ const meta = {
 		tooltipText: { description: 'Texte du Tooltips' },
 		tooltipTextColor: { description: 'Couleur du text du Tooltips' },
 		uniqueId: { description: 'Défini l’id du tooltip dans le DOM' },
-        click: {description: 'Evénement émis au click sur le bouton'},
-    },
+		click: { description: 'Evénement émis au click sur le bouton' },
+	},
 	component: AmeliproTooltips,
 	title: 'Composants/Amelipro/AmeliproTooltips',
 } as Meta<typeof AmeliproTooltips>
@@ -175,22 +175,22 @@ export const IconePersonnalisee: Story = {
 }
 
 export const AvecAction: Story = {
-    name: 'Avec action',
-    args: {
-        iconName: 'plus',
-        iconBgColor: 'ap-blue-darken-1',
-        iconColor: 'ap-white',
-        iconHoverBgColor: 'ap-white',
-        iconHoverColor: 'ap-blue-darken-1',
-        tooltipText: 'Action sur le clic',
-        uniqueId: 'tooltip-icon-custom',
-        onClick: fn(),
-    },
-    parameters: {
-        sourceCode: [
-            {
-                name: 'Template',
-                code: `<template>
+	name: 'Avec action',
+	args: {
+		iconName: 'plus',
+		iconBgColor: 'ap-blue-darken-1',
+		iconColor: 'ap-white',
+		iconHoverBgColor: 'ap-white',
+		iconHoverColor: 'ap-blue-darken-1',
+		tooltipText: 'Action sur le clic',
+		uniqueId: 'tooltip-icon-custom',
+		onClick: fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
     <p>Info-bulle avec une action lors d'un clic sur l'icone (<code>iconName</code>).</p>
     <AmeliproTooltips
         icon-name="plus"
@@ -202,19 +202,19 @@ export const AvecAction: Story = {
         unique-id="tooltip-icon-custom"
     />
 </template>`,
-            },
-        ],
-    },
-    render: args => ({
-        components: {AmeliproTooltips},
-        setup() {
-            return {args}
-        },
-        template: `
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTooltips },
+		setup() {
+			return { args }
+		},
+		template: `
           <p>Info-bulle avec une action lors d'un clic sur l'icone (<code>iconName</code>).</p>
           <AmeliproTooltips v-bind="args"/>
         `,
-    }),
+	}),
 }
 
 export const SlotDefault: Story = {
