@@ -114,7 +114,8 @@
 		padding: tokens.$gap-2 tokens.$gap-4;
 		margin-block: tokens.$gap-1;
 		gap: tokens.$gap-2 tokens.$gap-4;
-		box-shadow: 0 3px 5px -1px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)),
+		box-shadow:
+			0 3px 5px -1px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)),
 			0 6px 10px 0 var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)),
 			0 1px 18px 0 var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
 
@@ -133,6 +134,7 @@
 	.notification--success {
 		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgb(var(--v-theme-backgroundSuccessContrasted, '86, 194, 113'));
+		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
 	}
 
@@ -155,7 +157,7 @@
 	}
 
 	.notification--long-text {
-		/* stylelint-disable-next-line custom-property-pattern media-feature-name-no-unknown */
+		/* stylelint-disable-next-line */
 		@media screen and (width <= tokens.$container-mobile-max-width) {
 			flex-direction: column;
 			align-items: flex-start;
