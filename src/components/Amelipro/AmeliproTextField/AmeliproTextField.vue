@@ -11,7 +11,7 @@
 	import { notAfterDate } from '@/utils/amelipro/rules/notAfterDate'
 	import { notBeforeDate } from '@/utils/amelipro/rules/notBeforeDate'
 	import { isRequired } from '@/utils/rules/isRequired'
-import {mdiEye, mdiEyeOff} from '@mdi/js'
+	import { mdiCheck, mdiClose, mdiEye, mdiEyeOff } from '@mdi/js'
 
 	const props = defineProps({
 		required: {
@@ -69,6 +69,10 @@ import {mdiEye, mdiEyeOff} from '@mdi/js'
 		inputMinWidth: {
 			type: String,
 			default: undefined,
+		},
+		isValidationList: {
+			type: Boolean,
+			default: false,
 		},
 		label: {
 			type: String,
@@ -131,10 +135,10 @@ import {mdiEye, mdiEyeOff} from '@mdi/js'
 		},
 	})
 
-const show = ref(false)
+	const show = ref(false)
 	const inputTextField = ref<InputTextField>({ errorMessages: [], isValid: true })
 	const messagesToDisplay = computed(() => inputTextField.value.errorMessages)
-const isPassword = computed(() => props.type === 'password')
+	const isPassword = computed(() => props.type === 'password')
 	defineExpose({ messagesToDisplay })
 
 	const inputValue = computed({
@@ -146,23 +150,23 @@ const isPassword = computed(() => props.type === 'password')
 
 	const browserType = window?.navigator?.userAgent ?? ''
 	const isBrowserSafari = (/^((?!chrome|android).)*safari/i).test(browserType)
-const computedType = computed<string>(() => {
-  if (props.type === 'password') {
-    return show.value ? 'text' : 'password'
-  }
+	const computedType = computed<string>(() => {
+		if (props.type === 'password') {
+			return show.value ? 'text' : 'password'
+		}
 
-  if (
-      isBrowserSafari &&
-      props.disabledDateForSafari &&
-      props.type === 'date'
-  ) {
-    return 'text'
-  }
+		if (
+			isBrowserSafari
+			&& props.disabledDateForSafari
+			&& props.type === 'date'
+		) {
+			return 'text'
+		}
 
-  return props.type
-})
+		return props.type
+	})
 
-const focused = ref(false)
+	const focused = ref(false)
 	const errorId = computed<string>(() => `${props.uniqueId}-error`)
 	const displayError = computed(() => (inputTextField.value?.isValid !== null && !inputTextField.value?.isValid) && (inputTextField.value?.errorMessages && inputTextField.value?.errorMessages.length > 0))
 	const inputRules = computed<ValidationRule[]>(() => {
@@ -192,6 +196,38 @@ const focused = ref(false)
 			}
 		}
 		return rules
+	})
+
+	const isRulesType = computed(() =>
+		props.type === 'password' || props.type === 'email',
+	)
+
+	const rulesTitle = computed(() => {
+		if (props.type === 'password') return 'Votre mot de passe doit respecter les règles suivantes :'
+		if (props.type === 'email') return 'Votre e-mail doit respecter les règles suivantes :'
+		return ''
+	})
+
+	function getRuleLabel(rule: ValidationRule): string {
+		const result = rule('') // valeur volontairement invalide
+
+		return typeof result === 'string' ? result : ''
+	}
+
+	const rulesState = computed(() => {
+		if (!isRulesType.value || !props.rules) {
+			return []
+		}
+
+		return props.rules.map((rule, index) => {
+			const valid = rule(inputValue.value) === true
+
+			return {
+				key: index,
+				label: getRuleLabel(rule),
+				valid,
+			}
+		})
 	})
 
 	const emit = defineEmits(['change', 'update:model-value'])
@@ -319,7 +355,7 @@ const focused = ref(false)
 				v-model="inputValue"
 				:aria-describedby="displayError ? errorId : undefined"
 				:aria-invalid="displayError ? true : undefined"
-        :required="required"
+				:required="required"
 				:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 				class="pt-0 amelipro-text-field"
 				:clearable="clearable"
@@ -327,7 +363,7 @@ const focused = ref(false)
 				:counter="counter"
 				density="compact"
 				:disabled="disabled"
-				:hide-details="hideErrorMessage || fullWidthErrorMsg"
+				:hide-details="hideErrorMessage || fullWidthErrorMsg || props.isValidationList"
 				:max="maxDate || maxNumber"
 				:min="minDate || minNumber"
 				:placeholder="placeholder"
@@ -341,16 +377,19 @@ const focused = ref(false)
 				@change="emitChangeEvent"
 				@focus="focused = true"
 			>
-        <template #append-inner v-if="isPassword">
-          <VIcon
-              :icon="show ? mdiEye : mdiEyeOff"
-              :color="disabled || readonly ? 'ap-grey-darken-1' : 'ap-blue-darken-1'"
-              class="amelipro-eye-icon"
-              @click="!disabled && !readonly && (show = !show)"
-          />
-        </template>
 				<template
-					v-if="$slots.append"
+					v-if="isPassword && inputValue"
+					#append-inner
+				>
+					<VIcon
+						:icon="show ? mdiEye : mdiEyeOff"
+						:color="disabled || readonly ? 'ap-grey-darken-1' : 'ap-blue-darken-1'"
+						class="amelipro-eye-icon"
+						@click="!disabled && !readonly && (show = !show)"
+					/>
+				</template>
+				<template
+					v-if="$slots.appen"
 					#append
 				>
 					<slot name="append" />
@@ -383,6 +422,27 @@ const focused = ref(false)
 			</p>
 		</AmeliproMessage>
 	</div>
+	<div
+		v-if="props.isValidationList && isRulesType && rulesState.length"
+		class="amelipro-validation-rules"
+	>
+		<div class="mb-1">
+			{{ rulesTitle }}
+		</div>
+		<div
+			v-for="rule in rulesState"
+			:key="rule.key"
+			class="d-flex align-center mb-1 amelipro-validation-rule"
+			:class="{ 'is-valid': rule.valid, 'is-invalid': !rule.valid }"
+		>
+			<VIcon
+				:icon="rule.valid ? mdiCheck : mdiClose"
+				size="18"
+				class="mr-2"
+			/>
+			<div>{{ rule.label }}</div>
+		</div>
+	</div>
 </template>
 
 <style lang="scss" scoped>
@@ -403,6 +463,17 @@ const focused = ref(false)
 	.amelipro-eye-icon {
 		opacity: 1 !important;
 	}
+
+  .amelipro-validation-rules {
+    font-size: apTokens.$font-size-xs;
+    color: apTokens.$ap-grey;
+
+    .amelipro-validation-rule {
+      &.is-valid {
+        color: apTokens.$ap-turquoise-darken1;
+      }
+    }
+  }
 
 	.amelipro-text-field__label {
 		font-size: apTokens.$font-size-xs;
