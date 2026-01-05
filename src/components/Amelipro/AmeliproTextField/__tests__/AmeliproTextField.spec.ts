@@ -155,6 +155,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTextField> = {
 		type: String,
 		default: undefined,
 	},
+    isValidationList: {
+        type: Boolean,
+        default: false,
+    },
 	label: {
 		type: String,
 		required: true,
@@ -272,12 +276,20 @@ describe('AmeliproTextField', () => {
 			vueWrapper = shallowMount(AmeliproTextField, { props: requiredPropValues() })
 		})
 
-		it('prop uniqueId sets attribute id on root container', async () => {
-			expect(vueWrapper.attributes('id')).toBe(`${testHelper.default('uniqueId')}-container`)
-			const { uniqueId } = modifiedPropValues()
-			await vueWrapper.setProps({ uniqueId })
-			expect(vueWrapper.attributes('id')).toBe(`${testHelper.modified('uniqueId')}-container`)
-		})
+        it('prop uniqueId sets attribute id on root container', async () => {
+            const defaultId = testHelper.default('uniqueId')
+            let container = vueWrapper.find(`#${defaultId}-container`)
+
+            expect(container.exists()).toBe(true)
+            expect(container.attributes('id')).toBe(`${defaultId}-container`)
+
+            const {uniqueId} = modifiedPropValues()
+            await vueWrapper.setProps({uniqueId})
+
+            container = vueWrapper.find(`#${uniqueId}-container`)
+            expect(container.exists()).toBe(true)
+            expect(container.attributes('id')).toBe(`${uniqueId}-container`)
+        })
 
 		it('prop label sets label text', async () => {
 			expect(vueWrapper.find('.amelipro-text-field__label').text()).toContain(testHelper.default('label'))

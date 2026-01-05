@@ -857,7 +857,7 @@ export const ValidationList: Story = {
 	<AmeliproTextField
 		v-model="model"
 		label="Champ avec validation"
-		unique-id="text-validation"
+		unique-id="list-validation"
 		type="password"
 		isValidationList
 		:rules="[

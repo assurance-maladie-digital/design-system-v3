@@ -389,7 +389,7 @@
 					/>
 				</template>
 				<template
-					v-if="$slots.appen"
+            v-if="$slots.append"
 					#append
 				>
 					<slot name="append" />
