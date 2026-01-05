@@ -23,7 +23,7 @@ const meta = {
 		'horizontal': { description: 'Passe le champ au format horizontal' },
 		'inputMaxWidth': { description: 'Gère la largeur maximale du champ, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
 		'inputMinWidth': { description: 'Gère la largeur minimale du champ, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
-        'isValidationList': {description: 'Affiche une liste des règles à valider (uniquemenent avec type email et password)'},
+		'isValidationList': { description: 'Affiche une liste des règles à valider (uniquemenent avec type email et password)' },
 		'label': { description: 'Défini le label du champ' },
 		'labelInfo': { description: 'Permet d\'ajouter des infos à la suite du libellé du champ' },
 		'labelMaxWidth': { description: 'Gère la largeur maximale du label, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
@@ -835,24 +835,24 @@ export const Validation: Story = {
 }
 
 export const ValidationList: Story = {
-    args: {
-        label: 'Champ avec liste de validation validation',
-        modelValue: '',
-        uniqueId: 'list-validation',
-        type: 'password',
-        isValidationList: true,
-        rules: [
-            v => String(v ?? '').length >= 12 || 'Au moins 12 caractères',
-            v => ((/[A-Z]/.test(String(v ?? '')) && /[a-z]/.test(String(v ?? '')))) || 'Au moins une majuscule (A-Z) et une minuscule (a-z)',
-            v => /\d/.test(String(v ?? '')) || 'Au moins un chiffre (0-9)',
-            v => /[!@#$%^&*?./:;]/.test(String(v ?? '')) || 'Au moins un caractère spécial (! @ # $ % ^ & * ? . / : ;)'
-        ],
-    },
-    parameters: {
-        sourceCode: [
-            {
-                name: 'Template',
-                code: `<template>
+	args: {
+		label: 'Champ avec liste de validation validation',
+		modelValue: '',
+		uniqueId: 'list-validation',
+		type: 'password',
+		isValidationList: true,
+		rules: [
+			v => String(v ?? '').length >= 12 || 'Au moins 12 caractères',
+			v => ((/[A-Z]/.test(String(v ?? '')) && /[a-z]/.test(String(v ?? '')))) || 'Au moins une majuscule (A-Z) et une minuscule (a-z)',
+			v => /\d/.test(String(v ?? '')) || 'Au moins un chiffre (0-9)',
+			v => /[!@#$%^&*?./:;]/.test(String(v ?? '')) || 'Au moins un caractère spécial (! @ # $ % ^ & * ? . / : ;)',
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
 	<p>Le champ utilise la prop <code>rules</code> pour valider la saisie ainsi que le prop <code>isValidationList</code> pour afficher la liste des règles à valider.</p>
 	<AmeliproTextField
 		v-model="model"
@@ -868,28 +868,28 @@ export const ValidationList: Story = {
 ]"
 	/>
 </template>`,
-            },
-            {
-                name: 'Script',
-                code: `<script setup lang="ts">
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
 	import { AmeliproTextField } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const model = ref()
 </script>`,
-            },
-        ],
-    },
-    render: args => ({
-        components: {AmeliproTextField},
-        setup() {
-            const model = ref()
-            watch(() => args.modelValue, (newValue) => {
-                model.value = newValue
-            })
-            return {args, model}
-        },
-        template: `
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproTextField },
+		setup() {
+			const model = ref()
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
+			return { args, model }
+		},
+		template: `
           <p>Le champ utilise la prop <code>rules</code> pour valider la saisie ainsi que le prop
             <code>isValidationList</code>
             pour afficher la liste des règles à valider.</p>
@@ -898,5 +898,5 @@ export const ValidationList: Story = {
               v-model="model"
           />
         `,
-    }),
+	}),
 }

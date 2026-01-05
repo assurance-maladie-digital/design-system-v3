@@ -464,16 +464,16 @@
 		opacity: 1 !important;
 	}
 
-  .amelipro-validation-rules {
-    font-size: apTokens.$font-size-xs;
-    color: apTokens.$ap-grey;
+	.amelipro-validation-rules {
+		font-size: apTokens.$font-size-xs;
+		color: apTokens.$ap-grey;
 
-    .amelipro-validation-rule {
-      &.is-valid {
-        color: apTokens.$ap-turquoise-darken1;
-      }
-    }
-  }
+		.amelipro-validation-rule {
+			&.is-valid {
+				color: apTokens.$ap-turquoise-darken1;
+			}
+		}
+	}
 
 	.amelipro-text-field__label {
 		font-size: apTokens.$font-size-xs;
