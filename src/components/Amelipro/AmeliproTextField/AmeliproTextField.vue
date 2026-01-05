@@ -11,6 +11,7 @@
 	import { notAfterDate } from '@/utils/amelipro/rules/notAfterDate'
 	import { notBeforeDate } from '@/utils/amelipro/rules/notBeforeDate'
 	import { isRequired } from '@/utils/rules/isRequired'
+import {mdiEye, mdiEyeOff} from '@mdi/js'
 
 	const props = defineProps({
 		required: {
@@ -130,8 +131,10 @@
 		},
 	})
 
+const show = ref(false)
 	const inputTextField = ref<InputTextField>({ errorMessages: [], isValid: true })
 	const messagesToDisplay = computed(() => inputTextField.value.errorMessages)
+const isPassword = computed(() => props.type === 'password')
 	defineExpose({ messagesToDisplay })
 
 	const inputValue = computed({
@@ -143,8 +146,23 @@
 
 	const browserType = window?.navigator?.userAgent ?? ''
 	const isBrowserSafari = (/^((?!chrome|android).)*safari/i).test(browserType)
-	const computedType = computed<string>(() => (isBrowserSafari && props.disabledDateForSafari && props.type === 'date' ? 'text' : props.type))
-	const focused = ref(false)
+const computedType = computed<string>(() => {
+  if (props.type === 'password') {
+    return show.value ? 'text' : 'password'
+  }
+
+  if (
+      isBrowserSafari &&
+      props.disabledDateForSafari &&
+      props.type === 'date'
+  ) {
+    return 'text'
+  }
+
+  return props.type
+})
+
+const focused = ref(false)
 	const errorId = computed<string>(() => `${props.uniqueId}-error`)
 	const displayError = computed(() => (inputTextField.value?.isValid !== null && !inputTextField.value?.isValid) && (inputTextField.value?.errorMessages && inputTextField.value?.errorMessages.length > 0))
 	const inputRules = computed<ValidationRule[]>(() => {
@@ -301,7 +319,7 @@
 				v-model="inputValue"
 				:aria-describedby="displayError ? errorId : undefined"
 				:aria-invalid="displayError ? true : undefined"
-				:required="required"
+        :required="required"
 				:bg-color="disabled ? 'ap-grey-lighten-2' : 'ap-white'"
 				class="pt-0 amelipro-text-field"
 				:clearable="clearable"
@@ -323,6 +341,14 @@
 				@change="emitChangeEvent"
 				@focus="focused = true"
 			>
+        <template #append-inner v-if="isPassword">
+          <VIcon
+              :icon="show ? mdiEye : mdiEyeOff"
+              :color="disabled || readonly ? 'ap-grey-darken-1' : 'ap-blue-darken-1'"
+              class="amelipro-eye-icon"
+              @click="!disabled && !readonly && (show = !show)"
+          />
+        </template>
 				<template
 					v-if="$slots.append"
 					#append
@@ -372,6 +398,10 @@
 		& :deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
 			--v-field-border-width: 1px !important;
 		}
+	}
+
+	.amelipro-eye-icon {
+		opacity: 1 !important;
 	}
 
 	.amelipro-text-field__label {
