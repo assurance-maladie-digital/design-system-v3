@@ -47,6 +47,7 @@
 				to?: RouteLocationRaw
 				href?: string
 			}
+			width?: string | number
 		} & LogoProps>(),
 		{
 			sticky: true,
@@ -55,6 +56,7 @@
 			serviceTitle: undefined,
 			serviceSubtitle: undefined,
 			homeLink: undefined,
+			width: '1712px',
 		})
 
 	function registerHeaderMenu(childMenuStatus: DeepReadonly<Ref<boolean>>) {
@@ -178,7 +180,7 @@
 					name="menu"
 					:menu-open
 				/>
-				<div class="header-logo pl-xl-0 pl-md-14 pl-4">
+				<div class="header-logo pl-md-14 pl-4">
 					<slot
 						name="logo"
 						:menu-open
@@ -249,7 +251,7 @@
 	display: flex;
 	align-items: center;
 	height: $header-height;
-	max-width: $header-max-width;
+	max-width: v-bind(width);
 	margin: 0 auto;
 	border-bottom: solid 1px $blue-lighten-80;
 }
