@@ -389,4 +389,11 @@
 			opacity: 1 !important;
 		}
 	}
+
+	// Chrome and edge browser
+	@supports (-webkit-appearance: none) {
+		.amelipro-text-field :deep(input[type='date']) {
+			display: block !important;
+		}
+	}
 </style>
