@@ -111,7 +111,7 @@
 							v-if="loading"
 							width="300"
 							height="2rem"
-							color="secondary"
+							color="primary"
 						/>
 						<h2
 							v-else-if="titleText"
@@ -133,7 +133,7 @@
 							class="mt-1"
 							width="250"
 							height="2rem"
-							color="secondary"
+							color="primary"
 						/>
 						<p
 							v-else
