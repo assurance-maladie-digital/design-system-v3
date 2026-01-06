@@ -12,7 +12,8 @@ const getMainTargetUrl = (): string => {
 		const locationFromParent = window.parent?.location
 		const loc = locationFromTop ?? locationFromParent ?? window.location
 		return `${loc.origin}${loc.pathname}${loc.search}#main`
-	} catch {
+	}
+	catch {
 		return `${window.location.origin}${window.location.pathname}${window.location.search}#main`
 	}
 }
