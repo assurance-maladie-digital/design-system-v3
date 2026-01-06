@@ -15,7 +15,7 @@ Cette fonction crée une copie profonde d'un objet ou d'un tableau, ce qui perme
 
 ### Importation
 
-<Source dark code={`import { deepCopy } from '@cnamts/synpase'`}/>
+<Source dark code={`import { deepCopy } from '@cnamts/synapse'`}/>
 
 ### Utilisation
 
@@ -78,7 +78,7 @@ console.log(complexCopy.user.settings.theme) // 'light'
 
 <script>
 import { ref, reactive } from 'vue'
-import { deepCopy } from '@cnamts/synpase'
+import { deepCopy } from '@cnamts/synapse'
 
 export default {
   props: {
@@ -129,7 +129,7 @@ export default {
 
 #### 1. Sauvegarde de l'état initial
 
-<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+<Source dark code={`import { deepCopy } from '@cnamts/synapse'
 
 export default {
   setup() {
@@ -166,7 +166,7 @@ export default {
 
 #### 2. Comparaison avant/après
 
-<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+<Source dark code={`import { deepCopy } from '@cnamts/synapse'
 
 export default {
   props: {
@@ -212,7 +212,7 @@ export default {
 
 #### 3. Gestion d'un historique d'actions
 
-<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+<Source dark code={`import { deepCopy } from '@cnamts/synapse'
 
 export default {
   setup() {
@@ -297,7 +297,7 @@ export default {
 }
 
 import { deepCopy } from '
-import '../../styles/shared.css';@cnamts/synpase'
+import '../../styles/shared.css';@cnamts/synapse'
 
 // Fonction qui modifie une copie sans affecter l'original
 function updateUserTheme(user: User, newTheme: 'light' | 'dark'): User {

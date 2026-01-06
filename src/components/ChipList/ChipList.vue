@@ -112,12 +112,12 @@
 	})
 
 	/**
-   * Retourne la couleur de fond correspondant à l'état du chip
-   *
-   * @param state - L'état du chip
-   * @param options - Les options de personnalisation
-   * @returns La couleur de fond correspondante
-   */
+	 * Retourne la couleur de fond correspondant à l'état du chip
+	 *
+	 * @param state - L'état du chip
+	 * @param options - Les options de personnalisation
+	 * @returns La couleur de fond correspondante
+	 */
 	function getBackgroundColor(state: ChipState): string {
 		// Si des options Vuetify sont définies et qu'une couleur est spécifiée, on l'utilise
 		const vuetifyColor = props.vuetifyOptions?.chip?.color
@@ -211,6 +211,7 @@
 							:icon="customIcon || getIcon(item.state)"
 							:color="item.state"
 							decorative
+							class="mr-1"
 						/>
 					</template>
 
@@ -221,6 +222,7 @@
 							v-bind="options.icon"
 							:icon="customIcon || getIcon(item.state)"
 							decorative
+							class="ml-1"
 						/>
 					</template>
 
@@ -229,7 +231,7 @@
 						v-bind="options.btn"
 						:aria-label="`Supprimer le filtre '${item.text}'`"
 						icon
-						class="remove-chip"
+						class="remove-chip ml-1"
 						@click="emitRemoveEvent(item)"
 					>
 						<SyIcon

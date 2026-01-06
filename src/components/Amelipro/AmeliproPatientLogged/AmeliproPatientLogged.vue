@@ -16,6 +16,10 @@
 			type: Boolean,
 			default: false,
 		},
+		btnPrevention: {
+			type: Boolean,
+			default: false,
+		},
 		doctorTooltipRed: {
 			type: Boolean,
 			default: false,
@@ -45,6 +49,7 @@
 				fund: 'Caisse',
 				fundDialogTitle: 'Coordonnées de l\'organisme de rattachement du patient',
 				postalAddress: 'Adresse postale',
+				prevention: 'Prévention',
 				mtm: 'Modulation MT',
 				name: 'Nom',
 				nir: 'NIR',
@@ -96,7 +101,7 @@
 	const exemptionDialog = ref(false)
 	const fundDialog = ref(false)
 
-	const emit = defineEmits(['click', 'click:info', 'click:postal-address', 'click:pdf', 'update:model-value'])
+	const emit = defineEmits(['click', 'click:info', 'click:postal-address', 'click:prevention', 'click:pdf', 'update:model-value'])
 	const selectValue = computed({
 		get: (): SelectItem | number | string | undefined => props.modelValue,
 		set: (newValue: SelectItem | number | string | undefined): void => {
@@ -108,6 +113,7 @@
 	const emitClickInfo = () => emit('click:info', `${props.uniqueId}-info-btn`)
 	const emitClickPdf = () => emit('click:pdf', `${props.uniqueId}-pdf-btn`)
 	const emitClickPostalAddress = () => emit('click:postal-address', `${props.uniqueId}-btn-postal-address`)
+	const emitClickPrevention = () => emit('click:prevention', `${props.uniqueId}-btn-prevention`)
 </script>
 
 <template>
@@ -221,6 +227,20 @@
 						{{ patientInfos.rank }}
 					</span>
 				</p>
+			</div>
+			<div class="mb-4">
+				<AmeliproBtn
+					v-if="btnPrevention && !isRestrictedData"
+					bordered
+					class="d-block w-100"
+					color="ap-white"
+					hover-color="ap-blue-lighten-3"
+					text-color="ap-blue-darken-1"
+					:unique-id="`${uniqueId}-prenvention-btn`"
+					@click="emitClickPrevention"
+				>
+					{{ labels.prevention }}
+				</AmeliproBtn>
 			</div>
 			<div class="mb-4">
 				<p

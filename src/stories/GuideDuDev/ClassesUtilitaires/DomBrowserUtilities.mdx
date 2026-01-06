@@ -19,19 +19,13 @@ Cette fonction permet de copier un texte dans le presse-papier de l'utilisateur.
 
 ### Importation
 
-<Source dark code={`import { copyToClipboard } from '@cnamts/synpase'
+<Source dark code={`import { copyToClipboard } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
 
 <Source dark code={`// Copier un texte simple
 copyToClipboard('Texte à copier')
-  .then(() => {
-    console.log('Texte copié avec succès')
-  })
-  .catch(error => {
-    console.error('Erreur lors de la copie', error)
-  })
 `}/>
 
 ### Exemple pratique
@@ -46,7 +40,6 @@ copyToClipboard('Texte à copier')
     <v-btn
       icon
       @click="copyCode"
-      :loading="isCopying"
     >
       <v-icon>mdi-content-copy</v-icon>
     </v-btn>
@@ -61,30 +54,20 @@ copyToClipboard('Texte à copier')
 
 <script>
 import { ref } from 'vue'
-import { copyToClipboard } from '@cnamts/synpase'
+import { copyToClipboard } from '@cnamts/synapse'
 
 export default {
   setup() {
     const referenceCode = ref('REF-12345-ABCDE')
-    const isCopying = ref(false)
     const showSnackbar = ref(false)
     
-    const copyCode = async () => {
-      isCopying.value = true
-      
-      try {
-        await copyToClipboard(referenceCode.value)
-        showSnackbar.value = true
-      } catch (error) {
-        console.error('Erreur lors de la copie', error)
-      } finally {
-        isCopying.value = false
-      }
+    const copyCode = () => {
+      copyToClipboard(referenceCode.value)
+      showSnackbar.value = true
     }
     
     return {
       referenceCode,
-      isCopying,
       showSnackbar,
       copyCode
     }
@@ -95,21 +78,34 @@ export default {
 
 ## downloadFile
 
-Cette fonction permet de télécharger un fichier à partir d'une URL ou d'un Blob.
+Cette fonction permet de télécharger un fichier à partir d'un contenu (Blob, ArrayBuffer ou string).
 
 ### Importation
 
-<Source dark code={`import { downloadFile } from '@cnamts/synpase'
+<Source dark code={`import { downloadFile } from '@cnamts/synapse'
+`}/>
+
+### Signature
+
+<Source dark code={`downloadFile(
+  content: ArrayBuffer | ArrayBufferView | Blob | string,
+  filename: string,
+  type: string,        // Type MIME du fichier
+  utf8Bom?: boolean    // Ajouter le BOM UTF-8 (utile pour Excel)
+): void
 `}/>
 
 ### Utilisation
 
-<Source dark code={`// Télécharger un fichier à partir d'une URL
-downloadFile('https://example.com/document.pdf', 'mon-document.pdf')
+<Source dark code={`// Télécharger un fichier texte
+downloadFile('Contenu du fichier', 'mon-fichier.txt', 'text/plain')
+
+// Télécharger un fichier CSV avec BOM UTF-8 (pour Excel)
+downloadFile('Nom,Prénom\nDupont,Jean', 'export.csv', 'text/csv', true)
 
 // Télécharger un fichier à partir d'un Blob
 const blob = new Blob(['contenu du fichier'], { type: 'text/plain' })
-downloadFile(blob, 'mon-fichier.txt')
+downloadFile(blob, 'mon-fichier.txt', 'text/plain')
 `}/>
 
 ### Exemple pratique
@@ -119,7 +115,6 @@ downloadFile(blob, 'mon-fichier.txt')
     <v-btn
       color="primary"
       @click="downloadReport"
-      :loading="isDownloading"
     >
       Télécharger le rapport
     </v-btn>
@@ -127,12 +122,11 @@ downloadFile(blob, 'mon-fichier.txt')
 </template>
 
 <script>
-import { ref } from 'vue'
-import { downloadFile } from '@cnamts/synpase'
+import { downloadFile } from '@cnamts/synapse'
 
 export default {
   props: {
-    reportUrl: {
+    reportContent: {
       type: String,
       required: true
     },
@@ -142,22 +136,15 @@ export default {
     }
   },
   setup(props) {
-    const isDownloading = ref(false)
-    
-    const downloadReport = async () => {
-      isDownloading.value = true
-      
-      try {
-        await downloadFile(props.reportUrl, props.reportName)
-      } catch (error) {
-        console.error('Erreur lors du téléchargement', error)
-      } finally {
-        isDownloading.value = false
-      }
+    const downloadReport = () => {
+      downloadFile(
+        props.reportContent,
+        props.reportName,
+        'application/pdf'
+      )
     }
     
     return {
-      isDownloading,
       downloadReport
     }
   }
@@ -174,7 +161,7 @@ Vous pouvez également générer des fichiers à la volée à partir de données
 </template>
 
 <script>
-import { downloadFile } from '@cnamts/synpase'
+import { downloadFile } from '@cnamts/synapse'
 
 export default {
   props: {
@@ -196,9 +183,8 @@ export default {
       // Combiner en-tête et lignes
       const csvContent = [headers, ...rows].join('\n')
       
-      // Créer un Blob et télécharger
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-      downloadFile(blob, 'export.csv')
+      // Télécharger le fichier CSV avec BOM UTF-8 pour Excel
+      downloadFile(csvContent, 'export.csv', 'text/csv;charset=utf-8;', true)
     }
     
     return {
@@ -215,7 +201,15 @@ Cette fonction limite le nombre d'appels à une fonction d'affichage pour améli
 
 ### Importation
 
-<Source dark code={`import { throttleDisplayFn } from '@cnamts/synpase'
+<Source dark code={`import { throttleDisplayFn } from '@cnamts/synapse'
+`}/>
+
+### Signature
+
+<Source dark code={`throttleDisplayFn<F extends (...args: unknown[]) => void>(
+  fn: F,        // La fonction à throttler
+  delay: number // Délai minimum entre deux appels (en ms)
+): (...args: Parameters<F>) => void
 `}/>
 
 ### Utilisation
@@ -226,8 +220,8 @@ const updateUI = () => {
   console.log('Mise à jour de l\'UI')
 }
 
-// Création d'une version limitée de la fonction
-const throttledUpdateUI = throttleDisplayFn(updateUI)
+// Création d'une version limitée de la fonction (max 1 appel toutes les 100ms)
+const throttledUpdateUI = throttleDisplayFn(updateUI, 100)
 
 // Utilisation dans un événement qui se déclenche fréquemment
 window.addEventListener('scroll', throttledUpdateUI)
@@ -250,8 +244,7 @@ window.addEventListener('scroll', throttledUpdateUI)
 
 <script>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { throttleDisplayFn } from '
-import '../../styles/shared.css';@cnamts/synpase'
+import { throttleDisplayFn } from '@cnamts/synapse'
 
 export default {
   props: {
@@ -277,8 +270,8 @@ export default {
       }
     }
     
-    // Utilisation de throttleDisplayFn pour limiter les appels
-    const throttledCheckScroll = throttleDisplayFn(checkScroll)
+    // Utilisation de throttleDisplayFn pour limiter les appels (max 1 appel toutes les 100ms)
+    const throttledCheckScroll = throttleDisplayFn(checkScroll, 100)
     
     onMounted(() => {
       if (scrollContainer.value) {
@@ -334,16 +327,16 @@ export default {
 
 ### Pour copyToClipboard
 
-- Toujours gérer les erreurs potentielles avec try/catch ou .catch()
 - Fournir un retour visuel à l'utilisateur lorsque la copie est réussie
 - Vérifier que le texte à copier n'est pas vide ou null
+- La fonction est synchrone et utilise l'API Clipboard moderne avec fallback sur execCommand
 
 ### Pour downloadFile
 
 - Utiliser des noms de fichiers descriptifs et incluant l'extension appropriée
-- Gérer les erreurs potentielles lors du téléchargement
-- Indiquer à l'utilisateur que le téléchargement est en cours (loading state)
-- Pour les fichiers générés côté client, utiliser le type MIME approprié
+- Toujours spécifier le type MIME approprié (3ème paramètre)
+- Utiliser `utf8Bom: true` pour les fichiers CSV destinés à Excel (gestion des accents)
+- La fonction est synchrone et crée un lien de téléchargement temporaire
 
 ### Pour throttleDisplayFn
 
