@@ -34,6 +34,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTabs> = {
 		type: Boolean,
 		default: false,
 	},
+    onSameLine: {
+        type: Boolean,
+        default: false,
+    },
 	uniqueId: {
 		type: String,
 		required: true,

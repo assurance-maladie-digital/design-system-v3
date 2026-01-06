@@ -25,7 +25,8 @@ const meta = {
 			},
 		},
 		'noTabDefaultStyle': { description: 'Retire le style par défaut du contenu des tabs (fond blanc et padding)' },
-		'pills': { description: 'Change le style des boutons' },
+        'pills': {description: 'Change le style des boutons'},
+        'onSameLine': {description: 'Garde les onglets sur la même ligne si les libellés sont trop longs'},
 		'tab-panel': { description: 'Slot généré automatiquement pour tous les onglets afin d’y insérer des contenus génériques' },
 		'tabsDesc': { description: 'Slot pour ajouter des informations au dessus des boutons' },
 		'uniqueId': { description: 'Renseigne un id pour le groupe d’onglets' },
@@ -201,4 +202,78 @@ export const Pills: Story = {
 			</AmeliproTabs>
 		`,
 	}),
+}
+
+export const OnSameLine: Story = {
+    args: {
+        ariaLabel: 'Titre du group d\'onglets',
+        items,
+        onSameLine: true,
+        uniqueId: 'tabs',
+    },
+    parameters: {
+        sourceCode: [
+            {
+                name: 'Template',
+                code: `<template>
+	<AmeliproTabs
+		aria-label="Titre du group d'onglets"
+		:items="items"
+		onSameLine
+		unique-id="tabs"
+	>
+		<template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
+		<template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
+		<template #tabs-tab-panel-2>Contenu de l'onglet 3</template>
+		<template #tabs-tab-panel-3>Contenu de l'onglet 4</template>
+	</AmeliproTabs>
+</template>`,
+            },
+            {
+                name: 'Script',
+                code: `<script setup lang="ts">
+	import { AmeliproTabs } from '@cnamts/synapse'
+
+	const items = [
+		{
+			label: 'Mon onglet 1 avec un très long texte',
+			disabled: false,
+		},
+		{
+			label: 'Mon onglet 2 avec un très long texte',
+			disabled: false,
+		},
+		{
+			label: 'Mon onglet 3 avec un très long texte',
+			disabled: true,
+		},
+		{
+			label: 'Mon onglet 4 avec un très long texte',
+			disabled: false,
+		},
+	]
+</script>`,
+            },
+        ],
+    },
+    render: args => ({
+        components: {AmeliproTabs},
+        setup() {
+            return {args}
+        },
+        template: `
+          <AmeliproTabs
+              :aria-label="args.ariaLabel"
+              :items="args.items"
+              :on-same-line="args.onSameLine"
+              :unique-id="args.id"
+              v-bind="args"
+          >
+            <template #tabs-tab-panel-0>Contenu de l'onglet 1</template>
+            <template #tabs-tab-panel-1>Contenu de l'onglet 2</template>
+            <template #tabs-tab-panel-2>Contenu de l'onglet 3</template>
+            <template #tabs-tab-panel-3>Contenu de l'onglet 4</template>
+          </AmeliproTabs>
+        `,
+    }),
 }
