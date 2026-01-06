@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import {fn} from '@storybook/test'
 import AmeliproPatientLogged from './AmeliproPatientLogged.vue'
 import { ref, watch } from 'vue'
 
@@ -8,45 +9,106 @@ const meta = {
     parameters: {
         controls: {
             exclude: [
-                'click:info',
-                'click:copy',
-                'click:postal-address',
-                'click:prevention',
-                'click:fund-dialog',
-                'click:doctor-dialog',
-                'click:beneficiary-change',
-                'click:patient-change',
-                'click:pdf',
+                'onClick:info',
+                'onClick:copy',
+                'onClick:pdf',
+                'onClick:postal-address',
+                'onClick:prevention',
+                'onClick:fund-dialog',
+                'onClick:doctor-dialog',
+                'onClick:beneficiary-change',
+                'onClick:patient-change',
             ],
         },
     },
     argTypes: {
-        btnPostalAddress: {description: 'Affiche le bouton adresse postale'},
-        btnPrevention: {description: 'Affiche le bouton prévention'},
-        isRestrictedData: {description: 'Affiche la liste des bénéficiaires sans sélection possible'},
-
-        /* EVENTS — masqués */
-        'click:info': {action: false, table: {disable: true}},
-        'click:copy': {action: false, table: {disable: true}},
-        'click:postal-address': {action: false, table: {disable: true}},
-        'click:prevention': {action: false, table: {disable: true}},
-        'click:fund-dialog': {action: false, table: {disable: true}},
-        'click:doctor-dialog': {action: false, table: {disable: true}},
-        'click:beneficiary-change': {action: false, table: {disable: true}},
-        'click:patient-change': {action: false, table: {disable: true}},
-        'click:pdf': {action: false, table: {disable: true}},
-
-        /* SLOTS */
-        default: {description: 'Espace libre avant le bouton informations'},
-        doctor: {description: 'Slot ligne médecin traitant'},
-        doctorDialog: {description: 'Slot modale médecin traitant'},
-        doctorDialogFooter: {description: 'Slot footer modale médecin traitant'},
-        fundDialog: {description: 'Slot modale caisse'},
-
-        /* PROPS */
-        uniqueId: {description: 'Identifiant unique du composant'},
-        modelValue: {description: 'Valeur du select bénéficiaire'},
-        noPdfBtn: {description: 'Masque le bouton PDF'},
+        'btnPostalAddress': {description: 'Affiche le bouton adresse postale'},
+        'btnPrevention': {description: 'Affiche le bouton prévention'},
+        'isRestrictedData': {description: 'affiche la liste des bénéficiaires sans séléction possible'},
+        'click:info': {description: 'Evénement émis au click sur le bouton informations'},
+        'click:copy': {description: 'Evénement émis au click sur le bouton copier le texte'},
+        'click:postal-address': {description: 'Evénement émis au click sur le bouton adresse postale'},
+        'click:prevention': {description: 'Evénement émis au click sur le bouton prévention'},
+        'click:fund-dialog': {description: 'Evénement émis au click sur le bouton caisse'},
+        'click:doctor-dialog': {description: 'Evénement émis au click sur le bouton MT'},
+        'click:beneficiary-change': {description: 'Evénement émis au changement de bénéficiaire'},
+        'click:patient-change': {description: 'Evénement émis au click sur le bouton changement de patient'},
+        'click:pdf': {description: 'Evénement émis au click sur le bouton pdf'},
+        'default': {description: 'Espace libre avant le bouton informations supplémentaire au cas où il y aurait besoin de lignes supplémentaires'},
+        'doctor': {description: 'Slot permettant de remplacer le contenu de la ligne médecin traitant au besoin'},
+        'doctorDialog': {description: 'Slot permettant de renseigner le contenu de la modale médecin traitant'},
+        'doctorDialogFooter': {description: 'Slot permettant de renseigner le contenu du footer de la modale médecin traitant'},
+        'doctorTooltipRed': {description: 'Change la couleur du bouton de la tooltip pour la ligne médecin traitant'},
+        'exemptionDialog': {description: 'Slot permettant de renseigner le contenu de la modale exonération TM'},
+        'errorMessage': {description: 'Change le type du message affiché ne sert que si le slot `message` est rempli'},
+        'fundDialog': {description: 'Slot permettant de renseigner le contenu de la modale caisse'},
+        'labels': {
+            description: 'Valeur des titres pour chaque ligne',
+            table: {
+                type: {
+                    detail: `{
+						ame: string
+						birthdate: string
+						btnLabel: string
+						center: string
+						c2s: string
+						doctor: string
+						doctorDialogBtn: string
+						doctorDialogTitle: string
+						exemption: string
+						exemptionDialogTitle: string
+						exemptionLine2: string
+						firstName: string
+						fund: string
+						fundDialogTitle: string
+						postalAddress: string
+						mtm: string
+						name: string
+						nir: string
+						plan: string
+						rank: string
+						rights: string
+						selectLabel: string
+					}`,
+                    summary: 'IPatientInfoLabels',
+                },
+            },
+        },
+        'message': {description: 'Slot permettant de renseigner un message d\'information ou d\'erreur'},
+        'modelValue': {description: 'Valeur du select permettant de choisir un autre bénéficiaire'},
+        'noPdfBtn': {description: 'Masque le bouton pdf'},
+        'patientInfos': {
+            description: 'Informations concernant le patient',
+            table: {
+                type: {
+                    detail: `{
+						birthdate?: string
+						center?: string
+						exemptionDialogBtnText?: string
+						firstName?: string
+						name?: string
+						nir?: string
+						rank?: string
+						fund?: string
+						fundTooltip?: string
+						doctor?: string
+						doctorTooltip?: string
+						exemption?: string
+						exemptionLine2?: string
+						plan?: string
+						rights?: string
+						c2s?: string
+						c2sTooltip?: string
+						ame?: string
+						mtm?: string
+						selectItems?: SelectItem[]
+					}`,
+                    summary: 'IPatientInfos',
+                },
+            },
+        },
+        'uniqueId': {description: 'Identifiant unique du composant'},
+        'update:model-value': {description: 'Evénement émis à la mise à jour du v-model'},
     },
 } as Meta<typeof AmeliproPatientLogged>
 
@@ -56,11 +118,11 @@ type Story = StoryObj<typeof AmeliproPatientLogged>
 
 export const Default: Story = {
     args: {
-        btnPostalAddress: true,
-        btnPrevention: true,
-        doctorTooltipRed: true,
-        isRestrictedData: false,
-        patientInfos: {
+        'btnPostalAddress': true,
+        'btnPrevention': true,
+        'doctorTooltipRed': true,
+        'isRestrictedData': false,
+        'patientInfos': {
             ame: 'oui',
             birthdate: '09/11/1992 (32 ans)',
             c2s: 'non',
@@ -78,56 +140,141 @@ export const Default: Story = {
             rank: '1',
             rights: 'oui',
             selectItems: [
-                {title: 'Patient 1', value: 1},
-                {title: 'Patient 2', value: 2},
-                {title: 'Patient 3', value: 3},
+                {
+                    title: 'Patient 1',
+                    value: 1,
+                },
+                {
+                    title: 'Patient 2',
+                    value: 2,
+                },
+                {
+                    title: 'Patient 3',
+                    value: 3,
+                },
             ],
         },
-        uniqueId: 'test-id',
+        'uniqueId': 'test-id',
+        'onClick:info': fn(),
+        'onClick:copy': fn(),
+        'onClick:postal-address': fn(),
+        'onClick:prevention': fn(),
+        'onClick:fund-dialog': fn(),
+        'onClick:doctor-dialog': fn(),
+        'onClick:beneficiary-change': fn(),
+        'onClick:patient-change': fn(),
+        'onClick:pdf': fn(),
     },
-    render: (args) => ({
+    parameters: {
+        sourceCode: [
+            {
+                name: 'Template',
+                code: `<AmeliproPatientLogged
+	v-model="myModel"
+	:postal-address-info="true"
+	:doctor-tooltip-red="true"
+	:patient-infos="{
+		ame: 'oui',
+		birthdate: '09/11/1992 (32 ans)',
+		c2s: 'non',
+		c2sTooltip: 'c2s tooltip',
+		doctor: 'Voir détail MT',
+		doctorTooltip: 'doctor tooltip',
+		exemption: 'ALD hors liste',
+		firstName: 'prénom',
+		fund: 'CPAM du Puy de Dome',
+		fundTooltip: 'fund tooltip',
+		mtm: 'Allocation de solidarité aux personnes âgées',
+		name: 'nom',
+		nir: '123456789012345',
+		plan: 'Régime Général',
+		rank: '1',
+		rights: 'oui',
+		selectItems: [
+			{
+				title: 'Patient 1',
+				value: 1,
+			},
+			{
+				title: 'Patient 2',
+				value: 2,
+			},
+			{
+				title: 'Patient 3',
+				value: 3,
+			},
+		],
+	}"
+	unique-id="test-id"
+>
+	<template #doctorDialog>
+		<p>
+			Contenu du slot "doctorDialog"
+		</p>
+	</template>
+
+	<template #doctorDialogFooter>
+		<p>
+			Contenu du slot "doctorDialogFooter"
+		</p>
+	</template>
+
+	<template #fundDialog>
+		<p>
+			Contenu du slot "fundDialog"
+		</p>
+	</template>
+</AmeliproPatientLogged>`,
+            },
+            {
+                name: 'Script',
+                code: `<script setup lang="ts">
+	import { AmeliproPatientLogged } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const myModel = ref()
+</script>
+				`,
+            },
+        ],
+    },
+    render: args => ({
         components: {AmeliproPatientLogged},
         setup() {
             const model = ref(args.modelValue)
 
-            watch(
-                () => args.modelValue,
-                (val) => {
-                    model.value = val
-                },
-            )
-
+            // Optional: Keeps v-model in sync with storybook args
+            watch(() => args.modelValue, (newValue) => {
+                model.value = newValue
+            })
             return {args, model}
         },
         template: `
-          <div style="display:flex;justify-content:center">
+          <div style="display: flex; justify-content: center;">
+
             <AmeliproPatientLogged
                 v-bind="args"
                 v-model="model"
-                @click:info="() => {}"
-                @click:copy="() => {}"
-                @click:postal-address="() => {}"
-                @click:prevention="() => {}"
-                @click:fund-dialog="() => {}"
-                @click:doctor-dialog="() => {}"
-                @click:beneficiary-change="() => {}"
-                @click:patient-change="() => {}"
-                @click:pdf="() => {}"
-                style="width:350px !important"
+                style="width: 350px !important;"
             >
               <template #doctorDialog>
-                <p>Contenu du slot "doctorDialog"</p>
+                <p>
+                  Contenu du slot "doctorDialog"
+                </p>
               </template>
 
               <template #doctorDialogFooter>
-                <p>Contenu du slot "doctorDialogFooter"</p>
+                <p>
+                  Contenu du slot "doctorDialogFooter"
+                </p>
               </template>
 
               <template #fundDialog>
-                <p>Contenu du slot "fundDialog"</p>
+                <p>
+                  Contenu du slot "fundDialog"
+                </p>
               </template>
             </AmeliproPatientLogged>
-          </div>
-        `,
+          </div>`,
     }),
 }
