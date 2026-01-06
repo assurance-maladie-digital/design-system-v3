@@ -4,18 +4,18 @@ import AmeliproPatientLogin from './AmeliproPatientLogin.vue'
 import { ref, watch } from 'vue'
 
 const meta = {
-    title: 'Composants/Amelipro/IDPA/AmeliproPatientLogin',
-    component: AmeliproPatientLogin,
-    parameters: {
-        controls: {
-            exclude: [
-                'onClick:vital-card',
-                'onClick:vital-card-app',
-                'onSubmit:nir',
-            ],
-        },
-    },
-    argTypes: {
+	title: 'Composants/Amelipro/IDPA/AmeliproPatientLogin',
+	component: AmeliproPatientLogin,
+	parameters: {
+		controls: {
+			exclude: [
+				'onClick:vital-card',
+				'onClick:vital-card-app',
+				'onSubmit:nir',
+			],
+		},
+	},
+	argTypes: {
 		'autoCompleteCardItems': {
 			description: 'Liste des items pour le champ d\'autocomplétion',
 			table: {
@@ -94,9 +94,9 @@ export const Default: Story = {
 			formValue: {},
 		},
 		'uniqueId': 'test-id',
-        'onClick:vital-card': fn(),
-        'onClick:vital-card-app': fn(),
-        'onSubmit:nir': fn(),
+		'onClick:vital-card': fn(),
+		'onClick:vital-card-app': fn(),
+		'onSubmit:nir': fn(),
 	},
 	parameters: {
 		sourceCode: [
