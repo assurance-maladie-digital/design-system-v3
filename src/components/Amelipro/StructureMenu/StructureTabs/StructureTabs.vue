@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import type { IStructureTabs, StructureTab } from './types'
-	import { computed, nextTick, type PropType, ref } from 'vue'
+  import {computed, nextTick, type PropType, ref, watch} from 'vue'
 	import StructureBtn from '../StructureBtn/StructureBtn.vue'
 	import StructureList from '../StructureList/StructureList.vue'
 	import { locales } from './locales'
@@ -31,6 +31,10 @@
 			type: Array as PropType<StructureTab[]>,
 			default: () => [],
 		},
+    psUserName: {
+      type: String,
+      required: true,
+    },
 		uniqueId: {
 			type: String,
 			required: true,
@@ -60,7 +64,11 @@
 		},
 	})
 
-	const onClick = async (index: number): Promise<void> => {
+  const isFirstTabDisabled = computed(() => {
+    return props.tabs?.[0]?.structures?.length === 0
+  })
+
+  const onClick = async (index: number): Promise<void> => {
 		selected.value = index
 		await nextTick()
 	}
@@ -92,10 +100,21 @@
 			(structureBtns.value[selected.value].$el as HTMLElement).focus()
 		}
 	}
+
+  watch(
+      () => isFirstTabDisabled.value,
+      (isDisabled) => {
+        if (isDisabled && selected.value === 0) {
+          selected.value = 1
+        }
+      },
+      {immediate: true}
+  )
 </script>
 
 <template>
 	<div :id="`${uniqueId}-container`">
+    {{ psUserName }}
 		<div
 			v-if="tabs.length > 1"
 			:ariaLabelledby="`${uniqueId}-label`"
@@ -115,6 +134,7 @@
 					:key="index"
 					ref="structureBtns"
 					:aria-selected="selected === index ? 'true' : 'false'"
+          :disabled="index === 0 && isFirstTabDisabled"
 					class="mr-0 mr-sm-3 mb-2 mb-sm-1"
 					:controls="`structure-panel-${index}`"
 					role="tab"
