@@ -59,6 +59,25 @@ const items = [
 	},
 ]
 
+const longLabelItems = [
+    {
+        label: 'Mon onglet 1 avec un très très très long texte',
+        disabled: false,
+    },
+    {
+        label: 'Mon onglet 2 avec un très très très long texte',
+        disabled: false,
+    },
+    {
+        label: 'Mon onglet 3 avec un très très très long texte',
+        disabled: true,
+    },
+    {
+        label: 'Mon onglet 4 avec un très très très long texte',
+        disabled: false,
+    },
+]
+
 export const Default: Story = {
 	args: {
 		ariaLabel: 'Titre du group d\'onglets',
@@ -207,7 +226,7 @@ export const Pills: Story = {
 export const OnSameLine: Story = {
 	args: {
 		ariaLabel: 'Titre du group d\'onglets',
-		items,
+        items: longLabelItems,
 		onSameLine: true,
 		uniqueId: 'tabs',
 	},
@@ -236,19 +255,19 @@ export const OnSameLine: Story = {
 
 	const items = [
 		{
-			label: 'Mon onglet 1 avec un très long texte',
+			label: 'Mon onglet 1 avec un très très très long texte',
 			disabled: false,
 		},
 		{
-			label: 'Mon onglet 2 avec un très long texte',
+			label: 'Mon onglet 2 avec un très très très long texte',
 			disabled: false,
 		},
 		{
-			label: 'Mon onglet 3 avec un très long texte',
+			label: 'Mon onglet 3 avec un très long très très texte',
 			disabled: true,
 		},
 		{
-			label: 'Mon onglet 4 avec un très long texte',
+			label: 'Mon onglet 4 avec un très très très long texte',
 			disabled: false,
 		},
 	]
