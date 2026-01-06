@@ -82,12 +82,12 @@
 
 				<span
 					:id="`${uniqueId}-structure-infos`"
-          class="structure w-100 d-flex flex-column flex-md-row justify-md-space-between align-md-center"
+					class="structure w-100 d-flex flex-column flex-md-row justify-md-space-between align-md-center"
 				>
-          <span class="user-infos d-flex flex-column">
-            <span class="name">{{ item.userName }}</span>
-            <span class="address">{{ item.address }}</span>
-          </span>
+					<span class="user-infos d-flex flex-column">
+						<span class="name">{{ item.userName }}</span>
+						<span class="address">{{ item.address }}</span>
+					</span>
 
 					<span>
 						<span
@@ -131,11 +131,11 @@ input {
 }
 
 .structure {
-  font-size: apTokens.$font-size-xs;
-  color: apTokens.$ap-grey-darken1;
+	font-size: apTokens.$font-size-xs;
+	color: apTokens.$ap-grey-darken1;
 
-  .name {
-    font-weight: 600;
-  }
+	.name {
+		font-weight: 600;
+	}
 }
 </style>

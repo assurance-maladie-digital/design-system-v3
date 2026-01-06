@@ -60,67 +60,67 @@ type Story = StoryObj<typeof StructureMenu>
 const structuresTabs = [
 	{
 		structures: [
-            {
-                address: '70 rue de Lyon',
-                idNumber: 'XXXXXXXXXX',
-                value: 'titu',
-            },
-            {
-                address: '34 avenue de Bordeaux',
-                idNumber: 'XXXXXXXXXX',
-                value: 'titi',
-            },
-            {
-                address: '47 boulevard du Mans',
-                idNumber: 'XXXXXXXXXX',
-                value: 'a',
-            },
-            {
-                address: '84 bis rue de Toulouse',
-                idNumber: 'XXXXXXXXXX',
-                value: 'b',
-            },
-            {
-                address: '103 rue de Paris',
-                idNumber: 'XXXXXXXXXX',
-                value: 'c',
-            },
-            {
-                address: '21 rue de Nantes',
-                idNumber: 'XXXXXXXXXX',
-                value: 'd',
-            },
+			{
+				address: '70 rue de Lyon',
+				idNumber: 'XXXXXXXXXX',
+				value: 'titu',
+			},
+			{
+				address: '34 avenue de Bordeaux',
+				idNumber: 'XXXXXXXXXX',
+				value: 'titi',
+			},
+			{
+				address: '47 boulevard du Mans',
+				idNumber: 'XXXXXXXXXX',
+				value: 'a',
+			},
+			{
+				address: '84 bis rue de Toulouse',
+				idNumber: 'XXXXXXXXXX',
+				value: 'b',
+			},
+			{
+				address: '103 rue de Paris',
+				idNumber: 'XXXXXXXXXX',
+				value: 'c',
+			},
+			{
+				address: '21 rue de Nantes',
+				idNumber: 'XXXXXXXXXX',
+				value: 'd',
+			},
 		],
 		label: 'Mes structures',
 	},
 	{
 		structures: [
 			{
-                userName: 'Jean Martin',
+				userName: 'Jean Martin',
 				address: '39 rue de Rennes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'e',
 			},
 			{
-                userName: 'Jean Martin',
+				userName: 'Jean Martin',
 				address: '40 rue de Vannes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'f',
 			},
 			{
-                userName: 'Jean Martin',
+				userName: 'Jean Martin',
 				address: '50 Avenue de Marseille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'g',
 			},
 			{
-                userName: 'Jean Martin',
+				userName: 'Jean Martin',
 				address: '62 Boulevard de Lille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'h',
 			},
 		],
-        label: 'Mes déléguations',
+		label: 'Mes déléguations',
 	},
 ]
 
