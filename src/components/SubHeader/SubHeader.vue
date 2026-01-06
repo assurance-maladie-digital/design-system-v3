@@ -71,29 +71,30 @@
 				v-if="!hideBackBtn"
 				mode="out-in"
 			>
-				<VSkeletonLoader
-					v-if="loading"
-					max-height="28"
-					type="button"
-					color="primary"
-					class="vd-subheader-loading mb-4"
-				/>
-				<VBtn
-					v-else
-					v-bind="options.backBtn"
-					class="vd-sub-header-back-btn mb-1"
-					:aria-label="effectiveBackBtnAccessibleName"
-					@click="$emit('back')"
-				>
-					<slot name="back-btn-icon">
-						<SyIcon
-							class="mr-2"
-							:icon="backArrowIcon"
-							:decorative="true"
-						/>
-					</slot>
-					{{ backBtnText }}
-				</VBtn>
+				<VThemeProvider theme="dark">
+					<VSkeletonLoader
+						v-if="loading"
+						type="button"
+						class="vd-subheader-loading mb-4"
+					/>
+
+					<VBtn
+						v-else
+						v-bind="options.backBtn"
+						class="vd-sub-header-back-btn mb-1"
+						:aria-label="effectiveBackBtnAccessibleName"
+						@click="$emit('back')"
+					>
+						<slot name="back-btn-icon">
+							<SyIcon
+								class="mr-2"
+								:icon="backArrowIcon"
+								:decorative="true"
+							/>
+						</slot>
+						{{ backBtnText }}
+					</VBtn>
+				</VThemeProvider>
 			</VFadeTransition>
 		</slot>
 
@@ -105,48 +106,48 @@
 				class="vd-sub-header-informations d-flex flex-column mr-10"
 				:class="{ 'flex-shrink-0': renderFixedHeight }"
 			>
-				<slot name="title">
-					<VFadeTransition mode="out-in">
-						<HeaderLoading
-							v-if="loading"
-							width="300"
-							height="2rem"
-							color="primary"
-						/>
-						<h2
-							v-else-if="titleText"
-							class="text-h5 font-weight-bold"
-							:aria-label="titleAccessibleName"
-						>
-							{{ titleText }}
-						</h2>
-					</VFadeTransition>
-				</slot>
+				<VThemeProvider theme="dark">
+					<slot name="title">
+						<VFadeTransition mode="out-in">
+							<HeaderLoading
+								v-if="loading"
+								width="300"
+								height="2rem"
+							/>
+							<h2
+								v-else-if="titleText"
+								class="text-h5 font-weight-bold"
+								:aria-label="titleAccessibleName"
+							>
+								{{ titleText }}
+							</h2>
+						</VFadeTransition>
+					</slot>
 
-				<slot name="sub-title">
-					<VFadeTransition
-						v-if="subTitleText"
-						mode="out-in"
-					>
-						<HeaderLoading
-							v-if="loading"
-							class="mt-1"
-							width="250"
-							height="2rem"
-							color="primary"
-						/>
-						<p
-							v-else
-							class="text-h6 font-weight-bold mt-1 mb-0"
-							:style="{ color: 'rgba(255, 255, 255, .7)' }"
-							:aria-label="subTitleAccessibleName"
+					<slot name="sub-title">
+						<VFadeTransition
+							v-if="subTitleText"
+							mode="out-in"
 						>
-							{{ subTitleText }}
-						</p>
-					</VFadeTransition>
-				</slot>
+							<HeaderLoading
+								v-if="loading"
+								class="mt-1"
+								width="250"
+								height="2rem"
+							/>
+							<p
+								v-else
+								class="text-h6 font-weight-bold mt-1 mb-0"
+								:style="{ color: 'rgba(255, 255, 255, .7)' }"
+								:aria-label="subTitleAccessibleName"
+							>
+								{{ subTitleText }}
+							</p>
+						</VFadeTransition>
+					</slot>
 
-				<slot name="additional-informations" />
+					<slot name="additional-informations" />
+				</VThemeProvider>
 			</div>
 
 			<slot name="right-content">
@@ -224,4 +225,5 @@
 		background-color: #e6e6e6 !important;
 	}
 }
+
 </style>
