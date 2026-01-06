@@ -105,6 +105,7 @@
 		padding: 16px 50px 16px 20px;
 		text-align: left;
 		color: rgb(var(--v-theme-primary));
+		line-height: 1.25;
 
 		&:hover {
 			background-color: rgb(var(--v-theme-primary));

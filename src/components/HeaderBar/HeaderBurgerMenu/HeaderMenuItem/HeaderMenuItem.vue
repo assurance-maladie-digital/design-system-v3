@@ -30,6 +30,7 @@
 		padding: 0;
 		min-height: 44px; // accessibility requirement
 		font-weight: 700;
+		line-height: 1.25;
 
 		> :deep(a) {
 			display: flex;
