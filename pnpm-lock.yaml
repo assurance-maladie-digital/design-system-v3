@@ -9,6 +9,7 @@ overrides:
   undici: 7.15.0
   glob: '>=10.5.0'
   js-yaml: '>=4.1.1'
+  parse5: 7.1.2
 
 patchedDependencies:
   undici@7.15.0:
@@ -1878,7 +1879,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.25(typescript@5.4.2)
-      vue-component-type-helpers: 3.1.8
+      vue-component-type-helpers: 3.2.2
     dev: true
 
   /@stylistic/eslint-plugin-ts@2.13.0(eslint@9.39.1)(typescript@5.4.2):
@@ -2962,7 +2963,7 @@ packages:
       domutils: 3.2.2
       encoding-sniffer: 0.2.1
       htmlparser2: 10.0.0
-      parse5: 7.3.0
+      parse5: 7.1.2
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
       undici: 7.15.0(patch_hash=lbjqnmsiluc2yw26h75qnkpplq)
@@ -2997,7 +2998,7 @@ packages:
       chalk: 4.1.2
       highlight.js: 10.7.3
       mz: 2.7.0
-      parse5: 5.1.1
+      parse5: 7.1.2
       parse5-htmlparser2-tree-adapter: 6.0.1
       yargs: 16.2.0
     dev: true
@@ -4649,7 +4650,7 @@ packages:
       http-proxy-agent: 7.0.2
       https-proxy-agent: 7.0.6
       is-potential-custom-element-name: 1.0.1
-      parse5: 8.0.0
+      parse5: 7.1.2
       saxes: 6.0.0
       symbol-tree: 3.2.4
       tough-cookie: 6.0.0
@@ -5363,40 +5364,26 @@ packages:
   /parse5-htmlparser2-tree-adapter@6.0.1:
     resolution: {integrity: sha512-qPuWvbLgvDGilKc5BoicRovlT4MtYT6JfJyBOMDsKoiT+GiuP5qyrPCnR9HcPECIJJmZh5jRndyNThnhhb/vlA==}
     dependencies:
-      parse5: 6.0.1
+      parse5: 7.1.2
     dev: true
 
   /parse5-htmlparser2-tree-adapter@7.1.0:
     resolution: {integrity: sha512-ruw5xyKs6lrpo9x9rCZqZZnIUntICjQAd0Wsmp396Ul9lN/h+ifgVV1x1gZHi8euej6wTfpqX8j+BFQxF0NS/g==}
     dependencies:
       domhandler: 5.0.3
-      parse5: 7.3.0
+      parse5: 7.1.2
     dev: true
 
   /parse5-parser-stream@7.1.2:
     resolution: {integrity: sha512-JyeQc9iwFLn5TbvvqACIF/VXG6abODeB3Fwmv/TGdLk2LfbWkaySGY72at4+Ty7EkPZj854u4CrICqNk2qIbow==}
     dependencies:
-      parse5: 7.3.0
+      parse5: 7.1.2
     dev: true
 
-  /parse5@5.1.1:
-    resolution: {integrity: sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==}
-    dev: true
-
-  /parse5@6.0.1:
-    resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
-    dev: true
-
-  /parse5@7.3.0:
-    resolution: {integrity: sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==}
+  /parse5@7.1.2:
+    resolution: {integrity: sha512-Czj1WaSVpaoj0wbhMzLmWD69anp2WH7FXMB9n1Sy8/ZFF9jolSQVMu1Ij5WIyGmcBmhk7EOndpO4mIpihVqAXw==}
     dependencies:
-      entities: 6.0.1
-    dev: true
-
-  /parse5@8.0.0:
-    resolution: {integrity: sha512-9m4m5GSgXjL4AjumKzq1Fgfp3Z8rsvjRNbnkVwfu2ImRqE5D0LnY2QfDen18FSY9C573YU5XxSapdHZTZ2WolA==}
-    dependencies:
-      entities: 6.0.1
+      entities: 4.5.0
     dev: true
 
   /path-browserify@1.0.1:
@@ -7232,8 +7219,8 @@ packages:
     resolution: {integrity: sha512-YbGqHZ5/eW4SnkPNR44mKVc6ZKQoRs/Rux1sxC6rdwXb4qpbOSYfDr9DsTHolOTGmIKgM9j141mZbBeg05R1pw==}
     dev: true
 
-  /vue-component-type-helpers@3.1.8:
-    resolution: {integrity: sha512-oaowlmEM6BaYY+8o+9D9cuzxpWQWHqHTMKakMxXu0E+UCIOMTljyIPO15jcnaCwJtZu/zWDotK7mOIHvWD9mcw==}
+  /vue-component-type-helpers@3.2.2:
+    resolution: {integrity: sha512-x8C2nx5XlUNM0WirgfTkHjJGO/ABBxlANZDtHw2HclHtQnn+RFPTnbjMJn8jHZW4TlUam0asHcA14lf1C6Jb+A==}
     dev: true
 
   /vue-docgen-api@4.79.2(vue@3.5.25):
