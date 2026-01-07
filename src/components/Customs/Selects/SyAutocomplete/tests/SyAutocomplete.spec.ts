@@ -104,7 +104,7 @@ describe('SyAutocomplete.vue', () => {
 
 	describe('WithApiCall', () => {
 		it('shows and hides the loading row while fetchItems is pending', async () => {
-			let resolveFetch!: (items: Array<{ text: string; value: string }>) => void
+			let resolveFetch!: (items: Array<{ text: string, value: string }>) => void
 			const fetchItems = vi.fn().mockImplementation(
 				() => new Promise((resolve) => {
 					resolveFetch = resolve
