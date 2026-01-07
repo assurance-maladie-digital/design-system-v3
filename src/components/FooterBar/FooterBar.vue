@@ -311,6 +311,8 @@ a {
 
 // Use deep selector to style user content as well
 .vd-footer-bar.v-theme--dark :deep() {
+	background-color: tokens.$parma-darken-60 !important;
+
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
 		color: $white;
@@ -330,7 +332,7 @@ a {
 	}
 
 	.v-divider {
-		border-color: rgba($white, 1);
+		border-color: rgba(tokens.$colors-border-subdued, 1);
 	}
 
 	svg {
