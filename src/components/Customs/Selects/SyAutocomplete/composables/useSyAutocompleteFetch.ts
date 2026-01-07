@@ -14,10 +14,17 @@ type UseSyAutocompleteFetchOptions = {
 }
 
 export function useSyAutocompleteFetch(options: UseSyAutocompleteFetchOptions) {
+	// Liste réellement affichée dans le menu.
+	// - Si fetchItems est défini: alimentée par le résultat API.
+	// - Sinon: filtrage local sur options.items.
 	const internalItems = ref<ItemType[]>([...options.items.value])
+	// État de chargement (sert aussi à afficher "Chargement..." dans la liste)
 	const isLoading = ref(false)
+	// Cache simple par requête (query -> items). Activé uniquement si options.cache.
 	const cacheMap = ref(new Map<string, ItemType[]>())
+	// Incrémenté à chaque requête. Permet le comportement "last request wins".
 	const requestId = ref(0)
+	// Timer de debounce (setTimeout) pour ne pas appeler fetchItems à chaque frappe.
 	const debounceTimer = ref<number | null>(null)
 
 	const syncItemsFromProps = (newItems: ItemType[]) => {
@@ -30,22 +37,26 @@ export function useSyAutocompleteFetch(options: UseSyAutocompleteFetchOptions) {
 	}
 
 	const resetFetchState = () => {
+		// Annule le debounce en cours + invalide les requêtes précédentes.
 		if (debounceTimer.value != null) {
 			window.clearTimeout(debounceTimer.value)
 			debounceTimer.value = null
 		}
 		requestId.value += 1
 		setLoading(false)
+		// On revient aux items passés en props (cas: suppression de la recherche, etc.).
 		internalItems.value = [...options.items.value]
 	}
 
 	const performFetch = async (query: string) => {
 		const trimmed = query.trim()
+		// Si la recherche est trop courte, on ne fetch pas et on affiche les items de base.
 		if (trimmed.length < options.minChars.value) {
 			internalItems.value = [...options.items.value]
 			return
 		}
 
+		// Sans fetchItems: filtrage local (comportement historique conservé).
 		if (!options.fetchItems) {
 			const normalizedQuery = trimmed.toLowerCase()
 			internalItems.value = (options.items.value ?? []).filter((item) => {
@@ -57,11 +68,13 @@ export function useSyAutocompleteFetch(options: UseSyAutocompleteFetchOptions) {
 			return
 		}
 
+		// Cache (optionnel)
 		if (options.cache.value && cacheMap.value.has(trimmed)) {
 			internalItems.value = cacheMap.value.get(trimmed) ?? []
 			return
 		}
 
+		// Marqueur de requête: seule la dernière réponse doit mettre à jour internalItems.
 		const currentRequest = ++requestId.value
 		setLoading(true)
 		try {

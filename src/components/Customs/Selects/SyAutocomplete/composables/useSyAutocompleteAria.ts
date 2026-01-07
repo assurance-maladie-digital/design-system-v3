@@ -21,6 +21,8 @@ type AriaManager = {
 export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 	const ariaManager: AriaManager = {
 		cleanInputAttributes(inputElement: HTMLElement): void {
+			// On "nettoie" les attributs ARIA/role posés par Vuetify pour appliquer
+			// un pattern combobox/listbox cohérent (RGAA / WAI-ARIA) sans conflits.
 			if (!inputElement) return
 			inputElement.removeAttribute('role')
 			inputElement.removeAttribute('aria-expanded')
@@ -33,6 +35,9 @@ export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 		},
 		updateInputState(inputElement: HTMLElement, isOpenValue: boolean, menuId: string, activeDescendant: string): void {
 			if (!inputElement) return
+			// Pattern combobox:
+			// - le focus DOM reste sur l'input
+			// - l'option "active" est indiquée via aria-activedescendant
 			inputElement.setAttribute('role', 'combobox')
 			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
 			inputElement.setAttribute('aria-haspopup', 'listbox')
@@ -51,6 +56,7 @@ export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 		},
 		updateValidationAttributes(inputElement: HTMLElement, isRequiredValue: boolean, hasErrorValue: boolean): void {
 			if (!inputElement) return
+			// Synchronisation des états de validation (required / invalid) sur l'input.
 			if (isRequiredValue) {
 				inputElement.setAttribute('aria-required', 'true')
 			}
@@ -66,6 +72,8 @@ export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 		},
 		cleanParentAttributes(parentElement: HTMLElement): void {
 			if (!parentElement) return
+			// Évite les attributs ARIA posés sur le wrapper Vuetify qui peuvent produire
+			// des valeurs invalides ou redondantes.
 			parentElement.removeAttribute('role')
 			parentElement.removeAttribute('aria-expanded')
 			parentElement.removeAttribute('aria-controls')
@@ -77,6 +85,8 @@ export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 		},
 		cleanAlertAttributes(parentElement: HTMLElement): void {
 			if (!parentElement) return
+			// Vuetify peut poser role="alert"/aria-live sur les messages.
+			// On les retire pour éviter un comportement trop "verbeux" pour les lecteurs d'écran.
 			const messagesElements = parentElement.querySelectorAll('[role="alert"]')
 			messagesElements.forEach((element: Element) => {
 				element.removeAttribute('role')
@@ -86,6 +96,7 @@ export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 	}
 
 	const setupAriaAttributes = () => {
+		// Fonction "snapshot" qui applique tous les attributs ARIA en fonction de l'état courant.
 		if (!options.textInput.value || !options.textInput.value.$el) return
 		const inputElement = options.textInput.value.$el.querySelector('input') as HTMLElement
 		const parentElement = options.textInput.value.$el as HTMLElement
@@ -102,6 +113,7 @@ export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 
 	onMounted(() => {
 		nextTick(() => {
+			// Plusieurs ticks: Vuetify peut re-rendre/patcher l'input après montage.
 			setupAriaAttributes()
 			setTimeout(setupAriaAttributes, 100)
 			setTimeout(setupAriaAttributes, 300)

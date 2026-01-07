@@ -162,9 +162,13 @@
 		: props.menuId)
 	const optionIdPrefix = computed(() => `${uniqueMenuId.value}-`)
 
+	// Valeur sélectionnée (single) ou tableau (multiple). Elle sert de source de vérité interne.
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
+	// Valeur tapée dans l'input (v-model:search). Peut être différente de selectedItem.
 	const searchValue = ref(props.search)
 
+	// Normalisation: props.errorMessages peut être string | string[].
+	// On uniformise en tableau pour simplifier les composables de validation.
 	const normalizedErrorMessages = computed<readonly string[]>(() => {
 		if (typeof props.errorMessages === 'string') {
 			return props.errorMessages ? [props.errorMessages] : []
@@ -186,6 +190,7 @@
 		resetFetchState,
 		syncItemsFromProps,
 	} = useSyAutocompleteFetch({
+		// Centralise: filtrage local ou appel API + debounce + cache + "last request wins".
 		items: computed(() => props.items),
 		fetchItems: props.fetchItems,
 		minChars: computed(() => props.minChars),
@@ -206,6 +211,7 @@
 		markTouched,
 		validateOnSubmit,
 	} = useSyAutocompleteValidation({
+		// Centralise: notion de "touched" + affichage des erreurs + règle required.
 		required: computed(() => props.required),
 		errorMessages: normalizedErrorMessages,
 		readonly: computed(() => props.readonly),
@@ -344,7 +350,7 @@
 		isInputFocused.value = false
 		markTouched()
 		if (props.multiple && !props.chips) {
-			// When leaving the field, show the selected values instead of any transient search.
+			// À la sortie du champ, on affiche les valeurs sélectionnées plutôt qu'une recherche transitoire.
 			searchValue.value = ''
 		}
 	}
@@ -459,8 +465,9 @@
 			}
 
 			emit('update:modelValue', [...selectedArray])
-			// After a selection in multiple mode, reset the search so the field can
-			// display the selected values (non-chips) or stay ready for the next query (chips).
+			// Après une sélection en mode multiple, on réinitialise la recherche pour :
+			// - afficher les valeurs sélectionnées (mode sans chips)
+			// - rester prêt pour la prochaine requête (mode chips)
 			searchValue.value = ''
 			emit('update:search', '')
 			isOpen.value = true
@@ -490,7 +497,8 @@
 		})
 	})
 
-	// Utilisation du composable pour la gestion clavier
+	// Gestion clavier (navigation liste / sélection / escape / home/end/page up/down).
+	// Important: garde le focus DOM sur l'input (pattern combobox) et utilise aria-activedescendant.
 	const {
 		activeDescendantId,
 		setActiveDescendant,
@@ -517,6 +525,7 @@
 		initialFocusIndex: 0,
 	})
 
+	// Gestion ARIA (attributs combobox/listbox) + mise à jour des états (open/activeDescendant/error/required).
 	useSyAutocompleteAria({
 		textInput,
 		isOpen,
@@ -559,8 +568,8 @@
 		const trimmed = newValue.trim()
 		pendingFocusIndex.value = null
 
-		// If user manually cleared the input text in single-select mode, also clear the selection.
-		// Otherwise the component keeps a selected value and required validation won't trigger.
+		// Si l'utilisateur efface manuellement le texte en mode single, on efface aussi la sélection.
+		// Sinon, le composant conserve une valeur sélectionnée et la validation required ne se déclenche pas.
 		if (!props.multiple && trimmed.length === 0 && selectedItem.value != null) {
 			selectedItem.value = null
 			emit('update:modelValue', null)
@@ -574,7 +583,7 @@
 			}
 			else {
 				scheduleFetch(newValue)
-				// Reset active option to the first item when results are refreshed by typing
+				// Quand les résultats sont rafraîchis par la saisie, on réinitialise l'option active au début.
 				clearActiveDescendant()
 			}
 		}
@@ -654,7 +663,7 @@
 			const element = listElement.querySelector(`#${CSS.escape(activeDescendantId.value)}`)
 			if (!element) return
 
-			// Keep DOM focus on the input (combobox pattern). Only scroll the active option into view.
+			// On garde le focus DOM sur l'input (pattern combobox). On scroll uniquement l'option active.
 			;(element as HTMLElement).scrollIntoView({ block: 'nearest' })
 		})
 	}
@@ -692,8 +701,8 @@
 			return
 		}
 		if (isOpeningWithArrow.value) return
-		// Vuetify-like behavior: after typing/filtering we may clear the active option.
-		// The next ArrowDown should activate the first (filtered) option.
+		// Comportement type Vuetify : après saisie/filtrage, l'option active peut être vidée.
+		// Le prochain ArrowDown doit alors activer la première option (filtrée).
 		if (!activeDescendantId.value) {
 			if (formattedItems.value.length > 0) {
 				setActiveDescendant(0)
@@ -798,7 +807,8 @@
 			return
 		}
 
-		// Only intercept other navigation keys when the menu is open so typing/cursor navigation remains normal while closed.
+		// On n'intercepte les autres touches de navigation que si le menu est ouvert,
+		// pour garder une saisie/navigation curseur normale quand il est fermé.
 		if (!isOpen.value) return
 
 		switch (event.key) {
@@ -932,7 +942,7 @@
 		}
 		if (newValue) {
 			nextTick(() => {
-				// Ensure we always have an active option when opening (SySelect-like behavior)
+				// On s'assure d'avoir une option active à l'ouverture (comportement type SySelect)
 				if (!openedByTyping.value && !activeDescendantId.value) {
 					setActiveDescendant(0)
 				}
@@ -949,7 +959,7 @@
 			}
 		})
 
-		// If the menu was opened via ArrowDown/ArrowUp, keep the first option active during a short window.
+		// Si le menu a été ouvert via ArrowDown/ArrowUp, on force temporairement la première option active.
 		if (forceFirstOption.value && isOpen.value) {
 			const expectedId = `${optionIdPrefix.value}option-0`
 			if (newValue && newValue !== expectedId) {
@@ -974,7 +984,7 @@
 	}
 
 	watchEffect(() => {
-		// When the activator VTextField instance changes, reattach the listener.
+		// Quand l'instance VTextField (activateur) change, on rattache les listeners.
 		void textInput.value
 		nextTick(() => {
 			attachNativeKeydownListener()
