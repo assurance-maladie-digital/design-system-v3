@@ -13,13 +13,12 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
 	import { VListItem, VListItemTitle, VMenu } from 'vuetify/components'
+	import type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
+	import { useSyAutocompleteFetch } from './composables/useSyAutocompleteFetch'
+	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
+	import { useSyAutocompleteAria } from './composables/useSyAutocompleteAria'
 
-	export type ItemType = {
-		[key: string]: unknown
-	}
-
-	export type SelectItemValueType = Record<string, unknown> | string | number | null | undefined
-	export type SelectItemArrayType = Array<Record<string, unknown> | string | number>
+	export type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
 
 	const props = defineProps({
 		modelValue: {
@@ -165,14 +164,55 @@
 
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const searchValue = ref(props.search)
-	const hasError = ref(false)
-	const isTouched = ref(false)
 
-	const isLoading = ref(false)
-	const internalItems = ref<ItemType[]>([...props.items])
-	const cacheMap = ref(new Map<string, ItemType[]>())
-	const requestId = ref(0)
-	const debounceTimer = ref<number | null>(null)
+	const normalizedErrorMessages = computed<readonly string[]>(() => {
+		if (typeof props.errorMessages === 'string') {
+			return props.errorMessages ? [props.errorMessages] : []
+		}
+		return props.errorMessages ?? []
+	})
+
+	const emitLoading = (value: boolean) => {
+		emit('loading', value)
+	}
+	const emitError = (error: unknown) => {
+		emit('error', error)
+	}
+
+	const {
+		internalItems,
+		isLoading,
+		scheduleFetch,
+		resetFetchState,
+		syncItemsFromProps,
+	} = useSyAutocompleteFetch({
+		items: computed(() => props.items),
+		fetchItems: props.fetchItems,
+		minChars: computed(() => props.minChars),
+		debounceMs: computed(() => props.debounceMs),
+		cache: computed(() => props.cache),
+		getItemText: (item: unknown) => (item as Record<string, unknown>)[props.textKey] as string,
+		emitLoading,
+		emitError,
+	})
+
+	const {
+		hasError,
+		isTouched,
+		isRequired,
+		computedHasError,
+		textFieldErrorMessages,
+		requiredRules,
+		markTouched,
+		validateOnSubmit,
+	} = useSyAutocompleteValidation({
+		required: computed(() => props.required),
+		errorMessages: normalizedErrorMessages,
+		readonly: computed(() => props.readonly),
+		disableErrorHandling: computed(() => props.disableErrorHandling),
+		multiple: computed(() => props.multiple),
+		selectedItem,
+	})
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
@@ -250,7 +290,7 @@
 
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return props.errorMessages.length > 0 || hasError.value
+		return normalizedErrorMessages.value.length > 0 || hasError.value
 	})
 
 	const showHelpTextAsMessage = computed(() => {
@@ -302,8 +342,7 @@
 
 	const handleInputBlur = () => {
 		isInputFocused.value = false
-		isTouched.value = true
-		hasError.value = computedHasError.value
+		markTouched()
 		if (props.multiple && !props.chips) {
 			// When leaving the field, show the selected values instead of any transient search.
 			searchValue.value = ''
@@ -330,75 +369,6 @@
 			selectedItem.value = [...selectedArray]
 			emit('update:modelValue', [...selectedArray])
 		}
-	}
-
-	const emitLoading = (value: boolean) => {
-		isLoading.value = value
-		emit('loading', value)
-	}
-
-	const performFetch = async (query: string) => {
-		const trimmed = query.trim()
-		if (trimmed.length < props.minChars) {
-			internalItems.value = [...props.items]
-			return
-		}
-
-		if (!props.fetchItems) {
-			const normalizedQuery = trimmed.toLowerCase()
-			internalItems.value = (props.items ?? []).filter((item) => {
-				const itemTextValue = getItemText(item)
-				const itemText = itemTextValue != null ? String(itemTextValue).toLowerCase() : ''
-				if (!itemText) return false
-				if (itemText.startsWith(normalizedQuery)) return true
-				// Also match if any word starts with the query
-				return itemText
-					.split(/\s+/)
-					.some(word => word.startsWith(normalizedQuery))
-			})
-			return
-		}
-
-		if (props.cache && cacheMap.value.has(trimmed)) {
-			internalItems.value = cacheMap.value.get(trimmed) ?? []
-			return
-		}
-
-		const currentRequest = ++requestId.value
-		emitLoading(true)
-		try {
-			const result = await props.fetchItems(trimmed)
-			if (currentRequest !== requestId.value) return
-			internalItems.value = result
-			if (props.cache) {
-				cacheMap.value.set(trimmed, result)
-			}
-		}
-		catch (error) {
-			if (currentRequest !== requestId.value) return
-			internalItems.value = []
-			emit('error', error)
-		}
-		finally {
-			if (currentRequest === requestId.value) {
-				emitLoading(false)
-			}
-		}
-	}
-
-	const scheduleFetch = (query: string) => {
-		if (props.debounceMs <= 0) {
-			performFetch(query)
-			return
-		}
-
-		if (debounceTimer.value != null) {
-			window.clearTimeout(debounceTimer.value)
-		}
-
-		debounceTimer.value = window.setTimeout(() => {
-			performFetch(query)
-		}, props.debounceMs)
 	}
 
 	const openMenu = (skipInitialFocus = false) => {
@@ -439,7 +409,7 @@
 	const clearSelection = (event?: Event) => {
 		event?.preventDefault()
 		event?.stopPropagation()
-		isTouched.value = true
+		markTouched()
 		selectedItem.value = props.multiple ? [] : null
 		emit('update:modelValue', props.multiple ? [] : null)
 		if (!props.multiple) {
@@ -451,16 +421,7 @@
 			if (!isOpen.value) {
 				isOpen.value = true
 			}
-			nextTick(() => {
-				const inputElement = textInput.value?.$el.querySelector('input')
-				if (inputElement) {
-					(inputElement as HTMLInputElement).focus()
-				}
-				restoreFocus()
-			})
-		}
-		else {
-			isOpen.value = false
+			ensureNativeInputFocus()
 		}
 	}
 
@@ -485,7 +446,7 @@
 
 			const index = selectedArray.findIndex((selected) => {
 				if (props.returnObject) {
-					return (selected as Record<string, unknown>)[props.valueKey] === valueToCheck
+					return (selected as Record<string, unknown>)?.[props.valueKey] === valueToCheck
 				}
 				return selected === valueToCheck
 			})
@@ -529,6 +490,43 @@
 		})
 	})
 
+	// Utilisation du composable pour la gestion clavier
+	const {
+		activeDescendantId,
+		setActiveDescendant,
+		clearActiveDescendant,
+		handleEnterKey,
+		handleSpaceKey,
+		handleDownKey,
+		handleUpKey,
+		handleEscapeKey,
+		handleHomeKey,
+		handleEndKey,
+		handlePageUpKey,
+		handlePageDownKey,
+		handleTabKey,
+	} = useSySelectKeyboard({
+		isOpen,
+		formattedItems,
+		toggleMenu,
+		selectItem,
+		getItemText,
+		optionIdPrefix,
+		focusOptions: false,
+		restoreOnOpen: false,
+		initialFocusIndex: 0,
+	})
+
+	useSyAutocompleteAria({
+		textInput,
+		isOpen,
+		uniqueMenuId,
+		activeDescendantId,
+		isRequired,
+		hasError,
+		selectedItem,
+	})
+
 	const isNoDataVisible = computed(() => {
 		return !isLoading.value
 			&& searchValue.value.trim().length >= props.minChars
@@ -566,8 +564,7 @@
 		if (!props.multiple && trimmed.length === 0 && selectedItem.value != null) {
 			selectedItem.value = null
 			emit('update:modelValue', null)
-			isTouched.value = true
-			hasError.value = computedHasError.value
+			markTouched()
 		}
 		if (trimmed.length >= props.minChars) {
 			if (!isOpen.value) {
@@ -582,56 +579,12 @@
 			}
 		}
 		else {
-			// Reset results when query is too short (or cleared)
-			if (debounceTimer.value != null) {
-				window.clearTimeout(debounceTimer.value)
-				debounceTimer.value = null
-			}
-			// Invalidate any in-flight request
-			requestId.value++
-			emitLoading(false)
-			internalItems.value = [...props.items]
+			resetFetchState()
 		}
 	})
 
 	watch(() => props.items, (newItems) => {
-		internalItems.value = [...newItems]
-	})
-
-	const isRequired = computed(() => {
-		if (props.disableErrorHandling) return false
-		if (props.readonly) return
-		if (props.multiple) {
-			return (props.required || props.errorMessages.length > 0)
-				&& (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0))
-		}
-		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
-	})
-
-	const requiredErrorMessage = computed(() => {
-		return 'Le champ est requis.'
-	})
-
-	const computedHasError = computed(() => {
-		if (props.disableErrorHandling || props.readonly) return false
-		if (props.errorMessages.length > 0) return true
-		return Boolean(isTouched.value && isRequired.value)
-	})
-
-	const computedErrorMessages = computed(() => {
-		if (props.disableErrorHandling) return []
-		if (props.errorMessages.length > 0) return props.errorMessages
-		return computedHasError.value ? [requiredErrorMessage.value] : []
-	})
-
-	const textFieldErrorMessages = computed(() => {
-		return computedErrorMessages.value.length > 0 ? computedErrorMessages.value : undefined
-	})
-
-	const requiredRules = computed(() => {
-		if (props.disableErrorHandling || props.readonly) return []
-		if (!(props.required || props.errorMessages.length > 0)) return []
-		return [() => (!isRequired.value || requiredErrorMessage.value)]
+		syncItemsFromProps(newItems)
 	})
 
 	watch([selectedItem, isRequired, isTouched], () => {
@@ -654,120 +607,16 @@
 		hasError.value = newHasError
 	})
 
-	watch(() => props.errorMessages, (newValue) => {
-		if (!props.disableErrorHandling) {
-			hasError.value = newValue.length > 0
-		}
-	})
-
-	const validateOnSubmit = (): boolean => {
-		if (props.readonly || props.disableErrorHandling) {
-			return true
-		}
-
-		isTouched.value = true
-
-		const isValid = !isRequired.value
-		hasError.value = !isValid || props.errorMessages.length > 0
-		return isValid
-	}
-
 	useValidatable(validateOnSubmit)
 
 	onMounted(() => {
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
-	})
-
-	const ariaManager = {
-		cleanInputAttributes(inputElement: HTMLElement): void {
-			if (!inputElement) return
-			inputElement.removeAttribute('aria-describedby')
-			inputElement.removeAttribute('size')
-			inputElement.removeAttribute('tabindex')
-			inputElement.removeAttribute('aria-hidden')
-		},
-		updateInputState(inputElement: HTMLElement, isOpenValue: boolean, menuId: string, activeDescendant?: string): void {
-			if (!inputElement) return
-			inputElement.setAttribute('role', 'combobox')
-			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
-			inputElement.setAttribute('aria-haspopup', 'listbox')
-			if (isOpenValue) {
-				inputElement.setAttribute('aria-controls', menuId)
-			}
-			else {
-				inputElement.removeAttribute('aria-controls')
-			}
-			if (isOpenValue && activeDescendant) {
-				inputElement.setAttribute('aria-activedescendant', activeDescendant)
-			}
-			else {
-				inputElement.removeAttribute('aria-activedescendant')
-			}
-		},
-		updateValidationAttributes(inputElement: HTMLElement, isRequiredValue: boolean, hasErrorValue: boolean): void {
-			if (!inputElement) return
-			if (isRequiredValue) {
-				inputElement.setAttribute('aria-required', 'true')
-			}
-			else {
-				inputElement.removeAttribute('aria-required')
-			}
-			if (hasErrorValue) {
-				inputElement.setAttribute('aria-invalid', 'true')
-			}
-			else {
-				inputElement.removeAttribute('aria-invalid')
-			}
-		},
-		cleanParentAttributes(parentElement: HTMLElement): void {
-			if (!parentElement) return
-			parentElement.removeAttribute('role')
-			parentElement.removeAttribute('aria-expanded')
-			parentElement.removeAttribute('aria-controls')
-			parentElement.removeAttribute('aria-haspopup')
-			parentElement.removeAttribute('aria-activedescendant')
-			parentElement.removeAttribute('aria-required')
-			parentElement.removeAttribute('aria-invalid')
-			parentElement.removeAttribute('aria-hidden')
-		},
-		cleanAlertAttributes(parentElement: HTMLElement): void {
-			if (!parentElement) return
-			const messagesElements = parentElement.querySelectorAll('[role="alert"]')
-			messagesElements.forEach((element: Element) => {
-				element.removeAttribute('role')
-				element.removeAttribute('aria-live')
-			})
-		},
-	}
-
-	// Utilisation du composable pour la gestion clavier
-	const {
-		activeDescendantId,
-		setActiveDescendant,
-		clearActiveDescendant,
-		handleEnterKey,
-		handleSpaceKey,
-		handleDownKey,
-		handleUpKey,
-		handleEscapeKey,
-		handleHomeKey,
-		handleEndKey,
-		handlePageUpKey,
-		handlePageDownKey,
-		handleTabKey,
-		restoreFocus,
-	} = useSySelectKeyboard({
-		isOpen,
-		formattedItems,
-		toggleMenu,
-		selectItem,
-		getItemText,
-		optionIdPrefix,
-		focusOptions: false,
-		restoreOnOpen: false,
-		initialFocusIndex: 0,
+		nextTick(() => {
+			attachNativeKeydownListener()
+			attachFieldRootKeydownListener()
+		})
 	})
 
 	const getNativeInputElement = () => {
@@ -1074,38 +923,13 @@
 		fieldRootEl.value = null
 	}
 
-	const setupAriaAttributes = () => {
-		if (!textInput.value || !textInput.value.$el) return
-		const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-		const parentElement = textInput.value.$el as HTMLElement
-		if (inputElement) {
-			ariaManager.cleanInputAttributes(inputElement)
-			ariaManager.updateInputState(inputElement, isOpen.value, uniqueMenuId.value, activeDescendantId.value)
-			ariaManager.updateValidationAttributes(inputElement, Boolean(isRequired.value), Boolean(hasError.value))
-		}
-		if (parentElement) {
-			ariaManager.cleanParentAttributes(parentElement)
-			ariaManager.cleanAlertAttributes(parentElement)
-		}
-	}
-
 	watch(isOpen, (newValue) => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el) return
-			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-			if (inputElement) {
-				ariaManager.updateInputState(inputElement, newValue, uniqueMenuId.value, activeDescendantId.value)
-			}
-		})
-
 		if (newValue) {
 			ensureNativeInputFocus()
 		}
-
 		if (!newValue) {
 			openedByTyping.value = false
 		}
-
 		if (newValue) {
 			nextTick(() => {
 				// Ensure we always have an active option when opening (SySelect-like behavior)
@@ -1120,14 +944,8 @@
 	watch(activeDescendantId, (newValue) => {
 		nextTick(() => {
 			if (!textInput.value || !textInput.value.$el || !isOpen.value) return
-			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-			if (!inputElement) return
 			if (newValue) {
-				inputElement.setAttribute('aria-activedescendant', newValue)
 				focusActiveOptionElement()
-			}
-			else {
-				inputElement.removeAttribute('aria-activedescendant')
 			}
 		})
 
@@ -1139,26 +957,6 @@
 			}
 		}
 	})
-
-	watch(hasError, (newValue) => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el) return
-			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-			if (inputElement) {
-				ariaManager.updateValidationAttributes(
-					inputElement,
-					Boolean(isRequired.value),
-					Boolean(newValue),
-				)
-			}
-		})
-	})
-
-	watch(selectedItem, () => {
-		nextTick(() => {
-			setupAriaAttributes()
-		})
-	}, { deep: true })
 
 	type ActivatorProps = Record<string, unknown> & {
 		onClick?: unknown
@@ -1174,16 +972,6 @@
 			},
 		}
 	}
-
-	onMounted(() => {
-		nextTick(() => {
-			setupAriaAttributes()
-			setTimeout(setupAriaAttributes, 100)
-			setTimeout(setupAriaAttributes, 300)
-			attachNativeKeydownListener()
-			attachFieldRootKeydownListener()
-		})
-	})
 
 	watchEffect(() => {
 		// When the activator VTextField instance changes, reattach the listener.
@@ -1364,9 +1152,7 @@
 					role="option"
 					class="v-list-item"
 					:aria-current="`${optionIdPrefix}option-${index}` === activeDescendantId ? 'true' : undefined"
-					:aria-selected="props.multiple
-						? (isItemSelected(item) ? 'true' : 'false')
-						: (`${optionIdPrefix}option-${index}` === activeDescendantId || isItemSelected(item) ? 'true' : 'false')"
+					:aria-selected="isItemSelected(item) ? 'true' : 'false'"
 					tabindex="-1"
 					:active="isItemSelected(item) || `${optionIdPrefix}option-${index}` === activeDescendantId"
 					:class="{ 'keyboard-focused': `${optionIdPrefix}option-${index}` === activeDescendantId }"
