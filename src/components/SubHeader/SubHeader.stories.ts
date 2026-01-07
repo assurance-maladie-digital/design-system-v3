@@ -655,7 +655,6 @@ export const HtmlValue: Story = {
 				<template #item="{ item, itemValue }">
 					<span v-if="item.key === 'Adresse'">
 						<b>{{ itemValue }}</b><br>
-						75020 Paris
 					</span>
 
 					<span v-else>
