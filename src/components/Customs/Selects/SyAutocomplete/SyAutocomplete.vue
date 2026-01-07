@@ -166,6 +166,7 @@
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const searchValue = ref(props.search)
 	const hasError = ref(false)
+	const isTouched = ref(false)
 
 	const isLoading = ref(false)
 	const internalItems = ref<ItemType[]>([...props.items])
@@ -301,6 +302,8 @@
 
 	const handleInputBlur = () => {
 		isInputFocused.value = false
+		isTouched.value = true
+		hasError.value = computedHasError.value
 		if (props.multiple && !props.chips) {
 			// When leaving the field, show the selected values instead of any transient search.
 			searchValue.value = ''
@@ -436,12 +439,14 @@
 	const clearSelection = (event?: Event) => {
 		event?.preventDefault()
 		event?.stopPropagation()
+		isTouched.value = true
 		selectedItem.value = props.multiple ? [] : null
 		emit('update:modelValue', props.multiple ? [] : null)
 		if (!props.multiple) {
 			searchValue.value = ''
 			emit('update:search', '')
 		}
+		hasError.value = computedHasError.value
 		if (event?.type === 'keydown' || event?.type === 'click') {
 			if (!isOpen.value) {
 				isOpen.value = true
@@ -555,6 +560,15 @@
 		emit('update:search', newValue)
 		const trimmed = newValue.trim()
 		pendingFocusIndex.value = null
+
+		// If user manually cleared the input text in single-select mode, also clear the selection.
+		// Otherwise the component keeps a selected value and required validation won't trigger.
+		if (!props.multiple && trimmed.length === 0 && selectedItem.value != null) {
+			selectedItem.value = null
+			emit('update:modelValue', null)
+			isTouched.value = true
+			hasError.value = computedHasError.value
+		}
 		if (trimmed.length >= props.minChars) {
 			if (!isOpen.value) {
 				clearActiveDescendant()
@@ -594,6 +608,43 @@
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
+	const requiredErrorMessage = computed(() => {
+		return 'Le champ est requis.'
+	})
+
+	const computedHasError = computed(() => {
+		if (props.disableErrorHandling || props.readonly) return false
+		if (props.errorMessages.length > 0) return true
+		return Boolean(isTouched.value && isRequired.value)
+	})
+
+	const computedErrorMessages = computed(() => {
+		if (props.disableErrorHandling) return []
+		if (props.errorMessages.length > 0) return props.errorMessages
+		return computedHasError.value ? [requiredErrorMessage.value] : []
+	})
+
+	const textFieldErrorMessages = computed(() => {
+		return computedErrorMessages.value.length > 0 ? computedErrorMessages.value : undefined
+	})
+
+	const requiredRules = computed(() => {
+		if (props.disableErrorHandling || props.readonly) return []
+		if (!(props.required || props.errorMessages.length > 0)) return []
+		return [() => (!isRequired.value || requiredErrorMessage.value)]
+	})
+
+	watch([selectedItem, isRequired, isTouched], () => {
+		if (props.disableErrorHandling || props.readonly) {
+			hasError.value = false
+			return
+		}
+
+		if (isTouched.value) {
+			hasError.value = computedHasError.value
+		}
+	})
+
 	watch([hasError], ([newHasError]) => {
 		if (props.disableErrorHandling || props.readonly) {
 			hasError.value = false
@@ -613,6 +664,8 @@
 		if (props.readonly || props.disableErrorHandling) {
 			return true
 		}
+
+		isTouched.value = true
 
 		const isValid = !isRequired.value
 		hasError.value = !isValid || props.errorMessages.length > 0
@@ -1173,9 +1226,9 @@
 					:disabled="props.disabled"
 					:label="labelWithAsterisk"
 					:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-					:error-messages="props.disableErrorHandling ? [] : props.errorMessages"
+					:error-messages="textFieldErrorMessages"
 					:variant="props.outlined ? 'outlined' : 'underlined'"
-					:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+					:rules="requiredRules"
 					:bg-color="props.bgColor"
 					:density="props.density"
 					:active="hasChips || isOpen"
