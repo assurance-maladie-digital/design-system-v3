@@ -21,5 +21,7 @@ export const config = {
 	},
 	confirmBtn: {
 		color: 'primary',
+		elevation: 0,
+
 	},
 } as const
