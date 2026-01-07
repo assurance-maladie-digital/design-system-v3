@@ -127,15 +127,15 @@ describe('SyAutocomplete.vue', () => {
 			await wrapper.find('input').setValue('a')
 			await wrapper.vm.$nextTick()
 
-			// Loading indicator is rendered as a VListItem with the text "Chargement..."
-			expect(wrapper.text()).toContain('Chargement...')
+			// Le contenu du menu est téléporté : on vérifie le DOM global.
+			expect(document.body.textContent ?? '').toContain('Chargement...')
 
 			resolveFetch([{ text: 'Alpha', value: 'a' }])
 			await wrapper.vm.$nextTick()
 			await wrapper.vm.$nextTick()
 
-			expect(wrapper.text()).not.toContain('Chargement...')
-			expect(wrapper.text()).toContain('Alpha')
+			expect(document.body.textContent ?? '').not.toContain('Chargement...')
+			expect(document.body.textContent ?? '').toContain('Alpha')
 
 			wrapper.unmount()
 		})

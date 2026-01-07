@@ -654,13 +654,21 @@
 		})
 	}
 
+	const escapeForSelector = (value: string) => {
+		const maybeCss = (globalThis as unknown as { CSS?: { escape?: (s: string) => string } }).CSS
+		if (typeof maybeCss?.escape === 'function') {
+			return maybeCss.escape(value)
+		}
+		return String(value).replace(/[^a-zA-Z0-9_-]/g, c => `\\${c}`)
+	}
+
 	const focusActiveOptionElement = () => {
 		if (!activeDescendantId.value) return
 		nextTick(() => {
 			const listElement = list.value?.$el as HTMLElement | undefined
 			if (!listElement) return
 
-			const element = listElement.querySelector(`#${CSS.escape(activeDescendantId.value)}`)
+			const element = listElement.querySelector(`#${escapeForSelector(activeDescendantId.value)}`)
 			if (!element) return
 
 			// On garde le focus DOM sur l'input (pattern combobox). On scroll uniquement l'option active.
