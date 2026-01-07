@@ -1,0 +1,46 @@
+import { Canvas, Meta, Controls, Source } from '@storybook/blocks';
+import * as SyAutocompleteStories from "./SyAutocomplete.stories.ts";
+
+<Meta of={SyAutocompleteStories} />
+
+# SyAutocomplete
+
+Le composant `SyAutocomplete` permet de rechercher et sélectionner une valeur dans une liste, avec support
+de chargement asynchrone et une attention particulière portée à l’accessibilité.
+
+<Canvas of={SyAutocompleteStories.Default} />
+
+# API
+
+<Controls of={SyAutocompleteStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { SyAutocomplete } from '@cnamts/synapse'
+
+	const value = ref(null)
+	const search = ref('')
+
+	const items = [
+		{ text: 'Adrien', value: 'Adrien' },
+		{ text: 'Axel', value: 'Axel' },
+		{ text: 'Baptiste', value: 'Baptiste' },
+	]
+</script>
+
+<template>
+	<div class="pa-4">
+		<SyAutocomplete
+			v-model="value"
+			v-model:search="search"
+			:items="items"
+			label="Rechercher une personne"
+			return-object
+			clearable
+		/>
+	</div>
+</template>
+`} />
