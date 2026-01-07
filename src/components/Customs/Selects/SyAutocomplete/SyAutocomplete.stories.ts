@@ -101,10 +101,7 @@ export const Default: Story = {
 			setup() {
 				const value = ref(null)
 				const search = ref('')
-				const onUpdateModelValue = fn()
-				const onUpdateSearch = fn()
-
-				return { args, value, search, onUpdateModelValue, onUpdateSearch }
+				return { args, value, search }
 			},
 			template: `
 				<div class="pa-4">
@@ -113,8 +110,6 @@ export const Default: Story = {
 						v-model:search="search"
 						v-bind="args"
 						label="Rechercher une personne"
-						@update:model-value="onUpdateModelValue"
-						@update:search="onUpdateSearch"
 					/>
 					<div class="mt-4 text-caption">Valeur: {{ value }}</div>
 					<div class="mt-1 text-caption">Search: {{ search }}</div>
@@ -901,7 +896,7 @@ export const WithApiCall: Story = {
 						{ text: 'Suisse', value: 'CH' },
 						{ text: 'Maroc', value: 'MA' },
 						{ text: 'Tunisie', value: 'TN' },
-						{ text: 'Alg e9rie', value: 'DZ' },
+						{ text: 'Algérie', value: 'DZ' },
 						{ text: 'Cameroun', value: 'CM' },
 						{ text: 'Comores', value: 'KM' },
 					]
@@ -954,7 +949,7 @@ export const WithApiCall: Story = {
 					{ text: 'Suisse', value: 'CH' },
 					{ text: 'Maroc', value: 'MA' },
 					{ text: 'Tunisie', value: 'TN' },
-					{ text: 'Alg e9rie', value: 'DZ' },
+					{ text: 'Algérie', value: 'DZ' },
 					{ text: 'Cameroun', value: 'CM' },
 					{ text: 'Comores', value: 'KM' },
 				]
