@@ -31,6 +31,10 @@
 			type: Boolean,
 			default: false,
 		},
+		onSameLine: {
+			type: Boolean,
+			default: false,
+		},
 		uniqueId: {
 			type: String,
 			required: true,
@@ -202,13 +206,13 @@
 				:class="btnGroupClasses"
 			>
 				<slot name="tabsDesc" />
-
 				<div
 					:id="uniqueId"
 					:aria-label="ariaLabel"
 					:aria-labelledby="ariaLabelledby"
-					class="d-flex flex-column flex-sm-row align-center flex-nowrap justify-center justify-sm-start amelipro-tabs__btn-group__wrapper"
+					class="d-flex flex-column flex-sm-row align-center justify-center justify-sm-start amelipro-tabs__btn-group__wrapper"
 					role="tablist"
+					:class="onSameLine ? 'flex-nowrap' : ['align-sm-end', 'flex-wrap']"
 				>
 					<AmeliproTabBtn
 						v-for="(item, index) in items"
