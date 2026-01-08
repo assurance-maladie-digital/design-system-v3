@@ -8,7 +8,7 @@ const meta = {
 		'cancel': { description: 'event émis à la fermeture de la modale par le bouton annuler' },
 		'change': { description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation' },
 		'maxStructuresLoadedDefault': { description: 'Le nombre de structures affichées par défaut dans les onglets' },
-        'hasStructureAccess': {description: 'Donne accès à l\'onglet \'Mes structures\''},
+		'hasStructureAccess': { description: 'Donne accès à l\'onglet \'Mes structures\'' },
 		'modelValue': {
 			description: 'Objet contenant la valeur d’affichage de la modale ainsi que la structure sélectionnée',
 			table: {
