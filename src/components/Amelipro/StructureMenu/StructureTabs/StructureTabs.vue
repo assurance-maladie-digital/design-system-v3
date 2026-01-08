@@ -15,6 +15,10 @@
 			type: String,
 			default: undefined,
 		},
+    hasNoStructureAccess: {
+      type: Boolean,
+      default: false,
+    },
 		maxStructuresLoadedDefault: {
 			type: Number,
 			default: 5,
@@ -30,10 +34,6 @@
 		tabs: {
 			type: Array as PropType<StructureTab[]>,
 			default: () => [],
-		},
-		psUserName: {
-			type: String,
-			required: true,
 		},
 		uniqueId: {
 			type: String,
@@ -64,9 +64,7 @@
 		},
 	})
 
-	const isFirstTabDisabled = computed(() => {
-		return props.tabs?.[0]?.structures?.length === 0
-	})
+  const isFirstTabDisabled = computed(() => props.hasNoStructureAccess)
 
 	const onClick = async (index: number): Promise<void> => {
 		selected.value = index
@@ -101,20 +99,23 @@
 		}
 	}
 
-	watch(
-		() => isFirstTabDisabled.value,
-		(isDisabled) => {
-			if (isDisabled && selected.value === 0) {
-				selected.value = 1
-			}
-		},
-		{ immediate: true },
-	)
+  watch(
+      () => props.hasNoStructureAccess,
+      (hasNoAccess) => {
+        if (hasNoAccess && selected.value === 0) {
+          selected.value = 1
+        }
+
+        if (!hasNoAccess && selected.value === 1) {
+          selected.value = 0
+        }
+      },
+      {immediate: true},
+  )
 </script>
 
 <template>
 	<div :id="`${uniqueId}-container`">
-		{{ psUserName }}
 		<div
 			v-if="tabs.length > 1"
 			:ariaLabelledby="`${uniqueId}-label`"

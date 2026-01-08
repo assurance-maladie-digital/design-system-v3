@@ -18,6 +18,10 @@ class NoopMutationObserver {
 global.MutationObserver = NoopMutationObserver as any
 
 const expectedPropOptions: ExpectedPropOptions<typeof StructureMenu> = {
+    hasNoStructureAccess: {
+        type: Boolean,
+        default: false,
+    },
 	maxStructuresLoadedDefault: {
 		type: Number,
 		default: 5,
@@ -77,16 +81,18 @@ const structuresTabs = (): StructureTab[] => ([
 		label: 'item2',
 		listLabel: 'label2',
 		structures: [
-			{
-				address: '39 rue de la Vie',
-				idNumber: '3',
-				value: 'valeur3',
-			},
-			{
-				address: '39 rue de la Vie',
-				idNumber: '4',
-				value: 'valeur4',
-			},
+            {
+                userName: 'Dr Jean Martin',
+                address: '39 rue de Rennes',
+                idNumber: 'XXXXXXXXXX',
+                value: 'e',
+            },
+            {
+                userName: 'Pharmacie de la gare',
+                address: '40 rue de Vannes',
+                idNumber: 'XXXXXXXXXX',
+                value: 'f',
+            },
 		],
 	},
 ])

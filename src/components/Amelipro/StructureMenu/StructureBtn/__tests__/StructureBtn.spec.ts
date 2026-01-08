@@ -29,6 +29,7 @@ const requiredPropValues = (): ComponentProps<typeof StructureBtn> => ({
 	controls: 'required-controls',
 	tabindex: 1,
 	uniqueId: 'required-unique-id',
+    disabled: false,
 })
 
 // Valeurs pour les props "modified"
@@ -37,6 +38,7 @@ const modifiedPropValues = (): ComponentProps<typeof StructureBtn> => ({
 	selected: true,
 	tabindex: 0,
 	uniqueId: 'modified-unique-id',
+    disabled: true
 })
 
 const testHelper = new TestHelper(StructureBtn)

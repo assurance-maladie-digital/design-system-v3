@@ -11,6 +11,10 @@
 	import { locales } from './locales'
 
 	const props = defineProps({
+    hasNoStructureAccess: {
+      type: Boolean,
+      default: false,
+    },
 		maxStructuresLoadedDefault: {
 			type: Number,
 			default: 5,
@@ -154,13 +158,13 @@
 						</p>
 					</AmeliproMessage>
 				</div>
-
 				<StructureTabs
 					v-model="selectedStructure"
 					aria-labelledby="structure-menu-title"
 					:max-items-loaded-default="maxStructuresLoadedDefault"
 					:tabs="structuresTabs"
 					:unique-id="`${uniqueId}-structure-menu-tabs`"
+          :hasNoStructureAccess="hasNoStructureAccess"
 				>
 					<template #searchBar>
 						<slot name="searchBar" />
