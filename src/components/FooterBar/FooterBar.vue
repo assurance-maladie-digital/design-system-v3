@@ -252,11 +252,14 @@ a {
 	border: 0;
 }
 
+.vd-footer-bar.v-theme--dark {
+	--v-theme-background-surface: 47, 56, 77; // #2F384D
+}
+
 // Fix footer bar height in SK
 .v-footer {
 	flex-grow: 0 !important;
 	justify-content: center;
-	background-color: rgb(var(--v-theme-background-surface));
 
 	.container {
 		width: 100%;
