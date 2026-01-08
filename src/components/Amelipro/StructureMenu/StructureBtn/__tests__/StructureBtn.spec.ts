@@ -10,6 +10,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof StructureBtn> = {
 		type: String,
 		required: true,
 	},
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 	selected: {
 		type: Boolean,
 		default: false,
