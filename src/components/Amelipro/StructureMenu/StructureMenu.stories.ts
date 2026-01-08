@@ -246,6 +246,7 @@ export const HasStructureAccess: Story = {
 					user-name="Jean Martin"
 					user-profession="Médecin génraliste"
 					user-rpps="n° RPPS"
+					:hasStructureAccess="true"
 				/>
 	</div>
 </template>
