@@ -8,7 +8,7 @@ const meta = {
 		'cancel': { description: 'event émis à la fermeture de la modale par le bouton annuler' },
 		'change': { description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation' },
 		'maxStructuresLoadedDefault': { description: 'Le nombre de structures affichées par défaut dans les onglets' },
-		'hasNoStructureAccess': { description: 'Restreint l\'accès à l\'onglets \'Mes structures\'' },
+		'hasStructureAccess': { description: 'Donne accès à l\'onglets \'Mes structures\'' },
 		'modelValue': {
 			description: 'Objet contenant la valeur d’affichage de la modale ainsi que la structure sélectionnée',
 			table: {
@@ -219,6 +219,7 @@ export const HasStructureAccess: Story = {
 		userName: 'Jean Martin',
 		userProfession: 'Médecin génraliste',
 		userRpps: 'n° RPPS',
+		hasStructureAccess: true,
 	},
 	parameters: {
 		sourceCode: [

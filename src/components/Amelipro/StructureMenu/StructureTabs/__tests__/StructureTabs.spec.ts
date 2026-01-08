@@ -18,9 +18,9 @@ const expectedPropOptions: ExpectedPropOptions<typeof StructureTabs> = {
 		type: String,
 		default: undefined,
 	},
-	hasNoStructureAccess: {
+	hasStructureAccess: {
 		type: Boolean,
-		default: false,
+		default: true,
 	},
 	maxStructuresLoadedDefault: {
 		type: Number,

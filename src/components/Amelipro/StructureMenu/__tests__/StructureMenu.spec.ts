@@ -18,9 +18,9 @@ class NoopMutationObserver {
 global.MutationObserver = NoopMutationObserver as any
 
 const expectedPropOptions: ExpectedPropOptions<typeof StructureMenu> = {
-	hasNoStructureAccess: {
+	hasStructureAccess: {
 		type: Boolean,
-		default: false,
+		default: true,
 	},
 	maxStructuresLoadedDefault: {
 		type: Number,
