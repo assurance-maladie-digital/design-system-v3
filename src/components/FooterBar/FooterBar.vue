@@ -256,6 +256,7 @@ a {
 .v-footer {
 	flex-grow: 0 !important;
 	justify-content: center;
+	background-color: rgb(var(--v-theme-background-surface));
 
 	.container {
 		width: 100%;
@@ -311,8 +312,6 @@ a {
 
 // Use deep selector to style user content as well
 .vd-footer-bar.v-theme--dark :deep() {
-	background-color: tokens.$parma-darken-60 !important;
-
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
 		color: $white;
