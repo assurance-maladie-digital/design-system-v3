@@ -240,7 +240,7 @@
 @use '@/assets/tokens' as *;
 
 .sy-dialog-box-actions :deep(.v-btn) {
-  box-shadow: none;
+	box-shadow: none;
 }
 
 .sy-dialog-box-title {
