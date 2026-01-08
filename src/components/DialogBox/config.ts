@@ -24,4 +24,7 @@ export const config = {
 		elevation: 0,
 
 	},
+	actionsSlot: {
+		class: 'sy-dialog-box-actions',
+	},
 } as const
