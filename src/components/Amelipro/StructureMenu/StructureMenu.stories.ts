@@ -6,9 +6,9 @@ import StructureMenu from './StructureMenu.vue'
 const meta = {
 	argTypes: {
 		'cancel': { description: 'event émis à la fermeture de la modale par le bouton annuler' },
-        'change': {description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation'},
-        'maxStructuresLoadedDefault': {description: 'Le nombre de structures affichées par défaut dans les onglets'},
-        'hasNoStructureAccess': {description: 'Restreint l\'accès à l\'onglets \'Mes structures\''},
+		'change': { description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation' },
+		'maxStructuresLoadedDefault': { description: 'Le nombre de structures affichées par défaut dans les onglets' },
+		'hasNoStructureAccess': { description: 'Restreint l\'accès à l\'onglets \'Mes structures\'' },
 		'modelValue': {
 			description: 'Objet contenant la valeur d’affichage de la modale ainsi que la structure sélectionnée',
 			table: {
@@ -121,7 +121,7 @@ const structuresTabs = [
 				value: 'h',
 			},
 		],
-        label: 'Mes délégations',
+		label: 'Mes délégations',
 	},
 ]
 
