@@ -79,7 +79,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 						element.focus()
 					}
 					element.classList.add('keyboard-focused')
-					element.scrollIntoView({ block: 'nearest' })
+					;(element as unknown as { scrollIntoView?: (arg?: unknown) => void }).scrollIntoView?.({ block: 'nearest' })
 				}
 			})
 		}

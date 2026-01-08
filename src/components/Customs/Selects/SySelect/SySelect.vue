@@ -4,10 +4,15 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, computed, nextTick, type PropType } from 'vue'
+	import { ref, watch, watchEffect, onMounted, computed, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
+	import { useSySelectAria } from './composables/useSySelectAria'
+	import { useSySelectValidation } from './composables/useSySelectValidation'
+	import { useSySelectSelection } from './composables/useSySelectSelection'
+	import { useSySelectMenu } from './composables/useSySelectMenu'
+	import { useSySelectKeydown } from './composables/useSySelectKeydown'
+	import { useSySelectVuetifyAdapter } from './composables/useSySelectVuetifyAdapter'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
@@ -132,7 +137,16 @@
 	const isOpen = ref(false)
 	// Initialize selectedItem with props.modelValue or empty array for multiple mode
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
-	const hasError = ref(false)
+	const { hasError, isRequired, showHelpTextAsMessage, showHelpTextBelow, validateOnSubmit } = useSySelectValidation({
+		isOpen,
+		selectedItem,
+		disableErrorHandling: computed(() => props.disableErrorHandling),
+		readonly: computed(() => props.readonly),
+		required: computed(() => props.required),
+		errorMessages: computed(() => (Array.isArray(props.errorMessages) ? props.errorMessages : [props.errorMessages])),
+		helpText: computed(() => props.helpText),
+		hideMessages: computed(() => props.hideMessages),
+	})
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
@@ -140,163 +154,76 @@
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
 
-	const toggleMenu = (skipInitialFocus = false) => {
-		if (props.readonly) return
-		isOpen.value = !isOpen.value
-		if (isOpen.value) {
-			// Initialiser la sélection à l'ouverture seulement si pas ouvert via clavier
-			if (!skipInitialFocus) {
-				nextTick(() => {
-					// Si un élément est déjà sélectionné, l'activer
-					const selectedIndex = formattedItems.value.findIndex(item => isItemSelected(item))
-					if (selectedIndex >= 0) {
-						setActiveDescendant(selectedIndex)
-					}
-					else {
-						setActiveDescendant(0)
-					}
-				})
-			}
-		}
-	}
-
-	const closeList = (event?: Event) => {
-		// Check if the click is inside the dropdown list
-		const target = event?.target as HTMLElement
-		const listElement = list.value?.$el
-
-		// In multiple selection mode, don't close the dropdown when clicking on list items
-		if (props.multiple && listElement && listElement.contains(target)) {
-			return
-		}
-
-		isOpen.value = false
-	}
+	const { ensureNativeInputFocus } = useSySelectVuetifyAdapter({
+		textInput: textInput as unknown as import('vue').Ref<{ $el: HTMLElement } | null>,
+	})
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
 
-	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
-		// Prevent default action if event is provided
-		event?.preventDefault()
-
-		// Stop event propagation to prevent click-outside from triggering
-		event?.stopPropagation()
-
-		// Si c'est un clic, appliquer le focus visuel en utilisant le système existant
-		if (event?.type === 'click' && item !== null && item !== undefined) {
-			// Trouver l'index de l'élément cliqué
-			const clickedIndex = formattedItems.value.findIndex((formattedItem) => {
-				if (props.returnObject) {
-					return formattedItem[props.valueKey] === item[props.valueKey]
-				}
-				return formattedItem === item
-			})
-
-			// Si l'élément est trouvé, utiliser le système existant pour appliquer le focus visuel
-			if (clickedIndex !== -1) {
-				setActiveDescendant(clickedIndex)
+	const formattedItems = computed(() => {
+		return props.items.map((item) => {
+			if (typeof item === 'string') {
+				return { [props.textKey]: item, [props.valueKey]: item }
 			}
-		}
-		if (item === null || item === undefined) {
-			selectedItem.value = props.multiple ? [] : null
-			emit('update:modelValue', props.multiple ? [] : null)
+			return item
+		})
+	})
 
-			// Garder la liste ouverte après une suppression et réinitialiser la navigation au clavier
-			if (event?.type === 'keydown' || event?.type === 'click') {
-				if (!isOpen.value) {
-					isOpen.value = true
-				}
-
-				// S'assurer que le focus DOM revient à l'input et restaurer le focus visuel
-				nextTick(() => {
-					// Focus DOM sur l'input
-					const inputElement = textInput.value!.$el.querySelector('input')
-					if (inputElement) {
-						(inputElement as HTMLInputElement).focus()
-					}
-					// Restaurer le focus visuel/ARIA
-					restoreFocus()
-				})
-			}
-			else {
-				isOpen.value = false
-			}
-			return
-		}
-
-		// Handle default option in multiple mode
-		if (props.multiple && isDefaultOption(item)) {
-			// Clicking the default option in multiple mode clears all selections
-			selectedItem.value = []
-			emit('update:modelValue', [])
-			isOpen.value = false
-			return
-		}
-
-		// If the item is the default option (e.g., "-choisir-") in single mode, don't select it
-		if (isDefaultOption(item)) {
-			return
-		}
-
-		if (props.multiple) {
-			// Initialize as empty array if not already an array
-			if (!Array.isArray(selectedItem.value)) {
-				selectedItem.value = []
-			}
-
-			const selectedArray = selectedItem.value as SelectItemArrayType
-			let valueToCheck: unknown
-			let valueToStore: Record<string, unknown> | string | number
-
-			if (props.returnObject) {
-				valueToCheck = item[props.valueKey]
-				valueToStore = item
-			}
-			else {
-				valueToCheck = item[props.valueKey]
-				valueToStore = item[props.valueKey] as string | number | Record<string, unknown>
-			}
-
-			// Check if item is already selected
-			const index = selectedArray.findIndex((selected) => {
-				if (props.returnObject) {
-					return selected[props.valueKey] === valueToCheck
-				}
-				return selected === valueToCheck
-			})
-
-			// Toggle selection
-			if (index > -1) {
-				selectedArray.splice(index, 1)
-			}
-			else {
-				selectedArray.push(valueToStore)
-			}
-
-			emit('update:modelValue', [...selectedArray])
-			// Keep dropdown open for multiple selection
-			isOpen.value = true
-		}
-		else {
-			// Single selection mode
-			if (props.returnObject) {
-				selectedItem.value = item
-				emit('update:modelValue', item)
-			}
-			else {
-				selectedItem.value = item[props.valueKey] as SelectItemValueType
-				emit('update:modelValue', item[props.valueKey] as SelectItemValueType)
-			}
-			// Close dropdown for single selection
-			isOpen.value = false
-		}
+	let setActiveDescendantForMenu = (index: number) => {
+		void index
+	}
+	let isItemSelectedForMenu = (item: ItemType) => {
+		void item
+		return false
 	}
 
-	const getItemText = (item: unknown) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		return (item as Record<string, any>)[props.textKey]
+	const { toggleMenu, closeList } = useSySelectMenu({
+		readonly: computed(() => props.readonly),
+		multiple: computed(() => props.multiple),
+		isOpen,
+		list: list as unknown as import('vue').Ref<{ $el: HTMLElement } | null>,
+		formattedItems,
+		isItemSelected: item => isItemSelectedForMenu(item),
+		setActiveDescendant: index => setActiveDescendantForMenu(index),
+	})
+
+	let setActiveDescendantForSelection = (index: number) => {
+		void index
 	}
+	let restoreFocusForSelection = () => {}
+
+	const {
+		isDefaultOption,
+		isItemSelected,
+		selectItem,
+		removeChip,
+		getItemText,
+		safeChipItem,
+		getChipText,
+		hasChips,
+		selectedChipsItems,
+		hasSelectionToClear,
+		selectedItemText,
+	} = useSySelectSelection({
+		items: computed(() => props.items),
+		formattedItems,
+		selectedItem,
+		multiple: computed(() => props.multiple),
+		chips: computed(() => props.chips),
+		returnObject: computed(() => props.returnObject),
+		textKey: computed(() => props.textKey),
+		plainTextKey: computed(() => props.plainTextKey),
+		valueKey: computed(() => props.valueKey),
+		allowHtml: computed(() => props.allowHtml),
+		isOpen,
+		ensureNativeInputFocus: () => ensureNativeInputFocus(),
+		setActiveDescendant: index => setActiveDescendantForSelection(index),
+		restoreFocus: () => restoreFocusForSelection(),
+		emitUpdateModelValue: value => emit('update:modelValue', value),
+	})
+	void safeChipItem
+	isItemSelectedForMenu = (item: ItemType) => isItemSelected(item)
 
 	watchEffect(() => {
 		if (!props.allowHtml) {
@@ -315,106 +242,15 @@
 		})
 	})
 
-	const getPlainItemText = (item: unknown) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		const itemObj = item as Record<string, any>
-		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
-		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
-			return itemObj[props.plainTextKey]
-		}
-		return itemObj[props.textKey]
-	}
-
-	const selectedItemText = computed(() => {
-		// If chips are enabled and we have selected items, return empty string to hide text
-		if (hasChips.value) {
-			return ''
-		}
-
-		// For multiple mode, show default option text when nothing is selected
-		if (props.multiple) {
-			if (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)) {
-				// Find default option and return its text
-				const defaultOption = props.items.find(item => isDefaultOption(item))
-				if (defaultOption) {
-					return getPlainItemText(defaultOption) as string
-				}
-				return ''
-			}
-
-			// For multiple selection with items selected, return an array of text values
-			const selectedArray = selectedItem.value as SelectItemArrayType
-
-			return selectedArray.map((selected) => {
-				if (props.returnObject) {
-					return getPlainItemText(selected)
-				}
-				const foundItem = props.items.find((item: ItemType) => item[props.valueKey] === selected)
-				return foundItem ? getPlainItemText(foundItem) : ''
-			}).join(', ')
-		}
-		else {
-			// For single selection
-			if (!selectedItem.value) return ''
-
-			if (props.returnObject) {
-				return getPlainItemText(selectedItem.value)
-			}
-
-			const foundItem = props.items.find(item => item[props.valueKey] === selectedItem.value)
-			return foundItem ? getPlainItemText(foundItem) : ''
-		}
-	})
-
 	const isShouldDisplayAsterisk = computed(() => {
 		return props.required && props.displayAsterisk
-	})
-
-	const hasChips = computed(() => {
-		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
-	})
-
-	const hasSelectionToClear = computed(() => {
-		return props.multiple
-			? (((selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
-			: selectedItem.value != null
 	})
 
 	const labelWithAsterisk = computed(() => {
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
-	const formattedItems = computed(() => {
-		return props.items.map((item) => {
-			if (typeof item === 'string') {
-				return { [props.textKey]: item, [props.valueKey]: item }
-			}
-			return item
-		})
-	})
-
-	const isRequired = computed(() => {
-		if (props.disableErrorHandling) return false
-		if (props.readonly) return
-		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
-	})
-
-	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
-	const hasMessages = computed(() => {
-		if (props.disableErrorHandling) return false
-		return props.errorMessages.length > 0 || hasError.value
-	})
-
-	// Détermine si le helpText doit être affiché à la position du message ou en dessous
-	const showHelpTextAsMessage = computed(() => {
-		// Afficher à la position du message si pas de messages d'erreur
-		return props.helpText && !hasMessages.value
-	})
-
-	const showHelpTextBelow = computed(() => {
-		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
-		return props.helpText && hasMessages.value && !props.hideMessages
-	})
+	// Validation + messages are handled by useSySelectValidation
 
 	const calculatedWidth = computed(() => {
 		// If width prop is provided and not 'undefined', return it directly as a CSS value
@@ -466,291 +302,51 @@
 		getItemText,
 	})
 
-	// Function to check if an item is the default option (e.g., "-choisir-")
-	const isDefaultOption = (item: ItemType) => {
-		// Check if this is the first item and has a placeholder-like text
-		const itemText = item[props.textKey] as string
-		return itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
+	setActiveDescendantForMenu = (index: number) => {
+		setActiveDescendant(index)
 	}
 
-	// Function to check if an item is selected
-	const isItemSelected = (item: ItemType) => {
-		// For default option in multiple mode, show as selected when no other items are selected
-		if (props.multiple && isDefaultOption(item)) {
-			return !selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)
-		}
-
-		if (!selectedItem.value) return false
-
-		if (props.multiple && Array.isArray(selectedItem.value)) {
-			return selectedItem.value.some((selected) => {
-				if (props.returnObject) {
-					return selected?.[props.valueKey] === item?.[props.valueKey]
-				}
-				return selected === item?.[props.valueKey]
-			})
-		}
-		else {
-			if (props.returnObject) {
-				return Boolean(selectedItem.value && selectedItem.value[props.valueKey] === item?.[props.valueKey])
-			}
-			return selectedItem.value === item?.[props.valueKey]
-		}
+	setActiveDescendantForSelection = (index: number) => {
+		setActiveDescendant(index)
+	}
+	restoreFocusForSelection = () => {
+		restoreFocus()
 	}
 
-	// Function to safely get an item for chip operations
-	const safeChipItem = (item: unknown): Record<string, unknown> | string | number => {
-		// Handle null/undefined case
-		if (item === null || item === undefined) return ''
-
-		// If it's already a valid type, return it
-		if (typeof item === 'string' || typeof item === 'number') return item
-
-		// If it's an object, return it as a Record
-		if (typeof item === 'object') return item as Record<string, unknown>
-
-		// Default case - convert to string
-		return String(item)
-	}
-
-	// Function to get text for a chip
-	const getChipText = (item: unknown) => {
-		const safeItem = safeChipItem(item)
-
-		if (typeof safeItem === 'object') {
-			// Handle object type
-			return (safeItem as Record<string, unknown>)[props.textKey] as string
-		}
-		// Handle primitive types
-		return props.items.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
-	}
-
-	// Function to remove a chip
-	const removeChip = (item: unknown) => {
-		if (!Array.isArray(selectedItem.value)) return
-
-		const selectedArray = [...selectedItem.value] // Create a copy to avoid mutation issues
-		const safeItem = safeChipItem(item)
-		let index: number
-
-		if (props.returnObject) {
-			// Handle object type
-			const itemValue = typeof safeItem === 'object'
-				? (safeItem as Record<string, unknown>)[props.valueKey]
-				: safeItem
-			index = selectedArray.findIndex(selected =>
-				(selected as Record<string, unknown>)[props.valueKey] === itemValue)
-		}
-		else {
-			index = selectedArray.indexOf(safeItem)
-		}
-
-		if (index > -1) {
-			selectedArray.splice(index, 1)
-			// Ensure reactivity by creating a completely new array
-			const updatedArray = [...selectedArray]
-
-			// Update the local state first
-			selectedItem.value = updatedArray
-
-			// Then emit the update to the parent
-			emit('update:modelValue', updatedArray)
-		}
-	}
-
-	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
-		if (!newIsOpen) {
-			if (props.disableErrorHandling || props.readonly) {
-				hasError.value = false
-			}
-			else {
-				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
-			}
-		}
-		else {
-			hasError.value = newHasError
-		}
+	const { onFieldKeydown, onListKeydown } = useSySelectKeydown({
+		handleEnterKey,
+		handleSpaceKey,
+		handleDownKey,
+		handleUpKey,
+		handleEscapeKey,
+		handleHomeKey,
+		handleEndKey,
+		handlePageUpKey,
+		handlePageDownKey,
+		handleTabKey,
+		handleCharacterKey,
+		closeList,
 	})
 
-	watch(() => props.errorMessages, (newValue) => {
-		if (!props.disableErrorHandling) {
-			hasError.value = newValue.length > 0
-		}
-	})
-
-	const ariaManager = {
-		cleanInputAttributes(inputElement: HTMLElement): void {
-			if (!inputElement) return
-
-			inputElement.removeAttribute('aria-describedby')
-			inputElement.removeAttribute('size')
-			inputElement.removeAttribute('tabindex')
-			inputElement.removeAttribute('aria-hidden')
-		},
-
-		updateInputState(inputElement: HTMLElement, isOpenValue: boolean, menuId: string, activeDescendant?: string): void {
-			if (!inputElement) return
-
-			inputElement.setAttribute('role', 'combobox')
-			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
-			inputElement.setAttribute('aria-haspopup', 'listbox')
-
-			if (isOpenValue) {
-				inputElement.setAttribute('aria-controls', menuId)
-			}
-			else {
-				inputElement.removeAttribute('aria-controls')
-			}
-
-			if (isOpenValue && activeDescendant) {
-				inputElement.setAttribute('aria-activedescendant', activeDescendant)
-			}
-			else {
-				inputElement.removeAttribute('aria-activedescendant')
-			}
-		},
-
-		updateValidationAttributes(inputElement: HTMLElement, isRequiredValue: boolean, hasErrorValue: boolean): void {
-			if (!inputElement) return
-
-			if (isRequiredValue) {
-				inputElement.setAttribute('aria-required', 'true')
-			}
-			else {
-				inputElement.removeAttribute('aria-required')
-			}
-
-			if (hasErrorValue) {
-				inputElement.setAttribute('aria-invalid', 'true')
-			}
-			else {
-				inputElement.removeAttribute('aria-invalid')
-			}
-		},
-
-		cleanParentAttributes(parentElement: HTMLElement): void {
-			if (!parentElement) return
-
-			parentElement.removeAttribute('role')
-			parentElement.removeAttribute('aria-expanded')
-			parentElement.removeAttribute('aria-controls')
-			parentElement.removeAttribute('aria-haspopup')
-			parentElement.removeAttribute('aria-activedescendant')
-			parentElement.removeAttribute('aria-required')
-			parentElement.removeAttribute('aria-invalid')
-			parentElement.removeAttribute('aria-hidden')
-		},
-
-		cleanAlertAttributes(parentElement: HTMLElement): void {
-			if (!parentElement) return
-
-			const messagesElements = parentElement.querySelectorAll('[role="alert"]')
-			messagesElements.forEach((element: Element) => {
-				element.removeAttribute('role')
-				element.removeAttribute('aria-live')
-			})
-		},
-	}
-
-	const setupAriaAttributes = () => {
-		if (!textInput.value || !textInput.value.$el) return
-
-		const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-		const parentElement = textInput.value.$el as HTMLElement
-
-		if (inputElement) {
-			ariaManager.cleanInputAttributes(inputElement)
-			ariaManager.updateInputState(inputElement, isOpen.value, uniqueMenuId.value, activeDescendantId.value)
-			ariaManager.updateValidationAttributes(inputElement, Boolean(isRequired.value), Boolean(hasError.value))
-		}
-
-		if (parentElement) {
-			ariaManager.cleanParentAttributes(parentElement)
-			ariaManager.cleanAlertAttributes(parentElement)
-		}
-	}
+	// Error state syncing is handled by useSySelectValidation
 
 	onMounted(() => {
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
-
-		nextTick(() => {
-			setupAriaAttributes()
-
-			setTimeout(setupAriaAttributes, 100)
-			setTimeout(setupAriaAttributes, 300)
-		})
 	})
 
-	watch(isOpen, (newValue) => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el) return
-
-			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-			if (inputElement) {
-				ariaManager.updateInputState(inputElement, newValue, uniqueMenuId.value, activeDescendantId.value)
-			}
-		})
+	useSySelectAria({
+		textInput,
+		isOpen,
+		uniqueMenuId,
+		activeDescendantId,
+		isRequired,
+		hasError,
+		selectedItem,
 	})
 
-	watch(activeDescendantId, (newValue) => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el || !isOpen.value) return
-
-			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-			if (inputElement) {
-				if (newValue) {
-					inputElement.setAttribute('aria-activedescendant', newValue)
-				}
-				else {
-					inputElement.removeAttribute('aria-activedescendant')
-				}
-			}
-		})
-	})
-
-	watch(hasError, (newValue) => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el) return
-
-			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-			if (inputElement) {
-				ariaManager.updateValidationAttributes(
-					inputElement,
-					Boolean(isRequired.value),
-					Boolean(newValue),
-				)
-			}
-		})
-	})
-
-	watch(selectedItem, () => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el) return
-
-			setupAriaAttributes()
-		})
-	}, { deep: true })
-
-	// Méthode de validation pour l'enregistrement avec le système de validation du formulaire
-	const validateOnSubmit = (): boolean => {
-		// Si en mode readonly ou si la gestion d'erreur est désactivée, toujours valide
-		if (props.readonly || props.disableErrorHandling) {
-			return true
-		}
-
-		// Vérifier si une valeur est sélectionnée quand le champ est requis
-		const isValid = !isRequired.value
-
-		// Mettre à jour l'état d'erreur
-		hasError.value = !isValid || props.errorMessages.length > 0
-
-		return isValid
-	}
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	// validateOnSubmit comes from useSySelectValidation
 
 	defineExpose({
 		isOpen,
@@ -815,30 +411,15 @@
 						...initializeActivatorProps(activatorProps),
 					}"
 					@click="toggleMenu"
-					@keydown.enter.prevent="handleEnterKey"
-					@keydown.space.prevent="handleSpaceKey"
-					@keydown.down.prevent="handleDownKey"
-					@keydown.up.prevent="handleUpKey"
-					@keydown.esc.prevent="handleEscapeKey"
-					@keydown.home.prevent="handleHomeKey"
-					@keydown.end.prevent="handleEndKey"
-					@keydown.page-up.prevent="handlePageUpKey"
-					@keydown.page-down.prevent="handlePageDownKey"
-					@keydown.tab="handleTabKey"
-					@keydown="(e) => {
-						// Handle printable characters for keyboard navigation
-						if (!e.ctrlKey && !e.altKey && !e.metaKey) {
-							handleCharacterKey(e.key)
-						}
-					}"
+					@keydown="onFieldKeydown"
 				>
 					<div
 						v-if="hasChips"
 						class="d-flex flex-wrap gap-1"
 					>
 						<VChip
-							v-for="item in selectedItem"
-							:key="props.returnObject && item ? item[props.valueKey] : item"
+							v-for="item in selectedChipsItems"
+							:key="props.returnObject ? (item as any)[props.valueKey] : item"
 							size="small"
 							class="ma-1"
 							closable
@@ -899,15 +480,7 @@
 				bg-color="white"
 				tabindex="0"
 				:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
-				@keydown.esc.prevent="closeList"
-				@keydown.tab="handleTabKey"
-				@keydown.enter.prevent="handleEnterKey"
-				@keydown.down.prevent="handleDownKey"
-				@keydown.up.prevent="handleUpKey"
-				@keydown.home.prevent="handleHomeKey"
-				@keydown.end.prevent="handleEndKey"
-				@keydown.page-up.prevent="handlePageUpKey"
-				@keydown.page-down.prevent="handlePageDownKey"
+				@keydown="onListKeydown"
 				@click.stop
 			>
 				<VListItem
