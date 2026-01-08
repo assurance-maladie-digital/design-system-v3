@@ -1,5 +1,5 @@
 export interface Structure {
-    name?: string
+	name?: string
 	address: string
 	idNumber: string
 	value: string

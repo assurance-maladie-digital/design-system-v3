@@ -6,8 +6,8 @@ import StructureMenu from './StructureMenu.vue'
 const meta = {
 	argTypes: {
 		'cancel': { description: 'event émis à la fermeture de la modale par le bouton annuler' },
-        'change': {description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation'},
-        'hasNoStructureAccess': {description: 'Restreint l\'accès à l\'onglets \'Mes structures\''},
+		'change': { description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation' },
+		'hasNoStructureAccess': { description: 'Restreint l\'accès à l\'onglets \'Mes structures\'' },
 		'modelValue': {
 			description: 'Objet contenant la valeur d’affichage de la modale ainsi que la structure sélectionnée',
 			table: {
@@ -96,25 +96,25 @@ const structuresTabs = [
 	{
 		structures: [
 			{
-                name: 'Dr Jean Martin',
+				name: 'Dr Jean Martin',
 				address: '39 rue de Rennes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'e',
 			},
 			{
-                name: 'Pharmacie de la gare',
+				name: 'Pharmacie de la gare',
 				address: '40 rue de Vannes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'f',
 			},
 			{
-                name: 'Cabinet d\'analayse medicale',
+				name: 'Cabinet d\'analayse medicale',
 				address: '50 Avenue de Marseille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'g',
 			},
 			{
-                name: 'Pharmacie du quai',
+				name: 'Pharmacie du quai',
 				address: '62 Boulevard de Lille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'h',
@@ -210,20 +210,20 @@ export const Default: Story = {
 }
 
 export const HasStructureAccess: Story = {
-    args: {
-        modelValue: {dialog: false, activeTab: 0},
-        structuresTabs,
-        uniqueId: 'structure-menu-unique-id',
-        userAdeli: 'n° Adeli',
-        userName: 'Jean Martin',
-        userProfession: 'Médecin génraliste',
-        userRpps: 'n° RPPS',
-    },
-    parameters: {
-        sourceCode: [
-            {
-                name: 'Template',
-                code: `<template>
+	args: {
+		modelValue: { dialog: false, activeTab: 0 },
+		structuresTabs,
+		uniqueId: 'structure-menu-unique-id',
+		userAdeli: 'n° Adeli',
+		userName: 'Jean Martin',
+		userProfession: 'Médecin génraliste',
+		userRpps: 'n° RPPS',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
 	<div>
 				<AmeliproIconBtn
 					btn-label="Sélection de structure"
@@ -248,32 +248,32 @@ export const HasStructureAccess: Story = {
 	</div>
 </template>
 				`,
-            },
-            {
-                name: 'Script',
-                code: `<script setup lang="ts">
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
 	import { AmeliproIconBtn, StructureMenu } from '@cnamts/synapse'
 	import { ref } from 'vue'
 
 	const model = ref({ dialog: false, activeTab: 0 })
 </script>
 				`,
-            },
-        ],
-    },
-    render: args => ({
-        components: {AmeliproIconBtn, StructureMenu},
-        setup() {
-            const model = ref(args.modelValue)
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIconBtn, StructureMenu },
+		setup() {
+			const model = ref(args.modelValue)
 
-            // Optional: Keeps v-model in sync with storybook args
-            watch(() => args.modelValue, (newValue) => {
-                model.value = newValue
-            })
+			// Optional: Keeps v-model in sync with storybook args
+			watch(() => args.modelValue, (newValue) => {
+				model.value = newValue
+			})
 
-            return {args, model}
-        },
-        template: `
+			return { args, model }
+		},
+		template: `
           <div>
             <AmeliproIconBtn
                 btn-label="Sélection de structure"
@@ -291,5 +291,5 @@ export const HasStructureAccess: Story = {
                 v-model="model"
             />
           </div>`,
-    }),
+	}),
 }
