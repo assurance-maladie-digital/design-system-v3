@@ -2,17 +2,20 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
+
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import { computed, nextTick, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
+
 	import { useSySelectKeyboard } from '../SySelect/composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { VList as VListComponent } from 'vuetify/components'
-	import { VChip, VList, VTextField } from 'vuetify/components'
+	import { VChip, VList, VTextField, VListItem, VListItemTitle, VMenu } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+
 	import { locales } from './locales'
-	import { VListItem, VListItemTitle, VMenu } from 'vuetify/components'
+
 	import type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
 	import { useSyAutocompleteFetch } from './composables/useSyAutocompleteFetch'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
