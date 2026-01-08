@@ -85,7 +85,7 @@
 					class="structure w-100 d-flex flex-column flex-md-row justify-md-space-between align-md-center"
 				>
 					<span class="user-infos d-flex flex-column">
-						<span class="name">{{ item.userName }}</span>
+						<span class="name">{{ item.name }}</span>
 						<span class="address">{{ item.address }}</span>
 					</span>
 
