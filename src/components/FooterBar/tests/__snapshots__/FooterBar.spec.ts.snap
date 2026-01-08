@@ -4,7 +4,7 @@ exports[`FooterBar > renders correctly 1`] = `
 <footer
   class="
     align-stretch
-    bg-backgroundSurface
+    bg-parma-darken60
     elevation-3
     flex-column
     pa-3
