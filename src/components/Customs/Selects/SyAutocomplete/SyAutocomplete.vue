@@ -19,6 +19,10 @@
 	import { useSyAutocompleteAria } from './composables/useSyAutocompleteAria'
 	import { useSyAutocompleteVuetifyAdapter } from './composables/useSyAutocompleteVuetifyAdapter'
 	import { useSyAutocompleteModel } from './composables/useSyAutocompleteModel'
+	import { useSyAutocompleteMenu } from './composables/useSyAutocompleteMenu'
+	import { useSyAutocompleteSelection } from './composables/useSyAutocompleteSelection'
+	import { useSyAutocompleteKeyboardOpen } from './composables/useSyAutocompleteKeyboardOpen'
+	import { useSyAutocompleteKeydown } from './composables/useSyAutocompleteKeydown'
 
 	export type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
 
@@ -228,8 +232,6 @@
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
 	const isInputFocused = ref(false)
-	const isOpeningWithArrow = ref(false)
-	const forceFirstOption = ref(false)
 	const openedByTyping = ref(false)
 	const pendingFocusIndex = ref<number | null>(null)
 
@@ -253,46 +255,11 @@
 	const isShouldDisplayAsterisk = computed(() => props.required && props.displayAsterisk)
 	const labelWithAsterisk = computed(() => isShouldDisplayAsterisk.value ? `${props.label} *` : props.label)
 
-	const hasChips = computed(() => {
-		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
-	})
-
 	const hasSelectionToClear = computed(() => {
 		return props.multiple
 			? (((selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
 			: selectedItem.value != null
 	})
-
-	const getPlainItemText = (item: unknown) => {
-		const itemObj = item as Record<string, unknown>
-		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
-			return itemObj[props.plainTextKey] as string
-		}
-		return itemObj[props.textKey] as string
-	}
-
-	const getItemText = (item: unknown) => {
-		return (item as Record<string, unknown>)[props.textKey] as string
-	}
-
-	const isItemSelected = (item: ItemType) => {
-		if (!selectedItem.value) return false
-
-		if (props.multiple && Array.isArray(selectedItem.value)) {
-			return selectedItem.value.some((selected) => {
-				if (props.returnObject) {
-					return (selected as Record<string, unknown>)?.[props.valueKey] === item?.[props.valueKey]
-				}
-				return selected === item?.[props.valueKey]
-			})
-		}
-
-		if (props.returnObject) {
-			return Boolean((selectedItem.value as Record<string, unknown>)?.[props.valueKey] === item?.[props.valueKey])
-		}
-
-		return selectedItem.value === item?.[props.valueKey]
-	}
 
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
@@ -307,26 +274,8 @@
 		return props.helpText && hasMessages.value && !props.hideMessages
 	})
 
-	const getChipText = (item: unknown) => {
-		if (typeof item === 'object' && item) {
-			return (item as Record<string, unknown>)[props.textKey] as string
-		}
-
-		return internalItems.value.find((i: ItemType) => i[props.valueKey] === item)?.[props.textKey] as string || ''
-	}
-
-	const getChipKey = (item: unknown) => {
-		if (props.returnObject && typeof item === 'object' && item) {
-			const key = (item as Record<string, unknown>)[props.valueKey]
-			return (typeof key === 'string' || typeof key === 'number') ? key : String(key)
-		}
-		return (typeof item === 'string' || typeof item === 'number') ? item : String(item)
-	}
-
-	const getMultipleSelectionText = () => {
-		if (!props.multiple || props.chips) return ''
-		if (!Array.isArray(selectedItem.value) || selectedItem.value.length === 0) return ''
-		return selectedItem.value.map(item => getChipText(item)).filter(Boolean).join(', ')
+	const updateHasErrorFromSelection = () => {
+		hasError.value = computedHasError.value
 	}
 
 	const textFieldModel = computed({
@@ -343,6 +292,9 @@
 
 	let focusInputElement = () => {}
 	let ensureNativeInputFocus = () => {}
+	let setActiveDescendantForMenu = (index: number) => {
+		void index
+	}
 
 	const handleInputFocus = () => {
 		isInputFocused.value = true
@@ -358,139 +310,51 @@
 		}
 	}
 
-	const removeChip = (item: unknown) => {
-		if (!Array.isArray(selectedItem.value)) return
-		const selectedArray = [...selectedItem.value]
+	const {
+		openMenu,
+		toggleMenu,
+		closeList,
+		markOpenedByTyping,
+	} = useSyAutocompleteMenu({
+		readonly: computed(() => props.readonly),
+		multiple: computed(() => props.multiple),
+		isOpen,
+		list,
+		searchValue,
+		ensureNativeInputFocus: () => ensureNativeInputFocus(),
+		scheduleFetch,
+		setActiveDescendant: index => setActiveDescendantForMenu(index),
+		openedByTyping,
+	})
 
-		let index = -1
-		if (props.returnObject) {
-			const itemValue = (item as Record<string, unknown> | null)?.[props.valueKey]
-			index = selectedArray.findIndex(selected =>
-				(selected as Record<string, unknown>)?.[props.valueKey] === itemValue,
-			)
-		}
-		else {
-			index = selectedArray.indexOf(item as (Record<string, unknown> | string | number))
-		}
-
-		if (index > -1) {
-			selectedArray.splice(index, 1)
-			selectedItem.value = [...selectedArray]
-			emit('update:modelValue', [...selectedArray])
-		}
-	}
-
-	const openMenu = (skipInitialFocus = false) => {
-		if (props.readonly) return
-		if (isOpen.value) return
-		isOpen.value = true
-		scheduleFetch(searchValue.value)
-		// initialisé plus bas via l'adaptateur Vuetify/DOM
-		ensureNativeInputFocus()
-		if (!skipInitialFocus) {
-			nextTick(() => {
-				setActiveDescendant(0)
-			})
-		}
-	}
-
-	const closeMenu = () => {
-		isOpen.value = false
-	}
-
-	const toggleMenu = (skipInitialFocus = false) => {
-		if (props.readonly) return
-		if (isOpen.value) {
-			closeMenu()
-			return
-		}
-		openMenu(skipInitialFocus)
-	}
-
-	const closeList = (event?: Event) => {
-		const target = event?.target as HTMLElement
-		const listElement = list.value?.$el
-		if (props.multiple && listElement && listElement.contains(target)) {
-			return
-		}
-		closeMenu()
-	}
-
-	const clearSelection = (event?: Event) => {
-		event?.preventDefault()
-		event?.stopPropagation()
-		markTouched()
-		selectedItem.value = props.multiple ? [] : null
-		emit('update:modelValue', props.multiple ? [] : null)
-		if (!props.multiple) {
-			searchValue.value = ''
-			emit('update:search', '')
-		}
-		hasError.value = computedHasError.value
-		if (event?.type === 'keydown' || event?.type === 'click') {
-			if (!isOpen.value) {
-				isOpen.value = true
-			}
-			ensureNativeInputFocus()
-		}
-	}
-
-	const selectItem = (item: ItemType | null, event?: Event) => {
-		event?.preventDefault()
-		event?.stopPropagation()
-
-		if (item === null) {
-			clearSelection(event)
-			return
-		}
-
-		if (props.multiple) {
-			if (!Array.isArray(selectedItem.value)) {
-				selectedItem.value = []
-			}
-			const selectedArray = selectedItem.value as SelectItemArrayType
-			const valueToCheck = item[props.valueKey]
-			const valueToStore = props.returnObject
-				? item
-				: (item[props.valueKey] as (string | number))
-
-			const index = selectedArray.findIndex((selected) => {
-				if (props.returnObject) {
-					return (selected as Record<string, unknown>)?.[props.valueKey] === valueToCheck
-				}
-				return selected === valueToCheck
-			})
-
-			if (index > -1) {
-				selectedArray.splice(index, 1)
-			}
-			else {
-				selectedArray.push(valueToStore)
-			}
-
-			emit('update:modelValue', [...selectedArray])
-			// Après une sélection en mode multiple, on réinitialise la recherche pour :
-			// - afficher les valeurs sélectionnées (mode sans chips)
-			// - rester prêt pour la prochaine requête (mode chips)
-			searchValue.value = ''
-			emit('update:search', '')
-			isOpen.value = true
-			return
-		}
-
-		if (props.returnObject) {
-			selectedItem.value = item
-			emit('update:modelValue', item)
-		}
-		else {
-			selectedItem.value = item[props.valueKey] as (string | number)
-			emit('update:modelValue', item[props.valueKey] as (string | number))
-		}
-
-		searchValue.value = String(getPlainItemText(item) ?? '')
-		emit('update:search', searchValue.value)
-		isOpen.value = false
-	}
+	const {
+		hasChips,
+		getItemText,
+		isItemSelected,
+		getChipText,
+		getChipKey,
+		getMultipleSelectionText,
+		removeChip,
+		clearSelection,
+		selectItem,
+	} = useSyAutocompleteSelection({
+		multiple: computed(() => props.multiple),
+		chips: computed(() => props.chips),
+		returnObject: computed(() => props.returnObject),
+		textKey: computed(() => props.textKey),
+		valueKey: computed(() => props.valueKey),
+		plainTextKey: computed(() => props.plainTextKey),
+		allowHtml: computed(() => props.allowHtml),
+		internalItems,
+		selectedItem,
+		searchValue,
+		isOpen,
+		markTouched,
+		updateHasError: updateHasErrorFromSelection,
+		ensureNativeInputFocus: () => ensureNativeInputFocus(),
+		emitUpdateModelValue: value => emit('update:modelValue', value),
+		emitUpdateSearch: value => emit('update:search', value),
+	})
 
 	const formattedItems = computed(() => {
 		return internalItems.value.map((item) => {
@@ -528,6 +392,8 @@
 		restoreOnOpen: false,
 		initialFocusIndex: 0,
 	})
+
+	setActiveDescendantForMenu = setActiveDescendant
 
 	// Gestion ARIA (attributs combobox/listbox) + mise à jour des états (open/activeDescendant/error/required).
 	useSyAutocompleteAria({
@@ -573,6 +439,7 @@
 		scheduleFetch,
 		clearActiveDescendant,
 		markTouched,
+		markOpenedByTyping,
 		emitUpdateModelValue: value => emit('update:modelValue', value),
 		emitUpdateSearch: value => emit('update:search', value),
 	})
@@ -620,223 +487,44 @@
 		})
 	}
 
-	const handleInputDownKey = () => {
-		if (!isOpen.value) {
-			isOpeningWithArrow.value = true
-			forceFirstOption.value = true
-			clearActiveDescendant()
-			openMenu(true)
-			nextTick(() => {
-				ensureFirstOptionFocused()
-				requestAnimationFrame(() => {
-					ensureFirstOptionFocused()
-					setTimeout(() => {
-						ensureFirstOptionFocused()
-					}, 0)
-				})
-				isOpeningWithArrow.value = false
-				setTimeout(() => {
-					forceFirstOption.value = false
-				}, 150)
-			})
-			return
-		}
-		if (isOpeningWithArrow.value) return
-		// Comportement type Vuetify : après saisie/filtrage, l'option active peut être vidée.
-		// Le prochain ArrowDown doit alors activer la première option (filtrée).
-		if (!activeDescendantId.value) {
-			if (formattedItems.value.length > 0) {
-				setActiveDescendant(0)
-			}
-			else {
-				pendingFocusIndex.value = 0
-			}
-			return
-		}
-		handleDownKey()
-	}
+	const {
+		handleInputDownKey,
+		handleInputUpKey,
+		handleListDownKey,
+		handleListUpKey,
+	} = useSyAutocompleteKeyboardOpen({
+		isOpen,
+		activeDescendantId,
+		optionIdPrefix,
+		formattedItemsLength: computed(() => formattedItems.value.length),
+		pendingFocusIndex,
+		openMenu,
+		clearActiveDescendant,
+		setActiveDescendant,
+		handleDownKey,
+		handleUpKey,
+		ensureFirstOptionFocused,
+	})
 
-	watch(
-		() => formattedItems.value.length,
-		(newLength) => {
-			if (!isOpen.value) return
-			if (pendingFocusIndex.value == null) return
-			if (newLength <= 0) return
-			setActiveDescendant(Math.min(pendingFocusIndex.value, newLength - 1))
-			pendingFocusIndex.value = null
-		},
-	)
-
-	const handleInputUpKey = () => {
-		if (!isOpen.value) {
-			isOpeningWithArrow.value = true
-			forceFirstOption.value = true
-			clearActiveDescendant()
-			openMenu(true)
-			nextTick(() => {
-				ensureFirstOptionFocused()
-				requestAnimationFrame(() => {
-					ensureFirstOptionFocused()
-					setTimeout(() => {
-						ensureFirstOptionFocused()
-					}, 0)
-				})
-				isOpeningWithArrow.value = false
-				setTimeout(() => {
-					forceFirstOption.value = false
-				}, 150)
-			})
-			return
-		}
-		if (isOpeningWithArrow.value) return
-		handleUpKey()
-	}
-
-	const handleListDownKey = () => {
-		if (!isOpen.value) {
-			clearActiveDescendant()
-			openMenu(true)
-			nextTick(() => {
-				setActiveDescendant(0)
-			})
-			return
-		}
-		handleDownKey()
-	}
-
-	const handleListUpKey = () => {
-		if (!isOpen.value) {
-			clearActiveDescendant()
-			openMenu(true)
-			nextTick(() => {
-				setActiveDescendant(0)
-			})
-			return
-		}
-		handleUpKey()
-	}
-
-	const onNativeInputKeydown = (event: KeyboardEvent) => {
-		if (event.key === 'ArrowDown') {
-			event.preventDefault()
-			event.stopPropagation()
-			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
-			handleInputDownKey()
-			return
-		}
-		if (event.key === 'ArrowUp') {
-			event.preventDefault()
-			event.stopPropagation()
-			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
-			handleInputUpKey()
-			return
-		}
-
-		if (
-			event.key === 'Backspace'
-			&& props.multiple
-			&& Array.isArray(selectedItem.value)
-			&& selectedItem.value.length > 0
-			&& searchValue.value.trim().length === 0
-		) {
-			event.preventDefault()
-			const last = selectedItem.value[selectedItem.value.length - 1]
-			removeChip(last)
-			nextTick(() => {
-				focusInputElement()
-			})
-			return
-		}
-
-		// On n'intercepte les autres touches de navigation que si le menu est ouvert,
-		// pour garder une saisie/navigation curseur normale quand il est fermé.
-		if (!isOpen.value) return
-
-		switch (event.key) {
-		case 'Home':
-			event.preventDefault()
-			handleHomeKey()
-			break
-		case 'End':
-			event.preventDefault()
-			handleEndKey()
-			break
-		case 'PageUp':
-			event.preventDefault()
-			handlePageUpKey()
-			break
-		case 'PageDown':
-			event.preventDefault()
-			handlePageDownKey()
-			break
-		case 'Enter':
-			event.preventDefault()
-			event.stopPropagation()
-			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
-			handleEnterKey()
-			break
-		case 'Escape':
-			event.preventDefault()
-			handleEscapeKey()
-			nextTick(() => {
-				focusInputElement()
-			})
-			break
-		default:
-			break
-		}
-	}
-
-	const onFieldRootKeydown = (event: KeyboardEvent) => {
-		const input = (textInput.value?.$el?.querySelector('input') as HTMLInputElement | null) ?? null
-		if (input && event.target === input) return
-
-		if (event.key === 'ArrowDown') {
-			event.preventDefault()
-			event.stopPropagation()
-			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
-			handleInputDownKey()
-			ensureNativeInputFocus()
-			return
-		}
-		if (event.key === 'ArrowUp') {
-			event.preventDefault()
-			event.stopPropagation()
-			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
-			handleInputUpKey()
-			ensureNativeInputFocus()
-			return
-		}
-
-		if (!isOpen.value) return
-
-		switch (event.key) {
-		case 'Enter':
-			event.preventDefault()
-			event.stopPropagation()
-			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
-			handleEnterKey()
-			ensureNativeInputFocus()
-			break
-		case ' ':
-		case 'Spacebar':
-			event.preventDefault()
-			event.stopPropagation()
-			;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
-			handleSpaceKey()
-			ensureNativeInputFocus()
-			break
-		case 'Escape':
-			event.preventDefault()
-			handleEscapeKey()
-			nextTick(() => {
-				focusInputElement()
-			})
-			break
-		default:
-			break
-		}
-	}
+	const { onNativeInputKeydown, onFieldRootKeydown } = useSyAutocompleteKeydown({
+		textInput,
+		isOpen,
+		multiple: computed(() => props.multiple),
+		selectedItem,
+		searchValue,
+		handleInputDownKey,
+		handleInputUpKey,
+		handleHomeKey,
+		handleEndKey,
+		handlePageUpKey,
+		handlePageDownKey,
+		handleEnterKey,
+		handleSpaceKey,
+		handleEscapeKey,
+		removeChip,
+		focusInputElement: () => focusInputElement(),
+		ensureNativeInputFocus: () => ensureNativeInputFocus(),
+	})
 
 	// Adaptateur Vuetify/DOM : gestion du focus natif et des listeners clavier sur les bons éléments.
 	;({ focusInputElement, ensureNativeInputFocus } = useSyAutocompleteVuetifyAdapter({
@@ -860,16 +548,6 @@
 				}
 				openedByTyping.value = false
 			})
-		}
-	})
-
-	watch(activeDescendantId, (newValue) => {
-		// Si le menu a été ouvert via ArrowDown/ArrowUp, on force temporairement la première option active.
-		if (forceFirstOption.value && isOpen.value) {
-			const expectedId = `${optionIdPrefix.value}option-0`
-			if (newValue && newValue !== expectedId) {
-				setActiveDescendant(0)
-			}
 		}
 	})
 

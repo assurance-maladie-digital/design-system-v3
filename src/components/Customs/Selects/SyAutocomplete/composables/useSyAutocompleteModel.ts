@@ -21,6 +21,7 @@ type UseSyAutocompleteModelOptions = {
 	scheduleFetch: (query: string) => void
 	clearActiveDescendant: () => void
 	markTouched: () => void
+	markOpenedByTyping: (value: boolean) => void
 
 	emitUpdateModelValue: (value: SelectItemValueType | SelectItemArrayType) => void
 	emitUpdateSearch: (value: string) => void
@@ -51,6 +52,7 @@ export function useSyAutocompleteModel(options: UseSyAutocompleteModelOptions) {
 		if (trimmed.length >= options.minChars.value) {
 			if (!options.isOpen.value) {
 				options.clearActiveDescendant()
+				options.markOpenedByTyping(true)
 				options.openMenu(true)
 			}
 			else {
