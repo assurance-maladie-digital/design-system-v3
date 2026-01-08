@@ -8,10 +8,10 @@
 			type: String,
 			required: true,
 		},
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 		selected: {
 			type: Boolean,
 			default: false,
@@ -41,7 +41,7 @@
 		:color="btnColor"
 		elevation="0"
 		:ripple="false"
-    :disabled="disabled"
+		:disabled="disabled"
 		role="tab"
 		:style="style"
 		:tabindex="tabindex"
@@ -84,10 +84,10 @@
 }
 
 .v-btn.v-btn--disabled {
-  opacity: 1 !important;
+	opacity: 1 !important;
 
-  :deep(.v-btn__content) {
-    color: apTokens.$ap-grey !important;
-  }
+	:deep(.v-btn__content) {
+		color: apTokens.$ap-grey !important;
+	}
 }
 </style>

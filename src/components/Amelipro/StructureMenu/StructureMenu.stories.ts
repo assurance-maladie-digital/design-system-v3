@@ -7,7 +7,7 @@ const meta = {
 	argTypes: {
 		'cancel': { description: 'event émis à la fermeture de la modale par le bouton annuler' },
         'change': {description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation'},
-        'hasNoStructureAccess': {description: "Restreint l'accès à l'onglets 'Mes structures'"},
+        'hasNoStructureAccess': {description: 'Restreint l\'accès à l\'onglets \'Mes structures\''},
 		'modelValue': {
 			description: 'Objet contenant la valeur d’affichage de la modale ainsi que la structure sélectionnée',
 			table: {
@@ -96,25 +96,25 @@ const structuresTabs = [
 	{
 		structures: [
 			{
-                userName: 'Dr Jean Martin',
+                name: 'Dr Jean Martin',
 				address: '39 rue de Rennes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'e',
 			},
 			{
-                userName: 'Pharmacie de la gare',
+                name: 'Pharmacie de la gare',
 				address: '40 rue de Vannes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'f',
 			},
 			{
-                userName: "Cabinet d'analayse medicale",
+                name: 'Cabinet d\'analayse medicale',
 				address: '50 Avenue de Marseille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'g',
 			},
 			{
-                userName: 'Pharmacie du quai',
+                name: 'Pharmacie du quai',
 				address: '62 Boulevard de Lille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'h',

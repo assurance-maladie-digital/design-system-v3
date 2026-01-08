@@ -82,13 +82,13 @@ const structuresTabs = (): StructureTab[] => ([
 		listLabel: 'label2',
 		structures: [
             {
-                userName: 'Dr Jean Martin',
+                name: 'Dr Jean Martin',
                 address: '39 rue de Rennes',
                 idNumber: 'XXXXXXXXXX',
                 value: 'e',
             },
             {
-                userName: 'Pharmacie de la gare',
+                name: 'Pharmacie de la gare',
                 address: '40 rue de Vannes',
                 idNumber: 'XXXXXXXXXX',
                 value: 'f',

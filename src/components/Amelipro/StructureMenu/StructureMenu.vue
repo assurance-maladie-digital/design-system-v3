@@ -11,10 +11,10 @@
 	import { locales } from './locales'
 
 	const props = defineProps({
-    hasNoStructureAccess: {
-      type: Boolean,
-      default: false,
-    },
+		hasNoStructureAccess: {
+			type: Boolean,
+			default: false,
+		},
 		maxStructuresLoadedDefault: {
 			type: Number,
 			default: 5,
@@ -164,7 +164,7 @@
 					:max-items-loaded-default="maxStructuresLoadedDefault"
 					:tabs="structuresTabs"
 					:unique-id="`${uniqueId}-structure-menu-tabs`"
-          :hasNoStructureAccess="hasNoStructureAccess"
+					:has-no-structure-access="hasNoStructureAccess"
 				>
 					<template #searchBar>
 						<slot name="searchBar" />

@@ -15,10 +15,10 @@
 			type: String,
 			default: undefined,
 		},
-    hasNoStructureAccess: {
-      type: Boolean,
-      default: false,
-    },
+		hasNoStructureAccess: {
+			type: Boolean,
+			default: false,
+		},
 		maxStructuresLoadedDefault: {
 			type: Number,
 			default: 5,
@@ -64,7 +64,7 @@
 		},
 	})
 
-  const isFirstTabDisabled = computed(() => props.hasNoStructureAccess)
+	const isFirstTabDisabled = computed(() => props.hasNoStructureAccess)
 
 	const onClick = async (index: number): Promise<void> => {
 		selected.value = index
@@ -99,19 +99,19 @@
 		}
 	}
 
-  watch(
-      () => props.hasNoStructureAccess,
-      (hasNoAccess) => {
-        if (hasNoAccess && selected.value === 0) {
-          selected.value = 1
-        }
+	watch(
+		() => props.hasNoStructureAccess,
+		(hasNoAccess) => {
+			if (hasNoAccess && selected.value === 0) {
+				selected.value = 1
+			}
 
-        if (!hasNoAccess && selected.value === 1) {
-          selected.value = 0
-        }
-      },
-      {immediate: true},
-  )
+			if (!hasNoAccess && selected.value === 1) {
+				selected.value = 0
+			}
+		},
+		{ immediate: true },
+	)
 </script>
 
 <template>
