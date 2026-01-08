@@ -3,7 +3,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
+	import { computed, nextTick, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
 	import { useSySelectKeyboard } from '../SySelect/composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -17,6 +17,8 @@
 	import { useSyAutocompleteFetch } from './composables/useSyAutocompleteFetch'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { useSyAutocompleteAria } from './composables/useSyAutocompleteAria'
+	import { useSyAutocompleteVuetifyAdapter } from './composables/useSyAutocompleteVuetifyAdapter'
+	import { useSyAutocompleteModel } from './composables/useSyAutocompleteModel'
 
 	export type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
 
@@ -225,8 +227,6 @@
 	const list = ref<VListComponent | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
-	const nativeInputEl = ref<HTMLInputElement | null>(null)
-	const fieldRootEl = ref<HTMLElement | null>(null)
 	const isInputFocused = ref(false)
 	const isOpeningWithArrow = ref(false)
 	const forceFirstOption = ref(false)
@@ -341,6 +341,9 @@
 		},
 	})
 
+	let focusInputElement = () => {}
+	let ensureNativeInputFocus = () => {}
+
 	const handleInputFocus = () => {
 		isInputFocused.value = true
 		ensureNativeInputFocus()
@@ -382,6 +385,7 @@
 		if (isOpen.value) return
 		isOpen.value = true
 		scheduleFetch(searchValue.value)
+		// initialisé plus bas via l'adaptateur Vuetify/DOM
 		ensureNativeInputFocus()
 		if (!skipInitialFocus) {
 			nextTick(() => {
@@ -555,41 +559,22 @@
 		})
 	})
 
-	watch(() => props.modelValue, (newValue) => {
-		selectedItem.value = newValue
-	})
-
-	watch(() => props.search, (newValue) => {
-		searchValue.value = newValue
-	})
-
-	watch(searchValue, (newValue) => {
-		emit('update:search', newValue)
-		const trimmed = newValue.trim()
-		pendingFocusIndex.value = null
-
-		// Si l'utilisateur efface manuellement le texte en mode single, on efface aussi la sélection.
-		// Sinon, le composant conserve une valeur sélectionnée et la validation required ne se déclenche pas.
-		if (!props.multiple && trimmed.length === 0 && selectedItem.value != null) {
-			selectedItem.value = null
-			emit('update:modelValue', null)
-			markTouched()
-		}
-		if (trimmed.length >= props.minChars) {
-			if (!isOpen.value) {
-				clearActiveDescendant()
-				openedByTyping.value = true
-				openMenu(true)
-			}
-			else {
-				scheduleFetch(newValue)
-				// Quand les résultats sont rafraîchis par la saisie, on réinitialise l'option active au début.
-				clearActiveDescendant()
-			}
-		}
-		else {
-			resetFetchState()
-		}
+	useSyAutocompleteModel({
+		modelValue: computed(() => props.modelValue as SelectItemValueType | SelectItemArrayType),
+		search: computed(() => props.search),
+		multiple: computed(() => props.multiple),
+		minChars: computed(() => props.minChars),
+		selectedItem,
+		searchValue,
+		isOpen,
+		pendingFocusIndex,
+		openMenu,
+		resetFetchState,
+		scheduleFetch,
+		clearActiveDescendant,
+		markTouched,
+		emitUpdateModelValue: value => emit('update:modelValue', value),
+		emitUpdateSearch: value => emit('update:search', value),
 	})
 
 	watch(() => props.items, (newItems) => {
@@ -622,59 +607,7 @@
 		if (labelRef.value) {
 			labelWidth.value = labelRef.value.offsetWidth + 64
 		}
-		nextTick(() => {
-			attachNativeKeydownListener()
-			attachFieldRootKeydownListener()
-		})
 	})
-
-	const getNativeInputElement = () => {
-		return (textInput.value?.$el?.querySelector('input') as HTMLInputElement | null) ?? null
-	}
-
-	const getFieldRootElement = () => {
-		return (textInput.value?.$el as HTMLElement | undefined) ?? null
-	}
-
-	const focusInputElement = () => {
-		const input = getNativeInputElement()
-		if (input) input.focus()
-	}
-
-	const ensureNativeInputFocus = () => {
-		focusInputElement()
-		nextTick(() => {
-			focusInputElement()
-			requestAnimationFrame(() => {
-				focusInputElement()
-				setTimeout(() => {
-					focusInputElement()
-				}, 0)
-			})
-		})
-	}
-
-	const escapeForSelector = (value: string) => {
-		const maybeCss = (globalThis as unknown as { CSS?: { escape?: (s: string) => string } }).CSS
-		if (typeof maybeCss?.escape === 'function') {
-			return maybeCss.escape(value)
-		}
-		return String(value).replace(/[^a-zA-Z0-9_-]/g, c => `\\${c}`)
-	}
-
-	const focusActiveOptionElement = () => {
-		if (!activeDescendantId.value) return
-		nextTick(() => {
-			const listElement = list.value?.$el as HTMLElement | undefined
-			if (!listElement) return
-
-			const element = listElement.querySelector(`#${escapeForSelector(activeDescendantId.value)}`)
-			if (!element) return
-
-			// On garde le focus DOM sur l'input (pattern combobox). On scroll uniquement l'option active.
-			;(element as HTMLElement).scrollIntoView({ block: 'nearest' })
-		})
-	}
 
 	const ensureFirstOptionFocused = () => {
 		setActiveDescendant(0)
@@ -855,7 +788,7 @@
 	}
 
 	const onFieldRootKeydown = (event: KeyboardEvent) => {
-		const input = getNativeInputElement()
+		const input = (textInput.value?.$el?.querySelector('input') as HTMLInputElement | null) ?? null
 		if (input && event.target === input) return
 
 		if (event.key === 'ArrowDown') {
@@ -905,46 +838,17 @@
 		}
 	}
 
-	const attachNativeKeydownListener = () => {
-		const el = getNativeInputElement()
-		if (!el) return
-		if (nativeInputEl.value === el) return
-
-		if (nativeInputEl.value) {
-			nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown, true)
-		}
-		nativeInputEl.value = el
-		nativeInputEl.value.addEventListener('keydown', onNativeInputKeydown, true)
-	}
-
-	const attachFieldRootKeydownListener = () => {
-		const el = getFieldRootElement()
-		if (!el) return
-		if (fieldRootEl.value === el) return
-
-		if (fieldRootEl.value) {
-			fieldRootEl.value.removeEventListener('keydown', onFieldRootKeydown, true)
-		}
-		fieldRootEl.value = el
-		fieldRootEl.value.addEventListener('keydown', onFieldRootKeydown, true)
-	}
-
-	const detachNativeKeydownListener = () => {
-		if (!nativeInputEl.value) return
-		nativeInputEl.value.removeEventListener('keydown', onNativeInputKeydown, true)
-		nativeInputEl.value = null
-	}
-
-	const detachFieldRootKeydownListener = () => {
-		if (!fieldRootEl.value) return
-		fieldRootEl.value.removeEventListener('keydown', onFieldRootKeydown, true)
-		fieldRootEl.value = null
-	}
+	// Adaptateur Vuetify/DOM : gestion du focus natif et des listeners clavier sur les bons éléments.
+	;({ focusInputElement, ensureNativeInputFocus } = useSyAutocompleteVuetifyAdapter({
+		textInput,
+		list,
+		isOpen,
+		activeDescendantId,
+		onNativeInputKeydown,
+		onFieldRootKeydown,
+	}))
 
 	watch(isOpen, (newValue) => {
-		if (newValue) {
-			ensureNativeInputFocus()
-		}
 		if (!newValue) {
 			openedByTyping.value = false
 		}
@@ -960,13 +864,6 @@
 	})
 
 	watch(activeDescendantId, (newValue) => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el || !isOpen.value) return
-			if (newValue) {
-				focusActiveOptionElement()
-			}
-		})
-
 		// Si le menu a été ouvert via ArrowDown/ArrowUp, on force temporairement la première option active.
 		if (forceFirstOption.value && isOpen.value) {
 			const expectedId = `${optionIdPrefix.value}option-0`
@@ -990,20 +887,6 @@
 			},
 		}
 	}
-
-	watchEffect(() => {
-		// Quand l'instance VTextField (activateur) change, on rattache les listeners.
-		void textInput.value
-		nextTick(() => {
-			attachNativeKeydownListener()
-			attachFieldRootKeydownListener()
-		})
-	})
-
-	onBeforeUnmount(() => {
-		detachNativeKeydownListener()
-		detachFieldRootKeydownListener()
-	})
 
 	defineExpose({
 		validateOnSubmit,
