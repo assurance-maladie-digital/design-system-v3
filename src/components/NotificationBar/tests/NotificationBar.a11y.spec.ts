@@ -8,7 +8,7 @@ import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import NotificationBar from '../NotificationBar.vue'
 import type { Notification } from '@/components/NotificationBar/types'
 import { useNotificationService } from '@/services/NotificationService'
-import { ref, type Ref, nextTick } from 'vue'
+import { ref, type Ref } from 'vue'
 
 vi.mock('@/services/NotificationService')
 
