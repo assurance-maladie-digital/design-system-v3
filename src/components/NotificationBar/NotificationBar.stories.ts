@@ -552,9 +552,6 @@ export const showAll: Story = (args) => {
 		},
 		template: `
 		  <div class="d-flex flex-column align-center justify-center ga-4">
-		  	<NotificationBar
-				v-bind="args"
-			/>
 			<div class="d-flex flex-wrap justify-center ga-4">
 			  <VBtn
 				  color="primary"
@@ -582,6 +579,9 @@ export const showAll: Story = (args) => {
 			  </VBtn>
 			</div>
 			<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+			<NotificationBar
+				v-bind="args"
+			/>
 		  </div>
 		`,
 	}
@@ -599,10 +599,6 @@ showAll.parameters = {
 			name: 'Template',
 			code: `
 			<div class="d-flex flex-column align-center justify-center ga-4">
-				<NotificationBar
-					close-btn-text="Fermer"
-					show-all
-				/>
 				<div class="d-flex flex-wrap justify-center ga-4">
 					<VBtn
 						color="primary"
@@ -630,6 +626,10 @@ showAll.parameters = {
 					</VBtn>
 				</div>
 				<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+				<NotificationBar
+					close-btn-text="Fermer"
+					show-all
+				/>
 			</div>
 			`,
 		},

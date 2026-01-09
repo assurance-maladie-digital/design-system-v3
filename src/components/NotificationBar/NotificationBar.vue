@@ -150,7 +150,7 @@
 }
 
 .notification-bar-transition {
-	max-width: min(calc(100% - 16px), 960px);
+	width: min(calc(100% - 16px), 960px);
 	position: fixed;
 	z-index: 2000;
 	left: 50%;

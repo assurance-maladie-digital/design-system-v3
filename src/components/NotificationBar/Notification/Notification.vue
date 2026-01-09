@@ -110,6 +110,7 @@
 	.notification {
 		display: flex;
 		align-items: center;
+		width: 100%;
 		transform: translateX(-50%);
 		padding: tokens.$gap-2 tokens.$gap-4;
 		margin-block: tokens.$gap-1;
@@ -124,11 +125,25 @@
 		float: left;
 	}
 
+	.notification__close:focus-visible {
+		:deep(.v-btn__overlay) {
+			display: none;
+		}
+
+		&::after {
+			display: none;
+		}
+	}
+
 	.notification--info {
 		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgb(var(--v-theme-backgroundInfoContrasted, '12, 65, 154'));
 		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+
+		.notification__close:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+		}
 	}
 
 	.notification--success {
@@ -136,6 +151,10 @@
 		background-color: rgb(var(--v-theme-backgroundSuccessContrasted, '86, 194, 113'));
 		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
+
+		.notification__close:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-textBase, '0, 0, 0'));
+		}
 	}
 
 	.notification--warning {
@@ -143,6 +162,10 @@
 		background-color: rgb(var(--v-theme-backgroundWarningContrasted, '240, 179, 35'));
 		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
+
+		.notification__close:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-textBase, '0, 0, 0'));
+		}
 	}
 
 	.notification--error {
@@ -150,6 +173,10 @@
 		background-color: rgb(var(--v-theme-backgroundErrorContrasted, '179, 63, 46'));
 		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+
+		.notification__close:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+		}
 	}
 
 	.notification__message {
