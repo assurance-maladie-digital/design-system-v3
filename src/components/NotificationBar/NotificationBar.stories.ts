@@ -519,6 +519,7 @@ export const WithClearQueue: Story = (args) => {
                 Fermer toutes les notifications
               </VBtn>
             </div>
+			<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
           </div>
         `,
 	}
@@ -533,7 +534,7 @@ export const showAll: Story = (args) => {
 	return {
 		components: { NotificationBar, VBtn },
 		setup() {
-			const { addNotification } = useNotificationService()
+			const { addNotification, clearQueue } = useNotificationService()
 
 			const envoyerNotification = (message: string, type: Notification['type'] = 'info') => {
 				const notification: Notification = {
@@ -548,40 +549,47 @@ export const showAll: Story = (args) => {
 			return {
 				args,
 				envoyerNotification,
+				clearQueue,
 			}
 		},
 		template: `
-		  <div class="d-flex flex-column align-center justify-center ga-4">
+		<div class="d-flex flex-column align-center justify-center ga-4">
+			<NotificationBar
+				v-bind="args"
+			/>
 			<div class="d-flex flex-wrap justify-center ga-4">
 			  <VBtn
 				  color="primary"
 				  @click="envoyerNotification('Notification info', 'info')"
 			  >
-				Ajouter une notification info
+				Ajouter info
 			  </VBtn>
 			  <VBtn
 				  color="success"
 				  @click="envoyerNotification('Notification succès', 'success')"
 			  >
-				Ajouter une notification succès
+				Ajouter succès
 			  </VBtn>
 			  <VBtn
 				  color="warning"
 				  @click="envoyerNotification('Notification avertissement', 'warning')"
 			  >
-				Ajouter une notification avertissement
+				Ajouter avertissement
 			  </VBtn>
 			  <VBtn
 				  color="error"
 				  @click="envoyerNotification('Notification erreur', 'error')"
 			  >
-				Ajouter une notification erreur
+				Ajouter erreur
 			  </VBtn>
+				<VBtn
+					color="grey-darken-1"
+					@click="clearQueue()"
+				>
+					Fermer toutes les notifications
+				</VBtn>
 			</div>
 			<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
-			<NotificationBar
-				v-bind="args"
-			/>
 		  </div>
 		`,
 	}
