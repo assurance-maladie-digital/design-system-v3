@@ -13,6 +13,7 @@
 	import { VChip, VList, VTextField, VListItem, VListItemTitle, VMenu } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
 	import { locales } from './locales'
 
@@ -424,7 +425,7 @@
 			if (!el || !item) {
 				return
 			}
-			el.innerHTML = String(getItemText(item) ?? '')
+			el.innerHTML = sanitizeHtml(String(getItemText(item) ?? ''))
 		})
 	})
 

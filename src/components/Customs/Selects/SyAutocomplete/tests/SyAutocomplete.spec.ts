@@ -43,6 +43,36 @@ describe('SyAutocomplete.vue', () => {
 		})
 	})
 
+	describe('AllowHtml', () => {
+		it('sanitizes HTML rendered in the list when allowHtml is enabled', async () => {
+			const items = [
+				{ text: '<img src="x" onerror="alert(1)">OK<script>alert(2)</script>', value: 'a' },
+			]
+
+			const wrapper = mount(SyAutocomplete, {
+				props: {
+					items,
+					returnObject: true,
+					allowHtml: true,
+					minChars: 0,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-autocomplete').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+
+			const htmlSpan = document.body.querySelector('.item-text') as HTMLElement | null
+			expect(htmlSpan).not.toBeNull()
+			expect(htmlSpan?.innerHTML ?? '').toContain('OK')
+			expect(htmlSpan?.innerHTML ?? '').not.toContain('onerror')
+			expect(htmlSpan?.innerHTML ?? '').not.toContain('<script')
+
+			wrapper.unmount()
+		})
+	})
+
 	describe('Required', () => {
 		it('displays required error message after blur when required and empty', async () => {
 			const wrapper = mount(SyAutocomplete, {

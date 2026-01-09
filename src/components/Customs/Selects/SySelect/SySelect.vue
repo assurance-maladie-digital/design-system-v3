@@ -17,6 +17,7 @@
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { sanitizeHtml } from '@/utils/sanitizeHtml'
 	import { locales } from './locales'
 
 	export type ItemType = {
@@ -236,9 +237,9 @@
 				return
 			}
 
-			// getItemText already returns the correct HTML string for the item
-			// We assign it to innerHTML to preserve the previous rendering behavior
-			el.innerHTML = String(getItemText(item) ?? '')
+			// getItemText may contain HTML when allowHtml is enabled.
+			// Sanitize to mitigate XSS when assigning to innerHTML.
+			el.innerHTML = sanitizeHtml(String(getItemText(item) ?? ''))
 		})
 	})
 

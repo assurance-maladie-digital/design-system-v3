@@ -18,6 +18,35 @@ describe('SySelect.vue', () => {
 		wrapper.unmount()
 	})
 
+	describe('AllowHtml', () => {
+		it('sanitizes HTML rendered in the list when allowHtml is enabled', async () => {
+			const items = [
+				{ text: '<img src="x" onerror="alert(1)">OK<script>alert(2)</script>', value: 'a' },
+			]
+
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					allowHtml: true,
+					returnObject: true,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+
+			const htmlSpan = document.body.querySelector('.item-text') as HTMLElement | null
+			expect(htmlSpan).not.toBeNull()
+			expect(htmlSpan?.innerHTML ?? '').toContain('OK')
+			expect(htmlSpan?.innerHTML ?? '').not.toContain('onerror')
+			expect(htmlSpan?.innerHTML ?? '').not.toContain('<script')
+
+			wrapper.unmount()
+		})
+	})
+
 	it('displays the selected item text', async () => {
 		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
 		const wrapper = mount(SySelect, {
