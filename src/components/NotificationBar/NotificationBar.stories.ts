@@ -10,6 +10,7 @@ interface StoryArgs {
 	type: Notification['type']
 	bottom: boolean
 	rounded: string | number | boolean
+	showAll: boolean
 }
 
 const meta: Meta<typeof NotificationBar> = {
@@ -51,6 +52,18 @@ const meta: Meta<typeof NotificationBar> = {
 				},
 				defaultValue: {
 					summary: '4',
+				},
+			},
+		},
+		showAll: {
+			control: 'boolean',
+			description: 'Afficher toutes les notifications au lieu de la dernière uniquement',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
 				},
 			},
 		},
@@ -506,6 +519,7 @@ export const WithClearQueue: Story = (args) => {
                 Fermer toutes les notifications
               </VBtn>
             </div>
+			<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
           </div>
         `,
 	}
@@ -516,31 +530,114 @@ WithClearQueue.args = {
 	bottom: true,
 }
 
-WithClearQueue.parameters = {
+export const showAll: Story = (args) => {
+	return {
+		components: { NotificationBar, VBtn },
+		setup() {
+			const { addNotification, clearQueue } = useNotificationService()
+
+			const envoyerNotification = (message: string, type: Notification['type'] = 'info') => {
+				const notification: Notification = {
+					id: Date.now().toString(),
+					message,
+					type: type,
+					timeout: -1,
+				}
+				addNotification(notification)
+			}
+
+			return {
+				args,
+				envoyerNotification,
+				clearQueue,
+			}
+		},
+		template: `
+		<div class="d-flex flex-column align-center justify-center ga-4">
+			<NotificationBar
+				v-bind="args"
+			/>
+			<div class="d-flex flex-wrap justify-center ga-4">
+			  <VBtn
+				  color="primary"
+				  @click="envoyerNotification('Notification info', 'info')"
+			  >
+				Ajouter info
+			  </VBtn>
+			  <VBtn
+				  color="success"
+				  @click="envoyerNotification('Notification succès', 'success')"
+			  >
+				Ajouter succès
+			  </VBtn>
+			  <VBtn
+				  color="warning"
+				  @click="envoyerNotification('Notification avertissement', 'warning')"
+			  >
+				Ajouter avertissement
+			  </VBtn>
+			  <VBtn
+				  color="error"
+				  @click="envoyerNotification('Notification erreur', 'error')"
+			  >
+				Ajouter erreur
+			  </VBtn>
+				<VBtn
+					color="grey-darken-1"
+					@click="clearQueue()"
+				>
+					Fermer toutes les notifications
+				</VBtn>
+			</div>
+			<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+		  </div>
+		`,
+	}
+}
+
+showAll.args = {
+	...Default.args,
+	showAll: true,
+	bottom: true,
+}
+
+showAll.parameters = {
 	sourceCode: [
 		{
 			name: 'Template',
 			code: `
 			<div class="d-flex flex-column align-center justify-center ga-4">
-				<NotificationBar
-					bottom
-				/>
 				<div class="d-flex flex-wrap justify-center ga-4">
-					<!-- Boutons pour ajouter des notifications -->
 					<VBtn
 						color="primary"
 						@click="envoyerNotification('Notification info', 'info')"
 					>
-						Ajouter info
+						Ajouter une notification info
 					</VBtn>
-					<!-- ... autres boutons ... -->
 					<VBtn
-						color="grey-darken-1"
-						@click="clearQueue()"
+						color="success"
+						@click="envoyerNotification('Notification succès', 'success')"
 					>
-						Fermer toutes les notifications
+						Ajouter une notification succès
+					</VBtn>
+					<VBtn
+						color="warning"
+						@click="envoyerNotification('Notification avertissement', 'warning')"
+					>
+						Ajouter une notification avertissement
+					</VBtn>
+					<VBtn
+						color="error"
+						@click="envoyerNotification('Notification erreur', 'error')"
+					>
+						Ajouter une notification erreur
 					</VBtn>
 				</div>
+				<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+				<NotificationBar
+					close-btn-text="Fermer"
+					show-all
+				/>
 			</div>
 			`,
 		},
@@ -548,10 +645,13 @@ WithClearQueue.parameters = {
 			name: 'Script',
 			code: `
 			<script setup lang="ts">
+				import { VBtn } from 'vuetify/components'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+				import { ref } from 'vue'
 
-				const { addNotification, clearQueue } = useNotificationService()
+				const { addNotification } = useNotificationService()
 
-				const envoyerNotification = (message: string, type = 'info') => {
+				const envoyerNotification = (message: string, type: string = 'info') => {
 					const notification = {
 						id: Date.now().toString(),
 						message,

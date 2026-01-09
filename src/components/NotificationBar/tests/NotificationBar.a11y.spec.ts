@@ -8,7 +8,7 @@ import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import NotificationBar from '../NotificationBar.vue'
 import type { Notification } from '@/components/NotificationBar/types'
 import { useNotificationService } from '@/services/NotificationService'
-import { ref, type Ref, nextTick } from 'vue'
+import { ref, type Ref } from 'vue'
 
 vi.mock('@/services/NotificationService')
 
@@ -50,12 +50,11 @@ describe('NotificationBar – accessibility (axe)', () => {
 			icon: null,
 		}
 
+		useNotificationService().notificationQueue.value = [notification]
+
 		const wrapper = mount(NotificationBar, {
 			attachTo: document.body,
 		})
-
-		wrapper.vm.openNotification(notification)
-		await nextTick()
 
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'NotificationBar – visible info notification', {
