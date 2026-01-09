@@ -162,17 +162,17 @@
 						<span class="d-sr-only">{{ props.label }}</span>
 						<span
 							v-if="!isMobileVersion && !iconOnly"
-							class="d-flex flex-column align-end py-1 mr-1"
+							class="d-flex flex-column align-end py-1 mr-2"
 						>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="font-weight-bold"
+								class="text-h6 font-weight-bold"
 							>
 								{{ props.primaryInfo }}
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="text-grey text-darken-2 font-weight-medium"
+								class="text-grey text-darken-2 text-h7 font-weight-regular"
 							>
 								{{ props.secondaryInfo }}
 							</span>
