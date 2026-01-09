@@ -192,7 +192,7 @@ Success.parameters = {
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
 				import { ref } from 'vue'
-				import { useNotificationService, NotificationBar } from '@cnamts/synpase'
+				import { useNotificationService, NotificationBar } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
 

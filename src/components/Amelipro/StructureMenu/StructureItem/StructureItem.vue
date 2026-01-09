@@ -82,9 +82,12 @@
 
 				<span
 					:id="`${uniqueId}-structure-infos`"
-					class="w-100 d-flex flex-column flex-md-row justify-md-space-between align-md-center"
+					class="structure w-100 d-flex flex-column flex-md-row justify-md-space-between align-md-center"
 				>
-					<b>{{ item.address }}</b>
+					<span class="user-infos d-flex flex-column">
+						<span class="name">{{ item.name }}</span>
+						<span class="address">{{ item.address }}</span>
+					</span>
 
 					<span>
 						<span
@@ -125,5 +128,14 @@ input {
 
 .selected-border {
 	border: 1px solid apTokens.$ap-blue;
+}
+
+.structure {
+	font-size: apTokens.$font-size-xs;
+	color: apTokens.$ap-grey-darken1;
+
+	.name {
+		font-weight: 600;
+	}
 }
 </style>

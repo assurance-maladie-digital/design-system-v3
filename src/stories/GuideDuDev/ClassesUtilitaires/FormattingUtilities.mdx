@@ -15,7 +15,7 @@ Cette fonction convertit une taille en octets en une chaîne de caractères lisi
 
 ### Importation
 
-<Source dark code={`import { calcHumanFileSize } from '@cnamts/synpase'
+<Source dark code={`import { calcHumanFileSize } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
@@ -43,7 +43,7 @@ calcHumanFileSize(1099511627776) // '1 To'
 
 <script>
 import { ref } from 'vue'
-import { calcHumanFileSize } from '@cnamts/synpase'
+import { calcHumanFileSize } from '@cnamts/synapse'
 
 export default {
   setup() {
@@ -74,7 +74,7 @@ Cette fonction convertit une valeur en unité CSS (px, em, rem, etc.).
 
 ### Importation
 
-<Source dark code={`import { convertToUnit } from '@cnamts/synpase'
+<Source dark code={`import { convertToUnit } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
@@ -103,7 +103,7 @@ convertToUnit(undefined) // undefined
 
 <script>
 import { ref, computed } from 'vue'
-import { convertToUnit } from '@cnamts/synpase'
+import { convertToUnit } from '@cnamts/synapse'
 
 export default {
   props: {
@@ -129,7 +129,7 @@ Cette fonction formate une date selon un format spécifique, en utilisant la bib
 
 ### Importation
 
-<Source dark code={`import { formatDate } from '@cnamts/synpase'
+<Source dark code={`import { formatDate } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
@@ -159,7 +159,7 @@ formatDate(undefined) // ''
 
 <script>
 import { computed } from 'vue'
-import { formatDate } from '@cnamts/synpase'
+import { formatDate } from '@cnamts/synapse'
 
 export default {
   props: {
@@ -196,7 +196,7 @@ Cette fonction parse une chaîne de caractères en objet Date, en prenant en cha
 
 ### Importation
 
-<Source dark code={`import { parseDate } from '@cnamts/synpase'
+<Source dark code={`import { parseDate } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
@@ -232,7 +232,7 @@ parseDate('date invalide') // null
 <script>
 import { ref, computed } from 'vue'
 import { parseDate, isDateValidUtil } from '
-import '../../styles/shared.css';@cnamts/synpase'
+import '../../styles/shared.css';@cnamts/synapse'
 
 export default {
   setup() {
@@ -288,7 +288,7 @@ Cette fonction formate un numéro de sécurité sociale (NIR) pour le rendre plu
 
 ### Importation
 
-<Source dark code={`import { formatNir } from '@cnamts/synpase'
+<Source dark code={`import { formatNir } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
