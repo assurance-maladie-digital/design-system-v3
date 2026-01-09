@@ -7,6 +7,7 @@
 	import useAccordionState from './composables/useAccordionState'
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
 	import useAccordionKeyboardNavigation, { type AccordionItem as KeyboardNavigationItem } from './composables/useAccordionKeyboardNavigation'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	interface ContentObject {
 		title: string
@@ -117,7 +118,7 @@
 					:is="getHeadingTag(item)"
 					class="sy-accordion-heading"
 				>
-					<div
+					<span
 						class="sy-accordion-title"
 						:class="isItemOpen(item.id) ? `text-${options.accordion.activeColor}` : `text-${options.accordion.titleColor}`"
 					>
@@ -125,10 +126,13 @@
 							class="sy-accordion-icon"
 							:class="{ 'sy-accordion-icon--open': isItemOpen(item.id) }"
 						>
-							<v-icon :icon="mdiChevronRight" />
+							<SyIcon
+								:icon="mdiChevronRight"
+								decorative
+							/>
 						</span>
 						<span>{{ item.title }}</span>
-					</div>
+					</span>
 				</component>
 			</div>
 
