@@ -718,7 +718,7 @@ export const VuetifyOptions: Story = {
 				rounded: 'xl',
 			},
 			cardTitle: {
-				class: 'pa-4 mb-4 accent--text',
+				class: 'pa-5 mb-4 accent--text',
 			},
 			closeBtn: {
 				class: {
@@ -801,7 +801,7 @@ export const VuetifyOptions: Story = {
 							rounded: 'xl',
 						},
 						cardTitle: {
-							class: 'pa-4 mb-4 accent--text',
+							class: 'pa-5 mb-4 accent--text',
 						},
 						closeBtn: {
 							class: {
