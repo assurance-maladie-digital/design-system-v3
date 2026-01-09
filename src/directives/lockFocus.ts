@@ -8,19 +8,29 @@ import type { Directive } from 'vue'
  * @example
  * ```vue
  * <template>
- *   <div v-lock-focus>
+ *   <div v-lock-focus="true">
  *     <!-- Focus will be trapped within this element -->
  *   </div>
  * </template>
  * ```
  */
 const vLockFocus: Directive<HTMLElement> = {
-	mounted(el) {
+	mounted(el, binding) {
+		if (binding.value === false) return
 		el.addEventListener('keydown', handleFocus)
 	},
 
 	unmounted(el) {
 		el.removeEventListener('keydown', handleFocus)
+	},
+
+	updated(el, binding) {
+		if (binding.value === false) {
+			el.removeEventListener('keydown', handleFocus)
+		}
+		else {
+			el.addEventListener('keydown', handleFocus)
+		}
 	},
 }
 
