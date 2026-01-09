@@ -582,6 +582,7 @@
 			:bg-color="props.bgColor"
 			:center-affix="props.centerAffix"
 			:color="props.color"
+			:counter="props.counter"
 			:counter-value="props.counterValue"
 			:density="props.density"
 			:direction="props.direction"

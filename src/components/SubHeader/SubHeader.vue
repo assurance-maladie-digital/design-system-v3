@@ -24,7 +24,6 @@
 		subTitleAccessibleName?: string
 		dataListGroupItems?: DataListGroupItems | undefined
 		loading?: boolean
-		renderHtmlValue?: boolean
 		renderFixedHeight?: boolean
 	}>(), {
 		hideBackBtn: false,
@@ -36,7 +35,6 @@
 		subTitleAccessibleName: undefined,
 		dataListGroupItems: undefined,
 		loading: false,
-		renderHtmlValue: false,
 		renderFixedHeight: false,
 	})
 
@@ -45,7 +43,10 @@
 
 	const backArrowIcon = ref(mdiKeyboardBackspace)
 
-	const emit = defineEmits(['click:list-item', 'back'])
+	const emit = defineEmits<{
+		(e: 'click:list-item', value: DataListActionEvent): void
+		(e: 'back'): void
+	}>()
 
 	function emitItemAction(eventValue: DataListActionEvent) {
 		emit('click:list-item', eventValue)
@@ -70,29 +71,30 @@
 				v-if="!hideBackBtn"
 				mode="out-in"
 			>
-				<VSkeletonLoader
-					v-if="loading"
-					max-height="28"
-					type="button"
-					color="secondary"
-					class="vd-subheader-loading mb-4"
-				/>
-				<VBtn
-					v-else
-					v-bind="options.backBtn"
-					class="vd-sub-header-back-btn mb-1"
-					:aria-label="effectiveBackBtnAccessibleName"
-					@click="$emit('back')"
-				>
-					<slot name="back-btn-icon">
-						<SyIcon
-							class="mr-2"
-							:icon="backArrowIcon"
-							:decorative="true"
-						/>
-					</slot>
-					{{ backBtnText }}
-				</VBtn>
+				<VThemeProvider theme="dark">
+					<VSkeletonLoader
+						v-if="loading"
+						type="button"
+						class="vd-subheader-loading mb-4"
+					/>
+
+					<VBtn
+						v-else
+						v-bind="options.backBtn"
+						class="vd-sub-header-back-btn mb-1"
+						:aria-label="effectiveBackBtnAccessibleName"
+						@click="$emit('back')"
+					>
+						<slot name="back-btn-icon">
+							<SyIcon
+								class="mr-2"
+								:icon="backArrowIcon"
+								:decorative="true"
+							/>
+						</slot>
+						{{ backBtnText }}
+					</VBtn>
+				</VThemeProvider>
 			</VFadeTransition>
 		</slot>
 
@@ -104,48 +106,48 @@
 				class="vd-sub-header-informations d-flex flex-column mr-10"
 				:class="{ 'flex-shrink-0': renderFixedHeight }"
 			>
-				<slot name="title">
-					<VFadeTransition mode="out-in">
-						<HeaderLoading
-							v-if="loading"
-							width="300"
-							height="2rem"
-							color="secondary"
-						/>
-						<h2
-							v-else-if="titleText"
-							class="text-h5 font-weight-bold"
-							:aria-label="titleAccessibleName"
-						>
-							{{ titleText }}
-						</h2>
-					</VFadeTransition>
-				</slot>
+				<VThemeProvider theme="dark">
+					<slot name="title">
+						<VFadeTransition mode="out-in">
+							<HeaderLoading
+								v-if="loading"
+								width="300"
+								height="2rem"
+							/>
+							<h2
+								v-else-if="titleText"
+								class="text-h5 font-weight-bold"
+								:aria-label="titleAccessibleName"
+							>
+								{{ titleText }}
+							</h2>
+						</VFadeTransition>
+					</slot>
 
-				<slot name="sub-title">
-					<VFadeTransition
-						v-if="subTitleText"
-						mode="out-in"
-					>
-						<HeaderLoading
-							v-if="loading"
-							class="mt-1"
-							width="250"
-							height="2rem"
-							color="secondary"
-						/>
-						<p
-							v-else
-							class="text-h6 font-weight-bold mt-1 mb-0"
-							:style="{ color: 'rgba(255, 255, 255, .7)' }"
-							:aria-label="subTitleAccessibleName"
+					<slot name="sub-title">
+						<VFadeTransition
+							v-if="subTitleText"
+							mode="out-in"
 						>
-							{{ subTitleText }}
-						</p>
-					</VFadeTransition>
-				</slot>
+							<HeaderLoading
+								v-if="loading"
+								class="mt-1"
+								width="250"
+								height="2rem"
+							/>
+							<p
+								v-else
+								class="text-h6 font-weight-bold mt-1 mb-0"
+								:style="{ color: 'rgba(255, 255, 255, .7)' }"
+								:aria-label="subTitleAccessibleName"
+							>
+								{{ subTitleText }}
+							</p>
+						</VFadeTransition>
+					</slot>
 
-				<slot name="additional-informations" />
+					<slot name="additional-informations" />
+				</VThemeProvider>
 			</div>
 
 			<slot name="right-content">
@@ -154,11 +156,22 @@
 						v-if="dataListGroupItems"
 						:items="dataListGroupItems"
 						:loading="loading"
-						:render-html-value="renderHtmlValue"
 						item-width="auto"
 						:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
 						@click:list-item="emitItemAction"
-					/>
+					>
+						<template
+							v-if="$slots.item"
+							#item="{ item, index, itemValue }"
+						>
+							<slot
+								name="item"
+								:item="item"
+								:index="index"
+								:item-value="itemValue"
+							/>
+						</template>
+					</DataListGroup>
 				</VThemeProvider>
 			</slot>
 		</div>
@@ -168,6 +181,7 @@
 <style lang="scss" scoped>
 .vd-sub-header {
 	overflow-x: auto;
+	border-radius: 0 0 32px 32px;
 }
 
 .vd-sub-header-back-btn {
@@ -183,8 +197,6 @@
 .vd-data-list-group :deep(.vd-data-list) {
 	max-width: 200px;
 
-	// Apply margin right to avoid empty
-	// space on smaller screens
 	&:not(:last-child) {
 		margin-right: 80px !important;
 	}
@@ -210,7 +222,8 @@
 		margin: 0;
 		min-height: 28px;
 		height: auto;
-		background: rgba(white, var(--v-border-opacity));
+		background-color: #e6e6e6 !important;
 	}
 }
+
 </style>

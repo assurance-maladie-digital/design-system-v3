@@ -39,6 +39,8 @@
 			confirmTabChange?: boolean
 			/** Message affiché dans la boîte de dialogue de confirmation */
 			confirmationMessage?: boolean
+			/** Largeur interne */
+			width?: string
 		}>(),
 		{
 			// Confirmation related defaults
@@ -53,6 +55,7 @@
 			hideWhenDown: false,
 			maxHorizontalMenuItems: 6,
 			items: undefined,
+			width: '1712px',
 		})
 
 	// Définition des événements émis
@@ -126,6 +129,7 @@
 		:home-aria-label="homeAriaLabel"
 		:service-title="serviceTitle"
 		:service-subtitle="serviceSubtitle"
+		:width="width"
 	>
 		<template #menu>
 			<HeaderBurgerMenu

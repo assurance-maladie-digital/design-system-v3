@@ -1,18 +1,74 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Story } from '@storybook/blocks';
 import * as AccessStories from './Accessibilite.stories.ts';
-import '../../stories/styles/shared.css';
+import * as CollapsibleListStories from './CollapsibleList.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '../../stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={AccessStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Informations sur l'accessibilité du composant</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="CollapsibleList"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/"
+>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique">
+			<ul>
+				<li><strong>Comportement adaptatif</strong> : Section pliable sur mobile, liste statique sur desktop</li>
+				<li><strong>Sur mobile</strong> : <code>role="button"</code> pour l'en-tête et <code>role="region"</code> pour le contenu, <code>aria-expanded</code></li>
+				<li><strong>Sur desktop</strong> : Liste <code>&lt;ul&gt;</code> avec éléments <code>&lt;li&gt;</code> et liens <code>&lt;a&gt;</code></li>
+				<li><strong>Liens accessibles</strong> : <code>aria-label</code> sur les liens pour descriptions complètes</li>
+			</ul>
+		</CriteriaCard>
 
-<Story of={AccessStories.Legende} />
-<br />
+		<CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+			<ul>
+				<li><strong>Sur mobile</strong> : Touches Espace/Entrée pour ouvrir/fermer, Tab pour naviguer</li>
+				<li><strong>Sur desktop</strong> : Navigation Tab standard dans la liste</li>
+				<li><strong>Focus visible</strong> : Indicateurs de focus sur l'en-tête et les liens</li>
+			</ul>
+		</CriteriaCard>
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+		<CriteriaCard icon="📱" title="États et retours d'information">
+			<ul>
+				<li><strong>État d'expansion (mobile)</strong> : <code>aria-expanded</code> et icône indicative</li>
+				<li><strong>Indication visuelle</strong> : Changements de couleur au focus et hover</li>
+				<li><strong>Contenu masqué (mobile)</strong> : Liste cachée par défaut, visible à l'ouverture</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
 
-<Story of={AccessStories.AccessibilitePanel} />
-<br />
+	<DemoSection componentName="CollapsibleList">
+		<Story of={CollapsibleListStories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Utilisez un titre descriptif pour l'en-tête</li>
+			<li>Assurez-vous que le contenu est pertinent et non redondant</li>
+			<li>Évitez de placer des éléments interactifs complexes dans le contenu</li>
+			<li>Fournissez une alternative non-JavaScript si nécessaire</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les disclosures</a></li>
+			<li><a href="https://inclusive-components.design/collapsible-sections/" target="_blank" rel="noopener noreferrer">Inclusive Components: Collapsible Sections</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+		</ul>
+	</ResourcesSection>
+
+<AuditSection>
+		<p>Rapport d'audit manuel : <a href="/audits/CollapsibleList.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></p>
+		<p style={{color: 'grey', fontSize: '14px'}}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/792" target="_blank" style={{color: '#0C41BD'}}>issue #792</a>)</p>
+	</AuditSection>
+</AccessibilityGuideLayout>

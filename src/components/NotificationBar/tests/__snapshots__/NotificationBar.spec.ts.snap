@@ -1,34 +1,72 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`NotificationBar.vue > should render notification bar 1`] = `
-<div notification="[object Object]">
-  <v-snackbar-stub
-    absolute="false"
-    activatorprops="[object Object]"
-    attach="false"
-    class=""
-    closeonback="true"
-    closeoncontentclick="false"
-    color="info"
-    contained="false"
-    disabled="false"
-    eager="true"
-    location="top"
-    locationstrategy="static"
-    modelvalue="true"
-    multiline="false"
-    openonhover="false"
-    origin="auto"
-    role="status"
-    rounded="4"
-    tile="false"
-    timeout="-1"
-    timer="false"
-    transition="v-snackbar-transition"
-    variant="elevated"
-    vertical="false"
-    width="960px"
-    zindex="2000"
-  ></v-snackbar-stub>
+<div
+  class="
+    notification-bar
+    notification-bar--queue
+  "
+  role="status"
+>
+  <transition-group-stub
+    appear="false"
+    class="notification-bar-transition"
+    css="true"
+    name="fade"
+    persisted="false"
+    style="
+      bottom: auto;
+      top: 4px;
+    "
+    tag="div"
+  >
+    <div
+      class="
+        notification
+        notification--4
+        notification--info
+        notification--short-text
+        rounded-4
+      "
+      style="border-radius: 4px;"
+    >
+      <!-- v-if -->
+      <span class="notification__message">
+        Test message
+      </span>
+      <div class="
+        action-section-short-text
+        d-flex
+        ga-2
+        notification__actions
+      ">
+        <button
+          aria-label="Fermer la notification"
+          class="
+            ml-auto
+            notification__close
+            v-btn
+            v-btn--density-default
+            v-btn--size-default
+            v-btn--variant-text
+            v-theme--light
+          "
+          type="button"
+        >
+          <span class="v-btn__overlay"></span>
+          <span class="v-btn__underlay"></span>
+          <!---->
+          <span
+            class="v-btn__content"
+            data-no-activator=""
+          >
+            Fermer
+          </span>
+          <!---->
+          <!---->
+        </button>
+      </div>
+    </div>
+  </transition-group-stub>
 </div>
 `;

@@ -125,14 +125,20 @@ class IntersectionObserverMock {
  * une disponibilité maximale, car certains modules peuvent accéder à l'API
  * via l'une ou l'autre référence. Cela résout les différences entre
  * environnements local et CI.
+ *
+ * Avec jsdom, IntersectionObserver peut déjà être défini ; dans ce cas,
+ * nous conservons l'implémentation native et n'essayons pas de la
+ * redéfinir.
  */
-Object.defineProperty(window, 'IntersectionObserver', {
-	value: IntersectionObserverMock,
-	writable: true,
-})
+if (!('IntersectionObserver' in window)) {
+	Object.defineProperty(window, 'IntersectionObserver', {
+		value: IntersectionObserverMock,
+		writable: true,
+	})
+}
 
 // Définir pour l'objet global également (important pour CI)
-if (typeof global !== 'undefined') {
+if (typeof global !== 'undefined' && !(global as any).IntersectionObserver) {
 	// Assigner directement à global avant toute autre initialisation
 	// pour garantir sa disponibilité avant l'initialisation des composants Vuetify
 	Object.defineProperty(global, 'IntersectionObserver', {

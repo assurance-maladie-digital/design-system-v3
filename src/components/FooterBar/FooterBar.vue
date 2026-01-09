@@ -330,7 +330,7 @@ a {
 	}
 
 	.v-divider {
-		border-color: rgba($white, 1);
+		border-color: rgba(tokens.$colors-border-subdued, 1);
 	}
 
 	svg {
