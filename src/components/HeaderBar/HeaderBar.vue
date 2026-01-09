@@ -267,18 +267,19 @@
 	margin-left: auto;
 }
 
-	.header-logo {
+.header-logo {
 	padding-left: 16px;
 }
-@media screen and (min-width: $header-breakpoint) {
 
-.header-logo{
-	padding-left: 56px;
-}
-.menu + .header-logo {
-	padding-left: 0;
-	margin-left: 8px;
-}
+@media screen and (min-width: $header-breakpoint) {
+	.header-logo {
+		padding-left: 56px;
+	}
+
+	.menu + .header-logo {
+		padding-left: 0;
+		margin-left: 8px;
+	}
 
 	.inner-header {
 		height: $header-height-desktop;
