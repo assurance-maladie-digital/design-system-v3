@@ -50,12 +50,11 @@ describe('NotificationBar – accessibility (axe)', () => {
 			icon: null,
 		}
 
+		useNotificationService().notificationQueue.value = [notification]
+
 		const wrapper = mount(NotificationBar, {
 			attachTo: document.body,
 		})
-
-		wrapper.vm.openNotification(notification)
-		await nextTick()
 
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'NotificationBar – visible info notification', {
