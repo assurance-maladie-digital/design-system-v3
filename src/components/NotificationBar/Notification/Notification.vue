@@ -135,10 +135,9 @@
 		}
 	}
 
+	/* stylelint-disable custom-property-pattern */
 	.notification--info {
-		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgb(var(--v-theme-backgroundInfoContrasted, '12, 65, 154'));
-		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
 
 		.notification__close:focus-visible {
@@ -147,9 +146,7 @@
 	}
 
 	.notification--success {
-		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgb(var(--v-theme-backgroundSuccessContrasted, '86, 194, 113'));
-		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
 
 		.notification__close:focus-visible {
@@ -158,9 +155,7 @@
 	}
 
 	.notification--warning {
-		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgb(var(--v-theme-backgroundWarningContrasted, '240, 179, 35'));
-		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
 
 		.notification__close:focus-visible {
@@ -169,9 +164,7 @@
 	}
 
 	.notification--error {
-		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgb(var(--v-theme-backgroundErrorContrasted, '179, 63, 46'));
-		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
 
 		.notification__close:focus-visible {
