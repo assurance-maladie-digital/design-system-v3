@@ -128,7 +128,7 @@
 						>
 							<SyIcon
 								:icon="mdiChevronRight"
-								decoration
+								decorative
 							/>
 						</span>
 						<span>{{ item.title }}</span>
