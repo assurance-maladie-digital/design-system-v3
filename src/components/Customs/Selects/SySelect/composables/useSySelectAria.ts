@@ -64,14 +64,21 @@ export function useSySelectAria(options: UseSySelectAriaOptions) {
 		cleanParentAttributes(parentElement: HTMLElement): void {
 			if (!parentElement) return
 
-			parentElement.removeAttribute('role')
-			parentElement.removeAttribute('aria-expanded')
-			parentElement.removeAttribute('aria-controls')
-			parentElement.removeAttribute('aria-haspopup')
-			parentElement.removeAttribute('aria-activedescendant')
-			parentElement.removeAttribute('aria-required')
-			parentElement.removeAttribute('aria-invalid')
-			parentElement.removeAttribute('aria-hidden')
+			const isVuetifyWrapper = parentElement.tagName === 'DIV'
+				|| parentElement.classList.contains('v-input')
+				|| parentElement.classList.contains('v-field')
+			// Évite les attributs ARIA posés sur le wrapper Vuetify qui peuvent produire
+			// des valeurs invalides ou redondantes.
+			if (isVuetifyWrapper) {
+				parentElement.removeAttribute('role')
+				parentElement.removeAttribute('aria-expanded')
+				parentElement.removeAttribute('aria-controls')
+				parentElement.removeAttribute('aria-haspopup')
+				parentElement.removeAttribute('aria-activedescendant')
+				parentElement.removeAttribute('aria-required')
+				parentElement.removeAttribute('aria-invalid')
+				parentElement.removeAttribute('aria-hidden')
+			}
 		},
 
 		cleanAlertAttributes(parentElement: HTMLElement): void {

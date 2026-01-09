@@ -72,16 +72,22 @@ export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 		},
 		cleanParentAttributes(parentElement: HTMLElement): void {
 			if (!parentElement) return
+
+			const isVuetifyWrapper = parentElement.tagName === 'DIV'
+				|| parentElement.classList.contains('v-input')
+				|| parentElement.classList.contains('v-field')
 			// Évite les attributs ARIA posés sur le wrapper Vuetify qui peuvent produire
 			// des valeurs invalides ou redondantes.
-			parentElement.removeAttribute('role')
-			parentElement.removeAttribute('aria-expanded')
-			parentElement.removeAttribute('aria-controls')
-			parentElement.removeAttribute('aria-haspopup')
-			parentElement.removeAttribute('aria-activedescendant')
-			parentElement.removeAttribute('aria-required')
-			parentElement.removeAttribute('aria-invalid')
-			parentElement.removeAttribute('aria-hidden')
+			if (isVuetifyWrapper) {
+				parentElement.removeAttribute('role')
+				parentElement.removeAttribute('aria-expanded')
+				parentElement.removeAttribute('aria-controls')
+				parentElement.removeAttribute('aria-haspopup')
+				parentElement.removeAttribute('aria-activedescendant')
+				parentElement.removeAttribute('aria-required')
+				parentElement.removeAttribute('aria-invalid')
+				parentElement.removeAttribute('aria-hidden')
+			}
 		},
 		cleanAlertAttributes(parentElement: HTMLElement): void {
 			if (!parentElement) return
