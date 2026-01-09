@@ -15,10 +15,18 @@ export interface UseSySelectValidationOptions {
 export function useSySelectValidation(options: UseSySelectValidationOptions) {
 	const hasError = ref(false)
 
+	const hasSelection = computed(() => {
+		const value = options.selectedItem.value
+		if (Array.isArray(value)) {
+			return value.length > 0
+		}
+		return Boolean(value)
+	})
+
 	const isRequired = computed(() => {
 		if (options.disableErrorHandling.value) return false
 		if (options.readonly.value) return
-		return (options.required.value || options.errorMessages.value.length > 0) && !options.selectedItem.value
+		return (options.required.value || options.errorMessages.value.length > 0) && !hasSelection.value
 	})
 
 	const hasMessages = computed(() => {
@@ -64,7 +72,15 @@ export function useSySelectValidation(options: UseSySelectValidationOptions) {
 		return isValid
 	}
 
-	useValidatable(validateOnSubmit)
+	const clearValidation = () => {
+		hasError.value = false
+	}
+
+	const reset = () => {
+		hasError.value = false
+	}
+
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	return {
 		hasError,
@@ -73,5 +89,7 @@ export function useSySelectValidation(options: UseSySelectValidationOptions) {
 		showHelpTextAsMessage,
 		showHelpTextBelow,
 		validateOnSubmit,
+		clearValidation,
+		reset,
 	}
 }
