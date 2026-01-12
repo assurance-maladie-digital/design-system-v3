@@ -84,13 +84,13 @@ export const WithObjectContent: Story = {
 				code: `<template>
   <Accordion
     :items="[
-      { 
-        id: 'item3', 
-        title: 'Section 3', 
-        content: { 
-          title: 'Sous-titre de la section 3', 
-          content: 'Contenu détaillé de la section 3' 
-        } 
+      {
+        id: 'item3',
+        title: 'Section 3',
+        content: {
+		  title: '<b>Titre</b>',
+		  content: 'Mon contenu'
+        }
       }
     ]"
     :heading-level="3"
@@ -100,7 +100,16 @@ export const WithObjectContent: Story = {
 		],
 	},
 	args: {
-		items: [defaultItems[2]],
+		items: [
+			{
+				id: 'item3',
+				title: 'Section 3',
+				content: {
+					title: '<b>Titre</b>',
+					content: 'Mon contenu',
+				},
+			},
+		],
 		headingLevel: 3,
 	},
 	render: args => ({

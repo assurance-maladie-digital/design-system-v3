@@ -106,10 +106,10 @@ describe('Accordion', () => {
 		const button = wrapper.find('.sy-accordion-button')
 		await button.trigger('click')
 
-		const contentLine = wrapper.find('.sy-accordion-content-line')
 		const objectContent = defaultItems[2].content as { title: string, content: string }
-		expect(contentLine.text()).toContain(objectContent.title)
-		expect(contentLine.text()).toContain(objectContent.content)
+		const content = wrapper.find('.sy-accordion-content-inner')
+		expect(content.text()).toContain(objectContent.title)
+		expect(content.text()).toContain(objectContent.content)
 	})
 
 	it('has correct accessibility attributes', () => {
@@ -280,8 +280,7 @@ describe('Accordion', () => {
 		const secondContent = wrapper.findAll('.sy-accordion-content-inner')[1]
 		const contentLine = secondContent.find('.sy-accordion-content-line')
 		expect(contentLine.exists()).toBe(true)
-		expect(contentLine.find('strong').exists()).toBe(true)
-		expect(contentLine.find('strong').text()).toBe('Sous-titre')
+		expect(contentLine.text()).toContain('Sous-titre')
 		expect(contentLine.text()).toContain('Contenu détaillé')
 	})
 

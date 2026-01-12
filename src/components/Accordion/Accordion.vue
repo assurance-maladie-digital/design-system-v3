@@ -8,10 +8,34 @@
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
 	import useAccordionKeyboardNavigation, { type AccordionItem as KeyboardNavigationItem } from './composables/useAccordionKeyboardNavigation'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
-	interface ContentObject {
+	const escapeTextForHtml = (value: string): string => {
+		if (typeof DOMParser === 'undefined') {
+			return value
+		}
+
+		const doc = new DOMParser().parseFromString('', 'text/html')
+		const el = doc.createElement('div')
+		el.textContent = value
+		return el.innerHTML
+	}
+
+	type ContentObject = {
 		title: string
 		content: string
+		items?: string[]
+	} & Record<string, unknown>
+
+	const getContentItems = (content: ContentObject): string[] => {
+		if (Array.isArray(content.items)) {
+			return content.items
+		}
+
+		return [
+			content.title,
+			escapeTextForHtml(content.content),
+		].filter((v): v is string => typeof v === 'string' && v.length > 0)
 	}
 
 	interface AccordionItem {
@@ -175,9 +199,12 @@
 						<template v-else>
 							<div class="sy-accordion-content-item">
 								<div class="sy-accordion-content-line">
-									<strong>
-										{{ item.content.title }}
-									</strong>: {{ item.content.content }}
+									<div
+										v-for="(contentItem, contentIndex) in getContentItems(item.content)"
+										:key="contentIndex"
+										class="mb-2"
+										v-html="sanitizeHtml(contentItem)"
+									/>
 								</div>
 							</div>
 						</template>
@@ -303,7 +330,6 @@
 }
 
 .sy-accordion-content-line {
-	margin-bottom: 8px;
 	line-height: 1.5;
 }
 
