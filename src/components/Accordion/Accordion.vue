@@ -131,7 +131,23 @@
 								decorative
 							/>
 						</span>
-						<span>{{ item.title }}</span>
+						<slot
+							name="title"
+							:item="item"
+							:index="index"
+						>
+							<span>{{ item.title }}</span>
+						</slot>
+					</span>
+					<span
+						v-if="$slots['right-content']"
+						class="sy-accordion-right-content"
+					>
+						<slot
+							name="right-content"
+							:item="item"
+							:index="index"
+						/>
 					</span>
 				</component>
 			</div>
@@ -145,20 +161,27 @@
 				:tabindex="isItemOpen(item.id) ? 0 : -1"
 			>
 				<div class="sy-accordion-content-inner">
-					<template v-if="typeof item.content === 'string'">
-						<p class="sy-accordion-content-text">
-							{{ item.content }}
-						</p>
-					</template>
-					<template v-else>
-						<div class="sy-accordion-content-item">
-							<div class="sy-accordion-content-line">
-								<strong>
-									{{ item.content.title }}
-								</strong>: {{ item.content.content }}
+					<slot
+						name="content"
+						:item="item"
+						:index="index"
+						:is-open="isItemOpen(item.id)"
+					>
+						<template v-if="typeof item.content === 'string'">
+							<p class="sy-accordion-content-text">
+								{{ item.content }}
+							</p>
+						</template>
+						<template v-else>
+							<div class="sy-accordion-content-item">
+								<div class="sy-accordion-content-line">
+									<strong>
+										{{ item.content.title }}
+									</strong>: {{ item.content.content }}
+								</div>
 							</div>
-						</div>
-					</template>
+						</template>
+					</slot>
 				</div>
 			</div>
 		</div>
@@ -179,6 +202,10 @@
 
 .sy-accordion-heading {
 	margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .sy-accordion-button {
@@ -199,6 +226,12 @@
 
 .sy-accordion-title {
 	display: flex;
+}
+
+.sy-accordion-right-content {
+	display: flex;
+	align-items: center;
+	margin-left: 16px;
 }
 
 .sy-accordion-button:hover,
