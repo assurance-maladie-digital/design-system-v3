@@ -1170,12 +1170,12 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #B0B1B1;
+	background-color: #b0b1b1;
 }
 
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: #B0B1B1;
+	background-color: #b0b1b1;
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1192,7 +1192,7 @@
 }
 
 :deep(.custom-year-btn::after) {
-	background-color: #B0B1B1;
+	background-color: #b0b1b1;
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1202,7 +1202,7 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: #B0B1B1;
+	background-color: #b0b1b1;
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;
