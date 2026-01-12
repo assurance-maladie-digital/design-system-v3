@@ -13,8 +13,9 @@
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { mdiCalendar } from '@mdi/js'
+	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import type { DateObjectValue } from '../types'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -1020,15 +1021,15 @@
 								size="x-small"
 								color="primary"
 								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
-								class="my-2 pa-2 mt-2"
+								class="date-picker__today-button my-2 pa-2 mt-2"
 								:ripple="false"
 								@click="handleSelectToday"
 							>
-								<VIcon
-									class="mr-1"
-								>
-									{{ mdiCalendar }}
-								</VIcon>
+								<SyIcon
+									size="16px"
+									decorative
+									:icon="mdiCalendarMonthOutline"
+								/>
 								{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
 							</v-btn>
 						</div>
@@ -1169,12 +1170,12 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 }
 
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1185,9 +1186,13 @@
 	padding: 13px;
 }
 
-/* Style de base du ::after */
+:deep(.custom-year-btn) {
+	width: auto;
+	height: 28px;
+}
+
 :deep(.custom-year-btn::after) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1197,11 +1202,47 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;
 	border-radius: 9999px;
 }
 
+:deep(.v-picker__body .v-btn:focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
+
+	.v-btn__overlay {
+		display: none;
+	}
+
+	&::after {
+		display: none;
+	}
+}
+
+:deep(.v-date-picker-months .v-btn__content) {
+	font-size: 1rem;
+}
+
+.date-picker__today-button {
+	height: auto;
+
+	:deep(.v-btn__content) {
+		font-size: 1rem;
+		gap: 8px;
+	}
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
+
+		:deep(.v-btn__overlay) {
+			display: none;
+		}
+
+		&::after {
+			display: none;
+		}
+	}
+}
 </style>

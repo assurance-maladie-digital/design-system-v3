@@ -42,9 +42,10 @@
 	import type { DateObjectValue } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
-	import { mdiCalendar } from '@mdi/js'
+	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -1155,13 +1156,15 @@
 								size="x-small"
 								color="primary"
 								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
-								class="my-2 pa-2 mt-2"
+								class="date-picker__today-button my-2 pa-2 mt-2"
 								:ripple="false"
 								@click="handleSelectToday"
 							>
-								<VIcon class="mr-1">
-									{{ mdiCalendar }}
-								</VIcon>
+								<SyIcon
+									size="16px"
+									decorative
+									:icon="mdiCalendarMonthOutline"
+								/>
 								{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
 							</v-btn>
 						</div>
@@ -1292,12 +1295,12 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 }
 
 /* day before weekend */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1308,9 +1311,14 @@
 	padding: 13px;
 }
 
+:deep(.custom-year-btn) {
+	width: auto;
+	height: 28px;
+}
+
 /* Style de base du ::after */
 :deep(.custom-year-btn::after) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1320,7 +1328,7 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: #afb1b1;
+	background-color: #B0B1B1;
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;
