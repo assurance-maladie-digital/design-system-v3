@@ -19,7 +19,6 @@ exports[`FilterInline > renders correctly with an active filter 1`] = `
       v-btn
       v-btn--density-default
       v-btn--elevated
-      v-btn--rounded
       v-btn--size-default
       v-btn--variant-elevated
       v-theme--light
@@ -101,7 +100,6 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
       v-btn
       v-btn--density-default
       v-btn--elevated
-      v-btn--rounded
       v-btn--size-default
       v-btn--variant-elevated
       v-theme--light
@@ -172,7 +170,6 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
       v-btn
       v-btn--density-default
       v-btn--elevated
-      v-btn--rounded
       v-btn--size-default
       v-btn--variant-elevated
       v-theme--light
