@@ -287,23 +287,23 @@
 
 :global(.v-select__content .v-list-item:hover > .v-list-item__overlay),
 :global(.v-select__content .v-list-item--active > .v-list-item__overlay) {
-	background-color: currentColor;
+	background-color: currentcolor;
 }
 
-.sy-paginated-table  :deep(.v-pagination) button:focus-visible {
+.sy-paginated-table :deep(.v-pagination) button:focus-visible {
 	outline: 2px solid tokens.$colors-interactive;
 	outline-offset: -2px;
 }
 
-.sy-paginated-table :deep(.v-pagination) .v-pagination__list [aria-disabled="false"] svg {
+.sy-paginated-table :deep(.v-pagination) .v-pagination__list [aria-disabled='false'] svg {
 	color: tokens.$colors-icon-base;
 }
 
-.sy-paginated-table :deep(.v-pagination) .v-btn--variant-plain[aria-disabled="false"] {
+.sy-paginated-table :deep(.v-pagination) .v-btn--variant-plain[aria-disabled='false'] {
 	opacity: 1;
 }
 
-.sy-paginated-table :deep(.v-pagination) .v-btn--variant-plain:hover[aria-disabled="false"] svg {
+.sy-paginated-table :deep(.v-pagination) .v-btn--variant-plain:hover[aria-disabled='false'] svg {
 	color: #000;
 }
 </style>
