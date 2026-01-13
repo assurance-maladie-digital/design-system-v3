@@ -352,9 +352,8 @@
 </template>
 
 <style>
-
-.v-input--dirty.v-checkbox .v-icon--size-default{
---v-medium-emphasis-opacity:1 !important;
+.v-input--dirty.v-checkbox .v-icon--size-default {
+	--v-medium-emphasis-opacity: 1 !important;
 }
 
 :deep(.v-checkbox--indeterminate .v-selection-control__input .v-selection-control__input-icon) {
