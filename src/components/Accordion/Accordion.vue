@@ -10,6 +10,9 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
+	// Échappe une valeur texte pour pouvoir l'afficher via `v-html` sans l'interpréter comme du HTML.
+	// Exemple : "<b>test</b>" devient "&lt;b&gt;test&lt;/b&gt;".
+	// Objectif : garder `content.content` en texte (sans HTML) tout en ayant un rendu générique basé sur `v-html`.
 	const escapeTextForHtml = (value: string): string => {
 		if (typeof DOMParser === 'undefined') {
 			return value
@@ -27,6 +30,10 @@
 		items?: string[]
 	} & Record<string, unknown>
 
+	// Normalise le contenu "objet" en une liste de lignes (tableau de strings) à afficher.
+	// - Si `content.items` est fourni : on l'utilise tel quel (cas le plus générique / contrôlé par le consumer).
+	// - Sinon : on dérive les lignes à partir de `title` (peut contenir du HTML) et `content` (texte échappé).
+	// Chaque ligne sera ensuite rendue via `v-html` + `sanitizeHtml`.
 	const getContentItems = (content: ContentObject): string[] => {
 		if (Array.isArray(content.items)) {
 			return content.items
