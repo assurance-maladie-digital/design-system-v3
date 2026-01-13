@@ -3,6 +3,7 @@
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
+	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 
 	const props = withDefaults(
 		defineProps<{
@@ -13,6 +14,8 @@
 			ariaLabelledby?: string
 			title?: string
 			color?: string
+			colorIndeterminate?: string
+			colorDefault?: string
 			disabled?: boolean
 			readonly?: boolean
 			required?: boolean
@@ -43,6 +46,8 @@
 			ariaLabelledby: undefined,
 			title: undefined,
 			color: 'primary',
+			colorIndeterminate: '#6D8DC2',
+			colorDefault: cnamSemanticTokens.colors.border.darker,
 			disabled: false,
 			readonly: false,
 			required: false,
@@ -307,6 +312,7 @@
 			:aria-labelledby="props.ariaLabelledby"
 			:title="props.title"
 			:color="props.color"
+			:base-color="internalIndeterminate ? props.colorIndeterminate : colorDefault"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
 			:hide-details="props.hideDetails"
@@ -345,13 +351,10 @@
 	</div>
 </template>
 
-<style scoped>
-:deep(.v-selection-control--dirty .v-selection-control__input) {
-	color: v-bind('props.color');
-}
+<style>
 
-:deep(.v-checkbox--indeterminate .v-selection-control__input) {
-	color: v-bind('props.color');
+.v-input--dirty.v-checkbox .v-icon--size-default{
+--v-medium-emphasis-opacity:1 !important;
 }
 
 :deep(.v-checkbox--indeterminate .v-selection-control__input .v-selection-control__input-icon) {
