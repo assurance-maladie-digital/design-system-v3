@@ -1042,7 +1042,6 @@
 
 <template>
 	<SyTextField
-
 		ref="inputRef"
 		v-model="inputValue"
 		:append-icon="props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined"
