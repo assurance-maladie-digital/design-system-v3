@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import useFilterable, { type FilterProp } from '@/composables/useFilterable/useFilterable'
-	import { mdiChevronDown } from '@mdi/js'
+	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 	import { toRef } from 'vue'
 	import ChipList from '../ChipList/ChipList.vue'
 	import { locales as defaultLocales } from './locales'
@@ -41,13 +41,12 @@
 			nudge-bottom="10px"
 			z-index="1000"
 		>
-			<template #activator="{ props: menuProps }">
+			<template #activator="{ props: menuProps, isActive }">
 				<VBtn
 					v-bind="menuProps"
 					:class="`sy-filter-${filter.name}`"
 					:variant="getFilterCount(filter) ? undefined : 'outlined'"
 					color="secondary"
-					rounded
 					class="ma-2"
 				>
 					<VBadge
@@ -64,7 +63,7 @@
 						size="small"
 						class="ml-1"
 					>
-						{{ mdiChevronDown }}
+						{{ isActive ? mdiChevronUp : mdiChevronDown }}
 					</VIcon>
 				</VBtn>
 			</template>
@@ -105,4 +104,9 @@
 	color: tokens.$cyan-darken-40 !important;
 	background-color: white;
 }
+
+:deep(.v-btn[class*="sy-filter-"]) {
+  border-radius: 64px !important;
+}
+
 </style>
