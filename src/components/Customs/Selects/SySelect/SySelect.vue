@@ -134,6 +134,10 @@
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const hasError = ref(false)
 
+	const selectedItemsArray = computed<SelectItemArrayType>(() => {
+		return Array.isArray(selectedItem.value) ? selectedItem.value : []
+	})
+
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
 	const list = ref<VList | null>(null)
@@ -750,12 +754,45 @@
 		return isValid
 	}
 
+	// Méthode publique de validation (pour déclencher une re-validation depuis un parent).
+	// Exemple d'usage : si la date change, on peut refaire valider l'heure (SySelect) via un ref.
+	const validate = (): boolean => {
+		const isValid = validateOnSubmit()
+		// Déclenche aussi la validation Vuetify (affichage des messages côté VTextField).
+		// On passe par nextTick car le ref `textInput` peut ne pas être prêt au moment où validate() est appelé.
+		nextTick(() => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const vuetifyValidate = (textInput.value as any)?.validate
+			if (typeof vuetifyValidate === 'function') {
+				vuetifyValidate.call(textInput.value)
+			}
+		})
+		return isValid
+	}
+
+	// Réinitialise l'état de validation (utile si un parent veut effacer l'erreur affichée)
+	const resetValidation = (): void => {
+		if (props.disableErrorHandling) {
+			return
+		}
+		hasError.value = false
+		nextTick(() => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const vuetifyResetValidation = (textInput.value as any)?.resetValidation
+			if (typeof vuetifyResetValidation === 'function') {
+				vuetifyResetValidation.call(textInput.value)
+			}
+		})
+	}
+
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)
 
 	defineExpose({
 		isOpen,
 		closeList,
+		validate,
+		resetValidation,
 		validateOnSubmit,
 	})
 
@@ -838,8 +875,10 @@
 						class="d-flex flex-wrap gap-1"
 					>
 						<VChip
-							v-for="item in selectedItem"
-							:key="props.returnObject ? item[props.valueKey] : item"
+							v-for="item in selectedItemsArray"
+							:key="props.returnObject
+								? String((item as Record<string, unknown>)[props.valueKey])
+								: String(item)"
 							size="small"
 							class="ma-1"
 							closable

@@ -18,6 +18,58 @@ describe('SySelect.vue', () => {
 		wrapper.unmount()
 	})
 
+	it('exposes validate() and resetValidation() methods', () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				required: true,
+				items: [{ text: 'Option 1', value: '1' }],
+				modelValue: null,
+			},
+			attachTo: document.body,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Access exposed methods
+		const instance = wrapper.vm as any
+		expect(typeof instance.validate).toBe('function')
+		expect(typeof instance.resetValidation).toBe('function')
+		expect(typeof instance.validateOnSubmit).toBe('function')
+
+		wrapper.unmount()
+	})
+
+	it('validate() re-evaluates required state and resetValidation() clears error', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				required: true,
+				items: [{ text: 'Option 1', value: '1' }],
+				modelValue: null,
+			},
+			attachTo: document.body,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Access exposed methods
+		const instance = wrapper.vm as any
+
+		// required + empty => invalid
+		expect(instance.validate()).toBe(false)
+		await wrapper.vm.$nextTick()
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+		expect(input.attributes('aria-invalid')).toBe('true')
+
+		// set a value => valid
+		await wrapper.setProps({ modelValue: { text: 'Option 1', value: '1' } })
+		expect(instance.validate()).toBe(true)
+		await wrapper.vm.$nextTick()
+
+		// clear validation state
+		instance.resetValidation()
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').attributes('aria-invalid')).not.toBe('true')
+
+		wrapper.unmount()
+	})
+
 	it('displays the selected item text', async () => {
 		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
 		const wrapper = mount(SySelect, {

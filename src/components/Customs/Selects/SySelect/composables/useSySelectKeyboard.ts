@@ -54,7 +54,9 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 					element.setAttribute('tabindex', '0')
 					element.focus()
 					element.classList.add('keyboard-focused')
-					element.scrollIntoView({ block: 'nearest' })
+					if ('scrollIntoView' in element && typeof element.scrollIntoView === 'function') {
+						element.scrollIntoView({ block: 'nearest' })
+					}
 				}
 			})
 		}
