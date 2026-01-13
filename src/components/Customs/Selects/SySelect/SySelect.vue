@@ -134,10 +134,6 @@
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const hasError = ref(false)
 
-	const selectedItemsArray = computed<SelectItemArrayType>(() => {
-		return Array.isArray(selectedItem.value) ? selectedItem.value : []
-	})
-
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
 	const list = ref<VList | null>(null)
@@ -875,10 +871,8 @@
 						class="d-flex flex-wrap gap-1"
 					>
 						<VChip
-							v-for="item in selectedItemsArray"
-							:key="props.returnObject
-								? String((item as Record<string, unknown>)[props.valueKey])
-								: String(item)"
+							v-for="item in selectedItem"
+							:key="props.returnObject ? item[props.valueKey] : item"
 							size="small"
 							class="ma-1"
 							closable
