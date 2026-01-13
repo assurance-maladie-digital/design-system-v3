@@ -2586,7 +2586,7 @@ export const ServerFilterByPeriod: Story = {
 			  title: 'Date d'embauche', 
 			  key: 'hireDate',
 			  filterable: true,
-			  filterType: 'periode',
+			  filterType: 'period',
 			  dateFormat: 'DD/MM/YYYY'
 			},
 		  ]
