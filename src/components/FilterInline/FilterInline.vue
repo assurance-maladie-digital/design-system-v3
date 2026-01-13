@@ -105,8 +105,8 @@
 	background-color: white;
 }
 
-:deep(.v-btn[class*="sy-filter-"]) {
-  border-radius: 64px !important;
+:deep(.v-btn[class*='sy-filter-']) {
+	border-radius: 64px !important;
 }
 
 </style>
