@@ -210,6 +210,21 @@
 		return model.value ? 'true' : 'false'
 	})
 
+	const labelColor = computed(() => {
+		if (props.disabled) return cnamSemanticTokens.colors.text.disabled
+		switch (props.color) {
+		case 'error':
+			return 'rgb(var(--v-theme-error))'
+		case 'success':
+			return 'rgb(var(--v-theme-success))'
+		case 'warning':
+			return 'rgb(var(--v-theme-warning))'
+		case 'primary':
+		default:
+			return cnamSemanticTokens.colors.text.base
+		}
+	})
+
 	// Propriétés ARIA personnalisées pour éviter les conflits
 	const messageId = computed(() => {
 		// Don't create messageId if aria-labelledby is provided
@@ -312,6 +327,7 @@
 			:aria-labelledby="props.ariaLabelledby"
 			:title="props.title"
 			:color="props.color"
+			:style="{ color: labelColor }"
 			:base-color="internalIndeterminate ? props.colorIndeterminate : colorDefault"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
