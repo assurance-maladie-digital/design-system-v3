@@ -364,10 +364,10 @@
 </template>
 
 <style>
-
 :deep(.v-input--dirty .v-selection-control__input) {
 	color: v-bind('props.color');
 }
+
 :deep(.v-checkbox--indeterminate .v-selection-control__input) {
 	color: v-bind('props.color');
 }
