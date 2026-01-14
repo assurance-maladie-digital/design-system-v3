@@ -6,7 +6,7 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { defaultOptions } from './config'
 
-	type MenuItem = { text: string, value: string, link?: string }
+	type MenuItem = { text: string, value: string, link?: string, to?: string }
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		menuItems?: MenuItem[]
