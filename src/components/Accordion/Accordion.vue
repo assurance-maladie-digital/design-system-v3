@@ -8,47 +8,11 @@
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
 	import useAccordionKeyboardNavigation, { type AccordionItem as KeyboardNavigationItem } from './composables/useAccordionKeyboardNavigation'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { sanitizeHtml } from '@/utils/sanitizeHtml'
-
-	// Échappe une valeur texte pour pouvoir l'afficher via `v-html` sans l'interpréter comme du HTML.
-	// Exemple : "<b>test</b>" devient "&lt;b&gt;test&lt;/b&gt;".
-	// Objectif : garder `content.content` en texte (sans HTML) tout en ayant un rendu générique basé sur `v-html`.
-	const escapeTextForHtml = (value: string): string => {
-		if (typeof DOMParser === 'undefined') {
-			return value
-		}
-
-		const doc = new DOMParser().parseFromString('', 'text/html')
-		const el = doc.createElement('div')
-		el.textContent = value
-		return el.innerHTML
-	}
-
-	type ContentObject = {
-		title: string
-		content: string
-		items?: string[]
-	} & Record<string, unknown>
-
-	// Normalise le contenu "objet" en une liste de lignes (tableau de strings) à afficher.
-	// - Si `content.items` est fourni : on l'utilise tel quel (cas le plus générique / contrôlé par le consumer).
-	// - Sinon : on dérive les lignes à partir de `title` (peut contenir du HTML) et `content` (texte échappé).
-	// Chaque ligne sera ensuite rendue via `v-html` + `sanitizeHtml`.
-	const getContentItems = (content: ContentObject): string[] => {
-		if (Array.isArray(content.items)) {
-			return content.items
-		}
-
-		return [
-			content.title,
-			escapeTextForHtml(content.content),
-		].filter((v): v is string => typeof v === 'string' && v.length > 0)
-	}
 
 	interface AccordionItem {
 		id: string
 		title: string
-		content: string | ContentObject
+		content: string | Record<string, unknown>
 		headingLevel?: number
 		disabled?: boolean
 	}
@@ -205,14 +169,12 @@
 						</template>
 						<template v-else>
 							<div class="sy-accordion-content-item">
-								<div class="sy-accordion-content-line">
-									<div
-										v-for="(contentItem, contentIndex) in getContentItems(item.content)"
-										:key="contentIndex"
-										class="mb-2"
-										v-html="sanitizeHtml(contentItem)"
-									/>
-								</div>
+								<p class="sy-accordion-content-text">
+									<strong>{{ (item.content as any).title }}</strong>
+								</p>
+								<p class="sy-accordion-content-text">
+									{{ (item.content as any).content }}
+								</p>
 							</div>
 						</template>
 					</slot>

@@ -85,11 +85,11 @@ export const WithObjectContent: Story = {
   <Accordion
     :items="[
       {
-        id: 'item3',
-        title: 'Section 3',
-        content: {
-		  title: '<b>Titre</b>',
-		  content: 'Mon contenu'
+        id: 'item',
+        title: 'Section',
+        content: { 
+          title: 'Sous-titre de la section', 
+          content: 'Contenu détaillé de la section' 
         }
       }
     ]"
@@ -102,11 +102,11 @@ export const WithObjectContent: Story = {
 	args: {
 		items: [
 			{
-				id: 'item3',
-				title: 'Section 3',
+				id: 'item',
+				title: 'Section',
 				content: {
-					title: '<b>Titre</b>',
-					content: 'Mon contenu',
+					title: 'Sous-titre de la section ',
+					content: 'Contenu détaillé de la section',
 				},
 			},
 		],
