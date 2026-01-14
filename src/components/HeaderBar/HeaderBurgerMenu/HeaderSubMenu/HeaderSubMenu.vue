@@ -96,9 +96,11 @@
 	@use '@/assets/tokens.scss' as *;
 	@use '../../consts' as *;
 	@use '../menu';
+
 	.sub-menu-content-wrapper .sub-menu-content {
 		padding-top: 2px;
 	}
+
 	.sub-menu-btn {
 		display: flex;
 		justify-content: center;
