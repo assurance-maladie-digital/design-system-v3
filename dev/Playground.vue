@@ -1,8 +1,9 @@
 <script setup lang="ts">
 	// Root layout for the dev playground
+	import type { RouteLocationRaw } from 'vue-router'
 	import UserMenuBtn from '@/components/UserMenuBtn/UserMenuBtn.vue'
 
-	type MenuItem = { text: string, value: string, to?: string, link?: string }
+	type MenuItem = { text: string, value: string, to?: RouteLocationRaw, link?: string }
 
 	const menuItems: MenuItem[] = [
 		{ text: 'Accueil', value: 'home', to: '/' },
