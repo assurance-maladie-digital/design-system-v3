@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import Accordion from './Accordion.vue'
 
-const meta = {
+const meta: Meta<typeof Accordion> = {
 	title: 'Composants/Données/Accordion',
 	component: Accordion,
 	parameters: {
@@ -23,7 +23,7 @@ const meta = {
 			default: 'default',
 		},
 	},
-} satisfies Meta<typeof Accordion>
+}
 
 export default meta
 
@@ -84,13 +84,13 @@ export const WithObjectContent: Story = {
 				code: `<template>
   <Accordion
     :items="[
-      { 
-        id: 'item3', 
-        title: 'Section 3', 
+      {
+        id: 'item',
+        title: 'Section',
         content: { 
-          title: 'Sous-titre de la section 3', 
-          content: 'Contenu détaillé de la section 3' 
-        } 
+          title: 'Sous-titre de la section', 
+          content: 'Contenu détaillé de la section' 
+        }
       }
     ]"
     :heading-level="3"
@@ -100,7 +100,16 @@ export const WithObjectContent: Story = {
 		],
 	},
 	args: {
-		items: [defaultItems[2]],
+		items: [
+			{
+				id: 'item',
+				title: 'Section',
+				content: {
+					title: 'Sous-titre de la section ',
+					content: 'Contenu détaillé de la section',
+				},
+			},
+		],
 		headingLevel: 3,
 	},
 	render: args => ({
@@ -262,6 +271,70 @@ export const CustomHeadingLevel: Story = {
 				<Accordion v-bind="args" headingLevel="4" groupId="custom-heading-story" />
 				<Accordion v-bind="args" headingLevel="5" groupId="custom-heading-story" />
 				<Accordion v-bind="args" headingLevel="6" groupId="custom-heading-story" />
+			</div>
+		`,
+	}),
+}
+
+export const WithSlots: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				name: 'Template',
+				code: `<template>
+  <Accordion
+    :items="[
+      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' }
+    ]"
+  >
+    <template #title="{ item }">
+      <span style="font-weight: 700;">{{ item.title }}</span>
+    </template>
+
+    <template #right-content>
+      <span style="font-size: 12px; opacity: 0.7;">Right content</span>
+    </template>
+
+    <template #content="{ item }">
+      <div style="padding: 8px 0;">
+        <p style="margin: 0;">Contenu custom :</p>
+        <p style="margin: 0; font-weight: 600;">{{ typeof item.content === 'string' ? item.content : item.content.content }}</p>
+      </div>
+    </template>
+  </Accordion>
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: defaultItems.slice(0, 2),
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: { Accordion },
+		setup() {
+			return { args }
+		},
+		template: `
+			<div class="pa-4">
+				<Accordion v-bind="args">
+					<template #title="{ item }">
+						<span style="font-weight: 700;">{{ item.title }}</span>
+					</template>
+
+					<template #right-content>
+						<span style="font-size: 12px; opacity: 0.7;">Right content</span>
+					</template>
+
+					<template #content="{ item }">
+						<div style="padding: 8px 0;">
+							<p style="margin: 0;">Contenu custom :</p>
+							<p style="margin: 0; font-weight: 600;">{{ typeof item.content === 'string' ? item.content : item.content.content }}</p>
+						</div>
+					</template>
+				</Accordion>
 			</div>
 		`,
 	}),

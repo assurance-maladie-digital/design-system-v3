@@ -1017,9 +1017,6 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 // --------------------------------
 // Menu elements styling
 // --------------------------------
-.right-menu-item {
-	color: $blue-darken-60;
-}
 
 .sy-header-button {
 	min-width: $select-min-width;

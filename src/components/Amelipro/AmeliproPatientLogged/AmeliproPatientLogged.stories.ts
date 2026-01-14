@@ -4,12 +4,35 @@ import AmeliproPatientLogged from './AmeliproPatientLogged.vue'
 import { ref, watch } from 'vue'
 
 const meta = {
+	title: 'Composants/Amelipro/IDPA/AmeliproPatientLogged',
+	component: AmeliproPatientLogged,
+	parameters: {
+		controls: {
+			exclude: [
+				'onClick:info',
+				'onClick:copy',
+				'onClick:pdf',
+				'onClick:postal-address',
+				'onClick:prevention',
+				'onClick:fund-dialog',
+				'onClick:doctor-dialog',
+				'onClick:beneficiary-change',
+				'onClick:patient-change',
+			],
+		},
+	},
 	argTypes: {
 		'btnPostalAddress': { description: 'Affiche le bouton adresse postale' },
+		'btnPrevention': { description: 'Affiche le bouton prévention' },
 		'isRestrictedData': { description: 'affiche la liste des bénéficiaires sans séléction possible' },
-		'click': { description: 'Evénement émis au click sur le bouton changer de patient' },
 		'click:info': { description: 'Evénement émis au click sur le bouton informations' },
+		'click:copy': { description: 'Evénement émis au click sur le bouton copier le texte' },
 		'click:postal-address': { description: 'Evénement émis au click sur le bouton adresse postale' },
+		'click:prevention': { description: 'Evénement émis au click sur le bouton prévention' },
+		'click:fund-dialog': { description: 'Evénement émis au click sur le bouton caisse' },
+		'click:doctor-dialog': { description: 'Evénement émis au click sur le bouton MT' },
+		'click:beneficiary-change': { description: 'Evénement émis au changement de bénéficiaire' },
+		'click:patient-change': { description: 'Evénement émis au click sur le bouton changement de patient' },
 		'click:pdf': { description: 'Evénement émis au click sur le bouton pdf' },
 		'default': { description: 'Espace libre avant le bouton informations supplémentaire au cas où il y aurait besoin de lignes supplémentaires' },
 		'doctor': { description: 'Slot permettant de remplacer le contenu de la ligne médecin traitant au besoin' },
@@ -87,8 +110,6 @@ const meta = {
 		'uniqueId': { description: 'Identifiant unique du composant' },
 		'update:model-value': { description: 'Evénement émis à la mise à jour du v-model' },
 	},
-	component: AmeliproPatientLogged,
-	title: 'Composants/Amelipro/IDPA/AmeliproPatientLogged',
 } as Meta<typeof AmeliproPatientLogged>
 
 export default meta
@@ -98,6 +119,7 @@ type Story = StoryObj<typeof AmeliproPatientLogged>
 export const Default: Story = {
 	args: {
 		'btnPostalAddress': true,
+		'btnPrevention': true,
 		'doctorTooltipRed': true,
 		'isRestrictedData': false,
 		'patientInfos': {
@@ -133,9 +155,14 @@ export const Default: Story = {
 			],
 		},
 		'uniqueId': 'test-id',
-		'onClick': fn(),
 		'onClick:info': fn(),
+		'onClick:copy': fn(),
 		'onClick:postal-address': fn(),
+		'onClick:prevention': fn(),
+		'onClick:fund-dialog': fn(),
+		'onClick:doctor-dialog': fn(),
+		'onClick:beneficiary-change': fn(),
+		'onClick:patient-change': fn(),
 		'onClick:pdf': fn(),
 	},
 	parameters: {
@@ -222,31 +249,32 @@ export const Default: Story = {
 			})
 			return { args, model }
 		},
-		template: `<AmeliproPatientLogged
-	v-bind="args"
-	v-model="model"
-	@click="args['onClick']"
-	@click:infos="args['onClick:infos']"
-    @click:postal-address="args['onClick:postal-address']"
-	@click:pdf="args['onClick:pdf']"
->
-	<template #doctorDialog>
-		<p>
-			Contenu du slot "doctorDialog"
-		</p>
-	</template>
+		template: `
+          <div style="display: flex; justify-content: center;">
 
-	<template #doctorDialogFooter>
-		<p>
-			Contenu du slot "doctorDialogFooter"
-		</p>
-	</template>
+            <AmeliproPatientLogged
+                v-bind="args"
+                v-model="model"
+                style="width: 350px !important;"
+            >
+              <template #doctorDialog>
+                <p>
+                  Contenu du slot "doctorDialog"
+                </p>
+              </template>
 
-	<template #fundDialog>
-		<p>
-			Contenu du slot "fundDialog"
-		</p>
-	</template>
-</AmeliproPatientLogged>`,
+              <template #doctorDialogFooter>
+                <p>
+                  Contenu du slot "doctorDialogFooter"
+                </p>
+              </template>
+
+              <template #fundDialog>
+                <p>
+                  Contenu du slot "fundDialog"
+                </p>
+              </template>
+            </AmeliproPatientLogged>
+          </div>`,
 	}),
 }

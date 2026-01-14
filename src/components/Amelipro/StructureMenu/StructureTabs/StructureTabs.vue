@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import type { IStructureTabs, StructureTab } from './types'
-	import { computed, nextTick, type PropType, ref } from 'vue'
+	import { computed, nextTick, type PropType, ref, watch } from 'vue'
 	import StructureBtn from '../StructureBtn/StructureBtn.vue'
 	import StructureList from '../StructureList/StructureList.vue'
 	import { locales } from './locales'
@@ -14,6 +14,10 @@
 		ariaLabelledby: {
 			type: String,
 			default: undefined,
+		},
+		hasStructureAccess: {
+			type: Boolean,
+			default: true,
 		},
 		maxStructuresLoadedDefault: {
 			type: Number,
@@ -60,6 +64,8 @@
 		},
 	})
 
+	const isFirstTabDisabled = computed(() => !props.hasStructureAccess)
+
 	const onClick = async (index: number): Promise<void> => {
 		selected.value = index
 		await nextTick()
@@ -92,6 +98,20 @@
 			(structureBtns.value[selected.value].$el as HTMLElement).focus()
 		}
 	}
+
+	watch(
+		() => props.hasStructureAccess,
+		(hasAccess) => {
+			if (hasAccess && selected.value === 1) {
+				selected.value = 0
+			}
+
+			if (!hasAccess && selected.value === 0) {
+				selected.value = 1
+			}
+		},
+		{ immediate: true },
+	)
 </script>
 
 <template>
@@ -115,6 +135,7 @@
 					:key="index"
 					ref="structureBtns"
 					:aria-selected="selected === index ? 'true' : 'false'"
+					:disabled="index === 0 && isFirstTabDisabled"
 					class="mr-0 mr-sm-3 mb-2 mb-sm-1"
 					:controls="`structure-panel-${index}`"
 					role="tab"

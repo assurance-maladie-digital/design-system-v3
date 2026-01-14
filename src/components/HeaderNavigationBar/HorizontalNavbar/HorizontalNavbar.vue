@@ -16,14 +16,18 @@
 	}
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
-		items: NavigationItem[]
+		items?: NavigationItem[]
 		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 		confirmTabChange?: boolean
 		/** Message affiché dans la boîte de dialogue de confirmation */
 		confirmationMessage?: boolean
+		/** Largeur interne */
+		width?: string
 	}>(), {
+		items: () => [],
 		confirmTabChange: false,
 		confirmationMessage: false,
+		width: '1712px',
 	})
 
 	// Définition des événements émis
@@ -276,7 +280,7 @@
 .horizontal-menu {
 	display: flex;
 	align-items: center;
-	max-width: $header-max-width;
+	max-width: v-bind(width);
 	margin: 0 auto;
 }
 

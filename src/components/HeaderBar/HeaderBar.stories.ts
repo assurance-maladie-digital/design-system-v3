@@ -146,6 +146,18 @@ const meta = {
 				},
 			},
 		},
+		'width': {
+			control: { type: 'text' },
+			description: 'Largeur interne du header.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: '1712px',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof HeaderBar>
 

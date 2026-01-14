@@ -1,7 +1,7 @@
+/* eslint-disable no-useless-escape */
 import type { Meta, StoryFn } from '@storybook/vue3'
 import NotificationBar from './NotificationBar.vue'
 import { VBtn } from 'vuetify/components'
-import { ref, toRefs } from 'vue'
 import { useNotificationService } from '@/services/NotificationService'
 import type { Notification } from '@/components/NotificationBar/types'
 
@@ -10,13 +10,14 @@ interface StoryArgs {
 	type: Notification['type']
 	bottom: boolean
 	rounded: string | number | boolean
+	showAll: boolean
 }
 
 const meta: Meta<typeof NotificationBar> = {
 	title: 'Composants/Feedback/NotificationBar',
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['currentNotification', 'isNotificationVisible', 'hasActionSlot', 'isMobileVersion', 'hasLongContent', 'color', 'icon', 'contentStyle', 'smallCloseBtn', 'isVertical'] },
+		controls: { exclude: ['currentNotification', 'isNotificationVisible', 'hasActionSlot', 'isMobileVersion', 'hasLongContent', 'color', 'icon', 'contentStyle', 'smallCloseBtn', 'isVertical', 'type'] },
 	},
 	component: NotificationBar,
 	argTypes: {
@@ -54,18 +55,16 @@ const meta: Meta<typeof NotificationBar> = {
 				},
 			},
 		},
-		// @ts-expect-error the prop is passed down
-		type: {
-			control: 'select',
-			options: ['info', 'success', 'warning', 'error'],
+		showAll: {
+			control: 'boolean',
+			description: 'Afficher toutes les notifications au lieu de la dernière uniquement',
 			table: {
 				type: {
-					summary: 'info | success | warning | error',
+					summary: 'boolean',
 				},
 				defaultValue: {
-					summary: 'info',
+					summary: 'false',
 				},
-				category: 'props',
 			},
 		},
 	},
@@ -80,43 +79,31 @@ export const Default: Story = (args) => {
 		components: { NotificationBar, VBtn },
 		setup() {
 			const { addNotification } = useNotificationService()
-			const showNotification = ref(false)
-			const { type, closeBtnText, bottom, rounded } = toRefs(args)
-
+			const argsType = args.type || 'info'
 			const envoyerNotification = (message: string) => {
 				const notification: Notification = {
 					id: Date.now().toString(),
 					message,
-					type: type.value,
+					type: argsType,
 					timeout: -1,
 				}
 				addNotification(notification)
-				showNotification.value = true
 			}
 
 			return {
-				showNotification,
-				type,
-				closeBtnText,
-				bottom,
-				rounded,
+				args,
+				argsType,
 				envoyerNotification,
 			}
 		},
 		template: `
           <div class="d-flex flex-wrap align-center justify-center">
             <NotificationBar
-                v-model="showNotification"
-                :close-btn-text="closeBtnText"
-                :bottom="bottom"
-                :rounded="rounded"
-                :type="type"
-            >
-              <template #default>This is a {{ type }} notification</template>
-            </NotificationBar>
+                v-bind="args"
+            />
             <VBtn
                 color="primary"
-                @click="envoyerNotification('This is a ' + type + ' notification')"
+                @click="envoyerNotification('Ceci est une notification de type : ' + argsType)"
                 class="ma-6"
             >
               Afficher la notification
@@ -128,8 +115,7 @@ export const Default: Story = (args) => {
 
 Default.args = {
 	closeBtnText: 'Fermer',
-	type: 'info',
-	bottom: false,
+	rounded: 4,
 }
 
 Default.parameters = {
@@ -139,16 +125,11 @@ Default.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
-					:close-btn-text="closeBtnText"
-					:bottom="bottom"
-					:type="type"
-				>
-					<template #default>This is a {{ type }} notification</template>
-				</NotificationBar>
+					close-btn-text="Fermer"
+				/>
 				<VBtn
 					color="primary"
-					@click="envoyerNotification('This is a ' + type + ' notification')"
+					@click="envoyerNotification('Ceci est une notification')"
 					class="ma-6"
 				>
 					Afficher la notification
@@ -161,12 +142,10 @@ Default.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-                import { NotificationBar } from '@cnamts/synapse'
+                import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 				import { ref } from 'vue'
-                import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
-				const showNotification = ref(false)
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
@@ -176,7 +155,6 @@ Default.parameters = {
 						timeout: -1,
 					}
 					addNotification(notification)
-					showNotification.value = true
 				}
 			</script>
 			`,
@@ -196,16 +174,11 @@ Success.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
-					:close-btn-text="closeBtnText"
-					:bottom="bottom"
-					type="success"
-				>
-					<template #default>This is a success notification</template>
-				</NotificationBar>
+					close-btn-text="Fermer"
+				/>
 				<VBtn
 					color="success"
-					@click="envoyerNotification('This is a success notification')"
+					@click="envoyerNotification('Ceci est une notification de succès')"
 					class="ma-6"
 				>
 					Afficher la notification
@@ -218,12 +191,10 @@ Success.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-				import { NotificationBar } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@cnamts/synpase'
+				import { useNotificationService, NotificationBar } from '@cnamts/synapse'
 
 				const { addNotification } = useNotificationService()
-				const showNotification = ref(false)
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
@@ -233,7 +204,6 @@ Success.parameters = {
 						timeout: -1,
 					}
 					addNotification(notification)
-					showNotification.value = true
 				}
 			</script>
 			`,
@@ -253,16 +223,11 @@ Warning.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
-					:close-btn-text="closeBtnText"
-					:bottom="bottom"
-					type="warning"
-				>
-					<template #default>This is a warning notification</template>
-				</NotificationBar>
+					close-btn-text="Fermer"
+				/>
 				<VBtn
 					color="warning"
-					@click="envoyerNotification('This is a warning notification')"
+					@click="envoyerNotification('Ceci est une notification d\'avertissement')"
 					class="ma-6"
 				>
 					Afficher la notification
@@ -275,12 +240,10 @@ Warning.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-				import { NotificationBar } from '@cnamts/synapse'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
-				const showNotification = ref(false)
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
@@ -290,7 +253,6 @@ Warning.parameters = {
 						timeout: -1,
 					}
 					addNotification(notification)
-					showNotification.value = true
 				}
 			</script>
 			`,
@@ -310,16 +272,11 @@ Error.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
-					:close-btn-text="closeBtnText"
-					:bottom="bottom"
-					type="error"
-				>
-					<template #default>This is an error notification</template>
-				</NotificationBar>
+					close-btn-text="Fermer"
+				/>
 				<VBtn
 					color="error"
-					@click="envoyerNotification('This is an error notification')"
+					@click="envoyerNotification('Ceci est une notification d\'erreur')"
 					class="ma-6"
 				>
 					Afficher la notification
@@ -332,12 +289,10 @@ Error.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-				import { NotificationBar } from '@cnamts/synapse'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
-				const showNotification = ref(false)
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
@@ -347,7 +302,6 @@ Error.parameters = {
 						timeout: -1,
 					}
 					addNotification(notification)
-					showNotification.value = true
 				}
 			</script>
 			`,
@@ -367,16 +321,12 @@ Bottom.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
-					:close-btn-text="closeBtnText"
-					:bottom="true"
-					:type="type"
-				>
-					<template #default>This is a bottom-positioned notification</template>
-				</NotificationBar>
+					close-btn-text="Fermer"
+					bottom
+				/>
 				<VBtn
 					color="primary"
-					@click="envoyerNotification('This is a bottom-positioned notification')"
+					@click="envoyerNotification('Ceci est une notification affichée en bas de l\'écran')"
 					class="ma-6"
 				>
 					Afficher la notification
@@ -389,12 +339,10 @@ Bottom.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-				import { NotificationBar } from '@cnamts/synapse'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
-				const showNotification = ref(false)
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
@@ -404,7 +352,6 @@ Bottom.parameters = {
 						timeout: -1,
 					}
 					addNotification(notification)
-					showNotification.value = true
 				}
 			</script>
 			`,
@@ -424,17 +371,11 @@ CustomCloseBtnText.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
 					close-btn-text="Masquer"
-					:bottom="bottom"
-					:rounded="pill"
-					:type="type"
-				>
-					<template #default>This is a notification with custom close button text</template>
-				</NotificationBar>
+				/>
 				<VBtn
 					color="primary"
-					@click="envoyerNotification('This is a notification with custom close button text')"
+					@click="envoyerNotification('Ceci est une notification avec un texte de bouton personnalisé')"
 					class="ma-6"
 				>
 					Afficher la notification
@@ -447,12 +388,10 @@ CustomCloseBtnText.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-				import { NotificationBar } from '@cnamts/synapse'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
-				const showNotification = ref(false)
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
@@ -462,7 +401,6 @@ CustomCloseBtnText.parameters = {
 						timeout: -1,
 					}
 					addNotification(notification)
-					showNotification.value = true
 				}
 			</script>
 			`,
@@ -483,17 +421,12 @@ Customization.parameters = {
 			code: `
 			<div class="d-flex flex-wrap align-center justify-center">
 				<NotificationBar
-					v-model="showNotification"
-					:close-btn-text="closeBtnText"
-					:bottom="bottom"
-					:rounded="pill"
-					type="success"
-				>
-					<template #default>This is a success notification</template>
-				</NotificationBar>
+					close-btn-text="closeBtnText"
+					rounded="pill"
+				/>
 				<VBtn
 					color="success"
-					@click="envoyerNotification('This is a success notification')"
+					@click="envoyerNotification('Ceci est une notification de succès')"
 					class="ma-6"
 				>
 					Afficher la notification
@@ -506,12 +439,10 @@ Customization.parameters = {
 			code: `
 			<script setup lang="ts">
 				import { VBtn } from 'vuetify/components'
-				import { NotificationBar } from '@cnamts/synapse'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
 				import { ref } from 'vue'
-				import { useNotificationService } from '@cnamts/synpase'
 
 				const { addNotification } = useNotificationService()
-				const showNotification = ref(false)
 
 				const envoyerNotification = (message: string) => {
 					const notification = {
@@ -521,7 +452,6 @@ Customization.parameters = {
 						timeout: -1,
 					}
 					addNotification(notification)
-					showNotification.value = true
 				}
 			</script>
 			`,
@@ -534,7 +464,6 @@ export const WithClearQueue: Story = (args) => {
 		components: { NotificationBar, VBtn },
 		setup() {
 			const { addNotification, clearQueue } = useNotificationService()
-			const { closeBtnText, bottom, rounded } = toRefs(args)
 
 			// Fonction pour ajouter une notification avec un type spécifique
 			const envoyerNotification = (message: string, type: Notification['type'] = 'info') => {
@@ -548,21 +477,17 @@ export const WithClearQueue: Story = (args) => {
 			}
 
 			return {
-				closeBtnText,
-				bottom,
-				rounded,
+				args,
 				envoyerNotification,
 				clearQueue,
 			}
 		},
 		template: `
-          <div class="d-flex flex-column align-center justify-center gap-4">
+          <div class="d-flex flex-column align-center justify-center ga-4">
             <NotificationBar
-                :close-btn-text="closeBtnText"
-                :bottom="true"
-                :rounded="rounded"
+                v-bind="args"
             />
-            <div class="d-flex flex-wrap justify-center gap-4">
+            <div class="d-flex flex-wrap justify-center ga-4">
               <VBtn
                   color="primary"
                   @click="envoyerNotification('Notification info', 'info')"
@@ -594,6 +519,7 @@ export const WithClearQueue: Story = (args) => {
                 Fermer toutes les notifications
               </VBtn>
             </div>
+			<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
           </div>
         `,
 	}
@@ -601,35 +527,117 @@ export const WithClearQueue: Story = (args) => {
 
 WithClearQueue.args = {
 	...Default.args,
+	bottom: true,
 }
 
-WithClearQueue.parameters = {
+export const showAll: Story = (args) => {
+	return {
+		components: { NotificationBar, VBtn },
+		setup() {
+			const { addNotification, clearQueue } = useNotificationService()
+
+			const envoyerNotification = (message: string, type: Notification['type'] = 'info') => {
+				const notification: Notification = {
+					id: Date.now().toString(),
+					message,
+					type: type,
+					timeout: -1,
+				}
+				addNotification(notification)
+			}
+
+			return {
+				args,
+				envoyerNotification,
+				clearQueue,
+			}
+		},
+		template: `
+		<div class="d-flex flex-column align-center justify-center ga-4">
+			<NotificationBar
+				v-bind="args"
+			/>
+			<div class="d-flex flex-wrap justify-center ga-4">
+			  <VBtn
+				  color="primary"
+				  @click="envoyerNotification('Notification info', 'info')"
+			  >
+				Ajouter info
+			  </VBtn>
+			  <VBtn
+				  color="success"
+				  @click="envoyerNotification('Notification succès', 'success')"
+			  >
+				Ajouter succès
+			  </VBtn>
+			  <VBtn
+				  color="warning"
+				  @click="envoyerNotification('Notification avertissement', 'warning')"
+			  >
+				Ajouter avertissement
+			  </VBtn>
+			  <VBtn
+				  color="error"
+				  @click="envoyerNotification('Notification erreur', 'error')"
+			  >
+				Ajouter erreur
+			  </VBtn>
+				<VBtn
+					color="grey-darken-1"
+					@click="clearQueue()"
+				>
+					Fermer toutes les notifications
+				</VBtn>
+			</div>
+			<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+		  </div>
+		`,
+	}
+}
+
+showAll.args = {
+	...Default.args,
+	showAll: true,
+	bottom: true,
+}
+
+showAll.parameters = {
 	sourceCode: [
 		{
 			name: 'Template',
 			code: `
-			<div class="d-flex flex-column align-center justify-center gap-4">
-				<NotificationBar
-					:close-btn-text="closeBtnText"
-					:bottom="true"
-					:rounded="rounded"
-				/>
-				<div class="d-flex flex-wrap justify-center gap-4">
-					<!-- Boutons pour ajouter des notifications -->
+			<div class="d-flex flex-column align-center justify-center ga-4">
+				<div class="d-flex flex-wrap justify-center ga-4">
 					<VBtn
 						color="primary"
 						@click="envoyerNotification('Notification info', 'info')"
 					>
-						Ajouter info
+						Ajouter une notification info
 					</VBtn>
-					<!-- ... autres boutons ... -->
 					<VBtn
-						color="grey-darken-1"
-						@click="clearQueue()"
+						color="success"
+						@click="envoyerNotification('Notification succès', 'success')"
 					>
-						Fermer toutes les notifications
+						Ajouter une notification succès
+					</VBtn>
+					<VBtn
+						color="warning"
+						@click="envoyerNotification('Notification avertissement', 'warning')"
+					>
+						Ajouter une notification avertissement
+					</VBtn>
+					<VBtn
+						color="error"
+						@click="envoyerNotification('Notification erreur', 'error')"
+					>
+						Ajouter une notification erreur
 					</VBtn>
 				</div>
+				<p class="mt-4">Ajoutez plusieurs notifications pour tester l'affichage.</p>
+				<NotificationBar
+					close-btn-text="Fermer"
+					show-all
+				/>
 			</div>
 			`,
 		},
@@ -637,10 +645,13 @@ WithClearQueue.parameters = {
 			name: 'Script',
 			code: `
 			<script setup lang="ts">
+				import { VBtn } from 'vuetify/components'
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+				import { ref } from 'vue'
 
-				const { addNotification, clearQueue } = useNotificationService()
+				const { addNotification } = useNotificationService()
 
-				const envoyerNotification = (message: string, type = 'info') => {
+				const envoyerNotification = (message: string, type: string = 'info') => {
 					const notification = {
 						id: Date.now().toString(),
 						message,

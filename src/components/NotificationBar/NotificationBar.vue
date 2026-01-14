@@ -1,253 +1,142 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useNotificationService } from '@/services/NotificationService'
-	import { mdiAlertOutline, mdiAlertOctagonOutline, mdiCheckCircleOutline, mdiClose, mdiInformationOutline } from '@mdi/js'
-	import { computed, getCurrentInstance, onMounted, onUnmounted, ref, useAttrs, watch } from 'vue'
-	import { useDisplay } from 'vuetify'
+	import { onUnmounted, ref, useAttrs, watch } from 'vue'
 	import defaultOptions from './config'
-	import { type Notification } from './types'
+	import Notification from './Notification/Notification.vue'
+	import type { Notification as NotificationType } from './types'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		closeBtnText?: string
 		rounded?: 0 | 1 | 2 | 3 | 4 | 'xs' | 'sm' | true | 'lg' | 'xl' | 'pill' | 'circle' | 'shaped'
 		bottom?: true | false
+		showAll?: boolean
 	}>(), {
 		closeBtnText: 'Fermer',
 		rounded: 4,
 		bottom: false,
+		showAll: false,
 	})
 
 	const attrs = useAttrs()
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
-	const display = useDisplay()
+	const { notificationQueue, clearQueue, removeNotification } = useNotificationService()
 
-	const { notificationQueue, clearAllEvent, removeNotification } = useNotificationService()
-
-	// Fonction pour fermer la notification active
-	function closeAllNotifications() {
-		clearTimeout(timeoutID)
-		isNotificationVisible.value = false
-		currentNotification.value = undefined
-	}
-
-	const instance = getCurrentInstance()
-
-	const currentNotification = ref<Notification>()
-	const isNotificationVisible = ref(false)
-
-	const hasActionSlot = computed(() => !!instance?.slots.action)
-	const isMobileVersion = computed(() => display.name.value === 'xs')
-	const isTabletVersion = computed(() => display.name.value === 'sm')
-	const hasLongContent = computed(() => (currentNotification.value?.message?.length ?? 0) > 50)
-
-	const iconMapping: Record<string, string> = {
-		info: mdiInformationOutline,
-		success: mdiCheckCircleOutline,
-		warning: mdiAlertOutline,
-		error: mdiAlertOctagonOutline,
-	}
-
-	const icon = computed(() => {
-		return currentNotification.value ? iconMapping[currentNotification.value.type] : null
-	})
-
-	const color = computed(() => {
-		if (currentNotification.value) {
-			const typeColor: Record<string, string> = {
-				info: 'info',
-				success: '#56C271',
-				warning: '#F0B323',
-				error: 'error',
-			}
-			return typeColor[currentNotification.value.type] || 'info'
+	const displayedNotifications = ref<NotificationType[]>([])
+	let nextNotificationTimer: number | undefined = undefined
+	watch([notificationQueue, () => props.showAll], () => {
+		if (!notificationQueue.value) {
+			displayedNotifications.value = []
+			return
 		}
-		return 'info'
-	})
+		if (props.showAll) {
+			clearTimeout(nextNotificationTimer)
+			displayedNotifications.value = notificationQueue.value
+		}
+		else if (
+			displayedNotifications.value.length !== 1
+			|| notificationQueue.value?.[0]?.id !== displayedNotifications.value?.[0]?.id
+		) {
+			displayedNotifications.value = []
+			nextNotificationTimer = window.setTimeout(() => {
+				displayedNotifications.value = notificationQueue.value.slice(0, 1)
+				nextNotificationTimer = undefined
+			}, 200) // wait for the fade out transition to complete
+		}
+	}, { immediate: true, deep: 2 })
 
-	const contentStyle = computed(() => {
-		if (currentNotification.value) {
-			const isDarkText = currentNotification.value.type === 'success' || currentNotification.value.type === 'warning'
-			return {
-				contentColor: isDarkText ? 'grey-darken-80' : 'white',
+	const timers: Map<string, number> = new Map() // avoid duplicate timers
+	watch(displayedNotifications, () => {
+		// remove existing timers for removed notifications
+		for (const [id, timer] of timers) {
+			if (!displayedNotifications.value.find(n => n.id === id)) {
+				clearTimeout(timer)
+				timers.delete(id)
 			}
 		}
-		return {
-			contentColor: 'white',
+		if (props.showAll) {
+			for (const notification of displayedNotifications.value) {
+				timeoutNotification(notification)
+			}
 		}
-	})
-
-	const smallCloseBtn = computed(() => isMobileVersion.value && !hasLongContent.value && !hasActionSlot.value)
-
-	// Observer le signal de fermeture des notifications
-	watch(() => clearAllEvent.value, (shouldClear) => {
-		if (shouldClear) {
-			closeAllNotifications()
+		else {
+			const notification = displayedNotifications.value[0]
+			if (notification) timeoutNotification(notification)
 		}
-	})
+	}, { immediate: true, deep: 2 })
 
-	watch(() => notificationQueue.value.length, async (queueLength) => {
-		// Cas normal: afficher la première notification si aucune n'est affichée
-		if (queueLength > 0 && currentNotification.value === undefined) {
-			openNotification(notificationQueue.value[0])
-		}
-	}, { immediate: true })
-
-	let timeoutID: ReturnType<typeof setTimeout>
-	function openNotification(notification: Notification) {
-		currentNotification.value = notification
-		isNotificationVisible.value = true
-
-		if ((notification.timeout || 0) > 0) {
-			timeoutID = setTimeout(() => {
-				isNotificationVisible.value = false
+	function timeoutNotification(notification: NotificationType) {
+		if (notification.timeout && notification.timeout > 0 && !timers.has(notification.id)) {
+			const timer = window.setTimeout(() => {
+				removeNotification(notification.id)
+				timers.delete(notification.id)
 			}, notification.timeout)
+			timers.set(notification.id, timer)
 		}
 	}
-
-	watch(isNotificationVisible, async (isVisible) => {
-		if (!isVisible) {
-			// wait for the snackbar close animation to finish
-			await new Promise(resolve => setTimeout(resolve, 100))
-			if (currentNotification.value) {
-				removeNotification(currentNotification.value.id)
-			}
-			currentNotification.value = undefined
-
-			if (notificationQueue.value.length > 0) {
-				openNotification(notificationQueue.value[0])
-			}
-		}
-	})
-
-	function showNextNotification() {
-		clearTimeout(timeoutID)
-		isNotificationVisible.value = false
-	}
-
-	function closeOnEscape(e: KeyboardEvent) {
-		if (e.key == 'Escape' && notificationQueue.value.length) {
-			showNextNotification()
-		}
-	}
-
-	onMounted(() => {
-		document.addEventListener('keyup', closeOnEscape)
-	})
 
 	onUnmounted(() => {
-		document.removeEventListener('keyup', closeOnEscape)
+		timers.forEach((timer) => {
+			clearTimeout(timer)
+		})
+		clearTimeout(nextNotificationTimer)
 	})
 
 	defineExpose({
-		openNotification,
-		showNextNotification,
-		currentNotification,
-		isNotificationVisible,
-		hasActionSlot,
-		isMobileVersion,
-		hasLongContent,
-		color,
-		icon,
-		contentStyle,
-		smallCloseBtn,
-		isVertical: computed(() => hasLongContent.value && isMobileVersion.value),
+		clearAll: clearQueue,
+		clearNotification: removeNotification,
+		notificationQueue,
+		displayedNotifications,
 	})
-
 </script>
 
 <template>
-	<div>
-		<VSnackbar
-			v-bind="options.snackbar"
-			v-model="isNotificationVisible"
-			:role="attrs?.type === 'error' ? 'alert' : 'status'"
-			:eager="true"
-			:color="color"
-			:location="props.bottom ? 'bottom' : 'top'"
-			:vertical="hasLongContent"
-			:multi-line="hasLongContent"
-			:timeout="currentNotification?.timeout ?? -1"
-			:width="isMobileVersion || isTabletVersion ? 'auto' : '960px'"
-			:min-width="isMobileVersion || isTabletVersion ? 'auto' : undefined"
-			:rounded="props.rounded"
-			:class="[{ 'long-text': hasLongContent }]"
+	<div
+		class="notification-bar"
+		:class="{
+			'notification-bar--queue': !props.showAll,
+			'notification-bar--list': props.showAll,
+		}"
+		:role="attrs?.type === 'error' ? 'alert' : 'status'"
+	>
+		<TransitionGroup
+			name="fade"
+			tag="div"
+			class="notification-bar-transition"
+			:style="{
+				bottom: props.bottom ? '4px' : 'auto',
+				top: props.bottom ? 'auto' : '4px',
+			}"
 		>
-			<div class="d-flex align-center ga-2">
-				<VIcon
-					v-if="!isMobileVersion && icon"
-					v-bind="options.icon"
-					:icon="icon"
-					size="24"
-					aria-hidden="true"
-				/>
-				<p
-					class="sy-notification-content"
-					:class="'text-' + contentStyle.contentColor"
+			<Notification
+				v-for="notificationItem in displayedNotifications"
+				:key="notificationItem.id"
+				:notification="notificationItem"
+				:close-btn-text="props.closeBtnText"
+				:rounded="props.rounded"
+				:options
+				@close="removeNotification"
+			>
+				<!-- pass down slots -->
+				<template
+					v-for="(_, slotName) in $slots"
+					#[slotName]="slotProps"
+					:key="slotName"
 				>
-					{{ currentNotification?.message }}
-				</p>
-			</div>
-
-			<template #actions>
-				<div
-					class="d-flex ga-2"
-					style="width: 100%;"
-					:class="hasLongContent ? 'action-section-long-text' : 'action-section-short-text'"
-				>
-					<slot name="action" />
-					<VBtn
-						class="notification-bar__close"
-						:class="{ 'ma-0': smallCloseBtn }"
-						aria-label="Fermer la notification"
-						v-bind="options.btn"
-						@click="isNotificationVisible = false"
-					>
-						<template v-if="!smallCloseBtn">
-							{{ closeBtnText }}
-						</template>
-						<template v-else>
-							<VIcon :icon="mdiClose" />
-						</template>
-					</VBtn>
-				</div>
-			</template>
-		</VSnackbar>
+					<slot
+						:name="slotName"
+						v-bind="slotProps ?? {}"
+					/>
+				</template>
+			</Notification>
+		</TransitionGroup>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
-
-:deep(.v-overlay__content) {
-	max-width: 100%;
-}
-
-:deep(.v-snackbar__content) {
-	width: 100%;
-	padding: tokens.$padding-4 !important;
-}
-
-:deep(.v-snackbar__actions) {
-	margin-inline-end: 10px;
-}
-
-.long-text :deep(.v-snackbar__actions) {
-	width: 98% !important;
-}
-
-.short-text :deep(.v-snackbar__actions) {
-	width: 48% !important;
-}
-
-.action-section-long-text {
-	justify-content: space-around;
-}
-
-.action-section-short-text {
-	justify-content: end !important;
-}
 
 .sy-notification-content {
 	min-width: 0;
@@ -258,5 +147,62 @@
 :deep(.v-snackbar__wrapper) {
 	max-height: 100%;
 	overflow-y: auto;
+}
+
+.notification-bar-transition {
+	width: min(calc(100% - 16px), 960px);
+	position: fixed;
+	z-index: 2000;
+	left: 50%;
+}
+
+/* Fade transition for notifications */
+.notification-bar--queue {
+	.notification-bar-transition {
+		will-change: opacity;
+	}
+
+	.fade-enter-active {
+		transition: opacity 0.2s ease-in-out;
+	}
+
+	.fade-leave-active {
+		transition: opacity 0.17s ease-in-out;
+	}
+
+	.fade-enter-from,
+	.fade-leave-to {
+		opacity: 0;
+	}
+}
+
+.notification-bar--list {
+	.notification-bar-transition {
+		will-change: opacity, height, padding-block, margin-block;
+	}
+
+	.fade-enter-active,
+	.fade-leave-active {
+		overflow: clip;
+		height: auto;
+		interpolate-size: allow-keywords;
+		box-sizing: border-box;
+	}
+
+	.fade-enter-active {
+		transition: opacity 0.2s ease-in, height 0.2s ease-in, padding-block 0.2s ease-in, margin-block 0.2s ease-in;
+	}
+
+	.fade-leave-active {
+		transition: opacity 0.17s ease-out, height 0.17s ease-out, padding-block 0.17s ease-out, margin-block 0.17s ease-out;
+	}
+
+	.fade-enter-from,
+	.fade-leave-to {
+		opacity: 0;
+		height: 0;
+		padding-block: 0;
+		margin-block: tokens.$gap-0;
+	}
 }
 </style>

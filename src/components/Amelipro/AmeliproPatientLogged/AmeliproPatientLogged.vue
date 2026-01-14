@@ -16,6 +16,10 @@
 			type: Boolean,
 			default: false,
 		},
+		btnPrevention: {
+			type: Boolean,
+			default: false,
+		},
 		doctorTooltipRed: {
 			type: Boolean,
 			default: false,
@@ -45,6 +49,7 @@
 				fund: 'Caisse',
 				fundDialogTitle: 'Coordonnées de l\'organisme de rattachement du patient',
 				postalAddress: 'Adresse postale',
+				prevention: 'Prévention',
 				mtm: 'Modulation MT',
 				name: 'Nom',
 				nir: 'NIR',
@@ -96,7 +101,7 @@
 	const exemptionDialog = ref(false)
 	const fundDialog = ref(false)
 
-	const emit = defineEmits(['click', 'click:info', 'click:postal-address', 'click:pdf', 'update:model-value'])
+	const emit = defineEmits(['click', 'click:info', 'click:postal-address', 'click:prevention', 'click:pdf', 'click:fund-dialog', 'click:doctor-dialog', 'click:patient-change', 'click:copy', 'click:beneficiary-change', 'update:model-value'])
 	const selectValue = computed({
 		get: (): SelectItem | number | string | undefined => props.modelValue,
 		set: (newValue: SelectItem | number | string | undefined): void => {
@@ -104,10 +109,22 @@
 		},
 	})
 
-	const emitClick = () => emit('click', `${props.uniqueId}-btn`, selectValue.value)
 	const emitClickInfo = () => emit('click:info', `${props.uniqueId}-info-btn`)
 	const emitClickPdf = () => emit('click:pdf', `${props.uniqueId}-pdf-btn`)
-	const emitClickPostalAddress = () => emit('click:postal-address', `${props.uniqueId}-btn-postal-address`)
+	const emitClickPostalAddress = () => emit('click:postal-address', `${props.uniqueId}-postal-address-btn`)
+	const emitClickPrevention = () => emit('click:prevention', `${props.uniqueId}-prevention-btn`)
+	const emitClickFundDialog = () => {
+		fundDialog.value = true
+		emit('click:fund-dialog', `${props.uniqueId}-fun-dialog-btn`)
+	}
+	const emitClickDoctorDialog = () => {
+		doctorDialog.value = true
+		emit('click:doctor-dialog', `${props.uniqueId}-doctor-dialog-btn`)
+	}
+	const emitClickPatientChange = () => emit('click:patient-change', `${props.uniqueId}patient-change-btn`)
+	const emitClickCopy = () => emit('click:copy', `${props.uniqueId}-copy-btn`)
+	const emitBeneficiaryChange = () => emit('click:beneficiary-change', `${props.uniqueId}-beneficiary-change-btn`)
+
 </script>
 
 <template>
@@ -196,6 +213,7 @@
 						<AmeliproCopyBtn
 							:text-to-copy="patientInfos.nir"
 							:unique-id="`${uniqueId}-copy-nir-btn`"
+							@click="emitClickCopy"
 						/>
 					</span>
 				</p>
@@ -223,6 +241,20 @@
 				</p>
 			</div>
 			<div class="mb-4">
+				<AmeliproBtn
+					v-if="btnPrevention && !isRestrictedData"
+					bordered
+					class="d-block w-100"
+					color="ap-white"
+					hover-color="ap-blue-lighten-3"
+					text-color="ap-blue-darken-1"
+					:unique-id="`${uniqueId}-prenvention-btn`"
+					@click="emitClickPrevention"
+				>
+					{{ labels.prevention }}
+				</AmeliproBtn>
+			</div>
+			<div class="mb-4">
 				<p
 					v-if="patientInfos.plan"
 					:id="`${uniqueId}-plan`"
@@ -246,7 +278,7 @@
 							text
 							underline
 							:unique-id="`${uniqueId}-fund-dialog-btn`"
-							@click="fundDialog = true"
+							@click="emitClickFundDialog"
 						>
 							{{ patientInfos.fund }}
 						</AmeliproBtn>
@@ -311,7 +343,7 @@
 								text
 								underline
 								:unique-id="`${uniqueId}-doctor-dialog-btn`"
-								@click="doctorDialog = true"
+								@click="emitClickDoctorDialog"
 							>
 								{{ labels.doctorDialogBtn }}
 							</AmeliproBtn>
@@ -502,12 +534,13 @@
 				:items="patientInfos.selectItems"
 				:label="labels.selectLabel"
 				:unique-id="`${uniqueId}-select`"
+				@update:model-value="emitBeneficiaryChange"
 			/>
 
 			<AmeliproBtn
 				class="d-block w-100 patient-change-btn"
 				:unique-id="`${uniqueId}-btn`"
-				@click="emitClick"
+				@click="emitClickPatientChange"
 			>
 				{{ labels.btnLabel }}
 			</AmeliproBtn>
