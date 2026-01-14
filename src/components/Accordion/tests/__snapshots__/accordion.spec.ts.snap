@@ -142,14 +142,14 @@ exports[`Accordion > renders correctly 1`] = `
     >
       <div class="sy-accordion-content-inner">
         <div class="sy-accordion-content-item">
-          <div class="sy-accordion-content-line">
-            <div class="mb-2">
+          <p class="sy-accordion-content-text">
+            <strong>
               Sous-titre de la section 3
-            </div>
-            <div class="mb-2">
-              Contenu détaillé de la section 3
-            </div>
-          </div>
+            </strong>
+          </p>
+          <p class="sy-accordion-content-text">
+            Contenu détaillé de la section 3
+          </p>
         </div>
       </div>
     </div>
