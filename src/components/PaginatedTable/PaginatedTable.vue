@@ -209,6 +209,7 @@
 </template>
 
 <style lang="scss" scoped>
+/* stylelint-disable selector-class-pattern */
 @use '@/assets/tokens';
 
 .sy-paginated-table :deep() {
