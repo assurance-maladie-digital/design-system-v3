@@ -96,7 +96,9 @@
 	@use '@/assets/tokens.scss' as *;
 	@use '../../consts' as *;
 	@use '../menu';
-
+	.sub-menu-content-wrapper .sub-menu-content {
+		padding-top: 2px;
+	}
 	.sub-menu-btn {
 		display: flex;
 		justify-content: center;
@@ -105,8 +107,6 @@
 		padding: 16px 50px 16px 20px;
 		text-align: left;
 		color: rgb(var(--v-theme-primary));
-		border-top: none !important;
-		border-bottom: none !important;
 
 		&:hover {
 			background-color: rgb(var(--v-theme-primary));

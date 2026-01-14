@@ -37,8 +37,6 @@
 			padding: 16px 50px 16px 20px;
 			text-decoration: none;
 			color: currentcolor;
-			border-top: none !important;
-			border-bottom: none !important;
 
 			&:hover {
 				text-decoration: underline;
