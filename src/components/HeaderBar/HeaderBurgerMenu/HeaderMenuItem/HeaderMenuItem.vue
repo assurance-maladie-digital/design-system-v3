@@ -30,7 +30,6 @@
 		padding: 0;
 		min-height: 44px; // accessibility requirement
 		font-weight: 700;
-		line-height: 1.25;
 
 		> :deep(a) {
 			display: flex;
@@ -38,6 +37,8 @@
 			padding: 16px 50px 16px 20px;
 			text-decoration: none;
 			color: currentcolor;
+			border-top: none !important;
+			border-bottom: none !important;
 
 			&:hover {
 				text-decoration: underline;
