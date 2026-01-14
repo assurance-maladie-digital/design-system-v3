@@ -33,7 +33,7 @@ const meta = {
 		},
 		color: {
 			control: 'select',
-			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			options: ['primary', 'success', 'error', 'warning'],
 			description: 'Couleur de la case à cocher',
 		},
 		indeterminate: {

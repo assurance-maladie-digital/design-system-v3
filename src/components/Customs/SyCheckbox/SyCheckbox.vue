@@ -14,8 +14,6 @@
 			ariaLabelledby?: string
 			title?: string
 			color?: string
-			colorIndeterminate?: string
-			colorDefault?: string
 			disabled?: boolean
 			readonly?: boolean
 			required?: boolean
@@ -46,8 +44,6 @@
 			ariaLabelledby: undefined,
 			title: undefined,
 			color: 'primary',
-			colorIndeterminate: '#6D8DC2',
-			colorDefault: cnamSemanticTokens.colors.border.darker,
 			disabled: false,
 			readonly: false,
 			required: false,
@@ -220,8 +216,9 @@
 		case 'warning':
 			return 'rgb(var(--v-theme-warning))'
 		case 'primary':
-		default:
 			return cnamSemanticTokens.colors.text.base
+		default:
+			return ''
 		}
 	})
 
@@ -328,7 +325,6 @@
 			:title="props.title"
 			:color="props.color"
 			:style="{ color: labelColor }"
-			:base-color="internalIndeterminate ? props.colorIndeterminate : colorDefault"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
 			:hide-details="props.hideDetails"
@@ -368,8 +364,12 @@
 </template>
 
 <style>
-.v-input--dirty.v-checkbox .v-icon--size-default {
-	--v-medium-emphasis-opacity: 1 !important;
+
+:deep(.v-input--dirty .v-selection-control__input) {
+	color: v-bind('props.color');
+}
+:deep(.v-checkbox--indeterminate .v-selection-control__input) {
+	color: v-bind('props.color');
 }
 
 :deep(.v-checkbox--indeterminate .v-selection-control__input .v-selection-control__input-icon) {
