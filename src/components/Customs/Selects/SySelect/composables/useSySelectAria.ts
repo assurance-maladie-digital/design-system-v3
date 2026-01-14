@@ -25,6 +25,7 @@ export function useSySelectAria(options: UseSySelectAriaOptions) {
 			if (!inputElement) return
 
 			inputElement.setAttribute('role', 'combobox')
+			inputElement.setAttribute('aria-autocomplete', 'list')
 			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
 			inputElement.setAttribute('aria-haspopup', 'listbox')
 
