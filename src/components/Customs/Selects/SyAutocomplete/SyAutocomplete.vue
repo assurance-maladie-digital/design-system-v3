@@ -510,14 +510,18 @@
 		ensureFirstOptionFocused,
 	})
 
-	const { onNativeInputKeydown, onFieldRootKeydown } = useSyAutocompleteKeydown({
+	const { onNativeInputKeydown, onFieldRootKeydown, onListKeydown } = useSyAutocompleteKeydown({
 		textInput,
 		isOpen,
 		multiple: computed(() => props.multiple),
 		selectedItem,
 		searchValue,
+		handleTabKey,
 		handleInputDownKey,
 		handleInputUpKey,
+		handleListDownKey,
+		handleListUpKey,
+		handleListEscapeKey,
 		handleHomeKey,
 		handleEndKey,
 		handlePageUpKey,
@@ -618,14 +622,6 @@
 					@click="toggleMenu"
 					@focus="handleInputFocus"
 					@blur="handleInputBlur"
-					@keydown.enter.prevent="handleEnterKey"
-					@keydown.space.prevent="handleSpaceKey"
-					@keydown.esc.prevent="handleEscapeKey"
-					@keydown.home.prevent="handleHomeKey"
-					@keydown.end.prevent="handleEndKey"
-					@keydown.page-up.prevent="handlePageUpKey"
-					@keydown.page-down.prevent="handlePageDownKey"
-					@keydown.tab="handleTabKey"
 				>
 					<div
 						v-if="hasChips"
@@ -692,15 +688,7 @@
 				bg-color="white"
 				tabindex="0"
 				:title="props.multiple ? 'Sélection multiple' : 'Sélection'"
-				@keydown.esc.prevent="handleListEscapeKey"
-				@keydown.tab="handleTabKey"
-				@keydown.enter.prevent="handleEnterKey"
-				@keydown.down.prevent="handleListDownKey"
-				@keydown.up.prevent="handleListUpKey"
-				@keydown.home.prevent="handleHomeKey"
-				@keydown.end.prevent="handleEndKey"
-				@keydown.page-up.prevent="handlePageUpKey"
-				@keydown.page-down.prevent="handlePageDownKey"
+				@keydown="onListKeydown"
 				@click.stop
 			>
 				<VListItem

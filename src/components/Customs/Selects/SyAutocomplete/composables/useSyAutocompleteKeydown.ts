@@ -8,10 +8,12 @@ type UseSyAutocompleteKeydownOptions = {
 	multiple: Ref<boolean>
 	selectedItem: Ref<SelectItemValueType | SelectItemArrayType>
 	searchValue: Ref<string>
-
+	handleTabKey: () => void
 	handleInputDownKey: () => void
 	handleInputUpKey: () => void
-
+	handleListDownKey: () => void
+	handleListUpKey: () => void
+	handleListEscapeKey: () => void
 	handleHomeKey: () => void
 	handleEndKey: () => void
 	handlePageUpKey: () => void
@@ -19,7 +21,6 @@ type UseSyAutocompleteKeydownOptions = {
 	handleEnterKey: () => void
 	handleSpaceKey: () => void
 	handleEscapeKey: () => void
-
 	removeChip: (item: unknown) => void
 	focusInputElement: () => void
 	ensureNativeInputFocus: () => void
@@ -62,10 +63,6 @@ export function useSyAutocompleteKeydown(options: UseSyAutocompleteKeydownOption
 			return
 		}
 
-		// On n'intercepte les autres touches de navigation que si le menu est ouvert,
-		// pour garder une saisie/navigation curseur normale quand il est fermé.
-		if (!options.isOpen.value) return
-
 		switch (event.key) {
 			case 'Home':
 				event.preventDefault()
@@ -83,11 +80,21 @@ export function useSyAutocompleteKeydown(options: UseSyAutocompleteKeydownOption
 				event.preventDefault()
 				options.handlePageDownKey()
 				break
+			case 'Tab':
+				options.handleTabKey()
+				break
 			case 'Enter':
 				event.preventDefault()
 				event.stopPropagation()
 				;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
 				options.handleEnterKey()
+				break
+			case ' ':
+			case 'Spacebar':
+				event.preventDefault()
+				event.stopPropagation()
+				;(event as unknown as { stopImmediatePropagation?: () => void }).stopImmediatePropagation?.()
+				options.handleSpaceKey()
 				break
 			case 'Escape':
 				event.preventDefault()
@@ -95,6 +102,48 @@ export function useSyAutocompleteKeydown(options: UseSyAutocompleteKeydownOption
 				nextTick(() => {
 					options.focusInputElement()
 				})
+				break
+			default:
+				break
+		}
+	}
+
+	const onListKeydown = (event: KeyboardEvent) => {
+		switch (event.key) {
+			case 'Escape':
+				event.preventDefault()
+				options.handleListEscapeKey()
+				break
+			case 'Tab':
+				options.handleTabKey()
+				break
+			case 'Enter':
+				event.preventDefault()
+				options.handleEnterKey()
+				break
+			case 'ArrowDown':
+				event.preventDefault()
+				options.handleListDownKey()
+				break
+			case 'ArrowUp':
+				event.preventDefault()
+				options.handleListUpKey()
+				break
+			case 'Home':
+				event.preventDefault()
+				options.handleHomeKey()
+				break
+			case 'End':
+				event.preventDefault()
+				options.handleEndKey()
+				break
+			case 'PageUp':
+				event.preventDefault()
+				options.handlePageUpKey()
+				break
+			case 'PageDown':
+				event.preventDefault()
+				options.handlePageDownKey()
 				break
 			default:
 				break
@@ -155,5 +204,6 @@ export function useSyAutocompleteKeydown(options: UseSyAutocompleteKeydownOption
 	return {
 		onNativeInputKeydown,
 		onFieldRootKeydown,
+		onListKeydown,
 	}
 }
