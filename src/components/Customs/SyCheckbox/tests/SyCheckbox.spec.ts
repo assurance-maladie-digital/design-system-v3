@@ -114,8 +114,8 @@ describe('SyCheckbox', () => {
 		await wrapper.find('.v-checkbox').trigger('blur')
 
 		// Vérifier que le message d'erreur est affiché
-		expect(wrapper.find('.v-messages').exists()).toBe(true)
-		expect(wrapper.find('.v-messages').text()).toContain('Required checkbox est requis')
+		expect(wrapper.find('.checkbox-message').exists()).toBe(true)
+		expect(wrapper.find('.checkbox-message').text()).toContain('Required checkbox est requis')
 	})
 
 	it('should handle custom validation rules', async () => {

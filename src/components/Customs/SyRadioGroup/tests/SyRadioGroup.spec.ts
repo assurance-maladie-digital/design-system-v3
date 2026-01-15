@@ -59,7 +59,7 @@ describe('SyRadioGroup', () => {
 
 		// Vérifier que le message d'erreur est présent
 		await nextTick()
-		const errorMessages = wrapper.findAll('.v-messages__message')
+		const errorMessages = wrapper.findAll('.radio-message')
 		expect(errorMessages.length).toBeGreaterThan(0)
 		expect(errorMessages[0].text()).toContain('Required Radio est requis')
 
