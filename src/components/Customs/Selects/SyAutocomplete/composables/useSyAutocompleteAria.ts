@@ -15,7 +15,7 @@ type UseSyAutocompleteAriaOptions = {
 export function useSyAutocompleteAria(options: UseSyAutocompleteAriaOptions) {
 	return useSyComboboxAria({
 		getRootEl: () => options.textInput.value?.$el ?? null,
-		getInputEl: (rootEl) => rootEl.querySelector('input') as HTMLElement,
+		getInputEl: rootEl => rootEl.querySelector('input') as HTMLElement,
 		isOpen: options.isOpen,
 		uniqueMenuId: options.uniqueMenuId,
 		activeDescendantId: options.activeDescendantId,
