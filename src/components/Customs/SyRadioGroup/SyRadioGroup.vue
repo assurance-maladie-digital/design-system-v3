@@ -347,38 +347,40 @@
 
 .radio-message-enter-active,
 .radio-message-leave-active {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .radio-message-enter-from,
 .radio-message-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
+	opacity: 0;
+	transform: translateY(-8px);
 }
 
 .radio-message-enter-to,
 .radio-message-leave-from {
-  opacity: 1;
-  transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .radio-messages {
-  margin-top: 6px;
+	margin-top: 6px;
 }
 
 .radio-message {
-  font-size: 13px;
-  line-height: 1.4;
+	font-size: 13px;
+	line-height: 1.4;
 }
 
 .radio-message.error {
-  color: rgb(var(--v-theme-error));
+	color: rgb(var(--v-theme-error));
 }
+
 .radio-message.warning {
-  color: rgb(var(--v-theme-warning));
+	color: rgb(var(--v-theme-warning));
 }
+
 .radio-message.success {
-  color: rgb(var(--v-theme-success));
+	color: rgb(var(--v-theme-success));
 }
 
 </style>

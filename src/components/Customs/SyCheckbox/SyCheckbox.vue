@@ -419,40 +419,43 @@
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
 }
+
 .checkbox-message-enter-active,
 .checkbox-message-leave-active {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .checkbox-message-enter-from,
 .checkbox-message-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
+	opacity: 0;
+	transform: translateY(-8px);
 }
 
 .checkbox-message-enter-to,
 .checkbox-message-leave-from {
-  opacity: 1;
-  transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .checkbox-messages {
-  margin-top: 6px;
+	margin-top: 6px;
 }
 
 .checkbox-message {
-  font-size: 13px;
-  line-height: 1.4;
+	font-size: 13px;
+	line-height: 1.4;
 }
 
 .checkbox-message.error {
-  color: rgb(var(--v-theme-error));
+	color: rgb(var(--v-theme-error));
 }
+
 .checkbox-message.warning {
-  color: rgb(var(--v-theme-warning));
+	color: rgb(var(--v-theme-warning));
 }
+
 .checkbox-message.success {
-  color: rgb(var(--v-theme-success));
+	color: rgb(var(--v-theme-success));
 }
 
 </style>
