@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, onUnmounted } from 'vue'
+import {ref, onUnmounted, useId} from 'vue'
 	import { mdiContentCopy } from '@mdi/js'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
@@ -27,7 +27,8 @@
 
 	const options = useCustomizableOptions(config, props)
 
-	const tooltip = ref(false)
+const id = useId()
+const tooltip = ref(false)
 	const copyIcon = mdiContentCopy
 	let tooltipTimeoutId: ReturnType<typeof setTimeout> | undefined
 
@@ -87,7 +88,7 @@
 
 <template>
 	<div
-		:id="props.ariaOwns"
+      :id="`props.ariaOwns-${id}`"
 		class="sy-copy-btn"
 	>
 		<VTooltip
@@ -100,10 +101,10 @@
 			<template #activator="{ props: tooltipProps }">
 				<VBtn
 					v-bind="{...tooltipProps,...options.btn}"
-					:aria-label="props.ariaLabel"
-					:aria-owns="props.ariaOwns"
+          :aria-label="`props.ariaLabel-${id}`"
+          :aria-owns="`props.ariaOwns-${id}`"
 					:data-test-id="props.ariaOwns"
-					aria-controls="copy-btn"
+          :aria-controls="`copy-btn-${id}`"
 					@click="copy"
 				>
 					<slot name="icon">

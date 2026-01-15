@@ -3,7 +3,7 @@
 exports[`CopyBtn > renders correctly 1`] = `
 <div
   class="sy-copy-btn"
-  id="copy-btn"
+  id="props.ariaOwns-v-0"
   label="test"
 >
   <v-tooltip-stub
