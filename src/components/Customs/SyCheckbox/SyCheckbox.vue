@@ -442,8 +442,8 @@
 }
 
 .checkbox-message {
-	font-size: 13px;
-	line-height: 1.4;
+	font-size: 14px;
+	line-height: 16px !important;
 }
 
 .checkbox-message.error {
