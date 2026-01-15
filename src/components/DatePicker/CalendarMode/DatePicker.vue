@@ -1043,6 +1043,16 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
+.date-picker-title {
+	display: block;
+	text-transform: lowercase;
+	font-size: 0.875rem;
+
+	&::first-letter {
+		text-transform: uppercase;
+	}
+}
+
 /* Style pour les jours fériés */
 :deep(.holiday-day) {
 	background-color: rgb(255 193 7 / 10%);
@@ -1071,7 +1081,7 @@
 }
 
 .dp-width {
-	width: v-bind('props.width');
+	width: v-bind(width);
 }
 
 .v-messages__message--success {
@@ -1155,8 +1165,16 @@
 	}
 }
 
+:deep(.v-date-picker-month__day .v-btn:hover) {
+	background-color: tokens.$colors-background-main;
+}
+
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
 	opacity: 1;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn:hover) {
+	background-color: tokens.$colors-background-accent-contrasted !important;
 }
 
 .fade-enter-active,
@@ -1244,5 +1262,9 @@
 			display: none;
 		}
 	}
+}
+
+:deep(.v-picker__body .v-btn--active .v-btn__overlay) {
+	opacity: 0;
 }
 </style>

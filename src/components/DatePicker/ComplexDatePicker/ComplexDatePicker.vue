@@ -1343,6 +1343,43 @@
 	border-radius: 9999px !important;
 }
 
+:deep(.v-picker__body .v-btn:focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
+
+	.v-btn__overlay {
+		display: none;
+	}
+
+	&::after {
+		display: none;
+	}
+}
+
+:deep(.v-date-picker-months .v-btn__content) {
+	font-size: 1rem;
+}
+
+.date-picker__today-button {
+	height: auto;
+
+	:deep(.v-btn__content) {
+		font-size: 1rem;
+		gap: 8px;
+	}
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
+
+		:deep(.v-btn__overlay) {
+			display: none;
+		}
+
+		&::after {
+			display: none;
+		}
+	}
+}
+
 :deep(.v-picker__body .v-btn--active .v-btn__overlay) {
 	opacity: 0;
 }
