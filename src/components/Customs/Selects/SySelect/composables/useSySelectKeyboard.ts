@@ -40,7 +40,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	const parseOptionIndex = (id: string) => {
 		const match = id.match(/(\d+)$/)
 		if (!match) return -1
-		const index = parseInt(match[1])
+		const index = parseInt(match[1] ?? '')
 		return Number.isNaN(index) ? -1 : index
 	}
 
@@ -178,7 +178,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		if (isOpen.value) {
 			const index = findSelectedItemIndex()
 			if (index >= 0) {
-				selectItem(formattedItems.value[index])
+				selectItem(formattedItems.value[index] ?? null)
 			}
 		}
 		else {
@@ -198,7 +198,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		if (isOpen.value) {
 			const index = findSelectedItemIndex()
 			if (index >= 0) {
-				selectItem(formattedItems.value[index])
+				selectItem(formattedItems.value[index] ?? null)
 			}
 		}
 		else {
@@ -330,7 +330,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 			// Trouver l'item actuellement focusé
 			const currentIndex = parseOptionIndex(activeDescendantId.value)
 			if (currentIndex >= 0 && currentIndex < formattedItems.value.length) {
-				const currentItem = formattedItems.value[currentIndex]
+				const currentItem = formattedItems.value[currentIndex] ?? null
 				// Sélectionner l'item qui a le focus
 				selectItem(currentItem)
 			}

@@ -28,7 +28,7 @@ describe('SyAutocomplete.vue', () => {
 			const options = list.findAll('.v-list-item[role="option"]')
 			expect(options.length).toBeGreaterThanOrEqual(2)
 
-			await options[0].trigger('click')
+			await options[0]!.trigger('click')
 			await wrapper.vm.$nextTick()
 
 			// Re-open to read the listbox DOM again
@@ -36,8 +36,9 @@ describe('SyAutocomplete.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			const optionsAfter = wrapper.findComponent(VList).findAll('.v-list-item[role="option"]')
-			expect(optionsAfter[0].attributes('aria-selected')).toBe('true')
-			expect(optionsAfter[1].attributes('aria-selected')).toBe('false')
+			expect(optionsAfter.length).toBeGreaterThanOrEqual(2)
+			expect(optionsAfter[0]!.attributes('aria-selected')).toBe('true')
+			expect(optionsAfter[1]!.attributes('aria-selected')).toBe('false')
 
 			wrapper.unmount()
 		})
