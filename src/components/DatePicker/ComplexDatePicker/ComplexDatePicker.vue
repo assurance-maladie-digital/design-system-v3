@@ -1290,8 +1290,16 @@
 	}
 }
 
+:deep(.v-date-picker-month__day .v-btn:hover) {
+	background-color: tokens.$colors-background-main;
+}
+
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
 	opacity: 1;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn:hover) {
+	background-color: tokens.$colors-background-accent-contrasted !important;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
