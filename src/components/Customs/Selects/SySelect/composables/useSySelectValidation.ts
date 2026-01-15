@@ -1,6 +1,12 @@
 import { computed, ref, watch, type Ref } from 'vue'
 import { useValidatable } from '@/composables/validation/useValidatable'
 
+import {
+	useSyComboboxHasSelection,
+	useSyComboboxIsRequired,
+	useSyComboboxValidateOnSubmit,
+} from '../../common/combobox/useSyComboboxValidationBase'
+
 export interface UseSySelectValidationOptions {
 	isOpen: Ref<boolean>
 	selectedItem: Ref<unknown>
@@ -15,18 +21,16 @@ export interface UseSySelectValidationOptions {
 export function useSySelectValidation(options: UseSySelectValidationOptions) {
 	const hasError = ref(false)
 
-	const hasSelection = computed(() => {
-		const value = options.selectedItem.value
-		if (Array.isArray(value)) {
-			return value.length > 0
-		}
-		return Boolean(value)
+	const { hasSelection } = useSyComboboxHasSelection({
+		selectedItem: options.selectedItem,
 	})
 
-	const isRequired = computed(() => {
-		if (options.disableErrorHandling.value) return false
-		if (options.readonly.value) return
-		return (options.required.value || options.errorMessages.value.length > 0) && !hasSelection.value
+	const { isRequired } = useSyComboboxIsRequired({
+		required: options.required,
+		errorMessages: options.errorMessages,
+		disableErrorHandling: options.disableErrorHandling,
+		readonly: options.readonly,
+		hasSelection,
 	})
 
 	const hasMessages = computed(() => {
@@ -62,15 +66,15 @@ export function useSySelectValidation(options: UseSySelectValidationOptions) {
 		}
 	})
 
-	const validateOnSubmit = (): boolean => {
-		if (options.readonly.value || options.disableErrorHandling.value) {
-			return true
-		}
-
-		const isValid = !isRequired.value
-		hasError.value = !isValid || options.errorMessages.value.length > 0
-		return isValid
-	}
+	const { validateOnSubmit } = useSyComboboxValidateOnSubmit({
+		readonly: options.readonly,
+		disableErrorHandling: options.disableErrorHandling,
+		errorMessages: options.errorMessages,
+		isRequired,
+		setHasError: (value) => {
+			hasError.value = value
+		},
+	})
 
 	const clearValidation = () => {
 		hasError.value = false

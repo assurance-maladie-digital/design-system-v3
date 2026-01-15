@@ -28,6 +28,9 @@
 	import { useSyAutocompleteKeyboardOpen } from './composables/useSyAutocompleteKeyboardOpen'
 	import { useSyAutocompleteKeydown } from './composables/useSyAutocompleteKeydown'
 	import { useSyComboboxFormatItems } from '../common/combobox/useSyComboboxFormatItems'
+	import { useSyComboboxIds } from '../common/combobox/useSyComboboxIds'
+	import { useSyComboboxCalculatedWidth } from '../common/combobox/useSyComboboxCalculatedWidth'
+	import { useSyComboboxMenuTarget } from '../common/combobox/useSyComboboxMenuTarget'
 
 	export type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
 
@@ -167,10 +170,11 @@
 	])
 
 	const isOpen = ref(false)
-	const inputId = ref(`sy-autocomplete-${Math.random().toString(36).substring(7)}`)
-	const uniqueMenuId = ref(props.menuId === 'sy-autocomplete-menu'
-		? `sy-autocomplete-menu-${Math.random().toString(36).substring(7)}`
-		: props.menuId)
+	const { inputId, uniqueMenuId } = useSyComboboxIds({
+		inputIdPrefix: 'sy-autocomplete',
+		defaultMenuId: 'sy-autocomplete-menu',
+		menuId: computed(() => props.menuId),
+	})
 	const optionIdPrefix = computed(() => `${uniqueMenuId.value}-`)
 
 	// Valeur sélectionnée (single) ou tableau (multiple). Elle sert de source de vérité interne.
@@ -240,21 +244,12 @@
 	const openedByTyping = ref(false)
 	const pendingFocusIndex = ref<number | null>(null)
 
-	const menuTarget = computed<HTMLElement | undefined>(() => {
-		const rootEl = textInput.value?.$el as HTMLElement | undefined
-		if (!rootEl) return undefined
-		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
+	const { menuTarget } = useSyComboboxMenuTarget({
+		textInput: textInput as unknown as import('vue').Ref<{ $el?: HTMLElement } | null>,
 	})
 
-	const calculatedWidth = computed(() => {
-		if (props.width && props.width !== 'undefined') {
-			const numericValue = Number(props.width)
-			if (!isNaN(numericValue) && props.width === numericValue.toString()) {
-				return `${numericValue}px`
-			}
-			return props.width
-		}
-		return undefined
+	const { calculatedWidth } = useSyComboboxCalculatedWidth({
+		width: computed(() => props.width),
 	})
 
 	const isShouldDisplayAsterisk = computed(() => props.required && props.displayAsterisk)

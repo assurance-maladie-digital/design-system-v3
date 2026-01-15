@@ -1,5 +1,11 @@
 import { computed, ref, type Ref } from 'vue'
 
+import {
+	useSyComboboxHasSelection,
+	useSyComboboxIsRequired,
+	useSyComboboxValidateOnSubmit,
+} from '../../common/combobox/useSyComboboxValidationBase'
+
 type UseSyAutocompleteValidationOptions = {
 	required: Ref<boolean>
 	errorMessages: Ref<readonly string[]>
@@ -17,20 +23,17 @@ export function useSyAutocompleteValidation(options: UseSyAutocompleteValidation
 	// Message unique pour required (conservé volontairement, pas de locale ici pour l'instant).
 	const requiredErrorMessage = computed(() => 'Le champ est requis.')
 
-	const isRequired = computed(() => {
-		// Ne rien afficher en lecture seule / gestion d'erreur désactivée.
-		if (options.disableErrorHandling.value) return false
-		if (options.readonly.value) return false
+	const { hasSelection } = useSyComboboxHasSelection({
+		selectedItem: options.selectedItem,
+		multiple: options.multiple,
+	})
 
-		if (options.multiple.value) {
-			// Multiple: la valeur est valide si le tableau n'est pas vide.
-			const selected = options.selectedItem.value as unknown[] | null | undefined
-			return (options.required.value || options.errorMessages.value.length > 0)
-				&& (!selected || selected.length === 0)
-		}
-
-		// Single: la valeur est valide si selectedItem est défini.
-		return (options.required.value || options.errorMessages.value.length > 0) && !options.selectedItem.value
+	const { isRequired } = useSyComboboxIsRequired({
+		required: options.required,
+		errorMessages: options.errorMessages,
+		disableErrorHandling: options.disableErrorHandling,
+		readonly: options.readonly,
+		hasSelection,
 	})
 
 	const computedHasError = computed(() => {
@@ -72,9 +75,15 @@ export function useSyAutocompleteValidation(options: UseSyAutocompleteValidation
 		}
 
 		isTouched.value = true
-		const isValid = !isRequired.value
-		hasError.value = !isValid || options.errorMessages.value.length > 0
-		return isValid
+		return useSyComboboxValidateOnSubmit({
+			readonly: options.readonly,
+			disableErrorHandling: options.disableErrorHandling,
+			errorMessages: options.errorMessages,
+			isRequired,
+			setHasError: (value) => {
+				hasError.value = value
+			},
+		}).validateOnSubmit()
 	}
 
 	return {

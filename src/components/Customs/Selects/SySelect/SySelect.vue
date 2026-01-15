@@ -13,6 +13,9 @@
 	import { useSySelectKeydown } from './composables/useSySelectKeydown'
 	import { useSySelectVuetifyAdapter } from './composables/useSySelectVuetifyAdapter'
 	import { useSyComboboxFormatItems } from '../common/combobox/useSyComboboxFormatItems'
+	import { useSyComboboxIds } from '../common/combobox/useSyComboboxIds'
+	import { useSyComboboxCalculatedWidth } from '../common/combobox/useSyComboboxCalculatedWidth'
+	import { useSyComboboxMenuTarget } from '../common/combobox/useSyComboboxMenuTarget'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
@@ -159,9 +162,11 @@
 	const { ensureNativeInputFocus } = useSySelectVuetifyAdapter({
 		textInput: textInput as unknown as import('vue').Ref<{ $el: HTMLElement } | null>,
 	})
-	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
-	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
-	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
+	const { inputId, uniqueMenuId } = useSyComboboxIds({
+		inputIdPrefix: 'sy-select',
+		defaultMenuId: 'sy-select-menu',
+		menuId: computed(() => props.menuId),
+	})
 
 	const { formattedItems } = useSyComboboxFormatItems({
 		items: computed(() => props.items),
@@ -251,26 +256,12 @@
 
 	// Validation + messages are handled by useSySelectValidation
 
-	const calculatedWidth = computed(() => {
-		// If width prop is provided and not 'undefined', return it directly as a CSS value
-		if (props.width && props.width !== 'undefined') {
-			// Check if it's a pure number (for backward compatibility)
-			const numericValue = Number(props.width)
-			if (!isNaN(numericValue) && props.width === numericValue.toString()) {
-				// It's a pure number, add 'px' unit
-				return `${numericValue}px`
-			}
-			// It's already a CSS value (like "300px", "50%", "auto"), return as-is
-			return props.width
-		}
-		// No width specified, return undefined for auto-sizing
-		return undefined
+	const { calculatedWidth } = useSyComboboxCalculatedWidth({
+		width: computed(() => props.width),
 	})
 
-	const menuTarget = computed<HTMLElement | undefined>(() => {
-		const rootEl = textInput.value?.$el as HTMLElement | undefined
-		if (!rootEl) return undefined
-		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
+	const { menuTarget } = useSyComboboxMenuTarget({
+		textInput: textInput as unknown as import('vue').Ref<{ $el?: HTMLElement } | null>,
 	})
 
 	watch(() => props.modelValue, (newValue) => {
