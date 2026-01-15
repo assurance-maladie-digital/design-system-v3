@@ -328,6 +328,7 @@
 			:disabled="props.disabled"
 			:readonly="props.readonly"
 			:hide-details="props.hideDetails !== true"
+			:density="props.density"
 			:error="hasError"
 			:error-messages="props.hideDetails ? [] : errors"
 			:messages="props.hideDetails
