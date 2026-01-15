@@ -4,24 +4,13 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, computed, type PropType } from 'vue'
-	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
-	import { useSySelectAria } from './composables/useSySelectAria'
-	import { useSySelectValidation } from './composables/useSySelectValidation'
-	import { useSySelectSelection } from './composables/useSySelectSelection'
-	import { useSySelectMenu } from './composables/useSySelectMenu'
-	import { useSySelectKeydown } from './composables/useSySelectKeydown'
-	import { useSySelectVuetifyAdapter } from './composables/useSySelectVuetifyAdapter'
-	import { useSyComboboxFormatItems } from '../common/combobox/useSyComboboxFormatItems'
-	import { useSyComboboxIds } from '../common/combobox/useSyComboboxIds'
-	import { useSyComboboxCalculatedWidth } from '../common/combobox/useSyComboboxCalculatedWidth'
-	import { useSyComboboxMenuTarget } from '../common/combobox/useSyComboboxMenuTarget'
+	import { type PropType } from 'vue'
+	import { useSySelectSetup } from './composables/useSySelectSetup'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
-	import type { VList, VTextField } from 'vuetify/components'
+	import type { VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { sanitizeHtml } from '@/utils/sanitizeHtml'
 	import { locales } from './locales'
 
 	export type ItemType = {
@@ -139,229 +128,47 @@
 
 	const emit = defineEmits(['update:modelValue'])
 
-	const isOpen = ref(false)
-	// Initialize selectedItem with props.modelValue or empty array for multiple mode
-	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
-	const { hasError, isRequired, showHelpTextAsMessage, showHelpTextBelow, validateOnSubmit } = useSySelectValidation({
-		isOpen,
-		selectedItem,
-		disableErrorHandling: computed(() => props.disableErrorHandling),
-		readonly: computed(() => props.readonly),
-		required: computed(() => props.required),
-		errorMessages: computed(() => (Array.isArray(props.errorMessages) ? props.errorMessages : [props.errorMessages])),
-		helpText: computed(() => props.helpText),
-		hideMessages: computed(() => props.hideMessages),
-	})
-
-	const labelWidth = ref(0)
-	const labelRef = ref<HTMLElement | null>(null)
-	const list = ref<VList | null>(null)
-	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
-	const htmlItemRefs = ref<HTMLElement[]>([])
-	const vuetifyTextInputAdapter = computed(() => {
-		return textInput.value
-			? { $el: textInput.value.$el as HTMLElement }
-			: null
-	})
-
-	const { ensureNativeInputFocus } = useSySelectVuetifyAdapter({
-		textInput: vuetifyTextInputAdapter,
-	})
-	const { inputId, uniqueMenuId } = useSyComboboxIds({
-		inputIdPrefix: 'sy-select',
-		defaultMenuId: 'sy-select-menu',
-		menuId: computed(() => props.menuId),
-	})
-
-	const { formattedItems } = useSyComboboxFormatItems({
-		items: computed(() => props.items),
-		textKey: computed(() => props.textKey),
-		valueKey: computed(() => props.valueKey),
-	})
-
-	let setActiveDescendantForMenu = (index: number) => {
-		void index
-	}
-	let isItemSelectedForMenu = (item: ItemType) => {
-		void item
-		return false
-	}
-
-	const { toggleMenu, closeList } = useSySelectMenu({
-		readonly: computed(() => props.readonly),
-		multiple: computed(() => props.multiple),
-		isOpen,
-		list: list as unknown as import('vue').Ref<{ $el: HTMLElement } | null>,
-		formattedItems,
-		isItemSelected: item => isItemSelectedForMenu(item),
-		setActiveDescendant: index => setActiveDescendantForMenu(index),
-	})
-
-	let setActiveDescendantForSelection = (index: number) => {
-		void index
-	}
-	let restoreFocusForSelection = () => {}
-
 	const {
+		isOpen,
+		labelWidth,
+		inputId,
+		uniqueMenuId,
+		formattedItems,
+		hasError,
+		isRequired,
+		showHelpTextAsMessage,
+		showHelpTextBelow,
+		validateOnSubmit,
+		labelWithAsterisk,
+		calculatedWidth,
+		menuTarget,
+		labelRef,
+		htmlItemRefs,
+		textInput,
+		list,
+		toggleMenu,
+		closeList,
+		activeDescendantId,
+		onFieldKeydown,
+		onListKeydown,
 		isDefaultOption,
 		isItemSelected,
 		selectItem,
 		removeChip,
 		getItemText,
-		safeChipItem,
 		getChipText,
 		hasChips,
 		selectedChipsItems,
 		hasSelectionToClear,
 		selectedItemText,
-	} = useSySelectSelection({
-		items: computed(() => props.items),
-		formattedItems,
-		selectedItem,
-		multiple: computed(() => props.multiple),
-		chips: computed(() => props.chips),
-		returnObject: computed(() => props.returnObject),
-		textKey: computed(() => props.textKey),
-		plainTextKey: computed(() => props.plainTextKey),
-		valueKey: computed(() => props.valueKey),
-		allowHtml: computed(() => props.allowHtml),
-		isOpen,
-		ensureNativeInputFocus: () => ensureNativeInputFocus(),
-		setActiveDescendant: index => setActiveDescendantForSelection(index),
-		restoreFocus: () => restoreFocusForSelection(),
-		emitUpdateModelValue: value => emit('update:modelValue', value),
-	})
-	void safeChipItem
-	isItemSelectedForMenu = (item: ItemType) => isItemSelected(item)
-
-	watchEffect(() => {
-		if (!props.allowHtml) {
-			return
-		}
-
-		htmlItemRefs.value.forEach((el, index) => {
-			const item = formattedItems.value[index]
-			if (!el || !item) {
-				return
-			}
-
-			// getItemText may contain HTML when allowHtml is enabled.
-			// Sanitize to mitigate XSS when assigning to innerHTML.
-			el.innerHTML = sanitizeHtml(String(getItemText(item) ?? ''))
-		})
-	})
-
-	const isShouldDisplayAsterisk = computed(() => {
-		return props.required && props.displayAsterisk
-	})
-
-	const labelWithAsterisk = computed(() => {
-		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
-	})
-
-	// Validation + messages are handled by useSySelectValidation
-
-	const { calculatedWidth } = useSyComboboxCalculatedWidth({
-		width: computed(() => props.width),
-	})
-
-	const { menuTarget } = useSyComboboxMenuTarget({
-		textInput: textInput as unknown as import('vue').Ref<{ $el?: HTMLElement } | null>,
-	})
-
-	watch(() => props.modelValue, (newValue) => {
-		selectedItem.value = newValue
-	})
-
-	// Utilisation du composable pour la gestion clavier
-	const {
-		activeDescendantId,
-		setActiveDescendant,
-		handleEnterKey,
-		handleSpaceKey,
-		handleDownKey,
-		handleUpKey,
-		handleCharacterKey,
-		handleEscapeKey,
-		handleHomeKey,
-		handleEndKey,
-		handlePageUpKey,
-		handlePageDownKey,
-		handleTabKey,
-		restoreFocus,
-	} = useSySelectKeyboard({
-		isOpen,
-		formattedItems,
-		toggleMenu,
-		selectItem,
-		getItemText,
-	})
-
-	setActiveDescendantForMenu = (index: number) => {
-		setActiveDescendant(index)
-	}
-
-	setActiveDescendantForSelection = (index: number) => {
-		setActiveDescendant(index)
-	}
-	restoreFocusForSelection = () => {
-		restoreFocus()
-	}
-
-	const { onFieldKeydown, onListKeydown } = useSySelectKeydown({
-		handleEnterKey,
-		handleSpaceKey,
-		handleDownKey,
-		handleUpKey,
-		handleEscapeKey,
-		handleHomeKey,
-		handleEndKey,
-		handlePageUpKey,
-		handlePageDownKey,
-		handleTabKey,
-		handleCharacterKey,
-		closeList,
-	})
-
-	// Error state syncing is handled by useSySelectValidation
-
-	onMounted(() => {
-		if (labelRef.value) {
-			labelWidth.value = labelRef.value.offsetWidth + 64
-		}
-	})
-
-	useSySelectAria({
-		textInput,
-		isOpen,
-		uniqueMenuId,
-		activeDescendantId,
-		isRequired,
-		hasError,
-		selectedItem,
-	})
-
-	// validateOnSubmit comes from useSySelectValidation
+		initializeActivatorProps,
+	} = useSySelectSetup(props as unknown as Parameters<typeof useSySelectSetup>[0], emit)
 
 	defineExpose({
 		isOpen,
 		closeList,
 		validateOnSubmit,
 	})
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function initializeActivatorProps(activatorProps: Record<string, any>) {
-		return {
-			...activatorProps,
-			onKeydown: undefined,
-			onClick: undefined,
-			// the ref is needed by Vuetify to position the menu and by us for accessibility
-			ref: (el) => {
-				textInput.value = el
-				activatorProps.ref?.(el)
-			},
-		}
-	}
 </script>
 
 <template>
