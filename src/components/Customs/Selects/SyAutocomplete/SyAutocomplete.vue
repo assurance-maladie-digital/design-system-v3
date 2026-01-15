@@ -27,7 +27,7 @@
 	import { useSyAutocompleteSelection } from './composables/useSyAutocompleteSelection'
 	import { useSyAutocompleteKeyboardOpen } from './composables/useSyAutocompleteKeyboardOpen'
 	import { useSyAutocompleteKeydown } from './composables/useSyAutocompleteKeydown'
-  import { useSyComboboxFormatItems } from '../common/combobox/useSyComboboxFormatItems'
+	import { useSyComboboxFormatItems } from '../common/combobox/useSyComboboxFormatItems'
 
 	export type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
 
