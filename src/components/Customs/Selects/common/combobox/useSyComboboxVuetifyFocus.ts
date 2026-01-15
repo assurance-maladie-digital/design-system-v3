@@ -1,6 +1,6 @@
 import { nextTick, type Ref } from 'vue'
 
-type UseSyComboboxVuetifyFocusOptions = {
+export interface UseSyComboboxVuetifyFocusOptions {
 	textInput: Ref<{ $el?: HTMLElement } | null>
 }
 

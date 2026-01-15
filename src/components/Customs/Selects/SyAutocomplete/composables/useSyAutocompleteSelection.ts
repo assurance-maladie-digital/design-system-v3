@@ -9,7 +9,7 @@ import {
 	useSyComboboxIsItemSelected,
 } from '../../common/combobox/useSyComboboxSelectionHelpers'
 
-type UseSyAutocompleteSelectionOptions = {
+export interface UseSyAutocompleteSelectionOptions {
 	multiple: Ref<boolean>
 	chips: Ref<boolean>
 	returnObject: Ref<boolean>

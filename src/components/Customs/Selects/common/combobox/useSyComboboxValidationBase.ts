@@ -1,6 +1,6 @@
 import { computed, type ComputedRef, type Ref } from 'vue'
 
-type UseSyComboboxHasSelectionOptions = {
+export interface UseSyComboboxHasSelectionOptions {
 	selectedItem: Ref<unknown>
 	multiple?: Ref<boolean>
 }
@@ -20,7 +20,7 @@ export function useSyComboboxHasSelection(options: UseSyComboboxHasSelectionOpti
 	return { hasSelection }
 }
 
-type UseSyComboboxIsRequiredOptions = {
+export interface UseSyComboboxIsRequiredOptions {
 	required: Ref<boolean>
 	errorMessages: Ref<readonly string[]>
 	disableErrorHandling: Ref<boolean>
@@ -38,7 +38,7 @@ export function useSyComboboxIsRequired(options: UseSyComboboxIsRequiredOptions)
 	return { isRequired }
 }
 
-type UseSyComboboxValidateOnSubmitOptions = {
+export interface UseSyComboboxValidateOnSubmitOptions {
 	readonly: Ref<boolean>
 	disableErrorHandling: Ref<boolean>
 	errorMessages: Ref<readonly string[]>

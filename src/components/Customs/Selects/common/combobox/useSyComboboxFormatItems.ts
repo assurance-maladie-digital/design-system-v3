@@ -4,7 +4,7 @@ type ItemType = {
 	[key: string]: unknown
 }
 
-type UseSyComboboxFormatItemsOptions = {
+export interface UseSyComboboxFormatItemsOptions {
 	items: ComputedRef<ItemType[]>
 	textKey: ComputedRef<string>
 	valueKey: ComputedRef<string>

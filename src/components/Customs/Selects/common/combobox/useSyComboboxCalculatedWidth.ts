@@ -1,6 +1,6 @@
 import { computed, type Ref } from 'vue'
 
-type UseSyComboboxCalculatedWidthOptions = {
+export interface UseSyComboboxCalculatedWidthOptions {
 	width: Ref<string>
 }
 

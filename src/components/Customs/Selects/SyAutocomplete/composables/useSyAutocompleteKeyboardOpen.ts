@@ -1,6 +1,6 @@
 import { ref, nextTick, watch, type ComputedRef, type Ref } from 'vue'
 
-type UseSyAutocompleteKeyboardOpenOptions = {
+export interface UseSyAutocompleteKeyboardOpenOptions {
 	isOpen: Ref<boolean>
 	activeDescendantId: Ref<string>
 	optionIdPrefix: ComputedRef<string>

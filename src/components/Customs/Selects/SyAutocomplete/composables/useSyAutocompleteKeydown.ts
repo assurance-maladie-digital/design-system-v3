@@ -5,7 +5,7 @@ import type { SelectItemArrayType, SelectItemValueType } from '../types'
 import { useSyComboboxListKeydown } from '../../common/combobox/useSyComboboxListKeydown'
 import { useSyComboboxFieldKeydown } from '../../common/combobox/useSyComboboxFieldKeydown'
 
-type UseSyAutocompleteKeydownOptions = {
+export interface UseSyAutocompleteKeydownOptions {
 	textInput: Ref<{ $el?: HTMLElement } | null>
 	isOpen: Ref<boolean>
 	multiple: Ref<boolean>

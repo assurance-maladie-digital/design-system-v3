@@ -6,7 +6,7 @@ import {
 	useSyComboboxValidateOnSubmit,
 } from '../../common/combobox/useSyComboboxValidationBase'
 
-type UseSyAutocompleteValidationOptions = {
+export interface UseSyAutocompleteValidationOptions {
 	required: Ref<boolean>
 	errorMessages: Ref<readonly string[]>
 	readonly: Ref<boolean>

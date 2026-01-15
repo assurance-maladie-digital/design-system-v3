@@ -1,6 +1,6 @@
 import { computed, type Ref } from 'vue'
 
-type UseSyComboboxMenuTargetOptions = {
+export interface UseSyComboboxMenuTargetOptions {
 	textInput: Ref<{ $el?: HTMLElement } | null>
 }
 

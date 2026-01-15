@@ -2,7 +2,7 @@ import { ref, nextTick, onBeforeUnmount, onMounted, watch, watchEffect, type Ref
 
 import { useSyComboboxVuetifyFocus } from '../../common/combobox/useSyComboboxVuetifyFocus'
 
-type UseSyAutocompleteVuetifyAdapterOptions = {
+export interface UseSyAutocompleteVuetifyAdapterOptions {
 	textInput: Ref<{ $el?: HTMLElement } | null>
 	list: Ref<{ $el?: HTMLElement } | null>
 	isOpen: Ref<boolean>

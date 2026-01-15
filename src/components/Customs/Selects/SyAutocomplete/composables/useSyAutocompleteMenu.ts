@@ -2,7 +2,7 @@ import { type Ref } from 'vue'
 
 import { useSyComboboxMenu } from '../../common/combobox/useSyComboboxMenu'
 
-type UseSyAutocompleteMenuOptions = {
+export interface UseSyAutocompleteMenuOptions {
 	readonly: Ref<boolean>
 	multiple: Ref<boolean>
 	isOpen: Ref<boolean>

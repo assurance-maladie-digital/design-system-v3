@@ -1,6 +1,6 @@
 import { nextTick, type Ref } from 'vue'
 
-type UseSyComboboxMenuOptions = {
+export interface UseSyComboboxMenuOptions {
 	readonly: Ref<boolean>
 	multiple: Ref<boolean>
 	isOpen: Ref<boolean>

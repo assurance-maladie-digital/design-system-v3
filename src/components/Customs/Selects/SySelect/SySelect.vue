@@ -158,9 +158,14 @@
 	const list = ref<VList | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
+	const vuetifyTextInputAdapter = computed(() => {
+		return textInput.value
+			? { $el: textInput.value.$el as HTMLElement }
+			: null
+	})
 
 	const { ensureNativeInputFocus } = useSySelectVuetifyAdapter({
-		textInput: textInput as unknown as import('vue').Ref<{ $el: HTMLElement } | null>,
+		textInput: vuetifyTextInputAdapter,
 	})
 	const { inputId, uniqueMenuId } = useSyComboboxIds({
 		inputIdPrefix: 'sy-select',

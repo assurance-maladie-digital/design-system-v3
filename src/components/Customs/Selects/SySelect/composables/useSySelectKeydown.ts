@@ -1,3 +1,6 @@
+import { useSyComboboxListKeydown } from '../../common/combobox/useSyComboboxListKeydown'
+import { useSyComboboxFieldKeydown } from '../../common/combobox/useSyComboboxFieldKeydown'
+
 export interface UseSySelectKeydownOptions {
 	handleEnterKey: () => void
 	handleSpaceKey: () => void
@@ -12,9 +15,6 @@ export interface UseSySelectKeydownOptions {
 	handleCharacterKey: (key: string) => void
 	closeList: (event?: Event) => void
 }
-
-import { useSyComboboxListKeydown } from '../../common/combobox/useSyComboboxListKeydown'
-import { useSyComboboxFieldKeydown } from '../../common/combobox/useSyComboboxFieldKeydown'
 
 export function useSySelectKeydown(options: UseSySelectKeydownOptions) {
 	const isPrintableCharacter = (event: KeyboardEvent) => {

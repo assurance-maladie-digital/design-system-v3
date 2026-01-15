@@ -1,4 +1,4 @@
-type UseSyComboboxListKeydownOptions = {
+export interface UseSyComboboxListKeydownOptions {
 	onEscape: (event: KeyboardEvent) => void
 	onTab: (event: KeyboardEvent) => void
 	onEnter: (event: KeyboardEvent) => void

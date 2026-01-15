@@ -1,6 +1,6 @@
 import { ref, type Ref } from 'vue'
 
-type UseSyComboboxIdsOptions = {
+export interface UseSyComboboxIdsOptions {
 	inputIdPrefix: string
 	defaultMenuId: string
 	menuId: Ref<string>
