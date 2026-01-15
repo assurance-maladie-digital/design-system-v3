@@ -8,6 +8,7 @@ type UseSyAutocompleteModelOptions = {
 	search: Ref<string>
 	multiple: Ref<boolean>
 	minChars: Ref<number>
+	getSelectedText: () => string | null
 
 	// Internal state
 	selectedItem: Ref<SelectItemValueType | SelectItemArrayType>
@@ -47,6 +48,18 @@ export function useSyAutocompleteModel(options: UseSyAutocompleteModelOptions) {
 			options.selectedItem.value = null
 			options.emitUpdateModelValue(null)
 			options.markTouched()
+		}
+
+		// Single: si l'utilisateur modifie le texte après avoir sélectionné une option,
+		// et que le texte ne correspond plus à l'option sélectionnée, on efface la sélection.
+		// Sinon, required considère encore le champ "rempli" alors que le texte est partiel.
+		if (!options.multiple.value && trimmed.length > 0 && options.selectedItem.value != null) {
+			const selectedText = (options.getSelectedText()?.trim() ?? '')
+			if (selectedText && trimmed !== selectedText) {
+				options.selectedItem.value = null
+				options.emitUpdateModelValue(null)
+				options.markTouched()
+			}
 		}
 
 		if (trimmed.length >= options.minChars.value) {

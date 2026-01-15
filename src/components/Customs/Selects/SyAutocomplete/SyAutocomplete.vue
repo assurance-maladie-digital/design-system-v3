@@ -335,6 +335,7 @@
 		hasChips,
 		getItemText,
 		isItemSelected,
+		getPlainItemText,
 		getChipText,
 		getChipKey,
 		getMultipleSelectionText,
@@ -359,6 +360,22 @@
 		emitUpdateModelValue: value => emit('update:modelValue', value),
 		emitUpdateSearch: value => emit('update:search', value),
 	})
+
+	const getSelectedText = () => {
+		if (props.multiple) return null
+		if (selectedItem.value == null) return null
+
+		if (props.returnObject) {
+			return String(getPlainItemText(selectedItem.value as unknown) ?? '')
+		}
+
+		const selectedValue = selectedItem.value
+		const match = internalItems.value.find((it) => {
+			if (!it || typeof it !== 'object') return false
+			return (it as Record<string, unknown>)[props.valueKey] === selectedValue
+		})
+		return match ? String(getPlainItemText(match as unknown) ?? '') : ''
+	}
 
 	const formattedItems = computed(() => {
 		return internalItems.value.map((item) => {
@@ -434,6 +451,8 @@
 		search: computed(() => props.search),
 		multiple: computed(() => props.multiple),
 		minChars: computed(() => props.minChars),
+		getSelectedText,
+
 		selectedItem,
 		searchValue,
 		isOpen,

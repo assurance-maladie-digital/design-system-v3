@@ -41,6 +41,40 @@ describe('SyAutocomplete.vue', () => {
 
 			wrapper.unmount()
 		})
+
+		it('shows required error after selecting then editing input to non-matching partial text', async () => {
+			const wrapper = mount(SyAutocomplete, {
+				props: {
+					required: true,
+					hideMessages: false,
+					returnObject: true,
+					minChars: 0,
+					items: [
+						{ text: 'Adrien', value: 'adrien' },
+						{ text: 'Alice', value: 'alice' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// Select "Adrien"
+			await wrapper.find('.sy-autocomplete').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+			const list = wrapper.findComponent(VList)
+			const options = list.findAll('.v-list-item[role="option"]')
+			await options[0]!.trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// User edits input to partial text that no longer matches selection
+			const input = wrapper.find('input')
+			await input.setValue('A')
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.text()).toContain('Le champ est requis.')
+			wrapper.unmount()
+		})
 	})
 
 	describe('AllowHtml', () => {
