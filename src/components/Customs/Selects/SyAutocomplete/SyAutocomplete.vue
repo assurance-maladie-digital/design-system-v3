@@ -27,6 +27,7 @@
 	import { useSyAutocompleteSelection } from './composables/useSyAutocompleteSelection'
 	import { useSyAutocompleteKeyboardOpen } from './composables/useSyAutocompleteKeyboardOpen'
 	import { useSyAutocompleteKeydown } from './composables/useSyAutocompleteKeydown'
+  import { useSyComboboxFormatItems } from '../common/combobox/useSyComboboxFormatItems'
 
 	export type { ItemType, SelectItemArrayType, SelectItemValueType } from './types'
 
@@ -377,13 +378,10 @@
 		return match ? String(getPlainItemText(match as unknown) ?? '') : ''
 	}
 
-	const formattedItems = computed(() => {
-		return internalItems.value.map((item) => {
-			if (typeof item === 'string') {
-				return { [props.textKey]: item, [props.valueKey]: item }
-			}
-			return item
-		})
+	const { formattedItems } = useSyComboboxFormatItems({
+		items: computed(() => internalItems.value),
+		textKey: computed(() => props.textKey),
+		valueKey: computed(() => props.valueKey),
 	})
 
 	// Gestion clavier (navigation liste / sélection / escape / home/end/page up/down).

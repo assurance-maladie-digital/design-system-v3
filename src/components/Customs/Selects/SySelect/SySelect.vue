@@ -12,6 +12,7 @@
 	import { useSySelectMenu } from './composables/useSySelectMenu'
 	import { useSySelectKeydown } from './composables/useSySelectKeydown'
 	import { useSySelectVuetifyAdapter } from './composables/useSySelectVuetifyAdapter'
+	import { useSyComboboxFormatItems } from '../common/combobox/useSyComboboxFormatItems'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
@@ -162,13 +163,10 @@
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
 
-	const formattedItems = computed(() => {
-		return props.items.map((item) => {
-			if (typeof item === 'string') {
-				return { [props.textKey]: item, [props.valueKey]: item }
-			}
-			return item
-		})
+	const { formattedItems } = useSyComboboxFormatItems({
+		items: computed(() => props.items),
+		textKey: computed(() => props.textKey),
+		valueKey: computed(() => props.valueKey),
 	})
 
 	let setActiveDescendantForMenu = (index: number) => {

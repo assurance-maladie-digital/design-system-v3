@@ -1,5 +1,7 @@
 import { ref, nextTick, onBeforeUnmount, onMounted, watch, watchEffect, type Ref } from 'vue'
 
+import { useSyComboboxVuetifyFocus } from '../../common/combobox/useSyComboboxVuetifyFocus'
+
 type UseSyAutocompleteVuetifyAdapterOptions = {
 	textInput: Ref<{ $el?: HTMLElement } | null>
 	list: Ref<{ $el?: HTMLElement } | null>
@@ -13,30 +15,12 @@ export function useSyAutocompleteVuetifyAdapter(options: UseSyAutocompleteVuetif
 	const nativeInputEl = ref<HTMLInputElement | null>(null)
 	const fieldRootEl = ref<HTMLElement | null>(null)
 
-	const getNativeInputElement = () => {
-		return (options.textInput.value?.$el?.querySelector('input') as HTMLInputElement | null) ?? null
-	}
+	const { getNativeInputElement, focusInputElement, ensureNativeInputFocus } = useSyComboboxVuetifyFocus({
+		textInput: options.textInput,
+	})
 
 	const getFieldRootElement = () => {
 		return (options.textInput.value?.$el as HTMLElement | undefined) ?? null
-	}
-
-	const focusInputElement = () => {
-		const input = getNativeInputElement()
-		if (input) input.focus()
-	}
-
-	const ensureNativeInputFocus = () => {
-		focusInputElement()
-		nextTick(() => {
-			focusInputElement()
-			requestAnimationFrame(() => {
-				focusInputElement()
-				setTimeout(() => {
-					focusInputElement()
-				}, 0)
-			})
-		})
 	}
 
 	const escapeForSelector = (value: string) => {
