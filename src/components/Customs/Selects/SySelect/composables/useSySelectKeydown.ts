@@ -13,6 +13,9 @@ export interface UseSySelectKeydownOptions {
 	closeList: (event?: Event) => void
 }
 
+import { useSyComboboxListKeydown } from '../../common/combobox/useSyComboboxListKeydown'
+import { useSyComboboxFieldKeydown } from '../../common/combobox/useSyComboboxFieldKeydown'
+
 export function useSySelectKeydown(options: UseSySelectKeydownOptions) {
 	const isPrintableCharacter = (event: KeyboardEvent) => {
 		if (event.ctrlKey || event.altKey || event.metaKey) return false
@@ -20,95 +23,74 @@ export function useSySelectKeydown(options: UseSySelectKeydownOptions) {
 	}
 
 	const onFieldKeydown = (event: KeyboardEvent) => {
-		switch (event.key) {
-			case 'Enter':
-				event.preventDefault()
+		useSyComboboxFieldKeydown({
+			onEnter: () => {
 				options.handleEnterKey()
-				break
-			case ' ': // Space
-			case 'Spacebar':
-				event.preventDefault()
+			},
+			onSpace: () => {
 				options.handleSpaceKey()
-				break
-			case 'ArrowDown':
-				event.preventDefault()
+			},
+			onArrowDown: () => {
 				options.handleDownKey()
-				break
-			case 'ArrowUp':
-				event.preventDefault()
+			},
+			onArrowUp: () => {
 				options.handleUpKey()
-				break
-			case 'Escape':
-				event.preventDefault()
+			},
+			onEscape: () => {
 				options.handleEscapeKey()
-				break
-			case 'Home':
-				event.preventDefault()
+			},
+			onHome: () => {
 				options.handleHomeKey()
-				break
-			case 'End':
-				event.preventDefault()
+			},
+			onEnd: () => {
 				options.handleEndKey()
-				break
-			case 'PageUp':
-				event.preventDefault()
+			},
+			onPageUp: () => {
 				options.handlePageUpKey()
-				break
-			case 'PageDown':
-				event.preventDefault()
+			},
+			onPageDown: () => {
 				options.handlePageDownKey()
-				break
-			case 'Tab':
+			},
+			onTab: () => {
 				options.handleTabKey()
-				break
-			default:
-				if (isPrintableCharacter(event)) {
-					options.handleCharacterKey(event.key)
-				}
-				break
-		}
+			},
+			onCharacter: (_e, key) => {
+				options.handleCharacterKey(key)
+			},
+			isPrintableCharacter,
+		}).onFieldKeydown(event)
 	}
 
 	const onListKeydown = (event: KeyboardEvent) => {
-		switch (event.key) {
-			case 'Escape':
-				event.preventDefault()
-				options.closeList(event)
-				break
-			case 'Tab':
+		useSyComboboxListKeydown({
+			onEscape: (e) => {
+				options.closeList(e)
+			},
+			onTab: () => {
 				options.handleTabKey()
-				break
-			case 'Enter':
-				event.preventDefault()
+			},
+			onEnter: () => {
 				options.handleEnterKey()
-				break
-			case 'ArrowDown':
-				event.preventDefault()
+			},
+			onArrowDown: () => {
 				options.handleDownKey()
-				break
-			case 'ArrowUp':
-				event.preventDefault()
+			},
+			onArrowUp: () => {
 				options.handleUpKey()
-				break
-			case 'Home':
-				event.preventDefault()
+			},
+			onHome: () => {
 				options.handleHomeKey()
-				break
-			case 'End':
-				event.preventDefault()
+			},
+			onEnd: () => {
 				options.handleEndKey()
-				break
-			case 'PageUp':
-				event.preventDefault()
+			},
+			onPageUp: () => {
 				options.handlePageUpKey()
-				break
-			case 'PageDown':
-				event.preventDefault()
+			},
+			onPageDown: () => {
 				options.handlePageDownKey()
-				break
-			default:
-				break
-		}
+			},
+		}).onListKeydown(event)
 	}
 
 	return {

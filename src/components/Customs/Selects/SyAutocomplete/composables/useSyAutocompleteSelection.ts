@@ -1,6 +1,13 @@
-import { computed, type Ref } from 'vue'
+import { type Ref } from 'vue'
 
 import type { ItemType, SelectItemArrayType, SelectItemValueType } from '../types'
+
+import {
+	useSyComboboxChipsHelpers,
+	useSyComboboxGetItemText,
+	useSyComboboxGetPlainItemText,
+	useSyComboboxIsItemSelected,
+} from '../../common/combobox/useSyComboboxSelectionHelpers'
 
 type UseSyAutocompleteSelectionOptions = {
 	multiple: Ref<boolean>
@@ -22,86 +29,38 @@ type UseSyAutocompleteSelectionOptions = {
 }
 
 export function useSyAutocompleteSelection(options: UseSyAutocompleteSelectionOptions) {
-	const hasChips = computed(() => {
-		return options.chips.value
-			&& options.multiple.value
-			&& Array.isArray(options.selectedItem.value)
-			&& options.selectedItem.value.length > 0
+	const { getItemText } = useSyComboboxGetItemText(options.textKey)
+	const { getPlainItemText } = useSyComboboxGetPlainItemText({
+		textKey: options.textKey,
+		plainTextKey: options.plainTextKey,
+		allowHtml: options.allowHtml,
 	})
-
-	const getPlainItemText = (item: unknown) => {
-		const itemObj = item as Record<string, unknown>
-		if (options.plainTextKey.value && options.allowHtml.value && itemObj[options.plainTextKey.value]) {
-			return itemObj[options.plainTextKey.value] as string
-		}
-		return itemObj[options.textKey.value] as string
-	}
-
-	const getItemText = (item: unknown) => {
-		return (item as Record<string, unknown>)[options.textKey.value] as string
-	}
-
-	const isItemSelected = (item: ItemType) => {
-		if (!options.selectedItem.value) return false
-
-		if (options.multiple.value && Array.isArray(options.selectedItem.value)) {
-			return options.selectedItem.value.some((selected) => {
-				if (options.returnObject.value) {
-					return (selected as Record<string, unknown>)?.[options.valueKey.value] === item?.[options.valueKey.value]
-				}
-				return selected === item?.[options.valueKey.value]
-			})
-		}
-
-		if (options.returnObject.value) {
-			return Boolean((options.selectedItem.value as Record<string, unknown>)?.[options.valueKey.value] === item?.[options.valueKey.value])
-		}
-
-		return options.selectedItem.value === item?.[options.valueKey.value]
-	}
-
-	const getChipText = (item: unknown) => {
-		if (typeof item === 'object' && item) {
-			return (item as Record<string, unknown>)[options.textKey.value] as string
-		}
-
-		return options.internalItems.value.find((i: ItemType) => i[options.valueKey.value] === item)?.[options.textKey.value] as string || ''
-	}
-
-	const getChipKey = (item: unknown) => {
-		if (options.returnObject.value && typeof item === 'object' && item) {
-			const key = (item as Record<string, unknown>)[options.valueKey.value]
-			return (typeof key === 'string' || typeof key === 'number') ? key : String(key)
-		}
-		return (typeof item === 'string' || typeof item === 'number') ? item : String(item)
-	}
+	const { isItemSelected } = useSyComboboxIsItemSelected({
+		multiple: options.multiple,
+		returnObject: options.returnObject,
+		valueKey: options.valueKey,
+		selectedItem: options.selectedItem,
+	})
+	const {
+		hasChips,
+		getChipText,
+		getChipKey,
+		removeChip,
+	} = useSyComboboxChipsHelpers({
+		chips: options.chips,
+		multiple: options.multiple,
+		returnObject: options.returnObject,
+		textKey: options.textKey,
+		valueKey: options.valueKey,
+		items: options.internalItems,
+		selectedItem: options.selectedItem,
+		emitUpdateModelValue: options.emitUpdateModelValue,
+	})
 
 	const getMultipleSelectionText = () => {
 		if (!options.multiple.value || options.chips.value) return ''
 		if (!Array.isArray(options.selectedItem.value) || options.selectedItem.value.length === 0) return ''
 		return options.selectedItem.value.map(item => getChipText(item)).filter(Boolean).join(', ')
-	}
-
-	const removeChip = (item: unknown) => {
-		if (!Array.isArray(options.selectedItem.value)) return
-		const selectedArray = [...options.selectedItem.value]
-
-		let index = -1
-		if (options.returnObject.value) {
-			const itemValue = (item as Record<string, unknown> | null)?.[options.valueKey.value]
-			index = selectedArray.findIndex(selected =>
-				(selected as Record<string, unknown>)?.[options.valueKey.value] === itemValue,
-			)
-		}
-		else {
-			index = selectedArray.indexOf(item as (Record<string, unknown> | string | number))
-		}
-
-		if (index > -1) {
-			selectedArray.splice(index, 1)
-			options.selectedItem.value = [...selectedArray]
-			options.emitUpdateModelValue([...selectedArray])
-		}
 	}
 
 	const clearSelection = (event?: Event) => {

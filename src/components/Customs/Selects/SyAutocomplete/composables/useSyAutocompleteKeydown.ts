@@ -2,6 +2,9 @@ import { nextTick, type Ref } from 'vue'
 
 import type { SelectItemArrayType, SelectItemValueType } from '../types'
 
+import { useSyComboboxListKeydown } from '../../common/combobox/useSyComboboxListKeydown'
+import { useSyComboboxFieldKeydown } from '../../common/combobox/useSyComboboxFieldKeydown'
+
 type UseSyAutocompleteKeydownOptions = {
 	textInput: Ref<{ $el?: HTMLElement } | null>
 	isOpen: Ref<boolean>
@@ -63,26 +66,27 @@ export function useSyAutocompleteKeydown(options: UseSyAutocompleteKeydownOption
 			return
 		}
 
-		switch (event.key) {
-			case 'Home':
-				event.preventDefault()
+		useSyComboboxFieldKeydown({
+			onHome: () => {
 				options.handleHomeKey()
-				break
-			case 'End':
-				event.preventDefault()
+			},
+			onEnd: () => {
 				options.handleEndKey()
-				break
-			case 'PageUp':
-				event.preventDefault()
+			},
+			onPageUp: () => {
 				options.handlePageUpKey()
-				break
-			case 'PageDown':
-				event.preventDefault()
+			},
+			onPageDown: () => {
 				options.handlePageDownKey()
-				break
-			case 'Tab':
+			},
+			onTab: () => {
 				options.handleTabKey()
-				break
+			},
+		}).onFieldKeydown(event)
+
+		if (event.defaultPrevented) return
+
+		switch (event.key) {
 			case 'Enter':
 				event.preventDefault()
 				event.stopPropagation()
@@ -109,45 +113,35 @@ export function useSyAutocompleteKeydown(options: UseSyAutocompleteKeydownOption
 	}
 
 	const onListKeydown = (event: KeyboardEvent) => {
-		switch (event.key) {
-			case 'Escape':
-				event.preventDefault()
+		useSyComboboxListKeydown({
+			onEscape: () => {
 				options.handleListEscapeKey()
-				break
-			case 'Tab':
+			},
+			onTab: () => {
 				options.handleTabKey()
-				break
-			case 'Enter':
-				event.preventDefault()
+			},
+			onEnter: () => {
 				options.handleEnterKey()
-				break
-			case 'ArrowDown':
-				event.preventDefault()
+			},
+			onArrowDown: () => {
 				options.handleListDownKey()
-				break
-			case 'ArrowUp':
-				event.preventDefault()
+			},
+			onArrowUp: () => {
 				options.handleListUpKey()
-				break
-			case 'Home':
-				event.preventDefault()
+			},
+			onHome: () => {
 				options.handleHomeKey()
-				break
-			case 'End':
-				event.preventDefault()
+			},
+			onEnd: () => {
 				options.handleEndKey()
-				break
-			case 'PageUp':
-				event.preventDefault()
+			},
+			onPageUp: () => {
 				options.handlePageUpKey()
-				break
-			case 'PageDown':
-				event.preventDefault()
+			},
+			onPageDown: () => {
 				options.handlePageDownKey()
-				break
-			default:
-				break
-		}
+			},
+		}).onListKeydown(event)
 	}
 
 	const onFieldRootKeydown = (event: KeyboardEvent) => {

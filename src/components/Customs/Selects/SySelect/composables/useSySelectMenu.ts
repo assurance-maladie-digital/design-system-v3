@@ -1,4 +1,6 @@
-import { nextTick, type Ref } from 'vue'
+import { type Ref } from 'vue'
+
+import { useSyComboboxMenu } from '../../common/combobox/useSyComboboxMenu'
 
 export type ItemType = {
 	[key: string]: unknown
@@ -15,34 +17,17 @@ export interface UseSySelectMenuOptions {
 }
 
 export function useSySelectMenu(options: UseSySelectMenuOptions) {
-	const toggleMenu = (skipInitialFocus = false) => {
-		if (options.readonly.value) return
-
-		options.isOpen.value = !options.isOpen.value
-
-		if (options.isOpen.value && !skipInitialFocus) {
-			nextTick(() => {
-				const selectedIndex = options.formattedItems.value.findIndex(item => options.isItemSelected(item))
-				if (selectedIndex >= 0) {
-					options.setActiveDescendant(selectedIndex)
-				}
-				else {
-					options.setActiveDescendant(0)
-				}
-			})
-		}
-	}
-
-	const closeList = (event?: Event) => {
-		const target = event?.target as HTMLElement
-		const listElement = options.list.value?.$el
-
-		if (options.multiple.value && listElement && target && listElement.contains(target)) {
-			return
-		}
-
-		options.isOpen.value = false
-	}
+	const { toggleMenu, closeList } = useSyComboboxMenu({
+		readonly: options.readonly,
+		multiple: options.multiple,
+		isOpen: options.isOpen,
+		list: options.list as unknown as Ref<{ $el?: HTMLElement } | null>,
+		setActiveDescendant: options.setActiveDescendant,
+		getInitialActiveIndex: () => {
+			const selectedIndex = options.formattedItems.value.findIndex(item => options.isItemSelected(item))
+			return selectedIndex >= 0 ? selectedIndex : 0
+		},
+	})
 
 	return {
 		toggleMenu,

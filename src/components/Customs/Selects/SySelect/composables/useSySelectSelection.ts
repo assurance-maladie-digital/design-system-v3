@@ -1,5 +1,12 @@
 import { computed, nextTick, type Ref } from 'vue'
 
+import {
+	useSyComboboxGetItemText,
+	useSyComboboxGetPlainItemText,
+	useSyComboboxHasSelectionToClear,
+	useSyComboboxIsItemSelected,
+} from '../../common/combobox/useSyComboboxSelectionHelpers'
+
 export type ItemType = {
 	[key: string]: unknown
 }
@@ -31,45 +38,27 @@ export function useSySelectSelection(options: UseSySelectSelectionOptions) {
 		return itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
 	}
 
+	const { isItemSelected: isItemSelectedBase } = useSyComboboxIsItemSelected({
+		multiple: options.multiple,
+		returnObject: options.returnObject,
+		valueKey: options.valueKey,
+		selectedItem: options.selectedItem,
+	})
+
 	const isItemSelected = (item: ItemType) => {
 		if (options.multiple.value && isDefaultOption(item)) {
 			return !options.selectedItem.value || (Array.isArray(options.selectedItem.value) && options.selectedItem.value.length === 0)
 		}
 
-		if (!options.selectedItem.value) return false
-
-		if (options.multiple.value && Array.isArray(options.selectedItem.value)) {
-			return options.selectedItem.value.some((selected) => {
-				if (options.returnObject.value) {
-					return (selected as Record<string, unknown> | null | undefined)?.[options.valueKey.value] === item?.[options.valueKey.value]
-				}
-				return selected === item?.[options.valueKey.value]
-			})
-		}
-
-		if (options.returnObject.value) {
-			return Boolean(
-				options.selectedItem.value
-				&& (options.selectedItem.value as Record<string, unknown>)[options.valueKey.value] === item?.[options.valueKey.value],
-			)
-		}
-
-		return options.selectedItem.value === item?.[options.valueKey.value]
+		return isItemSelectedBase(item)
 	}
 
-	const getItemText = (item: unknown) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- generic type
-		return (item as Record<string, any>)[options.textKey.value]
-	}
-
-	const getPlainItemText = (item: unknown) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- generic type
-		const itemObj = item as Record<string, any>
-		if (options.plainTextKey.value && options.allowHtml.value && itemObj[options.plainTextKey.value]) {
-			return itemObj[options.plainTextKey.value]
-		}
-		return itemObj[options.textKey.value]
-	}
+	const { getItemText } = useSyComboboxGetItemText(options.textKey)
+	const { getPlainItemText } = useSyComboboxGetPlainItemText({
+		textKey: options.textKey,
+		plainTextKey: options.plainTextKey,
+		allowHtml: options.allowHtml,
+	})
 
 	const safeChipItem = (item: unknown): Record<string, unknown> | string | number => {
 		if (item === null || item === undefined) return ''
@@ -124,11 +113,7 @@ export function useSySelectSelection(options: UseSySelectSelectionOptions) {
 		return Array.isArray(options.selectedItem.value) ? options.selectedItem.value : []
 	})
 
-	const hasSelectionToClear = computed(() => {
-		return options.multiple.value
-			? (((options.selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
-			: options.selectedItem.value != null
-	})
+	const { hasSelectionToClear } = useSyComboboxHasSelectionToClear(options.multiple, options.selectedItem)
 
 	const selectedItemText = computed(() => {
 		if (hasChips.value) {

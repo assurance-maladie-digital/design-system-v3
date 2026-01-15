@@ -1,4 +1,6 @@
-import { nextTick, type Ref } from 'vue'
+import { type Ref } from 'vue'
+
+import { useSyComboboxMenu } from '../../common/combobox/useSyComboboxMenu'
 
 type UseSyAutocompleteMenuOptions = {
 	readonly: Ref<boolean>
@@ -13,40 +15,23 @@ type UseSyAutocompleteMenuOptions = {
 }
 
 export function useSyAutocompleteMenu(options: UseSyAutocompleteMenuOptions) {
-	const openMenu = (skipInitialFocus = false) => {
-		if (options.readonly.value) return
-		if (options.isOpen.value) return
-		options.isOpen.value = true
-		options.scheduleFetch(options.searchValue.value)
-		options.ensureNativeInputFocus()
-		if (!skipInitialFocus) {
-			nextTick(() => {
-				options.setActiveDescendant(0)
-			})
-		}
-	}
-
-	const closeMenu = () => {
-		options.isOpen.value = false
-	}
-
-	const toggleMenu = (skipInitialFocus = false) => {
-		if (options.readonly.value) return
-		if (options.isOpen.value) {
-			closeMenu()
-			return
-		}
-		openMenu(skipInitialFocus)
-	}
-
-	const closeList = (event?: Event) => {
-		const target = event?.target as HTMLElement
-		const listElement = options.list.value?.$el
-		if (options.multiple.value && listElement && target && listElement.contains(target)) {
-			return
-		}
-		closeMenu()
-	}
+	const {
+		openMenu,
+		closeMenu,
+		toggleMenu,
+		closeList,
+	} = useSyComboboxMenu({
+		readonly: options.readonly,
+		multiple: options.multiple,
+		isOpen: options.isOpen,
+		list: options.list,
+		setActiveDescendant: options.setActiveDescendant,
+		getInitialActiveIndex: () => 0,
+		onOpen: () => {
+			options.scheduleFetch(options.searchValue.value)
+			options.ensureNativeInputFocus()
+		},
+	})
 
 	const markOpenedByTyping = (value: boolean) => {
 		options.openedByTyping.value = value
