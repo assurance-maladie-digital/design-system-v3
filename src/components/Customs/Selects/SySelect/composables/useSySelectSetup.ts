@@ -159,7 +159,6 @@ export function useSySelectSetup(props: SySelectSetupProps, emit: SySelectSetupE
 		selectItem,
 		removeChip,
 		getItemText,
-		safeChipItem,
 		getChipText,
 		hasChips,
 		selectedChipsItems,
@@ -182,7 +181,6 @@ export function useSySelectSetup(props: SySelectSetupProps, emit: SySelectSetupE
 		restoreFocus: () => restoreFocusForSelection(),
 		emitUpdateModelValue: value => emit('update:modelValue', value),
 	})
-	void safeChipItem
 	isItemSelectedForMenu = (item: SySelectSetupItemType) => isItemSelected(item)
 
 	watchEffect(() => {

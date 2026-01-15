@@ -196,16 +196,27 @@ describe('SySelect.vue', () => {
 	})
 
 	it('updates selectedItem when v-model changes', async () => {
+		const items = [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		]
 		const wrapper = mount(SySelect, {
-			props: { modelValue: { text: 'Option 1', value: '1' }, textKey: 'text' },
+			props: {
+				items,
+				returnObject: true,
+				modelValue: items[0],
+				textKey: 'text',
+				valueKey: 'value',
+			},
 			attachTo: document.body,
 		})
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		const instance = wrapper.vm as any
-		expect(instance.selectedItem).toEqual({ text: 'Option 1', value: '1' })
 
-		await wrapper.setProps({ modelValue: { text: 'Option 2', value: '2' } })
-		expect(instance.selectedItem).toEqual({ text: 'Option 2', value: '2' })
+		const input = wrapper.find('input')
+		expect((input.element as HTMLInputElement).value).toBe('Option 1')
+
+		await wrapper.setProps({ modelValue: items[1] })
+		await wrapper.vm.$nextTick()
+		expect((input.element as HTMLInputElement).value).toBe('Option 2')
 
 		wrapper.unmount()
 	})
@@ -880,7 +891,7 @@ describe('SySelect.vue', () => {
 		})
 
 		it('safely handles different item types in chips', async () => {
-			// This test verifies our safeChipItem function works correctly
+			// This test verifies mixed primitive types are rendered correctly in chips
 			const items = [
 				{ text: 'Option 1', value: '1' },
 				{ text: 'Option 2', value: 2 }, // Number value
@@ -902,17 +913,6 @@ describe('SySelect.vue', () => {
 			expect(chips.length).toBe(2)
 			expect(chips[0]?.text()).toBe('Option 1')
 			expect(chips[1]?.text()).toBe('Option 2')
-
-			// Test the safeChipItem method directly
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			const instance = wrapper.vm as any
-			const stringResult = instance.safeChipItem('test')
-			const numberResult = instance.safeChipItem(123)
-			const objectResult = instance.safeChipItem({ id: 3 })
-
-			expect(stringResult).toBe('test')
-			expect(numberResult).toBe(123)
-			expect(typeof objectResult).toBe('object')
 
 			wrapper.unmount()
 		})
