@@ -249,15 +249,19 @@
 		:color="props.color"
 		:disabled="props.disabled"
 		:readonly="props.readonly"
-		:hide-details="props.hideDetails"
+		:hide-details="props.hideDetails !== true"
 		:density="props.density"
 		:error="hasError"
-		:error-messages="hasError ? errors : undefined"
-		:aria-describedby="messageId"
-		:messages="hasError ? errors :
-			hasWarning ? warnings :
-			(hasSuccess && props.showSuccessMessages ? successes : [])
-		"
+		:error-messages="props.hideDetails ? [] : errors"
+		:messages="props.hideDetails
+			? []
+			: hasError
+				? errors
+				: hasWarning
+					? warnings
+					: hasSuccess && props.showSuccessMessages
+						? successes
+						: []"
 	>
 		<v-radio
 			v-for="opt in props.options"
@@ -289,6 +293,25 @@
 			}}</span>.
 		</span>
 	</v-radio-group>
+	<Transition name="radio-message">
+		<div
+			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages))"
+			class="radio-messages"
+		>
+			<div
+				v-for="(msg, i) in hasError ? errors : hasWarning ? warnings : successes"
+				:key="i"
+				class="radio-message"
+				:class="{
+					error: hasError,
+					warning: hasWarning,
+					success: hasSuccess,
+				}"
+			>
+				{{ msg }}
+			</div>
+		</div>
+	</Transition>
 </template>
 
 <style scoped>
@@ -321,4 +344,41 @@
 		color: rgb(var(--v-theme-success)) !important;
 	}
 }
+
+.radio-message-enter-active,
+.radio-message-leave-active {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.radio-message-enter-from,
+.radio-message-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.radio-message-enter-to,
+.radio-message-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.radio-messages {
+  margin-top: 6px;
+}
+
+.radio-message {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.radio-message.error {
+  color: rgb(var(--v-theme-error));
+}
+.radio-message.warning {
+  color: rgb(var(--v-theme-warning));
+}
+.radio-message.success {
+  color: rgb(var(--v-theme-success));
+}
+
 </style>

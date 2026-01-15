@@ -327,11 +327,18 @@
 			:style="{ color: labelColor }"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
-			:hide-details="props.hideDetails"
-			:density="props.density"
+			:hide-details="props.hideDetails !== true"
 			:error="hasError"
-			:error-messages="errors"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:error-messages="props.hideDetails ? [] : errors"
+			:messages="props.hideDetails
+				? []
+				: hasError
+					? errors
+					: hasWarning
+						? warnings
+						: hasSuccess && props.showSuccessMessages
+							? successes
+							: []"
 			:indeterminate="internalIndeterminate"
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
@@ -360,6 +367,25 @@
 				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '') }}</span>.
 			</span>
 		</VCheckbox>
+		<Transition name="checkbox-message">
+			<div
+				v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages))"
+				class="checkbox-messages"
+			>
+				<div
+					v-for="(msg, i) in hasError ? errors : hasWarning ? warnings : successes"
+					:key="i"
+					class="checkbox-message"
+					:class="{
+						error: hasError,
+						warning: hasWarning,
+						success: hasSuccess,
+					}"
+				>
+					{{ msg }}
+				</div>
+			</div>
+		</Transition>
 	</div>
 </template>
 
@@ -393,4 +419,40 @@
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
 }
+.checkbox-message-enter-active,
+.checkbox-message-leave-active {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.checkbox-message-enter-from,
+.checkbox-message-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.checkbox-message-enter-to,
+.checkbox-message-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.checkbox-messages {
+  margin-top: 6px;
+}
+
+.checkbox-message {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.checkbox-message.error {
+  color: rgb(var(--v-theme-error));
+}
+.checkbox-message.warning {
+  color: rgb(var(--v-theme-warning));
+}
+.checkbox-message.success {
+  color: rgb(var(--v-theme-success));
+}
+
 </style>
