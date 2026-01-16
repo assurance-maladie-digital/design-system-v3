@@ -11,6 +11,7 @@
 		trim?: boolean
 		replaceTabs?: number
 		rules?: Array<Rule>
+		required?: boolean
 		maxLines?: number
 		autoWrap?: number
 		normalize?: boolean
@@ -24,6 +25,7 @@
 		trim: false,
 		replaceTabs: undefined,
 		rules: () => [],
+		required: false,
 		maxLines: undefined,
 		autoWrap: undefined,
 		normalize: false,
@@ -38,6 +40,7 @@
 	}>()
 
 	const textAreaRef = ref<VTextarea | null>(null)
+	const hasInteracted = ref(false)
 
 	const internalValue = ref(props.modelValue)
 	watch(
@@ -76,6 +79,7 @@
 	}
 
 	function execBlurChange() {
+		hasInteracted.value = true
 		let value = internalValue.value
 		blurActions.value.forEach((action) => {
 			value = action(value)
@@ -85,6 +89,13 @@
 
 	const internalRules = computed<Rule[]>(() => {
 		const internalRules: Rule[] = []
+
+		internalRules.push((value: string) => {
+			if (props.required && hasInteracted.value && !value) {
+				return locales.required
+			}
+			return true
+		})
 
 		internalRules.push((value: string) => {
 			const lines = value.split('\n').length
@@ -110,6 +121,8 @@
 		:rules="[...props.rules, ...internalRules]"
 		:label="label"
 		:aria-label="label"
+		:required="required"
+		:aria-required="required ? 'true' : undefined"
 		@update:model-value="execValueChange"
 		@update:focused="(e: boolean) => !e ? execBlurChange() : null"
 	/>
