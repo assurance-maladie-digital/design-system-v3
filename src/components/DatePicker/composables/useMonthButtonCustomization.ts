@@ -112,7 +112,6 @@ export function useMonthButtonCustomization(
 						monthBtnElement.setAttribute('data-ripple', 'false')
 						monthBtnElement.setAttribute('aria-label', monthText)
 						monthBtnElement.style.color = 'var(--v-theme-primary)'
-						monthBtnElement.style.marginRight = '7px'
 
 						const buttonContentHTML = `
 							<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
