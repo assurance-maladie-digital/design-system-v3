@@ -1,5 +1,6 @@
 import { it, describe, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import SyTextArea from '../SyTextArea.vue'
 
 describe('SyTextArea', () => {
@@ -12,6 +13,46 @@ describe('SyTextArea', () => {
 		})
 		expect(wrapper.exists()).toBe(true)
 		expect(wrapper.text()).toContain('Description des symptomes')
+	})
+
+	it('sets aria-required when required is true', () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				required: true,
+				label: 'Description des symptomes',
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		expect(textarea.attributes('aria-required')).toBe('true')
+	})
+
+	it('does not show required error message by default', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				required: true,
+				label: 'Description des symptomes',
+			},
+		})
+
+		expect(wrapper.text()).not.toContain('Ce champ est requis')
+	})
+
+	it('shows required error message when empty after interaction', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				required: true,
+				label: 'Description des symptomes',
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.trigger('blur')
+		expect(wrapper.text()).toContain('Ce champ est requis')
 	})
 
 	it('remove the white spaces at the beginning of the text as we try to add them', async () => {
@@ -89,6 +130,7 @@ describe('SyTextArea', () => {
 		expect(wrapper.text()).toContain('Ce champ ne peut pas dépasser 5 lignes')
 
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent')
+		await nextTick()
 		expect(wrapper.text()).not.toContain('Ce champ ne peut pas dépasser 5 lignes')
 	})
 
