@@ -64,7 +64,7 @@
     </tr>
     <tr style="vertical-align: top;">
       <td>- DialogBox: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1698">#1698</a></td>
-      <td>- </td>
+      <td></td>
     </tr>
     <tr style="vertical-align: top;">
       <td>- FooterBar: improve display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1697">#1697</a></td>
