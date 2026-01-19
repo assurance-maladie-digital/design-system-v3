@@ -440,7 +440,7 @@ export const ActionBtn: Story = {
 			components: { DataListGroup },
 			setup() {
 				const updateBirthdate = (eventValue: { dataListIndex: number, itemIndex: number }) => {
-					args.items[eventValue.dataListIndex].items[eventValue.itemIndex].value = '25/09/1970'
+					args.items[eventValue.dataListIndex]!.items[eventValue.itemIndex]!.value = '25/09/1970'
 				}
 				return { args, updateBirthdate }
 			},

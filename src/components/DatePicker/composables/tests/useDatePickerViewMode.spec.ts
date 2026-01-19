@@ -40,17 +40,17 @@ describe('useDatePickerViewMode', () => {
 			const [isBirthDateWatcher] = registeredWatchCallbacks
 			// Simuler isBirthDate passant à true sans date sélectionnée
 			isBirthDate = true
-			isBirthDateWatcher(true, false)
+			isBirthDateWatcher!(true, false)
 			expect(currentViewMode.value).toBe('year')
 
 			// Cas 2 : birthDate avec date sélectionnée -> month
 			selectedDate = new Date('2024-01-01')
-			isBirthDateWatcher(true, false)
+			isBirthDateWatcher!(true, false)
 			expect(currentViewMode.value).toBe('month')
 
 			// Cas 3 : mode normal (isBirthDate = false) -> month
 			isBirthDate = false
-			isBirthDateWatcher(false, true)
+			isBirthDateWatcher!(false, true)
 			expect(currentViewMode.value).toBe('month')
 		})
 
@@ -62,12 +62,12 @@ describe('useDatePickerViewMode', () => {
 
 			// newValue null -> year
 			selectedDate = null
-			selectedDateWatcher(null, undefined)
+			selectedDateWatcher!(null, undefined)
 			expect(currentViewMode.value).toBe('year')
 
 			// newValue défini -> month
 			selectedDate = new Date('2024-01-01')
-			selectedDateWatcher(selectedDate, null)
+			selectedDateWatcher!(selectedDate, null)
 			expect(currentViewMode.value).toBe('month')
 		})
 
@@ -78,7 +78,7 @@ describe('useDatePickerViewMode', () => {
 			const [, selectedDateWatcher] = registeredWatchCallbacks
 
 			// En mode normal, le watcher ne doit rien faire
-			selectedDateWatcher(new Date('2024-01-01'), null)
+			selectedDateWatcher!(new Date('2024-01-01'), null)
 			expect(currentViewMode.value).toBe('month')
 		})
 	})

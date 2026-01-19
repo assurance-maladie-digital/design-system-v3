@@ -47,7 +47,7 @@ const headers: TestDataTableHeader[] = [
 		title: 'Age',
 		key: 'age',
 	},
-]
+] as const
 
 describe('SyServerTable', () => {
 	beforeAll(() => {
@@ -398,7 +398,7 @@ describe('SyServerTable', () => {
 		expect(emitted).toBeTruthy()
 
 		if (emitted) {
-			const lastEmitted = emitted[emitted.length - 1][0] as { filters?: FilterOption[] }
+			const lastEmitted = emitted[emitted.length - 1]?.[0] as { filters?: FilterOption[] }
 			expect(lastEmitted).toHaveProperty('filters')
 			expect(lastEmitted.filters).toEqual([{ key: 'name', value: 'Jane', type: 'text' }])
 		}
@@ -463,7 +463,7 @@ describe('SyServerTable', () => {
 		expect(emitted).toBeTruthy()
 		if (emitted) {
 			// Find the last emitted event
-			const lastEmitted = emitted[emitted.length - 1][0] as { filters?: FilterOption[] }
+			const lastEmitted = emitted[emitted.length - 1]?.[0] as { filters?: FilterOption[] }
 			expect(lastEmitted).toHaveProperty('filters')
 			expect(lastEmitted.filters).toEqual([])
 		}
@@ -623,7 +623,7 @@ describe('SyServerTable', () => {
 		})
 
 		it('properly binds the v-model for selection', async () => {
-			const selectedItems = [fakeItems[0].id, fakeItems[2].id]
+			const selectedItems = [fakeItems[0]?.id, fakeItems[2]?.id]
 			const wrapper = mount(SyServerTable, {
 				props: {
 					headers,
@@ -708,7 +708,7 @@ describe('SyServerTable', () => {
 	})
 
 	it('properly binds the v-model for single selection', async () => {
-		const selectedItems = [fakeItems[0].id]
+		const selectedItems = [fakeItems[0]?.id]
 		const wrapper = mount(SyServerTable, {
 			props: {
 				headers,
@@ -722,7 +722,7 @@ describe('SyServerTable', () => {
 		})
 
 		// select the second item
-		await wrapper.setProps({ modelValue: [fakeItems[1].id] })
+		await wrapper.setProps({ modelValue: [fakeItems[1]?.id] })
 
 		// Check that the VDataTable has the correct model value
 		const dataTable = wrapper.findComponent({ name: 'VDataTableServer' })
@@ -839,7 +839,7 @@ describe('SyServerTable', () => {
 
 			// Simulate hiding a column by directly updating the headers
 			const updatedHeaders = [...headers] as TestDataTableHeader[]
-			updatedHeaders[1].hidden = true // Hide the Name column
+			updatedHeaders[1]!.hidden = true // Hide the Name column
 			organizeColumnsComponent.vm.$emit('update:headers', updatedHeaders)
 			await wrapper.vm.$nextTick()
 
@@ -861,9 +861,9 @@ describe('SyServerTable', () => {
 			// Verify initial order after sorting
 			let sortedHeaders = sortHeaders([...headersWithOrder])
 			expect(sortedHeaders.length).toBe(3)
-			expect(sortedHeaders[0].title).toBe('ID')
-			expect(sortedHeaders[1].title).toBe('Name')
-			expect(sortedHeaders[2].title).toBe('Age')
+			expect(sortedHeaders[0]?.title).toBe('ID')
+			expect(sortedHeaders[1]?.title).toBe('Name')
+			expect(sortedHeaders[2]?.title).toBe('Age')
 
 			// Update the headers to move ID to the bottom
 			const updatedHeaders = [
@@ -875,9 +875,9 @@ describe('SyServerTable', () => {
 			// Check that the columns are in the correct order after sorting
 			sortedHeaders = sortHeaders(updatedHeaders)
 			expect(sortedHeaders.length).toBe(3)
-			expect(sortedHeaders[0].title).toBe('Name')
-			expect(sortedHeaders[1].title).toBe('Age')
-			expect(sortedHeaders[2].title).toBe('ID')
+			expect(sortedHeaders[0]?.title).toBe('Name')
+			expect(sortedHeaders[1]?.title).toBe('Age')
+			expect(sortedHeaders[2]?.title).toBe('ID')
 		})
 
 		it('should move the column age to the top', async () => {
@@ -893,9 +893,9 @@ describe('SyServerTable', () => {
 			// Verify initial order after sorting
 			let sortedHeaders = sortHeaders([...headersWithOrder])
 			expect(sortedHeaders.length).toBe(3)
-			expect(sortedHeaders[0].title).toBe('ID')
-			expect(sortedHeaders[1].title).toBe('Name')
-			expect(sortedHeaders[2].title).toBe('Age')
+			expect(sortedHeaders[0]?.title).toBe('ID')
+			expect(sortedHeaders[1]?.title).toBe('Name')
+			expect(sortedHeaders[2]?.title).toBe('Age')
 
 			// Update the headers to move Age to the top
 			const updatedHeaders = [
@@ -907,9 +907,9 @@ describe('SyServerTable', () => {
 			// Check that the columns are in the correct order after sorting
 			sortedHeaders = sortHeaders(updatedHeaders)
 			expect(sortedHeaders.length).toBe(3)
-			expect(sortedHeaders[0].title).toBe('Age')
-			expect(sortedHeaders[1].title).toBe('ID')
-			expect(sortedHeaders[2].title).toBe('Name')
+			expect(sortedHeaders[0]?.title).toBe('Age')
+			expect(sortedHeaders[1]?.title).toBe('ID')
+			expect(sortedHeaders[2]?.title).toBe('Name')
 		})
 	})
 })

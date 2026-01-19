@@ -107,7 +107,7 @@ describe('useCalendarKeyboardNavigation', () => {
 		await nextTick()
 
 		expect(setCurrentDate).toHaveBeenCalledTimes(1)
-		const calledDate = setCurrentDate.mock.calls[0][0] as Date
+		const calledDate = setCurrentDate.mock.calls[0]?.[0] as Date
 		expect(calledDate).toBeInstanceOf(Date)
 		expect(calledDate.getDate()).toBe(11)
 		expect(focusSpy).toHaveBeenCalled()

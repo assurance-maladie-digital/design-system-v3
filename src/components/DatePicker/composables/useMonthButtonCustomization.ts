@@ -85,9 +85,9 @@ export function useMonthButtonCustomization(
 				if (monthBtns.length > 0) {
 					// Récupérer le texte original et le nettoyer du premier bouton pour référence
 					// Cela n'affectera pas la personnalisation des autres boutons
-					monthButtonText.value = monthBtns[0].textContent?.trim() || ''
+					monthButtonText.value = monthBtns[0]!.textContent?.trim() || ''
 					const parts = monthButtonText.value.split(' ')
-					yearText.value = parts.length > 1 ? parts[1] : ''
+					yearText.value = parts[1] ? parts[1] : ''
 
 					// Appliquer la personnalisation à tous les boutons du mois
 					monthBtns.forEach((monthBtn) => {
@@ -145,7 +145,7 @@ export function useMonthButtonCustomization(
 						if (yearName?.value) {
 							displayedYear = yearName.value
 						}
-						else if (monthBtnParts.length > 1) {
+						else if (monthBtnParts[1]) {
 							displayedYear = monthBtnParts[1]
 						}
 						else if (yearText.value) {

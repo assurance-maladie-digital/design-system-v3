@@ -25,10 +25,10 @@ describe('HeaderSubMenu', () => {
 		const content = wrapper.find('.sub-menu-content-wrapper')
 
 		expect(wrapper.find('h2').text()).toBe('Sub menu title')
-		expect(wrapper.find('.sub-menu-content').element.children[0].textContent).toBe('Test 1')
+		expect(wrapper.find('.sub-menu-content').element.children[0]?.textContent).toBe('Test 1')
 		expect(registerSubMenu.mock.calls.length).toBe(1)
-		const sharedStatus = registerSubMenu.mock.calls[0][0]
-		const sharedClose = registerSubMenu.mock.calls[0][1]
+		const sharedStatus = registerSubMenu.mock.calls[0]?.[0]
+		const sharedClose = registerSubMenu.mock.calls[0]?.[1]
 
 		expect(sharedStatus.value).toBe(false)
 		expect(content.attributes('style')).toContain('display: none;')

@@ -95,7 +95,7 @@
 
 	const focusChange = (): void => {
 		if (structureBtns.value && selected.value) {
-			(structureBtns.value[selected.value].$el as HTMLElement).focus()
+			(structureBtns.value[selected.value]?.$el as HTMLElement).focus()
 		}
 	}
 

@@ -28,7 +28,7 @@
 
 			parts.push({
 				type: 'phone',
-				value: match[1],
+				value: match[1]!,
 			})
 
 			lastIndex = regex.lastIndex

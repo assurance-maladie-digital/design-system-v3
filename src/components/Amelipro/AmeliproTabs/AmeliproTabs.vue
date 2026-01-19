@@ -79,14 +79,28 @@
 		document.getElementById(`${props.uniqueId}-select-label`)?.setAttribute('class', 'd-sr-only')
 	}
 
+	const isTabDisabled = (index: number): boolean => {
+		const tab = props.items[index]
+		return tab ? Boolean(tab.disabled) : true
+	}
+
 	const setDefaultValues = (): void => {
-		if (props.items !== undefined && selected.value !== undefined && props.items[selected.value] !== undefined) {
-			let disabledBtn = props.items[selected.value].disabled
-			while (disabledBtn) {
-				selected.value += 1
-				if (props.items[selected.value].disabled === false) {
-					disabledBtn = false
-				}
+		if (props.items.length === 0) {
+			return
+		}
+
+		if (selected.value < 0 || selected.value >= props.items.length) {
+			selected.value = 0
+		}
+
+		let disabledBtn = isTabDisabled(selected.value)
+		while (disabledBtn) {
+			selected.value += 1
+			if (selected.value >= props.items.length) {
+				selected.value = 0
+			}
+			if (!isTabDisabled(selected.value)) {
+				disabledBtn = false
 			}
 		}
 	}
@@ -102,7 +116,7 @@
 			let tablePos = 1
 			while (disabledBtn) {
 				selected.value = props.items.length - tablePos
-				if (props.items[selected.value].disabled === false) {
+				if (!isTabDisabled(selected.value)) {
 					disabledBtn = false
 				}
 				tablePos += 1
@@ -115,7 +129,7 @@
 			if (selected.value < 0) {
 				selected.value = props.items.length - 1
 			}
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 			focusChange()
@@ -128,7 +142,7 @@
 			let tablePos = 0
 			while (disabledBtn) {
 				selected.value = tablePos
-				if (props.items[selected.value].disabled === false) {
+				if (!isTabDisabled(selected.value)) {
 					disabledBtn = false
 				}
 				tablePos += 1
@@ -141,7 +155,7 @@
 			if (selected.value === props.items.length) {
 				selected.value = 0
 			}
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 			focusChange()
@@ -150,10 +164,10 @@
 
 	const pressHome = (): void => {
 		selected.value = 0
-		let disabledBtn = props.items[selected.value].disabled
+		let disabledBtn = isTabDisabled(selected.value)
 		while (disabledBtn) {
 			selected.value += 1
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 		}
@@ -162,12 +176,12 @@
 
 	const pressEnd = (): void => {
 		selected.value = props.items.length - 1
-		let disabledBtn = props.items[selected.value].disabled
+		let disabledBtn = isTabDisabled(selected.value)
 
 		while (disabledBtn) {
 			selected.value -= 1
 
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 		}
@@ -175,10 +189,13 @@
 	}
 
 	const focusChange = (): void => {
-		if (ameliproTabsBtns.value) {
-			(ameliproTabsBtns.value[selected.value].$el as HTMLElement).focus()
-			emitTabChangeEvent()
+		const tabButtons = ameliproTabsBtns.value
+		const currentButtonEl = tabButtons?.[selected.value]?.$el as HTMLElement | undefined
+
+		if (currentButtonEl) {
+			currentButtonEl.focus()
 		}
+		emitTabChangeEvent()
 	}
 
 	const emit = defineEmits(['change-tab'])

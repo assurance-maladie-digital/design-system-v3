@@ -61,7 +61,7 @@ describe('SyRadioGroup', () => {
 		await nextTick()
 		const errorMessages = wrapper.findAll('.v-messages__message')
 		expect(errorMessages.length).toBeGreaterThan(0)
-		expect(errorMessages[0].text()).toContain('Required Radio est requis')
+		expect(errorMessages[0]?.text()).toContain('Required Radio est requis')
 
 		// Sélectionner l'option
 		const radioX = wrapper.find('input[value="X"]')

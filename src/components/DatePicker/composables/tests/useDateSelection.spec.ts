@@ -24,11 +24,11 @@ describe('useDateSelection', () => {
 			const result = generateDateRange(startDate, endDate)
 
 			expect(result).toHaveLength(5)
-			expect(result[0].toISOString().split('T')[0]).toBe('2023-01-01')
-			expect(result[1].toISOString().split('T')[0]).toBe('2023-01-02')
-			expect(result[2].toISOString().split('T')[0]).toBe('2023-01-03')
-			expect(result[3].toISOString().split('T')[0]).toBe('2023-01-04')
-			expect(result[4].toISOString().split('T')[0]).toBe('2023-01-05')
+			expect(result[0]?.toISOString().split('T')[0]).toBe('2023-01-01')
+			expect(result[1]?.toISOString().split('T')[0]).toBe('2023-01-02')
+			expect(result[2]?.toISOString().split('T')[0]).toBe('2023-01-03')
+			expect(result[3]?.toISOString().split('T')[0]).toBe('2023-01-04')
+			expect(result[4]?.toISOString().split('T')[0]).toBe('2023-01-05')
 		})
 
 		it('devrait retourner une seule date si les dates de début et de fin sont identiques', () => {
@@ -39,7 +39,7 @@ describe('useDateSelection', () => {
 			const result = generateDateRange(sameDate, sameDate)
 
 			expect(result).toHaveLength(1)
-			expect(result[0].toISOString().split('T')[0]).toBe('2023-01-01')
+			expect(result[0]?.toISOString().split('T')[0]).toBe('2023-01-01')
 		})
 	})
 

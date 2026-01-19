@@ -21,7 +21,7 @@ dayjs.locale('fr')
  * @param format - Le format de la date (ex: 'DD/MM/YYYY')
  * @returns Un objet Date ou null si la chaîne n'est pas valide
  */
-export const parseDate = (dateString: string | Date | null, format: string): Date | null => {
+export const parseDate = (dateString: string | Date | null | undefined, format: string): Date | null => {
 	// Si dateString est null ou undefined, retourner null
 	if (!dateString) return null
 

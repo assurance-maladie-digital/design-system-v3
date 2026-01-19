@@ -36,8 +36,8 @@ describe('useDatePickerAccessibility', () => {
 			fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
 		}>>
 		// Obtenir les fonctions du composable directement depuis le composant monté
-		updateAccessibility = wrapper.vm.updateAccessibility
-		handleKeyDown = wrapper.vm.handleKeyDown
+		updateAccessibility = wrapper.vm.updateAccessibility!
+		handleKeyDown = wrapper.vm.handleKeyDown!
 
 		// Créer une structure DOM simulée pour les tests
 		document.body.innerHTML = `
@@ -71,9 +71,9 @@ describe('useDatePickerAccessibility', () => {
 		const buttons = document.querySelectorAll('.v-date-picker-header button')
 
 		// Vérifier que les attributs aria-label sont correctement définis
-		expect(buttons[0].getAttribute('aria-label')).toBe('Mois précédent')
-		expect(buttons[1].getAttribute('aria-label')).toBe(null) // Pas d'icône, donc pas d'attribu
-		expect(buttons[2].getAttribute('aria-label')).toBe('Mois suivant')
+		expect(buttons[0]?.getAttribute('aria-label')).toBe('Mois précédent')
+		expect(buttons[1]?.getAttribute('aria-label')).toBe(null) // Pas d'icône, donc pas d'attribu
+		expect(buttons[2]?.getAttribute('aria-label')).toBe('Mois suivant')
 	})
 
 	it('handles missing elements gracefully', async () => {
@@ -115,9 +115,9 @@ describe('useDatePickerAccessibility', () => {
 		const buttons = document.querySelectorAll('.v-date-picker-header button')
 
 		// Vérifier que les attributs aria-label sont correctement définis
-		expect(buttons[0].getAttribute('aria-label')).toBe(null) // Pas de chevron-lef
-		expect(buttons[1].getAttribute('aria-label')).toBe(null) // Pas d'icône
-		expect(buttons[2].getAttribute('aria-label')).toBe(null) // Pas de chevron-righ
+		expect(buttons[0]?.getAttribute('aria-label')).toBe(null) // Pas de chevron-lef
+		expect(buttons[1]?.getAttribute('aria-label')).toBe(null) // Pas d'icône
+		expect(buttons[2]?.getAttribute('aria-label')).toBe(null) // Pas de chevron-righ
 	})
 
 	it('adds sr-only instructions to the CalendarMode', async () => {

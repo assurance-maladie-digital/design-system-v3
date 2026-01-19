@@ -82,28 +82,27 @@
 	const variant = computed<NonNullable<'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'> | undefined>(() => (props.text ? 'text' : 'flat'))
 	const visible = ref(props.value)
 	const role = computed(() => (props.type === 'error' ? 'alert' : undefined))
-	const iconName = computed(() => props.icon || AmeliproMessageTypes[props.type].icon)
+	const iconName = computed(() => props.icon || AmeliproMessageTypes[props.type]!.icon)
 
 	const colorValue = computed(() => {
 		if (props.text) {
 			return convertToHex(props.textColor
-				|| AmeliproMessageTypes[props.type].textColor
+				|| AmeliproMessageTypes[props.type]!.textColor
 				|| props.color
-				|| AmeliproMessageTypes[props.type].color)
+				|| AmeliproMessageTypes[props.type]!.color)
 		}
-		return convertToHex(props.color || AmeliproMessageTypes[props.type].color)
+		return convertToHex(props.color || AmeliproMessageTypes[props.type]!.color)
 	})
 
 	const colorBorderLeftMessageTitle = computed(() => convertToHex(props.textColor
-		|| AmeliproMessageTypes[props.type].textColor
+		|| AmeliproMessageTypes[props.type]!.textColor
 		|| props.color
-		|| AmeliproMessageTypes[props.type].color))
+		|| AmeliproMessageTypes[props.type]!.color))
 
-	const iconBgColorValue = computed(() => props.iconBgColor || AmeliproMessageTypes[props.type].iconBgColor || AmeliproMessageTypes[props.type].color)
-
+	const iconBgColorValue = computed(() => props.iconBgColor || AmeliproMessageTypes[props.type]!.iconBgColor || AmeliproMessageTypes[props.type]!.color)
 	const iconColorValue = computed(() => props.iconColor || 'ap-white')
 
-	const isDark = computed(() => props.dark || AmeliproMessageTypes[props.type].type === 'dark')
+	const isDark = computed(() => props.dark || AmeliproMessageTypes[props.type]!.type === 'dark')
 
 	const iconCloseColor = computed(() => {
 		if (isDark.value || props.text || props.borderLeftMessage) {

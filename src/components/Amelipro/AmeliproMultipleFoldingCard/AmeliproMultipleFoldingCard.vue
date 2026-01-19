@@ -60,9 +60,9 @@
 	const internalTabs = ref<AmeliproMultipleFoldingCardItem[]>([])
 	const openDefaultItem = (): void => {
 		if (props.defaultItemOpened !== null) {
-			openedItemId.value = internalTabs.value[props.defaultItemOpened].id
+			openedItemId.value = internalTabs.value[props.defaultItemOpened]!.id
 			if (props.manualValidation === false) {
-				internalTabs.value[props.defaultItemOpened].valid = true
+				internalTabs.value[props.defaultItemOpened]!.valid = true
 			}
 		}
 	}
@@ -73,7 +73,7 @@
 
 	const openClose = (id: string, index: number): void => {
 		if (props.manualValidation === false) {
-			internalTabs.value[index].valid = true
+			internalTabs.value[index]!.valid = true
 		}
 		openedItemId.value = openedItemId.value === id ? null : id
 		emit('tab-clicked', id)
@@ -83,10 +83,10 @@
 		if (openedItemId.value === id) {
 			return 'classic-btn active-btn'
 		}
-		else if (internalTabs.value[index].error === true) {
+		else if (internalTabs.value[index]!.error === true) {
 			return 'classic-btn error-btn'
 		}
-		else if (internalTabs.value[index].valid === true) {
+		else if (internalTabs.value[index]!.valid === true) {
 			return 'classic-btn checked-btn'
 		}
 

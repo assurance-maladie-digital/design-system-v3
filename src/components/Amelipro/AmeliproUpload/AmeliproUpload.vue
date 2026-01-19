@@ -163,7 +163,7 @@
 
 		const allMatch = filesToAdd.length === lastEmittedFiles.value.length && filesToAdd.every((file, index) => {
 			const lastFile = lastEmittedFiles.value[index]
-			return fileHashSync(file) === lastFile.hash
+			return fileHashSync(file) === lastFile?.hash
 		})
 
 		// Si la liste est exactement la même que la dernière liste émise, ignorer

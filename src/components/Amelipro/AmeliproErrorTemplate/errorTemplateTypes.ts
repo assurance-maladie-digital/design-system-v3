@@ -6,7 +6,7 @@ import url503 from '../../../assets/amelipro/img/visuel_erreur_503.svg'
 import urlDeconnexion from '../../../assets/amelipro/img/visuel_deconnexion.svg'
 import urlObsolete from '../../../assets/amelipro/img/visuel_navigateur_obsolete.svg'
 
-export const ErrorTemplateContent: ErrorTemplateTypes = {
+export const ErrorTemplateContent = {
 	disconnect: {
 		btnText: 'Page d’accueil',
 		contentText: 'Merci pour votre visite, à très bientôt !',
@@ -82,4 +82,4 @@ export const ErrorTemplateContent: ErrorTemplateTypes = {
 		imgUrl: urlDeconnexion,
 		titleText: 'Erreur technique',
 	},
-}
+} as const satisfies ErrorTemplateTypes

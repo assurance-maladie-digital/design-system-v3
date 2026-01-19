@@ -147,16 +147,16 @@
 		const index = getCurrentIndex()
 		if (index > 0) {
 			focusedIndex.value = index - 1
-			optionsRef.value[index - 1].focus()
+			optionsRef.value[index - 1]?.focus()
 		}
 		else {
 			focusedIndex.value = optionsRef.value.length - 1
-			optionsRef.value[optionsRef.value.length - 1].focus()
+			optionsRef.value[optionsRef.value.length - 1]?.focus()
 		}
 
 		// auto select the focused item if not multiple
 		const item = filteredItems.value[index > 0 ? index - 1 : optionsRef.value.length - 1]
-		if (!props.multiple && !isSelected(item.value)) {
+		if (!props.multiple && item && !isSelected(item.value)) {
 			toggleItem(item)
 		}
 	}
@@ -165,28 +165,28 @@
 		const index = getCurrentIndex()
 		if (index < optionsRef.value.length - 1) {
 			focusedIndex.value = index + 1
-			optionsRef.value[index + 1].focus()
+			optionsRef.value[index + 1]!.focus()
 		}
 		else {
 			focusedIndex.value = 0
-			optionsRef.value[0].focus()
+			optionsRef.value[0]!.focus()
 		}
 
 		// auto select the focused item if not multiple
 		const item = filteredItems.value[index < optionsRef.value.length - 1 ? index + 1 : 0]
-		if (!props.multiple && !isSelected(item.value)) {
+		if (!props.multiple && item && !isSelected(item.value)) {
 			toggleItem(item)
 		}
 	}
 
 	function focusFirst(): void {
 		focusedIndex.value = 0
-		optionsRef.value[0].focus()
+		optionsRef.value[0]?.focus()
 	}
 
 	function focusLast(): void {
 		focusedIndex.value = optionsRef.value.length - 1
-		optionsRef.value[optionsRef.value.length - 1].focus()
+		optionsRef.value[optionsRef.value.length - 1]?.focus()
 	}
 
 	function handleBlur(): void {
@@ -209,7 +209,7 @@
 		focusedIndex.value = index
 		const item = filteredItems.value[index]
 		// Only auto-select on keyboard focus (Tab or arrow keys)
-		if (!props.multiple && !internalValue.value) {
+		if (!props.multiple && !internalValue.value && item) {
 			toggleItem(item)
 		}
 	}

@@ -245,7 +245,7 @@ describe('LangBtn', () => {
 		await wrapper.vm.$nextTick()
 
 		const languageItem = document.body.querySelectorAll('.v-list-item')[1]
-		languageItem.dispatchEvent(new Event('click'))
+		languageItem!.dispatchEvent(new Event('click'))
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('corsu')

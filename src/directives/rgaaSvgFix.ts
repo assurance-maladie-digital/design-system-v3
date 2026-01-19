@@ -242,7 +242,7 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 
 		// Corriger les attributs de chaque SVG
 		for (let i = 0; i < svgs.length; i++) {
-			const svg = svgs[i]
+			const svg = svgs[i]!
 
 			// Pour tous les SVG:
 			// 1. Toujours supprimer role="img"
