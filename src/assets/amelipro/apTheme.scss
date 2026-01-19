@@ -137,21 +137,21 @@
 		cursor: pointer;
 	}
 
-  // Vuetify Icon button
-  .v-btn--icon .v-icon {
-    color: $ap-blue-darken1;
-    transition: color 0.2s ease;
-  }
+	// Vuetify Icon button
+	.v-btn--icon .v-icon {
+		color: $ap-blue-darken1;
+		transition: color 0.2s ease;
+	}
 
-  .v-btn--icon .v-icon:hover {
-    color: $ap-blue-darken2
-  }
+	.v-btn--icon .v-icon:hover {
+		color: $ap-blue-darken2;
+	}
 
-  // Vuetify tooltip
-  .v-tooltip .tooltip {
-    color: $ap-grey-darken1;
-    border-color: $ap-grey;
-  }
+	// Vuetify tooltip
+	.v-tooltip .tooltip {
+		color: $ap-grey-darken1;
+		border-color: $ap-grey;
+	}
 }
 
 .theme-ap a {
