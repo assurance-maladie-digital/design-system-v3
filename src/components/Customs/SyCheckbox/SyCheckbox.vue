@@ -3,6 +3,7 @@
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
+	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 
 	const props = withDefaults(
 		defineProps<{
@@ -205,6 +206,22 @@
 		return model.value ? 'true' : 'false'
 	})
 
+	const labelColor = computed(() => {
+		if (props.disabled) return cnamSemanticTokens.colors.text.disabled
+		switch (props.color) {
+		case 'error':
+			return 'rgb(var(--v-theme-error))'
+		case 'success':
+			return 'rgb(var(--v-theme-success))'
+		case 'warning':
+			return 'rgb(var(--v-theme-warning))'
+		case 'primary':
+			return cnamSemanticTokens.colors.text.base
+		default:
+			return ''
+		}
+	})
+
 	// Propriétés ARIA personnalisées pour éviter les conflits
 	const messageId = computed(() => {
 		// Don't create messageId if aria-labelledby is provided
@@ -307,6 +324,7 @@
 			:aria-labelledby="props.ariaLabelledby"
 			:title="props.title"
 			:color="props.color"
+			:style="{ color: labelColor }"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
 			:hide-details="props.hideDetails"
@@ -345,8 +363,8 @@
 	</div>
 </template>
 
-<style scoped>
-:deep(.v-selection-control--dirty .v-selection-control__input) {
+<style>
+:deep(.v-input--dirty .v-selection-control__input) {
 	color: v-bind('props.color');
 }
 

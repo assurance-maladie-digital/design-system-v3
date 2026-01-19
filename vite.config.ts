@@ -123,6 +123,7 @@ export default defineConfig({
 		},
 	},
 	test: {
+		include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)', '**/*.a11y.spec.ts'],
 		environment: 'happy-dom',
 		isolate: true,
 		maxConcurrency: process.env.CI ? 1 : 5,

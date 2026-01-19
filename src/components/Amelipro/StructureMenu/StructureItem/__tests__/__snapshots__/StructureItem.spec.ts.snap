@@ -55,13 +55,21 @@ exports[`StructureItem > Snapshots > renders the component with all properties f
           flex-column
           flex-md-row
           justify-md-space-between
+          structure
           w-100
         "
         id="modified-unique-id-structure-infos"
       >
-        <b>
-          modified-address
-        </b>
+        <span class="
+          d-flex
+          flex-column
+          user-infos
+        ">
+          <span class="name"></span>
+          <span class="address">
+            modified-address
+          </span>
+        </span>
         <span>
           <!-- v-if -->
           AM/FINESS : modified-unique-id-number
@@ -125,13 +133,21 @@ exports[`StructureItem > Snapshots > renders the component with only required pr
           flex-column
           flex-md-row
           justify-md-space-between
+          structure
           w-100
         "
         id="required-unique-id-structure-infos"
       >
-        <b>
-          required-address
-        </b>
+        <span class="
+          d-flex
+          flex-column
+          user-infos
+        ">
+          <span class="name"></span>
+          <span class="address">
+            required-address
+          </span>
+        </span>
         <span>
           <!-- v-if -->
           AM/FINESS : required-unique-id-number

@@ -275,7 +275,7 @@ describe('FilterSideBar', () => {
 
 		await wrapper
 			.find(
-				'.v-navigation-drawer__content>div:last-child button:nth-child(2)',
+				'.v-navigation-drawer__content button[type="reset"]',
 			)
 			.trigger('click')
 
@@ -322,7 +322,7 @@ describe('FilterSideBar', () => {
 		await wrapper.find('.v-btn__content').trigger('click')
 		await wrapper
 			.find(
-				'.v-navigation-drawer__content>div:last-child button:nth-child(1)',
+				'.v-navigation-drawer__content button[aria-label="Fermer les filtres"]',
 			)
 			.trigger('click')
 

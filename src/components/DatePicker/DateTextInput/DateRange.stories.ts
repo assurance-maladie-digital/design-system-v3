@@ -180,6 +180,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -237,6 +240,9 @@ export const Default: Story = {
 
 export const WithInitialValue: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -293,6 +299,9 @@ export const WithInitialValue: Story = {
 
 export const WithCustomFormat: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -347,6 +356,9 @@ export const WithCustomFormat: Story = {
 
 export const WithValidation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

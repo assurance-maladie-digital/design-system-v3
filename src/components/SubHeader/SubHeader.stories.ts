@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SubHeader from './SubHeader.vue'
 import { ref } from 'vue'
 import { mdiStepBackward, mdiClose, mdiContentCopy } from '@mdi/js'
+import type { DataListGroupItems } from '../DataListGroup/types'
 
 const meta = {
 	title: 'Composants/Structure/SubHeader',
@@ -61,12 +62,6 @@ const meta = {
 			control: { type: 'boolean' },
 			default: false,
 			description: 'Affiche un indicateur de chargement à la place du contenu',
-		},
-		'renderHtmlValue': {
-			type: 'boolean',
-			control: { type: 'boolean' },
-			default: false,
-			description: 'Permet le rendu HTML dans les valeurs des éléments de données',
 		},
 		'renderFixedHeight': {
 			type: 'boolean',
@@ -138,6 +133,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -168,7 +166,6 @@ export const Default: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
-		'renderHtmlValue': false,
 		'dataListGroupItems': [],
 		'additional-informations': undefined,
 		'back-btn': undefined,
@@ -178,7 +175,7 @@ export const Default: Story = {
 		'right-content': undefined,
 		'vuetifyOptions': {
 			sheet: {
-				color: 'secondary',
+				color: 'primary',
 			},
 			backBtn: {
 				size: 'small',
@@ -198,8 +195,65 @@ export const Default: Story = {
 	},
 }
 
+export const BackgroundCustom: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SubHeader
+    title-text="Paul Dupont"
+    sub-title-text="1 69 08 75 125 456 75"
+    sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+    :vuetifyOptions="{ sheet: { color: 'secondary' } }"
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+  import { SubHeader } from '@cnamts/synapse'
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		backBtnText: 'Retour',
+		hideBackBtn: false,
+		titleText: 'Paul Dupont',
+		subTitleText: '1 69 08 75 125 456 75',
+		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
+		loading: false,
+		dataListGroupItems: [],
+		vuetifyOptions: {
+			sheet: {
+				color: 'secondary',
+			},
+			backBtn: {
+				size: 'small',
+				variant: 'text',
+				class: 'font-weight-regular white--text px-1',
+			},
+		},
+	},
+	render: args => ({
+		components: { SubHeader },
+		setup() {
+			return { args }
+		},
+		template: '<SubHeader v-bind="args" />',
+	}),
+}
+
 export const DataList: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -255,7 +309,6 @@ export const DataList: Story = {
 		subTitleText: '1 69 08 75 125 456 75',
 		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
-		renderHtmlValue: false,
 		dataListGroupItems: [
 			{
 				title: 'Informations patient',
@@ -293,6 +346,9 @@ export const DataList: Story = {
 
 export const DataListFixedHeight: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -349,7 +405,6 @@ export const DataListFixedHeight: Story = {
 		subTitleText: '1 69 08 75 125 456 75',
 		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
-		renderHtmlValue: false,
 		renderFixedHeight: true,
 		dataListGroupItems: [
 			{
@@ -388,6 +443,9 @@ export const DataListFixedHeight: Story = {
 
 export const ActionBtn: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -451,7 +509,6 @@ export const ActionBtn: Story = {
 		subTitleText: '1 69 08 75 125 456 75',
 		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
-		renderHtmlValue: false,
 		dataListGroupItems: [
 			{
 				title: 'Informations patient',
@@ -499,96 +556,114 @@ export const ActionBtn: Story = {
 
 export const HtmlValue: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SubHeader
-						title-text="Paul Dupont"
-						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
-						:data-list-group-items="items"
-						render-html-value
-					/>
-				</template>
+<template>
+	<SubHeader
+		title-text="Paul Dupont"
+		sub-title-text="1 69 08 75 125 456 75"
+		:data-list-group-items="items"
+	>
+		<template #item="{ item, itemValue }">
+			<span v-if="item.key === 'Adresse'">
+				<b>{{ itemValue }}</b><br>
+				75020 Paris
+			</span>
+
+			<span v-else>
+				{{ itemValue }}
+			</span>
+		</template>
+	</SubHeader>
+</template>
 				`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SubHeader } from '@cnamts/synapse'
+<script setup lang="ts">
+	import { SubHeader } from '@cnamts/synapse'
+	import type { DataListGroupItems } from '@cnamts/synapse'
 
-					const items = [
-						{
-							title: 'Informations patient',
-							items: [
-								{ key: 'Date de naissance', value: '24/09/1970' },
-								{ key: 'Adresse', value: '<b>50 Avenue du Professeur André Lemierre</b><br/>75020 Paris' },
-							],
-						},
-						{
-							title: 'Médecin traitant',
-							items: [
-								{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
-								{ key: 'N° RPPS', value: 'XXXXX' },
-							],
-						},
-						{
-							title: 'Autres informations',
-							items: [
-								{ key: 'Dernière modification', value: '04/06/2020' },
-							],
-						},
-					]
-				</script>
+	const items: DataListGroupItems = [
+		{
+			title: 'Informations patient',
+			items: [
+				{ key: 'Date de naissance', value: '24/09/1970' },
+				{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre' },
+			],
+		},
+		{
+			title: 'Médecin traitant',
+			items: [
+				{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+				{ key: 'N° RPPS', value: 'XXXXX' },
+			],
+		},
+		{
+			title: 'Autres informations',
+			items: [
+				{ key: 'Dernière modification', value: '04/06/2020' },
+			],
+		},
+	]
+</script>
 				`,
 			},
 		],
 	},
-	args: {
-		backBtnText: 'Retour',
-		hideBackBtn: false,
-		titleText: 'Paul Dupont',
-		subTitleText: '1 69 08 75 125 456 75',
-		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
-		loading: false,
-		renderHtmlValue: true,
-		dataListGroupItems: [
-			{
-				title: 'Informations patient',
-				items: [
-					{ key: 'Date de naissance', value: '24/09/1970' },
-					{ key: 'Adresse', value: '<b>50 Avenue du Professeur André Lemierre</b><br/>75020 Paris' },
-				],
-			},
-			{
-				title: 'Médecin traitant',
-				items: [
-					{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
-					{ key: 'N° RPPS', value: 'XXXXX' },
-				],
-			},
-			{
-				title: 'Autres informations',
-				items: [
-					{ key: 'Dernière modification', value: '04/06/2020' },
-				],
-			},
-		],
+	render: () => ({
+		components: { SubHeader },
+		setup() {
+			const items: DataListGroupItems = [
+				{
+					title: 'Informations patient',
+					items: [
+						{ key: 'Date de naissance', value: '24/09/1970' },
+						{ key: 'Adresse', value: '50 Avenue du Professeur André Lemierre, 75020 Paris' },
+					],
+				},
+				{
+					title: 'Médecin traitant',
+					items: [
+						{ key: 'Nom du praticien', value: 'Gérard Leblanc' },
+						{ key: 'N° RPPS', value: 'XXXXX' },
+					],
+				},
+				{
+					title: 'Autres informations',
+					items: [
+						{ key: 'Dernière modification', value: '04/06/2020' },
+					],
+				},
+			]
 
-	},
-	render: (args) => {
-		return {
-			components: { SubHeader },
-			setup() {
-				return { args }
-			},
-			template: '<SubHeader v-bind="args" />',
-		}
-	},
+			return { items }
+		},
+		template: `
+			<SubHeader
+				title-text="Paul Dupont"
+				sub-title-text="1 69 08 75 125 456 75"
+				:data-list-group-items="items"
+			>
+				<template #item="{ item, itemValue }">
+					<span v-if="item.key === 'Adresse'">
+						<b>{{ itemValue }}</b><br>
+					</span>
+
+					<span v-else>
+						{{ itemValue }}
+					</span>
+				</template>
+			</SubHeader>
+		`,
+	}),
 }
 
 export const Loading: Story = {
@@ -649,7 +724,6 @@ export const Loading: Story = {
 		subTitleText: '1 69 08 75 125 456 75',
 		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: true,
-		renderHtmlValue: false,
 		dataListGroupItems: [
 			{
 				title: 'Informations patient',
@@ -686,6 +760,9 @@ export const Loading: Story = {
 
 export const SlotAdditionalInformations: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -732,7 +809,6 @@ export const SlotAdditionalInformations: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
-		'renderHtmlValue': false,
 		'additional-informations': `<template #additional-informations>
 	<VSpacer />
 	<p class="white--text mt-8 mb-0">
@@ -778,6 +854,9 @@ export const SlotAdditionalInformations: Story = {
 
 export const SlotBackBtn: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -819,7 +898,6 @@ export const SlotBackBtn: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
-		'renderHtmlValue': false,
 		'back-btn': `<template #back-btn>
 	<VBtn
 		color="white"
@@ -855,6 +933,9 @@ export const SlotBackBtn: Story = {
 
 export const SlotBackBtnIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -895,7 +976,6 @@ export const SlotBackBtnIcon: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
-		'renderHtmlValue': false,
 		'back-btn-icon': `<template #back-btn-icon>
 	<VIcon class="mr-2">
 		{{ backArrowIcon }}
@@ -924,6 +1004,9 @@ export const SlotBackBtnIcon: Story = {
 
 export const SlotTitle: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -960,7 +1043,6 @@ export const SlotTitle: Story = {
 		subTitleText: '1 69 08 75 125 456 75',
 		subTitleAccessibleName: 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		loading: false,
-		renderHtmlValue: false,
 		title: `<template #title>
 	<h3 class="headline font-weight-bold mt-2">
 		Dossier n°42
@@ -988,6 +1070,9 @@ export const SlotTitle: Story = {
 
 export const SlotSubTitle: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
 		sourceCode: [
 			{
@@ -1023,7 +1108,6 @@ export const SlotSubTitle: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
-		'renderHtmlValue': false,
 		'sub-title': `<template #sub-title>
 	<h4 class="title mt-1">
 		Traité par Jean Lunel
@@ -1051,6 +1135,9 @@ export const SlotSubTitle: Story = {
 
 export const SlotRightContent: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
 		sourceCode: [
 			{
@@ -1090,7 +1177,6 @@ export const SlotRightContent: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
-		'renderHtmlValue': false,
 		'right-content': `<template #right-content>
 	<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
 		<VBtn

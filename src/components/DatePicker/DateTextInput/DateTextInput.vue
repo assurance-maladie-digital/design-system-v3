@@ -1038,21 +1038,13 @@
 	const isOnError = computed(() => warningMessages.value.length === 0 && successMessages.value.length === 0 && errorMessages.value.length > 0)
 	const isOnWarning = computed(() => errorMessages.value.length === 0 && successMessages.value.length === 0 && warningMessages.value.length > 0)
 	const isOnSuccess = computed(() => errorMessages.value.length === 0 && warningMessages.value.length === 0 && successMessages.value.length > 0)
-	const getIcon = computed(() => {
-		if (errorMessages.value.length) return 'error'
-		if (warningMessages.value.length) return 'warning'
-		if (successMessages.value.length && !warningMessages.value.length) return 'success'
-		return undefined
-	})
 </script>
 
 <template>
 	<SyTextField
-		:key="fieldKey"
 		ref="inputRef"
 		v-model="inputValue"
 		:append-icon="props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined"
-		:append-inner-icon="getIcon"
 		:class="{
 			'error-field': isOnError,
 			'warning-field': isOnWarning,

@@ -21,5 +21,10 @@ export const config = {
 	},
 	confirmBtn: {
 		color: 'primary',
+		elevation: 0,
+
+	},
+	actionsSlot: {
+		class: 'sy-dialog-box-actions',
 	},
 } as const

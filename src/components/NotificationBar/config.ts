@@ -5,7 +5,7 @@ const defaultOptions = {
 		timeout: -1,
 	},
 	icon: {
-		class: 'mr-2',
+		class: 'mr-0',
 	},
 	btn: {
 		variant: 'text' as VariantType,
