@@ -96,6 +96,7 @@
 			:open-on-click="true"
 			:open-on-hover="false"
 			:disabled="hideTooltip"
+      content-class="tooltip"
 		>
 			<template #activator="{ props: tooltipProps }">
 				<VBtn
