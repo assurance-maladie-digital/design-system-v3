@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproContentLayout from './AmeliproContentLayout.vue'
+import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 
 const meta = {
 	argTypes: {
@@ -41,4 +42,21 @@ export const Default: Story = {
 		`,
 	}),
 
+}
+
+export const Info: Story = {
+	render: (args) => {
+		return {
+			components: { AmeliproMessage },
+			setup() {
+				return { args }
+			},
+			template: `
+			  <AmeliproMessage>
+				Le composant <strong>AmelieproContentLayout</strong> a été remplacée par <strong>PageContainer</strong>.
+			  </AmeliproMessage>
+			`,
+		}
+	},
+	tags: ['!dev'],
 }
