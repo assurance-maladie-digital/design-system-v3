@@ -363,7 +363,7 @@
 	</div>
 </template>
 
-<style>
+<style scoped>
 :deep(.v-input--dirty .v-selection-control__input) {
 	color: v-bind('props.color');
 }
@@ -392,5 +392,21 @@
 
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
+}
+
+:deep(.v-messages__message) {
+	animation: sy-messages-in 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes sy-messages-in {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 </style>
