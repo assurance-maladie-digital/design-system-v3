@@ -15,6 +15,18 @@ export function useDateSelection(
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 
 	const normalizeToUtcMidnight = (date: Date): Date => {
+		// Si la date est déjà une date-only en 00:00 UTC, préserver le jour UTC
+		// (sinon, en timezone négative, getFullYear/getMonth/getDate représente la veille au soir).
+		const isAlreadyUtcMidnight = date.getUTCHours() === 0
+			&& date.getUTCMinutes() === 0
+			&& date.getUTCSeconds() === 0
+			&& date.getUTCMilliseconds() === 0
+
+		if (isAlreadyUtcMidnight) {
+			return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0))
+		}
+
+		// Sinon (ex: Date à minuit local émise par le calendrier), conserver la date locale
 		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0))
 	}
 

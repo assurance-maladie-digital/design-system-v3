@@ -130,6 +130,17 @@ describe('CalendarMode.vue - Events', () => {
 		expect(wrapper.vm.displayFormattedDate).toBe('02/01/2026')
 	})
 
+	it('ne décale pas la date (J-1) quand VDatePicker met à jour v-model directement (timezone positive)', async () => {
+		// Simule un update direct du v-model de VDatePicker (Date à minuit local)
+		wrapper.vm.selectedDates = new Date(2023, 10, 2) // 02/11/2023
+		await nextTick()
+
+		wrapper.vm.updateDisplayFormattedDate()
+		await nextTick()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('02/11/2023')
+	})
+
 	it('accepte différents formats de date', async () => {
 		const wrapperWithDashFormat = mount(DatePicker, {
 			props: {

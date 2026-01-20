@@ -229,10 +229,27 @@
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
+	const isNormalizingSelectedDates = ref(false)
 	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
 	const currentRangeIsValid = ref(true)
 	const getRangeValidationError = ref('')
+
+	const normalizeToUtcMidnight = (date: Date): Date => {
+		// Si la date est déjà une date-only en 00:00 UTC, préserver le jour UTC
+		// (sinon, en timezone négative, getFullYear/getMonth/getDate représente la veille au soir).
+		const isAlreadyUtcMidnight = date.getUTCHours() === 0
+			&& date.getUTCMinutes() === 0
+			&& date.getUTCSeconds() === 0
+			&& date.getUTCMilliseconds() === 0
+
+		if (isAlreadyUtcMidnight) {
+			return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0))
+		}
+
+		// Sinon (ex: Date à minuit local émise par le calendrier), conserver la date locale
+		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0))
+	}
 
 	const { validateDates: coreValidateDates } = useDateValidation({
 		noCalendar: props.noCalendar,
@@ -331,6 +348,44 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, (newValue) => {
+		if (isNormalizingSelectedDates.value) return
+		if (!newValue) {
+			// Valider les dates
+			validateDates()
+			// Marquer les jours fériés après la mise à jour des dates
+			markHolidayDays()
+			updateModel(null)
+			// Réinitialiser textInputValue
+			textInputValue.value = ''
+			return
+		}
+
+		// Normaliser toute Date provenant du v-model du VDatePicker (souvent à minuit local)
+		// en une date-only à 00:00 UTC pour éviter un affichage J-1/J+1 selon le fuseau.
+		let normalizedValue: Date | (Date | null)[] | null = null
+		if (newValue instanceof Date) {
+			const normalized = normalizeToUtcMidnight(newValue)
+			if (normalized.getTime() !== newValue.getTime()) normalizedValue = normalized
+		}
+		else if (Array.isArray(newValue)) {
+			const mapped = newValue.map(d => (d instanceof Date ? normalizeToUtcMidnight(d) : d))
+			const changed = newValue.some((d, i) => d instanceof Date && mapped[i] instanceof Date && (mapped[i] as Date).getTime() !== d.getTime())
+			if (changed) normalizedValue = mapped
+		}
+
+		if (normalizedValue) {
+			try {
+				isNormalizingSelectedDates.value = true
+				selectedDates.value = normalizedValue
+			}
+			finally {
+				setTimeout(() => {
+					isNormalizingSelectedDates.value = false
+				}, 0)
+			}
+			return
+		}
+
 		// Valider les dates
 		validateDates()
 		// Marquer les jours fériés après la mise à jour des dates
@@ -538,6 +593,19 @@
 		if (displayFormattedDateComputed.value) {
 			displayFormattedDate.value = displayFormattedDateComputed.value
 		}
+	}
+
+	const handleDatePickerModelValueUpdate = (value: Date | (Date | null)[] | null) => {
+		// Important: VDatePicker peut émettre une Date à minuit local.
+		// On normalise d'abord via updateSelectedDates (date-only à 00:00 UTC)
+		// puis on met à jour l'affichage.
+		const filteredValue = Array.isArray(value)
+			? value.filter((d): d is Date => d instanceof Date)
+			: value
+		updateSelectedDates(filteredValue)
+		void nextTick().then(() => {
+			updateDisplayFormattedDate()
+		})
 	}
 
 	// Le composable useDateSelection est déjà initialisé plus haut dans le code
@@ -985,7 +1053,7 @@
 				<VDatePicker
 					v-if="isDatePickerVisible && !props.noCalendar"
 					ref="datePickerRef"
-					v-model="selectedDates"
+					:model-value="selectedDates"
 					color="primary"
 					:first-day-of-week="1"
 					:multiple="props.displayRange ? 'range' : false"
@@ -1000,7 +1068,7 @@
 					@update:month="onUpdateMonth"
 					@update:year="onUpdateYear"
 					@click:date="updateSelectedDates"
-					@update:model-value="updateDisplayFormattedDate"
+					@update:model-value="handleDatePickerModelValueUpdate"
 					@focus="markHolidayDays"
 					@update:month-year="markHolidayDays"
 				>
