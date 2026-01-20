@@ -6,10 +6,12 @@
 		size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs'
 		spacing?: 'xl' | 'lg' | 'md' | 'sm' | 'xs'
 		color?: string
+		uniqueId?: string
 	}>(), {
 		size: undefined,
 		spacing: undefined,
 		color: 'transparent',
+		uniqueId: undefined,
 	})
 
 	const display = useDisplay()
@@ -53,8 +55,12 @@
 </script>
 
 <template>
-	<div :class="[spacingClass, 'vd-page-container d-flex justify-center']">
+	<div
+		:id="uniqueId ? `${uniqueId}-container` : undefined"
+		:class="[spacingClass, 'vd-page-container d-flex justify-center']"
+	>
 		<VSheet
+			:id="uniqueId ? `${uniqueId}-content` : undefined"
 			:width="containerSize"
 			:color="color"
 		>
