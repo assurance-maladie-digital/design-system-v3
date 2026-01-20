@@ -2,7 +2,7 @@
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import { type PropType } from 'vue'
 	import { useSySelectSetup } from './composables/useSySelectSetup'
-	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
+	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 	import type { VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'

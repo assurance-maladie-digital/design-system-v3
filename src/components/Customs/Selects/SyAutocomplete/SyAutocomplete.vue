@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import { type PropType } from 'vue'
-	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
+	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 	import { VChip, VList, VTextField, VListItem, VListItemTitle, VMenu } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
