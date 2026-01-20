@@ -72,7 +72,7 @@ export const parseDate = (dateString: string | Date | null | undefined, format: 
 export const formatDate = (date: Date | null, format: string): string => {
 	if (!date) return ''
 
-	return dayjs(date).format(format)
+	return dayjs.utc(date).format(format)
 }
 
 /**

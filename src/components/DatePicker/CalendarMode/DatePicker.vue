@@ -143,8 +143,9 @@
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
-		// Créer une seule instance de la date du jour
-		const today = new Date()
+		// Créer une seule instance de la date du jour (date-only en 00:00 UTC)
+		const now = new Date()
+		const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0))
 
 		// Si c'est une plage de dates, on définit le même jour pour début et fin
 		if (props.displayRange) {

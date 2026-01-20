@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
@@ -14,6 +14,10 @@ describe('CalendarMode.vue - Events', () => {
 				format: 'DD/MM/YYYY',
 			},
 		})
+	})
+
+	afterEach(() => {
+		wrapper?.unmount?.()
 	})
 
 	it('émet update:modelValue lors de la saisie d\'une date valide', async () => {
@@ -109,6 +113,21 @@ describe('CalendarMode.vue - Events', () => {
 			// Vérifier que displayFormattedDate est mis à jour correctement
 			expect(wrapper.vm.displayFormattedDate).toBe('01/01/2023')
 		}
+	})
+
+	it('ne décale pas la date (J-1) quand une Date à minuit local est sélectionnée depuis le calendrier', async () => {
+		await wrapper.find('.v-text-field').trigger('click')
+		await nextTick()
+
+		// Date à minuit local (ce que VDatePicker peut émettre)
+		const date = new Date(2026, 0, 2) // 02/01/2026
+		wrapper.vm.updateSelectedDates(date)
+		await nextTick()
+
+		wrapper.vm.updateDisplayFormattedDate()
+		await nextTick()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('02/01/2026')
 	})
 
 	it('accepte différents formats de date', async () => {
