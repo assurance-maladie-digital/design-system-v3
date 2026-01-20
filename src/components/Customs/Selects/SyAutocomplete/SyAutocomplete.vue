@@ -1,8 +1,4 @@
 <script setup lang="ts">
-	defineOptions({
-		inheritAttrs: false,
-	})
-
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import { type PropType } from 'vue'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
@@ -14,6 +10,10 @@
 
 	import type { ItemType, SelectItemArrayType } from './types'
 	import { useSyAutocompleteSetup } from './composables/useSyAutocompleteSetup'
+
+	defineOptions({
+		inheritAttrs: false,
+	})
 
 	export type { ItemType, SelectItemArrayType } from './types'
 

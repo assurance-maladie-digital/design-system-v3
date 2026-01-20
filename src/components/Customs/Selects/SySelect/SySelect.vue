@@ -1,8 +1,4 @@
 <script setup lang="ts">
-	// Prevent display-asterisk from being passed to the DOM
-	defineOptions({
-		inheritAttrs: false,
-	})
 	import { mdiAlertCircle, mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import { type PropType } from 'vue'
 	import { useSySelectSetup } from './composables/useSySelectSetup'
@@ -12,6 +8,11 @@
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
+
+	// Prevent display-asterisk from being passed to the DOM
+	defineOptions({
+		inheritAttrs: false,
+	})
 
 	export type ItemType = {
 		[key: string]: unknown
