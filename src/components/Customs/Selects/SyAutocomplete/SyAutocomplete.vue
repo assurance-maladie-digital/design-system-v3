@@ -11,6 +11,10 @@
 	import type { ItemType, SelectItemArrayType } from './types'
 	import { useSyAutocompleteSetup } from './composables/useSyAutocompleteSetup'
 
+	type ModelValue = Record<string, unknown> | string | number | null | SelectItemArrayType
+	type FetchItemsFn = (query: string) => Promise<ItemType[]>
+	type Density = 'default' | 'comfortable' | 'compact'
+
 	defineOptions({
 		inheritAttrs: false,
 	})
@@ -19,7 +23,7 @@
 
 	const props = defineProps({
 		modelValue: {
-			type: [Object, String, Number, Array] as PropType<Record<string, unknown> | string | number | null | SelectItemArrayType>,
+			type: [Object, String, Number, Array] as PropType<ModelValue>,
 			default: null,
 		},
 		menuId: {
@@ -31,8 +35,7 @@
 			default: '',
 		},
 		fetchItems: {
-			type: Function as PropType<((query: string) => Promise<ItemType[]>) | undefined>,
-			required: false,
+			type: Function as PropType<FetchItemsFn>,
 			default: undefined,
 		},
 		minChars: {
@@ -96,7 +99,7 @@
 			default: false,
 		},
 		density: {
-			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
+			type: String as PropType<Density>,
 			default: 'default',
 		},
 		bgColor: {

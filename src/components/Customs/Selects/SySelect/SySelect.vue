@@ -9,6 +9,10 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
 
+	type ModelValue = Record<string, unknown> | string | number | null | SelectItemArrayType
+	type Density = 'default' | 'comfortable' | 'compact'
+	type Autocomplete = 'on' | 'off' | string
+
 	// Prevent display-asterisk from being passed to the DOM
 	defineOptions({
 		inheritAttrs: false,
@@ -26,7 +30,7 @@
 		modelValue: {
 			// En Vue, on ne peut pas mettre null directement comme type
 			// On utilise PropType pour définir le type complet incluant null
-			type: [Object, String, Number, Array] as PropType<Record<string, unknown> | string | number | null | SelectItemArrayType>,
+			type: [Object, String, Number, Array] as PropType<ModelValue>,
 			default: null,
 		},
 		items: {
@@ -82,7 +86,7 @@
 			default: false,
 		},
 		density: {
-			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
+			type: String as PropType<Density>,
 			default: 'default',
 		},
 		bgColor: {
@@ -122,7 +126,7 @@
 			default: false,
 		},
 		autocomplete: {
-			type: String as PropType<'on' | 'off' | undefined | string>,
+			type: String as PropType<Autocomplete>,
 			default: 'on',
 		},
 	})
