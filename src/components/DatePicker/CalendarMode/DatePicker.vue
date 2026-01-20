@@ -125,6 +125,10 @@
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
 
+	const normalizeToUtcMidnight = (date: Date): Date => {
+		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0))
+	}
+
 	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
 	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
 
@@ -143,8 +147,9 @@
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
-		// Créer une seule instance de la date du jour
-		const today = new Date()
+		// Créer une seule instance de la date du jour (date-only en 00:00 UTC)
+		const now = new Date()
+		const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0))
 
 		// Si c'est une plage de dates, on définit le même jour pour début et fin
 		if (props.displayRange) {
@@ -232,6 +237,29 @@
 	const isInitialValidation = ref(true)
 	const currentRangeIsValid = ref(true)
 	const getRangeValidationError = ref('')
+
+	watch(selectedDates, (newValue) => {
+		if (isUpdatingFromInternal.value) return
+		if (!newValue) return
+
+		const normalizeIfNeeded = (d: Date) => normalizeToUtcMidnight(d)
+
+		try {
+			isUpdatingFromInternal.value = true
+
+			if (newValue instanceof Date) {
+				selectedDates.value = normalizeIfNeeded(newValue)
+			}
+			else if (Array.isArray(newValue)) {
+				selectedDates.value = newValue.map(d => (d instanceof Date ? normalizeIfNeeded(d) : d))
+			}
+		}
+		finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
+		}
+	}, { deep: true })
 
 	const { validateDates: coreValidateDates } = useDateValidation({
 		noCalendar: props.noCalendar,

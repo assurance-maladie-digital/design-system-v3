@@ -11,6 +11,10 @@ export function useDateSelection(
 	format: string,
 	displayRange: boolean,
 ) {
+	const normalizeToUtcMidnight = (date: Date): Date => {
+		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0))
+	}
+
 	// Stockage des dates de début et de fin pour les plages
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 
@@ -26,7 +30,7 @@ export function useDateSelection(
 
 		// Ajouter toutes les dates intermédiaires jusqu'à la date de fin
 		while (currentDate < end) {
-			currentDate.setDate(currentDate.getDate() + 1)
+			currentDate.setUTCDate(currentDate.getUTCDate() + 1)
 			dateArray.push(new Date(currentDate))
 		}
 
@@ -44,11 +48,19 @@ export function useDateSelection(
 			return
 		}
 
+		// Cas 0bis: Input est une Date (sélection depuis le calendrier)
+		if (input instanceof Date) {
+			const date = normalizeToUtcMidnight(input)
+			selectedDates.value = date
+			rangeBoundaryDates.value = null
+			return
+		}
+
 		// Cas 1: Input est un tableau de dates ou de chaînes (sélection depuis le calendrier)
 		if (Array.isArray(input)) {
 			const dates = input
 				.map((item) => {
-					if (item instanceof Date) return item
+					if (item instanceof Date) return normalizeToUtcMidnight(item)
 					return item ? parseDate(item, format) : null
 				})
 				.filter((date): date is Date => date !== null)

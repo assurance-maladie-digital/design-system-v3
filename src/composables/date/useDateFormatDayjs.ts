@@ -72,7 +72,10 @@ export const parseDate = (dateString: string | Date | null, format: string): Dat
 export const formatDate = (date: Date | null, format: string): string => {
 	if (!date) return ''
 
-	return dayjs(date).format(format)
+	// Les valeurs du DatePicker sont traitées comme des "date-only" (sans notion d'heure).
+	// parseDate retourne une Date à 00:00:00 UTC ; le formatage doit donc aussi être fait en UTC
+	// pour éviter les décalages liés au fuseau horaire (ex : UTC-4 affichant le jour précédent).
+	return dayjs.utc(date).format(format)
 }
 
 /**

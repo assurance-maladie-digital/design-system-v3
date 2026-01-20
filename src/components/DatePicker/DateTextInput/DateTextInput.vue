@@ -654,8 +654,10 @@
 			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
-				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
-				emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
+				const parsedDate = parseDate(inputValue.value, displayFormat.value)
+				if (parsedDate) {
+					emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : inputValue.value)
+				}
 			}
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
