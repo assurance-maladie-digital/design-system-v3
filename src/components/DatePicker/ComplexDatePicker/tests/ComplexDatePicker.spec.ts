@@ -42,7 +42,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toBe('01/01/2025')
+		expect(emitted && emitted[0]?.[0]).toBe('01/01/2025')
 
 		const selectedDate = wrapper.vm.selectedDates as Date
 		expect(selectedDate).toBeInstanceOf(Date)
@@ -79,11 +79,11 @@ describe('ComplexDatePicker.clean', () => {
 
 		const emittedUpdate = wrapper.emitted('update:modelValue')
 		expect(emittedUpdate).toBeTruthy()
-		expect(emittedUpdate && emittedUpdate[0][0]).toBe('01/01/2025')
+		expect(emittedUpdate && emittedUpdate[0]?.[0]).toBe('01/01/2025')
 
 		const emittedSelected = wrapper.emitted('date-selected')
 		expect(emittedSelected).toBeTruthy()
-		expect(emittedSelected && emittedSelected[0][0]).toBe('01/01/2025')
+		expect(emittedSelected && emittedSelected[0]?.[0]).toBe('01/01/2025')
 
 		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
 

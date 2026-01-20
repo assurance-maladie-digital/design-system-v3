@@ -474,8 +474,8 @@
 		let result = ''
 		let digitIndex = 0
 		for (let i = 0; i < props.format.length && digitIndex < cleanedInput.length; i++) {
-			const formatChar = props.format[i].toUpperCase()
-			if (['D', 'M', 'Y'].includes(formatChar)) {
+			const formatChar = props.format[i]?.toUpperCase()
+			if (formatChar && ['D', 'M', 'Y'].includes(formatChar)) {
 				result += cleanedInput[digitIndex]
 				digitIndex++
 			}
@@ -486,7 +486,7 @@
 
 		let newCursorPos = digitsBeforeCursor
 		for (let i = 0, digitCount = 0; i < props.format.length && digitCount < digitsBeforeCursor; i++) {
-			if (!['D', 'M', 'Y'].includes(props.format[i].toUpperCase())) newCursorPos++
+			if (!['D', 'M', 'Y'].includes(props.format[i]!.toUpperCase())) newCursorPos++
 			else digitCount++
 		}
 
@@ -545,8 +545,8 @@
 				}
 				else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
 					const formattedDates = [
-						formatDate(selectedDates.value[0], props.format),
-						formatDate(selectedDates.value[selectedDates.value.length - 1], props.format),
+						formatDate(selectedDates.value[0]!, props.format),
+						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
 					] as [string, string]
 					formattedValue = `${formattedDates[0]} - ${formattedDates[1]}`
 					displayFormattedDate.value = textInputValue.value = formattedValue
@@ -695,7 +695,7 @@
 			const cursorPos = input.selectionStart
 			const charBeforeCursor = input.value[cursorPos - 1]
 
-			if (!/\d/.test(charBeforeCursor)) {
+			if (!charBeforeCursor || !/\d/.test(charBeforeCursor)) {
 				event.preventDefault()
 				const newValue = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
 				displayFormattedDate.value = newValue

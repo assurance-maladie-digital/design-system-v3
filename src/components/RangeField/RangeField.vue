@@ -33,14 +33,14 @@
 	const options = useCustomizableOptions(config, props)
 
 	const model = defineModel<
-		Array<number>
+		[number, number]
 	>()
 
 	if (!model.value) {
 		model.value = [props.min, props.max]
 	}
 
-	const innerValue = computed(() => {
+	const innerValue = computed<[number, number]>(() => {
 		return model.value ? model.value : [props.min, props.max]
 	})
 

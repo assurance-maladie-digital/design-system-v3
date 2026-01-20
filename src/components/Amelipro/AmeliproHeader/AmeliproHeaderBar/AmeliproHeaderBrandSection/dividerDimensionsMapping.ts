@@ -1,6 +1,4 @@
-import type { IndexedObject } from '../../../types'
-
-export const dividerDimensionsMapping: IndexedObject<IndexedObject> = {
+export const dividerDimensionsMapping = {
 	normal: {
 		width: '22',
 		height: '64',
@@ -13,4 +11,4 @@ export const dividerDimensionsMapping: IndexedObject<IndexedObject> = {
 		width: '11',
 		height: '32',
 	},
-}
+} as const

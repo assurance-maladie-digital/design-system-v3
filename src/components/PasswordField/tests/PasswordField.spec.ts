@@ -37,7 +37,7 @@ describe('PasswordField.vue', () => {
 		const wrapper = mount(PasswordField)
 		const input = wrapper.find('input')
 		await input.setValue('new-password')
-		expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['new-password'])
+		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['new-password'])
 	})
 
 	it('validates the password field on blur', async () => {
@@ -86,12 +86,12 @@ describe('PasswordField.vue', () => {
 
 		const messages = wrapper.findAll('.v-messages__message')
 		expect(messages.length).toBe(1)
-		expect(messages[0].text()).toBe('Attention: mot de passe court')
+		expect(messages[0]?.text()).toBe('Attention: mot de passe court')
 
 		await wrapper.setProps({ warningMessages: [] })
 		const successMessages = wrapper.findAll('.v-messages__message')
 		expect(successMessages.length).toBe(1)
-		expect(successMessages[0].text()).toBe('Mot de passe valide')
+		expect(successMessages[0]?.text()).toBe('Mot de passe valide')
 	})
 
 	it('handles custom validation rules', async () => {
@@ -130,12 +130,12 @@ describe('PasswordField.vue', () => {
 		await wrapper.setProps({ modelValue: 'testpassword' })
 		await wrapper.find('input').trigger('blur')
 		const messages = wrapper.findAll('.v-messages__message')
-		expect(messages[0].text()).toBe('Le mot de passe pourrait être plus fort')
+		expect(messages[0]?.text()).toBe('Le mot de passe pourrait être plus fort')
 
 		await wrapper.setProps({ modelValue: 'TestPassword123' })
 		await wrapper.find('input').trigger('blur')
 		const successMessages = wrapper.findAll('.v-messages__message')
-		expect(successMessages[0].text()).toBe('Mot de passe fort')
+		expect(successMessages[0]?.text()).toBe('Mot de passe fort')
 	})
 
 	it('displays validation states based on validation rules', async () => {

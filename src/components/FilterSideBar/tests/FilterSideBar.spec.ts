@@ -140,7 +140,7 @@ describe('FilterSideBar', () => {
 
 		await wrapper.find('button:nth-child(3)').trigger('click')
 
-		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0]?.[0]
 		const expectedValue = [
 			{
 				name: 'name',
@@ -231,7 +231,7 @@ describe('FilterSideBar', () => {
 
 		await wrapper.find('button:nth-child(3)').trigger('click')
 
-		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0]?.[0]
 		const expectedValue = [
 			{
 				name: 'name',
@@ -279,7 +279,7 @@ describe('FilterSideBar', () => {
 			)
 			.trigger('click')
 
-		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0]?.[0]
 		const expectedValue = [
 			{
 				name: 'name',

@@ -153,17 +153,17 @@
 
 		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldLabels.forEach((fieldLabel) => {
-			(fieldLabel as HTMLElement).setAttribute('aria-label', 'éléments par page')
+			fieldLabel.setAttribute('aria-label', 'éléments par page')
 		})
 
 		const fieldTitles = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldTitles.forEach((fieldTitle) => {
-			(fieldTitle as HTMLElement).setAttribute('title', 'éléments par page')
+			fieldTitle.setAttribute('title', 'éléments par page')
 		})
 
 		const th = document.querySelectorAll(`#${uniqueTableId.value} th`)
-		for (let i = 0; i < th.length; i++) {
-			th[i].setAttribute('scope', 'col')
+		for (const el of th) {
+			el.setAttribute('tabindex', '0')
 		}
 	})
 </script>

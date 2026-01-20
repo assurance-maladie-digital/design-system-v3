@@ -49,7 +49,7 @@ describe('SyPagination', () => {
 		await wrapper.setProps({ modelValue: 2 })
 
 		// Click on next button
-		await wrapper.findAll('a').filter(a => a.text().includes('Suivant'))[0].trigger('click')
+		await wrapper.findAll('a').filter(a => a.text().includes('Suivant'))[0]!.trigger('click')
 		// Get updated emitted events
 		const updatedEmitted = wrapper.emitted('update:modelValue')
 		expect(updatedEmitted && updatedEmitted[1]).toEqual([3])
@@ -63,7 +63,7 @@ describe('SyPagination', () => {
 			},
 		})
 
-		const prevButton = wrapper.findAll('a').filter(a => a.text().includes('Précédent'))[0]
+		const prevButton = wrapper.findAll('a').filter(a => a.text().includes('Précédent'))[0]!
 		expect(prevButton.classes()).toContain('disabled')
 	})
 
@@ -75,7 +75,7 @@ describe('SyPagination', () => {
 			},
 		})
 
-		const nextButton = wrapper.findAll('a').filter(a => a.text().includes('Suivant'))[0]
+		const nextButton = wrapper.findAll('a').filter(a => a.text().includes('Suivant'))[0]!
 		expect(nextButton.classes()).toContain('disabled')
 	})
 

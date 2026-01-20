@@ -55,7 +55,7 @@ describe('EmotionPicker', () => {
 		const wrapper = mount(EmotionPicker)
 
 		const items = wrapper.findAll('[role="radio"]')
-		await items[0].trigger('click')
+		await items[0]?.trigger('click')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe(1)
 	})
@@ -78,6 +78,6 @@ describe('EmotionPicker', () => {
 		const items = wrapper.findAll('[role="radio"]')
 
 		await wrapper.setProps({ modelValue: 1 })
-		expect(items[0].classes()).toContain('sy-emotion-picker__item--active')
+		expect(items[0]?.classes()).toContain('sy-emotion-picker__item--active')
 	})
 })

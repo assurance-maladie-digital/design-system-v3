@@ -89,7 +89,7 @@
 	function fileSelected(files: File[]) {
 		const fileId
 			= inlineSelectedItemId ?? (props.uploadList.length === 1
-				? props.uploadList[0].id
+				? props.uploadList[0]!.id
 				: undefined)
 		inlineSelectedItemId = undefined
 
@@ -100,7 +100,7 @@
 			return
 		}
 
-		addOrReplaceFile(files[0], fileId)
+		addOrReplaceFile(files[0]!, fileId)
 	}
 
 	function uploadError(errors: string[]) {
@@ -120,7 +120,7 @@
 			return
 		}
 
-		addOrReplaceFile(uploadedFiles.value[0], selectedItem.value)
+		addOrReplaceFile(uploadedFiles.value[0]!, selectedItem.value)
 
 		showSelectDialog.value = false
 		selectedItem.value = undefined

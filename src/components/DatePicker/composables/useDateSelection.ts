@@ -64,8 +64,8 @@ export function useDateSelection(
 				dates.sort((a, b) => a.getTime() - b.getTime())
 
 				// Récupérer les dates de début et de fin
-				const startDate = dates[0]
-				const endDate = dates[dates.length - 1]
+				const startDate = dates[0]!
+				const endDate = dates[dates.length - 1]!
 
 				// Stocker les dates de début et de fin pour la plage, même si la plage est invalide
 				rangeBoundaryDates.value = [startDate, endDate]
@@ -99,8 +99,8 @@ export function useDateSelection(
 			// Mode plage de dates
 			const dates = input.split(' - ')
 			if (dates.length === 2) {
-				const startDate = parseDate(dates[0], format)
-				const endDate = parseDate(dates[1], format)
+				const startDate = parseDate(dates[0]!, format)
+				const endDate = parseDate(dates[1]!, format)
 				if (startDate && endDate) {
 					// Stocker les dates de début et de fin pour la plage
 					rangeBoundaryDates.value = [startDate, endDate]

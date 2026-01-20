@@ -41,7 +41,7 @@ export const useHolidayHighlighting = (
 
 			const joursFeries = getJoursFeries(year)
 			const holidayDates = Array.from(joursFeries).map((dateStr) => {
-				const [day, monthStr, yearStr] = dateStr.split('/')
+				const [day, monthStr, yearStr] = dateStr.split('/') as [string, string, string]
 				return new Date(parseInt(yearStr, 10), parseInt(monthStr, 10) - 1, parseInt(day, 10))
 			})
 

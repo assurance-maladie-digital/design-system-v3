@@ -32,7 +32,7 @@ describe('DatePicker', () => {
 
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toBe('01/01/2023')
+		expect(emitted && emitted[0]?.[0]).toBe('01/01/2023')
 	})
 
 	it('handles invalid typed date input gracefully', async () => {
@@ -66,8 +66,8 @@ describe('DatePicker', () => {
 		expect(result.length).toBe(2)
 		expect(result[0]).toBeInstanceOf(Date)
 		expect(result[1]).toBeInstanceOf(Date)
-		expect(result[0].toISOString().split('T')[0]).toBe('2023-01-01')
-		expect(result[1].toISOString().split('T')[0]).toBe('2023-01-05')
+		expect(result[0]?.toISOString().split('T')[0]).toBe('2023-01-01')
+		expect(result[1]?.toISOString().split('T')[0]).toBe('2023-01-05')
 	})
 
 	it('initializeSelectedDates returns an empty array for invalid range inputs', () => {

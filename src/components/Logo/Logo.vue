@@ -54,8 +54,8 @@
 
 	const dimensions = computed(() => {
 		return props.avatar
-			? logoAvatarDimensionsMapping[props.size]
-			: logoDimensionsMapping[props.size]
+			? logoAvatarDimensionsMapping[props.size]!
+			: logoDimensionsMapping[props.size]!
 	})
 
 	const viewBox = computed(() => {

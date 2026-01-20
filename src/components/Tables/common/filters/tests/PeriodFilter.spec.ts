@@ -45,10 +45,10 @@ describe('PeriodFilter.vue', () => {
 	it('emits update:filters event when period value changes', async () => {
 		const periodField = wrapper.findComponent(PeriodField)
 		const periodValue = { from: '01/01/2023', to: '31/12/2023' }
-		await periodField.vm.$emit('update:modelValue', periodValue)
+		periodField.vm.$emit('update:modelValue', periodValue)
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: periodValue, type: 'period' as FilterType as FilterType },
 		])
 	})
@@ -56,12 +56,12 @@ describe('PeriodFilter.vue', () => {
 	it('emits update:filters event to remove filter when both dates are null', async () => {
 		// First set a value
 		const periodField = wrapper.findComponent(PeriodField)
-		await periodField.vm.$emit('update:modelValue', { from: '01/01/2023', to: '31/12/2023' })
+		periodField.vm.$emit('update:modelValue', { from: '01/01/2023', to: '31/12/2023' })
 
 		// Then clear it
-		await periodField.vm.$emit('update:modelValue', { from: null, to: null })
+		periodField.vm.$emit('update:modelValue', { from: null, to: null })
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('emits update:filters event to remove filter when value is null', async () => {
@@ -70,17 +70,17 @@ describe('PeriodFilter.vue', () => {
 		await periodField.vm.$emit('update:modelValue', { from: '01/01/2023', to: '31/12/2023' })
 
 		// Then clear it
-		await periodField.vm.$emit('update:modelValue', null)
+		periodField.vm.$emit('update:modelValue', null)
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('handles clear button click', async () => {
 		const periodField = wrapper.findComponent(PeriodField)
-		await periodField.vm.$emit('click:clear')
+		periodField.vm.$emit('click:clear')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([])
 	})
 
 	it('updates existing filter when one already exists', async () => {
@@ -92,9 +92,9 @@ describe('PeriodFilter.vue', () => {
 		await wrapper.setProps({ filters: existingFilters })
 
 		const periodField = wrapper.findComponent(PeriodField)
-		await periodField.vm.$emit('update:modelValue', { from: '01/02/2023', to: '28/02/2023' })
+		periodField.vm.$emit('update:modelValue', { from: '01/02/2023', to: '28/02/2023' })
 
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: { from: '01/02/2023', to: '28/02/2023' }, type: 'period' as FilterType },
 		])
 	})
@@ -132,11 +132,11 @@ describe('PeriodFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: { from: string, to: string }, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: { from: string, to: string }, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe('filter_Test Period')
-		expect(emittedFilters[0].value).toEqual({ from: '01/01/2023', to: '31/12/2023' })
-		expect(emittedFilters[0].type).toBe('period')
+		expect(emittedFilters[0]?.key).toBe('filter_Test Period')
+		expect(emittedFilters[0]?.value).toEqual({ from: '01/01/2023', to: '31/12/2023' })
+		expect(emittedFilters[0]?.type).toBe('period')
 	})
 
 	it('generates unique key with timestamp when all header properties are absent', async () => {
@@ -169,11 +169,11 @@ describe('PeriodFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le timestamp
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: { from: string, to: string }, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: { from: string, to: string }, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe(`filter_${mockTimestamp}`)
-		expect(emittedFilters[0].value).toEqual({ from: '01/01/2023', to: '31/12/2023' })
-		expect(emittedFilters[0].type).toBe('period')
+		expect(emittedFilters[0]?.key).toBe(`filter_${mockTimestamp}`)
+		expect(emittedFilters[0]?.value).toEqual({ from: '01/01/2023', to: '31/12/2023' })
+		expect(emittedFilters[0]?.type).toBe('period')
 
 		// Restaurer Date.now
 		global.Date.now = originalDateNow

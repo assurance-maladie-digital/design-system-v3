@@ -56,8 +56,8 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		if (Array.isArray(selectedDates.value)) {
 			if (selectedDates.value.length >= 2) {
 				return [
-					formatDate(selectedDates.value[0], rf),
-					formatDate(selectedDates.value[selectedDates.value.length - 1], rf),
+					formatDate(selectedDates.value[0]!, rf),
+					formatDate(selectedDates.value[selectedDates.value.length - 1]!, rf),
 				] as [string, string]
 			}
 			return ''
@@ -71,12 +71,12 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 		if (Array.isArray(selectedDates.value)) {
 			if (selectedDates.value.length >= 2) {
-				return `${formatDate(selectedDates.value[0], format)} - ${formatDate(
-					selectedDates.value[selectedDates.value.length - 1],
+				return `${formatDate(selectedDates.value[0]!, format)} - ${formatDate(
+					selectedDates.value[selectedDates.value.length - 1]!,
 					format,
 				)}`
 			}
-			return formatDate(selectedDates.value[0], format)
+			return formatDate(selectedDates.value[0]!, format)
 		}
 
 		return formatDate(selectedDates.value, format)

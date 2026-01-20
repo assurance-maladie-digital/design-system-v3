@@ -31,7 +31,7 @@ describe('ChipList', () => {
 
 		// Vérifie le contenu des chips
 		defaultItems.forEach((item, index) => {
-			expect(chips[index].text()).toContain(item.text)
+			expect(chips[index]?.text()).toContain(item.text)
 		})
 	})
 
@@ -74,17 +74,17 @@ describe('ChipList', () => {
 
 		// Vérifie les classes d'état
 		const chips = wrapper.findAll('.v-chip')
-		expect(chips[0].classes()).toContain('sy-chip-success')
-		expect(chips[1].classes()).toContain('sy-chip-info')
-		expect(chips[2].classes()).toContain('sy-chip-warning')
-		expect(chips[3].classes()).toContain('sy-chip-error')
+		expect(chips[0]?.classes()).toContain('sy-chip-success')
+		expect(chips[1]?.classes()).toContain('sy-chip-info')
+		expect(chips[2]?.classes()).toContain('sy-chip-warning')
+		expect(chips[3]?.classes()).toContain('sy-chip-error')
 
 		// Vérifie les couleurs de fond via les classes
-		expect(chips[0].classes()).toContain('bg-backgroundSuccessSubdued')
-		expect(chips[1].classes()).toContain('bg-backgroundInfoSubdued')
-		expect(chips[2].classes()).toContain('bg-backgroundWarningSubdued')
-		expect(chips[3].classes()).toContain('bg-backgroundErrorSubdued')
-		expect(chips[4].classes()).toContain('bg-primary') // État par défaut
+		expect(chips[0]?.classes()).toContain('bg-backgroundSuccessSubdued')
+		expect(chips[1]?.classes()).toContain('bg-backgroundInfoSubdued')
+		expect(chips[2]?.classes()).toContain('bg-backgroundWarningSubdued')
+		expect(chips[3]?.classes()).toContain('bg-backgroundErrorSubdued')
+		expect(chips[4]?.classes()).toContain('bg-primary') // État par défaut
 	})
 
 	it('applique les bonnes classes selon l\'état', () => {

@@ -65,7 +65,7 @@
 
 	const imgUrl = computed<string>(() => (props.customImgUrl === undefined ? imgUrlDefault.value : props.customImgUrl))
 
-	const loadGlobalData = (templateName: string): void => {
+	const loadGlobalData = (templateName: keyof typeof ErrorTemplateContent): void => {
 		imgUrlDefault.value = ErrorTemplateContent[templateName]?.imgUrl
 		contentText.value = ErrorTemplateContent[templateName]?.contentText
 		contentTitle.value = ErrorTemplateContent[templateName]?.contentTitle

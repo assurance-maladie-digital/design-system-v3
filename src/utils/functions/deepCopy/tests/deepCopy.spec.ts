@@ -23,7 +23,7 @@ describe('deepCopy', () => {
 
 		copiedArray[0][0] = 'test'
 
-		expect(arrayToCopy[0][0]).toBe('a')
+		expect(arrayToCopy[0]?.[0]).toBe('a')
 	})
 
 	it('should copy an array containing falsy values', () => {
@@ -39,9 +39,9 @@ describe('deepCopy', () => {
 		copiedArray[0][1] = 'test'
 		copiedArray[0][2] = 'test'
 
-		expect(arrayToCopy[0][0]).toBe(false)
-		expect(arrayToCopy[0][1]).toBeNull()
-		expect(arrayToCopy[0][2]).toBe(0)
+		expect(arrayToCopy[0]?.[0]).toBe(false)
+		expect(arrayToCopy[0]?.[1]).toBeNull()
+		expect(arrayToCopy[0]?.[2]).toBe(0)
 	})
 
 	it('should copy an array containing undefined', () => {
@@ -53,6 +53,6 @@ describe('deepCopy', () => {
 
 		copiedArray[0][0] = 'test'
 
-		expect(arrayToCopy[0][0]).toBeUndefined()
+		expect(arrayToCopy[0]?.[0]).toBeUndefined()
 	})
 })

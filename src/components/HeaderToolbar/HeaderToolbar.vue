@@ -439,7 +439,7 @@
 
 				// Rechercher d'abord à partir de l'index de départ jusqu'à la fin
 				for (let i = startIndex; i < menuItems.length; i++) {
-					const itemText = menuItems[i].textContent?.trim().toLowerCase()
+					const itemText = (menuItems[i] as HTMLElement).textContent?.trim().toLowerCase()
 					if (itemText && itemText.startsWith(searchChar)) {
 						activeDescendantId.value = (menuItems[i] as HTMLElement).id
 						return
@@ -460,7 +460,7 @@
 		}
 
 		if (newIndex !== currentIndex && newIndex >= 0) {
-			activeDescendantId.value = menuItems[newIndex].id
+			activeDescendantId.value = (menuItems[newIndex] as HTMLElement).id
 			// Move real focus to the active item (roving tabindex)
 			const nextEl = menuItems[newIndex] as HTMLElement
 			nextTick(() => nextEl.focus())
