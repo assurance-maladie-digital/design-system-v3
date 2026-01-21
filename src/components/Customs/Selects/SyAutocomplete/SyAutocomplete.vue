@@ -14,6 +14,7 @@
 	type ModelValue = Record<string, unknown> | string | number | null | SelectItemArrayType
 	type FetchItemsFn = (query: string) => Promise<ItemType[]>
 	type Density = 'default' | 'comfortable' | 'compact'
+	type Autocomplete = 'on' | 'off' | string
 
 	defineOptions({
 		inheritAttrs: false,
@@ -139,7 +140,7 @@
 			default: false,
 		},
 		autocomplete: {
-			type: String as PropType<'on' | 'off' | undefined | string>,
+			type: String as PropType<Autocomplete>,
 			default: 'on',
 		},
 		noDataText: {
