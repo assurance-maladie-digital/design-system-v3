@@ -13,6 +13,7 @@
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
+	import type { ValidationRule, Value } from '@/utils/rules/types'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -124,6 +125,10 @@
 		autocomplete: {
 			type: String as PropType<'on' | 'off' | undefined | string>,
 			default: 'on',
+		},
+		rules: {
+			type: Array as PropType<ValidationRule[]>,
+			default: () => [],
 		},
 	})
 
@@ -741,9 +746,24 @@
 		}
 
 		// Vérifier si une valeur est sélectionnée quand le champ est requis
-		const isValid = !isRequired.value
+		const errors: string[] = []
+		let isValid = true
 
-		// Mettre à jour l'état d'erreur
+		// Si le champ est requis et aucune valeur n'est sélectionnée, c'est une erreur
+		if (props.required && !selectedItem.value) {
+			isValid = false
+		}
+
+		// Méthode de validation custom des rules
+		for (const rule of props.rules) {
+			const result = rule(Array.isArray(selectedItem.value) ? selectedItem.value : selectedItem.value as unknown as Value)
+			if (result !== true) {
+				errors.push(result as string)
+				isValid = false
+			}
+		}
+
+		// Update error state
 		hasError.value = !isValid || props.errorMessages.length > 0
 
 		return isValid

@@ -365,70 +365,336 @@ describe('SySelect.vue', () => {
 	})
 
 	describe('Validation', () => {
-		it('affiche une erreur pour un champ requis sans valeur', async () => {
+		it('should pass validation when value meets the rule', () => {
+			const rules = [
+				(value: unknown) => value !== undefined || 'La valeur est requise',
+			]
 			const wrapper = mount(SySelect, {
 				props: {
-					required: true,
-					label: 'Test Label',
-					modelValue: undefined,
+					rules,
+					modelValue: '1',
 				},
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should fail validation when value does not meet the rule', () => {
+			const rules = [
+				(value: unknown) => (typeof value === 'string' && value.length > 0) || 'La valeur doit être non vide',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					modelValue: '',
+				},
+				attachTo: document.body,
+			})
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('should collect errors from multiple rules', () => {
+			const rules = [
+				(value: unknown) => value !== undefined || 'La valeur est requise',
+				(value: unknown) => (typeof value === 'string' && value.length > 3) || 'La valeur doit contenir plus de 3 caractères',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					modelValue: '12',
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(false)
 			expect(instance.hasError).toBe(true)
 
 			wrapper.unmount()
 		})
 
-		it('n\'affiche pas d\'erreur pour un champ requis avec une valeur', async () => {
+		it('should validate array values with rules in multiple mode', () => {
+			const rules = [
+				(value: unknown) => (Array.isArray(value) && value.length > 0) || 'Au moins un élément doit être sélectionné',
+			]
 			const wrapper = mount(SySelect, {
 				props: {
-					required: true,
-					label: 'Test Label',
-					modelValue: { text: 'Option 1', value: '1' },
-					returnObject: true,
+					rules,
+					multiple: true,
+					modelValue: [],
 				},
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('should pass validation for array values that meet the rules', () => {
+			const rules = [
+				(value: unknown) => (Array.isArray(value) && value.length > 0) || 'Au moins un élément doit être sélectionné',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					multiple: true,
+					modelValue: ['1', '2'],
+				},
+				attachTo: document.body,
+			})
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should always return true when in readonly mode regardless of rules', () => {
+			const rules = [
+				(value: unknown) => value !== undefined || 'La valeur est requise',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					readonly: true,
+					modelValue: undefined,
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should always return true when disableErrorHandling is true', () => {
+			const rules = [
+				(value: unknown) => value !== undefined || 'La valeur est requise',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					disableErrorHandling: true,
+					modelValue: undefined,
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should handle complex validation rules', () => {
+			const rules = [
+				(value: unknown) => {
+					if (typeof value === 'string') {
+						const numValue = parseInt(value, 10)
+						return numValue > 0 && numValue <= 10 ? true : 'La valeur doit être entre 1 et 10'
+					}
+					return 'La valeur doit être une chaîne'
+				},
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					modelValue: '5',
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should fail complex validation when value is out of range', () => {
+			const rules = [
+				(value: unknown) => {
+					if (typeof value === 'string') {
+						const numValue = parseInt(value, 10)
+						return numValue > 0 && numValue <= 10 ? true : 'La valeur doit être entre 1 et 10'
+					}
+					return 'La valeur doit être une chaîne'
+				},
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					modelValue: '15',
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(false)
+			expect(instance.hasError).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should set hasError to true when validation fails', async () => {
+			const rules = [
+				(value: unknown) => value !== undefined || 'La valeur est requise',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					modelValue: undefined,
+					required: true,
+					disableErrorHandling: false,
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(false)
+			expect(instance.hasError).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should set hasError to false when validation passes', async () => {
+			const rules = [
+				(value: unknown) => value !== undefined || 'La valeur est requise',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					modelValue: '1',
+					required: false,
+					disableErrorHandling: false,
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
 			expect(instance.hasError).toBe(false)
 
 			wrapper.unmount()
 		})
 
-		it('n\'affiche pas d\'erreur quand disableErrorHandling est true', async () => {
+		it('should validate with no rules when rules array is empty', () => {
 			const wrapper = mount(SySelect, {
 				props: {
-					required: true,
-					label: 'Test Label',
+					rules: [],
 					modelValue: undefined,
-					disableErrorHandling: true,
 				},
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should fail validation when field is required but no value is selected', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					rules: [],
+					modelValue: undefined,
+				},
+				attachTo: document.body,
+			})
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
-			expect(instance.hasError).toBe(false)
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('should pass validation when field is required and a value is selected', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					rules: [],
+					modelValue: '1',
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('should fail validation when a rule returns an error message', () => {
+			const rules = [
+				(value: unknown) => (typeof value === 'string' && value !== '') || 'Erreur: Champ obligatoire',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					rules,
+					modelValue: '',
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			expect(isValid).toBe(false)
+			expect(instance.hasError).toBe(true)
 
 			wrapper.unmount()
 		})
@@ -451,29 +717,6 @@ describe('SySelect.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			expect(findList().exists()).toBe(true)
-
-			wrapper.unmount()
-		})
-
-		it('ouvre et ferme le menu au clic2', async () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					items: [{ text: 'Option 1', value: '1' }],
-				},
-				attachTo: document.body,
-			})
-
-			expect(wrapper.findComponent(VList).exists()).toBe(false)
-
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
-
-			expect(wrapper.findComponent(VList).exists()).toBe(true)
-
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
-
-			expect(wrapper.vm.isOpen).toBe(false)
 
 			wrapper.unmount()
 		})
