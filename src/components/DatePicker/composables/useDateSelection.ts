@@ -1,6 +1,8 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
+import { normalizeToUtcMidnight } from '../utils/normalizeToUtcMidnight'
+
 /**
  * Composable pour gérer la sélection de dates dans les composants CalendarMode
  * Gère les plages de dates et la génération des dates intermédiaires
@@ -13,19 +15,6 @@ export function useDateSelection(
 ) {
 	// Stockage des dates de début et de fin pour les plages
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
-
-	const normalizeToUtcMidnight = (date: Date): Date => {
-		const isAlreadyUtcMidnight = date.getUTCHours() === 0
-			&& date.getUTCMinutes() === 0
-			&& date.getUTCSeconds() === 0
-			&& date.getUTCMilliseconds() === 0
-
-		if (isAlreadyUtcMidnight) {
-			return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0))
-		}
-
-		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0))
-	}
 
 	/**
 	 * Génère toutes les dates entre deux dates (incluses)
