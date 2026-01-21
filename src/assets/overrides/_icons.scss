@@ -1,10 +1,11 @@
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/apNewTokens';
+
 
 .v-theme--apNew.v-btn--icon .v-icon {
-	color: apTokens.$ap-primary;
+  color: apNewTokens.$primary-base;
 	transition: color 0.2s ease;
 
 	&:hover {
-		color: apTokens.$ap-secondary;
+      color: apNewTokens.$secondary;
 	}
 }

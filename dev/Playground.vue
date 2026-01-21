@@ -13,10 +13,13 @@ import {CopyBtn} from "@/components";
     >
       start developing here
     </VSheet>
-    hello
-    <CopyBtn
+    <div class="pa-9">
+
+      <CopyBtn
         text-to-copy="1970756541"
     />
+      <a href="">A link here</a>
+    </div>
   </div>
 </template>
 

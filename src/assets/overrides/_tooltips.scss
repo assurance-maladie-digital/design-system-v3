@@ -1,4 +1,5 @@
 @use '@/assets/amelipro/apTokens';
+@use '@/assets/apNewTokens';
 
 .v-tooltip .v-overlay__content {
 	background-color: rgb(0 0 0 / 70%) !important;
@@ -10,7 +11,7 @@
 }
 
 .v-theme--apNew.v-tooltip .v-overlay__content {
-	color: apTokens.$ap-grey-darken1;
-	border: 1px solid apTokens.$ap-grey;
-	background-color: apTokens.$ap-white !important;
+  color: apNewTokens.$colors-text-base;
+  border: 1px solid apNewTokens.$colors-border-base;
+  background-color: apNewTokens.$colors-background-surface !important;
 }
