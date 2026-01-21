@@ -56,7 +56,7 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 
 // ✅ Apply theme-based ap and apNew
 .theme-ap,
- .theme-apNew {
+.theme-apNew {
 	@each $key, $value in $ap-radius {
 		--radius-#{$key}: #{$value};
 	}
