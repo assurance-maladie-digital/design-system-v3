@@ -195,16 +195,23 @@
 	}
 
 	/* forcr letter-spacing à 0 */
-  body,
-  p,
-  span,
-  label,
-  input,
-  textarea,
-  select,
-  .v-field__input,
-  .v-label,
-  .v-messages__message {
-    letter-spacing: 0 !important;
-  }
+ 	body,
+	p,
+	span,
+	label,
+	input,
+	textarea,
+	select,
+	button,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	.v-field__input,
+	.v-label,
+	.v-messages__message {
+		letter-spacing: 0 !important;
+	}
 }
