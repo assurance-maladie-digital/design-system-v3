@@ -51,9 +51,9 @@ export const Info: Story = {
 				return { args }
 			},
 			template: `
-			  <AmeliproMessage type="warning" :closable="false" class="mb-4">
+			  <AmeliproMessage :closable="false" class="mb-4">
 				<strong>Ce composant est déprécié</strong>, il ne sera plus maintenu ou mis à jour.
-				Nous vous recommandons d'utiliser à la place le composant <strong><a href='http://localhost:6006/?path=/docs/composants-layout-pagecontainer--docs'>PageContainer</a></strong>.
+				Nous vous recommandons d'utiliser à la place le composant <strong><a href='http://localhost:6006/?path=/docs/composants-layout-pagecontainer--docs' style='color: white;' onmouseover="this.style.color='lightgray';" onmouseout="this.style.color='white';">PageContainer</a></strong>.
 			  </AmeliproMessage>
 			`,
 		}
