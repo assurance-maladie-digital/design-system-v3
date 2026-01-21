@@ -196,7 +196,7 @@
 		handleInputBlur,
 		onListKeydown,
 		initializeActivatorProps,
-	} = useSyAutocompleteSetup(props as unknown as Parameters<typeof useSyAutocompleteSetup>[0], emit)
+	} = useSyAutocompleteSetup(props, emit)
 
 	defineExpose({
 		validateOnSubmit,

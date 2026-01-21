@@ -29,7 +29,7 @@ export type SyAutocompleteSetupEmit = {
 }
 
 export type SyAutocompleteSetupProps = {
-	modelValue: SelectItemValueType | SelectItemArrayType
+	modelValue: Record<string, unknown> | string | number | null | SelectItemArrayType
 	menuId: string
 	search: string
 	fetchItems?: (query: string) => Promise<ItemType[]>
@@ -48,7 +48,7 @@ export type SyAutocompleteSetupProps = {
 	displayAsterisk: boolean
 	returnObject: boolean
 	disableErrorHandling: boolean
-	density: 'default' | 'comfortable' | 'compact' | undefined
+	density: 'default' | 'comfortable' | 'compact'
 	bgColor: string
 	readonly: boolean
 	clearable: boolean
@@ -58,7 +58,7 @@ export type SyAutocompleteSetupProps = {
 	chips: boolean
 	helpText: string
 	allowHtml: boolean
-	autocomplete: string
+	autocomplete: 'on' | 'off' | string
 	noDataText: string
 }
 
@@ -334,7 +334,7 @@ export function useSyAutocompleteSetup(props: SyAutocompleteSetupProps, emit: Sy
 		isOpen,
 		formattedItems,
 		toggleMenu,
-		selectItem,
+		selectItem: (item, event) => selectItem(item ?? null, event),
 		getItemText,
 		optionIdPrefix,
 		focusOptions: false,
