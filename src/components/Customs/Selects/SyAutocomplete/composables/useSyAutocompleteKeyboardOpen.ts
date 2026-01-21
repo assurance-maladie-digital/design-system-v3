@@ -20,64 +20,46 @@ export function useSyAutocompleteKeyboardOpen(options: UseSyAutocompleteKeyboard
 	const isOpeningWithArrow = ref(false)
 	const forceFirstOption = ref(false)
 
-	const handleInputDownKey = () => {
-		if (!options.isOpen.value) {
-			isOpeningWithArrow.value = true
-			forceFirstOption.value = true
-			options.clearActiveDescendant()
-			options.openMenu(true)
-			nextTick(() => {
+	const openMenuWithArrow = () => {
+		isOpeningWithArrow.value = true
+		forceFirstOption.value = true
+		options.clearActiveDescendant()
+		options.openMenu(true)
+
+		// On refait le focus plusieurs fois (nextTick/RAF/setTimeout) car Vuetify peut rerender
+		// la liste au moment de l'ouverture (slots/virtualisation/filtrage), ce qui fait perdre
+		// l'option active sur certains navigateurs.
+		nextTick(() => {
+			options.ensureFirstOptionFocused()
+			requestAnimationFrame(() => {
 				options.ensureFirstOptionFocused()
-				requestAnimationFrame(() => {
-					options.ensureFirstOptionFocused()
-					setTimeout(() => {
-						options.ensureFirstOptionFocused()
-					}, 0)
-				})
-				isOpeningWithArrow.value = false
 				setTimeout(() => {
-					forceFirstOption.value = false
-				}, 150)
+					options.ensureFirstOptionFocused()
+				}, 0)
 			})
-			return
-		}
+			isOpeningWithArrow.value = false
+			setTimeout(() => {
+				forceFirstOption.value = false
+			}, 150)
+		})
+	}
+
+	const handleInputDownKey = () => {
+		if (!options.isOpen.value) return openMenuWithArrow()
 		if (isOpeningWithArrow.value) return
 
 		// Comportement type Vuetify : après saisie/filtrage, l'option active peut être vidée.
 		// Le prochain ArrowDown doit alors activer la première option (filtrée).
 		if (!options.activeDescendantId.value) {
-			if (options.formattedItemsLength.value > 0) {
-				options.setActiveDescendant(0)
-			}
-			else {
-				options.pendingFocusIndex.value = 0
-			}
+			if (options.formattedItemsLength.value > 0) options.setActiveDescendant(0)
+			else options.pendingFocusIndex.value = 0
 			return
 		}
 		options.handleDownKey()
 	}
 
 	const handleInputUpKey = () => {
-		if (!options.isOpen.value) {
-			isOpeningWithArrow.value = true
-			forceFirstOption.value = true
-			options.clearActiveDescendant()
-			options.openMenu(true)
-			nextTick(() => {
-				options.ensureFirstOptionFocused()
-				requestAnimationFrame(() => {
-					options.ensureFirstOptionFocused()
-					setTimeout(() => {
-						options.ensureFirstOptionFocused()
-					}, 0)
-				})
-				isOpeningWithArrow.value = false
-				setTimeout(() => {
-					forceFirstOption.value = false
-				}, 150)
-			})
-			return
-		}
+		if (!options.isOpen.value) return openMenuWithArrow()
 		if (isOpeningWithArrow.value) return
 		options.handleUpKey()
 	}
