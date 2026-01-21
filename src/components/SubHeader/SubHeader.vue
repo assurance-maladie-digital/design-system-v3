@@ -71,11 +71,12 @@
 				v-if="!hideBackBtn"
 				mode="out-in"
 			>
-				<VThemeProvider theme="dark">
+				<VThemeProvider>
 					<VSkeletonLoader
 						v-if="loading"
 						type="button"
 						class="vd-subheader-loading mb-4"
+						theme="dark"
 					/>
 
 					<VBtn
@@ -106,12 +107,13 @@
 				class="vd-sub-header-informations d-flex flex-column mr-10"
 				:class="{ 'flex-shrink-0': renderFixedHeight }"
 			>
-				<VThemeProvider theme="dark">
+				<VThemeProvider>
 					<slot name="title">
 						<VFadeTransition mode="out-in">
 							<HeaderLoading
 								v-if="loading"
 								width="300"
+								theme="dark"
 								height="2rem"
 							/>
 							<h2
@@ -134,6 +136,7 @@
 								class="mt-1"
 								width="250"
 								height="2rem"
+								theme="dark"
 							/>
 							<p
 								v-else
