@@ -167,7 +167,7 @@
 		hasSelectionToClear,
 		selectedItemText,
 		initializeActivatorProps,
-	} = useSySelectSetup(props as unknown as Parameters<typeof useSySelectSetup>[0], emit)
+	} = useSySelectSetup(props, emit)
 
 	defineExpose({
 		isOpen,

@@ -2,11 +2,11 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { defineComponent, nextTick, reactive } from 'vue'
 
-import { useSySelectSetup } from '../useSySelectSetup'
+import { useSySelectSetup, type SySelectSetupProps } from '../useSySelectSetup'
 
 describe('useSySelectSetup', () => {
 	it('exposes the expected contract', () => {
-		const props = reactive({
+		const initialProps: SySelectSetupProps = {
 			modelValue: null,
 			items: [],
 			label: 'Label',
@@ -32,10 +32,12 @@ describe('useSySelectSetup', () => {
 			helpText: '',
 			allowHtml: false,
 			autocomplete: 'on',
-		})
+		}
+
+		const props = reactive(initialProps)
 
 		const emit = () => {}
-		const api = useSySelectSetup(props as unknown as Parameters<typeof useSySelectSetup>[0], emit)
+		const api = useSySelectSetup(props, emit)
 
 		expect(api).toHaveProperty('isOpen')
 		expect(api).toHaveProperty('inputId')
@@ -50,8 +52,8 @@ describe('useSySelectSetup', () => {
 	})
 
 	it('reacts to modelValue changes (selection text updates)', async () => {
-		const props = reactive({
-			modelValue: null as unknown,
+		const initialProps: SySelectSetupProps = {
+			modelValue: null,
 			items: [
 				{ text: 'A', value: 'a' },
 				{ text: 'B', value: 'b' },
@@ -79,12 +81,14 @@ describe('useSySelectSetup', () => {
 			helpText: '',
 			allowHtml: false,
 			autocomplete: 'on',
-		})
+		}
+
+		const props = reactive(initialProps)
 
 		let api!: ReturnType<typeof useSySelectSetup>
 		const TestComponent = defineComponent({
 			setup() {
-				api = useSySelectSetup(props as unknown as Parameters<typeof useSySelectSetup>[0], () => {})
+				api = useSySelectSetup(props, () => {})
 				return () => null
 			},
 		})

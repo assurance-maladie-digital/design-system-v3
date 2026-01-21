@@ -38,7 +38,7 @@ export type SySelectSetupProps = {
 	displayAsterisk: boolean
 	returnObject: boolean
 	disableErrorHandling: boolean
-	density: 'default' | 'comfortable' | 'compact' | undefined
+	density: 'default' | 'comfortable' | 'compact'
 	bgColor: string
 	readonly: boolean
 	clearable: boolean
@@ -48,7 +48,7 @@ export type SySelectSetupProps = {
 	chips: boolean
 	helpText: string
 	allowHtml: boolean
-	autocomplete: string
+	autocomplete: 'on' | 'off' | string
 }
 
 export type SySelectSetupResult = {
@@ -232,7 +232,7 @@ export function useSySelectSetup(props: SySelectSetupProps, emit: SySelectSetupE
 		isOpen,
 		formattedItems,
 		toggleMenu,
-		selectItem,
+		selectItem: (item, event) => selectItem(item ?? null, event),
 		getItemText,
 	})
 
