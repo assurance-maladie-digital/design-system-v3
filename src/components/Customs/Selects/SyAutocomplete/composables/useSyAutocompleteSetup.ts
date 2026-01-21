@@ -1,20 +1,25 @@
-import { computed, nextTick, onMounted, ref, watch, watchEffect, type ComputedRef, type Ref } from 'vue'
+import { computed, nextTick, ref, watch, type ComputedRef, type Ref } from 'vue'
 import type { VList as VListComponent, VTextField } from 'vuetify/components'
 
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
 import { useSySelectKeyboard } from '../../SySelect/composables/useSySelectKeyboard'
 import { useSyComboboxCalculatedWidth } from '../../common/combobox/useSyComboboxCalculatedWidth'
+import { useSyComboboxHtmlItems } from '../../common/combobox/useSyComboboxHtmlItems'
 import { useSyComboboxFormatItems } from '../../common/combobox/useSyComboboxFormatItems'
 import { useSyComboboxIds } from '../../common/combobox/useSyComboboxIds'
 import { useSyComboboxMenuTarget } from '../../common/combobox/useSyComboboxMenuTarget'
 
 import type { ItemType, SelectItemArrayType, SelectItemValueType } from '../types'
 import { useSyAutocompleteAria } from './useSyAutocompleteAria'
+import { useSyAutocompleteActivatorProps } from './useSyAutocompleteActivatorProps'
 import { useSyAutocompleteFetch } from './useSyAutocompleteFetch'
+import { useSyAutocompleteInputFocus } from './useSyAutocompleteInputFocus'
 import { useSyAutocompleteKeydown } from './useSyAutocompleteKeydown'
 import { useSyAutocompleteKeyboardOpen } from './useSyAutocompleteKeyboardOpen'
+import { useSyAutocompleteOpenFocus } from './useSyAutocompleteOpenFocus'
+import { useSyAutocompleteFieldLabel } from './useSyAutocompleteFieldLabel'
+import { useSyAutocompleteMessages } from './useSyAutocompleteMessages'
 import { useSyAutocompleteMenu } from './useSyAutocompleteMenu'
 import { useSyAutocompleteModel } from './useSyAutocompleteModel'
 import { useSyAutocompleteSelection } from './useSyAutocompleteSelection'
@@ -179,8 +184,11 @@ export function useSyAutocompleteSetup(props: SyAutocompleteSetupProps, emit: Sy
 		selectedItem,
 	})
 
-	const labelWidth = ref(0)
-	const labelRef = ref<HTMLElement | null>(null)
+	const { labelWithAsterisk, labelWidth, labelRef } = useSyAutocompleteFieldLabel({
+		label: computed(() => props.label),
+		required: computed(() => props.required),
+		displayAsterisk: computed(() => props.displayAsterisk),
+	})
 	const list = ref<VListComponent | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
@@ -196,25 +204,18 @@ export function useSyAutocompleteSetup(props: SyAutocompleteSetupProps, emit: Sy
 		width: computed(() => props.width),
 	})
 
-	const labelWithAsterisk = computed(() => (props.required && props.displayAsterisk) ? `${props.label} *` : props.label)
-
 	const hasSelectionToClear = computed(() => {
 		return props.multiple
 			? (((selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
 			: selectedItem.value != null
 	})
 
-	const hasMessages = computed(() => {
-		if (props.disableErrorHandling) return false
-		return normalizedErrorMessages.value.length > 0 || hasError.value
-	})
-
-	const showHelpTextAsMessage = computed(() => {
-		return props.helpText && !hasMessages.value
-	})
-
-	const showHelpTextBelow = computed(() => {
-		return props.helpText && hasMessages.value && !props.hideMessages
+	const { showHelpTextAsMessage, showHelpTextBelow } = useSyAutocompleteMessages({
+		disableErrorHandling: computed(() => props.disableErrorHandling),
+		hideMessages: computed(() => props.hideMessages),
+		helpText: computed(() => props.helpText),
+		errorMessages: normalizedErrorMessages,
+		hasError,
 	})
 
 	const updateHasErrorFromSelection = () => {
@@ -291,18 +292,14 @@ export function useSyAutocompleteSetup(props: SyAutocompleteSetupProps, emit: Sy
 		void index
 	}
 
-	const handleInputFocus = () => {
-		isInputFocused.value = true
-		ensureNativeInputFocus()
-	}
-
-	const handleInputBlur = () => {
-		isInputFocused.value = false
-		markTouched()
-		if (props.multiple && !props.chips) {
-			searchValue.value = ''
-		}
-	}
+	const { handleInputFocus, handleInputBlur } = useSyAutocompleteInputFocus({
+		multiple: computed(() => props.multiple),
+		chips: computed(() => props.chips),
+		isInputFocused,
+		searchValue,
+		markTouched,
+		ensureNativeInputFocus: () => ensureNativeInputFocus(),
+	})
 
 	const { openMenu, toggleMenu, closeList, markOpenedByTyping } = useSyAutocompleteMenu({
 		readonly: computed(() => props.readonly),
@@ -360,17 +357,11 @@ export function useSyAutocompleteSetup(props: SyAutocompleteSetupProps, emit: Sy
 			&& formattedItems.value.length === 0
 	})
 
-	watchEffect(() => {
-		if (!props.allowHtml) {
-			return
-		}
-		htmlItemRefs.value.forEach((el, index) => {
-			const item = formattedItems.value[index]
-			if (!el || !item) {
-				return
-			}
-			el.innerHTML = sanitizeHtml(String(getItemText(item) ?? ''))
-		})
+	useSyComboboxHtmlItems({
+		allowHtml: computed(() => props.allowHtml),
+		htmlItemRefs,
+		formattedItems,
+		getItemText: item => getItemText(item),
 	})
 
 	useSyAutocompleteModel({
@@ -419,12 +410,6 @@ export function useSyAutocompleteSetup(props: SyAutocompleteSetupProps, emit: Sy
 	})
 
 	useValidatable(validateOnSubmit)
-
-	onMounted(() => {
-		if (labelRef.value) {
-			labelWidth.value = labelRef.value.offsetWidth + 64
-		}
-	})
 
 	const ensureFirstOptionFocused = () => {
 		setActiveDescendant(0)
@@ -489,34 +474,16 @@ export function useSyAutocompleteSetup(props: SyAutocompleteSetupProps, emit: Sy
 		onFieldRootKeydown,
 	}))
 
-	watch(isOpen, (newValue) => {
-		if (!newValue) {
-			openedByTyping.value = false
-		}
-		if (newValue) {
-			nextTick(() => {
-				if (!openedByTyping.value && !activeDescendantId.value) {
-					setActiveDescendant(0)
-				}
-				openedByTyping.value = false
-			})
-		}
+	useSyAutocompleteOpenFocus({
+		isOpen,
+		openedByTyping,
+		activeDescendantId,
+		setActiveDescendant,
 	})
 
-	type ActivatorProps = Record<string, unknown> & {
-		onClick?: unknown
-		ref?: (el: unknown) => void
-	}
-	function initializeActivatorProps(activatorProps: ActivatorProps) {
-		return {
-			...activatorProps,
-			onClick: undefined,
-			ref: (el: unknown) => {
-				textInput.value = el as InstanceType<typeof VTextField>
-				activatorProps.ref?.(el)
-			},
-		}
-	}
+	const { initializeActivatorProps } = useSyAutocompleteActivatorProps({
+		textInput,
+	})
 
 	return {
 		isOpen,

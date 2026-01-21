@@ -1,18 +1,20 @@
-import { computed, onMounted, ref, watch, watchEffect, type ComputedRef, type Ref } from 'vue'
+import { computed, ref, watch, type ComputedRef, type Ref } from 'vue'
 import type { VList, VTextField } from 'vuetify/components'
 
 import { useSySelectAria } from './useSySelectAria'
 import { useSySelectKeyboard } from './useSySelectKeyboard'
 import { useSySelectKeydown } from './useSySelectKeydown'
+import { useSySelectActivatorProps } from './useSySelectActivatorProps'
+import { useSySelectFieldLabel } from './useSySelectFieldLabel'
 import { useSySelectMenu } from './useSySelectMenu'
 import { useSySelectSelection } from './useSySelectSelection'
 import { useSySelectValidation } from './useSySelectValidation'
 import { useSySelectVuetifyAdapter } from './useSySelectVuetifyAdapter'
 import { useSyComboboxCalculatedWidth } from '../../common/combobox/useSyComboboxCalculatedWidth'
+import { useSyComboboxHtmlItems } from '../../common/combobox/useSyComboboxHtmlItems'
 import { useSyComboboxFormatItems } from '../../common/combobox/useSyComboboxFormatItems'
 import { useSyComboboxIds } from '../../common/combobox/useSyComboboxIds'
 import { useSyComboboxMenuTarget } from '../../common/combobox/useSyComboboxMenuTarget'
-import { sanitizeHtml } from '@/utils/sanitizeHtml'
 
 export type SySelectSetupItemType = {
 	[key: string]: unknown
@@ -102,8 +104,11 @@ export function useSySelectSetup(props: SySelectSetupProps, emit: SySelectSetupE
 		hideMessages: computed(() => props.hideMessages),
 	})
 
-	const labelWidth = ref(0)
-	const labelRef = ref<HTMLElement | null>(null)
+	const { labelWithAsterisk, labelWidth, labelRef } = useSySelectFieldLabel({
+		label: computed(() => props.label),
+		required: computed(() => props.required),
+		displayAsterisk: computed(() => props.displayAsterisk),
+	})
 	const list = ref<VList | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
@@ -183,22 +188,11 @@ export function useSySelectSetup(props: SySelectSetupProps, emit: SySelectSetupE
 	})
 	isItemSelectedForMenu = (item: SySelectSetupItemType) => isItemSelected(item)
 
-	watchEffect(() => {
-		if (!props.allowHtml) {
-			return
-		}
-
-		htmlItemRefs.value.forEach((el, index) => {
-			const item = formattedItems.value[index]
-			if (!el || !item) {
-				return
-			}
-			el.innerHTML = sanitizeHtml(String(getItemText(item) ?? ''))
-		})
-	})
-
-	const labelWithAsterisk = computed(() => {
-		return props.required && props.displayAsterisk ? `${props.label} *` : props.label
+	useSyComboboxHtmlItems({
+		allowHtml: computed(() => props.allowHtml),
+		htmlItemRefs,
+		formattedItems,
+		getItemText: item => getItemText(item),
 	})
 
 	const { calculatedWidth } = useSyComboboxCalculatedWidth({
@@ -261,12 +255,6 @@ export function useSySelectSetup(props: SySelectSetupProps, emit: SySelectSetupE
 		closeList,
 	})
 
-	onMounted(() => {
-		if (labelRef.value) {
-			labelWidth.value = labelRef.value.offsetWidth + 64
-		}
-	})
-
 	useSySelectAria({
 		textInput,
 		isOpen,
@@ -277,19 +265,9 @@ export function useSySelectSetup(props: SySelectSetupProps, emit: SySelectSetupE
 		selectedItem,
 	})
 
-	const initializeActivatorProps = (activatorProps: Record<string, unknown>) => {
-		const asRecord = activatorProps as Record<string, unknown>
-		return {
-			...asRecord,
-			onKeydown: undefined,
-			onClick: undefined,
-			ref: (el: unknown) => {
-				textInput.value = el as InstanceType<typeof VTextField>
-				const refFn = (activatorProps as { ref?: (el: unknown) => void }).ref
-				refFn?.(el)
-			},
-		}
-	}
+	const { initializeActivatorProps } = useSySelectActivatorProps({
+		textInput,
+	})
 
 	return {
 		isOpen,

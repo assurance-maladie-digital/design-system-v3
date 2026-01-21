@@ -1,4 +1,6 @@
-import { ref, watch, nextTick, type Ref } from 'vue'
+import { computed, ref, watch, nextTick, type Ref } from 'vue'
+
+import { useSySelectOpenFocus } from './useSySelectOpenFocus'
 
 export type ItemType = {
 	[key: string]: unknown
@@ -355,32 +357,14 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 	})
 
-	// Gérer l'ouverture et la fermeture de la liste
-	watch(isOpen, (open) => {
-		if (open) {
-			// À l'ouverture, restaurer le dernier focus ou initialiser au premier élément
-			nextTick(() => {
-				if (
-					restoreOnOpen
-					&& lastFocusedIndex.value >= 0
-					&& lastFocusedIndex.value < formattedItems.value.length
-				) {
-					// Restaurer le dernier focus
-					setActiveDescendant(lastFocusedIndex.value)
-					return
-				}
-
-				const safeInitialIndex = Math.min(
-					Math.max(initialFocusIndex, 0),
-					Math.max(formattedItems.value.length - 1, 0),
-				)
-				setActiveDescendant(safeInitialIndex)
-			})
-		}
-		else {
-			// Conserver lastFocusedIndex mais effacer le focus visuel et ARIA
-			clearVisualFocus()
-		}
+	useSySelectOpenFocus({
+		isOpen,
+		restoreOnOpen,
+		initialFocusIndex,
+		formattedItemsLength: computed(() => formattedItems.value.length),
+		lastFocusedIndex,
+		setActiveDescendant,
+		clearVisualFocus,
 	})
 
 	// Fonction utilitaire pour restaurer le focus après une action
