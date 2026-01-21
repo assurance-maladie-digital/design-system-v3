@@ -41,7 +41,6 @@ export const Default: Story = {
 </AmeliproContentLayout>
 		`,
 	}),
-
 }
 
 export const Info: Story = {
@@ -52,8 +51,9 @@ export const Info: Story = {
 				return { args }
 			},
 			template: `
-			  <AmeliproMessage>
-				Le composant <strong>AmelieproContentLayout</strong> a été remplacée par <strong>PageContainer</strong>.
+			  <AmeliproMessage type="warning" :closable="false" class="mb-4">
+				<strong>Ce composant est déprécié</strong>, il ne sera plus maintenu ou mis à jour.
+				Nous vous recommandons d'utiliser à la place le composant <strong><a href='http://localhost:6006/?path=/docs/composants-layout-pagecontainer--docs'>PageContainer</a></strong>.
 			  </AmeliproMessage>
 			`,
 		}
