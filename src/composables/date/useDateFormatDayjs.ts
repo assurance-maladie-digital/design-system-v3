@@ -8,6 +8,8 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import 'dayjs/locale/fr'
 
+import { getDateParts } from '@/utils/date/dateOnly'
+
 // Initialiser les plugins dayjs
 dayjs.extend(customParseFormat)
 dayjs.extend(localizedFormat)
@@ -72,18 +74,14 @@ export const parseDate = (dateString: string | Date | null | undefined, format: 
 export const formatDate = (date: Date | null, format: string): string => {
 	if (!date) return ''
 
-	const isAlreadyUtcMidnight = date.getUTCHours() === 0
-		&& date.getUTCMinutes() === 0
-		&& date.getUTCSeconds() === 0
-		&& date.getUTCMilliseconds() === 0
+	const { year, month, day } = getDateParts(date)
 
 	// On formate une "date-only" : on ne formate pas l'instant (sinon J-1/J+1 selon fuseau)
-	// - Si déjà 00:00 UTC, préserver les composantes UTC
-	// - Sinon (ex: date à minuit local émise par le calendrier), préserver les composantes locales
+	// Les composantes (UTC vs local) sont choisies par getDateParts().
 	return dayjs.utc()
-		.year(isAlreadyUtcMidnight ? date.getUTCFullYear() : date.getFullYear())
-		.month(isAlreadyUtcMidnight ? date.getUTCMonth() : date.getMonth())
-		.date(isAlreadyUtcMidnight ? date.getUTCDate() : date.getDate())
+		.year(year)
+		.month(month)
+		.date(day)
 		.hour(0)
 		.minute(0)
 		.second(0)
