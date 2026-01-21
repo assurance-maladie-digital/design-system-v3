@@ -10,6 +10,7 @@
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDateValidation, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation } from '../composables'
+	import { mapUtcMidnightToLocalMidnight } from '../utils/datePickerTimezoneUtils'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -124,6 +125,8 @@
 	const selectedDates = ref<Date | (Date | null)[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
+
+	const datePickerModelValue = computed(() => mapUtcMidnightToLocalMidnight(selectedDates.value))
 
 	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
 	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
@@ -382,6 +385,16 @@
 		props.format,
 		props.displayRange,
 	)
+
+	const handleDatePickerModelValueUpdate = (value: Date | (Date | null)[] | null) => {
+		const filteredValue = Array.isArray(value)
+			? value.filter((d): d is Date => d instanceof Date)
+			: value
+		updateSelectedDates(filteredValue)
+		void nextTick().then(() => {
+			updateDisplayFormattedDate()
+		})
+	}
 
 	const {
 		textInputValue,
@@ -984,7 +997,7 @@
 				<VDatePicker
 					v-if="isDatePickerVisible && !props.noCalendar"
 					ref="datePickerRef"
-					v-model="selectedDates"
+					:model-value="datePickerModelValue"
 					color="primary"
 					:first-day-of-week="1"
 					:multiple="props.displayRange ? 'range' : false"
@@ -998,8 +1011,7 @@
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
 					@update:year="onUpdateYear"
-					@click:date="updateSelectedDates"
-					@update:model-value="updateDisplayFormattedDate"
+					@update:model-value="handleDatePickerModelValueUpdate"
 					@focus="markHolidayDays"
 					@update:month-year="markHolidayDays"
 				>

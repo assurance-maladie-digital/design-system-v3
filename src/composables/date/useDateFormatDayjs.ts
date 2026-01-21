@@ -72,7 +72,23 @@ export const parseDate = (dateString: string | Date | null | undefined, format: 
 export const formatDate = (date: Date | null, format: string): string => {
 	if (!date) return ''
 
-	return dayjs(date).format(format)
+	const isAlreadyUtcMidnight = date.getUTCHours() === 0
+		&& date.getUTCMinutes() === 0
+		&& date.getUTCSeconds() === 0
+		&& date.getUTCMilliseconds() === 0
+
+	// On formate une "date-only" : on ne formate pas l'instant (sinon J-1/J+1 selon fuseau)
+	// - Si déjà 00:00 UTC, préserver les composantes UTC
+	// - Sinon (ex: date à minuit local émise par le calendrier), préserver les composantes locales
+	return dayjs.utc()
+		.year(isAlreadyUtcMidnight ? date.getUTCFullYear() : date.getFullYear())
+		.month(isAlreadyUtcMidnight ? date.getUTCMonth() : date.getMonth())
+		.date(isAlreadyUtcMidnight ? date.getUTCDate() : date.getDate())
+		.hour(0)
+		.minute(0)
+		.second(0)
+		.millisecond(0)
+		.format(format)
 }
 
 /**

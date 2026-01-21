@@ -43,6 +43,7 @@
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
+	import { mapUtcMidnightToLocalMidnight } from '../utils/datePickerTimezoneUtils'
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -411,6 +412,28 @@
 		dateSelectionResult.updateSelectedDates(date)
 		// Validate immediately to surface messages
 		queueMicrotask(() => validateDates(true))
+	}
+
+	const datePickerModelValue = computed(() => mapUtcMidnightToLocalMidnight(selectedDates.value))
+
+	const handleDatePickerModelValueUpdate = (value: Date | (Date | null)[] | null) => {
+		if (props.readonly) return
+
+		const filteredValue = Array.isArray(value)
+			? value.filter((d): d is Date => d instanceof Date)
+			: value
+
+		// Normalisation via useDateSelection (00:00 UTC)
+		if (Array.isArray(filteredValue)) {
+			dateSelectionResult.updateSelectedDates(filteredValue)
+		}
+		else {
+			dateSelectionResult.updateSelectedDates(filteredValue)
+		}
+
+		void nextTick().then(() => {
+			updateDisplayFormattedDate()
+		})
 	}
 
 	watch(selectedDates, (newValue) => {
@@ -1107,7 +1130,7 @@
 				<VDatePicker
 					v-if="isDatePickerVisible"
 					ref="datePickerRef"
-					v-model="selectedDates"
+					:model-value="datePickerModelValue"
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
@@ -1128,11 +1151,10 @@
 					:density="props.density"
 					:hint="props.hint"
 					:persistent-hint="props.persistentHint"
-					@update:model-value="updateDisplayFormattedDate"
+					@update:model-value="handleDatePickerModelValueUpdate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
 					@update:year="onUpdateYear"
-					@click:date="updateSelectedDates"
 					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 				>
