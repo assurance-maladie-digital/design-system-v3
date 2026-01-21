@@ -5,16 +5,16 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: 16px !important;
-    box-shadow: none !important;
+	box-shadow: none !important;
 }
 
-  /* États qui peuvent rajoutent des ombres */
-  .v-btn:hover,
-  .v-btn:focus,
-  .v-btn:active,
-  .v-btn--active {
-    box-shadow: none !important;
-  }
+/* États qui peuvent rajoutent des ombres */
+.v-btn:hover,
+.v-btn:focus,
+.v-btn:active,
+.v-btn--active {
+	box-shadow: none !important;
+}
 
 .theme-cnam .v-btn,
 .theme-pa .v-btn {
