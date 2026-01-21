@@ -193,4 +193,18 @@
 	.link-label {
 		font-size: $font-size-link-label;
 	}
+
+	/* forcr letter-spacing à 0 */
+  body,
+  p,
+  span,
+  label,
+  input,
+  textarea,
+  select,
+  .v-field__input,
+  .v-label,
+  .v-messages__message {
+    letter-spacing: 0 !important;
+  }
 }
