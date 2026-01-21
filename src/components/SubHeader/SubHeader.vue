@@ -71,31 +71,33 @@
 				v-if="!hideBackBtn"
 				mode="out-in"
 			>
-				<VThemeProvider>
-					<VSkeletonLoader
-						v-if="loading"
-						type="button"
-						class="vd-subheader-loading mb-4"
-						theme="dark"
-					/>
+				<div>
+					<VThemeProvider>
+						<VSkeletonLoader
+							v-if="loading"
+							type="button"
+							class="vd-subheader-loading mb-4"
+							theme="dark"
+						/>
 
-					<VBtn
-						v-else
-						v-bind="options.backBtn"
-						class="vd-sub-header-back-btn mb-1"
-						:aria-label="effectiveBackBtnAccessibleName"
-						@click="$emit('back')"
-					>
-						<slot name="back-btn-icon">
-							<SyIcon
-								class="mr-2"
-								:icon="backArrowIcon"
-								:decorative="true"
-							/>
-						</slot>
-						{{ backBtnText }}
-					</VBtn>
-				</VThemeProvider>
+						<VBtn
+							v-else
+							v-bind="options.backBtn"
+							class="vd-sub-header-back-btn mb-1"
+							:aria-label="effectiveBackBtnAccessibleName"
+							@click="$emit('back')"
+						>
+							<slot name="back-btn-icon">
+								<SyIcon
+									class="mr-2"
+									:icon="backArrowIcon"
+									:decorative="true"
+								/>
+							</slot>
+							{{ backBtnText }}
+						</VBtn>
+					</VThemeProvider>
+				</div>
 			</VFadeTransition>
 		</slot>
 
