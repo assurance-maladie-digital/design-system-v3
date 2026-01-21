@@ -44,6 +44,15 @@
 		>
 			Thème AmeliPro
 		</v-btn>
+    <v-btn
+        :color="currentTheme === 'apNew' ? 'primary' : ''"
+        variant="outlined"
+        size="small"
+        style="background-color: white"
+        @click="switchTheme('apNew')"
+    >
+      Thème AmeliPro Fusion
+    </v-btn>
 	</div>
 </template>
 
