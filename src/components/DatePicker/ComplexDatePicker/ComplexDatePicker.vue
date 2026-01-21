@@ -43,6 +43,7 @@
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
+	import { normalizeToUtcMidnight, utcMidnightToLocalMidnight } from '../utils/normalizeToUtcMidnight'
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -411,6 +412,28 @@
 		dateSelectionResult.updateSelectedDates(date)
 		// Validate immediately to surface messages
 		queueMicrotask(() => validateDates(true))
+	}
+
+	const datePickerModelValue = computed(() => {
+		const value = selectedDates.value
+		if (value instanceof Date) return utcMidnightToLocalMidnight(value)
+		if (Array.isArray(value)) return value.map(d => (d instanceof Date ? utcMidnightToLocalMidnight(d) : d))
+		return value
+	})
+
+	const handleDatePickerModelValueUpdate = (value: Date | (Date | null)[] | null) => {
+		if (props.readonly) return
+
+		const sanitizedValue = Array.isArray(value)
+			? value.filter((date): date is Date => date instanceof Date)
+			: value
+
+		dateSelectionResult.updateSelectedDates(
+			Array.isArray(sanitizedValue) && sanitizedValue.length === 0 ? null : sanitizedValue,
+		)
+		void nextTick().then(() => {
+			updateDisplayFormattedDate()
+		})
 	}
 
 	watch(selectedDates, (newValue) => {
@@ -919,15 +942,22 @@
 	/**
 	 * Today button + labels
 	 */
-	const { todayInString, selectToday, headerDate } = useTodayButton(props)
+	const { todayInString, headerDate } = useTodayButton(props)
 	const { labelWithAsterisk } = useAsteriskDisplay(props)
 	const { displayedDateString } = useDisplayedDateString({ selectedDates, rangeBoundaryDates, todayInString })
 
 	const handleSelectToday = () => {
-		selectToday(selectedDates)
-		const today = new Date()
-		const todayMonth = today.getMonth().toString()
-		const todayYear = today.getFullYear().toString()
+		const today = normalizeToUtcMidnight(new Date())
+		if (props.displayRange) {
+			selectedDates.value = [today, today]
+		}
+		else {
+			selectedDates.value = today
+		}
+
+		const now = new Date()
+		const todayMonth = now.getMonth().toString()
+		const todayYear = now.getFullYear().toString()
 		currentMonth.value = todayMonth
 		currentYear.value = todayYear
 		currentMonthName.value = dayjs().month(parseInt(todayMonth, 10)).format('MMMM')
@@ -1107,7 +1137,7 @@
 				<VDatePicker
 					v-if="isDatePickerVisible"
 					ref="datePickerRef"
-					v-model="selectedDates"
+					:model-value="datePickerModelValue"
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
@@ -1128,11 +1158,10 @@
 					:density="props.density"
 					:hint="props.hint"
 					:persistent-hint="props.persistentHint"
-					@update:model-value="updateDisplayFormattedDate"
+					@update:model-value="handleDatePickerModelValueUpdate"
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
 					@update:year="onUpdateYear"
-					@click:date="updateSelectedDates"
 					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 				>

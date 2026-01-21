@@ -10,6 +10,7 @@
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDateValidation, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation } from '../composables'
+	import { normalizeToUtcMidnight, utcMidnightToLocalMidnight } from '../utils/normalizeToUtcMidnight'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -143,9 +144,7 @@
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
-		// Créer une seule instance de la date du jour (date-only en 00:00 UTC)
-		const now = new Date()
-		const today = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0))
+		const today = normalizeToUtcMidnight(new Date())
 
 		// Si c'est une plage de dates, on définit le même jour pour début et fin
 		if (props.displayRange) {
@@ -235,21 +234,12 @@
 	const currentRangeIsValid = ref(true)
 	const getRangeValidationError = ref('')
 
-	const normalizeToUtcMidnight = (date: Date): Date => {
-		// Si la date est déjà une date-only en 00:00 UTC, préserver le jour UTC
-		// (sinon, en timezone négative, getFullYear/getMonth/getDate représente la veille au soir).
-		const isAlreadyUtcMidnight = date.getUTCHours() === 0
-			&& date.getUTCMinutes() === 0
-			&& date.getUTCSeconds() === 0
-			&& date.getUTCMilliseconds() === 0
-
-		if (isAlreadyUtcMidnight) {
-			return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0))
-		}
-
-		// Sinon (ex: Date à minuit local émise par le calendrier), conserver la date locale
-		return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0))
-	}
+	const datePickerModelValue = computed(() => {
+		const value = selectedDates.value
+		if (value instanceof Date) return utcMidnightToLocalMidnight(value)
+		if (Array.isArray(value)) return value.map(d => (d instanceof Date ? utcMidnightToLocalMidnight(d) : d))
+		return value
+	})
 
 	const { validateDates: coreValidateDates } = useDateValidation({
 		noCalendar: props.noCalendar,
@@ -1053,7 +1043,7 @@
 				<VDatePicker
 					v-if="isDatePickerVisible && !props.noCalendar"
 					ref="datePickerRef"
-					:model-value="selectedDates"
+					:model-value="datePickerModelValue"
 					color="primary"
 					:first-day-of-week="1"
 					:multiple="props.displayRange ? 'range' : false"
@@ -1067,7 +1057,6 @@
 					@update:view-mode="handleViewModeUpdate"
 					@update:month="onUpdateMonth"
 					@update:year="onUpdateYear"
-					@click:date="updateSelectedDates"
 					@update:model-value="handleDatePickerModelValueUpdate"
 					@focus="markHolidayDays"
 					@update:month-year="markHolidayDays"
