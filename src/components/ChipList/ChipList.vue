@@ -365,10 +365,13 @@
 		outline-offset: 2px !important;
 	}
 }
-.overflow-btn , .hide-extra-btn{
+
+.overflow-btn,
+ .hide-extra-btn {
 	font-size: var(--btn-font-size, 16px);
 	letter-spacing: var(--btn-letter-spacing, 0);
 }
+
 // Disable overflow button hover state
 .overflow-btn :deep(.v-btn__overlay) {
 	display: none;

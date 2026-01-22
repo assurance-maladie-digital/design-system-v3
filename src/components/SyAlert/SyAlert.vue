@@ -161,6 +161,7 @@
 	text-transform: none;
 	font-weight: bold;
 	letter-spacing: var(--btn-letter-spacing, 0);
+
 	span {
 		font-size: 14px;
 	}

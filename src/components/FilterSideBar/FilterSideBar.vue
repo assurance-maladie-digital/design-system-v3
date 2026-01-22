@@ -244,7 +244,8 @@
 	}
 }
 
-.sy-filters-side-bar .v-btn, .sy-filters-side-bar__content .v-btn{
+.sy-filters-side-bar .v-btn,
+ .sy-filters-side-bar__content .v-btn {
 	font-size: var(--btn-font-size, 16px);
 	letter-spacing: var(--btn-letter-spacing, 0);
 }

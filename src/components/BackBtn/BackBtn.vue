@@ -59,12 +59,13 @@
 		display: none;
 	}
 }
- .v-btn.v-btn--size-default {
-    height: auto;
-    min-height: auto;
-    padding: 0;
-    font-size: inherit;
-  }
+
+.v-btn.v-btn--size-default {
+	height: auto;
+	min-height: auto;
+	padding: 0;
+	font-size: inherit;
+}
 
 .sy-back-btn {
 	font-size: var(--btn-font-size, 16px);
