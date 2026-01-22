@@ -239,6 +239,7 @@ exports[`ErrorPage > renders correctly with undefined route 1`] = `
             class="
               bg-primary
               mt-6
+              sy-btn-return
               v-btn
               v-btn--density-default
               v-btn--elevated
