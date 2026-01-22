@@ -918,6 +918,12 @@
 								:decorative="true"
 							/>
 						</template>
+						<template
+							v-if="$slots.append"
+							#append
+						>
+							<slot name="append" />
+						</template>
 					</VTextField>
 					<span
 						ref="labelRef"
