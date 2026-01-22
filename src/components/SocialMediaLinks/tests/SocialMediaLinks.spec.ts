@@ -50,14 +50,14 @@ describe('SocialMediaLinks', () => {
 		expect(listItems.length).toBe(2)
 
 		// Check first link
-		const firstLink = listItems[0].find('a')
-		expect(firstLink.attributes('href')).toBe('https://twitter.com')
-		expect(firstLink.attributes('aria-label')).toBe('Lien vers Twitter')
+		const firstLink = listItems[0]?.find('a')
+		expect(firstLink?.attributes('href')).toBe('https://twitter.com')
+		expect(firstLink?.attributes('aria-label')).toBe('Lien vers Twitter')
 
 		// Check second link
-		const secondLink = listItems[1].find('a')
-		expect(secondLink.attributes('href')).toBe('https://facebook.com')
-		expect(secondLink.attributes('aria-label')).toBe('Lien vers Facebook')
+		const secondLink = listItems[1]?.find('a')
+		expect(secondLink?.attributes('href')).toBe('https://facebook.com')
+		expect(secondLink?.attributes('aria-label')).toBe('Lien vers Facebook')
 	})
 
 	it('renders the correct number of social media links', () => {

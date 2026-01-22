@@ -170,8 +170,8 @@
 		let foundActiveItem = false
 
 		// Trouver l'élément actif basé sur la route courante
-		for (let i = 0; i < props.items.length; i++) {
-			if (isActive(props.items[i], i)) {
+		for (const [i, item] of props.items.entries()) {
+			if (isActive(item, i)) {
 				activeItemIndex.value = i
 				activeTab.value = i
 				foundActiveItem = true
@@ -203,8 +203,8 @@
 
 			// Trouver l'élément actif basé sur la nouvelle route
 			let found = false
-			for (let i = 0; i < props.items.length; i++) {
-				if (isActive(props.items[i], i)) {
+			for (const [i, item] of props.items.entries()) {
+				if (isActive(item, i)) {
 					activeItemIndex.value = i
 					activeTab.value = i
 					found = true

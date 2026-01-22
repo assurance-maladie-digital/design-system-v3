@@ -111,7 +111,7 @@
 				const newFilters = [...props.filters]
 
 				if (existingFilterIndex >= 0) {
-					newFilters[existingFilterIndex].value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
+					newFilters[existingFilterIndex]!.value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
 				}
 				else {
 					newFilters.push({
@@ -138,7 +138,7 @@
 			const newFilters = [...props.filters]
 
 			if (existingFilterIndex >= 0) {
-				newFilters[existingFilterIndex].value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
+				newFilters[existingFilterIndex]!.value = newValue as string | number | Date | Array<string | number | Date> | Record<string, unknown> | null | undefined
 			}
 			else {
 				newFilters.push({

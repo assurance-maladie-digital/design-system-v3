@@ -203,7 +203,7 @@
 						étape {{ data.selected + 1 }}
 					</span>
 
-					{{ items[data.selected] !== undefined ? items[data.selected].label : undefined }}
+					{{ items[data.selected] !== undefined ? items[data.selected]?.label : undefined }}
 
 					<span
 						aria-hidden="true"
@@ -217,7 +217,7 @@
 
 				<div class="ml-4 stepper-mobile-btn-wrapper">
 					<AmeliproIconBtn
-						v-if="data.selected < items.length - 1 && hasNextItem && !items[data.selected + 1].disabled && !items[data.selected + 1].titleDisabled"
+						v-if="data.selected < items.length - 1 && hasNextItem && !items[data.selected + 1]?.disabled && !items[data.selected + 1]?.titleDisabled"
 						btn-label="Etape suivante"
 						class="amelipro-stepper__btn--next--mobile"
 						icon-bg-color="ap-blue-darken-1"
@@ -262,7 +262,7 @@
 					key="nextBtn"
 					class="order-sm-1 amelipro-stepper__btn--next"
 					:class="{ 'w-100': !smAndUp }"
-					:disabled="hasNextItem && items[data.selected + 1].disabled"
+					:disabled="hasNextItem && items[data.selected + 1]?.disabled"
 					:unique-id="uniqueId ? `${uniqueId}-footer-next-btn` : undefined"
 					@click="nextStepEvent(data.selected + 1)"
 				>

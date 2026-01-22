@@ -340,7 +340,7 @@
 
 								<slot
 									v-else
-									:name="`item-${headers[cellIndex].name}`"
+									:name="`item-${headers[cellIndex]?.name}`"
 									v-bind="row"
 								/>
 							</td>
@@ -384,14 +384,14 @@
 						<td
 							:id="`${uniqueId}-table-${tableIndex}-row-${headerindex}-content`"
 							class="text-left"
-							:class="datas(currentDataList[tableIndex])[headerindex].columnClasses !== undefined ? datas(currentDataList[tableIndex])[headerindex].columnClasses : undefined"
+							:class="datas(currentDataList[tableIndex]!)[headerindex]?.columnClasses !== undefined ? datas(currentDataList[tableIndex]!)?.[headerindex]?.columnClasses : undefined"
 							style="width: 50%; max-width: 50%; min-width: 50%;"
 						>
 							<p
-								v-if="datas(currentDataList[tableIndex])[headerindex].value !== undefined"
+								v-if="datas(currentDataList[tableIndex]!)[headerindex]?.value"
 								class="mb-0"
 							>
-								{{ datas(currentDataList[tableIndex])[headerindex].value }}
+								{{ datas(currentDataList[tableIndex]!)[headerindex]!.value }}
 							</p>
 							<slot
 								v-else

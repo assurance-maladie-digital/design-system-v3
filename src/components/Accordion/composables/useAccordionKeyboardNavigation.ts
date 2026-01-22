@@ -47,7 +47,7 @@ export default function useAccordionKeyboardNavigation(
 
 		// Si le prochain élément est désactivé, on continue à chercher
 		let attempts = 0
-		while (itemsArray[nextIndex].disabled && attempts < itemsArray.length) {
+		while (itemsArray[nextIndex]?.disabled && attempts < itemsArray.length) {
 			nextIndex = (nextIndex + 1) % itemsArray.length
 			attempts++
 		}
@@ -61,7 +61,7 @@ export default function useAccordionKeyboardNavigation(
 
 		// Si l'élément précédent est désactivé, on continue à chercher
 		let attempts = 0
-		while (itemsArray[prevIndex].disabled && attempts < itemsArray.length) {
+		while (itemsArray[prevIndex]?.disabled && attempts < itemsArray.length) {
 			prevIndex = (prevIndex - 1 + itemsArray.length) % itemsArray.length
 			attempts++
 		}
@@ -74,7 +74,7 @@ export default function useAccordionKeyboardNavigation(
 		let index = 0
 
 		// Si le premier élément est désactivé, on cherche le prochain disponible
-		while (index < itemsArray.length && itemsArray[index].disabled) {
+		while (index < itemsArray.length && itemsArray[index]?.disabled) {
 			index++
 		}
 
@@ -88,7 +88,7 @@ export default function useAccordionKeyboardNavigation(
 		let index = itemsArray.length - 1
 
 		// Si le dernier élément est désactivé, on cherche le précédent disponible
-		while (index >= 0 && itemsArray[index].disabled) {
+		while (index >= 0 && itemsArray[index]?.disabled) {
 			index--
 		}
 
@@ -99,7 +99,7 @@ export default function useAccordionKeyboardNavigation(
 
 	const focusHeaderByIndex = (index: number) => {
 		const itemsArray = getItemsArray()
-		const itemId = itemsArray[index].id
+		const itemId = itemsArray[index]!.id
 		const headerElement = document.getElementById(`accordion-button-${itemId}`)
 		headerElement?.focus()
 		setFocus(itemId)

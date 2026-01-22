@@ -54,7 +54,7 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('update:modelValue', 42)
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 42, type: 'number' as FilterType },
 		])
 	})
@@ -64,7 +64,7 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('update:modelValue', '42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 42, type: 'number' as FilterType },
 		])
 	})
@@ -77,7 +77,7 @@ describe('NumberFilter.vue', () => {
 		// Then clear it
 		await syTextField.vm.$emit('update:modelValue', null)
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('emits update:filters event to remove filter when value is empty string', async () => {
@@ -88,7 +88,7 @@ describe('NumberFilter.vue', () => {
 		// Then clear it
 		await syTextField.vm.$emit('update:modelValue', '')
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('emits update:filters event to remove filter when value is 0', async () => {
@@ -99,7 +99,7 @@ describe('NumberFilter.vue', () => {
 		// Then set to 0
 		await syTextField.vm.$emit('update:modelValue', 0)
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('handles clear button click', async () => {
@@ -107,7 +107,7 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('click:clear')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([])
 	})
 
 	it('updates existing filter when one already exists', async () => {
@@ -117,7 +117,7 @@ describe('NumberFilter.vue', () => {
 		const syTextField = wrapper.findComponent(SyTextField)
 		await syTextField.vm.$emit('update:modelValue', 20)
 
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 20, type: 'number' as FilterType },
 		])
 	})
@@ -152,11 +152,11 @@ describe('NumberFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: number, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: number, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe('filter_Test Number')
-		expect(emittedFilters[0].value).toBe(42)
-		expect(emittedFilters[0].type).toBe('number')
+		expect(emittedFilters[0]?.key).toBe('filter_Test Number')
+		expect(emittedFilters[0]?.value).toBe(42)
+		expect(emittedFilters[0]?.type).toBe('number')
 	})
 
 	// Tests for operator functionality
@@ -165,7 +165,7 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('update:modelValue', '<42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: '<42', type: 'number' as FilterType },
 		])
 	})
@@ -175,7 +175,7 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('update:modelValue', '<=42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: '<=42', type: 'number' as FilterType },
 		])
 	})
@@ -185,7 +185,7 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('update:modelValue', '>42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: '>42', type: 'number' as FilterType },
 		])
 	})
@@ -195,7 +195,7 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('update:modelValue', '>=42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: '>=42', type: 'number' as FilterType },
 		])
 	})
@@ -208,7 +208,7 @@ describe('NumberFilter.vue', () => {
 
 		// Should filter out invalid characters
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: '>42', type: 'number' as FilterType },
 		])
 	})
@@ -218,14 +218,14 @@ describe('NumberFilter.vue', () => {
 		await syTextField.vm.$emit('update:modelValue', '42.5')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 42.5, type: 'number' as FilterType },
 		])
 
 		// Test with comma as decimal separator
 		await syTextField.vm.$emit('update:modelValue', '42,5')
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([
 			{ key: 'test', value: 42.5, type: 'number' as FilterType },
 		])
 	})
@@ -262,7 +262,7 @@ describe('NumberFilter.vue', () => {
 		// Advance timer by 1 more ms to reach 300ms
 		vi.advanceTimersByTime(1)
 		expect(debounceWrapper.emitted('update:filters')).toBeTruthy()
-		expect(debounceWrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(debounceWrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 42, type: 'number' as FilterType },
 		])
 	})

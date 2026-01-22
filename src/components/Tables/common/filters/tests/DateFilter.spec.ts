@@ -47,7 +47,7 @@ describe('DateFilter.vue', () => {
 		await datePicker.vm.$emit('update:modelValue', '01/01/2023')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: '01/01/2023', type: 'date' as FilterType },
 		])
 	})
@@ -58,7 +58,7 @@ describe('DateFilter.vue', () => {
 		await datePicker.vm.$emit('update:modelValue', dateObj)
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: dateObj, type: 'date' as FilterType },
 		])
 	})
@@ -71,7 +71,7 @@ describe('DateFilter.vue', () => {
 		// Then clear it
 		await datePicker.vm.$emit('update:modelValue', null)
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('handles clear button click', async () => {
@@ -79,7 +79,7 @@ describe('DateFilter.vue', () => {
 		await datePicker.vm.$emit('click:clear')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([])
 	})
 
 	it('updates existing filter when one already exists', async () => {
@@ -89,7 +89,7 @@ describe('DateFilter.vue', () => {
 		const datePicker = wrapper.findComponent(DatePicker)
 		await datePicker.vm.$emit('update:modelValue', '02/01/2023')
 
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: '02/01/2023', type: 'date' as FilterType },
 		])
 	})
@@ -127,11 +127,11 @@ describe('DateFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: string, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe('filter_Test Date')
-		expect(emittedFilters[0].value).toBe('01/01/2023')
-		expect(emittedFilters[0].type).toBe('date')
+		expect(emittedFilters[0]?.key).toBe('filter_Test Date')
+		expect(emittedFilters[0]?.value).toBe('01/01/2023')
+		expect(emittedFilters[0]?.type).toBe('date')
 	})
 
 	it('generates unique key with timestamp when all header properties are absent', async () => {
@@ -164,11 +164,11 @@ describe('DateFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le timestamp
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: string, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe(`filter_${mockTimestamp}`)
-		expect(emittedFilters[0].value).toBe('01/01/2023')
-		expect(emittedFilters[0].type).toBe('date')
+		expect(emittedFilters[0]?.key).toBe(`filter_${mockTimestamp}`)
+		expect(emittedFilters[0]?.value).toBe('01/01/2023')
+		expect(emittedFilters[0]?.type).toBe('date')
 
 		// Restaurer Date.now
 		global.Date.now = originalDateNow

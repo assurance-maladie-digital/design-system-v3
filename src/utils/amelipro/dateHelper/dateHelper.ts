@@ -41,7 +41,7 @@ export const dateMatchFrIso = (date: string | null | undefined): boolean => {
  * @param {string} date - The date string to parse.
  * @returns {string[]} An array containing [year, month, day].
  */
-export const parseDate = (date: string): string[] => {
+export const parseDate = (date: string): (string | undefined)[] => {
 	const [year, month, day] = date.split('-')
 	return [year, month, day]
 }
@@ -51,7 +51,7 @@ export const parseDate = (date: string): string[] => {
  * @param {string} date - The date string to parse.
  * @returns {string[]} An array containing [day, month, year].
  */
-export const parseDateToFr = (date: string): string[] => {
+export const parseDateToFr = (date: string): (string | undefined)[] => {
 	const [day, month, year] = date.split('/')
 	return [day, month, year]
 }
@@ -66,6 +66,9 @@ export const dateToFormatFr = (date: string): string => {
 		return ''
 	}
 	const [year, month, day] = parseDate(date)
+	if (!year || !month || !day) {
+		return ''
+	}
 	return `${padTo2Digits(parseInt(day))}/${padTo2Digits(parseInt(month))}/${year.toString()}`
 }
 
@@ -79,6 +82,9 @@ export const dateToBasicFormat = (date: string): string => {
 		return ''
 	}
 	const [day, month, year] = parseDateToFr(date)
+	if (!year || !month || !day) {
+		return ''
+	}
 	return `${padTo2Digits(parseInt(year))}-${padTo2Digits(parseInt(month))}-${day.toString()}`
 }
 
@@ -92,6 +98,9 @@ export const stringToDate = (value: string): Date | undefined => {
 		return undefined
 	}
 	const [year, month, day] = parseDate(value)
+	if (!year || !month || !day) {
+		return undefined
+	}
 	// Adjust for JavaScript month indexing starting at 0
 	return new Date(parseInt(year), parseInt(month) - 1, parseInt(day), 0, 0, 0, 0)
 }

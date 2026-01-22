@@ -471,7 +471,7 @@ export const ActionBtn: Story = {
 			components: { DataList },
 			setup() {
 				const updateBirthdate = (index: number) => {
-					args.items[index].value = '25/09/1970'
+					args.items[index]!.value = '25/09/1970'
 				}
 				return { args, updateBirthdate }
 			},

@@ -92,7 +92,7 @@
 				}
 			}
 
-			if (existingFilterIndex >= 0) {
+			if (newFilters[existingFilterIndex]) {
 				newFilters[existingFilterIndex].value = dateValue
 			}
 			else {

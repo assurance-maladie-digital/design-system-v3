@@ -57,7 +57,7 @@ describe('SyTabs', () => {
 
 			// Vérifier le texte des onglets
 			testItems.forEach((item, index) => {
-				expect(tabButtons[index].text()).toBe(item.label.toUpperCase())
+				expect(tabButtons[index]?.text()).toBe(item.label.toUpperCase())
 			})
 		})
 
@@ -67,7 +67,7 @@ describe('SyTabs', () => {
 			// Par défaut, le premier onglet devrait être actif
 			const visiblePanel = wrapper.find('.sy-tabs-panel:not([hidden])')
 			expect(visiblePanel.exists()).toBe(true)
-			expect(visiblePanel.text()).toContain(testItems[0].content)
+			expect(visiblePanel.text()).toContain(testItems[0]?.content)
 		})
 
 		it('doit ajouter la classe active au bouton d\'onglet actif', () => {
@@ -76,7 +76,7 @@ describe('SyTabs', () => {
 			// Le premier onglet devrait avoir la classe active
 			const activeTab = wrapper.find('.sy-tabs__button--active')
 			expect(activeTab.exists()).toBe(true)
-			expect(activeTab.text()).toBe(testItems[0].label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[0]?.label.toUpperCase())
 		})
 	})
 
@@ -94,7 +94,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le deuxième onglet est actif
 			const activeTab = wrapper.find('.sy-tabs__button--active')
-			expect(activeTab.text()).toBe(testItems[1].label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[1]?.label.toUpperCase())
 
 			// Vérifier que le bon panneau est affiché
 			const visiblePanel = wrapper.find('.sy-tabs-panel:not([hidden])')
@@ -113,7 +113,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le bon onglet est actif
 			const activeTab = wrapper.find('.sy-tabs__button--active')
-			expect(activeTab.text()).toBe(testItems[1].label.toUpperCase())
+			expect(activeTab.text()).toBe(testItems[1]?.label.toUpperCase())
 		})
 	})
 
@@ -123,7 +123,7 @@ describe('SyTabs', () => {
 			const wrapper = createWrapper()
 
 			// Cliquer sur le deuxième onglet
-			const secondTab = wrapper.findAll('.sy-tabs__button')[1]
+			const secondTab = wrapper.findAll('.sy-tabs__button')[1]!
 			await secondTab.trigger('click')
 
 			// Vérifier que le deuxième onglet est maintenant actif
@@ -150,7 +150,7 @@ describe('SyTabs', () => {
 			})
 
 			// Cliquer sur le troisième onglet
-			const thirdTab = wrapper.findAll('.sy-tabs__button')[2]
+			const thirdTab = wrapper.findAll('.sy-tabs__button')[2]!
 			await thirdTab.trigger('click')
 
 			// Vérifier que l'événement update:modelValue a été émis avec la bonne valeur
@@ -173,7 +173,7 @@ describe('SyTabs', () => {
 			expect(nav.attributes('aria-label')).toBeDefined()
 
 			// Vérifier les attributs ARIA des onglets
-			const firstTab = wrapper.findAll('[role="tab"]')[0]
+			const firstTab = wrapper.findAll('[role="tab"]')[0]!
 			expect(firstTab.attributes('aria-selected')).toBe('true')
 			expect(firstTab.attributes('aria-controls')).toBe('panel-0')
 
@@ -186,7 +186,7 @@ describe('SyTabs', () => {
 			const wrapper = createWrapper()
 
 			// Simuler une pression de touche Enter sur le deuxième onglet
-			const secondTab = wrapper.findAll('.sy-tabs__button')[1]
+			const secondTab = wrapper.findAll('.sy-tabs__button')[1]!
 			await secondTab.trigger('keydown', {
 				key: 'Enter',
 			})
@@ -352,7 +352,7 @@ describe('SyTabs', () => {
 			const wrapper = createWrapper()
 
 			// Simuler une navigation avec flèche gauche depuis le premier onglet
-			const firstTab = wrapper.findAll('.sy-tabs__button')[0]
+			const firstTab = wrapper.findAll('.sy-tabs__button')[0]!
 			await firstTab.trigger('keydown', {
 				key: 'ArrowLeft',
 				preventDefault: vi.fn(),
@@ -485,20 +485,20 @@ describe('SyTabs', () => {
 			let markers = wrapper.findAll('[data-test="tab-prepend-slot"]')
 			expect(markers.length).toBe(testItems.length)
 			// Premier onglet actif, les autres inactifs
-			expect(markers[0].attributes('data-active')).toBe('true')
+			expect(markers[0]!.attributes('data-active')).toBe('true')
 			for (let i = 1; i < markers.length; i++) {
-				expect(markers[i].attributes('data-active')).toBe('false')
+				expect(markers[i]!.attributes('data-active')).toBe('false')
 			}
 
 			// Changer d'onglet actif
-			const secondTab = wrapper.findAll('.sy-tabs__button')[1]
+			const secondTab = wrapper.findAll('.sy-tabs__button')[1]!
 			await secondTab.trigger('click')
 			await nextTick()
 
 			// Recalcule des marqueurs
 			markers = wrapper.findAll('[data-test="tab-prepend-slot"]')
-			expect(markers[1].attributes('data-active')).toBe('true')
-			expect(markers[0].attributes('data-active')).toBe('false')
+			expect(markers[1]!.attributes('data-active')).toBe('true')
+			expect(markers[0]!.attributes('data-active')).toBe('false')
 		})
 
 		it('doit passer correctement item, index et isActive au slot tab-append', async () => {
@@ -520,20 +520,20 @@ describe('SyTabs', () => {
 			// Vérifier l'état initial : premier onglet actif
 			let markers = wrapper.findAll('[data-test="tab-append-slot"]')
 			expect(markers.length).toBe(testItems.length)
-			expect(markers[0].attributes('data-active')).toBe('true')
+			expect(markers[0]!.attributes('data-active')).toBe('true')
 			for (let i = 1; i < markers.length; i++) {
-				expect(markers[i].attributes('data-active')).toBe('false')
+				expect(markers[i]!.attributes('data-active')).toBe('false')
 			}
 
 			// Changer d'onglet actif
-			const thirdTab = wrapper.findAll('.sy-tabs__button')[2]
+			const thirdTab = wrapper.findAll('.sy-tabs__button')[2]!
 			await thirdTab.trigger('click')
 			await nextTick()
 
 			// Recalcule des marqueurs
 			markers = wrapper.findAll('[data-test="tab-append-slot"]')
-			expect(markers[2].attributes('data-active')).toBe('true')
-			expect(markers[0].attributes('data-active')).toBe('false')
+			expect(markers[2]!.attributes('data-active')).toBe('true')
+			expect(markers[0]!.attributes('data-active')).toBe('false')
 		})
 	})
 })

@@ -34,10 +34,10 @@ describe('Accordion – accessibility (axe)', () => {
 		// Ouvrir les deux sections pour inclure le contenu dans l’audit axe
 		const buttons = wrapper.findAll('.sy-accordion-button')
 		if (buttons.length > 0) {
-			await buttons[0].trigger('click')
+			await buttons[0]?.trigger('click')
 		}
 		if (buttons.length > 1) {
-			await buttons[1].trigger('click')
+			await buttons[1]?.trigger('click')
 		}
 
 		const results = await axe(wrapper.element as HTMLElement)

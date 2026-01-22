@@ -89,7 +89,7 @@ export function useLunarCalendarRules(
 
 function getYearFromModel(model: string): number | null {
 	const parts = model.split('/')
-	if (parts.length !== 3 || parts[2].length !== 4 || isNaN(Number(parts[2]))) {
+	if (parts.length !== 3 || parts[2]?.length !== 4 || isNaN(Number(parts[2]))) {
 		return null
 	}
 	return Number(parts[2])

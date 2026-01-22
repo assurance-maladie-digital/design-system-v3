@@ -134,7 +134,7 @@
 		const newFilters = [...props.filters]
 
 		if (existingFilterIndex >= 0) {
-			newFilters[existingFilterIndex].value = value
+			newFilters[existingFilterIndex]!.value = value
 		}
 		else {
 			newFilters.push({

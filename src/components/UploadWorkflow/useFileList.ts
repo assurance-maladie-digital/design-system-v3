@@ -39,6 +39,10 @@ export default function useFileList(
 		else {
 			const uploadItemIndex = uploadList.value.findIndex(item => item.id === fileId)
 
+			if (!uploadList.value[uploadItemIndex]) {
+				throw new Error(`Item with id ${fileId} not found in upload list`)
+			}
+
 			selectedFiles.value.push({
 				id: uploadList.value[uploadItemIndex].id,
 				title: uploadList.value[uploadItemIndex].title,

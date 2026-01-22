@@ -72,7 +72,7 @@ describe('CalendarMode.vue - Events', () => {
 		// Vérifier que l'événement update:modelValue est émis même avec disablePickerInteraction
 		const emitted = wrapperWithDisabledPicker.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toBe('01/01/2023')
+		expect(emitted && emitted[0]?.[0]).toBe('01/01/2023')
 	})
 
 	it('synchronise textInputValue et selectedDates', async () => {
@@ -130,7 +130,7 @@ describe('CalendarMode.vue - Events', () => {
 		// Vérifier que l'événement update:modelValue est émis avec le bon format
 		const emitted = wrapperWithDashFormat.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toBe('2023-01-01')
+		expect(emitted && emitted[0]?.[0]).toBe('2023-01-01')
 	})
 
 	it('accepte les plages de dates en entrée', async () => {

@@ -176,7 +176,7 @@
 		const hasOperator = /^[=<>]{1,2}/.test(value)
 
 		if (existingFilterIndex >= 0) {
-			newFilters[existingFilterIndex].value = hasOperator ? value : parseFloat(value.replace(',', '.'))
+			newFilters[existingFilterIndex]!.value = hasOperator ? value : parseFloat(value.replace(',', '.'))
 		}
 		else {
 			newFilters.push({

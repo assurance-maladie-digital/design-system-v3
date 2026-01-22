@@ -37,7 +37,7 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproErrorTemplate> = {
 		default: undefined,
 	},
 	errorType: {
-		type: String,
+		type: String as PropType<typeof AmeliproErrorTemplate.prototype.$props.errorType>,
 		required: true,
 	},
 	imgMinWidth: {

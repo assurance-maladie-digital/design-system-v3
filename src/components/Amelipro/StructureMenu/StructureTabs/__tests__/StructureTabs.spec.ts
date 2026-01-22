@@ -140,7 +140,7 @@ describe('StructureTabs', () => {
 			if (tabs) {
 				expect(btns.length).toBe(tabs.length)
 				btns.forEach((btn, idx) => {
-					expect(btn.text()).toBe((tabs[idx]).label)
+					expect(btn.text()).toBe((tabs[idx])?.label)
 				})
 			}
 		})
@@ -155,7 +155,7 @@ describe('StructureTabs', () => {
 			if (tabs) {
 				expect(lists.length).toBe(tabs.length)
 				lists.forEach((list, idx) => {
-					expect(list.props('structures')).toStrictEqual(tabs[idx].structures)
+					expect(list.props('structures')).toStrictEqual(tabs[idx]?.structures)
 				})
 			}
 		})
