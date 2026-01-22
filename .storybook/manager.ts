@@ -2,6 +2,7 @@ import { addons } from '@storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
+import apOldTheme from './ApOldTheme'
 
 // Helper function to apply theme class to HTML root element
 const applyThemeClass = (theme) => {
@@ -293,15 +294,29 @@ if (typeof window !== 'undefined') {
 }
 
 addons.setConfig({
-	theme: storedTheme === 'pa' ? paTheme : storedTheme === 'ap' ? apTheme : cnamTheme,
+    theme:
+        storedTheme === 'pa'
+            ? paTheme
+            : storedTheme === 'ap'
+                ? apTheme
+                : storedTheme === 'apOld'
+                    ? apOldTheme
+                    : cnamTheme,
 })
 
 // Create a function to handle theme changes that can be called from anywhere
 const handleThemeChange = (newTheme) => {
 	// Update Storybook theme
-	addons.setConfig({
-		theme: newTheme === 'pa' ? paTheme : newTheme === 'ap' ? apTheme : cnamTheme,
-	})
+    addons.setConfig({
+        theme:
+            newTheme === 'pa'
+                ? paTheme
+                : newTheme === 'ap'
+                    ? apTheme
+                    : newTheme === 'apOld'
+                        ? apOldTheme
+                        : cnamTheme,
+    })
 
 	// Apply theme class to HTML root
 	applyThemeClass(newTheme)

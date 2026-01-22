@@ -54,20 +54,20 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokensOld' as apTokens;
 
-	.amelipro-copy-btn-wrapper {
-		position: relative;
-		display: inline-block;
-	}
+.amelipro-copy-btn-wrapper {
+	position: relative;
+	display: inline-block;
+}
 
-	.validation-msg {
-		position: absolute;
-		top: -10px;
-		right: 30px;
-		padding: 8px 16px;
-		max-width: 200px;
-		background: apTokens.$ap-white;
-		border: 1px solid apTokens.$ap-grey-lighten3;
-		border-radius: apTokens.$card-radius;
-		z-index: 10;
-	}
+.validation-msg {
+	position: absolute;
+	top: -10px;
+	right: 30px;
+	padding: 8px 16px;
+	max-width: 200px;
+	background: apTokens.$ap-white;
+	border: 1px solid apTokens.$ap-grey-lighten3;
+	border-radius: apTokens.$card-radius;
+	z-index: 10;
+}
 </style>

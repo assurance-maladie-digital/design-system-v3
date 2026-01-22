@@ -132,39 +132,39 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokensOld' as apTokens;
 
-	.v-btn :deep(.v-btn__content) {
-		opacity: 1 !important;
-	}
+.v-btn :deep(.v-btn__content) {
+	opacity: 1 !important;
+}
 
-	:deep(.v-overlay__content) {
-		top: 40px;
-		left: 50% !important;
-		transform: translate(-50%);
-		z-index: 8;
-		border-radius: 4px;
-	}
+:deep(.v-overlay__content) {
+	top: 40px;
+	left: 50% !important;
+	transform: translate(-50%);
+	z-index: 8;
+	border-radius: 4px;
+}
 
-	.user-menu {
-		position: relative;
-		overflow-wrap: break-word;
-	}
+.user-menu {
+	position: relative;
+	overflow-wrap: break-word;
+}
 
-	.user-menu-popover {
-		border-radius: 4px;
-	}
+.user-menu-popover {
+	border-radius: 4px;
+}
 
-	.user-menu-last-connexion {
-		font-size: apTokens.$font-size-xs;
-	}
+.user-menu-last-connexion {
+	font-size: apTokens.$font-size-xs;
+}
 
-	.user-menu__btn--account,
-	.user-menu__btn--logout {
-		padding: 1rem 1.5rem !important;
-		border-radius: 0 !important;
-	}
+.user-menu__btn--account,
+.user-menu__btn--logout {
+	padding: 1rem 1.5rem !important;
+	border-radius: 0 !important;
+}
 
-	.user-menu__btn-wrapper {
-		border-bottom-left-radius: 4px;
-		border-bottom-right-radius: 4px;
-	}
+.user-menu__btn-wrapper {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
 </style>

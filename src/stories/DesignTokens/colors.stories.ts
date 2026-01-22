@@ -2,10 +2,10 @@ import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
 import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
 import { paLightTheme } from '@/designTokens/tokens/pa/paLightTheme'
 import { paColorsTokens } from '@/designTokens/tokens/pa/paColors'
-import {apLightThemeOld} from '@/designTokens/tokens/amelipro/apLightThemeOld'
-import {apLightTheme} from '@/designTokens/tokens/amelipro/apLightTheme'
-import {apColorsTokensOld} from '@/designTokens/tokens/amelipro/apColorsOld'
-import {apColorsTokens} from '@/designTokens/tokens/amelipro/apColors'
+import { apLightThemeOld } from '@/designTokens/tokens/amelipro/apLightThemeOld'
+import { apLightTheme } from '@/designTokens/tokens/amelipro/apLightTheme'
+import { apColorsTokensOld } from '@/designTokens/tokens/amelipro/apColorsOld'
+import { apColorsTokens } from '@/designTokens/tokens/amelipro/apColors'
 import ColorDisplay from './ColorDisplay.vue'
 import ColorIntegrationExample from './ColorIntegrationExample.vue'
 
@@ -67,27 +67,27 @@ export const Base: StoryObj = {
 					success: paLightTheme.success,
 					warning: paLightTheme.warning,
 				}
-                const apColorsOld = {
-                    primary: apLightThemeOld.primary,
-                    secondary: apLightThemeOld.secondary,
-                    error: apLightThemeOld.error,
-                    info: apLightThemeOld.info,
-                    success: apLightThemeOld.success,
-                    warning: apLightThemeOld.warning,
-                }
-                const apColors = {
-                    primary: apLightTheme.primary,
-                    secondary: apLightTheme.secondary,
-                    error: apLightTheme.error,
-                    info: apLightTheme.info,
-                    success: apLightTheme.success,
-                    warning: apLightTheme.warning,
-                }
+				const apColorsOld = {
+					primary: apLightThemeOld.primary,
+					secondary: apLightThemeOld.secondary,
+					error: apLightThemeOld.error,
+					info: apLightThemeOld.info,
+					success: apLightThemeOld.success,
+					warning: apLightThemeOld.warning,
+				}
+				const apColors = {
+					primary: apLightTheme.primary,
+					secondary: apLightTheme.secondary,
+					error: apLightTheme.error,
+					info: apLightTheme.info,
+					success: apLightTheme.success,
+					warning: apLightTheme.warning,
+				}
 				return {
 					cnamColors,
 					paColors,
-                    apColorsOld,
-                    apColors,
+					apColorsOld,
+					apColors,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -128,18 +128,18 @@ export const Others: StoryObj = {
 					light: paLightTheme.light,
 					dark: paLightTheme.dark,
 				}
-                const apColors = {
-                    accent: apLightTheme.accent,
-                    avatar: apLightTheme.avatar,
-                    light: apLightTheme.light,
-                    dark: apLightTheme.dark,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					accent: apLightTheme.accent,
+					avatar: apLightTheme.avatar,
+					light: apLightTheme.light,
+					dark: apLightTheme.dark,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -194,25 +194,25 @@ export const PaletteOrange: StoryObj = {
 					'orange-lighten-90': paColorsTokens.orange.lighten90,
 					'orange-lighten-97': paColorsTokens.orange.lighten97,
 				}
-                const apColors = {
-                    'amber-darken-80': apColorsTokens.amber.darken80,
-                    'amber-darken-60': apColorsTokens.amber.darken60,
-                    'amber-darken-40': apColorsTokens.amber.darken40,
-                    'amber-darken-20': apColorsTokens.amber.darken20,
-                    'amber-base': apColorsTokens.amber.base,
-                    'amber-lighten-20': apColorsTokens.amber.lighten20,
-                    'amber-lighten-40': apColorsTokens.amber.lighten40,
-                    'amber-lighten-60': apColorsTokens.amber.lighten60,
-                    'amber-lighten-80': apColorsTokens.amber.lighten80,
-                    'amber-lighten-90': apColorsTokens.amber.lighten90,
-                    'amber-lighten-97': apColorsTokens.amber.lighten97,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'amber-darken-80': apColorsTokens.amber.darken80,
+					'amber-darken-60': apColorsTokens.amber.darken60,
+					'amber-darken-40': apColorsTokens.amber.darken40,
+					'amber-darken-20': apColorsTokens.amber.darken20,
+					'amber-base': apColorsTokens.amber.base,
+					'amber-lighten-20': apColorsTokens.amber.lighten20,
+					'amber-lighten-40': apColorsTokens.amber.lighten40,
+					'amber-lighten-60': apColorsTokens.amber.lighten60,
+					'amber-lighten-80': apColorsTokens.amber.lighten80,
+					'amber-lighten-90': apColorsTokens.amber.lighten90,
+					'amber-lighten-97': apColorsTokens.amber.lighten97,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -244,34 +244,34 @@ export const PaletteRed: StoryObj = {
 				const displayEmptyColors = false
 				const cnamColors = {}
 				const paColors = {}
-                const apColors = {
-                    'red-darken-80': apColorsTokens.red.darken80,
-                    'red-darken-60': apColorsTokens.red.darken60,
-                    'red-darken-40': apColorsTokens.red.darken40,
-                    'red-darken-20': apColorsTokens.red.darken20,
-                    'red-base': apColorsTokens.red.base,
-                    'red-lighten-20': apColorsTokens.red.lighten20,
-                    'red-lighten-40': apColorsTokens.red.lighten40,
-                    'red-lighten-60': apColorsTokens.red.lighten60,
-                    'red-lighten-80': apColorsTokens.red.lighten80,
-                    'red-lighten-90': apColorsTokens.red.lighten90,
-                    'red-lighten-97': apColorsTokens.red.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-red-darken-2': apColorsTokensOld.apRed.darken2,
-                    'ap-red-darken-1': apColorsTokensOld.apRed.darken1,
-                    'ap-red': apColorsTokensOld.apRed.base,
-                    'ap-red-lighten-1': apColorsTokensOld.apRed.lighten1,
-                    'ap-red-lighten-2': apColorsTokensOld.apRed.lighten2,
-                    'ap-red-lighten-3': apColorsTokensOld.apRed.lighten3,
-                    'ap-red-lighten-4': apColorsTokensOld.apRed.lighten4,
+				const apColors = {
+					'red-darken-80': apColorsTokens.red.darken80,
+					'red-darken-60': apColorsTokens.red.darken60,
+					'red-darken-40': apColorsTokens.red.darken40,
+					'red-darken-20': apColorsTokens.red.darken20,
+					'red-base': apColorsTokens.red.base,
+					'red-lighten-20': apColorsTokens.red.lighten20,
+					'red-lighten-40': apColorsTokens.red.lighten40,
+					'red-lighten-60': apColorsTokens.red.lighten60,
+					'red-lighten-80': apColorsTokens.red.lighten80,
+					'red-lighten-90': apColorsTokens.red.lighten90,
+					'red-lighten-97': apColorsTokens.red.lighten97,
+				}
+				const apColorsOld = {
+					'ap-red-darken-2': apColorsTokensOld.apRed.darken2,
+					'ap-red-darken-1': apColorsTokensOld.apRed.darken1,
+					'ap-red': apColorsTokensOld.apRed.base,
+					'ap-red-lighten-1': apColorsTokensOld.apRed.lighten1,
+					'ap-red-lighten-2': apColorsTokensOld.apRed.lighten2,
+					'ap-red-lighten-3': apColorsTokensOld.apRed.lighten3,
+					'ap-red-lighten-4': apColorsTokensOld.apRed.lighten4,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -326,41 +326,41 @@ export const PaletteYellow: StoryObj = {
 					'yellow-lighten-90': paColorsTokens.yellow.lighten90,
 					'yellow-lighten-97': paColorsTokens.yellow.lighten97,
 				}
-                const apColors = {
-                    'yellow-darken-80': apColorsTokens.yellow.darken80,
-                    'yellow-darken-60': apColorsTokens.yellow.darken60,
-                    'yellow-darken-40': apColorsTokens.yellow.darken40,
-                    'yellow-darken-20': apColorsTokens.yellow.darken20,
-                    'yellow-base': apColorsTokens.yellow.base,
-                    'yellow-lighten-20': apColorsTokens.yellow.lighten20,
-                    'yellow-lighten-40': apColorsTokens.yellow.lighten40,
-                    'yellow-lighten-60': apColorsTokens.yellow.lighten60,
-                    'yellow-lighten-80': apColorsTokens.yellow.lighten80,
-                    'yellow-lighten-90': apColorsTokens.yellow.lighten90,
-                    'yellow-lighten-97': apColorsTokens.yellow.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-yellow-darken-4': apColorsTokensOld.apYellow.darken4,
-                    'ap-yellow-darken-3': apColorsTokensOld.apYellow.darken3,
-                    'ap-yellow-darken-2': apColorsTokensOld.apYellow.darken2,
-                    'ap-yellow-darken-1': apColorsTokensOld.apYellow.darken1,
-                    'ap-yellow': apColorsTokensOld.apYellow.base,
-                    'ap-yellow-lighten-1': apColorsTokensOld.apYellow.lighten1,
-                    'ap-yellow-lighten-2': apColorsTokensOld.apYellow.lighten2,
-                    'ap-yellow-lighten-3': apColorsTokensOld.apYellow.lighten3,
-                    'ap-yellow-lighten-4': apColorsTokensOld.apYellow.lighten4,
-                    'ap-yellow-lighten-5': apColorsTokensOld.apYellow.lighten5,
-                }
-                return {
-                    cnamColors,
-                    paColors,
-                    apColors,
-                    apColorsOld,
-                    colorTitle,
-                    colorTitleLevel,
-                }
-            },
-            template: `
+				const apColors = {
+					'yellow-darken-80': apColorsTokens.yellow.darken80,
+					'yellow-darken-60': apColorsTokens.yellow.darken60,
+					'yellow-darken-40': apColorsTokens.yellow.darken40,
+					'yellow-darken-20': apColorsTokens.yellow.darken20,
+					'yellow-base': apColorsTokens.yellow.base,
+					'yellow-lighten-20': apColorsTokens.yellow.lighten20,
+					'yellow-lighten-40': apColorsTokens.yellow.lighten40,
+					'yellow-lighten-60': apColorsTokens.yellow.lighten60,
+					'yellow-lighten-80': apColorsTokens.yellow.lighten80,
+					'yellow-lighten-90': apColorsTokens.yellow.lighten90,
+					'yellow-lighten-97': apColorsTokens.yellow.lighten97,
+				}
+				const apColorsOld = {
+					'ap-yellow-darken-4': apColorsTokensOld.apYellow.darken4,
+					'ap-yellow-darken-3': apColorsTokensOld.apYellow.darken3,
+					'ap-yellow-darken-2': apColorsTokensOld.apYellow.darken2,
+					'ap-yellow-darken-1': apColorsTokensOld.apYellow.darken1,
+					'ap-yellow': apColorsTokensOld.apYellow.base,
+					'ap-yellow-lighten-1': apColorsTokensOld.apYellow.lighten1,
+					'ap-yellow-lighten-2': apColorsTokensOld.apYellow.lighten2,
+					'ap-yellow-lighten-3': apColorsTokensOld.apYellow.lighten3,
+					'ap-yellow-lighten-4': apColorsTokensOld.apYellow.lighten4,
+					'ap-yellow-lighten-5': apColorsTokensOld.apYellow.lighten5,
+				}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColorsOld,
+					colorTitle,
+					colorTitleLevel,
+				}
+			},
+			template: `
               <ColorDisplay
                   displayEmptyColors
                   colorCategory="base"
@@ -372,44 +372,44 @@ export const PaletteYellow: StoryObj = {
                   :colorTitleLevel="colorTitleLevel"
               />
             `,
-        }
-    },
-    tags: ['!dev'],
+		}
+	},
+	tags: ['!dev'],
 }
 
 export const PaletteForestGreen: StoryObj = {
-    render: () => {
-        return {
-            components: {ColorDisplay},
-            setup() {
-                const colorTitle = 'Frosted blue'
-                const colorTitleLevel = 3
-                const apColors = {
-                    'forest-green-darken-80': apColorsTokens.forestGreen.darken80,
-                    'forest-green-darken-60': apColorsTokens.forestGreen.darken60,
-                    'forest-green-darken-40': apColorsTokens.forestGreen.darken40,
-                    'forest-green-darken-20': apColorsTokens.forestGreen.darken20,
-                    'forest-green-base': apColorsTokens.forestGreen.base,
-                    'forest-green-lighten-20': apColorsTokens.forestGreen.lighten20,
-                    'forest-green-lighten-40': apColorsTokens.forestGreen.lighten40,
-                    'forest-green-lighten-60': apColorsTokens.forestGreen.lighten60,
-                    'forest-green-lighten-80': apColorsTokens.forestGreen.lighten80,
-                    'forest-green-lighten-90': apColorsTokens.forestGreen.lighten90,
-                    'forest-green-lighten-97': apColorsTokens.forestGreen.lighten97,
-                }
-                const cnamColors = {}
-                const paColors = {}
-                const apColorsOld = {}
-                return {
-                    cnamColors,
-                    paColors,
-                    apColors,
-                    apColorsOld,
-                    colorTitle,
-                    colorTitleLevel,
-                }
-            },
-            template: `
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Frosted blue'
+				const colorTitleLevel = 3
+				const apColors = {
+					'forest-green-darken-80': apColorsTokens.forestGreen.darken80,
+					'forest-green-darken-60': apColorsTokens.forestGreen.darken60,
+					'forest-green-darken-40': apColorsTokens.forestGreen.darken40,
+					'forest-green-darken-20': apColorsTokens.forestGreen.darken20,
+					'forest-green-base': apColorsTokens.forestGreen.base,
+					'forest-green-lighten-20': apColorsTokens.forestGreen.lighten20,
+					'forest-green-lighten-40': apColorsTokens.forestGreen.lighten40,
+					'forest-green-lighten-60': apColorsTokens.forestGreen.lighten60,
+					'forest-green-lighten-80': apColorsTokens.forestGreen.lighten80,
+					'forest-green-lighten-90': apColorsTokens.forestGreen.lighten90,
+					'forest-green-lighten-97': apColorsTokens.forestGreen.lighten97,
+				}
+				const cnamColors = {}
+				const paColors = {}
+				const apColorsOld = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColorsOld,
+					colorTitle,
+					colorTitleLevel,
+				}
+			},
+			template: `
               <ColorDisplay
                   displayEmptyColors
                   colorCategory="base"
@@ -421,9 +421,9 @@ export const PaletteForestGreen: StoryObj = {
                   :colorTitleLevel="colorTitleLevel"
               />
             `,
-        }
-    },
-    tags: ['!dev'],
+		}
+	},
+	tags: ['!dev'],
 }
 
 export const PaletteGreen: StoryObj = {
@@ -459,31 +459,31 @@ export const PaletteGreen: StoryObj = {
 					'green-lighten-90': paColorsTokens.green.lighten90,
 					'green-lighten-97': paColorsTokens.green.lighten97,
 				}
-                const apColors = {
-                    'green-darken-80': apColorsTokens.green.darken80,
-                    'green-darken-60': apColorsTokens.green.darken60,
-                    'green-darken-40': apColorsTokens.green.darken40,
-                    'green-darken-20': apColorsTokens.green.darken20,
-                    'green-base': apColorsTokens.green.base,
-                    'green-lighten-20': apColorsTokens.green.lighten20,
-                    'green-lighten-40': apColorsTokens.green.lighten40,
-                    'green-lighten-60': apColorsTokens.green.lighten60,
-                    'green-lighten-80': apColorsTokens.green.lighten80,
-                    'green-lighten-90': apColorsTokens.green.lighten90,
-                    'green-lighten-97': apColorsTokens.green.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-green-darken-2': apColorsTokensOld.apGreen.darken2,
-                    'ap-green-darken-1': apColorsTokensOld.apGreen.darken1,
-                    'ap-green': apColorsTokensOld.apGreen.base,
-                    'ap-green-lighten-1': apColorsTokensOld.apGreen.lighten1,
-                    'ap-green-lighten-2': apColorsTokensOld.apGreen.lighten2,
+				const apColors = {
+					'green-darken-80': apColorsTokens.green.darken80,
+					'green-darken-60': apColorsTokens.green.darken60,
+					'green-darken-40': apColorsTokens.green.darken40,
+					'green-darken-20': apColorsTokens.green.darken20,
+					'green-base': apColorsTokens.green.base,
+					'green-lighten-20': apColorsTokens.green.lighten20,
+					'green-lighten-40': apColorsTokens.green.lighten40,
+					'green-lighten-60': apColorsTokens.green.lighten60,
+					'green-lighten-80': apColorsTokens.green.lighten80,
+					'green-lighten-90': apColorsTokens.green.lighten90,
+					'green-lighten-97': apColorsTokens.green.lighten97,
+				}
+				const apColorsOld = {
+					'ap-green-darken-2': apColorsTokensOld.apGreen.darken2,
+					'ap-green-darken-1': apColorsTokensOld.apGreen.darken1,
+					'ap-green': apColorsTokensOld.apGreen.base,
+					'ap-green-lighten-1': apColorsTokensOld.apGreen.lighten1,
+					'ap-green-lighten-2': apColorsTokensOld.apGreen.lighten2,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -538,32 +538,32 @@ export const PaletteTurquoise: StoryObj = {
 					'turquoise-lighten-90': paColorsTokens.turquoise.lighten90,
 					'turquoise-lighten-97': paColorsTokens.turquoise.lighten97,
 				}
-                const apColors = {
-                    'turquoise-darken-80': apColorsTokens.turquoise.darken80,
-                    'turquoise-darken-60': apColorsTokens.turquoise.darken60,
-                    'turquoise-darken-40': apColorsTokens.turquoise.darken40,
-                    'turquoise-darken-20': apColorsTokens.turquoise.darken20,
-                    'turquoise-base': apColorsTokens.turquoise.base,
-                    'turquoise-lighten-20': apColorsTokens.turquoise.lighten20,
-                    'turquoise-lighten-40': apColorsTokens.turquoise.lighten40,
-                    'turquoise-lighten-60': apColorsTokens.turquoise.lighten60,
-                    'turquoise-lighten-80': apColorsTokens.turquoise.lighten80,
-                    'turquoise-lighten-90': apColorsTokens.turquoise.lighten90,
-                    'turquoise-lighten-97': apColorsTokens.turquoise.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-turquoise-darken-3': apColorsTokensOld.apTurquoise.darken3,
-                    'ap-turquoise-darken-2': apColorsTokensOld.apTurquoise.darken2,
-                    'ap-turquoise-darken-1': apColorsTokensOld.apTurquoise.darken1,
-                    'ap-Turquoise': apColorsTokensOld.apTurquoise.base,
-                    'ap-turquoise-lighten-1': apColorsTokensOld.apTurquoise.lighten1,
-                    'ap-turquoise-lighten-2': apColorsTokensOld.apTurquoise.lighten2,
+				const apColors = {
+					'turquoise-darken-80': apColorsTokens.turquoise.darken80,
+					'turquoise-darken-60': apColorsTokens.turquoise.darken60,
+					'turquoise-darken-40': apColorsTokens.turquoise.darken40,
+					'turquoise-darken-20': apColorsTokens.turquoise.darken20,
+					'turquoise-base': apColorsTokens.turquoise.base,
+					'turquoise-lighten-20': apColorsTokens.turquoise.lighten20,
+					'turquoise-lighten-40': apColorsTokens.turquoise.lighten40,
+					'turquoise-lighten-60': apColorsTokens.turquoise.lighten60,
+					'turquoise-lighten-80': apColorsTokens.turquoise.lighten80,
+					'turquoise-lighten-90': apColorsTokens.turquoise.lighten90,
+					'turquoise-lighten-97': apColorsTokens.turquoise.lighten97,
+				}
+				const apColorsOld = {
+					'ap-turquoise-darken-3': apColorsTokensOld.apTurquoise.darken3,
+					'ap-turquoise-darken-2': apColorsTokensOld.apTurquoise.darken2,
+					'ap-turquoise-darken-1': apColorsTokensOld.apTurquoise.darken1,
+					'ap-Turquoise': apColorsTokensOld.apTurquoise.base,
+					'ap-turquoise-lighten-1': apColorsTokensOld.apTurquoise.lighten1,
+					'ap-turquoise-lighten-2': apColorsTokensOld.apTurquoise.lighten2,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -618,33 +618,33 @@ export const PaletteBlue: StoryObj = {
 					'blue-lighten-90': paColorsTokens.blue.lighten90,
 					'blue-lighten-97': paColorsTokens.blue.lighten97,
 				}
-                const apColors = {
-                    'blue-darken-80': apColorsTokens.blue.darken80,
-                    'blue-darken-60': apColorsTokens.blue.darken60,
-                    'blue-darken-40': apColorsTokens.blue.darken40,
-                    'blue-darken-20': apColorsTokens.blue.darken20,
-                    'blue-base': apColorsTokens.blue.base,
-                    'blue-lighten-20': apColorsTokens.blue.lighten20,
-                    'blue-lighten-40': apColorsTokens.blue.lighten40,
-                    'blue-lighten-60': apColorsTokens.blue.lighten60,
-                    'blue-lighten-80': apColorsTokens.blue.lighten80,
-                    'blue-lighten-90': apColorsTokens.blue.lighten90,
-                    'blue-lighten-97': apColorsTokens.blue.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-blue-darken-2': apColorsTokensOld.apBlue.darken2,
-                    'ap-blue-darken-1': apColorsTokensOld.apBlue.darken1,
-                    'ap-blue': apColorsTokensOld.apBlue.base,
-                    'ap-blue-lighten-1': apColorsTokensOld.apBlue.lighten1,
-                    'ap-blue-lighten-2': apColorsTokensOld.apBlue.lighten2,
-                    'ap-blue-lighten-3': apColorsTokensOld.apBlue.lighten3,
-                    'ap-blue-lighten-4': apColorsTokensOld.apBlue.lighten4,
+				const apColors = {
+					'blue-darken-80': apColorsTokens.blue.darken80,
+					'blue-darken-60': apColorsTokens.blue.darken60,
+					'blue-darken-40': apColorsTokens.blue.darken40,
+					'blue-darken-20': apColorsTokens.blue.darken20,
+					'blue-base': apColorsTokens.blue.base,
+					'blue-lighten-20': apColorsTokens.blue.lighten20,
+					'blue-lighten-40': apColorsTokens.blue.lighten40,
+					'blue-lighten-60': apColorsTokens.blue.lighten60,
+					'blue-lighten-80': apColorsTokens.blue.lighten80,
+					'blue-lighten-90': apColorsTokens.blue.lighten90,
+					'blue-lighten-97': apColorsTokens.blue.lighten97,
+				}
+				const apColorsOld = {
+					'ap-blue-darken-2': apColorsTokensOld.apBlue.darken2,
+					'ap-blue-darken-1': apColorsTokensOld.apBlue.darken1,
+					'ap-blue': apColorsTokensOld.apBlue.base,
+					'ap-blue-lighten-1': apColorsTokensOld.apBlue.lighten1,
+					'ap-blue-lighten-2': apColorsTokensOld.apBlue.lighten2,
+					'ap-blue-lighten-3': apColorsTokensOld.apBlue.lighten3,
+					'ap-blue-lighten-4': apColorsTokensOld.apBlue.lighten4,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -699,25 +699,25 @@ export const PaletteCyan: StoryObj = {
 					'cyan-lighten-90': paColorsTokens.cyan.lighten90,
 					'cyan-lighten-97': paColorsTokens.cyan.lighten97,
 				}
-                const apColors = {
-                    'cyan-darken-80': apColorsTokens.cyan.darken80,
-                    'cyan-darken-60': apColorsTokens.cyan.darken60,
-                    'cyan-darken-40': apColorsTokens.cyan.darken40,
-                    'cyan-darken-20': apColorsTokens.cyan.darken20,
-                    'cyan-base': apColorsTokens.cyan.base,
-                    'cyan-lighten-20': apColorsTokens.cyan.lighten20,
-                    'cyan-lighten-40': apColorsTokens.cyan.lighten40,
-                    'cyan-lighten-60': apColorsTokens.cyan.lighten60,
-                    'cyan-lighten-80': apColorsTokens.cyan.lighten80,
-                    'cyan-lighten-90': apColorsTokens.cyan.lighten90,
-                    'cyan-lighten-97': apColorsTokens.cyan.lighten97,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'cyan-darken-80': apColorsTokens.cyan.darken80,
+					'cyan-darken-60': apColorsTokens.cyan.darken60,
+					'cyan-darken-40': apColorsTokens.cyan.darken40,
+					'cyan-darken-20': apColorsTokens.cyan.darken20,
+					'cyan-base': apColorsTokens.cyan.base,
+					'cyan-lighten-20': apColorsTokens.cyan.lighten20,
+					'cyan-lighten-40': apColorsTokens.cyan.lighten40,
+					'cyan-lighten-60': apColorsTokens.cyan.lighten60,
+					'cyan-lighten-80': apColorsTokens.cyan.lighten80,
+					'cyan-lighten-90': apColorsTokens.cyan.lighten90,
+					'cyan-lighten-97': apColorsTokens.cyan.lighten97,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -772,13 +772,13 @@ export const PaletteFrostedBlue: StoryObj = {
 					'frosted-blue-lighten-90': paColorsTokens.frostedBlue.lighten90,
 					'frosted-blue-lighten-97': paColorsTokens.frostedBlue.lighten97,
 				}
-                const apColors = {}
-                const apColorsOld = {}
+				const apColors = {}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -833,28 +833,28 @@ export const PaletteParma: StoryObj = {
 					'parma-lighten-90': paColorsTokens.parma.lighten90,
 					'parma-lighten-97': paColorsTokens.parma.lighten97,
 				}
-                const apColors = {
-                    'parma-darken-80': apColorsTokens.parma.darken80,
-                    'parma-darken-60': apColorsTokens.parma.darken60,
-                    'parma-darken-40': apColorsTokens.parma.darken40,
-                    'parma-darken-20': apColorsTokens.parma.darken20,
-                    'parma-base': apColorsTokens.parma.base,
-                    'parma-lighten-20': apColorsTokens.parma.lighten20,
-                    'parma-lighten-40': apColorsTokens.parma.lighten40,
-                    'parma-lighten-60': apColorsTokens.parma.lighten60,
-                    'parma-lighten-80': apColorsTokens.parma.lighten80,
-                    'parma-lighten-90': apColorsTokens.parma.lighten90,
-                    'parma-lighten-97': apColorsTokens.parma.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-parme-darken-1': apColorsTokensOld.apParme.darken1,
-                    'ap-parme': apColorsTokensOld.apParme.base,
+				const apColors = {
+					'parma-darken-80': apColorsTokens.parma.darken80,
+					'parma-darken-60': apColorsTokens.parma.darken60,
+					'parma-darken-40': apColorsTokens.parma.darken40,
+					'parma-darken-20': apColorsTokens.parma.darken20,
+					'parma-base': apColorsTokens.parma.base,
+					'parma-lighten-20': apColorsTokens.parma.lighten20,
+					'parma-lighten-40': apColorsTokens.parma.lighten40,
+					'parma-lighten-60': apColorsTokens.parma.lighten60,
+					'parma-lighten-80': apColorsTokens.parma.lighten80,
+					'parma-lighten-90': apColorsTokens.parma.lighten90,
+					'parma-lighten-97': apColorsTokens.parma.lighten97,
+				}
+				const apColorsOld = {
+					'ap-parme-darken-1': apColorsTokensOld.apParme.darken1,
+					'ap-parme': apColorsTokensOld.apParme.base,
 				}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -909,25 +909,25 @@ export const PaletteMauve: StoryObj = {
 					'mauve-lighten-90': paColorsTokens.mauve.lighten90,
 					'mauve-lighten-97': paColorsTokens.mauve.lighten97,
 				}
-                const apColors = {
-                    'mauve-darken-80': apColorsTokens.mauve.darken80,
-                    'mauve-darken-60': apColorsTokens.mauve.darken60,
-                    'mauve-darken-40': apColorsTokens.mauve.darken40,
-                    'mauve-darken-20': apColorsTokens.mauve.darken20,
-                    'mauve-base': apColorsTokens.mauve.base,
-                    'mauve-lighten-20': apColorsTokens.mauve.lighten20,
-                    'mauve-lighten-40': apColorsTokens.mauve.lighten40,
-                    'mauve-lighten-60': apColorsTokens.mauve.lighten60,
-                    'mauve-lighten-80': apColorsTokens.mauve.lighten80,
-                    'mauve-lighten-90': apColorsTokens.mauve.lighten90,
-                    'mauve-lighten-97': apColorsTokens.mauve.lighten97,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'mauve-darken-80': apColorsTokens.mauve.darken80,
+					'mauve-darken-60': apColorsTokens.mauve.darken60,
+					'mauve-darken-40': apColorsTokens.mauve.darken40,
+					'mauve-darken-20': apColorsTokens.mauve.darken20,
+					'mauve-base': apColorsTokens.mauve.base,
+					'mauve-lighten-20': apColorsTokens.mauve.lighten20,
+					'mauve-lighten-40': apColorsTokens.mauve.lighten40,
+					'mauve-lighten-60': apColorsTokens.mauve.lighten60,
+					'mauve-lighten-80': apColorsTokens.mauve.lighten80,
+					'mauve-lighten-90': apColorsTokens.mauve.lighten90,
+					'mauve-lighten-97': apColorsTokens.mauve.lighten97,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -982,27 +982,27 @@ export const PalettePink: StoryObj = {
 					'pink-lighten-90': paColorsTokens.pink.lighten90,
 					'pink-lighten-97': paColorsTokens.pink.lighten97,
 				}
-                const apColors = {
-                    'pink-darken-80': apColorsTokens.pink.darken80,
-                    'pink-darken-60': apColorsTokens.pink.darken60,
-                    'pink-darken-40': apColorsTokens.pink.darken40,
-                    'pink-darken-20': apColorsTokens.pink.darken20,
-                    'pink-base': apColorsTokens.pink.base,
-                    'pink-lighten-20': apColorsTokens.pink.lighten20,
-                    'pink-lighten-40': apColorsTokens.pink.lighten40,
-                    'pink-lighten-60': apColorsTokens.pink.lighten60,
-                    'pink-lighten-80': apColorsTokens.pink.lighten80,
-                    'pink-lighten-90': apColorsTokens.pink.lighten90,
-                    'pink-lighten-97': apColorsTokens.pink.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-pink': apColorsTokensOld.apPink.base,
+				const apColors = {
+					'pink-darken-80': apColorsTokens.pink.darken80,
+					'pink-darken-60': apColorsTokens.pink.darken60,
+					'pink-darken-40': apColorsTokens.pink.darken40,
+					'pink-darken-20': apColorsTokens.pink.darken20,
+					'pink-base': apColorsTokens.pink.base,
+					'pink-lighten-20': apColorsTokens.pink.lighten20,
+					'pink-lighten-40': apColorsTokens.pink.lighten40,
+					'pink-lighten-60': apColorsTokens.pink.lighten60,
+					'pink-lighten-80': apColorsTokens.pink.lighten80,
+					'pink-lighten-90': apColorsTokens.pink.lighten90,
+					'pink-lighten-97': apColorsTokens.pink.lighten97,
+				}
+				const apColorsOld = {
+					'ap-pink': apColorsTokensOld.apPink.base,
 				}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1057,13 +1057,13 @@ export const PaletteBrick: StoryObj = {
 					'brick-lighten-90': paColorsTokens.brick.lighten90,
 					'brick-lighten-97': paColorsTokens.brick.lighten97,
 				}
-                const apColors = {}
-                const apColorsOld = {}
+				const apColors = {}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1118,34 +1118,34 @@ export const PaletteGrey: StoryObj = {
 					'grey-lighten-90': paColorsTokens.grey.lighten90,
 					'grey-lighten-97': paColorsTokens.grey.lighten97,
 				}
-                const apColors = {
-                    'grey-darken-80': apColorsTokens.grey.darken80,
-                    'grey-darken-60': apColorsTokens.grey.darken60,
-                    'grey-darken-40': apColorsTokens.grey.darken40,
-                    'grey-darken-20': apColorsTokens.grey.darken20,
-                    'grey-base': apColorsTokens.grey.base,
-                    'grey-lighten-20': apColorsTokens.grey.lighten20,
-                    'grey-lighten-40': apColorsTokens.grey.lighten40,
-                    'grey-lighten-60': apColorsTokens.grey.lighten60,
-                    'grey-lighten-80': apColorsTokens.grey.lighten80,
-                    'grey-lighten-90': apColorsTokens.grey.lighten90,
-                    'grey-lighten-97': apColorsTokens.grey.lighten97,
-                }
-                const apColorsOld = {
-                    'ap-grey-darken-1': apColorsTokensOld.apGrey.darken1,
-                    'ap-grey': apColorsTokensOld.apGrey.base,
-                    'ap-grey-lighten-1': apColorsTokensOld.apGrey.lighten1,
-                    'ap-grey-lighten-2': apColorsTokensOld.apGrey.lighten2,
-                    'ap-grey-lighten-3': apColorsTokensOld.apGrey.lighten3,
-                    'ap-grey-lighten-4': apColorsTokensOld.apGrey.lighten4,
-                    'ap-grey-lighten-5': apColorsTokensOld.apGrey.lighten5,
-                    'ap-grey-lighten-6': apColorsTokensOld.apGrey.lighten6,
+				const apColors = {
+					'grey-darken-80': apColorsTokens.grey.darken80,
+					'grey-darken-60': apColorsTokens.grey.darken60,
+					'grey-darken-40': apColorsTokens.grey.darken40,
+					'grey-darken-20': apColorsTokens.grey.darken20,
+					'grey-base': apColorsTokens.grey.base,
+					'grey-lighten-20': apColorsTokens.grey.lighten20,
+					'grey-lighten-40': apColorsTokens.grey.lighten40,
+					'grey-lighten-60': apColorsTokens.grey.lighten60,
+					'grey-lighten-80': apColorsTokens.grey.lighten80,
+					'grey-lighten-90': apColorsTokens.grey.lighten90,
+					'grey-lighten-97': apColorsTokens.grey.lighten97,
+				}
+				const apColorsOld = {
+					'ap-grey-darken-1': apColorsTokensOld.apGrey.darken1,
+					'ap-grey': apColorsTokensOld.apGrey.base,
+					'ap-grey-lighten-1': apColorsTokensOld.apGrey.lighten1,
+					'ap-grey-lighten-2': apColorsTokensOld.apGrey.lighten2,
+					'ap-grey-lighten-3': apColorsTokensOld.apGrey.lighten3,
+					'ap-grey-lighten-4': apColorsTokensOld.apGrey.lighten4,
+					'ap-grey-lighten-5': apColorsTokensOld.apGrey.lighten5,
+					'ap-grey-lighten-6': apColorsTokensOld.apGrey.lighten6,
 				}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1188,21 +1188,21 @@ export const PaletteWhite: StoryObj = {
 					'white-lighten-20': paColorsTokens.white.lighten20,
 					'white-base': paColorsTokens.white.base,
 				}
-                const apColors = {
-                    'white-lighten-80': apColorsTokens.white.lighten70,
-                    'white-lighten-60': apColorsTokens.white.lighten40,
-                    'white-lighten-40': apColorsTokens.white.lighten38,
-                    'white-lighten-20': apColorsTokens.white.lighten20,
-                    'white-base': apColorsTokens.white.base,
-                }
-                const apColorsOld = {
-                    'ap-white': apColorsTokensOld.apWhite.base,
+				const apColors = {
+					'white-lighten-80': apColorsTokens.white.lighten70,
+					'white-lighten-60': apColorsTokens.white.lighten40,
+					'white-lighten-40': apColorsTokens.white.lighten38,
+					'white-lighten-20': apColorsTokens.white.lighten20,
+					'white-base': apColorsTokens.white.base,
+				}
+				const apColorsOld = {
+					'ap-white': apColorsTokensOld.apWhite.base,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1233,17 +1233,17 @@ export const PaletteBlack: StoryObj = {
 				const colorTitleLevel = 3
 				const displayEmptyColors = false
 				const cnamColors = {}
-                const paColors = {}
-                const apColors = {}
-                const apColorsOld = {
-                    'ap-black': apColorsTokensOld.apBlack.base,
+				const paColors = {}
+				const apColors = {}
+				const apColorsOld = {
+					'ap-black': apColorsTokensOld.apBlack.base,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1288,20 +1288,20 @@ export const Interactive: StoryObj = {
 					'interactive-disabled': paLightTheme.interactiveDisabled,
 					'interactive-hover-on-selected': paLightTheme.interactiveHoverOnSelected,
 				}
-                const apColors = {
-                    'interactive-default': apLightTheme.interactiveDefault,
-                    'interactive-hover': apLightTheme.interactiveHover,
-                    'interactive-pressed': apLightTheme.interactivePressed,
-                    'interactive-focus': apLightTheme.interactiveFocus,
-                    'interactive-disabled': apLightTheme.interactiveDisabled,
-                    'interactive-hover-on-selected': apLightTheme.interactiveHoverOnSelected,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'interactive-default': apLightTheme.interactiveDefault,
+					'interactive-hover': apLightTheme.interactiveHover,
+					'interactive-pressed': apLightTheme.interactivePressed,
+					'interactive-focus': apLightTheme.interactiveFocus,
+					'interactive-disabled': apLightTheme.interactiveDisabled,
+					'interactive-hover-on-selected': apLightTheme.interactiveHoverOnSelected,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1360,27 +1360,27 @@ export const Border: StoryObj = {
 					'border-disabled': paLightTheme.borderDisabled,
 					'border-disabled-on-dark': paLightTheme.borderDisabledOnDark,
 				}
-                const apColors = {
-                    'border-darker': apLightTheme.borderDarker,
-                    'border-base': apLightTheme.borderBase,
-                    'border-subdued': apLightTheme.borderSubdued,
-                    'border-accent': apLightTheme.borderAccent,
-                    'border-accent-contrasted': apLightTheme.borderAccentContrasted,
-                    'border-accent-on-dark': apLightTheme.borderAccentOnDark,
-                    'border-info': apLightTheme.borderInfo,
-                    'border-success': apLightTheme.borderSuccess,
-                    'border-warning': apLightTheme.borderWarning,
-                    'border-error': apLightTheme.borderError,
-                    'border-on-dark': apLightTheme.borderOnDark,
-                    'border-disabled': apLightTheme.borderDisabled,
-                    'border-disabled-on-dark': apLightTheme.borderDisabledOnDark,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'border-darker': apLightTheme.borderDarker,
+					'border-base': apLightTheme.borderBase,
+					'border-subdued': apLightTheme.borderSubdued,
+					'border-accent': apLightTheme.borderAccent,
+					'border-accent-contrasted': apLightTheme.borderAccentContrasted,
+					'border-accent-on-dark': apLightTheme.borderAccentOnDark,
+					'border-info': apLightTheme.borderInfo,
+					'border-success': apLightTheme.borderSuccess,
+					'border-warning': apLightTheme.borderWarning,
+					'border-error': apLightTheme.borderError,
+					'border-on-dark': apLightTheme.borderOnDark,
+					'border-disabled': apLightTheme.borderDisabled,
+					'border-disabled-on-dark': apLightTheme.borderDisabledOnDark,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1437,26 +1437,26 @@ export const Text: StoryObj = {
 					'text-subdued-on-dark': paLightTheme.textSubduedOnDark,
 					'text-disabled-on-dark': paLightTheme.textDisabledOnDark,
 				}
-                const apColors = {
-                    'text-base': apLightTheme.textBase,
-                    'text-accent': apLightTheme.textAccent,
-                    'text-accent-contrasted': apLightTheme.textAccentContrasted,
-                    'text-subdued': apLightTheme.textSubdued,
-                    'text-info': apLightTheme.textInfo,
-                    'text-success': apLightTheme.textSuccess,
-                    'text-warning': apLightTheme.textWarning,
-                    'text-error': apLightTheme.textError,
-                    'text-disabled': apLightTheme.textDisabled,
-                    'text-on-dark': apLightTheme.textOnDark,
-                    'text-subdued-on-dark': apLightTheme.textSubduedOnDark,
-                    'text-disabled-on-dark': apLightTheme.textDisabledOnDark,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'text-base': apLightTheme.textBase,
+					'text-accent': apLightTheme.textAccent,
+					'text-accent-contrasted': apLightTheme.textAccentContrasted,
+					'text-subdued': apLightTheme.textSubdued,
+					'text-info': apLightTheme.textInfo,
+					'text-success': apLightTheme.textSuccess,
+					'text-warning': apLightTheme.textWarning,
+					'text-error': apLightTheme.textError,
+					'text-disabled': apLightTheme.textDisabled,
+					'text-on-dark': apLightTheme.textOnDark,
+					'text-subdued-on-dark': apLightTheme.textSubduedOnDark,
+					'text-disabled-on-dark': apLightTheme.textDisabledOnDark,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1512,26 +1512,26 @@ export const Icons: StoryObj = {
 					'icon-disabled': paLightTheme.iconDisabled,
 					'icon-disabled-on-dark': paLightTheme.iconDisabledOnDark,
 				}
-                const apColors = {
-                    'icon-base': apLightTheme.iconBase,
-                    'icon-subdued': apLightTheme.iconSubdued,
-                    'icon-subdued-on-dark': apLightTheme.iconSubduedOnDark,
-                    'icon-accent': apLightTheme.iconAccent,
-                    'icon-accent-contrasted': apLightTheme.iconAccentContrasted,
-                    'icon-info': apLightTheme.iconInfo,
-                    'icon-success': apLightTheme.iconSuccess,
-                    'icon-warning': apLightTheme.iconWarning,
-                    'icon-error': apLightTheme.iconError,
-                    'icon-on-dark': apLightTheme.iconOnDark,
-                    'icon-disabled': apLightTheme.iconDisabled,
-                    'icon-disabled-on-dark': apLightTheme.iconDisabledOnDark,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'icon-base': apLightTheme.iconBase,
+					'icon-subdued': apLightTheme.iconSubdued,
+					'icon-subdued-on-dark': apLightTheme.iconSubduedOnDark,
+					'icon-accent': apLightTheme.iconAccent,
+					'icon-accent-contrasted': apLightTheme.iconAccentContrasted,
+					'icon-info': apLightTheme.iconInfo,
+					'icon-success': apLightTheme.iconSuccess,
+					'icon-warning': apLightTheme.iconWarning,
+					'icon-error': apLightTheme.iconError,
+					'icon-on-dark': apLightTheme.iconOnDark,
+					'icon-disabled': apLightTheme.iconDisabled,
+					'icon-disabled-on-dark': apLightTheme.iconDisabledOnDark,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1570,17 +1570,17 @@ export const MainBackgrounds: StoryObj = {
 					'background-surface': paLightTheme.backgroundSurface,
 					'background-surface-alt': paLightTheme.backgroundSurfaceAlt,
 				}
-                const apColors = {
-                    'background-main': apLightTheme.backgroundMain,
-                    'background-surface': apLightTheme.backgroundSurface,
-                    'background-surface-alt': apLightTheme.backgroundSurfaceAlt,
-                }
-                const apColorsOld = {'ap-grey-lighten-6': apColorsTokensOld.apGrey.lighten6}
+				const apColors = {
+					'background-main': apLightTheme.backgroundMain,
+					'background-surface': apLightTheme.backgroundSurface,
+					'background-surface-alt': apLightTheme.backgroundSurfaceAlt,
+				}
+				const apColorsOld = { 'ap-grey-lighten-6': apColorsTokensOld.apGrey.lighten6 }
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1623,19 +1623,19 @@ export const AlternativeBackgrounds: StoryObj = {
 					'background-accent-contrasted': paLightTheme.backgroundAccentContrasted,
 					'background-accent-alt': paLightTheme.backgroundAccentAlt,
 				}
-                const apColors = {
-                    'background-mainAlt': apLightTheme.backgroundMainAlt,
-                    'background-raised': apLightTheme.backgroundRaised,
-                    'background-accent': apLightTheme.backgroundAccent,
-                    'background-accent-contrasted': apLightTheme.backgroundAccentContrasted,
-                    'background-accent-alt': apLightTheme.backgroundAccentAlt,
-                }
-                const apColorsOld = {'ap-blue-lighten-3': apColorsTokensOld.apBlue.lighten3}
+				const apColors = {
+					'background-mainAlt': apLightTheme.backgroundMainAlt,
+					'background-raised': apLightTheme.backgroundRaised,
+					'background-accent': apLightTheme.backgroundAccent,
+					'background-accent-contrasted': apLightTheme.backgroundAccentContrasted,
+					'background-accent-alt': apLightTheme.backgroundAccentAlt,
+				}
+				const apColorsOld = { 'ap-blue-lighten-3': apColorsTokensOld.apBlue.lighten3 }
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColorsOld,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1674,17 +1674,17 @@ export const InformationalBackgrounds: StoryObj = {
 					'background-info-subdued': paLightTheme.backgroundInfoSubdued,
 					'background-info-contrasted': paLightTheme.backgroundInfoContrasted,
 				}
-                const apColors = {
-                    'background-info': apLightTheme.backgroundInfo,
-                    'background-info-subdued': apLightTheme.backgroundInfoSubdued,
-                    'background-info-contrasted': apLightTheme.backgroundInfoContrasted,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'background-info': apLightTheme.backgroundInfo,
+					'background-info-subdued': apLightTheme.backgroundInfoSubdued,
+					'background-info-contrasted': apLightTheme.backgroundInfoContrasted,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1723,17 +1723,17 @@ export const SuccessBackgrounds: StoryObj = {
 					'background-success-subdued': paLightTheme.backgroundSuccessSubdued,
 					'background-success-contrasted': paLightTheme.backgroundSuccessContrasted,
 				}
-                const apColors = {
-                    'background-success': apLightTheme.backgroundSuccess,
-                    'background-success-subdued': apLightTheme.backgroundSuccessSubdued,
-                    'background-success-contrasted': apLightTheme.backgroundSuccessContrasted,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'background-success': apLightTheme.backgroundSuccess,
+					'background-success-subdued': apLightTheme.backgroundSuccessSubdued,
+					'background-success-contrasted': apLightTheme.backgroundSuccessContrasted,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1772,17 +1772,17 @@ export const WarningBackgrounds: StoryObj = {
 					'background-warning-subdued': paLightTheme.backgroundWarningSubdued,
 					'background-warning-contrasted': paLightTheme.backgroundWarningContrasted,
 				}
-                const apColors = {
-                    'background-warning': apLightTheme.backgroundWarning,
-                    'background-warning-subdued': apLightTheme.backgroundWarningSubdued,
-                    'background-warning-contrasted': apLightTheme.backgroundWarningContrasted,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'background-warning': apLightTheme.backgroundWarning,
+					'background-warning-subdued': apLightTheme.backgroundWarningSubdued,
+					'background-warning-contrasted': apLightTheme.backgroundWarningContrasted,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1821,17 +1821,17 @@ export const ErrorBackgrounds: StoryObj = {
 					'background-error-subdued': paLightTheme.backgroundErrorSubdued,
 					'background-error-contrasted': paLightTheme.backgroundErrorContrasted,
 				}
-                const apColors = {
-                    'background-error': apLightTheme.backgroundError,
-                    'background-error-subdued': apLightTheme.backgroundErrorSubdued,
-                    'background-error-contrasted': apLightTheme.backgroundErrorContrasted,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'background-error': apLightTheme.backgroundError,
+					'background-error-subdued': apLightTheme.backgroundErrorSubdued,
+					'background-error-contrasted': apLightTheme.backgroundErrorContrasted,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1874,19 +1874,19 @@ export const OtherBackgrounds: StoryObj = {
 					'background-professionnel': paLightTheme.backgroundProfessionnel,
 					'background-entreprise': paLightTheme.backgroundEntreprise,
 				}
-                const apColors = {
-                    'background-disabled': apLightTheme.backgroundDisabled,
-                    'background-disabled-on-dark': apLightTheme.backgroundDisabledOnDark,
-                    'background-assure': apLightTheme.backgroundAssure,
-                    'background-professionnel': apLightTheme.backgroundProfessionnel,
-                    'background-entreprise': apLightTheme.backgroundEntreprise,
-                }
-                const apColorsOld = {}
+				const apColors = {
+					'background-disabled': apLightTheme.backgroundDisabled,
+					'background-disabled-on-dark': apLightTheme.backgroundDisabledOnDark,
+					'background-assure': apLightTheme.backgroundAssure,
+					'background-professionnel': apLightTheme.backgroundProfessionnel,
+					'background-entreprise': apLightTheme.backgroundEntreprise,
+				}
+				const apColorsOld = {}
 				return {
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1917,23 +1917,23 @@ export const StatusBackgrounds: StoryObj = {
 				const colorTitleLevel = 3
 				const displayEmptyColors = false
 				const cnamColors = {}
-                const paColors = {}
-                const apColors = {}
-                const apColorsOld = {
-                    'ap-blue-lighten-2': apColorsTokensOld.apBlue.lighten2,
-                    'ap-parme': apColorsTokensOld.apParme.base,
-                    'ap-yellow-lighten-3': apColorsTokensOld.apYellow.lighten3,
-                    'ap-red-lighten-2': apColorsTokensOld.apRed.lighten2,
-                    'ap-red-lighten-3': apColorsTokensOld.apRed.lighten3,
-                    'ap-green-lighten-2': apColorsTokensOld.apGreen.lighten2,
-                    'ap-grey-lighten-2': apColorsTokensOld.apGrey.lighten2,
+				const paColors = {}
+				const apColors = {}
+				const apColorsOld = {
+					'ap-blue-lighten-2': apColorsTokensOld.apBlue.lighten2,
+					'ap-parme': apColorsTokensOld.apParme.base,
+					'ap-yellow-lighten-3': apColorsTokensOld.apYellow.lighten3,
+					'ap-red-lighten-2': apColorsTokensOld.apRed.lighten2,
+					'ap-red-lighten-3': apColorsTokensOld.apRed.lighten3,
+					'ap-green-lighten-2': apColorsTokensOld.apGreen.lighten2,
+					'ap-grey-lighten-2': apColorsTokensOld.apGrey.lighten2,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1964,20 +1964,20 @@ export const MessagesBackgrounds: StoryObj = {
 				const colorTitleLevel = 3
 				const displayEmptyColors = false
 				const cnamColors = {}
-                const paColors = {}
-                const apColors = {}
-                const apColorsOld = {
-                    'ap-red': apColorsTokensOld.apRed.base,
-                    'ap-turquoise-darken-1': apColorsTokensOld.apTurquoise.darken1,
-                    'ap-yellow': apColorsTokensOld.apYellow.base,
-                    'ap-parme-darken-1': apColorsTokensOld.apParme.darken1,
+				const paColors = {}
+				const apColors = {}
+				const apColorsOld = {
+					'ap-red': apColorsTokensOld.apRed.base,
+					'ap-turquoise-darken-1': apColorsTokensOld.apTurquoise.darken1,
+					'ap-yellow': apColorsTokensOld.apYellow.base,
+					'ap-parme-darken-1': apColorsTokensOld.apParme.darken1,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
-                    apColors,
-                    apColorsOld,
+					apColors,
+					apColorsOld,
 					colorTitle,
 					colorTitleLevel,
 				}

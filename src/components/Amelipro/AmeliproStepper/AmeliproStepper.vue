@@ -320,97 +320,97 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokensOld' as apTokens;
 
-	.amelipro-stepper__list li {
-		&:first-child {
-			& .amelipro-step-btn {
-				border-top-left-radius: 8px;
-			}
-		}
-
-		&:last-child {
-			& .amelipro-step-btn {
-				border-top-right-radius: 8px;
-			}
-		}
-	}
-
-	.step-number {
-		font-size: apTokens.$font-size-sm;
-
-		&::before {
-			position: absolute;
-			left: calc(50% - 1rem);
-			bottom: -1rem;
-			width: 2rem;
-			height: 2rem;
-			border-radius: 50%;
-			background-color: apTokens.$ap-blue-lighten3;
-			border: 1px solid apTokens.$ap-green-lighten2;
-			content: '';
-			z-index: -1;
-		}
-
-		& span {
-			position: absolute;
-			left: calc(50% - 0.3rem);
-			bottom: -0.7rem;
-			color: apTokens.$ap-grey-darken1;
-		}
-
-		&.step-number--active {
-			&::before {
-				background-color: apTokens.$ap-blue-darken1;
-				border: 0;
-			}
-
-			& span {
-				color: apTokens.$ap-white;
-			}
-		}
-
-		&.step-number--disabled {
-			&::before {
-				background-color: apTokens.$ap-grey-lighten2;
-				border: 0;
-			}
-
-			& span {
-				color: apTokens.$ap-grey-darken1;
-			}
-		}
-	}
-
-	.stepper-mobile-btn-wrapper {
-		min-width: 36px;
-	}
-
-	.active-step-title {
-		position: relative;
-		width: calc(100% - 96px);
-		background-color: apTokens.$ap-blue-darken1;
-		border-top-left-radius: 8px;
-		border-top-right-radius: 8px;
-		color: apTokens.$ap-white;
-		text-align: center;
-		z-index: 1;
-	}
-
-	.next-step-btn__wrapper {
-		@media #{apTokens.$media-only-xs} {
-			width: 100%;
-		}
-	}
-
-	.amelipro-stepper__content--default {
-		padding: 3rem apTokens.$card-padding-tablet apTokens.$card-padding-tablet apTokens.$card-padding-tablet;
-		background-color: apTokens.$ap-white;
-		border: 1px solid apTokens.$ap-green-lighten2;
-		border-radius: 8px;
-		border-top-left-radius: 0;
-
-		@media #{apTokens.$media-down-md} {
-			padding: 3rem apTokens.$card-padding-mobile apTokens.$card-padding-mobile apTokens.$card-padding-mobile;
+.amelipro-stepper__list li {
+	&:first-child {
+		& .amelipro-step-btn {
 			border-top-left-radius: 8px;
 		}
 	}
+
+	&:last-child {
+		& .amelipro-step-btn {
+			border-top-right-radius: 8px;
+		}
+	}
+}
+
+.step-number {
+	font-size: apTokens.$font-size-sm;
+
+	&::before {
+		position: absolute;
+		left: calc(50% - 1rem);
+		bottom: -1rem;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		background-color: apTokens.$ap-blue-lighten3;
+		border: 1px solid apTokens.$ap-green-lighten2;
+		content: '';
+		z-index: -1;
+	}
+
+	& span {
+		position: absolute;
+		left: calc(50% - 0.3rem);
+		bottom: -0.7rem;
+		color: apTokens.$ap-grey-darken1;
+	}
+
+	&.step-number--active {
+		&::before {
+			background-color: apTokens.$ap-blue-darken1;
+			border: 0;
+		}
+
+		& span {
+			color: apTokens.$ap-white;
+		}
+	}
+
+	&.step-number--disabled {
+		&::before {
+			background-color: apTokens.$ap-grey-lighten2;
+			border: 0;
+		}
+
+		& span {
+			color: apTokens.$ap-grey-darken1;
+		}
+	}
+}
+
+.stepper-mobile-btn-wrapper {
+	min-width: 36px;
+}
+
+.active-step-title {
+	position: relative;
+	width: calc(100% - 96px);
+	background-color: apTokens.$ap-blue-darken1;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	color: apTokens.$ap-white;
+	text-align: center;
+	z-index: 1;
+}
+
+.next-step-btn__wrapper {
+	@media #{apTokens.$media-only-xs} {
+		width: 100%;
+	}
+}
+
+.amelipro-stepper__content--default {
+	padding: 3rem apTokens.$card-padding-tablet apTokens.$card-padding-tablet apTokens.$card-padding-tablet;
+	background-color: apTokens.$ap-white;
+	border: 1px solid apTokens.$ap-green-lighten2;
+	border-radius: 8px;
+	border-top-left-radius: 0;
+
+	@media #{apTokens.$media-down-md} {
+		padding: 3rem apTokens.$card-padding-mobile apTokens.$card-padding-mobile apTokens.$card-padding-mobile;
+		border-top-left-radius: 8px;
+	}
+}
 </style>

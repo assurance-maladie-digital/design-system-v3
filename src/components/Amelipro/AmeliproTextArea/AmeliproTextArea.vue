@@ -293,31 +293,31 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokensOld' as apTokens;
 
-	.amelipro-textarea-input {
-		& :deep(.v-field__outline) {
-			border-color: v-bind(inputBorderStyle);
+.amelipro-textarea-input {
+	& :deep(.v-field__outline) {
+		border-color: v-bind(inputBorderStyle);
 
-			--v-field-border-opacity: 1 !important;
-		}
-
-		& :deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
-			--v-field-border-width: 1px !important;
-		}
+		--v-field-border-opacity: 1 !important;
 	}
 
-	.amelipro-textarea__label {
-		font-size: apTokens.$font-size-xs;
-		font-weight: apTokens.$label-font-weight;
+	& :deep(.v-field.v-field--variant-outlined.v-field--focused .v-field__outline) {
+		--v-field-border-width: 1px !important;
+	}
+}
+
+.amelipro-textarea__label {
+	font-size: apTokens.$font-size-xs;
+	font-weight: apTokens.$label-font-weight;
+}
+
+.v-input {
+	& :deep(.v-field__input) {
+		padding-left: 12px;
+		padding-right: 12px;
 	}
 
-	.v-input {
-		& :deep(.v-field__input) {
-			padding-left: 12px;
-			padding-right: 12px;
-		}
-
-		& :deep(.v-field--disabled) {
-			opacity: 1 !important;
-		}
+	& :deep(.v-field--disabled) {
+		opacity: 1 !important;
 	}
+}
 </style>

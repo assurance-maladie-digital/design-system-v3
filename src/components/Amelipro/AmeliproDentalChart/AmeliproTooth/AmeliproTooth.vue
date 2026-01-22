@@ -150,34 +150,34 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokensOld' as apTokens;
 
-	.tooth-btn {
-		border-radius: 8px;
-		max-width: 100%;
-		min-height: 100%;
+.tooth-btn {
+	border-radius: 8px;
+	max-width: 100%;
+	min-height: 100%;
 
-		&:hover {
-			background-color: apTokens.$ap-blue-lighten4;
+	&:hover {
+		background-color: apTokens.$ap-blue-lighten4;
+	}
+
+	& img {
+		max-width: 90%;
+		margin: 8px 0;
+
+		@media (width <= 1239.999px) {
+			width: 2.5rem;
 		}
 
-		& img {
-			max-width: 90%;
-			margin: 8px 0;
-
-			@media (width <= 1239.999px) {
-				width: 2.5rem;
-			}
-
-			@media (width >= 1240px) {
-				width: 3.125rem;
-			}
-		}
-
-		&:disabled {
-			&:hover {
-				background-color: transparent;
-			}
-
-			cursor: default;
+		@media (width >= 1240px) {
+			width: 3.125rem;
 		}
 	}
+
+	&:disabled {
+		&:hover {
+			background-color: transparent;
+		}
+
+		cursor: default;
+	}
+}
 </style>

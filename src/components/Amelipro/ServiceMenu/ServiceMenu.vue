@@ -176,19 +176,19 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokensOld' as apTokens;
 
-	:deep(.v-overlay__content) {
-		top: 40px;
-		left: -515px;
-		transform-origin: left top 0;
-		z-index: 8;
-		border-radius: 4px;
+:deep(.v-overlay__content) {
+	top: 40px;
+	left: -515px;
+	transform-origin: left top 0;
+	z-index: 8;
+	border-radius: 4px;
 
-		@media #{apTokens.$media-up-md} {
-			left: -800px;
-		}
+	@media #{apTokens.$media-up-md} {
+		left: -800px;
 	}
+}
 
-	.service-menu {
-		position: relative;
-	}
+.service-menu {
+	position: relative;
+}
 </style>

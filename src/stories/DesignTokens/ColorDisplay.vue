@@ -8,8 +8,8 @@
 		displayEmptyColors: boolean
 		cnamColors: Record<string, string>
 		paColors: Record<string, string>
-    apColors: Record<string, string>
-    apColorsOld: Record<string, string>
+		apColors: Record<string, string>
+		apColorsOld: Record<string, string>
 		colorTitle: string
 		colorTitleLevel: number
 	}
@@ -24,9 +24,9 @@
 		if (theme.value === 'ap') {
 			return props.apColors
 		}
-    if (theme.value === 'apOld') {
-      return props.apColorsOld
-    }
+		if (theme.value === 'apOld') {
+			return props.apColorsOld
+		}
 		return props.cnamColors
 	})
 

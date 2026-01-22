@@ -1,5 +1,5 @@
-import {apLightThemeOld} from '@/designTokens/tokens/amelipro/apLightThemeOld'
-import {apColorsTokensOld} from '@/designTokens/tokens/amelipro/apColorsOld'
+import { apLightThemeOld } from '@/designTokens/tokens/amelipro/apLightThemeOld'
+import { apColorsTokensOld } from '@/designTokens/tokens/amelipro/apColorsOld'
 import { AmeliproColors } from './ameliproColors/ameliproColors'
 
 const currentTheme = apLightThemeOld

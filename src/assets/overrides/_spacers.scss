@@ -127,7 +127,8 @@ $ap-spacers: (
 	}
 }
 
-.theme-ap, theme-apOld {
+.theme-ap,
+ theme-apold {
 	@each $key, $value in $ap-spacers {
 		--spacing-#{$key}: #{$value};
 	}

@@ -147,15 +147,15 @@
 <style lang="scss" scoped>
 @use '@/assets/amelipro/apTokensOld' as apTokens;
 
-	ol {
-		border: 1px solid apTokens.$ap-grey-lighten3;
-	}
+ol {
+	border: 1px solid apTokens.$ap-grey-lighten3;
+}
 
-	li:not(:last-child) {
-		border-right: 1px solid apTokens.$ap-grey-lighten3;
-	}
+li:not(:last-child) {
+	border-right: 1px solid apTokens.$ap-grey-lighten3;
+}
 
-	:deep(.amelipro-icon) {
-		position: relative !important;
-	}
+:deep(.amelipro-icon) {
+	position: relative !important;
+}
 </style>
