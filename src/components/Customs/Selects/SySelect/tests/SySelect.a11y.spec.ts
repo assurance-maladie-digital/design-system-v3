@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { describe, it } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -33,6 +33,64 @@ describe('SySelect – accessibility (axe)', () => {
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'SySelect – required select with menu open', {
 			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
+
+	it('has no obvious axe violations for horizontal layout select', async () => {
+		const items = [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		]
+
+		const wrapper = mount(SySelect, {
+			props: {
+				items,
+				label: 'Choisissez une option',
+				required: true,
+				horizontal: true,
+			},
+			attachTo: document.body,
+		})
+
+		// Ouvrir le menu pour inclure la liste déroulante dans l'analyse axe
+		const activator = wrapper.find('.sy-select')
+		if (activator.exists()) {
+			await activator.trigger('click')
+		}
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'SySelect – horizontal layout with menu open', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
+
+	it('has correct label association in horizontal mode', async () => {
+		const items = [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		]
+
+		const wrapper = mount(SySelect, {
+			props: {
+				items,
+				label: 'Choisissez une option',
+				horizontal: true,
+			},
+			attachTo: document.body,
+		})
+
+		// Vérifier que le label horizontal existe et a l'attribut 'for'
+		const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
+		expect(horizontalLabel.exists()).toBe(true)
+		expect(horizontalLabel.attributes('for')).toBeDefined()
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'SySelect – horizontal label association', {
+			ignoreRules: ['region', 'aria-allowed-attr'],
 		})
 
 		wrapper.unmount()

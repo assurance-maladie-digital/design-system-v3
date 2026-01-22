@@ -1131,4 +1131,244 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('Disposition horizontale (horizontal prop)', () => {
+		it('renders horizontal label when horizontal is true', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: true,
+				},
+				attachTo: document.body,
+			})
+
+			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
+			expect(horizontalLabel.exists()).toBe(true)
+			expect(horizontalLabel.text()).toBe('Choisissez une option')
+
+			wrapper.unmount()
+		})
+
+		it('does not render horizontal label when horizontal is false', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: false,
+				},
+				attachTo: document.body,
+			})
+
+			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
+			expect(horizontalLabel.exists()).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('applies horizontal class to container when horizontal is true', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					horizontal: true,
+				},
+				attachTo: document.body,
+			})
+
+			const container = wrapper.find('.sy-select-container')
+			expect(container.classes()).toContain('horizontal')
+
+			wrapper.unmount()
+		})
+
+		it('does not apply horizontal class when horizontal is false', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					horizontal: false,
+				},
+				attachTo: document.body,
+			})
+
+			const container = wrapper.find('.sy-select-container')
+			expect(container.classes()).not.toContain('horizontal')
+
+			wrapper.unmount()
+		})
+
+		it('hides VTextField label when horizontal is true', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: true,
+				},
+				attachTo: document.body,
+			})
+
+			// La prop :label du VTextField doit être vide en mode horizontal
+			const vTextField = wrapper.findComponent({ name: 'VTextField' })
+			expect(vTextField.props('label')).toBe('')
+
+			wrapper.unmount()
+		})
+
+		it('shows VTextField label when horizontal is false', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: false,
+				},
+				attachTo: document.body,
+			})
+
+			// La prop :label du VTextField doit contenir le label en mode vertical
+			const vTextField = wrapper.findComponent({ name: 'VTextField' })
+			expect(vTextField.props('label')).toContain('Choisissez une option')
+
+			wrapper.unmount()
+		})
+
+		it('horizontal label has correct for attribute linking to input', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: true,
+				},
+				attachTo: document.body,
+			})
+
+			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
+			const inputId = wrapper.find('input').attributes('id')
+
+			expect(horizontalLabel.attributes('for')).toBe(inputId)
+
+			wrapper.unmount()
+		})
+
+		it('displays asterisk in horizontal label when displayAsterisk and required are true', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: true,
+					displayAsterisk: true,
+					required: true,
+				},
+				attachTo: document.body,
+			})
+
+			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
+			expect(horizontalLabel.text()).toContain('*')
+
+			wrapper.unmount()
+		})
+
+		it('does not display asterisk in horizontal label when displayAsterisk is false', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: true,
+					displayAsterisk: false,
+					required: true,
+				},
+				attachTo: document.body,
+			})
+
+			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
+			expect(horizontalLabel.text()).not.toContain('*')
+
+			wrapper.unmount()
+		})
+
+		it('horizontal layout works with required validation', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: true,
+					required: true,
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			// Validation should fail because no value is selected
+			expect(isValid).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('horizontal layout works with custom rules', () => {
+			const rules = [
+				(value: unknown) => value !== undefined || 'La valeur est requise',
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					label: 'Choisissez une option',
+					horizontal: true,
+					rules,
+					modelValue: '1',
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			const isValid = instance.validateOnSubmit()
+
+			// Validation should pass because value is defined
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('maintains menu functionality in horizontal layout', async () => {
+			const items = [{ text: 'Option 1', value: '1' }]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					horizontal: true,
+				},
+				attachTo: document.body,
+			})
+
+			// Menu should open and close normally
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			const vList = wrapper.findComponent(VList)
+			expect(vList.exists()).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('works with all select features in horizontal mode', async () => {
+			const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					label: 'Choisissez une option',
+					horizontal: true,
+					required: true,
+					displayAsterisk: true,
+					clearable: true,
+				},
+				attachTo: document.body,
+			})
+
+			// Check horizontal label with asterisk
+			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
+			expect(horizontalLabel.text()).toContain('Choisissez une option *')
+
+			// Check that container has horizontal class
+			const container = wrapper.find('.sy-select-container')
+			expect(container.classes()).toContain('horizontal')
+
+			// Check that select can still be used
+			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			const vList = wrapper.findComponent(VList)
+			expect(vList.exists()).toBe(true)
+
+			wrapper.unmount()
+		})
+	})
 })
