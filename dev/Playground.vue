@@ -41,6 +41,7 @@ const checked5 = ref(true)
 
       <div>
         <SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)"/>
+        <SyCheckbox v-model="checked2" label="Couleur Secondaire" color="secondary"/>
         <SyCheckbox v-model="checked3" label="Couleur succès" color="success"/>
         <SyCheckbox v-model="checked4" label="Couleur erreur" color="error"/>
         <SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning"/>

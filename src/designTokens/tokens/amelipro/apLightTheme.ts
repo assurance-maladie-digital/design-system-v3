@@ -8,7 +8,7 @@ export const apLightTheme = {
 	error: apColorsTokens.red.darken20,
 	info: apColorsTokens.parma.darken40,
 	avatar: apColorsTokens.cyan.darken20,
-	success: apColorsTokens.turquoise.darken60,
+    success: apColorsTokens.turquoise.darken20,
 	warning: apColorsTokens.yellow.darken60,
 	risquePro: apColorsTokens.red.base,
 	light: apColorsTokens.grey.lighten60,
