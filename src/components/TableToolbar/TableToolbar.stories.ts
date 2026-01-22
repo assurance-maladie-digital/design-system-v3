@@ -1080,6 +1080,7 @@ export const OtherSlots: Story = {
 									variant="outlined"
 									size="small"
 									class="mx-5"
+									style="font-size: 16px; letter-spacing: 0;"
 								>
 									Exemple
 								</VBtn>
@@ -1115,6 +1116,7 @@ export const OtherSlots: Story = {
 										variant="outlined"
 										size="small"
 										class="mx-5"
+										style="font-size: 16px; letter-spacing: 0;"
 									>
 										Exemple
 									</VBtn>

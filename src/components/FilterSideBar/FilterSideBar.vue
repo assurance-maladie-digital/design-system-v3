@@ -244,6 +244,11 @@
 	}
 }
 
+.sy-filters-side-bar .v-btn, .sy-filters-side-bar__content .v-btn{
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+}
+
 .sy-filters-side-bar__close-btn,
 .sy-filters-side-bar__reset-btn,
 .sy-filters-side-bar__apply-btn,

@@ -117,7 +117,7 @@
 							:to="btnHref ? undefined : btnLink"
 							:href="btnHref"
 							color="primary"
-							class="mt-6"
+							class="sy-btn-return mt-6"
 						>
 							{{ btnText }}
 						</VBtn>
@@ -138,6 +138,11 @@
 </template>
 
 <style lang="scss" scoped>
+.sy-btn-return {
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+}
+
 .sy-code {
 	font-size: 6rem;
 	line-height: 6rem;

@@ -218,6 +218,11 @@
 	align-items: center;
 	flex-wrap: wrap;
 
+	.v-btn {
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+	}
+
 	> * {
 		grid-column: 1 / -1;
 	}

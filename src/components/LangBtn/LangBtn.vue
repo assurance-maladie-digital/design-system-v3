@@ -207,7 +207,7 @@
 .vd-lang-btn {
 	font-size: 16px;
 	text-transform: none;
-	letter-spacing: inherit;
+	letter-spacing: 0;
 
 	&:deep() {
 		.v-btn__underlay,

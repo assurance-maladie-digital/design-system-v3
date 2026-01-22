@@ -239,6 +239,11 @@
 <style lang="scss" scoped>
 @use '@/assets/tokens' as *;
 
+.sy-dialog-box-actions-ctn .v-btn{
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+}
+
 .sy-dialog-box-actions :deep(.v-btn) {
 	box-shadow: none;
 }

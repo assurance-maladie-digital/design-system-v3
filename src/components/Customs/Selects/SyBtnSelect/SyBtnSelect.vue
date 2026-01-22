@@ -233,6 +233,8 @@
 .sy-user-menu-btn {
 	outline: none;
 	padding: 12px !important;
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
 
 	&:hover::before {
 		background: #000;

@@ -303,6 +303,11 @@
 	background: transparent;
 }
 
+.vd-cookie-banner .vd-cookie-banner__inner .v-btn {
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+	}
+
 .vd-cookie-banner-content {
 	overflow-y: auto;
 	padding-right: 8px;

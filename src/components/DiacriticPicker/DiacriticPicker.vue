@@ -244,6 +244,11 @@
 	display: flex;
 	align-items: center;
 	padding: 0;
+
+	.v-btn {
+		font-size: var(--btn-font-size, 16px);
+		letter-spacing: var(--btn-letter-spacing, 0);
+	}
 }
 
 :deep(.sy-diacritic-dialog-content) {

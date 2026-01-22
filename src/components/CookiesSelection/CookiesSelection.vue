@@ -138,3 +138,9 @@
 		</VForm>
 	</VCard>
 </template>
+<style lang="scss" scoped>
+.vd-cookies-card .v-btn {
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+	}
+</style>

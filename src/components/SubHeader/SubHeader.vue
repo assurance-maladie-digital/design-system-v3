@@ -186,6 +186,8 @@
 
 .vd-sub-header-back-btn {
 	margin: 0 -6px;
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
 }
 
 .vd-data-list-group,

@@ -59,6 +59,17 @@
 		display: none;
 	}
 }
+ .v-btn.v-btn--size-default {
+    height: auto;
+    min-height: auto;
+    padding: 0;
+    font-size: inherit;
+  }
+
+.sy-back-btn {
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+}
 
 .sy-back-btn:focus-visible {
 	outline: 0;

@@ -319,6 +319,8 @@
 	width: auto !important;
 	height: auto !important;
 	flex-shrink: 0 !important;
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
 
 	// Assurer que l'icône reste visible en zoom texte 200%
 	:deep(.v-icon) {
@@ -363,7 +365,10 @@
 		outline-offset: 2px !important;
 	}
 }
-
+.overflow-btn , .hide-extra-btn{
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+}
 // Disable overflow button hover state
 .overflow-btn :deep(.v-btn__overlay) {
 	display: none;

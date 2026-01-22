@@ -128,6 +128,11 @@
 </template>
 
 <style lang="scss" scoped>
+.sy-download-btn {
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
+}
+
 .sy-download-btn :deep() {
 	.v-btn__content {
 		flex-wrap: wrap;

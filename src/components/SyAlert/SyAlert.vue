@@ -160,8 +160,7 @@
 	line-height: 0;
 	text-transform: none;
 	font-weight: bold;
-	letter-spacing: normal;
-
+	letter-spacing: var(--btn-letter-spacing, 0);
 	span {
 		font-size: 14px;
 	}

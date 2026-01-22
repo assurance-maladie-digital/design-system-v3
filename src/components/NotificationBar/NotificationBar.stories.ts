@@ -105,6 +105,7 @@ export const Default: Story = (args) => {
                 color="primary"
                 @click="envoyerNotification('Ceci est une notification de type : ' + argsType)"
                 class="ma-6"
+				style="font-size: 16px; letter-spacing: 0;"
             >
               Afficher la notification
             </VBtn>
@@ -131,6 +132,7 @@ Default.parameters = {
 					color="primary"
 					@click="envoyerNotification('Ceci est une notification')"
 					class="ma-6"
+					style="font-size: 16px; letter-spacing: 0;"
 				>
 					Afficher la notification
 				</VBtn>
@@ -180,6 +182,7 @@ Success.parameters = {
 					color="success"
 					@click="envoyerNotification('Ceci est une notification de succès')"
 					class="ma-6"
+					style="font-size: 16px; letter-spacing: 0;"
 				>
 					Afficher la notification
 				</VBtn>
@@ -229,6 +232,7 @@ Warning.parameters = {
 					color="warning"
 					@click="envoyerNotification('Ceci est une notification d\'avertissement')"
 					class="ma-6"
+					style="font-size: 16px; letter-spacing: 0;"
 				>
 					Afficher la notification
 				</VBtn>
@@ -278,6 +282,7 @@ Error.parameters = {
 					color="error"
 					@click="envoyerNotification('Ceci est une notification d\'erreur')"
 					class="ma-6"
+					style="font-size: 16px; letter-spacing: 0;"
 				>
 					Afficher la notification
 				</VBtn>
@@ -328,6 +333,7 @@ Bottom.parameters = {
 					color="primary"
 					@click="envoyerNotification('Ceci est une notification affichée en bas de l\'écran')"
 					class="ma-6"
+					style="font-size: 16px; letter-spacing: 0;"
 				>
 					Afficher la notification
 				</VBtn>
@@ -377,6 +383,7 @@ CustomCloseBtnText.parameters = {
 					color="primary"
 					@click="envoyerNotification('Ceci est une notification avec un texte de bouton personnalisé')"
 					class="ma-6"
+					style="font-size: 16px; letter-spacing: 0;"
 				>
 					Afficher la notification
 				</VBtn>
@@ -428,6 +435,7 @@ Customization.parameters = {
 					color="success"
 					@click="envoyerNotification('Ceci est une notification de succès')"
 					class="ma-6"
+					style="font-size: 16px; letter-spacing: 0;"
 				>
 					Afficher la notification
 				</VBtn>

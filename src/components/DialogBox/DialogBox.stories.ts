@@ -226,6 +226,7 @@ export const Default: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="rest"
@@ -248,6 +249,7 @@ export const Default: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"
@@ -296,6 +298,7 @@ export const ButtonTexts: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
+						style="font-size: 16px; letter-spacing: 0;"
 						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -319,6 +322,7 @@ export const ButtonTexts: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"
@@ -369,6 +373,7 @@ export const HideActions: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -389,6 +394,7 @@ export const HideActions: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"
@@ -436,6 +442,7 @@ export const Persistent: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -458,6 +465,7 @@ export const Persistent: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"
@@ -506,6 +514,7 @@ export const ActionsSlot: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -532,6 +541,7 @@ export const ActionsSlot: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"
@@ -582,6 +592,7 @@ export const TitleSlot: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -610,6 +621,7 @@ export const TitleSlot: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"
@@ -658,6 +670,7 @@ export const Width: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -680,6 +693,7 @@ export const Width: Story = {
 						<VBtn
 							color="primary"
 							@click="dialogOpen = !dialogOpen"
+							style="font-size: 16px; letter-spacing: 0;"
 						>Toggle DialogBox</VBtn>
 						<DialogBox
 							v-model="dialogOpen"
@@ -752,6 +766,7 @@ export const VuetifyOptions: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -774,6 +789,7 @@ export const VuetifyOptions: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"
@@ -848,6 +864,7 @@ export const Draggable: Story = {
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
 						color="primary"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -870,6 +887,7 @@ export const Draggable: Story = {
 					<VBtn
 						color="primary"
 						@click="dialogOpen = !dialogOpen"
+						style="font-size: 16px; letter-spacing: 0;"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-model="dialogOpen"

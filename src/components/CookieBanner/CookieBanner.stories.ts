@@ -246,7 +246,7 @@ export const Default: Story = {
 			},
 			template: `
 			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
+				<VBtn @click="open = true" style="font-size: 16px; letter-spacing: 0;" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<template #default v-if="args.default">
 						{{ args.default }}
@@ -345,7 +345,7 @@ export const WithoutCookiesItems: Story = {
 			},
 			template: `
 			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
+				<VBtn @click="open = true" style="font-size: 16px; letter-spacing: 0;" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open" >
 					<template #default v-if="args.default">
 						{{ args.default }}
@@ -402,7 +402,7 @@ export const BannerDescriptionSlot: Story = {
 			},
 			template: `
 			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
+				<VBtn @click="open = true" style="font-size: 16px; letter-spacing: 0;" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<p><b>Custom</b> description</p>
 				</CookieBanner>
@@ -505,7 +505,7 @@ export const CookiesDescriptionSlots: Story = {
 			},
 			template: `
 			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
+				<VBtn @click="open = true" style="font-size: 16px; letter-spacing: 0;" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open">
 					<template #cookie-description-contrast="{ cookie }">
 						voir : <a href="#">En savoir plus</a>
@@ -608,7 +608,7 @@ export const Customization: Story = {
 			},
 			template: `
 			<div style="height: 150px; display: flex; align-items: center; justify-content: center;">
-				<VBtn @click="open = true" v-if="!open">Ouvrir la bannière</VBtn>
+				<VBtn @click="open = true" style="font-size: 16px; letter-spacing: 0;" v-if="!open">Ouvrir la bannière</VBtn>
 				<CookieBanner v-bind="args" v-model="open" >
 					<template #default v-if="args.default">
 						{{ args.default }}

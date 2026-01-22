@@ -144,6 +144,11 @@
 	margin-left: auto;
 	align-items: end;
 
+	.v-btn {
+		font-size: var(--btn-font-size, 16px);
+		letter-spacing: var(--btn-letter-spacing, 0);
+	}
+
 	@media (width <= 600px) {
 		margin-left: 0;
 	}

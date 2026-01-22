@@ -182,6 +182,8 @@ $list-max-height: 248px;
 	max-width: none;
 	border-radius: 0 !important;
 	box-shadow: none !important;
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
 
 	:deep(.v-btn__content) {
 		flex-direction: inherit;
@@ -223,6 +225,8 @@ $list-max-height: 248px;
 	padding-block: 4px !important;
 	height: 48px !important;
 	border-radius: 0 !important;
+	font-size: var(--btn-font-size, 16px);
+	letter-spacing: var(--btn-letter-spacing, 0);
 
 	&:focus-visible {
 		outline: 0;
