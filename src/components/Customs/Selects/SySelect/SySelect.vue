@@ -24,11 +24,53 @@
 
 	// Définition des props avec typage correct pour modelValue
 	const props = defineProps({
-		modelValue: {
-			// En Vue, on ne peut pas mettre null directement comme type
-			// On utilise PropType pour définir le type complet incluant null
-			type: [Object, String, Number, Array] as PropType<Record<string, unknown> | string | number | null | SelectItemArrayType>,
-			default: null,
+		allowHtml: {
+			type: Boolean,
+			default: false,
+		},
+		autocomplete: {
+			type: String as PropType<'on' | 'off' | undefined | string>,
+			default: 'on',
+		},
+		bgColor: {
+			type: String,
+			default: 'white',
+		},
+		chips: {
+			type: Boolean,
+			default: false,
+		},
+		clearable: {
+			type: Boolean,
+			default: false,
+		},
+		density: {
+			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
+			default: 'default',
+		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		disableErrorHandling: {
+			type: Boolean,
+			default: false,
+		},
+		displayAsterisk: {
+			type: Boolean,
+			default: false,
+		},
+		errorMessages: {
+			type: [String, Array] as PropType<string | readonly string[]>,
+			default: () => [],
+		},
+		helpText: {
+			type: String,
+			default: '',
+		},
+		hideMessages: {
+			type: Boolean,
+			default: false,
 		},
 		items: {
 			type: Array as PropType<ItemType[]>,
@@ -38,39 +80,33 @@
 			type: String,
 			default: 'Sélectionnez une option',
 		},
-		errorMessages: {
-			type: [String, Array] as PropType<string | readonly string[]>,
-			default: () => [],
-		},
-		required: {
-			type: Boolean,
-			default: false,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
 		menuId: {
 			type: String,
 			default: 'sy-select-menu',
+		},
+		modelValue: {
+			// En Vue, on ne peut pas mettre null directement comme type
+			// On utilise PropType pour définir le type complet incluant null
+			type: [Object, String, Number, Array] as PropType<Record<string, unknown> | string | number | null | SelectItemArrayType>,
+			default: null,
+		},
+		multiple: {
+			type: Boolean,
+			default: false,
 		},
 		outlined: {
 			type: Boolean,
 			default: true,
 		},
-		textKey: {
-			type: String,
-			default: 'text',
-		},
 		plainTextKey: {
 			type: String,
 			default: '',
 		},
-		valueKey: {
-			type: String,
-			default: 'value',
+		readonly: {
+			type: Boolean,
+			default: false,
 		},
-		displayAsterisk: {
+		required: {
 			type: Boolean,
 			default: false,
 		},
@@ -78,57 +114,21 @@
 			type: Boolean,
 			default: false,
 		},
-		disableErrorHandling: {
-			type: Boolean,
-			default: false,
+		rules: {
+			type: Array as PropType<ValidationRule[]>,
+			default: () => [],
 		},
-		density: {
-			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
-			default: 'default',
-		},
-		bgColor: {
+		textKey: {
 			type: String,
-			default: 'white',
+			default: 'text',
 		},
-		readonly: {
-			type: Boolean,
-			default: false,
-		},
-		clearable: {
-			type: Boolean,
-			default: false,
-		},
-		hideMessages: {
-			type: Boolean,
-			default: false,
+		valueKey: {
+			type: String,
+			default: 'value',
 		},
 		width: {
 			type: String,
 			default: 'undefined',
-		},
-		multiple: {
-			type: Boolean,
-			default: false,
-		},
-		chips: {
-			type: Boolean,
-			default: false,
-		},
-		helpText: {
-			type: String,
-			default: '',
-		},
-		allowHtml: {
-			type: Boolean,
-			default: false,
-		},
-		autocomplete: {
-			type: String as PropType<'on' | 'off' | undefined | string>,
-			default: 'on',
-		},
-		rules: {
-			type: Array as PropType<ValidationRule[]>,
-			default: () => [],
 		},
 	})
 
