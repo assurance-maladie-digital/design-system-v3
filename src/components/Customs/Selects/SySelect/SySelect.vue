@@ -803,14 +803,20 @@
 		:class="{ 'horizontal': props.horizontal }"
 	>
 		<!-- Label horizontal sur la gauche -->
-		<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
-		<label
+		<div
 			v-if="props.horizontal"
-			class="sy-select__label-horizontal"
-			:for="inputId"
+			class="d-inline-flex align-baseline"
 		>
-			{{ labelWithAsterisk }}
-		</label>
+			<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
+			<label
+				class="sy-select__label-horizontal"
+				:for="inputId"
+			>
+				{{ labelWithAsterisk }}
+			</label>
+
+			<slot name="labelInfo" />
+		</div>
 
 		<div class="sy-select-wrapper">
 			<VMenu
