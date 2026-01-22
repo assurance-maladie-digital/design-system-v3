@@ -142,7 +142,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 .illustrated-data-tile__wrapper {
 	border-radius: 0.5rem;

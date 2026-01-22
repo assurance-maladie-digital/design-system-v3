@@ -177,7 +177,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 .tabs-btn-wrapper {
 	@media #{apTokens.$media-only-xs} {

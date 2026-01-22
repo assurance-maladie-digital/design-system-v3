@@ -416,7 +416,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 .amelipro-table__wrapper--desktop > div,
 .amelipro-table__wrapper--mobile > div {

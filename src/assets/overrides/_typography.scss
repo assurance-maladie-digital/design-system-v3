@@ -1,6 +1,6 @@
 /* Typography styles for CNAM and PA themes */
 @use '@/assets/tokens.scss' as *;
-@use '@/assets/amelipro/apTokens.scss' as *;
+@use '@/assets/amelipro/apTokensOld' as *;
 
 .theme-cnam,
 .theme-pa {
@@ -197,7 +197,7 @@
 }
 
 .theme-ap,
-.theme-apNew {
+.theme-apOld {
 	p {
 		font-size: $font-size-xs;
 	}
@@ -334,6 +334,10 @@
 	.pointer {
 		cursor: pointer;
 	}
+
+  .v-field--active .v-label.v-field-label {
+    font-weight: 700 !important;
+  }
 }
 
 // Font Styles

@@ -1,5 +1,7 @@
-@use '@/assets/amelipro/apTokens.scss' as *;
+@use '@/assets/amelipro/apTokensOld' as *;
 
-.border-0 {
-	border: 0;
+.theme-ap, .theme-apOld {
+  .border-0 {
+    border: 0;
+  }
 }

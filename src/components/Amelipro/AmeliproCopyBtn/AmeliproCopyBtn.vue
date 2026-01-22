@@ -52,7 +52,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 	.amelipro-copy-btn-wrapper {
 		position: relative;

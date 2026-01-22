@@ -306,7 +306,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 .v-btn {
 	letter-spacing: 0.64px;

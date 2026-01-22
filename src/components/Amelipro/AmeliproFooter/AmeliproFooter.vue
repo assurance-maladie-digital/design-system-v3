@@ -401,7 +401,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 :deep(.v-btn):focus {
 	outline-color: apTokens.$ap-white;

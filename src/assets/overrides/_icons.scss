@@ -1,10 +1,10 @@
-@use '@/assets/apNewTokens';
+@use '@/assets/apTokens';
 
-.v-theme--apNew.v-btn--icon .v-icon {
-	color: apNewTokens.$primary-base;
+.v-theme--ap.v-btn--icon .v-icon {
+  color: apTokens.$primary-base;
 	transition: color 0.2s ease;
 
 	&:hover {
-		color: apNewTokens.$secondary;
+      color: apTokens.$secondary;
 	}
 }

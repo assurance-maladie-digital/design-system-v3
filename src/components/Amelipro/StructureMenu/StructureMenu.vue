@@ -227,7 +227,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 .v-input.amelipro-switch {
 	margin-top: 0;

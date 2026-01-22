@@ -37,7 +37,7 @@ setup((app, { globals }) => {
 	// Apply theme class to <html> (document.documentElement) instead of #root
 	const applyThemeClass = (theme) => {
 		const rootElement = document.documentElement // Always exists
-		rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
+        rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-apOld')
 		rootElement.classList.add(`theme-${theme}`)
 	}
 
@@ -65,7 +65,7 @@ setup((app, { globals }) => {
 const globalTypes = {
 	theme: {
 		name: 'Theme',
-		description: 'Switch between CNAM, PA and AP themes',
+        description: 'Switch between CNAM, PA, AP and Old AP themes',
 		defaultValue: 'cnam',
 		toolbar: {
 			title: 'Thèmes',
@@ -73,7 +73,8 @@ const globalTypes = {
 			items: [
 				{ value: 'cnam', title: 'Thème CNAM' },
 				{ value: 'pa', title: 'Thème PA' },
-				{ value: 'ap', title: 'Thème AmeliPro' },
+                {value: 'ap', title: 'Thème AmeliPro'},
+                {value: 'apOld', title: 'Thème AmeliPro Old'},
 			],
 			dynamicTitle: true,
 		},
@@ -93,7 +94,7 @@ const preview: Preview = {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				vuetify.theme.change(context.globals.theme)
-				document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
+                document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-apOld')
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}

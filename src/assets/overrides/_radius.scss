@@ -54,12 +54,16 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 	}
 }
 
-// ✅ Apply theme-based ap and apNew
+// ✅ Apply theme-based ap and apOld
 .theme-ap,
-.theme-apNew {
-	@each $key, $value in $ap-radius {
-		--radius-#{$key}: #{$value};
-	}
+.theme-apOld {
+  @each $key, $value in $ap-radius {
+    --radius-#{$key}: #{$value};
+
+    .v-field {
+      border-radius: var(--radius-md) !important;
+    }
+  }
 }
 
 // ✅ Mixin to generate border-radius classes

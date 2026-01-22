@@ -216,7 +216,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 .ident-title {
 	font-size: apTokens.$font-size-xs !important;

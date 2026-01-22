@@ -290,7 +290,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokensOld' as apTokens;
 
 .amelipro-state-tile__pdf-download {
 	color: apTokens.$ap-blue-darken1;
