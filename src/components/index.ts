@@ -4,12 +4,12 @@
 export { default as FooterBar } from './FooterBar/FooterBar.vue'
 export { default as HeaderBar } from './HeaderBar/HeaderBar.vue'
 export { default as HeaderBurgerMenu } from './HeaderBar/HeaderBurgerMenu/HeaderBurgerMenu.vue'
-export { default as HeaderLoading } from './HeaderLoading/HeaderLoading.vue'
-export { default as HeaderLogo } from './HeaderBar/HeaderLogo/HeaderLogo.vue'
-export { default as HeaderMenuBtn } from './HeaderBar/HeaderMenuBtn/HeaderMenuBtn.vue'
 export { default as HeaderMenuItem } from './HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
 export { default as HeaderMenuSection } from './HeaderBar/HeaderBurgerMenu/HeaderMenuSection/HeaderMenuSection.vue'
 export { default as HeaderSubMenu } from './HeaderBar/HeaderBurgerMenu/HeaderSubMenu/HeaderSubMenu.vue'
+export { default as HeaderLogo } from './HeaderBar/HeaderLogo/HeaderLogo.vue'
+export { default as HeaderMenuBtn } from './HeaderBar/HeaderMenuBtn/HeaderMenuBtn.vue'
+export { default as HeaderLoading } from './HeaderLoading/HeaderLoading.vue'
 export { default as HeaderToolbar } from './HeaderToolbar/HeaderToolbar.vue'
 export { default as SubHeader } from './SubHeader/SubHeader.vue'
 
@@ -23,12 +23,13 @@ export { default as ToolbarContainer } from './ToolbarContainer/ToolbarContainer
 // Navigation
 // ===========================
 export { default as ContextualMenu } from './ContextualMenu/ContextualMenu.vue'
+export { default as SyPagination } from './Customs/SyPagination/SyPagination.vue'
+export { default as SyTabs } from './Customs/SyTabs/SyTabs.vue'
 export { default as ExternalLinks } from './ExternalLinks/ExternalLinks.vue'
 export { default as HeaderNavigationBar } from './HeaderNavigationBar/HeaderNavigationBar.vue'
 export { default as SkipLink } from './SkipLink/SkipLink.vue'
 export { default as SocialMediaLinks } from './SocialMediaLinks/SocialMediaLinks.vue'
-export { default as SyPagination } from './Customs/SyPagination/SyPagination.vue'
-export { default as SyTabs } from './Customs/SyTabs/SyTabs.vue'
+export { default as SyBtnMenu } from './SyBtnMenu/SyBtnMenu.vue'
 
 // ===========================
 // Boutons
@@ -45,6 +46,14 @@ export { default as UserMenuBtn } from './UserMenuBtn/UserMenuBtn.vue'
 // Formulaires
 // ===========================
 export { default as DatePicker } from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+export { default as Captcha } from './Captcha/Captcha.vue'
+export { default as SelectBtnField } from './Customs/Selects/SelectBtnField/SelectBtnField.vue'
+export { default as SyInputSelect } from './Customs/Selects/SyInputSelect/SyInputSelect.vue'
+export { default as SySelect } from './Customs/Selects/SySelect/SySelect.vue'
+export { default as SyCheckbox } from './Customs/SyCheckbox/SyCheckbox.vue'
+export { default as SyForm } from './Customs/SyForm/SyForm.vue'
+export { default as SyRadioGroup } from './Customs/SyRadioGroup/SyRadioGroup.vue'
+export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
 export { default as DiacriticPicker } from './DiacriticPicker/DiacriticPicker.vue'
 export { default as FileUpload } from './FileUpload/FileUpload.vue'
 export { default as LunarCalendar } from './LunarCalendar/LunarCalendar.vue'
@@ -56,16 +65,8 @@ export { indicatifs } from './PhoneField/indicatifs'
 export { default as PhoneField } from './PhoneField/PhoneField.vue'
 export { default as RangeField } from './RangeField/RangeField.vue'
 export { default as SearchListField } from './SearchListField/SearchListField.vue'
-export { default as SelectBtnField } from './Customs/Selects/SelectBtnField/SelectBtnField.vue'
-export { default as SyCheckbox } from './Customs/SyCheckbox/SyCheckbox.vue'
-export { default as SyInputSelect } from './Customs/Selects/SyInputSelect/SyInputSelect.vue'
-export { default as SySelect } from './Customs/Selects/SySelect/SySelect.vue'
 export { default as SyTextArea } from './SyTextArea/SyTextArea.vue'
-export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
-export { default as Captcha } from './Captcha/Captcha.vue'
-export { default as SyForm } from './Customs/SyForm/SyForm.vue'
-export { default as SyRadioGroup } from './Customs/SyRadioGroup/SyRadioGroup.vue'
 
 // ===========================
 // Tableaux
@@ -88,6 +89,7 @@ export { default as Accordion } from './Accordion/Accordion.vue'
 export { default as ChipList } from './ChipList/ChipList.vue'
 export * from './ChipList/types'
 export { default as CollapsibleList } from './CollapsibleList/CollapsibleList.vue'
+export { default as SyIcon } from './Customs/SyIcon/SyIcon.vue'
 export { default as DataList } from './DataList/DataList.vue'
 export { default as DataListGroup } from './DataListGroup/DataListGroup.vue'
 export { default as DataListItem } from './DataListItem/DataListItem.vue'
@@ -95,7 +97,6 @@ export { default as FileList } from './FileList/FileList.vue'
 export { default as FilePreview } from './FilePreview/FilePreview.vue'
 export { default as Logo } from './Logo/Logo.vue'
 export { default as LogoBrandSection } from './LogoBrandSection/LogoBrandSection.vue'
-export { default as SyIcon } from './Customs/SyIcon/SyIcon.vue'
 
 // ===========================
 // Feedback
@@ -121,8 +122,8 @@ export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 // Amelipro
 // ===========================
 export { default as AmeliproAccordion } from './Amelipro/AmeliproAccordion/AmeliproAccordion.vue'
-export { default as AmeliproAccordionGroup } from './Amelipro/AmeliproAccordionGroup/AmeliproAccordionGroup.vue'
 export { default as AmeliproAccordionFrieze } from './Amelipro/AmeliproAccordionFrieze/AmeliproAccordionFrieze.vue'
+export { default as AmeliproAccordionGroup } from './Amelipro/AmeliproAccordionGroup/AmeliproAccordionGroup.vue'
 export { default as AmeliproAccordionList } from './Amelipro/AmeliproAccordionList/AmeliproAccordionList.vue'
 export { default as AmeliproAccordionResult } from './Amelipro/AmeliproAccordionResult/AmeliproAccordionResult.vue'
 export { default as AmeliproAccordionResultList } from './Amelipro/AmeliproAccordionResultList/AmeliproAccordionResultList.vue'
@@ -130,10 +131,10 @@ export { default as AmeliproAutoCompleteField } from './Amelipro/AmeliproAutoCom
 export { default as AmeliproBadge } from './Amelipro/AmeliproBadge/AmeliproBadge.vue'
 export { default as AmeliproBreadcrumb } from './Amelipro/AmeliproBreadcrumb/AmeliproBreadcrumb.vue'
 export { default as AmeliproBtn } from './Amelipro/AmeliproBtn/AmeliproBtn.vue'
-export { default as AmeliproCard } from './Amelipro/AmeliproCard/AmeliproCard.vue'
 export { default as AmeliproCallback } from './Amelipro/AmeliproCallback/AmeliproCallback.vue'
-export { default as AmeliproCarousel } from './Amelipro/AmeliproCarousel/AmeliproCarousel.vue'
 export { default as AmeliproCaptcha } from './Amelipro/AmeliproCaptcha/AmeliproCaptcha.vue'
+export { default as AmeliproCard } from './Amelipro/AmeliproCard/AmeliproCard.vue'
+export { default as AmeliproCarousel } from './Amelipro/AmeliproCarousel/AmeliproCarousel.vue'
 export { default as AmeliproCheckbox } from './Amelipro/AmeliproCheckbox/AmeliproCheckbox.vue'
 export { default as AmeliproCheckboxGroup } from './Amelipro/AmeliproCheckboxGroup/AmeliproCheckboxGroup.vue'
 export { default as AmeliproChips } from './Amelipro/AmeliproChips/AmeliproChips.vue'
@@ -178,8 +179,8 @@ export { default as AmeliproTextField } from './Amelipro/AmeliproTextField/Ameli
 export { default as AmeliproTileBtn } from './Amelipro/AmeliproTileBtn/AmeliproTileBtn.vue'
 export { default as AmeliproTooltips } from './Amelipro/AmeliproTooltips/AmeliproTooltips.vue'
 export { default as AmeliproTransmission } from './Amelipro/AmeliproTransmission/AmeliproTransmission.vue'
-export { default as StructureMenu } from './Amelipro/StructureMenu/StructureMenu.vue'
 export { default as ServiceMenu } from './Amelipro/ServiceMenu/ServiceMenu.vue'
+export { default as StructureMenu } from './Amelipro/StructureMenu/StructureMenu.vue'
 export { default as UserInformationSummary } from './Amelipro/UserInformationSummary/UserInformationSummary.vue'
 export { default as UserMenu } from './Amelipro/UserMenu/UserMenu.vue'
 
@@ -188,10 +189,10 @@ export { default as UserMenu } from './Amelipro/UserMenu/UserMenu.vue'
 // ===========================
 export { useDateFormat } from '../composables/date/useDateFormatDayjs'
 export { useFieldValidation } from '../composables/rules/useFieldValidation'
-export { useNotificationService } from '../services/NotificationService'
-export { useValidation } from '../composables/validation/useValidation'
 export type { RuleOptions } from '../composables/rules/useFieldValidation'
 export { useValidatable } from '../composables/validation/useValidatable'
+export { useValidation } from '../composables/validation/useValidation'
+export { useNotificationService } from '../services/NotificationService'
 
 // ===========================
 // Directives
