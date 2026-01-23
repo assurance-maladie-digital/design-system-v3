@@ -1,4 +1,5 @@
-import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon } from 'vuetify/components'
+import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable } from 'vuetify/components'
+import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import type { StoryObj } from '@storybook/vue3'
 import { AccessibiliteItemsIndeterminate, AccessibiliteItemsValidated } from './AccessibiliteItems'
 import { mdiCheckboxMarkedCircle, mdiLink, mdiEye } from '@mdi/js'
@@ -15,7 +16,7 @@ export const AccessibilitePanel: StoryObj = {
 
 	render: () => {
 		return {
-			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon },
+			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, SyIcon },
 
 			setup() {
 				const icon = checkIcon
@@ -37,7 +38,7 @@ export const AccessibilitePanel: StoryObj = {
 						<v-expansion-panels value="opened" multiple>
 							<v-expansion-panel v-for="(item, index) in AccessibiliteItemsIndeterminate" :key="index" style="background-color: rgba(42, 96, 158, 0.1); margin-bottom: 10px;">
 								<v-expansion-panel-title>
-									<VIcon :icon="iconEye" style="margin-right: 5px; color:#5778b7;"/>
+									   <SyIcon :icon="iconEye" style="margin-right: 5px; color:#5778b7;"/>
 									{{ item.title }}
 								</v-expansion-panel-title>
 								<v-expansion-panel-text>
@@ -56,7 +57,7 @@ export const AccessibilitePanel: StoryObj = {
 														 style="margin-top:15px; font-size: 13px;line-height: 16px;">
 														<p style="font-weight: bold;">Méthodologie du test : <a
 															href="{{i.link}}" target="blank">
-															<VIcon :icon="linkICon"/>
+															   <SyIcon :icon="linkICon"/>
 														</a></p>
 
 														<p>{{ value.info1 }}</p>
@@ -82,7 +83,7 @@ export const AccessibilitePanel: StoryObj = {
 														 style="margin-top:15px; font-size: 13px;line-height: 16px;">
 														<p style="font-weight: bold;">Méthodologie du test : <a
 															href="value.link" target="blank">
-															<VIcon :icon="linkICon"/>
+															   <SyIcon :icon="linkICon"/>
 														</a></p>
 
 														<p>{{ element.info1 }}</p>
@@ -113,7 +114,7 @@ export const AccessibilitePanel: StoryObj = {
 								v-for="(item, index) in AccessibiliteItemsValidated"
 								:key="index" style="background-color: rgba(53,135,0,0.1); margin-bottom: 10px;">
 								<v-expansion-panel-title>
-									<VIcon color="green" :icon="icon" style="margin-right: 5px;"/>
+									   <SyIcon color="green" :icon="icon" style="margin-right: 5px;"/>
 									{{ item.title }}
 								</v-expansion-panel-title>
 								<v-expansion-panel-text>
@@ -131,7 +132,7 @@ export const AccessibilitePanel: StoryObj = {
 														 style="margin-top:15px; font-size: 13px;line-height: 16px;">
 														<p style="font-weight: bold;">Méthodologie du test : <a
 															href="value.link" target="blank">
-															<VIcon :icon="linkICon"/>
+															   <SyIcon :icon="linkICon"/>
 														</a></p>
 														<p>{{ element.info1 }}</p>
 														<p>{{ element.info2 }}</p>
@@ -160,7 +161,7 @@ export const Legende: StoryObj = {
 	},
 	render: (args) => {
 		return {
-			components: { VIcon },
+			components: { SyIcon },
 			setup() {
 				return { args }
 			},

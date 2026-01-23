@@ -1,7 +1,8 @@
 import { mdiAccount } from '@mdi/js'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyBtnSelect from './SyBtnSelect.vue'
-import { VIcon, VListItem, VListItemTitle } from 'vuetify/components'
+import { VListItem, VListItemTitle } from 'vuetify/components'
+import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 const meta: Meta<typeof SyBtnSelect> = {
 	title: 'Composants/Formulaires/Selects/SyBtnSelect',
@@ -58,7 +59,6 @@ const items = [
 		{ text: 'Administration', value: 'Administration', link: '/admin' },
 		{ text: 'Profil', value: 'Profil', link: '/profile' },
 		{ text: 'Paramètres', value: 'Paramètres', link: '/settings' },
-		{ text: 'Profil', value: 'Profil', link: '/profile' },
 	]
 </script>
 				`,
@@ -71,8 +71,8 @@ const items = [
 			{ text: 'Administration', value: 'Administration', link: '/admin' },
 			{ text: 'Profil', value: 'Profil', link: '/profile' },
 			{ text: 'Paramètres', value: 'Paramètres', link: '/settings' },
-			{ text: 'Profil', value: 'Profil', link: '/profile' },
 		],
+		modelValue: 'Administration',
 	},
 	render: (args) => {
 		return {
@@ -127,7 +127,7 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnSelect, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -155,7 +155,7 @@ export const WithSlotPrependIcon: Story = {
   	:menu-items="items"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" color="secondary" />
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
     </template>
   </SyBtnSelect>
 </template>
@@ -184,7 +184,7 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnSelect, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -192,7 +192,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative/>
                   </template>
                 </SyBtnSelect>
               </div>
@@ -216,7 +216,7 @@ export const WithSlotAppendIcon: Story = {
   	:menu-items="items"
   >
     <template #append-icon>
-      <VIcon :icon="mdiAccount" color="secondary" />
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
     </template>
   </SyBtnSelect>
 </template>
@@ -242,7 +242,7 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnSelect, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -250,7 +250,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #append-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative />
                   </template>
                 </SyBtnSelect>
               </div>
@@ -275,7 +275,7 @@ export const WithIconOnly: Story = {
   	icon-only
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" color="secondary" />
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
     </template>
   </SyBtnSelect>
 </template>
@@ -302,7 +302,7 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnSelect, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -310,7 +310,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative />
                   </template>
                 </SyBtnSelect>
               </div>
@@ -396,7 +396,7 @@ export const WithCustomKeys: Story = {
     :menu-items="menuItems"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" />
+	<SyIcon :icon="mdiAccount" decorative />
     </template>
   </SyBtnSelect>
 </template>
@@ -429,7 +429,7 @@ const menuItems = [
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnSelect, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -439,7 +439,7 @@ const menuItems = [
                     v-bind="args"
                 >
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount"/>
+					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                 </SyBtnSelect>
               </div>
@@ -463,7 +463,7 @@ export const WithMultipleSlots: Story = {
   	:menu-items="menuItems"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" />
+	<SyIcon :icon="mdiAccount" decorative />
     </template>
     <template #footer-list-item>
       <VListItem @click="console.log('logout')">
@@ -493,7 +493,7 @@ const menuItems = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon, VListItem, VListItemTitle },
+			components: { SyBtnSelect, SyIcon, VListItem, VListItemTitle },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -501,7 +501,7 @@ const menuItems = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount"/>
+					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                   <template #footer-list-item>
                     <VListItem @click="console.log('logout')">
@@ -530,10 +530,11 @@ export const WithCustomStyles: Story = {
   	:menu-items="items"
   	>
     <template #prepend-icon>
-      <VIcon 
+	<SyIcon 
       	:icon="mdiAccount" 
       	class="mr-2"
-      	color="secondary" 
+      	color="secondary"
+		decorative
       />
     </template>
   </SyBtnSelect>
@@ -560,7 +561,7 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnSelect, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -568,10 +569,11 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnSelect v-bind="args">
                   <template #prepend-icon>
-                    <VIcon
+					<SyIcon
                         :icon="mdiAccount"
                         class="mr-2"
                         color="secondary"
+						decorative
                     />
                   </template>
                 </SyBtnSelect>
@@ -597,7 +599,7 @@ export const WithStyledOptions: Story = {
     :options="options"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" />
+	<SyIcon :icon="mdiAccount" decorative />
     </template>
   </SyBtnSelect>
 </template>
@@ -632,7 +634,7 @@ const options = {
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnSelect, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
@@ -642,7 +644,7 @@ const options = {
                     v-bind="args"
                 >
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount"/>
+					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                 </SyBtnSelect>
               </div>
