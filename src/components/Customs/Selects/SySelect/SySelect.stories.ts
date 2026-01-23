@@ -951,3 +951,59 @@ export const Append: Story = {
 			`,
 	}),
 }
+
+export const Horizontal: Story = {
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		label: 'Label horizontal',
+		horizontal: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+					<template>
+						<SySelect
+							v-model="value"
+							:items="items"
+							horizontal
+						/>
+					</template>
+					`,
+			},
+			{
+				name: 'Script',
+				code: `
+					<script setup lang="ts">
+						import { SySelect } from '@cnamts/synapse'
+						
+						const items =  [
+							{ text: 'Option 1', value: '1' },
+							{ text: 'Option 2', value: '2' },
+							{ text: 'Option 3', value: '3' },
+						],
+					</script>
+					`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SySelect },
+		setup() {
+			return { args }
+		},
+		template: `
+				<div class="pa-4">
+					<SySelect
+						v-bind="args"
+						horizontal
+					/>
+				</div>
+			`,
+	}),
+}
