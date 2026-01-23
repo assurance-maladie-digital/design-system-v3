@@ -53,7 +53,7 @@ export const Info: Story = {
 			template: `
 			  <AmeliproMessage :closable="false" class="mb-4">
 				<strong>Ce composant est déprécié</strong>, il ne sera plus maintenu ou mis à jour.
-				Nous vous recommandons d'utiliser à la place le composant <strong><a href='http://localhost:6006/?path=/docs/composants-layout-pagecontainer--docs' style='color: white;' onmouseover="this.style.color='lightgray';" onmouseout="this.style.color='white';">PageContainer</a></strong>.
+				Nous vous recommandons d'utiliser à la place le composant <strong><a href='https://cnam-design-system.netlify.app/?path=/docs/composants-layout-pagecontainer--docs' style='color: white;' onmouseover="this.style.color='lightgray';" onmouseout="this.style.color='white';">PageContainer</a></strong>.
 			  </AmeliproMessage>
 			`,
 		}
