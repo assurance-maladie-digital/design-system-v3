@@ -1,9 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import SyAlert from '../../../SyAlert/SyAlert.vue'
-import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
+import {
+	VBtn,
+	VMenu,
+	VList,
+	VListItem,
+	VListItemTitle,
+	VForm,
+} from 'vuetify/components'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
+import AmeliproTooltips from '@/components/Amelipro/AmeliproTooltips/AmeliproTooltips.vue'
 
 const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/Selects/SySelect',
@@ -24,7 +32,8 @@ const meta: Meta<typeof SySelect> = {
 		},
 		plainTextKey: {
 			control: 'text',
-			description: 'Nom de la propriété qui contient le texte à afficher en mode texte brut (utile dans le cas de données HTML)',
+			description:
+        'Nom de la propriété qui contient le texte à afficher en mode texte brut (utile dans le cas de données HTML)',
 		},
 		allowHtml: {
 			control: 'boolean',
@@ -61,11 +70,24 @@ const meta: Meta<typeof SySelect> = {
 		},
 		width: {
 			control: 'text',
-			description: 'Permet de définir une largeur personnalisée pour le champ de sélection',
+			description:
+        'Permet de définir une largeur personnalisée pour le champ de sélection',
 		},
 		helpText: {
 			control: 'text',
 			description: 'Texte d\'aide à la saisie',
+		},
+		horizontal: {
+			control: 'boolean',
+			description: 'Passe le label sur la meme ligne que le select',
+		},
+		append: {
+			description:
+        'Slot permettant d’ajouter des éléments à la suite du champs (à droite)',
+		},
+		labelInfo: {
+			description:
+        'Slot permettant d’ajouter des informations supplémentaires au label quand horizontal est true',
 		},
 	},
 } as Meta<typeof SySelect>
@@ -291,7 +313,8 @@ export const RequiredWithAsterisk: Story = {
 		},
 		docs: {
 			description: {
-				story: 'Version du champ de sélection requis avec un astérisque visuel.',
+				story:
+          'Version du champ de sélection requis avec un astérisque visuel.',
 			},
 		},
 		sourceCode: [
@@ -359,7 +382,8 @@ export const MultipleSelection: Story = {
 		},
 		docs: {
 			description: {
-				story: 'Exemple de sélection multiple avec SySelect. Les options dans le menu déroulant sont affichées avec des cases à cocher pour faciliter la sélection multiple.',
+				story:
+          'Exemple de sélection multiple avec SySelect. Les options dans le menu déroulant sont affichées avec des cases à cocher pour faciliter la sélection multiple.',
 			},
 		},
 		sourceCode: [
@@ -452,7 +476,8 @@ export const ChipsDisplay: Story = {
 		},
 		docs: {
 			description: {
-				story: 'Exemple de sélection multiple avec affichage en chips. Les options sélectionnées sont affichées sous forme de chips dans le champ, et les options dans le menu déroulant sont affichées avec des cases à cocher.',
+				story:
+          'Exemple de sélection multiple avec affichage en chips. Les options sélectionnées sont affichées sous forme de chips dans le champ, et les options dans le menu déroulant sont affichées avec des cases à cocher.',
 			},
 		},
 		sourceCode: [
@@ -788,4 +813,73 @@ const submitForm = () => {
 			`,
 		}
 	},
+}
+
+export const LabelInfo: Story = {
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		label: 'Label avec info-bulle',
+		horizontal: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+					<template>
+					<p>Le slot <code>labelInfo</code> permet d’ajouter une info-bulle à droite du label quand la prop horizontal est true.</p>
+						<SySelect
+							v-model="value"
+							:items="items"
+							text-key="customKey"
+							horizontal>
+						<template #labelInfo>
+      <AmeliproTooltips
+        tooltip-text="Info-bulle personnalisée"
+        unique-id="amelipro-tooltip-id"
+      />
+    </template>
+	</SySelect>
+					</template>
+					`,
+			},
+			{
+				name: 'Script',
+				code: `
+					<script setup lang="ts">
+						import { SySelect } from '@cnamts/synapse'
+						
+						const items =  [
+							{ customKey: 'Choix 1', value: '1' },
+							{ customKey: 'Choix 2', value: '2' },
+						],
+					</script>
+					`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SySelect, AmeliproTooltips },
+		setup() {
+			return { args }
+		},
+		template: `
+				<div class="pa-4">
+					<SySelect
+						v-bind="args"
+						horizontal>
+						<template #labelInfo>
+	  <AmeliproTooltips
+		tooltip-text="Info-bulle personnalisée"
+		unique-id="amelipro-tooltip-id"
+	  />
+	</template>
+					</SySelect>
+				</div>
+			`,
+	}),
 }
