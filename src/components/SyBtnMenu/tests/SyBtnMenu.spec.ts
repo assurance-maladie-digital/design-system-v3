@@ -1,32 +1,38 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import SyBtnSelect from '../SyBtnSelect.vue'
+import SyBtnMenu from '../SyBtnMenu.vue'
 
-describe('SyBtnSelect', () => {
+describe('SyBtnMenu', () => {
 	it('renders the component with default props', () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				primaryInfo: 'John Doe',
 			},
+			attachTo: document.body,
 		})
 
 		expect(wrapper.exists()).toBe(true)
 		expect(wrapper.text()).toContain('John Doe')
+
+		wrapper.unmount()
 	})
 
 	it('shows secondaryInfo if provided', () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				primaryInfo: 'John Doe',
 				secondaryInfo: 'Additional Info',
 			},
+			attachTo: document.body,
 		})
 
 		expect(wrapper.text()).toContain('Additional Info')
+
+		wrapper.unmount()
 	})
 
 	it('emits "update:modelValue" when an item is selected', async () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				modelValue: null,
 				menuItems: [
@@ -35,6 +41,7 @@ describe('SyBtnSelect', () => {
 				],
 				primaryInfo: 'John Doe',
 			},
+			attachTo: document.body,
 		})
 
 		const button = wrapper.find('.sy-user-menu-btn')
@@ -50,13 +57,16 @@ describe('SyBtnSelect', () => {
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual([
 			{ text: 'Option 1', value: 'option1' },
 		])
+
+		wrapper.unmount()
 	})
 
 	it('toggles the menu open and closed', async () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				primaryInfo: 'John Doe',
 			},
+			attachTo: document.body,
 		})
 
 		const button = wrapper.find('.sy-user-menu-btn')
@@ -67,14 +77,17 @@ describe('SyBtnSelect', () => {
 
 		await button.trigger('click')
 		expect(wrapper.vm.isOpen).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('formats menu items correctly', () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				primaryInfo: 'John Doe',
 				menuItems: ['Option 1', 'Option 2'],
 			},
+			attachTo: document.body,
 		})
 
 		const formattedItems = wrapper.vm.formattedItems
@@ -82,59 +95,73 @@ describe('SyBtnSelect', () => {
 			{ text: 'Option 1', value: 'Option 1' },
 			{ text: 'Option 2', value: 'Option 2' },
 		])
+
+		wrapper.unmount()
 	})
 
 	it('updates selectedItem when modelValue changes', async () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				modelValue: 'initial-value',
 				primaryInfo: 'John Doe',
 			},
+			attachTo: document.body,
 		})
 
 		expect(wrapper.vm.selectedItem).toBe('initial-value')
 
 		await wrapper.setProps({ modelValue: 'new-value' })
 		expect(wrapper.vm.selectedItem).toBe('new-value')
+
+		wrapper.unmount()
 	})
 
 	it('renders the primaryInfo in a span when isMobileVersion and hideIcon are true', async () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				primaryInfo: 'John Doe',
 				isMobileView: true,
 				hideIcon: true,
 			},
+			attachTo: document.body,
 		})
 
 		const span = wrapper.find('span.font-weight-bold.text-caption')
 
 		expect(span.text()).toBe('John Doe')
+
+		wrapper.unmount()
 	})
 
 	it('does not render the span if isMobileVersion is false', () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				primaryInfo: 'John Doe',
 				isMobileView: false,
 				hideIcon: true,
 			},
+			attachTo: document.body,
 		})
 
 		const span = wrapper.find('span.font-weight-bold.text-sm-caption')
 		expect(span.exists()).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('does not render the span if hideIcon is false', () => {
-		const wrapper = mount(SyBtnSelect, {
+		const wrapper = mount(SyBtnMenu, {
 			props: {
 				primaryInfo: 'John Doe',
 				isMobileView: true,
 				hideIcon: false,
 			},
+			attachTo: document.body,
 		})
 
 		const span = wrapper.find('span.font-weight-bold.text-sm-caption')
 		expect(span.exists()).toBe(false)
+
+		wrapper.unmount()
 	})
 })

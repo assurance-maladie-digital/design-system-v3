@@ -9,7 +9,7 @@ const iconEye = mdiEye
 const linkICon = mdiLink
 
 export default {
-	title: 'Composants/Formulaires/Selects/SyBtnSelect/Accessibilité',
+	title: 'Composants/Navigation/SyBtnMenu/Accessibilité',
 }
 
 export const AccessibilitePanel: StoryObj = {
@@ -186,7 +186,11 @@ export const Legende: StoryObj = {
 					Problèmes relevés par Tanaguru
 				  </div>
 				</div>
-			  </div>
+			</div>
+			<div class="mt-4">
+				<p>Rapport d’audit manuel : <a href="/audits/SyBtnMenu.xlsx" style="color:#0C41BD;">Voir le rapport</a></p>
+				<p style="color: grey; font-size: 14px">Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/918" target="_blank" style="color:#0C41BD;">PR #918</a>)</p>
+			</div>
             `,
 		}
 	},
