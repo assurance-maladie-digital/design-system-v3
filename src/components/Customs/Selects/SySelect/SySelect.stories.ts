@@ -883,3 +883,71 @@ export const LabelInfo: Story = {
 			`,
 	}),
 }
+
+export const Append: Story = {
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		label: 'Label',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+					<template>
+					<p>Le slot <code>append</code> permet, par exemple, d’ajouter une info-bulle à droite du champ de text.</p>
+						<SySelect
+							v-model="value"
+							:items="items"
+							text-key="customKey"
+					>
+						<template #append>
+      <AmeliproTooltips
+        tooltip-text="Info-bulle personnalisée"
+        unique-id="amelipro-tooltip-id"
+      />
+    </template>
+	</SySelect>
+					</template>
+					`,
+			},
+			{
+				name: 'Script',
+				code: `
+					<script setup lang="ts">
+						import { SySelect } from '@cnamts/synapse'
+						
+						const items =  [
+							{ customKey: 'Choix 1', value: '1' },
+							{ customKey: 'Choix 2', value: '2' },
+						],
+					</script>
+					`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SySelect, AmeliproTooltips },
+		setup() {
+			return { args }
+		},
+		template: `
+				<div class="pa-4">
+					<SySelect
+						v-bind="args"
+						>
+						<template #append>
+	  <AmeliproTooltips
+		tooltip-text="Info-bulle personnalisée"
+		unique-id="amelipro-tooltip-id"
+	  />
+	</template>
+					</SySelect>
+				</div>
+			`,
+	}),
+}
