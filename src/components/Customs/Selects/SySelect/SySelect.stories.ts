@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import SyAlert from '../../../SyAlert/SyAlert.vue'
-import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
+import SyForm from '../../SyForm/SyForm.vue'
+import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 
@@ -947,7 +948,7 @@ export const FormValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <VForm @submit.prevent="submitForm">
+  <SyForm @submit="onSubmit">
     <SySelect
       v-model="formData.option"
       :items="options"
@@ -963,7 +964,7 @@ export const FormValidation: Story = {
     >
       Soumettre
     </VBtn>
-  </VForm>
+  </SyForm>
 </template>
         `,
 			},
@@ -972,8 +973,8 @@ export const FormValidation: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
-import { VBtn, VForm } from 'vuetify/components'
+import { SySelect, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const formData = ref({
   option: ''
@@ -985,9 +986,12 @@ const options = [
   { text: 'Option 3', value: '3' },
 ]
 
-const submitForm = () => {
-  // Traitement du formulaire
-  console.log('Formulaire soumis:', formData.value)
+const onSubmit = (event) => {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + JSON.stringify(formData.value))
+  } else {
+    alert('Formulaire invalide : veuillez choisir une option.')
+  }
 }
 </script>
         `,
@@ -1007,21 +1011,26 @@ const submitForm = () => {
 	},
 	render: (args) => {
 		return {
-			components: { SySelect, VBtn, VForm },
+			components: { SySelect, SyForm, VBtn },
 			setup() {
 				const formData = ref({
 					option: '',
 				})
 
-				const submitForm = () => {
-					console.log('Formulaire soumis:', formData.value)
+				const onSubmit = (event: { isValid: boolean }) => {
+					if (event.isValid) {
+						alert(`Formulaire valide : ${JSON.stringify(formData.value)}`)
+					}
+					else {
+						alert('Formulaire invalide : veuillez choisir une option.')
+					}
 				}
 
-				return { args, formData, submitForm }
+				return { args, formData, onSubmit }
 			},
 			template: `
 				<div class="pa-4">
-					<VForm @submit.prevent="submitForm">
+					<SyForm @submit="onSubmit">
 						<SySelect
 							v-model="formData.option"
 							v-bind="args"
@@ -1034,7 +1043,7 @@ const submitForm = () => {
 						>
 							Soumettre
 						</VBtn>
-					</VForm>
+					</SyForm>
 				</div>
 			`,
 		}
