@@ -414,26 +414,23 @@
 		queueMicrotask(() => validateDates(true))
 	}
 
-	const datePickerModelValue = computed(() => mapUtcMidnightToLocalMidnight(selectedDates.value))
+	const datePickerModelValue = computed(() =>
+		mapUtcMidnightToLocalMidnight(selectedDates.value),
+	)
 
-	const handleDatePickerModelValueUpdate = (value: Date | (Date | null)[] | null) => {
+	const handleDatePickerModelValueUpdate = (
+		value: Date | (Date | null)[] | null,
+	) => {
 		if (props.readonly) return
 
-		const filteredValue = Array.isArray(value)
+		const dates = Array.isArray(value)
 			? value.filter((d): d is Date => d instanceof Date)
 			: value
 
-		// Normalisation via useDateSelection (00:00 UTC)
-		if (Array.isArray(filteredValue)) {
-			dateSelectionResult.updateSelectedDates(filteredValue)
-		}
-		else {
-			dateSelectionResult.updateSelectedDates(filteredValue)
-		}
+		// normalizeToUtcMidnight est appliqué dans updateSelectedDates
+		dateSelectionResult.updateSelectedDates(dates)
 
-		void nextTick().then(() => {
-			updateDisplayFormattedDate()
-		})
+		void nextTick().then(updateDisplayFormattedDate)
 	}
 
 	watch(selectedDates, (newValue) => {
