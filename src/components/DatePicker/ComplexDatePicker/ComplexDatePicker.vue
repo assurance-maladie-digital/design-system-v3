@@ -485,6 +485,21 @@
 		}
 	})
 
+	watch(selectedDates, (newValue) => {
+		let baseDate: Date | null = null
+		if (Array.isArray(newValue)) {
+			baseDate = newValue.find(d => d instanceof Date && !Number.isNaN(d.getTime())) ?? null
+		}
+		else if (newValue instanceof Date && !Number.isNaN(newValue.getTime())) {
+			baseDate = newValue
+		}
+		const date = baseDate ?? new Date()
+		currentMonth.value = date.getMonth().toString()
+		currentMonthName.value = dayjs(date).format('MMMM')
+		currentYear.value = date.getFullYear().toString()
+		currentYearName.value = date.getFullYear().toString()
+	}, { immediate: true })
+
 	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
 		const cleanedInput = input.replace(/[^\d]/g, '')
 		const separator = props.format.match(/[^DMY]/)?.[0] || '/'
@@ -943,6 +958,22 @@
 	const { labelWithAsterisk } = useAsteriskDisplay(props)
 	const { displayedDateString } = useDisplayedDateString({ selectedDates, rangeBoundaryDates, todayInString })
 
+	const hasSelectedDate = computed(() => {
+		if (!selectedDates.value) return false
+		if (Array.isArray(selectedDates.value)) {
+			return selectedDates.value.some(d => d instanceof Date && !Number.isNaN(d.getTime()))
+		}
+		return selectedDates.value instanceof Date && !Number.isNaN(selectedDates.value.getTime())
+	})
+
+	const headerTitle = computed(() => {
+		if (hasSelectedDate.value) return displayedDateString.value
+		if (currentMonthName.value && currentYearName.value) {
+			return `${currentMonthName.value.charAt(0).toUpperCase() + currentMonthName.value.slice(1)} ${currentYearName.value}`
+		}
+		return headerDate.value
+	})
+
 	const handleSelectToday = () => {
 		selectToday(selectedDates)
 		const today = new Date()
@@ -1162,7 +1193,7 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ selectedDates ? displayedDateString : headerDate }}
+							{{ headerTitle }}
 						</h3>
 					</template>
 					<template

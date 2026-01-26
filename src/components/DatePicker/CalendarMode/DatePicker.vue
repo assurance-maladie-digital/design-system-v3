@@ -131,10 +131,25 @@
 	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
 	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
 
-	// Utilisation du composable pour l'affichage formaté des dates
 	const { displayedDateString } = useDisplayedDateString({
 		selectedDates,
 		todayInString,
+	})
+
+	const hasSelectedDate = computed(() => {
+		if (!selectedDates.value) return false
+		if (Array.isArray(selectedDates.value)) {
+			return selectedDates.value.some(d => d instanceof Date && !Number.isNaN(d.getTime()))
+		}
+		return selectedDates.value instanceof Date && !Number.isNaN(selectedDates.value.getTime())
+	})
+
+	const headerTitle = computed(() => {
+		if (hasSelectedDate.value) return displayedDateString.value
+		if (currentMonthName.value && currentYearName.value) {
+			return `${currentMonthName.value.charAt(0).toUpperCase() + currentMonthName.value.slice(1)} ${currentYearName.value}`
+		}
+		return headerDate.value
 	})
 
 	const onblur = ref(false)
@@ -779,16 +794,20 @@
 		}
 	}, { immediate: true })
 
-	// Reset month/year names when clearing the date
 	watch(selectedDates, (newValue) => {
-		if (!newValue) {
-			const today = new Date()
-			currentMonth.value = today.getMonth().toString()
-			currentMonthName.value = dayjs(today).format('MMMM')
-			currentYear.value = today.getFullYear().toString()
-			currentYearName.value = today.getFullYear().toString()
+		let baseDate: Date | null = null
+		if (Array.isArray(newValue)) {
+			baseDate = newValue.find(d => d instanceof Date && !Number.isNaN(d.getTime())) ?? null
 		}
-	})
+		else if (newValue instanceof Date && !Number.isNaN(newValue.getTime())) {
+			baseDate = newValue
+		}
+		const date = baseDate ?? new Date()
+		currentMonth.value = date.getMonth().toString()
+		currentMonthName.value = dayjs(date).format('MMMM')
+		currentYear.value = date.getFullYear().toString()
+		currentYearName.value = date.getFullYear().toString()
+	}, { immediate: true })
 
 	const toggleDatePicker = () => {
 		if (props.disabled || props.readonly) return
@@ -1020,7 +1039,7 @@
 					</template>
 					<template #header>
 						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ selectedDates ? displayedDateString : headerDate }}
+							{{ headerTitle }}
 						</h3>
 					</template>
 					<template
