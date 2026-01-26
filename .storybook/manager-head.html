@@ -29,11 +29,7 @@
 
         // Initial check in case the elements are already present
         window.addEventListener('click', () => {
-            menuItems.forEach((menuId) => {
-                if (typeof addCustomIcon === 'function') {
-                    addCustomIcon(menuId)
-                }
-            });
+            menuItems.forEach(addCustomIcon);
         });
     }); */
 </script>
