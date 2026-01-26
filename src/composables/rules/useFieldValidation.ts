@@ -41,7 +41,7 @@ export function useFieldValidation() {
 
 		// If dateStr is already a Date object, return it
 		if (dateStr instanceof Date) {
-			return dateStr
+			return new Date(dateStr.getTime())
 		}
 
 		const parts = dateStr.split(/[-/.]/)

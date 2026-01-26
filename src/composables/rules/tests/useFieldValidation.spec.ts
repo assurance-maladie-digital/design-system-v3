@@ -269,6 +269,11 @@ describe('useFieldValidation', () => {
 		}])
 		const rule = rules[0]!
 
+		const original = new Date(2023, 0, 10)
+		const originalTime = original.getTime()
+		rule(original)
+		expect(original.getTime()).toBe(originalTime)
+
 		// 9 janvier 2023 est avant la date de référence
 		expect(rule(new Date(2023, 0, 9))).toEqual({ error: 'Date cannot be before reference date.' })
 		// 10 janvier 2023 est la date de référence
@@ -308,6 +313,11 @@ describe('useFieldValidation', () => {
 			},
 		}])
 		const rule = rules[0]!
+
+		const original = new Date(2023, 0, 20)
+		const originalTime = original.getTime()
+		rule(original)
+		expect(original.getTime()).toBe(originalTime)
 
 		// 21 janvier 2023 est après la date de référence
 		expect(rule(new Date(2023, 0, 21))).toEqual({ error: 'Date cannot be after reference date.' })
