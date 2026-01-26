@@ -1710,6 +1710,216 @@ export const BidirectionalValidation: Story = {
 	},
 }
 
+export const UTC: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+							<button
+								type="button"
+								style="padding: 6px 10px; border: 1px solid #cfd6e6; border-radius: 6px; background: white; cursor: pointer;"
+								@click="selectedTimeZone = 'Europe/Paris'"
+							>
+								Europe/Paris
+							</button>
+							<button
+								type="button"
+								style="padding: 6px 10px; border: 1px solid #cfd6e6; border-radius: 6px; background: white; cursor: pointer;"
+								@click="selectedTimeZone = 'America/Guadeloupe'"
+							>
+								DOM-TOM (America/Guadeloupe)
+							</button>
+						</div>
+						<DatePicker
+							v-model="value"
+							placeholder="Sélectionner une date"
+							format="DD/MM/YYYY"
+						/>
+						<p class="mt-4" style="font-family: monospace;">
+							v-model: {{ value }}
+						</p>
+						<p style="font-family: monospace;">
+							Date ISO (UTC): {{ parsedIso }}
+						</p>
+						<p style="font-family: monospace;">
+							Date affichée dans le timezone sélectionné ({{ selectedTimeZone }}): {{ dateInSelectedTimeZone }}
+						</p>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { computed, ref, watch } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+					
+					const baseUtcDate = new Date('2023-01-15T00:00:00.000Z')
+					const value = ref('')
+					const selectedTimeZone = ref<'UTC' | 'Europe/Paris' | 'America/Guadeloupe'>('UTC')
+					const { parseDate } = useDateFormat()
+					
+					const dateStringInTimeZone = (date: Date, timeZone: string) => {
+						const parts = new Intl.DateTimeFormat('fr-FR', {
+							timeZone,
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+						}).formatToParts(date)
+						
+						const day = parts.find(p => p.type === 'day')?.value ?? ''
+						const month = parts.find(p => p.type === 'month')?.value ?? ''
+						const year = parts.find(p => p.type === 'year')?.value ?? ''
+						return day && month && year ? (day + '/' + month + '/' + year) : ''
+					}
+					
+					watch(selectedTimeZone, () => {
+						value.value = dateStringInTimeZone(baseUtcDate, selectedTimeZone.value)
+					}, { immediate: true })
+					
+					const parsedIso = computed(() => {
+						const d = parseDate(value.value, 'DD/MM/YYYY')
+						return d ? d.toISOString() : ''
+					})
+					
+					const dateInSelectedTimeZone = computed(() => {
+						const d = parseDate(value.value, 'DD/MM/YYYY')
+						if (!d) return ''
+						return new Intl.DateTimeFormat('fr-FR', {
+							timeZone: selectedTimeZone.value,
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+							second: '2-digit',
+							hour12: false,
+							timeZoneName: 'short',
+						}).format(d)
+					})
+					
+					const timezoneOffset = computed(() => {
+						const d = parseDate(value.value, 'DD/MM/YYYY')
+						return d ? d.getTimezoneOffset() : null
+					})
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render(args) {
+		return {
+			components: { DatePicker, SyAlert },
+			setup() {
+				const { parseDate } = useDateFormat()
+				const format = computed(() => args.format ?? 'DD/MM/YYYY')
+				const baseUtcDate = new Date('2023-01-15T00:00:00.000Z')
+				const value = ref('')
+				const selectedTimeZone = ref<'Europe/Paris' | 'America/Guadeloupe'>('Europe/Paris')
+				const dateStringInTimeZone = (date: Date, timeZone: string) => {
+					const parts = new Intl.DateTimeFormat('fr-FR', {
+						timeZone,
+						year: 'numeric',
+						month: '2-digit',
+						day: '2-digit',
+					}).formatToParts(date)
+					const day = parts.find(p => p.type === 'day')?.value ?? ''
+					const month = parts.find(p => p.type === 'month')?.value ?? ''
+					const year = parts.find(p => p.type === 'year')?.value ?? ''
+					return day && month && year ? `${day}/${month}/${year}` : ''
+				}
+				watch(selectedTimeZone, () => {
+					value.value = dateStringInTimeZone(baseUtcDate, selectedTimeZone.value)
+				}, { immediate: true })
+				const parsedIso = computed(() => {
+					const d = parseDate(value.value, format.value)
+					return d ? d.toISOString() : ''
+				})
+				const dateInSelectedTimeZone = computed(() => {
+					const d = parseDate(value.value, format.value)
+					if (!d) return ''
+					return new Intl.DateTimeFormat('fr-FR', {
+						timeZone: selectedTimeZone.value,
+						year: 'numeric',
+						month: '2-digit',
+						day: '2-digit',
+						hour: '2-digit',
+						minute: '2-digit',
+						second: '2-digit',
+						hour12: false,
+						timeZoneName: 'short',
+					}).format(d)
+				})
+				const timezoneOffset = computed(() => {
+					const d = parseDate(value.value, format.value)
+					return d ? d.getTimezoneOffset() : null
+				})
+				watch(value, () => {
+					args['onUpdate:modelValue']?.(value.value)
+				})
+				return { args, value, selectedTimeZone, parsedIso, dateInSelectedTimeZone, timezoneOffset }
+			},
+			template: `
+				<div class="d-flex flex-column gap-4 pa-4">
+					<SyAlert type="info" variant="tonal" class="mb-6">
+						Selon le timezone, une même date UTC peut correspondre à un jour différent en local.
+					</SyAlert>
+					<div class="mb-4" style="display: flex; gap: 8px; flex-wrap: wrap;">
+						<button
+							type="button"
+							style="padding: 6px 10px; border: 1px solid #cfd6e6; border-radius: 6px; background: white; cursor: pointer;"
+							@click="selectedTimeZone = 'Europe/Paris'"
+						>
+							Europe/Paris
+						</button>
+						<button
+							type="button"
+							style="padding: 6px 10px; border: 1px solid #cfd6e6; border-radius: 6px; background: white; cursor: pointer;"
+							@click="selectedTimeZone = 'America/Guadeloupe'"
+						>
+							DOM-TOM (America/Guadeloupe)
+						</button>
+					</div>
+					<DatePicker v-model="value" v-bind="args" />
+					<div class="mt-4" style="font-family: monospace;">
+						<div>timezone sélectionné : {{ selectedTimeZone }}</div>
+						<div>v-model (DD/MM/YYYY) : {{ value }}</div>
+						<div>Date ISO (UTC) : {{ parsedIso }}</div>
+						<div>Date affichée dans le timezone sélectionné : {{ dateInSelectedTimeZone }}</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
 export const WithFormSubmission: Story = {
 	parameters: {
 		a11y: {
