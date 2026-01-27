@@ -1,4 +1,4 @@
-import { VDataTable, VExpansionPanel, VExpansionPanels, VExpansionPanelText, VExpansionPanelTitle, VIcon } from 'vuetify/components'
+import { VIcon } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
 import { checkIcon, linkICon, croixIcon } from '@/constants/icons'
 import Usages from '@/components/Usages/Usages.vue'
@@ -18,7 +18,7 @@ export const UsagePage: StoryObj = {
 
 	render: () => {
 		return {
-			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon, Usages },
+			components: { VIcon, Usages },
 
 			setup() {
 				const icon = checkIcon
