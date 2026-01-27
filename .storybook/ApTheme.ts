@@ -4,7 +4,7 @@ export default create({
 	base: 'light',
 	brandTitle: 'AmeliPro',
 	brandUrl: './',
-	brandImage: '/logos/logo-amelipro.svg',
+    brandImage: '/logos/logo-amelipro-color.svg',
 	brandTarget: '_self',
 
     colorPrimary: '#0084b2',
