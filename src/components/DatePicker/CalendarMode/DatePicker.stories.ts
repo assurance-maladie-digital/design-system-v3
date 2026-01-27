@@ -1592,6 +1592,174 @@ export const UTC: Story = {
 	},
 }
 
+export const UTC_4: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<DatePicker
+							v-model="value"
+							placeholder="Sélectionner une date"
+							format="DD/MM/YYYY"
+						/>
+
+						<p class="mt-4" style="font-family: monospace;">timezone sélectionné : {{ selectedTimeZone }}</p>
+						<p style="font-family: monospace;">v-model (DD/MM/YYYY) : {{ value }}</p>
+						<p style="font-family: monospace;">Date ISO (UTC) : {{ parsedIso }}</p>
+						<p style="font-family: monospace;">Date affichée dans le timezone sélectionné : {{ dateInSelectedTimeZone }}</p>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { computed, ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+
+					const selectedTimeZone = 'America/Guadeloupe'
+					const baseUtcDate = new Date('2023-01-15T00:00:00.000Z')
+					const { parseDate } = useDateFormat()
+
+					const dateStringInTimeZone = (date: Date, timeZone: string) => {
+						const parts = new Intl.DateTimeFormat('fr-FR', {
+							timeZone,
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+						}).formatToParts(date)
+
+						const day = parts.find(p => p.type === 'day')?.value ?? ''
+						const month = parts.find(p => p.type === 'month')?.value ?? ''
+						const year = parts.find(p => p.type === 'year')?.value ?? ''
+						return day && month && year ? (day + '/' + month + '/' + year) : ''
+					}
+
+					// Exemple d'intégration: on initialise le v-model à partir d'une date UTC de référence
+					const value = ref(dateStringInTimeZone(baseUtcDate, selectedTimeZone))
+
+					const parsedIso = computed(() => {
+						const d = parseDate(value.value, 'DD/MM/YYYY')
+						return d ? d.toISOString() : ''
+					})
+
+					const dateInSelectedTimeZone = computed(() => {
+						const d = parseDate(value.value, 'DD/MM/YYYY')
+						if (!d) return ''
+						return new Intl.DateTimeFormat('fr-FR', {
+							timeZone: selectedTimeZone,
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+							second: '2-digit',
+							hour12: false,
+							timeZoneName: 'short',
+						}).format(d)
+					})
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render(args) {
+		return {
+			components: { DatePicker, SyAlert },
+			setup() {
+				const { parseDate } = useDateFormat()
+				const format = computed(() => args.format ?? 'DD/MM/YYYY')
+				const selectedTimeZone = 'America/Guadeloupe'
+				const baseUtcDate = new Date('2023-01-15T00:00:00.000Z')
+
+				const dateStringInTimeZone = (date: Date, timeZone: string) => {
+					const parts = new Intl.DateTimeFormat('fr-FR', {
+						timeZone,
+						year: 'numeric',
+						month: '2-digit',
+						day: '2-digit',
+					}).formatToParts(date)
+					const day = parts.find(p => p.type === 'day')?.value ?? ''
+					const month = parts.find(p => p.type === 'month')?.value ?? ''
+					const year = parts.find(p => p.type === 'year')?.value ?? ''
+					return day && month && year ? `${day}/${month}/${year}` : ''
+				}
+
+				const value = ref(dateStringInTimeZone(baseUtcDate, selectedTimeZone))
+
+				const parsedIso = computed(() => {
+					const d = parseDate(value.value, format.value)
+					return d ? d.toISOString() : ''
+				})
+
+				const dateInSelectedTimeZone = computed(() => {
+					const d = parseDate(value.value, format.value)
+					if (!d) return ''
+					return new Intl.DateTimeFormat('fr-FR', {
+						timeZone: selectedTimeZone,
+						year: 'numeric',
+						month: '2-digit',
+						day: '2-digit',
+						hour: '2-digit',
+						minute: '2-digit',
+						second: '2-digit',
+						hour12: false,
+						timeZoneName: 'short',
+					}).format(d)
+				})
+
+				watch(value, () => {
+					args['onUpdate:modelValue']?.(value.value)
+				})
+
+				return { args, value, selectedTimeZone, parsedIso, dateInSelectedTimeZone }
+			},
+			template: `
+				<div class="d-flex flex-column gap-4 pa-4">
+					<SyAlert type="info" variant="tonal" class="mb-6">
+						Exemple UTC-4: une date à minuit UTC peut correspondre à la veille en timezone local.
+					</SyAlert>
+					<DatePicker v-model="value" v-bind="args" />
+					<div class="mt-4" style="font-family: monospace;">
+						<div>timezone sélectionné : {{ selectedTimeZone }}</div>
+						<div>v-model (DD/MM/YYYY) : {{ value }}</div>
+						<div>Date ISO (UTC) : {{ parsedIso }}</div>
+						<div>Date affichée dans le timezone sélectionné : {{ dateInSelectedTimeZone }}</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+UTC_4.storyName = 'UTC-4'
+
 export const BidirectionalValidation: Story = {
 	parameters: {
 		a11y: {
