@@ -8,4 +8,13 @@
 	$utilities: (
 		'typography': false,
 	),
+	$button-sizes: (
+		'font-size': 1rem,
+	),
+	$button-text-letter-spacing: normal,
+	$button-elevation: (
+		'default': 0,
+		'hover': 0,
+		'active': 0,
+	),
 );
