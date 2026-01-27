@@ -21,7 +21,7 @@ export const UsagePage: StoryObj = {
 
 	render: () => {
 		return {
-			components: { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon, Usages },
+			components: { VIcon, Usages },
 
 			setup() {
 				const icon = checkIcon
