@@ -19,13 +19,7 @@ export const Legende: StoryObj = {
 				return { args }
 			},
 			template: `
-			  <p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
-			  <div>
-				<p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories du RGAA</a>.</p>
-				<p style="margin-bottom: 12px;font-weight:bold;">Pour rappel le composant seul ne garantie pas
-				  l'accessibilité du site.</p>
-				
-			  </div>
+			
 			  <div class="mt-4 mb-6">
 				  <p>Rapport d’audit manuel : <a href="/audits/HeaderLoding.xlsx" style="color:#0C41BD;">Voir le rapport</a></p>
 				  <p style="color: grey; font-size: 14px">Correctifs associés (<a href="https://github.com/orgs/assurance-maladie-digital/projects/8/views/6?pane=issue&itemId=112098733&issue=assurance-maladie-digital%7Cdesign-system-v3%7C639" target="_blank" style="color:#0C41BD;">issue #639</a>)</p>
