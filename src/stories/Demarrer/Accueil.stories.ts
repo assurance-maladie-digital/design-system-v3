@@ -100,10 +100,15 @@ export const Welcome: StoryObj = {
 			},
 			template: `
 				<div class="mt-12 mb-12">
-					<p style="font-family: Arial !important; font-size: 1rem !important;">Bienvenue dans notre guide d'aide à la conception, pensé par et pour les équipes <span v-if="theme === 'ap'">d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.</p>
+                  <p style="font-family: Arial !important; font-size: 1rem !important;">Bienvenue dans notre guide
+                    d'aide à la conception, pensé par et pour les équipes <span
+                        v-if="theme === 'ap' || theme === 'apOld'"
+                    >d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.
+                  </p>
 					<p style="font-family: Arial !important; font-size: 1rem !important;" class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de
 						plateformes web de qualité, alignées avec nos standards et nos valeurs.</p>
-					<p v-if="theme !== 'ap'" class="mt-4">Vous y trouverez toutes les ressources essentielles pour vous
+                  <p v-if="theme !== 'apOld'" class="mt-4">Vous y trouverez toutes les ressources
+                    essentielles pour vous
 						guider tout au long du processus de conception :</p>
 				</div>
 			`,
@@ -123,7 +128,7 @@ export const DesignSystem: StoryObj = {
 			},
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
-              <div class="mb-12" v-if="theme !== 'ap'">
+              <div class="mb-12" v-if="theme !== 'apOld'">
                   <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
@@ -173,7 +178,7 @@ export const Guidelines: StoryObj = {
 			},
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
-				<div v-if="theme !== 'ap'">
+              <div v-if="theme !== 'apOld'">
 					<h3 class="text-h5 font-weight-bold mb-6 text-primary">Guidelines</h3>
 					<VRow>
 						<VCol cols="12" md="4">
