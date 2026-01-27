@@ -5,19 +5,19 @@ import { mdiCheckboxMarkedCircle } from '@mdi/js'
 const checkIcon = mdiCheckboxMarkedCircle
 
 export default {
-  title: 'Composants/Formulaires/NirField/Accessibilité',
+	title: 'Composants/Formulaires/NirField/Accessibilité',
 }
 export const Legende: StoryObj = {
-  args: {
-    icon: checkIcon,
-  },
-  render: (args) => {
-    return {
-      components: { VIcon },
-      setup() {
-        return { args }
-      },
-      template: `
+	args: {
+		icon: checkIcon,
+	},
+	render: (args) => {
+		return {
+			components: { VIcon },
+			setup() {
+				return { args }
+			},
+			template: `
 			  <p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
 			  <div>
 				<p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories du RGAA</a>.</p>
@@ -30,7 +30,7 @@ export const Legende: StoryObj = {
 			  </div>
 			  </div>
             `,
-    }
-  },
-  tags: ['!dev'],
+		}
+	},
+	tags: ['!dev'],
 }
