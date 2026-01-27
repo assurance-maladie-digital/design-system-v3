@@ -7,45 +7,45 @@ const checkIcon = mdiCheckboxMarkedCircle
 const keyboardIcon = mdiKeyboard
 
 export default {
-	title: 'Composants/Formulaires/Selects/SySelect/Accessibilité',
+  title: 'Composants/Formulaires/Selects/SySelect/Accessibilité',
 }
 
 // Story masquée qui n'apparaît que dans le MDX
 export const ComboboxKeyboardNavigation: StoryObj = {
-	tags: ['!dev'],
-	render: () => {
-		return {
-			components: { VTable, VIcon },
-			setup() {
-				const keyboardData = [
-					{
-						touche: 'Flèche bas',
-						action: 'Ouvre le menu et déplace le focus sur la première option (ou la suivante si une option est déjà sélectionnée)',
-					},
-					{
-						touche: 'Flèche haut',
-						action: 'Ouvre le menu et déplace le focus sur la dernière option',
-					},
-					{
-						touche: 'Flèches haut/bas',
-						action: 'Déplace le focus dans la liste des options (sans modifier la sélection)',
-					},
-					{
-						touche: 'Entrée',
-						action: 'Sélectionne l\'option active et ferme le menu',
-					},
-					{
-						touche: 'Échap',
-						action: 'Ferme le menu sans modifier la sélection',
-					},
-					{
-						touche: 'Caractères imprimables',
-						action: 'Déplace le focus sur l\'option commençant par le(s) caractère(s) saisi(s)',
-					},
-				]
-				return { keyboardData, keyboardIcon }
-			},
-			template: `
+  tags: ['!dev'],
+  render: () => {
+    return {
+      components: { VTable, VIcon },
+      setup() {
+        const keyboardData = [
+          {
+            touche: 'Flèche bas',
+            action: 'Ouvre le menu et déplace le focus sur la première option (ou la suivante si une option est déjà sélectionnée)',
+          },
+          {
+            touche: 'Flèche haut',
+            action: 'Ouvre le menu et déplace le focus sur la dernière option',
+          },
+          {
+            touche: 'Flèches haut/bas',
+            action: 'Déplace le focus dans la liste des options (sans modifier la sélection)',
+          },
+          {
+            touche: 'Entrée',
+            action: 'Sélectionne l\'option active et ferme le menu',
+          },
+          {
+            touche: 'Échap',
+            action: 'Ferme le menu sans modifier la sélection',
+          },
+          {
+            touche: 'Caractères imprimables',
+            action: 'Déplace le focus sur l\'option commençant par le(s) caractère(s) saisi(s)',
+          },
+        ]
+        return { keyboardData, keyboardIcon }
+      },
+      template: `
 				<div>
 					<h3><v-icon :icon="keyboardIcon" style="margin-right: 8px;"/>Navigation au clavier</h3>
 					<p>Le composant SySelect implémente le pattern de navigation au clavier recommandé par le W3C pour les combobox select-only.</p>
@@ -66,41 +66,27 @@ export const ComboboxKeyboardNavigation: StoryObj = {
 					<p style="margin-top: 16px;"><strong>Note:</strong> Le focus DOM reste toujours sur l'élément combobox, tandis que le focus visuel est géré via <code>aria-activedescendant</code>.</p>
 				</div>
 			`,
-		}
-	},
+    }
+  },
 }
 
 export const Legende: StoryObj = {
-	args: {
-		icon: checkIcon,
-	},
-	render: (args) => {
-		return {
-			components: { VIcon },
-			setup() {
-				return { args }
-			},
-			template: `
+  args: {
+    icon: checkIcon,
+  },
+  render: (args) => {
+    return {
+      components: { VIcon },
+      setup() {
+        return { args }
+      },
+      template: `
 			  <p style="color: grey;font-size: 11px; margin-bottom: 12px;">Date de conception: 20/11/2024</p>
 			  <div>
 				<p>Le tableau ci-dessous liste nos recommandations suivant les <a target="blank" style="color:#0C41BD;" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#contenu">catégories du RGAA</a>.</p>
 				<p style="margin-bottom: 12px;font-weight:bold;">Pour rappel le composant seul ne garantie pas
-				  l'accessibilité du site.</p>
-				<div style="font-size: 14px">
-				  <p>Nous avons deux façons de relever les problèmes d'accessibilité des composants :</p>
-				  <div>
-					<v-btn variant="tonal" color="grey" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
-					  Audit
-					</v-btn>
-					Problèmes relevés par le projet
-				  </div>
-				  <div>
-					<v-btn variant="tonal" color="red" size="x-small" style="margin: 2px;font-size: 8px;" rounded>
-					  Tanaguru
-					</v-btn>
-					Problèmes relevés par Tanaguru
-				  </div>
-				</div>
+				   l'accessibilité du site.</p>
+			</div>
         <div class="mt-4">
 					  <p>Rapport d’audit manuel : <a href="/audits/SySelect.xlsx" style="color:#0C41BD;">Voir le
 						  rapport</a></p>
@@ -114,7 +100,7 @@ export const Legende: StoryObj = {
 				  </div>
 			  </div>
             `,
-		}
-	},
-	tags: ['!dev'],
+    }
+  },
+  tags: ['!dev'],
 }
