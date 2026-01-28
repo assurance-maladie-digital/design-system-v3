@@ -24,7 +24,6 @@ export const Legende: StoryObj = {
 					  <p>Rapport d’audit manuel : <a href="/audits/ChipList.xlsx" style="color:#0C41BD;">Voir le rapport</a></p>
 					  <p style="color: grey; font-size: 14px">Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/814" target="_blank" style="color:#0C41BD;">issue #814</a>)</p>
 				  </div>
-			  </div>
             `,
 		}
 	},

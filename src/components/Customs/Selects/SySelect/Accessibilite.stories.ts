@@ -94,7 +94,6 @@ export const Legende: StoryObj = {
 						  style="color:#0C41BD;"
 					  >issue #931</a>)</p>
 				  </div>
-			  </div>
             `,
 		}
 	},

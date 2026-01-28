@@ -29,7 +29,6 @@ export const Legende: StoryObj = {
                       style="color:#0C41BD;"
                   >issue #640</a>)</p>
                 </div>
-			  </div>
             `,
 		}
 	},
