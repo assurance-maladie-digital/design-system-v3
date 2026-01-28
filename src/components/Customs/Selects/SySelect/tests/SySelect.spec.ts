@@ -1132,247 +1132,183 @@ describe('SySelect.vue', () => {
 		})
 	})
 
-	describe('Disposition horizontale (horizontal prop)', () => {
-		it('renders horizontal label when horizontal is true', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: true,
-				},
-				attachTo: document.body,
-			})
-
-			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
-			expect(horizontalLabel.exists()).toBe(true)
-			expect(horizontalLabel.text()).toBe('Choisissez une option')
-
-			wrapper.unmount()
-		})
-
-		it('does not render horizontal label when horizontal is false', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: false,
-				},
-				attachTo: document.body,
-			})
-
-			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
-			expect(horizontalLabel.exists()).toBe(false)
-
-			wrapper.unmount()
-		})
-
-		it('applies horizontal class to container when horizontal is true', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					horizontal: true,
-				},
-				attachTo: document.body,
-			})
-
-			const container = wrapper.find('.sy-select-container')
-			expect(container.classes()).toContain('horizontal')
-
-			wrapper.unmount()
-		})
-
-		it('does not apply horizontal class when horizontal is false', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					horizontal: false,
-				},
-				attachTo: document.body,
-			})
-
-			const container = wrapper.find('.sy-select-container')
-			expect(container.classes()).not.toContain('horizontal')
-
-			wrapper.unmount()
-		})
-
-		it('hides VTextField label when horizontal is true', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: true,
-				},
-				attachTo: document.body,
-			})
-
-			// La prop :label du VTextField doit être vide en mode horizontal
-			const vTextField = wrapper.findComponent({ name: 'VTextField' })
-			expect(vTextField.props('label')).toBe('')
-
-			wrapper.unmount()
-		})
-
-		it('shows VTextField label when horizontal is false', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: false,
-				},
-				attachTo: document.body,
-			})
-
-			// La prop :label du VTextField doit contenir le label en mode vertical
-			const vTextField = wrapper.findComponent({ name: 'VTextField' })
-			expect(vTextField.props('label')).toContain('Choisissez une option')
-
-			wrapper.unmount()
-		})
-
-		it('horizontal label has correct for attribute linking to input', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: true,
-				},
-				attachTo: document.body,
-			})
-
-			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
-			const inputId = wrapper.find('input').attributes('id')
-
-			expect(horizontalLabel.attributes('for')).toBe(inputId)
-
-			wrapper.unmount()
-		})
-
-		it('displays asterisk in horizontal label when displayAsterisk and required are true', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: true,
-					displayAsterisk: true,
-					required: true,
-				},
-				attachTo: document.body,
-			})
-
-			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
-			expect(horizontalLabel.text()).toContain('*')
-
-			wrapper.unmount()
-		})
-
-		it('does not display asterisk in horizontal label when displayAsterisk is false', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: true,
-					displayAsterisk: false,
-					required: true,
-				},
-				attachTo: document.body,
-			})
-
-			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
-			expect(horizontalLabel.text()).not.toContain('*')
-
-			wrapper.unmount()
-		})
-
-		it('horizontal layout works with required validation', () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: true,
-					required: true,
-				},
-				attachTo: document.body,
-			})
-
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			const instance = wrapper.vm as any
-			const isValid = instance.validateOnSubmit()
-
-			// Validation should fail because no value is selected
-			expect(isValid).toBe(false)
-
-			wrapper.unmount()
-		})
-
-		it('horizontal layout works with custom rules', () => {
-			const rules = [
-				(value: unknown) => value !== undefined || 'La valeur est requise',
-			]
-			const wrapper = mount(SySelect, {
-				props: {
-					label: 'Choisissez une option',
-					horizontal: true,
-					rules,
-					modelValue: '1',
-				},
-				attachTo: document.body,
-			})
-
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			const instance = wrapper.vm as any
-			const isValid = instance.validateOnSubmit()
-
-			// Validation should pass because value is defined
-			expect(isValid).toBe(true)
-
-			wrapper.unmount()
-		})
-
-		it('maintains menu functionality in horizontal layout', async () => {
-			const items = [{ text: 'Option 1', value: '1' }]
-			const wrapper = mount(SySelect, {
-				props: {
-					items,
-					horizontal: true,
-				},
-				attachTo: document.body,
-			})
-
-			// Menu should open and close normally
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
-
-			const vList = wrapper.findComponent(VList)
-			expect(vList.exists()).toBe(true)
-
-			wrapper.unmount()
-		})
-
-		it('works with all select features in horizontal mode', async () => {
-			const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
-			const wrapper = mount(SySelect, {
-				props: {
-					items,
-					label: 'Choisissez une option',
-					horizontal: true,
-					required: true,
-					displayAsterisk: true,
-					clearable: true,
-				},
-				attachTo: document.body,
-			})
-
-			// Check horizontal label with asterisk
-			const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
-			expect(horizontalLabel.text()).toContain('Choisissez une option *')
-
-			// Check that container has horizontal class
-			const container = wrapper.find('.sy-select-container')
-			expect(container.classes()).toContain('horizontal')
-
-			// Check that select can still be used
-			await wrapper.find('.sy-select').trigger('click')
-			await wrapper.vm.$nextTick()
-
-			const vList = wrapper.findComponent(VList)
-			expect(vList.exists()).toBe(true)
-
-			wrapper.unmount()
-		})
-	})
-
 	describe('Slots', () => {
+		describe('Slot prepend', () => {
+			it('renders slot content in prepend', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [{ text: 'Option 1', value: '1' }],
+					},
+					slots: {
+						prepend: '<div id="prepend-content">Prepend Content</div>',
+					},
+					attachTo: document.body,
+				})
+
+				const prependContent = wrapper.find('#prepend-content')
+				expect(prependContent.exists()).toBe(true)
+				expect(prependContent.text()).toBe('Prepend Content')
+
+				wrapper.unmount()
+			})
+
+			it('displays prepend slot before the input field', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [{ text: 'Option 1', value: '1' }],
+					},
+					slots: {
+						prepend: '<span id="custom-prepend">Custom Prepend</span>',
+					},
+					attachTo: document.body,
+				})
+
+				const prependSlot = wrapper.find('#custom-prepend')
+				expect(prependSlot.exists()).toBe(true)
+				expect(prependSlot.text()).toBe('Custom Prepend')
+
+				wrapper.unmount()
+			})
+
+			it('can render multiple elements in prepend slot', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [{ text: 'Option 1', value: '1' }],
+					},
+					slots: {
+						prepend: `
+							<div id="prepend-item-1">Item 1</div>
+							<div id="prepend-item-2">Item 2</div>
+						`,
+					},
+					attachTo: document.body,
+				})
+
+				expect(wrapper.find('#prepend-item-1').exists()).toBe(true)
+				expect(wrapper.find('#prepend-item-2').exists()).toBe(true)
+
+				wrapper.unmount()
+			})
+
+			it('renders prepend slot with dynamic content', async () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [{ text: 'Option 1', value: '1' }],
+					},
+					slots: {
+						prepend: '<div id="prepend-content">{{ message }}</div>',
+					},
+					global: {
+						mocks: {
+							message: 'Dynamic Prepend',
+						},
+					},
+					attachTo: document.body,
+				})
+
+				expect(wrapper.find('#prepend-content').exists()).toBe(true)
+
+				wrapper.unmount()
+			})
+
+			it('prepend slot works with clearable option', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [{ text: 'Option 1', value: '1' }],
+						clearable: true,
+						modelValue: '1',
+					},
+					slots: {
+						prepend: '<button id="custom-prepend-btn">Custom Prepend Button</button>',
+					},
+					attachTo: document.body,
+				})
+
+				// Both the clear button and custom prepend content should be present
+				expect(wrapper.find('.sy-select__clear-icon').exists()).toBe(true)
+				expect(wrapper.find('#custom-prepend-btn').exists()).toBe(true)
+
+				wrapper.unmount()
+			})
+
+			it('prepend slot works with multiple selection', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [
+							{ text: 'Option 1', value: '1' },
+							{ text: 'Option 2', value: '2' },
+						],
+						multiple: true,
+					},
+					slots: {
+						prepend: '<div id="prepend-multiple">Prepend in Multiple Mode</div>',
+					},
+					attachTo: document.body,
+				})
+
+				expect(wrapper.find('#prepend-multiple').exists()).toBe(true)
+
+				wrapper.unmount()
+			})
+
+			it('prepend slot receives correct context', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [{ text: 'Option 1', value: '1' }],
+					},
+					slots: {
+						prepend: '<div id="prepend-test">Test</div>',
+					},
+					attachTo: document.body,
+				})
+
+				const prependElement = wrapper.find('#prepend-test')
+				expect(prependElement.exists()).toBe(true)
+
+				wrapper.unmount()
+			})
+
+			it('both prepend and append slots work together', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [{ text: 'Option 1', value: '1' }],
+					},
+					slots: {
+						prepend: '<div id="prepend-dual">Prepend</div>',
+						append: '<div id="append-dual">Append</div>',
+					},
+					attachTo: document.body,
+				})
+
+				expect(wrapper.find('#prepend-dual').exists()).toBe(true)
+				expect(wrapper.find('#append-dual').exists()).toBe(true)
+
+				wrapper.unmount()
+			})
+
+			it('prepend slot works with chips mode', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						items: [
+							{ text: 'Option 1', value: '1' },
+							{ text: 'Option 2', value: '2' },
+						],
+						multiple: true,
+						chips: true,
+						modelValue: ['1', '2'],
+					},
+					slots: {
+						prepend: '<div id="prepend-chips">Prepend with Chips</div>',
+					},
+					attachTo: document.body,
+				})
+
+				expect(wrapper.find('#prepend-chips').exists()).toBe(true)
+				expect(wrapper.findAll('.v-chip').length).toBe(2)
+
+				wrapper.unmount()
+			})
+		})
 		describe('Slot append', () => {
 			it('renders slot content in append', () => {
 				const wrapper = mount(SySelect, {
@@ -1471,25 +1407,6 @@ describe('SySelect.vue', () => {
 				wrapper.unmount()
 			})
 
-			it('append slot works in horizontal mode', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [{ text: 'Option 1', value: '1' }],
-						horizontal: true,
-					},
-					slots: {
-						append: '<div id="append-horizontal">Append in Horizontal Mode</div>',
-					},
-					attachTo: document.body,
-				})
-
-				const appendContent = wrapper.find('#append-horizontal')
-				expect(appendContent.exists()).toBe(true)
-				expect(wrapper.find('.sy-select-container').classes()).toContain('horizontal')
-
-				wrapper.unmount()
-			})
-
 			it('append slot works with multiple selection', () => {
 				const wrapper = mount(SySelect, {
 					props: {
@@ -1523,162 +1440,6 @@ describe('SySelect.vue', () => {
 
 				const appendElement = wrapper.find('#append-test')
 				expect(appendElement.exists()).toBe(true)
-
-				wrapper.unmount()
-			})
-		})
-
-		describe('Slot labelInfo', () => {
-			it('renders labelInfo slot in horizontal mode', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [{ text: 'Option 1', value: '1' }],
-						horizontal: true,
-						label: 'Test Label',
-					},
-					slots: {
-						labelInfo: '<div id="label-info-content">Label Info Content</div>',
-					},
-					attachTo: document.body,
-				})
-
-				const labelInfoContent = wrapper.find('#label-info-content')
-				expect(labelInfoContent.exists()).toBe(true)
-				expect(labelInfoContent.text()).toBe('Label Info Content')
-
-				wrapper.unmount()
-			})
-
-			it('labelInfo slot is positioned next to label in horizontal mode', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [{ text: 'Option 1', value: '1' }],
-						horizontal: true,
-						label: 'Test Label',
-					},
-					slots: {
-						labelInfo: '<span id="info-icon">(i)</span>',
-					},
-					attachTo: document.body,
-				})
-
-				const horizontalLabelWrapper = wrapper.find('.d-inline-flex.align-baseline')
-				expect(horizontalLabelWrapper.exists()).toBe(true)
-				expect(horizontalLabelWrapper.find('.sy-select__label-horizontal').exists()).toBe(true)
-				expect(horizontalLabelWrapper.find('#info-icon').exists()).toBe(true)
-
-				wrapper.unmount()
-			})
-
-			it('displays labelInfo with icon component', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [{ text: 'Option 1', value: '1' }],
-						horizontal: true,
-						label: 'Test Label',
-					},
-					slots: {
-						labelInfo: '<svg id="custom-icon" width="16" height="16"><circle cx="8" cy="8" r="7"/></svg>',
-					},
-					attachTo: document.body,
-				})
-
-				const customIcon = wrapper.find('#custom-icon')
-				expect(customIcon.exists()).toBe(true)
-				expect(customIcon.attributes('width')).toBe('16')
-
-				wrapper.unmount()
-			})
-
-			it('labelInfo slot works with required field and asterisk', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [{ text: 'Option 1', value: '1' }],
-						horizontal: true,
-						label: 'Required Field',
-						required: true,
-						displayAsterisk: true,
-					},
-					slots: {
-						labelInfo: '<div id="label-info">Additional Info</div>',
-					},
-					attachTo: document.body,
-				})
-
-				const horizontalLabel = wrapper.find('.sy-select__label-horizontal')
-				expect(horizontalLabel.text()).toContain('Required Field *')
-
-				const labelInfo = wrapper.find('#label-info')
-				expect(labelInfo.exists()).toBe(true)
-
-				wrapper.unmount()
-			})
-
-			it('labelInfo slot works with multiple selection mode', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [
-							{ text: 'Option 1', value: '1' },
-							{ text: 'Option 2', value: '2' },
-						],
-						horizontal: true,
-						multiple: true,
-						label: 'Multiple Select',
-					},
-					slots: {
-						labelInfo: '<span id="multi-info">(multiple)</span>',
-					},
-					attachTo: document.body,
-				})
-
-				const multiInfo = wrapper.find('#multi-info')
-				expect(multiInfo.exists()).toBe(true)
-				expect(multiInfo.text()).toBe('(multiple)')
-
-				wrapper.unmount()
-			})
-
-			it('both append and labelInfo slots work together', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [{ text: 'Option 1', value: '1' }],
-						horizontal: true,
-						label: 'Test Label',
-					},
-					slots: {
-						append: '<div id="append-content">Append</div>',
-						labelInfo: '<div id="label-info-content">Label Info</div>',
-					},
-					attachTo: document.body,
-				})
-
-				const appendContent = wrapper.find('#append-content')
-				const labelInfoContent = wrapper.find('#label-info-content')
-
-				expect(appendContent.exists()).toBe(true)
-				expect(labelInfoContent.exists()).toBe(true)
-
-				wrapper.unmount()
-			})
-
-			it('labelInfo slot works with clearable option', () => {
-				const wrapper = mount(SySelect, {
-					props: {
-						items: [{ text: 'Option 1', value: '1' }],
-						horizontal: true,
-						clearable: true,
-						modelValue: '1',
-						label: 'Clearable Select',
-					},
-					slots: {
-						labelInfo: '<div id="clearable-info">Info</div>',
-					},
-					attachTo: document.body,
-				})
-
-				// Both clear button and labelInfo should be present
-				expect(wrapper.find('.sy-select__clear-icon').exists()).toBe(true)
-				expect(wrapper.find('#clearable-info').exists()).toBe(true)
 
 				wrapper.unmount()
 			})

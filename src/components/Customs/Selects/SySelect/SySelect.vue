@@ -72,10 +72,6 @@
 			type: Boolean,
 			default: false,
 		},
-		horizontal: {
-			type: Boolean,
-			default: false,
-		},
 		items: {
 			type: Array as PropType<ItemType[]>,
 			default: () => [],
@@ -800,24 +796,7 @@
 <template>
 	<div
 		class="sy-select-container"
-		:class="{ 'horizontal': props.horizontal }"
 	>
-		<!-- Label horizontal sur la gauche -->
-		<div
-			v-if="props.horizontal"
-			class="d-inline-flex align-baseline"
-		>
-			<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
-			<label
-				class="sy-select__label-horizontal"
-				:for="inputId"
-			>
-				{{ labelWithAsterisk }}
-			</label>
-
-			<slot name="labelInfo" />
-		</div>
-
 		<div class="sy-select-wrapper">
 			<VMenu
 				v-model="isOpen"
@@ -837,7 +816,7 @@
 						:title="$attrs['aria-label'] || labelWithAsterisk"
 						color="primary"
 						:disabled="disabled"
-						:label="!props.horizontal ? labelWithAsterisk : ''"
+						:label="labelWithAsterisk"
 						:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 						:error-messages="props.disableErrorHandling ? [] : errorMessages"
 						:variant="outlined ? 'outlined' : 'underlined'"
@@ -892,6 +871,9 @@
 								{{ getChipText(item) }}
 							</VChip>
 						</div>
+						<template #prepend>
+							<slot name="prepend" />
+						</template>
 						<template #append-inner>
 							<SyIcon
 								v-if="hasError"
@@ -1022,19 +1004,6 @@
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-}
-
-.sy-select-container.horizontal {
-	flex-direction: row;
-	align-items: flex-start;
-	gap: 1rem;
-}
-
-.sy-select__label-horizontal {
-	flex-shrink: 0;
-	padding-top: 1rem;
-	min-width: max-content;
-	font-weight: 500;
 }
 
 .sy-select-wrapper {

@@ -9,6 +9,7 @@ import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 const meta = {
 	argTypes: {
 		'append': { description: 'Slot permettant d’ajouter des éléments à la suite du champs (à droite)' },
+		'prepend': { description: 'Slot permettant d’ajouter des éléments avant le champs (à gauche)' },
 		'required': { description: 'Passe le select en required' },
 		'classes': { description: 'classes css à ajouter au container du composant' },
 		'clearable': { description: 'Rends le select "clearable"' },
@@ -18,7 +19,6 @@ const meta = {
 		'globalMinWidth': { description: 'Gère la largeur minimale du composant, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
 		'globalWidth': { description: 'Gère la largeur du composant, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
 		'hideErrorMessage': { description: 'Masque ou affiche le message d’erreur, si la valeur est à "auto" le message ne sera rendu que s’il y en a un' },
-		'horizontal': { description: 'Passe le label sur la meme ligne que le select' },
 		'inputMaxWidth': { description: 'Gère la largeur maximale du champ, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
 		'inputMinWidth': { description: 'Gère la largeur minimale du champ, attend une valeur et une unité valide css (ex : 400px ou 25%)' },
 		'items': {
@@ -428,60 +428,6 @@ export const Readonly: Story = {
 			return { args, model }
 		},
 		template: `<p class="mb-2">Le select est en lecture seule grâce à la prop <code>readonly</code>.</p>
-<AmeliproSelect v-bind="args" v-model="model" />`,
-	}),
-}
-
-// --- Horizontal ---
-export const Horizontal: Story = {
-	args: {
-		items,
-		label: 'Label horizontal',
-		uniqueId: 'amelipro-select-horizontal',
-		horizontal: true,
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-  <p>Le label est affiché à l’horizontal grâce à la prop <code>horizontal</code>.</p>
-  <AmeliproSelect
-    v-model="model"
-    :items="items"
-    label="Label horizontal"
-    unique-id="amelipro-select-horizontal"
-    horizontal
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-  import { ref } from 'vue'
-  import { AmeliproSelect } from '@cnamts/synapse'
-  const model = ref()
-  const items = [
-    { title: 'Lille', value: 1 },
-    { title: 'Paris', value: 2 },
-    { title: 'Bordeaux', value: 3 },
-    { title: 'Tours', value: 4 },
-    { title: 'Marseille', value: 5 },
-  ]
-</script>`,
-			},
-		],
-	},
-	render: args => ({
-		components: { AmeliproSelect },
-		setup() {
-			const model = ref()
-			watch(() => args.modelValue, (newValue) => {
-				model.value = newValue
-			})
-			return { args, model }
-		},
-		template: `<p class="mb-2">Le label est affiché à l’horizontal grâce à la prop <code>horizontal</code>.</p>
 <AmeliproSelect v-bind="args" v-model="model" />`,
 	}),
 }

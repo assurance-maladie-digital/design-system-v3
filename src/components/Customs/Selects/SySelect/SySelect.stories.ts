@@ -77,17 +77,13 @@ const meta: Meta<typeof SySelect> = {
 			control: 'text',
 			description: 'Texte d\'aide à la saisie',
 		},
-		horizontal: {
-			control: 'boolean',
-			description: 'Passe le label sur la meme ligne que le select',
-		},
 		append: {
 			description:
         'Slot permettant d’ajouter des éléments à la suite du champs (à droite)',
 		},
-		labelInfo: {
+		prepend: {
 			description:
-        'Slot permettant d’ajouter des informations supplémentaires au label quand horizontal est true',
+		'Slot permettant d’ajouter des éléments avant le champs (à gauche)',
 		},
 	},
 } as Meta<typeof SySelect>
@@ -815,75 +811,6 @@ const submitForm = () => {
 	},
 }
 
-export const LabelInfo: Story = {
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-			{ text: 'Option 3', value: '3' },
-		],
-		label: 'Label avec info-bulle',
-		horizontal: true,
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-					<template>
-					<p>Le slot <code>labelInfo</code> permet d’ajouter une info-bulle à droite du label quand la prop horizontal est true.</p>
-						<SySelect
-							v-model="value"
-							:items="items"
-							text-key="customKey"
-							horizontal>
-						<template #labelInfo>
-      <AmeliproTooltips
-        tooltip-text="Info-bulle personnalisée"
-        unique-id="amelipro-tooltip-id"
-      />
-    </template>
-	</SySelect>
-					</template>
-					`,
-			},
-			{
-				name: 'Script',
-				code: `
-					<script setup lang="ts">
-						import { SySelect } from '@cnamts/synapse'
-						
-						const items =  [
-							{ customKey: 'Choix 1', value: '1' },
-							{ customKey: 'Choix 2', value: '2' },
-						],
-					</script>
-					`,
-			},
-		],
-	},
-	render: args => ({
-		components: { SySelect, AmeliproTooltips },
-		setup() {
-			return { args }
-		},
-		template: `
-				<div class="pa-4">
-					<SySelect
-						v-bind="args"
-						horizontal>
-						<template #labelInfo>
-	  <AmeliproTooltips
-		tooltip-text="Info-bulle personnalisée"
-		unique-id="amelipro-tooltip-id"
-	  />
-	</template>
-					</SySelect>
-				</div>
-			`,
-	}),
-}
-
 export const Append: Story = {
 	args: {
 		items: [
@@ -952,15 +879,14 @@ export const Append: Story = {
 	}),
 }
 
-export const Horizontal: Story = {
+export const Prepend: Story = {
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 			{ text: 'Option 3', value: '3' },
 		],
-		label: 'Label horizontal',
-		horizontal: true,
+		label: 'Label',
 	},
 	parameters: {
 		sourceCode: [
@@ -968,11 +894,19 @@ export const Horizontal: Story = {
 				name: 'Template',
 				code: `
 					<template>
+					<p>Le slot <code>prepend</code> permet, par exemple, d’ajouter une info-bulle à gauche du champ de text.</p>
 						<SySelect
 							v-model="value"
 							:items="items"
-							horizontal
-						/>
+							text-key="customKey"
+					>
+						<template #prepend>
+      <AmeliproTooltips
+        tooltip-text="Info-bulle personnalisée"
+        unique-id="amelipro-tooltip-id"
+      />
+    </template>
+	</SySelect>
 					</template>
 					`,
 			},
@@ -983,9 +917,8 @@ export const Horizontal: Story = {
 						import { SySelect } from '@cnamts/synapse'
 						
 						const items =  [
-							{ text: 'Option 1', value: '1' },
-							{ text: 'Option 2', value: '2' },
-							{ text: 'Option 3', value: '3' },
+							{ customKey: 'Choix 1', value: '1' },
+							{ customKey: 'Choix 2', value: '2' },
 						],
 					</script>
 					`,
@@ -993,7 +926,7 @@ export const Horizontal: Story = {
 		],
 	},
 	render: args => ({
-		components: { SySelect },
+		components: { SySelect, AmeliproTooltips },
 		setup() {
 			return { args }
 		},
@@ -1001,8 +934,14 @@ export const Horizontal: Story = {
 				<div class="pa-4">
 					<SySelect
 						v-bind="args"
-						horizontal
-					/>
+						>
+						<template #prepend>
+	  <AmeliproTooltips
+		tooltip-text="Info-bulle personnalisée"
+		unique-id="amelipro-tooltip-id"
+	  />
+	</template>
+					</SySelect>
 				</div>
 			`,
 	}),
