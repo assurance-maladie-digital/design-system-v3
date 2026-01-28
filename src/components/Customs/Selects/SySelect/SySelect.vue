@@ -247,6 +247,7 @@
 		isOpen.value = false
 	}
 
+	// si slot prepend/append, le menu peut devenir plus large que le champ de saisie, car il mesure la largeur du champ plus celle des emplacements (slots)
 	const updateMenuMinWidth = () => {
 		const el = textInput.value?.$el as HTMLElement | undefined
 		if (!el) return
