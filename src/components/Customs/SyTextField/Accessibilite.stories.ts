@@ -17,10 +17,7 @@ export const Legende: StoryObj = {
 			setup() {
 				return { args }
 			},
-			template: `
-			   
-		 
-			  </div>
+			template: `   
 			  <div class="mt-4">
 				  <p>Rapport d’audit manuel : <a href="/audits/SyTextField.xlsx" style="color:#0C41BD;">Voir le
 					  rapport</a></p>

@@ -17,10 +17,7 @@ export const Legende: StoryObj = {
 			setup() {
 				return { args }
 			},
-			template: `
-			   
-		 
-			  </div>
+			template: `   
 			  <div class="mt-4">
 				  <p>Rapport d’audit manuel : <a href="/audits/ContextualMenu.xlsx" style="color:#0C41BD;">Voir le rapport</a></p>
 				  <p style="color: grey; font-size: 14px">Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/658" target="_blank" style="color:#0C41BD;">issue #658</a>)</p>

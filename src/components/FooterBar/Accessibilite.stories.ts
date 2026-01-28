@@ -18,10 +18,7 @@ export const Legende: StoryObj = {
 			setup() {
 				return { args }
 			},
-			template: `
-			   
-		 
-			  </div>
+			template: `   
             `,
 		}
 	},
