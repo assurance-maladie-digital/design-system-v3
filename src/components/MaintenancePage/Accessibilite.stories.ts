@@ -28,8 +28,7 @@ export const Legende: StoryObj = {
 						href="https://github.com/assurance-maladie-digital/design-system-v3/issues/653" target="_blank"
 						style="color:#0C41BD;"
 					>issue #653</a>)</p>
-				</div>
-			  </div>
+				  </div>
             `,
 		}
 	},
