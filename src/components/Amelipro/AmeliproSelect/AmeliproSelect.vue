@@ -335,7 +335,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokensOld' as apTokens;
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .v-select {
 	& :deep(.v-select__selection--comma) {
@@ -379,7 +379,7 @@
 </style>
 
 <style lang="scss">
-@use '@/assets/amelipro/apTokensOld' as apTokens;
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-select-menu {
 	.v-list-item--active .v-list-item__overlay,

@@ -30,7 +30,7 @@ export const Header: StoryObj = {
 					<span v-if="theme === 'ap'"
                           style="position: absolute; top:0; left:-1000px; background-color: rgba(231,236,245); width: 1000%; height: 100%; z-index: 0"
 					/>
-                  <span v-if="theme === 'apOld'"
+                  <span v-if="theme === 'ap2026'"
                         style="position: absolute; top:0; left:-1000px; background-color: rgba(0, 116, 156, 0.1); width: 1000%; height: 100%; z-index: 0"
                   />
 					<span v-if="theme === 'cnam'"
@@ -44,7 +44,7 @@ export const Header: StoryObj = {
 							<h2 style="font-family: Arial !important; font-size: 1.5rem !important; font-weight: 400 !important; line-height: 1.30 !important; letter-spacing: normal !important;" class="mb-5">Synapse : 
 								<span v-if="theme === 'pa'" class="text-h5">thème Portail Agent</span>
                               <span v-if="theme === 'ap'">thème Amelipro</span>
-                              <span v-if="theme === 'apOld'">thème Amelipro Old</span>
+                              <span v-if="theme === 'ap2026'">thème Amelipro Old</span>
 								<span v-if="theme === 'cnam'" class="text-h5">thème CNAM</span></h2>
 							<p style="font-family: Arial !important; font-size: 1rem !important;" class="mb-5">Veuillez sélectionner dans la barre d’outil en haut de l’écran le thème graphique de votre produit avant de consulter la documentation, elle s’actualisera en conséquence avec les tokens et composants disponibles.
 								<br/>Si vous ne connaissez pas le thème auquel votre produit est soumis veuillez consulter le dossier d’architecture du produit.
@@ -102,12 +102,12 @@ export const Welcome: StoryObj = {
 				<div class="mt-12 mb-12">
                   <p style="font-family: Arial !important; font-size: 1rem !important;">Bienvenue dans notre guide
                     d'aide à la conception, pensé par et pour les équipes <span
-                        v-if="theme === 'ap' || theme === 'apOld'"
+                        v-if="theme === 'ap' || theme === 'ap2026'"
                     >d'AmeliPro</span><span v-if="theme === 'pa'">de Portail Agent</span><span v-if="theme === 'cnam'">de la CNAM</span>.
                   </p>
 					<p style="font-family: Arial !important; font-size: 1rem !important;" class="mt-4">Ce guide a été conçu pour accompagner chaque membre de l'équipe dans la création de
 						plateformes web de qualité, alignées avec nos standards et nos valeurs.</p>
-                  <p v-if="theme !== 'apOld'" class="mt-4">Vous y trouverez toutes les ressources
+                  <p v-if="theme !== 'ap2026'" class="mt-4">Vous y trouverez toutes les ressources
                     essentielles pour vous
 						guider tout au long du processus de conception :</p>
 				</div>
@@ -128,7 +128,7 @@ export const DesignSystem: StoryObj = {
 			},
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
-              <div class="mb-12" v-if="theme !== 'apOld'">
+              <div class="mb-12" v-if="theme !== 'ap2026'">
                   <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
@@ -178,7 +178,7 @@ export const Guidelines: StoryObj = {
 			},
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
-              <div v-if="theme !== 'apOld'">
+              <div v-if="theme !== 'ap2026'">
 					<h3 class="text-h5 font-weight-bold mb-6 text-primary">Guidelines</h3>
 					<VRow>
 						<VCol cols="12" md="4">

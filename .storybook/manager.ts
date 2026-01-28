@@ -2,7 +2,7 @@ import { addons } from '@storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
-import apOldTheme from './ApOldTheme'
+import ap2026Theme from './Ap2026Theme'
 
 // Helper function to apply theme class to HTML root element
 const applyThemeClass = (theme) => {
@@ -31,7 +31,7 @@ const applyThemeSidebar = (theme) => {
 			// First pass: identify if amelipro should be hidden
 			const hideAmelipro = theme === 'pa' || theme === 'cnam'
 			// When AP theme is active, only show Amelipro components
-			const showOnlyAmelipro = theme === 'ap'
+            const showOnlyAmelipro = theme === 'ap2026'
 
 			// Hide or show items based on theme
 			items.forEach((item) => {
@@ -61,52 +61,52 @@ const applyThemeSidebar = (theme) => {
 
 				// Handle the "Créer une issue" page - hide it when AP theme is active
 				if (item.querySelector('a[id^="démarrer-créer-une-issue--creeruneissue"]')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Conteneurs de page" page - hide it when AP theme is active
 				if (item.querySelector('a[id^="design-tokens-conteneurs-de-page"]')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Arrondis" page - hide it when AP theme is active
 				if (item.querySelector('a[id*="design-tokens-arrondis"]')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Elevations" page - hide it when AP theme is active
 				if (item.querySelector('a[id*="design-tokens-elevations"]')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Styles typographiques" page - hide it when AP theme is active
 				if (item.querySelector('a[id*="design-tokens-styles-typographiques"]')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Vue d'ensemble" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Vue d\'ensemble')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Migration depuis Bridge" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Migration depuis Bridge')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Migration depuis Vue2" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Migration depuis Vue2')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Breaking changes" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Breaking changes')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Handle the "Correspondance composants PAG" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 
 				// Get item ID and text content once for all checks
@@ -121,7 +121,7 @@ const applyThemeSidebar = (theme) => {
 				// Target any element with Templates text - case insensitive
 				if (itemText && itemText.toLowerCase().includes('templates')) {
 					// console.log('Found element with Templates text:', itemText)
-					item.style.display = theme === 'ap' ? 'none' : 'block'
+                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
 				}
 			})
 
@@ -299,8 +299,8 @@ addons.setConfig({
             ? paTheme
             : storedTheme === 'ap'
                 ? apTheme
-                : storedTheme === 'apOld'
-                    ? apOldTheme
+                : storedTheme === 'ap2026'
+                    ? ap2026Theme
                     : cnamTheme,
 })
 
@@ -313,8 +313,8 @@ const handleThemeChange = (newTheme) => {
                 ? paTheme
                 : newTheme === 'ap'
                     ? apTheme
-                    : newTheme === 'apOld'
-                        ? apOldTheme
+                    : newTheme === 'ap2026'
+                        ? ap2026Theme
                         : cnamTheme,
     })
 

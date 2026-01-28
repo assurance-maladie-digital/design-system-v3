@@ -36,13 +36,13 @@
 			Thème PA
 		</v-btn>
 		<v-btn
-        :color="currentTheme === 'apOld' ? 'primary' : ''"
+        :color="currentTheme === 'ap2026' ? 'primary' : ''"
 			variant="outlined"
 			size="small"
 			style="background-color: white"
-        @click="switchTheme('apOld')"
+        @click="switchTheme('ap2026')"
 		>
-      Thème AmeliPro Old
+      Thème AmeliPro 2026
 		</v-btn>
     <v-btn
         :color="currentTheme === 'ap' ? 'primary' : ''"

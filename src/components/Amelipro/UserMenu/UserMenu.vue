@@ -130,7 +130,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokensOld' as apTokens;
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .v-btn :deep(.v-btn__content) {
 	opacity: 1 !important;

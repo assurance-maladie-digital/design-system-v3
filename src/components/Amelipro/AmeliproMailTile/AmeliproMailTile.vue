@@ -264,7 +264,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokensOld' as apTokens;
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .mail-status-btn {
 	position: relative;

@@ -1,10 +1,10 @@
-import { apLightThemeOld } from '@/designTokens/tokens/amelipro/apLightThemeOld'
-import { apColorsTokensOld } from '@/designTokens/tokens/amelipro/apColorsOld'
+import {apLightTheme2026} from '@/designTokens/tokens/amelipro/apLightTheme2026'
+import {apColorsTokens2026} from '@/designTokens/tokens/amelipro/apColors2026'
 import { AmeliproColors } from './ameliproColors/ameliproColors'
 
-const currentTheme = apLightThemeOld
+const currentTheme = apLightTheme2026
 const ameliproColors = AmeliproColors
-const colors = apColorsTokensOld as unknown as Record<string, Record<string, string>>
+const colors = apColorsTokens2026 as unknown as Record<string, Record<string, string>>
 export function classToHex(color: string): string | undefined {
 	color = color.trim()
 	color = color.replace(/-./, x => x[1]!.toUpperCase())

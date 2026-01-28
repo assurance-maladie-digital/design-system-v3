@@ -2,7 +2,7 @@ import { ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import type { ThemeInstance } from 'vuetify'
 
-export type ThemeName = 'cnam' | 'pa' | 'ap' | 'apOld'
+export type ThemeName = 'cnam' | 'pa' | 'ap' | 'ap2026'
 
 /**
  * Theme utility to manage theme switching between CNAM and PA themes
@@ -17,7 +17,7 @@ export const useThemeManager = (vuetifyTheme: ThemeInstance) => {
    * Apply theme class to HTML root element
    */
 	const applyThemeClass = (theme: ThemeName) => {
-        document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-apOld', 'theme-ap')
+        document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap2026', 'theme-ap')
 		document.documentElement.classList.add(`theme-${theme}`)
 	}
 

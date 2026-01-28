@@ -54,9 +54,9 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 	}
 }
 
-// ✅ Apply theme-based ap and apOld
+// ✅ Apply theme-based ap and ap2026
 .theme-ap,
-.theme-apOld {
+.theme-ap2026 {
 	@each $key, $value in $ap-radius {
 		--radius-#{$key}: #{$value};
 
