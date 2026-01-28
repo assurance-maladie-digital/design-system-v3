@@ -39,4 +39,56 @@ describe('PageContainer', () => {
 
 		expect(wrapper.vm.containerSize).toBe(800)
 	})
+
+	describe('role prop', () => {
+		it('should render with role="main"', async () => {
+			const wrapper = mount(PageContainer, {
+				props: {
+					role: 'main',
+				},
+			})
+
+			expect(wrapper.attributes('role')).toBe('main')
+		})
+
+		it('should render with role="region"', async () => {
+			const wrapper = mount(PageContainer, {
+				props: {
+					role: 'region',
+				},
+			})
+
+			expect(wrapper.attributes('role')).toBe('region')
+		})
+
+		it('should render with role="navigation"', async () => {
+			const wrapper = mount(PageContainer, {
+				props: {
+					role: 'navigation',
+				},
+			})
+
+			expect(wrapper.attributes('role')).toBe('navigation')
+		})
+
+		it('should render with role="contentinfo"', async () => {
+			const wrapper = mount(PageContainer, {
+				props: {
+					role: 'contentinfo',
+				},
+			})
+
+			expect(wrapper.attributes('role')).toBe('contentinfo')
+		})
+
+		it('should not render role attribute when role prop is undefined', async () => {
+			const wrapper = mount(PageContainer, {
+				props: {
+					role: undefined,
+				},
+			})
+
+			expect(wrapper.attributes('role')).toBeUndefined()
+		})
+	})
 })
