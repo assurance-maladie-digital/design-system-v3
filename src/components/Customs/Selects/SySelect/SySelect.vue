@@ -192,8 +192,8 @@
 	const disableClickButton = computed(() => props.disableClickButton)
 
 	const iconColor = computed(() => {
-		if (hasError.value) return 'error'
-		return 'rgba(0, 0, 0, 1)'
+		if (hasError.value || Boolean(isRequired.value) || props.errorMessages.length > 0) return 'error'
+		return 'rgb(0 0 0 / 70%)'
 	})
 
 	const variant = computed(() => {
@@ -1145,8 +1145,9 @@
 .sy-select {
 	display: block;
 
-	:deep(.v-icon__svg) {
-		fill: rgb(0 0 0 / 70%);
+	:deep(.v-input__prepend > .v-icon__svg),
+	:deep(.v-input__append > .v-icon__svg) {
+    fill: rgb(0 0 0 / 70%);
 	}
 }
 
