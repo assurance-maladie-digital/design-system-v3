@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, computed, nextTick, type PropType } from 'vue'
+	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -762,6 +762,16 @@
 
 			setTimeout(setupAriaAttributes, 100)
 			setTimeout(setupAriaAttributes, 300)
+
+			updateMenuMinWidth()
+
+			const el = textInput.value?.$el as HTMLElement | undefined
+			if (!el || typeof ResizeObserver === 'undefined') return
+
+			resizeObserver = new ResizeObserver(() => {
+				updateMenuMinWidth()
+			})
+			resizeObserver.observe(el)
 		})
 	})
 
@@ -834,31 +844,15 @@
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)
 
-	onMounted(() => {
-		nextTick(() => {
-			updateMenuMinWidth()
-
-			const el = textInput.value?.$el as HTMLElement | undefined
-			if (!el || typeof ResizeObserver === 'undefined') return
-
-			resizeObserver = new ResizeObserver(() => {
-				updateMenuMinWidth()
-			})
-			resizeObserver.observe(el)
-		})
-	})
-
 	watch(isOpen, () => {
 		nextTick(() => {
 			updateMenuMinWidth()
 		})
 	})
 
-	onMounted(() => {
-		return () => {
-			resizeObserver?.disconnect()
-			resizeObserver = null
-		}
+	onBeforeUnmount(() => {
+		resizeObserver?.disconnect()
+		resizeObserver = null
 	})
 
 	defineExpose({
