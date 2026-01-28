@@ -18,13 +18,94 @@ describe('SySelect.vue', () => {
 		wrapper.unmount()
 	})
 
+	it('renders prepend and append slots content when provided', () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+			},
+			slots: {
+				prepend: '<span class="custom-prepend">prepend</span>',
+				append: '<span class="custom-append">append</span>',
+			},
+			attachTo: document.body,
+		})
+
+		expect(wrapper.find('.custom-prepend').exists()).toBe(true)
+		expect(wrapper.find('.custom-append').exists()).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('renders tooltip icons when prependTooltip/appendTooltip are provided', () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+				label: 'Test',
+				prependTooltip: 'Information à gauche du champ',
+				appendTooltip: 'Information à droite du champ',
+				tooltipLocation: 'top',
+			},
+			attachTo: document.body,
+		})
+
+		// SyIcon renders a v-icon with aria-label
+		expect(wrapper.findAll('[aria-label="Test - info"]').length).toBe(2)
+		wrapper.unmount()
+	})
+
+	it('emits prepend-icon-click and does not open menu when clicking prepend icon', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+				label: 'Test',
+				prependIcon: 'success',
+				disableClickButton: false,
+			},
+			attachTo: document.body,
+		})
+
+		expect(wrapper.findComponent(VList).exists()).toBe(false)
+		await wrapper
+			.find('.v-input__prepend [aria-label="Test - bouton success"]')
+			.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted()['prepend-icon-click']).toBeTruthy()
+		expect(wrapper.findComponent(VList).exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('emits append-icon-click and does not open menu when clicking append icon', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+				label: 'Test',
+				appendIcon: 'success',
+				disableClickButton: false,
+			},
+			attachTo: document.body,
+		})
+
+		expect(wrapper.findComponent(VList).exists()).toBe(false)
+		await wrapper
+			.find('.v-input__append [aria-label="Test - bouton success"]')
+			.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted()['append-icon-click']).toBeTruthy()
+		expect(wrapper.findComponent(VList).exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+
 	it('displays the selected item text', async () => {
 		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
 		const wrapper = mount(SySelect, {
 			props: { items, modelValue: { text: 'Option 1', value: '1' } },
 			attachTo: document.body,
 		})
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const firstItem = wrapper
 			.findComponent(VList)
 			.findAll('.v-list-item').at(0)
@@ -40,7 +121,7 @@ describe('SySelect.vue', () => {
 			props: { items },
 			attachTo: document.body,
 		})
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		await wrapper
 			.findComponent(VList)
 			.find('.v-list').trigger('keydown.esc')
@@ -204,7 +285,7 @@ describe('SySelect.vue', () => {
 			attachTo: document.body,
 		})
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		await wrapper.vm.$nextTick()
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -281,7 +362,7 @@ describe('SySelect.vue', () => {
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			expect(wrapper.find('.v-list').exists()).toBe(false)
@@ -375,9 +456,9 @@ describe('SySelect.vue', () => {
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -398,9 +479,9 @@ describe('SySelect.vue', () => {
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -421,9 +502,9 @@ describe('SySelect.vue', () => {
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -447,7 +528,7 @@ describe('SySelect.vue', () => {
 			}
 			expect(findList().exists()).toBe(false)
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			expect(findList().exists()).toBe(true)
@@ -465,12 +546,12 @@ describe('SySelect.vue', () => {
 
 			expect(wrapper.findComponent(VList).exists()).toBe(false)
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			expect(wrapper.findComponent(VList).exists()).toBe(true)
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			expect(wrapper.vm.isOpen).toBe(false)
@@ -490,7 +571,7 @@ describe('SySelect.vue', () => {
 			const instance = wrapper.vm as any
 			expect(instance.isOpen).toBe(false)
 
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			expect(instance.isOpen).toBe(true)
@@ -507,14 +588,14 @@ describe('SySelect.vue', () => {
 			attachTo: document.body,
 		})
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper
 			.findComponent(VList)
 			.find('.v-list').exists()).toBe(true)
 
 		await wrapper.find('.sy-select').trigger('mouseleave')
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.vm.isOpen).toBe(false)
@@ -540,12 +621,12 @@ describe('SySelect.vue', () => {
 			},
 			attachTo: document.body,
 		})
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['1'])
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[1]).toEqual(['2'])
@@ -562,12 +643,12 @@ describe('SySelect.vue', () => {
 			attachTo: document.body,
 		})
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual([{ text: 'Option 1', value: '1' }])
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[1]).toEqual([{ text: 'Option 2', value: '2' }])
@@ -585,12 +666,12 @@ describe('SySelect.vue', () => {
 			},
 			attachTo: document.body,
 		})
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['1'])
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[1]).toEqual(['2'])
@@ -609,12 +690,12 @@ describe('SySelect.vue', () => {
 			attachTo: document.body,
 		})
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual([{ theText: 'Option 1', theValue: '1' }])
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[1]).toEqual([{ theText: 'Option 2', theValue: '2' }])
@@ -630,12 +711,12 @@ describe('SySelect.vue', () => {
 			attachTo: document.body,
 		})
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
 		await firstItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['Option 1'])
 
-		await wrapper.find('.sy-select').trigger('click')
+		await wrapper.find('.v-field').trigger('click')
 		const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
 		await secondItem!.trigger('click')
 		expect(wrapper.emitted()['update:modelValue']?.[1]).toEqual(['Option 2'])
@@ -681,7 +762,7 @@ describe('SySelect.vue', () => {
 			})
 
 			// Open the select menu
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			// Select Option 1
@@ -718,7 +799,7 @@ describe('SySelect.vue', () => {
 			})
 
 			// Open the select menu
-			await wrapper.find('.sy-select').trigger('click')
+			await wrapper.find('.v-field').trigger('click')
 			await wrapper.vm.$nextTick()
 
 			// Click on the default option
