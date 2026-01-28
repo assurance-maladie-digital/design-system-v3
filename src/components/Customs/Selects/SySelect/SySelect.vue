@@ -1147,7 +1147,7 @@
 
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
-    fill: rgb(0 0 0 / 70%);
+		fill: rgb(0 0 0 / 70%);
 	}
 }
 
