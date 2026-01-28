@@ -2,9 +2,9 @@ import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
 import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
 import { paLightTheme } from '@/designTokens/tokens/pa/paLightTheme'
 import { paColorsTokens } from '@/designTokens/tokens/pa/paColors'
-import {apLightTheme2026} from '@/designTokens/tokens/amelipro/apLightTheme2026'
+import { apLightTheme2026 } from '@/designTokens/tokens/amelipro/apLightTheme2026'
 import { apLightTheme } from '@/designTokens/tokens/amelipro/apLightTheme'
-import {apColorsTokens2026} from '@/designTokens/tokens/amelipro/apColors2026'
+import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 import { apColorsTokens } from '@/designTokens/tokens/amelipro/apColors'
 import ColorDisplay from './ColorDisplay.vue'
 import ColorIntegrationExample from './ColorIntegrationExample.vue'
@@ -67,13 +67,13 @@ export const Base: StoryObj = {
 					success: paLightTheme.success,
 					warning: paLightTheme.warning,
 				}
-                const apColors2026 = {
-                    primary: apLightTheme2026.primary,
-                    secondary: apLightTheme2026.secondary,
-                    error: apLightTheme2026.error,
-                    info: apLightTheme2026.info,
-                    success: apLightTheme2026.success,
-                    warning: apLightTheme2026.warning,
+				const apColors2026 = {
+					primary: apLightTheme2026.primary,
+					secondary: apLightTheme2026.secondary,
+					error: apLightTheme2026.error,
+					info: apLightTheme2026.info,
+					success: apLightTheme2026.success,
+					warning: apLightTheme2026.warning,
 				}
 				const apColors = {
 					primary: apLightTheme.primary,
@@ -86,7 +86,7 @@ export const Base: StoryObj = {
 				return {
 					cnamColors,
 					paColors,
-                    apColors2026: apColors2026,
+					apColors2026: apColors2026,
 					apColors,
 					colorTitle,
 					colorTitleLevel,
@@ -134,12 +134,12 @@ export const Others: StoryObj = {
 					light: apLightTheme.light,
 					dark: apLightTheme.dark,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -207,12 +207,12 @@ export const PaletteOrange: StoryObj = {
 					'amber-lighten-90': apColorsTokens.amber.lighten90,
 					'amber-lighten-97': apColorsTokens.amber.lighten97,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -257,21 +257,21 @@ export const PaletteRed: StoryObj = {
 					'red-lighten-90': apColorsTokens.red.lighten90,
 					'red-lighten-97': apColorsTokens.red.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-red-darken-2': apColorsTokens2026.apRed.darken2,
-                    'ap-red-darken-1': apColorsTokens2026.apRed.darken1,
-                    'ap-red': apColorsTokens2026.apRed.base,
-                    'ap-red-lighten-1': apColorsTokens2026.apRed.lighten1,
-                    'ap-red-lighten-2': apColorsTokens2026.apRed.lighten2,
-                    'ap-red-lighten-3': apColorsTokens2026.apRed.lighten3,
-                    'ap-red-lighten-4': apColorsTokens2026.apRed.lighten4,
+				const apColors2026 = {
+					'ap-red-darken-2': apColorsTokens2026.apRed.darken2,
+					'ap-red-darken-1': apColorsTokens2026.apRed.darken1,
+					'ap-red': apColorsTokens2026.apRed.base,
+					'ap-red-lighten-1': apColorsTokens2026.apRed.lighten1,
+					'ap-red-lighten-2': apColorsTokens2026.apRed.lighten2,
+					'ap-red-lighten-3': apColorsTokens2026.apRed.lighten3,
+					'ap-red-lighten-4': apColorsTokens2026.apRed.lighten4,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -339,23 +339,23 @@ export const PaletteYellow: StoryObj = {
 					'yellow-lighten-90': apColorsTokens.yellow.lighten90,
 					'yellow-lighten-97': apColorsTokens.yellow.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-yellow-darken-4': apColorsTokens2026.apYellow.darken4,
-                    'ap-yellow-darken-3': apColorsTokens2026.apYellow.darken3,
-                    'ap-yellow-darken-2': apColorsTokens2026.apYellow.darken2,
-                    'ap-yellow-darken-1': apColorsTokens2026.apYellow.darken1,
-                    'ap-yellow': apColorsTokens2026.apYellow.base,
-                    'ap-yellow-lighten-1': apColorsTokens2026.apYellow.lighten1,
-                    'ap-yellow-lighten-2': apColorsTokens2026.apYellow.lighten2,
-                    'ap-yellow-lighten-3': apColorsTokens2026.apYellow.lighten3,
-                    'ap-yellow-lighten-4': apColorsTokens2026.apYellow.lighten4,
-                    'ap-yellow-lighten-5': apColorsTokens2026.apYellow.lighten5,
+				const apColors2026 = {
+					'ap-yellow-darken-4': apColorsTokens2026.apYellow.darken4,
+					'ap-yellow-darken-3': apColorsTokens2026.apYellow.darken3,
+					'ap-yellow-darken-2': apColorsTokens2026.apYellow.darken2,
+					'ap-yellow-darken-1': apColorsTokens2026.apYellow.darken1,
+					'ap-yellow': apColorsTokens2026.apYellow.base,
+					'ap-yellow-lighten-1': apColorsTokens2026.apYellow.lighten1,
+					'ap-yellow-lighten-2': apColorsTokens2026.apYellow.lighten2,
+					'ap-yellow-lighten-3': apColorsTokens2026.apYellow.lighten3,
+					'ap-yellow-lighten-4': apColorsTokens2026.apYellow.lighten4,
+					'ap-yellow-lighten-5': apColorsTokens2026.apYellow.lighten5,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026: apColors2026,
+					apColors2026: apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -382,8 +382,8 @@ export const PaletteForestGreen: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-                const colorTitle = 'Forest green'
-                const displayEmptyColors = false
+				const colorTitle = 'Forest green'
+				const displayEmptyColors = false
 				const colorTitleLevel = 3
 				const apColors = {
 					'forest-green-darken-80': apColorsTokens.forestGreen.darken80,
@@ -400,13 +400,13 @@ export const PaletteForestGreen: StoryObj = {
 				}
 				const cnamColors = {}
 				const paColors = {}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
-                    displayEmptyColors,
+					displayEmptyColors,
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -474,18 +474,18 @@ export const PaletteGreen: StoryObj = {
 					'green-lighten-90': apColorsTokens.green.lighten90,
 					'green-lighten-97': apColorsTokens.green.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-green-darken-2': apColorsTokens2026.apGreen.darken2,
-                    'ap-green-darken-1': apColorsTokens2026.apGreen.darken1,
-                    'ap-green': apColorsTokens2026.apGreen.base,
-                    'ap-green-lighten-1': apColorsTokens2026.apGreen.lighten1,
-                    'ap-green-lighten-2': apColorsTokens2026.apGreen.lighten2,
+				const apColors2026 = {
+					'ap-green-darken-2': apColorsTokens2026.apGreen.darken2,
+					'ap-green-darken-1': apColorsTokens2026.apGreen.darken1,
+					'ap-green': apColorsTokens2026.apGreen.base,
+					'ap-green-lighten-1': apColorsTokens2026.apGreen.lighten1,
+					'ap-green-lighten-2': apColorsTokens2026.apGreen.lighten2,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -553,19 +553,19 @@ export const PaletteTurquoise: StoryObj = {
 					'turquoise-lighten-90': apColorsTokens.turquoise.lighten90,
 					'turquoise-lighten-97': apColorsTokens.turquoise.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-turquoise-darken-3': apColorsTokens2026.apTurquoise.darken3,
-                    'ap-turquoise-darken-2': apColorsTokens2026.apTurquoise.darken2,
-                    'ap-turquoise-darken-1': apColorsTokens2026.apTurquoise.darken1,
-                    'ap-Turquoise': apColorsTokens2026.apTurquoise.base,
-                    'ap-turquoise-lighten-1': apColorsTokens2026.apTurquoise.lighten1,
-                    'ap-turquoise-lighten-2': apColorsTokens2026.apTurquoise.lighten2,
+				const apColors2026 = {
+					'ap-turquoise-darken-3': apColorsTokens2026.apTurquoise.darken3,
+					'ap-turquoise-darken-2': apColorsTokens2026.apTurquoise.darken2,
+					'ap-turquoise-darken-1': apColorsTokens2026.apTurquoise.darken1,
+					'ap-Turquoise': apColorsTokens2026.apTurquoise.base,
+					'ap-turquoise-lighten-1': apColorsTokens2026.apTurquoise.lighten1,
+					'ap-turquoise-lighten-2': apColorsTokens2026.apTurquoise.lighten2,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -633,20 +633,20 @@ export const PaletteBlue: StoryObj = {
 					'blue-lighten-90': apColorsTokens.blue.lighten90,
 					'blue-lighten-97': apColorsTokens.blue.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-blue-darken-2': apColorsTokens2026.apBlue.darken2,
-                    'ap-blue-darken-1': apColorsTokens2026.apBlue.darken1,
-                    'ap-blue': apColorsTokens2026.apBlue.base,
-                    'ap-blue-lighten-1': apColorsTokens2026.apBlue.lighten1,
-                    'ap-blue-lighten-2': apColorsTokens2026.apBlue.lighten2,
-                    'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3,
-                    'ap-blue-lighten-4': apColorsTokens2026.apBlue.lighten4,
+				const apColors2026 = {
+					'ap-blue-darken-2': apColorsTokens2026.apBlue.darken2,
+					'ap-blue-darken-1': apColorsTokens2026.apBlue.darken1,
+					'ap-blue': apColorsTokens2026.apBlue.base,
+					'ap-blue-lighten-1': apColorsTokens2026.apBlue.lighten1,
+					'ap-blue-lighten-2': apColorsTokens2026.apBlue.lighten2,
+					'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3,
+					'ap-blue-lighten-4': apColorsTokens2026.apBlue.lighten4,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -714,12 +714,12 @@ export const PaletteCyan: StoryObj = {
 					'cyan-lighten-90': apColorsTokens.cyan.lighten90,
 					'cyan-lighten-97': apColorsTokens.cyan.lighten97,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -775,12 +775,12 @@ export const PaletteFrostedBlue: StoryObj = {
 					'frosted-blue-lighten-97': paColorsTokens.frostedBlue.lighten97,
 				}
 				const apColors = {}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -848,15 +848,15 @@ export const PaletteParma: StoryObj = {
 					'parma-lighten-90': apColorsTokens.parma.lighten90,
 					'parma-lighten-97': apColorsTokens.parma.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-parme-darken-1': apColorsTokens2026.apParme.darken1,
-                    'ap-parme': apColorsTokens2026.apParme.base,
+				const apColors2026 = {
+					'ap-parme-darken-1': apColorsTokens2026.apParme.darken1,
+					'ap-parme': apColorsTokens2026.apParme.base,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -924,12 +924,12 @@ export const PaletteMauve: StoryObj = {
 					'mauve-lighten-90': apColorsTokens.mauve.lighten90,
 					'mauve-lighten-97': apColorsTokens.mauve.lighten97,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -997,14 +997,14 @@ export const PalettePink: StoryObj = {
 					'pink-lighten-90': apColorsTokens.pink.lighten90,
 					'pink-lighten-97': apColorsTokens.pink.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-pink': apColorsTokens2026.apPink.base,
+				const apColors2026 = {
+					'ap-pink': apColorsTokens2026.apPink.base,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1060,12 +1060,12 @@ export const PaletteBrick: StoryObj = {
 					'brick-lighten-97': paColorsTokens.brick.lighten97,
 				}
 				const apColors = {}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1133,21 +1133,21 @@ export const PaletteGrey: StoryObj = {
 					'grey-lighten-90': apColorsTokens.grey.lighten90,
 					'grey-lighten-97': apColorsTokens.grey.lighten97,
 				}
-                const apColors2026 = {
-                    'ap-grey-darken-1': apColorsTokens2026.apGrey.darken1,
-                    'ap-grey': apColorsTokens2026.apGrey.base,
-                    'ap-grey-lighten-1': apColorsTokens2026.apGrey.lighten1,
-                    'ap-grey-lighten-2': apColorsTokens2026.apGrey.lighten2,
-                    'ap-grey-lighten-3': apColorsTokens2026.apGrey.lighten3,
-                    'ap-grey-lighten-4': apColorsTokens2026.apGrey.lighten4,
-                    'ap-grey-lighten-5': apColorsTokens2026.apGrey.lighten5,
-                    'ap-grey-lighten-6': apColorsTokens2026.apGrey.lighten6,
+				const apColors2026 = {
+					'ap-grey-darken-1': apColorsTokens2026.apGrey.darken1,
+					'ap-grey': apColorsTokens2026.apGrey.base,
+					'ap-grey-lighten-1': apColorsTokens2026.apGrey.lighten1,
+					'ap-grey-lighten-2': apColorsTokens2026.apGrey.lighten2,
+					'ap-grey-lighten-3': apColorsTokens2026.apGrey.lighten3,
+					'ap-grey-lighten-4': apColorsTokens2026.apGrey.lighten4,
+					'ap-grey-lighten-5': apColorsTokens2026.apGrey.lighten5,
+					'ap-grey-lighten-6': apColorsTokens2026.apGrey.lighten6,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1197,14 +1197,14 @@ export const PaletteWhite: StoryObj = {
 					'white-lighten-20': apColorsTokens.white.lighten20,
 					'white-base': apColorsTokens.white.base,
 				}
-                const apColors2026 = {
-                    'ap-white': apColorsTokens2026.apWhite.base,
+				const apColors2026 = {
+					'ap-white': apColorsTokens2026.apWhite.base,
 				}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1237,15 +1237,15 @@ export const PaletteBlack: StoryObj = {
 				const cnamColors = {}
 				const paColors = {}
 				const apColors = {}
-                const apColors2026 = {
-                    'ap-black': apColorsTokens2026.apBlack.base,
+				const apColors2026 = {
+					'ap-black': apColorsTokens2026.apBlack.base,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1298,12 +1298,12 @@ export const Interactive: StoryObj = {
 					'interactive-disabled': apLightTheme.interactiveDisabled,
 					'interactive-hover-on-selected': apLightTheme.interactiveHoverOnSelected,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1377,12 +1377,12 @@ export const Border: StoryObj = {
 					'border-disabled': apLightTheme.borderDisabled,
 					'border-disabled-on-dark': apLightTheme.borderDisabledOnDark,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1453,12 +1453,12 @@ export const Text: StoryObj = {
 					'text-subdued-on-dark': apLightTheme.textSubduedOnDark,
 					'text-disabled-on-dark': apLightTheme.textDisabledOnDark,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1528,12 +1528,12 @@ export const Icons: StoryObj = {
 					'icon-disabled': apLightTheme.iconDisabled,
 					'icon-disabled-on-dark': apLightTheme.iconDisabledOnDark,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1577,12 +1577,12 @@ export const MainBackgrounds: StoryObj = {
 					'background-surface': apLightTheme.backgroundSurface,
 					'background-surface-alt': apLightTheme.backgroundSurfaceAlt,
 				}
-                const apColors2026 = {'ap-grey-lighten-6': apColorsTokens2026.apGrey.lighten6}
+				const apColors2026 = { 'ap-grey-lighten-6': apColorsTokens2026.apGrey.lighten6 }
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1632,12 +1632,12 @@ export const AlternativeBackgrounds: StoryObj = {
 					'background-accent-contrasted': apLightTheme.backgroundAccentContrasted,
 					'background-accent-alt': apLightTheme.backgroundAccentAlt,
 				}
-                const apColors2026 = {'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3}
+				const apColors2026 = { 'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3 }
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1681,12 +1681,12 @@ export const InformationalBackgrounds: StoryObj = {
 					'background-info-subdued': apLightTheme.backgroundInfoSubdued,
 					'background-info-contrasted': apLightTheme.backgroundInfoContrasted,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1730,12 +1730,12 @@ export const SuccessBackgrounds: StoryObj = {
 					'background-success-subdued': apLightTheme.backgroundSuccessSubdued,
 					'background-success-contrasted': apLightTheme.backgroundSuccessContrasted,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1779,12 +1779,12 @@ export const WarningBackgrounds: StoryObj = {
 					'background-warning-subdued': apLightTheme.backgroundWarningSubdued,
 					'background-warning-contrasted': apLightTheme.backgroundWarningContrasted,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1828,12 +1828,12 @@ export const ErrorBackgrounds: StoryObj = {
 					'background-error-subdued': apLightTheme.backgroundErrorSubdued,
 					'background-error-contrasted': apLightTheme.backgroundErrorContrasted,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1883,12 +1883,12 @@ export const OtherBackgrounds: StoryObj = {
 					'background-professionnel': apLightTheme.backgroundProfessionnel,
 					'background-entreprise': apLightTheme.backgroundEntreprise,
 				}
-                const apColors2026 = {}
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1921,21 +1921,21 @@ export const StatusBackgrounds: StoryObj = {
 				const cnamColors = {}
 				const paColors = {}
 				const apColors = {}
-                const apColors2026 = {
-                    'ap-blue-lighten-2': apColorsTokens2026.apBlue.lighten2,
-                    'ap-parme': apColorsTokens2026.apParme.base,
-                    'ap-yellow-lighten-3': apColorsTokens2026.apYellow.lighten3,
-                    'ap-red-lighten-2': apColorsTokens2026.apRed.lighten2,
-                    'ap-red-lighten-3': apColorsTokens2026.apRed.lighten3,
-                    'ap-green-lighten-2': apColorsTokens2026.apGreen.lighten2,
-                    'ap-grey-lighten-2': apColorsTokens2026.apGrey.lighten2,
+				const apColors2026 = {
+					'ap-blue-lighten-2': apColorsTokens2026.apBlue.lighten2,
+					'ap-parme': apColorsTokens2026.apParme.base,
+					'ap-yellow-lighten-3': apColorsTokens2026.apYellow.lighten3,
+					'ap-red-lighten-2': apColorsTokens2026.apRed.lighten2,
+					'ap-red-lighten-3': apColorsTokens2026.apRed.lighten3,
+					'ap-green-lighten-2': apColorsTokens2026.apGreen.lighten2,
+					'ap-grey-lighten-2': apColorsTokens2026.apGrey.lighten2,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}
@@ -1968,18 +1968,18 @@ export const MessagesBackgrounds: StoryObj = {
 				const cnamColors = {}
 				const paColors = {}
 				const apColors = {}
-                const apColors2026 = {
-                    'ap-red': apColorsTokens2026.apRed.base,
-                    'ap-turquoise-darken-1': apColorsTokens2026.apTurquoise.darken1,
-                    'ap-yellow': apColorsTokens2026.apYellow.base,
-                    'ap-parme-darken-1': apColorsTokens2026.apParme.darken1,
+				const apColors2026 = {
+					'ap-red': apColorsTokens2026.apRed.base,
+					'ap-turquoise-darken-1': apColorsTokens2026.apTurquoise.darken1,
+					'ap-yellow': apColorsTokens2026.apYellow.base,
+					'ap-parme-darken-1': apColorsTokens2026.apParme.darken1,
 				}
 				return {
 					displayEmptyColors,
 					cnamColors,
 					paColors,
 					apColors,
-                    apColors2026,
+					apColors2026,
 					colorTitle,
 					colorTitleLevel,
 				}

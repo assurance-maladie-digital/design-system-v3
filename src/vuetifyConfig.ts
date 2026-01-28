@@ -15,10 +15,10 @@ import {
 	paDarkTheme,
 	paFontsTokens,
 	apContextualTokens,
-    apLightTheme2026,
+	apLightTheme2026,
 	apDarkTheme,
 	apColorsTokens,
-    apColorsTokens2026,
+	apColorsTokens2026,
 	apLightTheme,
 } from './designTokens'
 import { createFlattenTheme, createFontVariables } from './designTokens/utils'
@@ -64,12 +64,12 @@ export const createVuetifyInstance = () => createVuetify({
 					...createFlattenTheme(paContextualTokens),
 				},
 			},
-            ap2026: {
+			ap2026: {
 				dark: false,
 				colors: {
-                    ...apLightTheme2026,
+					...apLightTheme2026,
 					...apDarkTheme,
-                    ...createFlattenTheme(apColorsTokens2026),
+					...createFlattenTheme(apColorsTokens2026),
 				},
 				variables: {
 					'font-family': '"Arial", sans-serif',

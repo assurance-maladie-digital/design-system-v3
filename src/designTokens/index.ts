@@ -10,11 +10,11 @@ import { paSemanticTokens } from './tokens/pa/paSemantic'
 import { paContextualTokens } from './tokens/pa/paContextual'
 import { paLightTheme } from './tokens/pa/paLightTheme'
 import { paDarkTheme } from './tokens/pa/paDarkTheme'
-import {apColorsTokens2026} from './tokens/amelipro/apColors2026'
+import { apColorsTokens2026 } from './tokens/amelipro/apColors2026'
 import { apColorsTokens } from './tokens/amelipro/apColors'
 import { apSemanticTokens } from './tokens/amelipro/apSemantic'
 import { apContextualTokens } from './tokens/amelipro/apContextual'
-import {apLightTheme2026} from './tokens/amelipro/apLightTheme2026'
+import { apLightTheme2026 } from './tokens/amelipro/apLightTheme2026'
 import { apLightTheme } from './tokens/amelipro/apLightTheme'
 import { apDarkTheme } from './tokens/amelipro/apDarkTheme'
 
@@ -32,10 +32,10 @@ export {
 	paLightTheme,
 	paDarkTheme,
 	apColorsTokens,
-    apColorsTokens2026,
+	apColorsTokens2026,
 	apSemanticTokens,
 	apContextualTokens,
-    apLightTheme2026,
+	apLightTheme2026,
 	apLightTheme,
 	apDarkTheme,
 }
