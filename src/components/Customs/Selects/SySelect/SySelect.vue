@@ -885,6 +885,7 @@
 			location="bottom"
 			offset="4"
 			origin="top"
+			:close-on-content-click="!props.multiple"
 			:target="menuTarget"
 		>
 			<template #activator="{ props: activatorProps }">
@@ -1072,6 +1073,7 @@
 				>{{ label }}</span>
 			</template>
 			<VList
+				ref="list"
 				@keydown.end.prevent="handleEndKey"
 				@keydown.page-up.prevent="handlePageUpKey"
 				@keydown.page-down.prevent="handlePageDownKey"
