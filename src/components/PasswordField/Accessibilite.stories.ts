@@ -19,16 +19,13 @@ export const Legende: StoryObj = {
 				return { args }
 			},
 			template: `
-			   
-		 
-				<div class="mt-4">
+			<div class="mt-4">
                   <p>Rapport d'audit manuel : <a href="/audits/PasswordField.xlsx" style="color:#0C41BD;">rapport</a></p>
                   <p style="color: grey; font-size: 14px">Correctifs associés (<a
                       href="https://github.com/assurance-maladie-digital/design-system-v3/issues/898" target="_blank"
                       style="color:#0C41BD;"
                   >issue #898</a>)</p>
                 </div>
-                
                 <div class="mt-6">
                   <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">Spécificité - Source technique</h3>
                   
@@ -117,7 +114,6 @@ export const Legende: StoryObj = {
                     </p>
                   </div>
                 </div>
-			  </div>
             `,
 		}
 	},
