@@ -167,8 +167,8 @@ export const PaletteOrange: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Orange'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'orange-darken-80': cnamColorsTokens.orange.darken80,
 					'orange-darken-60': cnamColorsTokens.orange.darken60,
@@ -216,7 +216,7 @@ export const PaletteOrange: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -385,7 +385,7 @@ export const PaletteForestGreen: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Forest green'
-                const displayEmptyColors = false
+				const displayEmptyColors = false
 				const colorTitleLevel = 3
 				const apColors = {
 					'forest-green-darken-80': apColorsTokens.forestGreen.darken80,
@@ -676,7 +676,7 @@ export const PaletteCyan: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Cyan'
-                const displayEmptyColors = false
+				const displayEmptyColors = false
 				const colorTitleLevel = 3
 				const cnamColors = {
 					'cyan-darken-80': cnamColorsTokens.cyan.darken80,
@@ -719,7 +719,7 @@ export const PaletteCyan: StoryObj = {
 				}
 				const apColors2026 = {}
 				return {
-                    displayEmptyColors,
+					displayEmptyColors,
 					cnamColors,
 					paColors,
 					apColors,
@@ -751,8 +751,8 @@ export const PaletteFrostedBlue: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Frosted blue'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'frosted-blue-darken-80': cnamColorsTokens.frostedBlue.darken80,
 					'frosted-blue-darken-60': cnamColorsTokens.frostedBlue.darken60,
@@ -788,7 +788,7 @@ export const PaletteFrostedBlue: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -814,8 +814,8 @@ export const PaletteParma: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Parma'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'parma-darken-80': cnamColorsTokens.parma.darken80,
 					'parma-darken-60': cnamColorsTokens.parma.darken60,
@@ -866,7 +866,7 @@ export const PaletteParma: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -892,8 +892,8 @@ export const PaletteMauve: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Mauve'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'mauve-darken-80': cnamColorsTokens.mauve.darken80,
 					'mauve-darken-60': cnamColorsTokens.mauve.darken60,
@@ -941,7 +941,7 @@ export const PaletteMauve: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -967,8 +967,8 @@ export const PalettePink: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Pink'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'pink-darken-80': cnamColorsTokens.pink.darken80,
 					'pink-darken-60': cnamColorsTokens.pink.darken60,
@@ -1018,7 +1018,7 @@ export const PalettePink: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -1044,8 +1044,8 @@ export const PaletteBrick: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Brick'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'brick-darken-80': cnamColorsTokens.brick.darken80,
 					'brick-darken-60': cnamColorsTokens.brick.darken60,
@@ -1081,7 +1081,7 @@ export const PaletteBrick: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -1107,8 +1107,8 @@ export const PaletteGrey: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Grey'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'grey-darken-80': cnamColorsTokens.grey.darken80,
 					'grey-darken-60': cnamColorsTokens.grey.darken60,
@@ -1165,7 +1165,7 @@ export const PaletteGrey: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -1191,8 +1191,8 @@ export const PaletteWhite: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'White'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'white-lighten-70': cnamColorsTokens.white.lighten70,
 					'white-lighten-60': cnamColorsTokens.white.lighten40,
@@ -1224,7 +1224,7 @@ export const PaletteWhite: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
@@ -1291,8 +1291,8 @@ export const Interactive: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Interactive'
-                const displayEmptyColors = false
-                const colorTitleLevel = 2
+				const displayEmptyColors = false
+				const colorTitleLevel = 2
 				const cnamColors = {
 					'interactive-default': cnamLightTheme.interactiveDefault,
 					'interactive-hover': cnamLightTheme.interactiveHover,
@@ -1325,7 +1325,7 @@ export const Interactive: StoryObj = {
 					apColors2026,
 					colorTitle,
 					colorTitleLevel,
-                    displayEmptyColors
+					displayEmptyColors,
 				}
 			},
 			template: `
