@@ -963,8 +963,8 @@
 									>
 										<template #activator="{ props: tooltipProps }">
 											<SyIcon
+												v-rgaa-svg-fix="true"
 												v-bind="tooltipProps"
-                        v-rgaa-svg-fix="true"
 												:label="props.label ? `${props.label} - info` : 'Info'"
 												:color="iconColor"
 												:icon="ICONS.info"
@@ -977,7 +977,7 @@
 								</template>
 								<SyIcon
 									v-else-if="props.prependIcon && !props.noIcon"
-                  v-rgaa-svg-fix="true"
+									v-rgaa-svg-fix="true"
 									:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
 									:color="iconColor"
 									:icon="ICONS[props.prependIcon]"
@@ -1005,8 +1005,8 @@
 									>
 										<template #activator="{ props: tooltipProps }">
 											<SyIcon
+												v-rgaa-svg-fix="true"
 												v-bind="tooltipProps"
-                        v-rgaa-svg-fix="true"
 												:label="props.label ? `${props.label} - info` : 'Info'"
 												:color="iconColor"
 												:icon="ICONS.info"
@@ -1019,7 +1019,7 @@
 								</template>
 								<SyIcon
 									v-else-if="props.appendIcon && !props.noIcon"
-                  v-rgaa-svg-fix="true"
+									v-rgaa-svg-fix="true"
 									:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
 									:color="iconColor"
 									:icon="ICONS[props.appendIcon]"
@@ -1036,7 +1036,7 @@
 						<template #append-inner>
 							<SyIcon
 								v-if="hasError"
-                v-rgaa-svg-fix="true"
+								v-rgaa-svg-fix="true"
 								class="mr-6"
 								color="error"
 								:icon="mdiAlertCircle"
@@ -1055,15 +1055,15 @@
 								@click.stop.prevent="$event => selectItem(null, $event)"
 							>
 								<SyIcon
+									v-rgaa-svg-fix="true"
 									class="sy-select__clear-icon"
-                  v-rgaa-svg-fix="true"
 									:icon="mdiCloseCircle"
 									:decorative="true"
 								/>
 							</button>
 							<SyIcon
+								v-rgaa-svg-fix="true"
 								class="arrow"
-                v-rgaa-svg-fix="true"
 								:icon="mdiChevronDown"
 								:decorative="true"
 							/>
