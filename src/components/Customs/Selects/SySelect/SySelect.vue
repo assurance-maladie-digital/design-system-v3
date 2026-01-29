@@ -887,6 +887,7 @@
 		>
 			<template #activator="{ props: activatorProps }">
 				<div
+					v-rgaa-svg-fix="true"
 					class="sy-select"
 					:class="{ 'sy-select--clearable': props.clearable }"
 				>
@@ -894,7 +895,6 @@
 						:id="inputId"
 						v-model="selectedItemText"
 						v-click-outside="closeList"
-						v-rgaa-svg-fix="true"
 						:title="$attrs['aria-label'] || labelWithAsterisk"
 						:color="props.color"
 						:disabled="disabled"
