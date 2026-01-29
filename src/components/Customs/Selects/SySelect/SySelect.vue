@@ -732,23 +732,6 @@
 				element.removeAttribute('aria-live')
 			})
 		},
-
-		cleanWrappersAttributes(parentElement: HTMLElement): void {
-			if (!parentElement) return
-
-			const wrappers = parentElement.querySelectorAll(
-				'.v-input, .v-field, .v-field__field, .v-field__input, .v-input__control',
-			)
-			wrappers.forEach((el) => {
-				const element = el as HTMLElement
-				if (element.getAttribute('role') === 'presentation') {
-					element.removeAttribute('role')
-				}
-				if (element.getAttribute('aria-hidden') === 'true') {
-					element.removeAttribute('aria-hidden')
-				}
-			})
-		},
 	}
 
 	const setupAriaAttributes = () => {
@@ -766,7 +749,6 @@
 		if (parentElement) {
 			ariaManager.cleanParentAttributes(parentElement)
 			ariaManager.cleanAlertAttributes(parentElement)
-			ariaManager.cleanWrappersAttributes(parentElement)
 		}
 	}
 
