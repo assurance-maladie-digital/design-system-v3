@@ -29,6 +29,11 @@ const meta = {
 			control: { type: 'text' },
 			default: undefined,
 		},
+		role: {
+			options: ['main', 'region', 'navigation', 'contentinfo', 'banner'],
+			control: { type: 'text' },
+			default: undefined,
+		},
 	},
 } as Meta<typeof PageContainer>
 
