@@ -181,7 +181,7 @@
 						name="menu"
 						:menu-open
 					/>
-					<div class="header-logo pl-md-14 pl-4">
+					<div class="header-logo">
 						<slot
 							name="logo"
 							:menu-open
@@ -267,13 +267,20 @@
 	margin-left: auto;
 }
 
-.menu + .header-logo {
-	@media screen and (width >= 340px) {
-		padding-left: 16px !important;
-	}
+.header-logo {
+	padding-left: 16px;
 }
 
 @media screen and (min-width: $header-breakpoint) {
+	.header-logo {
+		padding-left: 56px;
+	}
+
+	.menu + .header-logo {
+		padding-left: 0;
+		margin-left: 8px;
+	}
+
 	.inner-header {
 		height: $header-height-desktop;
 	}
