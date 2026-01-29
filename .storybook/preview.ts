@@ -6,6 +6,7 @@ import { setup } from '@storybook/vue3'
 import { createVuetifyInstance } from '../src/vuetifyConfig'
 
 const vuetify = createVuetifyInstance()
+const isDev = process.env.NODE_ENV === 'development'
 
 setup((app, { globals }) => {
 	app.use(vuetify)
@@ -62,6 +63,16 @@ setup((app, { globals }) => {
 	)
 })
 
+const themeItems = [
+    {value: 'cnam', title: 'Thème CNAM'},
+    {value: 'pa', title: 'Thème PA'},
+    ...(!isDev
+            ? []
+            : [{value: 'ap', title: 'Thème AmeliPro New'}]
+    ),
+    {value: 'ap2026', title: 'Thème AmeliPro'},
+]
+
 const globalTypes = {
 	theme: {
 		name: 'Theme',
@@ -70,12 +81,7 @@ const globalTypes = {
 		toolbar: {
 			title: 'Thèmes',
 			icon: 'paintbrush',
-			items: [
-				{ value: 'cnam', title: 'Thème CNAM' },
-				{ value: 'pa', title: 'Thème PA' },
-                {value: 'ap', title: 'Thème AmeliPro New'},
-                {value: 'ap2026', title: 'Thème AmeliPro'},
-			],
+            items: themeItems,
 			dynamicTitle: true,
 		},
 	},
