@@ -7,7 +7,7 @@
 	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useValidatable } from '@/composables/validation/useValidatable'
-  import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
+	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { ColorType, IconType, VariantStyle } from './types'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip, VTooltip } from 'vuetify/components'
@@ -894,7 +894,7 @@
 						:id="inputId"
 						v-model="selectedItemText"
 						v-click-outside="closeList"
-            v-rgaa-svg-fix="true"
+						v-rgaa-svg-fix="true"
 						:title="$attrs['aria-label'] || labelWithAsterisk"
 						:color="props.color"
 						:disabled="disabled"
