@@ -98,7 +98,7 @@
 		if (props.hideIcon) {
 			return 'pa-1 pa-sm-2'
 		}
-		return isMobileVersion.value ? 'pa-0' : 'pa-1 pa-sm-3'
+		return isMobileVersion.value ? 'pa-1' : 'pa-1 pa-sm-3'
 	})
 
 	const hasListContent = computed(() => {
@@ -299,7 +299,7 @@
 	}
 }
 
-:global(.sy-user-menu .v-list-item:focus-visible) {
+:global(.sy-user-menu .v-list-item:focus) {
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
 }
