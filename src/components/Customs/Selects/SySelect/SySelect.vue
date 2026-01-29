@@ -7,7 +7,6 @@
 	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import type { ColorType, IconType, VariantStyle } from './types'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip, VTooltip } from 'vuetify/components'
@@ -963,7 +962,6 @@
 									>
 										<template #activator="{ props: tooltipProps }">
 											<SyIcon
-												v-rgaa-svg-fix="true"
 												v-bind="tooltipProps"
 												:label="props.label ? `${props.label} - info` : 'Info'"
 												:color="iconColor"
@@ -976,15 +974,23 @@
 									</VTooltip>
 								</template>
 								<SyIcon
-									v-else-if="props.prependIcon && !props.noIcon"
-									v-rgaa-svg-fix="true"
-									:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
+									v-else-if="props.prependIcon && !props.noIcon && disableClickButton"
+									:label="undefined"
 									:color="iconColor"
 									:icon="ICONS[props.prependIcon]"
-									:role="disableClickButton ? 'presentation' : 'button'"
-									:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-									:decorative="disableClickButton"
-									:tabindex="disableClickButton ? undefined : '0'"
+									role="presentation"
+									class="cursor-default"
+									:decorative="true"
+								/>
+								<SyIcon
+									v-else-if="props.prependIcon && !props.noIcon"
+									:label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
+									:color="iconColor"
+									:icon="ICONS[props.prependIcon]"
+									role="button"
+									class="cursor-pointer"
+									:decorative="false"
+									tabindex="0"
 									@click.stop="handlePrependIconClick"
 									@keydown.enter.prevent.stop="handlePrependIconClick"
 									@keydown.space.prevent.stop="handlePrependIconClick"
@@ -1005,7 +1011,6 @@
 									>
 										<template #activator="{ props: tooltipProps }">
 											<SyIcon
-												v-rgaa-svg-fix="true"
 												v-bind="tooltipProps"
 												:label="props.label ? `${props.label} - info` : 'Info'"
 												:color="iconColor"
@@ -1018,15 +1023,23 @@
 									</VTooltip>
 								</template>
 								<SyIcon
-									v-else-if="props.appendIcon && !props.noIcon"
-									v-rgaa-svg-fix="true"
-									:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
+									v-else-if="props.appendIcon && !props.noIcon && disableClickButton"
+									:label="undefined"
 									:color="iconColor"
 									:icon="ICONS[props.appendIcon]"
-									:role="disableClickButton ? 'presentation' : 'button'"
-									:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-									:decorative="disableClickButton"
-									:tabindex="disableClickButton ? undefined : '0'"
+									role="presentation"
+									class="cursor-default"
+									:decorative="true"
+								/>
+								<SyIcon
+									v-else-if="props.appendIcon && !props.noIcon"
+									:label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
+									:color="iconColor"
+									:icon="ICONS[props.appendIcon]"
+									role="button"
+									class="cursor-pointer"
+									:decorative="false"
+									tabindex="0"
 									@click.stop="handleAppendIconClick"
 									@keydown.enter.prevent.stop="handleAppendIconClick"
 									@keydown.space.prevent.stop="handleAppendIconClick"
@@ -1036,7 +1049,6 @@
 						<template #append-inner>
 							<SyIcon
 								v-if="hasError"
-								v-rgaa-svg-fix="true"
 								class="mr-6"
 								color="error"
 								:icon="mdiAlertCircle"
@@ -1055,14 +1067,12 @@
 								@click.stop.prevent="$event => selectItem(null, $event)"
 							>
 								<SyIcon
-									v-rgaa-svg-fix="true"
 									class="sy-select__clear-icon"
 									:icon="mdiCloseCircle"
 									:decorative="true"
 								/>
 							</button>
 							<SyIcon
-								v-rgaa-svg-fix="true"
 								class="arrow"
 								:icon="mdiChevronDown"
 								:decorative="true"
