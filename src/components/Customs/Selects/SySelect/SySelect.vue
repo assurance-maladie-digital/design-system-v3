@@ -1150,12 +1150,13 @@
 	:deep(.v-input__append > .v-icon__svg) {
 		fill: rgb(0 0 0 / 70%);
 	}
-  :deep(.v-input__prepend .v-icon:focus-visible),
-  :deep(.v-input__append .v-icon:focus-visible) {
-    outline: 2px solid tokens.$primary-base;
-    outline-offset: 2px;
-    opacity: 1;
-  }
+
+	:deep(.v-input__prepend .v-icon:focus-visible),
+	:deep(.v-input__append .v-icon:focus-visible) {
+		outline: 2px solid tokens.$primary-base;
+		outline-offset: 2px;
+		opacity: 1;
+	}
 }
 
 .v-field {
