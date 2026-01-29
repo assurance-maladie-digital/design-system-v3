@@ -6,7 +6,6 @@
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
 	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
-	import { vRgaaSvgFix } from '../../../../directives/rgaaSvgFix'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { ColorType, IconType, VariantStyle } from './types'
 	import type { VList, VTextField } from 'vuetify/components'
@@ -733,6 +732,23 @@
 				element.removeAttribute('aria-live')
 			})
 		},
+
+		cleanWrappersAttributes(parentElement: HTMLElement): void {
+			if (!parentElement) return
+
+			const wrappers = parentElement.querySelectorAll(
+				'.v-input, .v-field, .v-field__field, .v-field__input, .v-input__control',
+			)
+			wrappers.forEach((el) => {
+				const element = el as HTMLElement
+				if (element.getAttribute('role') === 'presentation') {
+					element.removeAttribute('role')
+				}
+				if (element.getAttribute('aria-hidden') === 'true') {
+					element.removeAttribute('aria-hidden')
+				}
+			})
+		},
 	}
 
 	const setupAriaAttributes = () => {
@@ -750,6 +766,7 @@
 		if (parentElement) {
 			ariaManager.cleanParentAttributes(parentElement)
 			ariaManager.cleanAlertAttributes(parentElement)
+			ariaManager.cleanWrappersAttributes(parentElement)
 		}
 	}
 
@@ -776,14 +793,10 @@
 		})
 	})
 
-	watch(isOpen, (newValue) => {
+	watch(isOpen, () => {
 		nextTick(() => {
 			if (!textInput.value || !textInput.value.$el) return
-
-			const inputElement = textInput.value.$el.querySelector('input') as HTMLElement
-			if (inputElement) {
-				ariaManager.updateInputState(inputElement, newValue, uniqueMenuId.value, activeDescendantId.value)
-			}
+			setupAriaAttributes()
 		})
 	})
 
@@ -898,7 +911,6 @@
 						:id="inputId"
 						v-model="selectedItemText"
 						v-click-outside="closeList"
-						v-rgaa-svg-fix="true"
 						:title="$attrs['aria-label'] || labelWithAsterisk"
 						:color="props.color"
 						:disabled="disabled"
