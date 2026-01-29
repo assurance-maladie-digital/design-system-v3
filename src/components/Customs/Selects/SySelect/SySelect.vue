@@ -1086,7 +1086,10 @@
 				>{{ label }}</span>
 			</template>
 			<VList
+				:id="uniqueMenuId"
 				ref="list"
+				:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+				:title="$attrs['aria-label'] || labelWithAsterisk"
 				@keydown.end.prevent="handleEndKey"
 				@keydown.page-up.prevent="handlePageUpKey"
 				@keydown.page-down.prevent="handlePageDownKey"
