@@ -92,6 +92,7 @@
 			role="dialog"
 			temporary
 			width="300"
+      class="amelipro-menu__drawer"
 		>
 			<div
 				:id="`${uniqueId}-drawer-content`"
