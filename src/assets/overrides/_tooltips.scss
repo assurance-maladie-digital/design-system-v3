@@ -1,10 +1,17 @@
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026';
+@use '@/assets/apTokens';
 
 .v-tooltip .v-overlay__content {
 	background-color: rgb(0 0 0 / 70%) !important;
 }
 
+.v-theme--ap2026.v-tooltip .v-overlay__content {
+	background-color: apTokens2026.$ap-white !important;
+	border: 1px solid apTokens2026.$ap-parme-darken1 !important;
+}
+
 .v-theme--ap.v-tooltip .v-overlay__content {
-	background-color: apTokens.$ap-white !important;
-	border: 1px solid apTokens.$ap-parme-darken1 !important;
+	color: apTokens.$colors-text-base;
+	border: 1px solid apTokens.$colors-border-base;
+	background-color: apTokens.$colors-background-surface !important;
 }

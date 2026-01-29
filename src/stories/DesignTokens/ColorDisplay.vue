@@ -9,6 +9,7 @@
 		cnamColors: Record<string, string>
 		paColors: Record<string, string>
 		apColors: Record<string, string>
+		apColors2026: Record<string, string>
 		colorTitle: string
 		colorTitleLevel: number
 	}
@@ -23,6 +24,9 @@
 		if (theme.value === 'ap') {
 			return props.apColors
 		}
+		if (theme.value === 'ap2026') {
+			return props.apColors2026
+		}
 		return props.cnamColors
 	})
 
@@ -34,7 +38,7 @@
 
 <template>
 	<div
-		v-if="!isEmptyObject(displayColors) || (isEmptyObject(displayColors) && displayEmptyColors && theme !== 'ap')"
+		v-if="!isEmptyObject(displayColors) || (isEmptyObject(displayColors) && displayEmptyColors && theme !== 'ap2026')"
 		class="mb-5"
 	>
 		<h2

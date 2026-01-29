@@ -6,6 +6,7 @@ import { setup } from '@storybook/vue3'
 import { createVuetifyInstance } from '../src/vuetifyConfig'
 
 const vuetify = createVuetifyInstance()
+const isDev = process.env.NODE_ENV === 'development'
 
 setup((app, { globals }) => {
 	app.use(vuetify)
@@ -37,7 +38,7 @@ setup((app, { globals }) => {
 	// Apply theme class to <html> (document.documentElement) instead of #root
 	const applyThemeClass = (theme) => {
 		const rootElement = document.documentElement // Always exists
-		rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
+        rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
 		rootElement.classList.add(`theme-${theme}`)
 	}
 
@@ -62,19 +63,25 @@ setup((app, { globals }) => {
 	)
 })
 
+const themeItems = [
+    {value: 'cnam', title: 'Thème CNAM'},
+    {value: 'pa', title: 'Thème PA'},
+    ...(!isDev
+            ? []
+            : [{value: 'ap', title: 'Thème AmeliPro New'}]
+    ),
+    {value: 'ap2026', title: 'Thème AmeliPro'},
+]
+
 const globalTypes = {
 	theme: {
 		name: 'Theme',
-		description: 'Switch between CNAM, PA and AP themes',
+        description: 'Switch between CNAM, PA, AP and AP2026 themes',
 		defaultValue: 'cnam',
 		toolbar: {
 			title: 'Thèmes',
 			icon: 'paintbrush',
-			items: [
-				{ value: 'cnam', title: 'Thème CNAM' },
-				{ value: 'pa', title: 'Thème PA' },
-				{ value: 'ap', title: 'Thème AmeliPro' },
-			],
+            items: themeItems,
 			dynamicTitle: true,
 		},
 	},
@@ -93,7 +100,7 @@ const preview: Preview = {
 			// Handle theme changes
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				vuetify.theme.change(context.globals.theme)
-				document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
+                document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
 				document.documentElement.classList.add(`theme-${context.globals.theme}`)
 				localStorage.setItem('storybook-theme', context.globals.theme)
 			}

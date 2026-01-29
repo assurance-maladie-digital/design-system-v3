@@ -14,11 +14,12 @@ import {
 	paLightTheme,
 	paDarkTheme,
 	paFontsTokens,
-	// apColorsTokens,
 	apContextualTokens,
-	apLightTheme,
+	apLightTheme2026,
 	apDarkTheme,
 	apColorsTokens,
+	apColorsTokens2026,
+	apLightTheme,
 } from './designTokens'
 import { createFlattenTheme, createFontVariables } from './designTokens/utils'
 import { fr } from 'vuetify/locale'
@@ -61,6 +62,18 @@ export const createVuetifyInstance = () => createVuetify({
 					'font-family': paFontsTokens.family.primary,
 					...createFontVariables(paFontsTokens),
 					...createFlattenTheme(paContextualTokens),
+				},
+			},
+			ap2026: {
+				dark: false,
+				colors: {
+					...apLightTheme2026,
+					...apDarkTheme,
+					...createFlattenTheme(apColorsTokens2026),
+				},
+				variables: {
+					'font-family': '"Arial", sans-serif',
+					...createFlattenTheme(apContextualTokens),
 				},
 			},
 			ap: {

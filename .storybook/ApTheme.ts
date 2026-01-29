@@ -4,33 +4,33 @@ export default create({
 	base: 'light',
 	brandTitle: 'AmeliPro',
 	brandUrl: './',
-	brandImage: '/logos/logo-amelipro.svg',
+    brandImage: '/logos/logo-amelipro-color.svg',
 	brandTarget: '_self',
 
-	colorPrimary: 'rgba(0, 81, 109, 0.7)',
-	colorSecondary: '#163043',
+    colorPrimary: '#0084b2',
+    colorSecondary: '#006386',
 
 	// UI
-	appBg: 'rgba(0, 81, 109, 0.08)',
+    appBg: '#FFFFFF',
 	appContentBg: 'white',
 	appBorderColor: 'grey',
 	appBorderRadius: 4,
 
 	// Text colors
-	textColor: 'rgb(0,34,44)',
+    textColor: '0084b2',
 	textInverseColor: 'rgba(255,255,255,0.9)',
 
 	// Toolbar default and active colors
-	barTextColor: 'rgba(0, 81, 109, 1)',
-	barSelectedColor: 'rgba(0, 81, 109, 1)',
-	barBg: 'rgba(244, 245, 241, 0.9)',
+    barTextColor: '#0084b2',
+    barSelectedColor: '#0084b2',
+    barBg: '#FFFFFF',
 
 	// Form colors
 	inputBg: 'white',
-	inputBorder: 'rgba(0, 81, 109, 1)',
-	inputTextColor: 'rgba(0, 81, 109, 1)',
+    inputBorder: '#0084b2',
+    inputTextColor: '#0084b2',
 	inputBorderRadius: 4,
 
 	// Links colors
-	textMutedColor: 'rgba(0, 81, 109, 1)',
+    textMutedColor: '#0084b2',
 })
