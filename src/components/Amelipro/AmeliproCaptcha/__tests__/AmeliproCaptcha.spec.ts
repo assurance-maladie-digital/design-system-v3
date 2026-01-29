@@ -314,24 +314,24 @@ describe('AmeliproCaptcha', () => {
 
 			// uniqueId
 			it('prop uniqueId sets prop uniqueId', async () => {
-				expect(updateBtn().props('uniqueId')).toBe(`${testHelper.default('uniqueId')}-update-btn`)
-				expect(switchBtn().props('uniqueId')).toBe(`${testHelper.default('uniqueId')}-switch-type-btn`)
+				expect(updateBtn()?.props('uniqueId')).toBe(`${testHelper.default('uniqueId')}-update-btn`)
+				expect(switchBtn()?.props('uniqueId')).toBe(`${testHelper.default('uniqueId')}-switch-type-btn`)
 
 				const { uniqueId } = modifiedPropValues()
 				await wrapper.setProps({ uniqueId })
-				expect(updateBtn().props('uniqueId')).toBe(`${testHelper.modified('uniqueId')}-update-btn`)
-				expect(switchBtn().props('uniqueId')).toBe(`${testHelper.modified('uniqueId')}-switch-type-btn`)
+				expect(updateBtn()?.props('uniqueId')).toBe(`${testHelper.modified('uniqueId')}-update-btn`)
+				expect(switchBtn()?.props('uniqueId')).toBe(`${testHelper.modified('uniqueId')}-switch-type-btn`)
 			})
 
 			// text updateCaptchaLabelImg & switchCaptchaTypeLabelImg
 			it('props updateCaptchaLabelImg & switchCaptchaTypeLabelImg set btn text', async () => {
-				expect(updateBtn().text()).toBe(testHelper.default('updateCaptchaLabelImg'))
-				expect(switchBtn().text()).toBe(testHelper.default('switchCaptchaTypeLabelImg'))
+				expect(updateBtn()?.text()).toBe(testHelper.default('updateCaptchaLabelImg'))
+				expect(switchBtn()?.text()).toBe(testHelper.default('switchCaptchaTypeLabelImg'))
 
 				const { updateCaptchaLabelImg, switchCaptchaTypeLabelImg } = modifiedPropValues()
 				await wrapper.setProps({ updateCaptchaLabelImg, switchCaptchaTypeLabelImg })
-				expect(updateBtn().text()).toBe(testHelper.modified('updateCaptchaLabelImg'))
-				expect(switchBtn().text()).toBe(testHelper.modified('switchCaptchaTypeLabelImg'))
+				expect(updateBtn()?.text()).toBe(testHelper.modified('updateCaptchaLabelImg'))
+				expect(switchBtn()?.text()).toBe(testHelper.modified('switchCaptchaTypeLabelImg'))
 			})
 		})
 
@@ -359,13 +359,13 @@ describe('AmeliproCaptcha', () => {
 
 			// text updateCaptchaLabelAudio & switchCaptchaTypeLabelAudio
 			it('props updateCaptchaLabelAudio & switchCaptchaTypeLabelAudio set btn text', async () => {
-				expect(updateBtn().text()).toBe(testHelper.default('updateCaptchaLabelAudio'))
-				expect(switchBtn().text()).toBe(testHelper.default('switchCaptchaTypeLabelAudio'))
+				expect(updateBtn()?.text()).toBe(testHelper.default('updateCaptchaLabelAudio'))
+				expect(switchBtn()?.text()).toBe(testHelper.default('switchCaptchaTypeLabelAudio'))
 
 				const { updateCaptchaLabelAudio, switchCaptchaTypeLabelAudio } = modifiedPropValues()
 				await wrapper.setProps({ updateCaptchaLabelAudio, switchCaptchaTypeLabelAudio })
-				expect(updateBtn().text()).toBe(testHelper.modified('updateCaptchaLabelAudio'))
-				expect(switchBtn().text()).toBe(testHelper.modified('switchCaptchaTypeLabelAudio'))
+				expect(updateBtn()?.text()).toBe(testHelper.modified('updateCaptchaLabelAudio'))
+				expect(switchBtn()?.text()).toBe(testHelper.modified('switchCaptchaTypeLabelAudio'))
 			})
 		})
 	})

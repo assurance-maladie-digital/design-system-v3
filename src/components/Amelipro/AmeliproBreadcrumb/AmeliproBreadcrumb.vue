@@ -20,7 +20,10 @@
 		let itemsList = props.items.slice(0, (props.items.length - 1))
 
 		if (xs.value) {
-			itemsList = [props.items[props.items.length - 2]]
+			const key = props.items?.[props.items.length - 2]
+			if (key) {
+				itemsList = [key]
+			}
 		}
 
 		return itemsList
@@ -69,7 +72,7 @@
 					aria-current="page"
 					class="text-none mb-0 breadcrumb__active-page"
 				>
-					{{ items[items.length - 1].title }}
+					{{ items[items.length - 1]?.title }}
 				</p>
 			</li>
 		</ol>

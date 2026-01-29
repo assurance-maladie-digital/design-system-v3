@@ -52,8 +52,8 @@ export function useTableAccessibility({
 			})
 
 			const th = document.querySelectorAll(`#${tableId} th`)
-			for (let i = 0; i < th.length; i++) {
-				th[i].setAttribute('scope', 'col')
+			for (const el of th) {
+				el.setAttribute('scope', 'col')
 			}
 		})
 

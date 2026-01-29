@@ -38,6 +38,7 @@ exports[`StructureTabs > Snapshots > renders the component with all properties f
           mr-sm-3
         "
         controls="structure-panel-0"
+        disabled="false"
         role="tab"
         selected="false"
         tabindex="-1"
@@ -52,6 +53,7 @@ exports[`StructureTabs > Snapshots > renders the component with all properties f
           mr-sm-3
         "
         controls="structure-panel-1"
+        disabled="false"
         role="tab"
         selected="true"
         tabindex="0"

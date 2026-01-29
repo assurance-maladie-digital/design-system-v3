@@ -9,6 +9,7 @@ const meta = {
 		'cancel': { description: 'event émis à la fermeture de la modale par le bouton annuler' },
 		'change': { description: 'event émis à la fermeture de la modale par un autre moyen que le bouton de confirmation' },
 		'maxStructuresLoadedDefault': { description: 'Le nombre de structures affichées par défaut dans les onglets' },
+		'hasStructureAccess': { description: 'Donne accès à l\'onglet \'Mes structures\'' },
 		'modelValue': {
 			description: 'Objet contenant la valeur d’affichage de la modale ainsi que la structure sélectionnée',
 			table: {
@@ -97,27 +98,31 @@ const structuresTabs: StructureTab[] = [
 	{
 		structures: [
 			{
+				name: 'Dr Jean Martin',
 				address: '39 rue de Rennes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'e',
 			},
 			{
+				name: 'Pharmacie de la gare',
 				address: '40 rue de Vannes',
 				idNumber: 'XXXXXXXXXX',
 				value: 'f',
 			},
 			{
+				name: 'Cabinet d\'analayse medicale',
 				address: '50 Avenue de Marseille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'g',
 			},
 			{
+				name: 'Pharmacie du quai',
 				address: '62 Boulevard de Lille',
 				idNumber: 'XXXXXXXXXX',
 				value: 'h',
 			},
 		],
-		label: 'Mes délégués',
+		label: 'Mes délégations',
 	},
 ]
 
@@ -168,68 +173,6 @@ export const Default: Story = {
 	import { ref } from 'vue'
 
 	const model = ref({ dialog: false, activeTab: 0 })
-	const structuresTabs = [
-		{
-			structures: [
-				{
-					address: '70 rue de Lyon',
-					idNumber: 'XXXXXXXXXX',
-					value: 'titu',
-				},
-				{
-					address: '34 avenue de Bordeaux',
-					idNumber: 'XXXXXXXXXX',
-					value: 'titi',
-				},
-				{
-					address: '47 boulevard du Mans',
-					idNumber: 'XXXXXXXXXX',
-					value: 'a',
-				},
-				{
-					address: '84 bis rue de Toulouse',
-					idNumber: 'XXXXXXXXXX',
-					value: 'b',
-				},
-				{
-					address: '103 rue de Paris',
-					idNumber: 'XXXXXXXXXX',
-					value: 'c',
-				},
-				{
-					address: '21 rue de Nantes',
-					idNumber: 'XXXXXXXXXX',
-					value: 'd',
-				},
-			],
-			label: 'Mes structures',
-		},
-		{
-			structures: [
-				{
-					address: '39 rue de Rennes',
-					idNumber: 'XXXXXXXXXX',
-					value: 'e',
-				},
-				{
-					address: '40 rue de Vannes',
-					idNumber: 'XXXXXXXXXX',
-					value: 'f',
-				},
-				{
-					address: '50 Avenue de Marseille',
-					idNumber: 'XXXXXXXXXX',
-					value: 'g',
-				},
-				{
-					address: '62 Boulevard de Lille',
-					idNumber: 'XXXXXXXXXX',
-					value: 'h',
-				},
-			],
-			label: 'Mes délégués',
-		},
-	]
 </script>
 				`,
 			},
@@ -242,9 +185,7 @@ export const Default: Story = {
 
 			// Optional: Keeps v-model in sync with storybook args
 			watch(() => args.modelValue, (newValue) => {
-				if (newValue !== undefined) {
-					model.value = newValue
-				}
+				model.value = newValue
 			})
 
 			return { args, model }
@@ -267,6 +208,95 @@ export const Default: Story = {
 		v-model="model"
 	/>
 </div>`,
+	}),
+}
+
+export const HasStructureAccess: Story = {
+	args: {
+		modelValue: { dialog: false, activeTab: 0 },
+		structuresTabs,
+		uniqueId: 'structure-menu-unique-id',
+		userAdeli: 'n° Adeli',
+		userName: 'Jean Martin',
+		userProfession: 'Médecin génraliste',
+		userRpps: 'n° RPPS',
+		hasStructureAccess: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div>
+				<AmeliproIconBtn
+					btn-label="Sélection de structure"
+					icon="localisation"
+					icon-bg-color="ap-blue-darken-1"
+					icon-color="ap-white"
+					icon-hover-bg-color="ap-blue-darken-2"
+					icon-hover-color="ap-white"
+					size="2rem"
+					unique-id="structure-menu-unique-id-open-btn"
+					@click="model.dialog = true"
+				/>
+				<StructureMenu
+					v-model="model"
+					:structures-tabs="structuresTabs"
+					unique-id="structure-menu-unique-id"
+					user-adeli="n° Adeli"
+					user-name="Jean Martin"
+					user-profession="Médecin génraliste"
+					user-rpps="n° RPPS"
+					:hasStructureAccess="true"
+				/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { AmeliproIconBtn, StructureMenu } from '@cnamts/synapse'
+	import { ref } from 'vue'
+
+	const model = ref({ dialog: false, activeTab: 0 })
+</script>
+				`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproIconBtn, StructureMenu },
+		setup() {
+			const model = ref(args.modelValue)
+
+			// Optional: Keeps v-model in sync with storybook args
+			watch(() => args.modelValue, (newValue) => {
+				if (newValue !== undefined) {
+					model.value = newValue
+				}
+			})
+
+			return { args, model }
+		},
+		template: `
+          <div>
+            <AmeliproIconBtn
+                btn-label="Sélection de structure"
+                icon="localisation"
+                icon-bg-color="ap-blue-darken-1"
+                icon-color="ap-white"
+                icon-hover-bg-color="ap-blue-darken-2"
+                icon-hover-color="ap-white"
+                size="2rem"
+                :unique-id="\`\${args.uniqueId}-open-btn\`"
+                @click="model.dialog = true"
+            />
+            <StructureMenu
+                v-bind="args"
+                v-model="model"
+            />
+          </div>`,
 	}),
 }
 

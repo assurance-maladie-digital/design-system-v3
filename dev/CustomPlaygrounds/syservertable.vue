@@ -52,10 +52,10 @@
 
 			if (sortBy && sortBy.length > 0) {
 				items = items.sort((a, b) => {
-					const key = sortBy[0].key
-					const order = sortBy[0].order === 'asc' ? 1 : -1
+					const key = sortBy[0]!.key
+					const order = sortBy[0]?.order === 'asc' ? 1 : -1
 
-					return a[key] > b[key] ? order : -order
+					return a[key]! > b[key]! ? order : -order
 				})
 			}
 

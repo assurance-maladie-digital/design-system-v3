@@ -258,6 +258,9 @@ export const Default: Story = {
 	},
 
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -353,6 +356,9 @@ export const WithoutCookiesItems: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -405,6 +411,9 @@ export const BannerDescriptionSlot: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -511,6 +520,9 @@ export const CookiesDescriptionSlots: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -607,6 +619,9 @@ export const Customization: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

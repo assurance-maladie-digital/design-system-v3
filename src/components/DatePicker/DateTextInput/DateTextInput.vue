@@ -660,7 +660,7 @@
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
 					const dateRangeParts = inputValue.value.split(' - ')
-					if (dateRangeParts.length === 2) emitModel([dateRangeParts[0], dateRangeParts[1]])
+					if (dateRangeParts.length === 2) emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
 					else emitModel(inputValue.value)
 				}
 				else emitModel(inputValue.value)
@@ -1038,21 +1038,13 @@
 	const isOnError = computed(() => warningMessages.value.length === 0 && successMessages.value.length === 0 && errorMessages.value.length > 0)
 	const isOnWarning = computed(() => errorMessages.value.length === 0 && successMessages.value.length === 0 && warningMessages.value.length > 0)
 	const isOnSuccess = computed(() => errorMessages.value.length === 0 && warningMessages.value.length === 0 && successMessages.value.length > 0)
-	const getIcon = computed(() => {
-		if (errorMessages.value.length) return 'error'
-		if (warningMessages.value.length) return 'warning'
-		if (successMessages.value.length && !warningMessages.value.length) return 'success'
-		return undefined
-	})
 </script>
 
 <template>
 	<SyTextField
-		:key="fieldKey"
 		ref="inputRef"
 		v-model="inputValue"
 		:append-icon="props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined"
-		:append-inner-icon="getIcon"
 		:class="{
 			'error-field': isOnError,
 			'warning-field': isOnWarning,

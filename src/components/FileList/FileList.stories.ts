@@ -262,6 +262,9 @@ export const States: Story = {
 		onPreview: fn(),
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

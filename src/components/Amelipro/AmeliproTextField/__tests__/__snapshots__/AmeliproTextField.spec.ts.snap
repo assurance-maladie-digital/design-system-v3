@@ -81,6 +81,7 @@ exports[`AmeliproTextField > Snapshots > renders the component with all properti
   </div>
   <!-- v-if -->
 </div>
+<!-- v-if -->
 `;
 
 exports[`AmeliproTextField > Snapshots > renders the component with only required properties filled in 1`] = `
@@ -140,4 +141,5 @@ exports[`AmeliproTextField > Snapshots > renders the component with only require
   </div>
   <!-- v-if -->
 </div>
+<!-- v-if -->
 `;

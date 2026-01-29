@@ -227,7 +227,7 @@ describe('PhoneField', () => {
 
 		expect(wrapper.emitted('update:selectedDialCode')).toBeTruthy()
 		const emittedEvents = wrapper.emitted('update:selectedDialCode')
-		expect(emittedEvents && emittedEvents[0][0]).toEqual(dialCodeValue)
+		expect(emittedEvents && emittedEvents[0]?.[0]).toEqual(dialCodeValue)
 	})
 
 	it('validates phone number on submit', async () => {
@@ -832,7 +832,7 @@ describe('PhoneField', () => {
 			})
 
 			// Sélectionner l'indicatif personnalisé
-			wrapper.vm.dialCode = customIndicatifs[0]
+			wrapper.vm.dialCode = customIndicatifs[0]!
 			await wrapper.vm.$nextTick()
 
 			// Vérifier que le masque et le counter sont mis à jour

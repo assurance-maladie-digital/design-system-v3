@@ -55,9 +55,9 @@ exports[`AmeliproSelect > Snapshots > renders the component with all properties 
         pt-0
         v-select-stub
       "
-      color="ap-blue-darken-1"
       density="compact"
       item-props="true"
+      menu-props="[object Object]"
       style="
         max-width: modified-input-max-width;
         min-width: modified-input-min-width;
@@ -106,9 +106,9 @@ exports[`AmeliproSelect > Snapshots > renders the component with only required p
         pt-0
         v-select-stub
       "
-      color="ap-blue-darken-1"
       density="compact"
       item-props="true"
+      menu-props="[object Object]"
       variant="outlined"
     ></div>
   </div>

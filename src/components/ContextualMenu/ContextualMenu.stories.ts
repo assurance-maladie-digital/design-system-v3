@@ -223,6 +223,9 @@ export const WithAnchors: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

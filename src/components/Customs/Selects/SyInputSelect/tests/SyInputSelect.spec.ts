@@ -296,7 +296,7 @@ describe('SyInputSelect', () => {
 			await wrapper.vm.selectItem(null)
 
 			expect(wrapper.emitted('update:errorMessages')).toBeTruthy()
-			expect(wrapper.emitted('update:errorMessages')?.[0][0]).toContainEqual(expect.stringContaining('Test Label est requis'))
+			expect(wrapper.emitted('update:errorMessages')?.[0]?.[0]).toContainEqual(expect.stringContaining('Test Label est requis'))
 		})
 	})
 

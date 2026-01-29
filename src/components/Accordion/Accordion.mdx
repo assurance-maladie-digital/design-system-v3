@@ -27,6 +27,12 @@ Vous pouvez personnaliser le niveau de titre (h1-h6) utilisé pour les boutons d
 
 <Canvas of={AccordionStories.CustomHeadingLevel} />
 
+## Slots personnalisés
+
+Vous pouvez également utiliser des slots pour personnaliser le rendu des titres et du contenu.
+
+<Canvas of={AccordionStories.WithSlots} />
+
 ## Accessibilité
 
 Le composant Accordion respecte les normes d'accessibilité ARIA :
@@ -58,7 +64,6 @@ const accordionItems = [
   }
 ]
 </script>
-import '../../stories/styles/shared.css';
 
 <template>
   <main>

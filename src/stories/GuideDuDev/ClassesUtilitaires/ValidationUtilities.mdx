@@ -15,7 +15,7 @@ Cette fonction facilite la validation des props dans les composants Vue.
 
 ### Importation
 
-<Source dark code={`import { propValidator } from '@cnamts/synpase'
+<Source dark code={`import { propValidator } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
@@ -46,7 +46,7 @@ Cette fonction facilite la validation des props dans les composants Vue.
 </template>
 
 <script>
-import { propValidator } from '@cnamts/synpase'
+import { propValidator } from '@cnamts/synapse'
 
 export default {
   name: 'CustomButton',
@@ -72,7 +72,7 @@ Cette fonction génère un message d'erreur formaté pour les règles de validat
 
 ### Importation
 
-<Source dark code={`import { ruleMessage } from '@cnamts/synpase'
+<Source dark code={`import { ruleMessage } from '@cnamts/synapse'
 `}/>
 
 ### Utilisation
@@ -104,7 +104,7 @@ ruleMessage('Ce champ est requis', 'Email') // 'Email : Ce champ est requis'
 
 <script>
 import { ref } from 'vue'
-import { ruleMessage } from '@cnamts/synpase'
+import { ruleMessage } from '@cnamts/synapse'
 
 export default {
   setup() {
@@ -140,7 +140,7 @@ Vérifie si une date est postérieure à une autre date.
 
 #### Importation
 
-<Source dark code={`import { isDateAfter } from '@cnamts/synpase'
+<Source dark code={`import { isDateAfter } from '@cnamts/synapse'
 `}/>
 
 #### Utilisation
@@ -160,7 +160,7 @@ Vérifie si une date est antérieure à une autre date.
 
 #### Importation
 
-<Source dark code={`import { isDateBefore } from '@cnamts/synpase'
+<Source dark code={`import { isDateBefore } from '@cnamts/synapse'
 `}/>
 
 #### Utilisation
@@ -179,7 +179,7 @@ Vérifie si une date est comprise dans une plage de dates.
 
 #### Importation
 
-<Source dark code={`import { isDateInRange } from '@cnamts/synpase'
+<Source dark code={`import { isDateInRange } from '@cnamts/synapse'
 `}/>
 
 #### Utilisation
@@ -202,7 +202,7 @@ Vérifie si une chaîne de date est valide.
 
 #### Importation
 
-<Source dark code={`import { isDateValidUtil } from '@cnamts/synpase'
+<Source dark code={`import { isDateValidUtil } from '@cnamts/synapse'
 `}/>
 
 #### Utilisation
@@ -222,7 +222,7 @@ Vérifie si une date correspond à un jour de week-end (samedi ou dimanche).
 
 #### Importation
 
-<Source dark code={`import { isWeekend } from '@cnamts/synpase'
+<Source dark code={`import { isWeekend } from '@cnamts/synapse'
 `}/>
 
 #### Utilisation
@@ -244,7 +244,7 @@ Vérifie si une chaîne est un email valide.
 
 #### Importation
 
-<Source dark code={`import { isEmailValid } from '@cnamts/synpase'
+<Source dark code={`import { isEmailValid } from '@cnamts/synapse'
 `}/>
 
 #### Utilisation
@@ -303,7 +303,7 @@ import {
   isDateAfter,
   isWeekend,
   ruleMessage
-} from '@cnamts/synpase'
+} from '@cnamts/synapse'
 
 export default {
   setup() {

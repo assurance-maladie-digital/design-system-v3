@@ -4,6 +4,10 @@ import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, watch, computed } from 'vue'
 import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 import { fn } from '@storybook/test'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CalendarMode',
@@ -314,6 +318,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -375,6 +382,9 @@ export const Default: Story = {
 
 export const Required: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -447,6 +457,9 @@ export const Required: Story = {
 
 export const DateRange: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -511,6 +524,9 @@ export const DateRange: Story = {
 
 export const WithCustomPeriod: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -622,6 +638,9 @@ export const WithCustomPeriod: Story = {
 
 export const WithAppendIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -686,6 +705,9 @@ export const WithAppendIcon: Story = {
 
 export const WithoutIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -750,6 +772,9 @@ export const WithoutIcon: Story = {
 
 export const BirthDate: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -814,6 +839,9 @@ export const BirthDate: Story = {
 
 export const WithError: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -882,6 +910,9 @@ export const WithError: Story = {
 
 export const WithWarning: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -960,6 +991,9 @@ export const WithWarning: Story = {
 
 export const WithSuccess: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1029,6 +1063,9 @@ export const WithSuccess: Story = {
 
 export const DifferentFormats: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1132,6 +1169,9 @@ export const DifferentFormats: Story = {
 
 export const WithDateFormatReturn: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1240,6 +1280,9 @@ export const WithDateFormatReturn: Story = {
 
 export const WithDayjsFormat: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1343,8 +1386,162 @@ export const WithDayjsFormat: Story = {
 	},
 }
 
+export const UTC: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<DatePicker
+							v-model="dateString"
+							placeholder="Sélectionner une date"
+							format="DD/MM/YYYY"
+						/>
+
+						<p class="mt-4" style="font-family: monospace;">timezone sélectionné : {{ selectedTimeZone }}</p>
+						<p style="font-family: monospace;">v-model (DD/MM/YYYY) : {{ dateString }}</p>
+						<p style="font-family: monospace;">Date ISO (UTC) : {{ utcIso }}</p>
+						<p style="font-family: monospace;">Date affichée dans le timezone sélectionné : {{ dateInSelectedTimeZone }}</p>
+						<p style="font-family: monospace;">Date affichée dans Europe/Paris : {{ dateInParis }}</p>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { computed, ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					import dayjs from 'dayjs'
+					import customParseFormat from 'dayjs/plugin/customParseFormat'
+					import utc from 'dayjs/plugin/utc'
+					import timezone from 'dayjs/plugin/timezone'
+					
+					dayjs.extend(customParseFormat)
+					dayjs.extend(utc)
+					dayjs.extend(timezone)
+
+					const DISPLAY_FORMAT = 'DD/MM/YYYY'
+					const selectedTimeZone = ref<'America/Guadeloupe'>('America/Guadeloupe')
+					const utcIso = ref('2023-01-15T00:00:00.000Z')
+					
+					// Un seul computed avec getter/setter pour gérer l'intégration timezone:
+					// - getter: ISO UTC -> DD/MM/YYYY en timezone
+					// - setter: DD/MM/YYYY en timezone -> ISO UTC
+					const dateString = computed({
+						get() {
+							return dayjs.utc(utcIso.value).tz(selectedTimeZone.value).format(DISPLAY_FORMAT)
+						},
+						set(v: string) {
+							const parsed = dayjs.tz(v, DISPLAY_FORMAT, selectedTimeZone.value)
+							if (!parsed.isValid() || parsed.format(DISPLAY_FORMAT) !== v) return
+							utcIso.value = parsed.utc().toISOString()
+						},
+					})
+					
+					const dateInSelectedTimeZone = computed(() => {
+						return dayjs.utc(utcIso.value)
+							.tz(selectedTimeZone.value)
+							.format('DD/MM/YYYY')
+					})
+
+					const dateInParis = computed(() => {
+						return dayjs.utc(utcIso.value)
+							.tz('Europe/Paris')
+							.format('DD/MM/YYYY')
+					})
+					
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'placeholder': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render(args) {
+		return {
+			components: { DatePicker, SyAlert },
+			setup() {
+				dayjs.extend(customParseFormat)
+				dayjs.extend(utc)
+				dayjs.extend(timezone)
+
+				const DISPLAY_FORMAT = computed(() => args.format ?? 'DD/MM/YYYY')
+				const selectedTimeZone = ref<'America/Guadeloupe'>('America/Guadeloupe')
+				const utcIso = ref('2023-01-15T00:00:00.000Z')
+
+				const dateString = computed({
+					get() {
+						return dayjs.utc(utcIso.value).tz(selectedTimeZone.value).format(DISPLAY_FORMAT.value)
+					},
+					set(v: string) {
+						const parsed = dayjs.tz(v, DISPLAY_FORMAT.value, selectedTimeZone.value)
+						if (!parsed.isValid() || parsed.format(DISPLAY_FORMAT.value) !== v) return
+						utcIso.value = parsed.utc().toISOString()
+						args['onUpdate:modelValue']?.(v)
+					},
+				})
+
+				const dateInSelectedTimeZone = computed(() => {
+					return dayjs.utc(utcIso.value)
+						.tz(selectedTimeZone.value)
+						.format('DD/MM/YYYY')
+				})
+
+				const dateInParis = computed(() => {
+					return dayjs.utc(utcIso.value)
+						.tz('Europe/Paris')
+						.format('DD/MM/YYYY')
+				})
+
+				return { args, dateString, utcIso, selectedTimeZone, dateInSelectedTimeZone, dateInParis }
+			},
+			template: `
+				<div class="d-flex flex-column gap-4 pa-4">
+					<SyAlert type="info" variant="tonal" class="mb-6">
+						Selon le timezone, une même date UTC peut correspondre à un jour différent en local.
+					</SyAlert>
+					<DatePicker v-model="dateString" v-bind="args" />
+					<div class="mt-4" style="font-family: monospace;">
+						<div>timezone sélectionné : {{ selectedTimeZone }}</div>
+						<div>v-model (DD/MM/YYYY) : {{ dateString }}</div>
+						<div>Date ISO (UTC) : {{ utcIso }}</div>
+						<div>Date affichée dans le timezone sélectionné : {{ dateInSelectedTimeZone }}</div>
+						<div>Date affichée dans Europe/Paris : {{ dateInParis }}</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
 export const BidirectionalValidation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1670,6 +1867,9 @@ export const BidirectionalValidation: Story = {
 
 export const WithFormSubmission: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

@@ -199,6 +199,7 @@
 						:class="`text-${props?.options['list']?.textColor}`"
 						v-bind="props.options['list']"
 						:href="item.link"
+						:to="item.to"
 						@click="selectItem(item)"
 					>
 						<VListItemTitle v-bind="props.options['list']">

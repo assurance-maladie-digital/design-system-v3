@@ -176,7 +176,7 @@
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
 
-	const selectItem = (item: ItemType | null, event?: Event) => {
+	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
 		// Prevent default action if event is provided
 		event?.preventDefault()
 
@@ -184,7 +184,7 @@
 		event?.stopPropagation()
 
 		// Si c'est un clic, appliquer le focus visuel en utilisant le système existant
-		if (event?.type === 'click' && item !== null) {
+		if (event?.type === 'click' && item !== null && item !== undefined) {
 			// Trouver l'index de l'élément cliqué
 			const clickedIndex = formattedItems.value.findIndex((formattedItem) => {
 				if (props.returnObject) {
@@ -198,8 +198,7 @@
 				setActiveDescendant(clickedIndex)
 			}
 		}
-
-		if (item === null) {
+		if (item === null || item === undefined) {
 			selectedItem.value = props.multiple ? [] : null
 			emit('update:modelValue', props.multiple ? [] : null)
 
@@ -839,7 +838,7 @@
 					>
 						<VChip
 							v-for="item in selectedItem"
-							:key="props.returnObject ? item[props.valueKey] : item"
+							:key="props.returnObject && item ? item[props.valueKey] : item"
 							size="small"
 							class="ma-1"
 							closable

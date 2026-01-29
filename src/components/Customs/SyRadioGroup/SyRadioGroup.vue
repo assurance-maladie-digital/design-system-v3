@@ -321,4 +321,20 @@
 		color: rgb(var(--v-theme-success)) !important;
 	}
 }
+
+:deep(.v-messages__message) {
+	animation: sy-messages-in 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes sy-messages-in {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
 </style>

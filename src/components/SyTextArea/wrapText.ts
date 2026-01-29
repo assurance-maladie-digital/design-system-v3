@@ -16,9 +16,9 @@ export function wrapText(maxLength: number) {
 							const wordLines = word.match(wordRegex)
 							for (let i = 0; i < wordLines!.length - 1; i++) {
 								wordLines![i] += '-'
-								newLines.push(wordLines![i])
+								newLines.push(wordLines![i]!)
 							}
-							currentLine = wordLines![wordLines!.length - 1]
+							currentLine = wordLines![wordLines!.length - 1]!
 						}
 						else {
 							newLines.push(currentLine)

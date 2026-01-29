@@ -64,7 +64,7 @@ export const formatDateInput = (
 	// Pour chaque caractère dans l'entrée originale, noter sa position dans la chaîne nettoyée
 	for (let i = 0; i < input.length; i++) {
 		positionMap[i] = cleanedIndex
-		if (/\d/.test(input[i])) {
+		if (/\d/.test(input[i]!)) {
 			cleanedIndex++
 		}
 	}
@@ -79,6 +79,9 @@ export const formatDateInput = (
 
 	// Calculer la position du curseur dans l'entrée nettoyée (sans séparateurs)
 	const adjustedCursorPosition = cursorPosition !== undefined ? cursorPosition : input.length
+	if (positionMap[adjustedCursorPosition] === undefined) {
+		throw new Error('Invalid cursor position')
+	}
 	const digitPositionInCleaned = positionMap[adjustedCursorPosition]
 
 	// Extraire les groupes de chiffres du format (DD, MM, YYYY)
@@ -132,7 +135,7 @@ export const formatDateInput = (
 
 	// Parcourir les groupes de chiffres pour construire la date formatée
 	for (let groupIndex = 0; groupIndex < groupsToUse.length; groupIndex++) {
-		const group = groupsToUse[groupIndex]
+		const group = groupsToUse[groupIndex]!
 		const groupLength = group.length
 
 		// Ajouter les chiffres pour ce groupe
@@ -155,7 +158,7 @@ export const formatDateInput = (
 	}
 
 	// Calculer la nouvelle position du curseur en tenant compte du contexte d'édition
-	let newCursorPos
+	let newCursorPos: number
 
 	if (cursorPosition === undefined) {
 		// Si aucune position de curseur n'est fournie, placer à la fin
@@ -167,11 +170,11 @@ export const formatDateInput = (
 			// Rechercher la position correspondante dans le résultat formaté
 			if (digitPositionInCleaned < cleanedInput.length) {
 				// Le curseur est positionné sur un chiffre existant
-				newCursorPos = resultPositionMap[digitPositionInCleaned]
+				newCursorPos = resultPositionMap[digitPositionInCleaned]!
 			}
 			else if (cleanedInput.length > 0) {
 				// Le curseur est après le dernier chiffre saisi
-				const lastDigitPos = resultPositionMap[cleanedInput.length - 1]
+				const lastDigitPos = resultPositionMap[cleanedInput.length - 1]!
 				// Positionner après le dernier chiffre saisi
 				newCursorPos = lastDigitPos + 1
 				// Si la position tombe sur un séparateur, avancer d'une position
@@ -227,8 +230,8 @@ export const getDateDescription = (
 	for (let i = 0; i < formatParts.length; i++) {
 		if (i >= dateParts.length) break
 
-		const part = dateParts[i].trim()
-		const formatPart = formatParts[i].charAt(0).toUpperCase()
+		const part = dateParts[i]!.trim()
+		const formatPart = formatParts[i]!.charAt(0).toUpperCase()
 
 		// Ignorer les parties vides ou contenant uniquement des placeholders
 		if (!part || part.replace(new RegExp(placeholderChar, 'g'), '').length === 0) {

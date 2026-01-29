@@ -8,7 +8,7 @@ export interface UseSySelectKeyboardOptions {
 	isOpen: Ref<boolean>
 	formattedItems: Ref<ItemType[]>
 	toggleMenu: (skipInitialFocus?: boolean) => void
-	selectItem: (item: ItemType | null, event?: Event) => void
+	selectItem: (item: ItemType | null | undefined, event?: Event) => void
 	getItemText: (item: unknown) => unknown
 }
 
@@ -109,7 +109,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 
 		// Sinon, essayer de récupérer l'index à partir de l'ID ARIA
 		if (activeDescendantId.value) {
-			const activeIndex = parseInt(activeDescendantId.value.split('-')[1])
+			const activeIndexString = activeDescendantId.value.split('-')?.[1]
+			const activeIndex = activeIndexString ? parseInt(activeIndexString) : NaN
 			if (!isNaN(activeIndex) && activeIndex >= 0 && activeIndex < formattedItems.value.length) {
 				// Synchroniser lastFocusedIndex avec l'index trouvé
 				lastFocusedIndex.value = activeIndex
@@ -301,7 +302,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	const handleTabKey = () => {
 		if (isOpen.value && activeDescendantId.value) {
 			// Trouver l'item actuellement focusé
-			const currentIndex = parseInt(activeDescendantId.value.split('-')[1])
+			const currentIndexString = activeDescendantId.value.split('-')?.[1]
+			const currentIndex = currentIndexString ? parseInt(currentIndexString) : NaN
 			if (!isNaN(currentIndex) && currentIndex >= 0 && currentIndex < formattedItems.value.length) {
 				const currentItem = formattedItems.value[currentIndex]
 				// Sélectionner l'item qui a le focus
@@ -320,7 +322,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	// Watch activeDescendantId pour synchroniser lastFocusedIndex
 	watch(activeDescendantId, (newId) => {
 		if (newId) {
-			const index = parseInt(newId.split('-')[1])
+			const indexString = newId.split('-')?.[1]
+			const index = indexString ? parseInt(indexString) : NaN
 			if (!isNaN(index) && index >= 0 && index < formattedItems.value.length) {
 				// Synchroniser lastFocusedIndex avec l'ID ARIA
 				lastFocusedIndex.value = index

@@ -572,5 +572,4 @@ export const VuetifyItems = [
 			},
 		],
 	},
-
-]
+] as const

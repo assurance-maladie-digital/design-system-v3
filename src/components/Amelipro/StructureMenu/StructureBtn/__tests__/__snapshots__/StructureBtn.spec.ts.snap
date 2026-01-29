@@ -9,7 +9,7 @@ exports[`StructureBtn > Snapshots > renders the component with all properties fi
   class="structure-btn"
   color="ap-blue-darken-2"
   density="default"
-  disabled="false"
+  disabled="true"
   elevation="0"
   exact="false"
   flat="false"

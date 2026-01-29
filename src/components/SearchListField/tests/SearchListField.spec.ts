@@ -120,7 +120,7 @@ describe('SearchListField.vue', () => {
 
 		const filteredItems = wrapper.vm.filteredItems
 		expect(filteredItems).toHaveLength(1)
-		expect(filteredItems[0].label).toBe('Banana')
+		expect(filteredItems[0]?.label).toBe('Banana')
 	})
 
 	it('clears the search field', async () => {

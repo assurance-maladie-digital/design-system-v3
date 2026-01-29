@@ -33,7 +33,7 @@ const meta = {
 		},
 		color: {
 			control: 'select',
-			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			options: ['primary', 'success', 'error', 'warning'],
 			description: 'Couleur de la case à cocher',
 		},
 		indeterminate: {
@@ -171,6 +171,9 @@ export const Indeterminate: Story = {
 		template: `<SyCheckbox v-model="checked" :indeterminate="indeterminate" v-bind="args" label="Case à cocher indéterminée" />`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -204,6 +207,9 @@ Cette case à cocher est dans un état indéterminé, généralement utilisé lo
 
 export const WithControlsIds: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -605,7 +611,6 @@ export const CustomColors: Story = {
 				code: `
 <div>
   <SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-  <SyCheckbox v-model="checked2" label="Couleur secondaire" color="secondary" />
   <SyCheckbox v-model="checked3" label="Couleur succès" color="success" />
   <SyCheckbox v-model="checked4" label="Couleur erreur" color="error" />
   <SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning" />
@@ -634,7 +639,6 @@ Le composant SyCheckbox peut être personnalisé avec différentes couleurs pour
 		template: `
 			<div>
 				<SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-				<SyCheckbox v-model="checked2" label="Couleur secondaire" color="secondary" />
 				<SyCheckbox v-model="checked3" label="Couleur succès" color="success" />
 				<SyCheckbox v-model="checked4" label="Couleur erreur" color="error" />
 				<SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning" />

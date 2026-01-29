@@ -28,7 +28,7 @@ describe('tableFilterUtils', () => {
 			]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(1)
+			expect(result[0]?.id).toBe(1)
 		})
 
 		it('should filter by number correctly', () => {
@@ -37,7 +37,7 @@ describe('tableFilterUtils', () => {
 			]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(2)
+			expect(result[0]?.id).toBe(2)
 		})
 
 		it('should filter by select correctly', () => {
@@ -56,7 +56,7 @@ describe('tableFilterUtils', () => {
 			]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(2)
+			expect(result[0]?.id).toBe(2)
 		})
 
 		it('should apply multiple filters correctly', () => {
@@ -66,7 +66,7 @@ describe('tableFilterUtils', () => {
 			]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(1)
+			expect(result[0]?.id).toBe(1)
 		})
 
 		it('should handle case insensitivity for text filters', () => {
@@ -75,7 +75,7 @@ describe('tableFilterUtils', () => {
 			]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(1)
+			expect(result[0]?.id).toBe(1)
 		})
 
 		it('should handle partial matches for text filters', () => {

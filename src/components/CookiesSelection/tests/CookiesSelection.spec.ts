@@ -41,9 +41,9 @@ describe('CookiesSelection', () => {
 
 		expect(wrapper.html()).toMatchSnapshot()
 		const cookiesSections = wrapper.findAll('.vd-cookies-information')
-		expect(cookiesSections[0].text()).toContain(cookiesList.essentials[0].name)
-		expect(cookiesSections[1].text()).toContain(cookiesList.functional[0].name)
-		expect(cookiesSections[2].text()).toContain(cookiesList.analytics[0].name)
+		expect(cookiesSections[0]?.text()).toContain(cookiesList.essentials[0]?.name)
+		expect(cookiesSections[1]?.text()).toContain(cookiesList.functional[0]?.name)
+		expect(cookiesSections[2]?.text()).toContain(cookiesList.analytics[0]?.name)
 	})
 
 	it('sets global preferences', async () => {
@@ -84,13 +84,13 @@ describe('CookiesSelection', () => {
 
 		const radioGroup = wrapper.findAll('[data-test-id="radio-group"]')
 
-		const functionalReject = radioGroup[0].find('input[value="reject"]')
-		const functionalAccept = radioGroup[0].find('input[value="accept"]')
-		const analyticsReject = radioGroup[1].find('input[value="reject"]')
-		const analyticsAccept = radioGroup[1].find('input[value="accept"]')
+		const functionalReject = radioGroup[0]?.find('input[value="reject"]')
+		const functionalAccept = radioGroup[0]?.find('input[value="accept"]')
+		const analyticsReject = radioGroup[1]?.find('input[value="reject"]')
+		const analyticsAccept = radioGroup[1]?.find('input[value="accept"]')
 
-		await functionalReject.setValue(true)
-		await analyticsAccept.setValue(true)
+		await functionalReject?.setValue(true)
+		await analyticsAccept?.setValue(true)
 
 		await wrapper.find('[data-test-id="submit"]').trigger('click')
 		await wrapper.vm.$nextTick()
@@ -102,8 +102,8 @@ describe('CookiesSelection', () => {
 			analytics: true,
 		})
 
-		await functionalAccept.setValue(true)
-		await analyticsReject.setValue(true)
+		await functionalAccept?.setValue(true)
+		await analyticsReject?.setValue(true)
 
 		await wrapper.find('[data-test-id="submit"]').trigger('click')
 		await wrapper.vm.$nextTick()
@@ -125,12 +125,11 @@ describe('CookiesSelection', () => {
 
 		const radioGroup = wrapper.findAll('[data-test-id="radio-group"]')
 
-		const functionalReject = radioGroup[0].find('input[value="reject"]')
-		const functionalAccept = radioGroup[0].find('input[value="accept"]')
-		const analyticsReject = radioGroup[1].find('input[value="reject"]')
+		const functionalReject = radioGroup[0]?.find('input[value="reject"]')
+		const functionalAccept = radioGroup[0]?.find('input[value="accept"]')
+		const analyticsReject = radioGroup[1]?.find('input[value="reject"]')
 
-		await functionalReject.setValue(true)
-
+		await functionalReject?.setValue(true)
 		await wrapper.find('[data-test-id="submit"]').trigger('click')
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
@@ -138,8 +137,8 @@ describe('CookiesSelection', () => {
 		expect(wrapper.emitted()).not.toHaveProperty('submit')
 		expect(wrapper.text()).toContain('Le champ est requis.')
 
-		await functionalAccept.setValue(true)
-		await analyticsReject.setValue(true)
+		await functionalAccept?.setValue(true)
+		await analyticsReject?.setValue(true)
 
 		await wrapper.find('[data-test-id="submit"]').trigger('click')
 		await wrapper.vm.$nextTick()
@@ -163,6 +162,6 @@ describe('CookiesSelection', () => {
 			},
 		})
 
-		expect(wrapper.find('a.contrast-description').text()).toContain(cookiesList.functional[0].description)
+		expect(wrapper.find('a.contrast-description').text()).toContain(cookiesList.functional[0]?.description)
 	})
 })

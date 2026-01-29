@@ -83,7 +83,7 @@ describe('Accordion', () => {
 	it('renders string content correctly', () => {
 		const wrapper = mount(Accordion, {
 			propsData: {
-				items: [defaultItems[0]],
+				items: [defaultItems[0]!],
 				headingLevel: 2,
 			},
 		})
@@ -92,13 +92,13 @@ describe('Accordion', () => {
 		button.trigger('click')
 
 		const content = wrapper.find('.sy-accordion-content-inner')
-		expect(content.text()).toContain(defaultItems[0].content)
+		expect(content.text()).toContain(defaultItems[0]!.content)
 	})
 
 	it('renders object content correctly', async () => {
 		const wrapper = mount(Accordion, {
 			propsData: {
-				items: [defaultItems[2]],
+				items: [defaultItems[2]!],
 				headingLevel: 2,
 			},
 		})
@@ -106,10 +106,10 @@ describe('Accordion', () => {
 		const button = wrapper.find('.sy-accordion-button')
 		await button.trigger('click')
 
-		const contentLine = wrapper.find('.sy-accordion-content-line')
-		const objectContent = defaultItems[2].content as { title: string, content: string }
-		expect(contentLine.text()).toContain(objectContent.title)
-		expect(contentLine.text()).toContain(objectContent.content)
+		const objectContent = defaultItems[2]!.content as { title: string, content: string }
+		const content = wrapper.find('.sy-accordion-content-inner')
+		expect(content.text()).toContain(objectContent.title)
+		expect(content.text()).toContain(objectContent.content)
 	})
 
 	it('has correct accessibility attributes', () => {
@@ -263,26 +263,27 @@ describe('Accordion', () => {
 		})
 
 		// Ouvrir le premier accordéon (contenu string)
-		const firstButton = wrapper.findAll('.sy-accordion-button')[0]
+		const firstButton = wrapper.findAll('.sy-accordion-button')[0]!
 		await firstButton.trigger('click')
 
 		// Vérifier que le contenu string est rendu dans un élément p
-		const firstContent = wrapper.findAll('.sy-accordion-content-inner')[0]
+		const firstContent = wrapper.findAll('.sy-accordion-content-inner')[0]!
 		const paragraph = firstContent.find('p.sy-accordion-content-text')
 		expect(paragraph.exists()).toBe(true)
 		expect(paragraph.text()).toBe('Contenu de la section 1')
 
 		// Ouvrir le deuxième accordéon (contenu objet)
-		const secondButton = wrapper.findAll('.sy-accordion-button')[1]
+		const secondButton = wrapper.findAll('.sy-accordion-button')[1]!
 		await secondButton.trigger('click')
 
 		// Vérifier que le contenu objet est rendu avec la structure appropriée
-		const secondContent = wrapper.findAll('.sy-accordion-content-inner')[1]
-		const contentLine = secondContent.find('.sy-accordion-content-line')
-		expect(contentLine.exists()).toBe(true)
-		expect(contentLine.find('strong').exists()).toBe(true)
-		expect(contentLine.find('strong').text()).toBe('Sous-titre')
-		expect(contentLine.text()).toContain('Contenu détaillé')
+		const secondContent = wrapper.findAll('.sy-accordion-content-inner')[1]!
+		const paragraphs = secondContent.findAll('p.sy-accordion-content-text')
+		expect(paragraphs.length).toBe(2)
+		expect(paragraphs[0]!.text()).toContain('Sous-titre')
+		expect(paragraphs[1]!.text()).toContain('Contenu détaillé')
+		// Le titre est affiché en gras
+		expect(paragraphs[0]!.find('strong').exists()).toBe(true)
 	})
 
 	it('applies custom colors from options', async () => {
@@ -372,11 +373,11 @@ describe('Accordion', () => {
 		expect(buttons.length).toBeGreaterThan(1) // S'assurer qu'il y a plusieurs boutons
 
 		// Ouvrir le premier accordéon
-		await buttons[0].trigger('click')
+		await buttons[0]!.trigger('click')
 		expect(wrapper.findAll('.sy-accordion-content--open').length).toBe(1)
 
 		// Ouvrir le deuxième accordéon
-		await buttons[1].trigger('click')
+		await buttons[1]!.trigger('click')
 		expect(wrapper.findAll('.sy-accordion-content--open').length).toBe(2)
 
 		// Vérifier que les deux accordéons sont ouverts
@@ -396,18 +397,18 @@ describe('Accordion', () => {
 		expect(buttons.length).toBeGreaterThan(1) // S'assurer qu'il y a plusieurs boutons
 
 		// Ouvrir le premier accordéon - il devrait avoir le focus
-		await buttons[0].trigger('click')
-		expect(buttons[0].classes()).toContain('sy-accordion-button--focused')
-		expect(buttons[1].classes()).not.toContain('sy-accordion-button--focused')
+		await buttons[0]!.trigger('click')
+		expect(buttons[0]!.classes()).toContain('sy-accordion-button--focused')
+		expect(buttons[1]!.classes()).not.toContain('sy-accordion-button--focused')
 
 		// Ouvrir le deuxième accordéon - le focus devrait être transféré
-		await buttons[1].trigger('click')
-		expect(buttons[0].classes()).not.toContain('sy-accordion-button--focused')
-		expect(buttons[1].classes()).toContain('sy-accordion-button--focused')
+		await buttons[1]!.trigger('click')
+		expect(buttons[0]!.classes()).not.toContain('sy-accordion-button--focused')
+		expect(buttons[1]!.classes()).toContain('sy-accordion-button--focused')
 
 		// Fermer le deuxième accordéon - le focus devrait être supprimé
-		await buttons[1].trigger('click')
-		expect(buttons[1].classes()).not.toContain('sy-accordion-button--focused')
+		await buttons[1]!.trigger('click')
+		expect(buttons[1]!.classes()).not.toContain('sy-accordion-button--focused')
 	})
 
 	it('removes event listener on component unmount', async () => {

@@ -1,0 +1,9 @@
+# Exclude tests and documentation from src/
+src/**/*.spec.ts
+src/**/__snapshots__
+src/**/*.stories.ts
+src/**/*.mdx
+
+# Exclude entire folders not needed in production
+src/stories/
+src/temp/

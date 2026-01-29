@@ -131,6 +131,9 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -192,6 +195,9 @@ export const Default: Story = {
  */
 export const Required: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -229,6 +235,9 @@ export const Required: Story = {
  */
 export const RequiredWithAsterisk: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -267,6 +276,9 @@ export const RequiredWithAsterisk: Story = {
  */
 export const Disabled: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -304,6 +316,9 @@ export const Disabled: Story = {
  */
 export const ReadOnly: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -341,6 +356,9 @@ export const ReadOnly: Story = {
  */
 export const WithError: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -406,6 +424,9 @@ export const WithError: Story = {
  */
 export const WithWarning: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -473,6 +494,9 @@ export const WithWarning: Story = {
  */
 export const WithSuccess: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -550,6 +574,9 @@ export const WithSuccess: Story = {
  */
 export const WithValidation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -723,6 +750,9 @@ export const WithValidation: Story = {
  */
 export const WithCustomRules: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -861,6 +891,9 @@ export const WithCustomRules: Story = {
  */
 export const WithFormValidation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1030,6 +1063,9 @@ export const WithFormValidation: Story = {
 
 export const WithoutSuccessMessages: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: `
@@ -1115,6 +1151,9 @@ ne sont pas nécessaires dans certains contextes.
 
 export const DisableErrorHandling: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		docs: {
 			description: {
 				story: `

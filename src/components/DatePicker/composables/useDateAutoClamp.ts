@@ -64,8 +64,8 @@ export const useDateAutoClamp = () => {
 
 		// Extraire les valeurs de jour, mois et année selon le format
 		for (let i = 0; i < formatParts.length; i++) {
-			const formatPart = formatParts[i].toUpperCase()
-			const value = parseInt(dateParts[i], 10)
+			const formatPart = formatParts[i]!.toUpperCase()
+			const value = parseInt(dateParts[i]!, 10)
 
 			if (isNaN(value)) {
 				return { clampedDate: dateStr, adjusted: false }
@@ -111,8 +111,8 @@ export const useDateAutoClamp = () => {
 
 		// Reconstruire la chaîne de date avec le jour ajusté
 		const newDateParts = [...dateParts]
-		for (let i = 0; i < formatParts.length; i++) {
-			const formatPart = formatParts[i].toUpperCase()
+		for (const [i, part] of formatParts.entries()) {
+			const formatPart = part.toUpperCase()
 			if (formatPart.startsWith('D')) {
 				// Formater le jour avec le bon nombre de chiffres (01 ou 1 selon le format)
 				newDateParts[i] = formatPart.length > 1

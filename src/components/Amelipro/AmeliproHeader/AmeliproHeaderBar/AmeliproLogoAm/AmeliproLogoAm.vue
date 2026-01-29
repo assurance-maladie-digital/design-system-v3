@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import type { IndexedObject } from '../../../types'
 	import { LogoSizeEnum } from './LogoSizeEnum'
 	import { computed } from 'vue'
 	import { convertToHex } from '@/utils/functions/convertToHex'
@@ -25,7 +24,7 @@
 	})
 
 	const fillColor = computed<string>(() => convertToHex('ap-blue'))
-	const dimensions = computed<IndexedObject>(() => logoDimensionsMapping[props.size])
+	const dimensions = computed(() => logoDimensionsMapping[props.size]!)
 	const label = computed<string>(() => {
 		const COLON_SEPARATOR = ' : '
 

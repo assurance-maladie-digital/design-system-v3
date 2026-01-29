@@ -189,7 +189,7 @@
 
 		:deep(.v-alert__content) {
 			align-self: flex-start !important;
-			margin-top: tokens.$padding-6;
+			margin-top: tokens.$padding-4;
 		}
 
 		:deep(.v-alert__close) {

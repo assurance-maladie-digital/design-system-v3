@@ -31,7 +31,7 @@ describe('DateTextInput.clean', () => {
 
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toBe('01/01/2025')
+		expect(emitted && emitted[0]?.[0]).toBe('01/01/2025')
 	})
 
 	it('formats modelValue according to dateFormatReturn in single mode', async () => {
@@ -48,7 +48,7 @@ describe('DateTextInput.clean', () => {
 
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toBe('2025-01-01')
+		expect(emitted && emitted[0]?.[0]).toBe('2025-01-01')
 	})
 
 	it('validates on submit for required single date', async () => {
@@ -84,7 +84,7 @@ describe('DateTextInput.clean', () => {
 
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
-		const last = emitted && emitted[emitted.length - 1][0]
+		const last = emitted && emitted[emitted.length - 1]?.[0]
 		expect(Array.isArray(last)).toBe(true)
 		if (Array.isArray(last)) {
 			expect(last[0]).toBe('01/01/2025')
@@ -256,7 +256,7 @@ describe('DateTextInput.clean', () => {
 
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
-		const last = emitted && emitted[emitted.length - 1][0]
+		const last = emitted && emitted[emitted.length - 1]?.[0]
 		expect(Array.isArray(last)).toBe(true)
 		if (Array.isArray(last)) {
 			expect(last[0]).toBe('2025-01-01')

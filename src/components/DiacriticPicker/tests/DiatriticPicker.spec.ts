@@ -73,7 +73,7 @@ describe('DiacriticPicker.vue', () => {
 		await button!.trigger('click')
 		await nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('aá')
+		expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe('aá')
 	})
 
 	it('sets correct ARIA attributes', () => {
@@ -121,6 +121,6 @@ describe('DiacriticPicker.vue', () => {
 		await input.trigger('keydown', { key: '=' })
 		await nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[0][0]).toBe('á')
+		expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe('á')
 	})
 })

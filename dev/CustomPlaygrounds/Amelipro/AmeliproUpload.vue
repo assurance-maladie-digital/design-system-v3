@@ -53,6 +53,7 @@
 		C: dataSetC,
 	}
 	const selectData = (key: string): void => {
+		if (!dataSets[key]) return
 		dataTest.value = dataSets[key]()
 	}
 

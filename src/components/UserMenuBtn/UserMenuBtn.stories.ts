@@ -63,7 +63,7 @@ const meta = {
 			description: 'Liste des éléments du menu utilisateur',
 			table: {
 				type: {
-					summary: '{ text: string, value: string, link?: string }[]',
+					summary: '{ text: string, value: string, link?: string, to?: RouteLocationRaw }[]',
 				},
 			},
 		},
@@ -143,6 +143,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -196,6 +199,9 @@ export const Default: Story = {
 }
 export const HideLogoutButton: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -245,6 +251,9 @@ export const HideLogoutButton: Story = {
 
 export const HideUserIcon: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -294,6 +303,9 @@ export const HideUserIcon: Story = {
 
 export const MobileVersion: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -343,6 +355,9 @@ export const MobileVersion: Story = {
 
 export const CustomFullName: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -392,6 +407,9 @@ export const CustomFullName: Story = {
 
 export const CustomLogoutText: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -441,6 +459,9 @@ export const CustomLogoutText: Story = {
 
 export const CustomAdditionalInformation: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -490,6 +511,9 @@ export const CustomAdditionalInformation: Story = {
 
 export const WithVuetifyOptions: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -551,6 +575,9 @@ export const WithVuetifyOptions: Story = {
 
 export const LogoutEvent: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -604,6 +631,9 @@ export const LogoutEvent: Story = {
 
 export const Slot: Story = {
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',

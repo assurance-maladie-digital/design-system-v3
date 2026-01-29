@@ -46,10 +46,10 @@ describe('TextFilter.vue', () => {
 
 	it('emits update:filters event when value changes', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 'test value')
+		syTextField.vm.$emit('update:modelValue', 'test value')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 'test value', type: 'text' as FilterType },
 		])
 	})
@@ -57,20 +57,20 @@ describe('TextFilter.vue', () => {
 	it('emits update:filters event to remove filter when value is empty', async () => {
 		// First set a value
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 'test value')
+		syTextField.vm.$emit('update:modelValue', 'test value')
 
 		// Then clear it
-		await syTextField.vm.$emit('update:modelValue', '')
+		syTextField.vm.$emit('update:modelValue', '')
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('handles clear button click', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('click:clear')
+		syTextField.vm.$emit('click:clear')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([])
 	})
 
 	it('updates existing filter when one already exists', async () => {
@@ -78,9 +78,9 @@ describe('TextFilter.vue', () => {
 		await wrapper.setProps({ filters: existingFilters })
 
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 'new value')
+		syTextField.vm.$emit('update:modelValue', 'new value')
 
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 'new value', type: 'text' as FilterType },
 		])
 	})
@@ -111,11 +111,11 @@ describe('TextFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: string, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe('filter_Test Column')
-		expect(emittedFilters[0].value).toBe('test value')
-		expect(emittedFilters[0].type).toBe('text')
+		expect(emittedFilters[0]?.key).toBe('filter_Test Column')
+		expect(emittedFilters[0]?.value).toBe('test value')
+		expect(emittedFilters[0]?.type).toBe('text')
 	})
 
 	it('generates unique key with timestamp when all header properties are absent', async () => {
@@ -145,16 +145,15 @@ describe('TextFilter.vue', () => {
 
 		// Émettre une valeur pour déclencher la mise à jour du filtre
 		const syTextField = newWrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 'test value')
+		syTextField.vm.$emit('update:modelValue', 'test value')
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le timestamp
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: string, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe(`filter_${mockTimestamp}`)
-		expect(emittedFilters[0].value).toBe('test value')
-		expect(emittedFilters[0].type).toBe('text')
-
+		expect(emittedFilters[0]?.key).toBe(`filter_${mockTimestamp}`)
+		expect(emittedFilters[0]?.value).toBe('test value')
+		expect(emittedFilters[0]?.type).toBe('text')
 		// Restaurer Date.now
 		global.Date.now = originalDateNow
 	})
@@ -176,7 +175,7 @@ describe('TextFilter.vue', () => {
 			const filters = [{ key: 'text', value: 'cherry', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(3)
+			expect(result[0]?.id).toBe(3)
 		})
 
 		it('supports wildcard * for any string of characters', () => {
@@ -197,7 +196,7 @@ describe('TextFilter.vue', () => {
 			const filters = [{ key: 'text', value: '"Cherry"', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(3)
+			expect(result[0]?.id).toBe(3)
 
 			// Should not match lowercase
 			const filters2 = [{ key: 'text', value: '"cherry"', type: 'text' as FilterType }]
@@ -209,7 +208,7 @@ describe('TextFilter.vue', () => {
 			const filters = [{ key: 'text', value: 'e*', type: 'text' as FilterType }]
 			const result = filterItems(testItems, filters)
 			expect(result).toHaveLength(1)
-			expect(result[0].id).toBe(5)
+			expect(result[0]?.id).toBe(5)
 		})
 
 		it('supports exact length search equal and question marks', () => {

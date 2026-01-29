@@ -42,7 +42,7 @@
 			return props.items.slice(-3, -1)
 		}
 
-		return [props.items[activePage.value - 1]]
+		return [props.items[activePage.value - 1]!]
 	})
 
 	const emitClickEvent = () => emit('click', activePage.value)
@@ -67,9 +67,9 @@
 		>
 			<li class="amelipro-pagination__item">
 				<AmeliproPaginationBtn
-					:href="items[0] ? items[0].href : undefined"
+					:href="items[0] !== undefined && items[0]?.href ? items[0].href : undefined"
 					:is-active="activePage === 1"
-					:to="items[0] ? items[0].to : undefined"
+					:to="items[0] !== undefined && items[0]?.to ? items[0].to : undefined"
 					:unique-id="uniqueId ? `${uniqueId}-first` : undefined"
 					@click="onClick(1)"
 				>
@@ -83,9 +83,9 @@
 			>
 				<AmeliproPaginationBtn
 					key="previous"
-					:href="items[activePage - 2] ? items[activePage - 2].href : undefined"
+					:href="items[activePage - 2]?.href ? items[activePage - 2]!.href : undefined"
 					title="page précédente"
-					:to="items[activePage - 2] ? items[activePage - 2].to : undefined"
+					:to="items[activePage - 2]?.to ? items[activePage - 2]!.to : undefined"
 					:unique-id="uniqueId ? `${uniqueId}-previous` : undefined"
 					@click="onClick(activePage - 1)"
 				>
@@ -117,9 +117,9 @@
 			>
 				<AmeliproPaginationBtn
 					key="next"
-					:href="activePage < pageTotal && items[activePage] ? items[activePage].href : undefined"
+					:href="activePage < pageTotal && items[activePage]?.href ? items[activePage]!.href : undefined"
 					title="page suivante"
-					:to="activePage < pageTotal && items[activePage] ? items[activePage].to : undefined"
+					:to="activePage < pageTotal && items[activePage]?.to ? items[activePage]!.to : undefined"
 					:unique-id="uniqueId ? `${uniqueId}-next` : undefined"
 					@click="onClick(activePage + 1)"
 				>
@@ -131,13 +131,13 @@
 
 			<li class="amelipro-pagination__item">
 				<AmeliproPaginationBtn
-					:href="items[items.length - 1] ? items[items.length - 1].href : undefined"
+					:href="items[items.length - 1]?.href ? items[items.length - 1]!.href : undefined"
 					:is-active="activePage === pageTotal"
-					:to="items[items.length - 1] ? items[items.length - 1].to : undefined"
+					:to="items[items.length - 1]?.to ? items[items.length - 1]!.to : undefined"
 					:unique-id="uniqueId ? `${uniqueId}-last` : undefined"
 					@click="onClick(pageTotal)"
 				>
-					{{ items[items.length - 1] ? items[items.length - 1].key : undefined }}
+					{{ items[items.length - 1]?.key ?? undefined }}
 				</AmeliproPaginationBtn>
 			</li>
 		</ol>

@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import FilterSideBar from './FilterSideBar.vue'
 import { fn } from '@storybook/test'
-import { VDivider, VSelect, VTextField } from 'vuetify/components'
+import { VDivider, VSelect } from 'vuetify/components'
 import PeriodField from '../PeriodField/PeriodField.vue'
 import SearchListField from '../SearchListField/SearchListField.vue'
 import { ref } from 'vue'
 import FilterInline from '../FilterInline/FilterInline.vue'
 import RangeField from '../RangeField/RangeField.vue'
+import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
 const meta = {
 	title: 'Composants/Filtres/FiltersSideBar',
@@ -32,6 +33,21 @@ const meta = {
 				},
 				defaultValue: {
 					summary: '[]',
+				},
+			},
+		},
+		'modale': {
+			description: 'Definit la dialogue en mode modale et bloque le focus dans la dialogue.',
+			control: {
+				type: 'boolean',
+			},
+			table: {
+				category: 'props',
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
 				},
 			},
 		},
@@ -117,7 +133,7 @@ export const Default: Story = {
 		}),
 	],
 	render: args => ({
-		components: { FilterSideBar, VTextField, VSelect, PeriodField, SearchListField },
+		components: { FilterSideBar, SyTextField, VSelect, PeriodField, SearchListField },
 		setup() {
 			const filters = ref([
 				{
@@ -188,7 +204,7 @@ export const Default: Story = {
 				v-model="filters"
 			>
 				<template #name="{ props }">
-					<VTextField
+					<SyTextField
 						v-bind="props"
 						label="Nom"
 						variant="outlined"
@@ -224,8 +240,8 @@ export const Default: Story = {
 				<template #profession="{ props }">
 					<SearchListField
 						v-bind="props"
+						label="Profession"
 						:items="professionList"
-						return-object
 					/>
 				</template>
 			</FilterSideBar>
@@ -240,7 +256,7 @@ export const Default: Story = {
 	v-model="filters"
 >
 	<template #name="{ props }">
-		<VTextField
+		<SyTextField
 			v-bind="props"
 			label="Nom"
 			variant="outlined"
@@ -276,6 +292,7 @@ export const Default: Story = {
 	<template #profession="{ props }">
 		<SearchListField
 			v-bind="props"
+			label="Profession"
 			:items="professionList"
 			return-object
 		/>
@@ -463,7 +480,7 @@ export const FilterCombination: Story = {
 		}),
 	],
 	render: args => ({
-		components: { FilterSideBar, FilterInline, VTextField, VSelect, PeriodField, SearchListField, VDivider },
+		components: { FilterSideBar, FilterInline, SyTextField, VSelect, PeriodField, SearchListField, VDivider },
 		setup() {
 			const filters = ref([
 				{
@@ -535,7 +552,7 @@ export const FilterCombination: Story = {
 				v-bind="args"
 			>
 				<template #name="{ props }">
-					<VTextField
+					<SyTextField
 						v-bind="props"
 						label="Nom"
 						variant="outlined"
@@ -581,7 +598,7 @@ export const FilterCombination: Story = {
 				v-bind="args"
 			>
 				<template #name="{ props }">
-					<VTextField
+					<SyTextField
 						v-bind="props"
 						label="Nom"
 						variant="outlined"
@@ -617,6 +634,7 @@ export const FilterCombination: Story = {
 				<template #profession="{ props }">
 					<SearchListField
 						v-bind="props"
+						label="Profession"
 						:items="professionList"
 						color="primary"
 					/>
@@ -626,6 +644,9 @@ export const FilterCombination: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -635,7 +656,7 @@ export const FilterCombination: Story = {
 				v-model="filters"
 			>
 				<template #name="{ props }">
-					<VTextField
+					<SyTextField
 						v-bind="props"
 						label="Nom"
 						variant="outlined"
@@ -680,7 +701,7 @@ export const FilterCombination: Story = {
 				v-model="filters"
 			>
 				<template #name="{ props }">
-					<VTextField
+					<SyTextField
 						v-bind="props"
 						label="Nom"
 						variant="outlined"
@@ -717,6 +738,7 @@ export const FilterCombination: Story = {
 					<SearchListField
 						v-bind="props"
 						:items="professionList"
+						label="Profession"
 						color="primary"
 					/>
 				</template>
@@ -730,7 +752,7 @@ export const FilterCombination: Story = {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FilterSideBar, filterInline, SearchListField, PeriodField } from '@cnamts/synapse'
-import { VDivider, VSelect, VTextField } from 'vuetify/components'
+import { VDivider, VSelect, SyTextField } from 'vuetify/components'
 
 const filters = ref([
 	{

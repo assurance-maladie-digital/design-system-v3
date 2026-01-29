@@ -32,14 +32,14 @@ describe('StarsPicker', () => {
 		})
 
 		await wrapper.setProps({ modelValue: 4 })
-		expect(wrapper.findAll('[role="radio"]')[3].attributes('aria-checked')).toBe(
+		expect(wrapper.findAll('[role="radio"]')[3]?.attributes('aria-checked')).toBe(
 			'true',
 		)
 		await wrapper.setProps({ modelValue: 1 })
-		expect(wrapper.findAll('[role="radio"]')[3].attributes('aria-checked')).toBe(
+		expect(wrapper.findAll('[role="radio"]')[3]?.attributes('aria-checked')).toBe(
 			undefined,
 		)
-		expect(wrapper.findAll('[role="radio"]')[0].attributes('aria-checked')).toBe(
+		expect(wrapper.findAll('[role="radio"]')[0]?.attributes('aria-checked')).toBe(
 			'true',
 		)
 	})
@@ -51,11 +51,11 @@ describe('StarsPicker', () => {
 		await buttons.at(3)!.trigger('mouseover')
 
 		const icon = buttons!.at(3)!.findComponent(VIcon)
-		let slotContent = icon.vm.$slots.default!()![0].children
+		let slotContent = icon.vm.$slots.default!()![0]!.children
 		expect(slotContent).toContain(mdiStar)
 
 		await buttons.at(3)!.trigger('mouseleave')
-		slotContent = icon.vm.$slots.default!()![0].children
+		slotContent = icon.vm.$slots.default!()![0]!.children
 		expect(slotContent).toContain(mdiStarOutline)
 	})
 
@@ -66,11 +66,11 @@ describe('StarsPicker', () => {
 		await buttons.at(3)!.trigger('focus')
 
 		const icon = buttons!.at(3)!.findComponent(VIcon)
-		let slotContent = icon.vm.$slots.default!()![0].children
+		let slotContent = icon.vm.$slots.default!()![0]!.children
 		expect(slotContent).toContain(mdiStar)
 
 		await buttons.at(3)!.trigger('blur')
-		slotContent = icon.vm.$slots.default!()![0].children
+		slotContent = icon.vm.$slots.default!()![0]!.children
 		expect(slotContent).toContain(mdiStarOutline)
 	})
 })

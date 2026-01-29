@@ -47,7 +47,7 @@
 
 	const selectedValue = computed<string | null>(() => {
 		const checkedItem = currentValue.value.filter(e => e.isChecked)
-		return checkedItem.length === 1 ? checkedItem[0].value : null
+		return checkedItem[0] ? checkedItem[0].value : null
 	})
 
 	const emitChangeEvent = (item: AmeliproIllustratedRadioGroupItem) => {

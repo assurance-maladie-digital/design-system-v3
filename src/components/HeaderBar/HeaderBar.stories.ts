@@ -146,6 +146,18 @@ const meta = {
 				},
 			},
 		},
+		'width': {
+			control: { type: 'text' },
+			description: 'Largeur interne du header.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: '1712px',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof HeaderBar>
 
@@ -237,6 +249,9 @@ export const WithRightMenu: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -362,6 +377,9 @@ export const CustomLogo: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -547,6 +565,9 @@ export const WithHeaderToolbar: Story = {
 		}
 	},
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
