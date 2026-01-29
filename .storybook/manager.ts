@@ -7,7 +7,7 @@ import ap2026Theme from './Ap2026Theme'
 // Helper function to apply theme class to HTML root element
 const applyThemeClass = (theme) => {
 	const rootElement = document.documentElement // Always exists
-	rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap')
+    rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
 	rootElement.classList.add(`theme-${theme}`)
 }
 

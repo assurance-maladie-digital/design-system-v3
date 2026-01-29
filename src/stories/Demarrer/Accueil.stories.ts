@@ -43,8 +43,8 @@ export const Header: StoryObj = {
 							<img alt="line" src="/home-line.svg" width="120" height="5" class="mb-5" />
 							<h2 style="font-family: Arial !important; font-size: 1.5rem !important; font-weight: 400 !important; line-height: 1.30 !important; letter-spacing: normal !important;" class="mb-5">Synapse : 
 								<span v-if="theme === 'pa'" class="text-h5">thème Portail Agent</span>
-                              <span v-if="theme === 'ap'">thème Amelipro</span>
-                              <span v-if="theme === 'ap2026'">thème Amelipro Old</span>
+                              <span v-if="theme === 'ap'">thème Amelipro New</span>
+                              <span v-if="theme === 'ap2026'">thème Amelipro</span>
 								<span v-if="theme === 'cnam'" class="text-h5">thème CNAM</span></h2>
 							<p style="font-family: Arial !important; font-size: 1rem !important;" class="mb-5">Veuillez sélectionner dans la barre d’outil en haut de l’écran le thème graphique de votre produit avant de consulter la documentation, elle s’actualisera en conséquence avec les tokens et composants disponibles.
 								<br/>Si vous ne connaissez pas le thème auquel votre produit est soumis veuillez consulter le dossier d’architecture du produit.

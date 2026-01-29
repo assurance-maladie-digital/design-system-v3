@@ -38,7 +38,7 @@
 
 <template>
 	<div
-		v-if="!isEmptyObject(displayColors) || (isEmptyObject(displayColors) && displayEmptyColors && theme !== 'ap')"
+		v-if="!isEmptyObject(displayColors) || (isEmptyObject(displayColors) && displayEmptyColors && theme !== 'ap2026')"
 		class="mb-5"
 	>
 		<h2
