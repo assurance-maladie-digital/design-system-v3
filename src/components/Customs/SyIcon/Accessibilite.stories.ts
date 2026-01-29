@@ -2,7 +2,7 @@ import SyIconAccessibility from './SyIconAccessibility.vue'
 import { mdiStar } from '@mdi/js'
 
 const meta = {
-	title: 'Composants/Données/SyIcon/Accessibilite',
+	title: 'Composants/Données/SyIcon/Accessibilité',
 	component: () => import('./SyIcon.vue'),
 	parameters: {
 		docs: {
