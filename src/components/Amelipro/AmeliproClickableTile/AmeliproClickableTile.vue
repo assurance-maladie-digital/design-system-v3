@@ -54,6 +54,10 @@
 			type: String,
 			default: undefined,
 		},
+		onlyIconIsClickable: {
+			type: Boolean,
+			default: false,
+		},
 	})
 
 	const hover = ref(false)
@@ -131,6 +135,7 @@
 
 <template>
 	<VBtn
+		v-if="!onlyIconIsClickable"
 		:id="uniqueId"
 		class="amelipro-clickable-tile text-none"
 		:disabled="disabled"
@@ -186,6 +191,67 @@
 			size="16px"
 		/>
 	</VBtn>
+	<span
+		v-else
+		:id="uniqueId"
+		class="amelipro-clickable-tile text-none"
+		:style="tileStyles"
+	>
+		<span class="d-flex align-center flex-grow-1">
+			<img
+				v-if="imgSrc && !icon"
+				:id="uniqueId ? `${uniqueId}-img` : undefined"
+				alt=""
+				class="amelipro-clickable-tile__img"
+				:src="imgSrc"
+				:style="imgStyles"
+			>
+
+			<AmeliproIcon
+				v-if="icon && !imgSrc"
+				:id="uniqueId ? `${uniqueId}-icon` : undefined"
+				:bordered="borderedIcon"
+				class="amelipro-clickable-tile__icon"
+				:icon="icon"
+				:icon-bg-color="iconBgColorValue"
+				:icon-color="iconColorValue"
+				size="32px"
+			/>
+
+			<span
+				class="d-block ml-3 mr-6"
+			>
+				<slot name="default">
+					{{ tileTitle }}
+				</slot>
+			</span>
+		</span>
+		<VBtn
+			:id="uniqueId ? `${uniqueId}-icon-button` : undefined"
+			:disabled="disabled"
+			class="amelipro-clickable-tile__icon-button"
+			:elevation="0"
+			height="auto"
+			:href="href"
+			:ripple="false"
+			padding="0.5rem"
+			:to="to"
+			@blur="focus = false"
+			@click="emitClickEvent"
+			@focus="focus = true"
+			@mouseenter="hover = true"
+			@mouseleave="hover = false"
+		>
+			<AmeliproIcon
+				:id="uniqueId ? `${uniqueId}-icon-arrow` : undefined"
+				class="amelipro-clickable-tile__icon-arrow"
+				icon="chevronRight"
+				icon-bg-color="transparent"
+				:icon-color="iconArrowColorValue"
+				size="16px"
+			/>
+		</VBtn>
+	</span>
 </template>
 
 <style lang="scss" scoped>
@@ -200,6 +266,28 @@
 	font-size: 1rem;
 	font-weight: 600;
 	text-align: left;
+	align-items: center;
+	justify-content: space-between;
+
+	&__icon-button {
+		flex-shrink: 0;
+		padding: 0.5rem !important;
+		min-width: auto !important;
+		width: auto !important;
+		height: auto !important;
+		background-color: transparent !important;
+		border: none !important;
+
+		&:hover,
+		&:focus {
+			background-color: transparent !important;
+			border: none !important;
+		}
+
+		:deep(.v-btn__content) {
+			width: auto !important;
+		}
+	}
 }
 
 .v-btn {
