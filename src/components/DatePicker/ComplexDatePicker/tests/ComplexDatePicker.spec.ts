@@ -1,14 +1,23 @@
-import { mount, flushPromises } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { mount, flushPromises, VueWrapper } from '@vue/test-utils'
+import { describe, it, expect, afterEach } from 'vitest'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
-describe('ComplexDatePicker.clean', () => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const mountComponent = (props: any = { label: 'Test' }) => mount(ComplexDatePicker, {
-		props,
-	})
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let wrapper: VueWrapper<any> | null = null
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mountComponent = (props: any = { label: 'Test' }) => {
+	wrapper = mount(ComplexDatePicker, { props })
+	return wrapper
+}
+
+afterEach(() => {
+	wrapper?.unmount()
+	wrapper = null
+})
+
+describe('ComplexDatePicker.clean', () => {
 	it('renders in calendar mode by default', () => {
 		const wrapper = mountComponent()
 
