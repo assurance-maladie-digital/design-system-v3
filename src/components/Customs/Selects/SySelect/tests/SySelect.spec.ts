@@ -65,9 +65,7 @@ describe('SySelect.vue', () => {
 		})
 
 		expect(wrapper.findComponent(VList).exists()).toBe(false)
-		await wrapper
-			.find('.v-input__prepend [aria-label="Test - bouton success"]')
-			.trigger('click')
+		await wrapper.find('[aria-label="Test - bouton success"]').trigger('click')
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted()['prepend-icon-click']).toBeTruthy()
@@ -88,9 +86,7 @@ describe('SySelect.vue', () => {
 		})
 
 		expect(wrapper.findComponent(VList).exists()).toBe(false)
-		await wrapper
-			.find('.v-input__append [aria-label="Test - bouton success"]')
-			.trigger('click')
+		await wrapper.find('[aria-label="Test - bouton success"]').trigger('click')
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted()['append-icon-click']).toBeTruthy()

@@ -9,8 +9,9 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { ColorType, IconType, VariantStyle } from './types'
 	import type { VList, VTextField } from 'vuetify/components'
-	import { VChip, VTooltip } from 'vuetify/components'
+	import { VChip } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
 
@@ -949,48 +950,22 @@
 							v-if="$slots.prepend || props.prependIcon || props.prependTooltip"
 							#prepend
 						>
-							<slot name="prepend">
-								<template v-if="props.prependTooltip">
-									<VTooltip
-										:text="props.prependTooltip"
-										:location="props.tooltipLocation"
-									>
-										<template #activator="{ props: tooltipProps }">
-											<SyIcon
-												v-bind="tooltipProps"
-												:label="props.label ? `${props.label} - info` : 'Info'"
-												:color="iconColor"
-												:icon="ICONS.info"
-												role="button"
-												:decorative="false"
-												@click.stop
-											/>
-										</template>
-									</VTooltip>
-								</template>
-								<SyIcon
-									v-else-if="props.prependIcon && !props.noIcon && disableClickButton"
-									:label="undefined"
-									:color="iconColor"
-									:icon="ICONS[props.prependIcon]"
-									role="presentation"
-									class="cursor-default"
-									:decorative="true"
+							<IconSlot
+								:icon="props.prependIcon"
+								:tooltip="props.prependTooltip"
+								:label="props.label"
+								:icon-color="iconColor"
+								:icons="ICONS"
+								:no-icon="props.noIcon"
+								:disable-click-button="disableClickButton"
+								:tooltip-location="props.tooltipLocation"
+								@click="handlePrependIconClick"
+							>
+								<slot
+									v-if="$slots.prepend"
+									name="prepend"
 								/>
-								<SyIcon
-									v-else-if="props.prependIcon && !props.noIcon"
-									:label="props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`"
-									:color="iconColor"
-									:icon="ICONS[props.prependIcon]"
-									role="button"
-									class="cursor-pointer"
-									:decorative="false"
-									tabindex="0"
-									@click.stop="handlePrependIconClick"
-									@keydown.enter.prevent.stop="handlePrependIconClick"
-									@keydown.space.prevent.stop="handlePrependIconClick"
-								/>
-							</slot>
+							</IconSlot>
 						</template>
 
 						<!-- Append -->
@@ -998,48 +973,22 @@
 							v-if="$slots.append || props.appendIcon || props.appendTooltip"
 							#append
 						>
-							<slot name="append">
-								<template v-if="props.appendTooltip">
-									<VTooltip
-										:text="props.appendTooltip"
-										:location="props.tooltipLocation"
-									>
-										<template #activator="{ props: tooltipProps }">
-											<SyIcon
-												v-bind="tooltipProps"
-												:label="props.label ? `${props.label} - info` : 'Info'"
-												:color="iconColor"
-												:icon="ICONS.info"
-												role="button"
-												:decorative="false"
-												@click.stop
-											/>
-										</template>
-									</VTooltip>
-								</template>
-								<SyIcon
-									v-else-if="props.appendIcon && !props.noIcon && disableClickButton"
-									:label="undefined"
-									:color="iconColor"
-									:icon="ICONS[props.appendIcon]"
-									role="presentation"
-									class="cursor-default"
-									:decorative="true"
+							<IconSlot
+								:icon="props.appendIcon"
+								:tooltip="props.appendTooltip"
+								:label="props.label"
+								:icon-color="iconColor"
+								:icons="ICONS"
+								:no-icon="props.noIcon"
+								:disable-click-button="disableClickButton"
+								:tooltip-location="props.tooltipLocation"
+								@click="handleAppendIconClick"
+							>
+								<slot
+									v-if="$slots.append"
+									name="append"
 								/>
-								<SyIcon
-									v-else-if="props.appendIcon && !props.noIcon"
-									:label="props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`"
-									:color="iconColor"
-									:icon="ICONS[props.appendIcon]"
-									role="button"
-									class="cursor-pointer"
-									:decorative="false"
-									tabindex="0"
-									@click.stop="handleAppendIconClick"
-									@keydown.enter.prevent.stop="handleAppendIconClick"
-									@keydown.space.prevent.stop="handleAppendIconClick"
-								/>
-							</slot>
+							</IconSlot>
 						</template>
 						<template #append-inner>
 							<SyIcon
