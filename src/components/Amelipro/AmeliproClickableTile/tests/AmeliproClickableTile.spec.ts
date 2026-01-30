@@ -7,6 +7,12 @@ import type { PropType } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
 import TestHelper from '@tests/helpers/TestHelper'
 
+// Stub VBtn qui préserve les attributs comme aria-label
+const VBtnStub = {
+	template: '<button v-bind="$attrs"><slot /></button>',
+	inheritAttrs: false,
+}
+
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproClickableTile> = {
 	borderedIcon: {
 		type: Boolean,
@@ -96,7 +102,7 @@ describe('AmeliproClickableTile', () => {
 					tileTitle: 'Test',
 					uniqueId: 'test-tile',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 		})
 
@@ -140,7 +146,7 @@ describe('AmeliproClickableTile', () => {
 					icon: 'utilisateur',
 					tileTitle: 'Test',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 		})
 
@@ -199,7 +205,7 @@ describe('AmeliproClickableTile', () => {
 					icon: 'utilisateur',
 					tileTitle: 'titre de la tuile',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 		})
 
@@ -215,7 +221,7 @@ describe('AmeliproClickableTile', () => {
 				slots: {
 					default: 'Slot content',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 			expect(slotWrapper.text()).toContain('Slot content')
 		})
@@ -230,7 +236,7 @@ describe('AmeliproClickableTile', () => {
 					icon: 'utilisateur',
 					tileTitle: 'Test',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 		})
 
@@ -268,7 +274,7 @@ describe('AmeliproClickableTile', () => {
 					uniqueId: 'test-tile',
 					onlyIconIsClickable: true,
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 		})
 
@@ -340,7 +346,7 @@ describe('AmeliproClickableTile', () => {
 					icon: 'utilisateur',
 					tileTitle: 'Test',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 		})
 
@@ -384,7 +390,7 @@ describe('AmeliproClickableTile', () => {
 					tileTitle: 'Test',
 					disabled: true,
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 		})
 
@@ -407,7 +413,7 @@ describe('AmeliproClickableTile', () => {
 					tileTitle: 'Test',
 					uniqueId: 'test-tile',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 
 			expect(vueWrapper.attributes('id')).toBe('test-tile')
@@ -421,7 +427,7 @@ describe('AmeliproClickableTile', () => {
 					icon: 'utilisateur',
 					tileTitle: 'Test',
 				},
-				global: { stubs: { VBtn: { template: '<button><slot /></button>' } } },
+				global: { stubs: { VBtn: VBtnStub } },
 			})
 
 			expect(vueWrapper.attributes('id')).toBeUndefined()
