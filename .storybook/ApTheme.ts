@@ -17,7 +17,7 @@ export default create({
 	appBorderRadius: 4,
 
 	// Text colors
-    textColor: '0084b2',
+    textColor: '#0084b2',
 	textInverseColor: 'rgba(255,255,255,0.9)',
 
 	// Toolbar default and active colors
