@@ -236,6 +236,7 @@
 			:ripple="false"
 			padding="0.5rem"
 			:to="to"
+			aria-label="Ouvrir"
 			@blur="focus = false"
 			@click="emitClickEvent"
 			@focus="focus = true"
