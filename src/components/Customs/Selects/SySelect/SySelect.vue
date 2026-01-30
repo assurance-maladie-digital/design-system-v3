@@ -926,12 +926,7 @@
 						@keydown.page-up.prevent="handlePageUpKey"
 						@keydown.page-down.prevent="handlePageDownKey"
 						@keydown.tab="handleTabKey"
-						@keydown="(e) => {
-							// Handle printable characters for keyboard navigation
-							if (!e.ctrlKey && !e.altKey && !e.metaKey) {
-								handleCharacterKey(e.key)
-							}
-						}"
+						@keydown="handleCharacterKey"
 					>
 						<div
 							v-if="hasChips"
