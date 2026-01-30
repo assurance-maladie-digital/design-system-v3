@@ -250,9 +250,10 @@ describe('AmeliproClickableTile', () => {
 
 		it('arrow icon has correct size', async () => {
 			const icons = vueWrapper.findAllComponents({ name: 'AmeliproIcon' })
+			expect(icons.length).toBeGreaterThan(0)
 			const arrowIcon = icons[icons.length - 1]
-			expect(arrowIcon.props('size')).toBe('16px')
-			expect(arrowIcon.props('icon')).toBe('chevronRight')
+			expect(arrowIcon?.props('size')).toBe('16px')
+			expect(arrowIcon?.props('icon')).toBe('chevronRight')
 		})
 	})
 
