@@ -221,7 +221,7 @@ export const PaletteOrange: StoryObj = {
 			},
 			template: `
 				<ColorDisplay
-                    displayEmptyColors="displayEmptyColors"
+                    :displayEmptyColors="displayEmptyColors"
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors"
@@ -730,7 +730,7 @@ export const PaletteCyan: StoryObj = {
 			},
 			template: `
 				<ColorDisplay
-                    displayEmptyColors="displayEmptyColors"
+                    :displayEmptyColors="displayEmptyColors"
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors"
@@ -793,7 +793,7 @@ export const PaletteFrostedBlue: StoryObj = {
 			},
 			template: `
 				<ColorDisplay
-                    displayEmptyColors="displayEmptyColors"
+                    :displayEmptyColors="displayEmptyColors"
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
@@ -871,7 +871,7 @@ export const PaletteParma: StoryObj = {
 			},
 			template: `
 				<ColorDisplay
-                    displayEmptyColors="displayEmptyColors"
+                    :displayEmptyColors="displayEmptyColors"
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
@@ -946,7 +946,7 @@ export const PaletteMauve: StoryObj = {
 			},
 			template: `
 				<ColorDisplay
-                    displayEmptyColors="displayEmptyColors"
+                    :displayEmptyColors="displayEmptyColors"
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors" 
@@ -1023,7 +1023,7 @@ export const PalettePink: StoryObj = {
 			},
 			template: `
               <ColorDisplay
-                  displayEmptyColors="displayEmptyColors"
+                  :displayEmptyColors="displayEmptyColors"
                     colorCategory="base"
                     :cnamColors="cnamColors"
                     :paColors="paColors"
@@ -1086,7 +1086,7 @@ export const PaletteBrick: StoryObj = {
 			},
 			template: `
 				<ColorDisplay
-                    displayEmptyColors="displayEmptyColors"
+                    :displayEmptyColors="displayEmptyColors"
                     colorCategory="base"
                     :cnamColors="cnamColors"
                     :paColors="paColors"
@@ -1170,7 +1170,7 @@ export const PaletteGrey: StoryObj = {
 			},
 			template: `
 				<ColorDisplay
-                    displayEmptyColors="displayEmptyColors"
+                    :displayEmptyColors="displayEmptyColors"
                     colorCategory="base"
                     :cnamColors="cnamColors"
                     :paColors="paColors"
@@ -1229,7 +1229,7 @@ export const PaletteWhite: StoryObj = {
 			},
 			template: `
               <ColorDisplay
-                  displayEmptyColors="displayEmptyColors"
+                  :displayEmptyColors="displayEmptyColors"
 					colorCategory="base" 
 					:cnamColors="cnamColors" 
 					:paColors="paColors"
@@ -1330,7 +1330,7 @@ export const Interactive: StoryObj = {
 			},
 			template: `
               <ColorDisplay
-                  displayEmptyColors="displayEmptyColors"
+                  :displayEmptyColors="displayEmptyColors"
 					colorCategory="interactive"
                     :cnamColors="cnamColors"
                     :paColors="paColors"
