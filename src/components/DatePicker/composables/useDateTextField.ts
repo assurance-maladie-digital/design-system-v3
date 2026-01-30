@@ -99,7 +99,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			const formattedStartDate = startDateValidation.clampedDate || ''
 			const formattedEndDate = endDateValidation.clampedDate || ''
 
-			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : formattedStartDate
+			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : `${formattedStartDate} - `
 		}
 
 		const dateValidationResult = autoClampDate(raw, displayFormat.value)

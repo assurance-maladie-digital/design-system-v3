@@ -245,4 +245,44 @@ describe('SyTextField', () => {
 
 		expect(messages.text()).not.toContain('Test error message')
 	})
+
+	it('does not duplicate external error messages', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				errorMessages: ['Erreur externe'],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		const messages = wrapper.find('.v-messages')
+		expect(messages.text()).toBe('Erreur externe')
+	})
+
+	it('hides validation states when disableErrorHandling is true, even with prop flags', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				disableErrorHandling: true,
+				hasError: true,
+				errorMessages: ['Erreur prop'],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.find('.error-field').exists()).toBe(false)
+		expect(wrapper.find('.v-messages').text()).toBe('')
+	})
+
+	it('forwards validate-on="blur lazy" in Vuetify mode when rules are provided', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				useVuetifyValidation: true,
+				rules: [() => true],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		const textField = wrapper.findComponent({ name: 'VTextField' })
+		expect(textField.props('validateOn')).toBe('blur lazy')
+	})
 })

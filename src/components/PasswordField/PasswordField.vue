@@ -146,19 +146,19 @@
 
 	// Synchronisation des messages externes
 	watch(() => props.errorMessages, (newVal) => {
-		if (newVal) {
+		if (newVal !== null && newVal !== undefined) {
 			errors.value = newVal
 		}
 	}, { immediate: true })
 
 	watch(() => props.warningMessages, (newVal) => {
-		if (newVal) {
+		if (newVal !== null && newVal !== undefined) {
 			warnings.value = newVal
 		}
 	}, { immediate: true })
 
 	watch(() => props.successMessages, (newVal) => {
-		if (newVal) {
+		if (newVal !== null && newVal !== undefined) {
 			successes.value = newVal
 		}
 	}, { immediate: true })

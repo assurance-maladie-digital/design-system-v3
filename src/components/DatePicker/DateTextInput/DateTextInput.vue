@@ -660,10 +660,29 @@
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
 					const dateRangeParts = inputValue.value.split(' - ')
-					if (dateRangeParts.length === 2) emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
-					else emitModel(inputValue.value)
+					if (dateRangeParts.length === 2) {
+						const start = (dateRangeParts[0] ?? '').trim()
+						const end = (dateRangeParts[1] ?? '').trim()
+						// If only the start date is provided, keep the separator and don't emit an incomplete range model
+						if (start && !end) {
+							inputValue.value = `${start} - `
+							const parsedStart = dayjs(start, displayFormat.value, true).toDate()
+							if (parsedStart) emit('date-selected', returnFormat.value !== displayFormat.value ? dayjs(parsedStart).format(returnFormat.value) : start)
+						}
+						else if (start && end) {
+							emitModel([start, end])
+						}
+					}
 				}
-				else emitModel(inputValue.value)
+				else {
+					// No separator yet: treat as start date only and keep the separator in the UI
+					const start = inputValue.value.trim()
+					if (start) {
+						inputValue.value = `${start} - `
+						const parsedStart = dayjs(start, displayFormat.value, true).toDate()
+						if (parsedStart) emit('date-selected', returnFormat.value !== displayFormat.value ? dayjs(parsedStart).format(returnFormat.value) : start)
+					}
+				}
 			}
 			else {
 				runRules(inputValue.value)

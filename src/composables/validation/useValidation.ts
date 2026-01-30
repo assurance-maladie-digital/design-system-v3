@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, unref, type MaybeRef } from 'vue'
 import { useFieldValidation, type RuleOptions } from '../rules/useFieldValidation'
 
 export type ValidationRule = {
@@ -33,12 +33,17 @@ export interface ValidationResult {
  * @param options Options de configuration de la validation
  * @returns Un objet contenant les états et méthodes de validation
  */
-export function useValidation(options: ValidationOptions = { showSuccessMessages: true }) {
+export function useValidation(options: MaybeRef<ValidationOptions> = { showSuccessMessages: true }) {
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
 
 	const { generateRules } = useFieldValidation()
+
+	const resolvedOptions = computed<ValidationOptions>(() => ({
+		showSuccessMessages: true,
+		...(unref(options) ?? {}),
+	}))
 
 	const hasError = computed(() => errors.value.length > 0)
 	const hasWarning = computed(() => warnings.value.length > 0)
@@ -61,7 +66,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		clearValidation()
 
 		// Si la gestion des erreurs est désactivée, on retourne un résultat sans erreurs
-		if (options.disableErrorHandling) {
+		if (resolvedOptions.value.disableErrorHandling) {
 			return {
 				hasError: false,
 				hasWarning: false,
@@ -79,7 +84,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 			type: rule.type,
 			options: {
 				...rule.options,
-				fieldIdentifier: options.fieldIdentifier || rule.options.fieldIdentifier,
+				fieldIdentifier: resolvedOptions.value.fieldIdentifier || rule.options.fieldIdentifier,
 			},
 		}))
 
@@ -95,13 +100,13 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 
 		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
 		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication
-		if (!hasValidationError && value && options.showSuccessMessages !== false && (!successRules || successRules.length === 0)) {
+		if (!hasValidationError && value && resolvedOptions.value.showSuccessMessages !== false && (!successRules || successRules.length === 0)) {
 			const customSuccessMessage = rules.find(rule => rule.options.successMessage)?.options.successMessage
 			if (customSuccessMessage) {
 				successes.value.push(customSuccessMessage)
 			}
 			else {
-				const defaultMessage = options.fieldIdentifier ? `Le champ ${options.fieldIdentifier} est valide.` : 'Champ valide'
+				const defaultMessage = resolvedOptions.value.fieldIdentifier ? `Le champ ${resolvedOptions.value.fieldIdentifier} est valide.` : 'Champ valide'
 				successes.value.push(defaultMessage)
 			}
 		}
@@ -114,7 +119,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 					options: {
 						...rule.options,
 						isWarning: true,
-						fieldIdentifier: options.fieldIdentifier || rule.options.fieldIdentifier,
+						fieldIdentifier: resolvedOptions.value.fieldIdentifier || rule.options.fieldIdentifier,
 					},
 				})),
 			)
@@ -135,14 +140,14 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 					options: {
 						...rule.options,
 						isSuccess: true,
-						fieldIdentifier: options.fieldIdentifier || rule.options.fieldIdentifier,
+						fieldIdentifier: resolvedOptions.value.fieldIdentifier || rule.options.fieldIdentifier,
 					},
 				})),
 			)
 
 			successValidationRules.forEach((validationRule) => {
 				const result = validationRule(value)
-				if (result.success && options.showSuccessMessages !== false) {
+				if (result.success && resolvedOptions.value.showSuccessMessages !== false) {
 					successes.value.push(result.success)
 				}
 			})
@@ -160,7 +165,24 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		}
 	}
 
-	const validateOnSubmit = async (): Promise<boolean> => {
+	const validateOnSubmit = async (
+		value?: unknown,
+		rules?: ValidationRule[],
+		warningRules?: ValidationRule[],
+		successRules?: ValidationRule[],
+	): Promise<boolean> => {
+		// Si des paramètres sont fournis, on force une validation immédiate
+		if (value !== undefined || rules || warningRules || successRules) {
+			const result = validateField(
+				value,
+				rules ?? [],
+				warningRules ?? [],
+				successRules ?? [],
+			)
+			return !result.hasError
+		}
+
+		// Sinon, on se base sur l'état courant
 		return !hasError.value
 	}
 

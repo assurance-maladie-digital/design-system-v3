@@ -13,152 +13,154 @@
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from '@/types/vuetifyTypes'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useFieldValidationController, type FieldValidationProps } from '@/composables/validation/unification/FieldValidationController'
+	import { useFieldValidationProps } from '@/composables/validation/unification/useFieldValidationProps'
 	import { useValidatable } from '@/composables/validation/useValidatable'
+	import type { ValidationRule, ValidationOptions } from '@/composables/validation/useValidation'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
+	type SyTextFieldBaseProps = {
+		areDetailsHidden?: boolean | 'auto'
+		areSpinButtonsHidden?: boolean
+		appendIcon?: IconType
+		appendInnerIcon?: IconType
+		appendTooltip?: string
+		autocomplete?: string
+		baseColor?: string
+		bgColor?: string
+		centerAffix?: boolean
+		color?: ColorType
+		counter?: string | number | boolean
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		counterValue?: number | ((value: any) => number)
+		density?: 'default' | 'comfortable' | 'compact'
+		direction?: 'horizontal' | 'vertical'
+		disableClickButton?: boolean
+		displayAsterisk?: boolean
+		displayPersistentClear?: boolean
+		displayPersistentCounter?: boolean
+		displayPersistentHint?: boolean
+		displayPersistentPlaceholder?: boolean
+		hasError?: boolean
+		hasSuccess?: boolean
+		hasWarning?: boolean
+		helpText?: string
+		hint?: string
+		id?: string
+		isActive?: boolean
+		isClearable?: boolean
+		isDirty?: boolean
+		isFlat?: boolean
+		isFocused?: boolean
+		isOnError?: boolean
+		isOnSingleLine?: boolean
+		isReversed?: boolean
+		isTiled?: boolean
+		loading?: string | boolean
+		maxErrors?: string | number
+		maxWidth?: string | number
+		messages?: string | string[]
+		minWidth?: string | number
+		modelValue?: string | number | null
+		name?: string
+		noIcon?: boolean
+		placeholder?: string
+		prefix?: string
+		prependIcon?: IconType
+		prependInnerIcon?: IconType
+		prependTooltip?: string
+		role?: string
+		rounded?: string | number | boolean
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		rules?: ((value: any) => string | boolean)[]
+		showDivider?: boolean
+		successMessages?: string[] | null
+		suffix?: string
+		theme?: string
+		tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
+		type?: string
+		variantStyle?: VariantStyle
+		warningMessages?: string[] | null
+		width?: string | number
+	}
+
+	type SyTextFieldProps = SyTextFieldBaseProps & FieldValidationProps
+
 	const props = withDefaults(
-		defineProps<{
-			modelValue?: string | number | null
-			prependIcon?: IconType
-			appendIcon?: IconType
-			prependInnerIcon?: IconType
-			appendInnerIcon?: IconType
-			prependTooltip?: string
-			appendTooltip?: string
-			tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
-			variantStyle?: VariantStyle
-			color?: ColorType
-			isClearable?: boolean
-			showDivider?: boolean
-			label?: string
-			required?: boolean
-			errorMessages?: string[] | null
-			warningMessages?: string[] | null
-			successMessages?: string[] | null
-			readonly?: boolean
-			isActive?: boolean
-			baseColor?: string
-			bgColor?: string
-			centerAffix?: boolean
-			counter?: string | number | boolean
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			counterValue?: number | ((value: any) => number)
-			density?: 'default' | 'comfortable' | 'compact'
-			direction?: 'horizontal' | 'vertical'
-			isDirty?: boolean
-			disabled?: boolean
-			isOnError?: boolean
-			isFlat?: boolean
-			isFocused?: boolean
-			areDetailsHidden?: boolean | 'auto'
-			areSpinButtonsHidden?: boolean
-			hint?: string
-			id?: string
-			loading?: string | boolean
-			maxErrors?: string | number
-			maxWidth?: string | number
-			messages?: string | string[]
-			minWidth?: string | number
-			name?: string
-			displayPersistentClear?: boolean
-			displayPersistentCounter?: boolean
-			displayPersistentHint?: boolean
-			displayPersistentPlaceholder?: boolean
-			placeholder?: string
-			prefix?: string
-			isReversed?: boolean
-			role?: string
-			rounded?: string | number | boolean
-			hasError?: boolean
-			hasWarning?: boolean
-			hasSuccess?: boolean
-			isOnSingleLine?: boolean
-			suffix?: string
-			theme?: string
-			isTiled?: boolean
-			type?: string
-			width?: string | number
-			displayAsterisk?: boolean
-			noIcon?: boolean
-			customRules?: ValidationRule[]
-			customWarningRules?: ValidationRule[]
-			customSuccessRules?: ValidationRule[]
-			showSuccessMessages?: boolean
-			isValidateOnBlur?: boolean
-			disableErrorHandling?: boolean
-			disableClickButton?: boolean
-			autocomplete?: string
-			helpText?: string
-		}>(),
+		defineProps<SyTextFieldProps>(),
 		{
-			modelValue: undefined,
-			prependIcon: undefined,
+			areDetailsHidden: false,
+			areSpinButtonsHidden: false,
 			appendIcon: undefined,
 			appendInnerIcon: undefined,
-			prependInnerIcon: undefined,
-			prependTooltip: undefined,
 			appendTooltip: undefined,
-			tooltipLocation: 'top',
-			variantStyle: 'outlined',
-			color: 'primary',
-			label: '',
-			errorMessages: null,
-			warningMessages: null,
-			successMessages: null,
-			readonly: false,
-			isClearable: false,
-			isActive: false,
+			autocomplete: 'off',
 			baseColor: undefined,
 			bgColor: 'white',
 			centerAffix: undefined,
+			color: 'primary',
 			counter: false,
 			counterValue: undefined,
+			customRules: undefined,
+			customSuccessRules: undefined,
+			customWarningRules: undefined,
 			density: 'default',
 			direction: 'horizontal',
-			isDirty: false,
+			disableClickButton: true,
+			disableErrorHandling: false,
 			disabled: false,
-			isOnError: false,
-			isFlat: false,
-			isFocused: false,
-			areDetailsHidden: false,
-			areSpinButtonsHidden: false,
+			displayAsterisk: false,
+			displayPersistentClear: false,
+			displayPersistentCounter: false,
+			displayPersistentHint: false,
+			displayPersistentPlaceholder: false,
+			errorMessages: null,
+			hasError: false,
+			hasSuccess: false,
+			hasWarning: false,
+			helpText: '',
 			hint: undefined,
 			id: undefined,
+			isActive: false,
+			isClearable: false,
+			isDirty: false,
+			isFlat: false,
+			isFocused: false,
+			isOnError: false,
+			isOnSingleLine: false,
+			isReversed: false,
+			isTiled: false,
+			isValidateOnBlur: true,
+			label: '',
 			loading: false,
 			maxErrors: undefined,
 			maxWidth: undefined,
 			messages: undefined,
 			minWidth: undefined,
+			modelValue: undefined,
 			name: undefined,
-			hasError: false,
-			hasWarning: false,
-			displayPersistentClear: false,
-			displayPersistentCounter: false,
-			displayPersistentHint: false,
-			displayPersistentPlaceholder: false,
+			noIcon: false,
 			placeholder: undefined,
 			prefix: undefined,
-			isReversed: false,
+			prependIcon: undefined,
+			prependInnerIcon: undefined,
+			prependTooltip: undefined,
+			readonly: false,
+			required: false,
 			role: undefined,
 			rounded: undefined,
-			isOnSingleLine: false,
+			rules: undefined,
+			showDivider: false,
+			showSuccessMessages: true,
+			successMessages: null,
 			suffix: undefined,
 			theme: undefined,
-			isTiled: false,
+			tooltipLocation: 'top',
 			type: 'text',
+			useVuetifyValidation: false,
+			variantStyle: 'outlined',
+			warningMessages: null,
 			width: undefined,
-			displayAsterisk: false,
-			noIcon: false,
-			customRules: () => [],
-			customWarningRules: () => [],
-			customSuccessRules: () => [],
-			showSuccessMessages: true,
-			isValidateOnBlur: true,
-			disableErrorHandling: false,
-			disableClickButton: true,
-			autocomplete: 'off',
-			helpText: '',
 		},
 	)
 
@@ -190,6 +192,10 @@
 		},
 	})
 
+	const baseRules = computed<ValidationRule[]>(() => props.required ? [{ type: 'required', options: { message: `Le champ ${props.label || 'ce champ'} est requis.`, fieldIdentifier: props.label } }] : [])
+	const validationOptions = computed<Omit<ValidationOptions, 'customRules' | 'warningRules' | 'successRules'>>(() => ({ showSuccessMessages: props.showSuccessMessages, fieldIdentifier: props.label, disableErrorHandling: props.disableErrorHandling }))
+	const fieldProps = useFieldValidationProps(props)
+
 	const attrs = useAttrs()
 
 	const forwardedAttrs = computed(() => {
@@ -197,14 +203,15 @@
 			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
 		) as Record<string, unknown>
 
-		if (!('validate-on' in filteredAttrs) && 'rules' in filteredAttrs && props.isValidateOnBlur) {
-			filteredAttrs['validate-on'] = 'blur lazy'
+		if (!('validate-on' in filteredAttrs) && props.isValidateOnBlur) {
+			const hasRulesInAttrs = 'rules' in filteredAttrs
+			if (hasRulesInAttrs || props.rules) {
+				filteredAttrs['validate-on'] = 'blur lazy'
+			}
 		}
 
 		return filteredAttrs
 	})
-
-	const isBlurred = ref(false)
 
 	const showClear = computed(() => {
 		if (!props.isClearable) return false
@@ -216,97 +223,45 @@
 		model.value = ''
 	}
 
-	// Initialisation du composable de validation
-	const validation = useValidation({
-		customRules: props.customRules,
-		warningRules: props.customWarningRules,
-		successRules: props.customSuccessRules,
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label,
-		disableErrorHandling: props.disableErrorHandling,
-	})
+	const controller = useFieldValidationController({ value: model, props: fieldProps, baseRules, validationOptions })
 
-	// Synchronisation des messages externes
-	watch(() => props.errorMessages, (newVal) => {
-		validation.errors.value = newVal || []
-	}, { immediate: true })
+	const validateOnSubmit = controller.validateOnSubmit
 
-	watch(() => props.warningMessages, (newVal) => {
-		validation.warnings.value = newVal || []
-	}, { immediate: true })
-
-	watch(() => props.successMessages, (newVal) => {
-		validation.successes.value = newVal || []
-	}, { immediate: true })
-
-	// Construction des règles de validation
-	const defaultRules = computed<ValidationRule[]>(() => props.required
-		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
-		: [],
-	)
-
-	// Check if customRules contains a 'required' rule
-	const hasCustomRequiredRule = () => {
-		return props.customRules.some(rule => rule.type === 'required')
-	}
-
-	const validateField = (value: string | number | null) => {
-		if (props.readonly) {
-			validation.clearValidation()
-			return true
-		}
-
-		// Don't short-circuit if a custom required rule exists
-		if (!value && !props.required && !hasCustomRequiredRule()) {
-			validation.clearValidation()
-			return true
-		}
-
-		const result = validation.validateField(
-			value,
-			[...defaultRules.value, ...props.customRules],
-			props.customWarningRules,
-		)
-
-		return !result.hasError
-	}
-
-	const validateOnSubmit = () => {
-		isBlurred.value = true
-		return validateField(model.value ?? null)
+	// Intégration avec le système de validation du formulaire (seulement si pas en mode Vuetify)
+	if (!props.useVuetifyValidation) {
+		useValidatable(validateOnSubmit, controller.clearValidation)
 	}
 
 	const checkErrorOnBlur = () => {
-		isBlurred.value = true
-		validateField(model.value ?? null)
-		if (model.value !== lastEmittedModelValue.value) {
-			emit('update:modelValue', model.value)
-			lastEmittedModelValue.value = model.value
-		}
+		controller.validateOnBlur()
 	}
 
 	watch(model, (newValue) => {
-		if (!props.isValidateOnBlur) {
-			validateField(newValue ?? null)
-		}
 		if (props.isClearable && newValue === '') {
 			emit('clear')
 		}
 	})
 
-	const hasError = computed(() => validation.hasError.value || props.hasError)
-	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
-	const hasSuccess = computed(() => ((validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess) && props.showSuccessMessages)
+	const isErrorHandlingDisabled = computed(() => props.disableErrorHandling || props.useVuetifyValidation)
 
-	const errors = computed(() => [...validation.errors.value, ...(props.errorMessages || [])])
-	const warnings = computed(() => validation.warnings.value)
-	const successes = computed(() => validation.successes.value)
+	const hasError = computed(() => {
+		if (isErrorHandlingDisabled.value) return false
+		return controller.hasError.value || props.hasError
+	})
+
+	const hasWarning = computed(() => {
+		if (isErrorHandlingDisabled.value) return false
+		return controller.hasWarning.value || props.hasWarning
+	})
+
+	const hasSuccess = computed(() => {
+		if (isErrorHandlingDisabled.value || props.showSuccessMessages === false) return false
+		return (controller.hasSuccess.value && !controller.hasError.value && !controller.hasWarning.value) || props.hasSuccess
+	})
+
+	const errors = computed(() => controller.errors.value)
+	const warnings = computed(() => controller.warnings.value)
+	const successes = computed(() => controller.successes.value)
 
 	const iconColor = computed(() => {
 		if (hasError.value) return 'error'
@@ -381,8 +336,70 @@
 
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
 
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, validation.clearValidation)
+	watch([hasError, errors], () => {
+		nextTick(() => {
+			const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
+			const messagesContainer = syTextFieldRef.value?.$el?.querySelector('.v-messages')
+			const detailsContainer = syTextFieldRef.value?.$el?.querySelector('.v-input__details')
+
+			if (inputElement && messagesContainer) {
+				// Create unique ID for messages container only
+				const messagesId = `${inputElement.id || 'input'}-messages`
+				messagesContainer.id = messagesId
+
+				// Get existing aria-describedby value and combine with messages ID (avoid duplicates)
+				const existingDescribedby = inputElement.getAttribute('aria-describedby')
+				const existingIds = existingDescribedby ? existingDescribedby.split(' ').filter(id => id.trim()) : []
+
+				// Only add messagesId if it's not already present
+				if (!existingIds.includes(messagesId)) {
+					existingIds.push(messagesId)
+				}
+
+				const describedbyIds = existingIds.join(' ').trim()
+
+				// Associate input with messages via aria-describedby (preserve existing IDs)
+				inputElement.setAttribute('aria-describedby', describedbyIds)
+
+				// Remove problematic ARIA attributes from details container (parent)
+				if (detailsContainer) {
+					// Remove any existing ID to avoid duplicates
+					if (detailsContainer.id === messagesId) {
+						detailsContainer.removeAttribute('id')
+					}
+					detailsContainer.removeAttribute('role')
+					detailsContainer.removeAttribute('aria-live')
+					detailsContainer.removeAttribute('aria-atomic')
+				}
+
+				// Also remove from messages container itself
+				messagesContainer.removeAttribute('role')
+				messagesContainer.removeAttribute('aria-live')
+				messagesContainer.removeAttribute('aria-atomic')
+			}
+			else if (inputElement) {
+				// No messages container, but preserve existing aria-describedby values
+				const existingDescribedby = inputElement.getAttribute('aria-describedby')
+				const messagesId = `${inputElement.id || 'input'}-messages`
+
+				if (existingDescribedby) {
+					// Remove only the messages ID if it exists, keep other IDs
+					const describedbyIds = existingDescribedby
+						.split(' ')
+						.filter(id => id.trim() && id !== messagesId)
+						.join(' ')
+						.trim()
+
+					if (describedbyIds) {
+						inputElement.setAttribute('aria-describedby', describedbyIds)
+					}
+					else {
+						inputElement.removeAttribute('aria-describedby')
+					}
+				}
+			}
+		})
+	})
 
 	onMounted(() => {
 		nextTick(() => {
@@ -492,76 +509,10 @@
 
 			setupAriaDescribedby()
 		})
-
-		// Watch for error state changes to update aria-describedby dynamically
-		watch([hasError, errors], () => {
-			nextTick(() => {
-				const inputElement = syTextFieldRef.value?.$el?.querySelector('input')
-				const messagesContainer = syTextFieldRef.value?.$el?.querySelector('.v-messages')
-				const detailsContainer = syTextFieldRef.value?.$el?.querySelector('.v-input__details')
-
-				if (inputElement && messagesContainer) {
-					// Create unique ID for messages container only
-					const messagesId = `${inputElement.id || 'input'}-messages`
-					messagesContainer.id = messagesId
-
-					// Get existing aria-describedby value and combine with messages ID (avoid duplicates)
-					const existingDescribedby = inputElement.getAttribute('aria-describedby')
-					const existingIds = existingDescribedby ? existingDescribedby.split(' ').filter(id => id.trim()) : []
-
-					// Only add messagesId if it's not already present
-					if (!existingIds.includes(messagesId)) {
-						existingIds.push(messagesId)
-					}
-
-					const describedbyIds = existingIds.join(' ').trim()
-
-					// Associate input with messages via aria-describedby (preserve existing IDs)
-					inputElement.setAttribute('aria-describedby', describedbyIds)
-
-					// Remove problematic ARIA attributes from details container (parent)
-					if (detailsContainer) {
-						// Remove any existing ID to avoid duplicates
-						if (detailsContainer.id === messagesId) {
-							detailsContainer.removeAttribute('id')
-						}
-						detailsContainer.removeAttribute('role')
-						detailsContainer.removeAttribute('aria-live')
-						detailsContainer.removeAttribute('aria-atomic')
-					}
-
-					// Also remove from messages container itself
-					messagesContainer.removeAttribute('role')
-					messagesContainer.removeAttribute('aria-live')
-					messagesContainer.removeAttribute('aria-atomic')
-				}
-				else if (inputElement) {
-					// No messages container, but preserve existing aria-describedby values
-					const existingDescribedby = inputElement.getAttribute('aria-describedby')
-					const messagesId = `${inputElement.id || 'input'}-messages`
-
-					if (existingDescribedby) {
-						// Remove only the messages ID if it exists, keep other IDs
-						const describedbyIds = existingDescribedby
-							.split(' ')
-							.filter(id => id.trim() && id !== messagesId)
-							.join(' ')
-							.trim()
-
-						if (describedbyIds) {
-							inputElement.setAttribute('aria-describedby', describedbyIds)
-						}
-						else {
-							inputElement.removeAttribute('aria-describedby')
-						}
-					}
-				}
-			})
-		})
 	})
 
 	defineExpose({
-		validation,
+		validation: controller,
 		validateOnSubmit,
 		checkErrorOnBlur,
 	})
@@ -611,6 +562,7 @@
 			:reverse="props.isReversed"
 			:role="props.role"
 			:rounded="props.rounded"
+			:rules="useVuetifyValidation ? rules : undefined"
 			:single-line="props.isOnSingleLine"
 			:suffix="props.suffix"
 			:theme="props.theme"
