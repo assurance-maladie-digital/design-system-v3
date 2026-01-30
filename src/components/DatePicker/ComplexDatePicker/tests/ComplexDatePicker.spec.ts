@@ -3,18 +3,18 @@ import { describe, it, expect, afterEach } from 'vitest'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let wrapper: VueWrapper<any> | null = null
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mountComponent = (props: any = { label: 'Test' }) => {
-  wrapper = mount(ComplexDatePicker, { props })
-  return wrapper
+	wrapper = mount(ComplexDatePicker, { props })
+	return wrapper
 }
 
 afterEach(() => {
-  wrapper?.unmount()
-  wrapper = null
+	wrapper?.unmount()
+	wrapper = null
 })
 
 describe('ComplexDatePicker.clean', () => {
