@@ -42,7 +42,7 @@
 		const checkedItem = currentValue.value.filter(e => e.isChecked)
 
 		if (checkedItem.length === 1) {
-			return checkedItem[0].value
+			return checkedItem[0]!.value
 		}
 
 		return null
