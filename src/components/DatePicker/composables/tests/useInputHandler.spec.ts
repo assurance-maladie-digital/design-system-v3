@@ -741,7 +741,7 @@ describe('useInputHandler', () => {
 		// La seconde partie doit rester inchangée
 		expect(secondPartAfter).toBe('02/01/2023')
 		// Le curseur doit rester dans la première partie
-		expect(newPosFirst).toBeLessThanOrEqual(firstPartAfter.length)
+		expect(newPosFirst).toBeLessThanOrEqual(firstPartAfter!.length)
 
 		// Édition de la seconde partie
 		const cursorInSecondPart = valueWithRange.length
@@ -750,6 +750,6 @@ describe('useInputHandler', () => {
 		// La première partie doit rester inchangée
 		expect(firstPartAfterSecond).toBe('01/01/2023')
 		// Le curseur doit se trouver dans la seconde partie
-		expect(newPosSecond).toBeGreaterThan(firstPartAfterSecond.length)
+		expect(newPosSecond).toBeGreaterThan(firstPartAfterSecond!.length)
 	})
 })

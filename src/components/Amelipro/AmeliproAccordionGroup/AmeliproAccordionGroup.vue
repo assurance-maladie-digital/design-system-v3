@@ -46,11 +46,11 @@
 		},
 	})
 
-	const openId = ref<string | null>(null)
+	const openId = ref<string | undefined | null>(null)
 
 	onMounted(() => {
 		if (props.defaultItemOpened !== null) {
-			openId.value = props.items[props.defaultItemOpened].id
+			openId.value = props.items[props.defaultItemOpened]?.id
 		}
 	})
 

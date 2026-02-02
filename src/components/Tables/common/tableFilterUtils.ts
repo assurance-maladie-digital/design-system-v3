@@ -52,7 +52,7 @@ export function parseDate(value: unknown): Date | null {
 	if (typeof value === 'string') {
 		try {
 			if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(value)) {
-				const [day, month, year] = value.split('/').map(Number)
+				const [day, month, year] = value.split('/').map(Number) as [number, number, number]
 				return new Date(year, month - 1, day)
 			}
 			const parsed = new Date(value)

@@ -71,30 +71,33 @@
 				v-if="!hideBackBtn"
 				mode="out-in"
 			>
-				<VThemeProvider theme="dark">
-					<VSkeletonLoader
-						v-if="loading"
-						type="button"
-						class="vd-subheader-loading mb-4"
-					/>
+				<div>
+					<VThemeProvider>
+						<VSkeletonLoader
+							v-if="loading"
+							type="button"
+							class="vd-subheader-loading mb-4"
+							theme="dark"
+						/>
 
-					<VBtn
-						v-else
-						v-bind="options.backBtn"
-						class="vd-sub-header-back-btn mb-1"
-						:aria-label="effectiveBackBtnAccessibleName"
-						@click="$emit('back')"
-					>
-						<slot name="back-btn-icon">
-							<SyIcon
-								class="mr-2"
-								:icon="backArrowIcon"
-								:decorative="true"
-							/>
-						</slot>
-						{{ backBtnText }}
-					</VBtn>
-				</VThemeProvider>
+						<VBtn
+							v-else
+							v-bind="options.backBtn"
+							class="vd-sub-header-back-btn mb-1"
+							:aria-label="effectiveBackBtnAccessibleName"
+							@click="$emit('back')"
+						>
+							<slot name="back-btn-icon">
+								<SyIcon
+									class="mr-2"
+									:icon="backArrowIcon"
+									:decorative="true"
+								/>
+							</slot>
+							{{ backBtnText }}
+						</VBtn>
+					</VThemeProvider>
+				</div>
 			</VFadeTransition>
 		</slot>
 
@@ -106,12 +109,13 @@
 				class="vd-sub-header-informations d-flex flex-column mr-10"
 				:class="{ 'flex-shrink-0': renderFixedHeight }"
 			>
-				<VThemeProvider theme="dark">
+				<VThemeProvider>
 					<slot name="title">
 						<VFadeTransition mode="out-in">
 							<HeaderLoading
 								v-if="loading"
 								width="300"
+								theme="dark"
 								height="2rem"
 							/>
 							<h2
@@ -134,6 +138,7 @@
 								class="mt-1"
 								width="250"
 								height="2rem"
+								theme="dark"
 							/>
 							<p
 								v-else

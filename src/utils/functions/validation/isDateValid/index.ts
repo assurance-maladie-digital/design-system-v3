@@ -37,13 +37,13 @@ export function isDateValid(date: string): string | true {
 		31,
 	]
 
-	const parsedDate = date.split(DATE_SEPARATORS)
+	const parsedDate = date.split(DATE_SEPARATORS) as [string, string, string]
 
 	const day = parseInt(parsedDate[0], 10)
 	const month = parseInt(parsedDate[1], 10)
 
 	if (month !== 2) {
-		if (day > DAYS_IN_MONTH[month - 1]) {
+		if (day > DAYS_IN_MONTH[month - 1]!) {
 			return DateErrorCodes.MONTH_NOT_MATCH
 		}
 		else {

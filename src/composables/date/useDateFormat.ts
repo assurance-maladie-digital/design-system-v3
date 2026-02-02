@@ -38,7 +38,7 @@ export const parseDate = (dateString: string | Date | null, format: string): Dat
 
 	// Extraire les valeurs selon leur position dans le format
 	parts.forEach((part, index) => {
-		const value = parseInt(dateParts[index], 10)
+		const value = parseInt(dateParts[index]!, 10)
 		if (isNaN(value)) return
 
 		if (part.includes('DD') || part.includes('D')) day = value

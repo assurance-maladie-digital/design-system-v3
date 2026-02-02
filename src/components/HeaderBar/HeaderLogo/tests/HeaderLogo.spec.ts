@@ -39,8 +39,8 @@ describe('HeaderLogo', () => {
 		const desktopMode = desktopWrapper.html()
 
 		// Verify desktop mode renders Logo (width="211" height="63")
-		expect(desktopMode).toContain('width="211"')
-		expect(desktopMode).toContain('height="63"')
+		expect(desktopMode).toContain('width="165"')
+		expect(desktopMode).toContain('height="50"')
 		// And doesn't contain mobile dimensions
 		expect(desktopMode).not.toContain('width="141"')
 		desktopWrapper.unmount()

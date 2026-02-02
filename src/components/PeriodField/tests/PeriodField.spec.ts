@@ -1,7 +1,11 @@
-import { mount } from '@vue/test-utils'
+import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
+import type { ComponentPublicInstance } from 'vue'
 
 import PeriodField from '../PeriodField.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+
+type DatePickerWrapper = VueWrapper<ComponentPublicInstance<typeof DatePicker>>
 
 describe('PeriodField.vue', () => {
 	describe('Rendering', () => {
@@ -15,8 +19,8 @@ describe('PeriodField.vue', () => {
 
 			const inputs = wrapper.findAll('input')
 			expect(inputs).toHaveLength(2)
-			expect(inputs[0].attributes('aria-label')).toBe('From')
-			expect(inputs[1].attributes('aria-label')).toBe('To')
+			expect(inputs[0]!.attributes('aria-label')).toBe('From')
+			expect(inputs[1]!.attributes('aria-label')).toBe('To')
 		})
 
 		it('renders with initial values', async () => {
@@ -32,8 +36,8 @@ describe('PeriodField.vue', () => {
 			const inputs = wrapper.findAll('input')
 			await wrapper.vm.$nextTick()
 
-			expect(inputs[0].element.value).toBe('14/11/2005')
-			expect(inputs[1].element.value).toBe('23/12/2005')
+			expect(inputs[0]!.element.value).toBe('14/11/2005')
+			expect(inputs[1]!.element.value).toBe('23/12/2005')
 		})
 	})
 
@@ -48,7 +52,7 @@ describe('PeriodField.vue', () => {
 				},
 			})
 
-			const [startField, endField] = wrapper.findAll('input')
+			const [startField, endField] = wrapper.findAll<HTMLInputElement>('input') as [DOMWrapper<HTMLInputElement>, DOMWrapper<HTMLInputElement>]
 
 			// Test start date change
 			await startField.trigger('focus')
@@ -124,10 +128,10 @@ describe('PeriodField.vue', () => {
 			})
 
 			// Trigger validation manually
-			await wrapper.vm.validateOnSubmit()
+			wrapper.vm.validateOnSubmit()
 			await wrapper.vm.$nextTick()
 
-			const datePickers = wrapper.findAllComponents({ name: 'DatePicker' })
+			const datePickers = wrapper.findAllComponents({ name: 'DatePicker' }) as [DatePickerWrapper, DatePickerWrapper]
 			expect(wrapper.vm.isValid).toBe(false)
 			expect(datePickers[0].props('customRules')).toContainEqual(expect.objectContaining({
 				type: 'required',
@@ -158,7 +162,7 @@ describe('PeriodField.vue', () => {
 			await wrapper.vm.validateOnSubmit()
 			await wrapper.vm.$nextTick()
 
-			const datePickers = wrapper.findAllComponents({ name: 'DatePicker' })
+			const datePickers = wrapper.findAllComponents({ name: 'DatePicker' }) as [DatePickerWrapper, DatePickerWrapper]
 			expect(wrapper.vm.isValid).toBe(false)
 			expect(datePickers[1].props('customRules')).toContainEqual(expect.objectContaining({
 				type: 'required',
@@ -234,8 +238,8 @@ describe('PeriodField.vue', () => {
 			await wrapper1.vm.$nextTick()
 
 			// Vérifier que la fonction de validation renvoie false quand les deux champs sont vides
-			const fromDatePicker1 = wrapper1.findAllComponents({ name: 'DatePicker' })[0]
-			const requiredRule1 = fromDatePicker1.props('customRules').find(rule => rule.type === 'required')
+			const fromDatePicker1 = wrapper1.findAllComponents({ name: 'DatePicker' })[0] as DatePickerWrapper
+			const requiredRule1 = fromDatePicker1.props('customRules').find(rule => rule.type === 'required')!
 			expect(requiredRule1.options.validate(null)).toBe(false)
 			expect(wrapper1.vm.isValid).toBe(false)
 
@@ -254,8 +258,8 @@ describe('PeriodField.vue', () => {
 			await wrapper2.vm.$nextTick()
 
 			// Vérifier que la fonction de validation renvoie false quand from est vide mais to est rempli
-			const fromDatePicker2 = wrapper2.findAllComponents({ name: 'DatePicker' })[0]
-			const requiredRule2 = fromDatePicker2.props('customRules').find(rule => rule.type === 'required')
+			const fromDatePicker2 = wrapper2.findAllComponents({ name: 'DatePicker' })[0] as DatePickerWrapper
+			const requiredRule2 = fromDatePicker2.props('customRules').find(rule => rule.type === 'required')!
 			// Simuler le scénario où parsedToDate.value est non-null
 			expect(requiredRule2.options.validate(null)).toBe(false)
 			expect(wrapper2.vm.isValid).toBe(false)
@@ -275,8 +279,8 @@ describe('PeriodField.vue', () => {
 			await wrapper3.vm.$nextTick()
 
 			// Vérifier que la fonction de validation renvoie true quand le champ a une valeur
-			const fromDatePicker3 = wrapper3.findAllComponents({ name: 'DatePicker' })[0]
-			const requiredRule3 = fromDatePicker3.props('customRules').find(rule => rule.type === 'required')
+			const fromDatePicker3 = wrapper3.findAllComponents({ name: 'DatePicker' })[0] as DatePickerWrapper
+			const requiredRule3 = fromDatePicker3.props('customRules').find(rule => rule.type === 'required')!
 			const mockDate = new Date('2023-12-15')
 			expect(requiredRule3.options.validate(mockDate)).toBe(true)
 			expect(wrapper3.vm.isValid).toBe(true)
@@ -298,8 +302,8 @@ describe('PeriodField.vue', () => {
 			await wrapper1.vm.$nextTick()
 
 			// Vérifier que la fonction de validation renvoie false quand les deux champs sont vides
-			const toDatePicker1 = wrapper1.findAllComponents({ name: 'DatePicker' })[1]
-			const requiredRule1 = toDatePicker1.props('customRules').find(rule => rule.type === 'required')
+			const toDatePicker1 = wrapper1.findAllComponents({ name: 'DatePicker' })[1] as DatePickerWrapper
+			const requiredRule1 = toDatePicker1.props('customRules').find(rule => rule.type === 'required')!
 			expect(requiredRule1.options.validate(null)).toBe(false)
 			expect(wrapper1.vm.isValid).toBe(false)
 
@@ -314,12 +318,12 @@ describe('PeriodField.vue', () => {
 				},
 			})
 
-			await wrapper2.vm.validateOnSubmit()
+			wrapper2.vm.validateOnSubmit()
 			await wrapper2.vm.$nextTick()
 
 			// Vérifier que la fonction de validation renvoie false quand to est vide mais from est rempli
-			const toDatePicker2 = wrapper2.findAllComponents({ name: 'DatePicker' })[1]
-			const requiredRule2 = toDatePicker2.props('customRules').find(rule => rule.type === 'required')
+			const toDatePicker2 = wrapper2.findAllComponents({ name: 'DatePicker' })[1] as DatePickerWrapper
+			const requiredRule2 = toDatePicker2.props('customRules').find(rule => rule.type === 'required')!
 			// Simuler le scénario où parsedFromDate.value est non-null
 			expect(requiredRule2.options.validate(null)).toBe(false)
 			expect(wrapper2.vm.isValid).toBe(false)
@@ -335,12 +339,12 @@ describe('PeriodField.vue', () => {
 				},
 			})
 
-			await wrapper3.vm.validateOnSubmit()
+			wrapper3.vm.validateOnSubmit()
 			await wrapper3.vm.$nextTick()
 
 			// Vérifier que la fonction de validation renvoie true quand le champ a une valeur
-			const toDatePicker3 = wrapper3.findAllComponents({ name: 'DatePicker' })[1]
-			const requiredRule3 = toDatePicker3.props('customRules').find(rule => rule.type === 'required')
+			const toDatePicker3 = wrapper3.findAllComponents({ name: 'DatePicker' })[1] as DatePickerWrapper
+			const requiredRule3 = toDatePicker3.props('customRules').find(rule => rule.type === 'required')!
 			const mockDate = new Date('2023-12-20')
 			expect(requiredRule3.options.validate(mockDate)).toBe(true)
 			expect(wrapper3.vm.isValid).toBe(true)
@@ -399,10 +403,10 @@ describe('PeriodField.vue', () => {
 			})
 
 			// Trigger validation manually
-			await wrapper.vm.validateOnSubmit()
+			wrapper.vm.validateOnSubmit()
 			await wrapper.vm.$nextTick()
 
-			const datePickers = wrapper.findAllComponents({ name: 'DatePicker' })
+			const datePickers = wrapper.findAllComponents({ name: 'DatePicker' }) as [DatePickerWrapper, DatePickerWrapper]
 			const fromDatePicker = datePickers[0]
 			expect(fromDatePicker.vm.errorMessages).toContainEqual('Custom validation failed')
 			expect(datePickers[0].props('customRules')).toContainEqual(expect.objectContaining({

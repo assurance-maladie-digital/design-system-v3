@@ -174,7 +174,7 @@ describe('SyTableFilter', () => {
 		])
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]![0]).toEqual([
 			{ key: 'name', value: 'John', type: 'text' },
 		])
 	})

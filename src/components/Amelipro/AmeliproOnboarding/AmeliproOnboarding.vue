@@ -78,7 +78,7 @@
 	}
 	const { mdAndUp } = useDisplay()
 
-	const currentStep = computed<IOnboarding>(() => props.steps[currentStepIndex.value])
+	const currentStep = computed<IOnboarding>(() => props.steps[currentStepIndex.value]!)
 
 	const imgWrapperStyle = computed<string>(() => `width: ${props.imgWidth};`)
 	const textWrapperStyle = computed<string>(() => (mdAndUp.value ? `width: calc(100% - ${props.imgWidth});` : 'width: 100%;'))
@@ -214,7 +214,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-ondoarding-content {
 	min-height: 350px;

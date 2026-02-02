@@ -96,7 +96,7 @@ describe('AmeliproBreadcrumb', () => {
 			expect(wrapper.find('ol').attributes('id')).toBe(testHelper.default('uniqueId'))
 			expect(wrapper.attributes('id')).toBeUndefined()
 			expect(btns().length).toBeGreaterThan(0)
-			expect(btns()[0].attributes('id')).toBeUndefined()
+			expect(btns()[0]?.attributes('id')).toBeUndefined()
 			expect(wrapper.find('.breadcrumb__active-page').attributes('id')).toBeUndefined()
 
 			const { uniqueId } = modifiedPropValues()
@@ -112,12 +112,12 @@ describe('AmeliproBreadcrumb', () => {
 		it('prop items sets aria-current and text on last item', async () => {
 			const current = () => wrapper.find('.breadcrumb__active-page')
 			expect(current().attributes('aria-current')).toBe('page')
-			expect(current().text()).toBe(requiredPropValues().items.slice(-1)[0].title)
+			expect(current().text()).toBe(requiredPropValues().items.slice(-1)[0]?.title)
 
 			const { items } = modifiedPropValues()
 			await wrapper.setProps({ items })
 			expect(current().attributes('aria-current')).toBe('page')
-			expect(current().text()).toBe(modifiedPropValues().items.slice(-1)[0].title)
+			expect(current().text()).toBe(modifiedPropValues().items.slice(-1)[0]?.title)
 		})
 
 		it('sets aria-label on nav', () => {
@@ -171,7 +171,7 @@ describe('AmeliproBreadcrumb', () => {
 			const btns = wrapper.findAll('.breadcrumb__btn')
 			expect(btns.length).toBe(requiredPropValues().items.length - 1)
 			for (let i = 0; i < btns.length; i++) {
-				await btns[i].trigger('click')
+				await btns[i]?.trigger('click')
 			}
 			const emitted = wrapper.emitted('click')
 			expect(emitted).toBeDefined()
@@ -181,7 +181,7 @@ describe('AmeliproBreadcrumb', () => {
 				if (!emitted) {
 					continue
 				}
-				expect(emitted[i][0]).toBe(requiredPropValues().items[i].id)
+				expect(emitted[i]?.[0]).toBe(requiredPropValues().items[i]?.id)
 			}
 		})
 	})

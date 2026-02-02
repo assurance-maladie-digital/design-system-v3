@@ -252,7 +252,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('aria-checked')).toBe('false')
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].isChecked = true
+				modelValue[0]!.isChecked = true
 				await vueWrapper.setProps({ modelValue })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('aria-checked')).toBe('true')
 			})
@@ -275,7 +275,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('checked')).toBeUndefined()
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].isChecked = true
+				modelValue[0]!.isChecked = true
 				await vueWrapper.setProps({ modelValue })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('checked')).toBe('')
 			})
@@ -290,7 +290,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				await vueWrapper.setProps({ disabled: false })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('disabled')).toBeUndefined()
 
-				modelValue[0].disabled = true
+				modelValue[0]!.disabled = true
 				await vueWrapper.setProps({ modelValue })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('disabled')).toBe('')
 			})
@@ -315,7 +315,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('value')).toBe('the-item-value-1')
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].value = 'New value'
+				modelValue[0]!.value = 'New value'
 				await vueWrapper.setProps({ modelValue })
 				expect(vueWrapper.find('.amelipro-illustrated-radio-group__item input').attributes('value')).toBe('New value')
 			})
@@ -337,7 +337,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(finder().classes('bg-ap-blue-lighten-3')).toBe(true)
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].isChecked = true
+				modelValue[0]!.isChecked = true
 				await vueWrapper.setProps({ modelValue })
 				expect(finder().classes('bg-ap-blue-darken-1')).toBe(true)
 				expect(finder().classes('bg-ap-blue-lighten-3')).toBe(false)
@@ -368,7 +368,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(finder().classes('text-ap-blue-darken-1')).toBe(true)
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].isChecked = true
+				modelValue[0]!.isChecked = true
 				await vueWrapper.setProps({ modelValue })
 				expect(finder().classes('text-ap-white')).toBe(true)
 				expect(finder().classes('text-ap-blue-darken-1')).toBe(false)
@@ -378,7 +378,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(finder().text()).toBe('the item label 1')
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].label = 'New item label'
+				modelValue[0]!.label = 'New item label'
 				await vueWrapper.setProps({ modelValue })
 				expect(finder().text()).toBe('New item label')
 			})
@@ -410,7 +410,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.findComponent(AmeliproIcon).props('icon')).toBe('vaccination')
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].icon = 'new-icon'
+				modelValue[0]!.icon = 'new-icon'
 				await vueWrapper.setProps({ modelValue })
 				expect(vueWrapper.findComponent(AmeliproIcon).props('icon')).toBe('new-icon')
 			})
@@ -419,7 +419,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 				expect(vueWrapper.findComponent(AmeliproIcon).props('iconColor')).toBe('ap-yellow')
 
 				const { modelValue } = modifiedPropValues()
-				modelValue[0].isChecked = true
+				modelValue[0]!.isChecked = true
 				await vueWrapper.setProps({ modelValue })
 				expect(vueWrapper.findComponent(AmeliproIcon).props('iconColor')).toBe('ap-white')
 			})

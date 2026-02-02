@@ -23,7 +23,7 @@ export const generateThemeVariables = (tokens: Tokens): ThemeVariables => {
 			for (const token in categoryTokens) {
 				if (Object.prototype.hasOwnProperty.call(categoryTokens, token)) {
 					const variableName = `on${category.charAt(0).toUpperCase() + category.slice(1)}${token.charAt(0).toUpperCase() + token.slice(1)}`
-					themeVariables[variableName] = categoryTokens[token]
+					themeVariables[variableName] = categoryTokens[token]!
 				}
 			}
 		}

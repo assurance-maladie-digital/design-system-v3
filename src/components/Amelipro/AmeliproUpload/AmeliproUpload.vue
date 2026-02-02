@@ -163,7 +163,7 @@
 
 		const allMatch = filesToAdd.length === lastEmittedFiles.value.length && filesToAdd.every((file, index) => {
 			const lastFile = lastEmittedFiles.value[index]
-			return fileHashSync(file) === lastFile.hash
+			return fileHashSync(file) === lastFile?.hash
 		})
 
 		// Si la liste est exactement la même que la dernière liste émise, ignorer
@@ -643,7 +643,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-upload {
 	padding: apTokens.$card-padding-tablet;

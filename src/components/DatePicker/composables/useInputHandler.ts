@@ -191,14 +191,14 @@ export function useInputHandler(options: InputHandlerOptions) {
 
 			// Si nous avons déjà une partie de la seconde date, continuer à éditer cette partie
 			const parts = previousValue.split(' - ')
-			if (parts.length === 2 && parts[1].length > 0) {
+			if (parts.length === 2 && parts[1]!.length > 0) {
 				// Vérifier si la nouvelle valeur contient la première partie et le séparateur
 				if (value.startsWith(parts[0] + ' - ')) {
 					// Extraire la nouvelle seconde partie
 					const secondPart = value.substring((parts[0] + ' - ').length)
 
 					// Formater la seconde partie avec le composable useDateInputEditing
-					const secondPartCursorPos = value.length - (parts[0].length + 3)
+					const secondPartCursorPos = value.length - (parts[0]!.length + 3)
 					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(secondPart, secondPartCursorPos)
 
 					// Créer la nouvelle valeur formatée
@@ -209,7 +209,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 					// Mettre à jour les dates sélectionnées
 					if (displayRange) {
 						// Récupérer la première date
-						const firstDate = parseDate(parts[0], format)
+						const firstDate = parseDate(parts[0]!, format)
 						// Essayer de parser la seconde date (peut être incomplète)
 						const secondDate = parseDate(secondPart, format)
 						// Mettre à jour les dates sélectionnées
@@ -219,7 +219,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 					// Mettre à jour la position du curseur après le séparateur et la seconde partie formatée
 					const inputElement = inputRef.value?.$el?.querySelector('input')
 					// Calculer la position du curseur : longueur de la première partie + longueur du séparateur + nouvelle position du curseur dans la seconde partie
-					const cursorPosition = parts[0].length + 3 + newPos
+					const cursorPosition = parts[0]!.length + 3 + newPos
 					updateCursorPosition(inputElement, cursorPosition)
 					return true
 				}
@@ -240,19 +240,19 @@ export function useInputHandler(options: InputHandlerOptions) {
 			const parts = value.split(' - ')
 			if (parts.length === 2) {
 				// Déterminer quelle partie est en cours d'édition
-				const firstPartLength = parts[0].length
+				const firstPartLength = parts[0]!.length
 				const separatorLength = 3 // ' - '
 
 				if (cursorPos <= firstPartLength) {
 					// Édition de la première partie
-					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(parts[0], cursorPos)
+					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(parts[0]!, cursorPos)
 					formattedInput = `${formatted} - ${parts[1]}`
 					newCursorPos = newPos
 				}
 				else {
 					// Édition de la seconde partie
 					const secondPartCursorPos = cursorPos - (firstPartLength + separatorLength)
-					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(parts[1], secondPartCursorPos)
+					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(parts[1]!, secondPartCursorPos)
 					formattedInput = `${parts[0]} - ${formatted}`
 					newCursorPos = newPos + (firstPartLength + separatorLength)
 				}

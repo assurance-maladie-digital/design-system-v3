@@ -6,7 +6,7 @@ export default function filter(itemValue: unknown, filterValue: unknown): boolea
 			const operatorMatch = /^([=<>]{1,2})(.+)$/.exec(filterValue)
 			if (operatorMatch) {
 				const operator = operatorMatch[1]
-				const valueStr = operatorMatch[2].trim()
+				const valueStr = operatorMatch[2]!.trim()
 				const numValue = parseFloat(valueStr.replace(',', '.'))
 
 				if (isNaN(numValue)) return false

@@ -95,7 +95,7 @@
 
 	const focusChange = (): void => {
 		if (structureBtns.value && selected.value) {
-			(structureBtns.value[selected.value].$el as HTMLElement).focus()
+			(structureBtns.value[selected.value]?.$el as HTMLElement).focus()
 		}
 	}
 
@@ -177,7 +177,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .tabs-btn-wrapper {
 	@media #{apTokens.$media-only-xs} {

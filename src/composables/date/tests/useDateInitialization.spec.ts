@@ -25,13 +25,13 @@ describe('useDateInitialization', () => {
 			const dates = result as Date[]
 			expect(dates.length).toBe(2)
 
-			expect(dates[0].getFullYear()).toBe(2023)
-			expect(dates[0].getMonth()).toBe(0)
-			expect(dates[0].getDate()).toBe(15)
+			expect(dates[0]?.getFullYear()).toBe(2023)
+			expect(dates[0]?.getMonth()).toBe(0)
+			expect(dates[0]?.getDate()).toBe(15)
 
-			expect(dates[1].getFullYear()).toBe(2023)
-			expect(dates[1].getMonth()).toBe(0)
-			expect(dates[1].getDate()).toBe(20)
+			expect(dates[1]?.getFullYear()).toBe(2023)
+			expect(dates[1]?.getMonth()).toBe(0)
+			expect(dates[1]?.getDate()).toBe(20)
 		})
 
 		it('returns empty array when dates are invalid', () => {
@@ -53,9 +53,9 @@ describe('useDateInitialization', () => {
 			const dates = result as Date[]
 			expect(dates.length).toBe(1)
 
-			expect(dates[0].getFullYear()).toBe(2023)
-			expect(dates[0].getMonth()).toBe(0)
-			expect(dates[0].getDate()).toBe(15)
+			expect(dates[0]?.getFullYear()).toBe(2023)
+			expect(dates[0]?.getMonth()).toBe(0)
+			expect(dates[0]?.getDate()).toBe(15)
 		})
 
 		it('returns empty array for empty array input', () => {

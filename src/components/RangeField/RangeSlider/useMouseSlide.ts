@@ -72,7 +72,7 @@ export default function useMouseSlide(
 
 	function drag(event: MouseEvent | TouchEvent) {
 		event.stopPropagation()
-		lastPointerX = ('touches' in event) ? event.touches[0].clientX : event.clientX
+		lastPointerX = ('touches' in event) ? event.touches[0]!.clientX : event.clientX
 		if (startX === null) {
 			startX = lastPointerX
 		}

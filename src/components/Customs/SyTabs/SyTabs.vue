@@ -81,7 +81,7 @@
 	}
 
 	// Fonction pour activer un élément au clic avec confirmation si nécessaire
-	async function setActiveItem(index: number) {
+	async function setActiveItem(index: number): Promise<void> {
 		// Si l'index est déjà actif ou si l'élément est désactivé, ne rien faire
 		if (index === activeItemIndex.value) return
 
@@ -89,7 +89,7 @@
 		const item = props.items[index]
 
 		// Ne rien faire si l'élément est désactivé
-		if (item.disabled) return
+		if (item?.disabled) return
 
 		const hasHref = item && (item.href || item.to)
 
@@ -108,7 +108,7 @@
 
 		// Mettre à jour l'onglet actif
 		activeItemIndex.value = index
-		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[index].value : index)
+		emit('update:modelValue', typeof props.modelValue === 'string' ? props.items[index]!.value : index)
 
 		// Pour les éléments sans navigation (ni href ni to), on ne fait que mettre à jour l'état
 		// La navigation pour RouterLink et href se fait automatiquement via les éléments HTML
@@ -117,14 +117,14 @@
 	// Fonction pour gérer les touches Enter et Space
 	function handleKeyPress(event: KeyboardEvent, index: number) {
 		if (event.key === 'Enter' || event.key === ' ') {
-			const item = props.items[index]
+			const item = props.items[index] as TabItem | undefined
 			// Ne rien faire si l'élément est désactivé
-			if (item.disabled) {
+			if (item?.disabled) {
 				event.preventDefault()
 				return
 			}
 			// Don't prevent default for external links - let them navigate naturally
-			if (!item.href) {
+			if (!item?.href) {
 				event.preventDefault()
 			}
 			void setActiveItem(index) // void pour ignorer la promesse
@@ -290,7 +290,7 @@
 		if (itemCount === 0) return -1
 
 		for (let i = 0; i < itemCount; i++) {
-			if (!props.items[i].disabled) return i
+			if (!props.items[i]?.disabled) return i
 		}
 
 		return -1
@@ -301,7 +301,7 @@
 		if (itemCount === 0) return -1
 
 		for (let i = itemCount - 1; i >= 0; i--) {
-			if (!props.items[i].disabled) return i
+			if (!props.items[i]?.disabled) return i
 		}
 
 		return -1

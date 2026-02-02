@@ -3,7 +3,7 @@ import { type DOMWrapper, mount } from '@vue/test-utils'
 import DataList from '../DataList.vue'
 import type { DataListItem } from '../types'
 
-const items = [
+const items: DataListItem[] = [
 	{
 		key: 'Civility',
 		value: '',
@@ -16,7 +16,7 @@ const items = [
 		key: 'First name',
 		value: 'Paul',
 	},
-] as DataListItem[]
+]
 
 describe('DataList', () => {
 	it('renders correctly', () => {
@@ -64,8 +64,8 @@ describe('DataList', () => {
 	it('renders correctly with an icon', () => {
 		const listWithIcon = items
 
-		// Add an action to the second item
-		listWithIcon[1].icon = 'mdiTest'
+		// Add an action to the secondZ item
+		listWithIcon[1]!.icon = 'mdiTest'
 
 		const wrapper = mount(DataList, {
 			props: {
@@ -85,7 +85,7 @@ describe('DataList', () => {
 		const listWithClass = items
 
 		// Add a class to the second item
-		listWithClass[1].class = 'custom-class'
+		listWithClass[1]!.class = 'custom-class'
 
 		const wrapper = mount(DataList, {
 			props: {
@@ -128,7 +128,7 @@ describe('DataList', () => {
 		const listWithAction = items
 
 		// Add an action to the second item
-		listWithAction[1].action = 'Edit'
+		listWithAction[1]!.action = 'Edit'
 
 		const wrapper = mount(DataList, {
 			props: {
@@ -144,7 +144,7 @@ describe('DataList', () => {
 		const listWithAction = items
 
 		// Add an action to the second item
-		listWithAction[2].action = 'Edit'
+		listWithAction[2]!.action = 'Edit'
 
 		const wrapper = mount(DataList, {
 			props: {

@@ -161,7 +161,7 @@ Object.defineProperty(window, 'matchMedia', {
 	value: (query: string) => {
 		// Extraction de la valeur min-width depuis la media query
 		const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/)
-		const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0
+		const minWidth = minWidthMatch && minWidthMatch[1] ? parseInt(minWidthMatch[1], 10) : 0
 
 		/**
 		 * Fonction pour obtenir la largeur actuelle de la fenêtre simulée

@@ -19,11 +19,7 @@ exports[`HeaderBar > should render the component 1`] = `
     <!-- v-if -->
     <div class="global-container">
       <div class="inner-header">
-        <div class="
-          header-logo
-          pl-4
-          pl-md-14
-        ">
+        <div class="header-logo">
           <a
             class="logo"
             href="/"

@@ -54,6 +54,15 @@ const meta: Meta<typeof SySelect> = {
 			control: 'boolean',
 			description: 'Masque les messages d\'erreur',
 		},
+		variantStyle: {
+			control: 'select',
+			options: ['outlined', 'plain', 'underlined', 'filled', 'solo', 'solo-inverted', 'solo-filled'],
+		},
+		color: {
+			control: 'select',
+			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			description: 'Couleur du champ',
+		},
 		density: {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
@@ -66,6 +75,36 @@ const meta: Meta<typeof SySelect> = {
 		helpText: {
 			control: 'text',
 			description: 'Texte d\'aide à la saisie',
+		},
+		prependTooltip: {
+			description: 'Si le texte du prepend tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
+			control: 'text',
+		},
+		appendTooltip: {
+			description: 'Si le texte du append tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
+			control: 'text',
+		},
+		tooltipLocation: {
+			description: 'Position des tooltips',
+			control: 'select',
+			options: ['top', 'bottom', 'start', 'end'],
+			default: 'top',
+		},
+		append: {
+			description: 'Slot pour ajouter du contenu à droite du champ',
+			control: false,
+			table: {
+				type: { summary: 'VNode' },
+				category: 'slots',
+			},
+		},
+		prepend: {
+			description: 'Slot pour ajouter du contenu à gauche du champ',
+			control: false,
+			table: {
+				type: { summary: 'VNode' },
+				category: 'slots',
+			},
 		},
 	},
 } as Meta<typeof SySelect>
@@ -349,6 +388,218 @@ const items = [
 				</div>
 			`,
 		}
+	},
+}
+
+export const SlotPrepend: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SySelect
+						v-model="value"
+						:items="items"
+						prepend-icon="success"
+					>
+					</SySelect>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SySelect } from '@cnamts/synapse'
+
+					const value = ref(null)
+					const items = [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		'prependIcon': 'success',
+		'disableClickButton': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const value = ref(null)
+				const onPrependIconClick = fn()
+				return { args, value, onPrependIconClick }
+			},
+			template: `
+				<div class="pa-4">
+					<SySelect
+						v-bind="args"
+						v-model="value"
+						@prepend-icon-click="onPrependIconClick"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const SlotAppend: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SySelect
+						v-model="value"
+						:items="items"
+						append-icon="success"
+					>
+					</SySelect>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SySelect } from '@cnamts/synapse'
+
+					const value = ref(null)
+					const items = [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		'appendIcon': 'success',
+		'disableClickButton': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const value = ref(null)
+				const onAppendIconClick = fn()
+				return { args, value, onAppendIconClick }
+			},
+			template: `
+				<div class="pa-4">
+					<SySelect
+						v-bind="args"
+						v-model="value"
+						@append-icon-click="onAppendIconClick"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithTooltips: Story = {
+	args: {
+		...Default.args,
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		'label': 'Champ avec tooltips',
+		'prependTooltip': 'Information à gauche du champ',
+		'appendTooltip': 'Information à droite du champ',
+		'tooltipLocation': 'top',
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const value = ref(null)
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<p class="mb-4">
+						Des icônes d'information avec tooltips sont affichées de chaque côté du champ.
+						Survolez-les pour voir les messages d'aide qui apparaissent en haut grâce à la prop tooltipLocation="top".
+					</p>
+					<SySelect
+						v-bind="args"
+						v-model="value"
+					/>
+				</div>
+			`,
+		}
+	},
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		docs: {
+			description: {
+				story: 'Exemple de champ avec des tooltips d\'information. Les icônes d\'information apparaissent automatiquement lorsque les props prependTooltip et/ou appendTooltip sont renseignées. La position des tooltips peut être contrôlée avec la prop tooltipLocation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SySelect
+		v-model="value"
+		:items="items"
+		label="Champ avec tooltips"
+		prependTooltip="Information à gauche du champ"
+		appendTooltip="Information à droite du champ"
+		tooltipLocation="top"
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { SySelect } from '@cnamts/synapse'
+
+	const value = ref(null)
+	const items = [
+		{ text: 'Option 1', value: '1' },
+		{ text: 'Option 2', value: '2' },
+	]
+</script>
+				`,
+			},
+		],
 	},
 }
 

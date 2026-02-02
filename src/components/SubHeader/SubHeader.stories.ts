@@ -539,7 +539,7 @@ export const ActionBtn: Story = {
 			setup() {
 				const updateInfo = (eventValue: { dataListIndex: number, itemIndex: number }) => {
 					if (args.dataListGroupItems) {
-						args.dataListGroupItems[eventValue.dataListIndex].items[eventValue.itemIndex].value = '12/01/2003'
+						args.dataListGroupItems[eventValue.dataListIndex]!.items[eventValue.itemIndex]!.value = '12/01/2003'
 					}
 				}
 				return { args, updateInfo }
