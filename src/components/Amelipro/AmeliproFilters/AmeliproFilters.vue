@@ -40,7 +40,12 @@
 
 	const selectedValue = computed<string | null>(() => {
 		const checkedItem = currentValue.value.filter(e => e.isChecked)
-		return checkedItem.length === 1 ? checkedItem[0].value : null
+
+		if (checkedItem.length === 1) {
+			return checkedItem[0].value
+		}
+
+		return null
 	})
 
 	const emitChangeEvent = (item: AmeliproFilterItem): void => {
@@ -70,7 +75,7 @@
 
 <template>
 	<div
-		:aria-labelledby="unique === true ? `${groupId}-label` : undefined"
+		:aria-labelledby="unique === true && groupId ? `${groupId}-label` : undefined"
 		class="amelipro-filters"
 		:role="unique ? 'radiogroup' : undefined"
 	>

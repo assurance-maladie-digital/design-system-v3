@@ -100,8 +100,8 @@ describe('AmeliproFilters', () => {
 		expect(emittedChange.length).toBe(2)
 
 		// Vérifie les valeurs sélectionnées
-		const firstInputValues = emittedInput[0]![0].map(i => i.value)
-		const secondInputValues = emittedInput[1]![0].map(i => i.value)
+		const firstInputValues = emittedInput[0]![0]!.map(i => i.value)
+		const secondInputValues = emittedInput[1]![0]!.map(i => i.value)
 
 		expect(firstInputValues).toContain('the-item-value-1')
 		expect(secondInputValues).toContain('the-item-value-2')
