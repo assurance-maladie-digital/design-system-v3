@@ -61,17 +61,17 @@ describe('AmeliproFilters', () => {
 	})
 
 	it('emits "input" and "change:selected" for multiple (checkbox) mode', async () => {
-        await inputs[0]!.trigger('click')
-        await inputs[2]!.trigger('click')
+		await inputs[0]!.trigger('click')
+		await inputs[2]!.trigger('click')
 
-        const emittedInput = wrapper.emitted('input')! as unknown[][][]
-        const emittedChange = wrapper.emitted('change:selected')! as unknown[][]
+		const emittedInput = wrapper.emitted('input')! as unknown[][][]
+		const emittedChange = wrapper.emitted('change:selected')! as unknown[][]
 
 		expect(emittedInput.length).toBe(2)
 		expect(emittedChange.length).toBe(2)
 
-        const selectedValuesFirst = (emittedChange[0][0]! as AmeliproFilterItem[]).map(i => i.value)
-        const selectedValuesSecond = (emittedChange[1][0]! as AmeliproFilterItem[]).map(i => i.value)
+		const selectedValuesFirst = (emittedChange[0][0]! as AmeliproFilterItem[]).map(i => i.value)
+		const selectedValuesSecond = (emittedChange[1][0]! as AmeliproFilterItem[]).map(i => i.value)
 
 		expect(selectedValuesFirst).toContain('the-item-value-1')
 		expect(selectedValuesFirst).toContain('the-item-value-2')
@@ -88,10 +88,10 @@ describe('AmeliproFilters', () => {
 		inputs = wrapper.findAll<HTMLInputElement>('input')
 
 		// Simule un changement
-        inputs[0]!.element.checked = true
-        await inputs[0]!.trigger('change')
-        inputs[1]!.element.checked = true
-        await inputs[1]!.trigger('change')
+		inputs[0]!.element.checked = true
+		await inputs[0]!.trigger('change')
+		inputs[1]!.element.checked = true
+		await inputs[1]!.trigger('change')
 
 		const emittedInput = wrapper.emitted('input') as AmeliproFilterItem[][][]
 		const emittedChange = wrapper.emitted('change:selected') as string[][]
@@ -100,14 +100,14 @@ describe('AmeliproFilters', () => {
 		expect(emittedChange.length).toBe(2)
 
 		// Vérifie les valeurs sélectionnées
-        const firstInputValues = emittedInput[0][0]!.map(i => i.value)
-        const secondInputValues = emittedInput[1][0]!.map(i => i.value)
+		const firstInputValues = emittedInput[0][0]!.map(i => i.value)
+		const secondInputValues = emittedInput[1][0]!.map(i => i.value)
 
 		expect(firstInputValues).toContain('the-item-value-1')
 		expect(secondInputValues).toContain('the-item-value-2')
 
-        expect(emittedChange[0][0]!).toBe('the-item-value-1')
-        expect(emittedChange[1][0]!).toBe('the-item-value-2')
+		expect(emittedChange[0][0]!).toBe('the-item-value-1')
+		expect(emittedChange[1][0]!).toBe('the-item-value-2')
 	})
 
 	it('updates items when props.value changes', async () => {
@@ -130,9 +130,9 @@ describe('AmeliproFilters', () => {
 		await wrapper.setProps({ unique: true })
 		inputs = wrapper.findAll<HTMLInputElement>('input')
 
-        expect(inputs[0]!.attributes('type')).toBe('radio')
-        expect(inputs[0]!.attributes('name')).toBe('group-1')
-        expect(inputs[0]!.attributes('value')).toBe('the-item-value-1')
+		expect(inputs[0]!.attributes('type')).toBe('radio')
+		expect(inputs[0]!.attributes('name')).toBe('group-1')
+		expect(inputs[0]!.attributes('value')).toBe('the-item-value-1')
 	})
 
 	it('updates label text when groupLabel prop changes', async () => {
@@ -145,12 +145,12 @@ describe('AmeliproFilters', () => {
 
 	it('computes selectedValue correctly in unique mode', async () => {
 		await wrapper.setProps({ unique: true })
-        const firstInput = wrapper.findAll<HTMLInputElement>('input')[0]!
+		const firstInput = wrapper.findAll<HTMLInputElement>('input')[0]!
 		firstInput.element.checked = true
 		await firstInput.trigger('change')
 
 		const emittedChange = wrapper.emitted('change:selected') as string[][]
-        expect(emittedChange[0][0]!).toBe('the-item-value-1')
+		expect(emittedChange[0][0]!).toBe('the-item-value-1')
 	})
 
 	it('applies item-spacing class conditionally based on smAndUp', async () => {
@@ -165,7 +165,7 @@ describe('AmeliproFilters', () => {
 	it('sets correct ARIA attributes for checkbox items', () => {
 		const divs = wrapper.findAll('.amelipro-filters__filter__input')
 		divs.forEach((div, i) => {
-            const item = items[i]!
+			const item = items[i]!
 			expect(div.attributes('role')).toBe('checkbox')
 			if (item.isChecked) {
 				expect(div.attributes('aria-checked')).toBe('true')
