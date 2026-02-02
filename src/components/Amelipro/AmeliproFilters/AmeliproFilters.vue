@@ -70,7 +70,7 @@
 
 <template>
 	<div
-		:aria-labelledby="unique ? `${groupId}-label` : undefined"
+      :aria-labelledby="unique === true ? `${groupId}-label` : undefined"
 		class="amelipro-filters"
 		:role="unique ? 'radiogroup' : undefined"
 	>

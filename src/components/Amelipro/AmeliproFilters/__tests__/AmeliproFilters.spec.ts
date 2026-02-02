@@ -70,8 +70,8 @@ describe('AmeliproFilters', () => {
 		expect(emittedInput.length).toBe(2)
 		expect(emittedChange.length).toBe(2)
 
-		const selectedValuesFirst = (emittedChange[0][0]! as AmeliproFilterItem[]).map(i => i.value)
-		const selectedValuesSecond = (emittedChange[1][0]! as AmeliproFilterItem[]).map(i => i.value)
+        const selectedValuesFirst = (emittedChange[0]![0] as AmeliproFilterItem[]).map(i => i.value)
+        const selectedValuesSecond = (emittedChange[1]![0] as AmeliproFilterItem[]).map(i => i.value)
 
 		expect(selectedValuesFirst).toContain('the-item-value-1')
 		expect(selectedValuesFirst).toContain('the-item-value-2')
@@ -100,14 +100,14 @@ describe('AmeliproFilters', () => {
 		expect(emittedChange.length).toBe(2)
 
 		// Vérifie les valeurs sélectionnées
-		const firstInputValues = emittedInput[0][0]!.map(i => i.value)
-		const secondInputValues = emittedInput[1][0]!.map(i => i.value)
+        const firstInputValues = emittedInput[0]![0].map(i => i.value)
+        const secondInputValues = emittedInput[1]![0].map(i => i.value)
 
 		expect(firstInputValues).toContain('the-item-value-1')
 		expect(secondInputValues).toContain('the-item-value-2')
 
-		expect(emittedChange[0][0]!).toBe('the-item-value-1')
-		expect(emittedChange[1][0]!).toBe('the-item-value-2')
+        expect(emittedChange[0]![0]).toBe('the-item-value-1')
+        expect(emittedChange[1]![0]).toBe('the-item-value-2')
 	})
 
 	it('updates items when props.value changes', async () => {
@@ -150,7 +150,7 @@ describe('AmeliproFilters', () => {
 		await firstInput.trigger('change')
 
 		const emittedChange = wrapper.emitted('change:selected') as string[][]
-		expect(emittedChange[0][0]!).toBe('the-item-value-1')
+        expect(emittedChange[0]![0]).toBe('the-item-value-1')
 	})
 
 	it('applies item-spacing class conditionally based on smAndUp', async () => {
