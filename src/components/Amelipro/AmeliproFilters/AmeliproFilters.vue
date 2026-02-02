@@ -1,0 +1,215 @@
+<script setup lang="ts">
+import {computed} from 'vue'
+import type {PropType} from 'vue'
+import type {AmeliproFilterItem} from './types'
+import {useDisplay} from 'vuetify'
+
+const props = defineProps({
+  groupId: {
+    type: String,
+    required: true,
+  },
+  groupLabel: {
+    type: String,
+    required: true,
+  },
+  hiddenLabel: {
+    type: Boolean,
+    default: false,
+  },
+  unique: {
+    type: Boolean,
+    default: false,
+  },
+  value: {
+    type: Array as PropType<AmeliproFilterItem[]>,
+    default: () => [],
+  },
+})
+
+const {smAndUp} = useDisplay()
+
+const emit = defineEmits(['input', 'change:selected'])
+
+const currentValue = computed<AmeliproFilterItem[]>({
+  get: () => props.value,
+  set: (newValue: AmeliproFilterItem[]) => {
+    emit('input', newValue)
+  },
+})
+
+const selectedValue = computed<string | null>(() => {
+  const checkedItem = currentValue.value.filter(e => e.isChecked)
+  return checkedItem.length === 1 ? checkedItem[0].value : null
+})
+
+const emitChangeEvent = (item: AmeliproFilterItem): void => {
+  currentValue.value = currentValue.value.map((currentItem: AmeliproFilterItem) => {
+    if (currentItem.value === item.value) {
+      currentItem.isChecked = true
+    } else {
+      currentItem.isChecked = false
+    }
+    return currentItem
+  })
+  emit('change:selected', selectedValue.value, props.groupId)
+}
+
+const updateItems = (item: AmeliproFilterItem, isChecked: boolean) => {
+  currentValue.value = currentValue.value.map((currentItem: AmeliproFilterItem) => {
+    if (currentItem === item) {
+      currentItem.isChecked = isChecked
+    }
+    return currentItem
+  })
+  const selectedItems = currentValue.value.filter(e => e.isChecked === true)
+  emit('change:selected', selectedItems)
+}
+</script>
+
+<template>
+  <div
+      :aria-labelledby="unique ? `${groupId}-label` : undefined"
+      class="amelipro-filters"
+      :role="unique ? 'radiogroup' : undefined"
+  >
+    <p
+        :id="`${groupId}-label`"
+        class="mb-1 ap-grey--text text--darken-1 amelipro-filters__label"
+        :class="hiddenLabel ? 'd-sr-only' : undefined"
+    >
+      {{ groupLabel }}
+    </p>
+
+    <div
+        v-if="unique"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row justify-center justify-sm-start align-center amelipro-filters__group"
+    >
+      <label
+          v-for="(item, index) in currentValue"
+          :key="index"
+          :id="`${item.id}-label`"
+          :for="item.id"
+          class="mb-2 d-block font-weight-semibold amelipro-filters__item"
+          :class="smAndUp ? 'item-spacing' : undefined"
+      >
+        <input
+            :id="item.id"
+            :checked="!props.unique && item.isChecked ? true : undefined"
+            class="amelipro-filters__filter__input"
+            :name="groupId"
+            :type="unique ? 'radio' : 'checkbox'"
+            :value="item.value"
+            @change="emitChangeEvent(item)"
+        >
+
+        <span
+            :id="`${item.id}-label-text`"
+            class="filter d-block amelipro-filters__filter__label"
+        >
+					{{ item.label }}
+				</span>
+      </label>
+    </div>
+    <div
+        v-else
+        :aria-labelledby="`${groupId}-label`"
+        class="d-block amelipro-filters__group"
+        role="group"
+    >
+      <ul class="list-style-none w-100 d-flex flex-sm-wrap flex-column flex-sm-row justify-center justify-sm-start align-center">
+        <li
+            v-for="(item, index) in currentValue"
+            :id="`${item.id}-item`"
+            :key="index"
+            class="mb-2 d-block font-weight-semibold amelipro-filters__item"
+            :class="smAndUp ? 'item-spacing' : undefined"
+        >
+          <div
+              :id="item.id"
+              :aria-checked="item.isChecked ? true : undefined"
+              class="amelipro-filters__filter__input"
+              role="checkbox"
+              tabindex="0"
+              @click="updateItems(item, !item.isChecked)"
+              @keydown.space="updateItems(item, !item.isChecked)"
+          >
+						<span
+                :id="`${item.id}-label-text`"
+                class="filter d-block amelipro-filters__filter__label"
+            >
+							{{ item.label }}
+						</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+@use '@/assets/amelipro/apTokens2026' as apTokens;
+
+.item-spacing {
+
+  &:not(:last-child) {
+
+    @media #{apTokens.$media-up-sm} {
+      margin-right: 16px;
+    }
+  }
+}
+
+.amelipro-filters__item {
+  width: 135px;
+  text-align: center;
+}
+
+input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.filter {
+  padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
+  font-weight: apTokens.$filter-font-weight;
+
+  input +&,
+  .amelipro-filters__filter__input & {
+    position: relative;
+    border-radius: apTokens.$filter-radius;
+    border: 1px solid apTokens.$ap-blue-darken1;
+    background-color: apTokens.$ap-white;
+    color: apTokens.$ap-blue-darken1;
+    cursor: pointer;
+  }
+
+  input:checked +&,
+  .amelipro-filters__filter__input[aria-checked="true"] & {
+    background-color: apTokens.$ap-blue-lighten3;
+
+    &::after {
+      position: absolute;
+      top: 1.1rem;
+      left: 1.1rem;
+      width: 1rem;
+      height: 0.5rem;
+      border-bottom: 2px solid apTokens.$ap-blue-darken1;
+      border-left: 2px solid apTokens.$ap-blue-darken1;
+      transform: rotate(-50deg);
+      content: "";
+    }
+  }
+
+  input:focus +&,
+  .amelipro-filters__filter__input:focus & {
+    outline: 1px dotted apTokens.$ap-grey-darken1;
+  }
+}
+
+.amelipro-filters__label {
+  font-weight: apTokens.$label-font-weight;
+}
+</style>
