@@ -1,16 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type {StoryObj} from '@storybook/vue3'
 import AmeliproFilters from '../AmeliproFilters/AmeliproFilters.vue'
 
-const meta: Meta<typeof AmeliproFilters> = {
-	title: 'Composants/Amelipro/AmeliproFilters',
-	component: AmeliproFilters,
+const meta = {
 	argTypes: {
-		groupId: { description: 'Identifiant unique du groupe de filtres' },
-		groupLabel: { description: 'Libellé du groupe de filtres' },
-		hiddenLabel: { description: 'Cache le libellé du groupe de filtres' },
-		value: { description: 'Liste des filtres du du groupe' },
-		unique: { description: 'Pour avoir seulement un filtre sélectionnable' },
-	},
+        'groupId': {description: 'Identifiant unique du groupe de filtres'},
+        'groupLabel': {description: 'Libellé du groupe de filtres'},
+        'hiddenLabel': {description: 'Cache le libellé du groupe de filtres'},
+        'value': {description: 'Liste des filtres du du groupe'},
+        'unique': {description: 'Pour avoir seulement un filtre sélectionnable'},
+        'input': {
+            description: 'Event émis au click sur le bouton',
+        },
+        'change:selected': {
+            description: 'Evènement émis au changement du v-model',
+        },
+    },
+    title: 'Composants/Amelipro/AmeliproFilters',
+    component: AmeliproFilters,
 }
 
 export default meta
