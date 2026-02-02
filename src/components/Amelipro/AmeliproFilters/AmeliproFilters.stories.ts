@@ -83,8 +83,8 @@ export const SelectionUnique: Story = {
 	<AmeliproFilters
 		group-id="filter-group"
 		group-label="Filtres"
-		:hidden-label="true"
-		:unique="false"
+		:hidden-label="false"
+		:unique="true"
 		:value="value"
 	/>
 </template>
