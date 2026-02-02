@@ -242,16 +242,18 @@ describe('AmeliproClickableTile', () => {
 
 		it('prop borderedIcon changes icon style', async () => {
 			let icons = vueWrapper.findAllComponents({ name: 'AmeliproIcon' })
-			expect(icons[0].props('bordered')).toBe(false)
+			expect(icons.length).toBeGreaterThan(0)
+			expect(icons[0]?.props('bordered')).toBe(false)
 
 			await vueWrapper.setProps({ borderedIcon: true })
 			icons = vueWrapper.findAllComponents({ name: 'AmeliproIcon' })
-			expect(icons[0].props('bordered')).toBe(true)
+			expect(icons[0]?.props('bordered')).toBe(true)
 		})
 
 		it('icon has correct size', async () => {
 			const icons = vueWrapper.findAllComponents({ name: 'AmeliproIcon' })
-			expect(icons[0].props('size')).toBe('32px')
+			expect(icons.length).toBeGreaterThan(0)
+			expect(icons[0]?.props('size')).toBe('32px')
 		})
 
 		it('arrow icon has correct size', async () => {
@@ -295,7 +297,8 @@ describe('AmeliproClickableTile', () => {
 
 		it('icon button has uniqueId suffix', async () => {
 			const buttons = vueWrapper.findAll('button')
-			expect(buttons[0].attributes('id')).toBe('test-tile-icon-button')
+			expect(buttons.length).toBeGreaterThan(0)
+			expect(buttons[0]?.attributes('id')).toBe('test-tile-icon-button')
 		})
 
 		it('content is not clickable, only icon button is', () => {
