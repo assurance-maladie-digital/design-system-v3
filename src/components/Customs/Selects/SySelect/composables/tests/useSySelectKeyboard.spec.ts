@@ -223,13 +223,13 @@ describe('useSySelectKeyboard', () => {
 		it('trouve et sélectionne un élément commençant par le caractère donné', () => {
 			// Menu déjà ouvert, pas besoin d'attendre nextTick
 			isOpen.value = true
-			keyboard.handleCharacterKey('b')
+			keyboard.handleCharacterKey({ key: 'b', ctrlKey: false, altKey: false, metaKey: false } as KeyboardEvent)
 			expect(keyboard.activeDescendantId.value).toBe('option-1') // Banana
 		})
 
 		it('ouvre le menu si fermé et trouve un élément correspondant', async () => {
 			isOpen.value = false
-			keyboard.handleCharacterKey('c')
+			keyboard.handleCharacterKey({ key: 'c', ctrlKey: false, altKey: false, metaKey: false } as KeyboardEvent)
 			expect(toggleMenu).toHaveBeenCalled()
 
 			// Simuler l'ouverture du menu et attendre nextTick
@@ -240,7 +240,7 @@ describe('useSySelectKeyboard', () => {
 		})
 
 		it('ne fait rien si aucun élément ne correspond', () => {
-			keyboard.handleCharacterKey('z')
+			keyboard.handleCharacterKey({ key: 'z', ctrlKey: false, altKey: false, metaKey: false } as KeyboardEvent)
 			expect(keyboard.activeDescendantId.value).toBe('')
 			expect(toggleMenu).not.toHaveBeenCalled()
 		})

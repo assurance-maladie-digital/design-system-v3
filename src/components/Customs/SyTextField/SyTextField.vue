@@ -12,7 +12,7 @@
 		mdiCalendar,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance } from 'vue'
-	import type { IconType, VariantStyle, ColorType } from './types'
+	import type { IconType, VariantStyle, ColorType } from '@/types/vuetifyTypes'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -865,6 +865,13 @@
 .basic-field {
 	:deep(.v-icon__svg) {
 		fill: rgb(0 0 0 / 70%);
+	}
+
+	:deep(.v-input__prepend .v-icon:focus-visible),
+	:deep(.v-input__append .v-icon:focus-visible) {
+		outline: 2px solid tokens.$primary-base;
+		outline-offset: 2px;
+		opacity: 1;
 	}
 }
 

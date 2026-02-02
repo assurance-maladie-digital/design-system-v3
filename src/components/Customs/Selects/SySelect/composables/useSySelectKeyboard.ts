@@ -52,7 +52,6 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 					})
 
 					element.setAttribute('tabindex', '0')
-					element.focus()
 					element.classList.add('keyboard-focused')
 					element.scrollIntoView({ block: 'nearest' })
 				}
@@ -219,23 +218,24 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 	}
 
-	const handleCharacterKey = (key: string) => {
-		// Handle printable characters for keyboard navigation
-		if (key.length === 1 && key.match(/\S/)) {
-			const index = findItemStartingWith(key)
-			if (index >= 0) {
-				if (!isOpen.value) {
-					toggleMenu()
-					// Attendre que le menu soit ouvert avant de définir le focus
-					nextTick(() => {
-						setActiveDescendant(index)
-					})
-				}
-				else {
-					// Menu déjà ouvert, définir le focus immédiatement
-					setActiveDescendant(index)
-				}
-			}
+	const handleCharacterKey = (event: KeyboardEvent) => {
+		if (event.ctrlKey || event.altKey || event.metaKey) return
+		if (event.key.length !== 1) return
+		if (!event.key.match(/\S/)) return
+
+		const index = findItemStartingWith(event.key)
+		if (index < 0) return
+
+		if (!isOpen.value) {
+			toggleMenu()
+			// Attendre que le menu soit ouvert avant de définir le focus
+			nextTick(() => {
+				setActiveDescendant(index)
+			})
+		}
+		else {
+			// Menu déjà ouvert, définir le focus immédiatement
+			setActiveDescendant(index)
 		}
 	}
 
