@@ -1,3 +1,55 @@
+## v1.0.18 (02-02-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyRadiogroup/SyCheckbox: add animation on messages <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1740">#1740</a></td>
+      <td>- Amelipro: refactoring tokens + add colors 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1758">#1758</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1770">#1770</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PageContainer: add uniqueId prop <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/#1746">#1746</a></td>
+      <td>- AmeliproContentLayout: deprecate component for PageContainer <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1746">#1746</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Update Typescript + @vue/tsconfig <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1739">#1739</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SubHeader: fix VThemeProvider display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1755">#1755</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Btn: fix global display on components <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1760">#1760</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add story for UTC use <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1762">#1762</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderBar: fix display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1705">#1705</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: add slots <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1767">#1767</a></td>
+      <td></td>
+    </tr>
+     <tr style="vertical-align: top;">
+      <td>- Documentation: improve accessibility pages <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1763">#1763</a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.17 (19-01-2026)
 
 <table>
