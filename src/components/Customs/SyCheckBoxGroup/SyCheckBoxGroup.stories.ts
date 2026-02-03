@@ -394,6 +394,7 @@ export const ListModel: Story = {
 						label="v-model comme une liste (tableau)"
 						:options="options"
 						multiple
+						hide-details
 					/>
 					<div class="mt-2">Sélection : {{ selected }}</div>
 				`,
@@ -421,6 +422,7 @@ export const ListModel: Story = {
 		options: baseOptions,
 		multiple: true,
 		required: false,
+		hideDetails: true,
 	},
 	render: args => ({
 		components: { SyCheckBoxGroup },
