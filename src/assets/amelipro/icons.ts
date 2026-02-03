@@ -40,7 +40,7 @@ export const icons: Icons = {
 		</svg>`,
 	notifications: `
 		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
-			<ellipse  cx="17" cy="17" rx="17" ry="16.9"/>
+			<ellipse class="${CIRCLE_COLOR}" cx="17" cy="17" rx="17" ry="16.9"/>
 			<path class="${SHAPE_COLOR}" d="M21.1,21.4C21.1,21.4,21.1,21.4,21.1,21.4c0.4,0.7,0.2,1.6-0.5,2c-0.7,0.4-1.6,0.2-2-0.5c0,0,0,0,0,0 c-4.2,2.2-5.6,2.2-6.1,1.4c-0.1-0.3-0.2-0.6,0-0.9c0.7-3.3,1.6-3-0.2-6.2c-1.2-2.1-2.3-4.1,0.1-6C12.1,11.1,12,11,12,10.9 c-0.3-0.5-0.1-1.2,0.4-1.5c0.5-0.3,1.2-0.1,1.5,0.4C14,9.9,14,10,14,10.2c2.8-1.1,4,0.8,5.2,2.9c1.9,3.2,2.1,2.3,5.3,3.3 c0.4,0.1,0.6,0.2,0.8,0.5C25.8,17.7,25.1,19,21.1,21.4z"/>
 		</svg>`,
 	deconnexion: `
