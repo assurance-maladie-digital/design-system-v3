@@ -24,9 +24,9 @@ describe('SyCheckBoxGroup', () => {
 	it('should handle v-model correctly (single)', async () => {
 		const wrapper = mount(SyCheckBoxGroup, {
 			props: {
-				modelValue: null,
+				'modelValue': null,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
-				options: [
+				'options': [
 					{ label: 'Option A', value: 'A', id: 'opt-a' },
 					{ label: 'Option B', value: 'B', id: 'opt-b' },
 				],
@@ -46,10 +46,10 @@ describe('SyCheckBoxGroup', () => {
 	it('should handle v-model correctly (multiple)', async () => {
 		const wrapper = mount(SyCheckBoxGroup, {
 			props: {
-				multiple: true,
-				modelValue: [],
+				'multiple': true,
+				'modelValue': [],
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
-				options: [
+				'options': [
 					{ label: 'Option A', value: 'A', id: 'opt-a' },
 					{ label: 'Option B', value: 'B', id: 'opt-b' },
 				],
@@ -71,12 +71,12 @@ describe('SyCheckBoxGroup', () => {
 	it('should handle validation correctly (required)', async () => {
 		const wrapper = mount(SyCheckBoxGroup, {
 			props: {
-				modelValue: null,
-				label: 'Required CheckBoxGroup',
-				required: true,
-				isValidateOnBlur: false,
+				'modelValue': null,
+				'label': 'Required CheckBoxGroup',
+				'required': true,
+				'isValidateOnBlur': false,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
-				options: [{ label: 'X', value: 'X', id: 'opt-x' }],
+				'options': [{ label: 'X', value: 'X', id: 'opt-x' }],
 			},
 		})
 
@@ -127,11 +127,11 @@ describe('SyCheckBoxGroup', () => {
 
 		const wrapper = mount(SyCheckBoxGroup, {
 			props: {
-				modelValue: null,
-				required: true,
-				customRules: [customRule],
-				isValidateOnBlur: false,
-				options: [
+				'modelValue': null,
+				'required': true,
+				'customRules': [customRule],
+				'isValidateOnBlur': false,
+				'options': [
 					{ label: 'Non', value: 'NO', id: 'opt-no' },
 					{ label: 'Oui', value: 'OK', id: 'opt-ok' },
 				],
