@@ -288,60 +288,6 @@ export const Multiple: Story = {
 	}),
 }
 
-export const ListModel: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-					<SyCheckBoxGroup
-						v-model="selected"
-						label="v-model comme une liste (tableau)"
-						:options="options"
-						multiple
-					/>
-					<div class="mt-2">Sélection : {{ selected }}</div>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-					<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyCheckBoxGroup } from '@cnamts/synapse'
-
-					const selected = ref<Array<string>>(['a'])
-					const options = [
-						{ label: 'Option A', value: 'a' },
-						{ label: 'Option B', value: 'b' },
-						{ label: 'Option C', value: 'c' },
-					]
-					</script>
-				`,
-			},
-		],
-	},
-	args: {
-		label: 'v-model comme une liste (tableau)',
-		options: baseOptions,
-		multiple: true,
-		required: false,
-	},
-	render: args => ({
-		components: { SyCheckBoxGroup },
-		setup() {
-			const selected = ref<Array<string>>(['a'])
-			return { args, selected }
-		},
-		template: `
-			<div>
-				<SyCheckBoxGroup v-model="selected" v-bind="args" />
-				<div class="mt-2">Sélection : {{ selected }}</div>
-			</div>
-		`,
-	}),
-}
-
 export const MultipleRequired: Story = {
 	parameters: {
 		sourceCode: [
@@ -433,6 +379,60 @@ export const MultipleRequired: Story = {
 				<div class="mt-2">Sélection : {{ value }}</div>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
 			</SyForm>
+		`,
+	}),
+}
+
+export const ListModel: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+					<SyCheckBoxGroup
+						v-model="selected"
+						label="v-model comme une liste (tableau)"
+						:options="options"
+						multiple
+					/>
+					<div class="mt-2">Sélection : {{ selected }}</div>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+					<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyCheckBoxGroup } from '@cnamts/synapse'
+
+					const selected = ref<Array<string>>(['a'])
+					const options = [
+						{ label: 'Option A', value: 'a' },
+						{ label: 'Option B', value: 'b' },
+						{ label: 'Option C', value: 'c' },
+					]
+					</script>
+				`,
+			},
+		],
+	},
+	args: {
+		label: 'v-model comme une liste (tableau)',
+		options: baseOptions,
+		multiple: true,
+		required: false,
+	},
+	render: args => ({
+		components: { SyCheckBoxGroup },
+		setup() {
+			const selected = ref<Array<string>>(['a'])
+			return { args, selected }
+		},
+		template: `
+			<div>
+				<SyCheckBoxGroup v-model="selected" v-bind="args" />
+				<div class="mt-2">Sélection : {{ selected }}</div>
+			</div>
 		`,
 	}),
 }
