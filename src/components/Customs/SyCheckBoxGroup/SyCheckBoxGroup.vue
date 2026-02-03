@@ -25,6 +25,7 @@
 			ariaLabel?: string
 			ariaLabelledby?: string
 			title?: string
+			color?: string
 			disabled?: boolean
 			readonly?: boolean
 			required?: boolean
@@ -51,6 +52,7 @@
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			title: undefined,
+			color: 'primary',
 			disabled: false,
 			readonly: false,
 			required: false,
@@ -203,7 +205,7 @@
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value)
 
-	const groupErrorColor = computed(() => (hasError.value ? 'error' : undefined))
+	const checkboxColor = computed(() => (hasError.value ? 'error' : props.color))
 
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
@@ -266,7 +268,7 @@
 				:key="opt.value"
 				:model-value="isOptionChecked(opt.value)"
 				:label="opt.label"
-				:color="groupErrorColor"
+				:color="checkboxColor"
 				:disabled="props.disabled || opt.disabled"
 				:readonly="props.readonly || opt.readonly"
 				:name="opt.name || props.name"
@@ -307,7 +309,7 @@
 }
 
 :deep(.v-messages) {
-  opacity: 1;
+	opacity: 1;
 }
 
 .warning-field :deep(.v-messages__message) {
