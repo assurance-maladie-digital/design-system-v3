@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, watch } from 'vue'
+	import { computed, onMounted, ref, watch } from 'vue'
 	import { VMessages } from 'vuetify/components'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -74,7 +74,6 @@
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 
-	const groupId = computed(() => props.id ?? undefined)
 	const isMultiple = computed(() => props.multiple)
 
 	const model = computed({
@@ -204,6 +203,8 @@
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value)
 
+	const groupErrorColor = computed(() => (hasError.value ? 'error' : undefined))
+
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
@@ -212,10 +213,16 @@
 		if (props.ariaLabelledby) {
 			return undefined
 		}
-		if (groupId.value) {
-			return `${groupId.value}`
+		if (props.id) {
+			return `${props.id}`
 		}
 		return undefined
+	})
+
+	onMounted(() => {
+		if (!props.isValidateOnBlur && !props.required) {
+			validateField(getValidationValue())
+		}
 	})
 
 	useValidatable(validateOnSubmit)
@@ -229,6 +236,7 @@
 
 <template>
 	<div
+		:id="props.id"
 		class="sy-checkbox-group"
 		:class="{
 			'warning-field': hasWarning && !hasError,
@@ -238,11 +246,12 @@
 		:role="'group'"
 		:aria-label="props.ariaLabel"
 		:aria-labelledby="props.ariaLabelledby"
+		:aria-describedby="messageId"
 		:title="props.title"
 	>
 		<div
 			v-if="props.label"
-			class="sy-checkbox-group__label"
+			class="v-label sy-checkbox-group__label"
 			:aria-hidden="props.ariaLabel || props.ariaLabelledby ? 'true' : undefined"
 		>
 			{{ generatedLabel }}
@@ -250,7 +259,6 @@
 
 		<div
 			class="sy-checkbox-group__options"
-			:aria-describedby="messageId"
 		>
 			<SyCheckbox
 				v-for="opt in props.options"
@@ -258,6 +266,7 @@
 				:key="opt.value"
 				:model-value="isOptionChecked(opt.value)"
 				:label="opt.label"
+				:color="groupErrorColor"
 				:disabled="props.disabled || opt.disabled"
 				:readonly="props.readonly || opt.readonly"
 				:name="opt.name || props.name"
@@ -271,8 +280,8 @@
 		</div>
 
 		<div
-			v-if="props.hideDetails !== true"
-			class="sy-checkbox-group__messages"
+			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages))"
+			class="v-input__details sy-checkbox-group__messages"
 		>
 			<VMessages
 				:active="hasError || hasWarning || (hasSuccess && props.showSuccessMessages)"
@@ -285,7 +294,8 @@
 			:id="messageId"
 			class="d-sr-only"
 		>
-			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ generatedLabel }}</span>.
+			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
+			}}</span>.
 		</span>
 	</div>
 </template>
@@ -296,12 +306,20 @@
 	font-weight: 500;
 }
 
+:deep(.v-messages) {
+  opacity: 1;
+}
+
 .warning-field :deep(.v-messages__message) {
 	color: rgb(var(--v-theme-warning)) !important;
 }
 
 .error-field :deep(.v-messages__message) {
 	color: rgb(var(--v-theme-error)) !important;
+}
+
+.error-field :deep(.v-selection-control__input > .v-icon) {
+	opacity: 1 !important;
 }
 
 .success-field :deep(.v-messages__message) {
