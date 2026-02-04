@@ -1,8 +1,8 @@
 <template>
 	<svg
 		fill="#0c419a"
-		:width="211"
-		:height="63"
+		:width="165"
+		:height="50"
 		:viewBox="'0 0 211 64'"
 		role="img"
 		focusable="false"

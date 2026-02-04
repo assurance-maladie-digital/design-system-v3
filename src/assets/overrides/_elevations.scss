@@ -94,7 +94,8 @@ $ap-elevation: (
 }
 
 // Apply theme-based AP
-.theme-ap {
+.theme-ap,
+.theme-ap2026 {
 	@each $key, $value in $ap-elevation {
 		--elevation-#{$key}: #{$value};
 	}

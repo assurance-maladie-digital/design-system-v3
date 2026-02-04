@@ -58,10 +58,10 @@ describe('SelectFilter.vue', () => {
 
 	it('emits update:filters event when value changes', async () => {
 		const sySelect = wrapper.findComponent(SySelect)
-		await sySelect.vm.$emit('update:modelValue', 'option1')
+		sySelect.vm.$emit('update:modelValue', 'option1')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 'option1', type: 'select' as FilterType },
 		])
 	})
@@ -69,12 +69,12 @@ describe('SelectFilter.vue', () => {
 	it('emits update:filters event to remove filter when value is null', async () => {
 		// First set a value
 		const sySelect = wrapper.findComponent(SySelect)
-		await sySelect.vm.$emit('update:modelValue', 'option1')
+		sySelect.vm.$emit('update:modelValue', 'option1')
 
 		// Then clear it
-		await sySelect.vm.$emit('update:modelValue', null)
+		sySelect.vm.$emit('update:modelValue', null)
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('emits update:filters event to remove filter when value is undefined', async () => {
@@ -83,9 +83,9 @@ describe('SelectFilter.vue', () => {
 		await sySelect.vm.$emit('update:modelValue', 'option1')
 
 		// Then clear it
-		await sySelect.vm.$emit('update:modelValue', undefined)
+		sySelect.vm.$emit('update:modelValue', undefined)
 
-		expect(wrapper.emitted('update:filters')![1][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
 	it('handles clear button click', async () => {
@@ -93,7 +93,7 @@ describe('SelectFilter.vue', () => {
 		await sySelect.vm.$emit('click:clear')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([])
 	})
 
 	it('updates existing filter when one already exists', async () => {
@@ -101,9 +101,9 @@ describe('SelectFilter.vue', () => {
 		await wrapper.setProps({ filters: existingFilters })
 
 		const sySelect = wrapper.findComponent(SySelect)
-		await sySelect.vm.$emit('update:modelValue', 'option2')
+		sySelect.vm.$emit('update:modelValue', 'option2')
 
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 'option2', type: 'select' as FilterType },
 		])
 	})
@@ -121,9 +121,9 @@ describe('SelectFilter.vue', () => {
 		await wrapper.setProps({ header: objectHeader })
 
 		const sySelect = wrapper.findComponent(SySelect)
-		await sySelect.vm.$emit('update:modelValue', { id: 1, name: 'Option 1' })
+		sySelect.vm.$emit('update:modelValue', { id: 1, name: 'Option 1' })
 
-		expect(wrapper.emitted('update:filters')![0][0]).toEqual([
+		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: { id: 1, name: 'Option 1' }, type: 'select' as FilterType },
 		])
 	})
@@ -159,11 +159,11 @@ describe('SelectFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le titre
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: string, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe('filter_Test Select')
-		expect(emittedFilters[0].value).toBe('option1')
-		expect(emittedFilters[0].type).toBe('select')
+		expect(emittedFilters[0]?.key).toBe('filter_Test Select')
+		expect(emittedFilters[0]?.value).toBe('option1')
+		expect(emittedFilters[0]?.type).toBe('select')
 	})
 
 	it('generates unique key with timestamp when all header properties are absent', async () => {
@@ -201,12 +201,11 @@ describe('SelectFilter.vue', () => {
 
 		// Vérifier que l'événement a été émis avec une clé générée basée sur le timestamp
 		expect(newWrapper.emitted('update:filters')).toBeTruthy()
-		const emittedFilters = newWrapper.emitted('update:filters')![0][0] as Array<{ key: string, value: string, type: string }>
+		const emittedFilters = newWrapper.emitted('update:filters')![0]?.[0] as Array<{ key: string, value: string, type: string }>
 		expect(emittedFilters.length).toBe(1)
-		expect(emittedFilters[0].key).toBe(`filter_${mockTimestamp}`)
-		expect(emittedFilters[0].value).toBe('option1')
-		expect(emittedFilters[0].type).toBe('select')
-
+		expect(emittedFilters[0]?.key).toBe(`filter_${mockTimestamp}`)
+		expect(emittedFilters[0]?.value).toBe('option1')
+		expect(emittedFilters[0]?.type).toBe('select')
 		// Restaurer Date.now
 		global.Date.now = originalDateNow
 	})

@@ -1,14 +1,23 @@
-import { mount, flushPromises } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { mount, flushPromises, VueWrapper } from '@vue/test-utils'
+import { describe, it, expect, afterEach } from 'vitest'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
-describe('ComplexDatePicker.clean', () => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const mountComponent = (props: any = { label: 'Test' }) => mount(ComplexDatePicker, {
-		props,
-	})
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let wrapper: VueWrapper<any> | null = null
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mountComponent = (props: any = { label: 'Test' }) => {
+	wrapper = mount(ComplexDatePicker, { props })
+	return wrapper
+}
+
+afterEach(() => {
+	wrapper?.unmount()
+	wrapper = null
+})
+
+describe('ComplexDatePicker.clean', () => {
 	it('renders in calendar mode by default', () => {
 		const wrapper = mountComponent()
 
@@ -42,7 +51,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0][0]).toBe('01/01/2025')
+		expect(emitted && emitted[0]?.[0]).toBe('01/01/2025')
 
 		const selectedDate = wrapper.vm.selectedDates as Date
 		expect(selectedDate).toBeInstanceOf(Date)
@@ -79,11 +88,11 @@ describe('ComplexDatePicker.clean', () => {
 
 		const emittedUpdate = wrapper.emitted('update:modelValue')
 		expect(emittedUpdate).toBeTruthy()
-		expect(emittedUpdate && emittedUpdate[0][0]).toBe('01/01/2025')
+		expect(emittedUpdate && emittedUpdate[0]?.[0]).toBe('01/01/2025')
 
 		const emittedSelected = wrapper.emitted('date-selected')
 		expect(emittedSelected).toBeTruthy()
-		expect(emittedSelected && emittedSelected[0][0]).toBe('01/01/2025')
+		expect(emittedSelected && emittedSelected[0]?.[0]).toBe('01/01/2025')
 
 		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
 

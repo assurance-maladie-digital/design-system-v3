@@ -66,7 +66,7 @@
 
 	const selectedValue = computed<string | null>(() => {
 		const checkedItem = currentValue.value.filter(e => e.isChecked)
-		return checkedItem.length === 1 ? checkedItem[0].value : null
+		return checkedItem[0] ? checkedItem[0].value : null
 	})
 
 	const emitChangeEvent = (item: AmeliproRadioGroupItem) => {
@@ -254,7 +254,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .margin-label {
 	@media #{apTokens.$media-up-md} {

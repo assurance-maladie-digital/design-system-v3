@@ -133,8 +133,8 @@ describe('FooterBar', () => {
 		})
 
 		const links = wrapper.findAll('.vd-footer-bar-links a')
-		expect(links[0].attributes('target')).toBe('_blank')
-		expect(links[1].attributes('target')).toBeUndefined()
+		expect(links[0]?.attributes('target')).toBe('_blank')
+		expect(links[1]?.attributes('target')).toBeUndefined()
 	})
 
 	it('returns locales.a11yLabel when complianceLabel is a string', () => {

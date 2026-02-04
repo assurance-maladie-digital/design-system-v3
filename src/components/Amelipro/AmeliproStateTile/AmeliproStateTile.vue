@@ -74,11 +74,11 @@
 
 	const emit = defineEmits(['click'])
 
-	const hasDownload = computed<boolean>(() => AmeliproStateTileTypes[props.tileType].downloadable)
+	const hasDownload = computed<boolean>(() => !!AmeliproStateTileTypes[props.tileType]?.downloadable)
 
 	const icon = computed(() => {
-		if (AmeliproStateTileTypes[props.tileType].icon) {
-			const tileIcon = AmeliproStateTileTypes[props.tileType].icon
+		if (AmeliproStateTileTypes[props.tileType]?.icon) {
+			const tileIcon = AmeliproStateTileTypes[props.tileType]?.icon
 			return {
 				iconBgColor: tileIcon?.iconBgColor,
 				iconColor: tileIcon?.iconColor,
@@ -90,10 +90,10 @@
 
 	const tileStyles = computed<IndexedObject>(() => {
 		const styles: IndexedObject = {
-			backgroundColor: convertToHex(AmeliproStateTileTypes[props.tileType].bgColor),
-			border: `2px solid ${convertToHex(AmeliproStateTileTypes[props.tileType].borderColor)} !important`,
+			backgroundColor: convertToHex(AmeliproStateTileTypes[props.tileType]?.bgColor),
+			border: `2px solid ${convertToHex(AmeliproStateTileTypes[props.tileType]?.borderColor)} !important`,
 			borderRadius: '0.5rem',
-			color: convertToHex(AmeliproStateTileTypes[props.tileType].textColor || 'ap-grey-darken-1'),
+			color: convertToHex(AmeliproStateTileTypes[props.tileType]?.textColor || 'ap-grey-darken-1'),
 			padding: '0',
 		}
 
@@ -125,7 +125,7 @@
 			padding: `32px ${paddingX} 32px ${paddingX}`,
 			minHeight: props.contentMinHeight,
 		}
-		if (AmeliproStateTileTypes[tileType].icon) {
+		if (AmeliproStateTileTypes[tileType]?.icon) {
 			styles.padding = `50px ${paddingX} 50px ${paddingX}`
 		}
 		return styles
@@ -290,7 +290,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-state-tile__pdf-download {
 	color: apTokens.$ap-blue-darken1;

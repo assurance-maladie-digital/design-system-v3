@@ -199,7 +199,7 @@ describe('SyTablePagination.vue', () => {
 			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25, -1])
 
 			// Check that the last option is "Tous"
-			const lastOption = selectOptions[selectOptions.length - 1]
+			const lastOption = selectOptions[selectOptions.length - 1]!
 			expect(lastOption.value).toBe(-1)
 			expect(lastOption.text).toBe('Tous')
 		})

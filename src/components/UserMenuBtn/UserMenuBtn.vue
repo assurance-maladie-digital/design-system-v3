@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 	import { computed } from 'vue'
-	import SyBtnSelect from '@/components/Customs/Selects/SyBtnSelect/SyBtnSelect.vue'
+	import type { RouteLocationRaw } from 'vue-router'
+	import SyBtnMenu from '@/components/SyBtnMenu/SyBtnMenu.vue'
 	import { useDisplay } from 'vuetify'
 	import { mdiAccount, mdiLoginVariant } from '@mdi/js'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { defaultOptions } from './config'
 
-	type MenuItem = { text: string, value: string, link?: string }
+	type MenuItem = { text: string, value: string, link?: string, to?: RouteLocationRaw }
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		menuItems?: MenuItem[]
@@ -42,7 +43,7 @@
 </script>
 
 <template>
-	<SyBtnSelect
+	<SyBtnMenu
 		v-model="modelValue"
 		:hide-icon="hideUserIcon"
 		:icon-only="isMobileView"
@@ -84,7 +85,7 @@
 				</VListItem>
 			</slot>
 		</template>
-	</SyBtnSelect>
+	</SyBtnMenu>
 </template>
 
 <style scoped lang="scss">

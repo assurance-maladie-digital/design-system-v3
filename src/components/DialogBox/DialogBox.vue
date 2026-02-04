@@ -97,11 +97,11 @@
 
 		if (!e.shiftKey && (isOutside || focused === lastElement)) {
 			e.preventDefault()
-			selectableElements[0].focus()
+			selectableElements[0]?.focus()
 		}
 		else if (e.shiftKey && (isOutside || focused === 0)) {
 			e.preventDefault()
-			selectableElements[lastElement].focus()
+			selectableElements[lastElement]?.focus()
 		}
 	}
 

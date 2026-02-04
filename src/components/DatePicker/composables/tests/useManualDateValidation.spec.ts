@@ -192,12 +192,12 @@ describe('useManualDateValidation', () => {
 		// Vérifier que validateField a été appelé
 		expect(mockValidateField).toHaveBeenCalled()
 		// Vérifier que le premier argument est la date attendue
-		expect(mockValidateField.mock.calls[0][0]).toBe(date)
+		expect(mockValidateField.mock.calls[0]?.[0]).toBe(date)
 		// Vérifier la structure des règles sans comparer les références de fonctions
-		expect(mockValidateField.mock.calls[0][1][0].type).toBe('custom')
-		expect(typeof mockValidateField.mock.calls[0][1][0].options.validate).toBe('function')
-		expect(mockValidateField.mock.calls[0][2][0].type).toBe('warning')
-		expect(typeof mockValidateField.mock.calls[0][2][0].options.validate).toBe('function')
+		expect(mockValidateField.mock.calls[0]?.[1][0].type).toBe('custom')
+		expect(typeof mockValidateField.mock.calls[0]?.[1][0].options.validate).toBe('function')
+		expect(mockValidateField.mock.calls[0]?.[2][0].type).toBe('warning')
+		expect(typeof mockValidateField.mock.calls[0]?.[2][0].options.validate).toBe('function')
 	})
 
 	it('devrait retourner le résultat de validateField', () => {

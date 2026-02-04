@@ -1,0 +1,46 @@
+import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
+import * as SyBtnMenuStories from "./SyBtnMenu.stories.ts";
+
+<Meta of={SyBtnMenuStories}/>
+
+<div className="header">
+  <h1>SyBtnMenu</h1>
+  <p>Le composant `SyBtnMenu` est utilisé pour proposer une sélection d'options avec un bouton personnalisé, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.<br/>
+Il est basé sur un `v-btn`.</p>
+</div>
+
+<Canvas of={SyBtnMenuStories.Default}/>
+
+# API
+
+<Controls of={SyBtnMenuStories.Default}/>
+
+# Exemple d'utilisation
+
+<Source
+    dark code={`
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { SyBtnMenu } from '@cnamts/synapse'
+
+  const model = ref(null)
+  const menuItems = ['Option 1', 'Option 2', 'Option 3']
+
+</script>
+
+<template>
+  <main class="ma-12">
+    Option sélectionnée: {{ model }}
+    <div class="d-flex flex-wrap align-center">
+      <SyBtnMenu
+        v-model="model"
+        :menu-items="menuItems"
+        label="Sélectionnez une option"
+        primary-info="Primary Info"
+        secondary-info="Secondary Info"
+      />
+    </div>
+  </main>
+</template>
+`}
+/>

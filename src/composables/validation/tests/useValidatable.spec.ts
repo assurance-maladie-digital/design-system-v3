@@ -53,13 +53,13 @@ describe('useValidatable', () => {
 			reset: ReturnType<typeof vi.fn>
 		}
 
-		registered.validateOnSubmit()
+		registered?.validateOnSubmit()
 		expect(childVm.validateOnSubmit).toHaveBeenCalledTimes(1)
 
-		registered.clearValidation?.()
+		registered?.clearValidation?.()
 		expect(childVm.clearValidation).toHaveBeenCalledTimes(1)
 
-		registered.reset?.()
+		registered?.reset?.()
 		expect(childVm.reset).toHaveBeenCalledTimes(1)
 
 		wrapper.unmount()

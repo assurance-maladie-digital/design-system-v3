@@ -123,16 +123,16 @@ describe('FileList', () => {
 		const item1 = wrapper.findAll('.file-item').at(0)
 		const item1UploadBtn = item1!.find('.file-item__action-upload')
 		await item1UploadBtn!.trigger('click')
-		expect(wrapper.emitted('upload')?.[0][0]).toEqual(fileItem1)
+		expect(wrapper.emitted('upload')?.[0]?.[0]).toEqual(fileItem1)
 
 		const item2 = wrapper.findAll('.file-item').at(1)
 		const item2DeleteBtn = item2!.find('.file-item__action-delete')
 		await item2DeleteBtn!.trigger('click')
-		expect(wrapper.emitted('delete')?.[0][0]).toEqual(fileItem2)
+		expect(wrapper.emitted('delete')?.[0]?.[0]).toEqual(fileItem2)
 
 		const item2PreviewBtn = item2!.find('.file-item__action-preview')
 		await item2PreviewBtn!.trigger('click')
-		expect(wrapper.emitted('preview')?.[0][0]).toEqual(fileItem2)
+		expect(wrapper.emitted('preview')?.[0]?.[0]).toEqual(fileItem2)
 	})
 
 	it('shows when a file is optional', () => {

@@ -87,10 +87,6 @@ export const VuetifyItems = [
 						name: 'SyInputSelect',
 						href: '/?path=/docs/composants-formulaires-selects-syinputselect--docs',
 					},
-					{
-						name: 'SyBtnSelect',
-						href: '/?path=/docs/composants-formulaires-selects-sybtnselect--docs',
-					},
 				],
 			},
 			{
@@ -572,5 +568,4 @@ export const VuetifyItems = [
 			},
 		],
 	},
-
-]
+] as const

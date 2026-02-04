@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import { type PropType, computed, useSlots } from 'vue'
 	import AmeliproLogoAm from '../AmeliproLogoAm/AmeliproLogoAm.vue'
-	import type { IndexedObject } from '../../../types'
 	import type { LogoInfo } from './types'
 	import { LogoSizeEnum } from '../AmeliproLogoAm/LogoSizeEnum'
 	import { type RouteLocationRaw } from 'vue-router'
@@ -81,7 +80,7 @@
 	const showDivider = computed<boolean>(() => Boolean(ameliproLogo.value || props.serviceTitle))
 	const showServiceSubTitle = computed<boolean>(() => Boolean(props.serviceTitle && props.serviceSubTitle))
 	const dividerColor = computed<string>(() => (props.themeAmelipro ? '#006386' : convertToHex('ap-blue')))
-	const dividerDimensions = computed<IndexedObject>(() => {
+	const dividerDimensions = computed(() => {
 		const { xSmall, small, normal } = dividerDimensionsMapping
 
 		if (xs.value) {
@@ -180,7 +179,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .header-brand-section {
 	overflow: hidden;

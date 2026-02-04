@@ -38,10 +38,10 @@ describe('NumberPicker', () => {
 		const btn = wrapper.findAll('.sy-btn-answer')[0]
 
 		await wrapper.setProps({ modelValue: 4 })
-		expect(btn.text()).toBe('4')
+		expect(btn?.text()).toBe('4')
 
 		await wrapper.setProps({ modelValue: 5 })
-		expect(btn.text()).toBe('5')
+		expect(btn?.text()).toBe('5')
 	})
 
 	it('renders correctly in xs window', async () => {

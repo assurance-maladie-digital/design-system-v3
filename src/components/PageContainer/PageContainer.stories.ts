@@ -25,6 +25,15 @@ const meta = {
 			control: { type: 'select' },
 			default: 'transparent',
 		},
+		uniqueId: {
+			control: { type: 'text' },
+			default: undefined,
+		},
+		role: {
+			options: ['main', 'region', 'navigation', 'contentinfo', 'banner'],
+			control: { type: 'text' },
+			default: undefined,
+		},
 	},
 } as Meta<typeof PageContainer>
 
@@ -63,7 +72,7 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-                <PageContainer :size="args.size" :spacing="args.spacing" :color="args.color">
+                <PageContainer :size="args.size" :spacing="args.spacing" :color="args.color" :uniqueId="args.uniqueId">
 					{{ args.default }}
                 </PageContainer>
             `,

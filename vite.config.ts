@@ -149,7 +149,6 @@ export default defineConfig({
 				'src/**/*.spec.{js,vue,ts}',
 				'src/**/*.stories.*',
 				'src/**/*ExpertiseLevelEnum.ts*',
-				'src/**/*AccessibiliteItems.ts*',
 				'src/**/tests/data/*',
 				'src/**/constants/*',
 				'src/composables/index.ts*',

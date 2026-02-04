@@ -91,9 +91,9 @@ describe('UserMenuBtn', () => {
 			},
 		})
 
-		const SyBtnSelect = wrapper.findComponent({ name: 'SyBtnSelect' })
-		// Utiliser le format camelCase pour l'événement, comme déclaré dans le composant SyBtnSelect
-		await SyBtnSelect.vm.$emit('update:modelValue', 'test-value')
+		const SyBtnMenu = wrapper.findComponent({ name: 'SyBtnMenu' })
+		// Utiliser le format camelCase pour l'événement, comme déclaré dans le composant SyBtnMenu
+		await SyBtnMenu.vm.$emit('update:modelValue', 'test-value')
 
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')![0]).toEqual(['test-value'])

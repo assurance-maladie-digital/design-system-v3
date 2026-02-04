@@ -26,12 +26,12 @@ describe('CookiesInformation', () => {
 		})
 
 		expect(wrapper.text()).toContain(locales.functional.title)
-		expect(wrapper.text()).toContain(cookies[0].name)
-		expect(wrapper.text()).toContain(cookies[1].name)
-		expect(wrapper.text()).toContain(cookies[0].description)
-		expect(wrapper.text()).toContain(cookies[1].description)
-		expect(wrapper.text()).toContain(cookies[0].conservation)
-		expect(wrapper.text()).toContain(cookies[1].conservation)
+		expect(wrapper.text()).toContain(cookies[0]?.name)
+		expect(wrapper.text()).toContain(cookies[1]?.name)
+		expect(wrapper.text()).toContain(cookies[0]?.description)
+		expect(wrapper.text()).toContain(cookies[1]?.description)
+		expect(wrapper.text()).toContain(cookies[0]?.conservation)
+		expect(wrapper.text()).toContain(cookies[1]?.conservation)
 		expect(wrapper.findAll('tr')).toHaveLength(3)
 	})
 
@@ -105,13 +105,13 @@ describe('CookiesInformation', () => {
 
 		const radios = wrapper.findAll<HTMLInputElement>('input[type="radio"]')
 
-		expect(radios[0].element.checked).toBe(false)
-		expect(radios[1].element.checked).toBe(true)
+		expect(radios[0]?.element.checked).toBe(false)
+		expect(radios[1]?.element.checked).toBe(true)
 
 		await wrapper.setProps({ modelValue: false })
 
-		expect(radios[0].element.checked).toBe(true)
-		expect(radios[1].element.checked).toBe(false)
+		expect(radios[0]?.element.checked).toBe(true)
+		expect(radios[1]?.element.checked).toBe(false)
 	})
 
 	it('do not set the radio when the modelValue is undefined', async () => {
@@ -125,7 +125,7 @@ describe('CookiesInformation', () => {
 
 		const radios = wrapper.findAll<HTMLInputElement>('input[type="radio"]')
 
-		expect(radios[0].element.checked).toBe(false)
-		expect(radios[1].element.checked).toBe(false)
+		expect(radios[0]?.element.checked).toBe(false)
+		expect(radios[1]?.element.checked).toBe(false)
 	})
 })

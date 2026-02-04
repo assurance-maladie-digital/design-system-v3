@@ -82,7 +82,7 @@ describe('UploadWorkflow', () => {
 			},
 		})
 
-		await wrapper.findAll('.file-item button')[1].trigger('click')
+		await wrapper.findAll('.file-item button')[1]?.trigger('click')
 
 		const file: File = new File([''], 'theFilename.invalid', {
 			type: 'application/invalid',
@@ -104,7 +104,7 @@ describe('UploadWorkflow', () => {
 				],
 			],
 		])
-		expect(wrapper.findAll('.file-item')[1].text()).toContain(
+		expect(wrapper.findAll('.file-item')[1]?.text()).toContain(
 			fileListLocales.error,
 		)
 	})
@@ -148,9 +148,9 @@ describe('UploadWorkflow', () => {
 		await wrapper.find('[data-test-id="confirm-btn"]').trigger('click')
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect((wrapper.emitted('update:modelValue')?.[0][0] as any[]).find(item => item.fileName === 'uploadInField.pdf')).toBeTruthy()
+		expect((wrapper.emitted('update:modelValue')?.[0]?.[0] as any[]).find(item => item.fileName === 'uploadInField.pdf')).toBeTruthy()
 
-		expect(wrapper.findAll('.file-item')[1].text()).toContain('uploadInField.pdf')
+		expect(wrapper.findAll('.file-item')[1]?.text()).toContain('uploadInField.pdf')
 	})
 
 	it('replace the selected file', async () => {

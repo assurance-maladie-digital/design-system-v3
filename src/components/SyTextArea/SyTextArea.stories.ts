@@ -83,6 +83,14 @@ const meta = {
 				defaultValue: { summary: 'outlined' },
 			},
 		},
+		required: {
+			control: { type: 'boolean' },
+			description: 'Indique si le champ est requis',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 	},
 } satisfies Meta<typeof SyTextArea & typeof VTextarea>
 
@@ -105,6 +113,38 @@ export const Default: Story = {
 		placeholder="Entrez votre texte ici"
 		style="width: 100%"
 	></SyTextArea>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+const text = ref('')
+</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Required: Story = {
+	args: {
+		'label': 'Texte requis',
+		'required': true,
+		'onUpdate:modelValue': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyTextArea
+		v-model="text"
+		label="Texte requis"
+		:required="true"
+		style="width: 100%"
+	/>
 </template>
 				`,
 			},

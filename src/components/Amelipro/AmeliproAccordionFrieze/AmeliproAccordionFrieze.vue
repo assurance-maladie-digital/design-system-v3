@@ -158,8 +158,8 @@
 	watch(() => computedSlides.value, (newValue, oldValue) => {
 		if (currentOpenedAccordion.value === undefined && oldValue.length > 0) {
 			const currentSlideContent = oldValue[currentSlide.value]
-			const firstItemDisplayed = currentSlideContent[0]
-			const lastItemDisplayed = currentSlideContent[currentSlideContent.length - 1]
+			const firstItemDisplayed = currentSlideContent?.[0]
+			const lastItemDisplayed = currentSlideContent?.[currentSlideContent.length - 1]
 
 			if (props.fillSlideOrientation === 'left') {
 				newValue.forEach((slide, index) => {
@@ -352,7 +352,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .frieze {
 	position: relative;

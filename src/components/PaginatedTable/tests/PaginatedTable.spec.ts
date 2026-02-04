@@ -189,8 +189,8 @@ describe('PaginatedTable', () => {
 			}),
 		])
 
-		await wrapper
-			.findAll('.v-data-table-header__content')[1]
+		await wrapper!
+			.findAll('.v-data-table-header__content')[1]!
 			.trigger('click')
 
 		expect(wrapper.emitted('update:options')?.at(-1)).toEqual([
@@ -199,8 +199,8 @@ describe('PaginatedTable', () => {
 			}),
 		])
 
-		await wrapper
-			.findAll('.v-data-table-header__content')[1]
+		await wrapper!
+			.findAll('.v-data-table-header__content')[1]!
 			.trigger('click')
 
 		expect(wrapper.emitted('update:options')?.at(-1)).toEqual([

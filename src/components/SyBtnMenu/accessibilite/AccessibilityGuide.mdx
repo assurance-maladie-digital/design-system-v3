@@ -1,0 +1,77 @@
+import { Meta, Primary } from '@storybook/blocks';
+import * as SyBtnMenuStories from '../SyBtnMenu.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={SyBtnMenuStories} />
+
+<AccessibilityGuideLayout
+	componentName="SyBtnMenu"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/"
+>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique">
+			<ul>
+				   <li><strong>Rôles ARIA appropriés</strong> : <code>role="menu"</code> pour la liste (<code>&lt;ul&gt;</code>), <code>role="menuitem"</code> pour chaque option (<code>&lt;li&gt;</code>)</li>
+				   <li><strong>Attributs ARIA</strong> : <code>aria-haspopup</code>, <code>aria-expanded</code>, <code>aria-controls</code> sur le bouton, <code>aria-activedescendant</code> sur le menu</li>
+				<li><strong>Liens sémantiques</strong> : <code>aria-labelledby</code> pour relier le menu au bouton</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation clavier complète">
+			<ul>
+				<li><strong>Tabulation</strong> : Accès au bouton puis navigation dans le menu</li>
+				<li><strong>Touches fléchées</strong> : Navigation verticale dans les options</li>
+				<li><strong>Entrée/Espace</strong> : Activation d'une option</li>
+				<li><strong>Échappement</strong> : Fermeture du menu et retour au bouton</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="📱" title="États et retours d'information">
+			<ul>
+				<li><strong>État d'ouverture</strong> : <code>aria-expanded</code> reflète l'état du menu</li>
+				<li><strong>Focus visible</strong> : Indication claire de l'élément focalisé</li>
+				<li><strong>Retour visuel</strong> : Styles pour l'état actif/sélectionné</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Personnalisation accessible">
+			<ul>
+				<li><strong>Options de personnalisation</strong> : Couleurs, tailles, et icônes adaptables</li>
+				<li><strong>Compatibilité mobile</strong> : Utilisation adaptée sur petits écrans</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SyBtnMenu">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Utilisez un libellé explicite pour le bouton d'ouverture du menu</li>
+			<li>Utiliser des libellés explicites pour les options du menu</li>
+			<li>Évitez de surcharger le menu avec trop d'options</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices: Menu Button</a></li>
+			<li><a href="https://inclusive-components.design/menus-menu-buttons/" target="_blank" rel="noopener noreferrer">Inclusive Components: Menus & Menu Buttons</a></li>
+		</ul>
+	</ResourcesSection>
+
+	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/SyBtnMenu.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/918" target="_blank" style={{color:'#0C41BD'}}>issue #918</a>)</p>
+	</div>
+</AccessibilityGuideLayout>

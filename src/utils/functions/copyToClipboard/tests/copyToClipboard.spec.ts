@@ -3,7 +3,7 @@ import { copyToClipboard } from '../'
 
 interface TSelection {
 	rangeCount?: number
-	getRangeAt?: (index: number) => string | null
+	getRangeAt?: (index: number) => string | undefined | null
 	removeAllRanges?: () => null
 	addRange?: () => null
 }

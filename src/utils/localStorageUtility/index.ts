@@ -61,8 +61,8 @@ export class LocalStorageUtility {
 		return this.getAll().length
 	}
 
-	key(n: number): string {
-		return this.getAllKeys()[n]
+	key(n: number): string | undefined {
+		return this.getAllKeys()?.[n]
 	}
 
 	getItem<T = any>(key: string): T | null {
