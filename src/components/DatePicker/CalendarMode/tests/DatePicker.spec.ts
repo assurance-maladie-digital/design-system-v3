@@ -131,7 +131,9 @@ describe('DatePicker', () => {
 		if (!(vm.selectedDates instanceof Date)) {
 			throw new Error('Expected selectedDates to be a Date after parsing a valid string')
 		}
-		expect(vm.selectedDates.toISOString().split('T')[0]).toBe('2023-01-15')
+		expect(vm.selectedDates.getFullYear()).toBe(2023)
+		expect(vm.selectedDates.getMonth()).toBe(0)
+		expect(vm.selectedDates.getDate()).toBe(15)
 	})
 
 	it('updateSelectedDates does not update selectedDates for an invalid date string', () => {
