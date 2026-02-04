@@ -262,7 +262,7 @@
 	position: relative;
 	display: flex;
 	background-color: apTokens.$ap-white;
-	border-radius: 0.5rem;
+	border-radius: var(--radius-md) !important;
 	white-space: normal;
 	font-size: 1rem;
 	font-weight: 600;
