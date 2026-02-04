@@ -12,6 +12,7 @@ exports[`CopyBtn > renders correctly 1`] = `
     closeonback="false"
     closeoncontentclick="false"
     contained="false"
+    contentclass="tooltip"
     disabled="false"
     eager="true"
     interactive="false"
