@@ -4,6 +4,17 @@ import AmeliproPatientLogin from './AmeliproPatientLogin.vue'
 import { ref, watch } from 'vue'
 
 const meta = {
+	title: 'Composants/Amelipro/IDPA/AmeliproPatientLogin',
+	component: AmeliproPatientLogin,
+	parameters: {
+		controls: {
+			exclude: [
+				'onClick:vital-card',
+				'onClick:vital-card-app',
+				'onSubmit:nir',
+			],
+		},
+	},
 	argTypes: {
 		'autoCompleteCardItems': {
 			description: 'Liste des items pour le champ d\'autocomplétion',
@@ -56,8 +67,6 @@ const meta = {
 		'uniqueId': { description: 'Identifiant unique du composant.' },
 		'update:model-value': { description: 'Evénement émis au lors de la mise à jour du v-model' },
 	},
-	component: AmeliproPatientLogin,
-	title: 'Composants/Amelipro/IDPA/AmeliproPatientLogin',
 } as Meta<typeof AmeliproPatientLogin>
 
 export default meta
@@ -143,9 +152,6 @@ export const Default: Story = {
 		template: `<AmeliproPatientLogin
 	v-bind="args"
 	v-model="model"
-	@click:vital-card="args['onClick:vital-card']"
-	@click:vital-card-app="args['onClick:vital-card-app']"
-	@submit:nir="args['onSubmit:nir']"
 />`,
 	}),
 }

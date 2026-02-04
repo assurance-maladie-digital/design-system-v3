@@ -31,6 +31,10 @@
 			type: Boolean,
 			default: false,
 		},
+		onSameLine: {
+			type: Boolean,
+			default: false,
+		},
 		uniqueId: {
 			type: String,
 			required: true,
@@ -75,14 +79,28 @@
 		document.getElementById(`${props.uniqueId}-select-label`)?.setAttribute('class', 'd-sr-only')
 	}
 
+	const isTabDisabled = (index: number): boolean => {
+		const tab = props.items[index]
+		return tab ? Boolean(tab.disabled) : true
+	}
+
 	const setDefaultValues = (): void => {
-		if (props.items !== undefined && selected.value !== undefined && props.items[selected.value] !== undefined) {
-			let disabledBtn = props.items[selected.value].disabled
-			while (disabledBtn) {
-				selected.value += 1
-				if (props.items[selected.value].disabled === false) {
-					disabledBtn = false
-				}
+		if (props.items.length === 0) {
+			return
+		}
+
+		if (selected.value < 0 || selected.value >= props.items.length) {
+			selected.value = 0
+		}
+
+		let disabledBtn = isTabDisabled(selected.value)
+		while (disabledBtn) {
+			selected.value += 1
+			if (selected.value >= props.items.length) {
+				selected.value = 0
+			}
+			if (!isTabDisabled(selected.value)) {
+				disabledBtn = false
 			}
 		}
 	}
@@ -98,7 +116,7 @@
 			let tablePos = 1
 			while (disabledBtn) {
 				selected.value = props.items.length - tablePos
-				if (props.items[selected.value].disabled === false) {
+				if (!isTabDisabled(selected.value)) {
 					disabledBtn = false
 				}
 				tablePos += 1
@@ -111,7 +129,7 @@
 			if (selected.value < 0) {
 				selected.value = props.items.length - 1
 			}
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 			focusChange()
@@ -124,7 +142,7 @@
 			let tablePos = 0
 			while (disabledBtn) {
 				selected.value = tablePos
-				if (props.items[selected.value].disabled === false) {
+				if (!isTabDisabled(selected.value)) {
 					disabledBtn = false
 				}
 				tablePos += 1
@@ -137,7 +155,7 @@
 			if (selected.value === props.items.length) {
 				selected.value = 0
 			}
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 			focusChange()
@@ -146,10 +164,10 @@
 
 	const pressHome = (): void => {
 		selected.value = 0
-		let disabledBtn = props.items[selected.value].disabled
+		let disabledBtn = isTabDisabled(selected.value)
 		while (disabledBtn) {
 			selected.value += 1
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 		}
@@ -158,12 +176,12 @@
 
 	const pressEnd = (): void => {
 		selected.value = props.items.length - 1
-		let disabledBtn = props.items[selected.value].disabled
+		let disabledBtn = isTabDisabled(selected.value)
 
 		while (disabledBtn) {
 			selected.value -= 1
 
-			if (props.items[selected.value].disabled === false) {
+			if (!isTabDisabled(selected.value)) {
 				disabledBtn = false
 			}
 		}
@@ -171,10 +189,13 @@
 	}
 
 	const focusChange = (): void => {
-		if (ameliproTabsBtns.value) {
-			(ameliproTabsBtns.value[selected.value].$el as HTMLElement).focus()
-			emitTabChangeEvent()
+		const tabButtons = ameliproTabsBtns.value
+		const currentButtonEl = tabButtons?.[selected.value]?.$el as HTMLElement | undefined
+
+		if (currentButtonEl) {
+			currentButtonEl.focus()
 		}
+		emitTabChangeEvent()
 	}
 
 	const emit = defineEmits(['change-tab'])
@@ -202,13 +223,13 @@
 				:class="btnGroupClasses"
 			>
 				<slot name="tabsDesc" />
-
 				<div
 					:id="uniqueId"
 					:aria-label="ariaLabel"
 					:aria-labelledby="ariaLabelledby"
-					class="d-flex flex-column flex-sm-row align-center flex-nowrap justify-center justify-sm-start amelipro-tabs__btn-group__wrapper"
+					class="d-flex flex-column flex-sm-row align-center justify-center justify-sm-start amelipro-tabs__btn-group__wrapper"
 					role="tablist"
+					:class="onSameLine ? 'flex-nowrap' : ['align-sm-end', 'flex-wrap']"
 				>
 					<AmeliproTabBtn
 						v-for="(item, index) in items"
@@ -304,7 +325,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .first-tab-btn {
 	border-top-left-radius: 8px;

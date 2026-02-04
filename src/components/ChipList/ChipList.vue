@@ -215,7 +215,13 @@
 						/>
 					</template>
 
-					<span>{{ item.text }}</span>
+					<span
+						role="status"
+						:aria-label="locales.item(item.text)"
+						aria-live="polite"
+					>
+						{{ item.text }}
+					</span>
 
 					<template v-if="displayAppendStateIcon">
 						<SyIcon
@@ -233,6 +239,8 @@
 						icon
 						class="remove-chip ml-1"
 						@click="emitRemoveEvent(item)"
+						@keydown.enter.prevent="emitRemoveEvent(item)"
+						@keydown.space.prevent="emitRemoveEvent(item)"
 					>
 						<SyIcon
 							v-bind="options.icon"
@@ -244,7 +252,6 @@
 				</VChip>
 			</li>
 
-			<!-- Élément +N intégré dans la liste HTML -->
 			<li
 				v-if="showOverflowChip"
 				class="d-inline-flex"
@@ -252,18 +259,14 @@
 				<VChip
 					v-bind="options.chip"
 					class="overflow-chip text-cyan-darken-40 ma-1"
-					tabindex="0"
 					:aria-label="overflowAriaLabel"
 					@click="toggleShowAllItems"
-					@keydown.enter="toggleShowAllItems"
-					@keydown.space.prevent="toggleShowAllItems"
 				>
 					{{ overflowText }}
 				</VChip>
 			</li>
 		</ul>
 
-		<!-- Boutons d'action (hors de la liste) -->
 		<div
 			v-if="showAllItems || !readonly"
 			class="d-flex align-center"
@@ -327,7 +330,7 @@
 
 	// Améliorer le contraste des bordures de focus pour les boutons de suppression
 	&:focus-visible {
-		outline: 2px solid tokens.$primary-base !important;
+		outline: 2px solid #fff !important;
 		outline-offset: -2px !important;
 	}
 }
@@ -353,12 +356,11 @@
 }
 
 .overflow-chip {
-	border: 1px solid tokens.$cyan-lighten-90 !important;
 	cursor: pointer;
 
 	&:focus-visible {
 		outline: 2px solid tokens.$primary-base !important;
-		outline-offset: -2px !important;
+		outline-offset: 2px !important;
 	}
 }
 
@@ -370,7 +372,6 @@
 // Bouton "Réinitialiser le filtre" - améliorer le contraste de la bordure de focus
 .overflow-btn:focus-visible {
 	outline: 2px solid tokens.$primary-base !important;
-	outline-offset: -2px !important;
 }
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip

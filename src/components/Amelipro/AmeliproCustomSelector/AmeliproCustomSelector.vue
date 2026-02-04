@@ -68,7 +68,7 @@
 
 	const selectedValue = computed<string | null>(() => {
 		const checkedItem = currentValue.value.filter(e => e.isChecked)
-		return checkedItem.length === 1 ? checkedItem[0].value : null
+		return checkedItem.length === 1 && checkedItem[0] ? checkedItem[0].value : null
 	})
 
 	const emitChangeEvent = (item: AmeliproCustomSelectorItem): void => {
@@ -263,7 +263,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-custom-selector__label {
 	font-size: apTokens.$font-size-sm;

@@ -65,7 +65,7 @@
 
 	const imgUrl = computed<string>(() => (props.customImgUrl === undefined ? imgUrlDefault.value : props.customImgUrl))
 
-	const loadGlobalData = (templateName: string): void => {
+	const loadGlobalData = (templateName: keyof typeof ErrorTemplateContent): void => {
 		imgUrlDefault.value = ErrorTemplateContent[templateName]?.imgUrl
 		contentText.value = ErrorTemplateContent[templateName]?.contentText
 		contentTitle.value = ErrorTemplateContent[templateName]?.contentTitle
@@ -170,7 +170,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .w-70 {
 	width: 70% !important;

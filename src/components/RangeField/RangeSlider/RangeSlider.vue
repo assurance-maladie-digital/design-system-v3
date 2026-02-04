@@ -47,7 +47,7 @@
 	)
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: number[]): void
+		(e: 'update:modelValue', value: [number, number]): void
 	}>()
 
 	const {
@@ -154,7 +154,7 @@
 		range,
 	)
 
-	watch(() => [range.selectedMin.value, range.selectedMax.value], (value) => {
+	watch((): [number, number] => [range.selectedMin.value, range.selectedMax.value], (value) => {
 		if (
 			value[0] !== Number(props.modelValue[0])
 			|| value[1] !== Number(props.modelValue[1])

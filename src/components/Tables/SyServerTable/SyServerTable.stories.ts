@@ -383,10 +383,10 @@ export const Default: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -616,10 +616,10 @@ export const ServerSortBy: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -2586,7 +2586,7 @@ export const ServerFilterByPeriod: Story = {
 			  title: 'Date d'embauche', 
 			  key: 'hireDate',
 			  filterable: true,
-			  filterType: 'periode',
+			  filterType: 'period',
 			  dateFormat: 'DD/MM/YYYY'
 			},
 		  ]
@@ -3722,7 +3722,7 @@ export const ManyServerTables: Story = {
 				}
 
 				const getDataFromApi = async ({ sortBy, page, itemsPerPage }: DataOptions): Promise<DataObj> => {
-					const state = sortBy[0].key === 'lastname' ? stateTable1 : stateTable2
+					const state = sortBy[0]!.key === 'lastname' ? stateTable1 : stateTable2
 					state.value = StateEnum.PENDING
 					await wait(1000)
 
@@ -3732,10 +3732,10 @@ export const ManyServerTables: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -4010,10 +4010,10 @@ export const DataAlignment: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -4245,10 +4245,10 @@ export const ResizableColumns: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -4533,10 +4533,10 @@ fetchData()
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -4831,10 +4831,10 @@ fetchData()
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -5075,10 +5075,10 @@ export const ColumnControls: StoryObj<typeof SyServerTable> = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -5339,10 +5339,10 @@ export const ExpandableRows: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -5617,10 +5617,10 @@ export const SlotItem: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -5879,10 +5879,10 @@ export const SlotHeaders: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -6132,10 +6132,10 @@ export const SlotHeader: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -6374,10 +6374,10 @@ export const ItemsPerPageOptions: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
-								return a[key] > b[key] ? order : -order
+								return a[key]! > b[key]! ? order : -order
 							})
 						}
 
@@ -6616,8 +6616,8 @@ export const ComplexItemsDisplay: Story = {
 
 						if (sortBy && sortBy.length > 0) {
 							items = items.sort((a, b) => {
-								const key = sortBy[0].key
-								const order = sortBy[0].order === 'asc' ? 1 : -1
+								const key = sortBy[0]!.key
+								const order = sortBy[0]!.order === 'asc' ? 1 : -1
 
 								return a[key] > b[key] ? order : -order
 							})

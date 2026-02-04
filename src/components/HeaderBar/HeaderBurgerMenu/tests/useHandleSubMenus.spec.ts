@@ -102,11 +102,11 @@ describe('useHandleSubMenus', () => {
 		expect(wrapper.findAll('.children-open').length).toBe(0)
 
 		const childBtns = wrapper.findAll('.child-menu-btn')
-		await childBtns[0].trigger('click')
+		await childBtns[0]!.trigger('click')
 		expect(wrapper.find('.parent-open').exists()).toBe(true)
 		expect(wrapper.findAll('.children-open').length).toBe(1)
 
-		await childBtns[1].trigger('click')
+		await childBtns[1]!.trigger('click')
 		expect(wrapper.find('.parent-open').exists()).toBe(true)
 		expect(wrapper.findAll('.children-open').length).toBe(1)
 	})
@@ -133,13 +133,13 @@ describe('useHandleSubMenus', () => {
 
 		const childBtns = wrapper.findAll('.child-menu-btn')
 
-		await childBtns[0].trigger('click')
+		await childBtns[0]!.trigger('click')
 		expect(parentMenu!.classes()).toContain('has-open-submenu')
 
-		await childBtns[0].trigger('click')
+		await childBtns[0]!.trigger('click')
 		expect(parentMenu!.classes()).not.toContain('has-open-submenu')
 
-		await childBtns[1].trigger('click')
+		await childBtns[1]!.trigger('click')
 		expect(parentMenu!.classes()).toContain('has-open-submenu')
 	})
 })

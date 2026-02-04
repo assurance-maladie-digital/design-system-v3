@@ -123,6 +123,7 @@ export default defineConfig({
 		},
 	},
 	test: {
+		include: ['**/*.{test,spec}.?(c|m)[jt]s?(x)', '**/*.a11y.spec.ts'],
 		environment: 'happy-dom',
 		isolate: true,
 		maxConcurrency: process.env.CI ? 1 : 5,
@@ -148,7 +149,6 @@ export default defineConfig({
 				'src/**/*.spec.{js,vue,ts}',
 				'src/**/*.stories.*',
 				'src/**/*ExpertiseLevelEnum.ts*',
-				'src/**/*AccessibiliteItems.ts*',
 				'src/**/tests/data/*',
 				'src/**/constants/*',
 				'src/composables/index.ts*',

@@ -153,17 +153,17 @@
 
 		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldLabels.forEach((fieldLabel) => {
-			(fieldLabel as HTMLElement).setAttribute('aria-label', 'éléments par page')
+			fieldLabel.setAttribute('aria-label', 'éléments par page')
 		})
 
 		const fieldTitles = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldTitles.forEach((fieldTitle) => {
-			(fieldTitle as HTMLElement).setAttribute('title', 'éléments par page')
+			fieldTitle.setAttribute('title', 'éléments par page')
 		})
 
 		const th = document.querySelectorAll(`#${uniqueTableId.value} th`)
-		for (let i = 0; i < th.length; i++) {
-			th[i].setAttribute('scope', 'col')
+		for (const el of th) {
+			el.setAttribute('tabindex', '0')
 		}
 	})
 </script>
@@ -209,6 +209,7 @@
 </template>
 
 <style lang="scss" scoped>
+/* stylelint-disable selector-class-pattern */
 @use '@/assets/tokens';
 
 .sy-paginated-table :deep() {
@@ -256,8 +257,54 @@
 
 		&--focused {
 			border-color: tokens.$primary-base;
-			color: tokens.$primary-base;
 		}
 	}
+}
+
+:global(.v-select .v-field__outline__start),
+:global(.v-select .v-field__outline__end) {
+	border-color: tokens.$colors-border-base;
+	opacity: 1;
+	transition: border-color 0.2s ease;
+}
+
+:global(.v-select:hover .v-field__outline__start),
+:global(.v-select:hover .v-field__outline__end) {
+	border-color: tokens.$colors-border-darker;
+}
+
+:global(.v-select__content .v-list-item:focus-visible) {
+	outline: 2px solid tokens.$colors-interactive;
+	outline-offset: -2px;
+}
+
+:global(.v-select__content .v-list-item:hover) {
+	background-color: tokens.$colors-interactive-hover;
+}
+
+:global(.v-select__content .v-list-item > .v-list-item__overlay) {
+	background-color: transparent;
+}
+
+:global(.v-select__content .v-list-item:hover > .v-list-item__overlay),
+:global(.v-select__content .v-list-item--active > .v-list-item__overlay) {
+	background-color: currentcolor;
+}
+
+.sy-paginated-table :deep(.v-pagination) button:focus-visible {
+	outline: 2px solid tokens.$colors-interactive;
+	outline-offset: -2px;
+}
+
+.sy-paginated-table :deep(.v-pagination) .v-pagination__list [aria-disabled='false'] svg {
+	color: tokens.$colors-icon-base;
+}
+
+.sy-paginated-table :deep(.v-pagination) .v-btn--variant-plain[aria-disabled='false'] {
+	opacity: 1;
+}
+
+.sy-paginated-table :deep(.v-pagination) .v-btn--variant-plain:hover[aria-disabled='false'] svg {
+	color: #000;
 }
 </style>

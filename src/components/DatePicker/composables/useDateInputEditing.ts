@@ -77,7 +77,7 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 		}
 
 		const cursorPos = input.selectionStart
-		const charBeforeCursor = input.value[cursorPos - 1]
+		const charBeforeCursor = input.value[cursorPos - 1]!
 
 		// Si on est sur un séparateur, supprimer le séparateur et le chiffre qui le précède
 		if (!/\d/.test(charBeforeCursor) && cursorPos > 1 && separator === charBeforeCursor) {
@@ -118,7 +118,7 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 			const cursorPos = input.selectionStart || 0
 
 			if (event.key === 'ArrowLeft' && cursorPos > 0) {
-				const charBeforeCursor = input.value[cursorPos - 1]
+				const charBeforeCursor = input.value[cursorPos - 1]!
 
 				// Sauter par-dessus les séparateurs en naviguant vers la gauche
 				if (!/\d/.test(charBeforeCursor)) {
@@ -126,7 +126,7 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 
 					// Trouver la position du prochain chiffre à gauche
 					let newPos = cursorPos - 1
-					while (newPos > 0 && !/\d/.test(input.value[newPos - 1])) {
+					while (newPos > 0 && !/\d/.test(input.value[newPos - 1]!)) {
 						newPos--
 					}
 
@@ -134,7 +134,7 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 				}
 			}
 			else if (event.key === 'ArrowRight' && cursorPos < input.value.length) {
-				const charAtCursor = input.value[cursorPos]
+				const charAtCursor = input.value[cursorPos]!
 
 				// Sauter par-dessus les séparateurs en naviguant vers la droite
 				if (!/\d/.test(charAtCursor)) {
@@ -142,7 +142,7 @@ export const useDateInputEditing = (options: DateInputEditingOptions) => {
 
 					// Trouver la position du prochain chiffre à droite
 					let newPos = cursorPos + 1
-					while (newPos < input.value.length && !/\d/.test(input.value[newPos])) {
+					while (newPos < input.value.length && !/\d/.test(input.value[newPos]!)) {
 						newPos++
 					}
 

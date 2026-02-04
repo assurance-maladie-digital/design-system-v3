@@ -127,7 +127,8 @@ $ap-spacers: (
 	}
 }
 
-.theme-ap {
+.theme-ap,
+theme-ap2026 {
 	@each $key, $value in $ap-spacers {
 		--spacing-#{$key}: #{$value};
 	}

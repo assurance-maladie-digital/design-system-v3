@@ -55,12 +55,12 @@ export function useFieldValidation() {
 
 		// Mapper les parties selon le format
 		for (let i = 0; i < formatParts.length; i++) {
-			const value = parseInt(parts[i], 10)
+			const value = parseInt(parts[i]!, 10)
 			if (isNaN(value)) {
 				return null
 			}
 
-			switch (formatParts[i].toUpperCase()) {
+			switch (formatParts[i]!.toUpperCase()) {
 				case 'DD':
 					day = value
 					break

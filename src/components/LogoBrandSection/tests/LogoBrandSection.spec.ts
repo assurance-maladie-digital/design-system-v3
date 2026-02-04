@@ -315,6 +315,6 @@ describe('LogoBrandSection', () => {
 			},
 		})
 
-		expect(wrapper.findAll('.vd-home-link')[1].element.tagName).toBe('DIV')
+		expect(wrapper.findAll('.vd-home-link')[1]?.element.tagName).toBe('DIV')
 	})
 })

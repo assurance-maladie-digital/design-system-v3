@@ -56,8 +56,8 @@ export function useMobileRightMenu() {
 
 		if (newIndex !== currentIdx && newIndex >= 0) {
 			mobileActiveIndex.value = newIndex
-			mobileActiveDescendantId.value = items[newIndex].id
-			items[newIndex].focus()
+			mobileActiveDescendantId.value = (items[newIndex] as HTMLElement).id
+			;(items[newIndex] as HTMLElement).focus()
 		}
 	}
 

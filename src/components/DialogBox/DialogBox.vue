@@ -97,11 +97,11 @@
 
 		if (!e.shiftKey && (isOutside || focused === lastElement)) {
 			e.preventDefault()
-			selectableElements[0].focus()
+			selectableElements[0]?.focus()
 		}
 		else if (e.shiftKey && (isOutside || focused === 0)) {
 			e.preventDefault()
-			selectableElements[lastElement].focus()
+			selectableElements[lastElement]?.focus()
 		}
 	}
 
@@ -188,6 +188,7 @@
 			<div
 				v-if="!props.hideActions"
 				v-bind="options.cardActions"
+				:class="options.actionsSlot?.class"
 				class="sy-dialog-box-actions-ctn"
 			>
 				<VSpacer v-bind="options.actionsSpacer" />
@@ -237,6 +238,10 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens' as *;
+
+.sy-dialog-box-actions :deep(.v-btn) {
+	box-shadow: none;
+}
 
 .sy-dialog-box-title {
 	line-height: normal;

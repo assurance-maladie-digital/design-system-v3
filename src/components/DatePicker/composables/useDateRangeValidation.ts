@@ -12,7 +12,7 @@ export function useDateRangeValidation(
 	/**
 	 * Vérifie si une plage de dates est valide (date de début avant date de fin)
 	 */
-	const isRangeValid = (startDate: Date | null, endDate: Date | null): boolean => {
+	const isRangeValid = (startDate: Date | null | undefined, endDate: Date | null | undefined): boolean => {
 		if (!startDate || !endDate) return true // Si une des dates est manquante, considérer comme valide
 		return startDate.getTime() <= endDate.getTime()
 	}

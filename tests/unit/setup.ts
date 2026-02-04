@@ -125,14 +125,20 @@ class IntersectionObserverMock {
  * une disponibilité maximale, car certains modules peuvent accéder à l'API
  * via l'une ou l'autre référence. Cela résout les différences entre
  * environnements local et CI.
+ *
+ * Avec jsdom, IntersectionObserver peut déjà être défini ; dans ce cas,
+ * nous conservons l'implémentation native et n'essayons pas de la
+ * redéfinir.
  */
-Object.defineProperty(window, 'IntersectionObserver', {
-	value: IntersectionObserverMock,
-	writable: true,
-})
+if (!('IntersectionObserver' in window)) {
+	Object.defineProperty(window, 'IntersectionObserver', {
+		value: IntersectionObserverMock,
+		writable: true,
+	})
+}
 
 // Définir pour l'objet global également (important pour CI)
-if (typeof global !== 'undefined') {
+if (typeof global !== 'undefined' && !(global as any).IntersectionObserver) {
 	// Assigner directement à global avant toute autre initialisation
 	// pour garantir sa disponibilité avant l'initialisation des composants Vuetify
 	Object.defineProperty(global, 'IntersectionObserver', {
@@ -155,7 +161,7 @@ Object.defineProperty(window, 'matchMedia', {
 	value: (query: string) => {
 		// Extraction de la valeur min-width depuis la media query
 		const minWidthMatch = query.match(/\(min-width:\s*(\d+)px\)/)
-		const minWidth = minWidthMatch ? parseInt(minWidthMatch[1], 10) : 0
+		const minWidth = minWidthMatch && minWidthMatch[1] ? parseInt(minWidthMatch[1], 10) : 0
 
 		/**
 		 * Fonction pour obtenir la largeur actuelle de la fenêtre simulée

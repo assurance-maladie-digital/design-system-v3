@@ -88,7 +88,7 @@ export default function useRangeSlider(
 	watch(
 		() => toValue(value),
 		(newVal) => {
-			const newValCasted = newVal.map(Number)
+			const newValCasted = newVal.map(Number) as [number, number]
 
 			if (!isValidNumber(newValCasted[0]) || !isValidNumber(newValCasted[1])) {
 				return

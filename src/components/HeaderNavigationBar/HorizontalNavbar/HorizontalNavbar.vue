@@ -16,14 +16,18 @@
 	}
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
-		items: NavigationItem[]
+		items?: NavigationItem[]
 		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 		confirmTabChange?: boolean
 		/** Message affiché dans la boîte de dialogue de confirmation */
 		confirmationMessage?: boolean
+		/** Largeur interne */
+		width?: string
 	}>(), {
+		items: () => [],
 		confirmTabChange: false,
 		confirmationMessage: false,
+		width: '1712px',
 	})
 
 	// Définition des événements émis
@@ -166,8 +170,8 @@
 		let foundActiveItem = false
 
 		// Trouver l'élément actif basé sur la route courante
-		for (let i = 0; i < props.items.length; i++) {
-			if (isActive(props.items[i], i)) {
+		for (const [i, item] of props.items.entries()) {
+			if (isActive(item, i)) {
 				activeItemIndex.value = i
 				activeTab.value = i
 				foundActiveItem = true
@@ -199,8 +203,8 @@
 
 			// Trouver l'élément actif basé sur la nouvelle route
 			let found = false
-			for (let i = 0; i < props.items.length; i++) {
-				if (isActive(props.items[i], i)) {
+			for (const [i, item] of props.items.entries()) {
+				if (isActive(item, i)) {
 					activeItemIndex.value = i
 					activeTab.value = i
 					found = true
@@ -276,7 +280,7 @@
 .horizontal-menu {
 	display: flex;
 	align-items: center;
-	max-width: $header-max-width;
+	max-width: v-bind(width);
 	margin: 0 auto;
 }
 

@@ -34,9 +34,9 @@
 		},
 	})
 
-	const statusClasses = computed(() => AmeliproStatusTypes[props.type].bgColor)
+	const statusClasses = computed(() => AmeliproStatusTypes[props.type]?.bgColor)
 
-	const borderColorValue = computed(() => (AmeliproStatusTypes[props.type].borderColor || 'transparent'))
+	const borderColorValue = computed(() => (AmeliproStatusTypes[props.type]?.borderColor || 'transparent'))
 
 	const statusStyles = computed<IndexedObject>(() => ({
 		border: `2px solid ${convertToHex(borderColorValue.value)}`,
@@ -47,7 +47,7 @@
 		paddingTop: `${props.paddingY}`,
 	}))
 
-	const textValue = computed(() => (props.label || AmeliproStatusTypes[props.type].defaultLabel))
+	const textValue = computed(() => (props.label || AmeliproStatusTypes[props.type]!.defaultLabel))
 </script>
 
 <template>

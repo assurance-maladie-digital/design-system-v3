@@ -64,8 +64,8 @@ describe('Logo.vue', () => {
 		const wrapper = mount(Logo, {
 			props: { size: LogoSize.SMALL },
 		})
-		expect(wrapper.find('svg').attributes('width')).toBe(logoDimensionsMapping[LogoSize.SMALL].width)
-		expect(wrapper.find('svg').attributes('height')).toBe(logoDimensionsMapping[LogoSize.SMALL].height)
+		expect(wrapper.find('svg').attributes('width')).toBe(logoDimensionsMapping[LogoSize.SMALL]!.width)
+		expect(wrapper.find('svg').attributes('height')).toBe(logoDimensionsMapping[LogoSize.SMALL]!.height)
 	})
 
 	it('validates size prop correctly', () => {

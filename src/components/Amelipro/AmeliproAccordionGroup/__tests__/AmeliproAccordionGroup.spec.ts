@@ -182,8 +182,8 @@ describe('AmeliproAccordionGroup', () => {
 				const templates = wrapper.findAllComponents(AmeliproAccordionTemplate)
 				expect(templates.length).toBe(defaultItems.length)
 				for (let i = 0; i < templates.length; i++) {
-					expect(templates[i].props('accordionTitle')).toBe(defaultItems[i].title)
-					expect(templates[i].props('uniqueId')).toBe(defaultItems[i].id)
+					expect(templates[i]?.props('accordionTitle')).toBe(defaultItems[i].title)
+					expect(templates[i]?.props('uniqueId')).toBe(defaultItems[i].id)
 				}
 
 				const { items } = modifiedPropValues()
@@ -191,8 +191,8 @@ describe('AmeliproAccordionGroup', () => {
 				const modTemplates = wrapper.findAllComponents(AmeliproAccordionTemplate)
 				expect(modTemplates.length).toBe(items.length)
 				for (let i = 0; i < modTemplates.length; i++) {
-					expect(modTemplates[i].props('accordionTitle')).toBe(items[i].title)
-					expect(modTemplates[i].props('uniqueId')).toBe(items[i].id)
+					expect(modTemplates[i]?.props('accordionTitle')).toBe(items[i]?.title)
+					expect(modTemplates[i]?.props('uniqueId')).toBe(items[i]?.id)
 				}
 			})
 		})
@@ -213,21 +213,21 @@ describe('AmeliproAccordionGroup', () => {
 			// L'accordéon s'ouvre, l'id est celui de l'item
 			const emitted = wrapper.emitted('change')
 			expect(emitted).toBeTruthy()
-			expect(emitted![0][0]).toBe(items[0].id)
+			expect(emitted![0]?.[0]).toBe(items[0].id)
 
 			// On referme le même accordéon, l'id devient null
 			await wrapper.vm.openClose(items[0].id)
 			const emitted2 = wrapper.emitted('change')
-			expect(emitted2![1][0]).toBe(null)
+			expect(emitted2![1]?.[0]).toBe(null)
 		})
 
 		it('emit \'change\' with correct id when clicking on accordion', async () => {
 			const items = testHelper.default('items')
 			const templates = wrapper.findAllComponents(AmeliproAccordionTemplate)
-			await templates[1].vm.$emit('open-close')
+			templates[1]?.vm.$emit('open-close')
 			const emitted = wrapper.emitted('change')
 			expect(emitted).toBeTruthy()
-			expect(emitted![0][0]).toBe(items[1].id)
+			expect(emitted![0]?.[0]).toBe(items[1].id)
 		})
 	})
 })

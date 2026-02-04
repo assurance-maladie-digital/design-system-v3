@@ -134,12 +134,12 @@
 			const lastFocusableElement = focusableElements.value[focusableElements.value.length - 1]
 
 			// Si Shift+Tab est pressé et que le focus est sur le premier élément, rediriger vers le dernier
-			if (event.shiftKey && document.activeElement === firstFocusableElement) {
+			if (event.shiftKey && document.activeElement === firstFocusableElement && lastFocusableElement) {
 				lastFocusableElement.focus()
 				event.preventDefault()
 			}
 			// Si Tab est pressé et que le focus est sur le dernier élément, rediriger vers le premier
-			else if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+			else if (!event.shiftKey && document.activeElement === lastFocusableElement && firstFocusableElement) {
 				firstFocusableElement.focus()
 				event.preventDefault()
 			}
@@ -177,7 +177,6 @@
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<h2
-
 						class="text-h5 font-weight-bold"
 					>
 						{{ locales.title }}

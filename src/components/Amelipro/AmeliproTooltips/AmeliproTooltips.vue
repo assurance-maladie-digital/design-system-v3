@@ -52,8 +52,13 @@
 	})
 
 	const show = ref(false)
+
+	const emit = defineEmits(['click'])
+
 	const tooltipTextStyle = computed<IndexedObject>(() => ({ color: convertToHex(props.tooltipTextColor) }))
 	const tooltipBgStyle = computed<string>(() => `bg-${props.tooltipBg}`)
+
+	const emitClick = () => emit('click', `${props.uniqueId}-btn`)
 </script>
 
 <template>
@@ -90,6 +95,7 @@
 						v-bind="tooltipProps"
 						@touchend="show = false"
 						@touchstart="show = true"
+						@click="emitClick"
 					/>
 				</slot>
 			</template>
@@ -108,7 +114,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens';
+@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .v-btn {
 	&.tooltip-btn {

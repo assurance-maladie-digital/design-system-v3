@@ -140,7 +140,7 @@ describe('FilterSideBar', () => {
 
 		await wrapper.find('button:nth-child(3)').trigger('click')
 
-		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0]?.[0]
 		const expectedValue = [
 			{
 				name: 'name',
@@ -231,7 +231,7 @@ describe('FilterSideBar', () => {
 
 		await wrapper.find('button:nth-child(3)').trigger('click')
 
-		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0]?.[0]
 		const expectedValue = [
 			{
 				name: 'name',
@@ -275,11 +275,11 @@ describe('FilterSideBar', () => {
 
 		await wrapper
 			.find(
-				'.v-navigation-drawer__content>div:last-child button:nth-child(2)',
+				'.v-navigation-drawer__content button[type="reset"]',
 			)
 			.trigger('click')
 
-		const emittedValue = wrapper.emitted('update:modelValue')?.[0][0]
+		const emittedValue = wrapper.emitted('update:modelValue')?.[0]?.[0]
 		const expectedValue = [
 			{
 				name: 'name',
@@ -322,7 +322,7 @@ describe('FilterSideBar', () => {
 		await wrapper.find('.v-btn__content').trigger('click')
 		await wrapper
 			.find(
-				'.v-navigation-drawer__content>div:last-child button:nth-child(1)',
+				'.v-navigation-drawer__content button[aria-label="Fermer les filtres"]',
 			)
 			.trigger('click')
 

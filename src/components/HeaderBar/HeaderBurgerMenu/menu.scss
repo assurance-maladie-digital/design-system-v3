@@ -7,13 +7,23 @@ $blue: color.channel(tokens.$primary-base, 'blue');
 $primary: $red, $green, $blue;
 
 @mixin item-focused() {
-	border-top: 2px solid transparent;
-	border-bottom: 2px solid transparent;
-	transition: border-color 0.1s ease;
+	position: relative;
 
-	&:focus-visible {
-		outline: 0;
-		border-top: 2px solid rgb(var(--v-theme-primary, $primary));
-		border-bottom: 2px solid rgb(var(--v-theme-primary, $primary));
+	&:focus-visible::before,
+	&:focus-visible::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background-color: rgb(var(--v-theme-primary));
+	}
+
+	&:focus-visible::before {
+		top: 0;
+	}
+
+	&:focus-visible::after {
+		bottom: 0;
 	}
 }

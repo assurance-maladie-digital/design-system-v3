@@ -35,7 +35,7 @@ describe('useFieldValidation', () => {
 
 	it('should validate required rule', () => {
 		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.' } }])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('')).toEqual({ error: 'This field is required.' })
 		expect(rule('value')).toEqual({ success: 'Le champ est valide.' })
@@ -46,7 +46,7 @@ describe('useFieldValidation', () => {
 
 	it('should validate min rule', () => {
 		const rules = generateRules([{ type: 'min', options: { value: 5, message: 'Value must be at least 5.' } }])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule(3)).toEqual({ error: 'Value must be at least 5.' })
 		expect(rule(5)).toEqual({ success: 'Le champ est valide.' })
@@ -56,7 +56,7 @@ describe('useFieldValidation', () => {
 
 	it('should validate max rule', () => {
 		const rules = generateRules([{ type: 'max', options: { value: 10, message: 'Value must be at most 10.' } }])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule(15)).toEqual({ error: 'Value must be at most 10.' })
 		expect(rule(10)).toEqual({ success: 'Le champ est valide.' })
@@ -66,7 +66,7 @@ describe('useFieldValidation', () => {
 
 	it('should validate minLength rule', () => {
 		const rules = generateRules([{ type: 'minLength', options: { length: 5, message: 'Minimum length is 5.' } }])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('1234')).toEqual({ error: 'Minimum length is 5.' })
 		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
@@ -83,7 +83,7 @@ describe('useFieldValidation', () => {
 				ignoreSpace: true,
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('1 2 3 4')).toEqual({ error: 'Minimum length is 5.' }) // Length without spaces is 4
 		expect(rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
@@ -91,7 +91,7 @@ describe('useFieldValidation', () => {
 
 	it('should validate maxLength rule', () => {
 		const rules = generateRules([{ type: 'maxLength', options: { length: 5, message: 'Maximum length is 5.' } }])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('123456')).toEqual({ error: 'Maximum length is 5.' })
 		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
@@ -108,7 +108,7 @@ describe('useFieldValidation', () => {
 				ignoreSpace: true,
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('1 2 3 4 5 6')).toEqual({ error: 'Maximum length is 5.' }) // Length without spaces is 6
 		expect(rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
@@ -116,7 +116,7 @@ describe('useFieldValidation', () => {
 
 	it('should validate exactLength rule', () => {
 		const rules = generateRules([{ type: 'exactLength', options: { length: 5, message: 'Length must be exactly 5.' } }])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('1234')).toEqual({ error: 'Length must be exactly 5.' })
 		expect(rule('123456')).toEqual({ error: 'Length must be exactly 5.' })
@@ -133,7 +133,7 @@ describe('useFieldValidation', () => {
 				ignoreSpace: true,
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('1 2 3 4')).toEqual({ error: 'Length must be exactly 5.' }) // Length without spaces is 4
 		expect(rule('1 2 3 4 5 6')).toEqual({ error: 'Length must be exactly 5.' }) // Length without spaces is 6
@@ -148,7 +148,7 @@ describe('useFieldValidation', () => {
 		expect(EMAIL_REGEXP.test('test@example.com')).toBe(true)
 
 		const rules = generateRules([{ type: 'email', options: { message: 'Invalid email address.' } }])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('invalid-email')).toEqual({ error: 'Invalid email address.' })
 		expect(rule('test@example.com')).toEqual({ success: 'Le champ est valide.' })
@@ -161,7 +161,7 @@ describe('useFieldValidation', () => {
 			type: 'matchPattern',
 			options: { pattern: /^[a-z]+$/, message: 'Invalid format.' },
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('123')).toEqual({ error: 'Invalid format.' })
 		expect(rule('aBc')).toEqual({ error: 'Invalid format.' })
@@ -174,7 +174,7 @@ describe('useFieldValidation', () => {
 			type: 'notWeekend',
 			options: { message: 'Date cannot be on a weekend.' },
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		// 15 janvier 2023 est un dimanche (jour 0)
 		expect(rule(new Date(2023, 0, 15))).toEqual({ error: 'Date cannot be on a weekend.' })
@@ -190,7 +190,7 @@ describe('useFieldValidation', () => {
 			type: 'notBeforeToday',
 			options: { message: 'Date cannot be before today.' },
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		// 14 janvier 2023 est avant aujourd'hui (15 janvier 2023)
 		expect(rule(new Date(2023, 0, 14))).toEqual({ error: 'Date cannot be before today.' })
@@ -206,7 +206,7 @@ describe('useFieldValidation', () => {
 			type: 'notAfterToday',
 			options: { message: 'Date cannot be after today.' },
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		// 16 janvier 2023 est après aujourd'hui (15 janvier 2023)
 		expect(rule(new Date(2023, 0, 16))).toEqual({ error: 'Date cannot be after today.' })
@@ -267,7 +267,7 @@ describe('useFieldValidation', () => {
 				message: 'Date cannot be before reference date.',
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		// 9 janvier 2023 est avant la date de référence
 		expect(rule(new Date(2023, 0, 9))).toEqual({ error: 'Date cannot be before reference date.' })
@@ -281,7 +281,7 @@ describe('useFieldValidation', () => {
 		const ruleWithoutDate = generateRules([{
 			type: 'notBeforeDate',
 			options: { message: 'Date cannot be before reference date.' },
-		}])[0]
+		}])[0]!
 		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
 		expect(rule('')).toEqual({}) // Empty string should be ignored
 	})
@@ -294,7 +294,7 @@ describe('useFieldValidation', () => {
 					date: new Date() as unknown as string, // Date object instead of string
 					message: 'Date cannot be before reference date.',
 				},
-			}])[0]
+			}])[0]!
 			invalidRule(new Date())
 		}).toThrow('Date reference must be a string in DD/MM/YYYY format')
 	})
@@ -307,7 +307,7 @@ describe('useFieldValidation', () => {
 				message: 'Date cannot be after reference date.',
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		// 21 janvier 2023 est après la date de référence
 		expect(rule(new Date(2023, 0, 21))).toEqual({ error: 'Date cannot be after reference date.' })
@@ -321,7 +321,7 @@ describe('useFieldValidation', () => {
 		const ruleWithoutDate = generateRules([{
 			type: 'notAfterDate',
 			options: { message: 'Date cannot be after reference date.' },
-		}])[0]
+		}])[0]!
 		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
 		expect(rule('')).toEqual({}) // Empty string should be ignored
 	})
@@ -334,7 +334,7 @@ describe('useFieldValidation', () => {
 					date: new Date() as unknown as string, // Date object instead of string
 					message: 'Date cannot be after reference date.',
 				},
-			}])[0]
+			}])[0]!
 			invalidRule(new Date())
 		}).toThrow('Date reference must be a string in DD/MM/YYYY format')
 	})
@@ -347,7 +347,7 @@ describe('useFieldValidation', () => {
 				message: 'Date must be exactly the reference date.',
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		// 14 janvier 2023 n'est pas la date exacte
 		expect(rule(new Date(2023, 0, 14))).toEqual({ error: 'Date must be exactly the reference date.' })
@@ -361,7 +361,7 @@ describe('useFieldValidation', () => {
 		const ruleWithoutDate = generateRules([{
 			type: 'dateExact',
 			options: { message: 'Date must be exactly the reference date.' },
-		}])[0]
+		}])[0]!
 		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
 		expect(rule('')).toEqual({}) // Empty string should be ignored
 	})
@@ -374,7 +374,7 @@ describe('useFieldValidation', () => {
 					date: new Date() as unknown as string, // Date object instead of string
 					message: 'Date must be exactly the reference date.',
 				},
-			}])[0]
+			}])[0]!
 			invalidRule(new Date())
 		}).toThrow('Date reference must be a string in DD/MM/YYYY format')
 	})
@@ -384,7 +384,7 @@ describe('useFieldValidation', () => {
 			type: 'custom',
 			options: { validate: (value: unknown) => value === 'valid', message: 'Custom validation failed.' },
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('invalid')).toEqual({ error: 'Custom validation failed.' })
 		expect(rule('valid')).toEqual({ success: 'Le champ est valide.' })
@@ -394,7 +394,7 @@ describe('useFieldValidation', () => {
 		const customMessageRule = generateRules([{
 			type: 'custom',
 			options: { validate: (value: unknown) => value === 'valid' ? true : 'Custom error message' },
-		}])[0]
+		}])[0]!
 		expect(customMessageRule('invalid')).toEqual({ error: 'Custom error message' })
 	})
 
@@ -406,7 +406,7 @@ describe('useFieldValidation', () => {
 				isWarning: true,
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('')).toEqual({ warning: 'This field is required.' })
 
@@ -417,7 +417,7 @@ describe('useFieldValidation', () => {
 				warningMessage: 'Warning: this field should be filled.',
 				isWarning: true,
 			},
-		}])[0]
+		}])[0]!
 		expect(warningMessageRule('')).toEqual({ warning: 'Warning: this field should be filled.' })
 	})
 
@@ -428,7 +428,7 @@ describe('useFieldValidation', () => {
 				fieldName: 'Email',
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('')).toEqual({ error: 'Vous devez renseigner Email.' })
 
@@ -437,7 +437,7 @@ describe('useFieldValidation', () => {
 			options: {
 				fieldIdentifier: 'l\'adresse email',
 			},
-		}])[0]
+		}])[0]!
 		expect(fieldIdentifierRule('')).toEqual({ error: 'Vous devez renseigner l\'adresse email.' })
 	})
 
@@ -448,7 +448,7 @@ describe('useFieldValidation', () => {
 				successMessage: 'Field is valid!',
 			},
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('value')).toEqual({ success: 'Field is valid!' })
 	})
@@ -458,7 +458,7 @@ describe('useFieldValidation', () => {
 			type: 'invalidRuleType',
 			options: { message: 'This should show an error.' },
 		}])
-		const rule = rules[0]
+		const rule = rules[0]!
 
 		expect(rule('any value')).toEqual({ error: 'La règle spécifiée pour ce champ n\'existe pas.' })
 	})

@@ -8,7 +8,7 @@ export interface UseSySelectKeyboardOptions {
 	isOpen: Ref<boolean>
 	formattedItems: Ref<ItemType[]>
 	toggleMenu: (skipInitialFocus?: boolean) => void
-	selectItem: (item: ItemType | null, event?: Event) => void
+	selectItem: (item: ItemType | null | undefined, event?: Event) => void
 	getItemText: (item: unknown) => unknown
 }
 
@@ -52,7 +52,6 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 					})
 
 					element.setAttribute('tabindex', '0')
-					element.focus()
 					element.classList.add('keyboard-focused')
 					element.scrollIntoView({ block: 'nearest' })
 				}
@@ -109,7 +108,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 
 		// Sinon, essayer de récupérer l'index à partir de l'ID ARIA
 		if (activeDescendantId.value) {
-			const activeIndex = parseInt(activeDescendantId.value.split('-')[1])
+			const activeIndexString = activeDescendantId.value.split('-')?.[1]
+			const activeIndex = activeIndexString ? parseInt(activeIndexString) : NaN
 			if (!isNaN(activeIndex) && activeIndex >= 0 && activeIndex < formattedItems.value.length) {
 				// Synchroniser lastFocusedIndex avec l'index trouvé
 				lastFocusedIndex.value = activeIndex
@@ -218,23 +218,24 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		}
 	}
 
-	const handleCharacterKey = (key: string) => {
-		// Handle printable characters for keyboard navigation
-		if (key.length === 1 && key.match(/\S/)) {
-			const index = findItemStartingWith(key)
-			if (index >= 0) {
-				if (!isOpen.value) {
-					toggleMenu()
-					// Attendre que le menu soit ouvert avant de définir le focus
-					nextTick(() => {
-						setActiveDescendant(index)
-					})
-				}
-				else {
-					// Menu déjà ouvert, définir le focus immédiatement
-					setActiveDescendant(index)
-				}
-			}
+	const handleCharacterKey = (event: KeyboardEvent) => {
+		if (event.ctrlKey || event.altKey || event.metaKey) return
+		if (event.key.length !== 1) return
+		if (!event.key.match(/\S/)) return
+
+		const index = findItemStartingWith(event.key)
+		if (index < 0) return
+
+		if (!isOpen.value) {
+			toggleMenu()
+			// Attendre que le menu soit ouvert avant de définir le focus
+			nextTick(() => {
+				setActiveDescendant(index)
+			})
+		}
+		else {
+			// Menu déjà ouvert, définir le focus immédiatement
+			setActiveDescendant(index)
 		}
 	}
 
@@ -301,7 +302,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	const handleTabKey = () => {
 		if (isOpen.value && activeDescendantId.value) {
 			// Trouver l'item actuellement focusé
-			const currentIndex = parseInt(activeDescendantId.value.split('-')[1])
+			const currentIndexString = activeDescendantId.value.split('-')?.[1]
+			const currentIndex = currentIndexString ? parseInt(currentIndexString) : NaN
 			if (!isNaN(currentIndex) && currentIndex >= 0 && currentIndex < formattedItems.value.length) {
 				const currentItem = formattedItems.value[currentIndex]
 				// Sélectionner l'item qui a le focus
@@ -320,7 +322,8 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	// Watch activeDescendantId pour synchroniser lastFocusedIndex
 	watch(activeDescendantId, (newId) => {
 		if (newId) {
-			const index = parseInt(newId.split('-')[1])
+			const indexString = newId.split('-')?.[1]
+			const index = indexString ? parseInt(indexString) : NaN
 			if (!isNaN(index) && index >= 0 && index < formattedItems.value.length) {
 				// Synchroniser lastFocusedIndex avec l'ID ARIA
 				lastFocusedIndex.value = index

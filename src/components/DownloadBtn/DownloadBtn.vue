@@ -12,7 +12,7 @@
 
 	export interface FileInfo {
 		name: string
-		type: string
+		type: string | undefined
 	}
 
 	export interface Props {

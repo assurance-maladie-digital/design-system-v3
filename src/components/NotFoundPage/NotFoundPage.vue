@@ -54,11 +54,13 @@
 		</template>
 
 		<template #illustration>
-			<img
-				src="./assets/not-found.svg"
-				alt=""
-				aria-hidden="true"
-			>
+			<slot name="illustration">
+				<img
+					src="./assets/not-found.svg"
+					alt=""
+					aria-hidden="true"
+				>
+			</slot>
 		</template>
 	</ErrorPage>
 </template>

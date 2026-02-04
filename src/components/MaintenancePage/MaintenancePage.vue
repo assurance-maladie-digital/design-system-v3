@@ -10,11 +10,13 @@
 		:hide-btn="true"
 	>
 		<template #illustration>
-			<img
-				src="./assets/maintenance.svg"
-				alt=""
-				aria-hidden="true"
-			>
+			<slot name="illustration">
+				<img
+					src="./assets/maintenance.svg"
+					alt=""
+					aria-hidden="true"
+				>
+			</slot>
 		</template>
 	</ErrorPage>
 </template>

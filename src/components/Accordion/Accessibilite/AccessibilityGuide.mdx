@@ -10,7 +10,7 @@ import {
 	ResourcesSection,
 } from '../../../stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={AccordionStories} />
+<Meta of={AccordionStories}  name="Accessibilité" />
 
 <AccessibilityGuideLayout
 	componentName="Accordion"
@@ -73,4 +73,9 @@ import {
 			<li><a href="https://inclusive-components.design/collapsible-sections/" target="_blank" rel="noopener noreferrer">Inclusive Components: Collapsible Sections</a></li>
 		</ul>
 	</ResourcesSection>
+
+	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/Accordion.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/926" target="_blank" style={{color:'#0C41BD'}}>issue #926</a>)</p>
+	</div>
 </AccessibilityGuideLayout>

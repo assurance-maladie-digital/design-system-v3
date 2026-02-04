@@ -24,7 +24,7 @@ import '../../styles/shared.css';
 
 Classe utilitaire pour manipuler le localStorage avec gestion des préfixes et de la sérialisation.
 
-<Source dark code={`import { LocalStorageUtility } from '@cnamts/synpase'
+<Source dark code={`import { LocalStorageUtility } from '@cnamts/synapse'
 
 // Création d'une instance avec un préfixe
 const storage = new LocalStorageUtility('my-app')
@@ -53,7 +53,7 @@ storage.clear()
 
 Convertit une taille en octets en une chaîne de caractères lisible par un humain.
 
-<Source dark code={`import { calcHumanFileSize } from '@cnamts/synpase'
+<Source dark code={`import { calcHumanFileSize } from '@cnamts/synapse'
 
 console.log(calcHumanFileSize(1024)) // '1 Ko'
 console.log(calcHumanFileSize(1048576)) // '1 Mo'
@@ -64,7 +64,7 @@ console.log(calcHumanFileSize(1073741824)) // '1 Go'
 
 Convertit une valeur en unité CSS (px, em, rem, etc.).
 
-<Source dark code={`import { convertToUnit } from '@cnamts/synpase'
+<Source dark code={`import { convertToUnit } from '@cnamts/synapse'
 
 console.log(convertToUnit(16)) // '16px'
 console.log(convertToUnit('16')) // '16px'
@@ -77,7 +77,7 @@ console.log(convertToUnit(null)) // undefined
 
 Formate une date selon un format spécifique.
 
-<Source dark code={`import { formatDate } from '@cnamts/synpase'
+<Source dark code={`import { formatDate } from '@cnamts/synapse'
 
 const date = new Date('2023-01-15')
 
@@ -90,7 +90,7 @@ console.log(formatDate('2023-01-15')) // '15/01/2023'
 
 Parse une chaîne de caractères en objet Date.
 
-<Source dark code={`import { parseDate } from '@cnamts/synpase'
+<Source dark code={`import { parseDate } from '@cnamts/synapse'
 
 console.log(parseDate('15/01/2023').toISOString()) // '2023-01-15T00:00:00.000Z'
 console.log(parseDate('2023-01-15').toISOString()) // '2023-01-15T00:00:00.000Z'
@@ -100,7 +100,7 @@ console.log(parseDate('2023-01-15').toISOString()) // '2023-01-15T00:00:00.000Z'
 
 Formate un numéro de sécurité sociale (NIR) pour le rendre plus lisible en ajoutant des espaces à des positions fixes.
 
-<Source dark code={`import { formatNir } from '@cnamts/synpase'
+<Source dark code={`import { formatNir } from '@cnamts/synapse'
 
 console.log(formatNir('1234567890123'))   // '1 23 45 67 890 123'
 console.log(formatNir('123456789012345')) // '1 23 45 67 890 123 45'
@@ -112,7 +112,7 @@ console.log(formatNir('123456789012345')) // '1 23 45 67 890 123 45'
 
 Valide les props d'un composant Vue.
 
-<Source dark code={`import { propValidator } from '@cnamts/synpase'
+<Source dark code={`import { propValidator } from '@cnamts/synapse'
 
 export default {
   props: {
@@ -128,7 +128,7 @@ export default {
 
 Génère un message d'erreur pour les règles de validation.
 
-<Source dark code={`import { ruleMessage } from '@cnamts/synpase'
+<Source dark code={`import { ruleMessage } from '@cnamts/synapse'
 
 const message = ruleMessage('Ce champ est requis')
 console.log(message) // 'Ce champ est requis'
@@ -146,7 +146,7 @@ console.log(fieldMessage) // 'Email : Ce champ est requis'
   isDateInRange,
   isDateValidUtil,
   isWeekend
-} from '@cnamts/synpase'
+} from '@cnamts/synapse'
 
 // Vérifier si une date est après une autre
 console.log(isDateAfter('15/02/2023', '10/02/2023')) // true
@@ -169,7 +169,7 @@ console.log(isWeekend(new Date('2023-02-20'))) // false (lundi)
 
 ### Validation d'email
 
-<Source dark code={`import { isEmailValid } from '@cnamts/synpase'
+<Source dark code={`import { isEmailValid } from '@cnamts/synapse'
 
 console.log(isEmailValid('user@example.com')) // true
 console.log(isEmailValid('invalid-email')) // false
@@ -181,7 +181,7 @@ console.log(isEmailValid('invalid-email')) // false
 
 Copie un texte dans le presse-papier.
 
-<Source dark code={`import { copyToClipboard } from '@cnamts/synpase'
+<Source dark code={`import { copyToClipboard } from '@cnamts/synapse'
 
 // Copier un texte dans le presse-papier
 copyToClipboard('Texte à copier')
@@ -193,7 +193,7 @@ copyToClipboard('Texte à copier')
 
 Télécharge un fichier à partir d'une URL ou d'un Blob.
 
-<Source dark code={`import { downloadFile } from '@cnamts/synpase'
+<Source dark code={`import { downloadFile } from '@cnamts/synapse'
 
 // Télécharger un fichier à partir d'une URL
 downloadFile('https://example.com/document.pdf', 'mon-document.pdf')
@@ -207,7 +207,7 @@ downloadFile(blob, 'mon-fichier.txt')
 
 Limite le nombre d'appels à une fonction d'affichage pour améliorer les performances.
 
-<Source dark code={`import { throttleDisplayFn } from '@cnamts/synpase'
+<Source dark code={`import { throttleDisplayFn } from '@cnamts/synapse'
 
 // Fonction originale qui pourrait être appelée trop fréquemment
 const updateUI = () => {
@@ -227,7 +227,7 @@ window.addEventListener('scroll', throttledUpdateUI)
 
 Crée une copie profonde d'un objet.
 
-<Source dark code={`import { deepCopy } from '@cnamts/synpase'
+<Source dark code={`import { deepCopy } from '@cnamts/synapse'
 
 const originalObject = {
   user: {
@@ -263,7 +263,7 @@ Le Design System fournit également un ensemble de règles de validation prêtes
   isNotBeforeToday,
   isRequired,
   isValidEmail
-} from '@cnamts/synpase'
+} from '@cnamts/synapse'
 
 export default {
   setup() {
