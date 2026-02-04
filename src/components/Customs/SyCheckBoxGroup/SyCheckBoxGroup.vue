@@ -216,7 +216,7 @@
 			return undefined
 		}
 		if (props.id) {
-			return `${props.id}`
+			return `${props.id}-messages`
 		}
 		return undefined
 	})
