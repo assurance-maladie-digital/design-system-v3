@@ -2,6 +2,7 @@
 	import { computed, nextTick, onMounted, ref, inject, watch, type Ref, onUnmounted } from 'vue'
 	import type { VDataTable, VDataTableServer } from 'vuetify/components'
 	import { locales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	type HeaderPropsRaw = {
 		class?: string | string[]
@@ -225,7 +226,7 @@
 			v-if="header!.sortable"
 			class="sort-container d-flex align-center"
 		>
-			<VIcon
+			<SyIcon
 				class="v-data-table-header__sort-icon"
 				:class="{ 'text-primary opacity-100' : isColumnSorted }"
 				:icon="headerParams.getSortIcon(column)"

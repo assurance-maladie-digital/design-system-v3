@@ -7,6 +7,7 @@
 
 	import { locales } from './locales'
 	import { config } from './config'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		ariaLabel?: string
@@ -106,9 +107,11 @@
 					@click="copy"
 				>
 					<slot name="icon">
-						<VIcon v-bind="options.icon">
-							{{ copyIcon }}
-						</VIcon>
+						<SyIcon
+							v-bind="options.icon"
+							:icon="copyIcon"
+							decorative
+						/>
 					</slot>
 				</VBtn>
 			</template>

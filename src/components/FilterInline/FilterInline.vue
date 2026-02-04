@@ -4,6 +4,7 @@
 	import { toRef } from 'vue'
 	import ChipList from '../ChipList/ChipList.vue'
 	import { locales as defaultLocales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: FilterProp
@@ -59,12 +60,11 @@
 
 					{{ filter.title }}
 
-					<VIcon
+					<SyIcon
 						size="small"
 						class="ml-1"
-					>
-						{{ isActive ? mdiChevronUp : mdiChevronDown }}
-					</VIcon>
+						:icon="isActive ? mdiChevronUp : mdiChevronDown"
+					/>
 				</VBtn>
 			</template>
 

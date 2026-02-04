@@ -5,6 +5,7 @@
 	import { watch } from 'vue'
 	import type { DataTableHeaders } from '../types'
 	import { sortHeaders } from './sortHeaders'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const headers = defineModel<DataTableHeaders[]>(
 		'headers',
@@ -147,9 +148,10 @@
 					aria-haspopup="menu"
 					:aria-controls="isMenuOpen ? columnsMenuId : undefined"
 				>
-					<VIcon size="large">
-						{{ mdiTableEdit }}
-					</VIcon>
+					<SyIcon
+						:icon="mdiTableEdit"
+						size="large"
+					/>
 				</VBtn>
 			</template>
 			<VCard min-width="300">
@@ -186,9 +188,10 @@
 										header.hidden = !header.hidden
 									}"
 								>
-									<VIcon>
-										{{ header.hidden ? mdiEyeOff : mdiEye }}
-									</VIcon>
+									<SyIcon
+										:icon="header.hidden ? mdiEyeOff : mdiEye"
+										decorative
+									/>
 								</VBtn>
 							</div>
 							<div class="d-flex ga-2 pa-2">
@@ -207,11 +210,11 @@
 										color="primary"
 										@click="left(header)"
 									>
-										<VIcon
+										<SyIcon
+											:icon="mdiChevronUp"
+											decorative
 											size="x-large"
-										>
-											{{ mdiChevronUp }}
-										</VIcon>
+										/>
 									</VBtn>
 									<VBtn
 										:title="locales.moveColumnRight(header.title as string)"
@@ -221,11 +224,11 @@
 										color="primary"
 										@click="right(header)"
 									>
-										<VIcon
+										<SyIcon
+											:icon="mdiChevronDown"
+											decorative
 											size="x-large"
-										>
-											{{ mdiChevronDown }}
-										</VIcon>
+										/>
 									</VBtn>
 								</VBtnGroup>
 							</div>

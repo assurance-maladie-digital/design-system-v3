@@ -9,6 +9,7 @@
 		mdiClose,
 	} from '@mdi/js'
 	import type { VIcon } from 'vuetify/components'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	defineOptions({
 		inheritAttrs: false,
@@ -75,9 +76,9 @@
 			<template #prepend>
 				<VIcon
 					ref="alertIcon"
+					v-rgaa-svg-fix
 					class="alert-icon"
 					size="1.5rem"
-					role="presentation"
 				>
 					<slot name="icon">
 						{{ prependIcon }}
@@ -102,12 +103,10 @@
 					class="alert-close-btn"
 					@click="dismissAlert"
 				>
-					<VIcon
+					<SyIcon
 						size="large"
-					>
-						{{ mdiClose }}
-					</VIcon>
-
+						:icon="mdiClose"
+					/>
 					<span>
 						{{ locales.close }}
 					</span>

@@ -4,6 +4,7 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import defaultOptions from './config'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: Record<string, unknown> | string | null
@@ -253,21 +254,20 @@
 			@keydown.space.prevent="toggleMenu"
 		>
 			<span :class="{ 'error--text': hasError }">{{ selectedItemText }}</span>
-			<VIcon
+			<SyIcon
 				v-if="hasError"
 				class="ml-2"
 				color="error"
-			>
-				{{ mdiInformation }}
-			</VIcon>
-			<VIcon> {{ mdiChevronDown }}</VIcon>
-			<VIcon
+				:icon="mdiInformation"
+			/>
+			<SyIcon :icon="mdiChevronDown" />
+			<SyIcon
 				v-if="selectedItemText && props.clearable"
+				:icon="mdiCloseCircle"
 				aria-label="Supprimer"
+				role="button"
 				@click.stop.prevent="selectItem(null)"
-			>
-				{{ mdiCloseCircle }}
-			</VIcon>
+			/>
 		</div>
 		<VList
 			v-if="isOpen"

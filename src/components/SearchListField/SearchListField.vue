@@ -7,6 +7,7 @@
 
 	import { SyTextField, SyCheckbox } from '@/components'
 	import slugify from 'slugify'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = defineProps({
 		modelValue: {
@@ -114,9 +115,10 @@
 			:bg-color="props.bgColor"
 		>
 			<template #prepend-inner>
-				<VIcon class="mr-1">
-					{{ mdiMagnify }}
-				</VIcon>
+				<SyIcon
+					:icon="mdiMagnify"
+					class="mr-1"
+				/>
 			</template>
 		</SyTextField>
 

@@ -9,6 +9,7 @@
 	} from '@mdi/js'
 	import { cnamContextualTokens } from '@/designTokens/tokens/cnam/cnamContextual'
 	import { locales as defaultLocales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	type FileState = 'initial' | 'success' | 'error' | 'loading'
 
@@ -78,25 +79,26 @@
 							{{ locales.error }}
 						</span>
 
-						<VIcon
+						<SyIcon
 							v-if="state === 'error'"
+							:icon="mdiAlertCircle"
 							:size="cnamContextualTokens.iconSize.default"
-							:aria-label="locales.error"
 							color="error"
-						>{{ mdiAlertCircle }}</VIcon>
+						/>
 
-						<VIcon
+						<SyIcon
 							v-else-if="state === 'success'"
+							:icon="mdiCheckCircle"
 							:size="cnamContextualTokens.iconSize.default"
-							:aria-label="locales.success"
 							color="success"
-						>{{ mdiCheckCircle }}</VIcon>
+						/>
 
-						<VIcon
+						<SyIcon
 							v-else
 							:size="cnamContextualTokens.iconSize.default"
 							color="primary"
-						>{{ mdiFile }}</VIcon>
+							:icon="mdiFile"
+						/>
 					</slot>
 				</span>
 				<div>
@@ -129,11 +131,10 @@
 				>
 					<span>Importer</span>
 					<template #prepend>
-						<VIcon
+						<SyIcon
 							color="primary"
-						>
-							{{ mdiTrayArrowUp }}
-						</VIcon>
+							:icon="mdiTrayArrowUp"
+						/>
 					</template>
 				</VBtn>
 				<VBtn
@@ -144,11 +145,10 @@
 				>
 					<span>{{ locales.see }}</span>
 					<template #prepend>
-						<VIcon
+						<SyIcon
 							color="primary"
-						>
-							{{ mdiEyeOutline }}
-						</VIcon>
+							:icon="mdiEyeOutline"
+						/>
 					</template>
 				</VBtn>
 				<VBtn
@@ -159,11 +159,10 @@
 				>
 					<span>{{ locales.delete }}</span>
 					<template #prepend>
-						<VIcon
+						<SyIcon
 							color="error"
-						>
-							{{ mdiDeleteOutline }}
-						</VIcon>
+							:icon="mdiDeleteOutline"
+						/>
 					</template>
 				</VBtn>
 			</div>

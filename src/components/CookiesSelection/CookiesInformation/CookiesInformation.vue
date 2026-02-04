@@ -6,6 +6,7 @@
 	import CookiesTable from '../CookiesTable/CookiesTable.vue'
 	import type { CookieTypes, Cookie } from '../types'
 	import { locales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	defineProps<{
 		type: CookieTypes
@@ -104,12 +105,11 @@
 			<summary class="mb-1">
 				{{ open ? locales.hideInformation : locales.showInformation }}
 
-				<VIcon
+				<SyIcon
+					:icon="open ? mdiChevronUp : mdiChevronDown"
 					class="mr-2"
-					data-test="chevron"
-				>
-					{{ open ? mdiChevronUp : mdiChevronDown }}
-				</VIcon>
+					decorative
+				/>
 			</summary>
 
 			<CookiesTable

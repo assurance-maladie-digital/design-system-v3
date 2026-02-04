@@ -3,6 +3,7 @@
 	import { computed } from 'vue'
 	import { useTheme } from 'vuetify'
 	import { locales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<{
 		href: string
@@ -85,13 +86,12 @@
 			:aria-label="locales.infoLinkAriaLabel(isConnectPlus)"
 		>
 			{{ locales.infoLinkLabel(isConnectPlus) }}
-
-			<VIcon
+			<SyIcon
+				name="external-link"
 				size="1em"
+				:icon="mdiOpenInNew"
 				class="sy-france-connect-info-link-icon"
-			>
-				{{ mdiOpenInNew }}
-			</VIcon>
+			/>
 		</a>
 	</div>
 </template>
