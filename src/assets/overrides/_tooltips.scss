@@ -11,7 +11,5 @@
 }
 
 .v-theme--ap.v-tooltip .v-overlay__content {
-	color: apTokens.$colors-text-base;
-	border: 1px solid apTokens.$colors-border-base;
-	background-color: apTokens.$colors-background-surface !important;
+  font-size: 14px;
 }
