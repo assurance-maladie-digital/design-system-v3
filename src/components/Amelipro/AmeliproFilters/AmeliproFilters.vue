@@ -75,9 +75,7 @@
 
 <template>
 	<div
-		:aria-labelledby="unique === true && groupId ? `${groupId}-label` : undefined"
 		class="amelipro-filters"
-		:role="unique ? 'radiogroup' : undefined"
 	>
 		<p
 			:id="`${groupId}-label`"
@@ -133,12 +131,13 @@
 				>
 					<div
 						:id="item.id"
-						:aria-checked="item.isChecked ? true : undefined"
+						:aria-checked="item.isChecked"
 						class="amelipro-filters__filter__input"
 						role="checkbox"
 						tabindex="0"
 						@click="updateItems(item, !item.isChecked)"
 						@keydown.space="updateItems(item, !item.isChecked)"
+						@keydown.enter.prevent="updateItems(item, !item.isChecked)"
 					>
 						<span
 							:id="`${item.id}-label-text`"
