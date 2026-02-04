@@ -108,6 +108,7 @@
 				<SyIcon
 					:icon="open ? mdiChevronUp : mdiChevronDown"
 					class="mr-2"
+					data-test="chevron"
 					decorative
 				/>
 			</summary>
