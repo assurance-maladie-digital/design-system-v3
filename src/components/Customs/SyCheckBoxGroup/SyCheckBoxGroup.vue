@@ -8,7 +8,7 @@
 
 	type Option = {
 		label: string
-		value: PropertyKey
+		value: string | number
 		disabled?: boolean
 		readonly?: boolean
 		id?: string
@@ -19,7 +19,7 @@
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: PropertyKey | PropertyKey[] | null
+			modelValue?: (string | number) | (string | number)[] | null
 			label?: string
 			displayAsterisk?: boolean
 			ariaLabel?: string
@@ -117,14 +117,14 @@
 			: [],
 	)
 
-	function isOptionChecked(value: PropertyKey): boolean {
+	function isOptionChecked(value: string | number): boolean {
 		if (isMultiple.value) {
 			return Array.isArray(model.value) && model.value.includes(value)
 		}
 		return model.value === value
 	}
 
-	function toggleOption(value: PropertyKey): void {
+	function toggleOption(value: string | number): void {
 		if (props.readonly || props.disabled) {
 			return
 		}
@@ -148,14 +148,14 @@
 		}
 	}
 
-	function getValidationValue(): PropertyKey | PropertyKey[] | null {
+	function getValidationValue(): (string | number) | (string | number)[] | null {
 		if (isMultiple.value) {
 			return Array.isArray(model.value) ? model.value : []
 		}
-		return model.value as PropertyKey | null
+		return model.value as (string | number) | null
 	}
 
-	const validateField = (value: PropertyKey | PropertyKey[] | null) => {
+	const validateField = (value: (string | number) | (string | number)[] | null) => {
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
@@ -187,13 +187,13 @@
 	watch(model, (newValue) => {
 		if (!props.isValidateOnBlur) {
 			if (isSubmitted.value) {
-				const isValid = validateField(newValue as PropertyKey | PropertyKey[] | null)
+				const isValid = validateField(newValue as (string | number) | (string | number)[] | null)
 				if (isValid) {
 					validation.clearValidation()
 				}
 			}
 			else {
-				const isValid = validateField(newValue as PropertyKey | PropertyKey[] | null)
+				const isValid = validateField(newValue as (string | number) | (string | number)[] | null)
 				if (isValid && validation.hasError.value) {
 					validation.clearValidation()
 				}
