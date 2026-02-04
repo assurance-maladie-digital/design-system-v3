@@ -1,11 +1,12 @@
 import { mdiAccount } from '@mdi/js'
 import type { Meta, StoryObj } from '@storybook/vue3'
-import SyBtnSelect from './SyBtnSelect.vue'
-import { VIcon, VListItem, VListItemTitle } from 'vuetify/components'
+import SyBtnMenu from './SyBtnMenu.vue'
+import { VListItem, VListItemTitle } from 'vuetify/components'
+import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
-const meta: Meta<typeof SyBtnSelect> = {
-	title: 'Composants/Formulaires/Selects/SyBtnSelect',
-	component: SyBtnSelect,
+const meta: Meta<typeof SyBtnMenu> = {
+	title: 'Composants/Navigation/SyBtnMenu',
+	component: SyBtnMenu,
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue', 'label', 'required', 'isOpen', 'formattedItems', 'selectedItem'] },
@@ -40,7 +41,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect 
+  <SyBtnMenu 
   	:primary-info="primaryInfo" 
   	:menu-items="items" 
   />
@@ -51,14 +52,13 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = [
 		{ text: 'Administration', value: 'Administration', link: '/admin' },
 		{ text: 'Profil', value: 'Profil', link: '/profile' },
 		{ text: 'Paramètres', value: 'Paramètres', link: '/settings' },
-		{ text: 'Profil', value: 'Profil', link: '/profile' },
 	]
 </script>
 				`,
@@ -71,18 +71,18 @@ const items = [
 			{ text: 'Administration', value: 'Administration', link: '/admin' },
 			{ text: 'Profil', value: 'Profil', link: '/profile' },
 			{ text: 'Paramètres', value: 'Paramètres', link: '/settings' },
-			{ text: 'Profil', value: 'Profil', link: '/profile' },
 		],
+		modelValue: 'Administration',
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect },
+			components: { SyBtnMenu },
 			setup() {
 				return { args }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args"/>
+                <SyBtnMenu v-bind="args"/>
               </div>
             `,
 		}
@@ -99,7 +99,7 @@ export const MobileView: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect
+  <SyBtnMenu
    	:primary-info="primaryInfo" 
   	:menu-items="items" 
   	is-mobile-view
@@ -111,7 +111,7 @@ export const MobileView: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = ['Option 1', 'Option 2']
@@ -127,13 +127,13 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnMenu, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args"/>
+                <SyBtnMenu v-bind="args"/>
               </div>
             `,
 		}
@@ -150,14 +150,14 @@ export const WithSlotPrependIcon: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect 
+  <SyBtnMenu 
   	:primary-info="primaryInfo" 
   	:menu-items="items"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" color="secondary" />
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -165,7 +165,7 @@ export const WithSlotPrependIcon: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -184,17 +184,17 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnMenu, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args">
+                <SyBtnMenu v-bind="args">
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative/>
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
@@ -211,14 +211,14 @@ export const WithSlotAppendIcon: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect 
+  <SyBtnMenu 
   	:primary-info="primaryInfo" 
   	:menu-items="items"
   >
     <template #append-icon>
-      <VIcon :icon="mdiAccount" color="secondary" />
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -226,7 +226,7 @@ export const WithSlotAppendIcon: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -242,17 +242,17 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnMenu, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args">
+                <SyBtnMenu v-bind="args">
                   <template #append-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative />
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
@@ -269,15 +269,15 @@ export const WithIconOnly: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect 
+  <SyBtnMenu 
   	:primary-info="primaryInfo" 
   	:menu-items="items"
   	icon-only
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" color="secondary" />
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -285,7 +285,7 @@ export const WithIconOnly: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -302,17 +302,17 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnMenu, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args">
+                <SyBtnMenu v-bind="args">
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount" color="secondary"/>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative />
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
@@ -329,7 +329,7 @@ export const WithLogoutItemSlot: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect
+  <SyBtnMenu
   	:primary-info="primaryInfo"
   	:menu-items="items"
   >
@@ -338,7 +338,7 @@ export const WithLogoutItemSlot: Story = {
         <VListItemTitle>Logout</VListItemTitle>
       </VListItem>
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -346,7 +346,7 @@ export const WithLogoutItemSlot: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = ['Option 1', 'Option 2']
@@ -361,19 +361,19 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VListItem, VListItemTitle },
+			components: { SyBtnMenu, VListItem, VListItemTitle },
 			setup() {
 				return { args }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args">
+                <SyBtnMenu v-bind="args">
                   <template #footer-list-item>
                     <VListItem @click="console.log('logout')">
                       <VListItemTitle>Logout</VListItemTitle>
                     </VListItem>
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
@@ -390,15 +390,15 @@ export const WithCustomKeys: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect
+  <SyBtnMenu
     text-key="customText"
     value-key="customValue"
     :menu-items="menuItems"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" />
+	<SyIcon :icon="mdiAccount" decorative />
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -406,7 +406,7 @@ export const WithCustomKeys: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
@@ -429,19 +429,19 @@ const menuItems = [
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnMenu, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect
+                <SyBtnMenu
                     v-bind="args"
                 >
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount"/>
+					<SyIcon :icon="mdiAccount" decorative />
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
@@ -458,19 +458,19 @@ export const WithMultipleSlots: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect
+  <SyBtnMenu
     :primary-info="primaryInfo"
   	:menu-items="menuItems"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" />
+	<SyIcon :icon="mdiAccount" decorative />
     </template>
     <template #footer-list-item>
       <VListItem @click="console.log('logout')">
         <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -478,7 +478,7 @@ export const WithMultipleSlots: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
@@ -493,22 +493,22 @@ const menuItems = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon, VListItem, VListItemTitle },
+			components: { SyBtnMenu, SyIcon, VListItem, VListItemTitle },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args">
+                <SyBtnMenu v-bind="args">
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount"/>
+					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                   <template #footer-list-item>
                     <VListItem @click="console.log('logout')">
                       <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
@@ -525,18 +525,19 @@ export const WithCustomStyles: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect 
+  <SyBtnMenu 
   	:primary-info="primaryInfo"
   	:menu-items="items"
   	>
     <template #prepend-icon>
-      <VIcon 
+	<SyIcon 
       	:icon="mdiAccount" 
       	class="mr-2"
-      	color="secondary" 
+      	color="secondary"
+		decorative
       />
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -544,7 +545,7 @@ export const WithCustomStyles: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Jane Doe'
@@ -560,21 +561,22 @@ const items = ['Option 1', 'Option 2']
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnMenu, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect v-bind="args">
+                <SyBtnMenu v-bind="args">
                   <template #prepend-icon>
-                    <VIcon
+					<SyIcon
                         :icon="mdiAccount"
                         class="mr-2"
                         color="secondary"
+						decorative
                     />
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
@@ -591,15 +593,15 @@ export const WithStyledOptions: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyBtnSelect
+  <SyBtnMenu
     :primary-info="primaryInfo"
   	:menu-items="menuItems"
     :options="options"
   >
     <template #prepend-icon>
-      <VIcon :icon="mdiAccount" />
+	<SyIcon :icon="mdiAccount" decorative />
     </template>
-  </SyBtnSelect>
+  </SyBtnMenu>
 </template>
 				`,
 			},
@@ -607,7 +609,7 @@ export const WithStyledOptions: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { SyBtnSelect } from '@cnamts/synapse'
+import { SyBtnMenu } from '@cnamts/synapse'
 import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
@@ -632,19 +634,19 @@ const options = {
 	},
 	render: (args) => {
 		return {
-			components: { SyBtnSelect, VIcon },
+			components: { SyBtnMenu, SyIcon },
 			setup() {
 				return { args, mdiAccount }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-                <SyBtnSelect
+                <SyBtnMenu
                     v-bind="args"
                 >
                   <template #prepend-icon>
-                    <VIcon :icon="mdiAccount"/>
+					<SyIcon :icon="mdiAccount" decorative />
                   </template>
-                </SyBtnSelect>
+                </SyBtnMenu>
               </div>
             `,
 		}
