@@ -1,0 +1,94 @@
+import { Meta, Story } from '@storybook/addon-docs'
+import * as Stories from '../PasswordField.stories.ts'
+import '@/stories/styles/shared.css'
+
+<Meta of={Stories} />
+
+# Accessibilité
+
+Informations sur l’accessibilité du composant **PasswordField**.
+
+---
+
+## 📄 Rapports & correctifs
+
+- **Rapport d'audit manuel** :  
+  👉 [Télécharger le rapport](\/audits\/PasswordField.xlsx)
+
+- **Correctifs associés** :  
+  👉 [Issue GitHub #898](https://github.com/assurance-maladie-digital/design-system-v3/issues/898)
+
+---
+
+## 🔍 Spécificité — Source technique
+
+### 🏷️ Étiquette de champ (label)
+
+Les champs de formulaires doivent avoir une **étiquette explicite et visible**.
+
+Techniquement, on utilise la balise `label` associée au champ via les attributs `for` et `id`.  
+L’étiquette doit être **pertinente** et **accolée au champ** concerné.
+
+👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/)
+
+---
+
+### ✍️ Remplissage automatique
+
+Selon la finalité du champ, le **remplissage automatique** peut être activé grâce à l’attribut `autocomplete`.
+
+👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-lattribut-autocomplete-pour-faciliter-le-remplissage-automatique-des-champs/)
+
+---
+
+### 💡 Aide à la saisie
+
+Lorsqu’une aide à la saisie est fournie :
+- elle doit être **visible**
+- intégrée à l’étiquette ou
+- située dans le texte associé au champ
+
+👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-aides-a-la-saisie-directement-dans-les-balises-label/)
+
+---
+
+### ⚠️ Champs obligatoires
+
+Un champ obligatoire doit posséder **au moins une** des caractéristiques suivantes :
+
+- un intitulé visible indiquant son caractère obligatoire
+- un attribut `required`
+- ou `aria-required="true"`
+
+L’information doit être **rattachée au libellé** ou au texte associé.
+
+👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/integrer-required-ou-aria-requiredtrue-dans-les-champs-obligatoires/)
+
+---
+
+### ❌ Gestion des erreurs
+
+En cas d’erreur, le champ doit avoir :
+- un **message d’erreur visible**
+- et/ou l’attribut `aria-invalid="true"`
+
+Si l’erreur concerne un **format ou un type**, le message doit :
+- expliquer le problème
+- fournir des **exemples de valeurs attendues**
+- être distinct de l’aide à la saisie
+
+👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/)
+
+---
+
+### 🔐 Spécificités des champs mot de passe
+
+- Le **copier-coller doit être autorisé**  
+  (utile pour les gestionnaires de mots de passe)
+
+- Le mot de passe doit pouvoir être **démasqué pendant la saisie**  
+  afin d’améliorer l’accessibilité pour les personnes ayant des troubles cognitifs ou de saisie
+
+👉 [Documentation W3C – Accessible Authentication](https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html)
+
+---

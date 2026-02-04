@@ -1,0 +1,70 @@
+import { Meta, Primary } from '@storybook/blocks';
+import * as SkipLinkStories from '../SkipLink.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={SkipLinkStories} />
+
+<AccessibilityGuideLayout
+	componentName="SkipLink"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/link/"
+>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique">
+			<ul>
+				<li><strong>Rôles ARIA appropriés</strong> : <code>role="navigation"</code> pour l'élément principal</li>
+				<li><strong>Attributs ARIA utilisés</strong> : <code>aria-label</code> avec pour valeur "Liens d'évitement"</li>
+				<li><strong>Élément interactif</strong> : <code>&lt;a&gt;</code> pour la navigation vers la cible</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+			<ul>
+				<li><strong>Gestion du focus</strong> : Le lien n'est visible que s'il a le focus</li>
+				<li><strong>Navigation fluide</strong> : Utilisation de la classe <code>d-sr-only-focusable</code> pour masquer hors focus</li>
+				<li><strong>Pas de piège clavier</strong> : Lien accessible via tabulation et activation par Entrée</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SkipLink">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Utilisez un label descriptif pour indiquer la destination du lien</li>
+			<li>Vérifiez que la cible (<code>target</code>) existe et est accessible</li>
+			<li>Placez le composant en haut de la page pour une accessibilité optimale</li>
+			<li>Évitez les cibles dynamiques qui pourraient changer</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/link/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les liens</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#12.9.1" target="_blank" rel="noopener noreferrer">Critère 12.9.1 RGAA - Pas de piège au clavier</a></li>
+		</ul>
+	</ResourcesSection>
+
+	<AuditSection>
+		
+- 📄 **Rapport d’audit manuel**  
+  👉 [Voir le rapport](/audits/SkipLink.xlsx)
+
+- 🛠 **Correctifs associés**  
+  👉 [Issue #4012](https://github.com/assurance-maladie-digital/design-system-v3/issues/4012)
+
+---
+	</AuditSection>
+</AccessibilityGuideLayout>
