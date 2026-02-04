@@ -3,25 +3,26 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import AmeliproFilters from '../AmeliproFilters.vue'
 import type { AmeliproFilterItem } from '../types'
 
-const items: AmeliproFilterItem[] = [
+const createItems = (): AmeliproFilterItem[] => [
 	{ id: 'the-item-id-1', label: 'The item label 1', value: 'the-item-value-1' },
 	{ id: 'the-item-id-2', label: 'The item label 2', value: 'the-item-value-2', isChecked: true },
 	{ id: 'the-item-id-3', label: 'The item label 3', value: 'the-item-value-3' },
 	{ id: 'the-item-id-4', label: 'The item label 4', value: 'the-item-value-4', isChecked: true },
 ]
 
-const requiredProps = () => ({
-	groupId: 'group-1',
-	groupLabel: 'Group Label',
-	value: items,
-})
-
 describe('AmeliproFilters', () => {
-	let wrapper: VueWrapper
+	let wrapper: VueWrapper<InstanceType<typeof AmeliproFilters>>
 	let inputs: DOMWrapper<HTMLInputElement>[]
 
 	beforeEach(() => {
-		wrapper = shallowMount(AmeliproFilters, { props: requiredProps() })
+		wrapper = shallowMount(AmeliproFilters, {
+			props: {
+				groupId: 'group-1',
+				groupLabel: 'Group Label',
+				value: createItems(),
+				unique: false,
+			},
+		})
 		inputs = wrapper.findAll<HTMLInputElement>('.amelipro-filters__filter__input')
 	})
 
@@ -39,13 +40,14 @@ describe('AmeliproFilters', () => {
 		])
 	})
 
-	it('main div has correct aria-labelledby and role attributes', async () => {
-		expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
+	it('does not set ARIA attributes on root container', async () => {
 		expect(wrapper.attributes('role')).toBeUndefined()
+		expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
 
 		await wrapper.setProps({ unique: true })
-		expect(wrapper.attributes('aria-labelledby')).toBe('group-1-label')
-		expect(wrapper.attributes('role')).toBe('radiogroup')
+
+		expect(wrapper.attributes('role')).toBeUndefined()
+		expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
 	})
 
 	it('group label has correct text and id', () => {
@@ -114,7 +116,7 @@ describe('AmeliproFilters', () => {
 		await wrapper.setProps({ value: [] })
 		expect(wrapper.findAll('.amelipro-filters__item').length).toBe(0)
 
-		await wrapper.setProps({ value: items })
+		await wrapper.setProps({ value: createItems() })
 		expect(wrapper.findAll('.amelipro-filters__item').length).toBe(4)
 	})
 
@@ -122,7 +124,7 @@ describe('AmeliproFilters', () => {
 		await wrapper.setProps({ unique: true, value: [] })
 		expect(wrapper.findAll('.amelipro-filters__item').length).toBe(0)
 
-		await wrapper.setProps({ value: items })
+		await wrapper.setProps({ value: createItems() })
 		expect(wrapper.findAll('.amelipro-filters__item').length).toBe(4)
 	})
 
@@ -165,7 +167,7 @@ describe('AmeliproFilters', () => {
 	it('sets correct ARIA attributes for checkbox items', () => {
 		const divs = wrapper.findAll('.amelipro-filters__filter__input')
 		divs.forEach((div, i) => {
-			const item = items[i]!
+			const item = createItems()[i]!
 			expect(div.attributes('role')).toBe('checkbox')
 			if (item.isChecked) {
 				expect(div.attributes('aria-checked')).toBe('true')
