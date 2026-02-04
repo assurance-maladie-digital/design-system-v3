@@ -100,7 +100,7 @@
 				<input
 					:id="item.id"
 					:checked="!props.unique && item.isChecked ? true : undefined"
-					class="amelipro-filters__filter__input"
+					class="amelipro-filters__filter-input"
 					:name="groupId"
 					:type="unique ? 'radio' : 'checkbox'"
 					:value="item.value"
@@ -132,7 +132,7 @@
 					<div
 						:id="item.id"
 						:aria-checked="item.isChecked"
-						class="amelipro-filters__filter__input"
+						class="amelipro-filters__filter-input"
 						role="checkbox"
 						tabindex="0"
 						@click="updateItems(item, !item.isChecked)"
@@ -180,7 +180,7 @@ input {
 	font-weight: apTokens.$filter-font-weight;
 
 	input + &,
-	.amelipro-filters__filter__input & {
+	.amelipro-filters__filter-input & {
 		position: relative;
 		border-radius: apTokens.$filter-radius;
 		border: 1px solid apTokens.$ap-blue-darken1;
@@ -190,7 +190,7 @@ input {
 	}
 
 	input:checked + &,
-	.amelipro-filters__filter__input[aria-checked='true'] & {
+	.amelipro-filters__filter-input[aria-checked='true'] & {
 		background-color: apTokens.$ap-blue-lighten3;
 
 		&::after {
@@ -207,7 +207,7 @@ input {
 	}
 
 	input:focus + &,
-	.amelipro-filters__filter__input:focus & {
+	.amelipro-filters__filter-input:focus & {
 		outline: 1px dotted apTokens.$ap-grey-darken1;
 	}
 }
