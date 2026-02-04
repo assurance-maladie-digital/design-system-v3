@@ -23,7 +23,7 @@ describe('AmeliproFilters', () => {
 				unique: false,
 			},
 		})
-		inputs = wrapper.findAll<HTMLInputElement>('.amelipro-filters__filter__input')
+		inputs = wrapper.findAll<HTMLInputElement>('.amelipro-filters__filter-input')
 	})
 
 	it('renders correct number of filter items', () => {
@@ -165,7 +165,7 @@ describe('AmeliproFilters', () => {
 	})
 
 	it('sets correct ARIA attributes for checkbox items', () => {
-		const divs = wrapper.findAll('.amelipro-filters__filter__input')
+		const divs = wrapper.findAll('.amelipro-filters__filter-input')
 		divs.forEach((div, i) => {
 			const item = createItems()[i]!
 			expect(div.attributes('role')).toBe('checkbox')
