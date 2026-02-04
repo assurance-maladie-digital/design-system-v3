@@ -49,10 +49,10 @@ export const parseDate = (dateString: string | Date | null | undefined, format: 
 		return null
 	}
 
-	// Extraire les composants de la date pour créer une date UTC
-	// Cela évite les problèmes de décalage de fuseau horaire et garantit
-	// que les dates au format dd/mm/yyyy sont correctement interprétées
-	return dayjs.utc()
+	// Extraire les composants de la date pour créer une date à minuit en timezone locale.
+	// On évite ainsi les décalages jour-1/jour+1 quand on formate la Date en local,
+	// notamment dans les fuseaux négatifs (ex: UTC-4).
+	return dayjs()
 		.year(parsedDate.year())
 		.month(parsedDate.month())
 		.date(parsedDate.date())
