@@ -172,7 +172,7 @@
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="text-grey text-darken-2 text-h7 font-weight-regular"
+								class="subtitle text-grey text-darken-2 font-weight-regular"
 							>
 								{{ props.secondaryInfo }}
 							</span>
@@ -246,6 +246,11 @@
 
 	&:focus {
 		background: rgba(tokens.$blue-base, 0.08) !important;
+	}
+
+	.subtitle {
+		font-size: 0.875rem;
+		line-height: 1.5;
 	}
 }
 
