@@ -175,13 +175,13 @@
 				>
 					<span
 						:class="['text-'+props?.options['btn']?.color]"
-						class="d-flex align-center"
+						class="d-flex align-center ga-2"
 					>
 						<slot name="prepend-icon" />
 						<span class="d-sr-only">{{ props.label }}</span>
 						<span
 							v-if="!isMobileVersion && !iconOnly"
-							class="d-flex flex-column align-end py-1 mr-2"
+							class="d-flex flex-column align-end py-1"
 						>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
