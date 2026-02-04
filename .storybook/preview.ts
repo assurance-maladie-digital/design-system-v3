@@ -149,7 +149,7 @@ const preview: Preview = {
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SocialMediaLinks', 'SkipLink', 'SyPagination'],
 						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'LangBtn', 'DownloadBtn', 'FranceConnectBtn', 'UserMenuBtn'],
-						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'CalendarMode', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'SyRadioGroup'],
+						'Formulaires', ['SyTextField', 'SyTextArea', 'DatePicker', ['Introduction', 'CalendarMode', 'DateInput', 'CombinedMode', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'SearchListField', 'Selects', ['Introduction', 'SelectBtnField', 'SyInputSelect', 'SySelect'], 'UploadWorkflow', 'Captcha', 'SyRadioGroup', 'SyCheckBoxGroup', 'SyCheckBox'],
 						'Tableaux', ['PaginatedTable', 'TableToolbar', 'SyTable', 'SyServerTable'],
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
