@@ -1,12 +1,30 @@
 import { Meta, Story } from '@storybook/addon-docs';
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/components/Customs/Selects/SyAutocomplete/accessibilite/Accessibility.mdx
+import * as AutocompleteStories from '../SyAutocomplete.stories';
+import * as AccessStories from './Accessibilite.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import '@/stories/styles/shared.css';
+
+<Meta of={AutocompleteStories} name="Accessibility" />
+========
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
 import * as Stories from '../SySelect.stories.ts';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
 
 <Meta of={Stories} />
+<<<<<<< HEAD
 
 <div className="accessibility-guide">
   <h1>Guide d'Accessibilité du Composant SySelect</h1>
+=======
+>>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility):src/components/Customs/Selects/SySelect/accessibilite/Accessibility.mdx
+
+<div className="accessibility-guide">
+  <h1>Guide d'Accessibilité du Composant SyAutocomplete</h1>
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
   
   <div className="intro-section">
     <img 
@@ -15,8 +33,13 @@ import '@/stories/styles/shared.css';
       className="accessibility-icon"
     />
     <p className="intro-text">
+<<<<<<< HEAD
       Le composant SySelect a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
       notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les combobox select-only</a>. 
+=======
+      Le composant SyAutocomplete a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
+      notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les combobox avec auto-complétion</a>. 
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
       Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
     </p>
 </div>
@@ -32,8 +55,14 @@ import '@/stories/styles/shared.css';
       <ul>
         <li><strong>Rôles ARIA appropriés</strong> : <code>role="combobox"</code> sur l'input, <code>role="listbox"</code> sur le menu déroulant</li>
         <li><strong>Relations entre éléments</strong> : <code>aria-controls</code> pour lier le combobox au listbox</li>
+<<<<<<< HEAD
         <li><strong>Type d'interaction</strong> : <code>aria-haspopup="listbox"</code> et <code>aria-autocomplete="list"</code></li>
         <li><strong>État du menu</strong> : <code>aria-expanded</code> indique si le menu est ouvert ou fermé</li>
+=======
+        <li><strong>Type d'interaction</strong> : <code>aria-haspopup="listbox"</code> et <code>aria-autocomplete="list"</code> pour indiquer l'auto-complétion</li>
+        <li><strong>État du menu</strong> : <code>aria-expanded</code> indique si le menu est ouvert ou fermé</li>
+        <li><strong>Prévention de l'auto-complétion navigateur</strong> : <code>autocomplete="off"</code> pour éviter les conflits avec l'auto-complétion native du navigateur</li>
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
       </ul>
     </div>
     
@@ -46,6 +75,10 @@ import '@/stories/styles/shared.css';
         <li><strong>Flèches haut/bas</strong> : Navigation entre les options sans modifier la sélection</li>
         <li><strong>Entrée</strong> : Sélection de l'option active et fermeture du menu</li>
         <li><strong>Échap</strong> : Fermeture du menu sans modifier la sélection</li>
+<<<<<<< HEAD
+=======
+        <li><strong>Saisie de texte</strong> : Filtrage dynamique des options basé sur le texte saisi</li>
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
         <li><strong>Caractères imprimables</strong> : Navigation vers l'option commençant par le(s) caractère(s) saisi(s)</li>
       </ul>
     </div>
@@ -60,6 +93,10 @@ import '@/stories/styles/shared.css';
         <li><strong>Option sélectionnée</strong> : <code>aria-selected="true"</code> sur l'option sélectionnée</li>
         <li><strong>État de validation</strong> : <code>aria-required="true"</code> et <code>aria-invalid="true"</code> pour les champs obligatoires et en erreur</li>
         <li><strong>Scroll automatique</strong> : Les options sont automatiquement scrollées dans la vue lors de la navigation</li>
+<<<<<<< HEAD
+=======
+        <li><strong>Annonces dynamiques</strong> : Mise à jour des annonces pour les technologies d'assistance lors du filtrage</li>
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
       </ul>
     </div>
   </div>
@@ -127,17 +164,27 @@ import '@/stories/styles/shared.css';
   <div className="implementation-section">
     <h2>Spécificités d'implémentation</h2>
     <p>
+<<<<<<< HEAD
       Conformément aux recommandations WAI-ARIA pour les combobox select-only, notre implémentation :
+=======
+      Conformément aux recommandations WAI-ARIA pour les combobox avec auto-complétion, notre implémentation :
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
     </p>
     <ul>
       <li>Maintient le focus DOM sur l'input combobox pendant toute l'interaction</li>
       <li>Utilise <code>aria-activedescendant</code> pour indiquer l'option active aux technologies d'assistance</li>
       <li>Sépare clairement la navigation (flèches) de la sélection (Entrée)</li>
       <li>Gère correctement les états visuels et programmatiques des options</li>
+<<<<<<< HEAD
+=======
+      <li>Implémente un filtrage en temps réel des options basé sur la saisie utilisateur</li>
+      <li>Désactive l'auto-complétion du navigateur pour éviter les conflits</li>
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
     </ul>
   </div>
 </div>
 
+<<<<<<< HEAD
 <div className="accessibility-guide">
 <div className="header">
   <h1>Accessibilité</h1>
@@ -148,11 +195,36 @@ import '@/stories/styles/shared.css';
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/787" target="_blank" style={{color:'#0C41BD'}}>issue #787</a>), (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/931" target="_blank" style={{color:'#0C41BD'}}>issue #931</a>)</p>
 </div>
 
+=======
+<<<<<<<< HEAD:src/components/Customs/Selects/SyAutocomplete/accessibilite/Accessibility.mdx
+========
+<div className="accessibility-guide">
+<div className="header">
+  <h1>Accessibilité</h1>
+  <p>Informations sur l'accessibilité du composant</p>
+</div>
+
+## Rapport d’audit
+
+- 📄 **Rapport d’audit manuel**  
+  👉 [Voir le rapport](/audits/SySelect.xlsx)
+
+- 🛠 **Correctifs associés**  
+  👉 [Issue #787](https://github.com/assurance-maladie-digital/design-system-v3/issues/787)
+  
+  👉 [Issue #931](https://github.com/assurance-maladie-digital/design-system-v3/issues/931)
+
+---
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
 
 <br />
 
 </div>
 
+<<<<<<< HEAD
+=======
+>>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility):src/components/Customs/Selects/SySelect/accessibilite/Accessibility.mdx
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
 <style>
 {
 `
@@ -268,4 +340,8 @@ import '@/stories/styles/shared.css';
   }
 `
 }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility)
