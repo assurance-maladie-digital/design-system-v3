@@ -229,7 +229,7 @@
 		<VBtn
 			:id="uniqueId ? `${uniqueId}-icon-button` : undefined"
 			:disabled="disabled"
-			class="amelipro-clickable-tile__icon-button"
+			class="amelipro-clickable-tile__icon-button no-padding"
 			:elevation="0"
 			height="auto"
 			:href="href"
@@ -318,5 +318,8 @@
 		align-items: center;
 		width: 100%;
 	}
+}
+.no-padding {
+	padding: 0 !important;
 }
 </style>
