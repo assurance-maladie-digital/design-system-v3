@@ -319,6 +319,7 @@
 		width: 100%;
 	}
 }
+
 .no-padding {
 	padding: 0 !important;
 }
