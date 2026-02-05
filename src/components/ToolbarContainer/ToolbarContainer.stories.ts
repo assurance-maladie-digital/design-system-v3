@@ -49,7 +49,7 @@ export const Default: Story = {
 								value="left"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'left' ? 'true' : undefined"
+								:aria-checked="justification === 'left' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignLeft" size="x-large" decorative />
 							</VBtn>
@@ -60,7 +60,7 @@ export const Default: Story = {
 								value="center"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'center' ? 'true' : undefined"
+								:aria-checked="justification === 'center' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignCenter" size="x-large" decorative />
 							</VBtn>
@@ -71,7 +71,7 @@ export const Default: Story = {
 								value="right"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'right' ? 'true' : undefined"
+								:aria-checked="justification === 'right' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignRight" size="x-large" decorative />
 							</VBtn>
@@ -106,7 +106,7 @@ export const Default: Story = {
 									value="left"
 									elevation="2"
 									size="small"
-									:aria-checked="justification === 'left' ? 'true' : undefined"
+									:aria-checked="justification === 'left' ? 'true' : 'false'"
 								>
 									<SyIcon :icon="mdiFormatAlignLeft" size="x-large" decorative />
 								</VBtn>
@@ -117,7 +117,7 @@ export const Default: Story = {
 									value="center"
 									elevation="2"
 									size="small"
-									:aria-checked="justification === 'center' ? 'true' : undefined"
+									:aria-checked="justification === 'center' ? 'true' : 'false'"
 								>
 									<SyIcon :icon="mdiFormatAlignCenter" size="x-large" decorative />
 								</VBtn>
@@ -128,7 +128,7 @@ export const Default: Story = {
 									value="right"
 									elevation="2"
 									size="small"
-									:aria-checked="justification === 'right' ? 'true' : undefined"
+									:aria-checked="justification === 'right' ? 'true' : 'false'"
 								>
 									<SyIcon :icon="mdiFormatAlignRight" size="x-large" decorative />
 								</VBtn>
@@ -267,7 +267,7 @@ export const ManySections: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							:aria-checked="justification === 'left' ? 'true' : undefined"
+							:aria-checked="justification === 'left' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignLeft" size="x-large" decorative />
 						</VBtn>
@@ -279,7 +279,7 @@ export const ManySections: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							:aria-checked="justification === 'justify' ? 'true' : undefined"
+							:aria-checked="justification === 'justify' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignJustify" size="x-large" decorative />
 						</VBtn>
@@ -290,7 +290,7 @@ export const ManySections: Story = {
 							value="center"
 							elevation="2"
 							size="small"
-							:aria-checked="justification === 'center' ? 'true' : undefined"
+							:aria-checked="justification === 'center' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignCenter" size="x-large" decorative />
 						</VBtn>
@@ -301,7 +301,7 @@ export const ManySections: Story = {
 							value="right"
 							elevation="2"
 							size="small"
-							:aria-checked="justification === 'right' ? 'true' : undefined"
+							:aria-checked="justification === 'right' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignRight" size="x-large" decorative />
 						</VBtn>
@@ -398,7 +398,7 @@ export const ManySections: Story = {
 								value="left"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'left' ? 'true' : undefined"
+								:aria-checked="justification === 'left' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignLeft" size="x-large" decorative />
 							</VBtn>
@@ -409,7 +409,7 @@ export const ManySections: Story = {
 								value="justify"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'justify' ? 'true' : undefined"
+								:aria-checked="justification === 'justify' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignJustify" size="x-large" decorative />
 							</VBtn>
@@ -420,7 +420,7 @@ export const ManySections: Story = {
 								value="center"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'center' ? 'true' : undefined"
+								:aria-checked="justification === 'center' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignCenter" size="x-large" decorative />
 							</VBtn>
@@ -431,7 +431,7 @@ export const ManySections: Story = {
 								value="right"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'right' ? 'true' : undefined"
+								:aria-checked="justification === 'right' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignRight" size="x-large" decorative />
 							</VBtn>
@@ -551,7 +551,7 @@ export const Vertical: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							:aria-checked="justification === 'left' ? 'true' : undefined"
+							:aria-checked="justification === 'left' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignLeft" size="x-large" decorative />
 						</VBtn>
@@ -563,7 +563,7 @@ export const Vertical: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							:aria-checked="justification === 'justify' ? 'true' : undefined"
+							:aria-checked="justification === 'justify' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignJustify" size="x-large" decorative />
 						</VBtn>
@@ -575,7 +575,7 @@ export const Vertical: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							:aria-checked="justification === 'center' ? 'true' : undefined"
+							:aria-checked="justification === 'center' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignCenter" size="x-large" decorative />
 						</VBtn>
@@ -587,7 +587,7 @@ export const Vertical: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							:aria-checked="justification === 'right' ? 'true' : undefined"
+							:aria-checked="justification === 'right' ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatAlignRight" size="x-large" decorative />
 						</VBtn>
@@ -691,7 +691,7 @@ export const Vertical: Story = {
 								value="left"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'left' ? 'true' : undefined"
+								:aria-checked="justification === 'left' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignLeft" size="x-large" decorative />
 							</VBtn>
@@ -702,7 +702,7 @@ export const Vertical: Story = {
 								value="justify"
 								elevation="2"
 								size="small"
-								:aria-checked="justification === 'justify' ? 'true' : undefined"
+								:aria-checked="justification === 'justify' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignJustify" size="x-large" decorative />
 							</VBtn>
@@ -714,7 +714,7 @@ export const Vertical: Story = {
 								elevation="2"
 								size="small"
 								height="48"
-								:aria-checked="justification === 'center' ? 'true' : undefined"
+								:aria-checked="justification === 'center' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignCenter" size="x-large" decorative />
 							</VBtn>
@@ -726,7 +726,7 @@ export const Vertical: Story = {
 								elevation="2"
 								size="small"
 								height="48"
-								:aria-checked="justification === 'right' ? 'true' : undefined"
+								:aria-checked="justification === 'right' ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatAlignRight" size="x-large" decorative />
 							</VBtn>
