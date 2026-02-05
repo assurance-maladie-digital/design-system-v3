@@ -1,14 +1,25 @@
-import { mount, flushPromises } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
+import { describe, it, expect, afterEach } from 'vitest'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
 type DatePickerInstance = InstanceType<typeof DatePicker>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let wrapper: VueWrapper<any> | null = null
+
+afterEach(() => {
+	wrapper?.unmount()
+	wrapper = null
+})
+
 describe('DatePicker', () => {
-	const mountComponent = (props: Record<string, unknown> = {}) => mount(DatePicker, {
-		props: { label: 'Date Field', ...props },
-	})
+	const mountComponent = (props: Record<string, unknown> = {}) => {
+		wrapper = mount(DatePicker, {
+			props: { label: 'Date Field', ...props },
+		})
+		return wrapper
+	}
 
 	it('renders the calendar mode activator input by default', () => {
 		const wrapper = mountComponent({
@@ -131,7 +142,9 @@ describe('DatePicker', () => {
 		if (!(vm.selectedDates instanceof Date)) {
 			throw new Error('Expected selectedDates to be a Date after parsing a valid string')
 		}
-		expect(vm.selectedDates.toISOString().split('T')[0]).toBe('2023-01-15')
+		expect(vm.selectedDates.getFullYear()).toBe(2023)
+		expect(vm.selectedDates.getMonth()).toBe(0)
+		expect(vm.selectedDates.getDate()).toBe(15)
 	})
 
 	it('updateSelectedDates does not update selectedDates for an invalid date string', () => {

@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -88,7 +88,7 @@
     "postcss-html": "^1.7.0",
     "postcss-scss": "^4.0.9",
     "resize-observer-polyfill": "^1.5.1",
-    "semantic-release": "^24.2.3",
+    "semantic-release": "^25.0.3",
     "storybook": "^8.5.6",
     "storybook-addon-vue-mdx": "^2.0.0",
     "stylelint": "^16.12.0",
