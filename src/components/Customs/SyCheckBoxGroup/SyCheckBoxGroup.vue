@@ -220,14 +220,21 @@
 	})
 	const computedAriaLabel = computed(() => (computedAriaLabelledby.value ? undefined : props.ariaLabel))
 
-	const messageId = computed(() => {
-		if (props.ariaLabelledby) {
-			return undefined
+	const messagesId = computed(() => (props.id ? `${props.id}-messages` : undefined))
+	const requiredHintId = computed(() => (props.id ? `${props.id}-required-hint` : undefined))
+	const computedAriaDescribedby = computed(() => {
+		const ids: string[] = []
+
+		const shouldShowMessages = props.hideDetails !== true && (hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages))
+		if (messagesId.value && shouldShowMessages) {
+			ids.push(messagesId.value)
 		}
-		if (props.id) {
-			return `${props.id}-messages`
+
+		if (requiredHintId.value && props.required && !props.ariaLabel && !computedAriaLabelledby.value) {
+			ids.push(requiredHintId.value)
 		}
-		return undefined
+
+		return ids.length > 0 ? ids.join(' ') : undefined
 	})
 
 	onMounted(() => {
@@ -257,7 +264,7 @@
 		:role="'group'"
 		:aria-label="computedAriaLabel"
 		:aria-labelledby="computedAriaLabelledby"
-		:aria-describedby="messageId"
+		:aria-describedby="computedAriaDescribedby"
 		:title="props.title"
 	>
 		<div
@@ -292,6 +299,7 @@
 
 		<div
 			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages))"
+			:id="messagesId"
 			class="v-input__details sy-checkbox-group__messages"
 		>
 			<VMessages
@@ -301,8 +309,8 @@
 		</div>
 
 		<span
-			v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
-			:id="messageId"
+			v-if="requiredHintId && props.required && !props.ariaLabel && !computedAriaLabelledby"
+			:id="requiredHintId"
 			class="d-sr-only"
 		>
 			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
