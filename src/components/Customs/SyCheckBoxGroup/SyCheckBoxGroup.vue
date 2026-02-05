@@ -211,6 +211,15 @@
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
 
+	const labelId = computed(() => (props.id ? `${props.id}-label` : undefined))
+	const computedAriaLabelledby = computed(() => {
+		if (props.label && labelId.value) {
+			return [props.ariaLabelledby, labelId.value].filter(Boolean).join(' ')
+		}
+		return props.ariaLabelledby
+	})
+	const computedAriaLabel = computed(() => (computedAriaLabelledby.value ? undefined : props.ariaLabel))
+
 	const messageId = computed(() => {
 		if (props.ariaLabelledby) {
 			return undefined
@@ -246,15 +255,15 @@
 			'error-field': hasError,
 		}"
 		:role="'group'"
-		:aria-label="props.ariaLabel"
-		:aria-labelledby="props.ariaLabelledby"
+		:aria-label="computedAriaLabel"
+		:aria-labelledby="computedAriaLabelledby"
 		:aria-describedby="messageId"
 		:title="props.title"
 	>
 		<div
 			v-if="props.label"
+			:id="labelId"
 			class="v-label sy-checkbox-group__label"
-			:aria-hidden="props.ariaLabel || props.ariaLabelledby ? 'true' : undefined"
 		>
 			{{ generatedLabel }}
 		</div>
