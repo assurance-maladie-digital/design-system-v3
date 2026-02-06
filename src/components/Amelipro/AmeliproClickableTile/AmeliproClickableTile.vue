@@ -232,7 +232,7 @@
 			:ripple="false"
 			padding="0.5rem"
 			:to="to"
-			aria-label="Ouvrir"
+			:aria-label="`Ouvrir ${tileTitle}`"
 			@blur="focus = false"
 			@click="emitClickEvent"
 			@focus="focus = true"
