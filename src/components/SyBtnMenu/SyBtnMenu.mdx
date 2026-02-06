@@ -1,19 +1,19 @@
 import {Meta, Canvas, Controls, Source} from '@storybook/blocks';
-import * as SyBtnSelectStories from "./SyBtnSelect.stories.ts";
+import * as SyBtnMenuStories from "./SyBtnMenu.stories.ts";
 
-<Meta of={SyBtnSelectStories}/>
+<Meta of={SyBtnMenuStories}/>
 
 <div className="header">
-  <h1>SyBtnSelect</h1>
-  <p>Le composant `SyBtnSelect` est utilisé pour proposer une sélection d'options avec un bouton personnalisé, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.<br/>
+  <h1>SyBtnMenu</h1>
+  <p>Le composant `SyBtnMenu` est utilisé pour proposer une sélection d'options avec un bouton personnalisé, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>.<br/>
 Il est basé sur un `v-btn`.</p>
 </div>
 
-<Canvas of={SyBtnSelectStories.Default}/>
+<Canvas of={SyBtnMenuStories.Default}/>
 
 # API
 
-<Controls of={SyBtnSelectStories.Default}/>
+<Controls of={SyBtnMenuStories.Default}/>
 
 # Exemple d'utilisation
 
@@ -21,10 +21,9 @@ Il est basé sur un `v-btn`.</p>
     dark code={`
 <script setup lang="ts">
   import { ref } from 'vue'
-  import { SyBtnSelect } from '@cnamts/synapse'
+  import { SyBtnMenu } from '@cnamts/synapse'
 
   const model = ref(null)
-import '../../../../stories/styles/shared.css';
   const menuItems = ['Option 1', 'Option 2', 'Option 3']
 
 </script>
@@ -33,7 +32,7 @@ import '../../../../stories/styles/shared.css';
   <main class="ma-12">
     Option sélectionnée: {{ model }}
     <div class="d-flex flex-wrap align-center">
-      <SyBtnSelect
+      <SyBtnMenu
         v-model="model"
         :menu-items="menuItems"
         label="Sélectionnez une option"

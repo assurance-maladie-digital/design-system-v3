@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, useSlots, type PropType } from 'vue'
+	import { ref, watch, computed, onMounted, useSlots, type PropType, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
+	import slugify from 'slugify'
 
 	type Item = string | Record<string, unknown>
 
@@ -15,7 +16,7 @@
 		},
 		label: {
 			type: String,
-			default: 'Sélectionnez une option',
+			default: 'Menu utilisateur',
 		},
 		required: {
 			type: Boolean,
@@ -69,10 +70,6 @@
 
 	const isOpen = ref(false)
 	const selectedItem = ref<Record<string, unknown> | string | null>(props.modelValue as Record<string, unknown> | string | null)
-	const toggleMenu = () => {
-		isOpen.value = !isOpen.value
-	}
-
 	const buttonRef = ref<HTMLElement | null>(null)
 	const buttonWidth = ref('')
 
@@ -101,7 +98,7 @@
 		if (props.hideIcon) {
 			return 'pa-1 pa-sm-2'
 		}
-		return isMobileVersion.value ? 'pa-0' : 'pa-1 pa-sm-3'
+		return isMobileVersion.value ? 'pa-1' : 'pa-1 pa-sm-3'
 	})
 
 	const hasListContent = computed(() => {
@@ -118,6 +115,27 @@
 
 	const generatedId = ref(`custom-btn-select-${Math.random().toString(36).substring(7)}`)
 
+	function getSelectedValue() {
+		if (!selectedItem.value) return undefined
+		if (typeof selectedItem.value === 'string') return selectedItem.value
+		return selectedItem.value[props.textKey] as string
+	}
+
+	const menu = ref<InstanceType<typeof import('vuetify/components').VList> | null>(null)
+
+	watch(isOpen, async (newVal) => {
+		if (newVal) {
+			await nextTick()
+			if (menu.value?.$el) {
+				menu.value.$el.querySelector('[role="menuitem"]')?.focus()
+			}
+		}
+		else {
+			await nextTick()
+			document.getElementById(generatedId.value)!.focus()
+		}
+	})
+
 	defineExpose({
 		isOpen,
 		formattedItems,
@@ -131,7 +149,9 @@
 		class="sy-user-menu-btn-ctn d-inline-block"
 	>
 		<VMenu
-			:id="generatedId"
+			:id="$props.menuId"
+			v-model="isOpen"
+			class="sy-user-menu"
 			:disabled="!hasListContent"
 			location="bottom end"
 			transition="fade-transition"
@@ -152,17 +172,16 @@
 						...menuProps,
 						...props.options['btn'],
 					}"
-					@click="toggleMenu"
 				>
-					<div
+					<span
 						:class="['text-'+props?.options['btn']?.color]"
-						class="d-flex align-center"
+						class="d-flex align-center ga-2"
 					>
 						<slot name="prepend-icon" />
 						<span class="d-sr-only">{{ props.label }}</span>
 						<span
 							v-if="!isMobileVersion && !iconOnly"
-							class="d-flex flex-column align-end py-1 mr-2"
+							class="d-flex flex-column align-end py-1"
 						>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
@@ -172,7 +191,7 @@
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="text-grey text-darken-2 text-h7 font-weight-regular"
+								class="subtitle text-grey text-darken-2 font-weight-regular"
 							>
 								{{ props.secondaryInfo }}
 							</span>
@@ -185,27 +204,41 @@
 							{{ props.primaryInfo }}
 						</span>
 						<slot name="append-icon" />
-					</div>
+					</span>
 				</VBtn>
 			</template>
 			<slot name="content">
 				<VList
 					v-if="hasListContent"
+					ref="menu"
+					tag="ul"
+					role="menu"
 					v-bind="props.options['list']"
+					:aria-labelledby="generatedId"
+					:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
 				>
-					<VListItem
+					<li
 						v-for="(item, index) in formattedItems"
+						:id="`item-${slugify(item[props.textKey] as string)}`"
 						:key="index"
-						:class="`text-${props?.options['list']?.textColor}`"
-						v-bind="props.options['list']"
-						:href="item.link"
-						:to="item.to"
-						@click="selectItem(item)"
 					>
-						<VListItemTitle v-bind="props.options['list']">
-							{{ item[props.textKey] }}
-						</VListItemTitle>
-					</VListItem>
+						<VListItem
+							:class="`text-${props?.options['list']?.textColor}`"
+							v-bind="props.options['list']"
+							:href="item.link"
+							:to="item.to"
+							:tabindex="0"
+							role="menuitem"
+							:aria-current="selectedItem === item ? 'page' : undefined"
+							@click="selectItem(item)"
+						>
+							<VListItemTitle
+								class="item-title"
+							>
+								{{ item[props.textKey] }}
+							</VListItemTitle>
+						</VListItem>
+					</li>
 					<slot />
 					<slot name="footer-list-item" />
 				</VList>
@@ -247,9 +280,36 @@
 	&:focus {
 		background: rgba(tokens.$blue-base, 0.08) !important;
 	}
+
+	.subtitle {
+		font-size: 0.875rem;
+		line-height: 1.5;
+	}
 }
 
 :deep(.sy-user-menu-btn:focus > .v-btn__overlay) {
 	opacity: 0 !important;
+}
+
+.v-btn:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+
+	:deep(.v-btn__overlay) {
+		opacity: 0;
+	}
+
+	&::after {
+		opacity: 0;
+	}
+}
+
+:global(.sy-user-menu .v-list-item:focus) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -2px;
+}
+
+.item-title {
+	white-space: wrap;
 }
 </style>

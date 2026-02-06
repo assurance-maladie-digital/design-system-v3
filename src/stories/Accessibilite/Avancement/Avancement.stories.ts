@@ -43,7 +43,7 @@ const ITEMS: AuditItem[] = [
 	{ composant: 'PasswordField', status: STATUS.AUDITED },
 	{ composant: 'PhoneField', status: STATUS.AUDITED },
 	{ composant: 'UserMenuBtn', status: STATUS.NOT_AUDITED },
-	{ composant: 'SyBtnSelect', status: STATUS.NOT_AUDITED },
+	{ composant: 'SyBtnMenu', status: STATUS.AUDITED },
 	{ composant: 'NirField', status: STATUS.IN_PROGRESS },
 	{ composant: 'PeriodField', status: STATUS.NOT_AUDITED },
 	{ composant: 'RangeField', status: STATUS.NOT_AUDITED },

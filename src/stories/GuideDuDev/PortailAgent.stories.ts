@@ -241,7 +241,6 @@ export const PAgComponents: StoryObj = {
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-sytextfield--docs">SyTextField</a>, 
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-syselect--docs">SySelect</a>, 
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-syinputselect--docs">SyInputSelect</a>, 
-								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-sybtnselect--docs">SyBtnSelect</a>, 
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-sytextarea--docs">SyTextArea</a>, 
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-datepicker-introduction--docs">DatePicker</a>, 
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-diacriticpicker--docs">DiacriticPicker</a>, 
