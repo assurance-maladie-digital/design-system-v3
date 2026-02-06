@@ -1,3 +1,32 @@
+## v1.0.19 (05-02-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Fix security plugin (semantic-release) <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1794">#1794</a></td>
+      <td>- Add AmeliproFilters component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1778">#1778</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix utc in firefox <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1788">#1788</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyBtnSelect: rename component in SyBtnMenu + fix rgaa after audit <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1759">#1759</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- UserMenuBtn: update font size for subtitle <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1789">#1789</a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.18 (02-02-2026)
 
 <table>
