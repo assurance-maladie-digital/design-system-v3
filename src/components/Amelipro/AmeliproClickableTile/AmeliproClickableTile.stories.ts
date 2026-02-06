@@ -6,7 +6,8 @@ const meta = {
 	parameters: {
 		controls: {
 			exclude: [
-				'onClick:clickable-tile',
+				'onClick',
+				'click:clickable-tile',
 			],
 		},
 	},
