@@ -2,7 +2,7 @@
 	import { type PropType, computed, ref } from 'vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import type { IndexedObject } from '../types'
-	import type { RouteLocationRaw } from 'vue-router'
+	import type { NavigationProps } from '@/components/types'
 	import { convertToHex } from '@/utils/functions/convertToHex'
 
 	const props = defineProps({
@@ -15,7 +15,7 @@
 			default: false,
 		},
 		href: {
-			type: String,
+			type: String as PropType<NavigationProps['href']>,
 			default: undefined,
 		},
 		icon: {
@@ -47,7 +47,7 @@
 			default: '100%',
 		},
 		to: {
-			type: [Array, Object, String] as PropType<RouteLocationRaw>,
+			type: [Array, Object, String] as PropType<NavigationProps['to']>,
 			default: undefined,
 		},
 		uniqueId: {
@@ -173,9 +173,7 @@
 				size="32px"
 			/>
 
-			<span
-				class="d-block ml-3 mr-6"
-			>
+			<span class="d-block ml-3 mr-6">
 				<slot name="default">
 					{{ tileTitle }}
 				</slot>
@@ -218,9 +216,7 @@
 				size="32px"
 			/>
 
-			<span
-				class="d-block ml-3 mr-6"
-			>
+			<span class="dblock ml-3 mr-6">
 				<slot name="default">
 					{{ tileTitle }}
 				</slot>
