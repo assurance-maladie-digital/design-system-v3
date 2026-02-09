@@ -124,29 +124,19 @@
 		return model.value === value
 	}
 
-	function toggleOption(value: string | number): void {
-		if (props.readonly || props.disabled) {
-			return
-		}
+function toggleOption(value: string | number): void {
+  if (props.readonly || props.disabled) return
 
-		if (isMultiple.value) {
-			const current = Array.isArray(model.value) ? model.value : []
-			if (current.includes(value)) {
-				model.value = current.filter(v => v !== value)
-			}
-			else {
-				model.value = [...current, value]
-			}
-			return
-		}
+  if (isMultiple.value) {
+    const current = Array.isArray(model.value) ? model.value : []
+    model.value = current.includes(value)
+      ? current.filter(v => v !== value)
+      : [...current, value]
+    return
+  }
 
-		if (model.value === value) {
-			model.value = null
-		}
-		else {
-			model.value = value
-		}
-	}
+  model.value = model.value === value ? null : value
+}
 
 	function getValidationValue(): (string | number) | (string | number)[] | null {
 		if (isMultiple.value) {
