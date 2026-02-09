@@ -3,7 +3,6 @@
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import type { IndexedObject } from '../types'
 	import type { NavigationProps } from '@/components/types'
-	import { convertToHex } from '@/utils/functions/convertToHex'
 
 	const props = defineProps({
 		borderedIcon: {
@@ -63,24 +62,17 @@
 	const hover = ref(false)
 	const focus = ref(false)
 
-	const tileStyles = computed<IndexedObject>(() => {
-		const btnStyles: IndexedObject = {
-			backgroundColor: convertToHex('ap-white'),
-			border: `1px solid ${convertToHex('ap-blue-darken-1')} !important`,
-			color: convertToHex('ap-grey-darken-1'),
-			padding: '1rem',
-		}
-		if ((hover.value || focus.value) && !props.disabled) {
-			btnStyles.border = `1px solid ${convertToHex('ap-blue-darken-2')} !important`
-		}
-		if (props.disabled) {
-			btnStyles.color = `${convertToHex('ap-grey-darken-1')} !important`
-			btnStyles.backgroundColor = `${convertToHex('ap-grey-lighten-2')} !important`
-			btnStyles.border = `1px solid ${convertToHex('ap-grey-lighten-2')} !important`
-		}
+	const tileClasses = computed(() => ({
+		'amelipro-clickable-tile--hover': (hover.value || focus.value) && !props.disabled,
+		'amelipro-clickable-tile--disabled': props.disabled,
+		'amelipro-clickable-tile--only-icon-clickable': props.onlyIconIsClickable,
+	}))
 
-		return btnStyles
-	})
+	const containerClasses = computed(() => [
+		'amelipro-clickable-tile',
+		'text-none',
+		tileClasses.value,
+	])
 
 	const imgStyles = computed((): IndexedObject => {
 		const styles: IndexedObject = { width: props.imgWidth }
@@ -137,13 +129,12 @@
 	<VBtn
 		v-if="!onlyIconIsClickable"
 		:id="uniqueId"
-		class="amelipro-clickable-tile text-none"
+		:class="containerClasses"
 		:disabled="disabled"
 		:elevation="0"
 		height="auto"
 		:href="href"
 		:ripple="false"
-		:style="tileStyles"
 		:to="to"
 		:width="tileWidth"
 		@blur="focus = false"
@@ -192,8 +183,7 @@
 	<span
 		v-else
 		:id="uniqueId"
-		class="amelipro-clickable-tile text-none"
-		:style="tileStyles"
+		:class="containerClasses"
 	>
 		<span class="d-flex align-center flex-grow-1">
 			<img
@@ -216,7 +206,7 @@
 				size="32px"
 			/>
 
-			<span class="dblock ml-3 mr-6">
+			<span class="d-block ml-3 mr-6">
 				<slot name="default">
 					{{ tileTitle }}
 				</slot>
@@ -258,6 +248,7 @@
 	position: relative;
 	display: flex;
 	background-color: apTokens.$ap-white;
+	border: 1px solid apTokens.$ap-blue-darken1 !important;
 	border-radius: var(--radius-md) !important;
 	white-space: normal;
 	font-size: 1rem;
@@ -265,6 +256,18 @@
 	text-align: left;
 	align-items: center;
 	justify-content: space-between;
+	color: apTokens.$ap-grey-darken1;
+	padding: 1rem;
+
+	&--hover {
+		border-color: apTokens.$ap-blue-darken2 !important;
+	}
+
+	&--disabled {
+		color: apTokens.$ap-grey-darken1 !important;
+		background-color: apTokens.$ap-grey-lighten2 !important;
+		border-color: apTokens.$ap-grey-lighten2 !important;
+	}
 
 	&__icon-button {
 		flex-shrink: 0;
