@@ -6,15 +6,11 @@ settings:
 
 overrides:
   esbuild: ^0.25.0
-  undici: 7.15.0
+  undici: ^6.21.0
   glob: '>=10.5.0'
   js-yaml: '>=4.1.1'
   parse5: 7.1.2
-
-patchedDependencies:
-  undici@7.15.0:
-    hash: lbjqnmsiluc2yw26h75qnkpplq
-    path: patches/undici@7.15.0.patch
+  npm: ^11.8.1
 
 dependencies:
   '@emotion/css':
@@ -250,7 +246,7 @@ packages:
     resolution: {integrity: sha512-JP38FYYpyqvUsz+Igqlc/JG6YO9PaKuvqjM3iGvaLqFnJ7TFmcLyy2IDrY0bI0qCQug8E9K+elv5ZNfw62ZJzA==}
     dependencies:
       tunnel: 0.0.6
-      undici: 7.15.0(patch_hash=lbjqnmsiluc2yw26h75qnkpplq)
+      undici: 6.23.0
     dev: true
 
   /@actions/io@2.0.0:
@@ -1460,7 +1456,7 @@ packages:
       p-filter: 4.1.0
       semantic-release: 25.0.3(typescript@5.9.3)
       tinyglobby: 0.2.15
-      undici: 7.15.0(patch_hash=lbjqnmsiluc2yw26h75qnkpplq)
+      undici: 6.23.0
       url-join: 5.0.0
     transitivePeerDependencies:
       - supports-color
@@ -1481,7 +1477,7 @@ packages:
       lodash-es: 4.17.23
       nerf-dart: 1.0.0
       normalize-url: 8.1.1
-      npm: 11.8.0
+      npm: 11.9.0
       rc: 1.2.8
       read-pkg: 10.0.0
       registry-auth-token: 5.1.1
@@ -3141,7 +3137,7 @@ packages:
       parse5: 7.1.2
       parse5-htmlparser2-tree-adapter: 7.1.0
       parse5-parser-stream: 7.1.2
-      undici: 7.15.0(patch_hash=lbjqnmsiluc2yw26h75qnkpplq)
+      undici: 6.23.0
       whatwg-mimetype: 4.0.0
     dev: true
 
@@ -5335,8 +5331,8 @@ packages:
       unicorn-magic: 0.3.0
     dev: true
 
-  /npm@11.8.0:
-    resolution: {integrity: sha512-n19sJeW+RGKdkHo8SCc5xhSwkKhQUFfZaFzSc+EsYXLjSqIV0tl72aDYQVuzVvfrbysGwdaQsNLNy58J10EBSQ==}
+  /npm@11.9.0:
+    resolution: {integrity: sha512-BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA==}
     engines: {node: ^20.17.0 || >=22.9.0}
     hasBin: true
     dev: true
@@ -7139,11 +7135,10 @@ packages:
   /undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  /undici@7.15.0(patch_hash=lbjqnmsiluc2yw26h75qnkpplq):
-    resolution: {integrity: sha512-7oZJCPvvMvTd0OlqWsIxTuItTpJBpU1tcbVl24FMn3xt3+VSunwUasmfPJRE57oNO1KsZ4PgA1xTdAX4hq8NyQ==}
-    engines: {node: '>=20.18.1'}
+  /undici@6.23.0:
+    resolution: {integrity: sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==}
+    engines: {node: '>=18.17'}
     dev: true
-    patched: true
 
   /unicode-emoji-modifier-base@1.0.0:
     resolution: {integrity: sha512-yLSH4py7oFH3oG/9K+XWrz1pSi3dfUrWEnInbxMfArOfc1+33BlGPQtLsOYwvdMy11AwUBetYuaRxSPqgkq+8g==}
