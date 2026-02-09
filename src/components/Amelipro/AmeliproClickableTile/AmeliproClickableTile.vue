@@ -147,7 +147,7 @@
 			<img
 				v-if="imgSrc && !icon"
 				:id="uniqueId ? `${uniqueId}-img` : undefined"
-				alt=""
+				:alt="tileTitle || 'Image'"
 				class="amelipro-clickable-tile__img"
 				:src="imgSrc"
 				:style="imgStyles"
@@ -189,7 +189,7 @@
 			<img
 				v-if="imgSrc && !icon"
 				:id="uniqueId ? `${uniqueId}-img` : undefined"
-				alt=""
+				:alt="tileTitle || 'Image'"
 				class="amelipro-clickable-tile__img"
 				:src="imgSrc"
 				:style="imgStyles"
