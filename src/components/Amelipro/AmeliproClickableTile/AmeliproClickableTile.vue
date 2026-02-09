@@ -63,7 +63,7 @@
 	const focus = ref(false)
 
 	const tileClasses = computed(() => ({
-		'amelipro-clickable-tile--hover': (hover.value || focus.value) && !props.disabled,
+		'amelipro-clickable-tile--hover': (hover.value || focus.value) && !props.disabled && !props.onlyIconIsClickable,
 		'amelipro-clickable-tile--disabled': props.disabled,
 		'amelipro-clickable-tile--only-icon-clickable': props.onlyIconIsClickable,
 	}))
