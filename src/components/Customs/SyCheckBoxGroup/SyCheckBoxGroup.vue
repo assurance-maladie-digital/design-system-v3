@@ -5,17 +5,7 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import { locales } from './locales'
-
-	type Option = {
-		label: string
-		value: string | number
-		disabled?: boolean
-		readonly?: boolean
-		id?: string
-		name?: string
-		ariaLabel?: string
-		title?: string
-	}
+	import type { Option } from './types'
 
 	const props = withDefaults(
 		defineProps<{
@@ -124,19 +114,19 @@
 		return model.value === value
 	}
 
-function toggleOption(value: string | number): void {
-  if (props.readonly || props.disabled) return
+	function toggleOption(value: string | number): void {
+		if (props.readonly || props.disabled) return
 
-  if (isMultiple.value) {
-    const current = Array.isArray(model.value) ? model.value : []
-    model.value = current.includes(value)
-      ? current.filter(v => v !== value)
-      : [...current, value]
-    return
-  }
+		if (isMultiple.value) {
+			const current = Array.isArray(model.value) ? model.value : []
+			model.value = current.includes(value)
+				? current.filter(v => v !== value)
+				: [...current, value]
+			return
+		}
 
-  model.value = model.value === value ? null : value
-}
+		model.value = model.value === value ? null : value
+	}
 
 	function getValidationValue(): (string | number) | (string | number)[] | null {
 		if (isMultiple.value) {
