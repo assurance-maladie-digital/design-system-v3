@@ -186,18 +186,7 @@
 
 	watch(model, (newValue) => {
 		if (!props.isValidateOnBlur) {
-			if (isSubmitted.value) {
-				const isValid = validateField(newValue as (string | number) | (string | number)[] | null)
-				if (isValid) {
-					validation.clearValidation()
-				}
-			}
-			else {
-				const isValid = validateField(newValue as (string | number) | (string | number)[] | null)
-				if (isValid && validation.hasError.value) {
-					validation.clearValidation()
-				}
-			}
+			validateField(newValue as (string | number) | (string | number)[] | null)
 		}
 	})
 
@@ -253,7 +242,7 @@
 </script>
 
 <template>
-	<div
+	<fieldset
 		:id="props.id"
 		class="sy-checkbox-group"
 		:class="{
@@ -261,19 +250,16 @@
 			'success-field': hasSuccess && !hasError && !hasWarning,
 			'error-field': hasError,
 		}"
-		:role="'group'"
-		:aria-label="computedAriaLabel"
-		:aria-labelledby="computedAriaLabelledby"
 		:aria-describedby="computedAriaDescribedby"
 		:title="props.title"
 	>
-		<div
+		<legend
 			v-if="props.label"
 			:id="labelId"
 			class="v-label sy-checkbox-group__label"
 		>
 			{{ generatedLabel }}
-		</div>
+		</legend>
 
 		<div
 			class="sy-checkbox-group__options"
@@ -316,7 +302,7 @@
 			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
 			}}</span>.
 		</span>
-	</div>
+	</fieldset>
 </template>
 
 <style scoped>

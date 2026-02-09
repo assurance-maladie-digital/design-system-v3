@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-	import { computed, ref, watch, onMounted, nextTick } from 'vue'
+	import { computed, ref, watch, onMounted, onUpdated, nextTick } from 'vue'
+	import type { VCheckbox } from 'vuetify/components'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
@@ -69,6 +70,8 @@
 	)
 
 	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
+
+	const checkboxRef = ref<VCheckbox | null>(null)
 
 	const internalIndeterminate = ref(props.indeterminate)
 
@@ -239,36 +242,21 @@
 	// Fonction pour supprimer les attributs ARIA non désirés des éléments input
 	const removeAriaAttributes = () => {
 		nextTick(() => {
-			// Sélectionner tous les inputs de type checkbox dans le composant
-			// Pour aria-disabled
-			const checkboxInputsDisabled = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
-			checkboxInputsDisabled.forEach((input) => {
-				input.removeAttribute('aria-disabled')
-			})
-
-			// Configurer un MutationObserver pour surveiller les changements futurs
-			const observer = new MutationObserver((mutations) => {
-				mutations.forEach(() => {
-					// Pour aria-disabled
-					const newCheckboxInputsDisabled = document.querySelectorAll('input[type="checkbox"][aria-disabled="false"]')
-					newCheckboxInputsDisabled.forEach((input) => {
-						input.removeAttribute('aria-disabled')
-					})
-				})
-			})
-
-			// Observer le document pour les changements
-			observer.observe(document.body, {
-				subtree: true,
-				childList: true,
-				attributes: true,
-				attributeFilter: ['aria-disabled'],
-			})
+			if (checkboxRef.value) {
+				const checkboxInput = checkboxRef.value.$el.querySelector('input[type="checkbox"][aria-disabled="false"]')
+				if (checkboxInput) {
+					checkboxInput.removeAttribute('aria-disabled')
+				}
+			}
 		})
 	}
 
-	// Appliquer la correction lors du montage du composant
+	// Appliquer la correction lors du montage et de la mise à jour du composant
 	onMounted(() => {
+		removeAriaAttributes()
+	})
+
+	onUpdated(() => {
 		removeAriaAttributes()
 	})
 
@@ -316,6 +304,7 @@
 <template>
 	<div>
 		<VCheckbox
+			ref="checkboxRef"
 			:id="props.id"
 			v-model="model"
 			:name="props.name"

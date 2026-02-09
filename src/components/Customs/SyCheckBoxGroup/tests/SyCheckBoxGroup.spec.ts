@@ -36,11 +36,15 @@ describe('SyCheckBoxGroup', () => {
 		const checkboxes = wrapper.findAllComponents(SyCheckbox)
 		expect(checkboxes.length).toBe(2)
 
-		checkboxes[0]?.vm.$emit('update:modelValue', true)
-		await nextTick()
+		await checkboxes[0]?.find('input').setValue(true)
 
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['A'])
 		expect(wrapper.emitted('change')?.[0]).toEqual(['A'])
+
+		// Uncheck
+		await checkboxes[0]?.find('input').setValue(false)
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([null])
+		expect(wrapper.emitted('change')?.[1]).toEqual([null])
 	})
 
 	it('should handle v-model correctly (multiple)', async () => {
@@ -59,12 +63,10 @@ describe('SyCheckBoxGroup', () => {
 		const checkboxes = wrapper.findAllComponents(SyCheckbox)
 		expect(checkboxes.length).toBe(2)
 
-		checkboxes[0]?.vm.$emit('update:modelValue', true)
-		await nextTick()
+		await checkboxes[0]?.find('input').setValue(true)
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([['A']])
 
-		checkboxes[1]?.vm.$emit('update:modelValue', true)
-		await nextTick()
+		await checkboxes[1]?.find('input').setValue(true)
 		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([['A', 'B']])
 	})
 
@@ -80,19 +82,17 @@ describe('SyCheckBoxGroup', () => {
 			},
 		})
 
-		const isValid = await wrapper.vm.validateOnSubmit()
-		expect(isValid).toBe(false)
-
+		await wrapper.vm.validateOnSubmit()
 		await nextTick()
-		const errorMessages = wrapper.findAll('.v-messages__message')
-		expect(errorMessages.length).toBeGreaterThan(0)
-		expect(errorMessages[0]?.text()).toContain('est requis')
+		expect(wrapper.vm.validation.hasError.value).toBe(true)
+		expect(wrapper.vm.validation.errors.value[0]).toContain('est requis')
 
-		wrapper.findComponent(SyCheckbox).vm.$emit('update:modelValue', true)
+		await wrapper.find('input').setValue(true)
+
+		await wrapper.vm.validateOnSubmit()
 		await nextTick()
 
-		const isValidAfter = await wrapper.vm.validateOnSubmit()
-		expect(isValidAfter).toBe(true)
+		expect(wrapper.vm.validation.hasError.value).toBe(false)
 		expect(wrapper.props('modelValue')).toBe('X')
 	})
 
