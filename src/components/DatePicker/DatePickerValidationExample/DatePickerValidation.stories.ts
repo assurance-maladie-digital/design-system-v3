@@ -423,14 +423,12 @@ BidirectionalValidation.parameters = {
 	],
 }
 
-
 export const BidirectionalComplexDatePickerValidation: StoryFn = () => ({
 	components: {
 		BidirectionalComplexValidation,
 	},
 	template: '<BidirectionalComplexValidation />',
 })
-
 
 BidirectionalComplexDatePickerValidation.parameters = {
 	sourceCode: [

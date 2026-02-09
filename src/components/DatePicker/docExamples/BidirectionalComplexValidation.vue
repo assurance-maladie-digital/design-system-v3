@@ -166,7 +166,7 @@
 					v-model="startDate"
 					label="Date de début"
 					:custom-rules="startDateRules"
-                    use-combined-mode
+					use-combined-mode
 					required
 					@update:model-value="validateEndDate"
 				/>
@@ -180,7 +180,7 @@
 					v-model="endDate"
 					label="Date de fin"
 					:custom-rules="endDateRules"
-                    use-combined-mode
+					use-combined-mode
 					required
 					@update:model-value="validateStartDate"
 				/>
