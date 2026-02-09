@@ -9,58 +9,58 @@
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: (string | number) | (string | number)[] | null
-			label?: string
-			displayAsterisk?: boolean
 			ariaLabel?: string
 			ariaLabelledby?: string
-			title?: string
 			color?: string
+			customRules?: ValidationRule[]
+			customSuccessRules?: ValidationRule[]
+			customWarningRules?: ValidationRule[]
+			density?: 'default' | 'comfortable' | 'compact'
 			disabled?: boolean
+			disableErrorHandling?: boolean
+			displayAsterisk?: boolean
+			errorMessages?: string[] | null
+			hideDetails?: boolean | 'auto'
+			id?: string
+			isValidateOnBlur?: boolean
+			label?: string
+			modelValue?: (string | number) | (string | number)[] | null
+			multiple?: boolean
+			name?: string
+			options?: Option[]
 			readonly?: boolean
 			required?: boolean
-			hideDetails?: boolean | 'auto'
-			density?: 'default' | 'comfortable' | 'compact'
-			options?: Option[]
-			name?: string
-			id?: string
-			multiple?: boolean
-			errorMessages?: string[] | null
-			warningMessages?: string[] | null
-			successMessages?: string[] | null
-			customRules?: ValidationRule[]
-			customWarningRules?: ValidationRule[]
-			customSuccessRules?: ValidationRule[]
 			showSuccessMessages?: boolean
-			isValidateOnBlur?: boolean
-			disableErrorHandling?: boolean
+			successMessages?: string[] | null
+			title?: string
+			warningMessages?: string[] | null
 		}>(),
 		{
-			modelValue: null,
-			label: undefined,
-			displayAsterisk: false,
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
-			title: undefined,
 			color: 'primary',
+			customRules: () => [],
+			customSuccessRules: () => [],
+			customWarningRules: () => [],
+			density: 'default',
 			disabled: false,
+			disableErrorHandling: false,
+			displayAsterisk: false,
+			errorMessages: null,
+			hideDetails: 'auto',
+			id: undefined,
+			isValidateOnBlur: false,
+			label: undefined,
+			modelValue: null,
+			multiple: false,
+			name: undefined,
+			options: () => [],
 			readonly: false,
 			required: false,
-			hideDetails: 'auto',
-			density: 'default',
-			options: () => [],
-			name: undefined,
-			id: undefined,
-			multiple: false,
-			errorMessages: null,
-			warningMessages: null,
-			successMessages: null,
-			customRules: () => [],
-			customWarningRules: () => [],
-			customSuccessRules: () => [],
 			showSuccessMessages: true,
-			isValidateOnBlur: false,
-			disableErrorHandling: false,
+			successMessages: null,
+			title: undefined,
+			warningMessages: null,
 		},
 	)
 
