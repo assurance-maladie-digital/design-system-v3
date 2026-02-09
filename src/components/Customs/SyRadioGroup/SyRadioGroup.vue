@@ -206,8 +206,8 @@
 
 <template>
 	<v-radio-group
-		ref="radioGroupRef"
 		:id="props.id"
+		ref="radioGroupRef"
 		v-model="model"
 		:class="{
 			'warning-field': hasWarning && !hasError,

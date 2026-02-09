@@ -207,7 +207,6 @@
 		}
 		return props.ariaLabelledby
 	})
-	const computedAriaLabel = computed(() => (computedAriaLabelledby.value ? undefined : props.ariaLabel))
 
 	const messagesId = computed(() => (props.id ? `${props.id}-messages` : undefined))
 	const requiredHintId = computed(() => (props.id ? `${props.id}-required-hint` : undefined))

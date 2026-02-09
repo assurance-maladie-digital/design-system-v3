@@ -304,8 +304,8 @@
 <template>
 	<div>
 		<VCheckbox
-			ref="checkboxRef"
 			:id="props.id"
+			ref="checkboxRef"
 			v-model="model"
 			:name="props.name"
 			:label="generatedLabel"
