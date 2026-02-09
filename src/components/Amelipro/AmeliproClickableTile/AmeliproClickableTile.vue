@@ -2,7 +2,7 @@
 	import { type PropType, computed, ref } from 'vue'
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import type { IndexedObject } from '../types'
-	import type { RouteLocationRaw } from 'vue-router'
+	import type { NavigationProps } from '@/components/types'
 	import { convertToHex } from '@/utils/functions/convertToHex'
 
 	const props = defineProps({
@@ -15,7 +15,7 @@
 			default: false,
 		},
 		href: {
-			type: String,
+			type: String as PropType<NavigationProps['href']>,
 			default: undefined,
 		},
 		icon: {
@@ -47,12 +47,16 @@
 			default: '100%',
 		},
 		to: {
-			type: [Array, Object, String] as PropType<RouteLocationRaw>,
+			type: [Array, Object, String] as PropType<NavigationProps['to']>,
 			default: undefined,
 		},
 		uniqueId: {
 			type: String,
 			default: undefined,
+		},
+		onlyIconIsClickable: {
+			type: Boolean,
+			default: false,
 		},
 	})
 
@@ -131,6 +135,7 @@
 
 <template>
 	<VBtn
+		v-if="!onlyIconIsClickable"
 		:id="uniqueId"
 		class="amelipro-clickable-tile text-none"
 		:disabled="disabled"
@@ -168,9 +173,7 @@
 				size="32px"
 			/>
 
-			<span
-				class="d-block ml-3 mr-6"
-			>
+			<span class="d-block ml-3 mr-6">
 				<slot name="default">
 					{{ tileTitle }}
 				</slot>
@@ -186,6 +189,66 @@
 			size="16px"
 		/>
 	</VBtn>
+	<span
+		v-else
+		:id="uniqueId"
+		class="amelipro-clickable-tile text-none"
+		:style="tileStyles"
+	>
+		<span class="d-flex align-center flex-grow-1">
+			<img
+				v-if="imgSrc && !icon"
+				:id="uniqueId ? `${uniqueId}-img` : undefined"
+				alt=""
+				class="amelipro-clickable-tile__img"
+				:src="imgSrc"
+				:style="imgStyles"
+			>
+
+			<AmeliproIcon
+				v-if="icon && !imgSrc"
+				:id="uniqueId ? `${uniqueId}-icon` : undefined"
+				:bordered="borderedIcon"
+				class="amelipro-clickable-tile__icon"
+				:icon="icon"
+				:icon-bg-color="iconBgColorValue"
+				:icon-color="iconColorValue"
+				size="32px"
+			/>
+
+			<span class="dblock ml-3 mr-6">
+				<slot name="default">
+					{{ tileTitle }}
+				</slot>
+			</span>
+		</span>
+		<VBtn
+			:id="uniqueId ? `${uniqueId}-icon-button` : undefined"
+			:disabled="disabled"
+			class="amelipro-clickable-tile__icon-button no-padding"
+			:elevation="0"
+			height="auto"
+			:href="href"
+			:ripple="false"
+			padding="0.5rem"
+			:to="to"
+			:aria-label="`Ouvrir ${tileTitle}`"
+			@blur="focus = false"
+			@click="emitClickEvent"
+			@focus="focus = true"
+			@mouseenter="hover = true"
+			@mouseleave="hover = false"
+		>
+			<AmeliproIcon
+				:id="uniqueId ? `${uniqueId}-icon-arrow` : undefined"
+				class="amelipro-clickable-tile__icon-arrow"
+				icon="chevronRight"
+				icon-bg-color="transparent"
+				:icon-color="iconArrowColorValue"
+				size="16px"
+			/>
+		</VBtn>
+	</span>
 </template>
 
 <style lang="scss" scoped>
@@ -195,11 +258,33 @@
 	position: relative;
 	display: flex;
 	background-color: apTokens.$ap-white;
-	border-radius: 0.5rem;
+	border-radius: var(--radius-md) !important;
 	white-space: normal;
 	font-size: 1rem;
 	font-weight: 600;
 	text-align: left;
+	align-items: center;
+	justify-content: space-between;
+
+	&__icon-button {
+		flex-shrink: 0;
+		padding: 0.5rem !important;
+		min-width: auto !important;
+		width: auto !important;
+		height: auto !important;
+		background-color: transparent !important;
+		border: none !important;
+
+		&:hover,
+		&:focus {
+			background-color: transparent !important;
+			border: none !important;
+		}
+
+		:deep(.v-btn__content) {
+			width: auto !important;
+		}
+	}
 }
 
 .v-btn {
@@ -229,5 +314,9 @@
 		align-items: center;
 		width: 100%;
 	}
+}
+
+.no-padding {
+	padding: 0 !important;
 }
 </style>

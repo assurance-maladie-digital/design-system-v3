@@ -1,5 +1,77 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`AmeliproClickableTile > Snapshots > renders the component with all properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="
+    amelipro-clickable-tile
+    text-none
+  "
+  density="default"
+  disabled="false"
+  elevation="0"
+  exact="false"
+  flat="false"
+  height="auto"
+  icon="false"
+  id="modified-unique-id"
+  loading="false"
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="
+    background-color: #FFFFFF;
+    border: 1px solid #00749C !important;
+    color: #1A1B1B;
+    padding: 1rem;
+  "
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  tile="false"
+  variant="elevated"
+  width="100%"
+></v-btn-stub>
+`;
+
+exports[`AmeliproClickableTile > Snapshots > renders the component with only required properties filled in 1`] = `
+<v-btn-stub
+  block="false"
+  border="false"
+  class="
+    amelipro-clickable-tile
+    text-none
+  "
+  density="default"
+  disabled="false"
+  elevation="0"
+  exact="false"
+  flat="false"
+  height="auto"
+  icon="false"
+  id="required-unique-id"
+  loading="false"
+  replace="false"
+  ripple="false"
+  size="default"
+  slim="false"
+  stacked="false"
+  style="
+    background-color: #FFFFFF;
+    border: 1px solid #00749C !important;
+    color: #1A1B1B;
+    padding: 1rem;
+  "
+  symbol="Symbol(vuetify:v-btn-toggle)"
+  tag="button"
+  tile="false"
+  variant="elevated"
+  width="100%"
+></v-btn-stub>
+`;
+
 exports[`AmeliproClickableTile > render correctly 1`] = `
 <button
   class="
