@@ -288,6 +288,7 @@
 .sy-checkbox-group {
 	border: 0;
 }
+
 .sy-checkbox-group__label {
 	margin-bottom: 4px;
 	font-weight: 500;
