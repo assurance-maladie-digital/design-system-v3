@@ -253,7 +253,7 @@
 				:disabled="props.disabled || opt.disabled"
 				:readonly="props.readonly || opt.readonly"
 				:name="opt.name || props.name"
-				:aria-label="opt.ariaLabel"
+				:aria-label="opt.ariaLabel || `Option ${opt.value}`"
 				:title="opt.title"
 				:hide-details="props.hideDetails"
 				:density="props.density"
@@ -285,6 +285,9 @@
 </template>
 
 <style scoped>
+.sy-checkbox-group {
+	border: 0;
+}
 .sy-checkbox-group__label {
 	margin-bottom: 4px;
 	font-weight: 500;
