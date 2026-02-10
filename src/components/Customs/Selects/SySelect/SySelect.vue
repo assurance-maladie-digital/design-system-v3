@@ -1230,9 +1230,10 @@
 }
 
 .sy-select :deep(.v-field__input input) {
-	position: absolute;
-	z-index: -1;
+	position: static;
+	z-index: auto;
 	text-overflow: ellipsis;
+	white-space: normal;
 }
 
 .hidden-label {
