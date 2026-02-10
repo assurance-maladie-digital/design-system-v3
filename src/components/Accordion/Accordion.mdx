@@ -1,4 +1,5 @@
 import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import '@/stories/styles/shared.css';
 
 import * as AccordionStories from './Accordion.stories';
 
@@ -33,7 +34,9 @@ Vous pouvez également utiliser des slots pour personnaliser le rendu des titres
 
 <Canvas of={AccordionStories.WithSlots} />
 
-## Accessibilité
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
 
 Le composant Accordion respecte les normes d'accessibilité ARIA :
 

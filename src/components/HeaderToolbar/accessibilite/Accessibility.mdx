@@ -1,11 +1,13 @@
 import { Meta, Story } from '@storybook/blocks'
 import * as HeaderToolbarStories from '../HeaderToolbar.stories';
+import '@/stories/styles/shared.css';
 
 <Meta of={HeaderToolbarStories}/>
 
-# Accessibilité
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
 
-## Informations sur l'accessibilité du composant
 
 <div class="mt-2">
 <p>Rapport d’audit manuel : <a href="/audits/HeaderToolbar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>

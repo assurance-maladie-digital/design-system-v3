@@ -1,21 +1,14 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as Stories from '../DataListGroup.stories.ts';
+import '@/stories/styles/shared.css';
 
 <Meta of={Stories} />
 
-# Accessibilité
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
 
-Ce composant a fait l’objet d’un **audit manuel d’accessibilité**.
-
----
-
-## Rapport d’audit
-
-- 📄 **Rapport d’audit manuel**  
-  👉 [Voir le rapport](/audits/DataListGroup.xlsx)
-
-- 🛠 **Correctifs associés**  
-  👉 [Issue #651](https://github.com/assurance-maladie-digital/design-system-v3/issues/651)
-
----
-
+<div class="mt-2">
+<p>Rapport d’audit manuel : <a href="/audits/DataListGroup.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/651" target="_blank" style={{color:'#0C41BD'}}>issue #651</a>)</p>
+	</div>

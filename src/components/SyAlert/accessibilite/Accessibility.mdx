@@ -1,13 +1,12 @@
 import { Meta, Story } from '@storybook/addon-docs';
-import * as SyAlertStorie from '../SyAlert.stories.ts';
+import * as SyAlertStorie from '../SyAlert.stories';
+import '@/stories/styles/shared.css';
 
 <Meta of={SyAlertStorie} />
 
-# Accessibilité
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
 
-## Informations sur l'accessibilité du composant
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/SyAlert.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4010" target="_blank" style={{color:'#0C41BD'}}>issue #4010</a>)</p>
-	</div>
+  <p>Rapport d’audit manuel : <a href="/audits/SyAlert.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+  <p style={{ color: 'grey', fontSize: '14px', margin: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4010" target="_blank" style={{color:'#0C41BD'}}>issue #4010</a>)</p>
