@@ -188,14 +188,16 @@
 		return props.ariaLabelledby
 	})
 
-	const messagesId = computed(() => (props.id ? `${props.id}-messages` : undefined))
+	const messagesRef = ref<InstanceType<typeof VMessages> | null>(null)
+	const vMessagesId = computed(() => messagesRef.value?.$el.id)
+
 	const requiredHintId = computed(() => (props.id ? `${props.id}-required-hint` : undefined))
 	const computedAriaDescribedby = computed(() => {
 		const ids: string[] = []
 
 		const shouldShowMessages = props.hideDetails !== true && (hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages))
-		if (messagesId.value && shouldShowMessages) {
-			ids.push(messagesId.value)
+		if (vMessagesId.value && shouldShowMessages) {
+			ids.push(vMessagesId.value)
 		}
 
 		if (requiredHintId.value && props.required && !props.ariaLabel && !computedAriaLabelledby.value) {
@@ -264,10 +266,10 @@
 
 		<div
 			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages))"
-			:id="messagesId"
 			class="v-input__details sy-checkbox-group__messages"
 		>
 			<VMessages
+				ref="messagesRef"
 				:active="hasError || hasWarning || (hasSuccess && props.showSuccessMessages)"
 				:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			/>
