@@ -17,75 +17,92 @@ Informations sur l’accessibilité du composant **PasswordField**.
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/898" target="_blank" style={{color:'#0C41BD'}}>issue #898</a>)</p>
 	</div>
 
-## 🔍 Spécificité — Source technique
 
-### 🏷️ Étiquette de champ (label)
-
-Les champs de formulaires doivent avoir une **étiquette explicite et visible**.
-
-Techniquement, on utilise la balise `label` associée au champ via les attributs `for` et `id`.  
-L’étiquette doit être **pertinente** et **accolée au champ** concerné.
-
-👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/)
-
----
-
-### ✍️ Remplissage automatique
-
-Selon la finalité du champ, le **remplissage automatique** peut être activé grâce à l’attribut `autocomplete`.
-
-👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-lattribut-autocomplete-pour-faciliter-le-remplissage-automatique-des-champs/)
-
----
-
-### 💡 Aide à la saisie
-
-Lorsqu’une aide à la saisie est fournie :
-- elle doit être **visible**
-- intégrée à l’étiquette ou
-- située dans le texte associé au champ
-
-👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-aides-a-la-saisie-directement-dans-les-balises-label/)
-
----
-
-### ⚠️ Champs obligatoires
-
-Un champ obligatoire doit posséder **au moins une** des caractéristiques suivantes :
-
-- un intitulé visible indiquant son caractère obligatoire
-- un attribut `required`
-- ou `aria-required="true"`
-
-L’information doit être **rattachée au libellé** ou au texte associé.
-
-👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/integrer-required-ou-aria-requiredtrue-dans-les-champs-obligatoires/)
-
----
-
-### ❌ Gestion des erreurs
-
-En cas d’erreur, le champ doit avoir :
-- un **message d’erreur visible**
-- et/ou l’attribut `aria-invalid="true"`
-
-Si l’erreur concerne un **format ou un type**, le message doit :
-- expliquer le problème
-- fournir des **exemples de valeurs attendues**
-- être distinct de l’aide à la saisie
-
-👉 [Documentation accede-web](https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/)
-
----
-
-### 🔐 Spécificités des champs mot de passe
-
-- Le **copier-coller doit être autorisé**  
-  (utile pour les gestionnaires de mots de passe)
-
-- Le mot de passe doit pouvoir être **démasqué pendant la saisie**  
-  afin d’améliorer l’accessibilité pour les personnes ayant des troubles cognitifs ou de saisie
-
-👉 [Documentation W3C – Accessible Authentication](https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html)
-
----
+                <div class="mt-6">
+                  <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '16px' }}>Spécificité - Source technique</h3>
+                  
+                  <div style={{ backgroundColor: '#f5f5f5', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Les champs de formulaires doivent avoir une étiquette</p>
+                    <p style={{ marginBottom: '8px' }}>Techniquement, il est communément utilisé la balise "label" avec les attributs "for" et "id".
+                    Celle-ci doit être pertinente et accolée au champ associé.</p>
+                    <p>
+                      <a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/" 
+                         target="_blank" style={{ color:'#0C41BD' }}>
+                        Documentation accede-web
+                      </a>
+                    </p>
+                  </div>
+                  
+                  <div style={{ backgroundColor: '#f5f5f5', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Remplissage automatique des champs</p>
+                    <p style={{ marginBottom: '8px' }}>Selon la finalité du champ, le remplissage automatique est possible (attribut "autocomplete").</p>
+                    <p style={{ fontSize: '13px', color: '#0C41BD' }}>
+                      <a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-lattribut-autocomplete-pour-faciliter-le-remplissage-automatique-des-champs/" 
+                         target="_blank" style={{color:'#0C41BD'}}>
+                        Documentation accede-web
+                      </a>
+                    </p>
+                  </div>
+                  
+                  <div style={{ backgroundColor: '#f5f5f5', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Aide à la saisie</p>
+                    <p style={{ marginBottom: '8px' }}>En cas d'aide à la saisie, l'inscription est visible dans un message ou présente dans l'étiquette. Il doit être rattaché au libellé ou situé dans le passage de texte associé au champ.</p>
+                    <p style={{ fontSize: '13px', color: '#0C41BD' }}>
+                      <a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-aides-a-la-saisie-directement-dans-les-balises-label/" 
+                         target="_blank" style={{color:'#0C41BD'}}>
+                        Documentation accede-web
+                      </a>
+                    </p>
+                  </div>
+                  
+                  <div style={{ backgroundColor: '#f5f5f5', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Champs obligatoires</p>
+                    <p style={{ marginBottom: '8px' }}>Les champs obligatoires possèdent l'une et/ou l'autre condition :</p>
+                    <ul style={{ marginBottom: '8px', paddingLeft: '20px' }}>
+                      <li>un intitulé visible permettant de l'identifier comme tel</li>
+                      <li>un attribut "required" ou 'aria-required="true"'</li>
+                    </ul>
+                    <p style={{ marginBottom: '8px' }}>Il doit être rattaché au libellé ou situé dans le passage de texte associé au champ.</p>
+                    <p style={{ fontSize: '13px', color: '#0C41BD' }}>
+                      <a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-required-ou-aria-requiredtrue-dans-les-champs-obligatoires/" 
+                         target="_blank" style={{color:'#0C41BD'}}>
+                        Documentation accede-web
+                      </a>
+                    </p>
+                  </div>
+                  
+                  <div style={{ backgroundColor: '#f5f5f5', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Gestion des erreurs</p>
+                    <p style={{ marginBottom: '8px' }}>En cas d'erreur, le champ possède l'une et/ou l'autre condition :</p>
+                    <ul style={{ marginBottom: '8px', paddingLeft: '20px' }}>
+                      <li>un message visible permet de l'identifier comme tel</li>
+                      <li>un attribut 'aria-invalid="true"'</li>
+                    </ul>
+                    <p style={{ marginBottom: '8px' }}>Il doit être rattaché au libellé ou situé dans le passage de texte associé au champ.</p>
+                    <p style={{ marginBottom: '8px' }}>Par ailleurs, s'il s'agit d'une erreur de type ou format, l'information est retranscrite dans le message d'erreur avec des exemples de valeurs attendues autre que celle de l'aide à la saisie.</p>
+                    <p style={{ fontSize: '13px', color: '#0C41BD' }}>
+                      <a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/" 
+                         target="_blank" style={{color:'#0C41BD'}}>
+                        Documentation accede-web
+                      </a>
+                    </p>
+                  </div>
+                  
+                  <div style={{ backgroundColor: '#f5f5f5', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
+                    <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Spécificités des champs de mot de passe</p>
+                    <p style={{ marginBottom: '8px' }}>Le copier-coller doit être possible dans un champ d'authentification. Cela permet notamment de faciliter l'utilisation d'un gestionnaire de mot de passe.</p>
+                    <p style={{ marginBottom: '16px', fontSize: '13px', color: '#0C41BD' }}>
+                      <a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" 
+                         target="_blank" style={{color:'#0C41BD'}}>
+                        Documentation W3C
+                      </a>
+                    </p>
+                    <p style={{ marginBottom: '8px' }}>Il faut pouvoir démasquer le mot de passe lors de la saisie. Cela permet d'améliorer les chances de réussite pour certaines personnes souffrant de troubles cognitifs ou ayant des difficultés à saisir correctement un mot de passe.</p>
+                    <p style={{ fontSize: '13px', color: '#0C41BD' }}>
+                      <a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" 
+                         target="_blank" style={{color:'#0C41BD'}}>
+                        Documentation W3C
+                      </a>
+                    </p>
+                  </div>
+                </div>
