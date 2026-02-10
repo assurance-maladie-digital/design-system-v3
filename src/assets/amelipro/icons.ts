@@ -11,7 +11,7 @@ interface Icons {
 export const icons: Icons = {
 	// icônes header
 	utilisateur: `
-		<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 1823 1823" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
+		<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 1823 1823">
 			<circle class="${CIRCLE_COLOR}" cx="912" cy="912" r="912" />
 			<path class="${SHAPE_COLOR}" d="M962 454c117 0 125 154 125 154v145s1 111-73 152c-2 10-3 20-1 30 4-2-21 146 106 165 92 15 178 57 247 120 23 23 40 186 40 186H418s-2-132 40-186c73-62 162-104 257-120 128-19 85-160 89-158 2-10 1-21-1-31 0 0-69-89-68-169 1-81 0-134 0-134s-4-190 126-190l101 36z"/>
 		</svg>`,
@@ -145,9 +145,9 @@ export const icons: Icons = {
 		<svg  xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17" />
 			<g class="${SHAPE_COLOR}" transform="translate(8.996 8.988)">
-				<path  d="M278.218,570.969,272,573.251,274.249,567Z" transform="translate(-272 -557.235)"  fill-rule="evenodd"/>
-				<path d="M357,325.64l4,4.035,7.64-7.64-4-4.035Z" transform="translate(-354.189 -316.47)"  fill-rule="evenodd"/>
-				<path  d="M608.084,272.023l2.613,2.613a.979.979,0,0,1,0,1.356l-.728.728L606,272.75l.728-.728a.979.979,0,0,1,1.356,0Z" transform="translate(-594.953 -271.75)"  fill-rule="evenodd"/>
+				<path  d="M278.218,570.969,272,573.251,274.249,567Z" transform="translate(-272 -557.235)"/>
+				<path d="M357,325.64l4,4.035,7.64-7.64-4-4.035Z" transform="translate(-354.189 -316.47)"/>
+				<path  d="M608.084,272.023l2.613,2.613a.979.979,0,0,1,0,1.356l-.728.728L606,272.75l.728-.728a.979.979,0,0,1,1.356,0Z" transform="translate(-594.953 -271.75)"/>
 			</g>
 		</svg>
 	`,
@@ -520,7 +520,7 @@ export const icons: Icons = {
 		<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17" />
 			<g class="${SHAPE_COLOR}">
-				<path d="M1807.842,700.871a.415.415,0,0,0-.585,0l-6.116,6.082a.391.391,0,0,1-.577,0l-2.681-2.715a.373.373,0,0,0-.289-.136.389.389,0,0,0-.3.136l-1.179,1.052a.439.439,0,0,0-.119.3.419.419,0,0,0,.119.288l2.706,2.842c.161.153.424.424.585.577l1.154,1.171a.4.4,0,0,0,.577,0l7.864-7.838a.4.4,0,0,0,0-.577l-1.162-1.179Z" transform="translate(-1785.375 -697.208)" fill-rule="evenodd"/>
+				<path d="M1807.842,700.871a.415.415,0,0,0-.585,0l-6.116,6.082a.391.391,0,0,1-.577,0l-2.681-2.715a.373.373,0,0,0-.289-.136.389.389,0,0,0-.3.136l-1.179,1.052a.439.439,0,0,0-.119.3.419.419,0,0,0,.119.288l2.706,2.842c.161.153.424.424.585.577l1.154,1.171a.4.4,0,0,0,.577,0l7.864-7.838a.4.4,0,0,0,0-.577l-1.162-1.179Z" transform="translate(-1785.375 -697.208)"/>
 				<path d="M9.059.57a9.082,9.082,0,0,0,1.268,4.076c1,1.629.439,3.441-.641,4.89s-4.1,2.108-5.462,1.112S.232,10.608,0,13.338c-.1,1.226,1.721,1.359,1.811.725s.995-2.029,2.264-.905c1.246,1.1,2.669,3.8,6.768,3.441s7.993-6.158,7-9.689-3.17-3.441-4.981-3.531S11.11,1.542,11.02.455C10.947-.285,9.193-.033,9.059.57Z" transform="matrix(0.966, 0.259, -0.259, 0.966, 10.009, 11.332)"/>
 			</g>
 		</svg>`,
@@ -967,9 +967,9 @@ export const icons: Icons = {
 	calendar: `
 	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
   		<g class="${SHAPE_COLOR}">
-			<path d="M19.493,170v1.538a3,3,0,0,1-5.991,0V170h-3v1.538a3,3,0,0,1-5.991,0V170H0v21H24V170Zm-12,17.991H4.507v-3H7.493Zm0-5.991H4.507v-3H7.493Zm6.009,5.991h-3v-3h3Zm0-5.991h-3v-3h3Zm3,5.991v-3h2.987ZM19.493,182H16.507v-3h2.987Z" transform="translate(0 -166.996)" fill-rule="evenodd"/>
-			<path d="M352,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-345.779)" fill-rule="evenodd"/>
-			<path d="M836,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-821.225)" fill-rule="evenodd"/>
+			<path d="M19.493,170v1.538a3,3,0,0,1-5.991,0V170h-3v1.538a3,3,0,0,1-5.991,0V170H0v21H24V170Zm-12,17.991H4.507v-3H7.493Zm0-5.991H4.507v-3H7.493Zm6.009,5.991h-3v-3h3Zm0-5.991h-3v-3h3Zm3,5.991v-3h2.987ZM19.493,182H16.507v-3h2.987Z" transform="translate(0 -166.996)"/>
+			<path d="M352,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-345.779)"/>
+			<path d="M836,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-821.225)"/>
   		</g>
 	</svg>`,
 	discussion: `
