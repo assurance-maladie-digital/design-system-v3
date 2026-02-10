@@ -158,9 +158,9 @@
 
 		<div class="date-range-container mb-6">
 			<div class="date-picker-wrapper">
-				<h3 class="text-subtitle-1 mb-2">
+				<h2 class="text-subtitle-1 mb-2">
 					Date de début
-				</h3>
+				</h2>
 				<DatePicker
 					ref="startDatePickerRef"
 					v-model="startDate"
@@ -172,9 +172,9 @@
 				/>
 			</div>
 			<div class="date-picker-wrapper">
-				<h3 class="text-subtitle-1 mb-2">
+				<h2 class="text-subtitle-1 mb-2">
 					Date de fin
-				</h3>
+				</h2>
 				<DatePicker
 					ref="endDatePickerRef"
 					v-model="endDate"
