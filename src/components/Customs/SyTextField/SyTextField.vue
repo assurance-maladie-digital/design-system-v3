@@ -550,6 +550,10 @@
 
 						if (describedbyIds) {
 							inputElement.setAttribute('aria-describedby', describedbyIds)
+							// si erreur ajouter erreur dans aria-describedby
+							if (hasError.value) {
+								inputElement.setAttribute('aria-describedby', `${describedbyIds} ${messagesId}`)
+							}
 						}
 						else {
 							inputElement.removeAttribute('aria-describedby')
@@ -791,6 +795,10 @@
 		opacity: 1 !important;
 	}
 
+	:deep(.v-icon__svg) {
+		fill: tokens.$colors-text-warning !important;
+	}
+
 	:deep(.v-field) {
 		color: tokens.$colors-border-warning !important;
 
@@ -865,6 +873,11 @@
 .basic-field {
 	:deep(.v-icon__svg) {
 		fill: rgb(0 0 0 / 70%);
+	}
+
+	:deep(.v-field--focused .v-field__outline) {
+		color: tokens.$primary-base !important;
+		opacity: 1 !important;
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
