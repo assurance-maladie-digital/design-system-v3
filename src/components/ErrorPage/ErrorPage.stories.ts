@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import ErrorPage from './ErrorPage.vue'
 
 const meta: Meta = {
-	title: 'Templates/ErrorPagePage',
+	title: 'Templates/ErrorPage',
 	component: ErrorPage,
 	parameters: {
 		layout: 'fullscreen',
