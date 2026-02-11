@@ -11,12 +11,12 @@ interface Icons {
 export const icons: Icons = {
 	// icônes header
 	utilisateur: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 1823 1823" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
+		<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 1823 1823">
 			<circle class="${CIRCLE_COLOR}" cx="912" cy="912" r="912" />
 			<path class="${SHAPE_COLOR}" d="M962 454c117 0 125 154 125 154v145s1 111-73 152c-2 10-3 20-1 30 4-2-21 146 106 165 92 15 178 57 247 120 23 23 40 186 40 186H418s-2-132 40-186c73-62 162-104 257-120 128-19 85-160 89-158 2-10 1-21-1-31 0 0-69-89-68-169 1-81 0-134 0-134s-4-190 126-190l101 36z"/>
 		</svg>`,
 	structures: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M26.8,14.8L26.8,14.8l-2.5-2.5V8.1h-2.1v2.1L16.9,5L7,14.8c-0.8,0.8-0.9,2.1,0,3c0.8,0.8,2.1,0.9,3,0c0,0,0,0,0,0l0,0l6.9-6.9l6.9,6.9c0.8,0.8,2.1,0.9,3,0C27.6,17.1,27.6,15.7,26.8,14.8C26.8,14.9,26.8,14.9,26.8,14.8L26.8,14.8z"/>
@@ -24,7 +24,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	applications: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M34,17c0-4.7-1.9-8.9-5-12C26,1.9,21.7,0,17,0S8,1.9,5,5C1.9,8,0,12.3,0,17s1.9,8.9,5,12c3.1,3.1,7.3,5,12,5 s8.9-1.9,12-5C32.1,25.9,34,21.7,34,17z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M10.2,8L10.2,8c1.4,0,2.5,1.1,2.5,2.4l0,0c0,1.4-1.1,2.4-2.5,2.4l0,0c-1.3,0-2.4-1.1-2.4-2.4l0,0 C7.7,9.1,8.8,8,10.2,8z"/>
@@ -39,12 +39,12 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	notifications: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<ellipse class="${CIRCLE_COLOR}" cx="17" cy="17" rx="17" ry="16.9"/>
 			<path class="${SHAPE_COLOR}" d="M21.1,21.4C21.1,21.4,21.1,21.4,21.1,21.4c0.4,0.7,0.2,1.6-0.5,2c-0.7,0.4-1.6,0.2-2-0.5c0,0,0,0,0,0 c-4.2,2.2-5.6,2.2-6.1,1.4c-0.1-0.3-0.2-0.6,0-0.9c0.7-3.3,1.6-3-0.2-6.2c-1.2-2.1-2.3-4.1,0.1-6C12.1,11.1,12,11,12,10.9 c-0.3-0.5-0.1-1.2,0.4-1.5c0.5-0.3,1.2-0.1,1.5,0.4C14,9.9,14,10,14,10.2c2.8-1.1,4,0.8,5.2,2.9c1.9,3.2,2.1,2.3,5.3,3.3 c0.4,0.1,0.6,0.2,0.8,0.5C25.8,17.7,25.1,19,21.1,21.4z"/>
 		</svg>`,
 	deconnexion: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M12.1,12.5c0.5-0.5,0.5-1.4,0-1.9c0,0,0,0,0,0c-0.5-0.5-1.4-0.5-1.9,0c-1.8,1.8-2.8,4.2-2.7,6.6c0,5.2,4.2,9.4,9.4,9.4c5.2,0,9.4-4.2,9.4-9.4l0,0c0-2.5-1-4.9-2.7-6.6c-0.5-0.5-1.4-0.5-1.9,0c-0.5,0.5-0.5,1.4,0,1.9c1.2,1.2,1.9,2.9,1.9,4.7c0,1.7-0.7,3.4-1.9,4.7c-2.6,2.6-6.8,2.6-9.4,0.1C9.5,19.4,9.5,15.2,12.1,12.5C12.1,12.5,12.1,12.5,12.1,12.5z"/>
@@ -52,7 +52,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	home: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.1" cy="17" r="17"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M9.3,17.7v7.7c0,0.2,0.2,0.3,0.3,0.3h8.2v-7h3.9v7H24c0.2,0,0.3-0.2,0.3-0.3v-7.7l-7.5-7.5L9.3,17.7z M15.4,22h-3.5v-3.2h3.5V22z"/>
@@ -61,7 +61,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	homeSquare: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M32,34H2c-1.1,0-2-0.9-2-2V2c0-1.1,0.9-2,2-2h30c1.1,0,2,0.9,2,2v30C34,33.1,33.1,34,32,34z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M6.9,19.4v10.2c0,0.2,0.2,0.4,0.4,0.4h10.8v-9.2h5.1V30h3.1c0.2,0,0.4-0.2,0.4-0.4V19.4l-9.9-9.9L6.9,19.4zM15,25.1h-4.6v-4.3H15V25.1z"/>
@@ -70,7 +70,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	menu: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.1" cy="17" r="17"/>
 			<g class="${SHAPE_COLOR}">
 				<rect x="8.3" y="8.2" width="17.2" height="2.3"/>
@@ -81,7 +81,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	menuSquare: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M32,34H2c-1.1,0-2-0.9-2-2V2c0-1.1,0.9-2,2-2h30c1.1,0,2,0.9,2,2v30C34,33.1,33.1,34,32,34z"/>
 			<g class="${SHAPE_COLOR}">
 				<rect x="4.6" y="4.4" width="24.6" height="3.4"/>
@@ -93,30 +93,30 @@ export const icons: Icons = {
 	`,
 	// icônes génériques
 	aide: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="34" height="34" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd" viewBox="0 0 6828 6828">
+		<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 6828 6828">
 			<circle class="${CIRCLE_COLOR}" cx="3414" cy="3414" r="3321" />
 			<g class="${SHAPE_COLOR}">
-				<path class="fil1" d="M6642 3414c0-891-362-1698-946-2282S4306 187 3414 187c-891 0-1698 361-2282 945S187 2523 187 3414c0 892 361 1698 945 2282s1391 946 2282 946c892 0 1698-362 2282-946s946-1390 946-2282zm-814-2414c618 618 1000 1471 1000 2414 0 942-382 1796-1000 2414-617 618-1471 1000-2414 1000-942 0-1796-382-2414-1000C383 5211 0 4356 0 3414s382-1796 1000-2414C1618 383 2472 0 3414 0s1796 382 2414 1000z"/>
-				<path class="fil1" d="M3055 4035v-140c0-161 29-296 88-402 58-107 161-218 307-333 174-137 287-244 338-320 50-76 75-167 75-272 0-123-41-217-123-283s-200-99-353-99c-139 0-268 19-387 59-118 40-234 87-347 143l-184-387c297-165 615-247 955-247 287 0 515 70 683 210 168 141 253 335 253 582 0 110-16 208-49 294-32 85-81 167-146 244-64 78-177 179-337 303-136 107-227 196-274 266-45 70-68 165-68 283v99h-431zm-90 701c0-221 107-332 323-332 105 0 186 29 242 87 55 58 83 139 83 245 0 104-29 186-85 247s-136 91-240 91-184-30-240-89c-55-59-83-142-83-249z"/>
+				<path d="M6642 3414c0-891-362-1698-946-2282S4306 187 3414 187c-891 0-1698 361-2282 945S187 2523 187 3414c0 892 361 1698 945 2282s1391 946 2282 946c892 0 1698-362 2282-946s946-1390 946-2282zm-814-2414c618 618 1000 1471 1000 2414 0 942-382 1796-1000 2414-617 618-1471 1000-2414 1000-942 0-1796-382-2414-1000C383 5211 0 4356 0 3414s382-1796 1000-2414C1618 383 2472 0 3414 0s1796 382 2414 1000z"/>
+				<path d="M3055 4035v-140c0-161 29-296 88-402 58-107 161-218 307-333 174-137 287-244 338-320 50-76 75-167 75-272 0-123-41-217-123-283s-200-99-353-99c-139 0-268 19-387 59-118 40-234 87-347 143l-184-387c297-165 615-247 955-247 287 0 515 70 683 210 168 141 253 335 253 582 0 110-16 208-49 294-32 85-81 167-146 244-64 78-177 179-337 303-136 107-227 196-274 266-45 70-68 165-68 283v99h-431zm-90 701c0-221 107-332 323-332 105 0 186 29 242 87 55 58 83 139 83 245 0 104-29 186-85 247s-136 91-240 91-184-30-240-89c-55-59-83-142-83-249z"/>
 			</g>
 		</svg>`,
 	plus: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="34" height="34" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;fill-rule:evenodd;clip-rule:evenodd" viewBox="0 0 1028 1028">
+		<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 1028 1028">
 			<circle class="${CIRCLE_COLOR}" cx="514" cy="514" r="514"/>
 			<path class="${SHAPE_COLOR}" d="M475 734V552H294v-77h181V294h77v181h182v77H552v182z"/>
 		</svg>`,
 	croix: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="12" cy="12" r="12"/>
 			<polygon class="${SHAPE_COLOR}" points="15.3,16.7 12,13.4 8.7,16.7 7.3,15.3 10.6,12 7.3,8.7 8.7,7.3 12,10.6 15.3,7.3 16.7,8.7 13.4,12 16.7,15.3 "/>
 		</svg>`,
 	check: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 46 46" style="enable-background:new 0 0 46 46;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 46 46" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="23" cy="23" r="23"/>
 			<path class="${SHAPE_COLOR}" d="M31.5,15.3c-0.3-0.3-0.7-0.3-0.9,0l-9.8,9.8c-0.3,0.3-0.7,0.3-0.9,0l-4.3-4.3c-0.1-0.2-0.3-0.2-0.4-0.2 s-0.4,0-0.5,0.2l-1.9,1.7c-0.1,0.1-0.2,0.3-0.2,0.4s0,0.4,0.2,0.4l4.3,4.6c0.3,0.3,0.7,0.7,0.9,0.9l1.8,1.9c0.3,0.2,0.7,0.2,0.9,0 l12.6-12.6c0.3-0.3,0.3-0.7,0-0.9L31.5,15.3L31.5,15.3L31.5,15.3z"/>
 		</svg>`,
 	information: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve">
 		<circle class="${CIRCLE_COLOR}" cx="12" cy="12" r="12"/>
 		<g class="${SHAPE_COLOR}">
 			<rect x="10.8" y="10.8" width="2.4" height="7.2"/>
@@ -124,7 +124,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	telechargement: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<ellipse class="${CIRCLE_COLOR}" cx="17" cy="17" rx="17" ry="17"/>
 			<g class="${SHAPE_COLOR}">
 				<polygon points="22.1,17.2 22.1,21.4 11.7,21.4 11.7,17.2 10,17.2 10,23.1 24,23.1 24,17.2"/>
@@ -133,7 +133,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	upload: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
 		<circle class="${CIRCLE_COLOR}" cx="16" cy="16" r="16"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M20.8,16.6v4H11v-4H9.4v5.5h13.2v-5.5H20.8z"/>
@@ -142,23 +142,23 @@ export const icons: Icons = {
 	</svg>
 	`,
 	modifier: `
-		<svg aria-hidden="true"  xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
+		<svg  xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17" />
 			<g class="${SHAPE_COLOR}" transform="translate(8.996 8.988)">
-				<path  d="M278.218,570.969,272,573.251,274.249,567Z" transform="translate(-272 -557.235)"  fill-rule="evenodd"/>
-				<path d="M357,325.64l4,4.035,7.64-7.64-4-4.035Z" transform="translate(-354.189 -316.47)"  fill-rule="evenodd"/>
-				<path  d="M608.084,272.023l2.613,2.613a.979.979,0,0,1,0,1.356l-.728.728L606,272.75l.728-.728a.979.979,0,0,1,1.356,0Z" transform="translate(-594.953 -271.75)"  fill-rule="evenodd"/>
+				<path  d="M278.218,570.969,272,573.251,274.249,567Z" transform="translate(-272 -557.235)"/>
+				<path d="M357,325.64l4,4.035,7.64-7.64-4-4.035Z" transform="translate(-354.189 -316.47)"/>
+				<path  d="M608.084,272.023l2.613,2.613a.979.979,0,0,1,0,1.356l-.728.728L606,272.75l.728-.728a.979.979,0,0,1,1.356,0Z" transform="translate(-594.953 -271.75)"/>
 			</g>
 		</svg>
 	`,
 	pieceJointe: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="35" cy="35" r="35"/>
 			<path class="${SHAPE_COLOR}" d="M28.1,51.8c2.4,0,4.8-1,6.7-2.9l16-16.4l-1.6-1.7l-16,16.4c-2.7,2.8-7.1,2.9-9.8,0.2c-2.6-2.7-2.6-7.2,0.2-10l15.2-15.6c1.7-1.7,4.5-1.7,6.2,0c1.7,1.8,1.7,4.6,0,6.3L29.5,44c-0.7,0.7-1.9,0.7-2.6,0c-0.3-0.4-0.5-0.8-0.5-1.4c0-0.5,0.2-1,0.5-1.4l13.9-14.2l-1.6-1.6L25.3,39.7c-0.8,0.8-1.2,1.9-1.2,3c0,1.1,0.4,2.2,1.2,3c0.8,0.8,1.8,1.3,2.9,1.3c1.1,0,2.2-0.5,2.9-1.3l15.7-16.1l0,0c2.3-2.7,2.3-6.8-0.2-9.3c-2.5-2.6-6.5-2.6-9.1-0.2l0,0l-0.3,0.3L22,35.8c-3.6,3.7-3.7,9.7-0.2,13.3C23.5,50.9,25.8,51.8,28.1,51.8L28.1,51.8z"/>
 		</svg>
 	`,
 	poubelle: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<ellipse class="${CIRCLE_COLOR}" cx="17" cy="17" rx="17" ry="17"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M21.8,11.7H17h-4.8c-0.2,0-0.5,0.1-0.7,0.2c-0.2,0.2-0.2,0.5-0.2,0.7v0.8v0.3h0.2H17h5.5h0.2v-0.3v-0.8c0-0.3,0-0.5-0.2-0.7C22.3,11.8,22,11.7,21.8,11.7L21.8,11.7z"/>
@@ -168,7 +168,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	chronometer: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 64 64">
 		<circle class="${CIRCLE_COLOR}" cx="32" cy="32" r="32"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M14,21.9l-2-2c-.3-.3-.5-.8-.5-1.2s.2-.9.5-1.2l1.6-1.6c.2-.2.4-.3.6-.4.2,0,.4-.1.7-.1s.5,0,.7.1c.2,0,.4.2.6.4l1.8,1.8c-1.5,1.2-2.8,2.6-4,4.2Z"/>
@@ -177,13 +177,13 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	rechercher: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M31.944,15.972C31.944,7.151,24.792,0,15.972,0C7.153,0,0,7.151,0,15.972c0,8.824,7.153,15.972,15.972,15.972C24.792,31.944,31.944,24.796,31.944,15.972"/>
 			<path class="${SHAPE_COLOR}" d="M17.325,18.854c2.34,0,4.236-1.904,4.236-4.238c0-2.335-1.896-4.237-4.236-4.237c-2.335,0-4.231,1.902-4.231,4.237C13.094,16.951,14.99,18.854,17.325,18.854 M8.457,22.127l3.888-3.892c-0.738-1.017-1.181-2.267-1.181-3.619c0-3.404,2.764-6.162,6.162-6.162c3.402,0,6.163,2.758,6.163,6.162c0,3.405-2.761,6.161-6.163,6.161c-1.353,0-2.599-0.439-3.616-1.181l-3.892,3.892L8.457,22.127z"/>
 		</svg>
 	`,
 	informationPersonnage: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M16.8,13.4c2,0,3.7-1.6,3.7-3.7c0,0,0,0,0,0c0-2-1.6-3.7-3.7-3.7c-2,0-3.7,1.6-3.7,3.7 C13.1,11.7,14.7,13.4,16.8,13.4z"/>
@@ -191,17 +191,17 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	sensInterdit: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 20" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="10" cy="10" r="10"/>
 			<rect class="${SHAPE_COLOR}" x="6.2" y="8.7" width="7.8" height="2.5"/>
 		</svg>`,
 	exclamation: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="12" cy="12" r="12"/>
 			<path class="${SHAPE_COLOR}" d="M13.2,14.1H11l-0.5-8.8h3.2L13.2,14.1z M10.4,17.3c0-0.5,0.1-0.9,0.4-1.2c0.3-0.3,0.6-0.4,1.2-0.4	c0.5,0,0.9,0.2,1.2,0.4c0.3,0.3,0.4,0.6,0.4,1.2c0,0.4-0.1,0.8-0.4,1c-0.3,0.3-0.6,0.4-1.2,0.4c-0.5,0-0.9-0.1-1.2-0.4 C10.5,18.1,10.4,17.7,10.4,17.3z"/>
 		</svg>`,
 	ampoule: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24 24" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="12" cy="12" r="12"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M12,7.2c-2.4,0-4.2,2-4.2,4.4c0,1.2,0.5,2.3,1.3,3.1c0.4,0.5,1.1,1.1,1.1,1.9c0,0.1,0,0.5,0,0.5v1.9 c0,0.4,0.3,0.7,0.7,0.7h0.1c0.1,0.5,0.7,0.8,1.1,0.8c0.5,0,1-0.3,1.1-0.8h0.3c0.4,0,0.7-0.3,0.7-0.7v-1.9c0,0,0-0.4,0-0.5 c0-0.8,0.5-1.3,1.1-1.9c0.8-0.8,1.3-1.9,1.3-3.1C16.4,9.2,14.4,7.2,12,7.2L12,7.2z"/>
@@ -215,18 +215,18 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	courrier: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 			<path class="${SHAPE_COLOR}" d="M19.4,17.7l6.7,5.8c-0.3,0.2-0.6,0.4-1,0.4H8.8c-0.4,0-0.7-0.1-1-0.4l6.7-5.8l2.4,2L19.4,17.7z M17,18.4 l-9.1-7.9c0.3-0.2,0.6-0.4,1-0.3h16.3c0.4,0,0.7,0.1,1,0.4L17,18.4z M26.6,22.7L20,17.1l6.6-5.7V22.7L26.6,22.7z M7.5,22.7V11.4	l6.6,5.7L7.5,22.7L7.5,22.7z"/>
 		</svg>`,
 	message: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 44 44" style="enable-background:new 0 0 44 44;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 44 44" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M22,0C9.8,0,0,9.8,0,22s9.8,22,22,22s22-9.8,22-22S34.2,0,22,0z"/>
 			<path class="${SHAPE_COLOR}" d="M29.1,11.1H14.9c-2.2,0-4.1,1.8-4.1,4.1v9.9c0,2.2,1.8,4.1,4.1,4.1h5.9l6.3,6v-6h2c2.2,0,4.1-1.8,4.1-4.1v-9.9	C33.1,13,31.3,11.1,29.1,11.1z M15.8,15.7h4.1v1.4h-4.1V15.7z M24.4,23.7h-8.6v-1.4h8.6V23.7z M28.2,20.4H15.8V19h12.4V20.4z M28.2,17.1h-6.2v-1.4h6.2V17.1z"/>
 		</svg>`,
 	// icônes fichiers
 	pdf: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<ellipse class="${CIRCLE_COLOR}" cx="17" cy="17" rx="17" ry="16.9"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M17.5,14.7h-1.9v4.7h1.9c0.5,0,0.9-0.4,0.9-0.9v-2.8C18.4,15.1,18,14.7,17.5,14.7z"/>
@@ -235,23 +235,23 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	csv: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 			<path class="${SHAPE_COLOR}" d="M25.2,11.7H8.8c-1.1,0-1.9,0.9-1.9,1.9v6.8c0,1.1,0.9,1.9,1.9,1.9h16.4c1.1,0,1.9-0.9,1.9-1.9v-6.8 C27.1,12.6,26.3,11.7,25.2,11.7z M12.9,19.7c-0.4,0.5-1,0.7-1.6,0.7c-0.7,0-1.4-0.3-1.8-0.9c-0.9-1.6-0.9-3.5,0-5 c0.4-0.6,1.1-0.9,1.8-0.9c0.6,0,1.1,0.2,1.5,0.6c0.4,0.4,0.7,1,0.8,1.6h-0.9c-0.1-0.4-0.2-0.7-0.5-1c-0.2-0.2-0.5-0.4-0.8-0.4 c-0.5,0-0.9,0.3-1.1,0.7c-0.3,0.6-0.4,1.3-0.4,1.9c0,0.7,0.1,1.3,0.4,1.9c0.2,0.4,0.6,0.7,1.1,0.7c0.4,0,0.7-0.2,1-0.5 c0.3-0.4,0.4-0.8,0.5-1.3h0.9C13.6,18.5,13.4,19.2,12.9,19.7z M18.6,19.9c-0.5,0.4-1.1,0.6-1.7,0.6c-0.6,0-1.2-0.2-1.7-0.6 c-0.4-0.5-0.7-1.1-0.7-1.7l0.9,0c0,0.9,0.8,1.6,1.6,1.5c0.3,0,0.7-0.1,0.9-0.3c0.3-0.2,0.4-0.5,0.4-0.9c0-0.5-0.5-0.8-1.4-1.1 c-0.2,0-0.3-0.1-0.4-0.1c-0.5-0.1-1-0.3-1.5-0.7c-0.3-0.3-0.4-0.7-0.4-1.1c0-0.5,0.2-1,0.6-1.4c0.4-0.4,1-0.5,1.5-0.5 c0.6,0,1.2,0.2,1.6,0.5c0.4,0.4,0.6,1,0.6,1.5v0h-0.9c0-0.4-0.1-0.7-0.4-1c-0.3-0.2-0.6-0.4-0.9-0.3c-0.3,0-0.6,0.1-0.9,0.3	c-0.2,0.2-0.3,0.5-0.3,0.8c0,0.3,0.1,0.5,0.2,0.7c0.4,0.2,0.9,0.4,1.3,0.5c0.6,0.1,1.2,0.3,1.6,0.7c0.3,0.3,0.4,0.7,0.4,1.2 C19.3,18.9,19,19.5,18.6,19.9z M23,20.3h-0.9L20,13.7h0.9l1.7,5.5l1.6-5.5h0.9L23,20.3z"/>
 		</svg>`,
 	xls: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<ellipse class="${CIRCLE_COLOR}" cx="17" cy="17" rx="17" ry="16.9"/>
 			<path class="${SHAPE_COLOR}" d="M25.5,11.6H8.6c-1.1,0-2,0.9-2,2v6.9c0,1.1,0.9,2,2,2h16.9c1.1,0,2-0.9,2-2v-6.9C27.4,12.5,26.6,11.6,25.5,11.6 z M13.5,20.5h-1L11,17.9l-1.5,2.6h-1l2-3.5l-2-3.5h1l1.5,2.6l1.5-2.6h1l-2,3.5L13.5,20.5z M19.5,20.5h-5v-6.9h1v5.9h4V20.5z M22.5,16.5h1c1.1,0,2,0.9,2,2c0,1.1-0.9,2-2,2h-1c-1.1,0-2-0.9-2-2h1v0c0,0.5,0.4,1,1,1h1c0.6,0,1-0.5,1-1s-0.4-1-1-1h-1 c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2h1c1.1,0,2,0.9,2,2h-1c0-0.5-0.4-1-1-1h-1c-0.6,0-1,0.4-1,1C21.5,16.1,21.9,16.5,22.5,16.5z"/>
 		</svg>`,
 	// icônes services
 	convention: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17 0C7.6 0 0 7.6 0 17s7.6 17 17 17 17-7.6 17-17S26.4 0 17 0z"/>
 			<path class="${SHAPE_COLOR}" d="M11.8 24.4h2.1V17l-2.1 2.1v5.3zM9 22v2.5h2v-4.6l-1.4 1.4-.6.7zm5.7 2.4h2.1v-5.8l-2.1-2.1v7.9zm2.9-5.5v5.5h2.1v-7.6l-1.6 1.6-.5.5zm2.9 5.5h2.1V13.9L20.5 16v8.4zm-.8-14.7 1.4 1.4-3.7 3.7-2.9-2.8-7.1 7.1 1.5 1.5 5.6-5.7 2.8 2.8 5.2-5.2 1.4 1.4.5-4.7-4.7.5z"/>
 		</svg>`,
 	paiements: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M10.2,20.7c0.5,3.3,3.4,5.7,6.8,5.7c3.4,0,6.3-2.5,6.8-5.7c-1.3,2.4-3.9,4-6.8,4 C14.1,24.8,11.5,23.1,10.2,20.7L10.2,20.7z"/>
@@ -261,7 +261,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	commandes: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 		<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 		<g class="${SHAPE_COLOR}" transform="translate(0.754 51.247)">
 			<path d="M12.4-35.8c0.5,0.1,1-0.2,1.2-0.7c0.1-0.5-0.2-1-0.7-1.2c0,0,0,0,0,0c-0.5-0.1-1,0.2-1.2,0.7C11.6-36.5,11.9-35.9,12.4-35.8"/>
@@ -279,13 +279,13 @@ export const icons: Icons = {
 	</svg>
 	`,
 	patientele: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 		<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 		<path class="${SHAPE_COLOR}" d="M20.2,17.3L20.2,17.3c0.2,0.1,0.3,0.3,0.4,0.6l1.4,5c-0.6,0.5-1.2,0.8-1.8,1.1l-0.5-2v2.2c-1.7,0.6-3.5,0.6-5.1,0V22l-0.5,2c-0.7-0.3-1.3-0.7-1.8-1.1l1.3-5c0.1-0.5,0.5-0.8,1-0.8H16l0.9,1.7l0.9-1.7h1.7C19.8,17,20,17.1,20.2,17.3L20.2,17.3z M27,19.9c-0.6,0.5-1.2,0.8-1.8,1.1l-0.5-2v2.2c-0.8,0.3-1.6,0.4-2.5,0.4l-1.1-4c-0.1-0.3-0.3-0.6-0.5-0.8c0,0,0,0,0,0l0,0c-0.3-0.2-0.6-0.3-0.9-0.3h-1.4c0.2-0.1,0.4-0.3,0.6-0.5c0.5-0.5,0.8-1.2,0.8-1.9v-0.1h1.5l0.9,1.7l0.9-1.7h1.7c0.5,0,0.9,0.3,1,0.8L27,19.9z M7,19.9c0.6,0.5,1.2,0.8,1.8,1.1l0.5-2v2.2c0.8,0.3,1.6,0.4,2.5,0.4l1.1-4c0.1-0.3,0.3-0.6,0.6-0.8l0.3,0.4l-0.3-0.4c0,0,0,0,0,0c0.3-0.2,0.6-0.3,0.9-0.3h1.2c-0.2-0.1-0.4-0.3-0.6-0.5c-0.5-0.5-0.8-1.2-0.8-1.9v-0.1h-1.3L12,15.8l-0.9-1.7H9.4c-0.5,0-0.9,0.3-1,0.8L7,19.9z M12.1,9c-1.2,0-2.2,1-2.2,2.2c0,1.2,1,2.2,2.2,2.2s2.2-1,2.2-2.2l0,0C14.3,10,13.3,9,12.1,9z M21.9,9c1.2,0,2.2,1,2.2,2.2c0,1.2-1,2.2-2.2,2.2s-2.2-1-2.2-2.2l0,0C19.7,10,20.7,9,21.9,9z M16.9,12c1.2,0,2.2,1,2.2,2.2c0,1.2-1,2.2-2.2,2.2c-1.2,0-2.2-1-2.2-2.2C14.7,13,15.6,12,16.9,12C16.9,12,16.9,12,16.9,12z"/>
 	</svg>
 	`,
 	horlogeFlecheDroite: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.3,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17l0,0C7.7,34,0.1,26.3,0.1,17l0,0C0.1,7.7,7.7,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M18,16.7c0,0-0.1-0.1-0.1-0.1c0-0.1,0-0.1-0.1-0.2l-3.4-4c-0.2-0.3-0.6-0.3-0.8-0.1c-0.3,0.2-0.3,0.6-0.1,0.9 l3.3,3.8L14,19.4c-0.2,0.2-0.2,0.5,0,0.8c0.2,0.2,0.5,0.3,0.8,0.1l3.3-2.8C18.3,17.3,18.3,17,18,16.7z"/>
@@ -297,7 +297,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	horlogeFlecheGauche: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17s17-7.6,17-17S26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<polygon points="16,12.4 16,17.6 20.8,20.5 21.6,19.1 17.5,16.7 17.5,12.4"/>
@@ -305,7 +305,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	releveHonoraires: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34.1;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17.1l0,0C7.6,34.1,0,26.4,0,17l0,0C0,7.7,7.6,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M17.8,6.9c-0.7,0-1.4,0.1-2,0.5c-0.3,0.2-0.6,0.5-0.9,0.8c-0.2,0.3-0.4,0.7-0.5,1.1h4.8l-0.2,0.8h-4.7 c0,0.1,0,0.2,0,0.2c0,0.2,0,0.4,0,0.6h4.5l-0.2,0.8h-4.2c0.1,0.9,0.7,1.6,1.4,2c0.5,0.3,1.1,0.4,1.8,0.4c0.7,0,1.5-0.2,2.1-0.6V15 c-0.6,0.3-1.3,0.4-1.9,0.4c-2.1,0-3.6-0.8-4.3-2.4c-0.2-0.4-0.3-0.8-0.4-1.2H12l0.2-0.8h0.7c0-0.2,0-0.4,0-0.6v-0.3H12l0.2-0.8H13 c0.2-1.3,1.1-2.4,2.3-2.9c0.8-0.4,1.6-0.6,2.5-0.5c0.8,0,1.5,0.1,2.2,0.5l-0.3,1.2C19.2,7.1,18.5,6.9,17.8,6.9L17.8,6.9z"/>
@@ -313,7 +313,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	horairesCabinet: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M17.8,16.2V9.2c0-0.7-0.6-1.2-1.2-1.2c-0.7,0-1.2,0.6-1.2,1.2c0,0,0,0,0,0v7.5c0,0,0,0,0,0c0,0.1,0,0.2,0,0.2c0,0,0,0.1,0,0.1c0,0,0,0.1,0,0.1c0,0,0,0.1,0.1,0.1s0,0.1,0,0.1c0,0.1,0.1,0.1,0.2,0.2l3.5,3.5c0.5,0.5,1.3,0.5,1.8,0c0.5-0.5,0.5-1.3,0-1.8c0,0,0,0,0,0L17.8,16.2z"/>
@@ -325,7 +325,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	releveActivite: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}" transform="translate(47.748 -348.279)">
 				<path d="M-21.9,356.3h-17.8v18h18v-18H-21.9z M-28.8,356.6h3.2v3.2h-3.2L-28.8,356.6L-28.8,356.6z M-32.4,356.6h3.2v3.2h-3.2V356.6z M-35.9,356.6h3.2v3.2h-3.2L-35.9,356.6L-35.9,356.6z M-35.9,360.1h3.2v3.2h-3.2L-35.9,360.1L-35.9,360.1zM-39.4,356.6h3.2v3.2h-3.2V356.6z M-39.4,360.1h3.2v3.2h-3.2V360.1z M-32.7,374h-3.2v-3.2h3.2L-32.7,374L-32.7,374z M-29.1,374h-3.2v-3.2h3.2V374z M-25.6,374h-3.2v-3.2h3.2L-25.6,374L-25.6,374z M-25.6,370.4h-3.2v-3.2h3.2L-25.6,370.4L-25.6,370.4zM-22.1,374h-3.2v-3.2h3.2V374z M-22.1,370.4h-3.2v-3.2h3.2V370.4z M-22.1,359.8h-0.6l0,0.1l-0.1,0.3h0.7v3.2h-1.9l-0.1,0.3h2v3.2h-3.2v-1l-0.3-0.3l0,0v1.3h-2.9l-0.6,0.6v2.9h-3.2v-0.9l-0.3-0.3v1.2h-3.2v-0.7l-0.3,0.3v0.4h-0.5l-0.3,0.3h0.8v3.2h-3.2v-6.8h1.5l0.3-0.3h-1.9v-3.2h3.2v1.9l0.3-0.3v-1.5h3.2v1.1l0.3,0.3v-1.4h3.1l0.5-0.5v-1l-0.2-0.2l-0.1-0.1v1.4h-3.2v-3.2h3.2v1.1l0.3-0.1l0,0v-1h2.9l0.9-0.3h-0.2v-3.2h3.2L-22.1,359.8L-22.1,359.8z"/>
@@ -334,7 +334,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	checkText: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
 		<circle class="${CIRCLE_COLOR}" cx="16" cy="16" r="16"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M15.9,11.5c-0.1-0.1-0.1-0.1-0.2-0.1c-0.1,0-0.2,0-0.2,0.1L10.9,16c0,0-0.1,0.1-0.1,0.1c0,0-0.1,0-0.1,0s-0.1,0-0.1,0c0,0-0.1,0-0.1-0.1l-2-2c0,0-0.1-0.1-0.1-0.1c0,0-0.1,0-0.1,0c0,0-0.1,0-0.1,0c0,0-0.1,0-0.1,0.1l-0.9,0.8c-0.1,0.1-0.1,0.1-0.1,0.2c0,0.1,0,0.2,0.1,0.2l2,2.1c0.1,0.1,0.3,0.3,0.4,0.4l0.9,0.9c0,0,0.1,0.1,0.1,0.1c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1,0c0,0,0.1,0,0.1-0.1l5.8-5.8c0,0,0.1-0.1,0.1-0.1c0,0,0-0.1,0-0.1c0,0,0-0.1,0-0.1c0,0,0-0.1-0.1-0.1L15.9,11.5L15.9,11.5z"/>
@@ -346,7 +346,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	checkDocument: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M16,0C12.8,0,9.7.9,7.1,2.7c-2.6,1.8-4.7,4.3-5.9,7.2C0,12.8-.3,16,.3,19.1c.6,3.1,2.1,6,4.4,8.2,2.2,2.2,5.1,3.8,8.2,4.4,3.1.6,6.3.3,9.2-.9,2.9-1.2,5.4-3.3,7.2-5.9,1.8-2.6,2.7-5.7,2.7-8.9s-1.7-8.3-4.7-11.3C24.3,1.7,20.2,0,16,0Z"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M19.9,4.5c0,0-.1,0-.2,0s-.2,0-.2,0l-4.5,4.5s0,0,0,0c0,0,0,0-.1,0s0,0-.1,0c0,0,0,0,0,0l-2-2s0,0,0,0c0,0,0,0-.1,0,0,0,0,0-.1,0,0,0,0,0,0,0l-.9.8c0,0,0,.1,0,.2,0,0,0,.2,0,.2l2,2.1c.1.1.3.3.4.4l.8.9s0,0,0,0c0,0,0,0,.1,0s0,0,.1,0c0,0,0,0,0,0l5.8-5.8s0,0,0,0c0,0,0,0,0-.1s0,0,0-.1c0,0,0,0,0,0l-.9-.9Z"/>
@@ -354,12 +354,12 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	documentPill: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
 		<circle class="${CIRCLE_COLOR}" cx="16" cy="16" r="16"/>
 		<path class="${SHAPE_COLOR}" d="M21.2,24.4l1-1l-3.7-3.7l-1,1c-0.5,0.5-0.8,1.1-0.8,1.9s0.3,1.3,0.8,1.9c0.5,0.5,1.1,0.8,1.9,0.8C20,25.2,20.6,24.9,21.2,24.4z M23.3,22.3l1-1c0.5-0.5,0.8-1.1,0.8-1.9c0-0.7-0.3-1.3-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8c-0.7,0-1.3,0.3-1.9,0.8l-1,1L23.3,22.3z M11.7,13.5H20v-1.7h-8.3V13.5z M15.8,9.5c0.2,0,0.3-0.1,0.4-0.2c0.1-0.1,0.2-0.3,0.2-0.4c0-0.2-0.1-0.3-0.2-0.4c-0.1-0.1-0.3-0.2-0.4-0.2c-0.2,0-0.3,0.1-0.4,0.2c-0.1,0.1-0.2,0.3-0.2,0.4c0,0.2,0.1,0.3,0.2,0.4C15.5,9.5,15.7,9.5,15.8,9.5z M15.1,23.5H10c-0.5,0-0.9-0.2-1.2-0.5c-0.3-0.3-0.5-0.7-0.5-1.2V10.2c0-0.5,0.2-0.9,0.5-1.2C9.2,8.7,9.6,8.5,10,8.5h3.5C13.7,8,14,7.6,14.4,7.3c0.4-0.3,0.9-0.5,1.4-0.5c0.5,0,1,0.2,1.4,0.5C17.7,7.6,18,8,18.2,8.5h3.5c0.5,0,0.9,0.2,1.2,0.5c0.3,0.3,0.5,0.7,0.5,1.2v5.1c-0.6-0.1-1.2-0.1-1.7,0c-0.6,0.1-1.1,0.3-1.6,0.7v-0.7h-8.3v1.7h7.3l-1.7,1.7h-5.6v1.7h4.1c-0.3,0.5-0.5,1-0.7,1.6C15,22.3,15,22.9,15.1,23.5L15.1,23.5z"/>
 	</svg>`,
 	noPill: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 33">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 33">
 		<path class="${CIRCLE_COLOR}" d="M16,32.2c8.8,0,16-7.2,16-16S24.8.2,16,.2,0,7.4,0,16.2s7.2,16,16,16Z"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M13,16.1c-.8,1-.7,2.5.3,3.3s2.4.7,3.2-.3l3-3.7c.8-1,.7-2.5-.3-3.3s-2.4-.7-3.2.3l-1.2,1.5,3.5,3-.4.5-3.5-3-1.4,1.7Z"/>
@@ -367,7 +367,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	declarationAstreinte: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34.1" style="enable-background:new 0 0 34 34.1;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34.1" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17.1l0,0C7.6,34.1,0,26.4,0,17l0,0C0,7.7,7.6,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M19.7,27.8l-4,1.5l1.4-4L19.7,27.8z"/>
@@ -387,7 +387,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	declarationInserm: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.6,17,17l0,0c0,9.4-7.6,17-17,17l0,0C7.6,34,0,26.4,0,17l0,0C0,7.6,7.6,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M19.7,27.8l-4,1.5l1.4-4L19.7,27.8z"/>
@@ -402,16 +402,16 @@ export const icons: Icons = {
 		</svg>
 	`,
 	ordonnanceNumerique: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
+		<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17" />
 			<g  class="${SHAPE_COLOR}" transform="translate(1.803 8)">
-				<path d="M21.507,14.068a6.01,6.01,0,0,0-.69,11.98,4.852,4.852,0,0,1-3.879,1.941H2.2l.77.926h13.97a5.784,5.784,0,0,0,4.972-2.841,6.01,6.01,0,0,0-.4-12.006m0,10.087a4.076,4.076,0,1,1,4.076-4.076,4.076,4.076,0,0,1-4.076,4.076" transform="translate(0 -11.207)" fill="#fff"/>
-				<path d="M24.647,0a5.784,5.784,0,0,0-4.973,2.841,6.007,6.007,0,1,0,1.093.026A4.852,4.852,0,0,1,24.647.927H39.282L38.586,0Zm-.493,8.836a4.076,4.076,0,1,1-4.076-4.076,4.076,4.076,0,0,1,4.076,4.076" transform="translate(-11.587)" fill="#fff"/>
+				<path d="M21.507,14.068a6.01,6.01,0,0,0-.69,11.98,4.852,4.852,0,0,1-3.879,1.941H2.2l.77.926h13.97a5.784,5.784,0,0,0,4.972-2.841,6.01,6.01,0,0,0-.4-12.006m0,10.087a4.076,4.076,0,1,1,4.076-4.076,4.076,4.076,0,0,1-4.076,4.076" transform="translate(0 -11.207)"/>
+				<path d="M24.647,0a5.784,5.784,0,0,0-4.973,2.841,6.007,6.007,0,1,0,1.093.026A4.852,4.852,0,0,1,24.647.927H39.282L38.586,0Zm-.493,8.836a4.076,4.076,0,1,1-4.076-4.076,4.076,4.076,0,0,1,4.076,4.076" transform="translate(-11.587)"/>
 			</g>
 		</svg>
 	`,
 	optam: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}" transform="translate(-221.331 -164.58)">
 				<path d="M249.5,182.6l-1.5-0.1c-0.5-0.7-0.8-1.3-1.3-1.7c-0.5-0.5-1.1-0.7-1.7-1.3c0-0.7,0.1-1.4,0.5-2 c-1.8,0.2-1.8,0.9-3,1.5c-0.5-0.7-1.3-1.2-2.2-1.3l-0.6,1c-2-0.3-4-0.3-5.9,0.1c-0.4-0.2-0.7-0.6-0.8-1c-2.8,0.6-2.5,1.8-3.8,1.9 c-0.2-0.6,0-0.7,0.3-1.1c-1.7,0.1-1.2,1.3-0.7,2.1c-0.5,1.4-1.1,3.4-0.2,5c1,1.7,0.6,1.8,1.5,4.7h3.2v-1.2c1.9,0.3,3.9,0.4,5.9,0.3 c0.1,0.3,0.2,0.6,0.4,0.9h3.2l0-1.7C245.3,187.5,250.2,186.2,249.5,182.6z M244.7,182.1c-0.1-0.8,1-1.2,1.2-0.4 C246.2,182.7,244.8,182.9,244.7,182.1z"/>
@@ -419,7 +419,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	optam2: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M16,32c8.8,0,16-7.2,16-16S24.8,0,16,0,0,7.2,0,16s7.2,16,16,16Z"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M16.6,5.2c1.3.5,2,1.6,2.6,2.6,1.3,2.1,2.6,4.3,3.9,6.5,0,0,0,.1,0,.2h-.4c-.8-1-1.9-1.3-3.2-1.5-2.7-.5-5.4-1-8.1-1.5,0,0-.1,0-.3,0,.3-.5.6-1,.8-1.5.5-.9,1-1.9,1.6-2.8.2-.5.5-.9.9-1.2.4-.3.8-.6,1.3-.7h.7Z"/>
@@ -430,7 +430,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	arrowShield: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<circle class="${CIRCLE_COLOR}" cx="16" cy="16" r="16"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M25,15.5c-.3,0-.5.2-.5.5,0,1.6-.7,3.3-2,4.6-1.2,1.3-2.7,1.9-4.5,1.9h-9.8l2.1-2.1c.2-.2.2-.5,0-.7s-.5-.2-.7,0l-3,3s0,.1-.1.2c0,.1,0,.3,0,.4,0,0,0,.1.1.2l3,3c0,0,.2.1.4.1s.3,0,.4-.1c.2-.2.2-.5,0-.7l-2.1-2.1h9.8c2.1,0,3.9-.8,5.3-2.2,1.4-1.4,2.2-3.3,2.2-5.3s-.2-.5-.5-.5Z"/>
@@ -439,7 +439,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	echangeServiceMedical: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17s17-7.6,17-17S26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M15.4,6.4c-5,0-9,3.4-9,7.7c-0.1,2.3,1,4.6,2.8,6v3.8l3.9-2.2c0.8,0.1,1.6,0.2,2.3,0.2c5,0,8.3-3.6,8.3-7.8 S19.6,6.4,15.4,6.4z M10.9,15.2c-0.6,0-1-0.4-1-1c0-0.6,0.4-1,1-1c0.6,0,1,0.4,1,1C11.9,14.7,11.5,15.1,10.9,15.2z M15.1,15.2 C15.1,15.2,15.1,15.2,15.1,15.2c-0.6,0-1-0.4-1-1c0-0.6,0.4-1,1-1c0.6,0,1,0.4,1,1C16.1,14.7,15.7,15.1,15.1,15.2z M19.3,15.2 c-0.6,0-1-0.4-1-1c0-0.6,0.4-1,1-1c0.6,0,1,0.4,1,1C20.3,14.7,19.8,15.1,19.3,15.2z"/>
@@ -447,7 +447,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	adac: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.9 60.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.9 60.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="30.5" cy="30.4" r="30.4"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M14.9,37.5L14,34.4H9.3l-0.9,3.1H5.5L10,24.6h3.3l4.6,12.9H14.9z M13.4,32.2c-0.9-2.8-1.3-4.3-1.5-4.7s-0.2-0.7-0.2-0.9c-0.2,0.8-0.7,2.6-1.7,5.6H13.4z"/>
@@ -457,7 +457,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	perteActiviteCovid: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M14.5,26.5c-0.6,0-1.1-0.2-1.6-0.6c-0.3-0.3-0.5-0.7-0.6-1.2h3.1v-0.5h-3.2v-0.5h3.2v-0.5h-3.1
@@ -477,12 +477,12 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	stethoscope: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<path class="${SHAPE_COLOR}" d="M26,14.8c0-1.4-1.2-2.6-2.6-2.6s-2.6,1.2-2.6,2.6c0,1.2,0.7,2.1,1.8,2.5l-0.4,5.1c0,1.7-1.4,3-3,3h-1.1 c-1.7,0-3.1-1.3-3.3-3c2.3-0.8,5.1-4.5,5.1-8.2c0-2.6-1-4.9-2.8-6.2V7.8c0-0.4-0.3-0.7-0.7-0.7c-0.4,0-0.7,0.3-0.7,0.7v1.4 c0,0.4,0.3,0.7,0.7,0.7c0.2,0,0.3-0.1,0.4-0.1c1.1,1.1,1.7,2.8,1.7,4.6c0,3.6-3.1,7-4.6,7c-1.9,0-4.6-3.5-4.6-7	c0-1.9,0.7-3.5,1.7-4.6c0.1,0.1,0.2,0.1,0.4,0.1c0.4,0,0.7-0.3,0.7-0.7V7.8c0-0.4-0.3-0.7-0.7-0.7c-0.4,0-0.7,0.3-0.7,0.7v0.4 c-0.1,0.1-0.3,0.3-0.5,0.5C8.8,10,8,12.1,8,14.4c0,3.8,2.7,7.8,5.4,8.3c0.2,2.4,2.2,4.3,4.6,4.3h1c2.5,0,4.5-2,4.5-4.4l0.4-5.1 C25.1,17.1,26,16.1,26,14.8z M23.4,16.1c-0.7,0-1.2-0.6-1.2-1.2s0.6-1.2,1.2-1.2s1.2,0.6,1.2,1.2C24.6,15.6,24.1,16.1,23.4,16.1z"/>
 		</svg>`,
 	grossesse: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M17.4,7.6c0,0-1.2-1.3-2.2-1c-0.9,0.3-1.2,1-1.6,2c-0.3,0.9-0.3,1.7-0.9,1.8c-0.6,0.1-1-0.2-1-0.2	s1,1.1,1.7,1.1c0.8,0,1.4-0.1,2.1-1.5c0.5-1.2,0.8-1.3,1.2-1.4C17,8.3,17.4,7.8,17.4,7.6z"/>
@@ -490,7 +490,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	ambulance: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17s17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M27.6,20.6v-3.4l-2.1-1.3l-1.6-3.5c-0.2-0.4-0.7-0.8-1.2-0.8h-2.2v-1.4H7.7v9H7.1v1.1h1.5l0.7,1.1h0.2	c0.1,1.3,1.2,2.3,2.6,2.3c1.3,0,2.4-1,2.6-2.3h7c0.1,1.3,1.3,2.3,2.6,2.3c1.3,0,2.5-1,2.6-2.3h0.7L27.6,20.6L27.6,20.6z M12.1,22.5 c-0.7,0-1.3-0.6-1.3-1.3c0-0.7,0.6-1.3,1.3-1.3c0.7,0,1.3,0.6,1.3,1.3C13.5,21.9,12.9,22.5,12.1,22.5z M16.8,15.8h-1.7v1.7h-2v-1.7 h-1.7v-2h1.7v-1.7h2v1.7h1.7V15.8z M20.5,15.5v-3h2.2c0.1,0,0.4,0.2,0.4,0.3l1.2,2.7H20.5z M24.3,22.5c-0.7,0-1.3-0.6-1.3-1.3 c0-0.7,0.6-1.3,1.3-1.3c0.7,0,1.3,0.6,1.3,1.3C25.6,21.9,25,22.5,24.3,22.5z"/>
@@ -498,7 +498,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	demandeTransport: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17c9.4,0,17-7.6,17-17S26.4,0,17,0C17,0,17,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M25.9,24.2v-3l-1.8-1.2L22.7,17c-0.2-0.4-0.6-0.7-1.1-0.7l-1.9,0v-1.2H8.5v7.9H8v1h1.3L9.9,25h0.2c0.2,1.3,1.3,2.2,2.6,2c1-0.1,1.9-1,2-2h6.1c0.1,1.3,1.3,2.2,2.5,2c1.1-0.1,1.9-1,2-2H26L25.9,24.2L25.9,24.2z M13.6,24.7c0,0.6-0.5,1.2-1.2,1.2c0,0,0,0,0,0c-0.6,0-1.2-0.5-1.2-1.2c0-0.6,0.5-1.2,1.2-1.2C13,23.5,13.6,24.1,13.6,24.7C13.6,24.7,13.6,24.7,13.6,24.7z M16.5,20H15v1.5h-1.7V20h-1.5v-1.7h1.5v-1.5H15v1.5h1.5L16.5,20z M19.7,19.7v-2.6h1.9c0.2,0,0.3,0.1,0.4,0.2l1.1,2.4L19.7,19.7z M24.3,24.7c0,0.6-0.5,1.2-1.2,1.2c0,0,0,0,0,0c-0.6,0-1.2-0.5-1.2-1.2c0-0.6,0.5-1.2,1.2-1.2C23.7,23.5,24.3,24.1,24.3,24.7C24.3,24.7,24.3,24.7,24.3,24.7z"/>
@@ -508,7 +508,7 @@ export const icons: Icons = {
 		</svg>
 	`,
 	demandeMedicament: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17s17-7.6,17-17S26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M23.4,20.7c-0.8-0.6-1.7-0.9-2.7-0.9c0.5-1.5-0.1-3.2-1.3-4.2c-1.7-1.2-4-0.9-5.3,0.8l-4.7,6.3c-1.2,1.7-0.8,4,0.9,5.3c1.7,1.2,3.9,0.8,5.2-0.8l0.8-1.1c0.7,1.8,2.4,3,4.3,3c2.6,0,4.6-2.1,4.6-4.6C25.3,23,24.6,21.6,23.4,20.7L23.4,20.7z M15,17.1c0.9-1.2,2.5-1.4,3.7-0.6c0,0,0,0,0,0c1.1,0.8,1.4,2.3,0.8,3.4c-1,0.3-2,0.9-2.6,1.8c-0.2,0.3-0.4,0.6-0.5,0.9L12.8,20L15,17.1z M14.6,26.6c-0.9,1.2-2.6,1.4-3.8,0.6s-1.4-2.6-0.6-3.8l0,0l2.2-2.9l3.7,2.7c-0.1,0.5-0.2,1-0.2,1.5L14.6,26.6zM17.8,22.4c0.7-0.9,1.7-1.5,2.9-1.5c0.7,0,1.3,0.2,1.9,0.5l-4.2,5.7C16.9,26,16.7,23.9,17.8,22.4L17.8,22.4z M23.5,26.6c-0.7,0.9-1.7,1.5-2.9,1.5c-0.7,0-1.3-0.2-1.9-0.5l4.2-5.7C24.4,23,24.6,25.1,23.5,26.6L23.5,26.6z"/>
@@ -517,15 +517,15 @@ export const icons: Icons = {
 		</svg>
 	`,
 	checkEstomac: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
+		<svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17" />
 			<g class="${SHAPE_COLOR}">
-				<path d="M1807.842,700.871a.415.415,0,0,0-.585,0l-6.116,6.082a.391.391,0,0,1-.577,0l-2.681-2.715a.373.373,0,0,0-.289-.136.389.389,0,0,0-.3.136l-1.179,1.052a.439.439,0,0,0-.119.3.419.419,0,0,0,.119.288l2.706,2.842c.161.153.424.424.585.577l1.154,1.171a.4.4,0,0,0,.577,0l7.864-7.838a.4.4,0,0,0,0-.577l-1.162-1.179Z" transform="translate(-1785.375 -697.208)" fill-rule="evenodd"/>
+				<path d="M1807.842,700.871a.415.415,0,0,0-.585,0l-6.116,6.082a.391.391,0,0,1-.577,0l-2.681-2.715a.373.373,0,0,0-.289-.136.389.389,0,0,0-.3.136l-1.179,1.052a.439.439,0,0,0-.119.3.419.419,0,0,0,.119.288l2.706,2.842c.161.153.424.424.585.577l1.154,1.171a.4.4,0,0,0,.577,0l7.864-7.838a.4.4,0,0,0,0-.577l-1.162-1.179Z" transform="translate(-1785.375 -697.208)"/>
 				<path d="M9.059.57a9.082,9.082,0,0,0,1.268,4.076c1,1.629.439,3.441-.641,4.89s-4.1,2.108-5.462,1.112S.232,10.608,0,13.338c-.1,1.226,1.721,1.359,1.811.725s.995-2.029,2.264-.905c1.246,1.1,2.669,3.8,6.768,3.441s7.993-6.158,7-9.689-3.17-3.441-4.981-3.531S11.11,1.542,11.02.455C10.947-.285,9.193-.033,9.059.57Z" transform="matrix(0.966, 0.259, -0.259, 0.966, 10.009, 11.332)"/>
 			</g>
 		</svg>`,
 	contactCovid: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M12.7,16.7c0,1.2-1,2.7-2.2,2.7s-2.2-1.6-2.2-2.7c0-1.2,1-2.2,2.2-2.2 C11.7,14.5,12.7,15.5,12.7,16.7L12.7,16.7z"/>
@@ -537,7 +537,7 @@ export const icons: Icons = {
 		</svg>`,
 	// Icônes fonctionnalités
 	oeil: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.6,17,17l0,0c0,9.4-7.6,17-17,17l0,0C7.6,34,0,26.4,0,17l0,0C0,7.6,7.6,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M16.8,11.4c-3.7,0-6.7,2.3-10.3,5.9c3.1,3.1,5.7,5.9,10.3,5.9c4.6,0,8-3.5,10.3-5.8 C24.8,14.7,21.4,11.4,16.8,11.4z M16.8,21.5c-2.3,0-4.1-1.9-4.1-4.2c0-2.3,1.8-4.2,4.1-4.2c2.3,0,4.1,1.9,4.1,4.2 C21,19.6,19.1,21.5,16.8,21.5z"/>
@@ -545,7 +545,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	parapluie: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.6,17,17l0,0c0,9.4-7.6,17-17,17l0,0C7.7,34,0,26.4,0,17l0,0C0,7.6,7.7,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M17.8,16c-0.2,0-0.5,0-0.7,0c-0.3,0-0.5,0-0.8,0v5v0c0,0,0,0.7-0.4,1.1c-0.3,0.3-0.7,0.4-1.2,0.4h-1 c-0.4,0-0.8,0.3-0.8,0.8c0,0.4,0.3,0.8,0.8,0.8h1c1,0,1.7-0.3,2.3-0.9c0.8-0.9,0.8-2,0.8-2.2V16L17.8,16z"/>
@@ -553,12 +553,12 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	cible: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.6,17,17l0,0c0,9.4-7.6,17-17,17l0,0C7.7,34,0,26.4,0,17l0,0C0,7.6,7.7,0,17,0z"/>
 			<path class="${SHAPE_COLOR}" d="M18.9,23.9l0.7,1.7C18.7,25.8,17.9,26,17,26c-5.1,0-9.2-4.1-9.2-9.2s4.1-9.2,9.2-9.2s9.2,4.1,9.2,9.2 c0,0.9-0.1,1.7-0.4,2.5l-1.7-0.7c0.2-0.6,0.2-1.2,0.2-1.8c0-4.1-3.3-7.4-7.4-7.4s-7.4,3.3-7.4,7.4s3.3,7.4,7.4,7.4 C17.7,24.1,18.3,24,18.9,23.9L18.9,23.9z M17,20.4c-2,0-3.7-1.6-3.7-3.7c0-2,1.6-3.7,3.7-3.7s3.7,1.6,3.7,3.7c0,0.2,0,0.3,0,0.5 l1.8,0.7c0.1-0.4,0.1-0.8,0.1-1.2c0-3.1-2.5-5.5-5.5-5.5s-5.5,2.5-5.5,5.5c0,3,2.5,5.5,5.5,5.5c0.4,0,0.8-0.1,1.2-0.1l-0.7-1.7 C17.3,20.4,17.2,20.4,17,20.4z M17,18.6c1,0,1.8-0.8,1.8-1.8c0-1-0.8-1.8-1.8-1.8s-1.8,0.8-1.8,1.8C15.2,17.8,16,18.6,17,18.6z M22.7,20.9l2.3-1.1l-8-3.1l3.1,8l1.1-2.3l2.6,2.6l1.5-1.5L22.7,20.9L22.7,20.9z"/>
 		</svg>`,
 	medecin: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.6,17,17l0,0c0,9.4-7.6,17-17,17l0,0C7.7,34,0,26.4,0,17l0,0C0,7.6,7.7,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M18.8,9.5c-0.3-0.6-1-0.8-1.8-0.8c-1.9,0-3.5,1.4-3.5,2.8c0,0.9,0,1,0,1c0,2.8,1.4,5.2,3.5,5.2 c2.1,0,3.5-2.4,3.5-5.2c0,0,0-0.2,0-1C20.5,10.5,19.7,9.5,18.8,9.5L18.8,9.5z"/>
@@ -566,7 +566,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	infirmier: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17.5,0c9.6,0,17.4,7.8,17.4,17.4s-7.8,17.4-17.4,17.4S0,27.1,0,17.4S7.8,0,17.5,0z"/>
 			<g class="${SHAPE_COLOR}" transform="translate(6.35 4.346)">
 				<path d="M20.7,18.5c-1.5-2.2-5.3-3.2-5.4-3.3l-0.4-0.1l-0.2,0.4c-0.2,0.4-0.4,0.8-0.6,1.2c-0.9,0.6-1.9,0.9-3,0.8c-1.1,0.1-2.1-0.2-3-0.8c-0.3-0.4-0.5-0.8-0.6-1.2l-0.2-0.4l-0.4,0.1c-0.2,0-3.9,1.1-5.4,3.3c-0.8,1.4-1.3,3-1.3,4.7v0.2l0.1,0.1c0.1,0.1,2.3,2.6,10.8,2.6s10.7-2.5,10.8-2.6l0.1-0.1v-0.2C22,21.5,21.6,19.9,20.7,18.5L20.7,18.5z M11.1,25.2c-7,0-9.5-1.7-10-2.2c0-1.4,0.4-2.8,1.1-4c1.1-1.5,3.6-2.5,4.5-2.8c1.1,1.8,2.4,3.5,4,4.9l0.3,0.3l0.3-0.3c1.6-1.4,2.9-3,4-4.9c1,0.3,3.5,1.3,4.5,2.8c0.7,1.2,1.1,2.6,1.1,4C20.6,23.5,18.1,25.2,11.1,25.2L11.1,25.2z"/>
@@ -576,7 +576,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	brasCasse: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M20.1,16.3c0,0-0.2-0.1-0.5-0.1c-0.2,0.2-0.4,0.4-0.7,0.6l2.3,4.6c0.9,0.3,1.4,0.9,1.5,1.7 c0.1,0.8-0.3,2.3-1.8,2.3c-1.1,0-8.9,0-8.9,0c-0.7,0-1.5-0.6-1.5-1.6c0-0.3,0.1-0.7,0.3-1.1c0.1-0.1,3.5-6,3.7-6.3 c0,0-0.1-0.1-0.1-0.1c-0.4,0.1-0.8,0.2-1.2,0.3c-2.9,0.9-3.8,3.1-3.9,5.4c0,0.7,0,1.6,0.3,2.3c0.2,0.8,0.7,1.4,1.4,1.8 c0.3,0.1,0.7,0.3,1.1,0.3h9.2c1.3,0,2.9-0.7,3.1-1.9c0.2-0.8,0.2-1.7,0.2-2.4C24.6,19.4,23.6,17.1,20.1,16.3L20.1,16.3z"/>
@@ -585,7 +585,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	chute: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17s17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M25.6,17l-3.9-1.7c-0.3-0.1-0.7-0.1-0.9,0.1l-2.2,1.5l-1.2-3c0,0,0,0,0,0c0.8-0.3,1.8-0.8,2.7-1.7	c1.1-1.1,1.7-2.1,1.7-2.1c0.2-0.4,0.1-0.8-0.3-1c-0.4-0.2-0.8-0.1-1,0.3c0,0-0.5,0.9-1.5,1.8c-0.8,0.8-1.7,1.2-2.5,1.4 c0,0-2.1,0.8-2.9,1.1c-1.8,0.7-2.4,0.5-2.5,0.5C10.9,14,10.3,13,9.8,12c-0.2-0.4-0.6-0.5-1-0.4c-0.4,0.2-0.5,0.6-0.4,1 c0,0,0.3,0.6,0.6,1.2c0.7,1.3,1.1,1.6,1.4,1.7c0.3,0.1,0.6,0.2,0.9,0.2c0.7,0,1.6-0.2,2.7-0.6c0,0,0,0,0,0c0.4,0.9,1.5,3.4,1.9,4.4 c0,0,0,0,0,0c0.1,0.2,0.3,0.3,0.5,0.4c0.3,0.1,0.7,0.1,0.9-0.1c0.3-0.2,3.9-2.6,3.9-2.6l3.4,1.4c0.5,0.2,1.1,0,1.3-0.5 C26.4,17.7,26.1,17.2,25.6,17L25.6,17z"/>
@@ -595,7 +595,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	chuteCasque: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 33" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 33" xml:space="preserve">
 		<path class="${CIRCLE_COLOR}" d="M16,0.1c-3.2,0-6.3,0.9-8.9,2.7C4.5,4.5,2.4,7,1.2,9.9c-1.2,2.9-1.5,6.1-0.9,9.2s2.1,6,4.4,8.2c2.2,2.2,5.1,3.8,8.2,4.4c3.1,0.6,6.3,0.3,9.2-0.9c2.9-1.2,5.4-3.3,7.2-5.9c1.8-2.6,2.7-5.7,2.7-8.9c0-2.1-0.4-4.2-1.2-6.1c-0.8-1.9-2-3.7-3.5-5.2c-1.5-1.5-3.2-2.7-5.2-3.5C20.2,0.5,18.1,0.1,16,0.1z"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M10.7,11c0.4,0.5,0.9,0.9,1.5,1c0.6,0.1,1.2,0,1.8-0.3c0.5-0.3,0.9-0.8,1-1.4c0.1-0.6,0.1-1.2-0.2-1.7l-4.4,1.7C10.4,10.5,10.5,10.7,10.7,11z"/>
@@ -606,12 +606,12 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	seringue: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17s17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<path class="${SHAPE_COLOR}" d="M25.4,24.9L25.4,24.9L25.4,24.9L25.4,24.9L25.4,24.9l-0.1-0.1L23,22.3h0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0 l0,0l0-0.1l0,0v0l0,0v0v0v0v0l0-0.1v0l0,0l0-0.1l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l-0.9-0.9l0.1-0.1l0.1-0.1l0-0.1l0.1-0.1 l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1v-0.1l0-0.1v-0.1v-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1l0-0.1	l0-0.1l-0.1-0.1l-0.1-0.1l-0.1-0.1l-0.1-0.1l-0.1-0.1L22,17.1L22,17l-7-7l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1 l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1L16,8.6L16,8.5l0.1-0.1l0.1-0.1l0.1-0.1l0,0l0,0v0l0,0v0l0,0v0v0v0l0,0v0v0l0,0V7.8l0,0l0,0l0,0 l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0h0l0,0h0h0l0,0h0h0l0,0l0,0l-0.1,0l0,0h0l0,0h0l0,0l0,0l0,0l0,0 l0,0l0,0l0,0l0,0l0,0l-0.1,0.1l-0.1,0.1l-0.1,0.1L15,8.2l-0.1,0.1l-0.1,0.1l-0.1,0.1l-0.1,0.1l-0.1,0.1l-0.1,0.1l-0.1,0.1l-0.1,0.2 l-0.1,0.1l-0.1,0.2l-0.1,0.1L13.7,10l-1.2-1.2l0.1-0.2l0.1-0.2l0.1-0.1l0.1-0.2L13,8l0.1-0.1l0.1-0.2l0.1-0.1l0,0l0,0v0l0,0v0l0,0 l0,0v0v0v0v0v0v0l0,0l0-0.1l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0h0l0,0l0,0h0h0l0,0h0h0h0l0,0h0l-0.1,0	l0,0l0,0l0,0h0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l-0.1,0.2l-0.1,0.2l-0.1,0.2L12,7.7l-0.1,0.2L11.7,8l-0.1,0.2l-0.1,0.2l-0.2,0.2	l-0.2,0.2L11,8.9l-0.2,0.2l-0.2,0.2l-0.2,0.2l-0.2,0.2l-0.2,0.2L9.9,10l-0.2,0.2l-0.2,0.2l-0.2,0.2l-0.2,0.2L9,10.9L8.8,11l-0.2,0.1	l-0.2,0.2l-0.2,0.1l-0.2,0.1l-0.2,0.1l-0.2,0.1L7.6,12l-0.2,0.1l-0.2,0.1l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0v0l0,0l0,0l0,0.1 l0,0v0.1v0v0v0v0l0,0v0v0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0h0l0,0l0,0l0,0l0,0h0l0.1,0h0h0l0,0h0h0h0l0,0 l0,0l0,0l0,0l0,0l0,0l0.1-0.1l0.1-0.1l0.2-0.1l0.1-0.1l0.2-0.1l0.1-0.1l0.2-0.1L9,12.2l1.2,1.2l-0.2,0.1l-0.1,0.1l-0.2,0.1l-0.1,0.1	L9.5,14l-0.1,0.1l-0.1,0.1L9,14.4l-0.1,0.1l-0.1,0.1l-0.1,0.1l-0.1,0.1l-0.1,0.1L8.2,15L8.1,15l-0.1,0.1h0l0,0l0,0l0,0l0,0l0,0l0,0 l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0v0.1v0v0v0v0v0l0,0l0,0v0l0,0l0,0l0,0l0,0v0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0h0l0,0l0,0l0,0l0,0 l0,0l0.1,0h0h0h0l0,0h0l0,0h0l0,0h0l0,0l0,0l0,0l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1L9,15.6l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1l0.1-0.1 l0.1-0.1l0.1-0.1L9.9,15l0.1-0.1l0.1-0.1l0.1-0.1l0.3,0.3l0.4,0.4l0.4,0.4l0.5,0.5l0.6,0.6l0.6,0.6l0.6,0.6l0.6,0.6l0.6,0.6l0.6,0.6 l0.5,0.5l0.5,0.5l0.4,0.4l0.3,0.3l0.2,0.2l0.1,0.1l0.1,0.1l0.1,0.1l0.1,0.1l0.1,0.1l0.1,0.1l0.1,0.1l0.1,0.1l0.1,0l0.1,0l0.1,0 l0.1,0l0.1,0l0.1,0l0.1,0h0.1h0.1H19h0.1l0.1,0l0.1,0l0.1,0l0.1,0l0.1,0l0.1,0l0.1,0l0.1,0l0.1,0l0.1,0l0.1,0l0.1-0.1l0.1,0l0.1-0.1 l0.1-0.1l0.9,0.9l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0.1,0h0l0,0h0h0h0h0l0.1,0h0l0,0l0,0l0.1,0l0,0l0,0l0,0l0,0l0,0l0,0 l0,0l0,0l0,0h0l2.4,2.4l0,0l0,0l0,0l0,0h0l0,0h0h0h0h0l0,0h0l0,0l0,0l0,0l0,0l0,0l0,0l0,0l0,0v0l0,0L25.4,24.9L25.4,24.9L25.4,24.9 L25.4,24.9L25.4,24.9z M13.1,16.8l-0.5-0.5l1.6-1.6l0.5,0.5L13.1,16.8z M15,18.7l-0.5-0.5l1.6-1.6l0.5,0.5L15,18.7z M16.8,20.5 L16.3,20l1.6-1.6l0.5,0.5L16.8,20.5z"/>
 		</svg>`,
 	vaccination: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 			<g class="${SHAPE_COLOR}" transform="translate(0.262 0.371)">
 				<path d="M12.8,15.7H9.1C9,15,8.8,14.4,8.6,13.8c-0.1-0.1-0.2-0.2-0.4-0.2l0,0l-4.2,0v1.5	c0,0.2,0.2,0.4,0.4,0.4c0.2,0,0.4-0.2,0.4-0.4v-0.7h1.3v0.7c0,0.2,0.2,0.4,0.4,0.4c0,0,0,0,0,0l0,0c0.2,0,0.4-0.2,0.4-0.4l0,0v-0.7 h1c0.5,1.1,0.5,2.3,0,3.4l-3.9,0v0.8l4.2,0l0,0c0.2,0,0.3-0.1,0.4-0.2c0.3-0.6,0.4-1.2,0.5-1.9h3.7c0.2,0,0.4-0.2,0.4-0.4 C13.2,15.8,13,15.7,12.8,15.7L12.8,15.7z"/>
@@ -620,7 +620,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	stylo: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M17.3,21.6c-0.7-0.6-1.3-0.9-1.9-0.9c-0.5,0-0.9,0.2-1.4,0.5c0.2-0.7,0.5-1.3,0.8-1.7c0.1-0.3,0.2-0.6,0-0.9 c-0.1-0.3-0.4-0.4-0.6-0.3c-1.5,0.5-2.9,1.6-4,2.9c0.5-1.6,1.1-3.1,1.9-4.4c0.2-0.3,0.2-0.6,0-0.9c-0.1-0.3-0.4-0.4-0.6-0.4	c-2.3,0.6-4.3,3.4-5.1,5.8c-0.1,0.4,0,0.8,0.3,1c0.3,0.2,0.6,0,0.8-0.4c0.5-1.3,1.5-3,2.7-4c-1,2.3-1.6,4.9-2,7.3 c-0.1,0.4,0.1,0.8,0.4,0.9c0.1,0,0.1,0,0.2,0c0.2,0,0.5-0.2,0.5-0.5c0.4-1.8,1.9-3.9,3.8-5.2c-0.3,0.9-0.6,1.8-0.7,2.6 c0,0.3,0.1,0.6,0.3,0.8c0.2,0.2,0.5,0.2,0.6,0c1-1,1.6-1.6,2.1-1.6c0.3,0,0.8,0.2,1.4,0.6c0.3,0.2,0.6,0.1,0.8-0.3 C17.7,22.3,17.6,21.8,17.3,21.6L17.3,21.6z"/>
@@ -629,7 +629,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	pillules: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17c0,9.4,7.6,17,17,17c9.4,0,17-7.6,17-17C34,7.6,26.4,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<ellipse cx="17.2" cy="11.2" rx="5.7" ry="1.9"/>
@@ -639,12 +639,12 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	pillules2: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17s17-7.6,17-17S26.4,0,17,0z"/>
 			<path class="${SHAPE_COLOR}" d="M23.4,15.8c-0.8-0.6-1.7-0.9-2.7-0.9c0.5-1.5-0.1-3.2-1.3-4.2c-1.7-1.2-4-0.9-5.3,0.8l-4.7,6.3c-1.2,1.7-0.8,4,0.9,5.3c1.7,1.2,3.9,0.8,5.2-0.8l0.8-1.1c0.7,1.8,2.4,3,4.3,3c2.6,0,4.6-2.1,4.6-4.6C25.3,18.1,24.6,16.7,23.4,15.8L23.4,15.8z M15,12.2c0.9-1.2,2.5-1.4,3.7-0.6c0,0,0,0,0,0c1.1,0.8,1.4,2.3,0.8,3.4c-1,0.3-2,0.9-2.6,1.8c-0.2,0.3-0.4,0.6-0.5,0.9l-3.6-2.6L15,12.2z M14.6,21.6c-0.9,1.2-2.6,1.4-3.8,0.6s-1.4-2.6-0.6-3.8l0,0l2.2-2.9l3.7,2.7c-0.1,0.5-0.2,1-0.2,1.5L14.6,21.6zM17.8,17.4c0.7-0.9,1.7-1.5,2.9-1.5c0.7,0,1.3,0.2,1.9,0.5l-4.2,5.7C16.9,21,16.7,19,17.8,17.4L17.8,17.4z M23.5,21.6c-0.7,0.9-1.7,1.5-2.9,1.5c-0.7,0-1.3-0.2-1.9-0.5l4.2-5.7C24.4,18,24.6,20.1,23.5,21.6L23.5,21.6z"/>
 		</svg>`,
 	cadenas: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" style="enable-background:new 0 0 70 70;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 70 70" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M35,0c19.3,0,35,15.7,35,35S54.3,70,35,70S0,54.3,0,35S15.7,0,35,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M52.7,32.6c0-1.5-1.3-2.7-2.8-2.6h-0.3v-4.5C49.5,18,43.5,12,36,12c-7.5-0.1-13.7,6-13.8,13.5V30h-1.5	c-0.7,0-1.4,0.3-2,0.8C18.3,31.3,18,32,18,32.7c0,3.7,0,10.6,0,10.7c0,8,7.8,14.4,17.3,14.4v0c9.5,0,17.3-6.5,17.4-14.4	C52.7,43.3,52.7,36.3,52.7,32.6z M23.4,25.5c0.1-6.8,5.6-12.4,12.4-12.4c6.9-0.1,12.6,5.5,12.6,12.4V30H23.4V25.5z M38.5,38.8 c0,1.3-0.6,2.5-1.7,3.3l0.8,6.5c0,0.2,0,0.3-0.1,0.4c-0.1,0.1-0.3,0.2-0.4,0.2h-4.4c-0.2,0-0.3-0.1-0.4-0.2	C32.1,49,32,48.8,32,48.7l0.5-6.5c-1.1-0.7-1.8-2-1.8-3.3c-0.1-2.1,1.6-3.9,3.7-3.9s3.9,1.6,3.9,3.7C38.5,38.7,38.5,38.8,38.5,38.8 z"/>
@@ -652,12 +652,12 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	prescription: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0C7.6,0,0,7.6,0,17s7.6,17,17,17s17-7.6,17-17S26.4,0,17,0z"/>
 			<path class="${SHAPE_COLOR}" d="M24.4,10.6C24.4,10.6,24.4,10.5,24.4,10.6C24.4,10.5,24.4,10.5,24.4,10.6c0-0.2-0.1-0.2-0.1-0.3l-3.5-3.5 c0,0,0,0,0,0c-0.1-0.1-0.1-0.1-0.2-0.1c0,0,0,0-0.1,0c0,0,0,0,0,0c0,0,0,0-0.1,0H10.1c-0.3,0-0.5,0.2-0.5,0.5v19.7 c0,0.3,0.2,0.5,0.5,0.5h13.7c0.3,0,0.5-0.2,0.5-0.5L24.4,10.6C24.4,10.6,24.4,10.6,24.4,10.6z M13.1,10.8H14V9.9 c0-0.3,0.2-0.5,0.5-0.5c0.3,0,0.5,0.2,0.5,0.5v0.9h0.9c0.3,0,0.5,0.2,0.5,0.5c0,0.3-0.2,0.5-0.5,0.5H15v0.9c0,0.3-0.2,0.5-0.5,0.5 c-0.3,0-0.5-0.2-0.5-0.5v-0.9h-0.9c-0.3,0-0.5-0.2-0.5-0.5C12.6,11,12.9,10.8,13.1,10.8z M16.7,20.8h-3.5c-0.3,0-0.5-0.2-0.5-0.5 c0-0.3,0.2-0.5,0.5-0.5h3.5c0.3,0,0.5,0.2,0.5,0.5C17.2,20.6,17,20.8,16.7,20.8z M16.7,18.9h-3.5c-0.3,0-0.5-0.2-0.5-0.5 s0.2-0.5,0.5-0.5h3.5c0.3,0,0.5,0.2,0.5,0.5S17,18.9,16.7,18.9z M20.8,24.4h-1.9c-0.3,0-0.5-0.2-0.5-0.5c0-0.3,0.2-0.5,0.5-0.5h1.9 c0.3,0,0.5,0.2,0.5,0.5C21.3,24.2,21.1,24.4,20.8,24.4z M20.8,20.8h-1.9c-0.3,0-0.5-0.2-0.5-0.5c0-0.3,0.2-0.5,0.5-0.5h1.9 c0.3,0,0.5,0.2,0.5,0.5C21.3,20.6,21.1,20.8,20.8,20.8z M20.8,18.9h-1.9c-0.3,0-0.5-0.2-0.5-0.5s0.2-0.5,0.5-0.5h1.9 c0.3,0,0.5,0.2,0.5,0.5S21.1,18.9,20.8,18.9z M20.8,16.9h-7.6c-0.3,0-0.5-0.2-0.5-0.5c0-0.3,0.2-0.5,0.5-0.5h7.6 c0.3,0,0.5,0.2,0.5,0.5C21.3,16.7,21.1,16.9,20.8,16.9z M20.9,10.1V8.4l1.7,1.7H20.9z"/>
 		</svg>`,
 	personneAgee: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.3,0,17,7.7,17,17l0,0c0,9.3-7.7,17-17,17l0,0C7.7,34,0,26.3,0,17l0,0C0,7.7,7.7,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M19.8,11.3c0.4-0.3,0.6-0.7,0.7-1.1c0.6,0.1,1,0.1,1.1,0C22,9.7,19.8,7,18.6,7c-0.7,0-1.4,1.3-1.7,1.8 c0,0,0,0,0,0c-0.3,0.6-0.3,1.5,0.2,2.1C17.7,11.8,19,12,19.8,11.3z"/>
@@ -666,7 +666,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	nuageEchange: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.3,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17l0,0C7.7,34,0.1,26.3,0.1,17l0,0C0.1,7.7,7.7,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M15.3,21.8L14,20.5c0,0,0,0,0,0l3.4-3.4l-1.2-1l3.7-0.3l-0.3,3.7l-1-1.2L15.3,21.8 C15.3,21.7,15.3,21.8,15.3,21.8L15.3,21.8L15.3,21.8z"/>
@@ -675,7 +675,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	mainCoeur: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 62.4 62.4" style="enable-background:new 0 0 62.4 62.4;" xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 62.4 62.4" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="31.2" cy="31.2" r="31.2"/>
 			<g class="${SHAPE_COLOR}" transform="translate(11 15.288)">
 				<path d="M3.3,21.5c-0.4,0-0.7,0.3-0.6,0.7c0,0,0,0,0,0c0,0.4,0.3,0.7,0.6,0.7c0.4,0,0.7-0.3,0.7-0.7c0,0,0,0,0,0C3.9,21.8,3.6,21.5,3.3,21.5C3.3,21.5,3.3,21.5,3.3,21.5"/>
@@ -684,12 +684,12 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	localisation: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60 60" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="30" cy="30" r="30"/>
 			<path class="${SHAPE_COLOR}" d="M30,30.5c-2.7,0-4.8-2.2-4.8-4.8c0-2.7,2.1-4.9,4.8-4.9c2.7,0,4.8,2.2,4.8,4.9C34.8,28.3,32.7,30.5,30,30.5L30,30.5z M30,15c-5.9,0-10.6,4.8-10.6,10.7c0,5.6,4.8,12.7,8,16.2C28.6,43.2,30,45,30,45s1.5-1.8,2.8-3.1c3.1-3.4,7.8-10.2,7.8-16.2C40.6,19.8,35.9,15,30,15z"/>
 		</svg>`,
 	centPourcent: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.9 60.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 60.9 60.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="30.5" cy="30.5" r="30.5"/>
 			<g class="${SHAPE_COLOR}" transform="translate(7.941 14.999)">
 				<path d="M3.7,11.2c0.4,0.2,0.6,0.5,0.7,0.9c0.1,1.1,0.2,2.2,0.1,3.3v12.9h6v-24H7c-1.7,2-4,3.4-6.6,3.8v2.8H1C1.9,10.9,2.9,11,3.7,11.2z"/>
@@ -699,7 +699,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	link: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" style="enable-background:new 0 0 34.9 34.9;" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M13.1,18.2c0.3-0.3,0.3-0.8,0-1.1c-0.3-0.3-0.8-0.3-1.1,0l-1.4,1.4c-0.8,0.7-1.2,1.7-1.2,2.8c0,2.2,1.8,4,4,4c1.1,0,2.1-0.4,2.8-1.2l3-3c0.8-0.7,1.2-1.7,1.2-2.8c0-1.4-0.7-2.6-1.9-3.3C18.4,15,18.2,15,18,15c-0.2,0-0.4,0.2-0.5,0.3c-0.1,0.2-0.1,0.4-0.1,0.6c0,0.2,0.2,0.4,0.3,0.5c0.7,0.5,1.1,1.2,1.1,2.1c0,0.7-0.3,1.3-0.7,1.7l-3,3c-1,1-2.5,1-3.5,0s-1-2.5,0-3.5L13.1,18.2z"/>
@@ -707,7 +707,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	sidep: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M15,22.6c0,1.4-0.4,2.5-1.2,3.2s-1.9,1.1-3.4,1.1H8.1v-8.6h2.6c1.4,0,2.4,0.4,3.2,1.1C14.7,20.2,15,21.3,15,22.6z M13.6,22.6c0-2.1-1-3.1-2.9-3.1H9.5v6.2h1C12.5,25.8,13.6,24.7,13.6,22.6z"/>
@@ -718,10 +718,10 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	qrCode: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}" transform="translate(5.52 6.5)">
-				<polygon class="st0" points="3.8,1.6 3.7,1.6 3.2,1.6 3.1,1.6 2.6,1.6 2.6,2.1 2.6,2.2 2.6,2.7 2.6,2.8 2.6,3.4 3.1,3.4 3.2,3.43.7,3.4 3.8,3.4 4.4,3.4 4.4,2.8 4.4,2.7 4.4,2.2 4.4,2.1 4.4,1.6"/>
+				<polygon points="3.8,1.6 3.7,1.6 3.2,1.6 3.1,1.6 2.6,1.6 2.6,2.1 2.6,2.2 2.6,2.7 2.6,2.8 2.6,3.4 3.1,3.4 3.2,3.43.7,3.4 3.8,3.4 4.4,3.4 4.4,2.8 4.4,2.7 4.4,2.2 4.4,2.1 4.4,1.6"/>
 				<path d="M4.9,0.4H4.8H4.4H4.3H3.8H3.7H3.2H3.1H2.7H2.6H2.1H2H1.4V1v0.1v0.5v0.1v0.5v0.1v0.5v0.1v0.5v0.1v0.5v0.1v0.6H2h0.1h0.5h0.1h0.5h0.1h0.5h0.1h0.5h0.1h0.5h0.1h0.6V3.9V3.8V3.4V3.3V2.8V2.7V2.2V2.1V1.7V1.6V1.1V1V0.4H4.9z M4.8,1.7v0.5v0.1v0.5v0.1v0.5v0.1v0.5H4.4H4.3H3.8H3.7H3.2H3.1H2.7H2.6H2.1V3.4V3.3V2.8V2.7V2.2V2.1V1.7V1.6V1.1h0.5h0.1h0.5h0.1h0.5h0.1h0.5h0.1h0.5v0.5V1.7z"/>
 				<polygon points="7.1,6.7 7.1,7.2 7.1,7.3 7.1,7.9 7.7,7.9 7.7,7.3 7.7,7.2 7.7,6.7"/>
 				<polygon points="10,15.1 9.9,15.1 9.3,15.1 9.3,15.8 9.9,15.8 10,15.8 10.6,15.8 10.6,15.1"/>
@@ -741,12 +741,12 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	qrCode2: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
 			<path class="${CIRCLE_COLOR}" d="M24,48c13.3,0,24-10.7,24-24S37.3,0,24,0,0,10.7,0,24s10.7,24,24,24Z"/>
 			<path class="${SHAPE_COLOR}" d="M19.5,13.5h-6v6h6v-6ZM21,12v9h-9v-9h9ZM15,15h3v3h-3v-3ZM34.5,13.5h-6v6h6v-6ZM36,12v9h-9v-9h9ZM30,15h3v3h-3v-3ZM19.5,28.5h-6v6h6v-6ZM21,27v9h-9v-9h9ZM15,30h3v3h-3v-3ZM22.5,12h1.5v1.5h-1.5v-1.5ZM24,13.5h1.5v1.5h-1.5v-1.5ZM22.5,15h1.5v1.5h-1.5v-1.5ZM24,16.5h1.5v1.5h-1.5v-1.5ZM22.5,18h1.5v1.5h-1.5v-1.5ZM24,19.5h1.5v1.5h-1.5v-1.5ZM22.5,21h1.5v1.5h-1.5v-1.5ZM22.5,24h1.5v1.5h-1.5v-1.5ZM24,25.5h1.5v1.5h-1.5v-1.5ZM22.5,27h1.5v1.5h-1.5v-1.5ZM24,28.5h1.5v1.5h-1.5v-1.5ZM22.5,30h1.5v1.5h-1.5v-1.5ZM24,31.5h1.5v1.5h-1.5v-1.5ZM22.5,33h1.5v1.5h-1.5v-1.5ZM24,34.5h1.5v1.5h-1.5v-1.5ZM34.5,24h1.5v1.5h-1.5v-1.5ZM13.5,24h1.5v1.5h-1.5v-1.5ZM15,22.5h1.5v1.5h-1.5v-1.5ZM12,22.5h1.5v1.5h-1.5v-1.5ZM18,22.5h1.5v1.5h-1.5v-1.5ZM19.5,24h1.5v1.5h-1.5v-1.5ZM21,22.5h1.5v1.5h-1.5v-1.5ZM25.5,24h1.5v1.5h-1.5v-1.5ZM27,22.5h1.5v1.5h-1.5v-1.5ZM28.5,24h1.5v1.5h-1.5v-1.5ZM30,22.5h1.5v1.5h-1.5v-1.5ZM31.5,24h1.5v1.5h-1.5v-1.5ZM33,22.5h1.5v1.5h-1.5v-1.5ZM34.5,27h1.5v1.5h-1.5v-1.5ZM25.5,27h1.5v1.5h-1.5v-1.5ZM27,25.5h1.5v1.5h-1.5v-1.5ZM28.5,27h1.5v1.5h-1.5v-1.5ZM31.5,27h1.5v1.5h-1.5v-1.5ZM33,25.5h1.5v1.5h-1.5v-1.5ZM34.5,30h1.5v1.5h-1.5v-1.5ZM25.5,30h1.5v1.5h-1.5v-1.5ZM27,28.5h1.5v1.5h-1.5v-1.5ZM30,28.5h1.5v1.5h-1.5v-1.5ZM31.5,30h1.5v1.5h-1.5v-1.5ZM33,28.5h1.5v1.5h-1.5v-1.5ZM34.5,33h1.5v1.5h-1.5v-1.5ZM27,31.5h1.5v1.5h-1.5v-1.5ZM28.5,33h1.5v1.5h-1.5v-1.5ZM30,31.5h1.5v1.5h-1.5v-1.5ZM31.5,33h1.5v1.5h-1.5v-1.5ZM27,34.5h1.5v1.5h-1.5v-1.5ZM30,34.5h1.5v1.5h-1.5v-1.5ZM33,34.5h1.5v1.5h-1.5v-1.5Z"/>
 		</svg>`,
 	touch: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}" transform="translate(8.5 4.225)">
 				<path d="M11.1,22.8c-2.5,2.1-6.3,1.8-8.4-0.7c-0.9-1.1-1.4-2.5-1.4-3.9v-7.9C1.2,9.6,1.7,9,2.4,8.9s1.3,0.5,1.4,1.2c0,0.1,0,0.1,0,0.2v3.2C3.8,13.8,4,14,4.2,14c0.1,0,0.2,0,0.3-0.1L13,5.3c0.4-0.4,1.1-0.4,1.5,0s0.4,1.1,0,1.5l-6.8,6.8c-0.2,0.2-0.2,0.5,0,0.6c0.2,0.2,0.5,0.2,0.6,0l0,0l2.9-2.9c0.4-0.4,1.1-0.4,1.5,0s0.4,1.1,0,1.5l0,0l-2.5,2.6c-0.2,0.2-0.2,0.5,0,0.6c0.2,0.2,0.5,0.2,0.6,0l0,0l1.9-1.9c0.4-0.4,1.1-0.5,1.5,0s0.5,1.1,0,1.5l0,0L12,17.8c-0.2,0.2-0.2,0.5,0,0.6c0.2,0.2,0.5,0.2,0.6,0l0,0l0.7-0.7c0.4-0.3,1-0.3,1.3,0.1c0.3,0.3,0.3,0.8,0,1.1L11.1,22.8z"/>
@@ -816,7 +816,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	document: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M21.8,7.4v2.8h2.8L21.8,7.4z"/>
@@ -824,27 +824,27 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	phone: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<path class="${SHAPE_COLOR}" d="M19.5,21.3c0,0,1.5-0.8,1.9-1c0.3-0.2,0.7-0.3,1-0.1c0.4,0.2,3.4,2.3,3.7,2.5c0.3,0.3,0.3,0.8,0,1.2c-0.3,0.5-1.9,2.5-2.6,2.5c-0.7,0-3.6-0.1-9-5.5c-5.4-5.4-5.5-8.3-5.5-9c0-0.7,2-2.3,2.5-2.6c0.3-0.3,0.9-0.3,1.2,0c0.2,0.3,2.2,3.3,2.4,3.7c0.1,0.3,0.1,0.7-0.1,1c-0.2,0.4-1,1.9-1,1.9c0.7,1.1,1.6,2.1,2.6,3C17.4,19.7,18.4,20.6,19.5,21.3L19.5,21.3z"/>
 		</svg>`,
 	photo: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
 			<path class="${CIRCLE_COLOR}" d="M24,48c13.3,0,24-10.7,24-24S37.3,0,24,0,0,10.7,0,24s10.7,24,24,24Z"/>
 			<path class="${SHAPE_COLOR}" d="M34,15h-3.5l-1.7-2.6c0-.1-.2-.2-.4-.3-.1,0-.3-.1-.5-.1h-8c-.2,0-.3,0-.5.1-.1,0-.3.2-.4.3l-1.7,2.6h-3.5c-.8,0-1.6.3-2.1.9-.6.6-.9,1.3-.9,2.1v14c0,.8.3,1.6.9,2.1s1.3.9,2.1.9h20c.8,0,1.6-.3,2.1-.9s.9-1.3.9-2.1v-14c0-.8-.3-1.6-.9-2.1-.6-.6-1.3-.9-2.1-.9ZM28.5,24.5c0,.9-.3,1.8-.8,2.5-.5.7-1.2,1.3-2,1.7-.8.3-1.7.4-2.6.3-.9-.2-1.7-.6-2.3-1.2-.6-.6-1.1-1.4-1.2-2.3-.2-.9,0-1.8.3-2.6.3-.8.9-1.5,1.7-2,.7-.5,1.6-.8,2.5-.8s2.3.5,3.2,1.3c.8.8,1.3,2,1.3,3.2Z"/>
 		</svg>`,
 	video: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" style="enable-background:new 0 0 34.9 34.9;" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<path class="${SHAPE_COLOR}" d="M21,7.9h-7c-3.3,0-6,2.7-6,6v7c0,3.3,2.7,6,6,6h7c3.3,0,6-2.7,6-6v-7C27,10.6,24.3,7.9,21,7.9z M14,21.9v-9l8,4.5L14,21.9z"/>
 		</svg>`,
 	accessibility: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<path class="${SHAPE_COLOR}" d="M31,17.3c0,0-4.9-7.5-13.9-7.5c-0.8,0-1.6,0.1-2.4,0.2l-1.4-2.8l-1.3,0.9l1.2,2.3c-3.8,1.2-7.1,3.6-9.2,7c1,1.6,2.3,3.1,3.9,4.2l-2-4.1c0.2-0.4,0.5-0.7,0.8-1l3.1,6.3c0.7,0.4,1.4,0.7,2.2,1l-4.1-8.5c0.3-0.3,0.6-0.6,1-0.9l4.7,9.8c0.6,0.2,1.3,0.3,2,0.4l-5.3-11c0.3-0.3,0.7-0.5,1.1-0.7l5.7,11.8H17c1,0,1.9-0.1,2.8-0.2l1.6,3.4l1.4-0.8L21.5,24C25.3,22.9,28.7,20.5,31,17.3z M13.9,15.3l-1.4-2.9c0.4-0.2,0.8-0.4,1.2-0.5l1.1,2.3C14.5,14.5,14.2,14.8,13.9,15.3z M17.5,23.2l-0.8-1.7c0.2,0,0.4,0,0.6,0c0.3,0,0.6,0,0.8-0.1l0.8,1.6C18.4,23.1,18,23.2,17.5,23.2z M20.3,21.8l-0.5-1l0,0c1.1-0.8,1.8-2.1,1.8-3.5c0-2.3-1.9-4.2-4.2-4.2c-0.4,0-0.9,0.1-1.3,0.2l-0.5-1c2.3-0.8,5,0.1,6.3,2.2C23.6,17,22.8,20.3,20.3,21.8zM21.7,22.3c2.8-2.3,3.2-6.4,0.9-9.2c-0.3-0.3-0.6-0.6-0.9-0.9c0,0,3.2,0.3,7.4,5C25.4,21.6,21.7,22.3,21.7,22.3z"/>
 		</svg>`,
 	dmp: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M10.1,16c-0.4-0.4-0.8-0.7-1.3-0.9c-0.6-0.2-1.2-0.3-1.8-0.3H5.1c-0.7,0-1.2,0.5-1.2,1.2c0,0,0,0,0,0l0,7.2h3c0.6,0,1.2-0.1,1.7-0.3c0.5-0.2,0.9-0.5,1.3-0.8c0.4-0.4,0.7-0.8,0.8-1.3c0.2-0.6,0.3-1.1,0.3-1.7c0-0.5-0.1-1.1-0.3-1.6C10.7,16.8,10.4,16.3,10.1,16L10.1,16z M9.3,20c-0.1,0.3-0.3,0.6-0.5,0.9c-0.2,0.2-0.5,0.4-0.8,0.6c-0.3,0.1-0.7,0.2-1.1,0.2H5.6v-5.2c0-0.1,0.1-0.3,0.3-0.3c0,0,0,0,0,0H7c0.4,0,0.7,0.1,1.1,0.2c0.3,0.1,0.6,0.3,0.8,0.6c0.2,0.3,0.4,0.6,0.5,0.9c0.1,0.4,0.2,0.7,0.2,1.1C9.5,19.3,9.4,19.6,9.3,20z"/>
@@ -856,7 +856,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	hourglass: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}" transform="matrix(0.966, 0.259, -0.259, 0.966, 13.158, 6.5)">
 				<path d="M9.9,4.1c0.4-0.5,0.6-1.1,0.8-1.7H2.8C2.9,3,3.1,3.6,3.5,4.1l2.5,3c0.4,0.4,1,0.4,1.4,0L9.9,4.1z"/>
@@ -864,7 +864,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	homeChar: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34.9 34.9" xml:space="preserve">
 			<circle class="${CIRCLE_COLOR}" cx="17.5" cy="17.4" r="17.4"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M30.6,17C30.6,17,30.6,17,30.6,17c-0.1-0.3-0.2-0.5-0.4-0.6c-0.4-0.4-0.8-0.9-1.1-1.3c-0.5-0.6,0,0-0.5-0.5c-0.1-0.1-0.2-0.2-0.2-0.2c-0.3-0.3-0.4-0.6-0.4-1V9.4c0.1-0.5-0.2-0.9-0.6-1.2C27.1,8,26.7,8,26.3,8h-1.2c-0.4,0-0.8,0.1-1.1,0.4c-0.2,0.2-0.3,0.5-0.3,0.8c0,0.1,0,0.3,0,0.5c0,0.1,0,0.2,0,0.7c0,0,0,0.1,0,0.1c-0.6-0.6-4.1-4.1-5-5v0c-0.5-0.5-1.1-0.9-1.9-0.9c-0.7,0.1-1.3,0.4-1.7,0.9c-0.2,0.2-0.7,0.7-1.4,1.4l-2.6,2.6c-2.9,2.9-6.2,6.2-6.2,6.2c-0.2,0.2-0.2,0.6,0,0.8c0.2,0.2,0.6,0.2,0.8,0c0,0,3.4-3.3,6.2-6.2l2.6-2.6c0.7-0.7,1.2-1.2,1.5-1.4C16.3,6.2,16.6,6,17,5.9c0.4,0,0.7,0.2,1,0.5c1,1,5.1,5.1,5.1,5.1c0.7,0.6,1.9,0.5,1.9-1c0-0.3,0-0.5,0-0.7c0-0.1,0-0.1,0-0.5c0,0,0,0,0.1,0c0,0,1.8,0,1.9,0c0,0,0,0,0,0.1v4c-0.1,0.7,0.2,1.4,0.7,1.8c0.1,0.1,0.2,0.2,0.2,0.2c0.2,0.2,0.3,0.3,0.5,0.5c0.4,0.5,1,1.1,1.1,1.3h-3.2v0c-0.5,0-1,0.1-1.4,0.5c-0.3,0.4-0.5,0.9-0.5,1.4c0,0.6,0,1.6,0,3.8c0,1.1,0,2.3,0,3.8c0,0.3-0.1,0.6-0.2,0.8c-0.2,0.2-0.4,0.2-0.6,0.2H11c-0.3,0-0.5-0.1-0.7-0.3l0,0C10.1,27,10,26.7,10,26.5v-7.3c0-0.4,0.1-0.6,0.2-0.7c0.3-0.1,0.6-0.2,0.9-0.2h1.2c0-0.1,0-0.1,0-0.2c0-0.3,0-0.7,0.1-1h-1.3c-0.6,0-1.1,0.1-1.6,0.4c-0.5,0.4-0.7,1-0.6,1.7v7.3c0,0.6,0.2,1.2,0.6,1.6c0,0,0,0,0,0c0.4,0.4,1,0.7,1.6,0.6h12.4c0.6,0,1.1-0.2,1.5-0.6c0.4-0.4,0.5-1,0.5-1.6c0-0.6,0-1.6,0-3.8c0-1.2,0-2.3,0-3.8c0-0.2,0-0.4,0.1-0.5c0.2-0.1,0.4-0.1,0.6-0.1v0h3.4v0c0.2,0,0.4,0,0.7-0.1c0.2-0.1,0.4-0.3,0.5-0.5c0,0,0,0,0,0C30.7,17.4,30.7,17.2,30.6,17z"/>
@@ -873,22 +873,22 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	h: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30 30" style="enable-background:new 0 0 30 30;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30 30" xml:space="preserve">
 		<circle class="${CIRCLE_COLOR}" cx="15" cy="15" r="15"/>
 		<polygon class="${SHAPE_COLOR}" points="17,8 17,12.5 13,12.5 13,8 8,8 8,12.5 8,17.5 8,22 13,22 13,17.5 17,17.5 17,22 22,22 22,17.5 22,12.5 22,8 "/>
 	</svg>`,
 	ma: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M32,16c0,8.8-7.2,16-16,16S0,24.8,0,16,7.2,0,16,0s16,7.2,16,16Z"/>
 		<path class="${SHAPE_COLOR}" d="M10.6,22l-2.4-9h0c0,.4,0,.7,0,1,0,.3,0,.6,0,.9,0,.3,0,.5,0,.7v6.3h-2.2v-12.1h3.2l2.2,8.3h0l2.2-8.3h3.2v12.1h-2.2v-6.3c0-.2,0-.5,0-.8,0-.3,0-.6,0-.9,0-.3,0-.7,0-1h0l-2.4,8.9h-1.8ZM24.6,22l-.6-2.9h-2.7l-.6,2.9h-2.5l2.9-12.1h3l3,12.1h-2.5ZM23.6,17.1l-.7-3.2c0-.3,0-.5-.1-.8,0-.3,0-.5-.1-.7,0-.2,0-.5,0-.7,0,.2,0,.4,0,.6,0,.2,0,.5-.1.7,0,.3,0,.5-.1.8l-.6,3.2h2Z"/>
 	</svg>`,
 	sa: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M32,16c0,8.8-7.2,16-16,16S0,24.8,0,16,7.2,0,16,0s16,7.2,16,16Z"/>
 		<path class="${SHAPE_COLOR}" d="M14.5,22l-.6-2.9h-2.7l-.6,2.9h-2.5l2.9-12.1h3l3,12.1h-2.5ZM13.5,17.1l-.7-3.2c0-.3,0-.5-.1-.8,0-.3,0-.5-.1-.7,0-.2,0-.5,0-.7,0,.2,0,.4,0,.6,0,.2,0,.5-.1.7,0,.3,0,.5-.1.8l-.6,3.2h2ZM23.9,18.4c0,.7-.1,1.4-.4,1.9-.3.6-.7,1-1.2,1.3-.5.3-1.2.5-1.9.5s-.7,0-1,0c-.3,0-.6-.1-.9-.2-.3,0-.6-.2-.9-.4v-2.4c.4.3.9.5,1.4.7.5.1.9.2,1.3.2s.5,0,.7-.2c.2-.1.3-.3.4-.5,0-.2.1-.4.1-.7s0-.5-.1-.7c0-.2-.2-.4-.5-.6-.2-.2-.6-.4-1-.7-.4-.2-.7-.4-1-.6-.3-.2-.5-.5-.7-.7-.2-.3-.4-.6-.5-.9-.1-.4-.2-.8-.2-1.3,0-.7.1-1.3.4-1.8.3-.5.7-.9,1.2-1.2.5-.3,1.1-.4,1.9-.4.5,0,1,0,1.4.2.5.1.9.3,1.4.6l-.6,2.1c-.4-.2-.8-.4-1.1-.5-.3-.1-.7-.2-1-.2s-.5,0-.7.2c-.2,0-.3.2-.4.4,0,.2-.1.4-.1.6s0,.5.1.7c0,.2.3.4.5.6.2.2.6.4,1.1.7.5.3.9.6,1.3.9.3.3.6.7.8,1.1.2.4.3.9.3,1.4Z"/>
 	</svg>`,
 	readOnly: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
 		<circle class="${CIRCLE_COLOR}" cx="16" cy="16" r="16"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M15.9,13.8c-0.4,0-0.8,0.1-1.2,0.4c-0.3,0.2-0.6,0.6-0.8,1c-0.2,0.4-0.2,0.8-0.1,1.2c0.1,0.4,0.3,0.8,0.6,1.1c0.3,0.3,0.7,0.5,1.1,0.6c0.4,0.1,0.8,0,1.2-0.1c0.4-0.2,0.7-0.4,1-0.8c0.2-0.3,0.4-0.8,0.4-1.2c0-0.6-0.2-1.1-0.6-1.5C17,14,16.4,13.8,15.9,13.8z"/>
@@ -897,12 +897,12 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	microphone: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M16,32c8.8,0,16-7.2,16-16S24.8,0,16,0,0,7.2,0,16s7.2,16,16,16Z"/>
 		<path class="${SHAPE_COLOR}" d="M16,17.9c-.7,0-1.3-.2-1.8-.7-.5-.5-.8-1.1-.8-1.8v-5.1c0-.7.2-1.3.8-1.8s1.1-.7,1.8-.7,1.3.2,1.8.7.8,1.1.8,1.8v5.1c0,.7-.2,1.3-.8,1.8-.5.5-1.1.7-1.8.7ZM15.1,23.8v-2.6c-1.5-.2-2.7-.8-3.7-2-1-1.1-1.5-2.4-1.5-3.9h1.7c0,1.2.4,2.2,1.3,3,.8.8,1.8,1.2,3,1.2,1.2,0,2.2-.4,3-1.2.8-.8,1.3-1.8,1.3-3h1.7c0,1.5-.5,2.8-1.5,3.9-1,1.1-2.2,1.8-3.7,2v2.6h-1.7ZM16,16.2c.2,0,.4,0,.6-.2.2-.2.2-.4.2-.6v-5.1c0-.2,0-.4-.2-.6-.2-.2-.4-.2-.6-.2-.2,0-.4,0-.6.2-.2.2-.2.4-.2.6v5.1c0,.2,0,.4.2.6.2.2.4.2.6.2Z"/>
 	</svg>`,
 	bonus: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
 			<path class="${CIRCLE_COLOR}" d="M48,24c0,13.3-10.7,24-24,24S0,37.3,0,24,10.7,0,24,0s24,10.7,24,24Z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M24,11.7l3.2,7.9,8.5.6-6.5,5.5,2.1,8.3-7.2-4.5-7.2,4.5,2.1-8.3-6.5-5.5,8.5-.6,3.2-7.9Z"/>
@@ -917,63 +917,63 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	userFolder: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
 			<circle class="${CIRCLE_COLOR}" cx="24" cy="24" r="24"/>
 			<path class="${SHAPE_COLOR}" d="M34.4,15.7h-10.3c-1-1-2.5-2.4-3.1-2.7h-8.1c-1.7,0-2.5,1-2.5,2v16.7c0,1.8,1.4,3.2,3.2,3.2h20.8c1.8,0,3.2-1.4,3.2-3.2v-12.8c0-1.8-1.4-3.2-3.2-3.2ZM28.5,20.3c1.3,0,2.4,1.1,2.4,2.4s-1.1,2.4-2.4,2.4-2.4-1.1-2.4-2.4,1.1-2.4,2.4-2.4ZM28.4,30.5h-5.5c0-.6.1-1.2.4-1.7.3-.5.7-1,1.2-1.4.5-.4,1.1-.7,1.8-1,.7-.2,1.4-.3,2.1-.3s1.4.1,2.1.3c.7.2,1.3.5,1.8,1,.5.4.9.9,1.2,1.4.3.5.4,1.1.4,1.7h-5.5Z"/>
 		</svg>`,
 	toothShield: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 			<path class="${CIRCLE_COLOR}" d="M16,32c8.8,0,16-7.2,16-16S24.8,0,16,0,0,7.2,0,16s7.2,16,16,16Z"/>
 			<path class="${SHAPE_COLOR}" d="M20.9,25.8c-.2,0-.4,0-.6,0-.3,0-.6-.3-1-.5-1-.6-1.5-.9-1.9-1.4-.5-.6-.9-1.2-1.1-2-.2-.6-.2-1.2-.2-2.3v-.3c0-.8,0-1.2.2-1.6.1-.3.3-.5.5-.7.3-.3.7-.5,1.5-.7l1.3-.5c1.1-.4,1.5-.4,2.6,0l1.3.5c.7.3,1.1.4,1.5.7.2.2.4.4.5.7.2.4.2.8.2,1.6v.3c0,1.1,0,1.7-.2,2.3-.2.7-.6,1.4-1.1,2-.4.4-.9.8-1.9,1.4-.5.3-.7.5-1.1.6-.2,0-.4,0-.6,0ZM21,16.7c-.1,0-.4,0-.8.2l-1.3.5c-.5.2-.8.3-.9.4,0,0-.1.1-.2.2,0,.1,0,.4,0,1v.3c0,1,0,1.5.1,1.9.1.5.4,1,.7,1.3.3.3.7.6,1.6,1.1.3.2.5.3.7.4.1,0,.3,0,.4,0,.1,0,.3-.2.6-.4.9-.6,1.3-.8,1.6-1.1.3-.4.6-.8.7-1.3.1-.4.1-.9.1-1.9v-.3c0-.5,0-.8,0-1,0,0,0-.2-.2-.2-.1-.1-.4-.2-.9-.4l-1.3-.5c-.5-.2-.7-.2-.8-.2ZM11.9,23.9c-.8,0-1.5-.4-1.9-1.1-6-10.5-3.5-13.6-2.4-14.9.8-1,2-1.6,3.3-1.7,1.5,0,2.9.5,4,1.6,0,0,0,0,0,0,0,0,0,0,0,0,1.1-1.1,2.6-1.7,4-1.6,1.3,0,2.5.7,3.3,1.7.6.8,1.9,2.3,1.2,6,0,.4-.5.7-.9.6-.4,0-.7-.5-.6-.9.5-2.9-.4-4.1-.9-4.7-.5-.7-1.3-1.1-2.2-1.1-1,0-2,.3-2.8,1.1.6.4.9.3,1,.3.3-.3.8-.3,1.1,0,.3.3.3.8,0,1.1-.4.4-1.5,1.1-3.7-.7,0,0,0,0,0,0-.2-.2-.4-.4-.7-.6-.8-.8-1.8-1.2-2.9-1.2-.9,0-1.7.5-2.2,1.1-.8,1-2.9,3.6,2.5,13.3.1.2.3.3.6.3.4,0,.7-.3.7-.7,0-1.2.3-2.8,1.1-3.6.3-.3.8-.3,1.1,0,.3.3.3.8,0,1.1-.4.4-.6,1.3-.7,2.6,0,1.2-1,2.1-2.2,2.1ZM20.5,22.1c-.4,0-.6-.2-.8-.4l-.6-.6c-.3-.3-.3-.8,0-1.1.3-.3.8-.3,1.1,0l.3.3,1.3-1.6c.3-.3.7-.4,1.1-.1.3.3.4.7.1,1.1l-1.5,1.9c-.2.2-.4.5-.8.5,0,0,0,0,0,0Z"/>
 		</svg>`,
 	bell: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 			<path class="${CIRCLE_COLOR}" d="M16,0C19.2,0,22.3.9,24.9,2.7c2.6,1.8,4.7,4.3,5.9,7.2,1.2,2.9,1.5,6.1.9,9.2-.6,3.1-2.1,6-4.4,8.2s-5.1,3.8-8.2,4.4c-3.1.6-6.3.3-9.2-.9-2.9-1.2-5.4-3.3-7.2-5.9-1.8-2.6-2.7-5.7-2.7-8.9S1.7,7.7,4.7,4.7C7.7,1.7,11.8,0,16,0Z"/>
 			<path class="${SHAPE_COLOR}" d="M19.5,20.7s0,0,0,0c.2.3.3.8.2,1.2-.1.4-.4.7-.7.9s-.8.3-1.2.2c-.4-.1-.7-.4-.9-.7,0,0,0,0,0,0-4.3,2.3-5.8,2.3-6.2,1.4,0-.1-.1-.3-.1-.5,0-.2,0-.3.1-.5.7-3.4,1.7-3.1-.2-6.4-1.3-2.2-2.3-4.3,0-6.1-.1,0-.2-.2-.3-.3,0-.1-.1-.3-.1-.5,0-.2,0-.3,0-.5,0-.2.2-.3.3-.4.1-.1.3-.2.4-.3.2,0,.3,0,.5,0,.2,0,.3,0,.5.2.1,0,.3.2.4.4,0,.1.1.3.2.5,2.9-1.2,4.1.8,5.4,3,1.9,3.3,2.1,2.3,5.4,3.4.2,0,.3,0,.4.2.1,0,.2.2.3.3.5.8-.2,2.2-4.4,4.7Z"/>
 		</svg>`,
 	bubbleQuestion: `
-		<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 			<path class="${CIRCLE_COLOR}" d="M16,32c8.8,0,16-7.2,16-16S24.8,0,16,0,0,7.2,0,16s7.2,16,16,16Z"/>
 			<path class="${SHAPE_COLOR}" d="M16.4,6c-5.7,0-10.4,3.9-10.4,8.7,0,1.3.2,2.6.8,3.8.6,1.2,1.4,2.2,2.4,3.1v4.4l4.5-2.5c.9.1,1.8.2,2.7.2,5.7,0,9.6-4.1,9.6-8.9s-4.8-8.7-9.6-8.7ZM16.7,20.7c-.2.2-.5.3-.7.3s-.5-.1-.7-.3-.3-.5-.3-.7.1-.5.3-.7c.2-.2.5-.3.7-.3s.5.1.7.3c.2.2.3.5.3.7s-.1.5-.3.7ZM17.9,14.1c-.2.2-.4.4-.6.5h-.2c-.2.3-.3.4-.4.6v1.4c0,.2,0,.4-.2.6-.1.1-.3.2-.5.2s-.4,0-.5-.2c-.1-.1-.2-.3-.2-.6v-1.5c0-.2,0-.5.3-.8.2-.3.5-.5.7-.7l.2-.2h0c.2-.2.3-.3.5-.4.4-.4.6-.7.6-1.2,0-.2,0-.3-.1-.5,0-.1-.2-.3-.3-.4-.3-.2-.7-.3-1.1-.3s-.8.1-1.1.3c-.2.2-.4.4-.5.6,0,.2-.3.3-.4.4-.2,0-.4,0-.6,0-.2,0-.3-.2-.4-.4,0-.2,0-.4,0-.6.2-.4.5-.9,1-1.2.5-.3,1.1-.5,1.9-.5s1.4.2,2,.6c.3.2.6.6.8.9.2.4.3.8.3,1.2,0,1.1-.5,1.8-1.1,2.3Z"/>
 		</svg>`,
 	chevronLeft: `
-		<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 14.8 24" style="enable-background:new 0 0 14.8 24;" xml:space="preserve">
+		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 14.8 24" xml:space="preserve">
 			<path class="${SHAPE_COLOR}" d="M14.8,21.2L5.7,12l9.2-9.2L12,0L0,12l12,12L14.8,21.2z"/>
 		</svg>`,
 	chevronRight: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 14.8 24" style="enable-background:new 0 0 14.8 24;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 14.8 24" xml:space="preserve">
 		<path class="${SHAPE_COLOR}" d="M0,2.8L9.2,12L0,21.2L2.8,24l12-12L2.8,0L0,2.8z"/>
 	</svg>`,
 	chevronUp: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24.1 14.9" style="enable-background:new 0 0 24.1 14.9;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24.1 14.9" xml:space="preserve">
 		<path class="${SHAPE_COLOR}" d="M2.8,14.8L12,5.7l9.2,9.2L24,12L12,0L0,12L2.8,14.8z"/>
 	</svg>`,
 	chevronDown: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24.1 14.9" style="enable-background:new 0 0 24.1 14.9;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 24.1 14.9" xml:space="preserve">
 		<path class="${SHAPE_COLOR}" d="M21.2,0.1L12,9.2L2.8,0L0,2.9l12,12l12-12L21.2,0.1z"/>
 	</svg>`,
 	triangleUp: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 42 42" style="enable-background:new 0 0 42 42;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 42 42" xml:space="preserve">
 		<polygon class="${SHAPE_COLOR}" points="21,2.8 0,39.2 42,39.2 "/>
 	</svg>`,
 	circle: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
 		<circle class="${SHAPE_COLOR}" cx="16" cy="16" r="16"/>
 	</svg>`,
 	triangleDown: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 42 42" style="enable-background:new 0 0 42 42;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 42 42" xml:space="preserve">
 		<polygon class="${SHAPE_COLOR}" points="21,39.2 42,2.8 0,2.8 "/>
 	</svg>`,
 	calendar: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
   		<g class="${SHAPE_COLOR}">
-			<path d="M19.493,170v1.538a3,3,0,0,1-5.991,0V170h-3v1.538a3,3,0,0,1-5.991,0V170H0v21H24V170Zm-12,17.991H4.507v-3H7.493Zm0-5.991H4.507v-3H7.493Zm6.009,5.991h-3v-3h3Zm0-5.991h-3v-3h3Zm3,5.991v-3h2.987ZM19.493,182H16.507v-3h2.987Z" transform="translate(0 -166.996)" fill-rule="evenodd"/>
-			<path d="M352,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-345.779)" fill-rule="evenodd"/>
-			<path d="M836,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-821.225)" fill-rule="evenodd"/>
+			<path d="M19.493,170v1.538a3,3,0,0,1-5.991,0V170h-3v1.538a3,3,0,0,1-5.991,0V170H0v21H24V170Zm-12,17.991H4.507v-3H7.493Zm0-5.991H4.507v-3H7.493Zm6.009,5.991h-3v-3h3Zm0-5.991h-3v-3h3Zm3,5.991v-3h2.987ZM19.493,182H16.507v-3h2.987Z" transform="translate(0 -166.996)"/>
+			<path d="M352,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-345.779)"/>
+			<path d="M836,4.507v-3a1.5,1.5,0,0,1,3,0v3a1.5,1.5,0,0,1-3,0Z" transform="translate(-821.225)"/>
   		</g>
 	</svg>`,
 	discussion: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30 24.3" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30 24.3" xml:space="preserve">
 		<g class="${SHAPE_COLOR}">
 			<path d="M30,12c0-4.8-3.9-8.7-8.7-8.7c-0.6,0-1.1,0.1-1.7,0.2c1.7,2,2.7,4.6,2.8,7.4c0,3.7-1.7,7-4.4,9.1c1,0.4,2.1,0.7,3.3,0.7c1.2,0,2.5-0.2,3.6-0.8l4.5,2.7L27.7,18C29.2,16.4,30,14.3,30,12C30,12.1,30,12.1,30,12z"/>
 			<path d="M10.9,0L10.9,0C4.9,0,0,5,0,11c0,2.7,1,5.4,2.9,7.4L3,18.6l-2,5.7L6.3,21l0.1,0.1c1.4,0.6,2.9,0.9,4.5,1c6.1,0,11-5,10.9-11.1C21.8,5,16.9,0,10.9,0z M5.7,12.9c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S6.8,12.9,5.7,12.9z M11.1,12.9c-1.1,0-2-0.9-2-2s0.9-2,2-2s2,0.9,2,2S12.2,12.9,11.1,12.9z M16.6,12.9c-1.1,0-2-0.9-2-2s0.9-2,2-2c1.1,0,2,0.9,2,2S17.7,12.9,16.6,12.9z"/>
@@ -981,7 +981,7 @@ export const icons: Icons = {
 	</svg>
 	`,
 	chrono: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 19.7 24.3" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 19.7 24.3" xml:space="preserve">
 		<g class="${SHAPE_COLOR}" transform="translate(-3.727 -8.644)">
 			<path d="M13.6,15.8v6.7l4.7-4.7c2.6,2.6,2.6,6.8,0,9.4c-2.6,2.6-6.8,2.6-9.4,0s-2.6-6.8,0-9.4C10.1,16.5,11.8,15.8,13.6,15.8L13.6,15.8z"/>
 			<path d="M21.9,17l0.9-0.9c0.3-0.3,0.3-0.9,0-1.2l-0.8-0.8c0,0,0,0,0,0c-0.3-0.3-0.9-0.3-1.2,0l-0.7,0.7c-1.4-1.4-3.3-2.3-5.3-2.6v-1.4h0.3c0.6,0,0.8-0.9,0.8-1.5s-0.1-0.8-0.8-0.8h-3.3c-0.6,0-0.8,0.1-0.8,0.8s0.1,1.5,0.8,1.5h0.3v1.4c-2,0.3-3.8,1.2-5.2,2.6l-0.7-0.7c0,0,0,0,0,0c-0.3-0.3-0.9-0.3-1.2,0L4.3,15c-0.3,0.3-0.3,0.9,0,1.2l0.9,0.9c0,0,0,0,0-0.1c-1,1.6-1.5,3.5-1.5,5.5c0,5.7,4.4,10.4,9.9,10.4s9.9-4.6,9.9-10.4C23.5,20.5,22.9,18.6,21.9,17z M13.6,30.8c-4.4,0-7.9-3.7-7.9-8.3c0-4.6,3.5-8.3,7.9-8.3c4.4,0,7.9,3.7,7.9,8.3C21.5,27.1,18,30.8,13.6,30.8z"/>
@@ -989,7 +989,7 @@ export const icons: Icons = {
 	</svg>
 	`,
 	boite: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61 61" style="enable-background:new 0 0 61 61;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61 61" xml:space="preserve">
 		<g class="${SHAPE_COLOR}">
 			<path d="M4.1,19.6v32.6c0,2.8,2.3,5.1,5.1,5.1H52c2.8,0,5.1-2.3,5.1-5.1V19.6H4.1z M40.7,35.9H20.4v-4.6h20.4V35.9z"/>
 			<path d="M2.5,3h56c1.5,0,2.5,1,2.5,2.5v6.6c0,1.5-1,2.5-2.5,2.5h-56c-1.5,0-2.5-1-2.5-2.5V5.5C0,4,1,3,2.5,3z"/>
@@ -997,7 +997,7 @@ export const icons: Icons = {
 	</svg>
 	`,
 	horlogeFlecheDroiteNoCircle: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61 61" style="enable-background:new 0 0 61 61;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61 61" xml:space="preserve">
 		<g class="${SHAPE_COLOR}">
 			<path d="M32,1.6c-10.4,0-20.1,5.6-24.9,14.5L0,9.2V29h19.8l-8.6-8.6C16.8,8.9,30.5,4.1,41.9,9.7S58.1,29,52.8,40.4c-5.6,11.4-19.3,16.2-30.7,10.9c-5.6-2.5-9.6-7.4-11.7-12.9H4.1C8.1,53.9,24.1,63,39.6,59s24.6-20.1,20.6-35.5C56.6,10.5,44.9,1.6,32,1.6z"/>
 			<path d="M26.9,15v17.5l16.2,9.6l2.8-4.6l-13.7-8.1V15H26.9z"/>
@@ -1005,7 +1005,7 @@ export const icons: Icons = {
 	</svg>
 	`,
 	ecrire: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61 61" style="enable-background:new 0 0 61 61;" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 61 61" xml:space="preserve">
 		<g class="${SHAPE_COLOR}" transform="translate(-16.197 -237.598)">
 			<path d="M57.7,281.1c0,0-12.2,7.2-13.3,7.7c-0.9,0.5-0.7-0.5-0.7-0.5l2.7-15.1L57.7,281.1z"/>
 			<path d="M47.5,271.4l11.5,8.1l15.3-21.9l-11.5-8.1L47.5,271.4z"/>
@@ -1016,27 +1016,27 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	bulleGauche: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 23.9 24.1" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 23.9 24.1" xml:space="preserve">
 		<path class="${SHAPE_COLOR}" d="M12.4,0C5.6,0,0,4.7,0,10.5c-0.1,3.2,1.3,6.3,3.8,8.3v5.3l5.4-3c1.1,0.1,2.1,0.2,3.2,0.2c6.9,0,11.5-5,11.5-10.8S18.1,0,12.4,0z M6.2,12c-0.8,0-1.4-0.6-1.4-1.4c0-0.8,0.6-1.4,1.3-1.4c0.7,0,1.4,0.6,1.4,1.3C7.6,11.3,7,12,6.2,12z M12,12L12,12c-0.8,0-1.4-0.6-1.4-1.3c0-0.8,0.5-1.4,1.3-1.5c0.7,0,1.4,0.6,1.4,1.3C13.3,11.3,12.7,12,12,12zM17.7,12L17.7,12c-0.8,0-1.4-0.6-1.4-1.4c0-0.7,0.6-1.4,1.3-1.4c0.8,0,1.4,0.6,1.4,1.3c0,0,0,0,0,0C19,11.4,18.4,12,17.7,12z"/>
 	</svg>`,
 	bulleDroite: `
-	<svg aria-hidden="true" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 23.9 24.4" xml:space="preserve">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 23.9 24.4" xml:space="preserve">
 		<path class="${SHAPE_COLOR}" d="M23.9,10.5C23.9,4.7,18.1,0,12.4,0C5.6,0,0,4.7,0,10.5c0,2.7,0.9,5.2,2.6,7.3C3.7,19,5.1,20,6.7,20.6c1.4,0.5,2.8,0.7,4.3,0.8c1.3,0,2.6-0.2,3.8-0.5c0.1,0,5.3,3.7,5.2,3.6c-0.1,0-0.8-5.4-0.8-5.5C22,17,23.8,13.9,23.9,10.5z M6.2,12c-0.8,0-1.4-0.6-1.4-1.4c0-0.8,0.6-1.4,1.3-1.4c0.7,0,1.4,0.6,1.4,1.3C7.6,11.3,7,12,6.2,12z M12,12L12,12c-0.8,0-1.4-0.6-1.4-1.3c0-0.8,0.5-1.4,1.3-1.5c0.7,0,1.4,0.6,1.4,1.3C13.3,11.3,12.7,12,12,12z M17.7,12L17.7,12c-0.8,0-1.4-0.6-1.4-1.4c0-0.7,0.6-1.4,1.3-1.4c0.8,0,1.4,0.6,1.4,1.3c0,0,0,0,0,0C19,11.4,18.4,12,17.7,12z"/>
 	</svg>`,
 	closeNoCircle: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 		<path class="${SHAPE_COLOR}" d="M18 7.05L16.95 6L12 10.95L7.05 6L6 7.05L10.95 12L6 16.95L7.05 18L12 13.05L16.95 18L18 16.95L13.05 12L18 7.05Z" />
 	</svg>`,
 	diamondNoCircle: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 20 20">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 20 20">
 		<rect class="${SHAPE_COLOR}" x="2.9" y="2.9" width="14.2" height="14.2" transform="translate(-4.1 10) rotate(-45)"/>
 	</svg>`,
 	stats: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${SHAPE_COLOR}" d="M8.4,30.3h3.9v-14l-3.9,4v10.1ZM2.9,25.7v4.6h3.9v-8.6l-2.7,2.7-1.2,1.2ZM13.8,30.3h3.9v-10.9l-3.9-4v14.8ZM19.2,19.9v10.4h3.9v-14.4l-3.1,3.1-.9.9ZM24.7,30.3h3.9V10.6l-3.9,4v15.8ZM23.1,2.5l2.6,2.6h0s-7,7-7,7l-5.3-5.3L0,20.3l2.8,2.8,10.6-10.7,5.3,5.3,9.8-9.8,2.6,2.6.9-8.9-8.9.9h0Z"/>
 	</svg>`,
 	trashNoCircle: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<g class="${SHAPE_COLOR}">
 			<path d="M26.3,4.8H5.9c-.5,0-1,.2-1.4.5-.4.5-.6,1.1-.5,1.7v2.1h24v-2.1c0-.6-.1-1.2-.5-1.7-.3-.3-.8-.5-1.2-.5h0Z"/>
 			<path d="M13.5,0h5.3C19.2,0,19.7.2,20,.5c.2.4.3.8.2,1.2v2.4h-2.2v-1.9l-.2-.2h-3.4v2.1h-2.4V1.7c0-.4,0-.8.2-1.2C12.7.3,12.9,0,13.4,0h.1Z"/>
@@ -1044,7 +1044,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	pencilNoCircle: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 25">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 25">
 		<g class="${SHAPE_COLOR}">
 			<path d="M14.7,21.1l9.3,3.4-3.4-9.4-5.9,5.9Z"/>
 			<path d="M19.8,14.2l-6,6L2.3,8.8l6-6,11.4,11.4Z"/>
@@ -1052,22 +1052,22 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	folder: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 25">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 25">
 		<path class="${SHAPE_COLOR}" d="M14.8,5.3h6.1c.4,0,.8,0,1.2.3.4.2.7.4,1,.7.3.3.5.7.6,1.1.1.4.2.8.1,1.2l-1,10.6c0,.8-.4,1.4-1,2s-1.3.8-2.1.8H4c-.8,0-1.5-.3-2.1-.8s-.9-1.2-1-2L0,8.6c0-.7.1-1.4.5-2v-1.3c0-.8.3-1.6.8-2.1.6-.6,1.4-.9,2.2-.9h5.6c.8,0,1.6.3,2.2.9l1.3,1.3c.6.6,1.4.9,2.2.9ZM2,5.5c.3-.1.7-.2,1.1-.2h8.3l-1.1-1.1c-.3-.3-.7-.4-1.1-.4H3.6c-.4,0-.8.2-1.1.4-.3.3-.5.7-.5,1v.2Z"/>
 	</svg>`,
 	copy: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
 		<path class="${SHAPE_COLOR}" d="M8.4,0c-.6,0-1.2.3-1.7.7-.5.5-.7,1.1-.7,1.7v2.4h2.4v-2.4h13.2v13.2h-2.4v2.4h2.4c.6,0,1.2-.3,1.7-.7.5-.5.7-1.1.7-1.7V2.4c0-.6-.3-1.2-.7-1.7-.5-.5-1.1-.7-1.7-.7h-13.2ZM2.4,6c-.6,0-1.2.3-1.7.7C.3,7.2,0,7.8,0,8.4v13.2C0,22.2.3,22.8.7,23.3c.5.5,1.1.7,1.7.7h13.2c.6,0,1.2-.3,1.7-.7.5-.5.7-1.1.7-1.7v-13.2c0-.6-.3-1.2-.7-1.7-.5-.5-1.1-.7-1.7-.7H2.4Z"/>
 	</svg>`,
 	bus: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 15.2 19">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 15.2 19">
 		<g class="${SHAPE_COLOR}">
 			<path d="M15.1,7.9l-.2-5.5c0-.9.2-2.1-3.5-2.3C10.1,0,9,0,7.6,0c-1.4,0-2.5,0-3.9.1C0,.3.4,1.5.3,2.4L0,7.9c0,.7,0,1.3,0,2.1v5.1c0,.2,0,.5.2.6.1.2.4.3.6.3h0s13.5,0,13.5,0h0c.2,0,.4-.2.6-.4.1-.2.2-.4.2-.6v-5.1c0-.7,0-1.4,0-2.1ZM3.5,1.4s0,0,0-.1c0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,.1,0h7.7s0,0,.1,0c0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,.1v.8s0,0,0,.1c0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0-.1,0H3.7s0,0-.1,0c0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0-.1v-.8ZM2.6,14.5c-.2,0-.3,0-.5-.1-.1,0-.3-.2-.3-.4,0-.2,0-.3,0-.5,0-.2.1-.3.2-.5.1-.1.3-.2.5-.2.2,0,.3,0,.5,0,.2,0,.3.2.4.3s.1.3.1.5c0,.1,0,.2,0,.3,0,.1-.1.2-.2.3,0,0-.2.1-.3.2-.1,0-.2,0-.3,0h0ZM12.6,14.5c-.2,0-.3,0-.5-.1-.1,0-.3-.2-.3-.4,0-.2,0-.3,0-.5,0-.2.1-.3.2-.5.1-.1.3-.2.5-.2.2,0,.3,0,.5,0,.2,0,.3.2.4.3s.1.3.1.5c0,.1,0,.2,0,.3,0,.1-.1.2-.2.3,0,0-.2.1-.3.2-.1,0-.2,0-.3,0h0ZM13.8,8.6c0,.1,0,.3-.1.4,0,0-.2.1-.4.1H1.9c-.1,0-.3,0-.4-.1,0,0-.1-.2-.1-.4V3.9c0-.1,0-.3.1-.4,0,0,.2-.1.4-.1h11.3c.1,0,.3,0,.4.1,0,0,.1.2.1.4v4.6Z"/>
 			<path d="M11.8,16.8v1.6c0,.2,0,.3.2.4.1.1.3.2.4.2h1.4c.2,0,.3,0,.4-.2.1-.1.2-.3.2-.4v-1.6h-2.5ZM.8,18.4c0,.2,0,.3.2.4.1.1.3.2.4.2h1.4c.2,0,.3,0,.4-.2.1-.1.2-.3.2-.4v-1.6H.8v1.6Z"/>
 		</g>
 	</svg>`,
 	carPerson: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<g class="${SHAPE_COLOR}">
 			<path d="M30.6,15.8l-4.4-1.5-4-3.7c-.5-.5-1.1-.9-1.8-1.2-.7-.3-1.4-.4-2.1-.4h-5.6c-.8,0-1.6.2-2.2.7-.5.3-1,.7-1.4,1.1.2.5.5,1,.8,1.4,1-1.5,1.9-1.8,2.1-1.8h1.9v4.7h-1.4c.1.3.2.6.2.9,0,.3,0,.6-.1.9-.1.3-.3.6-.5.8-.2.2-.4.3-.6.4-.2,0-.5.1-.7.1-.5,0-1-.2-1.5-.5-.4-.3-.8-.5-1.2-.8v3.7c.3-.3.6-.6,1-.7.4-.1.8,0,1.2,0,.4.1.7.4,1,.8.2.4.4.8.4,1.2s-.1.9-.4,1.2c-.2.4-.6.6-1,.8-.4.1-.8.2-1.2,0-.4-.1-.8-.4-1-.7v2.2c.5.2,1,.4,1.5.4.9,0,1.7-.3,2.4-.9.7-.6,1.1-1.4,1.2-2.4h9.3c.1.9.6,1.8,1.2,2.4.7.6,1.5.9,2.4.9s1.7-.3,2.4-.9c.7-.6,1.1-1.4,1.2-2.4h.6c0,0,.2,0,.2,0s.1,0,.2-.1l1.1-1.3c0-.1.1-.2.1-.4v-3.2c0-.4-.1-.8-.4-1.2-.2-.3-.6-.6-1-.7ZM23.7,14.8c0,.1-.1.2-.2.3,0,0-.2.1-.3.1h-7.8v-4.7h3.1c.9,0,1.1.2,2.2,1.1l2.9,2.6c0,0,.1.2.2.3,0,.1,0,.2,0,.4ZM26.1,24.2c-.4,0-.8-.1-1.1-.4-.3-.2-.6-.6-.7-1-.2-.4-.2-.8-.1-1.2,0-.4.3-.8.6-1.1.3-.3.6-.5,1-.6.4,0,.8,0,1.2.1.4.2.7.4.9.8.2.3.3.8.3,1.2,0,.6-.2,1.1-.6,1.5-.4.4-.9.6-1.4.6h0Z"/>
 			<path d="M2,7c0,.4.1.8.3,1.1.2.3.5.6.9.7.4.2.8.2,1.2.1.4,0,.7-.3,1-.5.3-.3.5-.6.5-1,0-.4,0-.8-.1-1.2-.2-.4-.4-.7-.7-.9-.3-.2-.7-.3-1.1-.3-.5,0-1,.2-1.4.6-.4.4-.6.9-.6,1.4Z"/>
@@ -1075,7 +1075,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	planeBoat: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<g class="${SHAPE_COLOR}">
 			<path d="M9,12.2l-4.1-.7-1.5.7,3.1,1.3,2.5-1.3Z"/>
 			<path d="M12.7,11.1c-1.3.6-9.6,4.9-9.6,4.9l-1.6-.9-1.5.7,2.7,2.5,5-2.2-.6,4.9,1.8-.9,2.5-5.6,5.9-2.6c-1-1.8-3.2-1.4-4.5-.7Z"/>
@@ -1085,7 +1085,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	taxi: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<g class="${SHAPE_COLOR}">
 			<path d="M27.1,8.4c0-.2-.2-.4-.4-.6-.2-.2-.4-.3-.6-.3-.7-.1-1.4-.3-2.1-.4,0-.5-.2-.9-.6-1.3s-.8-.6-1.2-.7c-.3,0-.6-.2-.8-.4-.2-.2-.3-.5-.3-.9-.1-1.1-.6-1.7-5.1-1.7-4.5,0-5,.6-5.1,1.7,0,.3-.1.6-.3.9-.2.2-.5.4-.8.4-.5,0-.9.3-1.2.7-.3.4-.5.8-.6,1.3-.7.1-1.4.3-2.2.4-.2,0-.4.2-.5.3-.1.2-.3.3-.3.6-.3,1.7-.6,3.2-.9,4.8H1.7c-.4-.1-.9,0-1.2.3C.2,13.8,0,14.2,0,14.7c0,.4.1.9.4,1.2.3.3.7.5,1.1.6h1.6c-.6.5-1.2,1.1-1.6,1.8-.4.7-.6,1.4-.6,2.2,0,.8.1,1.5.5,2.2.3.7.8,1.3,1.4,1.8v3.9c0,.2,0,.4.2.5.1.1.3.2.5.2h4c.2,0,.4,0,.5-.2.1-.1.2-.3.2-.5v-3.1h15.3v3.1c0,.2,0,.4.2.5.1.1.3.2.5.2h4c0,0,.2,0,.3,0,0,0,.2,0,.2-.2,0,0,.1-.1.2-.2,0,0,0-.2,0-.3v-3.9c.6-.5,1.1-1.1,1.4-1.8s.5-1.5.5-2.2-.2-1.5-.6-2.2c-.4-.7-.9-1.3-1.6-1.7h1.6c.4-.1.8-.3,1.1-.7.3-.3.5-.7.4-1.2,0-.4-.2-.9-.5-1.2-.3-.3-.7-.5-1.2-.5h-2.3c-.3-1.4-.6-2.9-.9-4.6ZM12.1,4.8h1.5v-1.5h1.6v1.5h1.5v-1.6h1.6v1.6h1.5v1.6h-1.6v-1.5h-1.5v1.6h-1.6v-1.5h-1.5v1.5h-1.6v-1.6ZM5.3,22.8c-.4,0-.8-.1-1.1-.3-.3-.2-.6-.5-.7-.9-.2-.4-.2-.8-.1-1.2,0-.4.3-.8.6-1,.3-.3.6-.5,1-.6.4,0,.8,0,1.2.1.4.2.7.4.9.7.2.3.3.7.3,1.1,0,.3,0,.5-.2.8-.1.2-.2.5-.4.7-.2.2-.4.3-.7.4-.2.1-.5.2-.8.2ZM23.6,15.4c-.1-.3-.3-.5-.4-.7-.4-.4-.8-.6-1.3-.8-.5-.2-1-.3-1.5-.2-1,0-1.9.2-2.7.9-.2.2-.4.4-.5.7-.5,0-1,0-1.5,0-3.4,0-6.7.1-10.1.5l1.1-6.2c3-.8,6-1.2,9.1-1.2,3.3,0,6.5.4,9.7,1.2l1,6.2c-.8,0-1.8-.2-2.8-.2h0ZM28.7,20.8c0,.4-.1.8-.3,1.1-.2.3-.5.6-.9.7-.4.2-.8.2-1.2.1-.4,0-.8-.3-1-.6-.3-.3-.5-.6-.6-1,0-.4,0-.8.1-1.2.2-.4.4-.7.7-.9s.7-.3,1.1-.3c.3,0,.5,0,.8.2.2.1.5.3.7.4.2.2.3.4.4.7.1.2.2.5.2.8Z"/>
 			<path d="M11.1,12.9c-1.7,0-2.6.8-2.9,1.6,1.6-.1,3.5-.2,5.6-.2-.3-.5-.7-.9-1.2-1.2-.5-.3-1.1-.4-1.6-.3Z"/>
@@ -1094,23 +1094,23 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	ambulanceNoCircle: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${SHAPE_COLOR}" d="M19.6,8.2l-.6-1.2-.4.3.9.9h.1ZM18.8,9.2l-1.2-.4v.5c0,0,1.2,0,1.2,0h0ZM19.2,10.3h2l-.3-1.3c0-.1,0-.2-.2-.3s-.2-.1-.3-.1h-.5c-.1,0-.2,0-.3.1s-.2.2-.2.3l-.3,1.3ZM21.9,7.3l-.4-.3-.6,1.2h.1c0,0,.9-.9.9-.9ZM21.7,9.4h1.3s0-.5,0-.5l-1.2.4h0ZM6.9,22.3c-.2,0-.4,0-.5.2-.1.1-.2.3-.2.5,0,0,0,0,0,0h0c0,.2,0,.4.2.6.1.1.3.2.6.2s.4,0,.6-.2c.1-.1.2-.3.2-.6h0s0,0,0,0c0-.2-.1-.4-.2-.5-.1-.1-.3-.2-.5-.2h0ZM28.7,21.2c-.4-.4-.8-.6-1.3-.7-.5-.1-1,0-1.5.1-.5.2-.9.5-1.2,1-.3.4-.5.9-.5,1.5h0c0,.8.3,1.5.8,2s1.2.8,1.9.8,1.4-.3,1.9-.8c.5-.5.8-1.2.8-1.9h0c0-.8-.3-1.4-.8-1.9h0ZM28.3,23.1c0,.4-.2.7-.4,1-.3.3-.6.4-1,.4s-.8-.1-1-.4c-.3-.3-.4-.6-.4-1h0s0,0,0,0c0-.4.2-.7.4-1,.3-.3.6-.4,1-.4s.8.1,1,.4c.3.3.4.6.4,1,0,0,0,0,0,0s0,0,0,0ZM31.4,21.2v-2.1c0-.3,0-.5-.2-.7-.1-.2-.3-.4-.6-.5-.6-.2-4.3-1.3-4.3-1.3,0,0-2.5-3.7-2.7-4,0-.1-.2-.2-.3-.3-.1,0-.3-.1-.4-.2h-.7v-.8c0-.1,0-.3-.2-.4s-.2-.2-.4-.2H3.3c-.2,0-.3,0-.4.2-.1,0-.2.2-.3.4l-1.7,5.3c-.1.4-.2.9-.2,1.3v3.3h0c-.2,0-.3,0-.4.2-.1.1-.2.3-.2.4v.7c0,.2,0,.3.2.4.1.1.3.2.4.2h3.1c0-.9.4-1.7,1-2.3.6-.6,1.4-.9,2.2-.9s1.6.3,2.2.9c.6.6.9,1.4,1,2.2h0c0,0,13.6,0,13.6,0h0c0-.9.4-1.7,1-2.3.6-.6,1.4-.9,2.2-.9s1.6.3,2.2.9c.6.6.9,1.4,1,2.2h0c0,0,1.4,0,1.4,0,.2,0,.3,0,.4-.2.1-.1.2-.3.2-.4v-.7c0-.2,0-.3-.2-.4-.1-.1-.2-.2-.4-.2h0ZM14.6,16.5l-.7,1.2-1.5-.8v1.7h-1.4v-1.7l-1.5.8-.7-1.2,1.5-.8-1.5-.8.7-1.2,1.5.8v-1.7h1.4v1.7l1.5-.8.7,1.2-1.5.8,1.5.8ZM25,16.7h-5.3c-.1,0-.3,0-.4-.2-.1-.1-.2-.2-.2-.4v-2.8c0,0,0-.1,0-.2,0,0,0-.1.1-.2s.1,0,.2-.1c0,0,.1,0,.2,0h2.8c.1,0,.2,0,.3,0s.2.1.3.2c.1.2,1.1,1.6,2.1,3.1.2.2,0,.5-.2.5ZM8.8,21.2c-.4-.4-.8-.6-1.3-.7s-1,0-1.5.1c-.5.2-.9.5-1.2,1-.3.4-.5.9-.5,1.5h0c0,.8.3,1.5.8,2,.5.5,1.2.8,1.9.8s1.4-.3,1.9-.8c.5-.5.8-1.2.8-1.9h0c0-.8-.3-1.4-.8-1.9ZM8.4,23.1c0,.4-.2.8-.4,1-.3.3-.6.4-1,.4s-.8-.2-1-.4c-.3-.3-.4-.6-.4-1h0s0,0,0,0c0-.4.2-.7.5-1,.3-.3.6-.4,1-.4s.7.1,1,.4c.3.3.4.6.5,1,0,0,0,0,0,0s0,0,0,0ZM26.9,22.3c-.2,0-.4,0-.5.2-.1.1-.2.3-.2.5,0,0,0,0,0,0h0c0,.2,0,.4.2.6s.3.2.6.2.4,0,.6-.2c.1-.1.2-.3.2-.6h0s0,0,0,0c0-.2-.1-.4-.2-.5-.1-.1-.3-.2-.5-.2h0Z"/>
 	</svg>`,
 	arrowLeft: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
 		<path class="${SHAPE_COLOR}" d="M11.2,23.2c-.4,0-.7-.1-1-.4L.4,13c-.6-.6-.6-1.5,0-2L10.2,1.2c.6-.6,1.5-.6,2,0s.6,1.5,0,2l-7.3,7.3h17.6c.8,0,1.4.6,1.4,1.4s-.6,1.4-1.4,1.4H4.9l7.3,7.3c.6.6.6,1.5,0,2s-.7.4-1,.4Z"/>
 	</svg>`,
 	arrowRight: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
 		<path class="${SHAPE_COLOR}" d="M12.8,23.2c-.4,0-.7-.1-1-.4-.6-.6-.6-1.5,0-2l7.3-7.3H1.5C.7,13.4,0,12.8,0,12s.6-1.4,1.4-1.4h17.6l-7.3-7.3c-.6-.6-.6-1.5,0-2s1.5-.6,2,0l9.7,9.7c.6.6.6,1.5,0,2l-9.7,9.7c-.3.3-.7.4-1,.4Z"/>
 	</svg>`,
 	printNoCircle: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 20 19">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 20 19">
 		<path class="${SHAPE_COLOR}" d="M3.4,5.6V1.4c0-.4.1-.7.4-1C4.1.1,4.5,0,4.8,0h10.4c.2,0,.4,0,.5.1.2,0,.3.2.4.3.1.1.2.3.3.5,0,.2.1.4.1.5v4.2H3.4ZM2.8,16.9h-.7c-.5,0-1.1-.2-1.5-.6-.4-.4-.6-.9-.6-1.5v-6.3c0-.6.2-1.1.6-1.5.4-.4.9-.6,1.5-.6h15.9c.5,0,1.1.2,1.5.6.4.4.6.9.6,1.5v6.3c0,.6-.2,1.1-.6,1.5-.4.4-.9.6-1.5.6h-.7v-5.6H2.8v5.6ZM3.4,12v5.6c0,.2,0,.4.1.5,0,.2.2.3.3.5.1.1.3.2.4.3.2,0,.3.1.5.1h10.4c.2,0,.4,0,.5-.1.2,0,.3-.2.4-.3.1-.1.2-.3.3-.5,0-.2.1-.4.1-.5v-5.6H3.4ZM15.9,9.9c.1,0,.3,0,.4-.1.1,0,.2-.2.3-.3,0-.1,0-.3,0-.4s0-.3-.2-.4c0,0-.2-.2-.4-.2-.1,0-.3,0-.4,0-.1,0-.2.1-.3.3,0,.1-.1.3-.1.4s0,.4.2.5c.1.1.3.2.5.2ZM4.8,14.1v.7h10.3v-.7H4.8ZM4.8,16.2v.7h10.3v-.7H4.8Z"/>
 	</svg>`,
 	basketNoCircle: `
-	<svg aria-hidden="true" width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<svg width="23" height="20" viewBox="0 0 23 20" xmlns="http://www.w3.org/2000/svg">
 		<g class="${SHAPE_COLOR}">
 			<path d="M2.94844 17.4922L3.14842 18.3203C3.55839 19.7953 3.89136 20.0023 4.81328 20.0023H18.1821C19.1041 20.0023 19.437 19.7953 19.847 18.4023V18.3242L22.0768 9.05725H0.948608L2.94844 17.4922ZM18.2381 10.7133H19.0831C19.1885 10.7163 19.2902 10.7531 19.3732 10.8183C19.4561 10.8835 19.516 10.9735 19.544 11.0753L20.031 12.9643C20.0458 13.0052 20.0505 13.0491 20.0447 13.0923C20.0389 13.1355 20.0227 13.1766 19.9976 13.2122C19.9724 13.2477 19.9391 13.2767 19.9003 13.2965C19.8615 13.3164 19.8185 13.3266 19.775 13.3263H18.9041C18.8029 13.3186 18.7067 13.2796 18.6288 13.2148C18.5508 13.1499 18.495 13.0623 18.4691 12.9643L17.9821 11.0753C17.9282 10.8683 18.0301 10.7133 18.2351 10.7133H18.2381ZM15.7023 10.7133H16.5473C16.6527 10.7163 16.7544 10.7531 16.8374 10.8183C16.9204 10.8835 16.9802 10.9735 17.0082 11.0753L18.8471 18.0573C18.8981 18.2643 18.7961 18.4193 18.5911 18.4193H17.7472C17.6417 18.4162 17.54 18.3794 17.4571 18.3142C17.3741 18.249 17.3142 18.159 17.2862 18.0573L15.4474 11.0753C15.3924 10.8683 15.4954 10.7133 15.7003 10.7133H15.7023ZM13.1666 10.7133H14.0115C14.1138 10.7172 14.2119 10.7548 14.2905 10.8203C14.3692 10.8857 14.424 10.9754 14.4465 11.0753L16.3143 18.0573C16.3332 18.1224 16.328 18.1922 16.2997 18.2539C16.2715 18.3155 16.222 18.365 16.1603 18.3932C16.131 18.4132 16.0956 18.4224 16.0603 18.4193H15.1874C15.0606 18.4123 14.9414 18.3568 14.8544 18.2643C14.7967 18.21 14.7611 18.1362 14.7544 18.0573L12.8846 11.0713C12.871 11.0286 12.868 10.9832 12.8759 10.9391C12.8838 10.895 12.9024 10.8535 12.93 10.8182C12.9575 10.783 12.9934 10.7549 13.0342 10.7366C13.0751 10.7183 13.1199 10.7103 13.1646 10.7133H13.1666ZM10.6058 10.7133H11.4767C11.5778 10.7209 11.6741 10.7599 11.752 10.8248C11.83 10.8896 11.8858 10.9772 11.9117 11.0753L13.7795 18.0573V18.0833C13.7916 18.1249 13.7932 18.1689 13.7843 18.2113C13.7753 18.2537 13.7561 18.2933 13.7282 18.3265C13.7003 18.3597 13.6647 18.3856 13.6245 18.4017C13.5842 18.4179 13.5406 18.4239 13.4975 18.4193H12.6476C12.5453 18.4153 12.4472 18.3777 12.3686 18.3123C12.2899 18.2468 12.2351 18.1571 12.2126 18.0573L12.1127 17.6953L10.3478 11.0753C10.333 11.0343 10.3282 10.9904 10.3341 10.9472C10.3399 10.904 10.356 10.8629 10.3812 10.8273C10.4063 10.7918 10.4397 10.7628 10.4785 10.743C10.5172 10.7231 10.5602 10.7129 10.6038 10.7133H10.6058ZM8.07 10.7133H8.91492C9.02038 10.7163 9.12207 10.7531 9.20504 10.8183C9.28802 10.8835 9.3479 10.9735 9.37589 11.0753L11.0657 17.4922L11.2197 18.0612C11.2707 18.2682 11.1687 18.4232 10.9637 18.4232H10.1188C10.0134 18.4202 9.91168 18.3834 9.82871 18.3182C9.74573 18.253 9.68585 18.163 9.65786 18.0612L9.45788 17.2613L7.81902 11.0772C7.76102 10.8682 7.86301 10.7133 8.068 10.7133H8.07ZM5.53421 10.7133H6.37914C6.4846 10.7163 6.58629 10.7531 6.66926 10.8183C6.75223 10.8835 6.81211 10.9735 6.8401 11.0753L8.44797 17.1573L8.67894 18.0633C8.72994 18.2703 8.62795 18.4253 8.42297 18.4253H7.57804C7.47259 18.4222 7.3709 18.3854 7.28792 18.3202C7.20495 18.255 7.14507 18.165 7.11708 18.0633L6.8611 17.0803L5.27324 11.0803C5.22524 10.8683 5.32923 10.7133 5.53421 10.7133ZM2.99843 10.7133H3.84336C3.94881 10.7163 4.0505 10.7531 4.13347 10.8183C4.21645 10.8835 4.27633 10.9735 4.30432 11.0753L5.89218 17.1032L6.14816 18.0573C6.16301 18.0982 6.16772 18.1421 6.16191 18.1853C6.15609 18.2285 6.13992 18.2696 6.11477 18.3051C6.08962 18.3407 6.05625 18.3697 6.01749 18.3895C5.97873 18.4094 5.93574 18.4196 5.89218 18.4193H5.02126C4.92013 18.4116 4.8239 18.3726 4.74595 18.3077C4.668 18.2429 4.61219 18.1553 4.5863 18.0573L4.35532 17.2292L2.71646 11.0713C2.7028 11.0285 2.69982 10.983 2.70778 10.9388C2.71573 10.8947 2.73438 10.8531 2.7621 10.8178C2.78981 10.7825 2.82575 10.7545 2.86677 10.7363C2.90779 10.718 2.95365 10.7101 2.99843 10.7133Z"/>
 			<path d="M6.864 8.72029C7.02938 8.76366 7.20171 8.77397 7.37109 8.75063C7.54047 8.72729 7.70358 8.67074 7.85108 8.58426C7.99858 8.49778 8.12756 8.38305 8.23065 8.24663C8.33375 8.11022 8.40893 7.95481 8.45187 7.7893C8.50007 7.62515 8.51492 7.45302 8.49557 7.28304C8.47622 7.11306 8.42305 6.94867 8.33918 6.79956C8.25531 6.65046 8.14245 6.51965 8.00725 6.41484C7.87205 6.31004 7.71724 6.23335 7.55194 6.1893C7.38544 6.14387 7.21162 6.13167 7.0404 6.15342C6.86919 6.17516 6.70393 6.23041 6.55407 6.31603C6.40421 6.40164 6.27268 6.51594 6.16699 6.65239C6.0613 6.78885 5.98351 6.94479 5.93808 7.1113C5.89265 7.27782 5.88045 7.45165 5.90219 7.62288C5.92394 7.79411 5.97918 7.95938 6.06479 8.10926C6.1504 8.25913 6.26469 8.39067 6.40113 8.49637C6.53757 8.60207 6.6935 8.67986 6.86 8.7253L6.864 8.72029Z"/>
@@ -1125,12 +1125,12 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	link2: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M16,32c8.8,0,16-7.2,16-16S24.8,0,16,0,0,7.2,0,16s7.2,16,16,16Z"/>
 		<path class="${SHAPE_COLOR}" d="M15.1,20h-3.6c-1.2,0-2.3-.4-3.2-1.3s-1.3-1.9-1.3-3.2.4-2.3,1.3-3.2,1.9-1.3,3.2-1.3h3.6v1.8h-3.6c-.8,0-1.4.3-1.9.8-.5.5-.8,1.2-.8,1.9s.3,1.4.8,1.9c.5.5,1.2.8,1.9.8h3.6v1.8ZM12.4,16.4v-1.8h7.2v1.8h-7.2ZM16.9,20v-1.8h3.6c.8,0,1.4-.3,1.9-.8s.8-1.2.8-1.9-.3-1.4-.8-1.9c-.5-.5-1.2-.8-1.9-.8h-3.6v-1.8h3.6c1.2,0,2.3.4,3.2,1.3s1.3,1.9,1.3,3.2-.4,2.3-1.3,3.2c-.9.9-1.9,1.3-3.2,1.3h-3.6Z"/>
 	</svg>`,
 	notePencil: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34 34">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34 34">
 		<circle class="${CIRCLE_COLOR}" cx="17" cy="17" r="17"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M15,26h-4.7c-.6,0-1.2-.2-1.6-.7s-.7-1-.7-1.6v-13.5c0-.6.2-1.2.7-1.6.4-.4,1-.7,1.6-.7h1.3v-.5h.6c.1-.3.4-.7.7-1,.4-.4.9-.6,1.5-.6h3.5c.5,0,1.1.2,1.5.6.3.3.5.6.7,1h.6c0,0,0,.4,0,.4h1.3c.3,0,.6,0,.9.2.3.1.5.3.7.5.2.2.4.5.5.7.1.3.2.6.2.9v4.8h-.3c-.5.3-.9.5-1.2.9h0s-5,5.1-5,5.1h-5.4c-.2,0-.4,0-.5.2s-.2.3-.2.5,0,.4.2.5.3.2.5.2h3.9l-.3.7c0,.1,0,.3-.1.4l-.5,1.8c0,0,0,.1,0,.2v.4ZM10.2,9c-.3,0-.6.1-.9.4s-.4.6-.4.9v13.5c0,.3.1.7.4.9.2.2.6.4.9.4h3.9l.4-1.5h-2.5c-.5,0-.9-.2-1.2-.5-.3-.3-.5-.8-.5-1.2s.2-.9.5-1.2c.3-.3.8-.5,1.2-.5h4.9l4.5-4.5-.2-.5s0,0,0,0c-.3.3-.8.5-1.2.5h-8c-.5,0-.9-.2-1.2-.5s-.5-.8-.5-1.2.2-.9.5-1.2.8-.5,1.2-.5h8c.1,0,.2,0,.3,0l-1-3c0,.2-.2.3-.3.4-.3.3-.8.5-1.2.5h-3.5c-.5,0-.9-.2-1.2-.5-.2-.2-.4-.5-.5-.9h0s0,.4,0,.4h-2.3ZM20.3,9l1.9,5.8c.2-.2.5-.3.7-.4v-4.1c0-.2,0-.3,0-.5,0-.2-.2-.3-.3-.4-.1-.1-.3-.2-.4-.3-.2,0-.3,0-.5,0h-1.4ZM12,13c-.2,0-.4,0-.5.2s-.2.3-.2.5,0,.4.2.5.3.2.5.2h8c.2,0,.4,0,.5-.2s.2-.3.2-.5,0-.4-.2-.5-.3-.2-.5-.2h-8ZM14.2,7.5c-.2,0-.4,0-.5.2s-.2.3-.2.5,0,.4.2.5.3.2.5.2h3.5c.2,0,.4,0,.5-.2s.2-.3.2-.5,0-.4-.2-.5-.3-.2-.5-.2h-3.5ZM16,19.5h-4c-.5,0-.9-.2-1.2-.5-.3-.3-.5-.8-.5-1.2s.2-.9.5-1.2.8-.5,1.2-.5h4c.5,0,.9.2,1.2.5s.5.8.5,1.2-.2.9-.5,1.2c-.3.3-.8.5-1.2.5ZM12,17c-.2,0-.4,0-.5.2s-.2.3-.2.5,0,.4.2.5.3.2.5.2h4c.2,0,.4,0,.5-.2s.2-.3.2-.5,0-.4-.2-.5-.3-.2-.5-.2h-4Z"/>
@@ -1138,12 +1138,12 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	signature: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 90 90">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 90 90">
 		<circle class="${CIRCLE_COLOR}" cx="45" cy="45" r="45"/>
 		<path class="${SHAPE_COLOR}" d="M26.2,20c-3.4,0-6.2,2.8-6.2,6.2v37.3c0,3.4,2.8,6.2,6.2,6.2h24.9c3.4,0,6.2-2.8,6.2-6.2v-1.9c-.3.1-.5.2-.8.3l-5.8,1.5c-.3,0-.6.1-.9.1,0,0-.2,0-.3,0h-6.2c-.6,0-1.1-.3-1.4-.9l-.9-1.7c-.2-.3-.5-.5-.9-.5s-.7.2-.9.5l-.9,1.7c-.3.6-.9.9-1.5.9-.6,0-1.2-.5-1.4-1.1l-1.6-5.4-1,3.2c-.6,2-2.4,3.3-4.5,3.3h-.8c-.9,0-1.6-.7-1.6-1.6s.7-1.6,1.6-1.6h.8c.7,0,1.3-.4,1.5-1.1l1.4-4.8c.3-1.1,1.3-1.9,2.5-1.9s2.2.8,2.5,1.9l1.1,3.8c.7-.6,1.6-.9,2.6-.9,1.5,0,3,.9,3.6,2.3l.4.9h.9c-.3-.9-.4-1.8-.1-2.7l1.5-5.8c.3-1.1.8-2.1,1.6-2.9l9.2-9.2v-4.2h-12.4c-1.7,0-3.1-1.4-3.1-3.1v-12.4h-15.6ZM44.9,20v12.4h12.4l-12.4-12.4ZM73.5,33.6c-1.5-1.5-4-1.5-5.5,0l-2.9,2.9,6.9,6.9,2.9-2.9c1.5-1.5,1.5-4,0-5.5l-1.4-1.4ZM50.3,51.2c-.4.4-.7.9-.8,1.4l-1.5,5.8c-.1.5,0,1.1.4,1.5.4.4.9.5,1.5.4l5.8-1.5c.5-.1,1-.4,1.4-.8l12.6-12.6-6.9-6.9-12.6,12.6Z"/>
 	</svg>`,
 	signature2: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M16,32c8.8,0,16-7.2,16-16S24.8,0,16,0,0,7.2,0,16s7.2,16,16,16Z"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M14.5,22.1h10.7v1.9h-10.7v-1.9Z"/>
@@ -1151,12 +1151,12 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	shieldPlus: `
-  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
     <path class="${CIRCLE_COLOR}" d="M16,32c8.8,0,16-7.2,16-16S24.8,0,16,0,0,7.2,0,16s7.2,16,16,16Z"/>
     <path class="${SHAPE_COLOR}" d="M16.6,7.1l6.2,2.4c.3.1.6.4.8.7.2.3.3.7.3,1v4.9c0,1.5-.4,3-1.2,4.3-.8,1.3-1.9,2.3-3.2,3l-3,1.5c-.2,0-.4.1-.6.1s-.4,0-.6-.1l-3-1.5c-1.3-.7-2.4-1.7-3.2-3-.8-1.3-1.2-2.8-1.2-4.3v-4.9c0-.4.1-.7.3-1,.2-.3.5-.5.8-.7l6.2-2.4c.4-.2.8-.2,1.2,0ZM16,12.4c-.2,0-.4,0-.6.2s-.3.4-.3.6h0v1.9h-1.8c-.2,0-.4,0-.6.2-.2.2-.3.4-.3.6,0,.2,0,.5.2.6.1.2.4.3.6.3h.1s1.8,0,1.8,0v1.8c0,.2,0,.5.2.6.2.2.4.3.6.3.2,0,.4,0,.6-.2.2-.1.3-.4.3-.6h0v-1.9h1.8c.2,0,.4,0,.6-.2.2-.2.3-.4.3-.6,0-.2,0-.5-.2-.6-.1-.2-.4-.3-.6-.3h-.1s-1.8,0-1.8,0v-1.8c0-.2,0-.5-.3-.6-.2-.2-.4-.3-.6-.3Z"/>
   </svg>`,
 	delegation: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32">
 		<path class="${CIRCLE_COLOR}" d="M16,0c3.2,0,6.3.9,8.9,2.7,2.6,1.8,4.7,4.3,5.9,7.2,1.2,2.9,1.5,6.1.9,9.2-.6,3.1-2.1,6-4.4,8.2s-5.1,3.8-8.2,4.4c-3.1.6-6.3.3-9.2-.9-2.9-1.2-5.4-3.3-7.2-5.9-1.8-2.6-2.7-5.7-2.7-8.9S1.7,7.7,4.7,4.7C7.7,1.7,11.8,0,16,0Z"/>
 		<g class="${SHAPE_COLOR}">
 			<path d="M12.3,9c-4,0-7.3,3.3-7.3,7.3s3.3,7.3,7.3,7.3,7.3-3.3,7.3-7.3-3.3-7.3-7.3-7.3ZM9.4,19.2s0-.8.2-1.1c.4-.4,1-.6,1.5-.7.8-.1.5-.9.5-.9,0,0,0-.1,0-.2-.2-.3-.4-.6-.4-1,0-.5,0-.8,0-.8,0,0,0-1.1.7-1.1l.6.2c.7,0,.7.9.7.9v.9s0,.7-.4.9c0,0,0,.1,0,.2,0,0-.1.9.6,1,.5,0,1.1.3,1.5.7.1.1.2,1.1.2,1.1h-5.8Z"/>
@@ -1166,7 +1166,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	attele: `
-	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34 34">
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34 34">
 		 <path class="${CIRCLE_COLOR}" d="M16,0c-3.2,0-6.3.9-8.9,2.7-2.6,1.8-4.7,4.3-5.9,7.2C0,12.8-.3,16,.3,19.1c.6,3.1,2.1,6,4.4,8.2,2.2,2.2,5.1,3.8,8.2,4.4,3.1.6,6.3.3,9.2-.9s5.4-3.3,7.2-5.9c1.8-2.6,2.7-5.7,2.7-8.9,0-2.1-.4-4.2-1.2-6.1-.8-1.9-2-3.7-3.5-5.2-1.5-1.5-3.3-2.7-5.2-3.5C20.2.4,18.1,0,16,0Z"/>
 		 <g class="${SHAPE_COLOR}">
 			<path  d="M6.4,6.4c0,0,0,.3,0,1,0,.5,0,1,0,1.1v.3h2.7v-.3c0-.3.2-.7.5-.8.2-.1.4-.1,1.4-.2,1.6,0,1.9,0,2.2.3.2.2.3.3.3.6v.3h1.2c1.1,0,1.2,0,1.2-.1s0-.6.1-1.1c0-.8,0-1,0-1.1-.1-.2-9.4-.1-9.5,0Z"/>
@@ -1183,7 +1183,7 @@ export const icons: Icons = {
 		  </g>
 	</svg>`,
 	cookie: `
-    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 32 32" xml:space="preserve">
         <path class="${CIRCLE_COLOR}" d="M16.0374 0.449951C19.1203 0.449951 22.134 1.36414 24.6973 3.0769C27.2606 4.78967 29.2585 7.22408 30.4383 10.0723C31.618 12.9205 31.9267 16.0546 31.3253 19.0783C30.7238 22.102 29.2393 24.8794 27.0594 27.0593C24.8794 29.2392 22.102 30.7238 19.0784 31.3252C16.0547 31.9267 12.9206 31.618 10.0724 30.4382C7.22414 29.2584 4.78973 27.2606 3.07696 24.6972C1.3642 22.1339 0.450012 19.1202 0.450012 16.0373C0.450012 11.9033 2.09225 7.9386 5.01545 5.01539C7.93866 2.09219 11.9034 0.449951 16.0374 0.449951Z"/>
         <path class="${SHAPE_COLOR}" d="M25.9416 14.9813C24.1516 14.9513 22.2416 13.0313 23.2616 10.7613C20.2816 11.7613 17.4916 9.17134 18.0716 6.20134C10.9416 4.70134 5.99158 10.5713 5.99158 15.9913C5.99158 21.5113 10.4716 25.9913 15.9916 25.9913C21.8816 25.9913 26.5316 20.9113 25.9416 14.9813ZM12.4916 18.9913C11.6616 18.9913 10.9916 18.3213 10.9916 17.4913C10.9916 16.6613 11.6616 15.9913 12.4916 15.9913C13.3216 15.9913 13.9916 16.6613 13.9916 17.4913C13.9916 18.3213 13.3216 18.9913 12.4916 18.9913ZM14.4916 13.9913C13.6616 13.9913 12.9916 13.3213 12.9916 12.4913C12.9916 11.6613 13.6616 10.9913 14.4916 10.9913C15.3216 10.9913 15.9916 11.6613 15.9916 12.4913C15.9916 13.3213 15.3216 13.9913 14.4916 13.9913ZM18.9916 19.9913C18.4416 19.9913 17.9916 19.5413 17.9916 18.9913C17.9916 18.4413 18.4416 17.9913 18.9916 17.9913C19.5416 17.9913 19.9916 18.4413 19.9916 18.9913C19.9916 19.5413 19.5416 19.9913 18.9916 19.9913Z"/>
 	</svg>
