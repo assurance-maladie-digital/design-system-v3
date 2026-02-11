@@ -99,6 +99,7 @@
 				<SyIcon
 					v-bind="options.addIcon"
 					:icon="mdiPlus"
+					decorative
 				/>
 
 				<span

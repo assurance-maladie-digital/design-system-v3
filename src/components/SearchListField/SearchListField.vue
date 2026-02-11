@@ -118,6 +118,7 @@
 				<SyIcon
 					:icon="mdiMagnify"
 					class="mr-1"
+					decorative
 				/>
 			</template>
 		</SyTextField>

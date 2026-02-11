@@ -106,6 +106,7 @@
 					<SyIcon
 						size="large"
 						:icon="mdiClose"
+						decorative
 					/>
 					<span>
 						{{ locales.close }}

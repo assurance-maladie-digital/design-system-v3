@@ -58,6 +58,7 @@
 		<template #append-icon>
 			<SyIcon
 				v-if="!hideUserIcon"
+				decorative
 				:icon="mdiAccount"
 				:size="isMobileView ? 'x-large' : 'default'"
 				class="vd-user-icon mr-0 pa-2"
@@ -77,6 +78,7 @@
 							:icon="mdiLoginVariant"
 							class="mr-4"
 							v-bind="options['logoutIcon']"
+							decorative
 						/>
 						<VListItemTitle class="logout">
 							{{ props.logoutText }}

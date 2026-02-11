@@ -91,6 +91,7 @@
 				size="1em"
 				:icon="mdiOpenInNew"
 				class="sy-france-connect-info-link-icon"
+				decorative
 			/>
 		</a>
 	</div>

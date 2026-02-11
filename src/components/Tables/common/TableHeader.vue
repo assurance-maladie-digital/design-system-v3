@@ -232,6 +232,7 @@
 				:icon="headerParams.getSortIcon(column)"
 				:title="locales.columnOrder(column.title!)"
 				:aria-label="locales.columnOrder(column.title!)"
+				decorative
 				@click="headerParams.toggleSort(column)"
 			/>
 			<div

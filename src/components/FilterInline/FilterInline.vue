@@ -64,6 +64,7 @@
 						size="small"
 						class="ml-1"
 						:icon="isActive ? mdiChevronUp : mdiChevronDown"
+						decorative
 					/>
 				</VBtn>
 			</template>

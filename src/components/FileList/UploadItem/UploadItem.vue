@@ -84,6 +84,7 @@
 							:icon="mdiAlertCircle"
 							:size="cnamContextualTokens.iconSize.default"
 							color="error"
+							decorative
 						/>
 
 						<SyIcon
@@ -91,6 +92,7 @@
 							:icon="mdiCheckCircle"
 							:size="cnamContextualTokens.iconSize.default"
 							color="success"
+							decorative
 						/>
 
 						<SyIcon
@@ -98,6 +100,7 @@
 							:size="cnamContextualTokens.iconSize.default"
 							color="primary"
 							:icon="mdiFile"
+							decorative
 						/>
 					</slot>
 				</span>
@@ -134,6 +137,7 @@
 						<SyIcon
 							color="primary"
 							:icon="mdiTrayArrowUp"
+							decorative
 						/>
 					</template>
 				</VBtn>
@@ -148,6 +152,7 @@
 						<SyIcon
 							color="primary"
 							:icon="mdiEyeOutline"
+							decorative
 						/>
 					</template>
 				</VBtn>
@@ -162,6 +167,7 @@
 						<SyIcon
 							color="error"
 							:icon="mdiDeleteOutline"
+							decorative
 						/>
 					</template>
 				</VBtn>

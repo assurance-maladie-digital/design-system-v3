@@ -259,8 +259,12 @@
 				class="ml-2"
 				color="error"
 				:icon="mdiInformation"
+				decorative
 			/>
-			<SyIcon :icon="mdiChevronDown" />
+			<SyIcon
+				:icon="mdiChevronDown"
+				decorative
+			/>
 			<SyIcon
 				v-if="selectedItemText && props.clearable"
 				:icon="mdiCloseCircle"

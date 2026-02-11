@@ -151,6 +151,7 @@
 					<SyIcon
 						:icon="mdiTableEdit"
 						size="large"
+						decorative
 					/>
 				</VBtn>
 			</template>

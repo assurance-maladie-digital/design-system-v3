@@ -154,6 +154,7 @@
 						v-bind="options.icon"
 						class="ml-1"
 						:icon="mdiMenuDown"
+						decorative
 					/>
 				</VBtn>
 			</template>

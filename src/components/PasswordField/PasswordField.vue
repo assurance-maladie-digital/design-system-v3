@@ -309,6 +309,7 @@
 						:icon="showEyeIcon ? eyeIcon : eyeOffIcon"
 						color="rgb(0 0 0 / 70%)"
 						:aria-hidden="true"
+						decorative
 					/>
 				</v-button>
 			</div>
