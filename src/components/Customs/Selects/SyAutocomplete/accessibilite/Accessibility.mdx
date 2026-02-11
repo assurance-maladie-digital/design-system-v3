@@ -1,18 +1,10 @@
 import { Meta, Story } from '@storybook/addon-docs';
-<<<<<<<< HEAD:src/components/Customs/Selects/SyAutocomplete/accessibilite/Accessibility.mdx
 import * as AutocompleteStories from '../SyAutocomplete.stories';
 import * as AccessStories from './Accessibilite.stories';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
 
 <Meta of={AutocompleteStories} name="Accessibility" />
-========
-import * as Stories from '../SySelect.stories.ts';
-import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
-import '@/stories/styles/shared.css';
-
-<Meta of={Stories} />
->>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility):src/components/Customs/Selects/SySelect/accessibilite/Accessibility.mdx
 
 <div className="accessibility-guide">
   <h1>Guide d'Accessibilité du Composant SyAutocomplete</h1>
@@ -78,62 +70,7 @@ import '@/stories/styles/shared.css';
 
   <div className="keyboard-section">
     <h2>Détail de la navigation clavier</h2>
-    Le composant **SySelect** implémente le pattern de navigation au clavier recommandé par le W3C pour les *combobox select-only*.
- <table
-    style={{
-      width: '100%',
-      borderCollapse: 'collapse',
-      marginTop: '1em',
-    }}
-  >
-    <thead>
-      <tr style={{ borderBottom: '1px solid #ddd', textAlign: 'left' }}>
-        <th style={{ padding: '8px' }}>Touche</th>
-        <th style={{ padding: '8px' }}>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Flèche bas</code></td>
-        <td style={{ padding: '8px' }}>
-          Ouvre le menu et déplace le focus sur la première option (ou la suivante si une option est déjà sélectionnée)
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Flèche haut</code></td>
-        <td style={{ padding: '8px' }}>
-          Ouvre le menu et déplace le focus sur la dernière option
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Flèches haut/bas</code></td>
-        <td style={{ padding: '8px' }}>
-          Déplace le focus dans la liste des options (sans modifier la sélection)
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Entrée</code></td>
-        <td style={{ padding: '8px' }}>
-          Sélectionne l'option active et ferme le menu
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Échap</code></td>
-        <td style={{ padding: '8px' }}>
-          Ferme le menu sans modifier la sélection
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Caractères imprimables</code></td>
-        <td style={{ padding: '8px' }}>
-          Déplace le focus sur l'option commençant par le(s) caractère(s) saisi(s)
-        </td>
-      </tr>
-    </tbody>
-  </table>
- <p style={{ marginTop: '1em' }}>
-    <strong>Note :</strong> Le focus DOM reste toujours sur l'élément <em>combobox</em>, tandis que le focus visuel est géré via <code>aria-activedescendant</code>.
-  </p>
+    <Story of={AccessStories.ComboboxKeyboardNavigation} />
   </div>
 
   <div className="implementation-section">
@@ -152,31 +89,6 @@ import '@/stories/styles/shared.css';
   </div>
 </div>
 
-<<<<<<<< HEAD:src/components/Customs/Selects/SyAutocomplete/accessibilite/Accessibility.mdx
-========
-<div className="accessibility-guide">
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Informations sur l'accessibilité du composant</p>
-</div>
-
-## Rapport d’audit
-
-- 📄 **Rapport d’audit manuel**  
-  👉 [Voir le rapport](/audits/SySelect.xlsx)
-
-- 🛠 **Correctifs associés**  
-  👉 [Issue #787](https://github.com/assurance-maladie-digital/design-system-v3/issues/787)
-  
-  👉 [Issue #931](https://github.com/assurance-maladie-digital/design-system-v3/issues/931)
-
----
-
-<br />
-
-</div>
-
->>>>>>>> 1436a909 (creations dossier accessibilite et fichier accessibility):src/components/Customs/Selects/SySelect/accessibilite/Accessibility.mdx
 <style>
 {
 `
