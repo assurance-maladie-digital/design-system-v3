@@ -165,8 +165,8 @@
 	}
 
 	watch(model, (newValue) => {
-		if (!props.isValidateOnBlur) {
-			validateField(newValue as (string | number) | (string | number)[] | null)
+		if (!props.isValidateOnBlur || isSubmitted.value) {
+				validateField(newValue as (string | number) | (string | number)[] | null)
 		}
 	})
 
