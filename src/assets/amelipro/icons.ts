@@ -305,7 +305,7 @@ export const icons: Icons = {
 			</g>
 		</svg>`,
 	releveHonoraires: `
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34"xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17.1l0,0C7.6,34.1,0,26.4,0,17l0,0C0,7.7,7.6,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M17.8,6.9c-0.7,0-1.4,0.1-2,0.5c-0.3,0.2-0.6,0.5-0.9,0.8c-0.2,0.3-0.4,0.7-0.5,1.1h4.8l-0.2,0.8h-4.7 c0,0.1,0,0.2,0,0.2c0,0.2,0,0.4,0,0.6h4.5l-0.2,0.8h-4.2c0.1,0.9,0.7,1.6,1.4,2c0.5,0.3,1.1,0.4,1.8,0.4c0.7,0,1.5-0.2,2.1-0.6V15 c-0.6,0.3-1.3,0.4-1.9,0.4c-2.1,0-3.6-0.8-4.3-2.4c-0.2-0.4-0.3-0.8-0.4-1.2H12l0.2-0.8h0.7c0-0.2,0-0.4,0-0.6v-0.3H12l0.2-0.8H13 c0.2-1.3,1.1-2.4,2.3-2.9c0.8-0.4,1.6-0.6,2.5-0.5c0.8,0,1.5,0.1,2.2,0.5l-0.3,1.2C19.2,7.1,18.5,6.9,17.8,6.9L17.8,6.9z"/>
@@ -367,7 +367,7 @@ export const icons: Icons = {
 		</g>
 	</svg>`,
 	declarationAstreinte: `
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34.1"xml:space="preserve">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 34 34.1" xml:space="preserve">
 			<path class="${CIRCLE_COLOR}" d="M17,0L17,0c9.4,0,17,7.7,17,17l0,0c0,9.4-7.6,17-17,17.1l0,0C7.6,34.1,0,26.4,0,17l0,0C0,7.7,7.6,0,17,0z"/>
 			<g class="${SHAPE_COLOR}">
 				<path d="M19.7,27.8l-4,1.5l1.4-4L19.7,27.8z"/>
