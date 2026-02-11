@@ -5,7 +5,7 @@ import { mdiCheckboxMarkedCircle } from '@mdi/js'
 const checkIcon = mdiCheckboxMarkedCircle
 
 export default {
-	title: 'Templates/ErrorPage/Accessibilité',
+	title: 'Templates/ErrorPageStories/Accessibilité',
 }
 
 export const Legende: StoryObj = {
@@ -20,14 +20,14 @@ export const Legende: StoryObj = {
 			},
 			template: `
 			   
-			  
-				<div class="mt-4">
-					<p>Rapport d’audit manuel : <a href="/audits/ErrorPage.xlsx" style="color:#0C41BD;">Voir le
+		 
+								<div class="mt-4">
+					<p>Rapport d’audit manuel : <a href="/audits/ErrorPageStories.xlsx" style="color:#0C41BD;">Voir le
 						rapport</a></p>
 					<p style="color: grey; font-size: 14px">Correctifs associés (<a
-						href="https://github.com/assurance-maladie-digital/design-system-v3/issues/652" target="_blank"
+						href="https://github.com/assurance-maladie-digital/design-system-v3/issues/653" target="_blank"
 						style="color:#0C41BD;"
-					>issue #652</a>)</p>
+					>issue #653</a>)</p>
 				  </div>
             `,
 		}
