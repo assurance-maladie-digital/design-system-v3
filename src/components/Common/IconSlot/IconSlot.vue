@@ -25,7 +25,7 @@
 	const slots = useSlots()
 
 	const hasDefaultSlotContent = computed(() => {
-		const vnodes = slots.default?.() ?? []
+		const vnodes = slots.default?.({}) ?? []
 		return vnodes.some((vnode) => {
 			if (vnode.type === Comment) return false
 			if (vnode.type === Text) {
