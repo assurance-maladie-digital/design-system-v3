@@ -877,14 +877,14 @@
 
 		return {
 			...activatorProps,
-			'onKeydown': undefined,
-			'onClick': undefined,
+			onKeydown: undefined,
+			onClick: undefined,
 			// the ref is needed by Vuetify to position the menu and by us for accessibility
-			'ref': (el) => {
+			ref: (el) => {
 				textInput.value = el
 				activatorProps.ref?.(el)
 			},
-			'onFocus': onFocus,
+			onFocus: onFocus,
 		}
 	}
 </script>
