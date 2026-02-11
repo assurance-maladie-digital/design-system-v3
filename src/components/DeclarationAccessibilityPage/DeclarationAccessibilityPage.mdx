@@ -12,7 +12,7 @@ Le composant `DeclarationAccessibilityPage` permet de générer une déclaration
 
 ## API
 
-<Controls of={DeclarationAccessibilityPageStories.Default} />
+<Controls />
 
 ## Utilisation standard
 
@@ -44,6 +44,12 @@ Exemple de déclaration incluant les environnements de tests utilisés pour l'au
 
 <Canvas of={DeclarationAccessibilityPageStories.WithTestsEnvironement} />
 
+## Avec plan d'accessibilité
+
+Exemple de déclaration incluant un plan d'accessibilité avec des libellés personnalisés.
+
+<Canvas of={DeclarationAccessibilityPageStories.WithAccessibilityPlan} />
+
 ## Accessibilité
 
 Le composant `DeclarationAccessibilityPage` est lui-même conçu pour être pleinement accessible :
@@ -62,12 +68,11 @@ import { DeclarationAccessibilityPage } from '@cnamts/synapse'
 
 <template>
   <DeclarationAccessibilityPage
-    entityName="Assurance Maladie"
+    entityName="L'Assurance Maladie"
     siteName="ameli.fr"
     siteUrl="https://www.ameli.fr"
-    conformityLevel="partiellement"
+    :averageComplianceRate="78"
     auditEntity="Société d'audit AccessiWeb"
-    :rgaaCriteriaRespectedPercent="78"
     contactEmail="accessibilite@ameli.fr"
     :nonConformities="[
       'La vidéo de présentation n\'a pas de transcription. Cette erreur sera corrigée avant le 31 mars 2023.',

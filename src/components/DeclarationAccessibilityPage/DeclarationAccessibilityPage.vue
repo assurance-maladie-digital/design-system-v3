@@ -6,34 +6,27 @@
 		url?: string
 	}
 
-	interface DefenderContact {
-		name: string
-		address: string
-		postalCode: string
-	}
-
-	type ConformityLevel = 'non' | 'partiellement' | 'totalement'
-
 	type EvaluationMethod = 'auto-evaluation' | 'audit-interne' | 'audit-externe'
 
 	interface DeclarationAccessibilityPageProps {
 		entityName: string
 		schemaUrl?: string
+		schemaUrlLabel?: string
 		actionsRealisedUrl?: string
+		actionsRealisedUrlLabel?: string
 		planActionsUrl?: string
+		planActionsUrlLabel?: string
 		siteName: string
 		siteUrl: string
-		conformityLevel: ConformityLevel
 		rgaaVersion?: string
 		auditEntity?: string
 		auditDate?: string
 		evaluationMethod?: EvaluationMethod
-		rgaaCriteriaRespectedPercent?: number | null
-		siteConformityPercent?: number | null
+		overallComplianceRate?: number | null
+		averageComplianceRate?: number | null
 		auditGridUrl?: string
 		contactEmail: string
 		contactPhone?: string
-		defender?: DefenderContact
 		nonConformities?: string[]
 		exemptions?: string[]
 		nonObligatoryContents?: string[]
@@ -48,13 +41,8 @@
 	const props = withDefaults(defineProps<DeclarationAccessibilityPageProps>(), {
 		rgaaVersion: '4',
 		evaluationMethod: 'auto-evaluation',
-		rgaaCriteriaRespectedPercent: null,
-		siteConformityPercent: null,
-		defender: () => ({
-			name: 'Défenseur des droits',
-			address: 'Libre réponse 71120',
-			postalCode: '75342 Paris CEDEX 07',
-		}),
+		overallComplianceRate: null,
+		averageComplianceRate: null,
 		nonConformities: () => [],
 		exemptions: () => [],
 		nonObligatoryContents: () => [],
@@ -63,6 +51,10 @@
 		accessibilityTools: () => [],
 		verifiedPages: () => [],
 	})
+
+	const hasAccessibilityPlan = computed(
+		() => !!props.schemaUrl || !!props.actionsRealisedUrl || !!props.planActionsUrl,
+	)
 
 	const hasItems = <T>(items?: T[] | null): items is T[] =>
 		Array.isArray(items) && items.length > 0
@@ -81,11 +73,11 @@
 	}
 
 	const conformityLabel = computed(() => {
-		if (props.conformityLevel === 'totalement') {
+		if (props.averageComplianceRate === 100) {
 			return 'totalement conforme'
 		}
 
-		if (props.conformityLevel === 'partiellement') {
+		if (props.averageComplianceRate && props.averageComplianceRate >= 50) {
 			return 'partiellement conforme'
 		}
 
@@ -120,8 +112,8 @@
 	const hasTestResults = computed(
 		() =>
 			!!props.auditEntity
-			|| props.rgaaCriteriaRespectedPercent !== null
-			|| props.siteConformityPercent !== null
+			|| props.overallComplianceRate !== null
+			|| props.averageComplianceRate !== null
 			|| !!props.auditGridUrl,
 	)
 </script>
@@ -134,19 +126,21 @@
 				<strong>{{ entityName }}</strong> s'engage à rendre ses sites internet, intranet, extranet et ses progiciels accessibles (et ses applications mobiles et mobilier urbain numérique) conformément à l'article 47 de la loi n°2005-102 du 11 février 2005.
 			</p>
 
-			<p>À cette fin, <strong>{{ entityName }}</strong> met en œuvre la stratégie et les actions suivantes :</p>
+			<template v-if="hasAccessibilityPlan">
+				<p>À cette fin, <strong>{{ entityName }}</strong> met en œuvre la stratégie et les actions suivantes :</p>
 
-			<ul>
-				<li v-if="schemaUrl">
-					<a :href="schemaUrl">Schéma pluriannuel de mise en accessibilité 2022-2024</a> ;
-				</li>
-				<li v-if="actionsRealisedUrl">
-					<a :href="actionsRealisedUrl">Actions réalisées en 2020-2021</a> ;
-				</li>
-				<li v-if="planActionsUrl">
-					<a :href="planActionsUrl">Plan d'actions 2022-2024</a>.
-				</li>
-			</ul>
+				<ul>
+					<li v-if="schemaUrl">
+						<a :href="schemaUrl">{{ schemaUrlLabel ?? 'Schéma pluriannuel de mise en accessibilité' }}</a> ;
+					</li>
+					<li v-if="actionsRealisedUrl">
+						<a :href="actionsRealisedUrl">{{ actionsRealisedUrlLabel ?? 'Actions réalisées' }}</a> ;
+					</li>
+					<li v-if="planActionsUrl">
+						<a :href="planActionsUrl">{{ planActionsUrlLabel ?? 'Plan d\'actions' }}</a>.
+					</li>
+				</ul>
+			</template>
 
 			<p>
 				Cette déclaration d'accessibilité s'applique à <a
@@ -159,7 +153,13 @@
 		<section class="conformity">
 			<h2>État de conformité</h2>
 			<p>
-				<a :href="siteUrl">{{ siteName }}</a> est <strong>{{ conformityLabel }}</strong> au référentiel général d'amélioration de l'accessibilité (RGAA), version {{ rgaaVersion }}, en raison des non-conformités et des dérogations énumérées ci-dessous.
+				<a :href="siteUrl">{{ siteName }}</a> est <strong>{{ conformityLabel }}</strong> au référentiel général d'amélioration de l'accessibilité (RGAA), version {{ rgaaVersion }},
+				<span v-if="overallComplianceRate === null">
+					en raison d'une absence de réalisation d'audit.
+				</span>
+				<span v-else>
+					en raison des non-conformités et des dérogations énumérées ci-dessous.
+				</span>
 			</p>
 		</section>
 
@@ -177,11 +177,11 @@
 				Les tests de conformité réalisés conformément au RGAA version {{ rgaaVersion }} révèlent que :
 			</p>
 			<ul>
-				<li v-if="rgaaCriteriaRespectedPercent !== null">
-					{{ rgaaCriteriaRespectedPercent }}% des critères du RGAA version {{ rgaaVersion }} sont respectés ;
+				<li v-if="overallComplianceRate !== null">
+					{{ overallComplianceRate }}% des critères du RGAA version {{ rgaaVersion }} sont respectés ;
 				</li>
-				<li v-if="siteConformityPercent !== null">
-					Le taux moyen de conformité du site s'élève à {{ siteConformityPercent }}% ;
+				<li v-if="averageComplianceRate !== null">
+					Le taux moyen de conformité du site s'élève à {{ averageComplianceRate }}% ;
 				</li>
 				<li v-if="auditGridUrl">
 					<a :href="auditGridUrl">Accéder à la grille d'audit RGAA</a> pour télécharger la grille d'audit.
@@ -352,9 +352,9 @@
 				<li>
 					Envoyer un courrier par la poste (gratuit, ne pas mettre de timbre) :
 					<address>
-						{{ defender.name }}<br>
-						{{ defender.address }}<br>
-						{{ defender.postalCode }}
+						Défenseur des droits<br>
+						Libre réponse 71120<br>
+						75342 Paris CEDEX 07
 					</address>
 				</li>
 			</ul>

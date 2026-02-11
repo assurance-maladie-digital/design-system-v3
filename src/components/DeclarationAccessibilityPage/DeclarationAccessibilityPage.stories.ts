@@ -46,6 +46,30 @@ const meta = {
 				},
 			},
 		},
+		schemaUrlLabel: {
+			control: 'text',
+			description: 'Label pour le lien du schéma pluriannuel',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Schéma pluriannuel de mise en accessibilité',
+				},
+			},
+		},
+		actionsRealisedUrlLabel: {
+			control: 'text',
+			description: 'Label pour le lien des actions réalisées',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Actions réalisées',
+				},
+			},
+		},
 		planActionsUrl: {
 			control: 'text',
 			description: 'URL du plan d\'actions',
@@ -55,6 +79,18 @@ const meta = {
 				},
 				defaultValue: {
 					summary: '',
+				},
+			},
+		},
+		planActionsUrlLabel: {
+			control: 'text',
+			description: 'Label pour le lien du plan d\'actions',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Plan d\'actions',
 				},
 			},
 		},
@@ -73,66 +109,6 @@ const meta = {
 			table: {
 				type: {
 					summary: 'string',
-				},
-			},
-		},
-		conformityLevel: {
-			options: ['non', 'partiellement', 'totalement'],
-			control: {
-				type: 'select',
-			},
-			description: 'Niveau de conformité RGAA',
-			table: {
-				type: {
-					summary: 'select',
-				},
-			},
-		},
-		auditEntity: {
-			control: 'text',
-			description: 'Entité qui a réalisé l\'audit',
-			table: {
-				type: {
-					summary: 'string',
-				},
-				defaultValue: {
-					summary: '',
-				},
-			},
-		},
-		rgaaCriteriaRespectedPercent: {
-			control: { type: 'number', min: 0, max: 100 },
-			description: 'Pourcentage des critères RGAA respectés',
-			table: {
-				type: {
-					summary: 'number',
-				},
-				defaultValue: {
-					summary: 'null',
-				},
-			},
-		},
-		siteConformityPercent: {
-			control: { type: 'number', min: 0, max: 100 },
-			description: 'Taux moyen de conformité du site',
-			table: {
-				type: {
-					summary: 'number',
-				},
-				defaultValue: {
-					summary: 'null',
-				},
-			},
-		},
-		auditGridUrl: {
-			control: 'text',
-			description: 'URL de la grille d\'audit RGAA',
-			table: {
-				type: {
-					summary: 'string',
-				},
-				defaultValue: {
-					summary: '',
 				},
 			},
 		},
@@ -157,39 +133,39 @@ const meta = {
 				},
 			},
 		},
-		defenderName: {
+		auditEntity: {
 			control: 'text',
-			description: 'Nom du défenseur des droits',
+			description: 'Entité qui a réalisé l\'audit',
 			table: {
 				type: {
 					summary: 'string',
 				},
 				defaultValue: {
-					summary: 'Défenseur des droits',
+					summary: '',
 				},
 			},
 		},
-		defenderAddress: {
-			control: 'text',
-			description: 'Adresse du défenseur des droits',
+		overallComplianceRate: {
+			control: { type: 'number', min: 0, max: 100 },
+			description: 'Pourcentage des critères RGAA respectés',
 			table: {
 				type: {
-					summary: 'string',
+					summary: 'number',
 				},
 				defaultValue: {
-					summary: 'Libre réponse 71120',
+					summary: 'null',
 				},
 			},
 		},
-		defenderPostalCode: {
+		auditGridUrl: {
 			control: 'text',
-			description: 'Code postal du défenseur des droits',
+			description: 'URL de la grille d\'audit RGAA',
 			table: {
 				type: {
 					summary: 'string',
 				},
 				defaultValue: {
-					summary: '75342 Paris CEDEX 07',
+					summary: '',
 				},
 			},
 		},
@@ -318,9 +294,11 @@ export const Default: Story = {
   entityName="Assurance Maladie"
   siteName="ameli.fr"
   siteUrl="https://www.ameli.fr"
-  conformityLevel="partiellement"
   contactEmail="accessibilite@ameli.fr"
   contactPhone="01 23 45 67 89"
+  schemaUrl="#"
+  actionsRealisedUrl="#"
+  planActionsUrl="#"
 />`,
 			},
 		],
@@ -329,9 +307,11 @@ export const Default: Story = {
 		entityName: 'Assurance Maladie',
 		siteName: 'ameli.fr',
 		siteUrl: 'https://www.ameli.fr',
-		conformityLevel: 'partiellement',
 		contactEmail: 'accessibilite@ameli.fr',
 		contactPhone: '01 23 45 67 89',
+		schemaUrl: '#',
+		actionsRealisedUrl: '#',
+		planActionsUrl: '#',
 	},
 }
 
@@ -344,7 +324,6 @@ export const SimpleCase: Story = {
   entityName="CPAM de Paris"
   siteName="Mon Espace Santé"
   siteUrl="https://www.mon-espace-sante.fr"
-  conformityLevel="partiellement"
   contactEmail="accessibilite@mon-espace-sante.fr"
   contactPhone="01 23 45 67 89"
 />`,
@@ -355,9 +334,44 @@ export const SimpleCase: Story = {
 		entityName: 'CPAM de Paris',
 		siteName: 'Mon Espace Santé',
 		siteUrl: 'https://www.mon-espace-sante.fr',
-		conformityLevel: 'partiellement',
 		contactEmail: 'accessibilite@mon-espace-sante.fr',
 		contactPhone: '01 23 45 67 89',
+	},
+}
+
+export const WithAccessibilityPlan: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				code: `<DeclarationAccessibilityPage
+  entityName="CPAM de Paris"
+  siteName="Mon Espace Santé"
+  siteUrl="https://www.mon-espace-sante.fr"
+  contactEmail="accessibilite@mon-espace-sante.fr"
+  contactPhone="01 23 45 67 89"
+  schemaUrl="#"
+  schemaUrlLabel="Schéma pluriannuel 2022-2024"
+  actionsRealisedUrl="#"
+  actionsRealisedUrlLabel="Actions réalisées en 2022"
+  planActionsUrl="#"
+  planActionsUrlLabel="Plan d'actions 2023"
+/>`,
+			},
+		],
+	},
+	args: {
+		entityName: 'CPAM de Paris',
+		siteName: 'Mon Espace Santé',
+		siteUrl: 'https://www.mon-espace-sante.fr',
+		contactEmail: 'accessibilite@mon-espace-sante.fr',
+		contactPhone: '01 23 45 67 89',
+		schemaUrl: '#',
+		schemaUrlLabel: 'Schéma pluriannuel 2022-2024',
+		actionsRealisedUrl: '#',
+		actionsRealisedUrlLabel: 'Actions réalisées en 2022',
+		planActionsUrl: '#',
+		planActionsUrlLabel: 'Plan d\'actions 2023',
 	},
 }
 
@@ -370,12 +384,11 @@ export const WithNonConformities: Story = {
   entityName="CPAM de Paris"
   siteName="Mon Espace Santé"
   siteUrl="https://www.mon-espace-sante.fr"
-  conformityLevel="partiellement"
   contactEmail="accessibilite@mon-espace-sante.fr"
   contactPhone="01 23 45 67 89"
   :nonConformities="[
-	'Les formulaires de contact ne possèdent pas d\\'étiquettes correctement associées aux champs. Cette erreur sera corrigée avant le 30 septembre 2023.',
-	'Certaines images informatives n\\'ont pas d\\'alternative textuelle. Cette erreur sera corrigée avant le 31 décembre 2023.'
+    'Les formulaires de contact ne possèdent pas d\\'étiquettes correctement associées aux champs. Cette erreur sera corrigée avant le 30 septembre 2023.',
+    'Certaines images informatives n\\'ont pas d\\'alternative textuelle. Cette erreur sera corrigée avant le 31 décembre 2023.'
   ]"
 />`,
 			},
@@ -385,7 +398,6 @@ export const WithNonConformities: Story = {
 		entityName: 'CPAM de Paris',
 		siteName: 'Mon Espace Santé',
 		siteUrl: 'https://www.mon-espace-sante.fr',
-		conformityLevel: 'partiellement',
 		contactEmail: 'accessibilite@mon-espace-sante.fr',
 		contactPhone: '01 23 45 67 89',
 		nonConformities: [
@@ -404,7 +416,7 @@ export const WithExemptions: Story = {
   entityName="CPAM de Paris"
   siteName="Mon Espace Santé"
   siteUrl="https://www.mon-espace-sante.fr"
-  conformityLevel="partiellement"
+  :averageComplianceRate="75"
   contactEmail="accessibilite@mon-espace-sante.fr"
   contactPhone="01 23 45 67 89"
   :exemptions="[
@@ -419,7 +431,7 @@ export const WithExemptions: Story = {
 		entityName: 'CPAM de Paris',
 		siteName: 'Mon Espace Santé',
 		siteUrl: 'https://www.mon-espace-sante.fr',
-		conformityLevel: 'partiellement',
+		averageComplianceRate: 75,
 		contactEmail: 'accessibilite@mon-espace-sante.fr',
 		contactPhone: '01 23 45 67 89',
 		exemptions: [
@@ -438,7 +450,7 @@ export const WithTestsEnvironement: Story = {
   entityName="CPAM de Paris"
   siteName="Mon Espace Santé"
   siteUrl="https://www.mon-espace-sante.fr"
-  conformityLevel="partiellement"
+  :averageComplianceRate="75"
   contactEmail="accessibilite@mon-espace-sante.fr"
   contactPhone="01 23 45 67 89"
   :technologies="[
@@ -466,7 +478,7 @@ export const WithTestsEnvironement: Story = {
 		entityName: 'CPAM de Paris',
 		siteName: 'Mon Espace Santé',
 		siteUrl: 'https://www.mon-espace-sante.fr',
-		conformityLevel: 'partiellement',
+		averageComplianceRate: 75,
 		contactEmail: 'accessibilite@mon-espace-sante.fr',
 		contactPhone: '01 23 45 67 89',
 		technologies: [
