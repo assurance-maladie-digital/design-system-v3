@@ -36,15 +36,8 @@
 	const code = computed(() => props.code ?? themeLocales.value.code)
 	const src = computed(() => themeLocales.value.src)
 
-	// Props qui peuvent être customisées
-	const codeErrorText = computed(() => props.codeErrorText)
-	const btnText = computed(() => props.btnText)
-	const btnHref = computed(() => props.btnHref)
-	const btnLink = computed(() => props.btnLink)
-	const hideBtn = computed(() => props.hideBtn)
-
 	// Vérifier s'il y a une image à afficher
-	const hasImage = computed(() => src.value !== '')
+	const hasImage = computed(() => src.value)
 </script>
 
 <template>
@@ -52,11 +45,11 @@
 		:page-title="pageTitle"
 		:message="message"
 		:code="code"
-		:code-error-text="codeErrorText"
-		:btn-text="btnText"
-		:btn-href="btnHref"
-		:btn-link="btnLink"
-		:hide-btn="hideBtn"
+		:code-error-text="props.codeErrorText"
+		:btn-text="props.btnText"
+		:btn-href="props.btnHref"
+		:btn-link="props.btnLink"
+		:hide-btn="props.hideBtn"
 	>
 		<template
 			v-if="hasImage || $slots.illustration"

@@ -4,13 +4,13 @@ export const locales = {
 	default: {
 		pageTitle: 'Une erreur est survenue',
 		message: 'Une erreur est survenue de notre côté, veuillez réessayer plus tard.',
-		src: '',
+		src: undefined,
 		code: '500',
 	},
 	cnam: {
 		pageTitle: 'Une erreur est survenue',
 		message: 'Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646',
-		src: '',
+		src: undefined,
 		code: '500',
 	},
 	ap: {
