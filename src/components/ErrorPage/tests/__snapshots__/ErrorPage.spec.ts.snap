@@ -5,7 +5,7 @@ exports[`ErrorPage > renders correctly 1`] = `
   btnlink="/"
   code="500"
   codeerrortext="Code d'erreur : "
-  hidebtn="true"
+  hidebtn="false"
   message="Une erreur est survenue de notre côté, veuillez réessayer plus tard."
   pagetitle="Une erreur est survenue"
 ></status-page-stub>
