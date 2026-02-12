@@ -651,7 +651,15 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+			const emptyValidationResult: ValidationResult = {
+				hasError: false,
+				hasWarning: false,
+				hasSuccess: false,
+				state: { errors: [], warnings: [], successes: [] },
+			}
+			const customRulesValidationResult = formatValidationResult.isValid
+				? safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+				: emptyValidationResult
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
