@@ -1,5 +1,6 @@
 <script setup lang="ts">
-	import { vRgaaSvgFix } from '../../../directives/rgaaSvgFix'
+	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
+	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 	import { computed, onMounted, watch } from 'vue'
 
 	/**
@@ -17,14 +18,14 @@
 	/**
 	 * Vérifie si une icône non décorative a un label
 	 */
-	const checkAccessibility = (icon: string, decorative: boolean | undefined, label: string | undefined) => {
+	const checkAccessibility = (icon: IconValue, decorative: boolean | undefined, label: string | undefined) => {
 		if (decorative === false && !label) {
 			console.error(`L'icône "${icon}" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.`)
 		}
 	}
 
 	const props = defineProps<{
-		icon: string
+		icon: IconValue
 		label?: string
 		decorative?: boolean
 		role?: 'img' | 'button' | 'presentation'

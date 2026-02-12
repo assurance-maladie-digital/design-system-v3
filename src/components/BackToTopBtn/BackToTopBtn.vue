@@ -8,6 +8,7 @@
 
 	import { locales } from './locales'
 	import { config } from './config'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	import { type VBtn } from 'vuetify/components'
 
@@ -116,9 +117,11 @@
 			</span>
 
 			<slot name="icon">
-				<VIcon v-bind="options.icon">
-					{{ mdiArrowUp }}
-				</VIcon>
+				<SyIcon
+					v-bind="options.icon"
+					:icon="mdiArrowUp"
+					decorative
+				/>
 			</slot>
 		</VBtn>
 	</VFadeTransition>
