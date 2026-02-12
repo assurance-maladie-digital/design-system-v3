@@ -76,6 +76,6 @@
 
 <style lang="scss" scoped>
 img {
-  max-height: 290px;
+	max-height: 290px;
 }
 </style>
