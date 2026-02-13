@@ -18,16 +18,14 @@
 
 	const vuetifyTheme = useTheme()
 
+	const themeLocalesMap = {
+		cnam: locales.cnam,
+		ap: locales.ap,
+		default: locales.default,
+	} as const
+
 	const themeLocales = computed(() => {
-		if (vuetifyTheme.name.value === 'cnam') {
-			return locales.cnam
-		}
-		else if (vuetifyTheme.name.value === 'ap') {
-			return locales.ap
-		}
-		else {
-			return locales.default
-		}
+		return themeLocalesMap[vuetifyTheme.name.value as keyof typeof themeLocalesMap] ?? themeLocalesMap.default
 	})
 
 	// Utiliser les props de l'utilisateur en priorité, sinon les locales
@@ -35,9 +33,6 @@
 	const message = computed(() => props.message ?? themeLocales.value.message)
 	const code = computed(() => props.code ?? themeLocales.value.code)
 	const src = computed(() => themeLocales.value.src)
-
-	// Vérifier s'il y a une image à afficher
-	const hasImage = computed(() => src.value)
 </script>
 
 <template>
@@ -52,12 +47,12 @@
 		:hide-btn="props.hideBtn"
 	>
 		<template
-			v-if="hasImage || $slots.illustration"
+			v-if="src || $slots.illustration"
 			#illustration
 		>
 			<slot name="illustration">
 				<img
-					v-if="hasImage"
+					v-if="src"
 					:src="src"
 					alt=""
 					aria-hidden="true"
