@@ -284,6 +284,18 @@ describe('useFieldValidation', () => {
 		}])[0]!
 		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
 		expect(rule('')).toEqual({}) // Empty string should be ignored
+
+		const ruleWithEmptyDate = generateRules([{
+			type: 'notBeforeDate',
+			options: { date: '', message: 'Date cannot be before reference date.' },
+		}])[0]!
+		expect(ruleWithEmptyDate(new Date())).toEqual({})
+
+		const ruleWithUndefinedDate = generateRules([{
+			type: 'notBeforeDate',
+			options: { date: undefined as unknown as string, message: 'Date cannot be before reference date.' },
+		}])[0]!
+		expect(ruleWithUndefinedDate(new Date())).toEqual({})
 	})
 
 	it('should throw when date reference is not a string in notBeforeDate rule', () => {
@@ -324,6 +336,18 @@ describe('useFieldValidation', () => {
 		}])[0]!
 		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
 		expect(rule('')).toEqual({}) // Empty string should be ignored
+
+		const ruleWithEmptyDate = generateRules([{
+			type: 'notAfterDate',
+			options: { date: '', message: 'Date cannot be after reference date.' },
+		}])[0]!
+		expect(ruleWithEmptyDate(new Date())).toEqual({})
+
+		const ruleWithUndefinedDate = generateRules([{
+			type: 'notAfterDate',
+			options: { date: undefined as unknown as string, message: 'Date cannot be after reference date.' },
+		}])[0]!
+		expect(ruleWithUndefinedDate(new Date())).toEqual({})
 	})
 
 	it('should throw when date reference is not a string in notAfterDate rule', () => {
@@ -364,6 +388,18 @@ describe('useFieldValidation', () => {
 		}])[0]!
 		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
 		expect(rule('')).toEqual({}) // Empty string should be ignored
+
+		const ruleWithEmptyDate = generateRules([{
+			type: 'dateExact',
+			options: { date: '', message: 'Date must be exactly the reference date.' },
+		}])[0]!
+		expect(ruleWithEmptyDate(new Date())).toEqual({})
+
+		const ruleWithUndefinedDate = generateRules([{
+			type: 'dateExact',
+			options: { date: undefined as unknown as string, message: 'Date must be exactly the reference date.' },
+		}])[0]!
+		expect(ruleWithUndefinedDate(new Date())).toEqual({})
 	})
 
 	it('should throw when date reference is not a string in dateExact rule', () => {
