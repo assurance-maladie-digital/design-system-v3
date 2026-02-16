@@ -467,6 +467,7 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
+						label="Sélectionner une période"
 						placeholder="Sélectionner une période"
 						format="DD/MM/YYYY"
 						displayRange
@@ -489,6 +490,7 @@ export const DateRange: Story = {
 	},
 	args: {
 		'placeholder': 'Sélectionner une période',
+		'label': 'Sélectionner une période',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,

@@ -98,7 +98,7 @@
 					{{ props.closeBtnText }}
 				</template>
 				<template v-else>
-					<VIcon :icon="mdiClose" />
+					<SyIcon	:icon="mdiClose" />
 				</template>
 			</VBtn>
 		</div>

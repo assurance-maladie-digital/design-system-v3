@@ -3,6 +3,7 @@
 	import { locales } from './locales'
 	import { mdiCloudUpload } from '@mdi/js'
 	import { computed } from 'vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = defineProps<{
 		allowedExtensions: string[]
@@ -31,12 +32,12 @@
 		<slot
 			name="icon"
 		>
-			<VIcon
+			<SyIcon
 				size="40"
 				color="primary"
-			>
-				{{ mdiCloudUpload }}
-			</VIcon>
+				:icon="mdiCloudUpload"
+				decorative
+			/>
 		</slot>
 
 		<span

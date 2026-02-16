@@ -353,33 +353,36 @@ describe('AmeliproClickableTile', () => {
 			})
 		})
 
-		it('changes border style on hover', async () => {
+		it('applies hover class on hover', async () => {
 			const btn = vueWrapper.find('button')
 			await btn.trigger('mouseenter')
-			// Border should change when hovered
-			const style = btn.attributes('style')
-			expect(style).toBeDefined()
+			// Check that the hover class is applied to the container
+			expect(vueWrapper.classes()).toContain('amelipro-clickable-tile--hover')
 		})
 
-		it('changes border style on focus', async () => {
+		it('applies focus class on focus', async () => {
 			const btn = vueWrapper.find('button')
 			await btn.trigger('focus')
-			const style = btn.attributes('style')
-			expect(style).toBeDefined()
+			// Check that the hover/focus class is applied to the container
+			expect(vueWrapper.classes()).toContain('amelipro-clickable-tile--hover')
 		})
 
 		it('removes hover state on mouseleave', async () => {
 			const btn = vueWrapper.find('button')
 			await btn.trigger('mouseenter')
+			expect(vueWrapper.classes()).toContain('amelipro-clickable-tile--hover')
 			await btn.trigger('mouseleave')
 			// State should be reset
+			expect(vueWrapper.classes()).not.toContain('amelipro-clickable-tile--hover')
 		})
 
 		it('removes focus state on blur', async () => {
 			const btn = vueWrapper.find('button')
 			await btn.trigger('focus')
+			expect(vueWrapper.classes()).toContain('amelipro-clickable-tile--hover')
 			await btn.trigger('blur')
 			// State should be reset
+			expect(vueWrapper.classes()).not.toContain('amelipro-clickable-tile--hover')
 		})
 	})
 

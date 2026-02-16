@@ -1,5 +1,6 @@
 import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
 import * as SyServerTable from './SyServerTable.stories';
+import '@/stories/styles/shared.css';
 
 <Meta of={SyServerTable} />
 
@@ -75,7 +76,9 @@ Le composant permet de personnaliser l'affichage des en-têtes de colonnes en ut
 ### Items par page options
 Le composant permet de personnaliser le nombre possible d'éléments par page en utilisant la prop `items-per-page-options`. Vous pouvez spécifier un tableau d'options pour permettre de choisir le nombre d'éléments affichés par page.
 
-### Accessibilité
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
 
 Le composant améliore l'accessibilité en ajoutant automatiquement:
 - Une légende (caption) pour le tableau

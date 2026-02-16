@@ -860,6 +860,21 @@
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function initializeActivatorProps(activatorProps: Record<string, any>) {
+		const onFocus = (event: FocusEvent) => {
+			// Call original onFocus from Vuetify if it exists
+			activatorProps.onFocus?.(event)
+
+			// Prevents text from scrolling to the end on focus in Firefox
+			const target = event.target as HTMLInputElement
+			if (target) {
+				// We need to use a timeout to ensure this runs after Firefox's default behavior
+				setTimeout(() => {
+					target.scrollLeft = 0
+					target.setSelectionRange(0, 0)
+				}, 0)
+			}
+		}
+
 		return {
 			...activatorProps,
 			onKeydown: undefined,
@@ -869,6 +884,7 @@
 				textInput.value = el
 				activatorProps.ref?.(el)
 			},
+			onFocus: onFocus,
 		}
 	}
 </script>
@@ -1230,9 +1246,10 @@
 }
 
 .sy-select :deep(.v-field__input input) {
-	position: absolute;
-	z-index: -1;
+	position: static;
+	z-index: auto;
 	text-overflow: ellipsis;
+	white-space: normal;
 }
 
 .hidden-label {

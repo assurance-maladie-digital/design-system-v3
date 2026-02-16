@@ -22,12 +22,6 @@ exports[`AmeliproClickableTile > Snapshots > renders the component with all prop
   size="default"
   slim="false"
   stacked="false"
-  style="
-    background-color: #FFFFFF;
-    border: 1px solid #00749C !important;
-    color: #1A1B1B;
-    padding: 1rem;
-  "
   symbol="Symbol(vuetify:v-btn-toggle)"
   tag="button"
   tile="false"
@@ -58,12 +52,6 @@ exports[`AmeliproClickableTile > Snapshots > renders the component with only req
   size="default"
   slim="false"
   stacked="false"
-  style="
-    background-color: #FFFFFF;
-    border: 1px solid #00749C !important;
-    color: #1A1B1B;
-    padding: 1rem;
-  "
   symbol="Symbol(vuetify:v-btn-toggle)"
   tag="button"
   tile="false"

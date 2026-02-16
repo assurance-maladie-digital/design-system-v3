@@ -1,3 +1,69 @@
+## v1.0.20 (16-02-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- PaginatedTable : Fix leak CSS + linter warning
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1802">#1802</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1810">#1810</a>
+      </td>
+      <td>- AmeliproClickableTile: add clickable icon tile 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1772">#1772</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1809">#1809</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ToolbarContainer : Fixes after RGAA audit <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1680">#1680</a></td>
+      <td>- Icons: add Cookie icon + refacto 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1787">#1787</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1818">#1818</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: fix npm/undici package <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1799">#1799</a></td>
+      <td>- AmeliproIcons: add parameters icon <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1808">#1808</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix rules in combined mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1805">#1805</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- IconSlot: pass empty object to default slot to prevent errors <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1813">#1813</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutoComplete: add component <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1764">#1764</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve accessibility pages <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1792">#1792</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Optimisation: improve dependencies organisation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1817">#1817</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix display <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1815">#1815</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix range clear <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1824">#1824</a></td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyIcon: replace VIcon to SyIcon on components to improve accessibility <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1793">#1793</a></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.19 (05-02-2026)
 
 <table>

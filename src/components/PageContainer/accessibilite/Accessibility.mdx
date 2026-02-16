@@ -1,0 +1,53 @@
+import { Meta, Primary, Story} from '@storybook/blocks';
+import * as PageContainerStories from '../PageContainer.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={PageContainerStories} />
+
+<AccessibilityGuideLayout
+	componentName="PageContainer"
+	iconSrc={AccessibilityIcon}
+>
+
+<div class="mt-2">
+<p>Rapport d’audit manuel : <a href="/audits/PageContainer.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4011" target="_blank" style={{color:'#0C41BD'}}>issue #4011</a>)</p>
+	</div>
+
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique">
+			<ul>
+				<li><strong>Id unique</strong> : pour permettre des relations ARIA robustes</li>
+				<li><strong>Rôles ARIA appropriés si besoin</strong> :</li>
+					<ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+						<li style={{ listStyleType: '"- "' }}><code>role="region"</code> contient une zone importante identifiée par un titre</li>
+						<li style={{ listStyleType: '"- "' }}><code>role="main"</code> représente le contenu principal</li>
+						<li style={{ listStyleType: '"- "' }}><code>role="banner" / role="contentinfo"</code> pour l'en‑tête ou le pied de page du site</li>
+						<li style={{ listStyleType: '"- "' }}><code>role="navigation"</code> pour un conteneur contenant une navigation</li>
+					</ul>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Toujours privilégier les balises HTML sémantiques natales avant ARIA :</li>
+
+<li><code>header</code></li>
+<li><code>nav</code></li>
+<li><code>main</code></li>
+<li><code>footer</code></li>
+<li><code>section (avec un titre)</code></li>
+<li><code>aside</code></li>
+<li><code>article</code></li>
+		</ul>
+	</BestPracticesSection>
+</AccessibilityGuideLayout>

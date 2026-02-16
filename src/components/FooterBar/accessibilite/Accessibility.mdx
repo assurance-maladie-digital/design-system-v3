@@ -1,0 +1,73 @@
+import { Meta, Story } from '@storybook/blocks';
+import * as FooterBarStories from '../FooterBar.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={FooterBarStories} />
+
+<AccessibilityGuideLayout
+	componentName="FooterBar"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/"
+	apgLabel="Landmarks Guide"
+>
+	<CriteriaSection>
+		<CriteriaCard icon="🏷️" title="Rôles et landmarks">
+			<ul>
+				<li><strong>Landmark footer</strong> : <code>role="contentinfo"</code> pour identifier le pied de page</li>
+				<li><strong>Navigation sémantique</strong> : Liens structurés avec <code>&lt;a&gt;</code> et <code>aria-label</code> descriptifs</li>
+				<li><strong>Logo accessible</strong> : Image avec <code>alt</code> approprié ou texte alternatif</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation clavier">
+			<ul>
+				<li><strong>Focus visible</strong> : Indicateurs de focus sur tous les éléments interactifs</li>
+				<li><strong>Ordre logique</strong> : Tabulation dans un ordre cohérent</li>
+				<li><strong>Liens accessibles</strong> : <code>aria-label</code> pour les icônes de réseaux sociaux</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Contraste et lisibilité">
+			<ul>
+				<li><strong>Contraste suffisant</strong> : Respect des ratios WCAG pour le texte et les icônes</li>
+				<li><strong>Taille de texte</strong> : Texte lisible et redimensionnable</li>
+				<li><strong>Couleurs adaptatives</strong> : Support des thèmes clair et sombre</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="FooterBar">
+		<Story of={FooterBarStories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Utilisez des <code>aria-label</code> descriptifs pour les liens d'icônes</li>
+			<li>Assurez-vous que le logo a un texte alternatif approprié</li>
+			<li>Vérifiez le contraste des couleurs dans les thèmes clair et sombre</li>
+			<li>Évitez de surcharger le footer avec trop d'informations</li>
+			<li>Fournissez des liens vers les pages légales et de contact</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/" target="_blank" rel="noopener noreferrer">Guide des landmarks ARIA</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+			<li><a href="https://inclusive-components.design/content-sections/" target="_blank" rel="noopener noreferrer">Inclusive Components: Content Sections</a></li>
+		</ul>
+	</ResourcesSection>
+
+	<AuditSection>
+		<p>Aucun rapport d'audit disponible pour le moment.</p>
+	</AuditSection>
+</AccessibilityGuideLayout>

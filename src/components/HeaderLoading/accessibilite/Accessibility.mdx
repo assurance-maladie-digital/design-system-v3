@@ -1,0 +1,436 @@
+import { Meta, Title, Subtitle, Description, Primary, Controls, Stories, Canvas, Source, Story } from '@storybook/blocks';
+import * as HeaderLoadingStories from '../HeaderLoading.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import '../../../stories/styles/shared.css';
+
+<Meta of={HeaderLoadingStories} />
+
+<div className="accessibility-guide">
+  <Title>Guide d'Accessibilité du Composant HeaderLoading</Title>
+  
+  <div className="intro-section">
+    <img 
+      src={AccessibilityIcon} 
+      alt="Icône d'accessibilité" 
+      className="accessibility-icon"
+    />
+    <p className="intro-text">
+      Le composant HeaderLoading affiche un squelette de chargement destiné à indiquer qu'un contenu est en cours de chargement. 
+      Ce composant a été conçu en tenant compte des normes d'accessibilité RGAA et des recommandations pour les loaders visuels.
+      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
+    </p>
+</div>
+
+  <div className="criteria-section">
+    <h2>Critères d'accessibilité respectés</h2>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">🎨</span>
+        <h3>Contraste minimal</h3>
+      </div>
+      <ul>
+        <li><strong>Ratio de contraste</strong>: Utilise un niveau de contraste de 1.5:1 sur fond blanc pour les squelettes</li>
+        <li><strong>Visibilité garantie</strong>: Visible dans différentes conditions d'éclairage</li>
+        <li><strong>Couleur configurable</strong>: S'adapte aux thèmes pour maintenir le contraste</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">⚡</span>
+        <h3>Support des préférences de mouvement réduit</h3>
+      </div>
+      <ul>
+        <li><strong>Media query</strong>: Utilise <code>prefers-reduced-motion</code> pour détecter les préférences</li>
+        <li><strong>Désactivation automatique</strong>: Arrête les animations si l'utilisateur le préfère</li>
+        <li><strong>Respect du système</strong>: Aligne le comportement sur les paramètres du système d'exploitation</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">📱</span>
+        <h3>Modes d'implémentation flexibles</h3>
+      </div>
+      <ul>
+        <li><strong>Mode autonome</strong>: Pour un seul squelette, avec <code>role="alert"</code> et <code>aria-live="polite"</code></li>
+        <li><strong>Mode multiple</strong>: Pour plusieurs squelettes, avec <code>aria-hidden="true"</code> et un message unique</li>
+        <li><strong>Surcharge évitée</strong>: Évite la multiplication des annonces pour les lecteurs d'écran</li>
+      </ul>
+    </div>
+  </div>
+
+  <div className="demo-section">
+    <h2>API du composant</h2>
+    <p>
+      Le composant HeaderLoading prend en charge les propriétés suivantes pour personnaliser son apparence et son comportement d'accessibilité.
+    </p>
+
+    <div className="api-group">
+      <h3>Propriétés de dimensions</h3>
+      <table className="api-table">
+        <thead>
+          <tr>
+            <th>Propriété</th>
+            <th>Type</th>
+            <th>Par défaut</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>width</code></td>
+            <td>String</td>
+            <td>'100px'</td>
+            <td>Largeur du squelette de chargement. Accepte toutes les unités CSS valides (px, %, em, rem, vw).</td>
+          </tr>
+          <tr>
+            <td><code>height</code></td>
+            <td>String</td>
+            <td>'1rem'</td>
+            <td>Hauteur du squelette de chargement. Accepte toutes les unités CSS valides (px, %, em, rem, vh).</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div className="api-group">
+      <h3>Propriétés d'accessibilité</h3>
+      <table className="api-table">
+        <thead>
+          <tr>
+            <th>Propriété</th>
+            <th>Type</th>
+            <th>Par défaut</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>standalone</code></td>
+            <td>Boolean</td>
+            <td>false</td>
+            <td>
+              <strong>Mode d'utilisation du composant</strong>:<br/>
+              - <code>true</code>: Le composant gère sa propre annonce d'accessibilité (pour un squelette unique)<br/>
+              - <code>false</code>: Le composant est silencieux et doit être utilisé avec un conteneur parent qui a <code>aria-busy="true"</code>
+            </td>
+          </tr>
+          <tr>
+            <td><code>ariaLabel</code></td>
+            <td>String</td>
+            <td>'Chargement en cours...'</td>
+            <td>
+              Message vocalisé par les lecteurs d'écran pour indiquer l'état de chargement.<br/>
+              <strong>Note</strong>: Ne fonctionne que si <code>standalone</code> est <code>true</code>.
+            </td>
+          </tr>
+          <tr>
+            <td><code>statusMessageId</code></td>
+            <td>String</td>
+            <td>undefined</td>
+            <td>
+              ID d'un élément externe qui contient le message de statut de chargement (référence ARIA).<br/>
+              <strong>Exemple</strong>: Si vous avez <code>&lt;div id="status-msg"&gt;Chargement...&lt;/div&gt;</code>, utilisez <code>statusMessageId="status-msg"</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div className="implementation-section">
+    <h2>Modes d'implémentation</h2>
+    
+    <div className="implementation-card">
+      <h3>1. Mode Autonome (Standalone)</h3>
+      <p>
+        À utiliser lorsque vous avez besoin d'<strong>un seul</strong> squelette de chargement dans une section. 
+        Ce mode annonce l'état de chargement via les attributs <code>role="alert"</code> et <code>aria-live="polite"</code>.
+      </p>
+      
+      <div className="code-example">
+        <div className="preview-container">
+          <div style={{ padding: '16px', background: 'white', border: '1px solid #eaecef', borderRadius: '4px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+              <div style={{ width: '200px', height: '1rem', background: '#E6E6E6', borderRadius: '35px' }}></div>
+              <span style={{ fontSize: '12px', color: '#666' }}>← Squelette avec <code>standalone</code></span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="code-block">
+          <Source
+            language="vue"
+            dark
+            format
+            code={`<template>
+  <SyHeaderLoading
+    standalone
+    ariaLabel="Chargement en cours des informations utilisateur..."
+    width="200px"
+  />
+</template>`}
+          />
+        </div>
+      </div>
+    </div>
+    
+    <div className="implementation-card">
+      <h3>2. Mode Multiples Squelettes</h3>
+      <p>
+        À utiliser lorsque vous avez besoin de <strong>plusieurs</strong> squelettes dans la même section. 
+        Dans ce cas, la responsabilité de l'accessibilité est partagée avec le développeur qui doit :
+      </p>
+      <ol>
+        <li>Ajouter <code>aria-busy="true"</code> sur le conteneur parent</li>
+        <li>Fournir un message de statut unique via un élément avec <code>role="alert"</code> et <code>aria-live="polite"</code></li>
+      </ol>
+      
+      <div className="code-example">
+        <div className="preview-container">
+          <div style={{ padding: '16px', background: 'white', border: '1px solid #eaecef', borderRadius: '4px' }}>
+            <div style={{ border: '1px dashed #999', padding: '12px', marginBottom: '12px' }}>
+              <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}><code>aria-busy="true"</code> sur ce conteneur</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div style={{ width: '150px', height: '1rem', background: '#E6E6E6', borderRadius: '35px' }}></div>
+                <div style={{ width: '200px', height: '1rem', background: '#E6E6E6', borderRadius: '35px' }}></div>
+              </div>
+            </div>
+            <div style={{ fontSize: '12px', color: '#666', padding: '4px 8px', background: '#f5f5f5', borderRadius: '4px' }}>
+              Message d'état unique pour lecteurs d'écran (invisible visuellement)
+            </div>
+          </div>
+        </div>
+        
+        <div className="code-block">
+          <Source
+            language="vue"
+            dark
+            format
+            code={`<template>
+  <header role="banner">
+    <!-- Conteneur avec aria-busy pour indiquer le chargement -->
+    <div id="header-infos" aria-busy="true">
+      <!-- Multiples squelettes, tous avec aria-hidden="true" -->
+      <SyHeaderLoading width="150px" />
+      <SyHeaderLoading width="200px" />
+    </div>
+  </header>
+
+  <!-- Message de statut unique pour éviter la surcharge -->
+  <div role="alert" aria-live="polite" class="sr-only">
+    Chargement en cours des informations pour le header...
+  </div>
+</template>`}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div className="best-practices">
+    <h2>Bonnes pratiques d'utilisation</h2>
+    <ul>
+      <li><strong>Ne pas multiplier les messages de statut</strong>: La multiplication des messages de statuts complexifie la compréhension du site par les utilisateurs de technologies d'assistance.</li>
+      <li><strong>Utiliser le mode approprié</strong>: Choisir entre le mode autonome ou multiple selon le contexte d'utilisation.</li>
+      <li><strong>Messages clairs</strong>: Fournir des messages de statut informatifs et concis pour les utilisateurs de lecteurs d'écran.</li>
+      <li><strong>Contrôler le temps d'affichage</strong>: Ne pas laisser les squelettes affichés indéfiniment, prévoir un timeout raisonnable.</li>
+    </ul>
+  </div>
+
+  <div className="resources-section">
+    <h2>Ressources et références</h2>
+    <ul>
+      <li><a href="https://adrianroselli.com/2020/11/more-accessible-skeletons.html#Warning" target="_blank" rel="noopener noreferrer">More Accessible Skeletons</a> - Article critique sur l'approche de Vuetify concernant les skeleton loaders</li>
+      <li><a href="https://github.com/vuetifyjs/vuetify/issues/19622" target="_blank" rel="noopener noreferrer">Issue Vuetify #19622</a> - Concernant le support de <code>prefers-reduced-motion</code></li>
+      <li><a href="https://github.com/vuetifyjs/vuetify/issues/10999" target="_blank" rel="noopener noreferrer">Issue Vuetify #10999</a> - Concernant l'accessibilité des skeleton loaders</li>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/live-region-alert/" target="_blank" rel="noopener noreferrer">Guide WAI-ARIA pour les régions live et alertes</a></li>
+    </ul>
+  </div>
+
+  <div className="demo-section">
+    <h2>Démonstration interactive</h2>
+    <p>
+      Explorez ci-dessous un exemple de HeaderLoading entièrement accessible.
+      Essayez de modifier les propriétés pour voir comment le composant s'adapte.
+    </p>
+    <div className="demo-container">
+      <Canvas of={HeaderLoadingStories.Default} />
+      <Controls of={HeaderLoadingStories.Default} exclude={['heading', 'itemsNumber', 'row']} />  
+    </div>
+  </div>
+
+  <div className="compliance-section">
+    <h2>Conformité RGAA</h2>
+    <div className="legend-container">
+
+<div class="mt-2">
+<p>Rapport d’audit manuel : <a href="/audits/HeaderLoading.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/639" target="_blank" style={{color:'#0C41BD'}}>issue #639</a>)</p>
+	</div>
+
+    </div>
+    
+  </div>
+</div>
+
+<style>
+{`
+  .accessibility-guide {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+  }
+
+  .intro-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #0077cc;
+  }
+
+  .accessibility-icon {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+
+  .intro-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .criteria-section {
+    margin-bottom: 40px;
+  }
+
+  .criteria-section h2,
+  .demo-section h2,
+  .implementation-section h2,
+  .best-practices h2,
+  .resources-section h2,
+  .compliance-section h2 {
+    border-bottom: 2px solid #eaecef;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #0077cc;
+  }
+
+  .criteria-card, .implementation-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .criteria-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .criteria-icon {
+    font-size: 1.8em;
+    margin-right: 15px;
+  }
+
+  .criteria-header h3, .implementation-card h3 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #0077cc;
+  }
+
+  .criteria-card ul, .implementation-card ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .criteria-card li, .implementation-card li, .best-practices li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .code-example {
+    margin-top: 20px;
+  }
+
+  .preview-container {
+    margin-bottom: 15px;
+  }
+
+  .api-group {
+    margin-bottom: 30px;
+  }
+
+  .api-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .api-table th {
+    text-align: left;
+    padding: 10px;
+    background-color: #f0f7ff;
+    border-bottom: 2px solid #d1e5f9;
+  }
+
+  .api-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eaecef;
+    vertical-align: top;
+  }
+
+  .best-practices {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .resources-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+
+  .resources-section ul, .best-practices ul {
+    padding-left: 20px;
+  }
+
+  .resources-section a {
+    color: #0077cc;
+    text-decoration: none;
+  }
+
+  .resources-section a:hover {
+    text-decoration: underline;
+  }
+
+  .demo-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+  }
+
+  code {
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+  }
+`}
+</style>

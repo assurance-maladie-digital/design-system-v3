@@ -1,5 +1,6 @@
 import { Meta, Title, Subtitle, Description, Primary, Controls, Stories, Canvas } from '@storybook/blocks'
 import * as SyIconStories from './SyIcon.stories'
+import '@/stories/styles/shared.css';
 
 <Meta of={SyIconStories} />
 
@@ -15,7 +16,9 @@ Le composant `SyIcon` est un wrapper autour du composant `v-icon` de Vuetify qui
 <Primary />
 <Controls />
 
-## Accessibilité
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
 
 Le composant `SyIcon` gère automatiquement les attributs ARIA en fonction de la nature de l'icône :
 

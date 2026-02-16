@@ -1,0 +1,52 @@
+import {Controls, Canvas, Meta, Source, Story} from '@storybook/blocks';
+import '../../../../stories/styles/shared.css';
+
+import SyAutocomplete from './SyAutocomplete.vue';
+import * as SyAutocompleteStories from './SyAutocomplete.stories';
+
+<Meta title="Composants/Formulaires/Selects/SyAutocomplete" component={SyAutocomplete}/>
+
+<div className="header">
+  <h1>SyAutocomplete</h1>
+  <p>Le composant `SyAutocomplete` permet à l'utilisateur de rechercher et sélectionner une valeur dans une liste d'options.</p>
+</div>
+
+<Canvas of={SyAutocompleteStories.Default}  />
+
+## API
+
+<Controls of={SyAutocompleteStories.Default} />
+
+## Exemple d'utilisation avec Vue
+
+<Source dark code={`
+<script setup lang="ts">
+    import { ref } from 'vue'
+    import { SyAutocomplete } from '@cnamts/synapse'
+
+    const items = [
+      {
+        "text": "Adrien",
+        "value": "Adrien"
+      },
+      {
+        "text": "Axel",
+        "value": "Axel"
+      },
+      {
+        "text": "Baptiste",
+        "value": "Baptiste"
+      }
+    ];
+
+    const selected = ref('')
+</script>
+
+<template>
+    <SyAutocomplete
+        v-model="selected"
+        :items="items"
+        label="Rechercher un prénom"
+    />
+</template>
+`} />
