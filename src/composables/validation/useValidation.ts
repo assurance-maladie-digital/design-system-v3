@@ -52,12 +52,12 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		successes.value = []
 	}
 
-	const validateField = (
+	const validateField = async (
 		value: unknown,
 		rules: ValidationRule[] = [],
 		warningRules: ValidationRule[] = [],
 		successRules: ValidationRule[] = [],
-	): ValidationResult => {
+	): Promise<ValidationResult> => {
 		clearValidation()
 
 		// Si la gestion des erreurs est désactivée, on retourne un résultat sans erreurs
@@ -85,13 +85,20 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 
 		const validationRules = generateRules(normalRules)
 		let hasValidationError = false
-		validationRules.forEach((validationRule) => {
-			const result = validationRule(value)
+		for (const validationRule of validationRules) {
+			const result = await validationRule(value)
 			if (result.error) {
 				errors.value.push(result.error)
 				hasValidationError = true
 			}
-		})
+		}
+		// validationRules.forEach((validationRule) => {
+		// 	const result = await validationRule(value)
+		// 	if (result.error) {
+		// 		errors.value.push(result.error)
+		// 		hasValidationError = true
+		// 	}
+		// })
 
 		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
 		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication
@@ -119,12 +126,18 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				})),
 			)
 
-			warningValidationRules.forEach((validationRule) => {
-				const result = validationRule(value)
+			// warningValidationRules.forEach(async (validationRule) => {
+			// 	const result = await validationRule(value)
+			// 	if (result.warning) {
+			// 		warnings.value.push(result.warning)
+			// 	}
+			// })
+			for (const validationRule of warningValidationRules) {
+				const result = await validationRule(value)
 				if (result.warning) {
 					warnings.value.push(result.warning)
 				}
-			})
+			}
 		}
 
 		// Validation des règles de succès
@@ -140,12 +153,18 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				})),
 			)
 
-			successValidationRules.forEach((validationRule) => {
-				const result = validationRule(value)
+			// successValidationRules.forEach(async (validationRule) => {
+			// 	const result = await validationRule(value)
+			// 	if (result.success && options.showSuccessMessages !== false) {
+			// 		successes.value.push(result.success)
+			// 	}
+			// })
+			for (const validationRule of successValidationRules) {
+				const result = await validationRule(value)
 				if (result.success && options.showSuccessMessages !== false) {
 					successes.value.push(result.success)
 				}
-			})
+			}
 		}
 
 		return {
@@ -160,7 +179,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		}
 	}
 
-	const validateOnSubmit = async (): Promise<boolean> => {
+	const validateOnSubmit = (): boolean => {
 		return !hasError.value
 	}
 

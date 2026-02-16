@@ -1,2 +1,33 @@
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import TestComposant from '@/components/TestComponent/TestComponent.vue'
+	const selectedValue = ref('')
+
+	const customRules = [{
+		type: 'custom',
+		options: {
+			validate: async (value: string) => {
+				return fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
+					.then((response) => {
+						console.log('API response status:', response.status, response.ok)
+						return response.ok
+					})
+			},
+			message: 'This Pokemon does not exist.',
+		},
+	}]
+
+</script>
+
 <template>
+	<div class="ma-8">
+		<h1 class="text-2xl font-bold mb-4">
+			Playground
+		</h1>
+		<TestComposant
+			v-model="selectedValue"
+			label="Pokemon Name"
+			:custom-rules="customRules"
+		/>
+	</div>
 </template>

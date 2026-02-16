@@ -11,11 +11,11 @@
 		mdiAlertCircle,
 		mdiCalendar,
 	} from '@mdi/js'
-	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance } from 'vue'
+	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
 	import type { IconType, VariantStyle, ColorType } from '@/types/vuetifyTypes'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import type { ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidation, validationPropsDefaults, type FieldValidationProps } from './useValidation'
 
 	const props = withDefaults(
 		defineProps<{
@@ -32,10 +32,6 @@
 			isClearable?: boolean
 			showDivider?: boolean
 			label?: string
-			required?: boolean
-			errorMessages?: string[] | null
-			warningMessages?: string[] | null
-			successMessages?: string[] | null
 			readonly?: boolean
 			isActive?: boolean
 			baseColor?: string
@@ -70,9 +66,6 @@
 			isReversed?: boolean
 			role?: string
 			rounded?: string | number | boolean
-			hasError?: boolean
-			hasWarning?: boolean
-			hasSuccess?: boolean
 			isOnSingleLine?: boolean
 			suffix?: string
 			theme?: string
@@ -81,16 +74,10 @@
 			width?: string | number
 			displayAsterisk?: boolean
 			noIcon?: boolean
-			customRules?: ValidationRule[]
-			customWarningRules?: ValidationRule[]
-			customSuccessRules?: ValidationRule[]
-			showSuccessMessages?: boolean
-			isValidateOnBlur?: boolean
-			disableErrorHandling?: boolean
 			disableClickButton?: boolean
 			autocomplete?: string
 			helpText?: string
-		}>(),
+		} & FieldValidationProps>(),
 		{
 			modelValue: undefined,
 			prependIcon: undefined,
@@ -103,10 +90,6 @@
 			variantStyle: 'outlined',
 			color: 'primary',
 			label: '',
-			errorMessages: null,
-			warningMessages: null,
-			successMessages: null,
-			readonly: false,
 			isClearable: false,
 			isActive: false,
 			baseColor: undefined,
@@ -117,7 +100,6 @@
 			density: 'default',
 			direction: 'horizontal',
 			isDirty: false,
-			disabled: false,
 			isOnError: false,
 			isFlat: false,
 			isFocused: false,
@@ -131,8 +113,6 @@
 			messages: undefined,
 			minWidth: undefined,
 			name: undefined,
-			hasError: false,
-			hasWarning: false,
 			displayPersistentClear: false,
 			displayPersistentCounter: false,
 			displayPersistentHint: false,
@@ -150,15 +130,10 @@
 			width: undefined,
 			displayAsterisk: false,
 			noIcon: false,
-			customRules: () => [],
-			customWarningRules: () => [],
-			customSuccessRules: () => [],
-			showSuccessMessages: true,
-			isValidateOnBlur: true,
-			disableErrorHandling: false,
 			disableClickButton: true,
 			autocomplete: 'off',
 			helpText: '',
+			...validationPropsDefaults,
 		},
 	)
 
@@ -191,54 +166,6 @@
 	})
 
 	const attrs = useAttrs()
-
-	const forwardedAttrs = computed(() => {
-		const filteredAttrs = Object.fromEntries(
-			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
-		) as Record<string, unknown>
-
-		if (!('validate-on' in filteredAttrs) && 'rules' in filteredAttrs && props.isValidateOnBlur) {
-			filteredAttrs['validate-on'] = 'blur lazy'
-		}
-
-		return filteredAttrs
-	})
-
-	const isBlurred = ref(false)
-
-	const showClear = computed(() => {
-		if (!props.isClearable) return false
-		if (props.disabled) return false
-		return model.value !== undefined && model.value !== null && String(model.value) !== '' && String(model.value) !== '__/__/____'
-	})
-
-	const clearField = () => {
-		model.value = ''
-	}
-
-	// Initialisation du composable de validation
-	const validation = useValidation({
-		customRules: props.customRules,
-		warningRules: props.customWarningRules,
-		successRules: props.customSuccessRules,
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label,
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
-	// Synchronisation des messages externes
-	watch(() => props.errorMessages, (newVal) => {
-		validation.errors.value = newVal || []
-	}, { immediate: true })
-
-	watch(() => props.warningMessages, (newVal) => {
-		validation.warnings.value = newVal || []
-	}, { immediate: true })
-
-	watch(() => props.successMessages, (newVal) => {
-		validation.successes.value = newVal || []
-	}, { immediate: true })
-
 	// Construction des règles de validation
 	const defaultRules = computed<ValidationRule[]>(() => props.required
 		? [{
@@ -250,63 +177,57 @@
 		}]
 		: [],
 	)
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation(
+		toRef(props, 'modelValue'),
+		toRef(props, 'readonly'),
+		toRef(props, 'disabled'),
+		toRef(props, 'required'),
+		toRef(props, 'isValidateOnBlur'),
+		toRef(props, 'showSuccessMessages'),
+		toRef(props, 'disableErrorHandling'),
+		toRef(props, 'useVuetifyValidation'),
+		toRef(props, 'label'),
+		toRef(props, 'rules'),
+		computed(() => {
+			const customRules = props.customRules ? props.customRules : []
+			return [...defaultRules.value, ...customRules]
+		}),
+		toRef(props, 'customWarningRules'),
+		toRef(props, 'customSuccessRules'),
+		toRef(props, 'errorMessages'),
+		toRef(props, 'warningMessages'),
+		toRef(props, 'successMessages'),
+		toRef(props, 'hasError'),
+		toRef(props, 'hasWarning'),
+		toRef(props, 'hasSuccess'),
+	)
 
-	// Check if customRules contains a 'required' rule
-	const hasCustomRequiredRule = () => {
-		return props.customRules.some(rule => rule.type === 'required')
-	}
+	const forwardedAttrs = computed(() => {
+		const filteredAttrs = Object.fromEntries(
+			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
+		) as Record<string, unknown>
 
-	const validateField = (value: string | number | null) => {
-		if (props.readonly) {
-			validation.clearValidation()
-			return true
-		}
+		return filteredAttrs
+	})
 
-		// Don't short-circuit if a custom required rule exists
-		if (!value && !props.required && !hasCustomRequiredRule()) {
-			validation.clearValidation()
-			return true
-		}
+	const showClear = computed(() => {
+		if (!props.isClearable) return false
+		if (props.disabled) return false
+		return model.value !== undefined && model.value !== null && String(model.value) !== '' && String(model.value) !== '__/__/____'
+	})
 
-		const result = validation.validateField(
-			value,
-			[...defaultRules.value, ...props.customRules],
-			props.customWarningRules,
-		)
-
-		return !result.hasError
-	}
-
-	const validateOnSubmit = () => {
-		isBlurred.value = true
-		return validateField(model.value ?? null)
-	}
-
-	const checkErrorOnBlur = () => {
-		isBlurred.value = true
-		validateField(model.value ?? null)
-		if (model.value !== lastEmittedModelValue.value) {
-			emit('update:modelValue', model.value)
-			lastEmittedModelValue.value = model.value
-		}
+	const clearField = () => {
+		model.value = ''
 	}
 
 	watch(model, (newValue) => {
 		if (!props.isValidateOnBlur) {
-			validateField(newValue ?? null)
+			validate()
 		}
 		if (props.isClearable && newValue === '') {
 			emit('clear')
 		}
 	})
-
-	const hasError = computed(() => validation.hasError.value || props.hasError)
-	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
-	const hasSuccess = computed(() => ((validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess) && props.showSuccessMessages)
-
-	const errors = computed(() => [...validation.errors.value, ...(props.errorMessages || [])])
-	const warnings = computed(() => validation.warnings.value)
-	const successes = computed(() => validation.successes.value)
 
 	const iconColor = computed(() => {
 		if (hasError.value) return 'error'
@@ -380,9 +301,6 @@
 	}
 
 	const syTextFieldRef = ref<ComponentPublicInstance | null>(null)
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, validation.clearValidation)
 
 	onMounted(() => {
 		nextTick(() => {
@@ -565,9 +483,7 @@
 	})
 
 	defineExpose({
-		validation,
-		validateOnSubmit,
-		checkErrorOnBlur,
+		validateOnSubmit: validate,
 	})
 </script>
 
@@ -629,7 +545,7 @@
 				'success-field': hasSuccess,
 				'basic-field': !hasError && !hasWarning && !hasSuccess
 			}"
-			@blur="checkErrorOnBlur"
+			@blur="validate"
 		>
 			<!-- Prepend -->
 			<template
@@ -775,12 +691,6 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
-
-// :deep(.v-field__input input::placeholder),
-// :deep(input.v-field__input::placeholder),
-// :deep(textarea.v-field__input::placeholder) {
-// 	opacity: 0;
-// }
 
 .sy-textfield-container {
 	display: flex;

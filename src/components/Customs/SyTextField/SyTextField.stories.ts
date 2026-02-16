@@ -1213,8 +1213,8 @@ export const ValidateOnBlur: Story = {
 			const value = ref(args.modelValue)
 			const fieldRef = ref()
 
-			function handleSubmit() {
-				const isValid = fieldRef.value?.validateOnSubmit()
+			async function handleSubmit() {
+				const isValid = await fieldRef.value?.validateOnSubmit()
 				alert(isValid ? 'Formulaire valide !' : 'Formulaire invalide, veuillez corriger les erreurs.')
 			}
 
@@ -1284,8 +1284,8 @@ import { SyTextField } from '@cnamts/synapse'
 const value = ref('')
 const fieldRef = ref()
 
-function handleSubmit() {
-	const isValid = fieldRef.value?.validateOnSubmit()
+async function handleSubmit() {
+	const isValid = await fieldRef.value?.validateOnSubmit()
 	if (!isValid) {
 		// Gérer l'erreur
 		return
@@ -1340,11 +1340,11 @@ export const FormValidation: Story = {
 				]
 
 				const invalidFields = fields
-					.filter(({ ref }) => !ref.value?.validateOnSubmit())
+					.filter(async ({ ref }) => !(await ref.value?.validateOnSubmit()))
 					.map(({ name }) => name)
 
 				if (invalidFields.length > 0) {
-					alert(`Les champs suivants sont invalides: ${invalidFields.join('\\n')}`)
+					alert(`Les champs suivants sont invalides: ${invalidFields.join(', ')}`)
 				}
 				else {
 					alert('Formulaire soumis avec succès !')
@@ -1558,7 +1558,7 @@ const nomField = ref()
 				]
 
 				const invalidFields = fields
-					.filter(({ ref }) => !ref.value?.validateOnSubmit())
+					.filter(async ({ ref }) => !(await ref.value?.validateOnSubmit()))
 					.map(({ name }) => name)
 
 				if (invalidFields.length > 0) {
