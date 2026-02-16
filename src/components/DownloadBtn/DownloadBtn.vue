@@ -7,6 +7,7 @@
 	import { computed, ref, useAttrs } from 'vue'
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	type State = 'idle' | 'loading' | 'success' | 'error'
 
@@ -101,12 +102,12 @@
 		@click="download"
 	>
 		<slot name="icon">
-			<VIcon
+			<SyIcon
 				v-bind="options.icon"
+				:icon="mdiDownload"
 				:color="iconColor"
-			>
-				{{ mdiDownload }}
-			</VIcon>
+				decorative
+			/>
 		</slot>
 
 		<slot />

@@ -11,7 +11,7 @@ import '../../../stories/styles/shared.css';
 
 ## Variantes disponibles
 
-Notre système propose quatre modes de sélection, chacun adapté à des besoins spécifiques :
+Notre système propose cinq modes de sélection, chacun adapté à des besoins spécifiques :
 
 <div className="sb-unstyled" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
@@ -48,6 +48,78 @@ Notre système propose quatre modes de sélection, chacun adapté à des besoins
         fontSize: '14px', 
         cursor: 'pointer',
       }} onClick={() => linkTo('Composants/Formulaires/Selects/SySelect')()}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+
+  <div 
+    style={{ 
+      flex: '1 1 300px', 
+      border: '1px solid #e0e0e0', 
+      borderRadius: '8px', 
+      padding: '20px',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+    onClick={() => linkTo('Composants/Formulaires/Selects/SyAutocomplete')()}
+  >
+    <img style={{ width: '40%', height: 'auto', marginLeft: '35%' }} src="/components/search-list-field.svg" alt="SyAutocomplete" />
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#512da8' }}>SyAutocomplete</h3>
+    <div>Champ de saisie avec suggestions filtrées, compatible simple ou multiple, avec gestion des états et des puces.</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Rechercher dans des listes longues</li>
+        <li>Filtrer côté client en temps réel</li>
+        <li>Afficher des chips pour les sélections multiples</li>
+        <li>Gérer les erreurs, avertissements et succès</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{
+        padding: '5px 10px',
+        color: '#512da8',
+        borderRadius: '4px',
+        fontSize: '14px',
+        cursor: 'pointer',
+      }} onClick={() => linkTo('Composants/Formulaires/Selects/SyAutocomplete')()}>
+        Voir la documentation →
+      </span>
+    </div>
+  </div>
+
+  <div
+    style={{
+      flex: '1 1 300px',
+      border: '1px solid #e0e0e0',
+      borderRadius: '8px',
+      padding: '20px',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+      transition: 'all 0.2s ease',
+      backgroundColor: '#fff'
+    }}
+  >
+    <img style={{ width: '40%', height: 'auto', marginLeft: '35%' }} src="/components/sy-btn-select.svg" alt="SySelect" />
+    <h3 style={{ marginTop: 0, marginBottom: '10px', color: '#00796b' }}>SyBtnSelect</h3>
+    <div>Un composant de sélection sous forme de bouton, idéal pour les menus utilisateur ou les sélecteurs compacts.</div>
+    <div style={{ marginTop: '10px', color: '#666' }}>
+      <strong>Idéal pour :</strong>
+      <ul style={{ marginLeft: '20px', marginTop: '5px' }}>
+        <li>Menus utilisateur</li>
+        <li>Interfaces compactes</li>
+        <li>Affichage d'informations principales et secondaires</li>
+      </ul>
+    </div>
+    <div style={{ marginTop: '15px' }}>
+      <span style={{ 
+        padding: '5px 10px', 
+        color: '#00796b', 
+        borderRadius: '4px', 
+        fontSize: '14px', 
+        cursor: 'pointer',
+      }} onClick={() => linkTo('Composants/Formulaires/Selects/SyBtnSelect')()}>
         Voir la documentation →
       </span>
     </div>
@@ -125,6 +197,7 @@ Notre système propose quatre modes de sélection, chacun adapté à des besoins
     <thead>
       <tr style={{ backgroundColor: '#f5f5f5' }}>
         <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #e0e0e0' }}>Fonctionnalité</th>
+        <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>SyAutocomplete</th>
         <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>SySelect</th>
         <th style={{ padding: '12px', textAlign: 'center', borderBottom: '2px solid #e0e0e0' }}>SelectBtnField</th>
       </tr>
@@ -134,9 +207,11 @@ Notre système propose quatre modes de sélection, chacun adapté à des besoins
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Sélection multiple</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
       </tr>
       <tr>
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Affichage de puces (chips)</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
       </tr>
@@ -144,34 +219,52 @@ Notre système propose quatre modes de sélection, chacun adapté à des besoins
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Validation intégrée</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
-      </tr>
-      <tr>
-        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Apparence de bouton</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
       </tr>
       <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Apparence de bouton</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+      </tr>
+      <tr>
+        <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Mode icône uniquement</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+      </tr>
+      <tr>
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Effaçable (clearable)</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
       </tr>
       <tr>
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Densité personnalisable</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
       </tr>
       <tr>
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Retourne l'objet complet</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
       </tr>
       <tr>
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Disposition en ligne/colonne</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
       </tr>
       <tr>
         <td style={{ padding: '10px', borderBottom: '1px solid #e0e0e0' }}>Options uniques</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
+        <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>❌</td>
         <td style={{ padding: '10px', textAlign: 'center', borderBottom: '1px solid #e0e0e0' }}>✅</td>
       </tr>
@@ -185,6 +278,16 @@ Notre système propose quatre modes de sélection, chacun adapté à des besoins
 - Vous avez besoin d'une sélection simple ou multiple
 - Vous souhaitez afficher les sélections multiples sous forme de puces (chips)
 - Vous avez besoin de personnaliser la densité d'affichage
+
+### Utilisez SyAutocomplete quand :
+- Vous voulez filtrer la liste au fil de la saisie
+- Vous manipulez des listes longues nécessitant une recherche côté client
+- Vous avez besoin d'un champ unique ou multiple avec puces et gestion des états (erreur / avertissement / succès)
+
+### Utilisez SyBtnSelect quand :
+- Vous créez un menu utilisateur ou un sélecteur compact
+- Vous souhaitez afficher des informations principales et secondaires
+- Vous avez besoin d'un mode icône uniquement pour les interfaces très compactes
 
 ### Utilisez SelectBtnField quand :
 - Vous avez besoin d'options visuellement distinctes sous forme de boutons
@@ -202,6 +305,14 @@ Notre système propose quatre modes de sélection, chacun adapté à des besoins
   :items="options"
   label="Sélectionnez une option"
   required
+/>
+
+// SyAutocomplete - Recherche avec suggestions
+<SyAutocomplete
+  v-model="autocompleteValue"
+  :items="options"
+  label="Rechercher une option"
+  clearable
 />
 
 // SySelect - Sélection multiple avec puces

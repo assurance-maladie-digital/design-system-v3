@@ -4,7 +4,7 @@ import { mdiCheckboxMarkedCircle } from '@mdi/js'
 const checkIcon = mdiCheckboxMarkedCircle
 
 export default {
-	title: 'Composants/Formulaires/DatePicker/Accessibilité',
+	title: 'Composants/Formulaires/DatePicker/Accessibility',
 }
 
 export const Legende: StoryObj = {

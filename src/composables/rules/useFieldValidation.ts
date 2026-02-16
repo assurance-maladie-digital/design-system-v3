@@ -366,6 +366,13 @@ export function useFieldValidation() {
 					if (result === true) {
 						return { success: options.successMessage || baseMessages.success }
 					}
+					// If result is undefined or falsy but not true, treat as invalid
+					if (result === false) {
+						return options.isWarning
+							? { warning: options.warningMessage || baseMessages.warning }
+							: { error: options.message || baseMessages.error }
+					}
+					// If result is a string, use it as error/warning message
 					return options.isWarning
 						? { warning: typeof result === 'string' ? result : options.warningMessage || baseMessages.warning }
 						: { error: typeof result === 'string' ? result : options.message || baseMessages.error }

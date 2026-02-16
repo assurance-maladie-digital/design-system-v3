@@ -337,7 +337,11 @@
 
 		// Mettre à jour le modèle si nécessaire
 		if (newValue !== null) {
-			updateModel(formattedDate.value)
+			// En mode range, ne mettez à jour le modèle et ne fermez que si la plage est complète.
+			const isRangeComplete = props.displayRange && Array.isArray(newValue) && newValue.length >= 2
+			if (!props.displayRange || isRangeComplete) {
+				updateModel(formattedDate.value)
+			}
 
 			// Mettre à jour textInputValue pour le DateTextInput
 			try {
@@ -376,7 +380,7 @@
 	})
 
 	// Utilisation du composable pour gérer la sélection de dates
-	const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(
+	const { updateSelectedDates, rangeBoundaryDates, resetRange } = useDateSelection(
 		parseDate,
 		selectedDates,
 		props.format,
@@ -709,6 +713,14 @@
 		if (!isVisible) {
 			// set the focus on the text input
 			// wait for VMenu to finish DOM updates & transition
+
+			// Watch for changes on displayFormattedDate to handle clearing
+			watch(displayFormattedDate, (newValue) => {
+				if (!newValue) {
+					selectedDates.value = null
+					resetRange()
+				}
+			})
 			setTimeout(() => {
 				requestAnimationFrame(() => {
 					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')

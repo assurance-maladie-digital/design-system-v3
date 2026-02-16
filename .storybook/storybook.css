@@ -205,3 +205,18 @@ pre.prismjs {
 	font-style: italic;
 	color: #87104d;
 }
+
+/* Focus styles for Storybook toolbar buttons */
+.sy-toolbar .v-btn:focus-visible {
+	outline: 2px solid #0c41bd;
+	outline-offset: 2px;
+	border: 0 !important;
+}
+
+.sy-toolbar .v-btn:focus-visible .v-btn__overlay {
+	opacity: 0 !important;
+}
+
+.sy-toolbar .v-btn:focus-visible::after {
+	display: none !important;
+}

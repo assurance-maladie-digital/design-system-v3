@@ -467,6 +467,7 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
+						label="Sélectionner une période"
 						placeholder="Sélectionner une période"
 						format="DD/MM/YYYY"
 						displayRange
@@ -489,6 +490,7 @@ export const DateRange: Story = {
 	},
 	args: {
 		'placeholder': 'Sélectionner une période',
+		'label': 'Sélectionner une période',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -1539,6 +1541,7 @@ export const UTC: Story = {
 
 export const BidirectionalValidation: Story = {
 	parameters: {
+		controls: { disable: true },
 		a11y: {
 			disable: true,
 		},
@@ -1559,7 +1562,7 @@ export const BidirectionalValidation: Story = {
 								<DatePicker
 									ref="startDatePickerRef"
 									v-model="startDate"
-									placeholder="Date de début"
+									label="Date de début"
 									:custom-rules="startDateRules"
 									required
 									@update:model-value="validateEndDate"
@@ -1570,7 +1573,7 @@ export const BidirectionalValidation: Story = {
 								<DatePicker
 									ref="endDatePickerRef"
 									v-model="endDate"
-									placeholder="Date de fin"
+									label="Date de fin"
 									:custom-rules="endDateRules"
 									required
 									@update:model-value="validateStartDate"
@@ -1590,7 +1593,7 @@ export const BidirectionalValidation: Story = {
 				code: `
 				<script lang="ts" setup>
 					import { ref, watch, computed } from 'vue'
-					import DatePicker from '@cnamts/synapse'
+					import { DatePicker } from '@cnamts/synapse'
 					import { useDateFormat } from '@cnamts/synapse'
 
 					const { parseDate } = useDateFormat()
@@ -1612,7 +1615,7 @@ export const BidirectionalValidation: Story = {
 								if (!value) return true
 
 								// Si pas de date de début mais une date de fin, afficher l'erreur
-								if (!startDate.value) return 'Veuillez d'abord sélectionner une date de début'
+								if (!startDate.value) return 'Veuillez d\\'abord sélectionner une date de début'
 
 								const start = parseDate(startDate.value, 'DD/MM/YYYY')
 								const end = parseDate(value, 'DD/MM/YYYY')

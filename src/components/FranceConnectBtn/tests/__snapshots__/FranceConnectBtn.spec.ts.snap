@@ -73,6 +73,7 @@ exports[`FranceConnectBtn > renders correctly 1`] = `
       v-icon
       v-theme--light
     "
+    name="external-link"
     style="
       font-size: 1em;
       height: 1em;
@@ -162,6 +163,7 @@ exports[`FranceConnectBtn > renders correctly in black 1`] = `
         v-icon
         v-theme--dark
       "
+      name="external-link"
       style="
         font-size: 1em;
         height: 1em;
@@ -247,6 +249,7 @@ exports[`FranceConnectBtn > renders correctly with connect-plus 1`] = `
       v-icon
       v-theme--light
     "
+    name="external-link"
     style="
       font-size: 1em;
       height: 1em;

@@ -68,6 +68,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date1"
+					label="Date requise"
 					placeholder="Date requise"
 					required
 				/>
@@ -102,6 +103,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date2"
+					label="Jour de semaine"
 					placeholder="Jour de semaine uniquement"
 					:custom-rules="[{
 						type: 'notWeekend',
@@ -143,6 +145,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date3"
+					label="Date passée"
 					placeholder="Date passée ou aujourd'hui"
 					:custom-rules="[{
 						type: 'notAfterToday',
@@ -191,6 +194,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date4"
+					label="Date future"
 					placeholder="Date future ou aujourd'hui"
 					:custom-rules="[{
 						type: 'notBeforeToday',
@@ -239,6 +243,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date5"
+					label="Date après le 01/01/2025"
 					placeholder="Date après le 01/01/2025"
 					:custom-rules="[{
 						type: 'notBeforeDate',
@@ -281,6 +286,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date6"
+					label="Date avant le 31/12/2025"
 					placeholder="Date avant le 31/12/2025"
 					:custom-rules="[{
 						type: 'notAfterDate',
@@ -323,6 +329,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date7"
+					label="Date exacte"
 					placeholder="Date exacte: 25/12/2025"
 					:custom-rules="[{
 						type: 'dateExact',
@@ -365,6 +372,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date8"
+					label="Date hors 2024"
 					placeholder="Date hors 2024"
 					:custom-rules="[{
 						type: 'custom',
@@ -419,6 +427,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date9"
+					label="Date avec avertissement"
 					placeholder="Date (avertissement pour 2025)"
 					:custom-warning-rules="[{
 						type: 'custom',
@@ -477,6 +486,7 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date10"
+					label="Date de travail"
 					placeholder="Date de travail"
 					required
 					:custom-rules="[

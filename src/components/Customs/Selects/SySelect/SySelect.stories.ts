@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import SyAlert from '../../../SyAlert/SyAlert.vue'
-import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
+import SyForm from '../../SyForm/SyForm.vue'
+import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 
@@ -136,16 +137,16 @@ export const Default: Story = {
 					import { SySelect } from '@cnamts/synapse'
 					
 					const items =  [
-						{ text: 'Adrien', value: 'Adrien' },
-						{ text: 'Axel', value: 'Axel' },
-						{ text: 'Baptiste', value: 'Baptiste' },
-						{ text: 'Clement', value: 'Clement' },
-						{ text: 'Corentin', value: 'Corentin' },
-						{ text: 'Damien', value: 'Damien' },
-						{ text: 'David', value: 'David' },
-						{ text: 'Eloi', value: 'Eloi' },
-						{ text: 'Louis', value: 'Louis' },
-						{ text: 'Valentin', value: 'Valentin' },
+						{ text: 'Lorem Ipsum is simply dummy text of the printing and typesetting', value: 'Adrien' },
+						{ text: 'Industry. Lorem Ipsum has been the industry's standard dummy', value: 'Axel' },
+						{ text: 'Text ever since the 1500s, when an unknown printer took a galley', value: 'Baptiste' },
+						{ text: 'Of type and scrambled it to make a type specimen book. It has', value: 'Clement' },
+						{ text: 'Survived not only five centuries, but also the leap into electronic', value: 'Corentin' },
+						{ text: 'Cum haec taliaque sollicitas eius aures everberarent ', value: 'Damien' },
+						{ text: 'Expositas semper eius modi rumoribus et patentes, varia ', value: 'David' },
+						{ text: 'Expositas semper eius modi rumoribus et patentes, varia', value: 'Eloi' },
+						{ text: 'Emensis itaque difficultatibus multis et nive obrutis callibus', value: 'Louis' },
+						{ text: 'Plurimis ubi prope Rauracum ventum est ad supercilia', value: 'Valentin' },
 					],
 				</script>
 				`,
@@ -154,16 +155,16 @@ export const Default: Story = {
 	},
 	args: {
 		'items': [
-			{ text: 'Adrien', value: 'Adrien' },
-			{ text: 'Axel', value: 'Axel' },
-			{ text: 'Baptiste', value: 'Baptiste' },
-			{ text: 'Clement', value: 'Clement' },
-			{ text: 'Corentin', value: 'Corentin' },
-			{ text: 'Damien', value: 'Damien' },
-			{ text: 'David', value: 'David' },
-			{ text: 'Eloi', value: 'Eloi' },
-			{ text: 'Louis', value: 'Louis' },
-			{ text: 'Valentin', value: 'Valentin' },
+			{ text: 'Lorem Ipsum is simply dummy text of the printing and typesetting', value: 'Adrien' },
+			{ text: 'Industry. Lorem Ipsum has been the industry\'s standard dummy', value: 'Axel' },
+			{ text: 'Text ever since the 1500s, when an unknown printer took a galley', value: 'Baptiste' },
+			{ text: 'Of type and scrambled it to make a type specimen book. It has', value: 'Clement' },
+			{ text: 'Survived not only five centuries, but also the leap into electronic', value: 'Corentin' },
+			{ text: 'Cum haec taliaque sollicitas eius aures everberarent ', value: 'Damien' },
+			{ text: 'Expositas semper eius modi rumoribus et patentes, varia ', value: 'David' },
+			{ text: 'Expositas semper eius modi rumoribus et patentes, varia', value: 'Eloi' },
+			{ text: 'Emensis itaque difficultatibus multis et nive obrutis callibus', value: 'Louis' },
+			{ text: 'Plurimis ubi prope Rauracum ventum est ad supercilia', value: 'Valentin' },
 		],
 		'onUpdate:modelValue': fn(),
 	},
@@ -947,7 +948,7 @@ export const FormValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <VForm @submit.prevent="submitForm">
+  <SyForm @submit="onSubmit">
     <SySelect
       v-model="formData.option"
       :items="options"
@@ -963,7 +964,7 @@ export const FormValidation: Story = {
     >
       Soumettre
     </VBtn>
-  </VForm>
+  </SyForm>
 </template>
         `,
 			},
@@ -972,8 +973,8 @@ export const FormValidation: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
-import { VBtn, VForm } from 'vuetify/components'
+import { SySelect, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const formData = ref({
   option: ''
@@ -985,9 +986,12 @@ const options = [
   { text: 'Option 3', value: '3' },
 ]
 
-const submitForm = () => {
-  // Traitement du formulaire
-  console.log('Formulaire soumis:', formData.value)
+const onSubmit = (event) => {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + JSON.stringify(formData.value))
+  } else {
+    alert('Formulaire invalide : veuillez choisir une option.')
+  }
 }
 </script>
         `,
@@ -1007,21 +1011,26 @@ const submitForm = () => {
 	},
 	render: (args) => {
 		return {
-			components: { SySelect, VBtn, VForm },
+			components: { SySelect, SyForm, VBtn },
 			setup() {
 				const formData = ref({
 					option: '',
 				})
 
-				const submitForm = () => {
-					console.log('Formulaire soumis:', formData.value)
+				const onSubmit = (event: { isValid: boolean }) => {
+					if (event.isValid) {
+						alert(`Formulaire valide : ${JSON.stringify(formData.value)}`)
+					}
+					else {
+						alert('Formulaire invalide : veuillez choisir une option.')
+					}
 				}
 
-				return { args, formData, submitForm }
+				return { args, formData, onSubmit }
 			},
 			template: `
 				<div class="pa-4">
-					<VForm @submit.prevent="submitForm">
+					<SyForm @submit="onSubmit">
 						<SySelect
 							v-model="formData.option"
 							v-bind="args"
@@ -1034,7 +1043,7 @@ const submitForm = () => {
 						>
 							Soumettre
 						</VBtn>
-					</VForm>
+					</SyForm>
 				</div>
 			`,
 		}

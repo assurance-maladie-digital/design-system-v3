@@ -1,25 +1,43 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproClickableTile from './AmeliproClickableTile.vue'
+import { fn } from '@storybook/test'
 
 const meta = {
+	parameters: {
+		controls: {
+			exclude: [
+				'onClick',
+				'click:clickable-tile',
+			],
+		},
+	},
 	argTypes: {
-		borderedIcon: { description: 'change le style du pictogramme à gauche de la tuile' },
-		click: {
+		'borderedIcon': {
+			description: 'change le style du pictogramme à gauche de la tuile',
+		},
+		'click': {
 			table: { category: 'events' },
 			description: 'Événement émis au click sur le bouton',
 		},
-		default: { description: 'slot permettant de remplacer la property `tileTitle`, ce slot ne doit contenir que des balises span' },
-		disabled: { description: 'désactive la tuile' },
-		href: { description: 'Url de destination du lien' },
-		icon: { description: 'Nom de l\'icone à afficher' },
-		imgMaxWidth: { description: 'Taille maximale de l’image du bouton' },
-		imgMinWidth: { description: 'Taille minimale de l’image du bouton' },
-		imgSrc: { description: 'Url de l’image du bouton' },
-		imgWidth: { description: 'Taille de l’image du bouton' },
-		tileTitle: { description: 'Texte à afficher sur la tuile' },
-		tileWidth: { description: 'La largeur du bouton/lien' },
-		to: { description: 'Route de destination du lien' },
-		uniqueId: { description: 'Ajoute un id au bouton' },
+		'default': {
+			description:
+        'slot permettant de remplacer la property `tileTitle`, ce slot ne doit contenir que des balises span',
+		},
+		'disabled': { description: 'désactive la tuile' },
+		'href': { description: 'Url de destination du lien' },
+		'icon': { description: 'Nom de l\'icone à afficher' },
+		'imgMaxWidth': { description: 'Taille maximale de l’image du bouton' },
+		'imgMinWidth': { description: 'Taille minimale de l’image du bouton' },
+		'imgSrc': { description: 'Url de l’image du bouton' },
+		'imgWidth': { description: 'Taille de l’image du bouton' },
+		'tileTitle': { description: 'Texte à afficher sur la tuile' },
+		'tileWidth': { description: 'La largeur du bouton/lien' },
+		'to': { description: 'Route de destination du lien' },
+		'uniqueId': { description: 'Ajoute un id au bouton' },
+		'onlyIconIsClickable': {
+			description: 'Si true, seule l\'icône avec la flèche est cliquable',
+		},
+		'click:clickable-tile': { description: 'Evénement émis au click sur la tuile cliquable' },
 	},
 	component: AmeliproClickableTile,
 	title: 'Composants/Amelipro/Tuiles/AmeliproClickableTile',
@@ -34,6 +52,7 @@ export const Default: Story = {
 		icon: 'utilisateur',
 		tileTitle: 'Titre de la tuile',
 		uniqueId: 'amelipro-tile-btn-unique-id',
+		onClick: fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -50,6 +69,7 @@ export const Default: Story = {
 				name: 'Scripts',
 				code: `<script setup lang="ts">
 	import { AmeliproClickableTile } from '@cnamts/synapse'
+	}
 </script>`,
 			},
 		],
@@ -76,6 +96,7 @@ export const AvecImage: Story = {
 		imgWidth: '40px',
 		imgMinWidth: '40px',
 		imgMaxWidth: '40px',
+		onClick: fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -148,6 +169,7 @@ export const IconeAvecBordure: Story = {
 		tileTitle: 'Icône avec bordure',
 		uniqueId: 'amelipro-tile-bordered-icon',
 		borderedIcon: true,
+		onClick: fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -216,6 +238,7 @@ export const TitrePersonnalise: Story = {
 	args: {
 		icon: 'utilisateur',
 		uniqueId: 'amelipro-tile-slot-title',
+		onClick: fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -246,5 +269,41 @@ export const TitrePersonnalise: Story = {
             </template>
           </AmeliproClickableTile>
         `,
+	}),
+}
+
+// --- Tuile avec seule l’icône cliquable ---
+export const SeuleIconeCliquable: Story = {
+	name: 'Seule icône cliquable',
+	args: {
+		icon: 'utilisateur',
+		tileTitle: 'Tuile avec seule l’icône cliquable',
+		uniqueId: 'amelipro-tile-only-icon-clickable',
+		onlyIconIsClickable: true,
+		onClick: fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<AmeliproClickableTile
+  icon="utilisateur"
+  tile-title="Tuile avec seule l’icône cliquable"
+  unique-id="amelipro-tile-only-icon-clickable"
+  :only-icon-is-clickable="true"
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { AmeliproClickableTile },
+		setup() {
+			return { args }
+		},
+		template: `
+		  <p class="mb-2">Seule l’icône avec la flèche est cliquable grâce à la prop <code>onlyIconIsClickable</code>.</p>	
+		  <AmeliproClickableTile v-bind="args"/>
+		  `,
 	}),
 }

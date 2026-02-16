@@ -1,5 +1,5 @@
 import { Meta, Canvas, Controls, Source, Story } from '@storybook/blocks';
-import '../../../stories/styles/shared.css';
+import '@/stories/styles/shared.css';
 import * as SyTabsStories from "./SyTabs.stories";
 
 <Meta of={SyTabsStories} />
@@ -36,7 +36,9 @@ export interface TabItem {
 }
 ```
 
-## Accessibilité
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
 
 Le composant `SyTabs` respecte les critères d'accessibilité RGAA suivants :
 
