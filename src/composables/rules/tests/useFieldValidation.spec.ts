@@ -308,7 +308,7 @@ describe('useFieldValidation', () => {
 				},
 			}])[0]!
 			invalidRule(new Date())
-		}).toThrow('Date reference must be a string in DD/MM/YYYY format')
+		}).toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
 	it('should validate notAfterDate rule', () => {
@@ -360,7 +360,7 @@ describe('useFieldValidation', () => {
 				},
 			}])[0]!
 			invalidRule(new Date())
-		}).toThrow('Date reference must be a string in DD/MM/YYYY format')
+		}).toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
 	it('should validate dateExact rule', () => {
@@ -412,7 +412,7 @@ describe('useFieldValidation', () => {
 				},
 			}])[0]!
 			invalidRule(new Date())
-		}).toThrow('Date reference must be a string in DD/MM/YYYY format')
+		}).toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
 	it('should validate custom rule', () => {

@@ -255,7 +255,7 @@ export function useFieldValidation() {
 
 					// Check if options.date is a string and in DD/MM/YYYY format
 					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
 					}
 
 					const referenceDate = parseDate(options.date)
@@ -296,7 +296,7 @@ export function useFieldValidation() {
 
 					// Check if options.date is a string and in DD/MM/YYYY format
 					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
 					}
 
 					const referenceDate = parseDate(options.date)
@@ -336,7 +336,7 @@ export function useFieldValidation() {
 					}
 
 					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
 					}
 
 					const referenceDate = parseDate(options.date)
