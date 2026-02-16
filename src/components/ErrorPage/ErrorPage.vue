@@ -1,9 +1,9 @@
 <script setup lang="ts">
 	import { locales } from './locales'
 	import StatusPage from '../StatusPage/StatusPage.vue'
-	import { useTheme } from 'vuetify'
 	import { computed } from 'vue'
 	import type { RouteRecordRaw } from 'vue-router'
+	import { useThemeLocales } from '@/utils/theme'
 
 	const props = defineProps<{
 		pageTitle?: string
@@ -16,17 +16,7 @@
 		hideBtn?: boolean
 	}>()
 
-	const vuetifyTheme = useTheme()
-
-	const themeLocalesMap = {
-		cnam: locales.cnam,
-		ap: locales.ap,
-		default: locales.default,
-	} as const
-
-	const themeLocales = computed(() => {
-		return themeLocalesMap[vuetifyTheme.name.value as keyof typeof themeLocalesMap] ?? themeLocalesMap.default
-	})
+	const { themeLocales } = useThemeLocales(locales)
 
 	// Utiliser les props de l'utilisateur en priorité, sinon les locales
 	const pageTitle = computed(() => props.pageTitle ?? themeLocales.value.pageTitle)
