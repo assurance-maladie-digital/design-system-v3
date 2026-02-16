@@ -345,6 +345,7 @@ export const Default: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Sélectionner une date"
 						placeholder="Sélectionner une date"
 						useCombinedMode
 						format="DD/MM/YYYY"
@@ -366,6 +367,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
+		'label': 'Sélectionner une date',
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -417,6 +419,7 @@ export const Required: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Sélectionner une date"
 						placeholder="Sélectionner une date"
 						useCombinedMode
 						required
@@ -424,6 +427,7 @@ export const Required: Story = {
 					/>
 					<DatePicker
 						v-model="date"
+						label="Sélectionner une date"
 						placeholder="Sélectionner une date"
 						useCombinedMode
 						required
@@ -501,6 +505,7 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
+						label="Sélectionner une période"
 						placeholder="Sélectionner une période"
 						format="DD/MM/YYYY"
 						display-range
@@ -523,6 +528,7 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
+		'label': 'Sélectionner une période',
 		'placeholder': 'Sélectionner une période',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -572,6 +578,7 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Date de naissance"
 						placeholder="Date de naissance"
 						format="DD/MM/YYYY"
 						isBirthDate
@@ -594,6 +601,7 @@ export const BirthDate: Story = {
 		],
 	},
 	args: {
+		label: 'Date de naissance',
 		placeholder: 'Date de naissance',
 		format: 'DD/MM/YYYY',
 		isBirthDate: true,
@@ -637,6 +645,7 @@ export const WithValidation: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Date requise"
 						placeholder="Date requise"
 						format="DD/MM/YYYY"
 						required
@@ -676,6 +685,7 @@ export const WithValidation: Story = {
 		],
 	},
 	args: {
+		label: 'Date requise',
 		placeholder: 'Date requise',
 		format: 'DD/MM/YYYY',
 		required: true,
@@ -726,6 +736,7 @@ export const DifferentFormats: Story = {
 					<div class="d-flex flex-column">
 						<DatePicker
 							v-model="europeanDate"
+							label="Format européen"
 							placeholder="Format européen"
 							format="DD/MM/YYYY"
 							class="mb-4"
@@ -733,6 +744,7 @@ export const DifferentFormats: Story = {
 						/>
 						<DatePicker
 							v-model="americanDate"
+							label="Format américain"
 							placeholder="Format américain"
 							format="MM/DD/YYYY"
 							class="mb-4"
@@ -740,6 +752,7 @@ export const DifferentFormats: Story = {
 						/>
 						<DatePicker
 							v-model="isoDate"
+							label="Format ISO"
 							placeholder="Format ISO"
 							format="YYYY-MM-DD"
 							useCombinedMode
@@ -777,6 +790,7 @@ export const DifferentFormats: Story = {
               <div class="d-flex flex-column pa-4">
                 <DatePicker
                   v-model="europeanDate"
+				  label="Format européen"
                   placeholder="Format européen"
                   format="DD/MM/YYYY"
                   class="mb-4"
@@ -784,6 +798,7 @@ export const DifferentFormats: Story = {
                 />
                 <DatePicker
                   v-model="americanDate"
+				  label="Format américain"
                   placeholder="Format américain"
                   format="MM/DD/YYYY"
                   class="mb-4"
@@ -791,6 +806,7 @@ export const DifferentFormats: Story = {
                 />
                 <DatePicker
                   v-model="isoDate"
+				  label="Format ISO"
                   placeholder="Format ISO"
                   format="YYYY-MM-DD"
 				  useCombinedMode
@@ -814,6 +830,7 @@ export const WithDateFormatReturn: Story = {
 					<div class="d-flex flex-column">
 						<DatePicker
 							v-model="date"
+							label="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
 							placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
 							format="DD/MM/YYYY"
 							dateFormatReturn="YYYY-MM-DD"
@@ -849,10 +866,10 @@ export const WithDateFormatReturn: Story = {
               <div class="d-flex flex-column pa-4">
                 <DatePicker
                   v-model="date"
+				  label="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
                   placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
                   format="DD/MM/YYYY"
                   dateFormatReturn="YYYY-MM-DD"
-                  class="mb-4"
 				  useCombinedMode
                 />
                 <div>Valeur du modèle: {{ date }}</div>
@@ -874,6 +891,7 @@ export const DisablePickerInteraction: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Saisie manuelle uniquement"
 						placeholder="Saisie manuelle uniquement"
 						format="DD/MM/YYYY"
 						useCombinedMode
@@ -896,6 +914,7 @@ export const DisablePickerInteraction: Story = {
 		],
 	},
 	args: {
+		label: 'Saisie manuelle uniquement',
 		placeholder: 'Saisie manuelle uniquement',
 		format: 'DD/MM/YYYY',
 		displayIcon: true,
@@ -935,6 +954,7 @@ export const AutoFormattingInput: Story = {
 					<div class="d-flex flex-column">
 						<DatePicker
 							v-model="date"
+							label="Saisie avec formatage automatique"
 							placeholder="Saisie avec formatage automatique"
 							format="DD-MM-YYYY"
 							useCombinedMode
@@ -957,6 +977,7 @@ export const AutoFormattingInput: Story = {
 		],
 	},
 	args: {
+		label: 'Saisie avec formatage automatique',
 		placeholder: 'Saisie avec formatage automatique',
 		format: 'DD-MM-YYYY',
 		useCombinedMode: true,
@@ -990,6 +1011,7 @@ export const CustomDateFormat: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Format AAAA.MM.JJ"
 						placeholder="Format AAAA.MM.JJ"
 						format="AAAA.MM.JJ"
 						useCombinedMode
@@ -1011,6 +1033,7 @@ export const CustomDateFormat: Story = {
 		],
 	},
 	args: {
+		label: 'Format AAAA.MM.JJ',
 		placeholder: 'Format AAAA.MM.JJ',
 		format: 'YYYY.MM.DD',
 		useCombinedMode: true,
@@ -1047,6 +1070,7 @@ export const ReadonlyMode: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Date en lecture seule"
 						placeholder="Date en lecture seule"
 						format="DD/MM/YYYY"
 						useCombinedMode
@@ -1074,6 +1098,7 @@ export const ReadonlyMode: Story = {
 		],
 	},
 	args: {
+		label: 'Date en lecture seule',
 		placeholder: 'Date en lecture seule',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
@@ -1116,6 +1141,7 @@ export const AppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Date avec icône à la fin"
 						placeholder="Date avec icône à la fin"
 						format="DD/MM/YYYY"
 						useCombinedMode
@@ -1139,6 +1165,7 @@ export const AppendIcon: Story = {
 		],
 	},
 	args: {
+		label: 'Date avec icône à la fin',
 		placeholder: 'Date avec icône à la fin',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
@@ -1177,6 +1204,7 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Date avec icône à la fin"
 						placeholder="Date avec icône à la fin"
 						format="DD/MM/YYYY"
 						useCombinedMode
@@ -1226,6 +1254,7 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
+		label: 'Date avec icône à la fin',
 		placeholder: 'Date avec icône à la fin',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
@@ -1292,6 +1321,7 @@ export const WithTextFieldActivator: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
+						label="Cliquez sur le champ pour ouvrir"
 						placeholder="Cliquez sur le champ pour ouvrir"
 						format="DD/MM/YYYY"
 						useCombinedMode
@@ -1314,6 +1344,7 @@ export const WithTextFieldActivator: Story = {
 		],
 	},
 	args: {
+		label: 'Cliquez sur le champ pour ouvrir',
 		placeholder: 'Cliquez sur le champ pour ouvrir',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
@@ -1355,6 +1386,7 @@ export const AutoClampFeature: Story = {
 						<h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
 						<DatePicker
 							v-model="dateSlash"
+							label="Saisie avec auto clamp - séparateur /"
 							placeholder="Saisie avec auto clamp - séparateur /"
 							format="DD/MM/YYYY"
 							useCombinedMode
@@ -1364,6 +1396,7 @@ export const AutoClampFeature: Story = {
 						<h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
 						<DatePicker
 							v-model="dateDash"
+							label="Saisie avec auto clamp - séparateur -"
 							placeholder="Saisie avec auto clamp - séparateur -"
 							format="DD-MM-YYYY"
 							useCombinedMode
@@ -1373,6 +1406,7 @@ export const AutoClampFeature: Story = {
 						<h4 class="mt-4">Format AAAA.MM.JJ (séparateur .)</h4>
 						<DatePicker
 							v-model="dateDot"
+							label="Saisie avec auto clamp - séparateur ."
 							placeholder="Saisie avec auto clamp - séparateur ."
 							format="YYYY.MM.DD"
 							useCombinedMode
@@ -1414,6 +1448,7 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
                 <DatePicker
                   v-model="dateSlash"
+				  label="Saisie avec auto clamp - séparateur /"
                   placeholder="Saisie avec auto clamp - séparateur /"
                   format="DD/MM/YYYY"
                   useCombinedMode
@@ -1424,6 +1459,7 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
                 <DatePicker
                   v-model="dateDash"
+				  label="Saisie avec auto clamp - séparateur -"
                   placeholder="Saisie avec auto clamp - séparateur -"
                   format="DD-MM-YYYY"
                   useCombinedMode
@@ -1434,6 +1470,7 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
                 <DatePicker
                   v-model="dateDot"
+				  label="Saisie avec auto clamp - séparateur ."
                   placeholder="Saisie avec auto clamp - séparateur ."
                   format="YYYY.MM.DD"
                   useCombinedMode
@@ -1460,6 +1497,7 @@ export const WithFormSubmission: Story = {
 						<DatePicker
 							ref="datePicker"
 							v-model="date"
+							label="Date requise"
 							placeholder="Date requise"
 							format="DD/MM/YYYY"
 							required
@@ -1524,10 +1562,11 @@ export const WithFormSubmission: Story = {
                   <DatePicker
                     ref="datePicker"
                     v-model="date"
+					label="Date requise"
                     placeholder="Date requise"
                     format="DD/MM/YYYY"
                     required
-                    class="mb-4"
+					class="mb-4"
 					useCombinedMode
                   />
                   <v-btn type="submit" color="primary">Soumettre</v-btn>
@@ -1553,6 +1592,7 @@ export const CustomRules: Story = {
 					<template>
 						<DatePicker
 							v-model="date"
+							label="Date de rendez-vous"
 							placeholder="Date requise"
 							format="DD/MM/YYYY"
 							required
@@ -1631,6 +1671,7 @@ export const CustomWarningRules: Story = {
 					<template>
 						<DatePicker
 							v-model="date"
+							label="Date requise"
 							placeholder="Date requise"
 							format="DD/MM/YYYY"
 							required
