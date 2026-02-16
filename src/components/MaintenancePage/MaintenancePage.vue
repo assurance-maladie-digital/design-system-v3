@@ -1,18 +1,26 @@
 <script setup lang="ts">
 	import StatusPage from '../StatusPage/StatusPage.vue'
 	import { locales } from './locales'
+	import { useThemeLocales } from '@/utils/theme'
+
+	const { themeLocales } = useThemeLocales(locales)
 </script>
 
 <template>
 	<StatusPage
-		:page-title="locales.pageTitle"
-		:message="locales.message"
+		:page-title="themeLocales.pageTitle"
+		:message="themeLocales.message"
+		:code="themeLocales.code"
 		:hide-btn="true"
 	>
-		<template #illustration>
+		<template
+			v-if="themeLocales.src || $slots.illustration"
+			#illustration
+		>
 			<slot name="illustration">
 				<img
-					src="./assets/maintenance.svg"
+					v-if="themeLocales.src"
+					:src="themeLocales.src"
 					alt=""
 					aria-hidden="true"
 				>
