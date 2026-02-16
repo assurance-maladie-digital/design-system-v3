@@ -31,7 +31,7 @@
     </tr>
     <tr style="vertical-align: top;">
       <td>- DatePicker: fix rules in combined mode <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1805">#1805</a></td>
-      <td>- AmeliproIcons: add parameters <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1808">#1808</a></td>
+      <td></td>
     </tr>
     <tr style="vertical-align: top;">
       <td>- IconSlot: pass empty object to default slot to prevent errors <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1813">#1813</a></td>
