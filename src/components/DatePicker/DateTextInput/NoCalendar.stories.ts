@@ -231,6 +231,45 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<DatePicker
+							v-model="date"
+							format="DD/MM/YYYY"
+							date-format-return=""
+							placeholder="JJ/MM/AAAA"
+							label="Date avec règles de validation"
+							required
+							is-outlined
+							display-icon
+							:no-icon="false"
+							:no-calendar="true"
+						/>
+						<div style="margin-top: 10px; font-family: monospace; color: #666;">
+							Valeur : {{ date }}
+						</div>
+					</div>
+				</template>
+				`,
+			},
+		],
+	},
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
@@ -275,6 +314,51 @@ export const Default: Story = {
 }
 
 export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<h4 class="mb-4">Sans astérisque :</h4>
+						<DatePicker
+							v-model="date"
+							format="DD/MM/YYYY"
+							placeholder="JJ/MM/AAAA"
+							label="Date avec règles de validation"
+							required
+							is-outlined
+							:no-calendar="true"
+						/>
+						<h4 class="mb-4">Avec astérisque :</h4>
+						<DatePicker
+							v-model="date"
+							format="DD/MM/YYYY"
+							placeholder="JJ/MM/AAAA"
+							label="Date avec règles de validation"
+							required
+							is-outlined
+							:no-calendar="true"
+							display-asterisk
+						/>
+					</div>
+				</template>
+				`,
+			},
+		],
+	},
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
