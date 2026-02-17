@@ -297,7 +297,7 @@ a {
 	}
 
 	.v-divider {
-		border-color: rgba(tokens.$parma-darken-60, 1);
+    border-color: var(--footer-background);
 	}
 
 	svg.logo {
