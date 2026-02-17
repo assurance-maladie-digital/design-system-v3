@@ -265,7 +265,6 @@ export const Default: Story = {
 		vuetifyOptions: {
 			footer: {
 				elevation: 3,
-				color: '#2f384d',
 				height: 'auto',
 			},
 			goTopBtn: {
