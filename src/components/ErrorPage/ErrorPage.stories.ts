@@ -40,6 +40,41 @@ export const Default: Story = {
 	},
 }
 
+export const WithLink: Story = {
+	args: {
+		...Default.args,
+		btnHref: '/',
+		btnText: 'Retour à l\'accueil',
+	},
+	decorators: [
+		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="padding: 20px; background: rgb(231, 236, 245)">
+						<ErrorPage 
+							btn-href=""
+							btn-text="Retour à l'accueil"
+								/>
+					</div>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ErrorPage } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+}
+
 export const CustomIllustration: Story = {
 	decorators: [
 		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
