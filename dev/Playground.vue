@@ -2,6 +2,7 @@
 	import BarChart from '@/components/Chart/BarChart.vue'
 	import LineChart from '@/components/Chart/LineChart.vue'
 	import FormChart from '@/components/Chart/FormChart.vue'
+	import pattern from 'patternomaly'
 
 	const formData = {
 		datasets: [
@@ -83,9 +84,7 @@
 			{
 				label: 'Légende',
 				data: [12, 10, 28, 7, 32, 8],
-				backgroundColor: 'transparent',
-				borderColor: '#0c419a',
-				borderWidth: 2,
+				backgroundColor: [pattern.draw('line', '#ffffff', '#0c419a', 10)],
 				borderDashOffset: 40,
 				stack: 'total',
 				barThickness: 36,
