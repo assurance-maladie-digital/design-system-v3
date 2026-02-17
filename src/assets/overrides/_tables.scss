@@ -1,4 +1,5 @@
 @use '@/assets/tokens';
+@use '@/assets/apTokens';
 
 .v-data-table thead th .v-data-table-header__content {
 	opacity: 0.65;
@@ -15,4 +16,21 @@
 	.v-progress-linear__indeterminate {
 		background: tokens.$primary-base !important;
 	}
+}
+
+// Pagination color variables
+.theme-cnam, .theme-pa {
+  --pagination-color: #{tokens.$primary-base};
+  --pagination-border: #{tokens.$primary-base};
+  --pagination-ellipsis: #{tokens.$primary-base};
+  --pagination-focused-background-color: rgba(tokens.$primary-base, 0.1);
+  --pagination-background-color: #{tokens.$primary-base};
+}
+
+.theme-ap {
+  --pagination-color: #{apTokens.$primary-base};
+  --pagination-border: #{apTokens.$primary-base};
+  --pagination-ellipsis: #{apTokens.$primary-base};
+  --pagination-focused-background-color: rgba(apTokens.$primary-base, 0.1);
+  --pagination-background-color: #{apTokens.$primary-base};
 }
