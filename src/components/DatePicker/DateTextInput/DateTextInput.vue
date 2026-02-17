@@ -130,15 +130,15 @@
 
 	const errors = computed({
 		get: () => validationApi.value.errors.value,
-		set: value => { validationApi.value.errors.value = value },
+		set: (value) => { validationApi.value.errors.value = value },
 	})
 	const warnings = computed({
 		get: () => validationApi.value.warnings.value,
-		set: value => { validationApi.value.warnings.value = value },
+		set: (value) => { validationApi.value.warnings.value = value },
 	})
 	const successes = computed({
 		get: () => validationApi.value.successes.value,
-		set: value => { validationApi.value.successes.value = value },
+		set: (value) => { validationApi.value.successes.value = value },
 	})
 	const hasError = computed(() => {
 		const api = validationApi.value
