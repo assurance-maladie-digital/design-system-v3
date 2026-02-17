@@ -4,7 +4,6 @@ exports[`FooterBar > renders correctly 1`] = `
 <footer
   class="
     align-stretch
-    bg-parma-darken60
     elevation-3
     flex-column
     pa-3
@@ -15,7 +14,10 @@ exports[`FooterBar > renders correctly 1`] = `
     w-100
   "
   role="contentinfo"
-  style="height: auto;"
+  style="
+    background-color: var(--footer-background);
+    height: auto;
+  "
 >
   <div class="container">
     <!-- v-if -->
