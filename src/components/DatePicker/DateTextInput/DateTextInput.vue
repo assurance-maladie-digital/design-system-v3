@@ -103,30 +103,57 @@
 
 	/**
 	 * =====================
-	 * Validation setup (safe wrapper for readonly)
+	 * Validation setup (safe wrapper for readonly, reactive to toggles)
 	 * =====================
 	 */
-	const validationApi = !readonly.value
-		? useValidation({
-			showSuccessMessages: props.showSuccessMessages,
-			fieldIdentifier: props.label || props.placeholder,
-			disableErrorHandling: props.disableErrorHandling,
-		})
-		: {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			hasError: ref(false),
-			clearValidation: () => {},
-			validateField: () => ({
-				hasError: false,
-				hasWarning: false,
-				hasSuccess: false,
-				state: { errors: [], warnings: [], successes: [] },
-			} as ValidationResult),
-		}
+	const baseValidation = useValidation({
+		showSuccessMessages: props.showSuccessMessages,
+		fieldIdentifier: props.label || props.placeholder,
+		disableErrorHandling: props.disableErrorHandling,
+	})
 
-	const { errors, warnings, successes, hasError, clearValidation, validateField } = validationApi
+	const readonlyValidation = {
+		errors: ref<string[]>([]),
+		warnings: ref<string[]>([]),
+		successes: ref<string[]>([]),
+		hasError: ref(false),
+		clearValidation: () => {},
+		validateField: () => ({
+			hasError: false,
+			hasWarning: false,
+			hasSuccess: false,
+			state: { errors: [], warnings: [], successes: [] },
+		} as ValidationResult),
+	}
+
+	const validationApi = computed(() => (readonly.value ? readonlyValidation : baseValidation))
+
+	const errors = computed({
+		get: () => validationApi.value.errors.value,
+		set: value => { validationApi.value.errors.value = value },
+	})
+	const warnings = computed({
+		get: () => validationApi.value.warnings.value,
+		set: value => { validationApi.value.warnings.value = value },
+	})
+	const successes = computed({
+		get: () => validationApi.value.successes.value,
+		set: value => { validationApi.value.successes.value = value },
+	})
+	const hasError = computed(() => {
+		const api = validationApi.value
+		// baseValidation exposes a computed hasError, readonly stub exposes a ref
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- computed/ref dual shape
+		return (api as any).hasError?.value ?? api.errors.value.length > 0
+	})
+
+	const clearValidation = () => validationApi.value.clearValidation()
+
+	const validateField = (
+		value: unknown,
+		rules?: ValidationRule[],
+		warningRules?: ValidationRule[],
+	): ValidationResult => validationApi.value.validateField(value, rules, warningRules)
 
 	// Agrégation des erreurs internes et externes
 	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
