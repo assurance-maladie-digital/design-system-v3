@@ -144,9 +144,9 @@
 			legend: {
 				position: 'bottom',
 				labels: {
-					usePointStyle: true,
-					boxWidth: 8,
-					boxHeight: 8,
+					usePointStyle: false,
+					boxHeight: 1,
+					boxWidth: 30,
 				},
 			},
 			tooltip: {
