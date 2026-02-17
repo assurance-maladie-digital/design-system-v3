@@ -128,7 +128,6 @@
 			},
 			title: {
 				display: true,
-				text: 'Titre du graphique',
 				color: '#0c419a',
 				font: {
 					size: 20,
