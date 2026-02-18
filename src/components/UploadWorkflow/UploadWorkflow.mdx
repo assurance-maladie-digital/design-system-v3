@@ -17,7 +17,7 @@ import * as UploadWorkflowStories from './UploadWorkflow.stories';
 
 ## Événements
 
-Vous pouvez réagir lorsque la liste des fichiers est mise à jour en utilisant l’événement `update:modelValue`, et réagir aux erreurs de validation en utilisant l’événement `error`.
+Vous pouvez réagir lorsque la liste des fichiers est mise à jour en utilisant l’événement `update:modelValue`, réagir aux erreurs de validation en utilisant l’événement `error`, et intercepter l’ouverture d’une prévisualisation en utilisant l’événement `preview` (avec le `FileItem` associé).
 
 <Canvas of={UploadWorkflowStories.Events} />
 
@@ -38,6 +38,12 @@ Vous pouvez spécifier des fichiers optionnels en utilisant la propriété `opti
 Vous pouvez permettre à l’utilisateur de prévisualiser le fichier qu’il vient de sélectionner avant de valider en utilisant la prop `show-file-preview`.
 
 <Canvas of={UploadWorkflowStories.WithPreviewStep} />
+
+## Texte d'information
+
+Vous pouvez personnaliser le texte affiché dans la zone d’information du composant enfant `FileUpload` en utilisant la prop `info-text`.
+
+<Canvas of={UploadWorkflowStories.WithInfoText} />
 
 ## Exemple d'utilisation
 

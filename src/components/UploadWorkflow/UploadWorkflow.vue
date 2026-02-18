@@ -22,18 +22,21 @@
 				uploadList: UploadItem[]
 				sectionTitle?: string
 				showFilePreview?: boolean
+				infoText?: string
 				locales?: typeof defaultLocales
 			}
 		>(),
 		{
 			sectionTitle: undefined,
 			showFilePreview: false,
+			infoText: '',
 			locales: () => defaultLocales,
 		},
 	)
 
 	const emits = defineEmits<{
 		(e: 'error', value: string[]): void
+		(e: 'preview', value: FileItem): void
 		(e: 'update:modelValue', value: SelectedFile[]): void
 	}>()
 
@@ -72,6 +75,7 @@
 		fileUpload.value!.fileInput!.click()
 	}
 	function previewFile(file: FileItem & { file?: File }) {
+		emits('preview', file)
 		showPreviewDialog.value = true
 		fileToPreview.value = file.file
 	}
@@ -159,7 +163,14 @@
 				v-model="uploadedFiles"
 				@error="uploadError"
 				@update:model-value="fileSelected"
-			/>
+			>
+				<template
+					v-if="props.infoText"
+					#info-text
+				>
+					{{ props.infoText }}
+				</template>
+			</FileUpload>
 		</Transition>
 
 		<DialogBox

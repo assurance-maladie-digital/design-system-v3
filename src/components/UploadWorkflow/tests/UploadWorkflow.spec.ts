@@ -237,6 +237,29 @@ describe('UploadWorkflow', () => {
 
 		await wrapper.find('.file-item__action-preview').trigger('click')
 
+		expect(wrapper.emitted('preview')).toBeTruthy()
+		expect(wrapper.emitted('preview')?.[0]?.[0]).toMatchObject({
+			id: 'CERFA1',
+			title: 'CERFA 1',
+			showPreviewBtn: true,
+		})
+
 		expect(wrapper.find('.sy-file-preview img').exists()).toBeTruthy()
+	})
+
+	it('render custom infoText in FileUpload info-text slot', () => {
+		const wrapper = mount(UploadWorkflow, {
+			props: {
+				uploadList: [
+					{
+						id: 'ID',
+						title: 'Carte d\'identité',
+					},
+				],
+				infoText: 'Texte personnalisé',
+			},
+		})
+
+		expect(wrapper.find('.sy-file-upload').text()).toContain('Texte personnalisé')
 	})
 })
