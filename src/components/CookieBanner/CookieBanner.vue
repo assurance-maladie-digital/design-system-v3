@@ -34,14 +34,34 @@
 		return display.smAndDown.value ? '100%' : 'auto'
 	})
 
+	type ConsentPayload = Partial<{ essentials: boolean, functional: boolean, analytics: boolean }>
+
+	function buildConsentPayload(value: boolean): ConsentPayload {
+		const payload: ConsentPayload = {}
+
+		if (props.items?.essentials !== undefined) {
+			payload.essentials = true
+		}
+
+		if (props.items?.functional !== undefined) {
+			payload.functional = value
+		}
+
+		if (props.items?.analytics !== undefined) {
+			payload.analytics = value
+		}
+
+		return payload
+	}
+
 	function reject(): void {
 		active.value = false
-		emits('reject')
+		emits('reject', buildConsentPayload(false))
 	}
 
 	function accept(): void {
 		active.value = false
-		emits('accept')
+		emits('accept', buildConsentPayload(true))
 	}
 
 	function customize(): void {
@@ -51,7 +71,11 @@
 		emits('customize')
 	}
 
-	function personalizeCookies(e: Record<string, unknown>) {
+	function personalizeCookies(e: ConsentPayload) {
+		if (props.items?.essentials !== undefined) {
+			e.essentials = true
+		}
+
 		emits('submit', e)
 		showCookiesSelection.value = false
 		active.value = false
@@ -167,13 +191,13 @@
 		<VSheet
 			ref="vsheetRef"
 			v-bind="options.banner"
-			:aria-label="locales.label"
 			class="vd-cookie-banner"
 		>
 			<div
 				ref="bannerRef"
 				class="vd-cookie-banner__inner"
 				role="dialog"
+				:aria-label="locales.label"
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<h2
@@ -214,7 +238,7 @@
 					<Transition name="height">
 						<div v-if="showCookiesSelection && items">
 							<CookiesSelection
-								:items
+								:items="items"
 								@submit="personalizeCookies"
 							>
 								<template
