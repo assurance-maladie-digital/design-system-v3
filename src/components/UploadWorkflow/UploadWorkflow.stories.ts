@@ -539,16 +539,7 @@ export const OneFile: Story = {
 
 export const Events: Story = {
 	args: {
-		'modelValue': [
-			{
-				id: 'ID',
-				title: 'Carte d\'identité',
-				state: 'success',
-				showPreviewBtn: true,
-				fileName: 'carte_identite.pdf',
-				file: new File([''], 'carte_identite.pdf', { type: 'application/pdf' }),
-			},
-		],
+		'modelValue': [],
 		'uploadList': [
 			{
 				id: 'ID',
