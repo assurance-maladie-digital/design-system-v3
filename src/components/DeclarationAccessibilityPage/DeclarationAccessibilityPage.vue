@@ -39,10 +39,20 @@
 	}
 
 	const props = withDefaults(defineProps<DeclarationAccessibilityPageProps>(), {
+		schemaUrl: undefined,
+		schemaUrlLabel: undefined,
+		actionsRealisedUrl: undefined,
+		actionsRealisedUrlLabel: undefined,
+		planActionsUrl: undefined,
+		planActionsUrlLabel: undefined,
 		rgaaVersion: '4',
+		auditEntity: undefined,
+		auditDate: undefined,
 		evaluationMethod: 'auto-evaluation',
 		overallComplianceRate: null,
 		averageComplianceRate: null,
+		auditGridUrl: undefined,
+		contactPhone: undefined,
 		nonConformities: () => [],
 		exemptions: () => [],
 		nonObligatoryContents: () => [],
@@ -50,6 +60,8 @@
 		testEnvironments: () => [],
 		accessibilityTools: () => [],
 		verifiedPages: () => [],
+		declarationDate: undefined,
+		updateDate: undefined,
 	})
 
 	const hasAccessibilityPlan = computed(
