@@ -236,7 +236,10 @@
 						:aria-current="selectedItem === item ? 'page' : undefined"
 						@click="selectItem(item)"
 					>
-						<template #prepend v-if="item[props.iconKey]">
+						<template
+							v-if="item[props.iconKey]"
+							#prepend
+						>
 							<SyIcon
 								:icon="item[props.iconKey] as string"
 								decorative

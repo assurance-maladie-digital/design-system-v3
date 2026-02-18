@@ -172,7 +172,7 @@ export const Default: Story = {
 	},
 	args: {
 		menuItems: [
-			{ text: 'Administration', value: 'Administration'},
+			{ text: 'Administration', value: 'Administration' },
 			{ text: 'Profil', value: 'Profil' },
 			{ text: 'Paramètres', value: 'Paramètres' },
 		],
