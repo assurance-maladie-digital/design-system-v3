@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 
 import UploadWorkflow from '../UploadWorkflow.vue'
 import { locales as fileListLocales } from '@/components/FileList/UploadItem/locales'
@@ -247,9 +248,10 @@ describe('UploadWorkflow', () => {
 		expect(wrapper.find('.sy-file-preview img').exists()).toBeTruthy()
 	})
 
-	it('render custom infoText in FileUpload info-text slot', () => {
+	it('render custom infoText in FileUpload info-text slot', async () => {
 		const wrapper = mount(UploadWorkflow, {
 			props: {
+				modelValue: [],
 				uploadList: [
 					{
 						id: 'ID',
@@ -260,6 +262,11 @@ describe('UploadWorkflow', () => {
 			},
 		})
 
-		expect(wrapper.find('.sy-file-upload').text()).toContain('Texte personnalisé')
+		await nextTick()
+
+		const fileUpload = wrapper.find('.sy-file-upload')
+		expect(fileUpload.exists()).toBe(true)
+
+		expect(fileUpload.text()).toContain('Texte personnalisé')
 	})
 })
