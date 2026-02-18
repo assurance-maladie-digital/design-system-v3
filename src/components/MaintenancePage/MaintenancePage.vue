@@ -1,10 +1,10 @@
 <script setup lang="ts">
+	import StatusPage from '../StatusPage/StatusPage.vue'
 	import { locales } from './locales'
-	import ErrorPage from '../ErrorPage/ErrorPage.vue'
 </script>
 
 <template>
-	<ErrorPage
+	<StatusPage
 		:page-title="locales.pageTitle"
 		:message="locales.message"
 		:hide-btn="true"
@@ -18,7 +18,7 @@
 				>
 			</slot>
 		</template>
-	</ErrorPage>
+	</StatusPage>
 </template>
 
 <style lang="scss" scoped>

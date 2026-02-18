@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { onMounted, ref } from 'vue'
-	import ErrorPage from '../ErrorPage/ErrorPage.vue'
+	import StatusPage from '../StatusPage/StatusPage.vue'
 	import { locales } from './locales'
 	import type { RouteRecordRaw } from 'vue-router'
 
@@ -32,7 +32,7 @@
 </script>
 
 <template>
-	<ErrorPage
+	<StatusPage
 		:code="locales.code"
 		:page-title="locales.pageTitle"
 		:message="locales.message"
@@ -62,7 +62,7 @@
 				>
 			</slot>
 		</template>
-	</ErrorPage>
+	</StatusPage>
 </template>
 
 <style lang="scss" scoped>
