@@ -2,6 +2,7 @@
 	import { ref, watch, computed, onMounted, useSlots, type PropType, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import slugify from 'slugify'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	type Item = string | Record<string, unknown>
 
@@ -33,6 +34,10 @@
 		valueKey: {
 			type: String,
 			default: 'value',
+		},
+		iconKey: {
+			type: String,
+			default: 'icon',
 		},
 		primaryInfo: {
 			type: String,
@@ -217,28 +222,32 @@
 					:aria-labelledby="generatedId"
 					:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
 				>
-					<li
+					<VListItem
 						v-for="(item, index) in formattedItems"
 						:id="`item-${slugify(item[props.textKey] as string)}`"
 						:key="index"
+						tag="li"
+						:class="`text-${props?.options['list']?.textColor}`"
+						v-bind="props.options['list']"
+						:href="item.link"
+						:to="item.to"
+						:tabindex="0"
+						role="menuitem"
+						:aria-current="selectedItem === item ? 'page' : undefined"
+						@click="selectItem(item)"
 					>
-						<VListItem
-							:class="`text-${props?.options['list']?.textColor}`"
-							v-bind="props.options['list']"
-							:href="item.link"
-							:to="item.to"
-							:tabindex="0"
-							role="menuitem"
-							:aria-current="selectedItem === item ? 'page' : undefined"
-							@click="selectItem(item)"
+						<template #prepend v-if="item[props.iconKey]">
+							<SyIcon
+								:icon="item[props.iconKey] as string"
+								decorative
+							/>
+						</template>
+						<VListItemTitle
+							class="item-title"
 						>
-							<VListItemTitle
-								class="item-title"
-							>
-								{{ item[props.textKey] }}
-							</VListItemTitle>
-						</VListItem>
-					</li>
+							{{ item[props.textKey] }}
+						</VListItemTitle>
+					</VListItem>
 					<slot />
 					<slot name="footer-list-item" />
 				</VList>
@@ -311,5 +320,9 @@
 
 .item-title {
 	white-space: wrap;
+}
+
+:deep(.v-list-item__prepend) {
+	display: unset !important;
 }
 </style>

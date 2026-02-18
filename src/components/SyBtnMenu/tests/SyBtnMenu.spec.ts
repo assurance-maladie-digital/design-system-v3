@@ -164,4 +164,43 @@ describe('SyBtnMenu', () => {
 
 		wrapper.unmount()
 	})
+
+	it('renders a prepend icon when menu item provides icon', async () => {
+		const wrapper = mount(SyBtnMenu, {
+			props: {
+				primaryInfo: 'John Doe',
+				menuItems: [
+					{ text: 'Administration', value: 'admin', icon: 'mdi-account' },
+				],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		const prependIcon = wrapper.find('.v-list-item__prepend .v-icon')
+		expect(prependIcon.exists()).toBe(true)
+		expect(prependIcon.text()).toContain('mdi-account')
+
+		wrapper.unmount()
+	})
+
+	it('does not render a prepend icon when menu item has no icon', async () => {
+		const wrapper = mount(SyBtnMenu, {
+			props: {
+				primaryInfo: 'John Doe',
+				menuItems: [
+					{ text: 'Administration', value: 'admin' },
+				],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		const prependIcon = wrapper.find('.v-list-item__prepend .v-icon')
+		expect(prependIcon.exists()).toBe(false)
+
+		wrapper.unmount()
+	})
 })

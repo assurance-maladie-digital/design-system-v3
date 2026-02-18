@@ -1,12 +1,76 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../UserMenuBtn.stories.ts';
+import { Meta, Primary } from '@storybook/blocks';
+import * as UserMenuBtnStories from '../UserMenuBtn.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={UserMenuBtnStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="UserMenuBtn"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/"
+>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique">
+			<ul>
+				<li><strong>Rôles ARIA</strong> : <code>role="menu"</code> pour la liste et <code>role="menuitem"</code> pour chaque option (y compris le bouton de déconnexion).</li>
+				<li><strong>Attributs d'association</strong> : <code>aria-labelledby</code> relie le menu au bouton généré, <code>aria-haspopup</code>/<code>aria-expanded</code>/<code>aria-controls</code> sont gérés par <code>VMenu</code>.</li>
+				<li><strong>Étiquette accessible</strong> : un texte masqué (<code>label</code>, par défaut « Menu utilisateur ») assure le nom du bouton, même en mode icône seule.</li>
+				<li><strong>Suivi de l'item actif</strong> : <code>aria-activedescendant</code> pointe vers l'option active via un identifiant slugifié.</li>
+			</ul>
+		</CriteriaCard>
 
-<br />
+		<CriteriaCard icon="⌨️" title="Navigation clavier complète">
+			<ul>
+				<li><strong>Tabulation</strong> : accès au bouton puis parcours des options.</li>
+				<li><strong>Entrée/Espace</strong> : ouverture du menu et activation d'une option.</li>
+				<li><strong>Flèches</strong> : navigation verticale entre les éléments du menu.</li>
+				<li><strong>Échap</strong> : fermeture du menu et restitution du focus sur le bouton.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎯" title="Gestion du focus & retours">
+			<ul>
+				<li>Focus placé sur la première option à l'ouverture, puis renvoyé vers le bouton à la fermeture.</li>
+				<li><code>aria-expanded</code> reflète l'état d'ouverture ; <code>aria-current="page"</code> sur l'élément sélectionné.</li>
+				<li>Styles <code>:focus-visible</code> renforcés sur le bouton et les éléments du menu pour une indication claire.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="📱" title="Compatibilité mobile & personnalisation">
+			<ul>
+				<li>Modes <code>isMobileView</code> et <code>iconOnly</code> compactent l'affichage tout en conservant un libellé pour les lecteurs d'écran.</li>
+				<li>Options <code>menu</code> / <code>btn</code> / <code>list</code> personnalisables sans dégrader les attributs ARIA.</li>
+				<li>Le bouton de déconnexion optionnel (<code>hideLogoutBtn</code>) reste exposé comme élément de menu clavier/navigateur.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="UserMenuBtn">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournir un libellé clair pour <code>label</code> (ex. « Menu utilisateur », « Compte de Marie »), surtout en mode icône seule.</li>
+			<li>Limiter le nombre d'options et placer les actions destructives ou sensibles (ex. déconnexion) en fin de liste.</li>
+			<li>Utiliser des intitulés explicites pour les éléments du menu ; éviter les abréviations ou les seules icônes.</li>
+			<li>Vérifier le focus visible et le contraste des états actifs/sélectionnés, notamment sur fond personnalisé.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices : Menu button</a></li>
+			<li><a href="https://inclusive-components.design/menus-menu-buttons/" target="_blank" rel="noopener noreferrer">Inclusive Components : Menus &amp; Menu Buttons</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

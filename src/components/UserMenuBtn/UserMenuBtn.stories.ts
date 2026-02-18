@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { mdiAccount, mdiCog, mdiShieldAccount } from '@mdi/js'
 import UserMenuBtn from './UserMenuBtn.vue'
 
 const meta = {
@@ -63,7 +64,7 @@ const meta = {
 			description: 'Liste des éléments du menu utilisateur',
 			table: {
 				type: {
-					summary: '{ text: string, value: string, link?: string, to?: RouteLocationRaw }[]',
+					summary: '{ text: string, value: string, link?: string, to?: RouteLocationRaw, icon?: string }[]',
 				},
 			},
 		},
@@ -143,9 +144,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -174,7 +172,7 @@ export const Default: Story = {
 	},
 	args: {
 		menuItems: [
-			{ text: 'Administration', value: 'Administration' },
+			{ text: 'Administration', value: 'Administration'},
 			{ text: 'Profil', value: 'Profil' },
 			{ text: 'Paramètres', value: 'Paramètres' },
 		],
@@ -197,11 +195,59 @@ export const Default: Story = {
 		}
 	},
 }
+
+export const WithIcons: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+ <UserMenuBtn
+  v-model="selected"
+  :menu-items="menuItems"
+/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+ import { ref } from 'vue'
+ import { mdiAccount, mdiCog, mdiShieldAccount } from '@mdi/js'
+ import { UserMenuBtn } from '@cnamts/synapse'
+
+ const selected = ref(null)
+ const menuItems = ref([
+  { text: 'Administration', value: 'Administration', icon: mdiShieldAccount },
+  { text: 'Profil', value: 'Profil', icon: mdiAccount },
+  { text: 'Paramètres', value: 'Paramètres', icon: mdiCog },
+ ])
+</script>`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		menuItems: [
+			{ text: 'Administration', value: 'Administration', icon: mdiShieldAccount },
+			{ text: 'Profil', value: 'Profil', icon: mdiAccount },
+			{ text: 'Paramètres', value: 'Paramètres', icon: mdiCog },
+		],
+	},
+	render: (args) => {
+		return {
+			components: { UserMenuBtn },
+			setup() {
+				return { args }
+			},
+			template: `
+<div class="pa-4">
+	<UserMenuBtn v-bind="args"/>
+</div>`,
+		}
+	},
+}
 export const HideLogoutButton: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -251,9 +297,6 @@ export const HideLogoutButton: Story = {
 
 export const HideUserIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -303,9 +346,6 @@ export const HideUserIcon: Story = {
 
 export const MobileVersion: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -355,9 +395,6 @@ export const MobileVersion: Story = {
 
 export const CustomFullName: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -407,9 +444,6 @@ export const CustomFullName: Story = {
 
 export const CustomLogoutText: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -459,9 +493,6 @@ export const CustomLogoutText: Story = {
 
 export const CustomAdditionalInformation: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -511,9 +542,6 @@ export const CustomAdditionalInformation: Story = {
 
 export const WithVuetifyOptions: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -575,9 +603,6 @@ export const WithVuetifyOptions: Story = {
 
 export const LogoutEvent: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -631,9 +656,6 @@ export const LogoutEvent: Story = {
 
 export const Slot: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
