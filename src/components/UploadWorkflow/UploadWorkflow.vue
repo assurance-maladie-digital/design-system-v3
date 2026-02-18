@@ -4,7 +4,7 @@
 	} from '@/composables/useCustomizableOptions'
 	import { useWidthable, type Widthable } from '@/composables/widthable'
 	import { isRequired } from '@/utils/rules/isRequired'
-	import { computed, reactive, ref, toRef, watch } from 'vue'
+	import { computed, ref, toRef } from 'vue'
 	import DialogBox from '../DialogBox/DialogBox.vue'
 	import FileList from '../FileList/FileList.vue'
 	import FilePreview from '../FilePreview/FilePreview.vue'
@@ -23,6 +23,7 @@
 				sectionTitle?: string
 				showFilePreview?: boolean
 				infoText?: string
+				headingLevel?: number
 				locales?: typeof defaultLocales
 			}
 		>(),
@@ -30,6 +31,7 @@
 			sectionTitle: undefined,
 			showFilePreview: false,
 			infoText: '',
+			headingLevel: 4,
 			locales: () => defaultLocales,
 		},
 	)
@@ -42,20 +44,13 @@
 
 	const selectedFiles = defineModel<SelectedFile[]>({
 		type: Array,
-		default: reactive([]),
+		default: () => [],
 	})
-	watch(
-		selectedFiles,
-		(value) => {
-			emits('update:modelValue', value)
-		},
-		{ deep: true },
-	)
 
 	const { widthStyles } = useWidthable(props)
 	const options = useCustomizableOptions(config, props)
 
-	const fileUpload = ref<typeof FileUpload>()
+	const fileUpload = ref<InstanceType<typeof FileUpload>>()
 	const { selectItems, selectedItem } = useFileUploadJourney(
 		toRef(props, 'uploadList'),
 	)
@@ -68,11 +63,11 @@
 		= useFileList(selectedFiles, toRef(props, 'uploadList'))
 
 	// handle FileList
-	let inlineSelectedItemId: string | undefined = undefined
+	const inlineSelectedItemId = ref<string | undefined>(undefined)
 	function uploadInline(item: FileItem) {
-		inlineSelectedItemId = item.id
+		inlineSelectedItemId.value = item.id
 
-		fileUpload.value!.fileInput!.click()
+		fileUpload.value?.openFileDialog()
 	}
 	function previewFile(file: FileItem & { file?: File }) {
 		emits('preview', file)
@@ -82,6 +77,7 @@
 
 	// handle FileUpload
 	const uploadedFiles = ref<File[]>([])
+	const uploadedFile = computed(() => uploadedFiles.value[0])
 
 	const showFileUpload = computed(
 		() => (
@@ -92,10 +88,10 @@
 
 	function fileSelected(files: File[]) {
 		const fileId
-			= inlineSelectedItemId ?? (props.uploadList.length === 1
+			= inlineSelectedItemId.value ?? (props.uploadList.length === 1
 				? props.uploadList[0]!.id
 				: undefined)
-		inlineSelectedItemId = undefined
+		inlineSelectedItemId.value = undefined
 
 		if (props.showFilePreview || fileId === undefined) {
 			showSelectDialog.value = true
@@ -109,22 +105,22 @@
 
 	function uploadError(errors: string[]) {
 		emits('error', errors)
-		if (!inlineSelectedItemId) {
+		if (!inlineSelectedItemId.value) {
 			return
 		}
-		setItemOnError(inlineSelectedItemId)
-		inlineSelectedItemId = undefined
+		setItemOnError(inlineSelectedItemId.value)
+		inlineSelectedItemId.value = undefined
 	}
 
 	// handle DialogBox
 	const showSelectDialog = ref(false)
 
 	function dialogConfirm() {
-		if (!selectedItem.value) {
+		if (!selectedItem.value || !uploadedFile.value) {
 			return
 		}
 
-		addOrReplaceFile(uploadedFiles.value[0]!, selectedItem.value)
+		addOrReplaceFile(uploadedFile.value, selectedItem.value)
 
 		showSelectDialog.value = false
 		selectedItem.value = undefined
@@ -141,9 +137,13 @@
 		class="sy-upload-workflow white"
 	>
 		<slot name="title">
-			<h4 class="text-h6 mb-2">
+			<div
+				:aria-level="props.headingLevel"
+				role="heading"
+				class="text-h6 mb-2"
+			>
 				{{ title }}
-			</h4>
+			</div>
 		</slot>
 
 		<FileList
@@ -206,7 +206,7 @@
 			<FilePreview
 				v-if="showFilePreview"
 				:options="options.filePreview"
-				:file="uploadedFiles[0]"
+				:file="uploadedFile"
 			/>
 		</DialogBox>
 

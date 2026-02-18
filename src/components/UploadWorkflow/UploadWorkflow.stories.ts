@@ -75,6 +75,23 @@ const meta: Meta<typeof UploadWorkflow> = {
 				},
 			},
 		},
+		'headingLevel': {
+			description: 'Niveau du titre affiché (utilise role="heading" et aria-level).',
+			control: {
+				type: 'number',
+				min: 1,
+				max: 6,
+			},
+			table: {
+				category: 'props',
+				type: {
+					summary: 'number',
+				},
+				defaultValue: {
+					summary: '4',
+				},
+			},
+		},
 		'infoText': {
 			description: 'Personnalise le texte affiché dans la zone d’information du composant enfant FileUpload (slot info-text).',
 			control: 'text',

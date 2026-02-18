@@ -8,6 +8,10 @@ export default function useFileList(
 ) {
 	const errorSelectedFiles = ref<string[]>([])
 
+	function notifySelectedFilesChanged() {
+		selectedFiles.value = selectedFiles.value.slice()
+	}
+
 	function removeFromErrorList(fileId: string) {
 		const errorIndex = errorSelectedFiles.value.findIndex(item => item === fileId)
 		if (errorIndex !== -1) {
@@ -22,12 +26,14 @@ export default function useFileList(
 	function resetFile(fileItem: FileListItem | SelectedFile) {
 		const itemIndex = selectedFiles.value.findIndex(item => item.id === fileItem.id)
 		selectedFiles.value.splice(itemIndex, 1)
+		notifySelectedFilesChanged()
 	}
 
 	function replaceFile(file: File, item: SelectedFile, state: FileState = 'success') {
 		item.file = file
 		item.fileName = file.name
 		item.state = state
+		notifySelectedFilesChanged()
 	}
 
 	function addOrReplaceFile(file: File, fileId: string, state: FileState = 'success') {
@@ -52,6 +58,7 @@ export default function useFileList(
 				fileName: file.name,
 				file,
 			})
+			notifySelectedFilesChanged()
 			removeFromErrorList(fileId)
 		}
 	}

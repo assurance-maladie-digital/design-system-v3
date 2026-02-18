@@ -40,8 +40,13 @@
 	const fileList = ref<File[]>([])
 	const isDarkMode = useTheme().current.value.dark
 
+	function openFileDialog() {
+		fileInput.value?.click()
+	}
+
 	defineExpose({
 		fileInput,
+		openFileDialog,
 	})
 
 	watch(() => props.modelValue, (value) => {
