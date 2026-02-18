@@ -580,10 +580,11 @@
 		}
 
 		// Valider les dates au montage, mais sans afficher d'erreur pour le required
-		// Forcer la validation si il y a des custom rules et que le champ est rempli
-		const hasCustomRules = props.customRules && props.customRules.length > 0
+		// Forcer la validation si il y a des règles (erreur ou warning) et que le champ est rempli
+		const hasValidationRules = (props.customRules && props.customRules.length > 0)
+			|| (props.customWarningRules && props.customWarningRules.length > 0)
 		const hasValue = selectedDates.value !== null && selectedDates.value !== undefined
-		validateDates(hasCustomRules && hasValue)
+		validateDates(hasValidationRules && hasValue)
 
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
