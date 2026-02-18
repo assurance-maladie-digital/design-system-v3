@@ -84,7 +84,7 @@ const meta: Meta<typeof UploadWorkflow> = {
 					summary: 'string',
 				},
 				defaultValue: {
-					summary: "''",
+					summary: '\'\'',
 				},
 			},
 		},
