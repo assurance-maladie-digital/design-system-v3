@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
-
-import MaintenancePage from '../'
+import MaintenancePage from '../MaintenancePage.vue'
 
 describe('MaintenancePage', () => {
 	it('renders correctly', () => {
