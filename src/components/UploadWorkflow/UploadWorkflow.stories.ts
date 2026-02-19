@@ -662,10 +662,12 @@ export const Events: Story = {
 		{
 			id: 'ID',
 			title: 'Carte d'identité',
+			showPreviewBtn: true,
 		},
 		{
 			id: 'Bill',
 			title: 'Facture de soin',
+			showPreviewBtn: true,
 		},
 	]
 
