@@ -13,6 +13,10 @@ const JiraCollectorPage = defineComponent({
 			type: String,
 			default: '',
 		},
+		jiraCreateIssueUrl: {
+			type: String,
+			default: '',
+		},
 		mockShouldFail: {
 			type: Boolean,
 			default: false,
@@ -183,6 +187,20 @@ const JiraCollectorPage = defineComponent({
 				Envoyer
 			</VBtn>
 		</div>
+		
+		<hr class="mt-6" />
+
+		<div class="mt-6">
+			<VBtn
+				v-if="props.jiraCreateIssueUrl"
+				color="primary"
+				:href="props.jiraCreateIssueUrl"
+				target="_blank"
+				rel="noopener"
+			>
+				Créer une issue
+			</VBtn>
+		</div>
 	`,
 })
 
@@ -192,6 +210,10 @@ const meta: Meta = {
 	argTypes: {
 		createIssueEndpoint: {
 			description: 'URL d\'un endpoint interne (proxy) qui crée un ticket Jira. Si vide, la page fonctionne en mock local (aucun appel réseau).',
+			control: 'text',
+		},
+		jiraCreateIssueUrl: {
+			description: 'URL Jira à ouvrir dans un nouvel onglet pour créer une issue via l\'interface Jira.',
 			control: 'text',
 		},
 		mockShouldFail: {
@@ -208,6 +230,7 @@ type Story = StoryObj<typeof meta>
 export const Page: Story = {
 	args: {
 		createIssueEndpoint: '',
+		jiraCreateIssueUrl: 'https://jiracnam.ramage/projects/STD/issues/STD-62',
 		mockShouldFail: false,
 	},
 	tags: ['!dev'],
