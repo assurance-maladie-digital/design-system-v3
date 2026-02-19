@@ -8,6 +8,12 @@ const items = [
 	{
 		text: 'Plan du site',
 		href: '/sitemap',
+		theme: 'cnam',
+	},
+	{
+		text: 'Aide et configuration',
+		href: '/help',
+		theme: 'ap',
 	},
 	{
 		text: 'Conditions générales d\'utilisation',
@@ -16,6 +22,7 @@ const items = [
 	{
 		text: 'Gestion des cookies',
 		href: '/cookies',
+		theme: 'cnam',
 	},
 	{
 		text: 'Mentions légales',
@@ -85,6 +92,12 @@ const meta = {
 			},
 			description: 'Masque le lien vers le Plan du site.',
 		},
+		hideHelpLink: {
+			control: {
+				type: 'boolean',
+			},
+			description: 'Masque le lien vers aide et configuation.',
+		},
 		hideCguLink: {
 			control: {
 				type: 'boolean',
@@ -139,11 +152,29 @@ const meta = {
 			},
 			description: 'Use the light theme for the footer.',
 		},
+		backOffice: {
+			control: {
+				type: 'boolean',
+			},
+			description: 'Affichage du footer pour le back office.',
+		},
+		backOfficeText: {
+			control: {
+				type: 'text',
+			},
+			description: 'Nom du service en back office à afficher dans le footer.',
+		},
 		sitemapRoute: {
 			control: {
 				type: 'text',
 			},
 			description: 'La valeur de la prop `to` du lien vers le Plan du site.',
+		},
+		helpRoute: {
+			control: {
+				type: 'text',
+			},
+			description: 'La valeur de la prop `to` du lien vers aide et configuration.',
 		},
 		cguRoute: {
 			control: {
@@ -217,6 +248,7 @@ export const Default: Story = {
 	
 	const docProps = {
 		sitemapRoute: '/',
+		helpRoute: '/',
 		cguRoute: '/',
 		cookiesRoute: '/',
 		legalNoticeRoute: '/',
@@ -232,13 +264,16 @@ export const Default: Story = {
 		a11yCompliance: 'non-compliant',
 		items: items,
 		hideSitemapLink: false,
+		hideHelpLink: false,
 		hideCguLink: false,
 		hideCookiesLink: false,
 		hideLegalNoticeLink: false,
 		hideA11yLink: false,
 		hideLogo: false,
 		hideSocialMediaLinks: false,
-		version: '',
+		version: 'X.X.X',
+		backOffice: false,
+		backOfficeText: 'Ameli Pro Back Office',
 		socialMediaLinks: [
 			{
 				icon: mdiFacebook,
@@ -258,6 +293,7 @@ export const Default: Story = {
 		],
 		light: false,
 		sitemapRoute: '/',
+		helpRoute: '/',
 		cguRoute: '/',
 		cookiesRoute: '/',
 		legalNoticeRoute: '/',
@@ -265,6 +301,7 @@ export const Default: Story = {
 		vuetifyOptions: {
 			footer: {
 				elevation: 3,
+				color: 'var(--footer-background)',
 				height: 'auto',
 			},
 			goTopBtn: {
@@ -287,18 +324,23 @@ export const Default: Story = {
 			template: `
 				<FooterBar
 					v-bind="args.docProps"
+                    unique-id="test"
 					:link-items="args.items"
 					:a11y-compliance="args.a11yCompliance"
 					:hide-a11y-link="args.hideA11yLink"
 					:hide-cgu-link="args.hideCguLink"
 					:hide-cookies-link="args.hideCookiesLink"
 					:hide-legal-notice-link="args.hideLegalNoticeLink"
-					:hide-sitemap-link="args.hideSitemapLink"
+                    :hide-sitemap-link="args.hideSitemapLink"
+                    :hide-help-link="args.hidehelpLink"
 					:hide-logo="args.hideLogo"
 					:hide-social-media-links="args.hideSocialMediaLinks"
 					:light="args.light"
-					:version="args.version"
-					:sitemap-route="args.sitemapRoute"
+                    :version="args.version"
+                    :back-office="args.backOffice"
+                    :back-office-text="args.backOfficeText"
+                    :sitemap-route="args.sitemapRoute"
+                    :help-route="args.helpRoute"
 					:cgu-route="args.cguRoute"
 					:cookies-route="args.cookiesRoute"
 					:legal-notice-route="args.legalNoticeRoute"

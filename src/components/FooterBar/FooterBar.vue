@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, useSlots } from 'vue'
 	import { type RouteLocationRaw } from 'vue-router'
+  import {useTheme} from 'vuetify'
 
 	import Logo from '@/components/Logo/Logo.vue'
 	import { LogoSize } from '@/components/Logo/LogoSize'
@@ -23,11 +24,13 @@
 		linkItems?: LinkItem[] | null
 		items?: LinkItem[] | null
 		sitemapRoute?: RouteLocationRaw
+    helpRoute?: RouteLocationRaw
 		cguRoute?: RouteLocationRaw
 		cookiesRoute?: RouteLocationRaw
 		legalNoticeRoute?: RouteLocationRaw
 		a11yStatementRoute?: RouteLocationRaw
 		hideSitemapLink?: boolean
+    hideHelpLink?: boolean
 		hideCguLink?: boolean
 		hideCookiesLink?: boolean
 		hideLegalNoticeLink?: boolean
@@ -37,16 +40,21 @@
 		hideSocialMediaLinks?: boolean
 		socialMediaLinks?: SocialMediaLink[]
 		light?: boolean
+    uniqueId: string
+    backOffice?: boolean
+    backOfficeText?: string
 	}>(), {
 		a11yCompliance: 'non-compliant',
 		linkItems: null,
 		items: null,
 		sitemapRoute: () => ({ name: 'sitemap' }),
+    helpRoute: () => ({name: 'help'}),
 		cguRoute: () => ({ name: 'cgu' }),
 		cookiesRoute: () => ({ name: 'cookies' }),
 		legalNoticeRoute: () => ({ name: 'legalNotice' }),
 		a11yStatementRoute: () => ({ name: 'a11yStatement' }),
 		hideSitemapLink: false,
+    hideHelpLink: false,
 		hideCguLink: false,
 		hideCookiesLink: false,
 		hideLegalNoticeLink: false,
@@ -56,6 +64,9 @@
 		hideSocialMediaLinks: false,
 		socialMediaLinks: () => defaultSocialMediaLinks as SocialMediaLink[],
 		light: false,
+    uniqueId: undefined,
+    backOffice: false,
+    backOfficeText: undefined,
 	})
 
 	const arrowTopIcon = mdiArrowUp
@@ -63,6 +74,7 @@
 	const slots = useSlots()
 	const display = useDisplay()
 	const options = useCustomizableOptions(config, props)
+  const vuetifyTheme = useTheme()
 
 	const getLinkComponent = (item: LinkItem): string => {
 		return item.href ? 'a' : 'RouterLink'
@@ -95,15 +107,22 @@
 	})
 
 	const footerLinksMapping = computed(() => {
-		if (props.linkItems) {
-			return props.linkItems as LinkItem[]
-		}
+    // if (props.linkItems) {
+    //   return filterByTheme(props.linkItems as LinkItem[])
+    // }
 
 		const linksMapping: LinkItem[] = [
 			{
 				text: locales.sitemapLabel,
 				to: props.sitemapRoute,
 				hidden: props.hideSitemapLink,
+        theme: 'cnam',
+      },
+      {
+        text: locales.HelpLabel,
+        to: props.helpRoute,
+        hidden: props.hideHelpLink,
+        theme: 'ap',
 			},
 			{
 				text: locales.cguLabel,
@@ -114,6 +133,7 @@
 				text: locales.cookiesLabel,
 				to: props.cookiesRoute,
 				hidden: props.hideCookiesLink,
+        theme: 'cnam',
 			},
 			{
 				text: locales.legalNoticeLabel,
@@ -127,8 +147,18 @@
 			},
 		] as LinkItem[]
 
-		return linksMapping.filter(item => !item.hidden)
+    return filterByTheme(linksMapping)
 	})
+
+  function filterByTheme(items: LinkItem[]): LinkItem[] {
+    const currentTheme = vuetifyTheme.name.value
+
+    return items
+        .filter(item => !item.hidden)
+        .filter(item =>
+            !currentTheme || !item.theme || item.theme === currentTheme,
+        )
+  }
 
 	defineExpose({
 		logoSize,
@@ -137,6 +167,7 @@
 
 <template>
 	<VFooter
+      :id="uniqueId ? `${uniqueId}-footer` : undefined"
 		v-bind="{
 			...options.footer,
 			...$attrs,
@@ -214,6 +245,7 @@
 					:key="index"
 				>
 					<component
+              v-if="!backOffice"
 						:is="getLinkComponent(item)"
 						:href="item.href"
 						:to="item.to"
@@ -225,6 +257,12 @@
 						{{ item.text }}
 					</component>
 				</li>
+        <li
+            v-if="props.backOffice"
+            class="my-3 mx-4"
+        >
+          CNAM - {{ props.backOfficeText }}
+        </li>
 
 				<li
 					v-if="props.version"
