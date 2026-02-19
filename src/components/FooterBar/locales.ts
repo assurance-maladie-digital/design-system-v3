@@ -3,6 +3,7 @@ import { A11yComplianceEnum } from './A11yCompliance'
 export const locales = {
 	goTopBtnLabel: 'Retour en haut de la page',
 	sitemapLabel: 'Plan du site',
+	HelpLabel: 'Aide et configuration',
 	cguLabel: 'Conditions générales d’utilisation',
 	cookiesLabel: 'Gestion des cookies',
 	legalNoticeLabel: 'Mentions légales',

@@ -2,16 +2,9 @@
 @use '@/assets/apTokens';
 @use '@/assets/tokens';
 
-.theme-ap,
-.theme-ap2026 {
-	.border-0 {
-		border: 0;
-	}
-}
-
 .theme-cnam,
 .theme-pa {
-	--footer-background: #{apTokens.$parma-darken-60};
+  --footer-background: #{tokens.$parma-darken-60};
 }
 
 .theme-ap {

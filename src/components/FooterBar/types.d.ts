@@ -7,4 +7,5 @@ export interface LinkItem {
 	href?: string
 	ariaLabel?: string
 	openInNewTab?: boolean
+	theme?: string
 }
