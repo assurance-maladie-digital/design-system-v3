@@ -905,13 +905,13 @@ export const SlotFilters: Story = {
 							v-model:search="args.search"
 						>
 							<template #filters>
-								<div class="py-1">
+								<div class="px-4 py-4 py-sm-0">
 									<SySelect
 										v-model="search"
 										:items="filterItems"
 										label="Nom"
 										density="compact"
-										width="100"
+										width="150"
 										hide-messages
 										clearable
 									/>
@@ -942,13 +942,13 @@ export const SlotFilters: Story = {
 								:nb-total="items.length"
 							>
 								<template #filters>
-									<div class="py-4">
+									<div class="px-4 py-4 py-sm-0">
 										<SySelect 
 											v-model="search" 
 											:items="filterItems" 
 											label="Nom" 
 											density="compact" 
-											width="100"
+											width="150"
 											hide-messages
 											clearable 
 										/>
