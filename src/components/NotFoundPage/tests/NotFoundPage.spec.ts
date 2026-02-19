@@ -1,28 +1,60 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { locales } from '../locales'
+import { mount, flushPromises } from '@vue/test-utils'
 import NotFoundPage from '../NotFoundPage.vue'
+import StatusPage from '../../StatusPage/StatusPage.vue'
 
 describe('NotFoundPage', () => {
-	it('renders correctly', () => {
+	it('renders correctly', async () => {
 		const wrapper = mount(NotFoundPage)
+		await flushPromises()
 
-		expect(wrapper.text()).toContain(locales.code)
-		expect(wrapper.text()).toContain(locales.message)
-		expect(wrapper.html()).toMatchSnapshot()
+		expect(wrapper.findComponent(StatusPage).exists()).toBe(true)
+		expect(wrapper.text()).toContain('404')
+		expect(wrapper.text()).toContain('Page non trouvée')
 	})
 
-	it('display the support ID if provided in the url', async () => {
-		history.replaceState(
-			{},
-			'',
-			'/not-found?support_id=1234567890123456789',
-		)
+	it('renders StatusPage with correct props', async () => {
 		const wrapper = mount(NotFoundPage)
+		await flushPromises()
 
-		await wrapper.vm.$nextTick()
+		const statusPage = wrapper.findComponent(StatusPage)
+		expect(statusPage.props('code')).toBe('404')
+		expect(statusPage.props('pageTitle')).toBe('Page non trouvée')
+		expect(statusPage.props('message')).toBeDefined()
+	})
 
-		expect(wrapper.text()).toContain('1234 5678 9012 3456 789')
-		expect(wrapper.html()).toMatchSnapshot()
+	it('renders with custom button props', async () => {
+		const wrapper = mount(NotFoundPage, {
+			props: {
+				btnText: 'Retour à l\'accueil',
+				btnHref: '/',
+			},
+		})
+		await flushPromises()
+
+		const statusPage = wrapper.findComponent(StatusPage)
+		expect(statusPage.props('btnText')).toBe('Retour à l\'accueil')
+		expect(statusPage.props('btnHref')).toBe('/')
+	})
+
+	it('hides button when hideBtn prop is true', async () => {
+		const wrapper = mount(NotFoundPage, {
+			props: {
+				hideBtn: true,
+			},
+		})
+		await flushPromises()
+
+		expect(wrapper.findComponent(StatusPage).props('hideBtn')).toBe(true)
+	})
+
+	it('renders illustration with correct accessibility attributes', async () => {
+		const wrapper = mount(NotFoundPage)
+		await flushPromises()
+
+		const img = wrapper.find('img')
+		expect(img.exists()).toBe(true)
+		expect(img.attributes('alt')).toBe('')
+		expect(img.attributes('aria-hidden')).toBe('true')
 	})
 })
