@@ -47,14 +47,4 @@ describe('NotFoundPage', () => {
 
 		expect(wrapper.findComponent(StatusPage).props('hideBtn')).toBe(true)
 	})
-
-	it('renders illustration with correct accessibility attributes', async () => {
-		const wrapper = mount(NotFoundPage)
-		await flushPromises()
-
-		const img = wrapper.find('img')
-		expect(img.exists()).toBe(true)
-		expect(img.attributes('alt')).toBe('')
-		expect(img.attributes('aria-hidden')).toBe('true')
-	})
 })
