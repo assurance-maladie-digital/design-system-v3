@@ -34,24 +34,19 @@
 		return display.smAndDown.value ? '100%' : 'auto'
 	})
 
-	type ConsentPayload = Partial<{ essentials: boolean, functional: boolean, analytics: boolean }>
+	const itemKeys = computed(() => Object.keys(props.items ?? {}) as (keyof CookiesItems)[])
+
+	type ConsentPayload = Partial<Record<keyof CookiesItems, boolean>>
 
 	function buildConsentPayload(value: boolean): ConsentPayload {
-		const payload: ConsentPayload = {}
-
-		if (props.items?.essentials !== undefined) {
-			payload.essentials = true
+		if (!props.items) {
+			return {}
 		}
 
-		if (props.items?.functional !== undefined) {
-			payload.functional = value
-		}
-
-		if (props.items?.analytics !== undefined) {
-			payload.analytics = value
-		}
-
-		return payload
+		return itemKeys.value.reduce<ConsentPayload>((payload, key) => {
+			payload[key] = value
+			return payload
+		}, {})
 	}
 
 	function reject(): void {
@@ -72,10 +67,6 @@
 	}
 
 	function personalizeCookies(e: ConsentPayload) {
-		if (props.items?.essentials !== undefined) {
-			e.essentials = true
-		}
-
 		emits('submit', e)
 		showCookiesSelection.value = false
 		active.value = false
