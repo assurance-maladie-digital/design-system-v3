@@ -1,10 +1,12 @@
 <script setup lang="ts">
 	import { onMounted, ref } from 'vue'
 	import StatusPage from '../StatusPage/StatusPage.vue'
-	import { locales } from './locales'
+	import { locales, SUPPORT_ID_PARAM_NAME, supportIdMessage } from './locales'
 	import type { RouteRecordRaw } from 'vue-router'
+	import { useThemeLocales } from '@/utils/theme'
 
-	const SUPPORT_ID_PARAM_NAME = 'support_id'
+	const { themeLocales } = useThemeLocales(locales)
+
 	const supportId = ref<string | undefined>()
 
 	withDefaults(defineProps<{
@@ -33,9 +35,9 @@
 
 <template>
 	<StatusPage
-		:code="locales.code"
-		:page-title="locales.pageTitle"
-		:message="locales.message"
+		:page-title="themeLocales.pageTitle"
+		:message="themeLocales.message"
+		:code="themeLocales.code"
 		:btn-text="btnText"
 		:btn-href="btnHref"
 		:btn-link="btnLink"
@@ -46,17 +48,20 @@
 			#additional-content
 		>
 			<p class="mt-4">
-				{{ locales.supportIdMessage }}
+				{{ supportIdMessage }}
 
 				<b>{{ supportId }}</b>
 				.
 			</p>
 		</template>
 
-		<template #illustration>
+		<template
+			v-if="themeLocales.src || $slots.illustration"
+			#illustration
+		>
 			<slot name="illustration">
 				<img
-					src="./assets/not-found.svg"
+					:src="themeLocales.src"
 					alt=""
 					aria-hidden="true"
 				>
