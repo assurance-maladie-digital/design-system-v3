@@ -6,8 +6,8 @@ export const locales = {
 		pageTitle: 'Maintenance en cours',
 		message:
       'L’application n’est pas disponible pour le moment, veuillez nous excuser pour la gêne occasionnée.',
-		src: undefined,
-		code: '503',
+		src: imgUrlCnam,
+		code: '',
 	},
 	cnam: {
 		pageTitle: 'Maintenance en cours',
