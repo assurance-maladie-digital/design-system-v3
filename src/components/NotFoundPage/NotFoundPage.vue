@@ -1,15 +1,13 @@
 <script setup lang="ts">
 	import { onMounted, ref } from 'vue'
 	import StatusPage from '../StatusPage/StatusPage.vue'
-	import { locales } from './locales'
+	import { locales, SUPPORT_ID_PARAM_NAME, supportIdMessage } from './locales'
 	import type { RouteRecordRaw } from 'vue-router'
 	import { useThemeLocales } from '@/utils/theme'
 
 	const { themeLocales } = useThemeLocales(locales)
 
 	const supportId = ref<string | undefined>()
-	const SUPPORT_ID_PARAM_NAME = 'support_id'
-	const supportIdMessage = 'Votre identifiant de support est'
 
 	withDefaults(defineProps<{
 		btnText?: string
