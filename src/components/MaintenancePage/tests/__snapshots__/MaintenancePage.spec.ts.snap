@@ -3,6 +3,7 @@
 exports[`MaintenancePage > renders correctly 1`] = `
 <status-page-stub
   btnlink="/"
+  code=""
   codeerrortext="Code d'erreur : "
   hidebtn="true"
   message="L’application n’est pas disponible pour le moment, veuillez nous excuser pour la gêne occasionnée."
