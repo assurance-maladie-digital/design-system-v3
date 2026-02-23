@@ -4,66 +4,7 @@
 	import FormChart from '@/components/Chart/FormChart.vue'
 	import pattern from 'patternomaly'
 
-	const formData = {
-		datasets: [
-			// Product A — Violet ●
-			{
-				label: 'Product A',
-				data: [
-					{ x: 10, y: 4 },
-					{ x: 22, y: 3.2 },
-					{ x: 25, y: 6.2 },
-					{ x: 35, y: 5.9 },
-					{ x: 45, y: 6.0 },
-					{ x: 55, y: 11.8 },
-					{ x: 60, y: 9.2 },
-					{ x: 75, y: 11.7 },
-					{ x: 85, y: 10.4 },
-					{ x: 105, y: 12.1 },
-				],
-				backgroundColor: '#6C4CFF',
-				pointRadius: 7,
-				pointHoverRadius: 8,
-				pointStyle: 'circle',
-			},
 
-			// Product B — Vert ■
-			{
-				label: 'Product B',
-				data: [
-					{ x: 32, y: 9.2 },
-					{ x: 42, y: 8.6 },
-					{ x: 50, y: 10.2 },
-					{ x: 65, y: 10.8 },
-					{ x: 80, y: 12.6 },
-					{ x: 78, y: 8.8 },
-					{ x: 102, y: 7.2 },
-				],
-				backgroundColor: '#12B8A6',
-				pointRadius: 7,
-				pointHoverRadius: 8,
-				pointStyle: 'rect',
-			},
-
-			// Product C — Orange ▲
-			{
-				label: 'Product C',
-				data: [
-					{ x: 52, y: 7.5 },
-					{ x: 68, y: 7.8 },
-					{ x: 72, y: 10.0 },
-					{ x: 90, y: 8.4 },
-					{ x: 95, y: 11.6 },
-					{ x: 100, y: 10.1 },
-					{ x: 110, y: 11.0 },
-				],
-				backgroundColor: '#F97316',
-				pointRadius: 8,
-				pointHoverRadius: 9,
-				pointStyle: 'triangle',
-			},
-		],
-	}
 	const dataBar = {
 		labels: ['Mai 2023', 'Juin 2023', 'Juillet 2023', 'Août 2023', 'Sept 2023', 'Oct 2023'],
 		datasets: [
@@ -186,7 +127,66 @@
 			},
 		},
 	}
+	const formData = {
+		datasets: [
+			// Product A — Violet ●
+			{
+				label: 'Product A',
+				data: [
+					{ x: 10, y: 4 },
+					{ x: 22, y: 3.2 },
+					{ x: 25, y: 6.2 },
+					{ x: 35, y: 5.9 },
+					{ x: 45, y: 6.0 },
+					{ x: 55, y: 11.8 },
+					{ x: 60, y: 9.2 },
+					{ x: 75, y: 11.7 },
+					{ x: 85, y: 10.4 },
+					{ x: 105, y: 12.1 },
+				],
+				backgroundColor: '#6C4CFF',
+				pointRadius: 7,
+				pointHoverRadius: 8,
+				pointStyle: 'circle',
+			},
 
+			// Product B — Vert ■
+			{
+				label: 'Product B',
+				data: [
+					{ x: 32, y: 9.2 },
+					{ x: 42, y: 8.6 },
+					{ x: 50, y: 10.2 },
+					{ x: 65, y: 10.8 },
+					{ x: 80, y: 12.6 },
+					{ x: 78, y: 8.8 },
+					{ x: 102, y: 7.2 },
+				],
+				backgroundColor: '#12B8A6',
+				pointRadius: 7,
+				pointHoverRadius: 8,
+				pointStyle: 'rect',
+			},
+
+			// Product C — Orange ▲
+			{
+				label: 'Product C',
+				data: [
+					{ x: 52, y: 7.5 },
+					{ x: 68, y: 7.8 },
+					{ x: 72, y: 10.0 },
+					{ x: 90, y: 8.4 },
+					{ x: 95, y: 11.6 },
+					{ x: 100, y: 10.1 },
+					{ x: 110, y: 11.0 },
+				],
+				backgroundColor: '#F97316',
+				pointRadius: 8,
+				pointHoverRadius: 9,
+				pointStyle: 'triangle',
+			},
+		],
+	}
 	const formOptions = {
 		responsive: true,
 		maintainAspectRatio: false,

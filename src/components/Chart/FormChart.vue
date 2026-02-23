@@ -61,7 +61,7 @@
 	onMounted(async () => {
 		await nextTick()
 		if (chartRef.value?.chart?.canvas) {
-			const canvas = chartRef.value.chart.canvas
+			const canvas = chartRef.value.chart.canvas as HTMLCanvasElement
 			canvas.setAttribute('role', 'img')
 			canvas.setAttribute('aria-label', 'Scatter chart')
 		}

@@ -59,7 +59,11 @@
 		if (chartRef.value?.chart?.canvas) {
 			const canvasEl = chartRef.value.chart.canvas as HTMLCanvasElement
 			canvasEl.setAttribute('role', 'img')
-			canvasEl.setAttribute('aria-label', props.chartOptions.plugins.title.text)
+			const title
+				= typeof props.chartOptions.plugins?.title === 'object'
+					? props.chartOptions.plugins.title.text
+					: 'Bar chart'
+			canvasEl.setAttribute('aria-label', title ?? 'Bar chart')
 			canvasEl.setAttribute('aria-describedby', 'chart-desc')
 		}
 	})
@@ -75,6 +79,10 @@
 		id="chart-desc"
 		class="d-sr-only"
 	>
-		{{ props.chartOptions.plugins.title.text }}
+		{{
+			typeof chartOptions.plugins?.title === 'object'
+				? chartOptions.plugins.title.text
+				: 'Line chart'
+		}}
 	</p>
 </template>
