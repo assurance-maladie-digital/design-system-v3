@@ -60,6 +60,7 @@
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
+	const dialOnBlur = ref(false)
 
 	function formatPhoneNumber(value: string): string {
 		if (!value) return ''
@@ -252,14 +253,30 @@
 
 	const validation = useValidation({
 		customRules: validationRules.value,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		fieldIdentifier: locales.label,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
-	const hasError = computed(() => !shouldDisableErrorHandling.value && validation.hasError.value)
+	const shouldValidate = computed(() => !props.isValidatedOnBlur || onBlur.value || dialOnBlur.value)
+	const hasDialCodeError = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		if (!shouldValidate.value) return false
+		if (!props.withCountryCode || !props.countryCodeRequired) return false
+		return !dialCode.value
+	})
+	const dialCodeErrors = computed(() => hasDialCodeError.value ? [`Le champ ${locales.indicatifLabel} est requis.`] : [])
+
+	const hasError = computed(() => !shouldDisableErrorHandling.value && (validation.hasError.value || hasDialCodeError.value))
 	const hasWarning = computed(() => !shouldDisableErrorHandling.value && validation.hasWarning.value)
-	const hasSuccess = computed(() => !shouldDisableErrorHandling.value && validation.hasSuccess.value)
+	const hasSuccess = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		if (!shouldValidate.value) return false
+		if (hasError.value || hasWarning.value) return false
+		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
+		if (!cleanedValue) return false
+		return cleanedValue.length === counter.value
+	})
 
 	const iconColor = computed(() => {
 		if (shouldDisableErrorHandling.value) return '#222324'
@@ -271,7 +288,11 @@
 
 	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
 	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
-	const successes = computed(() => shouldDisableErrorHandling.value ? [] : validation.successes.value)
+	const successes = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		if (!hasSuccess.value) return []
+		return [`Le champ ${locales.label} est valide.`]
+	})
 
 	const showHelpTextBelow = computed(() => {
 		// Display help text below by default if it exists
@@ -284,6 +305,11 @@
 		onBlur.value = true
 		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
 		validation.validateField(cleanedValue, validationRules.value)
+	}
+
+	function validateDialCodeOnBlur() {
+		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
+		dialOnBlur.value = true
 	}
 
 	watch(phoneNumber, (newValue) => {
@@ -325,6 +351,7 @@
 	const reset = () => {
 		// Reset interaction state and validation FIRST to avoid triggering watchers with errors
 		onBlur.value = false
+		dialOnBlur.value = false
 		validation.clearValidation()
 
 		// Clear content
@@ -381,8 +408,8 @@
 					:outlined="outlinedIndicatif"
 					:required="countryCodeRequired"
 					:aria-required="countryCodeRequired"
-					:error="!!errors[1]"
-					:error-messages="errors[1] ? [errors[1]] : []"
+					:error="hasDialCodeError"
+					:error-messages="dialCodeErrors"
 					:display-asterisk="displayAsterisk"
 					:disable-error-handling="shouldDisableErrorHandling"
 					:return-object="true"
@@ -395,6 +422,7 @@
 					text-key="displayText"
 					plain-text-key="plainDisplayText"
 					value-key="code"
+					@blur="validateDialCodeOnBlur"
 				/>
 			</div>
 			<div class="phone-field-number">
@@ -406,10 +434,15 @@
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="required"
 					:aria-required="required"
+					:disable-error-handling="true"
+					:has-error="hasError"
+					:has-warning="hasWarning"
+					:has-success="hasSuccess"
 					:error="hasError"
 					:error-messages="errors"
 					:warning-messages="warnings"
 					:success-messages="successes"
+					:show-success-messages="true"
 					:variant="outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="displayAsterisk"
 					:readonly="readonly"
