@@ -1,7 +1,8 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import TestComposant from '@/components/TestComponent/TestComponent.vue'
+	import { SyTextField } from '@/components'
 	const selectedValue = ref('')
+
 
 	const customRules = [{
 		type: 'custom',
@@ -24,7 +25,7 @@
 		<h1 class="text-2xl font-bold mb-4">
 			Playground
 		</h1>
-		<TestComposant
+		<SyTextField
 			v-model="selectedValue"
 			label="Pokemon Name"
 			:custom-rules="customRules"
