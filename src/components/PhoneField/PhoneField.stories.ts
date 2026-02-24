@@ -8,47 +8,54 @@ const meta = {
 	component: PhoneField,
 	parameters: {
 		layout: 'fullscreen',
+		actions: {
+			handles: ['update:modelValue', 'update:selectedDialCode', 'update:dialCodeModel', 'change'],
+		},
 		controls: { exclude: ['computedValue', 'phoneMask', 'counter', 'hasError', 'phoneNumber', 'mergedDialCodes'] },
 	},
 	argTypes: {
-		modelValue: { control: false },
-		dialCodeModel: { control: false },
-		required: { control: 'boolean' },
-		outlined: { control: 'boolean' },
-		outlinedIndicatif: { control: 'boolean' },
-		withCountryCode: { control: 'boolean' },
-		countryCodeRequired: { control: 'boolean' },
-		displayFormat: {
+		'modelValue': { control: false },
+		'dialCodeModel': { control: false },
+		'onUpdate:modelValue': { action: 'update:modelValue' },
+		'onUpdate:selectedDialCode': { action: 'update:selectedDialCode' },
+		'onUpdate:dialCodeModel': { action: 'update:dialCodeModel' },
+		'onChange': { action: 'change' },
+		'required': { control: 'boolean' },
+		'outlined': { control: 'boolean' },
+		'outlinedIndicatif': { control: 'boolean' },
+		'withCountryCode': { control: 'boolean' },
+		'countryCodeRequired': { control: 'boolean' },
+		'displayFormat': {
 			control: { type: 'select' },
 			description: 'Format d\'affichage des items',
 			options: ['code', 'code-abbreviation', 'code-country', 'country', 'abbreviation'],
 		},
-		customIndicatifs: {
+		'customIndicatifs': {
 			control: 'object',
 			description: 'Permet d\'ajouter des indicatifs à la liste pre-existante',
 		},
-		useCustomIndicatifsOnly: {
+		'useCustomIndicatifsOnly': {
 			control: 'boolean',
 			description: 'Permet d\'utiliser uniquement les indicatifs que vous renseignez dans la props customIndicatifs',
 		},
-		helpText: {
+		'helpText': {
 			control: 'text',
 			description: 'Texte d\'aide affiché sous le champ. Lorsque présent, les messages d\'erreur incluent un exemple concret distinct du texte d\'aide.',
 		},
-		autocompleteCountryCode: {
+		'autocompleteCountryCode': {
 			control: 'text',
 			description: 'Valeur de l\'attribut autocomplete pour le champ indicatif pays (par défaut: "tel-country-code")',
 		},
-		autocompletePhone: {
+		'autocompletePhone': {
 			control: 'text',
 			description: 'Valeur de l\'attribut autocomplete pour le champ numéro de téléphone (par défaut: "tel-national")',
 		},
-		isValidatedOnBlur: { control: 'boolean' },
-		displayAsterisk: { control: 'boolean' },
-		disableErrorHandling: { control: 'boolean' },
-		disabled: { control: 'boolean' },
-		readonly: { control: 'boolean' },
-	},
+		'isValidatedOnBlur': { control: 'boolean' },
+		'displayAsterisk': { control: 'boolean' },
+		'disableErrorHandling': { control: 'boolean' },
+		'disabled': { control: 'boolean' },
+		'readonly': { control: 'boolean' },
+	} as Record<string, unknown>,
 } satisfies Meta<typeof PhoneField>
 
 export default meta
