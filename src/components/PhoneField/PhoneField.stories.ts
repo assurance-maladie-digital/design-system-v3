@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 
 const meta = {
@@ -1253,20 +1253,21 @@ export const DisplayModels: Story = {
 				name: 'Template',
 				code: `
         <template>
-        	<span>
-				{{ args.selectedDialCode }} - {{ args.modelValue }}
-			</span>
-          <PhoneField
-            v-model="modelValue"
-            v-model:selectedDialCode="selectedDialCode"
-            :required="required"
-            :withCountryCode="withCountryCode"
-            :countryCodeRequired="countryCodeRequired"
-            :displayFormat="displayFormat"
-            :customIndicatifs="customIndicatifs"
-            :useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-            :isValidatedOnBlur="isValidatedOnBlur"
-          />
+			<div>
+				Indicatif: {{ selectedDialCodeLabel }}<br/>Numéro: {{ modelValue }}
+			</div>
+			<PhoneField
+				v-model="modelValue"
+				:dialCodeModel="selectedDialCode"
+				@update:selectedDialCode="updateSelectedDialCode"
+				:required="required"
+				:withCountryCode="withCountryCode"
+				:countryCodeRequired="countryCodeRequired"
+				:displayFormat="displayFormat"
+				:customIndicatifs="customIndicatifs"
+				:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+				:isValidatedOnBlur="isValidatedOnBlur"
+			/>
         </template>
         `,
 			},
@@ -1275,9 +1276,25 @@ export const DisplayModels: Story = {
 				code: `
         <script setup lang="ts">
           import { PhoneField } from '@cnamts/synapse'
+		  import { computed, ref } from 'vue'
 
           const modelValue = ref('')
           const selectedDialCode = ref('')
+		  const selectedDialCodeLabel = computed(() => {
+			const value = selectedDialCode.value
+			if (!value) return 'Aucun'
+			if (typeof value === 'object' && value !== null) {
+				const obj = value as Record<string, unknown>
+				const code = 'code' in obj ? String(obj.code ?? '') : ''
+				const country = 'country' in obj ? String(obj.country ?? '') : ''
+				return [code, country].filter(Boolean).join(' ')
+			}
+			return String(value)
+		  })
+
+		  const updateSelectedDialCode = (value: unknown) => {
+			selectedDialCode.value = value as typeof selectedDialCode.value
+		  }
           const required = ref(true)
           const withCountryCode = ref(true)
           const countryCodeRequired = ref(true)
@@ -1309,15 +1326,52 @@ export const DisplayModels: Story = {
 		return {
 			components: { PhoneField },
 			setup() {
-				return { args }
+				type DialCodeModel = (typeof indicatifs)[number] | string | null | undefined
+				const modelValue = ref(args.modelValue)
+				const selectedDialCode = ref<DialCodeModel>(args.dialCodeModel as DialCodeModel)
+
+				watch(() => args.modelValue, () => {
+					modelValue.value = args.modelValue
+				})
+				watch(() => args.dialCodeModel, () => {
+					selectedDialCode.value = args.dialCodeModel as DialCodeModel
+				})
+
+				const selectedDialCodeLabel = computed(() => {
+					const value = selectedDialCode.value
+					if (!value) return 'Aucun'
+					if (typeof value === 'object' && value !== null) {
+						const obj = value as Record<string, unknown>
+						const code = 'code' in obj ? String(obj.code ?? '') : ''
+						const country = 'country' in obj ? String(obj.country ?? '') : ''
+						return [code, country].filter(Boolean).join(' ')
+					}
+					return String(value)
+				})
+
+				const forwardedArgs = computed(() => {
+					const rest = { ...args }
+					delete rest.modelValue
+					delete rest.dialCodeModel
+					return rest
+				})
+
+				const updateSelectedDialCode = (value: DialCodeModel) => {
+					selectedDialCode.value = value
+				}
+
+				return { forwardedArgs, modelValue, selectedDialCode, selectedDialCodeLabel, updateSelectedDialCode }
 			},
 			template: `
 				<div class="pa-4">
 					<div class="pa-4">
-						{{ args.dialCodeModel }} - {{ args.modelValue }}
+						Indicatif: {{ selectedDialCodeLabel }}<br/>Numéro: {{ modelValue }}
 					</div>
 					<PhoneField
-						v-bind="args"
+						v-bind="forwardedArgs"
+						v-model="modelValue"
+						:dialCodeModel="selectedDialCode"
+						@update:selectedDialCode="updateSelectedDialCode"
 					/>
 				</div>
 			`,
