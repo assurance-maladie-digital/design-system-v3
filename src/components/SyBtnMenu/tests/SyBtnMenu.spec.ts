@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import SyBtnMenu from '../SyBtnMenu.vue'
 
 describe('SyBtnMenu', () => {
@@ -177,10 +178,11 @@ describe('SyBtnMenu', () => {
 		})
 
 		await wrapper.find('.sy-user-menu-btn').trigger('click')
+		await nextTick()
 
-		const prependIcon = wrapper.find('.v-list-item__prepend .v-icon')
-		expect(prependIcon.exists()).toBe(true)
-		expect(prependIcon.text()).toContain('mdi-account')
+		const prependIcon = document.body.querySelector('.v-list-item__prepend .v-icon') as HTMLElement | null
+		expect(prependIcon).not.toBeNull()
+		expect(prependIcon?.classList.contains('mdi-account')).toBe(true)
 
 		wrapper.unmount()
 	})
