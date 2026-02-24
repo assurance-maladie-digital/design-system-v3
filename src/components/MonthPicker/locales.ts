@@ -4,5 +4,5 @@ export const locales = {
 	btnLabel: 'Ouvrir le sélecteur de mois',
 	headerSelectYear: 'Sélectionner une année',
 	headerSelectMonth: 'Sélectionner un mois',
-    yearBtnLabel: (currentYear: number) => `Sélectionner l'année, année actuelle ${currentYear}.`,
+	yearBtnLabel: (currentYear: number) => `Sélectionner l'année, année actuelle ${currentYear}.`,
 }
