@@ -2,7 +2,7 @@
 	import { computed, ref, watch, type ComponentPublicInstance } from 'vue'
 	import MonthSelector from './MonthSelector.vue'
 	import YearSelector from './YearSelector.vue'
-	import VisualpickerHeader from './VisualpickerHeader.vue'
+	import VisualpickerHeader from './VisualPickerHeader.vue'
 	import VisualPickerFooter from './VisualPickerFooter.vue'
 
 	const props = defineProps<{
