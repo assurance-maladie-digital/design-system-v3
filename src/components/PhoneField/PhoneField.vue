@@ -30,6 +30,8 @@
 		modelValue: { type: String, default: '' },
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		dialCodeModel: { type: [String, Object] as PropType<string | Record<string, any>>, default: '' },
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+		selectedDialCode: { type: [String, Object] as PropType<string | Record<string, any> | undefined>, default: undefined },
 		required: { type: Boolean, default: false },
 		outlined: { type: Boolean, default: true },
 		outlinedIndicatif: { type: Boolean, default: true },
@@ -50,16 +52,25 @@
 		withoutFieldset: { type: Boolean, default: false },
 	})
 
-	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'change'])
+	const emit = defineEmits(['update:modelValue', 'update:selectedDialCode', 'update:dialCodeModel', 'change'])
+	const phoneField = ref<InstanceType<typeof SyTextField> | null>(null)
 
 	const phoneNumber = ref(props.modelValue || '')
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const dialCode = ref<string | Record<string, any>>(props.dialCodeModel || '')
+	const dialCode = ref<string | Record<string, any>>((props.selectedDialCode !== undefined ? props.selectedDialCode : props.dialCodeModel) || '')
 	// Force re-render of SySelect when needed (e.g., after reset)
 	const dialSelectKey = ref(0)
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
+
+	const mergedDialCodes = computed(() => {
+		if (props.useCustomIndicatifsOnly) {
+			return props.customIndicatifs
+		}
+
+		return [...indicatifs, ...props.customIndicatifs]
+	})
 
 	function formatPhoneNumber(value: string): string {
 		if (!value) return ''
@@ -82,6 +93,7 @@
 
 	watch(dialCode, (newVal) => {
 		emit('update:selectedDialCode', newVal)
+		emit('update:dialCodeModel', newVal)
 		if (typeof newVal === 'object' && newVal !== null) {
 			counter.value = newVal.phoneLength || 10
 			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
@@ -121,12 +133,9 @@
 		return newPosition
 	}
 
-	const handlePhoneInput = (event: Event) => {
-		const inputElement = event.target as HTMLInputElement
-		const input = inputElement.value
-
-		// Sauvegarder la position du curseur
-		const cursorPosition = inputElement.selectionStart || 0
+	const handlePhoneInput = (input: string) => {
+		const inputElement = (phoneField.value?.$el as HTMLElement | undefined)?.querySelector('input') as HTMLInputElement | null
+		const cursorPosition = inputElement?.selectionStart ?? null
 
 		// Appliquer le masque
 		const mask = new Mask({ mask: phoneMask.value })
@@ -137,16 +146,15 @@
 		emit('update:modelValue', maskedValue)
 		emit('change', maskedValue)
 
-		// Restaurer la position du curseur sur le prochain cycle de rendu
+		if (cursorPosition === null) return
+
 		nextTick(() => {
+			const el = (phoneField.value?.$el as HTMLElement | undefined)?.querySelector('input') as HTMLInputElement | null
+			if (!el) return
 			const adjustedPosition = calculateAdjustedPosition(cursorPosition, input, maskedValue)
-			inputElement.setSelectionRange(adjustedPosition, adjustedPosition)
+			el.setSelectionRange(adjustedPosition, adjustedPosition)
 		})
 	}
-
-	const mergedDialCodes = computed(() =>
-		props.useCustomIndicatifsOnly ? props.customIndicatifs : [...indicatifs, ...props.customIndicatifs],
-	)
 
 	const dialCodeOptions = computed(() =>
 		mergedDialCodes.value.map(ind => ({
@@ -164,11 +172,9 @@
 	})
 
 	// Watcher pour initialiser dialCode à partir de props.dialCodeModel
-	watch(() => props.dialCodeModel, (newVal) => {
-		if (!newVal) {
-			dialCode.value = ''
-			return
-		}
+	watch(() => (props.selectedDialCode !== undefined ? props.selectedDialCode : props.dialCodeModel), (newVal) => {
+		// Éviter la boucle infinie
+		if (newVal === dialCode.value) return
 
 		// Si c'est un objet, on cherche l'indicatif correspondant dans la liste des options
 		if (typeof newVal === 'object') {
@@ -425,7 +431,7 @@
 					color="primary"
 					type="tel"
 					@blur="validateInputOnBlur"
-					@input="handlePhoneInput"
+					@update:model-value="handlePhoneInput"
 				>
 					<template #append-inner>
 						<div class="d-flex align-center">

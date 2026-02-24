@@ -1253,20 +1253,22 @@ export const DisplayModels: Story = {
 				name: 'Template',
 				code: `
         <template>
-        	<span>
-				{{ args.selectedDialCode }} - {{ args.modelValue }}
-			</span>
-          <PhoneField
-            v-model="modelValue"
-            v-model:selectedDialCode="selectedDialCode"
-            :required="required"
-            :withCountryCode="withCountryCode"
-            :countryCodeRequired="countryCodeRequired"
-            :displayFormat="displayFormat"
-            :customIndicatifs="customIndicatifs"
-            :useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-            :isValidatedOnBlur="isValidatedOnBlur"
-          />
+			<div>
+				Indicatif: {{ dialCodeModel }}<br/>Numéro: {{ modelValue }}
+			</div>
+			<PhoneField
+				:model-value="modelValue"
+				:dial-code-model="dialCodeModel"
+				@update:modelValue="(value) => modelValue = value"
+				@update:dialCodeModel="(value) => dialCodeModel = value"
+				:required="required"
+				:withCountryCode="withCountryCode"
+				:countryCodeRequired="countryCodeRequired"
+				:displayFormat="displayFormat"
+				:customIndicatifs="customIndicatifs"
+				:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
+				:isValidatedOnBlur="isValidatedOnBlur"
+			/>
         </template>
         `,
 			},
@@ -1275,16 +1277,17 @@ export const DisplayModels: Story = {
 				code: `
         <script setup lang="ts">
           import { PhoneField } from '@cnamts/synapse'
+		  import { ref } from 'vue'
 
-          const modelValue = ref('')
-          const selectedDialCode = ref('')
-          const required = ref(true)
-          const withCountryCode = ref(true)
-          const countryCodeRequired = ref(true)
-          const displayFormat = ref('code-country')
-          const customIndicatifs = ref([])
-          const useCustomIndicatifsOnly = ref(false)
-          const isValidatedOnBlur = ref(true)
+		  const modelValue = ref('')
+		  const dialCodeModel = ref('')
+		  const required = ref(true)
+		  const withCountryCode = ref(true)
+		  const countryCodeRequired = ref(true)
+		  const displayFormat = ref('code-country')
+		  const customIndicatifs = ref([])
+		  const useCustomIndicatifsOnly = ref(false)
+		  const isValidatedOnBlur = ref(true)
         </script>
         `,
 			},
@@ -1309,15 +1312,26 @@ export const DisplayModels: Story = {
 		return {
 			components: { PhoneField },
 			setup() {
-				return { args }
+				const updateModelValue = (value: string) => {
+					(args as Record<string, unknown>).modelValue = value
+				}
+				const updateDialCodeModel = (value: unknown) => {
+					(args as Record<string, unknown>).dialCodeModel = value
+				}
+
+				return { args, updateModelValue, updateDialCodeModel }
 			},
 			template: `
 				<div class="pa-4">
 					<div class="pa-4">
-						{{ args.dialCodeModel }} - {{ args.modelValue }}
+						Indicatif: {{ args.dialCodeModel }}<br/>Numéro: {{ args.modelValue }}
 					</div>
 					<PhoneField
 						v-bind="args"
+						:model-value="args.modelValue"
+						:dial-code-model="args.dialCodeModel"
+						@update:modelValue="updateModelValue"
+						@update:dialCodeModel="updateDialCodeModel"
 					/>
 				</div>
 			`,
