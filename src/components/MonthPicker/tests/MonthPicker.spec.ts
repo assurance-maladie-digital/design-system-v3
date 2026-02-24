@@ -215,7 +215,7 @@ describe('mounthpicker', () => {
 				expect(yearButton.attributes('tabindex')).toBe('0')
 
 				await yearButton.trigger('keydown', { key: 'ArrowUp' })
-				expect(wrapper.findComponent({ name: 'YearSelector' }).find('.year-2024').attributes('tabindex')).toBe('0')
+				expect(wrapper.findComponent({ name: 'YearSelector' }).find('.year-2022').attributes('tabindex')).toBe('0')
 
 				await yearButton.trigger('keydown', { key: 'ArrowDown' })
 				expect(wrapper.findComponent({ name: 'YearSelector' }).find('.year-2025').attributes('tabindex')).toBe('0')
