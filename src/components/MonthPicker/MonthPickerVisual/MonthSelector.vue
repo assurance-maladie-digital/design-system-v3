@@ -24,6 +24,10 @@
 
 	const monthSelector = useTemplateRef<HTMLElement>('monthSelector')
 
+	const initialFocusedMonth = (props.modelValue && props.modelValue >= 1 && props.modelValue <= 12)
+		? props.modelValue
+		: new Date().getMonth() + 1
+
 	const {
 		activeMonth,
 		selectNextMonth,
@@ -32,20 +36,14 @@
 		selectPreviousRow,
 	} = useMonthGrid(
 		monthSelector,
-		props.modelValue || 0,
+		initialFocusedMonth,
 	)
 
 	onMounted(() => {
-		const selectedMonthElement = monthSelector.value!.querySelector<HTMLElement>(`.month-${props.modelValue}`)
-		if (selectedMonthElement) {
-			setTimeout(() => {
-				selectedMonthElement.focus()
-			}, 0)
-			return
-		}
-		const currentMonth = new Date().getMonth() + 1
+		const selectedMonthElement = monthSelector.value!.querySelector<HTMLElement>(`.month-${initialFocusedMonth}`)
+
 		setTimeout(() => {
-			monthSelector.value!.querySelector<HTMLElement>(`.month-${currentMonth}`)!.focus()
+			selectedMonthElement!.focus()
 		}, 0)
 	})
 
