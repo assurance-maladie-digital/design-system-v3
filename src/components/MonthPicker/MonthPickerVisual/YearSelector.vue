@@ -28,17 +28,17 @@
 	)
 
 	onMounted(() => {
-		const selectedYearElement = yearSelector.value!.querySelector<HTMLElement>(`#year-${props.modelValue}`)
+		const selectedYearElement = yearSelector.value!.querySelector<HTMLElement>(`.year-${props.modelValue}`)
 		if (selectedYearElement) {
 			selectedYearElement.focus()
 			return
 		}
 		const currentYear = new Date().getFullYear()
 		if (currentYear >= props.min && currentYear <= props.max) {
-			yearSelector.value!.querySelector<HTMLElement>(`#year-${currentYear}`)!.focus()
+			yearSelector.value!.querySelector<HTMLElement>(`.year-${currentYear}`)!.focus()
 			return
 		}
-		yearSelector.value!.querySelector<HTMLElement>(`#year-${props.min}`)!.focus()
+		yearSelector.value!.querySelector<HTMLElement>(`.year-${props.min}`)!.focus()
 	})
 
 </script>
@@ -55,7 +55,6 @@
 	>
 		<button
 			v-for="year of Array.from({ length: props.max - props.min + 1 }, (_, i) => props.min + i)"
-			:id="`year-${year}`"
 			:key="year"
 			:tabindex="year === activeYear ? 0 : -1"
 			class="year-selector__year"

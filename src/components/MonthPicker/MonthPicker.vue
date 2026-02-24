@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-	import { computed, ref, useAttrs, type ComponentPublicInstance } from 'vue'
+	import { computed, provide, ref, useAttrs, type ComponentPublicInstance } from 'vue'
 	import MonthPickerInput from './MonthPickerInput.vue'
 	import MonthPickerVisual from './MonthPickerVisual/MonthPickerVisual.vue'
 	import { watch } from 'vue'
+	import { locales as defaultLocales, localesKey } from './locales'
 
 	const props = withDefaults(defineProps<{
 		modelValue: string | undefined
-		btnLabel?: string
+		locales?: typeof defaultLocales
 	}>(), {
-		btnLabel: 'Ouvrire le selecteur',
+		locales: () => defaultLocales,
 	})
+
+	provide(localesKey, computed(() => props.locales))
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
@@ -42,7 +45,6 @@
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"
-			:btn-label="props.btnLabel"
 			v-bind="attrs"
 		/>
 		<MonthPickerVisual

@@ -1,18 +1,21 @@
 <script setup lang="ts">
 	import { vMaska } from 'maska/vue'
-	import { ref, watch } from 'vue'
+	import { inject, ref, watch } from 'vue'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { mdiCalendar } from '@mdi/js'
+	import { localesKey } from './locales'
+	import { locales as defaultLocales } from './locales'
 
 	const props = defineProps<{
 		modelValue: string | undefined
-		btnLabel: string
 	}>()
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
 	}>()
+
+	const locales = inject<typeof defaultLocales>(localesKey)!
 
 	const mask = '##/####'
 
@@ -43,14 +46,15 @@
 		v-maska="mask"
 		show-success-messages
 		disable-error-handling
+		:help-text="locales.hint"
 	>
 		<template #append>
 			<button
 				ref="toggleBtn"
 				type="button"
 				class="month-picker-input__toggle-btn"
-				:title="props.btnLabel"
-				:aria-label="props.btnLabel"
+				:title="locales.btnLabel"
+				:aria-label="locales.btnLabel"
 			>
 				<SyIcon
 					:icon="mdiCalendar"

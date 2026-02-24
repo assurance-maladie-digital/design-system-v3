@@ -1,7 +1,8 @@
 <script setup lang="ts">
-	import { computed } from 'vue'
-	import { mdiChevronDown } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { mdiChevronDown } from '@mdi/js'
+	import { computed, inject } from 'vue'
+	import { locales as defaultLocales, localesKey } from '../locales'
 
 	const props = defineProps<{
 		modelValue: string | undefined
@@ -39,9 +40,9 @@
 		if (!props.modelValue) return (new Date().getFullYear())
 		return Number(props.modelValue.split('/')[1])
 	})
-	const yearBtnLabel = computed(() => {
-		return `Sélectionner l'année, année actuelle ${new Date().getFullYear()}`
-	})
+
+	const locales = inject<typeof defaultLocales>(localesKey)!
+
 </script>
 
 <template>
@@ -59,7 +60,7 @@
 		<button
 			type="button"
 			class="visual-picker-year-btn"
-			:aria-label="yearBtnLabel"
+			:aria-label="locales.yearBtnLabel((new Date()).getFullYear())"
 			@click="emits('update:view', props.view === 'months' ? 'years' : 'months')"
 		>
 			{{ selectedYear }}

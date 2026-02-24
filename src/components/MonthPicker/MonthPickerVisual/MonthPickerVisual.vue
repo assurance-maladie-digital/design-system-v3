@@ -1,9 +1,10 @@
 <script setup lang="ts">
-	import { computed, ref, watch, type ComponentPublicInstance } from 'vue'
+	import { computed, inject, ref, watch, type ComponentPublicInstance } from 'vue'
 	import MonthSelector from './MonthSelector.vue'
 	import YearSelector from './YearSelector.vue'
 	import VisualpickerHeader from './VisualPickerHeader.vue'
 	import VisualPickerFooter from './VisualPickerFooter.vue'
+	import { locales as defaultLocales, localesKey } from '../locales'
 
 	const props = defineProps<{
 		textInput: ComponentPublicInstance | null
@@ -17,6 +18,8 @@
 		(e: 'update:month', value: number | undefined): void
 		(e: 'update:open', value: boolean): void
 	}>()
+
+	const locales = inject<typeof defaultLocales>(localesKey)!
 
 	const view = ref<'months' | 'years'>('months')
 	const open = ref(false)
@@ -93,7 +96,7 @@
 		<div class="month-picker-menu">
 			<VisualpickerHeader
 				v-model:view="view"
-				:title="view === 'months' ? 'Sélectionnez un mois' : 'Sélectionnez une année'"
+				:title="view === 'months' ? locales.headerSelectMonth : locales.headerSelectYear"
 				:model-value="internalValue"
 				:min-year="1900"
 				:max-year="2100"
