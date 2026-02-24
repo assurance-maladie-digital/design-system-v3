@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 
 const meta = {
@@ -1253,8 +1253,9 @@ export const DisplayModels: Story = {
 				name: 'Template',
 				code: `
         <template>
-        	<span>
-				{{ args.selectedDialCode }} - {{ args.modelValue }}
+	        	<span>
+				Indicatif: {{ selectedDialCode }}<br/>
+				Numéro: {{ modelValue }}
 			</span>
           <PhoneField
             v-model="modelValue"
@@ -1275,6 +1276,7 @@ export const DisplayModels: Story = {
 				code: `
         <script setup lang="ts">
           import { PhoneField } from '@cnamts/synapse'
+		  import { ref } from 'vue'
 
           const modelValue = ref('')
           const selectedDialCode = ref('')
@@ -1309,15 +1311,33 @@ export const DisplayModels: Story = {
 		return {
 			components: { PhoneField },
 			setup() {
-				return { args }
+				const modelValue = ref(args.modelValue)
+				const selectedDialCode = ref(args.dialCodeModel)
+
+				watch(() => args.modelValue, (newVal) => {
+					modelValue.value = newVal
+				})
+
+				watch(() => args.dialCodeModel, (newVal) => {
+					selectedDialCode.value = newVal
+				})
+
+				return {
+					args,
+					modelValue,
+					selectedDialCode,
+				}
 			},
 			template: `
 				<div class="pa-4">
 					<div class="pa-4">
-						{{ args.dialCodeModel }} - {{ args.modelValue }}
+						Indicatif: {{ selectedDialCode }}<br/>
+						Numéro: {{ modelValue }}
 					</div>
 					<PhoneField
 						v-bind="args"
+						v-model="modelValue"
+						v-model:selectedDialCode="selectedDialCode"
 					/>
 				</div>
 			`,
