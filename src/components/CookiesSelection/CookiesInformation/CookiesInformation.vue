@@ -1,100 +1,103 @@
 <script setup lang="ts">
-import { isRequired } from '@/utils/rules/isRequired'
-import type { VRadio, VRadioGroup } from 'vuetify/components'
-import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
-import { computed, ref, nextTick, onMounted } from 'vue'
-import CookiesTable from '../CookiesTable/CookiesTable.vue'
-import type { CookieTypes, Cookie } from '../types'
-import { locales } from './locales'
-import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-import SyHeading from '@/SyHeading/SyHeading.vue'
+	import { isRequired } from '@/utils/rules/isRequired'
+	import type { VRadio, VRadioGroup } from 'vuetify/components'
+	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
+	import { computed, ref, nextTick, onMounted } from 'vue'
+	import CookiesTable from '../CookiesTable/CookiesTable.vue'
+	import type { CookieTypes, Cookie } from '../types'
+	import { locales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '@/SyHeading/SyHeading.vue'
 
-defineProps<{
-	type: CookieTypes
-	tableItems: Cookie[]
-}>()
+	defineProps<{
+		type: CookieTypes
+		tableItems: Cookie[]
+	}>()
 
-const status = defineModel<boolean | undefined>()
+	const status = defineModel<boolean | undefined>()
 
-const parsedValue = computed(() => {
-	if (status.value === true) {
-		return 'accept'
+	const parsedValue = computed(() => {
+		if (status.value === true) {
+			return 'accept'
+		}
+		if (status.value === false) {
+			return 'reject'
+		}
+		return undefined
+	})
+
+	const open = ref(false)
+	function toggleDetails(event: ToggleEvent): void {
+		open.value = event.newState === 'open'
 	}
-	if (status.value === false) {
-		return 'reject'
+
+	const rejectRadioRef = ref<VRadio | null>(null)
+	const acceptRadioRef = ref<VRadio | null>(null)
+	const radioGroupRef = ref<VRadioGroup | null>(null)
+
+	// Fonction pour supprimer les attributs aria-disabled des composants radio
+	const removeAriaDisabled = (radioRef: typeof rejectRadioRef) => {
+		if (!radioRef.value?.$el) return
+
+		// Chercher l'élément input dans le composant radio
+		const radioElement = radioRef.value.$el
+
+		// Supprimer l'attribut aria-disabled du composant lui-même
+		radioElement.removeAttribute('aria-disabled')
+
+		// Chercher et supprimer l'attribut aria-disabled des éléments enfants (input, label, etc.)
+		const elements = radioElement.querySelectorAll('[aria-disabled]')
+		elements.forEach(el => el.removeAttribute('aria-disabled'))
 	}
-	return undefined
-})
 
-const open = ref(false)
-function toggleDetails(event: ToggleEvent): void {
-	open.value = event.newState === 'open'
-}
+	const removeAriaDescribedby = (radioGrpRef: typeof radioGroupRef) => {
+		if (!radioGrpRef.value?.$el) return
 
-const rejectRadioRef = ref<VRadio | null>(null)
-const acceptRadioRef = ref<VRadio | null>(null)
-const radioGroupRef = ref<VRadioGroup | null>(null)
+		// Chercher l'élément input dans le composant radio
+		const radioElement = radioGrpRef.value.$el
 
-// Fonction pour supprimer les attributs aria-disabled des composants radio
-const removeAriaDisabled = (radioRef: typeof rejectRadioRef) => {
-	if (!radioRef.value?.$el) return
+		// Supprimer l'attribut aria-disabled du composant lui-même
+		radioElement.removeAttribute('aria-describedby')
 
-	// Chercher l'élément input dans le composant radio
-	const radioElement = radioRef.value.$el
+		// Chercher et supprimer l'attribut aria-disabled des éléments enfants (input, label, etc.)
+		const elements = radioElement.querySelectorAll('[aria-describedby]')
+		elements.forEach(el => el.removeAttribute('aria-describedby'))
+	}
 
-	// Supprimer l'attribut aria-disabled du composant lui-même
-	radioElement.removeAttribute('aria-disabled')
-
-	// Chercher et supprimer l'attribut aria-disabled des éléments enfants (input, label, etc.)
-	const elements = radioElement.querySelectorAll('[aria-disabled]')
-	elements.forEach(el => el.removeAttribute('aria-disabled'))
-}
-
-const removeAriaDescribedby = (radioGrpRef: typeof radioGroupRef) => {
-	if (!radioGrpRef.value?.$el) return
-
-	// Chercher l'élément input dans le composant radio
-	const radioElement = radioGrpRef.value.$el
-
-	// Supprimer l'attribut aria-disabled du composant lui-même
-	radioElement.removeAttribute('aria-describedby')
-
-	// Chercher et supprimer l'attribut aria-disabled des éléments enfants (input, label, etc.)
-	const elements = radioElement.querySelectorAll('[aria-describedby]')
-	elements.forEach(el => el.removeAttribute('aria-describedby'))
-}
-
-onMounted(() => {
-	nextTick(() => {
-		// Supprimer les attributs aria-disabled initiaux
-		removeAriaDisabled(rejectRadioRef)
-		removeAriaDisabled(acceptRadioRef)
-		removeAriaDescribedby(radioGroupRef)
-
-		// Observer les changements DOM pour supprimer aria-disabled s'il est ajouté dynamiquement
-		const observer = new MutationObserver(() => {
+	onMounted(() => {
+		nextTick(() => {
+			// Supprimer les attributs aria-disabled initiaux
 			removeAriaDisabled(rejectRadioRef)
 			removeAriaDisabled(acceptRadioRef)
 			removeAriaDescribedby(radioGroupRef)
-		})
 
-		// Observer les deux boutons radio
-		if (rejectRadioRef.value?.$el) {
-			observer.observe(rejectRadioRef.value.$el, { attributes: true, subtree: true, childList: true })
-		}
-		if (acceptRadioRef.value?.$el) {
-			observer.observe(acceptRadioRef.value.$el, { attributes: true, subtree: true, childList: true })
-		}
-		if (radioGroupRef.value?.$el) {
-			observer.observe(radioGroupRef.value.$el, { attributes: true, subtree: true, childList: true })
-		}
+			// Observer les changements DOM pour supprimer aria-disabled s'il est ajouté dynamiquement
+			const observer = new MutationObserver(() => {
+				removeAriaDisabled(rejectRadioRef)
+				removeAriaDisabled(acceptRadioRef)
+				removeAriaDescribedby(radioGroupRef)
+			})
+
+			// Observer les deux boutons radio
+			if (rejectRadioRef.value?.$el) {
+				observer.observe(rejectRadioRef.value.$el, { attributes: true, subtree: true, childList: true })
+			}
+			if (acceptRadioRef.value?.$el) {
+				observer.observe(acceptRadioRef.value.$el, { attributes: true, subtree: true, childList: true })
+			}
+			if (radioGroupRef.value?.$el) {
+				observer.observe(radioGroupRef.value.$el, { attributes: true, subtree: true, childList: true })
+			}
+		})
 	})
-})
 </script>
 
 <template>
 	<div class="vd-cookies-information">
-		<SyHeading class="text-subtitle-1 font-weight-bold mb-2" :level="2">
+		<SyHeading
+			class="text-subtitle-1 font-weight-bold mb-2"
+			:level="2"
+		>
 			{{ locales[type].title }}
 		</SyHeading>
 
@@ -106,28 +109,67 @@ onMounted(() => {
 			<summary class="mb-1">
 				{{ open ? locales.hideInformation : locales.showInformation }}
 
-				<SyIcon :icon="open ? mdiChevronUp : mdiChevronDown" class="mr-2" data-test="chevron" decorative />
+				<SyIcon
+					:icon="open ? mdiChevronUp : mdiChevronDown"
+					class="mr-2"
+					data-test="chevron"
+					decorative
+				/>
 			</summary>
 
-			<CookiesTable :items="tableItems" class="mb-2">
-				<template v-for="(_, slotName) in $slots" #[slotName]="slotProps">
-					<slot :name="slotName" v-bind="slotProps ?? {}" />
+			<CookiesTable
+				:items="tableItems"
+				class="mb-2"
+			>
+				<template
+					v-for="(_, slotName) in $slots"
+					#[slotName]="slotProps"
+				>
+					<slot
+						:name="slotName"
+						v-bind="slotProps ?? {}"
+					/>
 				</template>
 			</CookiesTable>
 		</details>
 
-		<div :id="`radio-group-${type}`" role="heading" aria-level="3" class="vd-cookies-information__heading">
+		<div
+			:id="`radio-group-${type}`"
+			role="heading"
+			aria-level="3"
+			class="vd-cookies-information__heading"
+		>
 			{{ locales.fieldLabel(locales[type].title) }}
 		</div>
 
-		<VRadioGroup v-if="type !== 'essentials'" ref="radioGroupRef" :model-value="parsedValue" :rules="[isRequired]"
-			data-test-id="radio-group" aria-required="true" inline hide-details="auto"
-			class="vd-cookies-information__radio-group" @update:model-value="status = $event === 'accept'">
+		<VRadioGroup
+			v-if="type !== 'essentials'"
+			ref="radioGroupRef"
+			:model-value="parsedValue"
+			:rules="[isRequired]"
+			data-test-id="radio-group"
+			aria-required="true"
+			inline
+			hide-details="auto"
+			class="vd-cookies-information__radio-group"
+			@update:model-value="status = $event === 'accept'"
+		>
 			<VSpacer />
 
-			<VRadio ref="rejectRadioRef" :label="locales.reject" :value="'reject'" color="primary" />
+			<VRadio
+				ref="rejectRadioRef"
+				:label="locales.reject"
+				:value="'reject'"
+				color="primary"
+			/>
 
-			<VRadio ref="acceptRadioRef" :label="locales.accept" :value="'accept'" class="mr-0" color="primary" />
+			<VRadio
+				ref="acceptRadioRef"
+				:label="locales.accept"
+				:value="'accept'"
+				class="mr-0"
+				color="primary"
+			/>
 		</VRadioGroup>
 	</div>
 </template>
@@ -135,7 +177,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
-details>summary {
+details > summary {
 	cursor: pointer;
 	list-style: none;
 	user-select: none;
