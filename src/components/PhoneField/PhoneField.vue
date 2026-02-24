@@ -174,7 +174,10 @@
 	// Watcher pour initialiser dialCode à partir de props.dialCodeModel
 	watch(() => (props.selectedDialCode !== undefined ? props.selectedDialCode : props.dialCodeModel), (newVal) => {
 		// Éviter la boucle infinie
-		if (newVal === dialCode.value) return
+		if (newVal === dialCode.value) {
+			if (typeof newVal !== 'object' || newVal === null) return
+			if (newVal.displayText && newVal.plainDisplayText) return
+		}
 
 		// Si c'est un objet, on cherche l'indicatif correspondant dans la liste des options
 		if (typeof newVal === 'object') {
@@ -188,7 +191,11 @@
 				dialCode.value = matchingOption
 			}
 			else {
-				dialCode.value = newVal
+				dialCode.value = {
+					...newVal,
+					displayText: newVal.displayText ?? generateDisplayText(newVal as Indicatif),
+					plainDisplayText: newVal.plainDisplayText ?? generatePlainDisplayText(newVal as Indicatif),
+				}
 			}
 		}
 		else {
