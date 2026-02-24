@@ -89,11 +89,17 @@
 
 			<div v-if="serviceTitle">
 				<SyHeading
-					class="service-subtitle"
+					class="service-title"
 					:level="1"
 				>
-					{{ serviceSubtitle }}
+					{{ serviceTitle }}
 				</SyHeading>
+				<div
+					v-if="serviceSubtitle"
+					class="service-subtitle"
+				>
+					{{ serviceSubtitle }}
+				</div>
 			</div>
 		</slot>
 	</component>
