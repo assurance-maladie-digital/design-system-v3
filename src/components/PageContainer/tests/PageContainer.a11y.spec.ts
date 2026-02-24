@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -9,6 +9,10 @@ import PageContainer from '../PageContainer.vue'
 // Scénario d’accessibilité : conteneur de page enveloppant un contenu principal.
 
 describe('PageContainer – accessibility (axe)', () => {
+	afterEach(() => {
+		document.body.innerHTML = ''
+	})
+
 	it('has no obvious axe violations with main content slot', async () => {
 		const wrapper = mount(PageContainer, {
 			slots: {
@@ -113,7 +117,7 @@ describe('PageContainer – accessibility (axe)', () => {
 					role: 'navigation',
 				},
 				slots: {
-					default: '<nav><ul><li><a href="#home">Accueil</a></li><li><a href="#about">À propos</a></li></ul></nav>',
+					default: '<ul><li><a href="#home">Accueil</a></li><li><a href="#about">À propos</a></li></ul>',
 				},
 				attachTo: document.body,
 			})
@@ -154,7 +158,7 @@ describe('PageContainer – accessibility (axe)', () => {
 					role: 'contentinfo',
 				},
 				slots: {
-					default: '<footer><p>&copy; 2026 - Tous droits réservés</p></footer>',
+					default: '<div><p>&copy; 2026 - Tous droits réservés</p></div>',
 				},
 				attachTo: document.body,
 			})
@@ -175,7 +179,7 @@ describe('PageContainer – accessibility (axe)', () => {
 					role: 'banner',
 				},
 				slots: {
-					default: '<header><h1>Logo</h1></header>',
+					default: '<div><h1>Logo</h1></div>',
 				},
 				attachTo: document.body,
 			})
@@ -286,7 +290,7 @@ describe('PageContainer – accessibility (axe)', () => {
 					uniqueId: 'footer',
 				},
 				slots: {
-					default: '<footer><p>Informations de pied de page</p></footer>',
+					default: '<div><p>Informations de pied de page</p></div>',
 				},
 				attachTo: document.body,
 			})
@@ -310,7 +314,7 @@ describe('PageContainer – accessibility (axe)', () => {
 					uniqueId: 'header',
 				},
 				slots: {
-					default: '<header><h1>En-tête</h1></header>',
+					default: '<div><h1>En-tête</h1></div>',
 				},
 				attachTo: document.body,
 			})
@@ -461,8 +465,11 @@ describe('PageContainer – accessibility (axe)', () => {
 		it('has proper color contrast with different background colors', async () => {
 			const wrapper = mount(PageContainer, {
 				props: {
-					role: 'main',
+					role: 'region',
 					color: 'surface',
+				},
+				attrs: {
+					'aria-label': 'Bloc coloré',
 				},
 				slots: {
 					default: '<h1>Texte contrasté</h1><p>Paragraphe avec contraste de couleur.</p>',
