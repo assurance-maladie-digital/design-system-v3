@@ -261,6 +261,7 @@ export const Default: Story = {
 		controls: { exclude: ['logoSize', 'items'] },
 	},
 	args: {
+		uniqueId: 'test',
 		a11yCompliance: 'non-compliant',
 		items: items,
 		hideSitemapLink: false,
@@ -323,7 +324,7 @@ export const Default: Story = {
 			template: `
 				<FooterBar
 					v-bind="args.docProps"
-                    unique-id="test"
+                    :unique-id="args.uniqueId"
 					:link-items="args.items"
 					:a11y-compliance="args.a11yCompliance"
 					:hide-a11y-link="args.hideA11yLink"
@@ -358,7 +359,7 @@ export const changeLinks: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar :link-items="items" />
+	<FooterBar unique-id="test" :link-items="items" />
 </template>
 				`,
 			},
@@ -394,6 +395,7 @@ export const changeLinks: Story = {
 		controls: { include: ['linkItems'] },
 	},
 	args: {
+		uniqueId: 'test',
 		linkItems: [
 			{
 				text: 'Accueil',
@@ -422,7 +424,7 @@ export const changeLinks: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.linkItems" />
+              <FooterBar :unique-id="args.uniqueId" :link-items="args.linkItems"/>
 			`,
 		}
 	},
@@ -434,7 +436,7 @@ export const slotPrepend: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar :link-items="items">
+	<FooterBar unique-id="test" :link-items="items">
 		<template #prepend>
 			<li class="text--secondary my-3 mx-4">
 				Texte ajouté
@@ -474,6 +476,7 @@ export const slotPrepend: Story = {
 		controls: { include: ['prepend'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		prepend: '<li class="text--secondary my-3 mx-4">Texte ajouté</li>',
 	},
@@ -484,7 +487,7 @@ export const slotPrepend: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :link-items="args.items">
 					<template #prepend>
 						<li class="text--secondary my-3 mx-4">
 							Texte ajouté
@@ -502,7 +505,7 @@ export const slotAppend: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar :link-items="items">
+	<FooterBar unique-id="test" :link-items="items">
 		<template #append>
 			<li class="text--secondary my-3 mx-4">
 				{{ currentYear }}
@@ -544,6 +547,7 @@ export const slotAppend: Story = {
 		controls: { include: ['append'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		append: '<li class="text--secondary my-3 mx-4">{{ currentYear }}</li>',
 	},
@@ -554,7 +558,7 @@ export const slotAppend: Story = {
 				return { args, currentYear }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :link-items="args.items">
 					<template #append>
 						<li class="text--secondary my-3 mx-4">
 							{{ currentYear }}
@@ -572,7 +576,7 @@ export const extendedMode: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar :link-items="items">
+	<FooterBar unique-id="test" :link-items="items">
 		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 	</FooterBar>
 </template>
@@ -608,6 +612,7 @@ export const extendedMode: Story = {
 		controls: { include: ['default'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		default: '<p class="text--secondary mb-0">Contenu supplémentaire.</p>',
 	},
@@ -618,7 +623,7 @@ export const extendedMode: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :link-items="args.items">
 					<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 				</FooterBar>
 			`,
@@ -632,7 +637,7 @@ export const slotLogo: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar :link-items="items">
+	<FooterBar unique-id="test" :link-items="items">
 		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		<template #logo>
 			<Logo
@@ -675,6 +680,7 @@ export const slotLogo: Story = {
 		controls: { include: ['logo'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		logo: '<Logo :risque-pro="true" aria-label="Risque Pro" />',
 	},
@@ -685,7 +691,7 @@ export const slotLogo: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :link-items="args.items">
 					<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 					<template #logo>
 						<Logo
@@ -705,7 +711,7 @@ export const collapsibleList: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar :link-items="items">
+	<FooterBar unique-id="test" :link-items="items">
 		<VRow class="max-width-none">
 			<VCol cols="12" sm="6">
 				<CollapsibleList
@@ -791,6 +797,7 @@ export const collapsibleList: Story = {
 		controls: { include: ['default'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		default: `<VRow class="max-width-none">
 	<VCol cols="12" sm="6">
@@ -816,7 +823,7 @@ export const collapsibleList: Story = {
 				return { args, remboursementItems, healthItems }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :link-items="args.items">
 					<VRow class="max-width-none">
 						<VCol cols="12" sm="6">
 							<CollapsibleList
@@ -846,6 +853,7 @@ export const hideSectionLogo: Story = {
 				name: 'Template',
 				code: `<template>
 	<FooterBar 
+	    unique-id="test" 
 		:link-items="items"
 		hide-logo
 	>
@@ -884,6 +892,7 @@ export const hideSectionLogo: Story = {
 		controls: { include: ['hideLogo'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		hideLogo: true,
 	},
@@ -894,7 +903,7 @@ export const hideSectionLogo: Story = {
 				return { args }
 			},
 			template: `
-        <FooterBar :hide-logo="args.hideLogo" :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :hide-logo="args.hideLogo" :link-items="args.items">
           <p class="text--secondary mb-0">Contenu supplémentaire.</p>
         </FooterBar>
       `,
@@ -909,6 +918,7 @@ export const hideSectionSocialMediaLinks: Story = {
 				name: 'Template',
 				code: `<template>
 	<FooterBar 
+	    unique-id="test" 
 		:link-items="items"
 		hide-social-media-link
 	>
@@ -947,6 +957,7 @@ export const hideSectionSocialMediaLinks: Story = {
 		controls: { include: ['hideSocialMediaLinks'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		hideSocialMediaLinks: true,
 	},
@@ -957,7 +968,9 @@ export const hideSectionSocialMediaLinks: Story = {
 				return { args }
 			},
 			template: `
-        <FooterBar :hide-social-media-links="args.hideSocialMediaLinks" :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :hide-social-media-links="args.hideSocialMediaLinks"
+                         :link-items="args.items"
+              >
           <p class="text--secondary mb-0">Contenu supplémentaire.</p>
         </FooterBar>
       `,
@@ -972,6 +985,7 @@ export const customSocialMediaLinks: Story = {
 				name: 'Template',
 				code: `<template>
 	<FooterBar 
+	     unique-id="test" 
 		:link-items="items"
 		:social-media-links="socialMediaLinks"
 	>
@@ -1034,6 +1048,7 @@ export const customSocialMediaLinks: Story = {
 		controls: { include: ['socialMediaLinks'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		socialMediaLinks: [
 			{
@@ -1065,7 +1080,9 @@ export const customSocialMediaLinks: Story = {
 				return { args }
 			},
 			template: `
-		<FooterBar :social-media-links="args.socialMediaLinks" :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :social-media-links="args.socialMediaLinks"
+                         :link-items="args.items"
+              >
 		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
@@ -1080,6 +1097,7 @@ export const lightTheme: Story = {
 				name: 'Template',
 				code: `<template>
 	<FooterBar 
+	    unique-id="test" 
 		:link-items="items"
 		light
 	>
@@ -1118,6 +1136,7 @@ export const lightTheme: Story = {
 		controls: { include: ['light'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		light: true,
 	},
@@ -1128,7 +1147,7 @@ export const lightTheme: Story = {
 				return { args }
 			},
 			template: `
-		<FooterBar :light="args.light" :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :light="args.light" :link-items="args.items">
 		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
@@ -1143,6 +1162,7 @@ export const customTheme: Story = {
 				name: 'Template',
 				code: `<template>
 	<FooterBar 
+	    unique-id="test" 
 		:link-items="items"
 		:vuetify-options="vuetifyOptions"
 	>
@@ -1192,6 +1212,7 @@ export const customTheme: Story = {
 		controls: { include: ['vuetifyOptions'] },
 	},
 	args: {
+		uniqueId: 'test',
 		items: items,
 		vuetifyOptions: {
 			footer: {
@@ -1211,7 +1232,7 @@ export const customTheme: Story = {
 				return { args }
 			},
 			template: `
-		<FooterBar :vuetify-options="args.vuetifyOptions" :link-items="args.items">
+              <FooterBar :unique-id="args.uniqueId" :vuetify-options="args.vuetifyOptions" :link-items="args.items">
 		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
@@ -1224,7 +1245,7 @@ export const BackOffice: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar v-bind="docProps" />
+	<FooterBar unique-id="test" v-bind="docProps" />
 </template>
 				`,
 			},
@@ -1248,6 +1269,7 @@ export const BackOffice: Story = {
 		controls: { exclude: ['logoSize', 'items'] },
 	},
 	args: {
+		uniqueId: 'test',
 		a11yCompliance: 'non-compliant',
 		items: items,
 		version: '1.1.2',
@@ -1303,7 +1325,7 @@ export const BackOffice: Story = {
 			template: `
               <FooterBar
                   v-bind="args.docProps"
-                  unique-id="test"
+                  :unique-id="args.uniqueId"
                   :link-items="args.items"
                   :a11y-compliance="args.a11yCompliance"
                   :hide-a11y-link="args.hideA11yLink"

@@ -16,13 +16,21 @@ describe('FooterBar', () => {
 	}
 
 	it('renders correctly', async () => {
-		const wrapper = mount(FooterBar)
+        const wrapper = mount(FooterBar, {
+            props: {
+                uniqueId: 'test',
+            },
+        })
 		expect(FooterBar).toBeTruthy()
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders default props correctly', () => {
-		const wrapper = mount(FooterBar)
+        const wrapper = mount(FooterBar, {
+            props: {
+                uniqueId: 'test',
+            },
+        })
 		expect(wrapper.props().a11yCompliance).toBe('non-compliant')
 		expect(wrapper.props().linkItems).toBeNull()
 		expect(wrapper.props().sitemapRoute).toEqual({ name: 'sitemap' })
@@ -31,6 +39,7 @@ describe('FooterBar', () => {
 
 	it('renders custom props correctly', () => {
 		const customProps = {
+            uniqueId: 'test',
 			a11yCompliance: A11yComplianceEnum['fully-compliant'],
 			linkItems: [{ text: 'Custom Link', to: '/custom' }],
 			hideSitemapLink: true,
@@ -42,7 +51,11 @@ describe('FooterBar', () => {
 	})
 
 	it('renders footer links correctly', () => {
-		const wrapper = mount(FooterBar)
+        const wrapper = mount(FooterBar, {
+            props: {
+                uniqueId: 'test',
+            },
+        })
 		const links = wrapper.findAll('.vd-footer-bar-links li')
 		expect(links.length).toBeGreaterThan(0)
 	})
@@ -50,6 +63,7 @@ describe('FooterBar', () => {
 	it('hides links based on props', () => {
 		const wrapper = mount(FooterBar, {
 			props: {
+                uniqueId: 'test',
 				hideSitemapLink: true,
 				hideCguLink: true,
 				hideCookiesLink: true,
@@ -62,18 +76,30 @@ describe('FooterBar', () => {
 	})
 
 	it('renders version if provided', () => {
-		const version = '1.0.0'
-		const wrapper = mount(FooterBar, { props: { version } })
-		expect(wrapper.text()).toContain(`${locales.versionLabel} ${version}`)
+        const customProps = {
+            uniqueId: 'test',
+            version: '1.0.0',
+        }
+
+        const wrapper = mount(FooterBar, {props: customProps})
+        expect(wrapper.text()).toContain(`${locales.versionLabel} ${customProps.version}`)
 	})
 
 	it('computes logoSize correctly for desktop screens', () => {
-		const wrapper = mount(FooterBar)
+        const wrapper = mount(FooterBar, {
+            props: {
+                uniqueId: 'test',
+            },
+        })
 		expect(wrapper.vm.$.exposed?.logoSize.value).toBe(LogoSize.NORMAL)
 	})
 
 	it('computes logoSize correctly for small screens', async () => {
-		const wrapper = mount(FooterBar)
+        const wrapper = mount(FooterBar, {
+            props: {
+                uniqueId: 'test',
+            },
+        })
 		Object.defineProperty(window, 'innerWidth', {
 			writable: true,
 			configurable: true,
@@ -87,6 +113,9 @@ describe('FooterBar', () => {
 	it('renders the scroll to top button and triggers scrollToTop', async () => {
 		// Passer un slot ou forcer une condition pour activer le mode étendu
 		const wrapper = mount(FooterBar, {
+            props: {
+                uniqueId: 'test',
+            },
 			slots: {
 				default: '<div>Extended mode content</div>', // Slot pour forcer le mode étendu
 			},
@@ -124,12 +153,17 @@ describe('FooterBar', () => {
 	})
 
 	it('sets target attribute correctly based on openInNewTab', () => {
-		const linkItems = [
-			{ text: 'Link 1', href: 'https://example.com', openInNewTab: true },
-			{ text: 'Link 2', href: 'https://example.com', openInNewTab: false },
-		]
+
+        const customProps = {
+            uniqueId: 'test',
+            linkItems: [
+                {text: 'Link 1', href: 'https://example.com', openInNewTab: true},
+                {text: 'Link 2', href: 'https://example.com', openInNewTab: false},
+            ],
+        }
+
 		const wrapper = mount(FooterBar, {
-			props: { linkItems },
+            props: customProps,
 		})
 
 		const links = wrapper.findAll('.vd-footer-bar-links a')
