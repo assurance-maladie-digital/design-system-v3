@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	/* eslint-disabled vuejs-accessibility/anchor-has-content */
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { computed } from 'vue'
 	import { VContainer, VRow, VCol, VCard, VCardTitle, VCardSubtitle } from 'vuetify/components'
 
@@ -44,9 +45,10 @@
 				!['ap2026', 'ap', 'cnam', 'pa'].includes(theme ?? ''))"
 		class="mb-5"
 	>
-		<h2
+		<SyHeading
 			v-if="colorTitleLevel === 2"
 			:id="titleKebabCase"
+			:level="2"
 			:style="`border-bottom: 1px solid rgba(38, 85, 115, 0.15); color: rgb(46, 52, 56); font-family: 'Nunito Sans', -apple-system, '.SFNSText-Regular', 'San Francisco', BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; `"
 			class="mb-2 pb-1 css-wzniqs"
 		>
@@ -77,11 +79,12 @@
 				</svg>
 			</a>
 			{{ colorTitle }}
-		</h2>
+		</SyHeading>
 
-		<h3
+		<SyHeading
 			v-else
 			:id="titleKebabCase"
+			:level="3"
 			:style="`color: rgb(46, 52, 56); font-family: 'Nunito Sans', -apple-system, '.SFNSText-Regular', 'San Francisco', BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; `"
 			class="mb-2 css-wzniqs"
 		>

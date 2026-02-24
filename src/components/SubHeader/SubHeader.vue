@@ -13,6 +13,7 @@
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
 	import { VThemeProvider } from 'vuetify/components'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
 		hideBackBtn?: boolean
@@ -118,13 +119,14 @@
 								theme="dark"
 								height="2rem"
 							/>
-							<h2
+							<SyHeading
 								v-else-if="titleText"
 								class="text-h5 font-weight-bold"
 								:aria-label="titleAccessibleName"
+								:level="2"
 							>
 								{{ titleText }}
-							</h2>
+							</SyHeading>
 						</VFadeTransition>
 					</slot>
 

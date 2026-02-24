@@ -2,6 +2,7 @@
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { ListItem } from './types'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = defineProps<{
 		listTitle: string | null
@@ -55,13 +56,17 @@
 		v-else
 		class="vd-collapse-list"
 	>
-		<h4
+		<SyHeading
 			class="text-subtitle-1 font-weight-bold mb-3"
+			:level="4"
 		>
 			{{ listTitle }}
-		</h4>
+		</SyHeading>
 
-		<ul class="pl-0">
+		<ul
+			class="
+			pl-0"
+		>
 			<li
 				v-for="(item, index) in items"
 				:key="index"

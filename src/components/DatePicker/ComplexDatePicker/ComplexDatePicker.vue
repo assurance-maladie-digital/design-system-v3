@@ -46,6 +46,7 @@
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -1153,9 +1154,12 @@
 						</span>
 					</template>
 					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
+						<SyHeading
+							class="mx-auto my-auto ml-5 mb-4"
+							:level="3"
+						>
 							{{ selectedDates ? displayedDateString : headerDate }}
-						</h3>
+						</SyHeading>
 					</template>
 					<template
 						v-if="props.displayTodayButton"

@@ -3,6 +3,7 @@
 	import PageContainer from '../PageContainer/PageContainer.vue'
 	import { useId } from 'vue'
 	import type { PageAriaRole } from '../types'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	type MessagePart =
 		| { type: 'text', value: string }
@@ -100,13 +101,14 @@
 						{{ code }}
 					</div>
 
-					<h1
+					<SyHeading
 						v-if="pageTitle"
 						:id="role ? `${uniqueId}-title` : undefined"
 						class="mb-2 font-weight-bold text-h5 mb-4"
+						:level="1"
 					>
 						{{ pageTitle }}
-					</h1>
+					</SyHeading>
 
 					<p v-if="message">
 						<template

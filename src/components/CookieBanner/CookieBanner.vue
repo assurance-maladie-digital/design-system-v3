@@ -9,6 +9,7 @@
 	import { config } from './config'
 	import { locales } from './locales'
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = defineProps<CustomizableOptions & {
 		items?: CookiesItems
@@ -191,11 +192,12 @@
 				:aria-label="locales.label"
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
-					<h2
+					<SyHeading
 						class="text-h5 font-weight-bold"
+						:level="2"
 					>
 						{{ locales.title }}
-					</h2>
+					</SyHeading>
 
 					<VSpacer v-bind="options.spacer" />
 

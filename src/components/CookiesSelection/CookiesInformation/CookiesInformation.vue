@@ -7,6 +7,7 @@
 	import type { CookieTypes, Cookie } from '../types'
 	import { locales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	defineProps<{
 		type: CookieTypes
@@ -93,9 +94,12 @@
 
 <template>
 	<div class="vd-cookies-information">
-		<h2 class="text-subtitle-1 font-weight-bold mb-2">
+		<SyHeading
+			class="text-subtitle-1 font-weight-bold mb-2"
+			:level="2"
+		>
 			{{ locales[type].title }}
-		</h2>
+		</SyHeading>
 
 		<p class="mb-4">
 			{{ locales[type].description }}

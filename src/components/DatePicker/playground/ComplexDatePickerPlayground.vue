@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 	import { ref } from 'vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Valeurs pour les différents exemples
 	const standardDate = ref<string | null>(null)
@@ -15,10 +16,17 @@
 
 <template>
 	<div class="playground-container">
-		<h1>ComplexDatePicker Playground</h1>
-
+		<SyHeading
+			:level="1"
+		>
+			ComplexDatePicker Playground
+		</SyHeading>
 		<div class="demo-section">
-			<h2>Format standard (DD/MM/YYYY)</h2>
+			<SyHeading
+				:level="2"
+			>
+				Format standard (DD/MM/YYYY)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="standardDate"
 				label="Date standard"
@@ -32,7 +40,9 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format américain (MM/DD/YYYY)</h2>
+			<SyHeading	:level="2">
+				Format américain (MM/DD/YYYY)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="americanDate"
 				label="Date américaine"
@@ -46,7 +56,9 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format ISO (YYYY-MM-DD)</h2>
+			<SyHeading	:level="2">
+				Format ISO (YYYY-MM-DD)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="isoDate"
 				label="Date ISO"
@@ -60,7 +72,9 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format avec séparateur point (DD.MM.YYYY)</h2>
+			<SyHeading	:level="2">
+				Format avec séparateur point (DD.MM.YYYY)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="dotDate"
 				label="Date avec points"
@@ -74,7 +88,9 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Champ requis</h2>
+			<SyHeading	:level="2">
+				Champ requis
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="requiredDate"
 				label="Date requise"
@@ -89,7 +105,9 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Plage de dates</h2>
+			<SyHeading	:level="2">
+				Plage de dates
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="dateRange"
 				label="Plage de dates"
@@ -104,7 +122,9 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Date de naissance (année d'abord)</h2>
+			<SyHeading	:level="2">
+				Date de naissance (année d'abord)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="birthDate"
 				label="Date de naissance"
@@ -119,7 +139,9 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format d'affichage vs format de retour</h2>
+			<SyHeading	:level="2">
+				Format d'affichage vs format de retour
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="formattedDate"
 				label="Date avec format de retour"

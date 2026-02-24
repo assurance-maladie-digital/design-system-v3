@@ -16,6 +16,7 @@
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import type { DateObjectValue } from '../types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -1043,9 +1044,12 @@
 						Sélectionnez une date
 					</template>
 					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
+						<SyHeading
+							class="mx-auto my-auto ml-5 mb-4"
+							:level="3"
+						>
 							{{ selectedDates ? displayedDateString : headerDate }}
-						</h3>
+						</SyHeading>
 					</template>
 					<template
 						v-if="props.displayTodayButton"

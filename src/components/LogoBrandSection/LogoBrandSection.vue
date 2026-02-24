@@ -8,6 +8,7 @@
 	import { locales } from './locales'
 	import { secondaryLogoMapping } from './secondaryLogoMapping'
 	import type { Theme } from './types'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = withDefaults(
 		defineProps<{
@@ -246,12 +247,13 @@
 				class="vd-title-container d-flex justify-center flex-column text-primary"
 			>
 				<slot name="brand-content">
-					<h1
+					<SyHeading
 						v-if="service.title"
 						:class="{
 							'vd-compte-entreprise-title': isCompteEntreprise,
 						}"
 						class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
+						:level="1"
 					>
 						<template v-if="typeof service.title === 'string'">
 							<span>
@@ -267,14 +269,15 @@
 								{{ service.title.highlight }}
 							</span>
 						</template>
-					</h1>
+					</SyHeading>
 
-					<h2
+					<SyHeading
 						v-if="showServiceSubTitle"
 						class="vd-title text-caption"
+						:level="2"
 					>
 						{{ service.subTitle }}
-					</h2>
+					</SyHeading>
 				</slot>
 			</div>
 		</slot>

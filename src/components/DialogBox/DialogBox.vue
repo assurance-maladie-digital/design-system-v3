@@ -8,6 +8,7 @@
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useDraggable } from './useDraggable'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<{
 		title?: string
@@ -155,13 +156,14 @@
 					:id="id"
 					name="title"
 				>
-					<h2
+					<SyHeading
 						v-if="title"
 						:id="id"
 						class="text-h4 mr-6 font-weight-bold"
+						:level="2"
 					>
 						{{ props.title }}
-					</h2>
+					</SyHeading>
 				</slot>
 
 				<VSpacer v-bind="options.spacer" />

@@ -6,6 +6,7 @@
 	import { locales } from './locales'
 	import LogoMobile from './logos/Logo-mobile.vue'
 	import Logo from './logos/Logo.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<{
 		ariaLabel?: string
@@ -87,15 +88,12 @@
 			</svg>
 
 			<div v-if="serviceTitle">
-				<h1 class="service-title">
-					{{ serviceTitle }}
-				</h1>
-				<div
-					v-if="serviceSubtitle"
+				<SyHeading
 					class="service-subtitle"
+					:level="1"
 				>
 					{{ serviceSubtitle }}
-				</div>
+				</SyHeading>
 			</div>
 		</slot>
 	</component>

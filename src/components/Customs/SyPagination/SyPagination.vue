@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	// Props definition
 	const props = defineProps<{
@@ -187,12 +188,13 @@
 			:aria-labelledby="uniqueId"
 			:aria-controls="ariaControls"
 		>
-			<h2
+			<SyHeading
 				:id="uniqueId"
 				class="d-sr-only"
+				:level="2"
 			>
 				{{ `${label}` }}
-			</h2>
+			</SyHeading>
 			<ul class="list">
 				<!-- First page button (optional) -->
 				<li v-if="$slots['first-page']">
