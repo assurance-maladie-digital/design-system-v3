@@ -8,7 +8,7 @@
 	import { locales } from './locales'
 	import { secondaryLogoMapping } from './secondaryLogoMapping'
 	import type { Theme } from './types'
-	import SyHeading from '@/SyHeading/SyHeading.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(
 		defineProps<{

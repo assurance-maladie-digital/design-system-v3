@@ -46,7 +46,7 @@
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import SyHeading from '@/SyHeading/SyHeading.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	dayjs.extend(customParseFormat)
 

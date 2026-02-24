@@ -7,7 +7,7 @@
 	import type { CookieTypes, Cookie } from '../types'
 	import { locales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import SyHeading from '@/SyHeading/SyHeading.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	defineProps<{
 		type: CookieTypes

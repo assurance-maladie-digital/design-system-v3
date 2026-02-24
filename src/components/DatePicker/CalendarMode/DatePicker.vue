@@ -16,7 +16,7 @@
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import type { DateObjectValue } from '../types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import SyHeading from '@/SyHeading/SyHeading.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)

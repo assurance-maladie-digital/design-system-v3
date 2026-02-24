@@ -8,7 +8,7 @@
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useDraggable } from './useDraggable'
-	import SyHeading from '@/SyHeading/SyHeading.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<{
 		title?: string

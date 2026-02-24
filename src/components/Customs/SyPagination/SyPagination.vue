@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
-	import SyHeading from '@/SyHeading/SyHeading.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Props definition
 	const props = defineProps<{

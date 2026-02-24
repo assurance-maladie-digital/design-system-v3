@@ -13,7 +13,7 @@
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
 	import { VThemeProvider } from 'vuetify/components'
-	import SyHeading from '@/SyHeading/SyHeading.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
 		hideBackBtn?: boolean
