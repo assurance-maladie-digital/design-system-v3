@@ -271,7 +271,6 @@ export const Default: Story = {
 		hideA11yLink: false,
 		hideLogo: false,
 		hideSocialMediaLinks: false,
-		version: 'X.X.X',
 		backOffice: false,
 		backOfficeText: 'Ameli Pro Back Office',
 		socialMediaLinks: [
@@ -332,7 +331,7 @@ export const Default: Story = {
 					:hide-cookies-link="args.hideCookiesLink"
 					:hide-legal-notice-link="args.hideLegalNoticeLink"
                     :hide-sitemap-link="args.hideSitemapLink"
-                    :hide-help-link="args.hidehelpLink"
+                    :hide-help-link="args.hideHelpLink"
 					:hide-logo="args.hideLogo"
 					:hide-social-media-links="args.hideSocialMediaLinks"
 					:light="args.light"
@@ -1216,6 +1215,119 @@ export const customTheme: Story = {
 		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
+		}
+	},
+}
+export const BackOffice: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar v-bind="docProps" />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { FooterBar } from '@cnamts/synapse'
+	
+	const docProps = {
+		sitemapRoute: '/',
+		helpRoute: '/',
+		cguRoute: '/',
+		cookiesRoute: '/',
+		legalNoticeRoute: '/',
+		a11yStatementRoute: '/',
+	}
+</script>
+				`,
+			},
+		],
+		controls: { exclude: ['logoSize', 'items'] },
+	},
+	args: {
+		a11yCompliance: 'non-compliant',
+		items: items,
+		version: '1.1.2',
+		backOffice: true,
+		backOfficeText: 'Ameli Pro Back Office',
+		socialMediaLinks: [
+			{
+				icon: mdiFacebook,
+				name: 'Facebook',
+				href: 'https://www.facebook.com',
+			},
+			{
+				icon: mdiTwitter,
+				name: 'Twitter',
+				href: 'https://www.twitter.com',
+			},
+			{
+				icon: mdiLinkedin,
+				name: 'LinkedIn',
+				href: 'https://www.linkedin.com',
+			},
+		],
+		light: false,
+		sitemapRoute: '/',
+		helpRoute: '/',
+		cguRoute: '/',
+		cookiesRoute: '/',
+		legalNoticeRoute: '/',
+		a11yStatementRoute: '/',
+		vuetifyOptions: {
+			footer: {
+				elevation: 3,
+				color: 'var(--footer-background)',
+				height: 'auto',
+			},
+			goTopBtn: {
+				density: 'compact',
+				icon: 'true',
+				variant: 'text',
+				elevation: 0,
+			},
+			goTopBtnIcon: {
+				color: 'primary',
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { FooterBar },
+			setup() {
+				return { args }
+			},
+			template: `
+              <FooterBar
+                  v-bind="args.docProps"
+                  unique-id="test"
+                  :link-items="args.items"
+                  :a11y-compliance="args.a11yCompliance"
+                  :hide-a11y-link="args.hideA11yLink"
+                  :hide-cgu-link="args.hideCguLink"
+                  :hide-cookies-link="args.hideCookiesLink"
+                  :hide-legal-notice-link="args.hideLegalNoticeLink"
+                  :hide-sitemap-link="args.hideSitemapLink"
+                  :hide-help-link="args.hidehelpLink"
+                  :hide-logo="args.hideLogo"
+                  :hide-social-media-links="args.hideSocialMediaLinks"
+                  :light="args.light"
+                  :version="args.version"
+                  :back-office="args.backOffice"
+                  :back-office-text="args.backOfficeText"
+                  :sitemap-route="args.sitemapRoute"
+                  :help-route="args.helpRoute"
+                  :cgu-route="args.cguRoute"
+                  :cookies-route="args.cookiesRoute"
+                  :legal-notice-route="args.legalNoticeRoute"
+                  :a11y-statement-route="args.a11yStatementRoute"
+                  :social-media-links="args.socialMediaLinks"
+                  :vuetify-options="args.vuetifyOptions"
+              />
+            `,
 		}
 	},
 }
