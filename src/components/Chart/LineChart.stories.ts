@@ -87,7 +87,14 @@ const chartOptions = {
 	responsive: true,
 	maintainAspectRatio: false,
 	plugins: {
-		legend: { position: 'bottom' },
+		legend: {
+				position: 'bottom',
+				labels: {
+					usePointStyle: false,
+					boxHeight: 1,
+					boxWidth: 30,
+				},
+			},
 		tooltip: { mode: 'index', intersect: false },
 	},
 	scales: {
@@ -146,8 +153,14 @@ const chartOptions = {
 			responsive: true,
 			maintainAspectRatio: false,
 			plugins: {
-				legend: { position: 'bottom' },
-				tooltip: { mode: 'index', intersect: false },
+				legend: {
+					position: 'bottom',
+					labels: {
+						usePointStyle: false,
+						boxHeight: 1,
+						boxWidth: 30,
+					},
+				}, tooltip: { mode: 'index', intersect: false },
 			},
 			scales: {
 				x: { grid: { display: false } },

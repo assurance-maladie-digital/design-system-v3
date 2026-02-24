@@ -14,7 +14,6 @@
 	import type { ChartComponentRef } from 'vue-chartjs'
 	import type { ChartData } from 'chart.js'
 
-	// Enregistrement Chart.js
 	ChartJS.register(
 		Title,
 		Tooltip,
@@ -25,7 +24,6 @@
 		LinearScale,
 	)
 
-	// Définition des props pour accepter les données et options dynamiques
 	const props = defineProps({
 		chartData: {
 			type: Object as () => ChartData<'line'>,
