@@ -356,11 +356,11 @@ a {
 .vd-footer-bar.v-theme--dark :deep() {
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
-    color: $white;
+		color: $white;
 
-    &.version {
-      color: tokens.$neutral-white-alpha;
-    }
+		&.version {
+			color: tokens.$neutral-white-alpha;
+		}
 	}
 
 	p,
