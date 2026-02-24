@@ -13,6 +13,7 @@ exports[`FooterBar > renders correctly 1`] = `
     vd-footer-bar
     w-100
   "
+  id="test-footer"
   role="contentinfo"
   style="
     background-color: var(--footer-background);
@@ -46,29 +47,7 @@ exports[`FooterBar > renders correctly 1`] = `
           "
           to="[object Object]"
         >
-          Plan du site
-        </routerlink>
-      </li>
-      <li>
-        <routerlink
-          class="
-            mx-4
-            my-3
-          "
-          to="[object Object]"
-        >
           Conditions générales d’utilisation
-        </routerlink>
-      </li>
-      <li>
-        <routerlink
-          class="
-            mx-4
-            my-3
-          "
-          to="[object Object]"
-        >
-          Gestion des cookies
         </routerlink>
       </li>
       <li>
@@ -93,6 +72,7 @@ exports[`FooterBar > renders correctly 1`] = `
           Accessibilité&nbsp;: non conforme
         </routerlink>
       </li>
+      <!-- v-if -->
       <!-- v-if -->
     </ul>
   </div>
