@@ -8,8 +8,10 @@
 
 	const props = defineProps<{
 		textInput: ComponentPublicInstance | null
-		toggleBtn?: HTMLElement | null
+		toggleBtn: HTMLElement | null
 		modelValue: string | undefined
+		minYear: number
+		maxYear: number
 	}>()
 
 	const emits = defineEmits<{
@@ -98,14 +100,14 @@
 				v-model:view="view"
 				:title="view === 'months' ? locales.headerSelectMonth : locales.headerSelectYear"
 				:model-value="internalValue"
-				:min-year="1900"
-				:max-year="2100"
+				:min-year
+				:max-year
 			/>
 			<YearSelector
 				v-if="view === 'years'"
 				:model-value="year"
-				:min="1900"
-				:max="2100"
+				:min="minYear"
+				:max="maxYear"
 				@update:model-value="setYear"
 			/>
 			<MonthSelector

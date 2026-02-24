@@ -7,9 +7,14 @@
 
 	const props = withDefaults(defineProps<{
 		modelValue: string | undefined
+		label: string
 		locales?: typeof defaultLocales
+		minYear?: number
+		maxYear?: number
 	}>(), {
 		locales: () => defaultLocales,
+		minYear: 1900,
+		maxYear: 2100,
 	})
 
 	provide(localesKey, computed(() => props.locales))
@@ -45,12 +50,15 @@
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"
+			:label
 			v-bind="attrs"
 		/>
 		<MonthPickerVisual
 			v-model="internalValue"
 			:text-input="textInput"
 			:toggle-btn="toggleBtn"
+			:min-year
+			:max-year
 			@update:open="emits('update:open', $event)"
 		/>
 	</div>

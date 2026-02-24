@@ -1,13 +1,33 @@
 import { fn } from '@storybook/test'
 import MonthPicker from './MonthPicker.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
+import type SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
 const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker',
 	component: MonthPicker,
 	argTypes: {
 		'modelValue': { control: 'text' },
-		'btnLabel': { control: 'text' },
+		'locales': {
+			description: 'Objet de traduction pour le sélecteur de mois. Par défaut, les traductions françaises sont utilisées.',
+			table: {
+				type: { summary: 'object' },
+			},
+		},
+		'minYear': {
+			description: 'Année minimale affichée dans le sélecteur visuel. Par défaut, 1900.',
+			table: {
+				type: { summary: 'number' },
+				defaultValue: { summary: '1900' },
+			},
+		},
+		'maxYear': {
+			description: 'Année maximale affichée dans le sélecteur visuel. Par défaut, 2100.',
+			table: {
+				type: { summary: 'number' },
+				defaultValue: { summary: '2100' },
+			},
+		},
 		'onUpdate:modelValue': {
 			action: 'update:modelValue',
 			description: 'Événement émis lorsque la valeur du sélecteur de mois change. La nouvelle valeur est passée en argument.',
@@ -23,17 +43,28 @@ const meta: Meta<typeof MonthPicker> = {
 			},
 		},
 	},
+	parameters: {
+		controls: {
+			exclude: ['width', 'onUpdate:modelValue', 'onUpdate:open'],
+		},
+		docs: {
+			controls: {
+				exclude: ['onUpdate:modelValue', 'onUpdate:open'],
+			},
+		},
+	},
 }
 
 export default meta
-type Story = StoryObj<typeof MonthPicker>
+type Story = StoryObj<typeof MonthPicker & typeof SyTextField>
 
 export const Default: Story = {
 	args: {
 		'modelValue': '11/2025',
-		'label': 'Début du projet (MM/YYYY)',
+		'label': 'Début du projet',
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
+		'width': '350px',
 	},
 	parameters: {
 		sourceCode: [
@@ -43,7 +74,48 @@ export const Default: Story = {
 				<template>
 					<MonthPicker
 						v-model="selectedMonth"
-						label="Début du projet (MM/YYYY)"
+						label="Début du projet"
+						width="350px"
+					/>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { MonthPicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedMonth = ref('11/2025')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const CustomDisplayedYears: Story = {
+	args: {
+		'modelValue': '11/2025',
+		'label': 'Début du projet',
+		'minYear': 2000,
+		'maxYear': 2025,
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+		'width': '350px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<MonthPicker
+						v-model="selectedMonth"
+						label="Début du projet"
+						:min-year="2000"
+						:max-year="2025"
+						width="350px"
 					/>
 				</template>
 				`,
