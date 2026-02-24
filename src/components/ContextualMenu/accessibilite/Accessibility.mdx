@@ -1,15 +1,71 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../ContextualMenu.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as ContextualMenuStories from '../ContextualMenu.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={ContextualMenuStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/ContextualMenu.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="ContextualMenu"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+		<p>Rapport d’audit manuel : <a href="/audits/ContextualMenu.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/658" target="_blank" style={{color:'#0C41BD'}}>issue #658</a>)</p>
-</div>
+	</AuditSection>
+  
+	<CriteriaSection>
+		<CriteriaCard icon="🏷️" title="Structure sémantique claire">
+			<ul>
+				<li>Landmark <code>&lt;nav&gt;</code> avec <code>aria-label</code> obligatoire pour annoncer la zone.</li>
+				<li>Hiérarchie native <code>ul &gt; li &gt; a</code> pour les niveaux imbriqués, sans rôles ARIA détournés.</li>
+				<li>Utilisation de <code>aria-current</code> sur le lien actif pour signaler la section courante.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation clavier native">
+			<ul>
+				<li>Parcours par <kbd>Tab</kbd>/<kbd>Maj+Tab</kbd> sur des liens standards, activation par <kbd>Entrée</kbd>.</li>
+				<li>Styles de focus visibles fournis par la feuille de style partagée et conservés sur tous les niveaux.</li>
+				<li>Activation via clic clavier ou souris met à jour le hash et synchronise l'état actif.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🧭" title="Repères et correspondance contenu">
+			<ul>
+				<li>Chaque élément pointe vers une ancre <code>hash</code>; les sections ciblées doivent avoir des <code>id</code> uniques et, idéalement, <code>tabindex="-1"</code> pour recevoir le focus programmatique.</li>
+				<li>Gestion du hash : changement d'URL et état contrôlé via <code>v-model</code> pour refléter l'élément actif.</li>
+				<li>Support multi-niveaux via la propriété optionnelle <code>level</code> (1 à 6) générant des listes imbriquées.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="ContextualMenu">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournissez systématiquement un <code>ariaLabel</code> descriptif (ex. « Plan de page »).</li>
+			<li>Assurez-vous que chaque <code>hash</code> correspond à un <code>id</code> existant dans la page, avec un titre associé via <code>aria-labelledby</code>.</li>
+			<li>Respectez l'ordre logique du contenu et les niveaux <code>level</code> pour refléter la structure réelle du document.</li>
+			<li>Évitez de placer des éléments interactifs non liens à l'intérieur des entrées du menu.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/TR/WCAG22/#navigation-mechanisms" target="_blank" rel="noopener noreferrer">WCAG – Mécanismes de navigation</a></li>
+			<li><a href="https://www.w3.org/TR/WCAG22/#link-purpose-in-context" target="_blank" rel="noopener noreferrer">WCAG – Objet du lien</a></li>
+			<li><a href="https://www.w3.org/WAI/tutorials/page-structure/sections/" target="_blank" rel="noopener noreferrer">WAI – Structuration des pages et sections</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>
