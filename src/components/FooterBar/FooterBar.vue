@@ -107,9 +107,9 @@
 	})
 
 	const footerLinksMapping = computed(() => {
-		// if (props.linkItems) {
-		//   return filterByTheme(props.linkItems as LinkItem[])
-		// }
+		if (props.linkItems) {
+			return filterByTheme(props.linkItems as LinkItem[])
+		}
 
 		const linksMapping: LinkItem[] = [
 			{
@@ -151,14 +151,16 @@
 	})
 
 	function filterByTheme(items: LinkItem[]): LinkItem[] {
-		const currentTheme = vuetifyTheme.name.value
-
 		return items
 			.filter(item => !item.hidden)
 			.filter(item =>
-				!currentTheme || !item.theme || item.theme === currentTheme,
+				!vuetifyTheme.name.value || !item.theme || item.theme === vuetifyTheme.name.value,
 			)
 	}
+
+	const fontStyle = computed(() => ({
+		fontSize: vuetifyTheme.name.value === 'ap' ? '14px' : '',
+	}))
 
 	defineExpose({
 		logoSize,
@@ -253,6 +255,7 @@
 						:target="item.openInNewTab ? '_blank' : undefined"
 						:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 						class="my-3 mx-4"
+						:style="fontStyle"
 					>
 						{{ item.text }}
 					</component>
@@ -260,13 +263,15 @@
 				<li
 					v-if="props.backOffice"
 					class="my-3 mx-4"
+					:style="fontStyle"
 				>
 					CNAM - {{ props.backOfficeText }}
 				</li>
 
 				<li
 					v-if="props.version"
-					class="my-3 mx-4"
+					class="my-3 mx-4 version"
+					:style="fontStyle"
 				>
 					{{ locales.versionLabel }} {{ props.version }}
 				</li>
@@ -351,7 +356,11 @@ a {
 .vd-footer-bar.v-theme--dark :deep() {
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
-		color: $white;
+    color: $white;
+
+    &.version {
+      color: tokens.$neutral-white-alpha;
+    }
 	}
 
 	p,

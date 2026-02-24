@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproFooter from './AmeliproFooter.vue'
+import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 
 const meta = {
 	argTypes: {
@@ -103,4 +104,24 @@ export const Default: Story = {
 />
 		`,
 	}),
+}
+
+export const Info: Story = {
+	render: (args) => {
+		return {
+			components: { AmeliproMessage },
+			setup() {
+				return { args }
+			},
+			template: `
+              <AmeliproMessage :closable="false" class="mb-4" type="warning">
+                <strong>Ce composant est déprécié</strong>, il ne sera plus maintenu ou mis à jour.
+                Nous vous recommandons d'utiliser à la place le composant <strong><a
+                  href="https://cnam-design-system.netlify.app/?path=/docs/composants-structure-footerbar--docs"
+              >Footer</a></strong>.
+              </AmeliproMessage>
+            `,
+		}
+	},
+	tags: ['!dev'],
 }
