@@ -1259,8 +1259,6 @@ export const DisplayModels: Story = {
 			<PhoneField
 				:model-value="modelValue"
 				:dial-code-model="dialCodeModel"
-				@update:modelValue="(value) => modelValue = value"
-				@update:dialCodeModel="(value) => dialCodeModel = value"
 				:required="required"
 				:withCountryCode="withCountryCode"
 				:countryCodeRequired="countryCodeRequired"
@@ -1268,6 +1266,8 @@ export const DisplayModels: Story = {
 				:customIndicatifs="customIndicatifs"
 				:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
 				:isValidatedOnBlur="isValidatedOnBlur"
+				@update:modelValue="(value) => modelValue = value"
+				@update:dialCodeModel="(value) => dialCodeModel = value"
 			/>
         </template>
         `,
