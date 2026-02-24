@@ -5,46 +5,46 @@
 	import type { PageAriaRole } from '../types'
 	import SyHeading from '../SyHeading/SyHeading.vue'
 
-	type MessagePart =
-		| { type: 'text', value: string }
-		| { type: 'phone', value: string }
+type MessagePart =
+	| { type: 'text', value: string }
+	| { type: 'phone', value: string }
 
-	// Fonction pour formater le message et ajouter des liens tel: aux numéros de téléphone
-	const splitMessage = (message?: string): MessagePart[] => {
-		// Regex pour détecter les numéros de téléphone
-		if (!message)
-			return []
+// Fonction pour formater le message et ajouter des liens tel: aux numéros de téléphone
+const splitMessage = (message?: string): MessagePart[] => {
+	// Regex pour détecter les numéros de téléphone
+	if (!message)
+		return []
 
-		const regex = /\b(\d{4}|\d{10})\b/g
-		const parts: MessagePart[] = []
-		let lastIndex = 0
-		let match: RegExpExecArray | null
+	const regex = /\b(\d{4}|\d{10})\b/g
+	const parts: MessagePart[] = []
+	let lastIndex = 0
+	let match: RegExpExecArray | null
 
-		while ((match = regex.exec(message)) !== null) {
-			if (match.index > lastIndex) {
-				parts.push({
-					type: 'text',
-					value: message.slice(lastIndex, match.index),
-				})
-			}
-
-			parts.push({
-				type: 'phone',
-				value: match[1]!,
-			})
-
-			lastIndex = regex.lastIndex
-		}
-
-		if (lastIndex < message.length) {
+	while ((match = regex.exec(message)) !== null) {
+		if (match.index > lastIndex) {
 			parts.push({
 				type: 'text',
-				value: message.slice(lastIndex),
+				value: message.slice(lastIndex, match.index),
 			})
 		}
 
-		return parts
+		parts.push({
+			type: 'phone',
+			value: match[1]!,
+		})
+
+		lastIndex = regex.lastIndex
 	}
+
+	if (lastIndex < message.length) {
+		parts.push({
+			type: 'text',
+			value: message.slice(lastIndex),
+		})
+	}
+
+	return parts
+}
 
 	withDefaults(defineProps<{
 		pageTitle?: string
@@ -88,15 +88,9 @@
 			class="pa-6 pa-sm-16"
 		>
 			<VRow class="max-width-none">
-				<VCol
-					:sm="$slots.illustration ? 6 : 12"
-					cols="12"
-					class="order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start"
-				>
-					<div
-						v-if="code"
-						class="sy-code text-primary mb-4"
-					>
+				<VCol :sm="$slots.illustration ? 6 : 12" cols="12"
+					class="order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start">
+					<div v-if="code" class="sy-code text-primary mb-4">
 						<span class="d-sr-only">{{ codeErrorText }}</span>
 						{{ code }}
 					</div>
@@ -111,17 +105,11 @@
 					</SyHeading>
 
 					<p v-if="message">
-						<template
-							v-for="(part, index) in splitMessage(message)"
-							:key="index"
-						>
+						<template v-for="(part, index) in splitMessage(message)" :key="index">
 							<span v-if="part.type === 'text'">
 								{{ part.value }}
 							</span>
-							<a
-								v-else
-								:href="`tel:${part.value}`"
-							>
+							<a v-else :href="`tel:${part.value}`">
 								{{ part.value }}
 							</a>
 						</template>
@@ -143,12 +131,7 @@
 					</slot>
 				</VCol>
 
-				<VCol
-					v-if="$slots.illustration"
-					cols="12"
-					sm="6"
-					class="d-flex align-center justify-center"
-				>
+				<VCol v-if="$slots.illustration" cols="12" sm="6" class="d-flex align-center justify-center">
 					<slot name="illustration" />
 				</VCol>
 			</VRow>

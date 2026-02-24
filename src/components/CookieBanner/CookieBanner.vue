@@ -9,7 +9,7 @@
 	import { config } from './config'
 	import { locales } from './locales'
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
-	import SyHeading from '../SyHeading/SyHeading.vue'
+	import SyHeading from '@/SyHeading/SyHeading.vue'
 
 	const props = defineProps<CustomizableOptions & {
 		items?: CookiesItems

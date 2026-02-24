@@ -2,7 +2,7 @@
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { ListItem } from './types'
-	import SyHeading from '../SyHeading/SyHeading.vue'
+	import SyHeading from '@/SyHeading/SyHeading.vue'
 
 	const props = defineProps<{
 		listTitle: string | null
