@@ -1,8 +1,8 @@
 # Rapport a11y
 
-- Généré le: 2026-02-24T16:03:45.588Z
+- Généré le: 2026-02-25T08:54:32.719Z
 - Commande: pnpm vitest run a11y.spec.ts --reporter=json --outputFile a11y-raw.json
-- Composants affectés: 14
+- Composants affectés: 13
 
 ## DataListItem
 Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/DataListItem/tests/DataListItem.a11y.spec.ts
@@ -46,6 +46,20 @@ Error: [a11y][ExternalLinks – menu open with items] 1 violation(s) axe:
     at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
 ```
 
+## HeaderToolbar
+Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/HeaderToolbar/tests/HeaderToolbar.a11y.spec.ts
+
+- Test: HeaderToolbar – accessibility (axe) > has no obvious axe violations with default desktop menus
+  - Détails:
+
+```
+Error: [a11y][HeaderToolbar – default desktop menus] 1 violation(s) axe:
+1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: a[aria-label="Professionnel de santé"]]
+    at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
+    at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\HeaderToolbar\tests\HeaderToolbar.a11y.spec.ts:19:3
+    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
+```
+
 ## HeaderNavigationBar
 Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/HeaderNavigationBar/tests/HeaderNavigationBar.a11y.spec.ts
 
@@ -66,20 +80,6 @@ TypeError: Cannot read properties of undefined (reading 'setInnerWidth')
     at runSuite (file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:1729:8)
 ```
 
-## HeaderToolbar
-Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/HeaderToolbar/tests/HeaderToolbar.a11y.spec.ts
-
-- Test: HeaderToolbar – accessibility (axe) > has no obvious axe violations with default desktop menus
-  - Détails:
-
-```
-Error: [a11y][HeaderToolbar – default desktop menus] 1 violation(s) axe:
-1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: a[aria-label="Professionnel de santé"]]
-    at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
-    at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\HeaderToolbar\tests\HeaderToolbar.a11y.spec.ts:19:3
-    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
-```
-
 ## LunarCalendar
 Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/LunarCalendar/tests/LunarCalendar.a11y.spec.ts
 
@@ -94,26 +94,6 @@ Error: [a11y][LunarCalendar – labeled required field] 1 violation(s) axe:
     at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
 ```
 
-## MaintenancePage
-Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/MaintenancePage/tests/MaintenancePage.a11y.spec.ts
-
-- Test: MaintenancePage – visual hierarchy > applies correct styling for max-height constraint
-  - Détails:
-
-```
-AssertionError: expected null to be truthy
-    at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\MaintenancePage\tests\MaintenancePage.a11y.spec.ts:127:20
-    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:155:11
-    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:26
-    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:1897:20
-    at new Promise (<anonymous>)
-    at runWithTimeout (file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:1863:10)
-    at runTest (file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:1574:12)
-    at runSuite (file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:1729:8)
-    at runSuite (file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:1729:8)
-    at runFiles (file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:1787:3)
-```
-
 ## PaginatedTable
 Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/PaginatedTable/tests/PaginatedTable.a11y.spec.ts
 
@@ -122,7 +102,7 @@ Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/componen
 
 ```
 Error: [a11y][PaginatedTable – local mode with caption] 1 violation(s) axe:
-1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #sy-select-nfcpo]
+1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #sy-select-b4nw0r]
     at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
     at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\PaginatedTable\tests\PaginatedTable.a11y.spec.ts:37:3
     at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
@@ -136,23 +116,9 @@ Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/componen
 
 ```
 Error: [a11y][PhoneField – country code + phone] 1 violation(s) axe:
-1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #sy-select-313lgo]
+1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #sy-select-21r76]
     at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
     at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\PhoneField\tests\PhoneField.a11y.spec.ts:28:3
-    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
-```
-
-## CalendarMode
-Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/DatePicker/CalendarMode/tests/DatePicker.a11y.spec.ts
-
-- Test: DatePicker (CalendarMode) – accessibility (axe) > has no obvious axe violations in default state
-  - Détails:
-
-```
-Error: [a11y][DatePicker (CalendarMode) – default state] 1 violation(s) axe:
-1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #input-v-1]
-    at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
-    at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\DatePicker\CalendarMode\tests\DatePicker.a11y.spec.ts:23:3
     at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
 ```
 
@@ -170,21 +136,6 @@ Error: [a11y][SyPagination – labelled navigation] 1 violation(s) axe:
     at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
 ```
 
-## ComplexDatePicker
-Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/DatePicker/ComplexDatePicker/tests/ComplexDatePicker.a11y.spec.ts
-
-- Test: ComplexDatePicker – accessibility (axe) > has no obvious axe violations in default calendar mode
-  - Détails:
-
-```
-Error: [a11y][ComplexDatePicker – default calendar mode] 2 violation(s) axe:
-1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #input-v-1]
-2. aria-command-name (serious) – ARIA commands must have an accessible name [targets: i]
-    at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
-    at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\DatePicker\ComplexDatePicker\tests\ComplexDatePicker.a11y.spec.ts:22:3
-    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
-```
-
 ## SyTabs
 Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/Customs/SyTabs/tests/SyTabs.a11y.spec.ts
 
@@ -198,6 +149,35 @@ Error: [a11y][SyTabs – default configuration] 3 violation(s) axe:
 3. list (serious) – <ul> and <ol> must only directly contain <li>, <script> or <template> elements [targets: ul]
     at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
     at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\Customs\SyTabs\tests\SyTabs.a11y.spec.ts:45:3
+    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
+```
+
+## CalendarMode
+Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/DatePicker/CalendarMode/tests/DatePicker.a11y.spec.ts
+
+- Test: DatePicker (CalendarMode) – accessibility (axe) > has no obvious axe violations in default state
+  - Détails:
+
+```
+Error: [a11y][DatePicker (CalendarMode) – default state] 1 violation(s) axe:
+1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #input-v-1]
+    at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
+    at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\DatePicker\CalendarMode\tests\DatePicker.a11y.spec.ts:23:3
+    at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
+```
+
+## ComplexDatePicker
+Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/DatePicker/ComplexDatePicker/tests/ComplexDatePicker.a11y.spec.ts
+
+- Test: ComplexDatePicker – accessibility (axe) > has no obvious axe violations in default calendar mode
+  - Détails:
+
+```
+Error: [a11y][ComplexDatePicker – default calendar mode] 2 violation(s) axe:
+1. aria-allowed-attr (critical) – Elements must only use supported ARIA attributes [targets: #input-v-1]
+2. aria-command-name (serious) – ARIA commands must have an accessible name [targets: i]
+    at Module.assertNoA11yViolations (C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\tests\unit\accessibility\axeUtils.ts:45:8)
+    at C:\Users\VACHETBENIMEL1-32214\Desktop\Dev\design-system-v3\src\components\DatePicker\ComplexDatePicker\tests\ComplexDatePicker.a11y.spec.ts:22:3
     at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
 ```
 
