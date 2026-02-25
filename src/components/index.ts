@@ -121,6 +121,7 @@ export { default as ErrorPage } from './ErrorPage/ErrorPage.vue'
 export { default as MaintenancePage } from './MaintenancePage/MaintenancePage.vue'
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
 export { default as StatusPage } from './StatusPage/StatusPage.vue'
+export { default as DeclarationAccessibilityPage } from './DeclarationAccessibilityPage/DeclarationAccessibilityPage.vue'
 
 // ===========================
 // Amelipro
