@@ -17,7 +17,7 @@
 	}>()
 
 	const localeDate = computed(() => {
-		if (!props.modelValue) return new Date().toLocaleString('default', { month: 'long', year: 'numeric' })
+		if (!props.modelValue) return Intl.DateTimeFormat(navigator.language, { month: 'long', year: 'numeric' }).format(new Date())
 		const [month, year] = props.modelValue.split('/').map(Number)
 		let displayYear: string
 		let displayMonth: string
@@ -28,10 +28,10 @@
 			displayYear = (new Date().getFullYear()).toString()
 		}
 		if (month && !isNaN(month) && month >= 1 && month <= 12) {
-			displayMonth = new Date(0, month - 1).toLocaleString('default', { month: 'long' })
+			displayMonth = new Intl.DateTimeFormat(navigator.language, { month: 'long' }).format(new Date(0, month - 1))
 		}
 		else {
-			displayMonth = new Date().toLocaleString('default', { month: 'long' })
+			displayMonth = new Intl.DateTimeFormat(navigator.language, { month: 'long' }).format(new Date())
 		}
 		return `${displayMonth} ${displayYear}`
 	})
