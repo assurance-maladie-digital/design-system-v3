@@ -13,7 +13,7 @@ exports[`FooterBar > renders correctly 1`] = `
     vd-footer-bar
     w-100
   "
-  id="test-footer"
+  id="unique-id-footer"
   role="contentinfo"
   style="
     background-color: var(--footer-background);
