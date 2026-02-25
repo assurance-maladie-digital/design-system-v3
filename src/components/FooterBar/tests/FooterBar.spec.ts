@@ -18,7 +18,7 @@ describe('FooterBar', () => {
 	it('renders correctly', async () => {
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
+                uniqueId: 'unique-id',
 			},
 		})
 		expect(FooterBar).toBeTruthy()
@@ -28,7 +28,7 @@ describe('FooterBar', () => {
 	it('renders default props correctly', () => {
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
+                uniqueId: 'unique-id',
 			},
 		})
 		expect(wrapper.props().a11yCompliance).toBe('non-compliant')
@@ -39,7 +39,7 @@ describe('FooterBar', () => {
 
 	it('renders custom props correctly', () => {
 		const customProps = {
-			uniqueId: 'test',
+            uniqueId: 'unique-id',
 			a11yCompliance: A11yComplianceEnum['fully-compliant'],
 			linkItems: [{ text: 'Custom Link', to: '/custom' }],
 			hideSitemapLink: true,
@@ -53,7 +53,7 @@ describe('FooterBar', () => {
 	it('renders footer links correctly', () => {
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
+                uniqueId: 'unique-id',
 			},
 		})
 		const links = wrapper.findAll('.vd-footer-bar-links li')
@@ -63,7 +63,7 @@ describe('FooterBar', () => {
 	it('hides links based on props', () => {
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
+                uniqueId: 'unique-id',
 				hideSitemapLink: true,
 				hideCguLink: true,
 				hideCookiesLink: true,
@@ -77,7 +77,7 @@ describe('FooterBar', () => {
 
 	it('renders version if provided', () => {
 		const customProps = {
-			uniqueId: 'test',
+            uniqueId: 'unique-id',
 			version: '1.0.0',
 		}
 
@@ -88,7 +88,7 @@ describe('FooterBar', () => {
 	it('computes logoSize correctly for desktop screens', () => {
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
+                uniqueId: 'unique-id',
 			},
 		})
 		expect(wrapper.vm.$.exposed?.logoSize.value).toBe(LogoSize.NORMAL)
@@ -97,7 +97,7 @@ describe('FooterBar', () => {
 	it('computes logoSize correctly for small screens', async () => {
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
+                uniqueId: 'unique-id',
 			},
 		})
 		Object.defineProperty(window, 'innerWidth', {
@@ -114,7 +114,7 @@ describe('FooterBar', () => {
 		// Passer un slot ou forcer une condition pour activer le mode étendu
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
+                uniqueId: 'unique-id',
 			},
 			slots: {
 				default: '<div>Extended mode content</div>', // Slot pour forcer le mode étendu
@@ -154,7 +154,7 @@ describe('FooterBar', () => {
 
 	it('sets target attribute correctly based on openInNewTab', () => {
 		const customProps = {
-			uniqueId: 'test',
+            uniqueId: 'unique-id',
 			linkItems: [
 				{ text: 'Link 1', href: 'https://example.com', openInNewTab: true },
 				{ text: 'Link 2', href: 'https://example.com', openInNewTab: false },
