@@ -591,7 +591,9 @@
 	 */
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
+	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
 
 	/**
 	 * Holiday marking (partagé via useHolidayHighlighting)
@@ -1050,7 +1052,7 @@
 		<template v-else>
 			<VMenu
 				v-model="isDatePickerVisible"
-				activator="parent"
+				:activator="menuActivatorRef"
 				:min-width="0"
 				location="bottom"
 				:close-on-content-click="false"
@@ -1059,54 +1061,63 @@
 				transition="fade-transition"
 				:offset="[0, 10]"
 			>
-				<template #activator="{ props: menuProps }">
-					<DateTextInput
-						v-bind="menuProps"
-						ref="dateCalendarTextInputRef"
-						:key="fieldKey"
-						:model-value="textInputValue"
-						:label="labelWithAsterisk"
-						:placeholder="props.placeholder"
-						:format="props.format"
-						:date-format-return="props.dateFormatReturn"
-						:required="props.required"
-						:disabled="props.disabled"
-						:readonly="props.readonly"
-						:title="props.title"
-						:is-outlined="props.isOutlined"
-						:display-icon="props.displayIcon"
-						:display-append-icon="props.displayAppendIcon"
-						:display-prepend-icon="props.displayPrependIcon"
-						:no-icon="props.noIcon"
-						:custom-rules="props.customRules"
-						:custom-warning-rules="props.customWarningRules"
-						:display-asterisk="props.displayAsterisk"
-						:disable-error-handling="props.disableErrorHandling"
-						:show-success-messages="props.showSuccessMessages"
-						:bg-color="props.bgColor"
-						:display-range="props.displayRange"
-						:is-validate-on-blur="props.isValidateOnBlur"
-						:external-error-messages="errorMessages"
-						:class="[getMessageClasses(), 'label-hidden-on-focus']"
-						:auto-clamp="props.autoClamp"
-						:density="props.density"
-						:hint="props.hint"
-						:persistent-hint="props.persistentHint"
-						@update:model-value="handleDateTextInputUpdate"
-						@click="openDatePickerOnClick"
-						@focus="openDatePickerOnFocus"
-						@blur="handleInputBlur"
-						@input="handleInput"
-						@keydown="handleKeydown"
-						@date-selected="handleDateSelected"
-						@prepend-icon-click="openDatePickerOnIconClick"
-						@append-icon-click="openDatePickerOnIconClick"
-					/>
+				<template #activator>
+					<div
+						class="date-text-input-activator"
+						role="combobox"
+						aria-haspopup="dialog"
+						:aria-expanded="isDatePickerVisible"
+						:aria-controls="datePickerContentId"
+						ref="menuActivatorRef"
+					>
+						<DateTextInput
+							ref="dateCalendarTextInputRef"
+							:key="fieldKey"
+							:model-value="textInputValue"
+							:label="labelWithAsterisk"
+							:placeholder="props.placeholder"
+							:format="props.format"
+							:date-format-return="props.dateFormatReturn"
+							:required="props.required"
+							:disabled="props.disabled"
+							:readonly="props.readonly"
+							:title="props.title"
+							:is-outlined="props.isOutlined"
+							:display-icon="props.displayIcon"
+							:display-append-icon="props.displayAppendIcon"
+							:display-prepend-icon="props.displayPrependIcon"
+							:no-icon="props.noIcon"
+							:custom-rules="props.customRules"
+							:custom-warning-rules="props.customWarningRules"
+							:display-asterisk="props.displayAsterisk"
+							:disable-error-handling="props.disableErrorHandling"
+							:show-success-messages="props.showSuccessMessages"
+							:bg-color="props.bgColor"
+							:display-range="props.displayRange"
+							:is-validate-on-blur="props.isValidateOnBlur"
+							:external-error-messages="errorMessages"
+							:class="[getMessageClasses(), 'label-hidden-on-focus']"
+							:auto-clamp="props.autoClamp"
+							:density="props.density"
+							:hint="props.hint"
+							:persistent-hint="props.persistentHint"
+							@update:model-value="handleDateTextInputUpdate"
+							@click="openDatePickerOnClick"
+							@focus="openDatePickerOnFocus"
+							@blur="handleInputBlur"
+							@input="handleInput"
+							@keydown="handleKeydown"
+							@date-selected="handleDateSelected"
+							@prepend-icon-click="openDatePickerOnIconClick"
+							@append-icon-click="openDatePickerOnIconClick"
+						/>
+					</div>
 				</template>
 
 				<VDatePicker
 					v-if="isDatePickerVisible"
 					ref="datePickerRef"
+					:id="datePickerContentId"
 					v-model="selectedDates"
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
