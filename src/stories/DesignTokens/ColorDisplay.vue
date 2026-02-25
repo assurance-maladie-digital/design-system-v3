@@ -11,6 +11,7 @@
 		apColors: Record<string, string>
 		apColors2026: Record<string, string>
 		colorTitle: string
+		colorDescription?: string
 		colorTitleLevel: number
 	}
 
@@ -110,6 +111,7 @@
 			</a>
 			{{ colorTitle }}
 		</h3>
+		<span>{{ colorDescription }}</span>
 
 		<VContainer>
 			<VRow v-if="!isEmptyObject(displayColors)">
