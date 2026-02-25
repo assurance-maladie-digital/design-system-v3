@@ -94,6 +94,7 @@
 		:max-height="455"
 		disable-initial-focus
 		:retain-focus="false"
+		:activator-props="{'aria-haspopup': 'dialog'}"
 	>
 		<div class="month-picker-menu">
 			<VisualpickerHeader
