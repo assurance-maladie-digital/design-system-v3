@@ -136,6 +136,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies requis
@@ -241,6 +242,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies fonctionnels
@@ -444,6 +446,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies d’analyse

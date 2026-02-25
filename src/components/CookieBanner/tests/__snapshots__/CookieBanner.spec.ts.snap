@@ -136,6 +136,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies requis
@@ -241,6 +242,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies fonctionnels
@@ -442,6 +444,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies d’analyse
