@@ -224,11 +224,11 @@ const meta = {
 			},
 			description: 'Slot pour remplacer le logo.',
 		},
-        uniqueId: {
-            description: 'Identifiant unique du footer'
-        },
+		uniqueId: {
+			description: 'Identifiant unique du footer',
+		},
 
-    },
+	},
 } satisfies Meta<typeof FooterBar>
 
 export default meta
@@ -265,7 +265,7 @@ export const Default: Story = {
 		controls: { exclude: ['logoSize', 'items'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		a11yCompliance: 'non-compliant',
 		items: items,
 		hideSitemapLink: false,
@@ -399,7 +399,7 @@ export const changeLinks: Story = {
 		controls: { include: ['linkItems'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		linkItems: [
 			{
 				text: 'Accueil',
@@ -480,7 +480,7 @@ export const slotPrepend: Story = {
 		controls: { include: ['prepend'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		prepend: '<li class="text--secondary my-3 mx-4">Texte ajouté</li>',
 	},
@@ -551,7 +551,7 @@ export const slotAppend: Story = {
 		controls: { include: ['append'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		append: '<li class="text--secondary my-3 mx-4">{{ currentYear }}</li>',
 	},
@@ -616,7 +616,7 @@ export const extendedMode: Story = {
 		controls: { include: ['default'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		default: '<p class="text--secondary mb-0">Contenu supplémentaire.</p>',
 	},
@@ -684,7 +684,7 @@ export const slotLogo: Story = {
 		controls: { include: ['logo'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		logo: '<Logo :risque-pro="true" aria-label="Risque Pro" />',
 	},
@@ -801,7 +801,7 @@ export const collapsibleList: Story = {
 		controls: { include: ['default'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		default: `<VRow class="max-width-none">
 	<VCol cols="12" sm="6">
@@ -896,7 +896,7 @@ export const hideSectionLogo: Story = {
 		controls: { include: ['hideLogo'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		hideLogo: true,
 	},
@@ -961,7 +961,7 @@ export const hideSectionSocialMediaLinks: Story = {
 		controls: { include: ['hideSocialMediaLinks'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		hideSocialMediaLinks: true,
 	},
@@ -1052,7 +1052,7 @@ export const customSocialMediaLinks: Story = {
 		controls: { include: ['socialMediaLinks'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		socialMediaLinks: [
 			{
@@ -1140,7 +1140,7 @@ export const lightTheme: Story = {
 		controls: { include: ['light'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		light: true,
 	},
@@ -1216,7 +1216,7 @@ export const customTheme: Story = {
 		controls: { include: ['vuetifyOptions'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		items: items,
 		vuetifyOptions: {
 			footer: {
@@ -1273,7 +1273,7 @@ export const BackOffice: Story = {
 		controls: { exclude: ['logoSize', 'items'] },
 	},
 	args: {
-        uniqueId: 'unique-id',
+		uniqueId: 'unique-id',
 		a11yCompliance: 'non-compliant',
 		items: items,
 		version: '1.1.2',
