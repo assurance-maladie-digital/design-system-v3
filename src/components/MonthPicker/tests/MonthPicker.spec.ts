@@ -44,7 +44,11 @@ describe('mounthpicker', () => {
 
 	describe('MonthPickerInput', () => {
 		it('should emit update:modelValue when the input value changes', async () => {
-			const wrapper = mount(MonthPicker)
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+				},
+			})
 
 			const input = wrapper.find('input')
 			await input.setValue('01/2027')
@@ -55,7 +59,11 @@ describe('mounthpicker', () => {
 		})
 
 		it('should emit multiple update:modelValue when the input value changes multiple times', async () => {
-			const wrapper = mount(MonthPicker)
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+				},
+			})
 			const input = wrapper.find('input')
 
 			await input.setValue('01/2027')
@@ -280,7 +288,7 @@ describe('mounthpicker', () => {
 			const currentMonthBtn = modal.find('.month-picker-footer__current-month-btn')
 			await currentMonthBtn.trigger('click')
 
-			expect(wrapper.emitted('update:modelValue')![0]![0]).toBe('03/2023') // The value should be '03/2023' (March 2023)
+			expect(wrapper.emitted('update:modelValue')).toEqual([['03/2023']]) // The value should be '03/2023' (March 2023)
 
 			wrapper.unmount()
 		})
@@ -308,7 +316,7 @@ describe('mounthpicker', () => {
 			const currentMonthBtn = modal.find('.month-picker-footer__current-month-btn')
 			await currentMonthBtn.trigger('click')
 
-			expect(wrapper.emitted('update:modelValue')![0]![0]).toBe('03/2023') // The value should be '03/2023' (March 2023)
+			expect(wrapper.emitted('update:modelValue')).toEqual([['03/2023']]) // The value should be '03/2023' (March 2023)
 
 			wrapper.unmount()
 		})
@@ -647,6 +655,68 @@ describe('mounthpicker', () => {
 			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
 			expect(monthButton.attributes('aria-label')).toBe('janvier')
 			expect(monthButton.text()).toBe('janv.')
+
+			wrapper.unmount()
+		})
+
+		it('display the date in the header according to the locale', async () => {
+			// mock navigator.language to french
+			Object.defineProperty(navigator, 'language', {
+				value: 'fr-FR',
+				writable: true,
+			})
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const headerText = wrapper
+				.findComponent({ name: 'VisualPickerHeader' })
+				.find('.visual-picker-header__date')
+				.text()
+
+			expect(headerText).toBe('novembre 2025') // The header should display the date in the format "month year" in lowercase and in french
+
+			wrapper.unmount()
+		})
+
+		it('display the date in the header according to the locale', async () => {
+			// mock navigator.language to German
+			Object.defineProperty(navigator, 'language', {
+				value: 'de-DE',
+				writable: true,
+			})
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Projektbeginn',
+					modelValue: '02/2025',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const headerText = wrapper
+				.findComponent({ name: 'VisualPickerHeader' })
+				.find('.visual-picker-header__date')
+				.text()
+
+			expect(headerText).toBe('Februar 2025') // The header should display the date in the format "month year" in German
 
 			wrapper.unmount()
 		})

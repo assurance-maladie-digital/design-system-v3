@@ -6,12 +6,13 @@
 	import { locales as defaultLocales, localesKey } from './locales'
 
 	const props = withDefaults(defineProps<{
-		modelValue: string | undefined
+		modelValue?: string
 		label: string
 		locales?: typeof defaultLocales
 		minYear?: number
 		maxYear?: number
 	}>(), {
+		modelValue: undefined,
 		locales: () => defaultLocales,
 		minYear: 1900,
 		maxYear: 2100,
