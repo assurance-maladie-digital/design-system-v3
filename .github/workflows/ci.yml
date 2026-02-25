@@ -45,10 +45,10 @@ jobs:
         working-directory: ./
       - name: Unit tests without Snapshots
         run: pnpm test:unit
-      #   env:
-      #     NODE_OPTIONS: "--max-old-space-size=4096"
-      # - name: Accessibility tests (axe via vitest-axe)
-      #   run: pnpm test:a11y
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+      - name: Accessibility tests (axe via vitest-axe)
+        run: pnpm test:a11y
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
       - name: Build
