@@ -21,36 +21,29 @@
 - Documentation
 - Ce changement nécessite une mise à jour de la documentation
 
+## Definition of Done
 
-## Checklist de validation RGAA
-
-- [ ] Testé avec navigation au clavier
-- [ ] Testé avec lecteur d'écran
-- [ ] Testé avec différentes tailles d'écran
-- [ ] Testé avec Tanaguru
-
-## Checklist
-
-<!-- Vérifiez chaque point de la checklist et cochez-le s'il est appliqué. -->
-
-- [ ] Ma Pull Request pointe vers la bonne branche
-- [ ] Le composant est conforme aux maquettes (tokens)
-- [ ] Le composant est fonctionnel
-- [ ] Le composant est responsive (mobile, tablet et desktop)
-- [ ] Le composant répond aux critères d'accessibilité (test Tanaguru + A11y linter)
-- [ ] J'ai effectué une review de mon propre code
-- [ ] J'ai commenté mon code, en particulier dans les parties difficiles à comprendre
-- [ ] J'ai mis en place une stories pour ma fonctionnalité / fix /...
-- [ ] Mes modifications ne génèrent aucun nouveau warning
-- [ ] J'ai ajouté des tests qui prouvent que mon correctif est efficace ou que ma fonctionnalité fonctionne
-- [ ] Les tests unitaires passent localement avec mes modifications
-
-## Checklist de validation du correctif RGAA
-
-- [ ] Conforme au critère RGAA concerné
-- [ ] Testé avec navigation au clavier
-- [ ] Testé avec lecteur d'écran
-- [ ] Testé avec différentes tailles d'écran
-- [ ] Pas de régression visuelle
-- [ ] Documentation mise à jour (ajout du doc + maj avancement) 
-- [ ] Breaking changes documentés
+| Nouveau composant                                                                  | Evolution ou correctif                                                                                           |
+|------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **Bonne Pratique**                                                                 | **Bonne Pratique**                                                                                               |
+| - [ ] Ma Pull Request est bien nommée (SY/AP - Composant: descriptif du composant) | - [ ] Ma Pull Request est bien nommée (SY/AP - Composant: descriptif issue)                                      |
+| - [ ] Ma Pull Request pointe vers la bonne branche                                 | - [ ] Ma Pull Request pointe vers la bonne branche                                                               |
+| - [ ] Linker la demande de création du composant et PR                             | - [ ] Linker issue et PR                                                                                         |
+| **Design**                                                                         | **Design**                                                                                                       |
+| - [ ] Le composant respecte les maquettes validées                                 | - [ ] L'évolution du composant respecte les maquettes validées (et l'équipe design est informée des changements) |
+| - [ ] Les design tokens sont utilisés                                              | - [ ] Les design tokens sont utilisés                                                                            |
+| **Fonctionnel**                                                                    | **Fonctionnel**                                                                                                  |
+| - [ ] Le composant est fonctionnel dans les cas d’usage définis                    | - [ ] Le correctif résout le problème identifié                                                                  |
+| - [ ] Le composant est responsive (mobile, tablet, desktop)                        | - [ ] Aucun impact sur les usages existants                                                                      |
+| **Accessibilité spécifique au composant**                                          | **Accessibilité spécifique**                                                                                     |
+| - [ ] La navigation clavier couvre tous les éléments interactifs                   | - [ ] Navigation clavier vérifiée                                                                                |
+| - [ ] La restitution lecteur d’écran est correcte                                  | - [ ] Restitution lecteur d’écran vérifiée                                                                       |
+| - [ ] Les règles a11y spécifiques sont documentées                                 | - [ ] Tests a11y mis à jour si nécessaire                                                                        |
+| - [ ] Les tests a11y automatisés sont présents                                     | - [ ] Page accessibilité mise à jour si impact / crée si n’existe pas                                            |
+| **Documentation & Storybook**                                                      | **Documentation & Storybook**                                                                                    |
+| - [ ] Une story est créée avec exemples d’usage                                    | - [ ] Storybook mis à jour si nécessaire                                                                         |
+| - [ ] L’onglet A11Y Storybook est présent et sans erreur                           | - [ ] Onglet A11Y sans erreur                                                                                    |
+| - [ ] Une page de documentation accessibilité est créée                            | - [ ] La page de documentation accessibilité mise à jour si nécessaire                                           |
+| **Tests**                                                                          | **Tests**                                                                                                        |
+| - [ ] Des tests prouvent le bon fonctionnement du composant                        | - [ ] Tests mis à jour ou ajoutés pour couvrir le correctif                                                      |
+| - [ ] Deploy + SKSN Checks                                                         | - [ ] Deploy + SKSN Checks                                                                                       |
