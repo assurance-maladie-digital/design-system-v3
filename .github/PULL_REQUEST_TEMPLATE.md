@@ -23,6 +23,8 @@
 
 ## Definition of Done
 
+<!-- Avant de proposer une review, vérifiez chaque point de la checklist qui vous concerne et cochez-le s'il est appliqué. -->
+
 | Nouveau composant/template                                                                           | Evolution ou correctif de composant/template                                                                              |
 |------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
 | **Bonne Pratique**                                                                                   | **Bonne Pratique**                                                                                                        |
