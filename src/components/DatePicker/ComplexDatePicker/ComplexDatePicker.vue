@@ -1063,12 +1063,12 @@
 			>
 				<template #activator>
 					<div
+						ref="menuActivatorRef"
 						class="date-text-input-activator"
 						role="combobox"
 						aria-haspopup="dialog"
 						:aria-expanded="isDatePickerVisible"
 						:aria-controls="datePickerContentId"
-						ref="menuActivatorRef"
 					>
 						<DateTextInput
 							ref="dateCalendarTextInputRef"
@@ -1116,8 +1116,8 @@
 
 				<VDatePicker
 					v-if="isDatePickerVisible"
-					ref="datePickerRef"
 					:id="datePickerContentId"
+					ref="datePickerRef"
 					v-model="selectedDates"
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
