@@ -77,7 +77,7 @@
 	const vuetifyTheme = useTheme()
 
 	const emit = defineEmits<{
-    (e: 'event', item: string): void
+		(e: 'event', item: string): void
 	}>()
 
 	const getLinkComponent = (item: LinkItem): string => {
