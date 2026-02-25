@@ -68,7 +68,7 @@ const chartOptions = {
 			labels: ['Mai', 'Juin', 'Juillet', 'Août', 'Sept', 'Oct'],
 			datasets: [
 				{
-					label: 'Légende',
+					label: 'Légende 1',
 					data: [20, 32, 14, 20, 12, 68],
 					backgroundColor: '#0c419a',
 					stack: 'total',
@@ -76,7 +76,7 @@ const chartOptions = {
 
 				},
 				{
-					label: 'Légende',
+					label: 'Légende 2',
 					data: [22, 18, 40, 8, 33, 10],
 					backgroundColor: '#dbe4f3',
 					stack: 'total',
@@ -84,7 +84,7 @@ const chartOptions = {
 
 				},
 				{
-					label: 'Légende',
+					label: 'Légende 3',
 					data: [12, 10, 28, 7, 32, 8],
 					backgroundColor: [
 						pattern.draw('line', '#ffffff', '#0c419a', 10),

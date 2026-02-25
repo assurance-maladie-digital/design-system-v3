@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, onMounted, nextTick } from 'vue'
+	import { ref, onMounted, nextTick, computed } from 'vue'
 	import { Bar } from 'vue-chartjs'
 	import {
 		Chart as ChartJS,
@@ -12,6 +12,7 @@
 	} from 'chart.js'
 	import type { ChartComponentRef } from 'vue-chartjs'
 	import type { ChartData } from 'chart.js'
+	import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 
 	// Enregistrement des composants nécessaires de Chart.js
 	ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -53,6 +54,41 @@
 	// Référence au composant Bar chart
 	const chartRef = ref<ChartComponentRef | null>(null)
 
+	// colonnes
+	const tableHeaders = computed(() => {
+		const base = [
+			{ title: 'Mois', key: 'label' },
+		]
+
+		const datasetHeaders = props.chartData.datasets.map((ds, index) => ({
+			title: ds.label ?? `Série ${index + 1}`,
+			key: `dataset_${index}`,
+			align: 'end',
+		}))
+
+		return [...base, ...datasetHeaders]
+	})
+
+	/**
+	 * Lignes du tableau (historique)
+	 */
+	const tableItems = computed(() => {
+		if (!props.chartData.labels) return []
+
+		return props.chartData.labels.map((label, labelIndex) => {
+			const row: Record<string, string | number> = {
+				label: label as string,
+			}
+
+			props.chartData.datasets.forEach((dataset, datasetIndex) => {
+				row[`dataset_${datasetIndex}`]
+					= Number(dataset.data[labelIndex] ?? 0)
+			})
+
+			return row
+		})
+	})
+
 	// Ajout des attributs d'accessibilité après le rendu
 	onMounted(async () => {
 		await nextTick()
@@ -85,4 +121,13 @@
 				: 'Line chart'
 		}}
 	</p>
+
+	<SyTable
+		suffix="Graphique"
+		caption="Historique des données du graphique"
+		:headers="tableHeaders"
+		:items="tableItems"
+		density="compact"
+		striped
+	/>
 </template>
