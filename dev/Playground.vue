@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyTextField } from '@/components'
+	import { SyTextField, NirField } from '@/components'
 	const selectedValue = ref('')
-
+	const nir = ref('')
 
 	const customRules = [{
 		type: 'custom',
@@ -29,6 +29,11 @@
 			v-model="selectedValue"
 			label="Pokemon Name"
 			:custom-rules="customRules"
+		/>
+		<br>
+		<NirField
+			v-model="nir"
+			label="NIR"
 		/>
 	</div>
 </template>
