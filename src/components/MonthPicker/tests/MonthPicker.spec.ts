@@ -476,6 +476,37 @@ describe('mounthpicker', () => {
 
 			wrapper.unmount()
 		})
+
+		it('handle correctly month and year that start with 0 in the text input', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '01/2025',
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.setValue('02/025')
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-2') // February button
+			expect(monthButton.classes()).toContain('month-selector__month--active')
+
+			await wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-year-btn').trigger('click')
+
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-selector__year--active')
+			expect(yearButton.exists()).toBeFalsy()
+
+			await toggleBtn.trigger('click') // close the menu
+
+			expect(wrapper.emitted('update:modelValue')).toEqual([['02/025']])
+			expect(wrapper.find('input').element.value).toBe('02/025') // The input value should still be '02/025'
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('visual picker header', () => {

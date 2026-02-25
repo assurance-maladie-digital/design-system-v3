@@ -42,11 +42,10 @@
 		return `${String(month.value).padStart(2, '0')}/${year.value}`
 	})
 
-	watch([year, month], (newValues, oldValues) => {
+	watch([year, month], (newValues) => {
 		const [newYear, newMonth] = newValues
-		const [oldYear, oldMonth] = oldValues
 
-		if (newYear && newMonth && (newYear !== oldYear || newMonth !== oldMonth)) {
+		if (newYear !== year.value || newMonth !== month.value) {
 			emits('update:modelValue', internalValue.value)
 		}
 	})
