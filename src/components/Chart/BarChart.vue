@@ -19,6 +19,14 @@
 
 	// Définition des props pour accepter les données et options dynamiques
 	const props = defineProps({
+		labelHeaderTitle: {
+			type: String,
+			default: 'Mois',
+		},
+		showTable: {
+			type: Boolean,
+			default: true,
+		},
 		chartData: {
 			type: Object as () => ChartData<'bar'>,
 			required: true,
@@ -57,7 +65,7 @@
 	// colonnes
 	const tableHeaders = computed(() => {
 		const base = [
-			{ title: 'Mois', key: 'label' },
+			{ title: props.labelHeaderTitle, key: 'label' },
 		]
 
 		const datasetHeaders = props.chartData.datasets.map((ds, index) => ({
@@ -69,25 +77,19 @@
 		return [...base, ...datasetHeaders]
 	})
 
-	/**
-	 * Lignes du tableau (historique)
-	 */
-	const tableItems = computed(() => {
-		if (!props.chartData.labels) return []
+	const tableItems = computed(() =>
+		(props.chartData.labels ?? []).map((label, li) => {
+			const values = props.chartData.datasets.map((ds, di) => [
+				`dataset_${di}`,
+				Number(ds.data?.[li] ?? 0),
+			])
 
-		return props.chartData.labels.map((label, labelIndex) => {
-			const row: Record<string, string | number> = {
-				label: label as string,
+			return {
+				label: String(label),
+				...Object.fromEntries(values),
 			}
-
-			props.chartData.datasets.forEach((dataset, datasetIndex) => {
-				row[`dataset_${datasetIndex}`]
-					= Number(dataset.data[labelIndex] ?? 0)
-			})
-
-			return row
-		})
-	})
+		}),
+	)
 
 	// Ajout des attributs d'accessibilité après le rendu
 	onMounted(async () => {
@@ -118,11 +120,12 @@
 		{{
 			typeof chartOptions.plugins?.title === 'object'
 				? chartOptions.plugins.title.text
-				: 'Line chart'
+				: 'Bar chart'
 		}}
 	</p>
 
 	<SyTable
+		v-if="props.showTable"
 		suffix="Graphique"
 		caption="Historique des données du graphique"
 		:headers="tableHeaders"
