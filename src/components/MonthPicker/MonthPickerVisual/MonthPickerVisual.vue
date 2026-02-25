@@ -42,10 +42,18 @@
 		return `${String(month.value).padStart(2, '0')}/${year.value}`
 	})
 
-	watch([year, month], (newValues) => {
-		const [newYear, newMonth] = newValues
+	function parseStringValue(value: string | undefined): [number | undefined, number | undefined] {
+		if (!value) return [undefined, undefined]
+		const [monthStr, yearStr] = value.split('/')
+		const month = monthStr ? parseInt(monthStr, 10) : undefined
+		const year = yearStr ? parseInt(yearStr, 10) : undefined
+		return [month, year]
+	}
 
-		if (newYear !== year.value || newMonth !== month.value) {
+	watch(internalValue, () => {
+		const [oldMonth, oldYear] = parseStringValue(props.modelValue)
+
+		if (year.value !== oldYear || month.value !== oldMonth) {
 			emits('update:modelValue', internalValue.value)
 		}
 	})
@@ -70,17 +78,13 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
-			if (!newValue) {
-				month.value = undefined
-				year.value = undefined
-				return
-			}
-			const [monthStr, yearStr] = newValue.split('/')
-			month.value = monthStr ? parseInt(monthStr, 10) : undefined
-			year.value = yearStr ? parseInt(yearStr, 10) : undefined
+			const [newMonth, newYear] = parseStringValue(newValue)
+			month.value = newMonth
+			year.value = newYear
 		},
 		{ immediate: true },
 	)
+
 </script>
 <template>
 	<VMenu
