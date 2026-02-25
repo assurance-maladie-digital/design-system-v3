@@ -1,13 +1,30 @@
 // @vitest-environment jsdom
 
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
+import StatusPage from '../../StatusPage/StatusPage.vue'
+
+const themeLocales = {
+	pageTitle: 'Maintenance en cours',
+	message: 'L’application n’est pas disponible pour le moment.',
+	code: '503',
+	src: '/img/maintenance.svg',
+}
+
+vi.mock('@/utils/theme', () => ({
+	useThemeLocales: () => ({
+		themeLocales,
+	}),
+}))
+
+// Import après les mocks
 import MaintenancePage from '../MaintenancePage.vue'
 
-// Scénario d'accessibilité : page de maintenance basée sur ErrorPage,
-// sans bouton d'action, avec illustration décorative masquée.
+afterEach(() => {
+	vi.clearAllMocks()
+})
 
 describe('MaintenancePage – accessibility (axe)', () => {
 	it('has no obvious axe violations in default state', async () => {
@@ -15,148 +32,62 @@ describe('MaintenancePage – accessibility (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'MaintenancePage – default state', {
-			ignoreRules: ['region'],
-		})
-	})
-
-	it('has no obvious axe violations with custom illustration', async () => {
-		const wrapper = mount(MaintenancePage, {
-			slots: {
-				illustration: '<div class="custom-illustration">Illustration personnalisée</div>',
-			},
-		})
-
-		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'MaintenancePage – with custom illustration', {
+			// Ignoré car la page repose sur la structure de StatusPage/PageContainer
 			ignoreRules: ['region'],
 		})
 	})
 })
 
-describe('MaintenancePage – semantic structure', () => {
-	it('renders without error', () => {
+describe('MaintenancePage – StatusPage wiring', () => {
+	it('passes expected props to StatusPage and hides the action button', () => {
 		const wrapper = mount(MaintenancePage)
-		expect(wrapper.vm).toBeDefined()
-	})
+		const statusPage = wrapper.findComponent(StatusPage)
 
-	it('illustration image has aria-hidden attribute', () => {
-		const wrapper = mount(MaintenancePage)
-		const img = wrapper.find('img')
-
-		if (img.exists()) {
-			expect(img.attributes('aria-hidden')).toBe('true')
-		}
-	})
-
-	it('illustration image has empty alt text for decorative images', () => {
-		const wrapper = mount(MaintenancePage)
-		const img = wrapper.find('img')
-
-		if (img.exists()) {
-			expect(img.attributes('alt')).toBe('')
-		}
-	})
-
-	it('passes required props to StatusPage for proper structure', () => {
-		const wrapper = mount(MaintenancePage)
-		const statusPageElement = wrapper.find('[data-testid="status-page"], div')
-
-		expect(statusPageElement.exists()).toBe(true)
-	})
-})
-
-describe('MaintenancePage – keyboard navigation', () => {
-	it('should be focusable and keyboard accessible', () => {
-		const wrapper = mount(MaintenancePage)
-		const element = wrapper.element as HTMLElement
-
-		// La page ne devrait pas avoir d'éléments interactifs par défaut
-		// car hideBtn=true masque le bouton d'action
-		const interactiveElements = element.querySelectorAll('button, a, input, [role="button"]')
-		expect(interactiveElements.length).toBe(0)
-	})
-
-	it('custom illustration slot preserves keyboard accessibility', () => {
-		const wrapper = mount(MaintenancePage, {
-			slots: {
-				illustration: '<button class="custom-btn">Action</button>',
-			},
-		})
-
-		const button = wrapper.find('.custom-btn')
-		expect(button.exists()).toBe(true)
-	})
-})
-
-describe('MaintenancePage – semantic content', () => {
-	it('should have proper heading structure via StatusPage', () => {
-		const wrapper = mount(MaintenancePage)
-		const element = wrapper.element as HTMLElement
-
-		// StatusPage contient le contenu et la structure de heading
-		expect(element).toBeDefined()
-	})
-
-	it('illustration slot content is optional and does not affect structure', () => {
-		const wrapper = mount(MaintenancePage)
-
-		// Vérifier que le composant fonctionne correctement sans slot
-		expect(wrapper.vm).toBeDefined()
-		expect(wrapper.html()).toBeTruthy()
-	})
-
-	it('respects ARIA attributes for decorative elements', () => {
-		const wrapper = mount(MaintenancePage)
-		const img = wrapper.find('img')
-
-		if (img.exists()) {
-			// Vérifie que l'image est marquée comme décorative
-			expect(img.attributes('aria-hidden')).toBe('true')
-			// Et a un alt vide pour les lecteurs d'écran
-			expect(img.attributes('alt')).toBe('')
-		}
-	})
-})
-
-describe('MaintenancePage – visual hierarchy', () => {
-	it('applies correct styling for max-height constraint', () => {
-		const wrapper = mount(MaintenancePage)
-		const element = wrapper.element as HTMLElement
-		const styleTag = element.querySelector('style')
-
-		expect(styleTag).toBeTruthy()
-	})
-
-	it('image dimensions are properly constrained', () => {
-		const wrapper = mount(MaintenancePage)
-		const img = wrapper.find('img')
-
-		if (img.exists()) {
-			// L'image a une hauteur maximale de 290px définie en CSS
-			expect(img.exists()).toBe(true)
-		}
-	})
-})
-
-describe('MaintenancePage – responsive accessibility', () => {
-	it('maintains accessibility on different viewport sizes', async () => {
-		const wrapper = mount(MaintenancePage)
-
-		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'MaintenancePage – responsive', {
-			ignoreRules: ['region'],
+		expect(statusPage.exists()).toBe(true)
+		expect(statusPage.props()).toMatchObject({
+			pageTitle: themeLocales.pageTitle,
+			message: themeLocales.message,
+			code: themeLocales.code,
+			hideBtn: true,
 		})
 	})
 
-	it('custom illustration is accessible regardless of implementation', () => {
-		const wrapper = mount(MaintenancePage, {
-			slots: {
-				illustration: '<img src="test.svg" alt="Illustration de maintenance" />',
-			},
-		})
+	it('renders a single main heading with the page title', () => {
+		const wrapper = mount(MaintenancePage)
+		const headings = wrapper.findAll('h1')
 
+		expect(headings).toHaveLength(1)
+		expect(headings[0]!.text()).toContain(themeLocales.pageTitle)
+	})
+
+	it('displays the status code block when provided', () => {
+		const wrapper = mount(MaintenancePage)
+		const code = wrapper.find('.sy-code')
+
+		expect(code.exists()).toBe(true)
+		expect(code.text()).toContain(themeLocales.code)
+	})
+})
+
+describe('MaintenancePage – illustration', () => {
+	it('renders decorative illustration with proper ARIA when provided by theme', () => {
+		const wrapper = mount(MaintenancePage)
 		const img = wrapper.find('img')
+
 		expect(img.exists()).toBe(true)
-		expect(img.attributes('alt')).toBeTruthy()
+		expect(img.attributes('aria-hidden')).toBe('true')
+		expect(img.attributes('alt')).toBe('')
+	})
+
+	it('uses custom illustration slot instead of default decorative image', () => {
+		const wrapper = mount(MaintenancePage, {
+			slots: {
+				illustration: '<img class="custom-illustration" src="/custom.svg" alt="Illustration personnalisée" />',
+			},
+		})
+
+		const customImg = wrapper.find('.custom-illustration')
+		expect(customImg.exists()).toBe(true)
+		expect(wrapper.find('img[aria-hidden="true"]').exists()).toBe(false)
 	})
 })
