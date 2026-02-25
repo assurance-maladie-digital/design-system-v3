@@ -76,6 +76,10 @@
 	const options = useCustomizableOptions(config, props)
 	const vuetifyTheme = useTheme()
 
+  const emit = defineEmits<{
+    (e: 'event', item: LinkItem): void
+  }>()
+
 	const getLinkComponent = (item: LinkItem): string => {
 		return item.href ? 'a' : 'RouterLink'
 	}
@@ -161,6 +165,10 @@
 	const fontStyle = computed(() => ({
 		fontSize: vuetifyTheme.name.value === 'ap' ? '14px' : '',
 	}))
+
+  function emitEvent(item: LinkItem) {
+    emit('event', item.text)
+  }
 
 	defineExpose({
 		logoSize,
@@ -256,6 +264,7 @@
 						:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 						class="my-3 mx-4"
 						:style="fontStyle"
+            @click="emitEvent(item)"
 					>
 						{{ item.text }}
 					</component>
