@@ -3,6 +3,7 @@
 	import { mdiChevronDown } from '@mdi/js'
 	import { computed, inject } from 'vue'
 	import { locales as defaultLocales, localesKey } from '../locales'
+	import { dateToString } from './utils'
 
 	const props = defineProps<{
 		modelValue: string | undefined
@@ -17,28 +18,23 @@
 	}>()
 
 	const localeDate = computed(() => {
-		if (!props.modelValue) return Intl.DateTimeFormat(navigator.language, { month: 'long', year: 'numeric' }).format(new Date())
-		const [month, year] = props.modelValue.split('/').map(Number)
-		let displayYear: string
-		let displayMonth: string
-		if (year && !isNaN(year) && year >= props.minYear && year <= props.maxYear) {
-			displayYear = String(year)
+		const [month, year] = (props.modelValue || '').split('/').map(Number)
+		const isYearValid = year && !isNaN(year)
+		const isMonthValid = month && !isNaN(month) && month >= 1 && month <= 12
+		if (isMonthValid && isYearValid) {
+			return dateToString(new Date(year, month - 1))
 		}
-		else {
-			displayYear = (new Date().getFullYear()).toString()
-		}
-		if (month && !isNaN(month) && month >= 1 && month <= 12) {
-			displayMonth = new Intl.DateTimeFormat(navigator.language, { month: 'long' }).format(new Date(0, month - 1))
-		}
-		else {
-			displayMonth = new Intl.DateTimeFormat(navigator.language, { month: 'long' }).format(new Date())
-		}
-		return `${displayMonth} ${displayYear}`
+		else return dateToString(new Date())
 	})
 
 	const selectedYear = computed(() => {
-		if (!props.modelValue) return (new Date().getFullYear())
-		return Number(props.modelValue.split('/')[1])
+		const year = props.modelValue ? parseInt(props.modelValue.split('/')[1] || '', 10) : undefined
+		if (year && !isNaN(year)) {
+			return String(year)
+		}
+		else {
+			return String(new Date().getFullYear())
+		}
 	})
 
 	const locales = inject<typeof defaultLocales>(localesKey)!

@@ -52,7 +52,6 @@ describe('mounthpicker', () => {
 
 			const input = wrapper.find('input')
 			await input.setValue('01/2027')
-			expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 			expect(wrapper.emitted('update:modelValue')).toEqual([['01/2027']])
 
 			wrapper.unmount()
@@ -93,7 +92,7 @@ describe('mounthpicker', () => {
 	})
 
 	describe('MonthPickerVisual', () => {
-		it('should emit update:modelValue when a month is selected', async () => {
+		it('should emit update:modelValue when a month is selected and a year is selected', async () => {
 			const wrapper = mount(MonthPicker, {
 				props: {
 					label: 'Début du projet',
@@ -112,7 +111,83 @@ describe('mounthpicker', () => {
 			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
 			await monthButton.trigger('click')
 
-			expect(wrapper.emitted('update:modelValue')![0]![0]).toBe('01/2025') // The month part of the value should be '01'
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2024')
+			await yearButton.trigger('click')
+
+			expect(wrapper.emitted('update:modelValue')).toEqual([['01/2024']]) // The month part of the value should be '01'
+
+			wrapper.unmount()
+		})
+
+		it('do not emit update:modelValue when only a month is selected', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
+			await monthButton.trigger('click')
+
+			expect(wrapper.emitted('update:modelValue')).toBeFalsy() // The value should not be emitted when only a month is selected
+
+			wrapper.unmount()
+		})
+
+		it('do not emit update:modelValue when only a month is selected', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
+			await monthButton.trigger('click')
+
+			expect(wrapper.emitted('update:modelValue')).toBeFalsy() // The value should not be emitted when only a month is selected
+
+			wrapper.unmount()
+		})
+
+		it('do not emit update:modelValue when only a year is selected', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const switchViewBtn = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-year-btn')
+			await switchViewBtn.trigger('click')
+
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2024')
+			await yearButton.trigger('click')
+
+			expect(wrapper.emitted('update:modelValue')).toBeFalsy() // The value should not be emitted when only a year is selected
 
 			wrapper.unmount()
 		})
@@ -139,6 +214,71 @@ describe('mounthpicker', () => {
 			expect(wrapper.findComponent({ name: 'MonthSelector' }).exists()).toBeFalsy()
 			expect(wrapper.findComponent({ name: 'YearSelector' }).isVisible()).toBeTruthy()
 			expect(wrapper.findComponent({ name: 'YearSelector' })).toMatchSnapshot()
+
+			wrapper.unmount()
+		})
+
+		it('shows the month picker after the year is selected', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			// Switch to year selector
+			const switchViewBtn = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-year-btn')
+			await switchViewBtn.trigger('click')
+
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2024')
+			await yearButton.trigger('click')
+
+			expect(wrapper.findComponent({ name: 'YearSelector' }).exists()).toBeFalsy()
+			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+			expect(wrapper.findComponent({ name: 'MonthSelector' })).toMatchSnapshot()
+
+			wrapper.unmount()
+		})
+
+		it ('should close the menu after selecting a year and then a month', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			// Switch to year selector
+			const switchViewBtn = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-year-btn')
+			await switchViewBtn.trigger('click')
+
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2024')
+			await yearButton.trigger('click')
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
+			await monthButton.trigger('click')
+
+			const monthPickerVisualWrapper = wrapper.findComponent({ name: 'MonthPickerVisual' }).find('.month-picker-menu')
+			expect(monthPickerVisualWrapper.exists()).toBeFalsy()
+
+			expect(wrapper.emitted('update:modelValue')).toEqual([['01/2024']]) // The value should be '01/2024' after selecting January and 2024
+			expect(wrapper.emitted('update:open')).toEqual([[true], [false]]) // The menu should be closed after selecting a month and a year
 
 			wrapper.unmount()
 		})
@@ -568,13 +708,12 @@ describe('mounthpicker', () => {
 				.findComponent({ name: 'VisualPickerHeader' })
 				.find('.visual-picker-header__date')
 				.text()
-			expect(headerText).toContain('November')
-			expect(headerText).toContain('2025')
+			expect(headerText).toBe('November 2025')
 
 			wrapper.unmount()
 		})
 
-		it('displays the selected year and the current month when only the year is selected', async () => {
+		it('displays the current month and year when the model value is invalid', async () => {
 			// mock current date to 15th March 2023
 			const mockDate = new Date(2023, 2, 15)
 			vi.setSystemTime(mockDate)
@@ -594,8 +733,32 @@ describe('mounthpicker', () => {
 			await toggleBtn.trigger('click')
 
 			const headerText = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-header__date').text()
-			expect(headerText).toContain('March')
-			expect(headerText).toContain('2023')
+			expect(headerText).toBe('March 2023')
+
+			wrapper.unmount()
+		})
+
+		it ('displays the current month and year when the model value year is not set', async () => {
+			// mock current date to 15th March 2023
+			const mockDate = new Date(2023, 2, 15)
+			vi.setSystemTime(mockDate)
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '05/',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const headerText = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-header__date').text()
+			expect(headerText).toBe('March 2023')
 
 			wrapper.unmount()
 		})

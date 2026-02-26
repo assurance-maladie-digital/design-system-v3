@@ -2,11 +2,6 @@
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
-	defineProps<{
-		modelValue: string | undefined
-
-	}>()
-
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string): void
 	}>()

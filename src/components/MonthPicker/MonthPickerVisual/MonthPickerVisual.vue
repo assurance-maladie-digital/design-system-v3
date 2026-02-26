@@ -5,6 +5,7 @@
 	import VisualpickerHeader from './VisualPickerHeader.vue'
 	import VisualPickerFooter from './VisualPickerFooter.vue'
 	import { locales as defaultLocales, localesKey } from '../locales'
+	import { parseMonthYearString } from './utils'
 
 	const props = defineProps<{
 		textInput: ComponentPublicInstance | null
@@ -28,6 +29,8 @@
 	watch(open, (newValue) => {
 		if (newValue) {
 			view.value = 'months'
+			draftMonth.value = undefined
+			draftYear.value = undefined
 		}
 		else {
 			props.toggleBtn!.focus()
@@ -35,39 +38,30 @@
 		emits('update:open', newValue)
 	})
 
-	const year = ref<number | undefined>(undefined)
-	const month = ref<number | undefined>(undefined)
-	const internalValue = computed(() => {
-		if (!year.value || !month.value) return undefined
-		return `${String(month.value).padStart(2, '0')}/${year.value}`
-	})
-
-	function parseStringValue(value: string | undefined): [number | undefined, number | undefined] {
-		if (!value) return [undefined, undefined]
-		const [monthStr, yearStr] = value.split('/')
-		const month = monthStr ? parseInt(monthStr, 10) : undefined
-		const year = yearStr ? parseInt(yearStr, 10) : undefined
-		return [month, year]
-	}
-
-	watch(internalValue, () => {
-		const [oldMonth, oldYear] = parseStringValue(props.modelValue)
-
-		if (year.value !== oldYear || month.value !== oldMonth) {
-			emits('update:modelValue', internalValue.value)
-		}
-	})
+	const initValue = computed(() => parseMonthYearString(props.modelValue))
+	const draftMonth = ref<number | undefined>(undefined)
+	const draftYear = ref<number | undefined>(undefined)
 
 	function setYear(value: number | undefined) {
-		year.value = value
-		open.value = false
-		emits('update:year', year.value)
+		draftYear.value = value
+		emits('update:year', draftYear.value)
+		if (draftMonth.value === undefined) {
+			view.value = 'months'
+		}
+		else {
+			open.value = false
+		}
 	}
 
 	function setMonth(value: number | undefined) {
-		month.value = value
-		view.value = 'years'
-		emits('update:month', month.value)
+		draftMonth.value = value
+		emits('update:month', draftMonth.value)
+		if (draftYear.value === undefined) {
+			view.value = 'years'
+		}
+		else {
+			open.value = false
+		}
 	}
 
 	function setDate(value: string) {
@@ -76,11 +70,12 @@
 	}
 
 	watch(
-		() => props.modelValue,
-		(newValue) => {
-			const [newMonth, newYear] = parseStringValue(newValue)
-			month.value = newMonth
-			year.value = newYear
+		[draftMonth, draftYear],
+		() => {
+			const oldValue = parseMonthYearString(props.modelValue)
+			if (draftMonth.value !== undefined && draftYear.value !== undefined && (draftMonth.value !== oldValue[0] || draftYear.value !== oldValue[1])) {
+				emits('update:modelValue', `${String(draftMonth.value).padStart(2, '0')}/${draftYear.value}`)
+			}
 		},
 		{ immediate: true },
 	)
@@ -103,24 +98,23 @@
 			<VisualpickerHeader
 				v-model:view="view"
 				:title="view === 'months' ? locales.headerSelectMonth : locales.headerSelectYear"
-				:model-value="internalValue"
+				:model-value="modelValue"
 				:min-year
 				:max-year
 			/>
 			<YearSelector
 				v-if="view === 'years'"
-				:model-value="year"
+				:model-value="draftYear || initValue[1]"
 				:min="minYear"
 				:max="maxYear"
 				@update:model-value="setYear"
 			/>
 			<MonthSelector
 				v-else-if="view === 'months'"
-				:model-value="month"
+				:model-value="draftMonth || initValue[0]"
 				@update:model-value="setMonth"
 			/>
 			<VisualPickerFooter
-				:model-value="internalValue"
 				@update:model-value="setDate"
 			/>
 		</div>
