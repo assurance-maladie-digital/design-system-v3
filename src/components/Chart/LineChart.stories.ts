@@ -4,6 +4,7 @@ import LineChart from './LineChart.vue'
 const meta: Meta<typeof LineChart> = {
 	title: 'Composants/Données/Charts/LineChart',
 	component: LineChart,
+	decorators: [() => ({ template: '<div class="pa-4"><story/></div>' })],
 	parameters: {
 		layout: 'fullscreen',
 	},

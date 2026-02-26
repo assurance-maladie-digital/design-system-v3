@@ -4,6 +4,7 @@ import FormChart from './FormChart.vue'
 const meta: Meta<typeof FormChart> = {
 	title: 'Composants/Données/Charts/FormChart',
 	component: FormChart,
+	decorators: [() => ({ template: '<div class="pa-4"><story/></div>' })],
 	parameters: {
 		layout: 'fullscreen',
 	},

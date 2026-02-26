@@ -5,6 +5,7 @@ import pattern from 'patternomaly'
 const meta: Meta<typeof BarChart> = {
 	title: 'Composants/Données/Charts/BarChart',
 	component: BarChart,
+	decorators: [() => ({ template: '<div class="pa-4"><story/></div>' })],
 	parameters: {
 		layout: 'fullscreen',
 	},
@@ -44,14 +45,33 @@ export const Default: Story = {
 const chartData = {
 	labels: ['Mai', 'Juin', 'Juillet', 'Août', 'Sept', 'Oct'],
 	datasets: [
-		{
-			label: 'Légende',
-			data: [20, 32, 14, 20, 12, 68],
-			backgroundColor: '#0c419a',
-			stack: 'total',
-			barThickness: 36,
-		},
-	]
+				{
+					label: 'Légende 1',
+					data: [20, 32, 14, 20, 12, 68],
+					backgroundColor: '#0c419a',
+					stack: 'total',
+					barThickness: 36,
+
+				},
+				{
+					label: 'Légende 2',
+					data: [22, 18, 40, 8, 33, 10],
+					backgroundColor: '#dbe4f3',
+					stack: 'total',
+					barThickness: 36,
+
+				},
+				{
+					label: 'Légende 3',
+					data: [12, 10, 28, 7, 32, 8],
+					backgroundColor: [
+						pattern.draw('line', '#ffffff', '#0c419a', 10),
+					],
+					stack: 'total',
+					barThickness: 36,
+
+				},
+			],
 }
 
 const chartOptions = {
