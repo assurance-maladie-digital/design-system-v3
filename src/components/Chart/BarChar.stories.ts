@@ -18,6 +18,14 @@ const meta: Meta<typeof BarChart> = {
 			control: { type: 'object' },
 			description: 'Options Chart.js',
 		},
+		showTable: {
+			control: 'boolean',
+			description: 'Affiche le tableau de données sous le graphique',
+		},
+		labelHeaderTitle: {
+			control: 'text',
+			description: 'Titre de la première colonne du tableau',
+		},
 	},
 }
 
@@ -34,6 +42,8 @@ export const Default: Story = {
 	<BarChart
 		:chart-data="chartData"
 		:chart-options="chartOptions"
+		:show-table="true"
+		label-header-title="Mois"
 	/>
 </template>
 `,
@@ -84,6 +94,8 @@ const chartOptions = {
 		],
 	},
 	args: {
+		showTable: true,
+		labelHeaderTitle: 'Mois',
 		chartData: {
 			labels: ['Mai', 'Juin', 'Juillet', 'Août', 'Sept', 'Oct'],
 			datasets: [
