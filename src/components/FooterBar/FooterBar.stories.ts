@@ -2,7 +2,9 @@ import FooterBar from '../FooterBar/FooterBar.vue'
 import Logo from '../Logo/Logo.vue'
 import CollapsibleList from '../CollapsibleList/CollapsibleList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { mdiTwitter, mdiLinkedin, mdiFacebook, mdiYoutube } from '@mdi/js'
+import { mdiLinkedin, mdiFacebook, mdiYoutube } from '@mdi/js'
+
+const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
 
 const items = [
 	{
@@ -246,8 +248,8 @@ export const Default: Story = {
 				href: 'https://www.facebook.com',
 			},
 			{
-				icon: mdiTwitter,
-				name: 'Twitter',
+				icon: xIcon,
+				name: 'X',
 				href: 'https://www.twitter.com',
 			},
 			{
@@ -944,7 +946,9 @@ export const customSocialMediaLinks: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 	import { FooterBar } from '@cnamts/synapse'
-	import { mdiFacebook, mdiTwitter, mdiLinkedin, mdiYoutube } from '@mdi/js'
+	import { mdiFacebook, mdiLinkedin, mdiYoutube } from '@mdi/js'
+	
+	const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
 	
 	const items = [
         {
@@ -972,8 +976,8 @@ export const customSocialMediaLinks: Story = {
 			href: 'https://www.facebook.com',
 		},
 		{
-			icon: mdiTwitter,
-			name: 'Twitter',
+			icon: xIcon,
+			name: 'X',
 			href: 'https://www.twitter.com',
 		},
 		{
@@ -997,19 +1001,19 @@ export const customSocialMediaLinks: Story = {
 		items: items,
 		socialMediaLinks: [
 			{
+				icon: mdiLinkedin,
+				name: 'LinkedIn',
+				href: 'https://www.linkedin.com',
+			},
+			{
 				icon: mdiFacebook,
 				name: 'Facebook',
 				href: 'https://www.facebook.com',
 			},
 			{
-				icon: mdiTwitter,
-				name: 'Twitter',
+				icon: xIcon,
+				name: 'X',
 				href: 'https://www.twitter.com',
-			},
-			{
-				icon: mdiLinkedin,
-				name: 'LinkedIn',
-				href: 'https://www.linkedin.com',
 			},
 			{
 				icon: mdiYoutube,
