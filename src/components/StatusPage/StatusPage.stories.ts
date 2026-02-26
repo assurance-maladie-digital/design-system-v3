@@ -191,3 +191,39 @@ export const CustomIllustration: Story = {
 		`,
 	}),
 }
+
+export const WithRole: Story = {
+	args: {
+		pageTitle: 'Une erreur est survenue',
+		message: 'Veuillez réessayer ultérieurement.',
+		code: '500',
+		role: 'main',
+		uniqueId: 'status-page-main',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<StatusPage
+						page-title="Une erreur est survenue"
+						message="Veuillez réessayer ultérieurement."
+						code="500"
+						role="main"
+						unique-id="status-page-main"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { StatusPage } from '@cnamts/synapse'
+				</script>
+				`,
+			},
+		],
+	},
+}

@@ -207,3 +207,50 @@ export const Card: Story = {
 		}
 	},
 }
+
+export const WithAriaRole: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<PageContainer
+		role="region"
+		unique-id="main-content"
+		aria-labelledby="main-content-title"
+	>
+		<h2 id="main-content-title">Contenu principal</h2>
+		Contenu de la page
+	</PageContainer>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { PageContainer } from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		role: 'region',
+		uniqueId: 'main-content',
+		ariaLabelledby: 'main-content-title',
+	},
+	render: (args) => {
+		return {
+			components: { PageContainer },
+			setup() {
+				return { args }
+			},
+			template: `
+				<PageContainer :role="args.role" :unique-id="args.uniqueId" :aria-labelledby="args.ariaLabelledby">
+					<h2 id="main-content-title" class="pa-4">Contenu principal</h2>
+					<p class="pa-4">Contenu de la page</p>
+				</PageContainer>
+			`,
+		}
+	},
+}

@@ -32,6 +32,14 @@ import {
             </ul>
         </CriteriaCard>
 
+        <CriteriaCard icon="🏷️" title="Rôle et identifiant ARIA">
+            <ul>
+                <li><strong>Prop <code>role</code></strong> : permet de définir le rôle ARIA de la page d'erreur — deux valeurs acceptées : <code>main</code> ou <code>region</code></li>
+                <li><strong>Prop <code>uniqueId</code></strong> : permet de définir un identifiant unique sur le conteneur, facilitant le ciblage par <code>aria-labelledby</code> ou <code>aria-describedby</code> depuis d'autres éléments</li>
+                <li><strong>Usage recommandé</strong> : utiliser <code>role="main"</code> si la page d'erreur constitue le contenu principal, ou <code>role="region"</code> si elle est intégrée dans une section d'une mise en page plus complexe</li>
+            </ul>
+        </CriteriaCard>
+
         <CriteriaCard icon="🔗" title="Liens et boutons">
             <ul>
                 <li><strong>Bouton de retour</strong> : rendu via <code>btn-href</code> (balise <code>a</code>) ou <code>btn-link</code> (balise <code>router-link</code>)</li>
@@ -55,6 +63,10 @@ import {
         <Story of={Stories.Default} />
     </DemoSection>
 
+    <DemoSection title="Avec rôle et identifiant ARIA" componentName="ErrorPage">
+        <Story of={Stories.WithRole} />
+    </DemoSection>
+
     <BestPracticesSection>
         <ul>
             <li>Les valeurs par défaut de <code>page-title</code>, <code>message</code> et <code>code</code> proviennent du thème — les surcharger uniquement si le contexte métier le nécessite</li>
@@ -62,6 +74,8 @@ import {
             <li>Ne pas masquer le bouton (<code>hide-btn</code>) sans proposer une alternative de navigation claire</li>
             <li>Les illustrations doivent toujours être décoratives (<code>aria-hidden="true"</code>) — ne jamais y placer d'information essentielle</li>
             <li>Personnaliser <code>code-error-text</code> si le contexte métier nécessite une formulation différente de <em>"Code d'erreur : "</em></li>
+            <li>Utiliser <code>role</code> pour préciser le rôle sémantique du composant dans son contexte d'intégration — préférer <code>role="main"</code> pour le contenu principal ou <code>role="region"</code> pour une section d'une mise en page plus complexe</li>
+            <li>Utiliser <code>unique-id</code> pour permettre à d'autres éléments de référencer la page d'erreur via <code>aria-labelledby</code> ou <code>aria-describedby</code></li>
         </ul>
     </BestPracticesSection>
 
@@ -71,6 +85,7 @@ import {
             <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 2.4.4 – Link Purpose</a></li>
             <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.1.1 – Non-text Content</a></li>
             <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" style={{ color: '#0C41BD' }}>ARIA Authoring Practices Guide</a></li>
+            <li><a href="https://www.w3.org/TR/wai-aria-1.2/#landmark_roles" target="_blank" style={{ color: '#0C41BD' }}>WAI-ARIA 1.2 – Landmark Roles</a></li>
         </ul>
     </ResourcesSection>
 
