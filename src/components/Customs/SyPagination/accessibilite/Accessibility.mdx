@@ -22,127 +22,55 @@ import {
 >
 
     <CriteriaSection>
-
         <CriteriaCard icon="🏷️" title="Structure et ARIA">
             <ul>
-                <li>
-                    <strong>Navigation sémantique</strong> :
-                    Utilisation de <code>&lt;nav&gt;</code> pour identifier la pagination
+                <li><strong>Navigation sémantique</strong> : Utilisation de <code>&lt;nav&gt;</code> pour identifier la
+                    pagination
                 </li>
-
-                <li>
-                    <strong>Label accessible</strong> :
-                    Utilisation de <code>aria-labelledby</code> pour nommer la navigation
+                <li><strong>Label accessible</strong> : Utilisation de <code>aria-labelledby</code> pour nommer la
+                    navigation
                 </li>
-
-                <li>
-                    <strong>Page active</strong> :
-                    Indication avec <code>aria-current="page"</code>
-                </li>
-
-                <li>
-                    <strong>Relations ARIA</strong> :
-                    Utilisation possible de <code>aria-controls</code> pour relier la pagination au contenu
+                <li><strong>Page active</strong> : Indication avec <code>aria-current="page"</code></li>
+                <li><strong>Relations ARIA</strong> : Utilisation possible de <code>aria-controls</code> pour relier la
+                    pagination au contenu
                 </li>
             </ul>
         </CriteriaCard>
-
 
         <CriteriaCard icon="⌨️" title="Navigation clavier">
             <ul>
-
-                <li>
-                    <strong>Navigation tabulation</strong> :
-                    Tous les liens sont accessibles au clavier
-                </li>
-
-                <li>
-                    <strong>Focus visible</strong> :
-                    Indicateur visible lors du focus clavier
-                </li>
-
-                <li>
-                    <strong>Actions accessibles</strong> :
-                    Navigation possible avec Entrée ou Espace
-                </li>
-
-                <li>
-                    <strong>Boutons désactivés</strong> :
-                    Indiqués avec <code>aria-disabled="true"</code>
-                </li>
-
+                <li><strong>Navigation tabulation</strong> : Tous les liens sont accessibles au clavier</li>
+                <li><strong>Focus visible</strong> : Indicateur visible lors du focus clavier</li>
+                <li><strong>Actions accessibles</strong> : Navigation possible avec Entrée ou Espace</li>
+                <li><strong>Boutons désactivés</strong> : Indiqués avec <code>aria-disabled="true"</code></li>
             </ul>
         </CriteriaCard>
-
 
         <CriteriaCard icon="🎨" title="Lisibilité et contraste">
             <ul>
-
-                <li>
-                    <strong>Contraste suffisant</strong> :
-                    Respect des ratios WCAG pour les liens
-                </li>
-
-                <li>
-                    <strong>Page active identifiable</strong> :
-                    Différenciation visuelle claire
-                </li>
-
-                <li>
-                    <strong>Taille lisible</strong> :
-                    Boutons adaptés à une lecture confortable
-                </li>
-
-                <li>
-                    <strong>États visuels</strong> :
-                    Hover, focus et actif distincts
-                </li>
-
+                <li><strong>Contraste suffisant</strong> : Respect des ratios WCAG pour les liens</li>
+                <li><strong>Page active identifiable</strong> : Différenciation visuelle claire</li>
+                <li><strong>Taille lisible</strong> : Boutons adaptés à une lecture confortable</li>
+                <li><strong>États visuels</strong> : Hover, focus et actif distincts</li>
             </ul>
         </CriteriaCard>
 
-
     </CriteriaSection>
-
 
     <DemoSection componentName="SyPagination">
         <Story of={PaginationStories.Default}/>
     </DemoSection>
 
-
     <BestPracticesSection>
-
         <ul>
-
-            <li>
-                Fournissez un <code>label</code> explicite pour décrire la pagination
-            </li>
-
-            <li>
-                Utilisez <code>aria-controls</code> pour associer la pagination au contenu
-            </li>
-
-            <li>
-                Assurez-vous que la page active est identifiable visuellement
-            </li>
-
-            <li>
-                Évitez un trop grand nombre de pages visibles
-            </li>
-
-            <li>
-                Préférez des libellés explicites comme "Page 3"
-                pour les lecteurs d'écran
-            </li>
-
-            <li>
-                Vérifiez la navigation clavier
-            </li>
-
+            <li>Fournissez un <code>label</code> explicite pour décrire la pagination</li>
+            <li>Utilisez <code>aria-controls</code> pour associer la pagination au contenu</li>
+            <li>Assurez-vous que la page active est identifiable visuellement</li>
+            <li>Évitez un trop grand nombre de pages visibles</li>
+            <li>Préférez des libellés explicites comme "Page 3" pour les lecteurs d'écran</li>
+            <li>Vérifiez la navigation clavier</li>
         </ul>
-
     </BestPracticesSection>
-
 
     <ResourcesSection>
         <ul>
@@ -156,11 +84,7 @@ import {
         </ul>
     </ResourcesSection>
 
-
     <AuditSection>
-
         <p>Aucun rapport d'audit disponible pour le moment.</p>
     </AuditSection>
-
-
 </AccessibilityGuideLayout>
