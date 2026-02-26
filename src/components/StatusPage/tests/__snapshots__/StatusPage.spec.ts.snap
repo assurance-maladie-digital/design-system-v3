@@ -94,7 +94,7 @@ exports[`StatusPage > renders correctly 1`] = `
           v-col-sm-12
         ">
           <!-- v-if -->
-          <h1 class="
+          <hundefined class="
             font-weight-bold
             mb-2
             mb-4
@@ -102,7 +102,7 @@ exports[`StatusPage > renders correctly 1`] = `
             text-h5
           ">
             Something went wrong
-          </h1>
+          </hundefined>
           <p>
             <span>
               Error message
@@ -223,7 +223,7 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
             </span>
             501
           </div>
-          <h1 class="
+          <hundefined class="
             font-weight-bold
             mb-2
             mb-4
@@ -231,7 +231,7 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
             text-h5
           ">
             Error
-          </h1>
+          </hundefined>
           <p>
             <span>
               Error message

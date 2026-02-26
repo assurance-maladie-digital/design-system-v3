@@ -42,7 +42,7 @@ exports[`LogoBrandSection > renders correctly 1`] = `
     text-primary
     vd-title-container
   ">
-    <h1 class="
+    <hundefined class="
       font-weight-medium
       sy-heading
       text-caption
@@ -52,14 +52,14 @@ exports[`LogoBrandSection > renders correctly 1`] = `
       <span>
         Service Title
       </span>
-    </h1>
-    <h2 class="
+    </hundefined>
+    <hundefined class="
       sy-heading
       text-caption
       vd-title
     ">
       Service Sub Title
-    </h2>
+    </hundefined>
   </div>
 </div>
 `;
