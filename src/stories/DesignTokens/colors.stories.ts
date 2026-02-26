@@ -822,16 +822,16 @@ export const IconPrimary: StoryObj = {
 				const colorDescription = 'Ce sont les couleurs à utiliser dès qu’un icône symbolise une action.'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					// 'icon-accent': cnamLightTheme.iconAccent,
-					// 'icon-accent-contrasted': cnamLightTheme.iconAccentContrasted,
+                    'icon-accent': cnamLightTheme.iconAccentPrimary,
+                    'icon-accent-contrasted': cnamLightTheme.iconAccentPrimaryContrasted,
 				}
 				const paColors = {
-					'icon-accent': paLightTheme.iconAccent,
-					'icon-accent-contrasted': paLightTheme.iconAccentContrasted,
+                    'icon-accent': paLightTheme.iconAccentPrimary,
+                    'icon-accent-contrasted': paLightTheme.iconAccentPrimaryContrasted,
 				}
 				const apColors = {
-					'icon-accent': apLightTheme.iconAccent,
-					'icon-accent-contrasted': apLightTheme.iconAccentContrasted,
+                    'icon-accent': apLightTheme.iconAccentPrimary,
+                    'icon-accent-contrasted': apLightTheme.iconAccentPrimaryContrasted,
 				}
 				const apColors2026 = {}
 				return {
@@ -867,16 +867,16 @@ export const IconSecondary: StoryObj = {
 			components: { ColorDisplay },
 			setup() {
 				const colorTitle = 'Secondary'
-				const colorDescription = ''
+                const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des icônes.'
 				const colorTitleLevel = 3
 				const cnamColors = {
 					'icon-accent-secondary': cnamLightTheme.iconAccentSecondary,
 				}
 				const paColors = {
-					// 'icon-accent-secondary': paLightTheme.iconAccentSecondary,
+                    'icon-accent-secondary': paLightTheme.iconAccentSecondary,
 				}
 				const apColors = {
-					// 'icon-accent-secondary': apLightTheme.iconAccentSecondary,
+                    'icon-accent-secondary': apLightTheme.iconAccentSecondary,
 				}
 				const apColors2026 = {}
 				return {
