@@ -113,7 +113,7 @@ export const CustomIllustration: Story = {
 	},
 	parameters: {
 		query: {
-			support_id: 'jkjk',
+			support_id: '',
 		},
 		sourceCode: [
 			{

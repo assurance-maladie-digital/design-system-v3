@@ -25,31 +25,80 @@
 
 <!-- Avant de proposer une review, vérifiez chaque point de la checklist qui vous concerne et cochez-le s'il est appliqué. -->
 
-| Nouveau composant/template                                                                           | Evolution ou correctif de composant/template                                                                              |
-|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| **Bonne Pratique**                                                                                   | **Bonne Pratique**                                                                                                        |
-| - [ ] Ma Pull Request est bien nommée (SY/AP - Composant/template: descriptif du composant/template) | - [ ] Ma Pull Request est bien nommée (SY/AP - Composant/template: descriptif issue)                                      |
-| - [ ] Ma Pull Request pointe vers la bonne branche                                                   | - [ ] Ma Pull Request pointe vers la bonne branche                                                                        |
-| - [ ] Linker la demande de création du composant/template et PR                                      | - [ ] Linker issue et PR                                                                                                  |
-| **Design**                                                                                           | **Design**                                                                                                                |
-| - [ ] Le composant/template respecte les maquettes validées                                          | - [ ] L'évolution du composant/template respecte les maquettes validées (et l'équipe design est informée des changements) |
-| - [ ] Les design tokens sont utilisés                                                                | - [ ] Les design tokens sont utilisés                                                                                     |
-| **Fonctionnel**                                                                                      | **Fonctionnel**                                                                                                           |
-| - [ ] Le composant/template est fonctionnel dans les cas d’usage définis                             | - [ ] Le correctif résout le problème identifié                                                                           |
-| - [ ] Le composant/template est responsive (mobile, tablet, desktop)                                 | - [ ] Aucun impact sur les usages existants                                                                               |
-| **Accessibilité spécifique au composant/template**                                                   | **Accessibilité spécifique au composant/template**                                                                        |
-| - [ ] La navigation clavier couvre tous les éléments interactifs                                     | - [ ] Navigation clavier vérifiée                                                                                         |
-| - [ ] La restitution lecteur d’écran est correcte                                                    | - [ ] Restitution lecteur d’écran vérifiée                                                                                |
-| - [ ] Les règles a11y spécifiques sont documentées                                                   | - [ ] Tests a11y mis à jour si nécessaire                                                                                 |
-| - [ ] Les tests a11y automatisés sont présents                                                       | - [ ] Page accessibilité mise à jour si impact / crée si n’existe pas                                                     |
-| **Documentation & Storybook**                                                                        | **Documentation & Storybook**                                                                                             |
-| - [ ] Une story est créée avec exemples d’usage                                                      | - [ ] Storybook mis à jour si nécessaire                                                                                  |
-| - [ ] L’onglet A11Y Storybook est présent et sans erreur                                             | - [ ] Onglet A11Y sans erreur                                                                                             |
-| - [ ] Une page de documentation accessibilité est créée                                              | - [ ] La page de documentation accessibilité mise à jour si nécessaire                                                    |
-| **Tests**                                                                                            | **Tests**                                                                                                                 |
-| - [ ] Des tests prouvent le bon fonctionnement du composant/template                                 | - [ ] Tests mis à jour ou ajoutés pour couvrir le correctif                                                               |
-| - [ ] Deploy + SKSN Checks                                                                           | - [ ] Deploy + SKSN Checks                                                                                                |
-|                                                                                                      | **Fusion de composant/template**                                                                                          |
-|                                                                                                      | - [ ] Le composant/template n'induit pas de régression dans le composant/template Synapse, PA ou AP                       |
-|                                                                                                      | - [ ] Ajout des stories propre au thème (penser à filter le menu/props si nécessaire)                                     |
-|                                                                                                      | - [ ] Ajouter un message dans le composant/template déprécié avec un lien vers le nouveau                                 |
+### Nouveau composant/template
+
+**Bonne Pratique**
+
+- [ ] Ma Pull Request est bien nommée (SY/AP - Composant/template: descriptif du composant/template)
+- [ ] Ma Pull Request pointe vers la bonne branche
+- [ ] Linker la demande de création du composant/template et PR
+
+**Design**
+
+- [ ] Le composant/template respecte les maquettes validées
+- [ ] Les design tokens sont utilisés
+
+**Fonctionnel**
+
+- [ ] Le composant/template est fonctionnel dans les cas d’usage définis
+- [ ] Le composant/template est responsive (mobile, tablet, desktop)
+
+**Accessibilité spécifique au composant/template**
+
+- [ ] La navigation clavier couvre tous les éléments interactifs
+- [ ] La restitution lecteur d’écran est correcte
+- [ ] Les règles a11y spécifiques sont documentées
+- [ ] Les tests a11y automatisés sont présents
+
+**Documentation & Storybook**
+
+- [ ] Une story est créée avec exemples d’usage
+- [ ] L’onglet A11Y Storybook est présent et sans erreur
+- [ ] Une page de documentation accessibilité est créée
+
+**Tests**
+
+- [ ] Des tests prouvent le bon fonctionnement du composant/template
+- [ ] Deploy + SKSN Checks
+
+### Evolution ou correctif de composant/template
+
+**Bonne Pratique**
+
+- [ ] Ma Pull Request est bien nommée (SY/AP - Composant/template: descriptif issue)
+- [ ] Ma Pull Request pointe vers la bonne branche
+- [ ] Linker issue et PR
+
+**Design**
+
+- [ ] L'évolution du composant/template respecte les maquettes validées (et l'équipe design est informée des changements)
+- [ ] Les design tokens sont utilisés
+
+**Fonctionnel**
+
+- [ ] Le correctif résout le problème identifié
+- [ ] Aucun impact sur les usages existants
+
+**Accessibilité spécifique au composant/template**
+
+- [ ] Navigation clavier vérifiée
+- [ ] Restitution lecteur d’écran vérifiée
+- [ ] Tests a11y mis à jour si nécessaire
+- [ ] Page accessibilité mise à jour si impact / crée si n’existe pas
+
+**Documentation & Storybook**
+
+- [ ] Storybook mis à jour si nécessaire
+- [ ] Onglet A11Y sans erreur
+- [ ] La page de documentation accessibilité mise à jour si nécessaire
+
+**Tests**
+
+- [ ] Tests mis à jour ou ajoutés pour couvrir le correctif
+- [ ] Deploy + SKSN Checks
+
+**Fusion de composant/template**
+
+- [ ] Le composant/template n'induit pas de régression dans le composant/template Synapse, PA ou AP
+- [ ] Ajout des stories propre au thème (penser à filter le menu/props si nécessaire)
+- [ ] Ajouter un message dans le composant/template déprécié avec un lien vers le nouveau
