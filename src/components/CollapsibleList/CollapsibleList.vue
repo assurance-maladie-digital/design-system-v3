@@ -7,6 +7,7 @@
 	const props = defineProps<{
 		listTitle: string | null
 		items: ListItem[]
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
 	}>()
 
 	const { smAndDown } = useDisplay()
@@ -58,7 +59,7 @@
 	>
 		<SyHeading
 			class="text-subtitle-1 font-weight-bold mb-3"
-			:level="4"
+			:level="headingLevel"
 		>
 			{{ listTitle }}
 		</SyHeading>

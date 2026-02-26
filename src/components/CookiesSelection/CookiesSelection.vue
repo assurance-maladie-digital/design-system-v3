@@ -7,6 +7,8 @@
 
 	const props = defineProps<{
 		items: CookiesItems
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+
 	}>()
 
 	const emits = defineEmits<{
@@ -109,6 +111,7 @@
 					:type="cookieType"
 					:table-items="cookies"
 					class="mb-6"
+					:heading-level="headingLevel"
 				>
 					<template
 						v-for="(_, slotName) in $slots"

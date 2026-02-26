@@ -15,6 +15,10 @@ const meta = {
 		items: {
 			control: 'object',
 		},
+		headingLevel: {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 	},
 } as Meta<typeof CollapsibleList>
 
@@ -32,7 +36,7 @@ export const Default: Story = {
 		<CollapsibleList 
 			:list-title="listTitle"
 			:items="items" 
-		/>
+  :heading-level="headingLevel"		/>
 	</div>
 </template>
 				`,
@@ -43,7 +47,7 @@ export const Default: Story = {
 	import { CollapsibleList } from '@cnamts/synapse'
 	
 	const listTitle = 'Santé'
-	
+	 const headingLevel = 4
 	const items = [
         		{
 			text: 'Mon espace santé',
@@ -61,6 +65,7 @@ export const Default: Story = {
 	},
 	args: {
 		listTitle: 'Santé',
+		headingLevel: 4,
 		items: [
 			{
 				text: 'Mon espace santé',
@@ -80,7 +85,7 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
-					<CollapsibleList v-bind="args" />
+					<CollapsibleList v-bind="args"/>
 				</div>
 			`,
 		}

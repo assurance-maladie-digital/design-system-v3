@@ -41,6 +41,10 @@ const meta: Meta<typeof SyPagination> = {
 		'append': {
 			description: 'Slot pour ajouter du contenu après la pagination',
 		},
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 	},
 } as Meta<typeof SyPagination>
 
@@ -57,6 +61,7 @@ export const Default: Story = {
 		},
 	},
 	args: {
+		'headingLevel': 2,
 		'modelValue': 1,
 		'pages': 5,
 		'visible': 5,
@@ -74,6 +79,7 @@ export const Default: Story = {
 				<SyPagination
 					v-model="currentPage"
 					:pages="args.pages"
+					:headingLevel="args.headingLevel"
 					:visible="args.visible"
 					:label="args.label"
 					@update:model-value="args['onUpdate:modelValue']"
@@ -92,6 +98,7 @@ export const ManyPages: Story = {
 		},
 	},
 	args: {
+		'headingLevel': 2,
 		'modelValue': 5,
 		'pages': 20,
 		'visible': 5,
@@ -111,6 +118,7 @@ export const ManyPages: Story = {
 					:pages="args.pages"
 					:visible="args.visible"
 					:label="args.label"
+					:headingLevel="args.headingLevel"
 					@update:model-value="args['onUpdate:modelValue']"
 				/>
 			</div>
@@ -127,6 +135,7 @@ export const CustomButtons: Story = {
 		},
 	},
 	args: {
+		'headingLevel': 2,
 		'modelValue': 5,
 		'pages': 20,
 		'visible': 5,
@@ -145,6 +154,7 @@ export const CustomButtons: Story = {
 					v-model="currentPage"
 					:pages="args.pages"
 					:visible="args.visible"
+					:headingLevel="args.headingLevel"
 					:label="args.label"
 					@update:model-value="args['onUpdate:modelValue']"
 				>
@@ -175,6 +185,7 @@ export const Slots: Story = {
 		},
 	},
 	args: {
+		'headingLevel': 2,
 		'modelValue': 3,
 		'pages': 10,
 		'visible': 5,
@@ -186,11 +197,11 @@ export const Slots: Story = {
 			const currentPage = ref(args.modelValue)
 			const itemsPerPage = 10
 			const totalItems = 100
-
+			const headingLevel = 2
 			const startItem = computed(() => (currentPage.value - 1) * itemsPerPage + 1)
 			const endItem = computed(() => Math.min(currentPage.value * itemsPerPage, totalItems))
 
-			return { args, currentPage, totalItems, startItem, endItem }
+			return { args, currentPage, totalItems, startItem, endItem, headingLevel }
 		},
 		template: `
 			<div>
@@ -199,6 +210,7 @@ export const Slots: Story = {
 					:pages="args.pages"
 					:visible="args.visible"
 					:label="args.label"
+					:headingLevel="args.headingLevel"
 					@update:model-value="args['onUpdate:modelValue']"
 				>
 					<template #prepend>

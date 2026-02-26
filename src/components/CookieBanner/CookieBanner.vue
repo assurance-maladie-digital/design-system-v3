@@ -13,6 +13,9 @@
 
 	const props = defineProps<CustomizableOptions & {
 		items?: CookiesItems
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelInformation: 1 | 2 | 3 | 4 | 5 | 6
+
 	}>()
 
 	const options = useCustomizableOptions(config, props)
@@ -194,7 +197,7 @@
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<SyHeading
 						class="text-h5 font-weight-bold"
-						:level="2"
+						:level="headingLevel"
 					>
 						{{ locales.title }}
 					</SyHeading>
@@ -232,6 +235,7 @@
 						<div v-if="showCookiesSelection && items">
 							<CookiesSelection
 								:items="items"
+								:heading-level="headingLevelInformation"
 								@submit="personalizeCookies"
 							>
 								<template

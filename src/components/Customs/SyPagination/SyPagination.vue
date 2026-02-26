@@ -24,6 +24,11 @@
 		 * ID of the element controlled by this pagination
 		 */
 		ariaControls?: string
+		/**
+		 * Heading level for the pagination label (for accessibility)
+		 */
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+
 	}>()
 
 	// Default values for optional props
@@ -191,7 +196,7 @@
 			<SyHeading
 				:id="uniqueId"
 				class="d-sr-only"
-				:level="2"
+				:level="headingLevel"
 			>
 				{{ `${label}` }}
 			</SyHeading>

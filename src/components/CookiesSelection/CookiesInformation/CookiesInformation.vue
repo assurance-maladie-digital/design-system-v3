@@ -12,6 +12,8 @@
 	defineProps<{
 		type: CookieTypes
 		tableItems: Cookie[]
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+
 	}>()
 
 	const status = defineModel<boolean | undefined>()
@@ -96,7 +98,7 @@
 	<div class="vd-cookies-information">
 		<SyHeading
 			class="text-subtitle-1 font-weight-bold mb-2"
-			:level="2"
+			:level="headingLevel"
 		>
 			{{ locales[type].title }}
 		</SyHeading>
