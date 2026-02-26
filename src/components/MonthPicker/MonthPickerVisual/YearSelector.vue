@@ -5,6 +5,7 @@
 	const props = defineProps<{
 		min: number
 		max: number
+		order: 'asc' | 'desc'
 		modelValue?: number
 	}>()
 
@@ -54,7 +55,7 @@
 		@keydown.down.prevent="selectNextRow"
 	>
 		<button
-			v-for="year of Array.from({ length: props.max - props.min + 1 }, (_, i) => props.min + i)"
+			v-for="year of Array.from({ length: props.max - props.min + 1 }, (_, i) => props.order === 'asc' ? props.min + i : props.max - i)"
 			:key="year"
 			:tabindex="year === activeYear ? 0 : -1"
 			class="year-selector__year"

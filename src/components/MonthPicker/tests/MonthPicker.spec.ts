@@ -402,6 +402,39 @@ describe('mounthpicker', () => {
 				wrapper.unmount()
 			})
 		})
+
+		it ('show the years in the correct order according to the yearsOrder prop', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+					yearsOrder: 'desc',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
+			await monthButton.trigger('click')
+
+			const yearButtons = wrapper.findComponent({ name: 'YearSelector' }).findAll('.year-selector__year')
+			expect(yearButtons[0]!.text()).toBe('2100')
+			expect(yearButtons[yearButtons.length - 1]!.text()).toBe('1900')
+
+			await wrapper.setProps({ yearsOrder: 'asc' })
+
+			const newYearButtons = wrapper.findComponent({ name: 'YearSelector' }).findAll('.year-selector__year')
+			expect(newYearButtons[0]!.text()).toBe('1900')
+			expect(newYearButtons[newYearButtons.length - 1]!.text()).toBe('2100')
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('select current month btn', () => {

@@ -6,14 +6,13 @@
 	import VisualPickerFooter from './VisualPickerFooter.vue'
 	import { locales as defaultLocales, localesKey } from '../locales'
 	import { parseMonthYearString } from './utils'
+	import type { MonthPickerVisualProps } from './MonthPickerVisualProps'
 
 	const props = defineProps<{
 		textInput: ComponentPublicInstance | null
 		toggleBtn: HTMLElement | null
 		modelValue: string | undefined
-		minYear: number
-		maxYear: number
-	}>()
+	} & MonthPickerVisualProps>()
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
@@ -107,6 +106,7 @@
 				:model-value="draftYear || initValue[1]"
 				:min="minYear"
 				:max="maxYear"
+				:order="yearsOrder"
 				@update:model-value="setYear"
 			/>
 			<MonthSelector

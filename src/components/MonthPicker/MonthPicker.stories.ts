@@ -15,17 +15,29 @@ const meta: Meta<typeof MonthPicker> = {
 			},
 		},
 		'minYear': {
-			description: 'Année minimale affichée dans le sélecteur visuel. Par défaut, 1900.',
+			description: 'Année minimale affichée dans le sélecteur visuel. Ne concerne pas la validation.',
 			table: {
 				type: { summary: 'number' },
 				defaultValue: { summary: '1900' },
+				category: 'props',
 			},
 		},
 		'maxYear': {
-			description: 'Année maximale affichée dans le sélecteur visuel. Par défaut, 2100.',
+			description: 'Année maximale affichée dans le sélecteur visuel. Ne concerne pas la validation.',
 			table: {
 				type: { summary: 'number' },
 				defaultValue: { summary: '2100' },
+				category: 'props',
+			},
+		},
+		'yearsOrder': {
+			description: 'Ordre d’affichage des années dans le sélecteur visuel. Peut être "asc" pour un ordre croissant ou "desc" pour un ordre décroissant.',
+			control: 'select',
+			options: ['asc', 'desc'],
+			table: {
+				type: { summary: '"asc" | "desc"' },
+				defaultValue: { summary: '"asc"' },
+				category: 'props',
 			},
 		},
 		'onUpdate:modelValue': {
@@ -47,6 +59,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'text',
 			table: {
 				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 		'label': {
@@ -54,6 +67,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'text',
 			table: {
 				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 		'density': {
@@ -63,6 +77,7 @@ const meta: Meta<typeof MonthPicker> = {
 			table: {
 				type: { summary: '"default" | "comfortable" | "compact"' },
 				defaultValue: { summary: '"default"' },
+				category: 'props',
 			},
 		},
 		'helpText': {
@@ -70,6 +85,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'text',
 			table: {
 				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 	},
