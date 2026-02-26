@@ -40,7 +40,6 @@
 		hideSocialMediaLinks?: boolean
 		socialMediaLinks?: SocialMediaLink[]
 		light?: boolean
-		uniqueId: string
 		backOffice?: boolean
 		backOfficeText?: string
 	}>(), {
@@ -64,7 +63,6 @@
 		hideSocialMediaLinks: false,
 		socialMediaLinks: () => defaultSocialMediaLinks as SocialMediaLink[],
 		light: false,
-		uniqueId: undefined,
 		backOffice: false,
 		backOfficeText: undefined,
 	})
@@ -177,7 +175,6 @@
 
 <template>
 	<VFooter
-		:id="uniqueId ? `${uniqueId}-footer` : undefined"
 		v-bind="{
 			...options.footer,
 			...$attrs,
@@ -217,6 +214,7 @@
 
 				<VBtn
 					id="scroll-btn"
+          class="back-to-top"
 					v-bind="options.goTopBtn"
 					:aria-label="locales.goTopBtnLabel"
 					@click="scrollToTop"
@@ -246,7 +244,7 @@
 
 			<ul
 				:class="{ 'py-2 py-sm-0': !extendedMode }"
-				class="vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-start justify-center max-width-none mx-n3 my-n3"
+        class="vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-center justify-center max-width-none mx-n3 my-n3"
 			>
 				<slot name="prepend" />
 
@@ -332,13 +330,22 @@ a {
 
 	.social {
 		.text--primary {
-			color: rgb(var(--v-theme-primary));
+      color: rgb(var(--v-theme-primary));
 		}
+
+    a.v-btn {
+      border-radius: 4px !important;
+    }
 
 		a.v-btn:hover {
 			background: rgb(0 0 0 / 5%);
 		}
 	}
+
+
+  .back-to-top {
+    border-radius: 4px !important;
+  }
 
 	button.v-btn:hover {
 		background: rgb(0 0 0 / 5%);
@@ -350,10 +357,6 @@ a {
 
 	.v-divider {
 		border-color: var(--footer-background);
-	}
-
-	svg.logo {
-		fill: rgb(var(--v-theme-primary));
 	}
 
 	.scroll {

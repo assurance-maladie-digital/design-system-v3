@@ -15,7 +15,7 @@ const applyThemeSidebar = (theme) => {
 	const processSidebar = () => {
 		const sidebar = document.querySelector('.sidebar-container')
 
-		if (sidebar) {
+        if (sidebar) {
 			// First, reset display of all items if we're coming from AP theme
 			// This ensures components are properly restored when switching from AP to other themes
 			if (theme !== 'ap') {
@@ -39,6 +39,10 @@ const applyThemeSidebar = (theme) => {
 				if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
 					item.style.display = theme === 'cnam' ? 'block' : 'none'
 				}
+                if (item.querySelector('a[id^="composants-structure-footerbar--with-phone-number"]')) {
+                    item.style.display = theme === 'cnam' || theme === 'pa' ? 'none' : 'block'
+                }
+
 
 				// Handle amelipro components folder
 				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
