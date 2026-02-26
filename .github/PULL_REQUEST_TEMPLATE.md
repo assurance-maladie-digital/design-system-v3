@@ -29,7 +29,7 @@ Avant de proposer une review, vérifiez chaque point de la checklist qui vous co
 
 **Bonne Pratique**
 
-- [ ] Ma Pull Request est bien nommée (SY/AP - Composant/template: descriptif du composant/template)
+- [ ] Ma Pull Request est bien nommée (Composant/template: descriptif du composant/template)
 - [ ] Ma Pull Request pointe vers la bonne branche
 - [ ] Linker la demande de création du composant/template et PR
 
@@ -67,7 +67,7 @@ Avant de proposer une review, vérifiez chaque point de la checklist qui vous co
 
 **Bonne Pratique**
 
-- [ ] Ma Pull Request est bien nommée (SY/AP - Composant/template: descriptif issue)
+- [ ] Ma Pull Request est bien nommée (Composant/template: descriptif issue)
 - [ ] Ma Pull Request pointe vers la bonne branche
 - [ ] Linker issue et PR
 
@@ -101,6 +101,6 @@ Avant de proposer une review, vérifiez chaque point de la checklist qui vous co
 
 **Fusion de composant/template**
 
-- [ ] Le composant/template n'induit pas de régression dans le composant/template Synapse, PA ou AP
+- [ ] Le composant/template n'induit pas de régression dans le composant/template Synapse, Portail Agent ou AmeliPro
 - [ ] Ajout des stories propre au thème (penser à filter le menu/props si nécessaire)
 - [ ] Ajouter un message dans le composant/template déprécié avec un lien vers le nouveau
