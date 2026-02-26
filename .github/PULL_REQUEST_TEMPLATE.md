@@ -14,7 +14,7 @@
 <!-- Supprimez les options non pertinentes. -->
 
 - Nouvelle fonctionnalité
-- Correction de bug
+- Correction de bugs
 - Changement cassant
 - Refactoring
 - Maintenance
