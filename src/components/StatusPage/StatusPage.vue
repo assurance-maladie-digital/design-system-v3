@@ -57,6 +57,7 @@
 		hideBtn?: boolean
 		uniqueId?: string
 		role?: PageAriaRole
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		pageTitle: undefined,
 		message: undefined,
@@ -105,7 +106,7 @@
 						v-if="pageTitle"
 						:id="role ? `${uniqueId}-title` : undefined"
 						class="mb-2 font-weight-bold text-h5 mb-4"
-						:level="1"
+						:level="headingLevel"
 					>
 						{{ pageTitle }}
 					</SyHeading>

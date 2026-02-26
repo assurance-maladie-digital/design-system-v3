@@ -17,6 +17,7 @@
 			to?: RouteLocationRaw
 			href?: string
 		}
+		headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		ariaLabel: locales.ariaLabel,
 		serviceTitle: undefined,
@@ -90,7 +91,7 @@
 			<div v-if="serviceTitle">
 				<SyHeading
 					class="service-title"
-					:level="1"
+					:level="headingLevelTitle"
 				>
 					{{ serviceTitle }}
 				</SyHeading>

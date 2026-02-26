@@ -19,6 +19,7 @@
 		persistent?: boolean
 		autofocusValidateBtn?: boolean
 		draggable?: boolean
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -160,7 +161,7 @@
 						v-if="title"
 						:id="id"
 						class="text-h4 mr-6 font-weight-bold"
-						:level="2"
+						:level="headingLevel"
 					>
 						{{ props.title }}
 					</SyHeading>

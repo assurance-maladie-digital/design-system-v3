@@ -22,6 +22,8 @@
 				to?: RouteLocationRaw
 				href?: string
 			}
+			headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
+			headingLevelSubtitle: 1 | 2 | 3 | 4
 		}>(), {
 			theme: 'default',
 			serviceTitle: undefined,
@@ -253,7 +255,7 @@
 							'vd-compte-entreprise-title': isCompteEntreprise,
 						}"
 						class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
-						:level="1"
+						:level="headingLevelTitle"
 					>
 						<template v-if="typeof service.title === 'string'">
 							<span>
@@ -274,7 +276,7 @@
 					<SyHeading
 						v-if="showServiceSubTitle"
 						class="vd-title text-caption"
-						:level="2"
+						:level="headingLevelSubtitle"
 					>
 						{{ service.subTitle }}
 					</SyHeading>

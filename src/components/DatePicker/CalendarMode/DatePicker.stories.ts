@@ -38,6 +38,14 @@ const meta = {
 		},
 	},
 	argTypes: {
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
+		'headingLevelComplexDatePicker': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 		'onUpdate:modelValue': {
 			description: 'Émis lorsque la valeur du champ est mise à jour',
 			table: {
@@ -345,6 +353,8 @@ export const Default: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -417,6 +427,8 @@ export const Required: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -489,6 +501,8 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une période',
 		'label': 'Sélectionner une période',
 		'format': 'DD/MM/YYYY',
@@ -575,6 +589,8 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -671,6 +687,8 @@ export const WithAppendIcon: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -738,6 +756,8 @@ export const WithoutIcon: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -805,6 +825,8 @@ export const BirthDate: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Date de naissance',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -873,6 +895,8 @@ export const WithError: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -948,6 +972,8 @@ export const WithWarning: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Date avec avertissement',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -1026,6 +1052,8 @@ export const WithSuccess: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Date valide',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -1222,6 +1250,8 @@ export const WithDateFormatReturn: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -1333,6 +1363,8 @@ export const WithDayjsFormat: Story = {
 		],
 	},
 	args: {
+		headingLevel: 3,
+		headingLevelComplexDatePicker: 3,
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		isBirthDate: false,
@@ -1465,6 +1497,8 @@ export const UTC: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
+		'headingLevelComplexDatePicker': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',

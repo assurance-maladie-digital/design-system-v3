@@ -171,6 +171,8 @@
 			density?: 'default' | 'comfortable' | 'compact'
 			hint?: string
 			persistentHint?: boolean
+			headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+
 		}>(),
 		{
 			modelValue: undefined,
@@ -1156,7 +1158,7 @@
 					<template #header>
 						<SyHeading
 							class="mx-auto my-auto ml-5 mb-4"
-							:level="3"
+							:level="headingLevel"
 						>
 							{{ selectedDates ? displayedDateString : headerDate }}
 						</SyHeading>

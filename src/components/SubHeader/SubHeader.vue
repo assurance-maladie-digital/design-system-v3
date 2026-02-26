@@ -26,6 +26,7 @@
 		dataListGroupItems?: DataListGroupItems | undefined
 		loading?: boolean
 		renderFixedHeight?: boolean
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
@@ -37,6 +38,7 @@
 		dataListGroupItems: undefined,
 		loading: false,
 		renderFixedHeight: false,
+		headingLevel: 1,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -123,7 +125,7 @@
 								v-else-if="titleText"
 								class="text-h5 font-weight-bold"
 								:aria-label="titleAccessibleName"
-								:level="2"
+								:level="headingLevel"
 							>
 								{{ titleText }}
 							</SyHeading>

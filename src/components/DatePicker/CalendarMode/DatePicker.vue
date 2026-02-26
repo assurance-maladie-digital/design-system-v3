@@ -75,6 +75,9 @@
 		isValidateOnBlur?: boolean
 		hint?: string
 		persistentHint?: boolean
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelComplexDatePicker: 1 | 2 | 3 | 4 | 5 | 6
+
 	}>(), {
 		modelValue: undefined,
 		placeholder: undefined,
@@ -924,6 +927,7 @@
 		<template v-else-if="props.useCombinedMode">
 			<ComplexDatePicker
 				ref="complexDatePickerRef"
+				:heading-level="headingLevelComplexDatePicker"
 				:model-value="props.modelValue"
 				:format="props.format"
 				:date-format-return="props.dateFormatReturn"
@@ -1044,7 +1048,7 @@
 					<template #header>
 						<SyHeading
 							class="mx-auto my-auto ml-5 mb-4"
-							:level="3"
+							:level="headingLevel"
 						>
 							{{ selectedDates ? displayedDateString : headerDate }}
 						</SyHeading>
