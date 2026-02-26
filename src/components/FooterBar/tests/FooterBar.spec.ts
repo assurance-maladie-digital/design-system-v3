@@ -16,13 +16,13 @@ describe('FooterBar', () => {
 	}
 
 	it('renders correctly', async () => {
-        const wrapper = mount(FooterBar)
+		const wrapper = mount(FooterBar)
 		expect(FooterBar).toBeTruthy()
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
 	it('renders default props correctly', () => {
-        const wrapper = mount(FooterBar)
+		const wrapper = mount(FooterBar)
 		expect(wrapper.props().a11yCompliance).toBe('non-compliant')
 		expect(wrapper.props().linkItems).toBeNull()
 		expect(wrapper.props().sitemapRoute).toEqual({ name: 'sitemap' })
@@ -42,7 +42,7 @@ describe('FooterBar', () => {
 	})
 
 	it('renders footer links correctly', () => {
-        const wrapper = mount(FooterBar)
+		const wrapper = mount(FooterBar)
 		const links = wrapper.findAll('.vd-footer-bar-links li')
 		expect(links.length).toBeGreaterThan(0)
 	})
@@ -62,18 +62,18 @@ describe('FooterBar', () => {
 	})
 
 	it('renders version if provided', () => {
-        const version = '1.0.0'
-        const wrapper = mount(FooterBar, {props: {version}})
-        expect(wrapper.text()).toContain(`${locales.versionLabel} ${version}`)
+		const version = '1.0.0'
+		const wrapper = mount(FooterBar, { props: { version } })
+		expect(wrapper.text()).toContain(`${locales.versionLabel} ${version}`)
 	})
 
 	it('computes logoSize correctly for desktop screens', () => {
-        const wrapper = mount(FooterBar)
+		const wrapper = mount(FooterBar)
 		expect(wrapper.vm.$.exposed?.logoSize.value).toBe(LogoSize.NORMAL)
 	})
 
 	it('computes logoSize correctly for small screens', async () => {
-        const wrapper = mount(FooterBar)
+		const wrapper = mount(FooterBar)
 		Object.defineProperty(window, 'innerWidth', {
 			writable: true,
 			configurable: true,
@@ -124,12 +124,12 @@ describe('FooterBar', () => {
 	})
 
 	it('sets target attribute correctly based on openInNewTab', () => {
-        const linkItems = [
-            {text: 'Link 1', href: 'https://example.com', openInNewTab: true},
-            {text: 'Link 2', href: 'https://example.com', openInNewTab: false},
-        ]
+		const linkItems = [
+			{ text: 'Link 1', href: 'https://example.com', openInNewTab: true },
+			{ text: 'Link 2', href: 'https://example.com', openInNewTab: false },
+		]
 		const wrapper = mount(FooterBar, {
-            props: {linkItems},
+			props: { linkItems },
 		})
 
 		const links = wrapper.findAll('.vd-footer-bar-links a')

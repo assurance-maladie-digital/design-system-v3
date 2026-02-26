@@ -88,7 +88,7 @@ li {
 }
 
 .vd-social-media-links-icon {
-  color: tokens.$grey-base !important;
+	color: tokens.$grey-base !important;
 }
 
 .v-btn--icon {

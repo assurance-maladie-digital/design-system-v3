@@ -2,33 +2,33 @@ import FooterBar from '../FooterBar/FooterBar.vue'
 import Logo from '../Logo/Logo.vue'
 import CollapsibleList from '../CollapsibleList/CollapsibleList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
-import {fn} from '@storybook/test'
+import { fn } from '@storybook/test'
 import { mdiTwitter, mdiLinkedin, mdiFacebook, mdiYoutube } from '@mdi/js'
 import imgUrl from '@/assets/amelipro/img/cartouche_nouveauTEL.svg'
 
 const items = [
 	{
 		text: 'Plan du site',
-        href: 'javascript:void(0)',
+		href: 'javascript:void(0)',
 		theme: 'cnam',
 	},
 	{
 		text: 'Aide et configuration',
-        href: 'javascript:void(0)',
+		href: 'javascript:void(0)',
 		theme: 'ap',
 	},
 	{
 		text: 'Conditions générales d\'utilisation',
-        href: 'javascript:void(0)',
+		href: 'javascript:void(0)',
 	},
 	{
 		text: 'Gestion des cookies',
-        href: 'javascript:void(0)',
+		href: 'javascript:void(0)',
 		theme: 'cnam',
 	},
 	{
 		text: 'Mentions légales',
-        href: 'javascript:void(0)',
+		href: 'javascript:void(0)',
 	},
 ]
 
@@ -73,61 +73,61 @@ const meta = {
 	component: FooterBar,
 	parameters: {
 		layout: 'fullscreen',
-        controls: {exclude: ['logoSize', 'onEvent']},
-        actions: {
-            handles: ['event']
-        },
+		controls: { exclude: ['logoSize', 'onEvent'] },
+		actions: {
+			handles: ['event'],
+		},
 	},
 	argTypes: {
-        'a11yCompliance': {
+		a11yCompliance: {
 			options: ['non-compliant', 'partially-compliant', 'fully-compliant'],
 			control: { type: 'select' },
 			default: 'fully-compliant',
 			description: 'Le niveau de conformité aux règles d’accessibilité de l’application.\n Cette mention est obligatoire, voir la <a target="_blank" href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/obligations/#d%C3%A9claration-daccessibilit%C3%A9">documentation du RGAA</a>.',
 		},
-        'linkItems': {
+		linkItems: {
 			control: {
 				type: 'object',
 			},
 			description: 'Les liens de navigation à afficher dans le pied de page.',
 		},
-        'hideSitemapLink': {
+		hideSitemapLink: {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Masque le lien vers le Plan du site.',
 		},
-        'hideHelpLink': {
+		hideHelpLink: {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Masque le lien vers aide et configuation.',
 		},
-        'hideCguLink': {
+		hideCguLink: {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Masque le lien vers les Conditions générales d’utilisation.',
 		},
-        'hideCookiesLink': {
+		hideCookiesLink: {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Masque le lien vers la Gestion des cookies.',
 		},
-        'hideLegalNoticeLink': {
+		hideLegalNoticeLink: {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Masque le lien vers les Mentions légales.',
 		},
-        'hideA11yLink': {
+		hideA11yLink: {
 			control: {
 				type: 'boolean',
 			},
 			description: 'Masque le lien vers la Déclaration d’accessibilité.',
 		},
-        'hideLogo': {
+		hideLogo: {
 			control: {
 				type: 'boolean',
 			},
@@ -263,7 +263,7 @@ export const Default: Story = {
 				`,
 			},
 		],
-        controls: {exclude: ['logoSize', 'items', 'onEvent']},
+		controls: { exclude: ['logoSize', 'items', 'onEvent'] },
 	},
 	args: {
 		a11yCompliance: 'non-compliant',
@@ -318,7 +318,7 @@ export const Default: Story = {
 				color: 'primary',
 			},
 		},
-        'onEvent': fn()
+		onEvent: fn(),
 	},
 	render: (args) => {
 		return {
@@ -1342,12 +1342,12 @@ export const BackOffice: Story = {
 	},
 }
 export const withPhoneNumber: Story = {
-    parameters: {
-        themes: ['ap'],
-        sourceCode: [
-            {
-                name: 'Template',
-                code: `<template>
+	parameters: {
+		themes: ['ap'],
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
       <FooterBar :link-items="args.items" prepend>
                 <template #prepend>
                   <img
@@ -1360,10 +1360,10 @@ export const withPhoneNumber: Story = {
 	</FooterBar>
 </template>
 				`,
-            },
-            {
-                name: 'Script',
-                code: `<script setup lang="ts">
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
 	import { FooterBar } from '@cnamts/synapse'
 	
 	const items = [
@@ -1386,20 +1386,20 @@ export const withPhoneNumber: Story = {
 	]
 </script>
 				`,
-            },
-        ],
-        controls: {include: ['prepend']},
-    },
-    args: {
-        items: items,
-    },
-    render: (args) => {
-        return {
-            components: {FooterBar},
-            setup() {
-                return {args, imgUrl}
-            },
-            template: `
+			},
+		],
+		controls: { include: ['prepend'] },
+	},
+	args: {
+		items: items,
+	},
+	render: (args) => {
+		return {
+			components: { FooterBar },
+			setup() {
+				return { args, imgUrl }
+			},
+			template: `
               <FooterBar :link-items="args.items" prepend>
                 <template #prepend>
                   <img
@@ -1410,6 +1410,6 @@ export const withPhoneNumber: Story = {
                 </template>
               </FooterBar>
             `,
-        }
-    },
+		}
+	},
 }
