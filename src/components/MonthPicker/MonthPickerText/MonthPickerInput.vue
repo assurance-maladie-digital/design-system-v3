@@ -1,15 +1,16 @@
 <script setup lang="ts">
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import { mdiCalendar } from '@mdi/js'
 	import { vMaska } from 'maska/vue'
 	import { inject, ref, watch } from 'vue'
-	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
-	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
-	import { mdiCalendar } from '@mdi/js'
-	import { localesKey } from './locales'
-	import { locales as defaultLocales } from './locales'
+	import { locales as defaultLocales, localesKey } from '../locales'
+	import type { TextFieldProps } from './useTextField'
+	import { useTextField } from './useTextField'
 
 	const props = defineProps<{
 		modelValue: string | undefined
-	}>()
+	} & TextFieldProps>()
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
@@ -46,7 +47,7 @@
 		v-maska="mask"
 		show-success-messages
 		disable-error-handling
-		:help-text="locales.hint"
+		v-bind="useTextField(props).value"
 	>
 		<template #append>
 			<button

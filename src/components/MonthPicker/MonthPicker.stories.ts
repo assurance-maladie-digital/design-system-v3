@@ -42,6 +42,36 @@ const meta: Meta<typeof MonthPicker> = {
 				type: { summary: 'boolean' },
 			},
 		},
+		'placeholder': {
+			description: 'Texte affiché dans le champ de saisie lorsque aucune valeur n’est sélectionnée.',
+			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		'label': {
+			description: 'Label du champ de saisie du sélecteur de mois.',
+			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		'density': {
+			description: 'Densité d’affichage du champ de saisie. Peut être "default", "comfortable" ou "compact".',
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			table: {
+				type: { summary: '"default" | "comfortable" | "compact"' },
+				defaultValue: { summary: '"default"' },
+			},
+		},
+		'helpText': {
+			description: 'Texte d’aide affiché sous le champ de saisie.',
+			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
 	},
 	parameters: {
 		controls: {

@@ -1,21 +1,23 @@
 <script lang="ts" setup>
 	import { computed, provide, ref, useAttrs, type ComponentPublicInstance } from 'vue'
-	import MonthPickerInput from './MonthPickerInput.vue'
+	import MonthPickerInput from './MonthPickerText/MonthPickerInput.vue'
 	import MonthPickerVisual from './MonthPickerVisual/MonthPickerVisual.vue'
 	import { watch } from 'vue'
 	import { locales as defaultLocales, localesKey } from './locales'
+	import { defaultTextFieldProps, useTextField, type TextFieldProps } from './MonthPickerText/useTextField'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string
-		label: string
 		locales?: typeof defaultLocales
 		minYear?: number
 		maxYear?: number
-	}>(), {
+	} & TextFieldProps>(), {
 		modelValue: undefined,
 		locales: () => defaultLocales,
 		minYear: 1900,
 		maxYear: 2100,
+		...defaultTextFieldProps,
+		helpText: 'Format MM/AAAA',
 	})
 
 	provide(localesKey, computed(() => props.locales))
@@ -51,8 +53,7 @@
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"
-			:label
-			v-bind="attrs"
+			v-bind="{...attrs, ...useTextField(props).value}"
 		/>
 		<MonthPickerVisual
 			v-model="internalValue"
