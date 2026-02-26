@@ -250,7 +250,7 @@ export const Default: Story = {
 			{
 				icon: xIcon,
 				name: 'X',
-				href: 'https://www.twitter.com',
+				href: 'https://x.com',
 			},
 			{
 				icon: mdiLinkedin,

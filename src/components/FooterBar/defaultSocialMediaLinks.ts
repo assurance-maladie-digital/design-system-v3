@@ -18,6 +18,6 @@ export const defaultSocialMediaLinks: SocialMediaLink[] = [
 	{
 		icon: xIcon,
 		name: 'X',
-		href: 'https://twitter.com/Assur_Maladie',
+		href: 'https://x.com/Assur_Maladie',
 	},
 ]
