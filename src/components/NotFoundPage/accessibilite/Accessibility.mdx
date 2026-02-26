@@ -1,15 +1,87 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as Stories from '../NotFoundPage.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
+<AccessibilityGuideLayout
+    componentName="NotFoundPage"
+    iconSrc={AccessibilityIcon}
+>
 
 <div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/NotFoundPage.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/654" target="_blank" style={{color:'#0C41BD'}}>issue #654</a>)</p>
-	</div>
+    <p>Rapport d'audit manuel : <a href="/audits/NotFoundPage.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/654" target="_blank" style={{color:'#0C41BD'}}>issue #654</a>)</p>
+</div>
+
+    <CriteriaSection>
+        <CriteriaCard icon="🔍" title="Structure sémantique">
+            <ul>
+                <li><strong>Titre de page</strong> : rendu dans une balise <code>h1</code> via <code>StatusPage</code>, sa valeur provient des locales du thème via <code>useThemeLocales</code></li>
+                <li><strong>Code d'erreur</strong> : le code <em>404</em> est précédé du texte masqué visuellement <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) pour les lecteurs d'écran</li>
+                <li><strong>Identifiant de support</strong> : si le paramètre <code>support_id</code> est présent dans l'URL, il est affiché dans le slot <code>#additional-content</code> avec un formatage espacé par groupes de 4 caractères pour faciliter la lecture</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🔗" title="Liens et boutons">
+            <ul>
+                <li><strong>Bouton de retour</strong> : rendu via <code>btn-href</code> (balise <code>a</code>) ou <code>btn-link</code> (balise <code>router-link</code>), par défaut redirige vers <code>/</code></li>
+                <li><strong>Texte du bouton</strong> : doit être explicite et décrire la destination, ex. <em>"Retour à l'accueil"</em></li>
+                <li><strong>Masquage du bouton</strong> : la prop <code>hide-btn</code> permet de masquer le bouton si une alternative de navigation est présente</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🖼️" title="Illustration">
+            <ul>
+                <li><strong>Image décorative</strong> : l'illustration par défaut possède <code>alt=""</code> et <code>aria-hidden="true"</code> car elle est purement décorative</li>
+                <li><strong>Source thémable</strong> : l'image source provient des locales du thème via <code>useThemeLocales</code></li>
+                <li><strong>Slot <code>#illustration</code></strong> : si une illustration personnalisée est fournie, les mêmes règles d'accessibilité s'appliquent</li>
+                <li><strong>Mise en page adaptive</strong> : la colonne illustration n'est affichée que si <code>src</code> ou le slot <code>#illustration</code> est fourni</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🪪" title="Identifiant de support">
+            <ul>
+                <li><strong>Paramètre URL</strong> : le paramètre <code>support_id</code> est lu depuis <code>document.location.search</code> au montage du composant via <code>onMounted</code></li>
+                <li><strong>Formatage lisible</strong> : l'identifiant est découpé en groupes de 4 caractères séparés par des espaces pour faciliter la lecture vocale et visuelle, ex. <em>"1234 5678 9012 3456 789"</em></li>
+                <li><strong>Contenu conditionnel</strong> : la section identifiant n'est affichée que si <code>support_id</code> est présent dans l'URL</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
+
+    <DemoSection title="État par défaut" componentName="NotFoundPage">
+        <Story
+            of={Stories.Default}
+            parameters={{ docs: { inlineStories: true } }}
+        />
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Fournir un <code>btn-text</code> explicite — éviter les libellés génériques comme <em>"Cliquez ici"</em></li>
+            <li>Ne pas masquer le bouton (<code>hide-btn</code>) sans proposer une alternative de navigation claire</li>
+            <li>Les illustrations doivent toujours être décoratives (<code>aria-hidden="true"</code>) — ne jamais y placer d'information essentielle</li>
+            <li>Le slot <code>#illustration</code> personnalisé doit respecter les mêmes règles : <code>alt=""</code> et <code>aria-hidden="true"</code> si l'image est décorative</li>
+            <li>Ne pas stocker d'informations sensibles dans le paramètre <code>support_id</code> visible dans l'URL</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.3.1 – Info and Relationships</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 2.4.4 – Link Purpose</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.1.1 – Non-text Content</a></li>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" style={{ color: '#0C41BD' }}>ARIA Authoring Practices Guide</a></li>
+        </ul>
+    </ResourcesSection>
+
+</AccessibilityGuideLayout>
