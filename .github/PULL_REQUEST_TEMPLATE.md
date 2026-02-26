@@ -61,6 +61,8 @@
 - [ ] Des tests prouvent le bon fonctionnement du composant/template
 - [ ] Deploy + SKSN Checks
 
+---
+
 ### Evolution ou correctif de composant/template
 
 **Bonne Pratique**
