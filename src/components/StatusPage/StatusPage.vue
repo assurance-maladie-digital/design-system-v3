@@ -1,6 +1,8 @@
 <script setup lang="ts">
 	import type { RouteRecordRaw } from 'vue-router'
 	import PageContainer from '../PageContainer/PageContainer.vue'
+	import { useId } from 'vue'
+	import type { PageAriaRole } from '../types'
 
 	type MessagePart =
 		| { type: 'text', value: string }
@@ -52,6 +54,8 @@
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
+		uniqueId?: string
+		role?: PageAriaRole
 	}>(), {
 		pageTitle: undefined,
 		message: undefined,
@@ -61,11 +65,23 @@
 		btnLink: '/',
 		btnHref: undefined,
 		hideBtn: false,
+		uniqueId: useId(),
+		role: undefined,
 	})
+
+	const emit = defineEmits(['click'])
+	const emitClickEvent = (): void => {
+		emit('click')
+	}
 </script>
 
 <template>
-	<PageContainer size="md">
+	<PageContainer
+		size="md"
+		:unique-id="uniqueId"
+		:role="role"
+		:aria-labelledby="role ? `${uniqueId}-title` : undefined"
+	>
 		<VCard
 			:elevation="0"
 			class="pa-6 pa-sm-16"
@@ -86,6 +102,7 @@
 
 					<h1
 						v-if="pageTitle"
+						:id="role ? `${uniqueId}-title` : undefined"
 						class="mb-2 font-weight-bold text-h5 mb-4"
 					>
 						{{ pageTitle }}
@@ -117,6 +134,7 @@
 							:href="btnHref"
 							color="primary"
 							class="mt-6"
+							@click="emitClickEvent"
 						>
 							{{ btnText }}
 						</VBtn>

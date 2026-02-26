@@ -8,3 +8,7 @@ export type NavigationProps =
 	| { href: string, to?: never }
 	| { to: RouteLocationRaw, href?: never }
 	| { href?: never, to?: never }
+
+// Type pour les rôles ARIA utilisés dans les composants
+export type AriaRole = 'main' | 'region' | 'navigation' | 'contentinfo' | 'banner'
+export type PageAriaRole = 'main' | 'region'
