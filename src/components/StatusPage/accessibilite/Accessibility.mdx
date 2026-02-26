@@ -1,0 +1,89 @@
+import { Meta, Story } from '@storybook/blocks';
+import * as StatusPageStories from '../StatusPage.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={StatusPageStories} />
+
+<AccessibilityGuideLayout
+    componentName="StatusPage"
+    iconSrc={AccessibilityIcon}
+>
+
+    <CriteriaSection>
+        <CriteriaCard icon="🔍" title="Structure sémantique">
+            <ul>
+                <li><strong>Titre de page</strong> : le titre est rendu dans une balise <code>h1</code>, unique et descriptif</li>
+                <li><strong>Code d'erreur</strong> : le code (ex. <code>500</code>, <code>404</code>) est précédé du texte masqué visuellement <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) pour les lecteurs d'écran</li>
+                <li><strong>Rôles ARIA hérités</strong> via <code>PageContainer</code> :</li>
+                <ul>
+                    <li>exemple : <code>role="main"</code> représente le contenu principal de la page</li>
+                </ul>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🔗" title="Liens et boutons">
+            <ul>
+                <li><strong>Numéros de téléphone</strong> : les numéros de 4 ou 10 chiffres (ex. <code>3646</code>) sont automatiquement transformés en liens <code>tel:</code> cliquables et vocalisables</li>
+                <li><strong>Bouton de retour</strong> : rendu via <code>btn-href</code> (balise <code>a</code>) ou <code>btn-link</code> (balise <code>router-link</code>)</li>
+                <li><strong>Texte du bouton</strong> : doit être explicite et décrire la destination, ex. <em>"Retour à l'accueil"</em></li>
+                <li><strong>Masquage du bouton</strong> : la prop <code>hide-btn</code> permet de masquer le bouton si une alternative de navigation est présente</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🖼️" title="Illustration">
+            <ul>
+                <li><strong>Image décorative</strong> : l'illustration doit avoir <code>alt=""</code> et <code>aria-hidden="true"</code> car elle est purement décorative</li>
+                <li><strong>Slot illustration</strong> : si une illustration personnalisée est fournie via le slot <code>#illustration</code>, les mêmes règles s'appliquent</li>
+                <li><strong>Mise en page adaptive</strong> : la colonne illustration n'est affichée que si le slot est fourni, évitant des zones vides</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="📝" title="Contenu additionnel">
+            <ul>
+                <li><strong>Slot <code>additional-content</code></strong> : destiné à du contenu textuel complémentaire (ex. identifiant de support), doit rester lisible par les lecteurs d'écran</li>
+                <li><strong>Slot <code>action</code></strong> : permet d'ajouter des actions supplémentaires accessibles au clavier</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
+
+    <DemoSection title="État par défaut">
+        <Story of={StatusPageStories.Default} />
+    </DemoSection>
+
+    <DemoSection title="Avec lien de retour">
+        <Story of={StatusPageStories.WithLink} />
+    </DemoSection>
+
+    <DemoSection title="Avec illustration personnalisée">
+        <Story of={StatusPageStories.CustomIllustration} />
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Toujours renseigner <code>page-title</code> avec un titre clair et unique décrivant l'erreur</li>
+            <li>Personnaliser <code>code-error-text</code> si nécessaire pour un contexte métier spécifique</li>
+            <li>Fournir un <code>btn-text</code> explicite — éviter les libellés génériques comme <em>"Cliquez ici"</em></li>
+            <li>Ne pas masquer le bouton (<code>hide-btn</code>) sans proposer une alternative de navigation claire</li>
+            <li>Les illustrations doivent toujours être décoratives (<code>aria-hidden="true"</code>) — ne jamais y placer d'information essentielle</li>
+            <li>Le contenu dans <code>additional-content</code> doit être lisible par les lecteurs d'écran : éviter le contenu purement visuel</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.3.1 – Info and Relationships</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 2.4.4 – Link Purpose</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.1.1 – Non-text Content</a></li>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" style={{ color: '#0C41BD' }}>ARIA Authoring Practices Guide</a></li>
+        </ul>
+    </ResourcesSection>
+
+</AccessibilityGuideLayout>

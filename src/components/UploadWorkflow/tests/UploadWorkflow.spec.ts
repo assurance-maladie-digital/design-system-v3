@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 
 import UploadWorkflow from '../UploadWorkflow.vue'
 import { locales as fileListLocales } from '@/components/FileList/UploadItem/locales'
@@ -32,6 +33,24 @@ describe('UploadWorkflow', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.findAll('.file-item')).toHaveLength(2)
 		expect(wrapper.find('.sy-file-upload').isVisible()).toBeTruthy()
+	})
+
+	it('renders default title with role heading and configured aria-level', () => {
+		const wrapper = mount(UploadWorkflow, {
+			props: {
+				uploadList: [
+					{
+						id: 'ID',
+						title: 'Carte d\'identité',
+					},
+				],
+				headingLevel: 2,
+			},
+		})
+
+		const title = wrapper.find('[role="heading"]')
+		expect(title.exists()).toBe(true)
+		expect(title.attributes('aria-level')).toBe('2')
 	})
 
 	it('shows the file in the list when set with the list button', async () => {
@@ -237,6 +256,35 @@ describe('UploadWorkflow', () => {
 
 		await wrapper.find('.file-item__action-preview').trigger('click')
 
+		expect(wrapper.emitted('preview')).toBeTruthy()
+		expect(wrapper.emitted('preview')?.[0]?.[0]).toMatchObject({
+			id: 'CERFA1',
+			title: 'CERFA 1',
+			showPreviewBtn: true,
+		})
+
 		expect(wrapper.find('.sy-file-preview img').exists()).toBeTruthy()
+	})
+
+	it('render custom infoText in FileUpload info-text slot', async () => {
+		const wrapper = mount(UploadWorkflow, {
+			props: {
+				modelValue: [],
+				uploadList: [
+					{
+						id: 'ID',
+						title: 'Carte d\'identité',
+					},
+				],
+				infoText: 'Texte personnalisé',
+			},
+		})
+
+		await nextTick()
+
+		const fileUpload = wrapper.find('.sy-file-upload')
+		expect(fileUpload.exists()).toBe(true)
+
+		expect(fileUpload.text()).toContain('Texte personnalisé')
 	})
 })

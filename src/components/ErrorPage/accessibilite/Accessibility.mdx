@@ -1,15 +1,77 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as Stories from '../ErrorPage.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
+<AccessibilityGuideLayout
+    componentName="ErrorPage"
+    iconSrc={AccessibilityIcon}
+>
 
 <div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/ErrorPage.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/652" target="_blank" style={{color:'#0C41BD'}}>issue #652</a>)</p>
-	</div>
+    <p>Rapport d'audit manuel : <a href="/audits/ErrorPage.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/652" target="_blank" style={{color:'#0C41BD'}}>issue #652</a>)</p>
+</div>
+
+    <CriteriaSection>
+        <CriteriaCard icon="🔍" title="Structure sémantique">
+            <ul>
+                <li><strong>Titre de page</strong> : rendu dans une balise <code>h1</code> via <code>StatusPage</code>, unique et descriptif — surchargeable via la prop <code>page-title</code></li>
+                <li><strong>Code d'erreur</strong> : la prop <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) est masquée visuellement via <code>d-sr-only</code> pour contextualiser le code aux lecteurs d'écran</li>
+                <li><strong>Valeurs par défaut</strong> : <code>pageTitle</code>, <code>message</code> et <code>code</code> proviennent des locales du thème via <code>useThemeLocales</code> et peuvent être surchargés via les props</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🔗" title="Liens et boutons">
+            <ul>
+                <li><strong>Bouton de retour</strong> : rendu via <code>btn-href</code> (balise <code>a</code>) ou <code>btn-link</code> (balise <code>router-link</code>)</li>
+                <li><strong>Texte du bouton</strong> : doit être explicite et décrire la destination, ex. <em>"Retour à l'accueil"</em></li>
+                <li><strong>Masquage du bouton</strong> : la prop <code>hide-btn</code> permet de masquer le bouton si une alternative de navigation est présente</li>
+                <li><strong>Numéros de téléphone</strong> : si le message contient un numéro de téléphone, il est automatiquement transformé en lien <code>tel:</code> par <code>StatusPage</code></li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🖼️" title="Illustration">
+            <ul>
+                <li><strong>Image décorative</strong> : l'illustration par défaut possède <code>alt=""</code> et <code>aria-hidden="true"</code> car elle est purement décorative</li>
+                <li><strong>Source thémable</strong> : l'image source provient des locales du thème via <code>useThemeLocales</code></li>
+                <li><strong>Slot <code>#illustration</code></strong> : si une illustration personnalisée est fournie, les mêmes règles d'accessibilité s'appliquent</li>
+                <li><strong>Mise en page adaptive</strong> : la colonne illustration n'est affichée que si <code>src</code> ou le slot <code>#illustration</code> est fourni</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
+
+    <DemoSection title="État par défaut">
+        <Story of={Stories.Default} />
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Les valeurs par défaut de <code>page-title</code>, <code>message</code> et <code>code</code> proviennent du thème — les surcharger uniquement si le contexte métier le nécessite</li>
+            <li>Fournir un <code>btn-text</code> explicite — éviter les libellés génériques comme <em>"Cliquez ici"</em></li>
+            <li>Ne pas masquer le bouton (<code>hide-btn</code>) sans proposer une alternative de navigation claire</li>
+            <li>Les illustrations doivent toujours être décoratives (<code>aria-hidden="true"</code>) — ne jamais y placer d'information essentielle</li>
+            <li>Personnaliser <code>code-error-text</code> si le contexte métier nécessite une formulation différente de <em>"Code d'erreur : "</em></li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.3.1 – Info and Relationships</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 2.4.4 – Link Purpose</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.1.1 – Non-text Content</a></li>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" style={{ color: '#0C41BD' }}>ARIA Authoring Practices Guide</a></li>
+        </ul>
+    </ResourcesSection>
+
+</AccessibilityGuideLayout>

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 
-	import { computed, nextTick, onMounted, ref, watch } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue'
+	import type { VRadioGroup } from 'vuetify/components'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
@@ -61,6 +62,7 @@
 	)
 
 	const emit = defineEmits(['update:modelValue', 'change'])
+	const radioGroupRef = ref<VRadioGroup | null>(null)
 	const model = computed({
 		get() {
 			return props.modelValue
@@ -139,24 +141,10 @@
 
 	watch(model, (newValue) => {
 		if (!props.isValidateOnBlur) {
-			// Si le formulaire a été soumis et que la valeur change, on valide à nouveau
-			if (isSubmitted.value) {
-				const isValid = validateField(newValue)
-				if (isValid) {
-					// La validation a réussi, effacer les erreurs
-					validation.clearValidation()
-				}
-			}
-			else {
-				// Comportement normal (hors soumission)
-				const isValid = validateField(newValue)
-				// Si la validation réussit, s'assurer que les erreurs sont effacées
-				if (isValid && validation.hasError.value) {
-					validation.clearValidation()
-				}
-			}
+			validateField(newValue)
 		}
 	})
+
 	const hasError = computed(() => validation.hasError.value)
 	const hasWarning = computed(() => validation.hasWarning.value)
 	const hasSuccess = computed(() => validation.hasSuccess.value)
@@ -184,41 +172,25 @@
 
 	const removeAriaAttributesForRadio = () => {
 		nextTick(() => {
-			// Pour aria-disabled sur les radios
-			const radioInputsDisabled = document.querySelectorAll(
-				'input[type="radio"][aria-disabled="false"]',
-			)
-			radioInputsDisabled.forEach((input) => {
-				input.removeAttribute('aria-disabled')
-			})
-
-			// Observer les futurs changements
-			const observer = new MutationObserver((mutations) => {
-				mutations.forEach(() => {
-					const newRadioInputsDisabled = document.querySelectorAll(
-						'input[type="radio"][aria-disabled="false"]',
-					)
-					newRadioInputsDisabled.forEach((input) => {
-						input.removeAttribute('aria-disabled')
-					})
+			if (radioGroupRef.value) {
+				const radioInputs = radioGroupRef.value.$el.querySelectorAll('input[type="radio"][aria-disabled="false"]')
+				radioInputs.forEach((input: Element) => {
+					input.removeAttribute('aria-disabled')
 				})
-			})
-
-			observer.observe(document.body, {
-				subtree: true,
-				childList: true,
-				attributes: true,
-				attributeFilter: ['aria-disabled'],
-			})
+			}
 		})
 	}
 
-	// Appliquer la correction lors du montage du composant
+	// Appliquer la correction lors du montage et de la mise à jour du composant
 	onMounted(() => {
 		removeAriaAttributesForRadio()
 		if (!props.isValidateOnBlur && !props.required) {
 			validateField(model.value)
 		}
+	})
+
+	onUpdated(() => {
+		removeAriaAttributesForRadio()
 	})
 
 	// Intégration avec le système de validation du formulaire
@@ -235,6 +207,7 @@
 <template>
 	<v-radio-group
 		:id="props.id"
+		ref="radioGroupRef"
 		v-model="model"
 		:class="{
 			'warning-field': hasWarning && !hasError,

@@ -53,6 +53,7 @@ export { default as SySelect } from './Customs/Selects/SySelect/SySelect.vue'
 export { default as SyAutocomplete } from './Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 // export { default as SyBtnSelect } from './Customs/Selects/SyBtnSelect/SyBtnSelect.vue'
 export { default as SyCheckbox } from './Customs/SyCheckbox/SyCheckbox.vue'
+export { default as SyCheckBoxGroup } from './Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
 export { default as SyForm } from './Customs/SyForm/SyForm.vue'
 export { default as SyRadioGroup } from './Customs/SyRadioGroup/SyRadioGroup.vue'
 export { default as SyTextField } from './Customs/SyTextField/SyTextField.vue'
@@ -119,6 +120,8 @@ export { default as SyAlert } from './SyAlert/SyAlert.vue'
 export { default as ErrorPage } from './ErrorPage/ErrorPage.vue'
 export { default as MaintenancePage } from './MaintenancePage/MaintenancePage.vue'
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage.vue'
+export { default as StatusPage } from './StatusPage/StatusPage.vue'
+export { default as DeclarationAccessibilityPage } from './DeclarationAccessibilityPage/DeclarationAccessibilityPage.vue'
 
 // ===========================
 // Amelipro

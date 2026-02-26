@@ -878,7 +878,7 @@ export const SlotFilters: Story = {
 					},
 				]
 
-				const search = ref('')
+				const search = ref(undefined)
 
 				const filterItems = ref<{ text: string, value: string }[]>([])
 
@@ -902,16 +902,16 @@ export const SlotFilters: Story = {
 					<template #top>
 						<TableToolbar
 							v-bind="args"
-							v-model:search="args.search"
+							v-model:search="search"
 						>
 							<template #filters>
-								<div class="py-1">
+								<div class="px-4 py-4 py-sm-1">
 									<SySelect
 										v-model="search"
 										:items="filterItems"
 										label="Nom"
 										density="compact"
-										width="100"
+										width="150"
 										hide-messages
 										clearable
 									/>
@@ -942,13 +942,13 @@ export const SlotFilters: Story = {
 								:nb-total="items.length"
 							>
 								<template #filters>
-									<div class="py-4">
+									<div class="px-4 py-4 py-sm-1">
 										<SySelect 
 											v-model="search" 
 											:items="filterItems" 
 											label="Nom" 
 											density="compact" 
-											width="100"
+											width="150"
 											hide-messages
 											clearable 
 										/>
