@@ -1276,9 +1276,9 @@ export const BackOffice: Story = {
 				href: 'https://www.facebook.com',
 			},
 			{
-                icon: xIcon,
-                name: 'X',
-                href: 'https://x.com',
+				icon: xIcon,
+				name: 'X',
+				href: 'https://x.com',
 			},
 			{
 				icon: mdiLinkedin,
