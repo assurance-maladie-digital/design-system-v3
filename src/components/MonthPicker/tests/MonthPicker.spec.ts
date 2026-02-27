@@ -917,4 +917,96 @@ describe('mounthpicker', () => {
 			wrapper.unmount()
 		})
 	})
+	describe('validation', () => {
+		it('show the error message when the input value is invalid', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: string) => {
+								const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
+								return regex.test(value) || 'Invalid month/year format. Use MM/YYYY.'
+							},
+							message: 'Invalid month/year format. Use MM/YYYY.',
+						},
+					}],
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.setValue('99/2025')
+			await input.trigger('blur')
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(true)
+			expect(wrapper.find('.v-input__details').text()).toBe('Invalid month/year format. Use MM/YYYY.')
+
+			wrapper.unmount()
+		})
+
+		it('should not show an error message when the input value is valid', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: string) => {
+								const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
+								return regex.test(value) || 'Invalid month/year format. Use MM/YYYY.'
+							},
+							message: 'Invalid month/year format. Use MM/YYYY.',
+						},
+					}],
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.setValue('12/2025')
+			await input.trigger('blur')
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(false)
+			expect(wrapper.find('.v-input__details').text()).toBe('Format MM/AAAA')
+
+			wrapper.unmount()
+		})
+
+		it ('show the error when the value is selected in the visual picker', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: string) => {
+								const year = value.split('/')[1]
+								return !!year && parseInt(year!) >= 2026
+							},
+							message: 'The year must be 2026 or later.',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
+			await monthButton.trigger('click')
+
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2025')
+			await yearButton.trigger('click')
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(true)
+			expect(wrapper.find('.v-input__details').text()).toBe('The year must be 2026 or later.')
+
+			wrapper.unmount()
+		})
+	})
 })
