@@ -1343,7 +1343,6 @@ export const BackOffice: Story = {
 }
 export const withPhoneNumber: Story = {
 	parameters: {
-		themes: ['ap'],
 		sourceCode: [
 			{
 				name: 'Template',

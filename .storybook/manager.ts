@@ -32,6 +32,7 @@ const applyThemeSidebar = (theme) => {
 			const hideAmelipro = theme === 'pa' || theme === 'cnam'
 			// When AP theme is active, only show Amelipro components
             const showOnlyAmelipro = theme === 'ap2026'
+            const hideOnlyNewAmelipro = theme !== 'ap'
 
 			// Hide or show items based on theme
 			items.forEach((item) => {
@@ -39,12 +40,16 @@ const applyThemeSidebar = (theme) => {
 				if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
 					item.style.display = theme === 'cnam' ? 'block' : 'none'
 				}
-                if (item.querySelector('a[id^="composants-structure-footerbar--with-phone-number"]')) {
-                    item.style.display = theme === 'cnam' || theme === 'pa' ? 'none' : 'block'
+                const itemId = item.getAttribute('data-item-id') || ''
+
+                // Hide New amelipro stories
+                if (hideOnlyNewAmelipro) {
+                    if (itemId === 'composants-structure-footerbar--with-phone-number') {
+                        item.style.display = 'none'
+                    }
                 }
 
-
-				// Handle amelipro components folder
+                // Handle amelipro components folder
 				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
 				if (isAmeliproFolder) {
 					item.style.display = hideAmelipro ? 'none' : 'block'
@@ -114,7 +119,6 @@ const applyThemeSidebar = (theme) => {
 				}
 
 				// Get item ID and text content once for all checks
-				const itemId = item.getAttribute('data-item-id') || ''
 				const itemText = item.textContent || ''
 
 				// Handle all items containing 'amelipro' in their ID or text content

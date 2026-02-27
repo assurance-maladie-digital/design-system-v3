@@ -24,7 +24,7 @@ exports[`FooterBar > renders correctly 1`] = `
     <!-- v-if -->
     <!-- v-if -->
     <ul class="
-      align-start
+      align-center
       d-flex
       flex-column
       flex-sm-row
