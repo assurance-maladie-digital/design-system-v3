@@ -93,18 +93,21 @@ const meta: Meta<typeof MonthPicker> = {
 			description: 'Règles de validation personnalisées pour les erreurs.',
 			table: {
 				type: { summary: 'ValidationRule[]' },
+				category: 'props',
 			},
 		},
 		'customWarningRules': {
 			description: 'Règles de validation personnalisées pour les avertissements.',
 			table: {
 				type: { summary: 'ValidationRule[]' },
+				category: 'props',
 			},
 		},
 		'customSuccessRules': {
 			description: 'Règles de validation personnalisées pour les succès.',
 			table: {
 				type: { summary: 'ValidationRule[]' },
+				category: 'props',
 			},
 			category: 'validation',
 		},
@@ -113,6 +116,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'text',
 			table: {
 				type: { summary: 'string | string[]' },
+				category: 'props',
 			},
 		},
 		'warningMessages': {
@@ -120,6 +124,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'text',
 			table: {
 				type: { summary: 'string | string[]' },
+				category: 'props',
 			},
 		},
 		'successMessages': {
@@ -127,6 +132,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'text',
 			table: {
 				type: { summary: 'string | string[]' },
+				category: 'props',
 			},
 		},
 		'hasError': {
@@ -134,6 +140,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
+				category: 'props',
 			},
 		},
 		'hasWarning': {
@@ -141,6 +148,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
+				category: 'props',
 			},
 		},
 		'hasSuccess': {
@@ -148,6 +156,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
+				category: 'props',
 			},
 		},
 		'showSuccessMessages': {
@@ -155,6 +164,7 @@ const meta: Meta<typeof MonthPicker> = {
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
+				category: 'props',
 			},
 		},
 	},
