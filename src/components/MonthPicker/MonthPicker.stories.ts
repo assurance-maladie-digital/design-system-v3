@@ -1,4 +1,5 @@
 import { fn } from '@storybook/test'
+import { nextTick } from 'vue'
 import MonthPicker from './MonthPicker.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import type SyTextField from '../Customs/SyTextField/SyTextField.vue'
@@ -110,7 +111,7 @@ export const Default: Story = {
 		'label': 'Début du projet',
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
-		'width': '350px',
+		'width': '400px',
 	},
 	parameters: {
 		sourceCode: [
@@ -121,7 +122,7 @@ export const Default: Story = {
 					<MonthPicker
 						v-model="selectedMonth"
 						label="Début du projet"
-						width="350px"
+						width="400px"
 					/>
 				</template>
 				`,
@@ -140,15 +141,182 @@ export const Default: Story = {
 	},
 }
 
+export const MonthValidation: Story = {
+	args: {
+		'modelValue': '11/2025',
+		'label': 'Début du projet',
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+	},
+	play: async ({ canvasElement }) => {
+		const input = canvasElement.querySelector('input') as HTMLInputElement
+		const currentDate = new Date()
+		setTimeout(async () => {
+			input.focus()
+			input.value = '19/2025'
+			input.dispatchEvent(new Event('input'))
+			await nextTick()
+			input.dispatchEvent(new Event('blur'))
+		}, 1500)
+
+		setTimeout(async () => {
+			input.focus()
+			const futureYear = currentDate.getFullYear() + 6
+			input.value = `11/${futureYear}`
+			input.dispatchEvent(new Event('input'))
+			await nextTick()
+			input.dispatchEvent(new Event('blur'))
+		}, 3000)
+
+		setTimeout(async () => {
+			input.focus()
+			const validYear = currentDate.getFullYear() + 1
+			input.value = `11/${validYear}`
+			input.dispatchEvent(new Event('input'))
+			await nextTick()
+			input.dispatchEvent(new Event('blur'))
+		}, 4500)
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<MonthPicker
+						v-model="selectedMonth"
+						label="Début du projet"
+						:custom-rules
+						:custom-warning-rules
+					/>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { MonthPicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedMonth = ref('11/2025')
+
+					const customRules = [
+						{
+							type: 'required',
+							options: {
+								message: 'Ce champ est requis.',
+							},
+						},
+						{
+							type: 'custom',
+							options: {
+								validator: (value: string) => {
+									const [month] = value.split('/').map(Number)
+									if (
+										!value ||
+										!month ||
+										!/^\\d{2}\\/\\d{4}$/.test(value) ||
+										month < 1 ||
+										month > 12
+									) {
+										return false
+									}
+									return true
+								},
+								message: 'Format de mois invalide.',
+							},
+						},
+					]
+
+					const customWarningRules = [{
+						type: 'custom',
+						options: {
+							validator: (value: string) => {
+								const [month, year] = value.split('/').map(Number) as [number, number]
+								const currentDate = new Date()
+								const currentYear = currentDate.getFullYear()
+								const currentMonth = currentDate.getMonth() + 1
+								if (year > currentYear + 5 || (year === currentYear + 5 && month > currentMonth)) {
+									return false
+								}
+								return true
+							},
+							warningMessage: 'La date est plus de 5 ans dans le futur.',
+						},
+					}]
+				</script>
+				`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker },
+		setup() {
+			const customRules = [
+				{
+					type: 'required',
+					options: {
+						message: 'Ce champ est requis.',
+					},
+				},
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							const [month] = value.split('/').map(Number)
+							if (
+								!month
+								|| !/^\d{2}\/\d{4}$/.test(value)
+								|| month < 1
+								|| month > 12
+							) {
+								return false
+							}
+							return true
+						},
+						message: 'Format de mois invalide.',
+					},
+				},
+			]
+
+			const customWarningRules = [{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						const [month, year] = value.split('/').map(Number) as [number, number]
+						const currentDate = new Date()
+						const currentYear = currentDate.getFullYear()
+						const currentMonth = currentDate.getMonth() + 1
+						if (year > currentYear + 5 || (year === currentYear + 5 && month > currentMonth)) {
+							return false
+						}
+						return true
+					},
+					warningMessage: 'La date est plus de 5 ans dans le futur.',
+				},
+			}]
+			return { args, customRules, customWarningRules }
+		},
+		template: `
+			<MonthPicker
+				v-bind="args"
+				:custom-rules="customRules"
+				:custom-warning-rules="customWarningRules"
+				width="400px"
+			/>
+		`,
+	}),
+}
+
 export const CustomDisplayedYears: Story = {
 	args: {
 		'modelValue': '11/2025',
 		'label': 'Début du projet',
 		'minYear': 2000,
 		'maxYear': 2025,
+		'width': '400px',
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
-		'width': '350px',
 	},
 	parameters: {
 		sourceCode: [
@@ -161,7 +329,6 @@ export const CustomDisplayedYears: Story = {
 						label="Début du projet"
 						:min-year="2000"
 						:max-year="2025"
-						width="350px"
 					/>
 				</template>
 				`,

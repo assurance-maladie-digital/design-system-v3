@@ -3,36 +3,43 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { mdiCalendar } from '@mdi/js'
 	import { vMaska } from 'maska/vue'
-	import { inject, ref, watch } from 'vue'
+	import { nextTick, inject, ref, watch } from 'vue'
 	import { locales as defaultLocales, localesKey } from '../locales'
 	import type { TextFieldProps } from './useTextField'
 	import { useTextField } from './useTextField'
+	import { useMonthPickerValidation, type ValidationProps } from '../useMonthPickerValidation'
 
 	const props = defineProps<{
 		modelValue: string | undefined
-	} & TextFieldProps>()
+	} & TextFieldProps & ValidationProps>()
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
 	}>()
 
 	const locales = inject<typeof defaultLocales>(localesKey)!
+	const input = ref<InstanceType<typeof SyTextField>>()
 
 	const mask = '##/####'
 
 	const innerValue = ref<string | undefined>(undefined)
 	watch(
 		() => props.modelValue,
-		(newValue) => {
-			innerValue.value = newValue
+		async (newValue) => {
+			if (newValue !== innerValue.value) {
+				innerValue.value = newValue
+				await nextTick()
+				input.value?.validateOnSubmit() // do not fire on mount
+			}
+			else {
+				innerValue.value = newValue
+			}
 		},
 		{ immediate: true },
 	)
 
-	watch(innerValue, (newValue, oldValue) => {
-		if (newValue !== oldValue) {
-			emits('update:modelValue', newValue)
-		}
+	watch(innerValue, (newValue) => {
+		emits('update:modelValue', newValue)
 	})
 
 	const toggleBtn = ref<HTMLButtonElement | null>(null)
@@ -43,11 +50,13 @@
 
 <template>
 	<SyTextField
+		ref="input"
 		v-model="innerValue"
 		v-maska="mask"
-		show-success-messages
-		disable-error-handling
-		v-bind="useTextField(props).value"
+		v-bind="{
+			...useTextField(props).value,
+			...useMonthPickerValidation(props).value
+		}"
 	>
 		<template #append>
 			<button
@@ -67,4 +76,13 @@
 </template>
 
 <style scoped lang="scss">
+
+.error-field .month-picker-input__toggle-btn :deep(svg) {
+	color: rgb(var(--v-theme-error, 179,63,46));
+}
+
+.warning-field .month-picker-input__toggle-btn :deep(svg) {
+	color: rgb(var(--v-theme-warning, 96,72,14));
+}
+
 </style>

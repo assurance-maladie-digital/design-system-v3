@@ -6,11 +6,12 @@
 	import { locales as defaultLocales, localesKey } from './locales'
 	import { defaultTextFieldProps, useTextField, type TextFieldProps } from './MonthPickerText/useTextField'
 	import { defaultMonthPickerVisualProps, type MonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
+	import { useMonthPickerValidation, type ValidationProps } from './useMonthPickerValidation'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string
 		locales?: typeof defaultLocales
-	} & TextFieldProps & Partial<MonthPickerVisualProps>>(), {
+	} & TextFieldProps & ValidationProps & Partial<MonthPickerVisualProps>>(), {
 		modelValue: undefined,
 		locales: () => defaultLocales,
 		helpText: 'Format MM/AAAA',
@@ -51,7 +52,11 @@
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"
-			v-bind="{...attrs, ...useTextField(props).value}"
+			v-bind="{
+				...attrs,
+				...useTextField(props).value,
+				...useMonthPickerValidation(props).value
+			}"
 		/>
 		<MonthPickerVisual
 			v-model="internalValue"
