@@ -43,8 +43,14 @@ const applyThemeSidebar = (theme) => {
                 const itemId = item.getAttribute('data-item-id') || ''
 
                 // Hide New amelipro stories
+
+                const apOnlyStories = [
+                    'footerbar--back-office',
+                    'footerbar--with-phone-number'
+                ]
+
                 if (hideOnlyNewAmelipro) {
-                    if (itemId === 'composants-structure-footerbar--with-phone-number') {
+                    if (apOnlyStories.some(s => itemId.includes(s))) {
                         item.style.display = 'none'
                     }
                 }
