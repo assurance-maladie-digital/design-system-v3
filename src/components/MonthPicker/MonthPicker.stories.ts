@@ -89,6 +89,74 @@ const meta: Meta<typeof MonthPicker> = {
 				category: 'props',
 			},
 		},
+		'customRules': {
+			description: 'Règles de validation personnalisées pour les erreurs.',
+			table: {
+				type: { summary: 'ValidationRule[]' },
+			},
+		},
+		'customWarningRules': {
+			description: 'Règles de validation personnalisées pour les avertissements.',
+			table: {
+				type: { summary: 'ValidationRule[]' },
+			},
+		},
+		'customSuccessRules': {
+			description: 'Règles de validation personnalisées pour les succès.',
+			table: {
+				type: { summary: 'ValidationRule[]' },
+			},
+			category: 'validation',
+		},
+		'errorMessages': {
+			description: 'Messages d’erreur personnalisés à afficher lorsque la validation échoue. Peut être une chaîne de caractères ou un tableau de chaînes.',
+			control: 'text',
+			table: {
+				type: { summary: 'string | string[]' },
+			},
+		},
+		'warningMessages': {
+			description: 'Messages d’avertissement personnalisés à afficher lorsque la validation génère un avertissement. Peut être une chaîne de caractères ou un tableau de chaînes.',
+			control: 'text',
+			table: {
+				type: { summary: 'string | string[]' },
+			},
+		},
+		'successMessages': {
+			description: 'Messages de succès personnalisés à afficher lorsque la validation réussit. Peut être une chaîne de caractères ou un tableau de chaînes.',
+			control: 'text',
+			table: {
+				type: { summary: 'string | string[]' },
+			},
+		},
+		'hasError': {
+			description: 'Indique si le champ est en état d’erreur. Utilisé pour forcer l’affichage des messages d’erreur.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'hasWarning': {
+			description: 'Indique si le champ est en état d’avertissement. Utilisé pour forcer l’affichage des messages d’avertissement.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'hasSuccess': {
+			description: 'Indique si le champ est en état de succès. Utilisé pour forcer l’affichage des messages de succès.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
+		'showSuccessMessages': {
+			description: 'Indique si les messages de succès doivent être affichés.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
+		},
 	},
 	parameters: {
 		controls: {
