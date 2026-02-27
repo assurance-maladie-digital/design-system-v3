@@ -49,7 +49,10 @@
 					<SyIcon
 						:icon="social.icon"
 						size="30px"
-						class="vd-social-media-links-icon"
+						:class="{
+							'vd-social-media-links-icon': true,
+							'vd-social-media-links-icon--x': social.name === 'X',
+						}"
 						decorative
 					/>
 				</VBtn>
@@ -89,6 +92,11 @@ li {
 
 .vd-social-media-links-icon {
 	color: tokens.$grey-base !important;
+}
+
+.vd-social-media-links-icon--x {
+	transform: scale(0.75);
+	transform-origin: center;
 }
 
 .v-btn--icon {
