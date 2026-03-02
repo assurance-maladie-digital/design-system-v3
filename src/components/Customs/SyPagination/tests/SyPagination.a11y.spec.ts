@@ -16,6 +16,7 @@ describe('SyPagination – accessibility (axe)', () => {
 	afterEach(() => {
 		document.body.innerHTML = ''
 	})
+
 	const baseProps = {
 		modelValue: 1,
 		pages: 5,
@@ -25,12 +26,28 @@ describe('SyPagination – accessibility (axe)', () => {
 	}
 
 	it('has no obvious axe violations on default pagination', async () => {
+		const wrapper = mount(SyPagination, {
+			props: baseProps,
+			attachTo: document.body,
+		})
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'SyPagination – default')
+		wrapper.unmount()
 	})
 
 	it('has no obvious axe violations with ellipses and disabled controls', async () => {
+		const wrapper = mount(SyPagination, {
+			props: {
+				modelValue: 1,
+				pages: 10,
+				visible: 3,
+				ariaControls: 'paginated-content',
+				label: 'Pagination ellipses',
+			},
+			attachTo: document.body,
+		})
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'SyPagination – ellipsis variant')
+		wrapper.unmount()
 	})
 })
