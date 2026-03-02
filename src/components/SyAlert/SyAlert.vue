@@ -267,31 +267,31 @@
 	@include redesign(
 		'success',
 		(
-			'background': tokens.$colors-background-success,
-			'accent': tokens.$colors-border-success,
-			'border': tokens.$colors-border-success,
-			'icon':tokens.$colors-icon-success,
-			'icon-bg': tokens.$colors-background-success-subdued,
+			'background': var(--alert-success-background),
+			'accent': var(--alert-success-accent),
+			'border': var(--alert-success-border),
+			'icon':var(--alert-success-icon),
+			'icon-bg': var(--alert-success-icon-bg),
 		)
 	);
 	@include redesign(
 		'error',
 		(
-			'background': tokens.$colors-background-error,
-			'accent': tokens.$colors-border-error,
-			'border': tokens.$colors-border-error,
-			'icon':tokens.$colors-icon-error,
-			'icon-bg': tokens.$colors-background-error-subdued,
+			'background': var(--alert-error-background),
+			'accent': var(--alert-error-accent),
+			'border': var(--alert-error-border),
+			'icon':var(--alert-error-icon),
+			'icon-bg': var(--alert-error-icon-bg),
 		)
 	);
 	@include redesign(
 		'info',
 		(
-			'background': tokens.$colors-background-info,
-			'accent': tokens.$colors-border-info,
-			'border': tokens.$colors-border-info,
-			'icon':tokens.$colors-icon-info,
-			'icon-bg': tokens.$colors-background-info-subdued,
+			'background': var(--alert-info-background),
+			'accent': var(--alert-info-accent),
+			'border': var(--alert-info-border),
+			'icon':var(--alert-info-icon),
+			'icon-bg': var(--alert-info-icon-bg),
 		)
 	);
 }
