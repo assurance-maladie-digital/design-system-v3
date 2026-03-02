@@ -119,6 +119,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
+@use '@/assets/apTokens';
 @use 'sass:map';
 
 .sy-alert {
@@ -256,11 +257,11 @@
 	@include redesign(
 		'warning',
 		(
-			'background': tokens.$colors-background-warning,
-			'accent': tokens.$colors-border-warning,
-			'border': tokens.$colors-border-warning,
-			'icon':tokens.$colors-icon-warning,
-			'icon-bg': tokens.$colors-background-warning-subdued,
+			'background': var(--alert-warning-background),
+			'accent': var(--alert-warning-accent),
+			'border': var(--alert-warning-border),
+			'icon':var(--alert-warning-icon),
+			'icon-bg': var(--alert-warning-icon-bg),
 		)
 	);
 	@include redesign(
