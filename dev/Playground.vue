@@ -2,21 +2,11 @@
 	import { ref } from 'vue'
 	import { SyTextField, NirField } from '@/components'
 	const selectedValue = ref('')
-	const nir = ref('')
 
-	const customRules = [{
-		type: 'custom',
-		options: {
-			validate: async (value: string) => {
-				return fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
-					.then((response) => {
-						console.log('API response status:', response.status, response.ok)
-						return response.ok
-					})
-			},
-			message: 'This Pokemon does not exist.',
-		},
-	}]
+	const rules = [
+		(value: string) => !!value || 'Required.',
+		(value: string) => value.length >= 3 || 'Min 3 characters',
+	]
 
 </script>
 
@@ -27,13 +17,9 @@
 		</h1>
 		<SyTextField
 			v-model="selectedValue"
-			label="Pokemon Name"
-			:custom-rules="customRules"
-		/>
-		<br>
-		<NirField
-			v-model="nir"
-			label="NIR"
+			use-vuetify-validation
+			label="Test"
+			:rules="rules"
 		/>
 	</div>
 </template>

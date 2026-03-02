@@ -1,8 +1,8 @@
 import type { ValidationRule as SyValidationRule, ValidationResult } from '@/composables/validation/useValidation'
-import { computed, ref, toRef, type Ref } from 'vue'
+import { computed, ref, toRef, watch, type Ref } from 'vue'
 import type { ValidationRule } from 'vuetify'
 import { useCustomValidation } from './useCustomValidation'
-
+import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
 export interface FieldValidationProps {
 	modelValue: unknown
 	readonly?: boolean
@@ -62,19 +62,40 @@ export function useValidation(
 	errorMessages: Ref<string[] | null | undefined>,
 	warningMessages: Ref<string[] | null | undefined>,
 	successMessages: Ref<string[] | null | undefined>,
-	hasErrorProp: Ref<boolean | undefined>,
-	hasWarningProp: Ref<boolean | undefined>,
-	hasSuccessProp: Ref<boolean | undefined>,
+	hasErrorProp: Ref<boolean>,
+	hasWarningProp: Ref<boolean>,
+	hasSuccessProp: Ref<boolean>,
 ) {
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
 
-	/* const vuetifyValidator = useVuetifyValidation(
+	watch(errorMessages, (newVal) => {
+		errors.value = newVal || []
+	}, { immediate: true })
+
+	watch(warningMessages, (newVal) => {
+		warnings.value = newVal || []
+	}, { immediate: true })
+
+	watch(successMessages, (newVal) => {
+		successes.value = newVal || []
+	}, { immediate: true })
+
+	const vuetifyValidator = useVuetifyValidationComposable(
 		modelValue,
 		rules,
+		disabled,
 		errors,
-	) */
+		hasErrorProp,
+		computed(() => errorMessages.value || []),
+		ref(false), // focused
+		ref(1), // maxErrors
+		label,
+		label,
+		readonly,
+		'input',
+	)
 
 	const customValidator = useCustomValidation(
 		modelValue,
@@ -96,20 +117,18 @@ export function useValidation(
 
 			return true
 		}
+		console.log('useVuetifyValidation.value', useVuetifyValidation.value)
 
-		/* if (useVuetifyValidation.value) {
-			vuetifyValidator.validate(
-				modelValue.value,
-				rules.value,
-			)
+		if (useVuetifyValidation.value) {
+			const result = await vuetifyValidator.validate()
+			console.log('Vuetify validation result:', result)
+			return result.length === 0
+		}
 
-			return
-		} */
-
-		// else {
-		const result = await customValidator.validate()
-		return result.state.errors.length === 0
-		// }
+		else {
+			const result = await customValidator.validate()
+			return result.state.errors.length === 0
+		}
 	}
 
 	const hasError = computed(() => errors.value.length > 0 || hasErrorProp.value)
