@@ -44,7 +44,7 @@ describe('CookieBanner', () => {
 		await wrapper.find('[data-test-id="reject"]').trigger('click')
 
 		expect(wrapper.emitted('reject')?.[0]?.[0]).toEqual({
-			enessentials: false,
+			essentials: false,
 			functional: false,
 		})
 	})

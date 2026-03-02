@@ -5,6 +5,7 @@ exports[`MaintenancePage > renders correctly 1`] = `
   btnlink="/"
   code=""
   codeerrortext="Code d'erreur : "
+  headinglevel="1"
   hidebtn="true"
   message="L’application n’est pas disponible pour le moment, veuillez nous excuser pour la gêne occasionnée."
   pagetitle="Maintenance en cours"
