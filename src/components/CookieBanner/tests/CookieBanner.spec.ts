@@ -24,8 +24,14 @@ describe('CookieBanner', () => {
 		expect(wrapper.find('[data-test-id="customize"]').attributes('style')).toContain('100%')
 	})
 
-	it('emit a reject event when the reject btn is clicked', async () => {
+	it('emit a reject event with payload built from provided items', async () => {
 		const wrapper = mount(CookieBanner, {
+			props: {
+				items: {
+					enessentials: [],
+					functional: [],
+				},
+			},
 			global: {
 				stubs: {
 					Teleport: true,
@@ -35,11 +41,20 @@ describe('CookieBanner', () => {
 
 		await wrapper.find('[data-test-id="reject"]').trigger('click')
 
-		expect(wrapper.emitted()).toHaveProperty('reject')
+		expect(wrapper.emitted('reject')?.[0]?.[0]).toEqual({
+			enessentials: false,
+			functional: false,
+		})
 	})
 
-	it('emit a accept event when the accept btn is clicked', async () => {
+	it('emit an accept event with payload built from provided items', async () => {
 		const wrapper = mount(CookieBanner, {
+			props: {
+				items: {
+					functional: [],
+					analytics: [],
+				},
+			},
 			global: {
 				stubs: {
 					Teleport: true,
@@ -49,7 +64,10 @@ describe('CookieBanner', () => {
 
 		await wrapper.find('[data-test-id="accept"]').trigger('click')
 
-		expect(wrapper.emitted()).toHaveProperty('accept')
+		expect(wrapper.emitted('accept')?.[0]?.[0]).toEqual({
+			functional: true,
+			analytics: true,
+		})
 	})
 
 	it('does not close the dialog when the customize button is clicked and do not show the cookie form', async () => {
@@ -115,5 +133,31 @@ describe('CookieBanner', () => {
 		expect(wrapper.find('.vd-cookies-card').exists()).toBe(true)
 		expect(wrapper.find('.vd-cookies-card').html()).toMatchSnapshot()
 		expect(wrapper.emitted()).toHaveProperty('customize')
+	})
+
+	it('emits submit payload coming from CookiesSelection without altering categories', async () => {
+		const wrapper = mount(CookieBanner, {
+			props: {
+				items: {
+					functional: [],
+					analytics: [],
+				},
+			},
+			global: {
+				stubs: {
+					Teleport: true,
+				},
+			},
+		})
+
+		await wrapper.find('[data-test-id="customize"]').trigger('click')
+		await wrapper.vm.$nextTick()
+
+		const selection = wrapper.findComponent({ name: 'CookiesSelection' })
+		selection.vm.$emit('submit', { functional: true })
+
+		expect(wrapper.emitted('submit')?.[0]?.[0]).toEqual({
+			functional: true,
+		})
 	})
 })

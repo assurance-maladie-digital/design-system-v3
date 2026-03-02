@@ -1,15 +1,71 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as CookiesStories from '../CookieBanner.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as CookieBannerStories from '../CookieBanner.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={CookiesStories} />
+<Meta of={CookieBannerStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="CookieBanner"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/"
+>
+		<div class="mt-6">
+			<p>Rapport d’audit manuel : <a href="/audits/Cookies.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+			<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/806" target="_blank" style={{color:'#0C41BD'}}>issue #806</a>)</p>
+		</div>
+	<CriteriaSection>
+		<CriteriaCard icon="🧭" title="Structure et nom accessible">
+			<ul>
+				<li><strong>Rôle</strong> : <code>role="dialog"</code> sur le conteneur principal de la bannière.</li>
+				<li><strong>Nom accessible</strong> : <code>aria-label="Gestion des cookies"</code> (ou <code>aria-labelledby</code> pointant vers le titre).</li>
+				<li><strong>Hiérarchie</strong> : le titre est exposé (<code>h2</code>) et peut être référencé par <code>aria-labelledby</code> si besoin.</li>
+			</ul>
+		</CriteriaCard>
 
+		<CriteriaCard icon="⌨️" title="Navigation clavier">
+			<ul>
+				<li>Gestion de la touche <kbd>Tab</kbd> pour boucler le focus dans la bannière.</li>
+				<li>Échappe (<kbd>Esc</kbd>) ferme la bannière ou revient depuis la personnalisation.</li>
+				<li>Focus initial sur le bouton de fermeture à l’ouverture.</li>
+			</ul>
+		</CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/Cookies.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/806" target="_blank" style={{color:'#0C41BD'}}>issue #806</a>)</p>
-</div>
+		<CriteriaCard icon="🦻" title="Événements et consentement">
+			<ul>
+				<li><strong>accept/reject</strong> : émettent les catégories configurables (via les items) et toujours <code>essentials: true</code> si fournis.</li>
+				<li><strong>submit</strong> : renvoie les préférences personnalisées + <code>essentials: true</code> le cas échéant.</li>
+				<li>Pas de chargement de cookies non essentiels avant l’<code>accept</code> ou <code>submit</code>.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="CookieBanner">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Ne surchargez pas la description : un paragraphe clair et concis.</li>
+			<li>Assurez un contraste suffisant des boutons et du fond de bannière.</li>
+			<li>Proposez un lien « En savoir plus » vers votre politique cookies.</li>
+			<li>Chargez les cookies non essentiels uniquement après <code>accept</code> ou <code>submit</code>.</li>
+			<li>Conservez la possibilité de rouvrir la bannière ou de modifier le choix ailleurs dans l’interface.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/" target="_blank" rel="noopener noreferrer">APG : Alert dialog</a></li>
+			<li><a href="https://www.cnil.fr/fr/cookies-traceurs-que-dit-la-loi" target="_blank" rel="noopener noreferrer">CNIL : Cookies et traceurs</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

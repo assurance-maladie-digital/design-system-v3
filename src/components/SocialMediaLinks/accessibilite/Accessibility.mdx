@@ -1,15 +1,67 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../SocialMediaLinks.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Story } from '@storybook/blocks';
+import * as SocialMediaLinksStories from '../SocialMediaLinks.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={SocialMediaLinksStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="SocialMediaLinks"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+		<div>Rapport d’audit manuel : <a href="/audits/SocialMediaLinks.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></div>
+		<div style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+			Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/790" target="_blank" style={{ color: '#0C41BD' }}>issue #790</a>)
+		</div>
+	</AuditSection>
+	
+	<CriteriaSection>
+		<CriteriaCard icon="🏷️" title="Structure et rôles">
+			<ul>
+				<li><strong>Titre accessible</strong> : utilise un heading natif (<code>h1–h6</code>) ou un <code>role="heading"</code> + <code>aria-level</code> via <code>use-native-heading</code>.</li>
+				<li><strong>Liens</strong> : chaque bouton est un lien <code>&lt;a&gt;</code> avec <code>aria-label</code> explicite « Lien vers &lt;nom&gt; ».</li>
+				<li><strong>Icônes décoratives</strong> : <code>SyIcon</code> marqué décoratif pour ne pas polluer le lecteur d’écran.</li>
+				<li><strong>Ouverture externe</strong> : <code>target="_blank"</code> avec <code>rel="noopener noreferrer"</code> pour la sécurité.</li>
+			</ul>
+		</CriteriaCard>
 
+		<CriteriaCard icon="⌨️" title="Navigation clavier">
+			<ul>
+				<li><strong>Focus visible</strong> : halo visible sur <code>.v-btn--icon:focus-visible</code>, contrasté en clair/sombre.</li>
+				<li><strong>Ordre logique</strong> : tabulation suit l’ordre des liens fournis.</li>
+				<li><strong>Taille des cibles</strong> : boutons icon-text élargis (<code>height/width</code> ajustée) pour une cible confortable.</li>
+			</ul>
+		</CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/SocialMediaLinks.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/790" target="_blank" style={{color:'#0C41BD'}}>issue #790</a>)</p>
-	</div>
+		<CriteriaCard icon="🎨" title="Contraste et lisibilité">
+			<ul>
+				<li><strong>Texte du label</strong> : couleur primaire (<code>tokens.$blue-base</code>) ou blanc en thème sombre.</li>
+				<li><strong>Icônes</strong> : couleur neutre (<code>tokens.$grey-base</code>) et outline blanc en sombre.</li>
+				<li><strong>Responsive</strong> : alignement adapté (gauche/droite) selon la largeur.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SocialMediaLinks">
+		<Story of={SocialMediaLinksStories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournissez toujours un <code>aria-label</code> descriptif pour chaque lien d’icône.</li>
+			<li>Choisissez un niveau de titre cohérent avec la hiérarchie de la page (<code>heading-level</code> 1–6) ou activez <code>use-native-heading</code> pour un titre sémantique.</li>
+			<li>Vérifiez le focus visible sur tous les liens, notamment en thème sombre.</li>
+			<li>Utilisez des icônes SVG accessibles et marquées décoratives quand le libellé est déjà donné.</li>
+			<li>Si vous changez l’ordre ou la liste des réseaux, assurez-vous que l’ordre de tabulation reste logique.</li>
+		</ul>
+	</BestPracticesSection>
+</AccessibilityGuideLayout>
