@@ -167,10 +167,29 @@ const meta: Meta<typeof MonthPicker> = {
 				category: 'props',
 			},
 		},
+		'disabled': {
+			description: 'Indique si le champ de saisie est désactivé. Lorsqu’il est désactivé, le sélecteur de mois ne peut pas être ouvert et aucune interaction n’est possible.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
+			},
+		},
+		'readonly': {
+			description: 'Indique si le champ de saisie est en lecture seule. Lorsqu’il est en lecture seule, le sélecteur de mois peut être ouvert pour afficher la valeur sélectionnée, mais aucune modification n’est possible.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
+			},
+			category: 'props',
+		},
 	},
 	parameters: {
 		controls: {
-			exclude: ['width', 'onUpdate:modelValue', 'onUpdate:open'],
+			exclude: ['width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open'],
 		},
 		docs: {
 			controls: {
