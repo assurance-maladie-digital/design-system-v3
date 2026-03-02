@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 import AmeliproErrorTemplate from './AmeliproErrorTemplate.vue'
 
 const meta = {
@@ -384,3 +385,5 @@ export const Error503: Story = {
 />`,
 	}),
 }
+
+export const DeprecationNotice = createDeprecationNotice('ErrorPage', 'https://cnam-design-system.netlify.app/?path=/docs/templates-errorpage--docs')
