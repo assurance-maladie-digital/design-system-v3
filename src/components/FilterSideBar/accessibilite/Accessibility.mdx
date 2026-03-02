@@ -1,15 +1,76 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../FilterSideBar.stories.ts';
+import { Meta, Story } from '@storybook/blocks';
+import * as Stories from '../FilterSideBar.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="FilterSideBar"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+		<div>Rapport d’audit manuel : <a href="/audits/FilterSideBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></div>
+		<div style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+			Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/913" target="_blank" style={{color:'#0C41BD'}}>issue #913</a>)
+		</div>
+	</AuditSection>
 
+	<CriteriaSection>
+		<CriteriaCard icon="🏷️" title="Structure et rôles">
+			<ul>
+				<li>Le bouton d’ouverture est un <code>button</code> avec badge de comptage et libellé localisé.</li>
+				<li>Le panneau est un <code>VNavigationDrawer</code> exposé en <code>role="dialog"</code> et <code>aria-modal</code> lorsque <code>modale</code> est activé.</li>
+				<li><code>aria-hidden</code>, <code>inert</code> et <code>tabindex=-1</code> appliqués lorsqu’il est fermé pour éviter le focus sur du contenu masqué.</li>
+				<li>Chaque groupe de filtres conserve le rôle natif des champs (Select, SearchListField, PeriodField…) et les puces (<code>ChipList</code>) exposent un libellé <code>aria-label</code> pour la liste.</li>
+			</ul>
+		</CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/FilterSideBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/913" target="_blank" style={{color:'#0C41BD'}}>issue #913</a>)</p>
-	</div>
+		<CriteriaCard icon="⌨️" title="Navigation clavier">
+			<ul>
+				<li>Ouverture/fermeture du panneau via Entrée/Espace sur le bouton ; focus renvoyé au bouton à la fermeture.</li>
+				<li>Échappe (Esc) pour fermer le panneau.</li>
+				<li>Si <code>modale</code> est vrai, le focus est verrouillé dans le panneau via <code>v-lock-focus</code>.</li>
+				<li>Focus visible maintenu sur les boutons d’action (Appliquer, Réinitialiser, Fermer).</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Contraste et lisibilité">
+			<ul>
+				<li>Bouton d’ouverture et actions en thème primaire/secondaire avec halo focus contrasté.</li>
+				<li>Badges de comptage colorés et annoncés via <code>locales.badgeLabel</code>.</li>
+				<li>Texte et champs héritent du thème (fond blanc, ombre) pour une lecture claire.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="FilterSideBar">
+		<Story of={Stories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournissez des titres courts pour chaque filtre et un texte d’aide si nécessaire.</li>
+			<li>Activez <code>modale</code> quand le focus doit rester dans le panneau (dialogue bloquant).</li>
+			<li>Évitez de cacher le focus visible ; renforcez-le si votre thème réduit les contours.</li>
+			<li>Utilisez des libellés uniques pour les options (Select, listes) afin d’éviter les ambiguïtés.</li>
+			<li>Vérifiez l’ordre de tabulation si vous combinez FilterSideBar et FilterInline dans la même vue.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices – Dialog (Modal)</a></li>
+			<li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – critères 7.1 (attributs ARIA) et 10.8 (éléments masqués)</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>
