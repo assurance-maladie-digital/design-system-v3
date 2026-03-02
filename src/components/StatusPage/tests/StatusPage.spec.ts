@@ -6,6 +6,7 @@ describe('StatusPage', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(StatusPage, {
 			props: {
+				headingLevel: 1,
 				pageTitle: 'Something went wrong',
 				message: 'Error message',
 			},
@@ -19,6 +20,7 @@ describe('StatusPage', () => {
 	it('renders correctly with undefined route', () => {
 		const wrapper = mount(StatusPage, {
 			props: {
+				headingLevel: 1,
 				code: '501',
 				pageTitle: 'Error',
 				message: 'Error message',
@@ -34,6 +36,7 @@ describe('StatusPage', () => {
 	it('uses href without router navigation when only btnHref is provided', () => {
 		const wrapper = mount(StatusPage, {
 			props: {
+				headingLevel: 1,
 				code: '401',
 				pageTitle: 'Auth error',
 				message: 'You are not authorized',

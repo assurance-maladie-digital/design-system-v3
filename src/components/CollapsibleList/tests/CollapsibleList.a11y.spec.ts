@@ -25,6 +25,7 @@ describe('CollapsibleList – accessibility (axe)', () => {
 	it('has no obvious axe violations in desktop mode', async () => {
 		const wrapper = mount(CollapsibleList, {
 			props: {
+				headingLevel: 4,
 				listTitle: 'Santé',
 				items,
 			},

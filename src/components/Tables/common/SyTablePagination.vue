@@ -46,6 +46,7 @@
 		itemsPerPage: number
 		itemsLength: number
 		itemsPerPageOptions?: number[]
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
 	}>()
 
 	const emit = defineEmits<{
@@ -120,6 +121,7 @@
 			v-if="pageCount > 1"
 			:model-value="page"
 			:pages="pageCount"
+			:heading-level="headingLevel"
 			:visible="5"
 			:label="locales.pagination.paginationNavAriaLabel"
 			class="pagination"

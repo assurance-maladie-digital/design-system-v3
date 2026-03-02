@@ -168,6 +168,8 @@
 				<DatePicker
 					ref="startDatePickerRef"
 					v-model="startDate"
+					:heading-level="2"
+					:heading-level-complex-date-picker="2"
 					label="Date de début"
 					:custom-rules="startDateRules"
 					required
@@ -185,6 +187,8 @@
 					ref="endDatePickerRef"
 					v-model="endDate"
 					label="Date de fin"
+					:heading-level="2"
+					:heading-level-complex-date-picker="2"
 					:custom-rules="endDateRules"
 					required
 					@update:model-value="validateStartDate"

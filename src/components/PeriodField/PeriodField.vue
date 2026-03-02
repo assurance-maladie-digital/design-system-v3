@@ -32,6 +32,8 @@
 		bgColor?: string
 		density?: 'default' | 'comfortable' | 'compact'
 		hideDetails?: boolean | 'auto'
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelComplexDatePicker?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		modelValue: () => ({ from: null, to: null }),
 		placeholderFrom: 'Début',
@@ -54,6 +56,8 @@
 		bgColor: 'white',
 		density: 'default',
 		hideDetails: false,
+		headingLevel: 2,
+		headingLevelComplexDatePicker: 2,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -345,6 +349,8 @@
 				:error-message="fromDateValidation.hasError"
 				:format="props.format"
 				:disabled="props.disabled"
+				:heading-level="props.headingLevel"
+				:heading-level-complex-date-picker="props.headingLevelComplexDatePicker"
 				:is-outlined="props.isOutlined"
 				:no-calendar="props.noCalendar"
 				:no-icon="props.noIcon"
@@ -371,6 +377,8 @@
 				:display-append-icon="props.displayAppendIcon"
 				:display-icon="props.displayIcon"
 				:error-message="toDateValidation.hasError"
+				:heading-level="props.headingLevel"
+				:heading-level-complex-date-picker="props.headingLevelComplexDatePicker"
 				:format="props.format"
 				:disabled="props.disabled"
 				:is-outlined="props.isOutlined"

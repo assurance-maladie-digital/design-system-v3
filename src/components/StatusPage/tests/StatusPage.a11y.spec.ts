@@ -13,6 +13,7 @@ describe('StatusPage – accessibility (axe)', () => {
 	it('has no obvious axe violations with title, message and action button', async () => {
 		const wrapper = mount(StatusPage, {
 			props: {
+				headingLevel: 1,
 				pageTitle: 'Une erreur est survenue',
 				message: 'Un problème technique est survenu. Merci de réessayer plus tard.',
 				code: '500',

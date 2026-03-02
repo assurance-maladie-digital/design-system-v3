@@ -75,8 +75,8 @@
 		isValidateOnBlur?: boolean
 		hint?: string
 		persistentHint?: boolean
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
-		headingLevelComplexDatePicker: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelComplexDatePicker?: 1 | 2 | 3 | 4 | 5 | 6
 
 	}>(), {
 		modelValue: undefined,
@@ -116,6 +116,8 @@
 		isValidateOnBlur: true,
 		hint: undefined,
 		persistentHint: false,
+		headingLevel: 3,
+		headingLevelComplexDatePicker: 3,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable

@@ -57,7 +57,7 @@
 		hideBtn?: boolean
 		uniqueId?: string
 		role?: PageAriaRole
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		pageTitle: undefined,
 		message: undefined,
@@ -69,6 +69,7 @@
 		hideBtn: false,
 		uniqueId: useId(),
 		role: undefined,
+		headingLevel: 1,
 	})
 
 	const emit = defineEmits(['btn-click'])
@@ -105,7 +106,7 @@
 					<SyHeading
 						v-if="pageTitle"
 						:id="role ? `${uniqueId}-title` : undefined"
-						class="mb-2 font-weight-bold text-h5 mb-4"
+						:class="headingLevel === 1 ? 'mb-2 font-weight-bold text-h5 mb-4' : 'mb-2 font-weight-bold mb-4'"
 						:level="headingLevel"
 					>
 						{{ pageTitle }}

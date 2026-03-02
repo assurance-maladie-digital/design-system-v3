@@ -14,6 +14,7 @@
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 		src?: string
 		uniqueId?: string
 	}
@@ -22,6 +23,7 @@
 		btnLink: '/',
 		btnHref: undefined,
 		hideBtn: false,
+		headingLevel: 1,
 		src: undefined,
 		uniqueId: undefined,
 	})
@@ -42,6 +44,7 @@
 <template>
 	<StatusPage
 		:page-title="themeLocales.pageTitle"
+		:heading-level="headingLevel"
 		:message="themeLocales.message"
 		:code="themeLocales.code"
 		:btn-text="btnText"

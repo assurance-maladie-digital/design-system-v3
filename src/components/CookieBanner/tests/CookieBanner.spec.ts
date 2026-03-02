@@ -27,8 +27,10 @@ describe('CookieBanner', () => {
 	it('emit a reject event with payload built from provided items', async () => {
 		const wrapper = mount(CookieBanner, {
 			props: {
+				headingLevel: 2,
+				headingLevelInformation: 2,
 				items: {
-					enessentials: [],
+					essentials: [],
 					functional: [],
 				},
 			},
@@ -50,6 +52,8 @@ describe('CookieBanner', () => {
 	it('emit an accept event with payload built from provided items', async () => {
 		const wrapper = mount(CookieBanner, {
 			props: {
+				headingLevel: 2,
+				headingLevelInformation: 2,
 				items: {
 					functional: [],
 					analytics: [],
@@ -90,6 +94,8 @@ describe('CookieBanner', () => {
 	it('does not close the dialog when the customize button is clicked and show the cookie form', async () => {
 		const wrapper = mount(CookieBanner, {
 			props: {
+				headingLevel: 2,
+				headingLevelInformation: 2,
 				items: {
 					essentials: [
 						{
@@ -138,6 +144,8 @@ describe('CookieBanner', () => {
 	it('emits submit payload coming from CookiesSelection without altering categories', async () => {
 		const wrapper = mount(CookieBanner, {
 			props: {
+				headingLevel: 2,
+				headingLevelInformation: 2,
 				items: {
 					functional: [],
 					analytics: [],

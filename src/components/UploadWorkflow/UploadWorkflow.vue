@@ -24,7 +24,7 @@
 				sectionTitle?: string
 				showFilePreview?: boolean
 				infoText?: string
-				headingLevel?: number
+				headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 				locales?: typeof defaultLocales
 			}
 		>(),
@@ -183,6 +183,7 @@
 
 		<DialogBox
 			v-model="showSelectDialog"
+			:heading-level="props.headingLevel"
 			v-bind="options.dialog"
 			@cancel="showSelectDialog = false"
 			@confirm="dialogConfirm"
@@ -227,6 +228,7 @@
 
 		<DialogBox
 			v-model="showPreviewDialog"
+			:heading-level="props.headingLevel"
 			v-bind="options.previewDialog"
 			hide-actions
 		>

@@ -29,6 +29,8 @@
 			</SyHeading>
 			<ComplexDatePicker
 				v-model="standardDate"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				label="Date standard"
 				placeholder="15/03/2024"
 				format="DD/MM/YYYY"
@@ -46,6 +48,8 @@
 			<ComplexDatePicker
 				v-model="americanDate"
 				label="Date américaine"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="03/15/2024"
 				format="MM/DD/YYYY"
 				class="date-picker"
@@ -62,6 +66,8 @@
 			<ComplexDatePicker
 				v-model="isoDate"
 				label="Date ISO"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="2024-03-15"
 				format="YYYY-MM-DD"
 				class="date-picker"
@@ -78,6 +84,8 @@
 			<ComplexDatePicker
 				v-model="dotDate"
 				label="Date avec points"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="15.03.2024"
 				format="DD.MM.YYYY"
 				class="date-picker"
@@ -93,6 +101,8 @@
 			</SyHeading>
 			<ComplexDatePicker
 				v-model="requiredDate"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				label="Date requise"
 				placeholder="Veuillez sélectionner une date *"
 				format="DD/MM/YYYY"
@@ -111,6 +121,8 @@
 			<ComplexDatePicker
 				v-model="dateRange"
 				label="Plage de dates"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="01/01/2024 au 31/12/2024"
 				format="DD/MM/YYYY"
 				display-range
@@ -128,6 +140,8 @@
 			<ComplexDatePicker
 				v-model="birthDate"
 				label="Date de naissance"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="25/12/1990"
 				format="DD/MM/YYYY"
 				is-birth-date
@@ -144,6 +158,8 @@
 			</SyHeading>
 			<ComplexDatePicker
 				v-model="formattedDate"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				label="Date avec format de retour"
 				placeholder="Affichage: 15/03/2024, Retour: 2024-03-15"
 				format="DD/MM/YYYY"

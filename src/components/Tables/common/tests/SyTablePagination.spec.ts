@@ -6,6 +6,7 @@ describe('SyTablePagination.vue', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -19,6 +20,7 @@ describe('SyTablePagination.vue', () => {
 	it('displays pagination when there are multiple pages', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -31,6 +33,7 @@ describe('SyTablePagination.vue', () => {
 	it('does not display pagination navigation when there is only one page', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 5,
@@ -44,6 +47,7 @@ describe('SyTablePagination.vue', () => {
 	it('always shows items per page selector even with only one page', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 5,
@@ -59,6 +63,7 @@ describe('SyTablePagination.vue', () => {
 		// Test with standard value
 		const wrapper1 = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10, // Standard value
 				itemsLength: 42,
@@ -76,6 +81,7 @@ describe('SyTablePagination.vue', () => {
 		// Test with custom value
 		const wrapper2 = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 42, // Custom value
 				itemsLength: 100,
@@ -97,6 +103,7 @@ describe('SyTablePagination.vue', () => {
 	it('shows correct range when "All" is selected', async () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: -1, // "All" option
 				itemsLength: 42,
@@ -111,6 +118,7 @@ describe('SyTablePagination.vue', () => {
 	it('emits update:page event when SyPagination emits update:modelValue', async () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -130,6 +138,7 @@ describe('SyTablePagination.vue', () => {
 	it('has the correct structure for items per page selection', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -148,6 +157,7 @@ describe('SyTablePagination.vue', () => {
 		it('should use default options when itemsPerPageOptions is not provided', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,
@@ -165,6 +175,7 @@ describe('SyTablePagination.vue', () => {
 		it('should limit options when itemsPerPageOptions is provided', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,
@@ -184,6 +195,7 @@ describe('SyTablePagination.vue', () => {
 		it('should include "Tous" option when explicitly allowed in itemsPerPageOptions', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,
@@ -207,6 +219,7 @@ describe('SyTablePagination.vue', () => {
 		it('should add current itemsPerPage to options if not already included', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 15, // Not in the itemsPerPageOptions
@@ -225,6 +238,7 @@ describe('SyTablePagination.vue', () => {
 		it('should not add current itemsPerPage if it is -1 (Tous)', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: -1, // "Tous" option
@@ -244,6 +258,7 @@ describe('SyTablePagination.vue', () => {
 		it('should work with very restrictive options', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 5,
@@ -263,6 +278,7 @@ describe('SyTablePagination.vue', () => {
 		it('should handle empty itemsPerPageOptions array', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,

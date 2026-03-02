@@ -15,6 +15,7 @@
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
 		uniqueId?: string
 		role?: PageAriaRole
 	}>()
@@ -30,6 +31,7 @@
 
 <template>
 	<StatusPage
+		:heading-level="props.headingLevel"
 		:page-title="pageTitle"
 		:message="message"
 		:code="code"

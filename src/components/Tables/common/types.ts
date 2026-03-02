@@ -98,6 +98,7 @@ export type SyTableProps = {
 	multiSort?: boolean
 	mustSort?: boolean
 	itemsPerPageOptions?: number[]
+	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 }
 
 export type SyServerTableProps = {
@@ -120,4 +121,6 @@ export type SyServerTableProps = {
 	multiSort?: boolean
 	mustSort?: boolean
 	itemsPerPageOptions?: number[]
+	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+
 }
