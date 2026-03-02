@@ -1,6 +1,8 @@
 import SocialMediaLinks from './SocialMediaLinks.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { mdiFacebook, mdiLinkedin, mdiTwitter } from '@mdi/js'
+import { mdiFacebook, mdiLinkedin } from '@mdi/js'
+
+const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
 
 const meta = {
 	title: 'Composants/Navigation/SocialMediaLinks',
@@ -22,11 +24,11 @@ const meta = {
 			},
 			{
 				icon: mdiFacebook,
-				href: 'https://twitter.com/Assur_Maladie',
+				href: 'https://www.facebook.com/AssurMaladie/',
 			},
 			{
-				icon: mdiTwitter,
-				href: 'https://twitter.com/Assur_Maladie',
+				icon: xIcon,
+				href: 'https://x.com/Assur_Maladie',
 			},
 		],
 		headingLevel: 6,
@@ -78,7 +80,9 @@ export const Default: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 	import { SocialMediaLinks } from '@cnamts/synapse'
-	import { mdiFacebook, mdiLinkedin, mdiTwitter } from '@mdi/js'
+	import { mdiFacebook, mdiLinkedin } from '@mdi/js'
+	
+	const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
 	
 	const links = [
 		{
@@ -89,12 +93,12 @@ export const Default: Story = {
 		{
 			icon: mdiFacebook,
 			name: 'Facebook',
-			href: 'https://twitter.com/Assur_Maladie',
+			href: 'https://www.facebook.com/AssurMaladie/',
 		},
 		{
-			icon: mdiTwitter,
-			name: 'Twitter',
-			href: 'https://twitter.com/Assur_Maladie',
+			icon: xIcon,
+			name: 'X',
+			href: 'https://x.com/Assur_Maladie',
 		},
 	]
 </script>
@@ -112,12 +116,12 @@ export const Default: Story = {
 			{
 				icon: mdiFacebook,
 				name: 'Facebook',
-				href: 'https://twitter.com/Assur_Maladie',
+				href: 'https://www.facebook.com/AssurMaladie/',
 			},
 			{
-				icon: mdiTwitter,
-				name: 'Twitter',
-				href: 'https://twitter.com/Assur_Maladie',
+				icon: xIcon,
+				name: 'X',
+				href: 'https://x.com/Assur_Maladie',
 			},
 		],
 	},
