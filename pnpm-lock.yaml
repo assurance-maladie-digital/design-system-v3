@@ -193,7 +193,7 @@ devDependencies:
     specifier: ^5.3.5
     version: 5.4.21(@types/node@20.19.35)(sass-embedded@1.83.0)
   vite-plugin-dts:
-    specifier: ^4.0.1
+    specifier: ^4.5.4
     version: 4.5.4(@types/node@20.19.35)(typescript@5.9.3)(vite@5.4.21)
   vite-plugin-vuetify:
     specifier: ^2.1.1
