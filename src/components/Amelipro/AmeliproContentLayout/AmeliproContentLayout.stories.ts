@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproContentLayout from './AmeliproContentLayout.vue'
-import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 const meta = {
 	argTypes: {
@@ -43,20 +43,4 @@ export const Default: Story = {
 	}),
 }
 
-export const Info: Story = {
-	render: (args) => {
-		return {
-			components: { AmeliproMessage },
-			setup() {
-				return { args }
-			},
-			template: `
-			  <AmeliproMessage :closable="false" class="mb-4" type="warning">
-				<strong>Ce composant est déprécié</strong>, il ne sera plus maintenu ou mis à jour.
-				Nous vous recommandons d'utiliser à la place le composant <strong><a href='https://cnam-design-system.netlify.app/?path=/docs/composants-layout-pagecontainer--docs'>PageContainer</a></strong>.
-			  </AmeliproMessage>
-			`,
-		}
-	},
-	tags: ['!dev'],
-}
+export const DeprecationNotice = createDeprecationNotice('PageContainer', 'https://cnam-design-system.netlify.app/?path=/docs/composants-layout-pagecontainer--docs')
