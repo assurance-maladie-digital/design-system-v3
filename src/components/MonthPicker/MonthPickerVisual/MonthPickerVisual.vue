@@ -12,6 +12,8 @@
 		textInput: ComponentPublicInstance | null
 		toggleBtn: HTMLElement | null
 		modelValue: string | undefined
+		readonly: boolean
+		disable: boolean
 	} & MonthPickerVisualProps>()
 
 	const emits = defineEmits<{
@@ -63,8 +65,14 @@
 		}
 	}
 
+	function emitModelValue(value: string) {
+		if (!props.readonly && !props.disable) {
+			emits('update:modelValue', value)
+		}
+	}
+
 	function setDate(value: string) {
-		emits('update:modelValue', value)
+		emitModelValue(value)
 		open.value = false
 	}
 
@@ -73,7 +81,7 @@
 		() => {
 			const oldValue = parseMonthYearString(props.modelValue)
 			if (draftMonth.value !== undefined && draftYear.value !== undefined && (draftMonth.value !== oldValue[0] || draftYear.value !== oldValue[1])) {
-				emits('update:modelValue', `${String(draftMonth.value).padStart(2, '0')}/${draftYear.value}`)
+				emitModelValue(`${String(draftMonth.value).padStart(2, '0')}/${draftYear.value}`)
 			}
 		},
 		{ immediate: true },
@@ -91,9 +99,16 @@
 		:max-height="455"
 		disable-initial-focus
 		:retain-focus="false"
-		:activator-props="{'aria-haspopup': 'dialog'}"
+		:disabled="props.disable"
+		:activator-props="{
+			'aria-haspopup': 'dialog',
+			'disabled': props.disable ? 'true' : undefined,
+		}"
 	>
-		<div class="month-picker-menu">
+		<div
+			class="month-picker-menu"
+			:class="{ 'month-picker-menu--readonly': props.readonly }"
+		>
 			<VisualpickerHeader
 				v-model:view="view"
 				:title="view === 'months' ? locales.headerSelectMonth : locales.headerSelectYear"

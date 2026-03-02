@@ -11,6 +11,8 @@
 	const props = withDefaults(defineProps<{
 		modelValue?: string
 		locales?: typeof defaultLocales
+		disabled?: boolean
+		readonly?: boolean
 	} & TextFieldProps & ValidationProps & Partial<MonthPickerVisualProps>>(), {
 		modelValue: undefined,
 		locales: () => defaultLocales,
@@ -18,6 +20,8 @@
 		showSuccessMessages: false,
 		...defaultMonthPickerVisualProps,
 		...defaultTextFieldProps,
+		disabled: false,
+		readonly: false,
 	})
 
 	provide(localesKey, computed(() => props.locales))
@@ -41,8 +45,8 @@
 		{ immediate: true },
 	)
 
-	watch(internalValue, (newValue, oldValue) => {
-		if (newValue !== oldValue) {
+	watch(internalValue, (newValue) => {
+		if (!props.readonly && !props.disabled) {
 			emits('update:modelValue', newValue)
 		}
 	})
@@ -66,6 +70,8 @@
 			:min-year
 			:max-year
 			:years-order
+			:disable="props.disabled"
+			:readonly="props.readonly"
 			@update:open="emits('update:open', $event)"
 		/>
 	</div>

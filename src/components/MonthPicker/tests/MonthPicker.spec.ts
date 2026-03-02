@@ -797,6 +797,100 @@ describe('mounthpicker', () => {
 		})
 	})
 
+	describe('disabled and readonly state', () => {
+		it('does not update the model value when the field is disabled', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+					disabled: true,
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.attributes('disabled')).toBeDefined()
+
+			await input.setValue('01/2027')
+			expect(wrapper.emitted('update:modelValue')).toBeFalsy() // The value should not be emitted when the field is disabled
+
+			wrapper.unmount()
+		})
+
+		it('does not open the visual picker when the field is disabled', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+					disabled: true,
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			console.log(toggleBtn.html())
+			expect(toggleBtn.attributes('disabled')).toBeDefined()
+
+			await toggleBtn.trigger('click')
+
+			const modal = wrapper.findComponent({ name: 'MonthPickerVisual' }).find('.month-picker-menu')
+			expect(modal.exists()).toBeFalsy() // The month buttons should not be rendered when the field is disabled
+
+			wrapper.unmount()
+		})
+
+		it('does not update the model value when the field is readonly', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+					readonly: true,
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.attributes('readonly')).toBeDefined()
+
+			await input.setValue('01/2027')
+			expect(wrapper.emitted('update:modelValue')).toBeFalsy() // The value should not be emitted when the field is readonly
+
+			wrapper.unmount()
+		})
+
+		it('does not update the model value when the visual picker is used and the field is readonly', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '11/2025',
+					readonly: true,
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1')
+			await monthButton.trigger('click')
+
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2024')
+			await yearButton.trigger('click')
+
+			expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+			expect(wrapper.emitted('update:open')).toEqual([[true], [false]])
+			expect(wrapper.find('input').element.value).toBe('11/2025')
+
+			wrapper.unmount()
+		})
+	})
+
 	describe('localization', () => {
 		afterEach(() => {
 			// reset navigator.language to default value after each test

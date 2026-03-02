@@ -71,6 +71,7 @@
 			label="début"
 			:custom-rules="customValidation"
 			:custom-warning-rules="warningValidation"
+			disabled
 		/>
 	</div>
 </template>
