@@ -197,6 +197,11 @@
 			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
 		) as Record<string, unknown>
 
+		// aria-controls coming from menu activators is invalid on the input itself; drop it
+		if ('aria-controls' in filteredAttrs) {
+			delete filteredAttrs['aria-controls']
+		}
+
 		if (!('validate-on' in filteredAttrs) && 'rules' in filteredAttrs && props.isValidateOnBlur) {
 			filteredAttrs['validate-on'] = 'blur lazy'
 		}
@@ -449,7 +454,12 @@
 					const describedbyIds = existingIds.join(' ').trim()
 
 					// Associate input with messages via aria-describedby (preserve existing IDs)
-					inputElement.setAttribute('aria-describedby', describedbyIds)
+					if (describedbyIds) {
+						inputElement.setAttribute('aria-describedby', describedbyIds)
+					}
+					else {
+						inputElement.removeAttribute('aria-describedby')
+					}
 
 					// Remove problematic ARIA attributes from details container (parent)
 					if (detailsContainer) {
@@ -517,7 +527,12 @@
 					const describedbyIds = existingIds.join(' ').trim()
 
 					// Associate input with messages via aria-describedby (preserve existing IDs)
-					inputElement.setAttribute('aria-describedby', describedbyIds)
+					if (describedbyIds) {
+						inputElement.setAttribute('aria-describedby', describedbyIds)
+					}
+					else {
+						inputElement.removeAttribute('aria-describedby')
+					}
 
 					// Remove problematic ARIA attributes from details container (parent)
 					if (detailsContainer) {

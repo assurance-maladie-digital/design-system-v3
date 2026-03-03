@@ -346,7 +346,6 @@ exports[`UploadWorkflow > render the upload list 1`] = `
         </span>
         <span class="
           bg-primary
-          elevation-2
           sy-file-upload-btn
           text-white
         ">
