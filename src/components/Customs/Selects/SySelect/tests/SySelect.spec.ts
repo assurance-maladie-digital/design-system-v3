@@ -965,4 +965,46 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('keyboard navigation', () => {
+		it('navigates options with arrow keys and selects with enter', async () => {
+			const items = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+				{ text: 'Option 3', value: '3' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					modelValue: null,
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			const list = wrapper.findComponent(VList).find('.v-list')!
+
+			// expect the first item to be highlighted
+			const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)
+
+			await wrapper.vm.$nextTick()
+			expect(firstItem?.classes()).toContain('active')
+			expect(firstItem?.attributes('tabindex')).toBe('0')
+
+			await list.trigger('keydown.down')
+			await wrapper.vm.$nextTick()
+
+			const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
+			expect(firstItem?.classes()).not.toContain('active')
+			expect(firstItem?.attributes('tabindex')).toBe('-1')
+			expect(secondItem?.classes()).toContain('active')
+			expect(secondItem?.attributes('tabindex')).toBe('0')
+
+			wrapper.unmount()
+		})
+	})
 })
