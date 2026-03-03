@@ -29,9 +29,9 @@ const parseToUTCDate = (dateStr: string, format: string): Date | null => {
 	if (!parsedDate.isValid()) return null
 
 	// Extraire les composants de la date à partir de la chaîne
-	// Créer une date UTC avec les composants exacts pour éviter les décalages de fuseau horaire
-	// Utiliser set pour définir explicitement l'année, le mois et le jour
-	return dayjs.utc()
+	// Créer une date à minuit en timezone locale pour éviter les décalages de fuseau horaire
+	// (jour-1/jour+1) lors du formatage en chaîne (YYYY-MM-DD)
+	return dayjs()
 		.year(parsedDate.year())
 		.month(parsedDate.month())
 		.date(parsedDate.date())

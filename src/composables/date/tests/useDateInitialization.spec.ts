@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { initializeSelectedDates, type DateInput } from '../useDateInitialization'
 
 describe('useDateInitialization', () => {
@@ -74,6 +74,22 @@ describe('useDateInitialization', () => {
 			const result2 = initializeSelectedDates('15/01/2023', 'DD/MM/YYYY', 'YYYY-MM-DD')
 			expect(result2).toBeInstanceOf(Date)
 			expect((result2 as Date).getDate()).toBe(15)
+		})
+
+		it('does not shift day when parsing YYYY-MM-DD in a negative timezone (regression)', () => {
+			const original = Date.prototype.getTimezoneOffset
+			Date.prototype.getTimezoneOffset = vi.fn(() => 240)
+
+			try {
+				const result = initializeSelectedDates('2022-10-18', 'DD/MM/YYYY', 'YYYY-MM-DD')
+				expect(result).toBeInstanceOf(Date)
+				expect((result as Date).getFullYear()).toBe(2022)
+				expect((result as Date).getMonth()).toBe(9)
+				expect((result as Date).getDate()).toBe(18)
+			}
+			finally {
+				Date.prototype.getTimezoneOffset = original
+			}
 		})
 
 		it('returns null for object input', () => {
