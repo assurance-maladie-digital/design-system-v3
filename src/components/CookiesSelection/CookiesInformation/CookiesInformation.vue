@@ -99,7 +99,7 @@
 <template>
 	<div class="vd-cookies-information">
 		<SyHeading
-			:class="headingLevel === 2 ? 'text-h5 font-weight-bold' : 'font-weight-bold mb-2'"
+			:class="headingLevel === 2 ? 'text-subtitle-1 font-weight-bold mb-2' : 'font-weight-bold mb-2'"
 			:level="headingLevel"
 		>
 			{{ locales[type].title }}
