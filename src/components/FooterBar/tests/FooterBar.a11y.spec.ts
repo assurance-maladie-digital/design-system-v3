@@ -13,7 +13,6 @@ describe('FooterBar – accessibility (axe)', () => {
 	it('has no obvious axe violations in extended mode with links and version', async () => {
 		const wrapper = mount(FooterBar, {
 			props: {
-				uniqueId: 'test',
 				version: '1.2.3',
 			},
 			slots: {

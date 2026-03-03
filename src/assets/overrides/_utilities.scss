@@ -4,8 +4,8 @@
 
 .theme-cnam,
 .theme-pa {
-    --footer-background: #{tokens.$parma-darken-60};
-    --alert-warning-background: #{tokens.$colors-background-warning};
+  --footer-background: #{tokens.$parma-darken-60};
+  --alert-warning-background: #{tokens.$colors-background-warning};
 	--alert-warning-accent: #{tokens.$colors-border-warning};
 	--alert-warning-border: #{tokens.$colors-border-warning};
 	--alert-warning-icon: #{tokens.$colors-icon-warning};
@@ -27,9 +27,10 @@
 	--alert-error-icon-bg: #{tokens.$colors-background-error-subdued};
 }
 
-.theme-ap {
-    --footer-background: #{apTokens.$primary-darker};
-    --alert-background: #{apTokens.$primary-darker};
+.theme-ap,
+.theme-ap2026 {
+  --footer-background: #{apTokens.$primary-darker};
+  --alert-background: #{apTokens.$primary-darker};
 	--alert-warning-background: #{apTokens.$colors-background-warning};
 	--alert-warning-accent: #{apTokens.$colors-border-warning};
 	--alert-warning-border: #{apTokens.$colors-border-warning};
