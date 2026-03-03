@@ -39,9 +39,9 @@
 
 <template>
 	<div
-		v-if="!isEmptyObject(displayColors) ||
-			(isEmptyObject(displayColors) && displayEmptyColors &&
-				!['ap2026', 'ap', 'cnam', 'pa'].includes(theme))"
+      v-if="!isEmptyObject(displayColors) ||
+      (isEmptyObject(displayColors) && displayEmptyColors &&
+       !['ap2026', 'ap', 'cnam', 'pa'].includes(theme ?? ''))"
 		class="mb-5"
 	>
 		<h2
