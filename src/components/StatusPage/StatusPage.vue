@@ -69,9 +69,9 @@
 		role: undefined,
 	})
 
-	const emit = defineEmits(['click'])
+	const emit = defineEmits(['btn-click'])
 	const emitClickEvent = (): void => {
-		emit('click')
+		emit('btn-click')
 	}
 </script>
 

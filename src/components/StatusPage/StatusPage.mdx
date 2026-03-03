@@ -28,3 +28,11 @@ Lorsque `role` est défini, l'attribut `aria-labelledby` est automatiquement app
 Vous pouvez mettre un lien vers une autre page avec les props `btn-text` et `btn-link` ou `btn-href`.
 
 <Canvas of={StatusPageStories.WithLink} />
+
+## Événement btn-click
+
+L'événement `btn-click` est émis lorsque l'utilisateur clique sur le bouton. Il permet de distinguer ce clic d'un clic natif sur la page.
+
+```html
+<StatusPage @btn-click="onBtnClick" />
+```
