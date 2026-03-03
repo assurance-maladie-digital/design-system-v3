@@ -60,7 +60,7 @@
 		class="vd-collapse-list"
 	>
 		<SyHeading
-			:class="headingLevel === 4 ? 'text-subtitle-1 font-weight-bold mb-3' : ''"
+			:class="headingLevel === 4 ? 'text-subtitle-1 font-weight-bold mb-3' : 'font-weight-bold mb-3'"
 			:level="headingLevel"
 		>
 			{{ listTitle }}
