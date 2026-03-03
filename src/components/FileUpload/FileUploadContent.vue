@@ -60,7 +60,7 @@
 		</span>
 
 		<span
-			class="sy-file-upload-btn bg-primary text-white elevation-2"
+			class="sy-file-upload-btn bg-primary text-white"
 		>
 			<slot name="button-text">
 				{{ locales.chooseFile(multiple) }}
