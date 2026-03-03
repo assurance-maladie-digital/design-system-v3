@@ -170,7 +170,6 @@
 					ref="startDatePickerRef"
 					v-model="startDate"
 					:heading-level="2"
-					:heading-level-complex-date-picker="2"
 					label="Date de début"
 					:custom-rules="startDateRules"
 					use-combined-mode

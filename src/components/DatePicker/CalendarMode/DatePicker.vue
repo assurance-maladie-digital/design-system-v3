@@ -76,7 +76,6 @@
 		hint?: string
 		persistentHint?: boolean
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-		headingLevelComplexDatePicker?: 1 | 2 | 3 | 4 | 5 | 6
 
 	}>(), {
 		modelValue: undefined,
@@ -117,7 +116,6 @@
 		hint: undefined,
 		persistentHint: false,
 		headingLevel: 3,
-		headingLevelComplexDatePicker: 3,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -929,7 +927,7 @@
 		<template v-else-if="props.useCombinedMode">
 			<ComplexDatePicker
 				ref="complexDatePickerRef"
-				:heading-level="headingLevelComplexDatePicker"
+				:heading-level="headingLevel"
 				:model-value="props.modelValue"
 				:format="props.format"
 				:date-format-return="props.dateFormatReturn"

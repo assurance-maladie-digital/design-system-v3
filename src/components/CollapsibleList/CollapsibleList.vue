@@ -4,11 +4,13 @@
 	import type { ListItem } from './types'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		listTitle: string | null
 		items: ListItem[]
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
-	}>()
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	}>(), {
+		headingLevel: 4,
+	})
 
 	const { smAndDown } = useDisplay()
 
@@ -58,7 +60,7 @@
 		class="vd-collapse-list"
 	>
 		<SyHeading
-			class="text-subtitle-1 font-weight-bold mb-3"
+			:class="headingLevel === 4 ? 'text-subtitle-1 font-weight-bold mb-3' : ''"
 			:level="headingLevel"
 		>
 			{{ listTitle }}

@@ -5,11 +5,13 @@
 	import { locales } from './locales'
 	import type { CookieTypes, CookiesItems, Preferences } from './types'
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		items: CookiesItems
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 
-	}>()
+	}>(), {
+		headingLevel: 2,
+	})
 
 	const emits = defineEmits<{
 		submit: [preferences: Partial<Preferences>]

@@ -3,7 +3,7 @@
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Props definition
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		/**
 		 * Current page number
 		 */
@@ -27,9 +27,15 @@
 		/**
 		 * Heading level for the pagination label (for accessibility)
 		 */
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 
-	}>()
+	}>(), {
+		pages: undefined,
+		visible: undefined,
+		label: undefined,
+		ariaControls: undefined,
+		headingLevel: 2,
+	})
 
 	// Default values for optional props
 	const visiblePages = computed(() => props.visible || 5)

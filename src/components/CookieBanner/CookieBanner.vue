@@ -11,12 +11,16 @@
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
-	const props = defineProps<CustomizableOptions & {
+	const props = withDefaults(defineProps<CustomizableOptions & {
 		items?: CookiesItems
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
-		headingLevelInformation: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelInformation?: 1 | 2 | 3 | 4 | 5 | 6
 
-	}>()
+	}>(), {
+		items: undefined,
+		headingLevel: 2,
+		headingLevelInformation: 3,
+	})
 
 	const options = useCustomizableOptions(config, props)
 
@@ -196,7 +200,7 @@
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<SyHeading
-						class="text-h5 font-weight-bold"
+						:class="headingLevel === 2 ? 'text-h5 font-weight-bold' : 'font-weight-bold'"
 						:level="headingLevel"
 					>
 						{{ locales.title }}

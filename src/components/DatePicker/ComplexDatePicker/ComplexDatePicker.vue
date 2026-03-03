@@ -171,7 +171,7 @@
 			density?: 'default' | 'comfortable' | 'compact'
 			hint?: string
 			persistentHint?: boolean
-			headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+			headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 
 		}>(),
 		{
@@ -210,6 +210,7 @@
 			density: 'default',
 			hint: undefined,
 			persistentHint: false,
+			headingLevel: 3,
 		},
 	)
 

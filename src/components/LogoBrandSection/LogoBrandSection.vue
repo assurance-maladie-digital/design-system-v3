@@ -22,14 +22,16 @@
 				to?: RouteLocationRaw
 				href?: string
 			}
-			headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
-			headingLevelSubtitle: 1 | 2 | 3 | 4
+			headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
+			headingLevelSubtitle?: 1 | 2 | 3 | 4
 		}>(), {
 			theme: 'default',
 			serviceTitle: undefined,
 			serviceSubTitle: undefined,
 			mobileVersion: false,
 			reduceLogo: false,
+			headingLevelTitle: 1,
+			headingLevelSubtitle: 2,
 			homeLink: () => ({
 				href: '/',
 			}),
@@ -253,8 +255,9 @@
 						v-if="service.title"
 						:class="{
 							'vd-compte-entreprise-title': isCompteEntreprise,
+							'vd-title text-caption text-md-subtitle-1 font-weight-medium': headingLevelTitle === 1,
+							'vd-title text-caption font-weight-medium': headingLevelTitle !== 1,
 						}"
-						class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
 						:level="headingLevelTitle"
 					>
 						<template v-if="typeof service.title === 'string'">

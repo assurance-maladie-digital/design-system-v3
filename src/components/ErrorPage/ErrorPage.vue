@@ -31,7 +31,6 @@
 
 <template>
 	<StatusPage
-		:heading-level="props.headingLevel"
 		:page-title="pageTitle"
 		:message="message"
 		:code="code"

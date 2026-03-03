@@ -9,12 +9,14 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
-	defineProps<{
+	withDefaults(defineProps<{
 		type: CookieTypes
 		tableItems: Cookie[]
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 
-	}>()
+	}>(), {
+		headingLevel: 2,
+	})
 
 	const status = defineModel<boolean | undefined>()
 
@@ -97,7 +99,7 @@
 <template>
 	<div class="vd-cookies-information">
 		<SyHeading
-			class="text-subtitle-1 font-weight-bold mb-2"
+			:class="headingLevel === 2 ? 'text-h5 font-weight-bold' : 'font-weight-bold mb-2'"
 			:level="headingLevel"
 		>
 			{{ locales[type].title }}

@@ -19,7 +19,7 @@
 		persistent?: boolean
 		autofocusValidateBtn?: boolean
 		draggable?: boolean
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -28,6 +28,7 @@
 		hideActions: false,
 		persistent: false,
 		autofocusValidateBtn: false,
+		headingLevel: 2,
 	})
 
 	defineEmits(['cancel', 'confirm', 'update:modelValue'])
@@ -160,7 +161,7 @@
 					<SyHeading
 						v-if="title"
 						:id="id"
-						class="text-h4 mr-6 font-weight-bold"
+						:class="headingLevel === 2 ? 'text-h4 mr-6 font-weight-bold' : 'mr-6 font-weight-bold'"
 						:level="headingLevel"
 					>
 						{{ props.title }}
