@@ -31,7 +31,7 @@ describe('SearchListField – accessibility (axe)', () => {
 					<SearchListField v-bind="props" />
 				</main>
 			`,
-		}) )
+		}))
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'SearchListField – default list')
