@@ -769,4 +769,7 @@ export const ManyTables: Story = {
 	},
 }
 
-export const DeprecationNotice = createDeprecationNotice('SyTable', '?path=/docs/composants-tableaux-sytable--docs')
+export const DeprecationNotice = {
+	...createDeprecationNotice('SyTable', '?path=/docs/composants-tableaux-sytable--docs'),
+	tags: ['!dev'],
+}

@@ -602,4 +602,7 @@ const validateForm = () => {
 	},
 }
 
-export const DeprecationNotice = createDeprecationNotice('SySelect', '/?path=/docs/composants-formulaires-selects-syselect--docs')
+export const DeprecationNotice = {
+	...createDeprecationNotice('SySelect', '/?path=/docs/composants-formulaires-selects-syselect--docs'),
+	tags: ['!dev'],
+}
