@@ -6,7 +6,7 @@ import UploadWorkflow from '../UploadWorkflow.vue'
 import { locales as fileListLocales } from '@/components/FileList/UploadItem/locales'
 import { locales as FileUploadLocales } from '@/components/FileUpload/locales'
 import { afterEach } from 'node:test'
-import { VSelect } from 'vuetify/components'
+import { SySelect } from '@/components'
 
 describe('UploadWorkflow', () => {
 	afterEach(() => {
@@ -161,8 +161,8 @@ describe('UploadWorkflow', () => {
 			},
 		})
 
-		wrapper.find('.v-select input').setValue('bill')
-		wrapper.findComponent(VSelect).vm.$emit('update:modelValue', 'bill')
+		wrapper.find('.sy-select input').setValue('bill')
+		wrapper.findComponent(SySelect).vm.$emit('update:modelValue', 'bill')
 
 		await wrapper.find('[data-test-id="confirm-btn"]').trigger('click')
 

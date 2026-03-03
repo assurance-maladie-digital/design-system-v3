@@ -31,7 +31,7 @@
 	defineEmits(['cancel', 'confirm', 'update:modelValue'])
 	defineSlots<{
 		default?: () => undefined
-		title?: () => undefined
+		title?: (props: { id: string }) => undefined
 		actions?: () => undefined
 	}>()
 
@@ -151,7 +151,10 @@
 				@keydown.up.self="moveToTop"
 				@keydown.down.self="moveToBottom"
 			>
-				<slot name="title">
+				<slot
+					:id="id"
+					name="title"
+				>
 					<h2
 						v-if="title"
 						:id="id"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import useCustomizableOptions, {
 		type CustomizableOptions,
 	} from '@/composables/useCustomizableOptions'
@@ -12,8 +13,8 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import type { FileItem, SelectedFile, UploadItem } from './types'
-	import useFileUploadJourney from './useFileUploadJourney'
 	import useFileList from './useFileList'
+	import useFileUploadJourney from './useFileUploadJourney'
 
 	const props = withDefaults(
 		defineProps<
@@ -40,6 +41,13 @@
 		(e: 'error', value: string[]): void
 		(e: 'preview', value: FileItem): void
 		(e: 'update:modelValue', value: SelectedFile[]): void
+	}>()
+
+	defineSlots<{
+		'title'?: () => undefined
+		'modal-title'?: (props: { id: string }) => undefined
+		'modal-description'?: () => undefined
+		'preview-description'?: () => undefined
 	}>()
 
 	const selectedFiles = defineModel<SelectedFile[]>({
@@ -179,20 +187,27 @@
 			@cancel="showSelectDialog = false"
 			@confirm="dialogConfirm"
 		>
-			<template #title>
-				<slot name="modal-title">
-					{{ locales.modalTitle }}
+			<template #title="titleSlotProps">
+				<slot
+					:id="titleSlotProps.id"
+					name="modal-title"
+				>
+					<div
+						:id="titleSlotProps.id"
+						class="text-h4 font-weight-medium"
+					>
+						{{ locales.modalTitle }}
+					</div>
 				</slot>
 			</template>
 			<slot name="modal-description" />
 
-			<VForm
-				v-if="true"
+			<div
 				ref="form"
 				v-bind="options.form"
 				class="mb-2"
 			>
-				<VSelect
+				<SySelect
 					v-model="selectedItem"
 					v-bind="options.select"
 					:items="selectItems"
@@ -201,7 +216,7 @@
 					:rules="[isRequired]"
 					color="primary"
 				/>
-			</VForm>
+			</div>
 
 			<FilePreview
 				v-if="showFilePreview"
