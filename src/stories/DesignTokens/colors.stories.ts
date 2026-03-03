@@ -8,9 +8,47 @@ import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 import { apColorsTokens } from '@/designTokens/tokens/amelipro/apColors'
 import ColorDisplay from './ColorDisplay.vue'
 import ColorIntegrationExample from './ColorIntegrationExample.vue'
+import { h } from 'vue'
+import { useTheme } from 'vuetify'
 
 import type { StoryObj } from '@storybook/vue3'
 import { computed } from 'vue'
+
+export function createSection(
+	title: string,
+	stories: StoryObj[],
+	hideOn?: string,
+) {
+	return {
+		render() {
+			const theme = useTheme()
+			if (hideOn && theme.global.name.value === hideOn) {
+				return h('div')
+			}
+
+			return h('section', [
+				h('h2',
+					{
+						style: `
+                            border-bottom: 1px solid rgba(38, 85, 115, 0.15);
+                            color: rgb(46, 52, 56);
+                            font-family: 'Nunito Sans', -apple-system, '.SFNSText-Regular', 'San Francisco', BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                        `,
+					},
+					title,
+				),
+				...stories.map((story) => {
+					if (story.render) {
+						const component = story.render(story.args ?? {}, {} as Parameters<typeof story.render>[1])
+						return h(component)
+					}
+					return h('div')
+				}),
+			])
+		},
+	}
+}
+
 export default {
 	title: 'Design Tokens/Couleurs',
 }
@@ -114,7 +152,7 @@ export const ColorPrimary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Primary'
+				const colorTitle = 'Accent Primary'
 				const colorTitleLevel = 3
 				const colorDescription = 'Ces couleurs sont à utiliser pour mettre en avant des containers de manière marquée.'
 				const cnamColors = {
@@ -166,7 +204,7 @@ export const ColorSecondary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Secondary'
+				const colorTitle = 'Accent Secondary'
 				const colorTitleLevel = 3
 				const colorDescription = 'Ces couleurs sont à utiliser pour mettre en avant des containers de manière marquée.'
 				const cnamColors = {
@@ -218,7 +256,7 @@ export const ColorAlternatives: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Alternatives'
+				const colorTitle = 'Accent Alternatives'
 				const colorTitleLevel = 3
 				const colorDescription = 'Cette couleur est à utiliser pour mettre en avant des containers de manière marquée.'
 				const cnamColors = {
@@ -327,6 +365,12 @@ export const Interactive: StoryObj = {
 	},
 	tags: ['!dev'],
 }
+export const AccentSection = createSection('Accent', [
+	ColorPrimary,
+	ColorSecondary,
+	ColorAlternatives,
+	Interactive,
+], 'ap2026')
 
 export const BorderBase: StoryObj = {
 	render: () => {
@@ -392,7 +436,7 @@ export const BorderPrimary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Primary'
+				const colorTitle = 'Accent Primary'
 				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des éléments par leur contour.'
 				const colorTitleLevel = 3
 				const cnamColors = {
@@ -444,7 +488,7 @@ export const BorderSecondary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Secondary'
+				const colorTitle = 'Accent Secondary'
 				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des éléments par leur contour.'
 				const colorTitleLevel = 3
 				const cnamColors = {
@@ -543,6 +587,13 @@ export const BorderStates: StoryObj = {
 	tags: ['!dev'],
 }
 
+export const BorderSection = createSection('Border', [
+	BorderBase,
+	BorderPrimary,
+	BorderSecondary,
+	BorderStates,
+], 'ap2026')
+
 export const TextBase: StoryObj = {
 	render: () => {
 		return {
@@ -608,7 +659,7 @@ export const TextPrimary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Primary'
+				const colorTitle = 'Accent Primary'
 				const colorDescription = 'Ce sont les couleurs les plus courantes à utiliser pour les textes.'
 				const colorTitleLevel = 3
 				const cnamColors = {
@@ -657,7 +708,7 @@ export const TextSecondary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Secondary'
+				const colorTitle = 'Accent Secondary'
 				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des textes.'
 				const colorTitleLevel = 3
 				const cnamColors = {
@@ -753,6 +804,13 @@ export const TextState: StoryObj = {
 	tags: ['!dev'],
 }
 
+export const TextSection = createSection('Text', [
+	TextBase,
+	TextPrimary,
+	TextSecondary,
+	TextState,
+], 'ap2026')
+
 export const IconBase: StoryObj = {
 	render: () => {
 		return {
@@ -818,20 +876,20 @@ export const IconPrimary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Primary'
+				const colorTitle = 'Accent Primary'
 				const colorDescription = 'Ce sont les couleurs à utiliser dès qu’un icône symbolise une action.'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'icon-accent': cnamLightTheme.iconAccentPrimary,
-					'icon-accent-contrasted': cnamLightTheme.iconAccentPrimaryContrasted,
+					'icon-accent-primary': cnamLightTheme.iconAccentPrimary,
+					'icon-accent-primary-contrasted': cnamLightTheme.iconAccentPrimaryContrasted,
 				}
 				const paColors = {
-					'icon-accent': paLightTheme.iconAccentPrimary,
-					'icon-accent-contrasted': paLightTheme.iconAccentPrimaryContrasted,
+					'icon-accent-primary': paLightTheme.iconAccentPrimary,
+					'icon-accent-primary-contrasted': paLightTheme.iconAccentPrimaryContrasted,
 				}
 				const apColors = {
-					'icon-accent': apLightTheme.iconAccentPrimary,
-					'icon-accent-contrasted': apLightTheme.iconAccentPrimaryContrasted,
+					'icon-accent-primary': apLightTheme.iconAccentPrimary,
+					'icon-accent-primary-contrasted': apLightTheme.iconAccentPrimaryContrasted,
 				}
 				const apColors2026 = {}
 				return {
@@ -866,7 +924,7 @@ export const IconSecondary: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Secondary'
+				const colorTitle = 'Accent Secondary'
 				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des icônes.'
 				const colorTitleLevel = 3
 				const cnamColors = {
@@ -960,6 +1018,12 @@ export const IconState: StoryObj = {
 	},
 	tags: ['!dev'],
 }
+export const IconSection = createSection('Icons', [
+	IconBase,
+	IconPrimary,
+	IconSecondary,
+	IconState,
+], 'ap2026')
 
 export const MainBackgrounds: StoryObj = {
 	render: () => {
@@ -1033,6 +1097,46 @@ export const SurfaceBackgrounds: StoryObj = {
 					'background-surface': apLightTheme.backgroundSurface,
 					'background-surface-alt': apLightTheme.backgroundSurfaceAlt,
 				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  displayEmptyColors
+                  colorCategory="alternativeBackgrounds"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const AlternativeBackgrounds: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Alternative'
+				const colorDescription = ''
+				const colorTitleLevel = 3
+				const cnamColors = {}
+				const paColors = {}
+				const apColors = {}
 				const apColors2026 = { 'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3 }
 				return {
 					cnamColors,
@@ -1079,7 +1183,7 @@ export const RaisedBackgrounds: StoryObj = {
 				const apColors = {
 					'background-raised': apLightTheme.backgroundRaised,
 				}
-				const apColors2026 = { 'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3 }
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
@@ -1128,7 +1232,7 @@ export const DisabledBackgrounds: StoryObj = {
 					'background-disabled': apLightTheme.backgroundDisabled,
 					'background-disabled-on-dark': apLightTheme.backgroundDisabledOnDark,
 				}
-				const apColors2026 = { 'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3 }
+				const apColors2026 = {}
 				return {
 					cnamColors,
 					paColors,
