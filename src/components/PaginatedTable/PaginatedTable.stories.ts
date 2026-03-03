@@ -4,6 +4,7 @@ import { StateEnum } from './constants/StateEnum'
 import type { DataOptions } from './types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 interface User {
 	[key: string]: string
@@ -767,3 +768,5 @@ export const ManyTables: Story = {
 		}
 	},
 }
+
+export const DeprecationNotice = createDeprecationNotice('SyTable', '?path=/docs/composants-tableaux-sytable--docs')

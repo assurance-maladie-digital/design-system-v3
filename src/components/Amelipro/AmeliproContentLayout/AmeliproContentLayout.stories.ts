@@ -43,4 +43,4 @@ export const Default: Story = {
 	}),
 }
 
-export const DeprecationNotice = createDeprecationNotice('PageContainer', 'https://cnam-design-system.netlify.app/?path=/docs/composants-layout-pagecontainer--docs')
+export const DeprecationNotice = createDeprecationNotice('PageContainer', '/?path=/docs/composants-layout-pagecontainer--docs')

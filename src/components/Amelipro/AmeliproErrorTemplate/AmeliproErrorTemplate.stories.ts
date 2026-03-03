@@ -386,4 +386,4 @@ export const Error503: Story = {
 	}),
 }
 
-export const DeprecationNotice = createDeprecationNotice('ErrorPage', 'https://cnam-design-system.netlify.app/?path=/docs/templates-errorpage--docs')
+export const DeprecationNotice = createDeprecationNotice('ErrorPage', '/?path=/docs/templates-errorpage--docs')
