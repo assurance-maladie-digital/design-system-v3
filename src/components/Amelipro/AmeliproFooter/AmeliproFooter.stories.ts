@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproFooter from './AmeliproFooter.vue'
-import {createDeprecationNotice} from '@/stories/DeprecationNotice/DeprecationNotice'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 const meta = {
 	argTypes: {
