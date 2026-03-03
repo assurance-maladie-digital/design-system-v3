@@ -23,7 +23,7 @@ const meta = {
 	component: PaginatedTable,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div><story/></div>',
 		}),
 	],
 	parameters: {
