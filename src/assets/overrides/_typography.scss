@@ -1,6 +1,6 @@
 /* Typography styles for CNAM and PA themes */
 @use '@/assets/tokens.scss' as *;
-@use '@/assets/apTokens.scss';
+@use '@/assets/apTokens';
 @use '@/assets/amelipro/apTokens2026' as *;
 
 .theme-cnam,
@@ -198,19 +198,19 @@
 }
 
 .theme-ap {
-  a {
-    color: apTokens.$colors-text-accent;
-  }
+	a {
+		color: apTokens.$colors-text-accent;
+	}
 }
 
 .theme-ap2026 {
-  a {
-    color: $ap-blue-darken1;
+	a {
+		color: $ap-blue-darken1;
 
-    &:hover {
-      color: $ap-blue-darken2;
-    }
-  }
+		&:hover {
+			color: $ap-blue-darken2;
+		}
+	}
 }
 
 .theme-ap,
