@@ -105,4 +105,7 @@ export const Default: Story = {
 		`,
 	}),
 }
-export const DeprecationNotice = createDeprecationNotice('Footer', '/?path=/docs/composants-structure-footerbar--docs')
+export const DeprecationNotice = {
+    ...createDeprecationNotice('Footer', '/?path=/docs/composants-structure-footerbar--docs'),
+    tags: ['!dev'],
+}
