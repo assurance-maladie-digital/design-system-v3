@@ -967,7 +967,7 @@ describe('SySelect.vue', () => {
 	})
 
 	describe('keyboard navigation', () => {
-		it('navigates options with arrow keys and selects with enter', async () => {
+		it('navigates options with arrow keys', async () => {
 			const items = [
 				{ text: 'Option 1', value: '1' },
 				{ text: 'Option 2', value: '2' },
@@ -999,10 +999,40 @@ describe('SySelect.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			const secondItem = wrapper.findComponent(VList).findAll('.v-list-item').at(1)
-			expect(firstItem?.classes()).not.toContain('active')
+			expect(firstItem?.classes()).not.toContain('keyboard-focused')
 			expect(firstItem?.attributes('tabindex')).toBe('-1')
-			expect(secondItem?.classes()).toContain('active')
+			expect(secondItem?.classes()).toContain('keyboard-focused')
 			expect(secondItem?.attributes('tabindex')).toBe('0')
+
+			wrapper.unmount()
+		})
+
+		it('selects an option with enter key', async () => {
+			const items = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+				{ text: 'Option 3', value: '3' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					modelValue: null,
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			const list = wrapper.findComponent(VList).find('.v-list')!
+			await list.trigger('keydown.down')
+			await wrapper.vm.$nextTick()
+			await list.trigger('keydown.enter')
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.emitted()['update:modelValue']).toEqual([['2']])
 
 			wrapper.unmount()
 		})
