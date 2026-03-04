@@ -305,7 +305,11 @@
 		}
 	})
 
-	const hasError = computed(() => validation.hasError.value || props.hasError)
+	const hasError = computed(() =>
+		validation.hasError.value
+		|| (props.errorMessages?.length ?? 0) > 0
+		|| props.hasError,
+	)
 	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
 	const hasSuccess = computed(() => ((validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess) && props.showSuccessMessages)
 

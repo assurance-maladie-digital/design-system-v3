@@ -259,7 +259,12 @@
 
 	const hasError = computed(() => !shouldDisableErrorHandling.value && validation.hasError.value)
 	const hasWarning = computed(() => !shouldDisableErrorHandling.value && validation.hasWarning.value)
-	const hasSuccess = computed(() => !shouldDisableErrorHandling.value && validation.hasSuccess.value)
+	const hasSuccess = computed(() =>
+		!shouldDisableErrorHandling.value
+		&& !hasError.value
+		&& !hasWarning.value
+		&& validation.hasSuccess.value,
+	)
 
 	const iconColor = computed(() => {
 		if (shouldDisableErrorHandling.value) return '#222324'
@@ -271,7 +276,11 @@
 
 	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
 	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
-	const successes = computed(() => shouldDisableErrorHandling.value ? [] : validation.successes.value)
+	const successes = computed(() =>
+		shouldDisableErrorHandling.value || hasError.value || hasWarning.value
+			? []
+			: validation.successes.value,
+	)
 
 	const showHelpTextBelow = computed(() => {
 		// Display help text below by default if it exists
