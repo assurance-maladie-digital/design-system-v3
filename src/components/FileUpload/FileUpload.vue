@@ -110,6 +110,7 @@
 				'dark-mode': isDarkMode,
 			},
 		]"
+		tabindex="0"
 		:style="widthStyles"
 		class="sy-file-upload d-block pa-4"
 		@dragover.prevent="dragover = true"
