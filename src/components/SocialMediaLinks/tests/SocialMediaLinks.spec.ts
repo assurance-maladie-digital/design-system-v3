@@ -2,6 +2,8 @@ import { mount, VueWrapper } from '@vue/test-utils'
 import SocialMediaLinks from '../SocialMediaLinks.vue'
 import { describe, it, expect, afterEach } from 'vitest'
 
+const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
+
 describe('SocialMediaLinks', () => {
 	let wrapper: VueWrapper
 
@@ -30,7 +32,7 @@ describe('SocialMediaLinks', () => {
 
 	it('renders correctly with provided links', () => {
 		const links = [
-			{ href: 'https://twitter.com', name: 'Twitter', icon: 'mdi-twitter' },
+			{ href: 'https://x.com', name: 'X', icon: xIcon },
 			{ href: 'https://facebook.com', name: 'Facebook', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
@@ -51,8 +53,8 @@ describe('SocialMediaLinks', () => {
 
 		// Check first link
 		const firstLink = listItems[0]?.find('a')
-		expect(firstLink?.attributes('href')).toBe('https://twitter.com')
-		expect(firstLink?.attributes('aria-label')).toBe('Lien vers Twitter')
+		expect(firstLink?.attributes('href')).toBe('https://x.com')
+		expect(firstLink?.attributes('aria-label')).toBe('Lien vers X')
 
 		// Check second link
 		const secondLink = listItems[1]?.find('a')
@@ -62,7 +64,7 @@ describe('SocialMediaLinks', () => {
 
 	it('renders the correct number of social media links', () => {
 		const links = [
-			{ href: 'https://twitter.com', name: 'Twitter', icon: 'mdi-twitter' },
+			{ href: 'https://x.com', name: 'X', icon: xIcon },
 			{ href: 'https://facebook.com', name: 'Facebook', icon: 'mdi-facebook' },
 		]
 		wrapper = mount(SocialMediaLinks, {
@@ -126,7 +128,7 @@ describe('SocialMediaLinks', () => {
 
 	it('has proper focus styles for accessibility', () => {
 		const links = [
-			{ href: 'https://twitter.com', name: 'Twitter', icon: 'mdi-twitter' },
+			{ href: 'https://x.com', name: 'X', icon: xIcon },
 		]
 		wrapper = mount(SocialMediaLinks, {
 			props: {
@@ -142,8 +144,8 @@ describe('SocialMediaLinks', () => {
 
 		// Verify the button has proper accessibility attributes
 		const link = wrapper.find('a')
-		expect(link.attributes('href')).toBe('https://twitter.com')
-		expect(link.attributes('aria-label')).toBe('Lien vers Twitter')
+		expect(link.attributes('href')).toBe('https://x.com')
+		expect(link.attributes('aria-label')).toBe('Lien vers X')
 
 		// Check that the component has the necessary CSS classes for focus styles
 		// We can't test the actual CSS properties, but we can verify the structure is there

@@ -1,0 +1,31 @@
+import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import '../../stories/styles/shared.css';
+import * as StatusPageStories from './StatusPage.stories'
+
+<Meta of={StatusPageStories} />
+
+<div className="header">
+  <h1>StatusPage</h1>
+  <p>Le composant `StatusPage` sert à afficher une page de statut.</p>
+</div>
+
+<Canvas of={StatusPageStories.Default} />
+
+# API
+
+<Controls of={StatusPageStories.Default} />
+
+## Rôle et identifiant ARIA
+
+Les props `role` et `unique-id` permettent de préciser le rôle sémantique du composant et de lier le titre au conteneur via `aria-labelledby`.
+
+Lorsque `role` est défini, l'attribut `aria-labelledby` est automatiquement appliqué sur le `PageContainer` en pointant vers le `h1`.
+
+<Canvas of={StatusPageStories.WithRole} />
+
+## Lien de retour
+
+Vous pouvez mettre un lien vers une autre page avec les props `btn-text` et `btn-link` ou `btn-href`.<br/>
+L'événement `btn-click` est émis lorsque l'utilisateur clique sur le bouton.
+
+<Canvas of={StatusPageStories.WithLink} />

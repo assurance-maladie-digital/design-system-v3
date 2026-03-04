@@ -2,6 +2,7 @@
 	import { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { checkIcon, croixIcon } from '@/constants/icons'
 	import { ref } from 'vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	withDefaults(defineProps<CustomizableOptions & {
 		items1?: string[]
@@ -31,7 +32,7 @@
 				style="display: flex;"
 				class="d-flex check-text"
 			>
-				<VIcon :icon="iconCheck" />
+				<SyIcon :icon="iconCheck" />
 				<p class="font-weight-bold mb-2">
 					À faire
 				</p>
@@ -54,7 +55,7 @@
 			class="m-2 p-2 v-col-auto not-check"
 		>
 			<div class="d-flex not-check-text">
-				<VIcon :icon="iconCross" />
+				<SyIcon :icon="iconCross" />
 				<p class="font-weight-bold mb-2">
 					À ne pas faire
 				</p>

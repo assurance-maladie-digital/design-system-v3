@@ -34,14 +34,29 @@
 		return display.smAndDown.value ? '100%' : 'auto'
 	})
 
+	const itemKeys = computed(() => Object.keys(props.items ?? {}) as (keyof CookiesItems)[])
+
+	type ConsentPayload = Partial<Record<keyof CookiesItems, boolean>>
+
+	function buildConsentPayload(value: boolean): ConsentPayload {
+		if (!props.items) {
+			return {}
+		}
+
+		return itemKeys.value.reduce<ConsentPayload>((payload, key) => {
+			payload[key] = value
+			return payload
+		}, {})
+	}
+
 	function reject(): void {
 		active.value = false
-		emits('reject')
+		emits('reject', buildConsentPayload(false))
 	}
 
 	function accept(): void {
 		active.value = false
-		emits('accept')
+		emits('accept', buildConsentPayload(true))
 	}
 
 	function customize(): void {
@@ -51,7 +66,7 @@
 		emits('customize')
 	}
 
-	function personalizeCookies(e: Record<string, unknown>) {
+	function personalizeCookies(e: ConsentPayload) {
 		emits('submit', e)
 		showCookiesSelection.value = false
 		active.value = false
@@ -167,13 +182,13 @@
 		<VSheet
 			ref="vsheetRef"
 			v-bind="options.banner"
-			:aria-label="locales.label"
 			class="vd-cookie-banner"
 		>
 			<div
 				ref="bannerRef"
 				class="vd-cookie-banner__inner"
 				role="dialog"
+				:aria-label="locales.label"
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<h2
@@ -214,7 +229,7 @@
 					<Transition name="height">
 						<div v-if="showCookiesSelection && items">
 							<CookiesSelection
-								:items
+								:items="items"
 								@submit="personalizeCookies"
 							>
 								<template

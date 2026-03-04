@@ -7,6 +7,7 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import defaultOptions from './config'
 	import type { VBtn, VListItem } from 'vuetify/components'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: string
@@ -148,13 +149,13 @@
 					class="vd-lang-btn"
 				>
 					{{ currentLangData.name }}
-					<VIcon
+					<SyIcon
 						v-if="!hideDownArrow"
 						v-bind="options.icon"
 						class="ml-1"
-					>
-						{{ mdiMenuDown }}
-					</VIcon>
+						:icon="mdiMenuDown"
+						decorative
+					/>
 				</VBtn>
 			</template>
 			<VList

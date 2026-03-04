@@ -2,6 +2,7 @@
 	import { mdiAlertCircleOutline, mdiAutorenew } from '@mdi/js'
 	import { useAttrs } from 'vue'
 	import type { locales as defaultLocales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	defineProps<{
 		locales: typeof defaultLocales
@@ -22,12 +23,12 @@
 			v-bind="attrs"
 		>
 			<template #prepend>
-				<VIcon
+				<SyIcon
 					color="error"
 					class="mr-2"
-				>
-					{{ errorIcon }}
-				</VIcon>
+					:icon="errorIcon"
+					decorative
+				/>
 			</template>
 
 			<span>
@@ -44,9 +45,10 @@
 					<p class="d-sr-only">
 						{{ locales.renew }}
 					</p>
-					<VIcon>
-						{{ renewIcon }}
-					</VIcon>
+					<SyIcon
+						:icon="renewIcon"
+						decorative
+					/>
 				</VBtn>
 			</template>
 		</VAlert>

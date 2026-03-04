@@ -231,6 +231,45 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<DatePicker
+							v-model="date"
+							format="DD/MM/YYYY"
+							date-format-return=""
+							placeholder="JJ/MM/AAAA"
+							label="Date avec règles de validation"
+							required
+							is-outlined
+							display-icon
+							:no-icon="false"
+							:no-calendar="true"
+						/>
+						<div style="margin-top: 10px; font-family: monospace; color: #666;">
+							Valeur : {{ date }}
+						</div>
+					</div>
+				</template>
+				`,
+			},
+		],
+	},
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
@@ -275,6 +314,51 @@ export const Default: Story = {
 }
 
 export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<h4 class="mb-4">Sans astérisque :</h4>
+						<DatePicker
+							v-model="date"
+							format="DD/MM/YYYY"
+							placeholder="JJ/MM/AAAA"
+							label="Date avec règles de validation"
+							required
+							is-outlined
+							:no-calendar="true"
+						/>
+						<h4 class="mb-4">Avec astérisque :</h4>
+						<DatePicker
+							v-model="date"
+							format="DD/MM/YYYY"
+							placeholder="JJ/MM/AAAA"
+							label="Date avec règles de validation"
+							required
+							is-outlined
+							:no-calendar="true"
+							display-asterisk
+						/>
+					</div>
+				</template>
+				`,
+			},
+		],
+	},
 	args: {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
@@ -359,6 +443,7 @@ export const EuropeanFormat: Story = {
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': 'YYYY/MM/DD',
 		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date avec règles de validation',
 		'required': true,
 		'noIcon': true,
 		'onUpdate:modelValue': fn(),
@@ -421,6 +506,7 @@ export const CustomRules: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': 'DD/MM/YYYY',
+		'label': 'Date avec règles personnalisées',
 		'placeholder': 'DD/MM/YYYY',
 		'required': true,
 		'customRules': [{
@@ -492,6 +578,7 @@ export const WarningRules: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date avec règles d\'avertissement',
 		'customWarningRules': [{
 			type: 'custom',
 			options: {
@@ -553,6 +640,7 @@ export const WithAppendIcon: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date avec icône en suffixe',
 		'displayAppendIcon': true,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -623,6 +711,7 @@ export const WithErrorDisabled: Story = {
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: 'YYYY/MM/DD',
 		placeholder: 'Date requise sans erreur',
+		label: 'Date requise sans erreur',
 		required: true,
 		noIcon: true,
 		disableErrorHandling: true,
@@ -757,6 +846,7 @@ export const AutoClampFeature: Story = {
                 <DatePicker
                   v-model="dateSlash"
                   placeholder="Saisie avec auto clamp - séparateur /"
+				  label="Date"
                   format="DD/MM/YYYY"
                   noCalendar
                   autoClamp
@@ -767,6 +857,7 @@ export const AutoClampFeature: Story = {
                 <DatePicker
                   v-model="dateDash"
                   placeholder="Saisie avec auto clamp - séparateur -"
+				  label="Date"
                   format="DD-MM-YYYY"
                   noCalendar
                   autoClamp
@@ -777,6 +868,7 @@ export const AutoClampFeature: Story = {
                 <DatePicker
                   v-model="dateDot"
                   placeholder="Saisie avec auto clamp - séparateur ."
+				  label="Date"
                   format="YYYY.MM.DD"
                   noCalendar
                   autoClamp
@@ -787,6 +879,7 @@ export const AutoClampFeature: Story = {
                 <DatePicker
                   v-model="dateRange"
                   placeholder="Saisie plage avec auto clamp"
+				  label="Date"
                   format="DD/MM/YYYY"
                   displayRange
                   noCalendar
@@ -874,6 +967,7 @@ export const DifferentFormats: Story = {
                 <DatePicker
                     v-model="value1"
                     placeholder="Format JJ/MM/AAAA"
+					label="Date"
                     format="DD/MM/YYYY"
                     no-calendar
                     class="py-4"
@@ -881,6 +975,7 @@ export const DifferentFormats: Story = {
                 <DatePicker
                     v-model="value2"
                     placeholder="Format MM/JJ/AAAA"
+					label="Date"
                     format="MM/DD/YYYY"
 					no-calendar
 					class="py-4"
@@ -888,6 +983,7 @@ export const DifferentFormats: Story = {
                 <DatePicker
                     v-model="value3"
                     placeholder="Format AAAA-MM-JJ"
+					label="Date"
                     format="YYYY-MM-DD"
 					no-calendar
 					class="py-4"
@@ -895,6 +991,7 @@ export const DifferentFormats: Story = {
                 <DatePicker
                     v-model="value4"
                     placeholder="Format JJ-MM-AA"
+					label="Date"
                     format="DD-MM-YY"
 					no-calendar
 					class="py-4"
@@ -902,6 +999,7 @@ export const DifferentFormats: Story = {
                 <DatePicker
                     v-model="value5"
                     placeholder="Format JJ.MM.AAAA"
+					label="Date"
                     format="DD.MM.YYYY"
 					no-calendar
 					class="py-4"

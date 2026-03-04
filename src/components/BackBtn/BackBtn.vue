@@ -2,6 +2,7 @@
 	import { mdiArrowLeft } from '@mdi/js'
 	import { computed } from 'vue'
 	import { locales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<{
 		hideBackIcon?: boolean
@@ -35,14 +36,14 @@
 		:style="{ backgroundColor: buttonBgColor }"
 	>
 		<slot name="icon">
-			<VIcon
+			<SyIcon
 				v-if="!props.hideBackIcon"
+				:icon="mdiArrowLeft"
+				decorative
 				:color="iconColor"
 				:class="{ 'ml-n1': isDark }"
 				class="mr-1"
-			>
-				{{ mdiArrowLeft }}
-			</VIcon>
+			/>
 		</slot>
 
 		<slot>

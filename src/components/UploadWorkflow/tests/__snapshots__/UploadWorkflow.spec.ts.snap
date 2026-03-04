@@ -8,12 +8,16 @@ exports[`UploadWorkflow > render the upload list 1`] = `
   "
   style="width: 100%;"
 >
-  <h4 class="
-    mb-2
-    text-h6
-  ">
+  <div
+    aria-level="4"
+    class="
+      mb-2
+      text-h6
+    "
+    role="heading"
+  >
     Documents à nous transmettre
-  </h4>
+  </div>
   <ul
     class="upload-list"
     style="width: 100%;"
@@ -342,7 +346,6 @@ exports[`UploadWorkflow > render the upload list 1`] = `
         </span>
         <span class="
           bg-primary
-          elevation-2
           sy-file-upload-btn
           text-white
         ">

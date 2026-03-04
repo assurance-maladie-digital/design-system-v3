@@ -8,7 +8,7 @@ const meta: Meta<typeof UploadWorkflow> = {
 	title: 'Composants/Formulaires/UploadWorkflow',
 	component: UploadWorkflow,
 	parameters: {
-		controls: { exclude: ['update:modelValue', 'error'] },
+		controls: { exclude: ['update:modelValue', 'error', 'preview'] },
 	},
 	argTypes: {
 		'modelValue': {
@@ -72,6 +72,36 @@ const meta: Meta<typeof UploadWorkflow> = {
 				category: 'props',
 				type: {
 					summary: 'string',
+				},
+			},
+		},
+		'headingLevel': {
+			description: 'Niveau du titre affiché (utilise role="heading" et aria-level).',
+			control: {
+				type: 'number',
+				min: 1,
+				max: 6,
+			},
+			table: {
+				category: 'props',
+				type: {
+					summary: 'number',
+				},
+				defaultValue: {
+					summary: '4',
+				},
+			},
+		},
+		'infoText': {
+			description: 'Personnalise le texte affiché dans la zone d’information du composant enfant FileUpload (slot info-text).',
+			control: 'text',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: '\'\'',
 				},
 			},
 		},
@@ -186,6 +216,15 @@ const meta: Meta<typeof UploadWorkflow> = {
 				},
 			},
 		},
+		'onPreview': {
+			description: 'Événement émis lors de l\'ouverture d\'une prévisualisation.',
+			table: {
+				category: 'events',
+				type: {
+					summary: 'FileItem',
+				},
+			},
+		},
 		'onUpdate:modelValue': {
 			description: 'Événement émis lorsqu\'un fichier est ajouté ou supprimé.',
 			table: {
@@ -267,6 +306,7 @@ export const Default: Story = {
 		],
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
+		'onPreview': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -380,6 +420,7 @@ export const WithPreviewStep: Story = {
 		],
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
+		'onPreview': fn(),
 		'showFilePreview': true,
 	},
 	parameters: {
@@ -391,6 +432,7 @@ export const WithPreviewStep: Story = {
 		v-model="files"
 		:upload-list="uploadList"
 		:showFilePreview="true"
+		@preview="onPreview"
 	/>
 </template>`,
 
@@ -411,6 +453,57 @@ export const WithPreviewStep: Story = {
 			id: 'Bill',
 			title: 'Facture de soin',
 		},
+	]
+
+	function onPreview(fileItem: unknown) {
+		console.log('preview', fileItem)
+	}
+</script>`,
+			},
+		],
+	},
+}
+
+export const WithInfoText: Story = {
+	args: {
+		'modelValue': [],
+		'uploadList': [
+			{
+				id: '1',
+				title: 'Carte d\'identité',
+			},
+			{
+				id: '2',
+				title: 'Facture de soin',
+			},
+		],
+		'infoText': 'Vous pouvez déposer vos fichiers ici. Formats acceptés : PDF, JPG, PNG.',
+		'onUpdate:modelValue': fn(),
+		'onError': fn(),
+		'onPreview': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<UploadWorkflow
+		v-model="files"
+		:upload-list="uploadList"
+		info-text="Vous pouvez déposer vos fichiers ici. Formats acceptés : PDF, JPG, PNG."
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UploadWorkflow } from '@cnamts/synapse'
+
+	const files = ref([])
+	const uploadList = [
+		{ id: '1', title: 'Carte d\\'identité' },
+		{ id: '2', title: 'Facture de soin' },
 	]
 </script>`,
 			},
@@ -468,14 +561,17 @@ export const Events: Story = {
 			{
 				id: 'ID',
 				title: 'Carte d\'identité',
+				showPreviewBtn: true,
 			},
 			{
 				id: 'Bill',
 				title: 'Facture de soin',
+				showPreviewBtn: true,
 			},
 		],
 		'onUpdate:modelValue': fn(),
 		'onError': fn(),
+		'onPreview': fn(),
 	},
 	render: (args) => {
 		return {
@@ -517,6 +613,7 @@ export const Events: Story = {
 					:upload-list="args.uploadList"
 					:vuetify-options="options"
 					@error="[showError, args.onError]"
+					@preview="args.onPreview"
 					@update:modelValue="[valueUpdated, args['onUpdate:modelValue']]"
 				/>
 				<VSnackbar
@@ -549,6 +646,7 @@ export const Events: Story = {
 		:upload-list="uploadList"
 		vuetify-options="options"
 		@onError="showError"
+		@onPreview="onPreview"
 		@onUpdate:modelValue="valueUpdated"
 	/>
 </template>`,
@@ -564,10 +662,12 @@ export const Events: Story = {
 		{
 			id: 'ID',
 			title: 'Carte d'identité',
+			showPreviewBtn: true,
 		},
 		{
 			id: 'Bill',
 			title: 'Facture de soin',
+			showPreviewBtn: true,
 		},
 	]
 
@@ -581,19 +681,23 @@ export const Events: Story = {
 		}
 	}
 
-	function showError (errors: string[]) {
+	function showError(errors: string[]) {
 		snackbarText.value = errors.join(', ')
 		snackbarColor.value = 'error';
 		snackbar.value = true
 	}
 
-	function valueUpdated (items: {fileName: string, file: File}[]) {
+	function valueUpdated(items: { fileName: string, file: File }[]) {
 		if(items.length === 0) {
 			return
 		}
 		snackbarText.value = \`Le fichier "\${items[0].fileName}" a été ajouté avec succès.\`;
 		snackbarColor.value = 'success';
 		snackbar.value = true
+	}
+
+	function onPreview(fileItem: unknown) {
+		console.log('preview', fileItem)
 	}
 </script>`,
 			},

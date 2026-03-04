@@ -11,6 +11,7 @@
 	import volumeUp from './icons/volumeUp.vue'
 	import { locales as defaultLocales } from './locales'
 	import { type CaptchaType, type StateType } from './types'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<{
 		urlCreate: string
@@ -202,7 +203,10 @@
 					@click="toggleAudio"
 				>
 					<span v-if="isPlaying">
-						<VIcon>{{ mdiPause }}</VIcon>
+						<SyIcon
+							:icon="mdiPause"
+							decorative
+						/>
 						{{ locales.pause }}
 					</span>
 

@@ -1,0 +1,32 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+import '../../../stories/styles/shared.css';
+import * as SyCheckBoxGroupStories from './SyCheckBoxGroup.stories';
+
+<Meta of={SyCheckBoxGroupStories} />
+
+<div className="header">
+  <h1>SyCheckBoxGroup</h1>
+  <p>Le composant `SyCheckBoxGroup` est un groupe de cases à cocher basé sur `SyCheckbox`, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
+</div>
+
+Il étend les fonctionnalités de base avec :
+
+- La gestion d’un groupe d’options via la prop `options`
+- Un mode **sélection unique** (par défaut) ou **multiple** (`multiple`)
+- Un système de validation avancé (erreur, avertissement, succès)
+
+<Canvas of={SyCheckBoxGroupStories.Default} />
+
+# API
+
+<Controls of={SyCheckBoxGroupStories.Default} />
+
+## Validation
+
+Le composant supporte trois types de validation :
+
+- Règles d'erreur standard (`customRules`)
+- Règles d'avertissement (`customWarningRules`)
+- Règles de succès (`customSuccessRules`)
+
+<a href="/?path=/docs/guide-du-dev-guide-de-validation-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>

@@ -49,7 +49,7 @@ const meta = {
 			description: 'Événement émis lors de l\'acceptation des cookies',
 			table: {
 				category: 'Events',
-				type: { summary: '' },
+				type: { summary: 'Partial<{ functional: boolean; analytics: boolean }>' },
 			},
 		},
 		'onReject': {
@@ -57,7 +57,7 @@ const meta = {
 			description: 'Événement émis lors du refus des cookies',
 			table: {
 				category: 'Events',
-				type: { summary: '' },
+				type: { summary: 'Partial<{ functional: boolean; analytics: boolean }>' },
 			},
 		},
 		'onCustomize': {
@@ -66,6 +66,14 @@ const meta = {
 			table: {
 				category: 'Events',
 				type: { summary: '' },
+			},
+		},
+		'onSubmit': {
+			action: 'submit',
+			description: 'Événement émis lors de la sauvegarde des préférences personnalisées',
+			table: {
+				category: 'Events',
+				type: { summary: 'Partial<Preferences>' },
 			},
 		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -226,12 +234,10 @@ export const Default: Story = {
 		onAccept: { action: 'accept' },
 		onReject: { action: 'reject' },
 		onCustomize: { action: 'customize' },
+		onSubmit: { action: 'submit' },
 	},
 	args: {
 		items,
-		onAccept: fn(),
-		onReject: fn(),
-		onCustomize: fn(),
 	},
 
 	render: (args) => {
@@ -258,9 +264,6 @@ export const Default: Story = {
 	},
 
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -356,9 +359,6 @@ export const WithoutCookiesItems: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -411,9 +411,6 @@ export const BannerDescriptionSlot: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -520,9 +517,6 @@ export const CookiesDescriptionSlots: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -619,9 +613,6 @@ export const Customization: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

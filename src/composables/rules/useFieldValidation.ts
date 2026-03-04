@@ -232,14 +232,19 @@ export function useFieldValidation() {
 				}
 
 				case 'notBeforeDate': {
-					if (typeof options.date === 'undefined') {
+					const hasDateOption = Object.prototype.hasOwnProperty.call(options, 'date')
+					if (!hasDateOption) {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
 						return {}
 					}
-					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
+					if (
+						options.date === undefined
+						|| options.date === null
+						|| (typeof options.date === 'string' && options.date.trim() === '')
+					) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -249,7 +254,7 @@ export function useFieldValidation() {
 
 					// Check if options.date is a string and in DD/MM/YYYY format
 					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
 					}
 
 					const referenceDate = parseDate(options.date)
@@ -268,14 +273,19 @@ export function useFieldValidation() {
 				}
 
 				case 'notAfterDate': {
-					if (typeof options.date === 'undefined') {
+					const hasDateOption = Object.prototype.hasOwnProperty.call(options, 'date')
+					if (!hasDateOption) {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
 						return {}
 					}
-					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
+					if (
+						options.date === undefined
+						|| options.date === null
+						|| (typeof options.date === 'string' && options.date.trim() === '')
+					) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -285,7 +295,7 @@ export function useFieldValidation() {
 
 					// Check if options.date is a string and in DD/MM/YYYY format
 					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
 					}
 
 					const referenceDate = parseDate(options.date)
@@ -304,14 +314,19 @@ export function useFieldValidation() {
 				}
 
 				case 'dateExact': {
-					if (typeof options.date === 'undefined') {
+					const hasDateOption = Object.prototype.hasOwnProperty.call(options, 'date')
+					if (!hasDateOption) {
 						return { error: 'Configuration de la règle invalide' }
 					}
 					// Si la valeur est null ou vide, ne pas valider (champ vide autorisé)
 					if (value === null || value === undefined || value === '') {
 						return {}
 					}
-					if (options.date === null || (typeof options.date === 'string' && options.date.trim() === '')) {
+					if (
+						options.date === undefined
+						|| options.date === null
+						|| (typeof options.date === 'string' && options.date.trim() === '')
+					) {
 						return {}
 					}
 					const dateValue = parseDate(value)
@@ -320,7 +335,7 @@ export function useFieldValidation() {
 					}
 
 					if (typeof options.date !== 'string') {
-						throw new Error('Date reference must be a string in DD/MM/YYYY format')
+						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
 					}
 
 					const referenceDate = parseDate(options.date)

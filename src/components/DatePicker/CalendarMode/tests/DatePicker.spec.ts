@@ -77,8 +77,12 @@ describe('DatePicker', () => {
 		expect(result.length).toBe(2)
 		expect(result[0]).toBeInstanceOf(Date)
 		expect(result[1]).toBeInstanceOf(Date)
-		expect(result[0]?.toISOString().split('T')[0]).toBe('2023-01-01')
-		expect(result[1]?.toISOString().split('T')[0]).toBe('2023-01-05')
+		expect(result[0]?.getFullYear()).toBe(2023)
+		expect(result[0]?.getMonth()).toBe(0)
+		expect(result[0]?.getDate()).toBe(1)
+		expect(result[1]?.getFullYear()).toBe(2023)
+		expect(result[1]?.getMonth()).toBe(0)
+		expect(result[1]?.getDate()).toBe(5)
 	})
 
 	it('initializeSelectedDates returns an empty array for invalid range inputs', () => {
@@ -106,7 +110,9 @@ describe('DatePicker', () => {
 		if (!(result instanceof Date)) {
 			throw new Error('Expected initializeSelectedDates to return a Date for a single valid date')
 		}
-		expect(result.toISOString().split('T')[0]).toBe('2023-01-01')
+		expect(result.getFullYear()).toBe(2023)
+		expect(result.getMonth()).toBe(0)
+		expect(result.getDate()).toBe(1)
 	})
 
 	it('initializeSelectedDates returns an empty array when start date is after end date', () => {

@@ -14,6 +14,10 @@ export function useDateSelection(
 	// Stockage des dates de début et de fin pour les plages
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 
+	const resetRange = () => {
+		rangeBoundaryDates.value = null
+	}
+
 	/**
 	 * Génère toutes les dates entre deux dates (incluses)
 	 */
@@ -117,5 +121,6 @@ export function useDateSelection(
 		updateSelectedDates,
 		rangeBoundaryDates,
 		generateDateRange,
+		resetRange,
 	}
 }

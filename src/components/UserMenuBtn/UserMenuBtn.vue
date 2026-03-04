@@ -6,8 +6,9 @@
 	import { mdiAccount, mdiLoginVariant } from '@mdi/js'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { defaultOptions } from './config'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
-	type MenuItem = { text: string, value: string, link?: string, to?: RouteLocationRaw }
+	type MenuItem = { text: string, value: string, link?: string, to?: RouteLocationRaw, icon?: string }
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		menuItems?: MenuItem[]
@@ -55,28 +56,32 @@
 		class="user-menu-btn"
 	>
 		<template #append-icon>
-			<VIcon
+			<SyIcon
 				v-if="!hideUserIcon"
+				decorative
+				:icon="mdiAccount"
 				:size="isMobileView ? 'x-large' : 'default'"
 				class="vd-user-icon mr-0 pa-2"
 				v-bind="options['icon']"
-			>
-				{{ mdiAccount }}
-			</VIcon>
+			/>
 		</template>
 		<template #footer-list-item>
 			<slot>
 				<VListItem
 					v-if="!hideLogoutBtn"
 					class="logout"
+					tag="li"
+					role="menuitem"
+					tabindex="0"
 					v-bind="options['logoutListItem']"
 					@click="$emit('logout')"
 				>
 					<div class="d-flex">
-						<VIcon
+						<SyIcon
 							:icon="mdiLoginVariant"
 							class="mr-4"
 							v-bind="options['logoutIcon']"
+							decorative
 						/>
 						<VListItemTitle class="logout">
 							{{ props.logoutText }}

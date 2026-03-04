@@ -5,6 +5,7 @@
 	import { useDisplay, useTheme } from 'vuetify'
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<{
 		nbTotal?: number
@@ -65,7 +66,7 @@
 	>
 		<p
 			v-if="nbTotal > 0"
-			class="mb-0 font-weight-bold mr-4 mr-sm-0 my-3"
+			class="mb-0 font-weight-bold mr-4 mr-sm-0"
 			data-test-id="nb-rows"
 		>
 			{{ displayNbRows }}
@@ -95,9 +96,11 @@
 				data-test-id="add-btn"
 				@click="$emit('add')"
 			>
-				<VIcon v-bind="options.addIcon">
-					{{ mdiPlus }}
-				</VIcon>
+				<SyIcon
+					v-bind="options.addIcon"
+					:icon="mdiPlus"
+					decorative
+				/>
 
 				<span
 					v-show="!display.xs.value"

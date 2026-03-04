@@ -19,6 +19,10 @@ describe('ComplexDatePicker – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
+		// Debug aid: log violations details when present
+		if (results.violations.length > 0) {
+			console.log(JSON.stringify(results.violations, null, 2))
+		}
 		assertNoA11yViolations(results, 'ComplexDatePicker – default calendar mode', {
 			ignoreRules: ['region'],
 		})

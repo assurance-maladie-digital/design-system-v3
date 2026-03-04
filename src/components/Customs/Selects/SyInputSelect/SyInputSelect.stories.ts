@@ -3,6 +3,7 @@ import SyInputSelect from './SyInputSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
 import { ref } from 'vue'
 import SyAlert from '../../../SyAlert/SyAlert.vue'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 const meta = {
 	title: 'Composants/Formulaires/Selects/SyInputSelect',
@@ -601,16 +602,7 @@ const validateForm = () => {
 	},
 }
 
-// depreciation notice
 export const DeprecationNotice = {
-	render: () => ({
-		components: { SyAlert },
-		template: `
-			<SyAlert type="warning" variant="tonal" :closable="false">
-				<b>Ce composant est déprécié</b>, il ne sera plus maintenu ou mis à jour.<br/>
-				Nous vous recommandons d'utiliser à la place le composant <a class="text-primary" href="/?path=/docs/composants-formulaires-selects-syselect--docs"><code>SySelect</code></a>.
-			</SyAlert>
-		`,
-	}),
+	...createDeprecationNotice('SySelect', '/?path=/docs/composants-formulaires-selects-syselect--docs'),
 	tags: ['!dev'],
 }

@@ -467,6 +467,7 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
+						label="Sélectionner une période"
 						placeholder="Sélectionner une période"
 						format="DD/MM/YYYY"
 						displayRange
@@ -489,6 +490,7 @@ export const DateRange: Story = {
 	},
 	args: {
 		'placeholder': 'Sélectionner une période',
+		'label': 'Sélectionner une période',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -1494,12 +1496,20 @@ export const UTC: Story = {
 
 				const dateString = computed({
 					get() {
-						return dayjs.utc(utcIso.value).tz(selectedTimeZone.value).format(DISPLAY_FORMAT.value)
+						return dayjs.utc(utcIso.value).format(DISPLAY_FORMAT.value)
 					},
 					set(v: string) {
-						const parsed = dayjs.tz(v, DISPLAY_FORMAT.value, selectedTimeZone.value)
+						const parsed = dayjs.utc(v, DISPLAY_FORMAT.value, true)
 						if (!parsed.isValid() || parsed.format(DISPLAY_FORMAT.value) !== v) return
-						utcIso.value = parsed.utc().toISOString()
+						utcIso.value = dayjs.utc()
+							.year(parsed.year())
+							.month(parsed.month())
+							.date(parsed.date())
+							.hour(0)
+							.minute(0)
+							.second(0)
+							.millisecond(0)
+							.toISOString()
 						args['onUpdate:modelValue']?.(v)
 					},
 				})
