@@ -1403,7 +1403,6 @@ export const UTC: Story = {
 							v-model="dateString"
 							placeholder="Sélectionner une date"
 							format="DD/MM/YYYY"
-							readonly
 						/>
 
 						<p class="mt-4" style="font-family: monospace;">timezone sélectionné : {{ selectedTimeZone }}</p>
@@ -1478,7 +1477,6 @@ export const UTC: Story = {
 		'disabled': false,
 		'noIcon': false,
 		'noCalendar': false,
-		'readonly': false,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
 		'onBlur': fn(),
@@ -1498,12 +1496,20 @@ export const UTC: Story = {
 
 				const dateString = computed({
 					get() {
-						return dayjs.utc(utcIso.value).tz(selectedTimeZone.value).format(DISPLAY_FORMAT.value)
+						return dayjs.utc(utcIso.value).format(DISPLAY_FORMAT.value)
 					},
 					set(v: string) {
-						const parsed = dayjs.tz(v, DISPLAY_FORMAT.value, selectedTimeZone.value)
+						const parsed = dayjs.utc(v, DISPLAY_FORMAT.value, true)
 						if (!parsed.isValid() || parsed.format(DISPLAY_FORMAT.value) !== v) return
-						utcIso.value = parsed.utc().toISOString()
+						utcIso.value = dayjs.utc()
+							.year(parsed.year())
+							.month(parsed.month())
+							.date(parsed.date())
+							.hour(0)
+							.minute(0)
+							.second(0)
+							.millisecond(0)
+							.toISOString()
 						args['onUpdate:modelValue']?.(v)
 					},
 				})
