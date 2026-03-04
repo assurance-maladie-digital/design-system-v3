@@ -207,9 +207,6 @@ export const Default: Story = {
 		`,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -370,9 +367,6 @@ export const ChipFormat: Story = {
 		`,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -599,9 +593,6 @@ export const FilterCombination: Story = {
 		`,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		layout: 'fullscreen',
 		sourceCode: [
 			{
@@ -835,9 +826,6 @@ export const Boolean: Story = {
 		`,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -988,9 +976,6 @@ export const ManyFields: Story = {
 		`,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
