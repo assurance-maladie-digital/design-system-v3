@@ -45,6 +45,7 @@
 			<template #activator="{ props: menuProps, isActive }">
 				<VBtn
 					v-bind="menuProps"
+					:aria-controls="isActive ? menuProps['aria-controls'] : undefined"
 					:class="`sy-filter-${filter.name}`"
 					:variant="getFilterCount(filter) ? undefined : 'outlined'"
 					color="secondary"
