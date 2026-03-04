@@ -2,7 +2,7 @@ import { apSemanticTokens } from './apSemantic'
 import { apColorsTokens } from './apColors'
 
 export const apLightTheme = {
-	primary: apColorsTokens.cyan.darken40,
+    primary: apColorsTokens.cyan.darken20,
 	secondary: apColorsTokens.cyan.darken60,
 	accentPrimaryLight: apColorsTokens.blue.lighten20,
 	accentPrimary: apColorsTokens.cyan.darken20,
