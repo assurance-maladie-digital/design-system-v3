@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { initializeSelectedDates, type DateInput } from '../useDateInitialization'
 
 describe('useDateInitialization', () => {
@@ -76,20 +76,25 @@ describe('useDateInitialization', () => {
 			expect((result2 as Date).getDate()).toBe(15)
 		})
 
-		it('does not shift day when parsing YYYY-MM-DD in a negative timezone (regression)', () => {
-			const original = Date.prototype.getTimezoneOffset
-			Date.prototype.getTimezoneOffset = vi.fn(() => 240) // Simulate UTC-4
+		describe('timezone regression', () => {
+			let tzOffsetSpy: ReturnType<typeof vi.spyOn> | null = null
 
-			try {
+			beforeEach(() => {
+				tzOffsetSpy = vi.spyOn(Date.prototype, 'getTimezoneOffset').mockReturnValue(240)
+			})
+
+			afterEach(() => {
+				tzOffsetSpy?.mockRestore()
+				tzOffsetSpy = null
+			})
+
+			it('does not shift day when parsing YYYY-MM-DD in a negative timezone (regression)', () => {
 				const result = initializeSelectedDates('2022-10-18', 'DD/MM/YYYY', 'YYYY-MM-DD')
 				expect(result).toBeInstanceOf(Date)
 				expect((result as Date).getFullYear()).toBe(2022)
 				expect((result as Date).getMonth()).toBe(9)
 				expect((result as Date).getDate()).toBe(18)
-			}
-			finally {
-				Date.prototype.getTimezoneOffset = original
-			}
+			})
 		})
 
 		it('returns null for object input', () => {

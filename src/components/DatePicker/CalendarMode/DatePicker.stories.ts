@@ -1478,7 +1478,7 @@ export const UTC: Story = {
 		'disabled': false,
 		'noIcon': false,
 		'noCalendar': false,
-		'readonly': true,
+		'readonly': false,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
 		'onBlur': fn(),
