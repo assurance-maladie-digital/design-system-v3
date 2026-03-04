@@ -35,10 +35,7 @@ const parseToUTCDate = (dateStr: string, format: string): Date | null => {
 		.year(parsedDate.year())
 		.month(parsedDate.month())
 		.date(parsedDate.date())
-		.hour(0)
-		.minute(0)
-		.second(0)
-		.millisecond(0)
+		.startOf('day')
 		.toDate()
 }
 
