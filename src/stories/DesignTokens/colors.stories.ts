@@ -88,8 +88,8 @@ export const ColorBase: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-                const colorTitle = ''
-                const colorTitleLevel = 3
+				const colorTitle = ''
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'primary': cnamLightTheme.primary,
 					'secondary': cnamLightTheme.secondary,
@@ -304,10 +304,10 @@ export const Interactive: StoryObj = {
 		return {
 			components: { ColorDisplay },
 			setup() {
-                const colorTitle = ''
+				const colorTitle = ''
 				const colorDescription = 'Ces couleurs sont à utiliser pour les fonds des éléments interactifs de sélection (item de liste sélectionnable, carte sélectionnable,...)'
 				const displayEmptyColors = false
-                const colorTitleLevel = 3
+				const colorTitleLevel = 3
 				const cnamColors = {
 					'interactive-selection-enabled': cnamLightTheme.interactiveSelectionEnabled,
 					'interactive-selection-hover': cnamLightTheme.interactiveSelectionHover,
@@ -369,13 +369,12 @@ export const Interactive: StoryObj = {
 }
 
 export const ColorBaseSection = {
-    render() {
-        return h(createSection('Couleurs de base', [
-            ColorBase
-        ]))
-    },
+	render() {
+		return h(createSection('Couleurs de base', [
+			ColorBase,
+		]))
+	},
 }
-
 
 export const AccentSection = {
 	render() {
@@ -387,11 +386,11 @@ export const AccentSection = {
 	},
 }
 export const InteractiveSection = {
-    render() {
-        return h(createSection('Interactive', [
-            Interactive,
-        ], 'ap2026'))
-    },
+	render() {
+		return h(createSection('Interactive', [
+			Interactive,
+		], 'ap2026'))
+	},
 }
 
 export const BorderBase: StoryObj = {
