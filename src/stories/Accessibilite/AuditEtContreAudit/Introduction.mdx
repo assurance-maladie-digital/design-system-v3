@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/blocks';
 import '../../styles/shared.css';
 
-<Meta title="Accessibilité/Kit de pré-audit/Introduction" />
+<Meta title="Accessibilité/Audit et Contre-audit/Introduction" />
 
 <style>
 {
@@ -126,23 +126,17 @@ import '../../styles/shared.css';
 </style>
 
 <div className="header">
-  <h1>Pré-audit à l'accessibilité</h1>
-  <p>Vérifiez la conformité de votre service web avant l'audit officiel</p>
+  <h1>Audit et Contre-audit de conformité à l'accessibilité</h1>
+  <p>Demandez-nous un audit (ou contre-audit) de conformité RGAA</p>
 </div>
 
 <div className="info-section">
   <h2>🌟 Objectif</h2>
-  <p>L'objectif du pré-audit est d'<b>obtenir un premier avis sur le taux de conformité de votre service web, avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr></b>, sans viser l'exhaustivité ni un score parfait. La procédure se fait <b>en autonomie par l'équipe de développement du produit</b>. Le relevé des non-conformités relève de la responsabilité de l’équipe de développement, ce kit étant conçu pour guider l’auto-évaluation.</p>
+  <p>Une fois la phase pré-audit réalisée et que le niveau de conformité est jugé suffisant, <b>l'équipe produit peut solliciter la Filière Digital pour un audit de conformité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> sur le même échantillon de pages</b>.</p>
 
-  <p>La restitution consiste à s'assurer que toutes les exigences du pré-audit sont remplies et que vous ayez un minimum d'erreur en lançant les tests automatisés avec Tanaguru.</p>
+  <p>L'objectif de l'audit est d'évaluer la conformité d'un produit aux critères d'accessibilités définis par le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. L'expert identifie les non-conformités et fournit des recommandations pour améliorer l'accessibilité du produit.</p>
 
-  <p>Les résultats observés par le pré-audit sont souvent partiels et doivent être considérés comme un point de départ et non comme une évaluation finale. Lors d'un audit suivi du pré-audit, nous observons un taux minimum compris entre 30% et 50%. Un contre-audit pourra être proposé après application des correctifs relevés par l'audit.</p>
-
-  <p>L'enjeu est d'identifier un maximum de non conformités en phase pré-audit afin de réduire le nombre de correctifs en phase audit. Ce kit met aussi à disposition <b>des outils et des tutoriels pour vous accompagner dans cette démarche</b>.</p>
-
-  <div className="alert">
-    <p><strong>Note :</strong> Vous pouvez nous solliciter pour un accompagnement si vous rencontrez des difficultés techniques à résoudre les non-conformités, relevées par Tanaguru en phase automatique ou par l'équipe en phase manuelle.</p>
-  </div>
+  <p>Un contre-audit des non conformités pourra être proposé après application des correctifs relevés par l'audit. Il permettra d'identifier un nouveau niveau de conformité qui sera indiqué dans la déclaration d'accessibilité.</p>
 </div>
 
 <div className="section-container">
@@ -177,27 +171,18 @@ import '../../styles/shared.css';
 <div className="section-container">
   <h2>Livrables</h2>
 
-  <p> A l'issue du pré-audit, nous attendons les éléments suivants :</p>
+  <p> A l'issue de l'audit et, optionnellement, du contre-audit, il y aura deux livrables : la grille d'évaluation RGAA et la déclaration d'accessibilité.</p>
 
-  <div className="resources-grid">
+  <div className="environment-grid">
     <div className="resource-card">
-      <h3>Contexte du projet</h3>
-      <p>Détails sur les responsabilités et les parties prenantes.</p>
+      <h3>Grille d'évaluation RGAA</h3>
+      <p>La Filière Digital remet la grille officielle RGAA avec les non-conformités et les recommandations techniques.</p>
     </div>
 
     <div className="resource-card">
-      <h3>Résultat de l'échantillon de test</h3>
-      <p>Analyse des pages testées.</p>
-    </div>
-
-    <div className="resource-card">
-      <h3>Résultat du pré-audit manuel</h3>
-      <p>Complété avec un onglet par page.</p>
+      <h3>Déclaration d'accessibilité</h3>
+      <p>L'équipe produit devra réaliser <a href="https://accessibilite.numerique.gouv.fr/ressources/modele-de-declaration/" target="_blank">la déclaration d'accessibilité en suivant le modèle officiel</a>. La Filière Digital pourra accompagner l'équipe pour sa réalisation.</p>
     </div>
   </div>
 
-  <div className="info-section">
-    <h3>Annexes</h3>
-      <p>Pour chaque page testée, il sera demandé de restituer un rapport Tanaguru complet.</p>
-  </div>
 </div>
