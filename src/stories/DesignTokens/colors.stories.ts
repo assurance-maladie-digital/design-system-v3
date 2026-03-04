@@ -10,41 +10,43 @@ import ColorDisplay from './ColorDisplay.vue'
 import ColorIntegrationExample from './ColorIntegrationExample.vue'
 import { h } from 'vue'
 import { useTheme } from 'vuetify'
-
 import type { StoryObj } from '@storybook/vue3'
 import { computed } from 'vue'
 
-export function createSection(
+function createSection(
 	title: string,
 	stories: StoryObj[],
 	hideOn?: string,
 ) {
 	return {
-		render() {
+		setup() {
 			const theme = useTheme()
-			if (hideOn && theme.global.name.value === hideOn) {
-				return h('div')
-			}
-
-			return h('section', [
-				h('h2',
-					{
-						style: `
-                            border-bottom: 1px solid rgba(38, 85, 115, 0.15);
-                            color: rgb(46, 52, 56);
-                            font-family: 'Nunito Sans', -apple-system, '.SFNSText-Regular', 'San Francisco', BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                        `,
-					},
-					title,
-				),
-				...stories.map((story) => {
-					if (story.render) {
-						const component = story.render(story.args ?? {}, {} as Parameters<typeof story.render>[1])
-						return h(component)
-					}
+			return () => {
+				if (hideOn && theme.global.name.value === hideOn) {
 					return h('div')
-				}),
-			])
+				}
+				return h('section', [
+					h(
+						'h2',
+						{
+							style: `
+                    border-bottom: 1px solid rgba(38, 85, 115, 0.15);
+                    color: rgb(46, 52, 56);
+                    font-family: 'Nunito Sans', -apple-system, '.SFNSText-Regular', 'San Francisco', BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                `,
+						},
+						title,
+					),
+					...stories.map((story) => {
+						if (story.render) {
+							const component = story.render(story.args ?? {}, {} as Parameters<typeof story.render>[1])
+							return h(component)
+						}
+						return h('div')
+					}),
+				])
+			}
+			if (theme.global.name.value === 'ap2026') return
 		},
 	}
 }
@@ -365,12 +367,17 @@ export const Interactive: StoryObj = {
 	},
 	tags: ['!dev'],
 }
-export const AccentSection = createSection('Accent', [
-	ColorPrimary,
-	ColorSecondary,
-	ColorAlternatives,
-	Interactive,
-], 'ap2026')
+
+export const AccentSection = {
+	render() {
+		return h(createSection('Accent', [
+			ColorPrimary,
+			ColorSecondary,
+			ColorAlternatives,
+			Interactive,
+		], 'ap2026'))
+	},
+}
 
 export const BorderBase: StoryObj = {
 	render: () => {
@@ -587,13 +594,16 @@ export const BorderStates: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const BorderSection = createSection('Border', [
-	BorderBase,
-	BorderPrimary,
-	BorderSecondary,
-	BorderStates,
-], 'ap2026')
-
+export const BorderSection = {
+	render() {
+		return h(createSection('Border', [
+			BorderBase,
+			BorderPrimary,
+			BorderSecondary,
+			BorderStates,
+		], 'ap2026'))
+	},
+}
 export const TextBase: StoryObj = {
 	render: () => {
 		return {
@@ -804,12 +814,16 @@ export const TextState: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const TextSection = createSection('Text', [
-	TextBase,
-	TextPrimary,
-	TextSecondary,
-	TextState,
-], 'ap2026')
+export const TextSection = {
+	render() {
+		return h(createSection('Text', [
+			TextBase,
+			TextPrimary,
+			TextSecondary,
+			TextState,
+		], 'ap2026'))
+	},
+}
 
 export const IconBase: StoryObj = {
 	render: () => {
@@ -1018,12 +1032,16 @@ export const IconState: StoryObj = {
 	},
 	tags: ['!dev'],
 }
-export const IconSection = createSection('Icons', [
-	IconBase,
-	IconPrimary,
-	IconSecondary,
-	IconState,
-], 'ap2026')
+export const IconSection = {
+	render() {
+		return h(createSection('Icons', [
+			IconBase,
+			IconPrimary,
+			IconSecondary,
+			IconState,
+		], 'ap2026'))
+	},
+}
 
 export const MainBackgrounds: StoryObj = {
 	render: () => {
@@ -1595,6 +1613,25 @@ export const MessagesBackgrounds: StoryObj = {
 		}
 	},
 	tags: ['!dev'],
+}
+
+export const BackgroundSection = {
+	render() {
+		return h(createSection('Background', [
+			MainBackgrounds,
+			SurfaceBackgrounds,
+			AlternativeBackgrounds,
+			RaisedBackgrounds,
+			DisabledBackgrounds,
+			InformationalBackgrounds,
+			SuccessBackgrounds,
+			WarningBackgrounds,
+			ErrorBackgrounds,
+			OtherBackgrounds,
+			StatusBackgrounds,
+			MessagesBackgrounds,
+		]))
+	},
 }
 
 export const PaletteOrange: StoryObj = {
@@ -2719,4 +2756,27 @@ export const PaletteBlack: StoryObj = {
 		}
 	},
 	tags: ['!dev'],
+}
+
+export const PaletteSection = {
+	render() {
+		return h(createSection('Palette', [
+			PaletteOrange,
+			PaletteRed,
+			PaletteYellow,
+			PaletteForestGreen,
+			PaletteGreen,
+			PaletteTurquoise,
+			PaletteBlue,
+			PaletteCyan,
+			PaletteFrostedBlue,
+			PaletteParma,
+			PaletteMauve,
+			PalettePink,
+			PaletteBrick,
+			PaletteGrey,
+			PaletteWhite,
+			PaletteBlack,
+		]))
+	},
 }
