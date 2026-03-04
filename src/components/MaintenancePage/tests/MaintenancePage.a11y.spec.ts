@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, vi, afterEach } from 'vitest'
+import { ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -15,7 +16,7 @@ const themeLocales = {
 
 vi.mock('@/utils/theme', () => ({
 	useThemeLocales: () => ({
-		themeLocales,
+		themeLocales: ref(themeLocales),
 	}),
 }))
 

@@ -29,6 +29,7 @@ import {
                 <li><strong>Titre de page</strong> : rendu dans une balise <code>h1</code> via <code>StatusPage</code>, sa valeur provient des locales du thème via <code>useThemeLocales</code></li>
                 <li><strong>Code d'erreur</strong> : le code est précédé du texte masqué visuellement <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) pour les lecteurs d'écran</li>
                 <li><strong>Valeurs par défaut</strong> : <code>pageTitle</code>, <code>message</code> et <code>code</code> proviennent des locales du thème via <code>useThemeLocales</code></li>
+                <li><strong>Prop</strong> <code>uniqueId</code> : permet de définir un identifiant unique sur le conteneur, facilitant le ciblage par <code>aria-labelledby</code> ou <code>aria-describedby</code> depuis d'autres éléments</li>
             </ul>
         </CriteriaCard>
 
@@ -55,6 +56,7 @@ import {
             <li>Ne pas afficher de bouton de retour (<code>hide-btn="true"</code> par défaut) — l'application étant indisponible, un lien de retour serait inutile voire trompeur</li>
             <li>Les illustrations doivent toujours être décoratives (<code>aria-hidden="true"</code>) — ne jamais y placer d'information essentielle</li>
             <li>Le slot <code>#illustration</code> personnalisé doit respecter les mêmes règles : <code>alt=""</code> et <code>aria-hidden="true"</code> si l'image est décorative</li>
+            <li>Utiliser <code>unique-id</code> pour permettre à d'autres éléments de référencer la page de maintenance via <code>aria-labelledby</code> ou <code>aria-describedby</code></li>
         </ul>
     </BestPracticesSection>
 
