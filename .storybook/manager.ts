@@ -46,7 +46,8 @@ const applyThemeSidebar = (theme) => {
                     'design-tokens-couleurs--border-section',
                     'design-tokens-couleurs--text-section',
                     'design-tokens-couleurs--icon-section',
-                    'design-tokens-couleurs--accent-section'
+                    'design-tokens-couleurs--accent-section',
+                    'design-tokens-couleurs--interactive-section'
                 ]
 
                 if (showOnlyAmelipro) {
