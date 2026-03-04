@@ -251,6 +251,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
       "
       for="file-upload-v-2"
       style="width: 100%;"
+      tabindex="0"
     >
       <input
         accept=".pdf, .jpg, .jpeg, .png"
