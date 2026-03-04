@@ -4,6 +4,7 @@ import { StateEnum } from './constants/StateEnum'
 import type { DataOptions } from './types'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 interface User {
 	[key: string]: string
@@ -22,7 +23,7 @@ const meta = {
 	component: PaginatedTable,
 	decorators: [
 		() => ({
-			template: '<div style="padding: 20px;"><story/></div>',
+			template: '<div><story/></div>',
 		}),
 	],
 	parameters: {
@@ -766,4 +767,9 @@ export const ManyTables: Story = {
 			`,
 		}
 	},
+}
+
+export const DeprecationNotice = {
+	...createDeprecationNotice('SyTable', '?path=/docs/composants-tableaux-sytable--docs'),
+	tags: ['!dev'],
 }

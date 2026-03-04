@@ -1,8 +1,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue'
 	import { useDisplay } from 'vuetify'
-
-	type AriaRole = 'main' | 'region' | 'navigation' | 'contentinfo' | 'banner'
+	import type { AriaRole } from '../types'
 
 	const props = withDefaults(defineProps<{
 		size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs'
@@ -10,12 +9,14 @@
 		color?: string
 		uniqueId?: string
 		role?: AriaRole
+		ariaLabelledby?: string
 	}>(), {
 		size: undefined,
 		spacing: undefined,
 		color: 'transparent',
 		uniqueId: undefined,
 		role: undefined,
+		ariaLabelledby: undefined,
 	})
 
 	const display = useDisplay()
@@ -63,6 +64,7 @@
 		:id="uniqueId ? `${uniqueId}-container` : undefined"
 		:class="[spacingClass, 'vd-page-container d-flex justify-center']"
 		:role="role"
+		:aria-labelledby="ariaLabelledby"
 	>
 		<VSheet
 			:id="uniqueId ? `${uniqueId}-content` : undefined"

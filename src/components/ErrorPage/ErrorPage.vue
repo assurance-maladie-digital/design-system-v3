@@ -4,6 +4,7 @@
 	import { computed } from 'vue'
 	import type { RouteRecordRaw } from 'vue-router'
 	import { useThemeLocales } from '@/utils/theme'
+	import type { PageAriaRole } from '../types'
 
 	const props = defineProps<{
 		pageTitle?: string
@@ -14,6 +15,8 @@
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
+		uniqueId?: string
+		role?: PageAriaRole
 	}>()
 
 	const { themeLocales } = useThemeLocales(locales)
@@ -35,6 +38,8 @@
 		:btn-href="props.btnHref"
 		:btn-link="props.btnLink"
 		:hide-btn="props.hideBtn"
+		:unique-id="props.uniqueId"
+		:role="props.role"
 	>
 		<template
 			v-if="src || $slots.illustration"
