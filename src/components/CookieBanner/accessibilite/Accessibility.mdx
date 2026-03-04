@@ -22,6 +22,16 @@ import {
 			<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/806" target="_blank" style={{color:'#0C41BD'}}>issue #806</a>)</p>
 		</div>
 	<CriteriaSection>
+<CriteriaCard icon="🧩" title="Gestion dynamique des titres">
+  <ul>
+    <li><strong>Composant <code>SyHeading</code></strong> : Remplace les balises <code>h1–h6</code> dans les composants</li>
+    <li><strong>Paramétrable via la prop <code>headingLevel</code></strong> : Le niveau du titre est contrôlé par la prop déclarée dans le composant (<code>headingLevel?: 1 | 2 | 3 | 4 | 5 | 6</code>) ; vous pouvez passer directement un chiffre pour définir le niveau du titre</li>
+      <code>&lt;CookieBanner
+          :heading-level="2" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Hiérarchie sémantique respectée pour une meilleure lecture par les lecteurs d’écran</li>
+  </ul>
+</CriteriaCard>
 		<CriteriaCard icon="🧭" title="Structure et nom accessible">
 			<ul>
 				<li><strong>Rôle</strong> : <code>role="dialog"</code> sur le conteneur principal de la bannière.</li>

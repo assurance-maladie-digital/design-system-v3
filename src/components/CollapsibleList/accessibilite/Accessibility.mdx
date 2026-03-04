@@ -18,7 +18,21 @@ import {
 	iconSrc={AccessibilityIcon}
 	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/"
 >
+
 	<CriteriaSection>
+<CriteriaCard icon="🧩" title="Gestion dynamique des titres">
+  <ul>
+    <li><strong>Composant <code>SyHeading</code></strong> : Remplace les balises <code>h1–h6</code> dans les composants</li>
+    <li><strong>Paramétrable via la prop <code>headingLevel</code></strong> : Le niveau du titre est contrôlé par la prop déclarée dans le composant (<code>headingLevel?: 1 | 2 | 3 | 4 | 5 | 6</code>) ; vous pouvez passer directement un chiffre pour définir le niveau du titre</li>
+      <code>&lt;CollapsibleList 
+          :list-title="listTitle"
+          :items="items" 
+          :heading-level="4" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Hiérarchie sémantique respectée pour une meilleure lecture par les lecteurs d’écran</li>
+  </ul>
+</CriteriaCard>
+
 		<CriteriaCard icon="🔍" title="Structure sémantique">
 			<ul>
 				<li><strong>Comportement adaptatif</strong> : Section pliable sur mobile, liste statique sur desktop</li>

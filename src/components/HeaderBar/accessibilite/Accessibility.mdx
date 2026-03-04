@@ -1,15 +1,36 @@
 import { Meta, Story } from '@storybook/blocks'
 import * as HeaderBarStories from '../HeaderBar.stories';
 import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={HeaderBarStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="HeaderBar"
+	iconSrc={AccessibilityIcon}
+>
 
+<CriteriaCard icon="🧩" title="Gestion dynamique des titres">
+  <ul>
+    <li><strong>Composant <code>SyHeading</code></strong> : Remplace les balises <code>h1–h6</code> dans les composants</li>
+    <li><strong>Paramétrable via la prop <code>headingLevel</code></strong> : Le niveau du titre est contrôlé par la prop déclarée dans le composant (<code>headingLevel?: 1 | 2 | 3 | 4 | 5 | 6</code>) ; vous pouvez passer directement un chiffre pour définir le niveau du titre</li>
+      <code>&lt;HeaderBar
+          :heading-level="2" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Hiérarchie sémantique respectée pour une meilleure lecture par les lecteurs d’écran</li>
+  </ul>
+</CriteriaCard>
 
 <div class="mt-2">
 <p>Rapport d’audit manuel : <a href="/audits/HeaderBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{color:'#0C41BD'}}>issue #643</a>)</p>
 </div>
+</AccessibilityGuideLayout>
