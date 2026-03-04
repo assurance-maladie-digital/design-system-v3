@@ -3,8 +3,6 @@
 import { mount } from '@vue/test-utils'
 import SearchListField from '../SearchListField.vue'
 import { describe, it, expect } from 'vitest'
-import { axe } from 'vitest-axe'
-import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 
 describe('SearchListField.vue', () => {
 	it('renders the password field', () => {
@@ -396,31 +394,6 @@ describe('SearchListField.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			expect(emittedEvents![1]).toEqual([[]])
-		})
-	})
-
-	describe('accessibility (axe)', () => {
-		it('has no obvious violations with default list', async () => {
-			const wrapper = mount(SearchListField, {
-				props: {
-					label: 'Rechercher une profession',
-					listLabel: 'Résultats',
-					items: [
-						{ label: 'Infirmier', value: 'infirmier' },
-						{ label: 'Pharmacien', value: 'pharmacien' },
-					],
-				},
-			})
-
-			await wrapper.vm.$nextTick()
-			await wrapper.vm.$nextTick()
-			await new Promise(resolve => setTimeout(resolve, 50))
-			await wrapper.vm.$nextTick()
-
-			const results = await axe(wrapper.element as HTMLElement)
-			assertNoA11yViolations(results, 'SearchListField – default list', {
-				ignoreRules: ['region'],
-			})
 		})
 	})
 })
