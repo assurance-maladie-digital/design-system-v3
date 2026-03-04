@@ -1403,6 +1403,7 @@ export const UTC: Story = {
 							v-model="dateString"
 							placeholder="Sélectionner une date"
 							format="DD/MM/YYYY"
+							readonly
 						/>
 
 						<p class="mt-4" style="font-family: monospace;">timezone sélectionné : {{ selectedTimeZone }}</p>
@@ -1477,6 +1478,7 @@ export const UTC: Story = {
 		'disabled': false,
 		'noIcon': false,
 		'noCalendar': false,
+		'readonly': true,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
 		'onBlur': fn(),
