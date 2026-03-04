@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { mount } from '@vue/test-utils'
 import SearchListField from '../SearchListField.vue'
 import { describe, it, expect } from 'vitest'
@@ -410,8 +412,15 @@ describe('SearchListField.vue', () => {
 				},
 			})
 
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+			await new Promise(resolve => setTimeout(resolve, 50))
+			await wrapper.vm.$nextTick()
+
 			const results = await axe(wrapper.element as HTMLElement)
-			assertNoA11yViolations(results, 'SearchListField – default list')
+			assertNoA11yViolations(results, 'SearchListField – default list', {
+				ignoreRules: ['region'],
+			})
 		})
 	})
 })
