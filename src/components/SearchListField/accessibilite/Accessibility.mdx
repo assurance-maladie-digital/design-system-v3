@@ -1,15 +1,75 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../SearchListField.stories.ts';
+import { Meta, Story } from '@storybook/blocks';
+import * as Stories from '../SearchListField.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="SearchListField"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+		<div>Rapport d’audit manuel : <a href="/audits/SearchListField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></div>
+		<div style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+			Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/1499" target="_blank" style={{color:'#0C41BD'}}>issue #1499</a>)
+		</div>
+	</AuditSection>
 
+	<CriteriaSection>
+		<CriteriaCard icon="🏷️" title="Structure et rôles">
+			<ul>
+				<li>Le champ de recherche reste un champ texte natif (<code>SyTextField</code> sous-jacent) avec label obligatoire.</li>
+				<li>La liste est encapsulée dans un <code>fieldset</code> + <code>legend</code> (listLabel) et les résultats sont des <code>li</code> avec checkbox.</li>
+				<li>Les icônes de recherche sont décoratives (pas d’annonce superflue).</li>
+			</ul>
+		</CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/SearchListField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/1499" target="_blank" style={{color:'#0C41BD'}}>issue #1499</a>)</p>
-	</div>
+		<CriteriaCard icon="⌨️" title="Navigation clavier">
+			<ul>
+				<li>Tabulation : focus successif sur le champ puis chaque option ; activation par Espace/Entrée sur la checkbox.</li>
+				<li>Focus visible sur le champ et les cases à cocher ; suppression via la case déjà cochée.</li>
+				<li>Annonces SR : nombre de résultats via le <code>role="status"</code> conditionnel.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Contraste et lisibilité">
+			<ul>
+				<li>Label et texte des options utilisent les couleurs du thème avec contrastes conformes.</li>
+				<li>État sélectionné signalé par classe <code>suggestion-item--selected</code> (fond/contour) + checkbox cochée.</li>
+				<li>Placeholder/texte d’aide : éviter les messages uniquement par couleur.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SearchListField">
+		<Story of={Stories.Default} />
+		<Story of={Stories.WithReturnObject} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournir un <code>label</code> et un <code>listLabel</code> explicites (champ + legend).</li>
+			<li>Utiliser des libellés uniques par option ; éviter les doublons qui compliquent l’annonce.</li>
+			<li>Garder le menu ouvert pour la sélection multiple ; ne pas masquer le focus.</li>
+			<li>Si l’ensemble d’options est long, guider la saisie avec un libellé contextualisé (“Rechercher une profession…”).</li>
+			<li>En retour objet (<code>returnObject</code>), vérifier que chaque item a un <code>label</code> et une <code>value</code> stables.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener noreferrer">WAI-ARIA APG – Combobox</a> (pour les champs de recherche avec liste)</li>
+			<li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – critères 7.1 (ARIA) et 10.8 (éléments masqués)</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>
