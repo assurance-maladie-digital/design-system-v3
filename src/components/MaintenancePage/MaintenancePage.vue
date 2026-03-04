@@ -6,18 +6,27 @@
 
 	const { themeLocales } = useThemeLocales(locales)
 
-	const props = defineProps<{
+	interface Props {
 		pageTitle?: string
 		message?: string
 		code?: string
+		src?: string
 		uniqueId?: string
-	}>()
+	}
 
-	// Utiliser les props de l'utilisateur en priorité, sinon les locales
-	const pageTitle = computed(() => props.pageTitle ?? themeLocales.value.pageTitle)
-	const message = computed(() => props.message ?? themeLocales.value.message)
-	const code = computed(() => props.code ?? themeLocales.value.code)
-	const src = computed(() => themeLocales.value.src)
+	const props = withDefaults(defineProps<Props>(), {
+		pageTitle: undefined,
+		message: undefined,
+		code: undefined,
+		src: undefined,
+		uniqueId: undefined,
+	})
+
+	// Utiliser les props de l'utilisateur en priorité, sinon les locales du thème
+	const pageTitle = computed(() => props.pageTitle || themeLocales.value.pageTitle)
+	const message = computed(() => props.message || themeLocales.value.message)
+	const code = computed(() => props.code || themeLocales.value.code)
+	const src = computed(() => props.src || themeLocales.value.src)
 </script>
 
 <template>

@@ -9,7 +9,7 @@ import StatusPage from '../../StatusPage/StatusPage.vue'
 
 const themeLocales = {
 	pageTitle: 'Maintenance en cours',
-	message: 'L’application n’est pas disponible pour le moment.',
+	message: 'L\'application n\'est pas disponible pour le moment.',
 	code: '503',
 	src: '/img/maintenance.svg',
 }
