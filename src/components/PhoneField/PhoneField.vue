@@ -168,10 +168,10 @@
 		const inputElement = event.target as HTMLInputElement | null
 		const selectionStart = inputElement?.selectionStart ?? null
 		const selectionEnd = inputElement?.selectionEnd ?? null
-		const hasSelection =
-			selectionStart !== null
-			&& selectionEnd !== null
-			&& selectionEnd > selectionStart
+		const hasSelection
+			= selectionStart !== null
+				&& selectionEnd !== null
+				&& selectionEnd > selectionStart
 
 		const currentDigitsCount = phoneNumber.value.replace(/\D/g, '').length
 		if (currentDigitsCount >= counter.value && !hasSelection) {
