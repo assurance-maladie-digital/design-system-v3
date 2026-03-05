@@ -5,6 +5,6 @@
 	transition: color 0.2s ease;
 
 	&:hover {
-		color: apTokens.$secondary !important;
+      color: apTokens.$secondary-base !important;
 	}
 }
