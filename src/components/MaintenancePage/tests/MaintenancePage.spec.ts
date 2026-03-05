@@ -26,6 +26,24 @@ describe('MaintenancePage', () => {
 		expect(statusPage.props('code')).toBeDefined()
 	})
 
+	it('passes a uniqueId prop to StatusPage', () => {
+		const wrapper = shallowMount(MaintenancePage)
+		const statusPage = wrapper.findComponent(StatusPage)
+
+		expect(statusPage.props('uniqueId')).toBeDefined()
+	})
+
+	it('passes a custom uniqueId prop to StatusPage', () => {
+		const wrapper = shallowMount(MaintenancePage, {
+			props: {
+				uniqueId: 'custom-id',
+			},
+		})
+		const statusPage = wrapper.findComponent(StatusPage)
+
+		expect(statusPage.props('uniqueId')).toBe('custom-id')
+	})
+
 	it('renders default illustration when no slot is provided', () => {
 		const wrapper = shallowMount(MaintenancePage)
 
