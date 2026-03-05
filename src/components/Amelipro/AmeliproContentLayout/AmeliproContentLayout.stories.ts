@@ -44,6 +44,8 @@ export const Default: Story = {
 }
 
 export const DeprecationNotice = {
-	...createDeprecationNotice('PageContainer', '/?path=/docs/composants-layout-pagecontainer--docs'),
+	...createDeprecationNotice([
+		{ label: 'PageContainer', url: '/?path=/docs/composants-layout-pagecontainer--docs&globals=theme:ap' },
+	]),
 	tags: ['!dev'],
 }
