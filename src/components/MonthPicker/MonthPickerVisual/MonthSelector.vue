@@ -53,11 +53,7 @@
 	<div
 		ref="monthSelector"
 		class="month-selector"
-		role="grid"
-		@keydown.left.prevent="selectPreviousMonth"
-		@keydown.right.prevent="selectNextMonth"
-		@keydown.up.prevent="selectPreviousRow"
-		@keydown.down.prevent="selectNextRow"
+		role="group"
 	>
 		<button
 			v-for="monthIndex in 12"
@@ -71,7 +67,12 @@
 			:aria-label="getMonthName(monthIndex)"
 			:aria-pressed="monthIndex === props.modelValue"
 			@click="() => emits('update:modelValue', monthIndex)"
+			@keydown.left.prevent="selectPreviousMonth"
+			@keydown.right.prevent="selectNextMonth"
+			@keydown.up.prevent="selectPreviousRow"
+			@keydown.down.prevent="selectNextRow"
 			@keydown.enter.stop
+			@keydown.space.stop
 		>
 			{{ getMonthShortName(monthIndex) }}
 		</button>

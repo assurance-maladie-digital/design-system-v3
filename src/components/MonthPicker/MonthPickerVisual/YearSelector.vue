@@ -48,11 +48,7 @@
 	<div
 		ref="yearSelector"
 		class="year-selector"
-		role="grid"
-		@keydown.left.prevent="selectPreviousYear"
-		@keydown.right.prevent="selectNextYear"
-		@keydown.up.prevent="selectPreviousRow"
-		@keydown.down.prevent="selectNextRow"
+		role="group"
 	>
 		<button
 			v-for="year of Array.from({ length: props.max - props.min + 1 }, (_, i) => props.order === 'asc' ? props.min + i : props.max - i)"
@@ -65,7 +61,12 @@
 			}]"
 			:aria-pressed="year === props.modelValue"
 			@click="() => emits('update:modelValue', year)"
+			@keydown.left.prevent="selectPreviousYear"
+			@keydown.right.prevent="selectNextYear"
+			@keydown.up.prevent="selectPreviousRow"
+			@keydown.down.prevent="selectNextRow"
 			@keydown.enter.stop
+			@keydown.space.stop
 		>
 			{{ year }}
 		</button>

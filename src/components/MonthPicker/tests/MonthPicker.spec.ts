@@ -831,7 +831,6 @@ describe('mounthpicker', () => {
 			await nextTick()
 
 			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
-			console.log(toggleBtn.html())
 			expect(toggleBtn.attributes('disabled')).toBeDefined()
 
 			await toggleBtn.trigger('click')

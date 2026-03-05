@@ -3,7 +3,7 @@
 exports[`mounthpicker > MonthPickerVisual > shows the month picker after the year is selected 1`] = `
 <div
   class="month-selector"
-  role="grid"
+  role="group"
 >
   <button
     aria-label="January"
@@ -145,7 +145,7 @@ exports[`mounthpicker > MonthPickerVisual > shows the month picker after the yea
 exports[`mounthpicker > MonthPickerVisual > shows the year picker after the month is selected 1`] = `
 <div
   class="year-selector"
-  role="grid"
+  role="group"
 >
   <button
     aria-pressed="false"
@@ -2174,8 +2174,9 @@ exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
   </div>
   <div class="visual-picker-subheader">
     <button
-      aria-label="Sélectionner l'année, année actuelle 2026."
+      aria-label="Sélectionner une année, l'année sélectionnée est 2026"
       class="visual-picker-year-btn"
+      title="Sélectionner une année, l'année sélectionnée est 2026"
       type="button"
     >
       2026
@@ -2194,7 +2195,7 @@ exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
   </div>
   <div
     class="month-selector"
-    role="grid"
+    role="group"
   >
     <button
       aria-label="January"
