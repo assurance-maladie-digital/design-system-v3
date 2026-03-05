@@ -12,7 +12,6 @@ overrides:
   parse5: 7.1.2
   npm: ^11.8.1
   minimatch: '>=10.2.3'
-  immutable: '>=5.1.5'
 
 dependencies:
   '@emotion/css':
@@ -279,7 +278,7 @@ packages:
     dependencies:
       '@asamuzakjp/nwsapi': 2.3.9
       bidi-js: 1.0.3
-      css-tree: 3.2.0
+      css-tree: 3.2.1
       is-potential-custom-element-name: 1.0.1
       lru-cache: 11.2.6
     dev: true
@@ -3370,8 +3369,8 @@ packages:
       nth-check: 2.1.1
     dev: true
 
-  /css-tree@3.2.0:
-    resolution: {integrity: sha512-t99A4LolkP0ZX9WUoaHz4YrPT1FKNlV8IDCeCPPpGaWyxegh64tt/BSUqN3u5necrYRon+ddZ6mPMjxIlfpobg==}
+  /css-tree@3.2.1:
+    resolution: {integrity: sha512-X7sjQzceUhu1u7Y/ylrRZFU2FS6LRiFVp6rKLPg23y3x3c3DOKAwuXGDp+PAGjh6CSnCjYeAul8pcT8bAl+lSA==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
     dependencies:
       mdn-data: 2.27.1
@@ -3399,7 +3398,7 @@ packages:
     dependencies:
       '@asamuzakjp/css-color': 4.1.2
       '@csstools/css-syntax-patches-for-csstree': 1.0.29
-      css-tree: 3.2.0
+      css-tree: 3.2.1
       lru-cache: 11.2.6
     dev: true
 
@@ -6716,7 +6715,7 @@ packages:
     peerDependencies:
       stylelint: ^16.8.2
     dependencies:
-      css-tree: 3.2.0
+      css-tree: 3.2.1
       is-plain-object: 5.0.0
       known-css-properties: 0.37.0
       mdn-data: 2.27.1
@@ -6742,7 +6741,7 @@ packages:
       colord: 2.9.3
       cosmiconfig: 9.0.1(typescript@5.9.3)
       css-functions-list: 3.3.3
-      css-tree: 3.2.0
+      css-tree: 3.2.1
       debug: 4.4.3
       fast-glob: 3.3.3
       fastest-levenshtein: 1.0.16
