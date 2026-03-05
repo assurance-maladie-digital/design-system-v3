@@ -61,6 +61,15 @@
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
 
+	const toTrimmedDigits = (value: string, maxDigits: number): string => {
+		return value.replace(/\D/g, '').slice(0, maxDigits)
+	}
+
+	const applyMask = (digits: string): string => {
+		const mask = new Mask({ mask: phoneMask.value })
+		return mask.masked(digits)
+	}
+
 	function formatPhoneNumber(value: string): string {
 		if (!value) return ''
 		const cleaned = value.replace(/\D/g, '')
@@ -72,8 +81,8 @@
 	watch(() => props.modelValue, (newVal) => {
 		if (newVal) {
 			// Apply mask to incoming value to ensure consistent formatting
-			const mask = new Mask({ mask: phoneMask.value })
-			phoneNumber.value = mask.masked(newVal)
+			const digits = toTrimmedDigits(newVal, counter.value)
+			phoneNumber.value = applyMask(digits)
 		}
 		else {
 			phoneNumber.value = ''
@@ -85,8 +94,8 @@
 		if (typeof newVal === 'object' && newVal !== null) {
 			counter.value = newVal.phoneLength || 10
 			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
-			const mask = new Mask({ mask: phoneMask.value })
-			const maskedValue = mask.masked(phoneNumber.value)
+			const digits = toTrimmedDigits(phoneNumber.value, counter.value)
+			const maskedValue = applyMask(digits)
 			emit('update:modelValue', maskedValue)
 		}
 	})
@@ -128,9 +137,9 @@
 		// Sauvegarder la position du curseur
 		const cursorPosition = inputElement.selectionStart || 0
 
-		// Appliquer le masque
-		const mask = new Mask({ mask: phoneMask.value })
-		const maskedValue = mask.masked(input)
+		// Appliquer le masque (en tronquant au nombre de chiffres attendu)
+		const digits = toTrimmedDigits(input, counter.value)
+		const maskedValue = applyMask(digits)
 
 		// Mettre à jour la valeur
 		phoneNumber.value = maskedValue
@@ -142,6 +151,32 @@
 			const adjustedPosition = calculateAdjustedPosition(cursorPosition, input, maskedValue)
 			inputElement.setSelectionRange(adjustedPosition, adjustedPosition)
 		})
+	}
+
+	const handlePhoneModelUpdate = (value: string | number | null) => {
+		const digits = toTrimmedDigits(String(value ?? ''), counter.value)
+		const maskedValue = applyMask(digits)
+		phoneNumber.value = maskedValue
+		emit('update:modelValue', maskedValue)
+		emit('change', maskedValue)
+	}
+
+	const handlePhoneKeydown = (event: KeyboardEvent) => {
+		if (counter.value <= 0) return
+		if (!event.key || !/\d/.test(event.key)) return
+
+		const inputElement = event.target as HTMLInputElement | null
+		const selectionStart = inputElement?.selectionStart ?? null
+		const selectionEnd = inputElement?.selectionEnd ?? null
+		const hasSelection =
+			selectionStart !== null
+			&& selectionEnd !== null
+			&& selectionEnd > selectionStart
+
+		const currentDigitsCount = phoneNumber.value.replace(/\D/g, '').length
+		if (currentDigitsCount >= counter.value && !hasSelection) {
+			event.preventDefault()
+		}
 	}
 
 	const mergedDialCodes = computed(() =>
@@ -416,7 +451,7 @@
 					ref="phoneField"
 					:model-value="phoneNumber"
 					:counter="counter"
-					:counter-value="(value: string) => value.replace(/\s/g, '').length"
+					:counter-value="(value: string) => value.replace(/\D/g, '').length"
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="required"
 					:aria-required="required"
@@ -439,7 +474,9 @@
 					color="primary"
 					type="tel"
 					@blur="validateInputOnBlur"
+					@update:model-value="handlePhoneModelUpdate"
 					@input="handlePhoneInput"
+					@keydown="handlePhoneKeydown"
 				>
 					<template #append-inner>
 						<div class="d-flex align-center">

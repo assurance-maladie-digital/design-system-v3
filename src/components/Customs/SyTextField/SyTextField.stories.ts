@@ -185,6 +185,10 @@ const meta = {
 			description: 'Texte d\'aide affiché sous le champ',
 			control: 'text',
 		},
+		'maxlength': {
+			description: 'Nombre maximal de caractères autorisés dans le champ',
+			control: { type: 'text' },
+		},
 		'loading': {
 			description: 'Affiche un indicateur de chargement',
 			control: 'boolean',

@@ -80,6 +80,42 @@ describe('PhoneField', () => {
 		expect(messageAfterBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
 	})
 
+	it('trims input to the expected phoneLength', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				withCountryCode: true,
+				modelValue: '',
+			},
+		})
+
+		wrapper.vm.dialCode = { code: '+27', abbreviation: 'ZA', country: 'South Africa', phoneLength: 9, mask: '### ### ###' }
+		await wrapper.vm.$nextTick()
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		const input = textField.find('input')
+		await input.setValue('01234567890')
+		await wrapper.vm.$nextTick()
+
+		const lastModelValueEmission = wrapper.emitted('update:modelValue')?.at(-1)?.[0]
+		expect(typeof lastModelValueEmission).toBe('string')
+		expect(String(lastModelValueEmission).replace(/\D/g, '').length).toBe(9)
+	})
+
+	it('keeps counter max aligned with dial code phoneLength (+27 => 9)', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				withCountryCode: true,
+				modelValue: '',
+			},
+		})
+
+		wrapper.vm.dialCode = { code: '+27', abbreviation: 'ZA', country: 'South Africa', phoneLength: 9, mask: '### ### ###' }
+		await wrapper.vm.$nextTick()
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.props('counter')).toBe(9)
+	})
+
 	it('applies default phone mask correctly', async () => {
 		const wrapper = mount(PhoneField, {
 			props: { modelValue: '0619123456' },
