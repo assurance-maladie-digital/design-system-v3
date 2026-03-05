@@ -8,7 +8,13 @@ const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker',
 	component: MonthPicker,
 	argTypes: {
-		'modelValue': { control: 'text' },
+		'modelValue': {
+			control: 'text',
+			description: 'Valeur du sélecteur de mois au format "MM/YYYY".',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
 		'locales': {
 			description: 'Objet de traduction pour le sélecteur de mois. Par défaut, les traductions françaises sont utilisées.',
 			table: {
@@ -41,18 +47,14 @@ const meta: Meta<typeof MonthPicker> = {
 				category: 'props',
 			},
 		},
-		'onUpdate:modelValue': {
-			action: 'update:modelValue',
-			description: 'Événement émis lorsque la valeur du sélecteur de mois change. La nouvelle valeur est passée en argument.',
+		'initialView': {
+			description: 'Vue initiale affichée lorsque la modale de sélection de mois est ouverte.',
+			control: 'select',
+			options: ['months', 'years'],
 			table: {
-				type: { summary: 'string' },
-			},
-		},
-		'onUpdate:open': {
-			action: 'update:open',
-			description: 'Événement émis lorsque le sélecteur de mois est ouvert ou fermé.',
-			table: {
-				type: { summary: 'boolean' },
+				type: { summary: '"months" | "years"' },
+				defaultValue: { summary: '"months"' },
+				category: 'props',
 			},
 		},
 		'placeholder': {
@@ -185,6 +187,20 @@ const meta: Meta<typeof MonthPicker> = {
 				category: 'props',
 			},
 			category: 'props',
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			description: 'Événement émis lorsque le champs de saisie change (quelque soit la valeur renseigné même incomplète ou invalide) ou lorsque un mois ET une année sont sélectionnés dans la modale. La valeur est toujours au format "MM/YYYY".',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		'onUpdate:open': {
+			action: 'update:open',
+			description: 'Événement émis lorsque le sélecteur de mois est ouvert ou fermé. Si seulement une année ou un mois est sélectionné, le contenu de ma modale est réinitialisé et aucun événement "update:modelValue" n’est émis.',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 	},
 	parameters: {
