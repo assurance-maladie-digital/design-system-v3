@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiChevronDown } from '@mdi/js'
-	import { computed, inject } from 'vue'
+	import { computed, inject, type ComputedRef } from 'vue'
 	import { locales as defaultLocales, localesKey } from '../locales'
 	import { dateToString } from './utils'
 
@@ -27,17 +27,43 @@
 		else return dateToString(new Date())
 	})
 
-	const selectedYear = computed(() => {
-		const year = props.modelValue ? parseInt(props.modelValue.split('/')[1] || '', 10) : undefined
-		if (year && !isNaN(year)) {
-			return String(year)
+	const formatter = Intl.DateTimeFormat(navigator.language, { month: 'long' })
+
+	const locales = inject<ComputedRef<typeof defaultLocales>>(localesKey)!
+
+	const btnLabel = computed(() => {
+		if (props.view === 'months') {
+			return props.modelValue ? parseInt(props.modelValue.split('/')[1] || '', 10) : (new Date().getFullYear())
 		}
 		else {
-			return String(new Date().getFullYear())
+			const month = props.modelValue ? parseInt(props.modelValue.split('/')[0] || '', 10) : (new Date().getMonth() + 1)
+			return formatter.format(new Date(2000, month - 1))
 		}
 	})
 
-	const locales = inject<typeof defaultLocales>(localesKey)!
+	const btnAriaLabel = computed(() => {
+		const labels = locales.value
+		if (props.view === 'months') {
+			const selectedYear = props.modelValue ? parseInt(props.modelValue.split('/')[1] || '', 10) : undefined
+			if (selectedYear && !isNaN(selectedYear)) {
+				return labels.yearBtnLabelSelected(String(selectedYear))
+			}
+			else {
+				return labels.yearBtnLabelUnselected(String(new Date().getFullYear()))
+			}
+		}
+		else {
+			const selectedMonth = props.modelValue ? parseInt(props.modelValue.split('/')[0] || '', 10) : undefined
+			if (selectedMonth && !isNaN(selectedMonth)) {
+				const monthName = formatter.format(new Date(2000, selectedMonth - 1))
+				return labels.monthBtnLabelSelected(monthName)
+			}
+			else {
+				const currentMonthName = formatter.format(new Date())
+				return labels.monthBtnLabelUnselected(currentMonthName)
+			}
+		}
+	})
 
 </script>
 
@@ -56,10 +82,11 @@
 		<button
 			type="button"
 			class="visual-picker-year-btn"
-			:aria-label="locales.yearBtnLabel((new Date()).getFullYear())"
+			:title="btnAriaLabel"
+			:aria-label="btnAriaLabel"
 			@click="emits('update:view', props.view === 'months' ? 'years' : 'months')"
 		>
-			{{ selectedYear }}
+			{{ btnLabel }}
 			<SyIcon
 				:icon="mdiChevronDown"
 				decorative

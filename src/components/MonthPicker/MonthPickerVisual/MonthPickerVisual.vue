@@ -13,7 +13,7 @@
 		toggleBtn: HTMLElement | null
 		modelValue: string | undefined
 		readonly: boolean
-		disable: boolean
+		disabled: boolean
 	} & MonthPickerVisualProps>()
 
 	const emits = defineEmits<{
@@ -66,7 +66,7 @@
 	}
 
 	function emitModelValue(value: string) {
-		if (!props.readonly && !props.disable) {
+		if (!props.readonly && !props.disabled) {
 			emits('update:modelValue', value)
 		}
 	}
@@ -99,11 +99,12 @@
 		:max-height="455"
 		disable-initial-focus
 		:retain-focus="false"
-		:disabled="props.disable"
+		:disabled="props.disabled"
 		:activator-props="{
 			'aria-haspopup': 'dialog',
-			'disabled': props.disable ? 'true' : undefined,
+			'disabled': props.disabled ? 'true' : undefined,
 		}"
+		role="dialog"
 	>
 		<div
 			class="month-picker-menu"

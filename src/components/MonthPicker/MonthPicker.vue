@@ -70,7 +70,7 @@
 			:min-year
 			:max-year
 			:years-order
-			:disable="props.disabled"
+			:disabled="props.disabled"
 			:readonly="props.readonly"
 			@update:open="emits('update:open', $event)"
 		/>

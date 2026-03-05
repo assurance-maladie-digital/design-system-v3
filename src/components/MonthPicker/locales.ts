@@ -3,5 +3,8 @@ export const locales = {
 	btnLabel: 'Ouvrir le sélecteur de mois',
 	headerSelectYear: 'Sélectionner une année',
 	headerSelectMonth: 'Sélectionner un mois',
-	yearBtnLabel: (currentYear: number) => `Sélectionner l'année, année actuelle ${currentYear}.`,
+	yearBtnLabelSelected: (selectedYear: string) => `Sélectionner une année, l'année sélectionnée est ${selectedYear}`,
+	yearBtnLabelUnselected: (selectedYear: string) => `Sélectionner une année, nous sommes actuellement en ${selectedYear}`,
+	monthBtnLabelSelected: (selectedMonth: string) => `Sélectionner un mois, le mois sélectionné est ${selectedMonth}`,
+	monthBtnLabelUnselected: (selectedMonth: string) => `Sélectionner un mois, nous sommes actuellement en ${selectedMonth}`,
 }
