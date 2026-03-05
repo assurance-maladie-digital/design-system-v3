@@ -22,7 +22,7 @@ export const createDeprecationNotice = (replacements: Replacement[]) => ({
             <b>
               Ce<span v-if="isMultiple">s</span> composant<span v-if="isMultiple">s</span>
               <span v-if="isMultiple"> sont</span>
-              <span v-else>est</span> déprécié<span v-if="isMultiple">s</span>
+              <span v-else> est</span> déprécié<span v-if="isMultiple">s</span>
             </b>,
             <span v-if="isMultiple">ils ne seront</span>
             <span v-else>il ne sera</span> plus maintenu<span v-if="isMultiple">s</span> ou mis à jour.<br/>

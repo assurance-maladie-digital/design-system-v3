@@ -88,7 +88,7 @@
 
 <template>
 	<div
-		:id="`props.ariaOwns-${id}`"
+		:id="`${props.ariaOwns}-${id}`"
 		class="sy-copy-btn"
 	>
 		<VTooltip
@@ -102,8 +102,8 @@
 			<template #activator="{ props: tooltipProps }">
 				<VBtn
 					v-bind="{...tooltipProps,...options.btn}"
-					:aria-label="`props.ariaLabel-${id}`"
-					:aria-owns="`props.ariaOwns-${id}`"
+					:aria-label="props.ariaLabel"
+					:aria-owns="`${props.ariaOwns}-${id}`"
 					:data-test-id="props.ariaOwns"
 					:aria-controls="`copy-btn-${id}`"
 					@click="copy"
