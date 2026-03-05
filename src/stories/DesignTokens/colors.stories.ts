@@ -70,8 +70,8 @@ export const Theme: StoryObj = {
 				const themeLabels: Record<ThemeKey, string> = {
 					cnam: 'Assurance Maladie',
 					pa: 'Portail Agent',
-					ap: 'Ameli Pro',
-					ap2026: 'Ameli Pro',
+                    ap: 'AmeliPro',
+                    ap2026: 'AmeliPro',
 				}
 
 				const themeLabel = computed(() => themeLabels[theme.value])
