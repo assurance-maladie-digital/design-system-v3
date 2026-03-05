@@ -215,6 +215,11 @@
 		return format[props.displayFormat] || ind.code
 	}
 
+	const phoneFieldIdentifier = computed(() => props.withCountryCode
+		? locales.phoneNumberWithoutCountryLabel
+		: locales.label,
+	)
+
 	const validationRules = computed<ValidationRule[]>(() => {
 		const rules = [{
 			type: 'exactLength',
@@ -222,7 +227,7 @@
 				length: counter.value,
 				ignoreSpace: true,
 				message: `Le numéro de téléphone doit contenir ${counter.value} chiffres.`,
-				fieldIdentifier: locales.label,
+				fieldIdentifier: phoneFieldIdentifier.value,
 			},
 		}] as ValidationRule[]
 
@@ -233,7 +238,7 @@
 					length: counter.value,
 					ignoreSpace: true,
 					message: `Le champ ${locales.label} est requis.`,
-					fieldIdentifier: locales.label,
+					fieldIdentifier: phoneFieldIdentifier.value,
 				},
 			})
 		}
@@ -253,7 +258,7 @@
 	const validation = useValidation({
 		customRules: validationRules.value,
 		showSuccessMessages: true,
-		fieldIdentifier: locales.label,
+		fieldIdentifier: phoneFieldIdentifier.value,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 

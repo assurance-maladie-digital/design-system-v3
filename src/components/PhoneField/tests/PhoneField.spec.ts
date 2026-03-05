@@ -53,6 +53,33 @@ describe('PhoneField', () => {
 		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
 	})
 
+	it('keeps a consistent success message before and after blur when withCountryCode is true', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				withCountryCode: true,
+				isValidatedOnBlur: false,
+				modelValue: '',
+			},
+		})
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		const input = textField.find('input')
+		await input.setValue('0123456789')
+		await wrapper.vm.$nextTick()
+
+		const messageBeforeBlur = textField.find('.v-messages__message')
+		expect(messageBeforeBlur.exists()).toBe(true)
+		expect(messageBeforeBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+		expect(messageBeforeBlur.text()).not.toBe('Le champ Numéro de téléphone est valide.')
+
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+
+		const messageAfterBlur = textField.find('.v-messages__message')
+		expect(messageAfterBlur.exists()).toBe(true)
+		expect(messageAfterBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+	})
+
 	it('applies default phone mask correctly', async () => {
 		const wrapper = mount(PhoneField, {
 			props: { modelValue: '0619123456' },
