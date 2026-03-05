@@ -28,18 +28,27 @@
 		props.modelValue,
 	)
 
-	onMounted(() => {
-		const selectedYearElement = yearSelector.value!.querySelector<HTMLElement>(`.year-${props.modelValue}`)
-		if (selectedYearElement) {
-			selectedYearElement.focus()
-			return
+	function getFocusedYear() {
+		if (props.modelValue && props.modelValue >= props.min && props.modelValue <= props.max) {
+			return props.modelValue
 		}
 		const currentYear = new Date().getFullYear()
 		if (currentYear >= props.min && currentYear <= props.max) {
-			yearSelector.value!.querySelector<HTMLElement>(`.year-${currentYear}`)!.focus()
-			return
+			return currentYear
 		}
-		yearSelector.value!.querySelector<HTMLElement>(`.year-${props.min}`)!.focus()
+		else {
+			return props.order === 'asc' ? props.min : props.max
+		}
+	}
+
+	onMounted(() => {
+		const selectedYearElement = yearSelector.value!.querySelector<HTMLElement>(`.year-${getFocusedYear()}`)
+		selectedYearElement!.focus()
+
+		// When the menu opens, the transition can cause the focus to be lost, so we ensure it is set after the transition begins.
+		setTimeout(() => {
+			selectedYearElement!.focus()
+		}, 0)
 	})
 
 </script>

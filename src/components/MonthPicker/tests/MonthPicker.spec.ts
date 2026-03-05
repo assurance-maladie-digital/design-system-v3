@@ -548,6 +548,99 @@ describe('mounthpicker', () => {
 
 			wrapper.unmount()
 		})
+
+		it('shows the year selector when the initialView prop is set to year', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					initialView: 'years',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			expect(wrapper.findComponent({ name: 'YearSelector' }).isVisible()).toBeTruthy()
+			expect(wrapper.findComponent({ name: 'MonthSelector' }).exists()).toBeFalsy()
+
+			expect(document.activeElement?.classList).toContain('year-selector__year')
+			wrapper.unmount()
+		})
+
+		it('shows the month selector when the initialView prop is set to month', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					initialView: 'months',
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+			expect(wrapper.findComponent({ name: 'YearSelector' }).exists()).toBeFalsy()
+
+			expect(document.activeElement?.classList).toContain('month-selector__month')
+			wrapper.unmount()
+		})
+
+		it ('focuses the lowerst year when opening the year selector if no year is selected and the order is ascending', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					initialView: 'years',
+					minYear: 2000,
+					maxYear: 2020,
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			expect(document.activeElement?.classList).toContain('year-2000')
+
+			wrapper.unmount()
+		})
+
+		it ('focuses the highest year when opening the year selector if no year is selected and the order is descending', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					initialView: 'years',
+					yearsOrder: 'desc',
+					minYear: 2000,
+					maxYear: 2020,
+				},
+				attachTo: document.body,
+			})
+
+			// Wait for the VMenu to resolve the differents ref used to find the activator element
+			await nextTick()
+			await nextTick()
+
+			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+			await toggleBtn.trigger('click')
+
+			expect(document.activeElement?.classList).toContain('year-2020')
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('minYear and maxYear props', () => {

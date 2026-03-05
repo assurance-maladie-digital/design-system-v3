@@ -65,13 +65,14 @@
 		/>
 		<MonthPickerVisual
 			v-model="internalValue"
-			:text-input="textInput"
-			:toggle-btn="toggleBtn"
+			:text-input
+			:toggle-btn
 			:min-year
 			:max-year
 			:years-order
-			:disabled="props.disabled"
-			:readonly="props.readonly"
+			:initial-view
+			:disabled
+			:readonly
 			@update:open="emits('update:open', $event)"
 		/>
 	</div>

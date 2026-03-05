@@ -41,7 +41,9 @@
 
 	onMounted(() => {
 		const selectedMonthElement = monthSelector.value!.querySelector<HTMLElement>(`.month-${initialFocusedMonth}`)
+		selectedMonthElement!.focus()
 
+		// When the menu opens, the transition can cause the focus to be lost, so we ensure it is set after the transition begins.
 		setTimeout(() => {
 			selectedMonthElement!.focus()
 		}, 0)

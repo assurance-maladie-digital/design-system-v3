@@ -68,10 +68,9 @@
 	<div class="playground ma-8">
 		<MonthPicker
 			:model-value="month"
-			label="début"
+			label="Début"
 			:custom-rules="customValidation"
 			:custom-warning-rules="warningValidation"
-			disabled
 		/>
 	</div>
 </template>

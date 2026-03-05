@@ -25,11 +25,11 @@
 
 	const locales = inject<typeof defaultLocales>(localesKey)!
 
-	const view = ref<'months' | 'years'>('months')
+	const view = ref<'months' | 'years'>(props.initialView)
 	const open = ref(false)
 	watch(open, (newValue) => {
 		if (newValue) {
-			view.value = 'months'
+			view.value = props.initialView
 			draftMonth.value = undefined
 			draftYear.value = undefined
 		}
