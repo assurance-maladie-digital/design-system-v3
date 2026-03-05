@@ -2,13 +2,6 @@
 @use '@/assets/apTokens';
 @use '@/assets/tokens';
 
-.theme-ap,
-.theme-ap2026 {
-	.border-0 {
-		border: 0;
-	}
-}
-
 .theme-cnam,
 .theme-pa {
 	--alert-warning-background: #{tokens.$colors-background-warning};
@@ -33,7 +26,8 @@
 	--alert-error-icon-bg: #{tokens.$colors-background-error-subdued};
 }
 
-.theme-ap {
+.theme-ap,
+.theme-ap2026 {
 	--alert-background: #{apTokens.$primary-darker};
 	--alert-warning-background: #{apTokens.$colors-background-warning};
 	--alert-warning-accent: #{apTokens.$colors-border-warning};
