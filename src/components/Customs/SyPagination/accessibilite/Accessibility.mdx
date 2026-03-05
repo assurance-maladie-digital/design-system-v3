@@ -1,72 +1,84 @@
-import { Meta, Primary } from '@storybook/blocks';
-import * as SyPaginationStories from '../SyPagination.stories';
-import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import { Meta, Story } from '@storybook/blocks';
+import * as PaginationStories from '../SyPagination.stories';
+import PaginationIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+
 import {
-	AccessibilityGuideLayout,
-	CriteriaSection,
-	CriteriaCard,
-	DemoSection,
-	BestPracticesSection,
-	ResourcesSection,
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+    AuditSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={SyPaginationStories} />
+<Meta of={PaginationStories}/>
 
 <AccessibilityGuideLayout
-	componentName="SyPagination"
-	iconSrc={AccessibilityIcon}
+    componentName="SyPagination"
+    iconSrc={PaginationIcon}
+    apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/navigation.html"
+    apgLabel="Navigation Guide"
 >
-	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Structure sémantique">
-			<ul>
-				<li><strong>Zone de navigation</strong> : utilisation de <code>&lt;nav&gt;</code> et <code>&lt;ul&gt;</code> pour structurer la pagination.</li>
-				<li><strong>Nom accessible</strong> : titre <code>&lt;h2&gt;</code> caché (classe <code>d-sr-only</code>) relié au <code>nav</code> via <code>aria-labelledby</code>; libellé personnalisable avec la prop <code>label</code> (par défaut «&nbsp;Pagination&nbsp;»).</li>
-				<li><strong>Association au contenu</strong> : prise en charge de <code>aria-controls</code> pour relier la pagination à la zone paginée.</li>
-				<li><strong>Page active</strong> : l’attribut <code>aria-current="page"</code> est appliqué au lien de la page courante.</li>
-			</ul>
-		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation clavier">
-			<ul>
-				<li><strong>Tabulation</strong> : l’ordre de tab suit la séquence logique (Précédent → numéros → Suivant).</li>
-				<li><strong>Activation</strong> : les liens de pagination se déclenchent à l’Entrée (ou Espace selon le navigateur).</li>
-				<li><strong>Focus visible</strong> : le focus natif reste apparent sur les liens (<code>&lt;a&gt;</code>).</li>
-			</ul>
-		</CriteriaCard>
+    <CriteriaSection>
+        <CriteriaCard icon="🏷️" title="Structure et ARIA">
+            <ul>
+                <li><strong>Navigation sémantique</strong>: Utilisation de `&lt;nav&gt;` pour identifier la pagination</li>
+                <li><strong>Label accessible</strong>: Utilisation de `aria-labelledby` pour nommer la navigation</li>
+                <li><strong>Page active</strong>: Indication avec `aria-current="page"`</li>
+                <li><strong>Relations ARIA</strong>: Utilisation possible de `aria-controls` pour relier la pagination au contenu</li>
+            </ul>
+        </CriteriaCard>
 
-		<CriteriaCard icon="📱" title="États et retours d’information">
-			<ul>
-				<li><strong>Boutons indisponibles</strong> : <code>aria-disabled="true"</code> est ajouté sur «&nbsp;Précédent&nbsp;» / «&nbsp;Suivant&nbsp;» / premières/dernières pages lorsque non actionnables.</li>
-				<li><strong>Ellipses non interactives</strong> : les séparateurs «&nbsp;…&nbsp;» sont rendus non cliquables pour éviter la confusion.</li>
-			</ul>
-		</CriteriaCard>
+        <CriteriaCard icon="⌨️" title="Navigation clavier">
+            <ul>
+                <li><strong>Navigation tabulation</strong> : Tous les liens sont accessibles au clavier</li>
+                <li><strong>Focus visible</strong> : Indicateur visible lors du focus clavier</li>
+                <li><strong>Actions accessibles</strong> : Navigation possible avec Entrée ou Espace</li>
+                <li><strong>Boutons désactivés</strong> : Indiqués avec <code>aria-disabled="true"</code></li>
+            </ul>
+        </CriteriaCard>
 
-		<CriteriaCard icon="🎨" title="Personnalisation accessible">
-			<ul>
-				<li>Slots pour <code>first-page</code>, <code>previous</code>, <code>next</code>, <code>last-page</code> et <code>page-number</code> afin d’adapter les libellés ou ajouter des icônes.</li>
-				<li>Possibilité d’ajouter du contexte via <code>prepend</code> / <code>append</code> (ex. compteur «&nbsp;Éléments 21-40 sur 200&nbsp;»).</li>
-			</ul>
-		</CriteriaCard>
-	</CriteriaSection>
+        <CriteriaCard icon="🎨" title="Lisibilité et contraste">
+            <ul>
+                <li><strong>Contraste suffisant</strong> : Respect des ratios WCAG pour les liens</li>
+                <li><strong>Page active identifiable</strong> : Différenciation visuelle claire</li>
+                <li><strong>Taille lisible</strong> : Boutons adaptés à une lecture confortable</li>
+                <li><strong>États visuels</strong> : Hover, focus et actif distincts</li>
+            </ul>
+        </CriteriaCard>
 
-	<DemoSection componentName="SyPagination">
-		<Primary />
-	</DemoSection>
+    </CriteriaSection>
 
-	<BestPracticesSection>
-		<ul>
-			<li>Renseigner un <strong>label</strong> explicite (ex. «&nbsp;Pagination des résultats de recherche&nbsp;») pour nommer la navigation.</li>
-			<li>Relier la pagination à la zone de contenu avec <code>aria-controls</code> et un <code>id</code> stable sur le conteneur paginé.</li>
-			<li>Conserver des libellés textuels même si des icônes sont utilisées dans les slots (ou ajouter du texte masqué).</li>
-			<li>S’assurer d’un <strong>contraste suffisant</strong> et d’une taille de cible d’au moins 44px pour les liens.</li>
-			<li>Limiter le nombre de pages affichées en choisissant un <code>visible</code> adapté et en gardant des libellés courts.</li>
-		</ul>
-	</BestPracticesSection>
+    <DemoSection componentName="SyPagination">
+        <Story of={PaginationStories.Default}/>
+    </DemoSection>
 
-	<ResourcesSection>
-		<ul>
-			<li><a href="https://www.w3.org/TR/wai-aria-1.2/#navigation" target="_blank" rel="noopener noreferrer">Rôle ARIA « navigation »</a></li>
-			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/#navigation-mechanisms-headings-and-labels" target="_blank" rel="noopener noreferrer">WCAG 2.4 - Mécanismes de navigation</a></li>
-		</ul>
-	</ResourcesSection>
+    <BestPracticesSection>
+        <ul>
+            <li>Fournissez un <code>label</code> explicite pour décrire la pagination</li>
+            <li>Utilisez <code>aria-controls</code> pour associer la pagination au contenu</li>
+            <li>Assurez-vous que la page active est identifiable visuellement</li>
+            <li>Évitez un trop grand nombre de pages visibles</li>
+            <li>Préférez des libellés explicites comme "Page 3" pour les lecteurs d'écran</li>
+            <li>Vérifiez la navigation clavier</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/" target="_blank" rel="noopener noreferrer">Guide
+                des landmarks ARIA</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence
+                rapide WCAG 2.1</a></li>
+            <li><a href="https://inclusive-components.design/menus-menu-buttons/" target="_blank"
+                   rel="noopener noreferrer"
+            >Menus & Menu Buttons</a></li>
+        </ul>
+    </ResourcesSection>
+
+    <AuditSection>
+        <p>Aucun rapport d'audit disponible pour le moment.</p>
+    </AuditSection>
 </AccessibilityGuideLayout>
