@@ -192,4 +192,53 @@ describe('NotFoundPage – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations with a custom uniqueId', async () => {
+		const wrapper = mount(NotFoundPage, {
+			props: {
+				uniqueId: 'custom-not-found-id',
+			},
+		})
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'NotFoundPage – custom uniqueId', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has a single h1 heading', async () => {
+		const wrapper = mount(NotFoundPage)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		const headings = wrapper.findAll('h1')
+		if (headings.length !== 1) {
+			throw new Error(`Expected exactly 1 h1 heading, found ${headings.length}`)
+		}
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'NotFoundPage – single h1', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has no obvious axe violations with all props provided', async () => {
+		const wrapper = mount(NotFoundPage, {
+			props: {
+				uniqueId: 'full-props-id',
+				btnText: 'Retour à l\'accueil',
+				btnHref: 'https://example.com',
+				hideBtn: false,
+			},
+		})
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'NotFoundPage – all props', {
+			ignoreRules: ['region'],
+		})
+	})
 })
