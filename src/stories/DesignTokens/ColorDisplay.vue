@@ -115,7 +115,7 @@
 				</svg>
 			</a>
 			{{ colorTitle }}
-		</h3>
+		</SyHeading>
 		<span>{{ colorDescription }}</span>
 
 		<VContainer>
