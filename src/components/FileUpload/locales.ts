@@ -1,4 +1,5 @@
 export const locales = {
+	fileUploadTitle: 'Téléverser un fichier',
 	or: 'Ou',
 	chooseFile: (multiple: boolean) => multiple ? 'Choisir des fichiers' : 'Choisir un fichier',
 	infoText: (max: string, ext: string[]): string =>
