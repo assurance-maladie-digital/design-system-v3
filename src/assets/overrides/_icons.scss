@@ -11,10 +11,10 @@
 }
 
 .v-theme--ap2026.v-btn--icon .v-icon {
-  color: apTokens2026.$ap-blue-darken1 !important;
-  transition: color 0.2s ease;
+	color: apTokens2026.$ap-blue-darken1 !important;
+	transition: color 0.2s ease;
 
-  &:hover {
-    color: apTokens2026.$ap-blue-darken2 !important;
-  }
+	&:hover {
+		color: apTokens2026.$ap-blue-darken2 !important;
+	}
 }
