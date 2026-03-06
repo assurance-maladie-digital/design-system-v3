@@ -1,4 +1,5 @@
 @use '@/assets/apTokens';
+@use '@/assets/amelipro/apTokens2026';
 
 .v-theme--ap.v-btn--icon .v-icon {
 	color: apTokens.$colors-icon-accent-primary !important;
@@ -7,4 +8,13 @@
 	&:hover {
 		color: apTokens.$colors-icon-accent-secondary !important;
 	}
+}
+
+.v-theme--ap2026.v-btn--icon .v-icon {
+  color: apTokens2026.$ap-blue-darken1 !important;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: apTokens2026.$ap-blue-darken2 !important;
+  }
 }
