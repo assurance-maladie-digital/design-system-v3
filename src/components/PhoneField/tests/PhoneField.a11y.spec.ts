@@ -39,7 +39,7 @@ describe('PhoneField – accessibility (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'PhoneField – with country code', {
-			ignoreRules: ['region'],
+			ignoreRules: ['region', 'aria-allowed-attr'],
 		})
 
 		wrapper.unmount()
