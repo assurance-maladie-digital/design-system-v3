@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { computed, ref, watch, nextTick } from 'vue'
 	import type { PropType } from 'vue'
-	import { mdiPhone } from '@mdi/js'
+	import { mdiAlertOutline, mdiCheck, mdiInformation, mdiPhone } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
 	import { Mask } from 'maska'
 	import { locales } from './locales'
@@ -10,11 +10,6 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
-	import {
-		mdiAlertOutline,
-		mdiCheck,
-		mdiInformation,
-	} from '@mdi/js'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 	type Indicatif = {
@@ -60,26 +55,20 @@
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
-	// Verrou interne pendant un changement d'indicatif : évite que les watchers "normaux"
-	// (ex: validation en temps réel) ne réagissent à des valeurs intermédiaires.
-	const isDialCodeChanging = ref(false)
+
+	const buildDefaultMask = (length: number): string =>
+		'#'.repeat(length || 10).replace(/(.{2})/g, '$1 ').trim()
 
 	const toTrimmedDigits = (value: string, maxDigits: number): string => {
 		return value.replace(/\D/g, '').slice(0, maxDigits)
 	}
 
-	const applyMask = (digits: string): string => {
-		const mask = new Mask({ mask: phoneMask.value })
-		return mask.masked(digits)
-	}
+	// Cache the Mask instance — recreated only when phoneMask changes, not on every keystroke
+	const maskInstance = computed(() => new Mask({ mask: phoneMask.value }))
+	const applyMask = (digits: string): string => maskInstance.value.masked(digits)
 
-	function formatPhoneNumber(value: string): string {
-		if (!value) return ''
-		const cleaned = value.replace(/\D/g, '')
-		return cleaned.replace(/(.{2})/g, '$1 ').trim()
-	}
-
-	const computedValue = computed(() => formatPhoneNumber(phoneNumber.value))
+	// phoneNumber is always masked, so this is just a stable public alias
+	const computedValue = computed(() => phoneNumber.value)
 
 	watch(() => props.modelValue, (newVal) => {
 		if (newVal) {
@@ -115,16 +104,15 @@
 				// on reconstruit un mask de secours à partir de phoneLength.
 				mask: resolvedDialCode.mask && placeholdersCount === resolvedDialCode.phoneLength
 					? resolvedDialCode.mask
-					: '#'.repeat(resolvedDialCode.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim(),
+					: buildDefaultMask(resolvedDialCode.phoneLength),
 			}
 			: null
 
 		emit('update:selectedDialCode', normalizedDialCode ?? newVal)
 
 		if (normalizedDialCode) {
-			isDialCodeChanging.value = true
 			counter.value = normalizedDialCode.phoneLength || 10
-			phoneMask.value = normalizedDialCode.mask || '#'.repeat(normalizedDialCode.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
+			phoneMask.value = normalizedDialCode.mask || buildDefaultMask(normalizedDialCode.phoneLength)
 			const digits = toTrimmedDigits(phoneNumber.value, counter.value)
 			const maskedValue = applyMask(digits)
 			phoneNumber.value = maskedValue
@@ -132,14 +120,12 @@
 
 			await nextTick()
 			await nextTick()
-			isDialCodeChanging.value = false
 
 			// Le changement d'indicatif modifie les règles (longueur attendue), donc on revalide immédiatement
 			// si une valeur est déjà saisie. Objectif: messages à jour sans nécessiter un nouveau blur.
 			if (!shouldDisableErrorHandling.value && phoneNumber.value) {
 				onBlur.value = true
-				const cleanedValue = phoneNumber.value.replace(/\D/g, '')
-				validation.validateField(cleanedValue, validationRules.value)
+				runValidation()
 			}
 		}
 	})
@@ -229,14 +215,13 @@
 		mergedDialCodes.value.map(ind => ({
 			...ind,
 			displayText: generateDisplayText(ind),
-			plainDisplayText: generatePlainDisplayText(ind),
+			plainDisplayText: generateDisplayText(ind, true),
 		})),
 	)
 
 	watch(() => props.readonly, () => {
 		if (onBlur.value && !shouldDisableErrorHandling.value) {
-			const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-			validation.validateField(cleanedValue, validationRules.value)
+			runValidation()
 		}
 	})
 
@@ -251,49 +236,26 @@
 			return
 		}
 
-		// Si c'est un objet, on cherche l'indicatif correspondant dans la liste des options
 		if (typeof newVal === 'object') {
-			// On cherche l'indicatif avec le même code
-			const matchingOption = dialCodeOptions.value.find((opt) => {
-				return opt.code === newVal.code
-			})
-
-			if (matchingOption) {
-				// On utilise directement l'objet de la liste pour éviter les problèmes de référence
-				dialCode.value = matchingOption
-			}
-			else {
-				dialCode.value = newVal
-			}
+			const matchingOption = dialCodeOptions.value.find(opt => opt.code === newVal.code)
+			dialCode.value = matchingOption ?? newVal
 		}
 		else {
-			// Si c'est une chaîne ou autre chose, on l'utilise directement
 			dialCode.value = newVal
 		}
 	}, { immediate: true })
 
-	function generateDisplayText(ind: Indicatif): string {
+	function generateDisplayText(ind: Indicatif, plain = false): string {
 		const countryName = ind.countryFr || ind.country
-		const format = {
+		const abbr = plain ? ind.abbreviation : `<abbr title="${countryName}">${ind.abbreviation}</abbr>`
+		const format: Record<DisplayFormat, string> = {
 			'code': ind.code,
-			'code-abbreviation': `${ind.code} (<abbr title="${countryName}">${ind.abbreviation}</abbr>)`,
+			'code-abbreviation': `${ind.code} (${abbr})`,
 			'code-country': `${ind.code} ${countryName}`,
 			'country': countryName,
-			'abbreviation': `<abbr title="${countryName}">${ind.abbreviation}</abbr>`,
+			'abbreviation': abbr,
 		}
-		return format[props.displayFormat] || ind.code
-	}
-
-	function generatePlainDisplayText(ind: Indicatif): string {
-		const countryName = ind.countryFr || ind.country
-		const format = {
-			'code': ind.code,
-			'code-abbreviation': `${ind.code} (${ind.abbreviation})`,
-			'code-country': `${ind.code} ${countryName}`,
-			'country': countryName,
-			'abbreviation': ind.abbreviation,
-		}
-		return format[props.displayFormat] || ind.code
+		return format[props.displayFormat] ?? ind.code
 	}
 
 	const phoneFieldIdentifier = computed(() => props.withCountryCode
@@ -319,7 +281,7 @@
 				options: {
 					length: counter.value,
 					ignoreSpace: true,
-					message: `Le champ ${locales.label} est requis.`,
+					message: `Le champ ${phoneFieldIdentifier.value} est requis.`,
 					fieldIdentifier: phoneFieldIdentifier.value,
 				},
 			})
@@ -368,10 +330,12 @@
 			: validation.successes.value,
 	)
 
-	const showHelpTextBelow = computed(() => {
-		// Display help text below by default if it exists
-		return props.helpText && props.helpText.trim() !== ''
-	})
+	const showHelpTextBelow = computed(() => !!props.helpText?.trim())
+
+	const runValidation = (): void => {
+		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
+		validation.validateField(cleanedValue, validationRules.value)
+	}
 
 	function validateInputOnBlur() {
 		emit('change', phoneNumber.value)
@@ -379,8 +343,7 @@
 		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
 
 		onBlur.value = true
-		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-		validation.validateField(cleanedValue, validationRules.value)
+		runValidation()
 	}
 
 	watch(phoneNumber, (newValue) => {
@@ -400,8 +363,7 @@
 
 	watch(validationRules, () => {
 		if (onBlur.value && !shouldDisableErrorHandling.value) {
-			const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-			validation.validateField(cleanedValue, validationRules.value)
+			runValidation()
 		}
 	})
 
@@ -415,9 +377,7 @@
 		}
 
 		onBlur.value = true
-
-		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-		validation.validateField(cleanedValue, validationRules.value)
+		runValidation()
 
 		if (props.withCountryCode && props.countryCodeRequired && !dialCode.value) {
 			validation.errors.value.push(`Le champ ${locales.indicatifLabel} est requis.`)
@@ -538,19 +498,19 @@
 					<template #append-inner>
 						<div class="d-flex align-center">
 							<SyIcon
-								v-if="hasError && !shouldDisableErrorHandling"
+								v-if="hasError"
 								color="error"
 								:icon="mdiInformation"
 								decorative
 							/>
 							<SyIcon
-								v-else-if="hasWarning && !shouldDisableErrorHandling"
+								v-else-if="hasWarning"
 								color="warning"
 								:icon="mdiAlertOutline"
 								decorative
 							/>
 							<SyIcon
-								v-else-if="hasSuccess && !shouldDisableErrorHandling"
+								v-else-if="hasSuccess"
 								color="success"
 								:icon="mdiCheck"
 								decorative
