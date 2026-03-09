@@ -225,6 +225,13 @@ export const Default: Story = {
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
 		'width': '400px',
+		'customRules': [{
+			type: 'custom',
+			options: {
+				validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+				message: 'Le format doit être MM/YYYY. (ex: 12/2026).',
+			},
+		}],
 	},
 	parameters: {
 		sourceCode: [
@@ -236,6 +243,7 @@ export const Default: Story = {
 						v-model="selectedMonth"
 						label="Début du projet"
 						width="400px"
+						:custom-rules="rules"
 					/>
 				</template>
 				`,
@@ -247,6 +255,14 @@ export const Default: Story = {
 					import { ref } from 'vue'
 
 					const selectedMonth = ref('11/2025')
+
+					const rules = [{
+						type: 'custom',
+						options: {
+							validate: (value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value),
+							message: 'Le format doit être MM/YYYY (ex: 12/2026).',
+						},
+					}]
 				</script>
 				`,
 			},
