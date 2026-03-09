@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { computed, onMounted, ref } from 'vue'
+	import { computed, inject, onMounted, ref } from 'vue'
 	import { useYearGrid } from './useYearGrid'
+	import { localesKey, type locales as defaultLocales } from '../locales'
 
 	const props = defineProps<{
 		min: number
@@ -51,6 +52,8 @@
 		}, 0)
 	})
 
+	const locales = inject<typeof defaultLocales>(localesKey)!
+
 </script>
 
 <template>
@@ -58,6 +61,7 @@
 		ref="yearSelector"
 		class="year-selector"
 		role="group"
+		:aria-label="locales.yearSelectorLabel"
 	>
 		<button
 			v-for="year of Array.from({ length: props.max - props.min + 1 }, (_, i) => props.order === 'asc' ? props.min + i : props.max - i)"
