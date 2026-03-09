@@ -761,7 +761,7 @@ export const DisplayFormatCode: Story = {
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -835,7 +835,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		displayFormat: 'code-abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -909,7 +909,7 @@ export const DisplayFormatCodeCountry: Story = {
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -983,7 +983,7 @@ export const DisplayFormatCountry: Story = {
 		displayFormat: 'country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -1057,7 +1057,7 @@ export const DisplayFormatAbbreviation: Story = {
 		displayFormat: 'abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -1308,7 +1308,7 @@ export const DisplayModels: Story = {
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		bgColor: 'white',
 	},
@@ -1438,7 +1438,7 @@ export const FormValidation: Story = {
 							:outlinedIndicatif="true"
 							:withCountryCode="true"
 							:country-code-required="true"
-							:isValidatedOnBlur="false"
+							:isValidatedOnBlur="true"
 							:readonly="readonly"
 							:disabled="disabled"
 						/>
@@ -1493,7 +1493,7 @@ export const FormValidation: Story = {
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -1527,6 +1527,7 @@ export const FormValidation: Story = {
 				<div class="pa-4">
 					<form @submit.prevent="submitForm" class="d-flex flex-column">
 						<PhoneField
+							ref="phoneFieldRef"
 							v-bind="args"
 						/>
 						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
