@@ -2167,7 +2167,10 @@ exports[`mounthpicker > MonthPickerVisual > shows the year picker after the mont
 exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
 <div class="month-picker-menu">
   <div class="visual-picker-header">
-    <div class="visual-picker-header__title">
+    <div
+      class="visual-picker-header__title"
+      id="v-2-title"
+    >
       Sélectionner un mois
     </div>
     <div class="visual-picker-header__date">

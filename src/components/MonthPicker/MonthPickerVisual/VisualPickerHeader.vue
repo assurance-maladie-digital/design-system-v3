@@ -11,6 +11,7 @@
 		title: string
 		minYear: number
 		maxYear: number
+		id: string
 	}>()
 
 	const emits = defineEmits<{
@@ -69,7 +70,10 @@
 
 <template>
 	<div class="visual-picker-header">
-		<div class="visual-picker-header__title">
+		<div
+			:id="`${props.id}-title`"
+			class="visual-picker-header__title"
+		>
 			{{ title }}
 		</div>
 		<div class="visual-picker-header__date">

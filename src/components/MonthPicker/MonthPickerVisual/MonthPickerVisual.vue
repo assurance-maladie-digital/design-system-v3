@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, inject, ref, watch, type ComponentPublicInstance } from 'vue'
+	import { computed, inject, ref, useId, watch, type ComponentPublicInstance } from 'vue'
 	import MonthSelector from './MonthSelector.vue'
 	import YearSelector from './YearSelector.vue'
 	import VisualpickerHeader from './VisualPickerHeader.vue'
@@ -87,6 +87,8 @@
 		{ immediate: true },
 	)
 
+	const id = useId()
+
 </script>
 <template>
 	<VMenu
@@ -105,12 +107,14 @@
 			'disabled': props.disabled ? 'true' : undefined,
 		}"
 		role="dialog"
+		:aria-labelledby="`${id}-title`"
 	>
 		<div
 			class="month-picker-menu"
 			:class="{ 'month-picker-menu--readonly': props.readonly }"
 		>
 			<VisualpickerHeader
+				:id
 				v-model:view="view"
 				:title="view === 'months' ? locales.headerSelectMonth : locales.headerSelectYear"
 				:model-value="modelValue"
