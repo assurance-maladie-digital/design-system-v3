@@ -18,6 +18,8 @@ describe('PhoneField', () => {
 		const input = wrapper.find('input')
 		await input.setValue('1234567890')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		// change est émis au blur, pas à chaque frappe
+		await input.trigger('blur')
 		expect(wrapper.emitted('change')).toBeTruthy()
 	})
 
@@ -138,6 +140,10 @@ describe('PhoneField', () => {
 				modelValue: '0123456789',
 			},
 		})
+
+		// Vider le code pays manuellement (France est sélectionnée par défaut)
+		wrapper.vm.dialCode = ''
+		await wrapper.vm.$nextTick()
 
 		const result = await wrapper.vm.validateOnSubmit()
 
@@ -284,13 +290,14 @@ describe('PhoneField', () => {
 			},
 		})
 
-		const dialCodeValue = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
+		const dialCodeValue = { code: '+34', abbreviation: 'ES', country: 'Spain', phoneLength: 9, mask: '### ### ###' }
 		wrapper.vm.dialCode = dialCodeValue
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:selectedDialCode')).toBeTruthy()
 		const emittedEvents = wrapper.emitted('update:selectedDialCode')
-		expect(emittedEvents && emittedEvents[0]?.[0]).toEqual(dialCodeValue)
+		const lastEmitted = emittedEvents && emittedEvents[emittedEvents.length - 1]?.[0]
+		expect(lastEmitted).toEqual(dialCodeValue)
 	})
 
 	it('validates phone number on submit', async () => {
@@ -413,7 +420,8 @@ describe('PhoneField', () => {
 			},
 		})
 
-		expect(wrapper.vm.dialCode).toBe('')
+		// France est sélectionnée par défaut quand withCountryCode=true
+		expect(wrapper.vm.dialCode).toMatchObject({ code: '+33' })
 
 		await wrapper.setProps({
 			dialCodeModel: { code: '+1', country: 'USA', abbreviation: 'US', phoneLength: 10, mask: '###-###-####' },
@@ -840,6 +848,10 @@ describe('PhoneField', () => {
 					countryCodeRequired: true,
 				},
 			})
+
+			// Vider le code pays manuellement (France est sélectionnée par défaut)
+			wrapper.vm.dialCode = ''
+			await wrapper.vm.$nextTick()
 
 			// Sans code pays, la validation échoue
 			const isValidWithoutCountry = await wrapper.vm.validateOnSubmit()

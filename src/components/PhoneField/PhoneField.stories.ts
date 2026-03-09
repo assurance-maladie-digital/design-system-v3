@@ -106,7 +106,7 @@ export const Default: Story = {
 	},
 	args: {
 		modelValue: '',
-		required: true,
+		required: false,
 		outlined: true,
 		outlinedIndicatif: true,
 		withCountryCode: true,
@@ -472,7 +472,7 @@ const phoneValue3 = ref('')
 		],
 	},
 	args: {
-		required: true,
+		required: false,
 		withCountryCode: true,
 		autocompleteCountryCode: 'tel-country-code',
 		autocompletePhone: 'tel-national',
@@ -1136,7 +1136,7 @@ export const DefaultDialCode: Story = {
 	args: {
 		modelValue: '',
 		dialCodeModel: { code: '+3433', country: 'Exemple', abbreviation: 'EX', phoneLength: 10, mask: '## ## ## ## ##' },
-		required: true,
+		required: false,
 		outlined: true,
 		outlinedIndicatif: true,
 		withCountryCode: true,

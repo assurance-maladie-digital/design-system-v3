@@ -144,7 +144,6 @@
 		// Mettre à jour la valeur
 		phoneNumber.value = maskedValue
 		emit('update:modelValue', maskedValue)
-		emit('change', maskedValue)
 
 		// Restaurer la position du curseur sur le prochain cycle de rendu
 		nextTick(() => {
@@ -158,7 +157,6 @@
 		const maskedValue = applyMask(digits)
 		phoneNumber.value = maskedValue
 		emit('update:modelValue', maskedValue)
-		emit('change', maskedValue)
 	}
 
 	const handlePhoneKeydown = (event: KeyboardEvent) => {
@@ -332,6 +330,8 @@
 	})
 
 	function validateInputOnBlur() {
+		emit('change', phoneNumber.value)
+
 		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
 
 		onBlur.value = true
@@ -340,9 +340,17 @@
 	}
 
 	watch(phoneNumber, (newValue) => {
-		if ((!props.isValidatedOnBlur || onBlur.value) && !shouldDisableErrorHandling.value) {
+		if (shouldDisableErrorHandling.value) return
+
+		if (!props.isValidatedOnBlur) {
+			// Validation en temps réel (isValidatedOnBlur=false)
 			const cleanedValue = newValue.replace(/\s/g, '')
 			validation.validateField(cleanedValue, validationRules.value)
+		}
+		else if (onBlur.value) {
+			// Après un premier blur, effacer les erreurs pendant la frappe —
+			// la revalidation se fera au prochain blur (comme SyTextField)
+			validation.clearValidation()
 		}
 	})
 
