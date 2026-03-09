@@ -198,10 +198,14 @@
 		}
 	})
 
+	const getFranceDefault = () =>
+		dialCodeOptions.value.find(opt => opt.code === '+33') ?? ''
+
 	// Watcher pour initialiser dialCode à partir de props.dialCodeModel
 	watch(() => props.dialCodeModel, (newVal) => {
 		if (!newVal) {
-			dialCode.value = ''
+			// Par défaut, pré-sélectionner la France (+33) quand l'indicatif est activé
+			dialCode.value = props.withCountryCode ? getFranceDefault() : ''
 			return
 		}
 
@@ -380,9 +384,10 @@
 		phoneNumber.value = ''
 		emit('update:modelValue', '')
 
-		// Clear dial code and restore defaults
-		dialCode.value = ''
-		emit('update:selectedDialCode', '')
+		// Reset dial code : France par défaut si indicatif activé, sinon vide
+		const defaultDialCode = props.withCountryCode ? getFranceDefault() : ''
+		dialCode.value = defaultDialCode
+		emit('update:selectedDialCode', defaultDialCode)
 		counter.value = 10
 		phoneMask.value = '## ## ## ## ##'
 
