@@ -112,10 +112,10 @@
 }
 
 .visual-picker-header__date {
-	font-size: var(--v-typography-h3-font-size);
-	font-weight: var(--v-typography-h3-font-weight);
-	line-height: var(--v-typography-h3-line-height);
-	letter-spacing: var(--v-typography-h3-letter-spacing);
+	font-size: var(--v-typography-h3-font-size, 1.5rem);
+	font-weight: var(--v-typography-h3-font-weight, 700);
+	line-height: var(--v-typography-h3-line-height, 130%);
+	letter-spacing: var(--v-typography-h3-letter-spacing, 0%);
 	text-transform: capitalize;
 	margin-left: 20px;
 }
@@ -128,9 +128,15 @@
 	display: flex;
 	gap: 4px;
 	margin: auto;
+	padding: 0.2rem 0.5rem;
 	font-size: 1rem;
 	font-weight: bold;
 	color: rgb(var(--v-theme-primary, 12, 65, 154));
 	cursor: pointer;
+
+	&:focus-visible {
+		/* stylelint-disable-next-line custom-property-pattern */
+		outline: 2px solid rgb(var(--v-theme-accentPrimary, 12, 65, 154));
+	}
 }
 </style>

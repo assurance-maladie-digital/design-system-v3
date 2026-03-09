@@ -44,5 +44,11 @@
 	font-weight: bold;
 	font-size: 0.875rem;
 	color: rgb(var(--v-theme-primary, 12, 65, 154));
+	margin-bottom: 2px;
+
+	&:focus-visible {
+		/* stylelint-disable-next-line custom-property-pattern */
+		outline: 2px solid rgb(var(--v-theme-accentPrimary, 12, 65, 154));
+	}
 }
 </style>

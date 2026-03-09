@@ -104,20 +104,24 @@
 	font-weight: bold;
 
 	&:hover {
-		background-color: #d0d0d0;
+		/* stylelint-disable-next-line custom-property-pattern */
+		background-color: rgb(var(--v-theme-interactiveHover, 227, 234, 252));
 	}
 }
 
 .month-selector__month--selected {
-	background-color: rgb(var(--v-theme-primary, 12, 65, 154));
+	/* stylelint-disable-next-line custom-property-pattern */
+	background-color: rgb(var(--v-theme-accentPrimary, 12, 65, 154));
 	color: white;
 
 	&:hover {
-		background-color: rgb(var(--v-theme-primary-darken-1, 31, 85, 146));
+		/* stylelint-disable-next-line custom-property-pattern */
+		background-color: rgb(var(--v-theme-accentPrimaryContrasted, 7, 39, 92));
 	}
 }
 
 .month-selector__month--active:focus {
-	outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
+	/* stylelint-disable-next-line custom-property-pattern */
+	outline: 2px solid rgb(var(--v-theme-accentPrimary, 12, 65, 154));
 }
 </style>
