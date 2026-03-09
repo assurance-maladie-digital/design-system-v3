@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 
 const meta = {
@@ -1315,18 +1315,46 @@ export const DisplayModels: Story = {
 	render: args => ({
 		components: { PhoneField },
 		setup() {
-			return { args }
+			// IMPORTANT (Storybook): éviter de muter `args` directement dans les handlers @update:...
+			// car `args` n'est pas un state Vue "classique" (ref/reactive) et les mises à jour peuvent
+			// être partielles (ex: messages de validation qui ne se rafraîchissent pas correctement).
+			//
+			// On utilise donc de vrais refs avec v-model (modelValue + selectedDialCode), et on synchronise
+			// ces refs avec `args` via des watch pour conserver l'affichage "DisplayModels".
+			const modelValue = ref(args.modelValue)
+			const selectedDialCode = ref(args.dialCodeModel)
+
+			// Sync ref -> args (pour afficher les modèles dans la story)
+			watch(modelValue, (val) => {
+				args.modelValue = val
+			})
+			watch(selectedDialCode, (val) => {
+				args.dialCodeModel = val
+			})
+			// Sync args -> ref (quand on change les controls Storybook)
+			watch(() => args.modelValue, (val) => {
+				modelValue.value = val
+			})
+			watch(() => args.dialCodeModel, (val) => {
+				selectedDialCode.value = val
+			})
+
+			return {
+				args,
+				modelValue,
+				selectedDialCode,
+			}
 		},
 		template: `
     <div class="pa-4">
       <div class="pa-4">
-        Indicatif: {{ args.dialCodeModel }}<br/>Numéro: {{ args.modelValue }}
+        Indicatif: {{ selectedDialCode }}<br/>Numéro: {{ modelValue }}
       </div>
 
       <PhoneField
         v-bind="args"
-        @update:modelValue="args.modelValue = $event"
-        @update:selectedDialCode="args.dialCodeModel = $event"
+        v-model="modelValue"
+        v-model:selectedDialCode="selectedDialCode"
       />
     </div>
   `,

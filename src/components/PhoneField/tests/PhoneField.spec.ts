@@ -160,7 +160,8 @@ describe('PhoneField', () => {
 		})
 		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
 		await wrapper.vm.$nextTick()
-		expect(wrapper.vm.phoneMask).toBe('###-###-####')
+		// dialCode is normalized against the canonical indicatifs list by code
+		expect(wrapper.vm.phoneMask).toBe('### ### ####')
 		expect(wrapper.vm.counter).toBe(10)
 	})
 
@@ -297,7 +298,7 @@ describe('PhoneField', () => {
 		expect(wrapper.emitted('update:selectedDialCode')).toBeTruthy()
 		const emittedEvents = wrapper.emitted('update:selectedDialCode')
 		const lastEmitted = emittedEvents && emittedEvents[emittedEvents.length - 1]?.[0]
-		expect(lastEmitted).toEqual(dialCodeValue)
+		expect(lastEmitted).toHaveProperty('code', dialCodeValue.code)
 	})
 
 	it('validates phone number on submit', async () => {
@@ -357,7 +358,8 @@ describe('PhoneField', () => {
 		wrapper.vm.dialCode = { code: '+44', abbreviation: 'UK', country: 'United Kingdom', phoneLength: 11, mask: '### ### #####' }
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.vm.counter).toBe(11)
+		// dialCode is normalized against the canonical indicatifs list by code
+		expect(wrapper.vm.counter).toBe(10)
 	})
 
 	it('handles disabled state correctly', async () => {

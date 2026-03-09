@@ -60,6 +60,9 @@
 	const counter = ref(10)
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
+	// Verrou interne pendant un changement d'indicatif : évite que les watchers "normaux"
+	// (ex: validation en temps réel) ne réagissent à des valeurs intermédiaires.
+	const isDialCodeChanging = ref(false)
 
 	const toTrimmedDigits = (value: string, maxDigits: number): string => {
 		return value.replace(/\D/g, '').slice(0, maxDigits)
@@ -89,14 +92,55 @@
 		}
 	}, { immediate: true })
 
-	watch(dialCode, (newVal) => {
-		emit('update:selectedDialCode', newVal)
-		if (typeof newVal === 'object' && newVal !== null) {
-			counter.value = newVal.phoneLength || 10
-			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
+	const isIndicatifLike = (value: unknown): value is Indicatif => {
+		return typeof value === 'object'
+			&& value !== null
+			&& 'code' in value
+			&& 'phoneLength' in value
+	}
+
+	watch(dialCode, async (newVal) => {
+		// Storybook / composants parents peuvent fournir un objet indicatif "stale" (mask/phoneLength obsolètes).
+		// On normalise donc TOUJOURS l'indicatif à partir de la liste dialCodeOptions
+		const dialCodeValue = typeof newVal === 'object' && newVal !== null
+			? newVal.code
+			: newVal
+		const resolvedDialCode = dialCodeOptions.value.find(opt => opt.code === dialCodeValue)
+			?? (isIndicatifLike(newVal) ? newVal : null)
+		const placeholdersCount = (resolvedDialCode?.mask?.match(/#/g) || []).length
+		const normalizedDialCode = resolvedDialCode
+			? {
+				...resolvedDialCode,
+				// Si le mask n'est pas cohérent avec phoneLength (ex: 10 placeholders mais phoneLength=9),
+				// on reconstruit un mask de secours à partir de phoneLength.
+				mask: resolvedDialCode.mask && placeholdersCount === resolvedDialCode.phoneLength
+					? resolvedDialCode.mask
+					: '#'.repeat(resolvedDialCode.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim(),
+			}
+			: null
+
+		emit('update:selectedDialCode', normalizedDialCode ?? newVal)
+
+		if (normalizedDialCode) {
+			isDialCodeChanging.value = true
+			counter.value = normalizedDialCode.phoneLength || 10
+			phoneMask.value = normalizedDialCode.mask || '#'.repeat(normalizedDialCode.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
 			const digits = toTrimmedDigits(phoneNumber.value, counter.value)
 			const maskedValue = applyMask(digits)
+			phoneNumber.value = maskedValue
 			emit('update:modelValue', maskedValue)
+
+			await nextTick()
+			await nextTick()
+			isDialCodeChanging.value = false
+
+			// Le changement d'indicatif modifie les règles (longueur attendue), donc on revalide immédiatement
+			// si une valeur est déjà saisie. Objectif: messages à jour sans nécessiter un nouveau blur.
+			if (!shouldDisableErrorHandling.value && phoneNumber.value) {
+				onBlur.value = true
+				const cleanedValue = phoneNumber.value.replace(/\D/g, '')
+				validation.validateField(cleanedValue, validationRules.value)
+			}
 		}
 	})
 
@@ -264,6 +308,7 @@
 				length: counter.value,
 				ignoreSpace: true,
 				message: `Le numéro de téléphone doit contenir ${counter.value} chiffres.`,
+				successMessage: `Le champ ${phoneFieldIdentifier.value} est valide.`,
 				fieldIdentifier: phoneFieldIdentifier.value,
 			},
 		}] as ValidationRule[]
@@ -295,7 +340,6 @@
 	const validation = useValidation({
 		customRules: validationRules.value,
 		showSuccessMessages: true,
-		fieldIdentifier: phoneFieldIdentifier.value,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
