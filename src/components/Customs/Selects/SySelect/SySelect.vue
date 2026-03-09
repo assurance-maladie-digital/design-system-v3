@@ -1194,7 +1194,7 @@
 .v-list-item.keyboard-focused {
 	outline: 2px solid tokens.$primary-base;
 	outline-offset: -2px;
-	background-color: #fff;
+	background-color: rgb(0 0 0 / 8%);
 }
 
 .v-list-item :deep(.v-list-item__overlay) {
