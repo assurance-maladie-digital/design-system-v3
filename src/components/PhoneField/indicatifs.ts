@@ -2,7 +2,7 @@ export const indicatifs = [
 	{ code: '+1', country: 'USA/Canada', countryFr: 'États-Unis/Canada', abbreviation: 'US/CA', phoneLength: 10, mask: '### ### ####' },
 	{ code: '+7', country: 'Russia/Kazakhstan', countryFr: 'Russie/Kazakhstan', abbreviation: 'RU/KZ', phoneLength: 10, mask: '### ### ## ##' },
 	{ code: '+20', country: 'Egypt', countryFr: 'Égypte', abbreviation: 'EG', phoneLength: 9, mask: '### ### ####' },
-	{ code: '+27', country: 'South Africa', countryFr: 'Afrique du Sud', abbreviation: 'ZA', phoneLength: 9, mask: '### ### ###' },
+	{ code: '+27', country: 'South Africa', countryFr: 'Afrique du Sud', abbreviation: 'ZA', phoneLength: 9, mask: '## ### ####' },
 	{ code: '+30', country: 'Greece', countryFr: 'Grèce', abbreviation: 'GR', phoneLength: 10, mask: '### ### ####' },
 	{ code: '+31', country: 'Netherlands', countryFr: 'Pays-Bas', abbreviation: 'NL', phoneLength: 9, mask: '## ### ####' },
 	{ code: '+32', country: 'Belgium', countryFr: 'Belgique', abbreviation: 'BE', phoneLength: 9, mask: '### ### ###' },
