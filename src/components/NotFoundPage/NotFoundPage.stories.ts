@@ -6,6 +6,9 @@ const meta = {
 	component: NotFoundPage,
 	parameters: {
 		layout: 'fullscreen',
+		docs: {
+			inlineStories: true,
+		},
 	},
 	argTypes: {
 		hideBtn: {
@@ -74,9 +77,6 @@ export const WithErrorCode: Story = {
 		query: {
 			support_id: '1234567890123456789',
 		},
-		btnText: 'Retour à l’accueil',
-		btnHref: '/',
-		hideBtn: false,
 		sourceCode: [
 			{
 				name: 'Template',

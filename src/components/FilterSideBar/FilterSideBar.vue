@@ -115,10 +115,11 @@
 				rail
 				rail-width="395"
 				disable-resize-watcher
-				tabindex="0"
+				:tabindex="drawer ? 0 : -1"
 				class="sy-filters-side-bar__content elevation-6 bg-white"
 				role="dialog"
 				:aria-hidden="drawer ? undefined : 'true'"
+				:inert="drawer ? undefined : 'true'"
 				:aria-modal="props.modale"
 				:aria-label="locales.modaleLabel"
 				@keydown.escape.prevent="drawer = false"

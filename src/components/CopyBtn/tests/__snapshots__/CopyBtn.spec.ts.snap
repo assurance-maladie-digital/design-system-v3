@@ -3,7 +3,7 @@
 exports[`CopyBtn > renders correctly 1`] = `
 <div
   class="sy-copy-btn"
-  id="copy-btn"
+  id="copy-btn-v-0"
   label="test"
 >
   <v-tooltip-stub
@@ -12,6 +12,7 @@ exports[`CopyBtn > renders correctly 1`] = `
     closeonback="false"
     closeoncontentclick="false"
     contained="false"
+    contentclass="tooltip"
     disabled="false"
     eager="true"
     interactive="false"

@@ -1,15 +1,75 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/blocks';
 import * as NotificationBarStories from '../NotificationBar.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={NotificationBarStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
 
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/NotificationBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="NotificationBar"
+	iconSrc={AccessibilityIcon}
+>
+	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/NotificationBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4029" target="_blank" style={{color:'#0C41BD'}}>issue #4029</a>)</p>
 	</div>
+	<CriteriaSection>
+		<CriteriaCard icon="🔔" title="Annonce et rôles adaptés">
+			<ul>
+				<li><strong>Rôle dynamique</strong> : <code>role="status"</code> pour les notifications neutres et <code>role="alert"</code> pour les erreurs afin d’informer immédiatement les lecteurs d’écran.</li>
+				<li><strong>Icônes décoratives</strong> : les pictogrammes sont marqués comme décoratifs pour ne pas être annoncés inutilement.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation clavier complète">
+			<ul>
+				<li><strong>Fermeture clavier</strong> : le bouton « Fermer » est focalisable, activable au clavier et accessible avec <kbd>Échap</kbd>.</li>
+				<li><strong>Focus visible</strong> : styles d’outline renforcés sur le bouton de fermeture pour chaque état de contraste.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🕒" title="Temps de lecture maîtrisé">
+			<ul>
+				<li><strong>Pas d’expiration forcée</strong> : par défaut <code>timeout=-1</code> pour laisser le temps de lecture ; la temporisation reste configurable.</li>
+				<li><strong>File ou liste</strong> : <code>show-all</code> permet d’afficher toutes les notifications simultanément pour éviter la perte d’information.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🖼️" title="Lisibilité et contraste">
+			<ul>
+				<li><strong>Contrastes définis</strong> : couleurs d’arrière‑plan et de texte prévues pour chaque type (info, success, warning, error).</li>
+				<li><strong>Adaptation mobile</strong> : réorganisation verticale automatique lorsque le message est long sur petits écrans.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="NotificationBar">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Privilégiez l’option <code>timeout=-1</code> pour laisser le temps de lecture, surtout pour les messages critiques.</li>
+			<li>Utilisez <code>type="error"</code> uniquement pour les situations bloquantes afin d’éviter la surcharge d’alertes.</li>
+			<li>Ajoutez un libellé explicite au bouton d’action (slot <code>action</code>) et assurez-vous qu’il soit atteignable au clavier.</li>
+			<li>Évitez d’empiler trop de notifications : activez <code>show-all</code> en cas de rafale pour limiter la perte contextuelle.</li>
+			<li>Ne déplacez pas le focus automatiquement sur la notification : laissez l’utilisateur garder son contexte d’interaction.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/alert/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices – Alert</a></li>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/status/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices – Status</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/#timing-adjustable" target="_blank" rel="noopener noreferrer">WCAG 2.1 – Timing Adjustable</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

@@ -1,0 +1,188 @@
+import { Meta } from '@storybook/blocks';
+import '../../styles/shared.css';
+
+<Meta title="Accessibilité/Audit et Contre-audit/Introduction" />
+
+<style>
+{
+`
+      
+  
+  .key-element {
+    background-color: #f8f9fa;
+    border-left: 4px solid #0c419a;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .key-element h3 {
+    color: #0c419a;
+    margin-top: 0;
+  }
+  
+  .info-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .info-section h2 {
+    padding-bottom: 0.5rem;
+    margin-top: 0;
+  }
+  
+  .contact-card {
+    background-color: #f0f7ff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .resource-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .resource-card h3 {
+    margin-top: 0;
+    color: #0c419a;
+  }
+  
+  .resource-card a {
+    margin-top: auto;
+    text-decoration: none;
+    font-weight: 500;
+    color: #0c419a;
+  }
+  
+  .alert {
+    background-color: #e3e8f2;
+    border-left: 4px solid #0c419a;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 4px;
+  }
+  
+  .alert-title {
+    color: #0c419a;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .process-steps {
+    counter-reset: step;
+    margin: 2rem 0;
+  }
+  
+  .process-step {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .environment-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+      .info-section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      
+      border-radius: 3px;
+    }
+
+    .section-container h2::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      
+      border-radius: 3px;
+    }
+`
+}
+</style>
+
+<div className="header">
+  <h1>Audit et Contre-audit de conformité à l'accessibilité</h1>
+  <p>Demandez-nous un audit (ou contre-audit) de conformité RGAA</p>
+</div>
+
+<div className="info-section">
+  <h2>🌟 Objectif</h2>
+  <p>Une fois la phase pré-audit réalisée et que le niveau de conformité est jugé suffisant, <b>l'équipe produit peut solliciter la Filière Digital pour un audit de conformité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> sur le même échantillon de pages</b>.</p>
+
+  <p>L'objectif de l'audit est d'évaluer la conformité d'un produit aux critères d'accessibilités définis par le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. L'expert identifie les non-conformités et fournit des recommandations pour améliorer l'accessibilité du produit.</p>
+
+  <p>Un contre-audit des non conformités pourra être proposé après application des correctifs relevés par l'audit. Il permettra d'identifier un nouveau niveau de conformité qui sera indiqué dans la déclaration d'accessibilité.</p>
+</div>
+
+<div className="section-container">
+  <h2>Environnement de test</h2>
+  <p>Il est important de tester votre service dans un environnement similaire à celui utilisé par les utilisateurs finaux. <b>L'environnement de test sera le même pour chacune des phases (pré-audit, audit, contre-audit) et devra être stable. Aucune nouvelle fonctionnalité ne doit être développée entre chaque phase.</b> Seules les corrections liées aux écarts d’accessibilité identifiés doivent être réalisées, afin de garantir la cohérence et la comparabilité des résultats.</p>
+
+  <p>Le produit devra mettre à disposition un environnement adéquat pour l'audit qui, selon le public ciblé par le produit, pourra être un environnement de bureau ou mobile.</p>
+
+  <div className="environment-grid">
+    <div className="resource-card">
+      <h3>💻 Environnement principal</h3>
+      <p>Si l'outil cible un public utilisant des terminaux de bureau :</p>
+      <ul>
+        <li>Système d'exploitation : Windows</li>
+        <li>Navigateur : Firefox (mentionner la version)</li>
+        <li>Lecteur d'écran : NVDA (dernière version)</li>
+      </ul>
+    </div>
+
+    <div className="resource-card">
+      <h3>📱 Environnement mobile</h3>
+      <p>Si l'outil cible un public utilisant des terminaux mobile :</p>
+      <ul>
+        <li>Système d'exploitation : Android</li>
+        <li>Navigateur : Chrome (mentionner la version)</li>
+        <li>Lecteur d'écran : TalkBack (dernière version)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div className="section-container">
+  <h2>Livrables</h2>
+
+  <p> A l'issue de l'audit et, optionnellement, du contre-audit, il y aura deux livrables : la grille d'évaluation RGAA et la déclaration d'accessibilité.</p>
+
+  <div className="environment-grid">
+    <div className="resource-card">
+      <h3>Grille d'évaluation RGAA</h3>
+      <p>La Filière Digital remet la grille officielle RGAA avec les non-conformités et les recommandations techniques.</p>
+    </div>
+
+    <div className="resource-card">
+      <h3>Déclaration d'accessibilité</h3>
+      <p>L'équipe produit devra réaliser <a href="https://accessibilite.numerique.gouv.fr/ressources/modele-de-declaration/" target="_blank">la déclaration d'accessibilité en suivant le modèle officiel</a>. La Filière Digital pourra accompagner l'équipe pour sa réalisation.</p>
+    </div>
+  </div>
+
+</div>

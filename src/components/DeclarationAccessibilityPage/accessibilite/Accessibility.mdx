@@ -1,0 +1,75 @@
+import { Meta, Primary } from '@storybook/blocks'
+import * as Stories from '../DeclarationAccessibilityPage.stories.ts'
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+  AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
+
+<Meta of={Stories} />
+
+<AccessibilityGuideLayout
+  componentName="DeclarationAccessibilityPage"
+  iconSrc={AccessibilityIcon}
+>
+  <CriteriaSection>
+    <CriteriaCard icon="📑" title="Structure et sémantique">
+      <ul>
+        <li>Sections structurées avec titres (<code>h2</code>) pour engagement, conformité, résultats de tests, contenus non accessibles, déclaration, contacts et recours.</li>
+        <li>Liens descriptifs vers le site, le schéma, les actions, le plan et la grille d'audit.</li>
+        <li>Listes ordonnées/non ordonnées pour les non-conformités, exemptions, contenus non obligatoires, technologies, environnements et outils.</li>
+        <li>Contact présenté sous forme de liste ; téléphone généré en <code>tel:</code> via <code>contactPhone</code> (espaces retirés).</li>
+        <li>Dates affichées au format localisé (FR) à partir de valeurs ISO recommandées.</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🧭" title="Visibilité conditionnelle">
+      <ul>
+        <li>Affichage conditionnel uniquement si des données sont fournies (plans d'actions, résultats, listes) pour éviter le contenu vide.</li>
+        <li>Étiquettes de conformité dérivées des taux fournis : totalement, partiellement ou non conforme.</li>
+        <li>Pages vérifiées listées avec liens cliquables quand l'URL est fournie.</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="📣" title="Information utilisateur">
+      <ul>
+        <li>Voies de recours complètes (Défenseur des droits) avec liens et adresse postale.</li>
+        <li>Contact accessible : mailto obligatoire et téléphone optionnel.</li>
+        <li>Méthode d'évaluation explicite (auto, audit interne/externe) et taux de conformité.</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="DeclarationAccessibilityPage">
+    <Primary />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li>Fournir au minimum <code>entityName</code>, <code>siteName</code>, <code>siteUrl</code>, <code>contactEmail</code>.</li>
+      <li>Préférer des URLs publiques et pérennes pour le schéma, les actions, le plan et la grille d'audit.</li>
+      <li>Entrer les dates en ISO (<code>YYYY-MM-DD</code>) pour un formatage fiable.</li>
+      <li>Renseigner les listes seulement lorsqu'elles sont disponibles (non-conformités, exemptions, contenus non obligatoires, technologies, environnements, outils, pages vérifiées).</li>
+      <li>Utiliser un numéro lisible (<code>contactPhone</code>) pour générer un lien téléphonique valide.</li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methodologie/declaration-obligatoire/" target="_blank" rel="noopener noreferrer">Modèle de déclaration d’accessibilité (RGAA)</a></li>
+      <li><a href="https://www.w3.org/WAI/policies/" target="_blank" rel="noopener noreferrer">W3C – Accessibility Statements</a></li>
+    </ul>
+  </ResourcesSection>
+
+  <AuditSection>
+    <p>Rapport d’audit manuel : <em>en cours de réalisation</em>.</p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+      Correctifs associés : à venir (sera référencé dès publication de l’audit officiel).
+    </p>
+  </AuditSection>
+</AccessibilityGuideLayout>

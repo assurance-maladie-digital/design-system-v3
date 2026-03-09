@@ -1,50 +1,12 @@
 <script setup lang="ts">
-	import type { RouteRecordRaw } from 'vue-router'
 	import { locales } from './locales'
-	import PageContainer from '../PageContainer/PageContainer.vue'
+	import StatusPage from '../StatusPage/StatusPage.vue'
+	import { computed } from 'vue'
+	import type { RouteRecordRaw } from 'vue-router'
+	import { useThemeLocales } from '@/utils/theme'
+	import type { PageAriaRole } from '../types'
 
-	type MessagePart =
-		| { type: 'text', value: string }
-		| { type: 'phone', value: string }
-
-	// Fonction pour formater le message et ajouter des liens tel: aux numéros de téléphone
-	const splitMessage = (message?: string): MessagePart[] => {
-		// Regex pour détecter les numéros de téléphone
-		if (!message)
-			return []
-
-		const regex = /\b(\d{4}|\d{10})\b/g
-		const parts: MessagePart[] = []
-		let lastIndex = 0
-		let match: RegExpExecArray | null
-
-		while ((match = regex.exec(message)) !== null) {
-			if (match.index > lastIndex) {
-				parts.push({
-					type: 'text',
-					value: message.slice(lastIndex, match.index),
-				})
-			}
-
-			parts.push({
-				type: 'phone',
-				value: match[1]!,
-			})
-
-			lastIndex = regex.lastIndex
-		}
-
-		if (lastIndex < message.length) {
-			parts.push({
-				type: 'text',
-				value: message.slice(lastIndex),
-			})
-		}
-
-		return parts
-	}
-
-	withDefaults(defineProps<{
+	const props = defineProps<{
 		pageTitle?: string
 		message?: string
 		code?: string
@@ -53,94 +15,50 @@
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
-	}>(), {
-		pageTitle: undefined,
-		message: undefined,
-		code: undefined,
-		codeErrorText: locales.errorCodeText,
-		btnText: undefined,
-		btnLink: '/',
-		btnHref: undefined,
-		hideBtn: false,
-	})
+		uniqueId?: string
+		role?: PageAriaRole
+	}>()
+
+	const { themeLocales } = useThemeLocales(locales)
+
+	// Utiliser les props de l'utilisateur en priorité, sinon les locales
+	const pageTitle = computed(() => props.pageTitle ?? themeLocales.value.pageTitle)
+	const message = computed(() => props.message ?? themeLocales.value.message)
+	const code = computed(() => props.code ?? themeLocales.value.code)
+	const src = computed(() => themeLocales.value.src)
 </script>
 
 <template>
-	<PageContainer size="md">
-		<VCard
-			:elevation="0"
-			class="pa-6 pa-sm-16"
+	<StatusPage
+		:page-title="pageTitle"
+		:message="message"
+		:code="code"
+		:code-error-text="props.codeErrorText"
+		:btn-text="props.btnText"
+		:btn-href="props.btnHref"
+		:btn-link="props.btnLink"
+		:hide-btn="props.hideBtn"
+		:unique-id="props.uniqueId"
+		:role="props.role"
+	>
+		<template
+			v-if="src || $slots.illustration"
+			#illustration
 		>
-			<VRow class="max-width-none">
-				<VCol
-					:sm="$slots.illustration ? 6 : 12"
-					cols="12"
-					class="order-last order-sm-first text-center text-sm-left d-flex flex-column justify-center align-sm-start"
+			<slot name="illustration">
+				<img
+					v-if="src"
+					:src="src"
+					alt=""
+					aria-hidden="true"
 				>
-					<div
-						v-if="code"
-						class="sy-code text-primary mb-4"
-					>
-						<span class="d-sr-only">{{ codeErrorText }}</span>
-						{{ code }}
-					</div>
-
-					<h1
-						v-if="pageTitle"
-						class="mb-2 font-weight-bold text-h5 mb-4"
-					>
-						{{ pageTitle }}
-					</h1>
-
-					<p v-if="message">
-						<template
-							v-for="(part, index) in splitMessage(message)"
-							:key="index"
-						>
-							<span v-if="part.type === 'text'">
-								{{ part.value }}
-							</span>
-							<a
-								v-else
-								:href="`tel:${part.value}`"
-							>
-								{{ part.value }}
-							</a>
-						</template>
-					</p>
-
-					<slot name="additional-content" />
-
-					<slot name="action">
-						<VBtn
-							v-if="!hideBtn && btnText && (btnLink || btnHref)"
-							:to="btnHref ? undefined : btnLink"
-							:href="btnHref"
-							color="primary"
-							class="mt-6"
-						>
-							{{ btnText }}
-						</VBtn>
-					</slot>
-				</VCol>
-
-				<VCol
-					v-if="$slots.illustration"
-					cols="12"
-					sm="6"
-					class="d-flex align-center justify-center"
-				>
-					<slot name="illustration" />
-				</VCol>
-			</VRow>
-		</VCard>
-	</PageContainer>
+			</slot>
+		</template>
+	</StatusPage>
 </template>
 
 <style lang="scss" scoped>
-.sy-code {
-	font-size: 6rem;
-	line-height: 6rem;
-	font-weight: 400;
+img {
+	max-height: 290px;
 }
 </style>

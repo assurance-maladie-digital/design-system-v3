@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproCopyBtn from './AmeliproCopyBtn.vue'
 import AmeliproTextArea from '../AmeliproTextArea/AmeliproTextArea.vue'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 const meta = {
 	argTypes: {
@@ -151,4 +152,10 @@ function onCopyClick(id: string) {
 <AmeliproTextArea style="width: 100%; height: 100px; margin-top: 1rem;" placeholder="Vous pouvez coller ici le texte copié pour vérifier que cela a bien fonctionné." />
         `,
 	}),
+}
+export const DeprecationNotice = {
+	...createDeprecationNotice([
+		{ label: 'CopyBtn', url: '/?path=/docs/composants-boutons-copybtn--docs&globals=theme:ap' },
+	]),
+	tags: ['!dev'],
 }

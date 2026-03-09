@@ -188,15 +188,38 @@
 		warningRules: props.customWarningRules,
 		disableErrorHandling: props.disableErrorHandling,
 	})
-	const { errors, warnings, successes, validateField, clearValidation } = !props.readonly
-		? validation
-		: {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			validateField: () => {},
-			clearValidation: () => {},
+	const { errors, warnings, successes, validateField: baseValidateField, clearValidation: baseClearValidation } = validation
+
+	const clearValidation = () => baseClearValidation()
+
+	watch(() => props.readonly, () => {
+		// When toggling readonly, reset validation state to avoid stale success/errors
+		errors.value = []
+		warnings.value = []
+		successes.value = []
+	})
+
+	const validateField = (
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
+		value: any,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
+		rules: any[] = [],
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
+		warningRules: any[] = [],
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
+		successRules: any[] = [],
+	): ValidationResult => {
+		if (props.readonly) {
+			return {
+				hasError: false,
+				hasWarning: false,
+				hasSuccess: false,
+				state: { errors: [], warnings: [], successes: [] },
+			}
 		}
+
+		return baseValidateField(value, rules, warningRules, successRules) as ValidationResult
+	}
 
 	const validateFieldForDateValidation = (
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
@@ -580,10 +603,11 @@
 		}
 
 		// Valider les dates au montage, mais sans afficher d'erreur pour le required
-		// Forcer la validation si il y a des custom rules et que le champ est rempli
-		const hasCustomRules = props.customRules && props.customRules.length > 0
+		// Forcer la validation si il y a des règles (erreur ou warning) et que le champ est rempli
+		const hasValidationRules = (props.customRules && props.customRules.length > 0)
+			|| (props.customWarningRules && props.customWarningRules.length > 0)
 		const hasValue = selectedDates.value !== null && selectedDates.value !== undefined
-		validateDates(hasCustomRules && hasValue)
+		validateDates(hasValidationRules && hasValue)
 
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
@@ -1186,7 +1210,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: tokens.$colors-background-accent-contrasted !important;
+	background-color: tokens.$colors-background-accent-primary-contrasted !important;
 }
 
 .fade-enter-active,

@@ -66,7 +66,9 @@
 		v-rgaa-svg-fix="rgaaSvgFixConfig"
 		:color="props.color"
 		:size="props.size"
-		:aria-label="props.label"
+		:role="props.role"
+		:aria-label="props.decorative ? undefined : props.label"
+		:aria-hidden="props.decorative ? 'true' : undefined"
 	>
 		{{ icon }}
 	</v-icon>

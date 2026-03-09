@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, ref } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 	import { locales } from './locales'
@@ -74,6 +74,18 @@
 		return wrapperRef.value?.querySelector('input, textarea') ?? null
 	}
 
+	function ensureInputAccessibilityLabel() {
+		const input = getNativeInput()
+		if (!input) return
+
+		const hasAriaLabel = input.hasAttribute('aria-label')
+		const hasLabelledBy = input.hasAttribute('aria-labelledby')
+
+		if (!hasAriaLabel && !hasLabelledBy) {
+			input.setAttribute('aria-label', props.inputAriaLabel)
+		}
+	}
+
 	function insertChar(char: string) {
 		const el = getNativeInput()
 		if (!el) return
@@ -146,6 +158,13 @@
 	onMounted(() => {
 		nextTick(() => {
 			updateInputMessageHeight()
+			ensureInputAccessibilityLabel()
+		})
+	})
+
+	onUpdated(() => {
+		nextTick(() => {
+			ensureInputAccessibilityLabel()
 		})
 	})
 </script>

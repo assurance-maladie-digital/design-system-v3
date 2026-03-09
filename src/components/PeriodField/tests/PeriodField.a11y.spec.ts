@@ -22,6 +22,9 @@ describe('PeriodField – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
+		if (results.violations.length) {
+			console.log(JSON.stringify(results.violations, null, 2))
+		}
 		assertNoA11yViolations(results, 'PeriodField – valid period', {
 			ignoreRules: ['region'],
 		})

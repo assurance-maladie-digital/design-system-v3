@@ -1,24 +1,56 @@
 <script setup lang="ts">
+	import { computed } from 'vue'
+	import StatusPage from '../StatusPage/StatusPage.vue'
 	import { locales } from './locales'
-	import ErrorPage from '../ErrorPage/ErrorPage.vue'
+	import { useThemeLocales } from '@/utils/theme'
+
+	const { themeLocales } = useThemeLocales(locales)
+
+	interface Props {
+		pageTitle?: string
+		message?: string
+		code?: string
+		src?: string
+		uniqueId?: string
+	}
+
+	const props = withDefaults(defineProps<Props>(), {
+		pageTitle: undefined,
+		message: undefined,
+		code: undefined,
+		src: undefined,
+		uniqueId: undefined,
+	})
+
+	// Utiliser les props de l'utilisateur en priorité, sinon les locales du thème
+	const pageTitle = computed(() => props.pageTitle || themeLocales.value.pageTitle)
+	const message = computed(() => props.message || themeLocales.value.message)
+	const code = computed(() => props.code || themeLocales.value.code)
+	const src = computed(() => props.src || themeLocales.value.src)
 </script>
 
 <template>
-	<ErrorPage
-		:page-title="locales.pageTitle"
-		:message="locales.message"
+	<StatusPage
+		:unique-id="props.uniqueId"
+		:page-title="pageTitle"
+		:message="message"
+		:code="code"
 		:hide-btn="true"
 	>
-		<template #illustration>
+		<template
+			v-if="src || $slots.illustration"
+			#illustration
+		>
 			<slot name="illustration">
 				<img
-					src="./assets/maintenance.svg"
+					v-if="src"
+					:src="src"
 					alt=""
 					aria-hidden="true"
 				>
 			</slot>
 		</template>
-	</ErrorPage>
+	</StatusPage>
 </template>
 
 <style lang="scss" scoped>

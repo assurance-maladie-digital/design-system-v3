@@ -66,7 +66,7 @@
 	>
 		<p
 			v-if="nbTotal > 0"
-			class="mb-0 font-weight-bold mr-4 mr-sm-0 my-3"
+			class="mb-0 font-weight-bold mr-4 mr-sm-0"
 			data-test-id="nb-rows"
 		>
 			{{ displayNbRows }}

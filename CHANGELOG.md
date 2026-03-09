@@ -1,3 +1,111 @@
+## v1.0.21 (02-03-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- FooterBar: Fix X icon display
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1893">#1893</a>
+      </td>
+      <td>- NotFoundPage / MaintenancePage / ErrorPage / statusPage: add AP tokens + improve components flexibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1861">#1861</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1854">#1854</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1823">#1823</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NotFoundPage / MaintenancePage / ErrorPage / statusPage / SocialMediaLinks / ContextualMenu / NotificationBar: improve accessibility documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1880">#1880</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1887">#1887</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1875">#1875</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1873">#1873</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1876">#1876</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1866">#1866</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1850">#1850</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DeclarationAccessibilityPage: add template
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/812">#812</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- CI: add a11y tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1881">#1881</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PhoneField: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1877">#1877</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckBoxGroup: add component
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1783">#1783</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- CookiesBanner: fix events
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1849">#1849</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix form submission on readonly mode
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1860">#1860</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix custom warning rules on mounted
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1853">#1853</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix custom rule empty refs
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1847">#1847</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve combinedMode documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1834">#1834</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- TableToolbar: fix documentation of SlotFilter
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1857">#1857</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- UploadWorkflow: add preview event + info-text prop + improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1846">#1846</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1858">#1858</a>
+      </td>
+      <td></td>
+    </tr>
+     <tr style="vertical-align: top;">
+      <td>- DiacriticPicker: improve accessibility and documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1832">#1832</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+
+
 ## v1.0.20 (16-02-2026)
 
 <table>
