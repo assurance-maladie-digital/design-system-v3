@@ -57,6 +57,8 @@ import '@/stories/styles/shared.css';
 			</div>
 			<ul>
 				<li><strong>État requis</strong> : Support du mode <code>required</code> et affichage d'un message d'erreur en cas de soumission invalide.</li>
+				<li><strong>État d'erreur</strong> : Un message d'erreur et une icône rouge sont affichés sous le champ lorsque la valeur saisie est invalide.</li>
+				<li><strong>État de succès</strong> : Un message de confirmation et une icône verte indiquent que la valeur saisie est valide.</li>
 				<li><strong>États disabled / readonly</strong> : Les états sont communiqués visuellement et empêchent l'interaction selon le cas.</li>
 				<li><strong>Texte d'aide</strong> : La prop <code>helpText</code> permet d'afficher une aide à la saisie sous le champ.</li>
 				<li><strong>Retour textuel</strong> : Les messages de validation sont affichés dans la zone dédiée aux détails.</li>
@@ -89,7 +91,7 @@ import '@/stories/styles/shared.css';
 		<h2>Bonnes pratiques d'utilisation</h2>
 		<ul>
 			<li>Utilisez un libellé explicite pour chaque champ téléphone afin d'informer clairement l'utilisateur du format attendu.</li>
-			<li>Configurez les attributs <code>autocomplete</code> appropriés (<code>tel-country-code</code>, <code>tel-national</code> ou <code>tel</code>) pour faciliter le remplissage automatique.</li>
+			<li>Les attributs <code>autocomplete</code> sont préconfigurés par défaut (<code>autocompleteCountryCode</code> : <code>"tel-country-code"</code>, <code>autocompletePhone</code> : <code>"tel-national"</code>) et couvrent la majorité des cas d'usage. Adaptez-les si nécessaire (ex. <code>"tel"</code> pour un numéro complet avec indicatif intégré).</li>
 			<li>Pour un champ requis, expliquez clairement la contrainte via la prop <code>helpText</code>.</li>
 			<li>Évitez de baser le sens uniquement sur la couleur (toujours fournir un message textuel).</li>
 			<li>Assurez-vous que les zones cliquables restent confortables sur mobile.</li>
