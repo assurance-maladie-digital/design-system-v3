@@ -752,6 +752,7 @@ describe('mounthpicker', () => {
 		})
 
 		it('handle correctly month and year that start with 0 in the text input', async () => {
+			vi.setSystemTime(new Date(2023, 5, 15))
 			const wrapper = mount(MonthPicker, {
 				props: {
 					label: 'Début du projet',
@@ -766,13 +767,14 @@ describe('mounthpicker', () => {
 			const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
 			await toggleBtn.trigger('click')
 
-			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-2') // February button
-			expect(monthButton.classes()).toContain('month-selector__month--active')
+			const activeMonthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-2') // February button
+			expect(activeMonthButton.classes()).toContain('month-selector__month--active')
 
 			await wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-year-btn').trigger('click')
 
-			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-selector__year--active')
-			expect(yearButton.exists()).toBeFalsy()
+			const activeYearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-selector__year--active')
+			expect(activeYearButton.text()).toBe('2023') // the selector fallback to the current year if the year is not in the range
+			expect(activeYearButton.classes()).toContain('year-2023')
 
 			await toggleBtn.trigger('click') // close the menu
 
@@ -780,6 +782,7 @@ describe('mounthpicker', () => {
 			expect(wrapper.find('input').element.value).toBe('02/025') // The input value should still be '02/025'
 
 			wrapper.unmount()
+			vi.useRealTimers()
 		})
 	})
 
