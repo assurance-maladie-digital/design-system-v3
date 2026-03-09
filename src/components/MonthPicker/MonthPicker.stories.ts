@@ -323,7 +323,7 @@ export const MonthValidation: Story = {
 						{
 							type: 'custom',
 							options: {
-								validator: (value: string) => {
+								validate: (value: string) => {
 									const [month] = value.split('/').map(Number)
 									if (
 										!value ||
@@ -344,7 +344,7 @@ export const MonthValidation: Story = {
 					const customWarningRules = [{
 						type: 'custom',
 						options: {
-							validator: (value: string) => {
+							validate: (value: string) => {
 								const [month, year] = value.split('/').map(Number) as [number, number]
 								const currentDate = new Date()
 								const currentYear = currentDate.getFullYear()
