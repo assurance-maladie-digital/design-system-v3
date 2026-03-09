@@ -5,15 +5,65 @@ import { nextTick, ref } from 'vue'
 
 describe('Filterable', () => {
 	describe('formatFilterName', () => {
-		it('returns the correct slugified name', () => {
+		it('preserves existing behavior for names with spaces', () => {
 			const { formatFilterName } = useFilterable(
 				ref([]),
 				() => {},
 			)
 
 			const name = formatFilterName('Test Name')
-
 			expect(name).toBe('test-name')
+
+			const anotherName = formatFilterName('My Filter Name')
+			expect(anotherName).toBe('my-filter-name')
+		})
+
+		it('preserves existing behavior for names with special characters', () => {
+			const { formatFilterName } = useFilterable(
+				ref([]),
+				() => {},
+			)
+
+			const nameWithSpecialChars = formatFilterName('Filter@Name#Test')
+			expect(nameWithSpecialChars).toBe('filternametest')
+
+			const nameWithSpacesAndSpecial = formatFilterName('My Filter-Name')
+			expect(nameWithSpacesAndSpecial).toBe('my-filter-name')
+		})
+
+		it('fixes camelCase issue by preserving case for single words', () => {
+			const { formatFilterName } = useFilterable(
+				ref([]),
+				() => {},
+			)
+
+			const camelCaseName = formatFilterName('totoCase')
+			expect(camelCaseName).toBe('totoCase')
+
+			const anotherCamelCase = formatFilterName('myFilterName')
+			expect(anotherCamelCase).toBe('myFilterName')
+
+			const pascalCase = formatFilterName('MyFilter')
+			expect(pascalCase).toBe('MyFilter')
+		})
+
+		it('handles edge cases correctly', () => {
+			const { formatFilterName } = useFilterable(
+				ref([]),
+				() => {},
+			)
+
+			// Single lowercase word
+			expect(formatFilterName('name')).toBe('name')
+
+			// Single uppercase word
+			expect(formatFilterName('NAME')).toBe('NAME')
+
+			// Mixed case with numbers
+			expect(formatFilterName('filter123Test')).toBe('filter123Test')
+
+			// Empty string
+			expect(formatFilterName('')).toBe('')
 		})
 	})
 
