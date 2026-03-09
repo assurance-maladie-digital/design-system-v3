@@ -16,21 +16,6 @@
 		(event: 'update:modelValue', value: number): void
 	}>()
 
-	const {
-		activeYear,
-		selectNextYear,
-		selectPreviousYear,
-		selectNextRow,
-		selectPreviousRow,
-	} = useYearGrid(
-		yearSelector,
-		computed(() => props.min),
-		computed(() => props.max),
-		props.modelValue,
-	)
-
-	let focusTimeout: ReturnType<typeof setTimeout> | undefined
-
 	function getFocusedYear() {
 		if (props.modelValue && props.modelValue >= props.min && props.modelValue <= props.max) {
 			return props.modelValue
@@ -43,6 +28,21 @@
 			return props.order === 'asc' ? props.min : props.max
 		}
 	}
+
+	const {
+		activeYear,
+		selectNextYear,
+		selectPreviousYear,
+		selectNextRow,
+		selectPreviousRow,
+	} = useYearGrid(
+		yearSelector,
+		computed(() => props.min),
+		computed(() => props.max),
+		getFocusedYear(),
+	)
+
+	let focusTimeout: ReturnType<typeof setTimeout> | undefined
 
 	onMounted(() => {
 		const selectedYearElement = yearSelector.value!.querySelector<HTMLElement>(`.year-${getFocusedYear()}`)
