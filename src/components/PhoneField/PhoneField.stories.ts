@@ -1315,12 +1315,6 @@ export const DisplayModels: Story = {
 	render: args => ({
 		components: { PhoneField },
 		setup() {
-			// IMPORTANT (Storybook): éviter de muter `args` directement dans les handlers @update:...
-			// car `args` n'est pas un state Vue "classique" (ref/reactive) et les mises à jour peuvent
-			// être partielles (ex: messages de validation qui ne se rafraîchissent pas correctement).
-			//
-			// On utilise donc de vrais refs avec v-model (modelValue + selectedDialCode), et on synchronise
-			// ces refs avec `args` via des watch pour conserver l'affichage "DisplayModels".
 			const modelValue = ref(args.modelValue)
 			const selectedDialCode = ref(args.dialCodeModel)
 
