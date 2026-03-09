@@ -2,6 +2,7 @@
 
 exports[`mounthpicker > MonthPickerVisual > shows the month picker after the year is selected 1`] = `
 <div
+  aria-label="Sélectionner un mois"
   class="month-selector"
   role="group"
 >
@@ -144,6 +145,7 @@ exports[`mounthpicker > MonthPickerVisual > shows the month picker after the yea
 
 exports[`mounthpicker > MonthPickerVisual > shows the year picker after the month is selected 1`] = `
 <div
+  aria-label="Sélectionner une année"
   class="year-selector"
   role="group"
 >
@@ -2194,6 +2196,7 @@ exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
     </button>
   </div>
   <div
+    aria-label="Sélectionner un mois"
     class="month-selector"
     role="group"
   >

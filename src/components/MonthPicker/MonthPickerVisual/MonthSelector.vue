@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { onMounted, useTemplateRef } from 'vue'
+	import { onMounted, useTemplateRef, inject } from 'vue'
 	import { useMonthGrid } from './useMonthGrid'
+	import { localesKey, type locales as defaultLocales } from '../locales'
 
 	const props = defineProps<{
 		modelValue: number | undefined
@@ -49,6 +50,8 @@
 		}, 0)
 	})
 
+	const locales = inject<typeof defaultLocales>(localesKey)!
+
 </script>
 
 <template>
@@ -56,6 +59,7 @@
 		ref="monthSelector"
 		class="month-selector"
 		role="group"
+		:aria-label="locales.monthSelectorLabel"
 	>
 		<button
 			v-for="monthIndex in 12"
