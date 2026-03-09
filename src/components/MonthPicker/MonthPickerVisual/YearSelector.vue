@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, inject, onMounted, ref } from 'vue'
+	import { computed, inject, onMounted, onUnmounted, ref } from 'vue'
 	import { useYearGrid } from './useYearGrid'
 	import { localesKey, type locales as defaultLocales } from '../locales'
 
@@ -29,6 +29,8 @@
 		props.modelValue,
 	)
 
+	let focusTimeout: ReturnType<typeof setTimeout> | undefined
+
 	function getFocusedYear() {
 		if (props.modelValue && props.modelValue >= props.min && props.modelValue <= props.max) {
 			return props.modelValue
@@ -47,9 +49,13 @@
 		selectedYearElement!.focus()
 
 		// When the menu opens, the transition can cause the focus to be lost, so we ensure it is set after the transition begins.
-		setTimeout(() => {
+		focusTimeout = setTimeout(() => {
 			selectedYearElement!.focus()
 		}, 0)
+	})
+
+	onUnmounted(() => {
+		clearTimeout(focusTimeout)
 	})
 
 	const locales = inject<typeof defaultLocales>(localesKey)!

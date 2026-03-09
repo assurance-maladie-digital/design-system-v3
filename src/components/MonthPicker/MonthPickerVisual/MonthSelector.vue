@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { onMounted, useTemplateRef, inject } from 'vue'
+	import { onMounted, onUnmounted, useTemplateRef, inject } from 'vue'
 	import { useMonthGrid } from './useMonthGrid'
 	import { localesKey, type locales as defaultLocales } from '../locales'
 
@@ -40,14 +40,20 @@
 		initialFocusedMonth,
 	)
 
+	let focusTimeout: ReturnType<typeof setTimeout> | undefined
+
 	onMounted(() => {
 		const selectedMonthElement = monthSelector.value!.querySelector<HTMLElement>(`.month-${initialFocusedMonth}`)
 		selectedMonthElement!.focus()
 
 		// When the menu opens, the transition can cause the focus to be lost, so we ensure it is set after the transition begins.
-		setTimeout(() => {
+		focusTimeout = setTimeout(() => {
 			selectedMonthElement!.focus()
 		}, 0)
+	})
+
+	onUnmounted(() => {
+		clearTimeout(focusTimeout)
 	})
 
 	const locales = inject<typeof defaultLocales>(localesKey)!
