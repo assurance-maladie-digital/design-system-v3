@@ -75,7 +75,7 @@ describe('UploadWorkflow', () => {
 			type: 'application/pdf',
 		})
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -155,7 +155,7 @@ describe('UploadWorkflow', () => {
 			type: 'application/pdf',
 		})
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -204,7 +204,7 @@ describe('UploadWorkflow', () => {
 			type: 'application/pdf',
 		})
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -248,7 +248,7 @@ describe('UploadWorkflow', () => {
 
 		await wrapper.find('.file-item button').trigger('click')
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [image],
 			},
