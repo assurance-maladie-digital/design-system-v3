@@ -1,0 +1,45 @@
+import { Meta, Primary } from '@storybook/blocks';
+import * as SyIconButtonStories from '../SyIconButton.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={SyIconButtonStories} />
+
+<AccessibilityGuideLayout
+	componentName="SyIconButton"
+	iconSrc={AccessibilityIcon}
+>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique">
+			<ul>
+				
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation clavier">
+			<ul>
+			
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SyIconButton">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+	</ResourcesSection>
+</AccessibilityGuideLayout>
