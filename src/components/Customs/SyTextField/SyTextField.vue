@@ -91,6 +91,7 @@
 			autocomplete?: string
 			helpText?: string
 			maxlength?: string | number
+			title?: string | false
 		}>(),
 		{
 			modelValue: undefined,
@@ -161,6 +162,7 @@
 			autocomplete: 'off',
 			helpText: '',
 			maxlength: undefined,
+			title: undefined,
 		},
 	)
 
@@ -368,7 +370,13 @@
 		return props.helpText && hasMessages.value && !props.areDetailsHidden
 	})
 
-	// Accessible label that includes prefix and suffix content for screen readers
+	// Use title prop if provided, otherwise fall back to accessible label
+	const titleValue = computed(() => {
+		// If title is explicitly false, don't show any title
+		if (props.title === false) return undefined
+		// Otherwise use title if provided, or accessibleLabel as fallback
+		return props.title || accessibleLabel.value
+	})
 	const accessibleLabel = computed(() => {
 		let label = labelWithAsterisk.value
 
@@ -602,7 +610,7 @@
 			v-model="model"
 			:autocomplete="props.autocomplete"
 			:active="props.isActive"
-			:title="accessibleLabel"
+			:title="titleValue"
 			:aria-label="accessibleLabel"
 			:aria-required="props.required ? 'true' : undefined"
 			:base-color="props.baseColor"
