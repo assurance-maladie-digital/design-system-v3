@@ -46,7 +46,7 @@
 		const labels = locales.value
 		if (props.view === 'months') {
 			const selectedYear = props.modelValue ? parseInt(props.modelValue.split('/')[1] || '', 10) : undefined
-			if (selectedYear && !isNaN(selectedYear)) {
+			if (selectedYear && !isNaN(selectedYear) && selectedYear >= props.minYear && selectedYear <= props.maxYear) {
 				return labels.yearBtnLabelSelected(String(selectedYear))
 			}
 			else {
