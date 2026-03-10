@@ -1,12 +1,75 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../FilterInline.stories.ts';
+import { Meta, Story } from '@storybook/blocks';
+import * as Stories from '../FilterInline.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="FilterInline"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+		<div>Aucun audit externe spécifique à ce composant pour le moment.</div>
+		<div style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+			Testez via l’addon a11y et les tests axe dédiés.
+		</div>
+	</AuditSection>
 
-<br />
+	<CriteriaSection>
+		<CriteriaCard icon="🏷️" title="Structure et rôles">
+			<ul>
+				<li>Chaque filtre est un <code>button</code> ouvrant un menu (<code>VMenu</code>) avec <code>aria-haspopup="menu"</code> et <code>aria-expanded</code> géré par Vuetify.</li>
+				<li><code>aria-controls</code> est présent uniquement quand le menu est ouvert pour éviter des références manquantes.</li>
+				<li>Les listes de valeurs utilisent des composants champs (Select, SearchListField, PeriodField…) conservant leurs rôles natifs.</li>
+				<li>Les puces récapitulatives (<code>ChipList</code>) exposent un libellé (<code>aria-label</code>) et des actions de suppression.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation clavier">
+			<ul>
+				<li>Activation des menus au clavier (Entrée/Espace) via <code>VMenu</code>.</li>
+				<li>Focus visible sur les boutons de filtres et sur les items des listes.</li>
+				<li>Échappe (Esc) pour fermer les menus.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Contraste et lisibilité">
+			<ul>
+				<li>Boutons par défaut en thème secondaire avec contrastes conformes aux tokens.</li>
+				<li>Badges de comptage lisibles et annoncés via <code>aria-label</code> localisé.</li>
+				<li>Textes des puces issus des valeurs choisies ; évitez les libellés trop longs.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="FilterInline">
+		<Story of={Stories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Préférez des titres de filtres courts et explicites ; complétez avec une aide textuelle dans le menu si nécessaire.</li>
+			<li>Évitez de masquer les focus visibles : laisser les styles par défaut ou renforcer le contour si nécessaire.</li>
+			<li>Pour les listes multiples, assurez-vous que chaque option a un libellé unique et compréhensible.</li>
+			<li>Ne forcez pas la fermeture automatique du menu lors de la sélection multiple afin de laisser l’utilisateur compléter sa saisie.</li>
+			<li>Vérifiez l’ordre logique de tabulation quand vous combinez FilterInline et FilterSideBar sur une même page.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices – Menu Button</a></li>
+			<li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – critères 7.1 (attributs ARIA) et 10.8 (éléments masqués)</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

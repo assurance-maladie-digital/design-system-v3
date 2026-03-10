@@ -8,7 +8,7 @@
 	import { defaultOptions } from './config'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
-	type MenuItem = { text: string, value: string, link?: string, to?: RouteLocationRaw }
+	type MenuItem = { text: string, value: string, link?: string, to?: RouteLocationRaw, icon?: string }
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		menuItems?: MenuItem[]
@@ -70,6 +70,9 @@
 				<VListItem
 					v-if="!hideLogoutBtn"
 					class="logout"
+					tag="li"
+					role="menuitem"
+					tabindex="0"
 					v-bind="options['logoutListItem']"
 					@click="$emit('logout')"
 				>

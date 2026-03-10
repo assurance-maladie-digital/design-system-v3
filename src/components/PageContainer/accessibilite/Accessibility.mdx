@@ -25,29 +25,43 @@ import {
 	<CriteriaSection>
 		<CriteriaCard icon="🔍" title="Structure sémantique">
 			<ul>
-				<li><strong>Id unique</strong> : pour permettre des relations ARIA robustes</li>
-				<li><strong>Rôles ARIA appropriés si besoin</strong> :</li>
-					<ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
-						<li style={{ listStyleType: '"- "' }}><code>role="region"</code> contient une zone importante identifiée par un titre</li>
-						<li style={{ listStyleType: '"- "' }}><code>role="main"</code> représente le contenu principal</li>
-						<li style={{ listStyleType: '"- "' }}><code>role="banner" / role="contentinfo"</code> pour l'en‑tête ou le pied de page du site</li>
-						<li style={{ listStyleType: '"- "' }}><code>role="navigation"</code> pour un conteneur contenant une navigation</li>
-					</ul>
+				<li><strong>Id unique</strong> : la prop <code>uniqueId</code> génère un identifiant sur le conteneur (suffixe <code>-container</code>) et sur le contenu interne (suffixe <code>-content</code>), permettant des relations ARIA robustes</li>
+				<li><strong>Rôles ARIA disponibles via la prop <code>role</code></strong> :</li>
+				<ul style={{ listStyleType: 'none', paddingLeft: 0 }}>
+					<li style={{ listStyleType: '"- "' }}><code>role="region"</code> : contient une zone importante identifiée par un titre</li>
+					<li style={{ listStyleType: '"- "' }}><code>role="main"</code> : représente le contenu principal</li>
+					<li style={{ listStyleType: '"- "' }}><code>role="banner"</code> : pour l'en-tête du site</li>
+					<li style={{ listStyleType: '"- "' }}><code>role="contentinfo"</code> : pour le pied de page du site</li>
+					<li style={{ listStyleType: '"- "' }}><code>role="navigation"</code> : pour un conteneur de navigation</li>
+				</ul>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🏷️" title="Liaison ARIA">
+			<ul>
+				<li><strong>Prop <code>ariaLabelledby</code></strong> : permet de lier le conteneur à un titre via son <code>id</code>, renforçant la compréhension par les lecteurs d'écran — particulièrement utile avec <code>role="region"</code></li>
+				<li><strong>Avec <code>StatusPage</code></strong> : la liaison est gérée automatiquement via les props <code>role</code> et <code>uniqueId</code> de <code>StatusPage</code></li>
 			</ul>
 		</CriteriaCard>
 	</CriteriaSection>
 
+	<DemoSection title="Avec rôle et liaison ARIA" componentName="PageContainer">
+		<Story of={PageContainerStories.WithAriaRole} />
+	</DemoSection>
+
 	<BestPracticesSection>
 		<ul>
-			<li>Toujours privilégier les balises HTML sémantiques natales avant ARIA :</li>
-
-<li><code>header</code></li>
-<li><code>nav</code></li>
-<li><code>main</code></li>
-<li><code>footer</code></li>
-<li><code>section (avec un titre)</code></li>
-<li><code>aside</code></li>
-<li><code>article</code></li>
+			<li>Toujours privilégier les balises HTML sémantiques natives avant ARIA :</li>
+			<li><code>header</code></li>
+			<li><code>nav</code></li>
+			<li><code>main</code></li>
+			<li><code>footer</code></li>
+			<li><code>section (avec un titre)</code></li>
+			<li><code>aside</code></li>
+			<li><code>article</code></li>
+			<li>Toujours associer <code>role="region"</code> à un <code>aria-labelledby</code> pointant vers un titre visible</li>
+			<li>Ne pas utiliser <code>role="main"</code> plus d'une fois par page</li>
+			<li>Fournir un <code>uniqueId</code> explicite et descriptif pour garantir l'unicité des identifiants générés</li>
 		</ul>
 	</BestPracticesSection>
 </AccessibilityGuideLayout>

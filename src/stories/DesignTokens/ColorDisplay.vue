@@ -11,6 +11,7 @@
 		apColors: Record<string, string>
 		apColors2026: Record<string, string>
 		colorTitle: string
+		colorDescription?: string
 		colorTitleLevel: number
 	}
 
@@ -38,7 +39,9 @@
 
 <template>
 	<div
-		v-if="!isEmptyObject(displayColors) || (isEmptyObject(displayColors) && displayEmptyColors && theme !== 'ap2026')"
+		v-if="!isEmptyObject(displayColors) ||
+			(isEmptyObject(displayColors) && displayEmptyColors &&
+				!['ap2026', 'ap', 'cnam', 'pa'].includes(theme ?? ''))"
 		class="mb-5"
 	>
 		<h2
@@ -110,6 +113,7 @@
 			</a>
 			{{ colorTitle }}
 		</h3>
+		<span>{{ colorDescription }}</span>
 
 		<VContainer>
 			<VRow v-if="!isEmptyObject(displayColors)">

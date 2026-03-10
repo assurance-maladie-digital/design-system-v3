@@ -152,7 +152,7 @@
 .sy-file-upload {
 	cursor: pointer;
 	position: relative;
-	border: 1px dashed tokens.$colors-border-accent;
+	border: 1px dashed tokens.$colors-border-accent-primary;
 	border-radius: tokens.$radius-rounded-lg;
 	transition: background 0.25s;
 

@@ -1210,7 +1210,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: tokens.$colors-background-accent-contrasted !important;
+	background-color: tokens.$colors-background-accent-primary-contrasted !important;
 }
 
 .fade-enter-active,

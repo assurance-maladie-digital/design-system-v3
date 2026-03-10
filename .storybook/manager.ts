@@ -15,7 +15,7 @@ const applyThemeSidebar = (theme) => {
 	const processSidebar = () => {
 		const sidebar = document.querySelector('.sidebar-container')
 
-        if (sidebar) {
+		if (sidebar) {
 			// First, reset display of all items if we're coming from AP theme
 			// This ensures components are properly restored when switching from AP to other themes
 			if (theme !== 'ap') {
@@ -29,10 +29,9 @@ const applyThemeSidebar = (theme) => {
 			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
 			// First pass: identify if amelipro should be hidden
-			const hideAmelipro = theme === 'pa' || theme === 'cnam'
+            const hideAmelipro = theme === 'pa' || theme === 'cnam' || theme === 'ap'
 			// When AP theme is active, only show Amelipro components
             const showOnlyAmelipro = theme === 'ap2026'
-            const hideOnlyNewAmelipro = theme !== 'ap'
 
 			// Hide or show items based on theme
 			items.forEach((item) => {
@@ -41,21 +40,27 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = theme === 'cnam' ? 'block' : 'none'
 				}
                 const itemId = item.getAttribute('data-item-id') || ''
-
                 // Hide New amelipro stories
 
                 const apOnlyStories = [
+                    'design-tokens-couleurs--border-section',
+                    'design-tokens-couleurs--text-section',
+                    'design-tokens-couleurs--icon-section',
+                    'design-tokens-couleurs--accent-section',
+                    'design-tokens-couleurs--interactive-section',
                     'footerbar--back-office',
                     'footerbar--with-phone-number'
                 ]
 
-                if (hideOnlyNewAmelipro) {
+                if (showOnlyAmelipro) {
                     if (apOnlyStories.some(s => itemId.includes(s))) {
                         item.style.display = 'none'
                     }
                 }
 
                 // Handle amelipro components folder
+
+				// Handle amelipro components folder
 				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
 				if (isAmeliproFolder) {
 					item.style.display = hideAmelipro ? 'none' : 'block'

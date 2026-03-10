@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 import AmeliproErrorTemplate from './AmeliproErrorTemplate.vue'
 
 const meta = {
@@ -383,4 +384,22 @@ export const Error503: Story = {
 	v-bind="args"
 />`,
 	}),
+}
+
+export const DeprecationNotice = {
+	...createDeprecationNotice([
+		{
+			label: 'ErrorPage',
+			url: '/?path=/docs/templates-errorpage--docs&globals=theme:ap',
+		},
+		{
+			label: 'MaintenancePage',
+			url: '/?path=/docs/templates-maintenancepage--docs&globals=theme:ap',
+		},
+		{
+			label: 'NotFoundPage',
+			url: '/?path=/docs/templates-notfoundpage--docs&globals=theme:ap',
+		},
+	]),
+	tags: ['!dev'],
 }
