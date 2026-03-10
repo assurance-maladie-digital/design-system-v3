@@ -770,6 +770,8 @@ export const ManyTables: Story = {
 }
 
 export const DeprecationNotice = {
-	...createDeprecationNotice('SyTable', '?path=/docs/composants-tableaux-sytable--docs'),
+	...createDeprecationNotice([
+		{ label: 'SyTable', url: '?path=/docs/composants-tableaux-sytable--docs' },
+	]),
 	tags: ['!dev'],
 }

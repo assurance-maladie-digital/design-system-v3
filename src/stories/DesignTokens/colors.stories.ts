@@ -55,21 +55,38 @@ export default {
 	title: 'Design Tokens/Couleurs',
 }
 
+type ThemeKey = 'cnam' | 'pa' | 'ap' | 'ap2026'
+
 export const Theme: StoryObj = {
 	render: () => {
 		return {
 			setup() {
-				const theme = computed(() => typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam')
+				const theme = computed<ThemeKey>(() => {
+					const value
+                        = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
+					return (value as ThemeKey) ?? 'cnam'
+				})
+
+				const themeLabels: Record<ThemeKey, string> = {
+					cnam: 'Assurance Maladie',
+					pa: 'Portail Agent',
+					ap: 'AmeliPro',
+					ap2026: 'AmeliPro',
+				}
+
+				const themeLabel = computed(() => themeLabels[theme.value])
+
 				return {
-					theme,
+					themeLabel,
 				}
 			},
 			template: `
-				<p style="font-size: 14px;  margin: 16px 0; line-height: 24px; color: rgb(46, 52, 56);">
-					Les couleurs contribuent à l’identification de nos applications ou services et font partie intégrante de la marque <span v-if="theme === 'cnam'"><b>Assurance Maladie</b></span><span v-if="theme === 'pa'"><b>Portail Agent</b></span>. 
-					Elles assurent l’homogénéité graphique des interfaces.
-				</p>
-			`,
+              <p style="font-size: 14px; margin: 16px 0; line-height: 24px; color: rgb(46, 52, 56);">
+                Les couleurs contribuent à l’identification de nos applications ou services
+                et font partie intégrante de la marque <b>{{ themeLabel }}</b>.
+                Elles assurent l’homogénéité graphique des interfaces.
+              </p>
+            `,
 		}
 	},
 	tags: ['!dev'],
