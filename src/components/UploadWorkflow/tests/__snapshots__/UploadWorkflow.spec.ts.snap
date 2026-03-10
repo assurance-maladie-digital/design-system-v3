@@ -10,9 +10,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
 >
   <h4 class="
     mb-2
-    mb-2
     sy-heading
-    text-h6
     text-h6
   ">
     Documents à nous transmettre
