@@ -6,6 +6,9 @@ import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { SyTextField } from '@/main'
 
 export type NirValidationProps = {
+	numberRules?: ValidationRule[]
+	keyRules?: ValidationRule[]
+	useVuetifyValidation?: boolean
 	customNumberRules?: ValidationRule[]
 	customKeyRules?: ValidationRule[]
 	customNumberWarningRules?: ValidationRule[]

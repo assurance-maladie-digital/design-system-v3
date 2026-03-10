@@ -8,18 +8,87 @@
 		(value: string) => value.length >= 3 || 'Min 3 characters',
 	]
 
+	const customRules = [{
+			type: 'required',
+			options: {
+				message: 'Required type.',
+			},
+		},
+		{
+			type: 'custom',
+			options: {
+				validate: (value: string) => !!value,
+				message: 'Required.',
+			},
+		}, {
+			type: 'custom',
+			options: {
+				validate: (value: string) => value.length >= 3,
+				message: 'Min 3 characters',
+			},
+		}]
+
+	const nirRules = [
+		(value: string) => !!value || 'Required.',
+		(value: string) => value.at(0) == '1' || 'Should not be a female',
+	]
+
 </script>
 
 <template>
-	<div class="ma-8">
+	<div class="ma-16">
 		<h1 class="text-2xl font-bold mb-4">
 			Playground
 		</h1>
-		<SyTextField
-			v-model="selectedValue"
-			use-vuetify-validation
-			label="Test"
-			:rules="rules"
-		/>
+
+		<div
+			style="display: grid; gap: 2rem 10rem; grid-template-columns: 1fr 1fr;"
+		>
+			<div>
+				<p class="mb-4">
+					SyTextField vuetify validation
+				</p>
+				<SyTextField
+					v-model="selectedValue"
+					use-vuetify-validation
+					label="Test"
+					:rules="rules"
+				/>
+			</div>
+
+			<div>
+				<p class="mb-4">
+					SyTextField custom validation
+				</p>
+				<SyTextField
+					v-model="selectedValue"
+					label="Test"
+					:custom-rules="customRules"
+				/>
+			</div>
+
+			<div>
+				<p class="mb-4">
+					NirField with vuetify validation
+				</p>
+				<NirField
+					v-model="selectedValue"
+					use-vuetify-validation
+					label="Test"
+					:rules="nirRules"
+				/>
+			</div>
+
+			<div>
+				<p class="mb-4">
+					NirField with custom validation
+				</p>
+				<NirField
+					v-model="selectedValue"
+					label="Test"
+					:custom-rules="customRules"
+				/>
+			</div>
+		</div>
 	</div>
 </template>

@@ -101,6 +101,7 @@
 label {
 	margin-left: 0.5rem;
 }
+
 .input {
 	display: block;
 	border: 1px solid black;

@@ -92,13 +92,6 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				hasValidationError = true
 			}
 		}
-		// validationRules.forEach((validationRule) => {
-		// 	const result = await validationRule(value)
-		// 	if (result.error) {
-		// 		errors.value.push(result.error)
-		// 		hasValidationError = true
-		// 	}
-		// })
 
 		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
 		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication
@@ -126,12 +119,6 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				})),
 			)
 
-			// warningValidationRules.forEach(async (validationRule) => {
-			// 	const result = await validationRule(value)
-			// 	if (result.warning) {
-			// 		warnings.value.push(result.warning)
-			// 	}
-			// })
 			for (const validationRule of warningValidationRules) {
 				const result = await validationRule(value)
 				if (result.warning) {
@@ -153,12 +140,6 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				})),
 			)
 
-			// successValidationRules.forEach(async (validationRule) => {
-			// 	const result = await validationRule(value)
-			// 	if (result.success && options.showSuccessMessages !== false) {
-			// 		successes.value.push(result.success)
-			// 	}
-			// })
 			for (const validationRule of successValidationRules) {
 				const result = await validationRule(value)
 				if (result.success && options.showSuccessMessages !== false) {
