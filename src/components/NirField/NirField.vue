@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 	import { ref, watch, computed, nextTick, toRef, onMounted, useId, onBeforeUnmount } from 'vue'
 	import { vMaska } from 'maska/vue'
-	import { checkNIR, isNIRKeyValid } from './nirValidation'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import { locales } from './locales'
-	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
+	import { useNirValidation, type NirValidationProps } from './useNirValidation'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -17,22 +16,13 @@
 		keyTooltip?: string
 		nirTooltipPosition?: 'prepend' | 'append'
 		keyTooltipPosition?: 'prepend' | 'append'
-		required?: boolean
 		displayAsterisk?: boolean
-		customNumberRules?: ValidationRule[]
-		customKeyRules?: ValidationRule[]
-		customNumberWarningRules?: ValidationRule[]
-		customKeyWarningRules?: ValidationRule[]
-		customRulesPrecedence?: boolean
-		showSuccessMessages?: boolean
 		width?: string
 		bgColor?: string
-		disabled?: boolean
 		density?: 'default' | 'comfortable' | 'compact'
 		hideDetails?: boolean | 'auto'
 		hideSpinButtons?: boolean
 		placeholder?: string
-		readonly?: boolean
 		variant?: 'filled' | 'outlined' | 'plain' | 'underlined' | 'solo'
 		clearable?: boolean
 		counter?: boolean | number | string
@@ -43,8 +33,8 @@
 		disableErrorHandling?: boolean
 		nirType?: 'simple' | 'complexe'
 		withoutFieldset?: boolean
-		customLocale?: Partial<Record<keyof typeof locales, string>>
-	}>(), {
+		customLocale?: Record<keyof typeof locales, string>
+	} & NirValidationProps>(), {
 		modelValue: undefined,
 		label: 'Identifiant d\'assuré',
 		numberLabel: 'Numéro de sécurité sociale',
@@ -80,14 +70,7 @@
 		disableErrorHandling: false,
 		nirType: 'simple',
 		withoutFieldset: false,
-		customLocale: () => ({
-			errorRequiredNumber: locales.errorRequiredNumber,
-			errorInvalidNumber: locales.errorInvalidNumber,
-			errorRequiredKey: locales.errorRequiredKey,
-			errorInvalidKey: locales.errorInvalidKey,
-			successNumberValid: locales.successNumberValid,
-			successKeyValid: locales.successKeyValid,
-		} as Partial<Record<keyof typeof locales, string>>),
+		customLocale: () => locales,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -187,143 +170,6 @@
 		}
 	})
 
-	// Règles de validation
-	const defaultNumberRules = computed(() => {
-		const rules: ValidationRule[] = []
-		if (props.readonly && props.disabled) return
-		if (props.required) {
-			rules.push({
-				type: 'required',
-				options: {
-					message: props.customLocale.errorRequiredNumber,
-					fieldIdentifier: props.numberLabel,
-				},
-			})
-		}
-
-		// Ajout des règles personnalisées avec prévalence si demandé
-		if (props.customRulesPrecedence && props.customNumberRules && props.customNumberRules.length > 0) {
-			rules.push(...props.customNumberRules.map(rule => ({
-				...rule,
-				options: rule.options || {},
-			})))
-		}
-
-		// Règle de validation standard du NIR
-		rules.push({
-			type: 'custom',
-			options: {
-				validate: (value: string) => {
-					if (!value) return true
-					// Ne valider que si tous les caractères sont saisis
-					if (value.length < 13) {
-						return props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
-					}
-					const result = checkNIR(value, props.nirType)
-					return result ? true : props.customLocale.errorInvalidNumber || locales.errorInvalidNumber
-				},
-				message: props.customLocale.errorInvalidNumber,
-				successMessage: props.customLocale.successNumberValid,
-				fieldIdentifier: props.numberLabel,
-			},
-		})
-
-		// Ajout des règles personnalisées sans prévalence (comportement par défaut)
-		if (!props.customRulesPrecedence && props.customNumberRules && props.customNumberRules.length > 0) {
-			rules.push(...props.customNumberRules.map(rule => ({
-				...rule,
-				options: rule.options || {},
-			})))
-		}
-
-		return rules
-	})
-
-	const defaultKeyRules = computed(() => {
-		const rules: ValidationRule[] = []
-		if (props.readonly && props.disabled) return
-		if (props.required) {
-			rules.push({
-				type: 'required',
-				options: {
-					message: props.customLocale.errorRequiredKey,
-					fieldIdentifier: props.keyLabel,
-				},
-			})
-		}
-
-		const validateKey = (value: string) => {
-			if (!value) return true
-			if (!unmaskedNumberValue.value) return true
-			const fullNir = unmaskedNumberValue.value + value
-			return isNIRKeyValid(fullNir)
-		}
-
-		// Ajout des règles personnalisées
-		if (props.customKeyRules) {
-			rules.push(...props.customKeyRules)
-		}
-
-		// Ajout de la règle de validation par défaut si pas de règle personnalisée avec validation de clé
-		if (!props.customKeyRules?.some(rule => rule.options.validate)) {
-			rules.push({
-				type: 'custom',
-				options: {
-					validate: validateKey,
-					message: props.customLocale.errorInvalidKey,
-					successMessage: props.customLocale.successKeyValid,
-					fieldIdentifier: props.keyLabel,
-				},
-			})
-		}
-
-		return rules
-	})
-
-	const numberValidation = useValidation(
-		numberValue,
-		toRef(props, 'readonly'),
-		toRef(props, 'disabled'),
-		toRef(props, 'required'),
-		ref(true), // isValidateOnBlur
-		toRef(props, 'showSuccessMessages'),
-		toRef(props, 'disableErrorHandling'),
-		false, // useVuetifyValidation
-		toRef(props, 'label'),
-		undefined, // rules
-		computed(() => [...(defaultNumberRules.value ? defaultNumberRules.value : []), ...(props.customNumberRules ? props.customNumberRules : [])]), // Combinaison des règles par défaut et personnalisées
-		computed(() => unmaskedNumberValue.value.length === 13 ? props.customNumberWarningRules : []), // N'appliquer les warnings que si le numéro est complet
-		undefined, // customNumberSuccessRules,
-		undefined, // errorMessages
-		undefined, // warningMessages
-		undefined, // successMessages
-		undefined, // hasErrorProp
-		undefined, // hasWarningProp
-		undefined, // hasSuccessProp
-	)
-
-	const keyValidation = useValidation(
-		keyValue,
-		toRef(props, 'readonly'),
-		toRef(props, 'disabled'),
-		toRef(props, 'required'),
-		ref(true), // isValidateOnBlur
-		toRef(props, 'showSuccessMessages'),
-		toRef(props, 'disableErrorHandling'),
-		false, // useVuetifyValidation
-		toRef(props, 'label'),
-		undefined, // rules
-		computed(() => [...(defaultKeyRules.value ? defaultKeyRules.value : []), ...(props.customKeyRules ? props.customKeyRules : [])]), // Combinaison des règles par défaut et personnalisées
-		computed(() => keyValue.value.length === 2 ? props.customKeyWarningRules : []), // N'appliquer les warnings que si la clé est complète
-		undefined, // customKeySuccessRules,
-		undefined, // errorMessages
-		undefined, // warningMessages
-		undefined, // successMessages
-		undefined, // hasErrorProp
-		undefined, // hasWarningProp
-		undefined, // hasSuccessProp
-	)
-
 	// Synchronisation avec modelValue
 	watch(modelValueRef, (newValue) => {
 		// Ignorer les mises à jour internes pour éviter les boucles infinies
@@ -374,9 +220,35 @@
 		})
 	}
 
-	// État pour suivre si une validation est en cours
-	const isValidating = ref(false)
-	const shouldValidateOnBlur = ref(false)
+	const {
+		numberValidation,
+		keyValidation,
+		validateFields,
+		hasFieldErrors,
+	} = useNirValidation(
+		numberValue,
+		keyValue,
+		unmaskedNumberValue,
+		unmaskedKeyValue,
+		toRef(props, 'readonly'),
+		toRef(props, 'disabled'),
+		toRef(props, 'required'),
+		numberField,
+		keyField,
+		toRef(props, 'customLocale'),
+		toRef(props, 'numberLabel'),
+		toRef(props, 'keyLabel'),
+		toRef(props, 'customNumberRules'),
+		toRef(props, 'customKeyRules'),
+		toRef(props, 'customNumberWarningRules'),
+		toRef(props, 'customKeyWarningRules'),
+		toRef(props, 'displayKey'),
+		toRef(props, 'customRulesPrecedence'),
+		toRef(props, 'nirType'),
+		toRef(props, 'label'),
+		toRef(props, 'showSuccessMessages'),
+		toRef(props, 'disableErrorHandling'),
+	)
 
 	// Fonction utilitaire pour créer une fonction debounced
 	const createDebouncedFunction = <T extends (...args: unknown[]) => void>(fn: T, delay: number) => {
@@ -387,46 +259,11 @@
 		}
 	}
 
-	// Validation des champs
-	const validateFields = async (onBlur = false) => {
-		// Éviter les validations redondantes
-		if (isValidating.value) {
-			shouldValidateOnBlur.value = shouldValidateOnBlur.value || onBlur
-			return true
-		}
-
-		isValidating.value = true
-
-		// Valider le numéro
-		await numberValidation.validate()
-
-		// Valider la clé si elle est affichée
-		if (props.displayKey) {
-			await keyValidation.validate()
-		}
-
-		// Si on est en mode blur et qu'il y a des erreurs, focus sur le premier champ en erreur
-		if (onBlur || shouldValidateOnBlur.value) {
-			await nextTick()
-			if (numberValidation.hasError.value) {
-				numberField.value?.$el?.querySelector?.('input')?.focus()
-			}
-			else if (keyValidation.hasError.value) {
-				keyField.value?.$el?.querySelector?.('input')?.focus()
-			}
-			shouldValidateOnBlur.value = false
-		}
-
-		isValidating.value = false
-		return !numberValidation.hasError.value && !keyValidation.hasError.value
-	}
-
 	const validateOnSubmit = () => {
 		return validateFields(true)
 	}
 
 	// Propriétés calculées pour les attributs ARIA et les états d'erreur
-	const hasFieldErrors = computed(() => numberValidation.hasError.value || keyValidation.hasError.value)
 	const ariaRequired = computed(() => props.required ? 'true' : undefined)
 	const ariaInvalidNumber = computed(() => hasFieldErrors.value ? 'true' : undefined)
 	const ariaInvalidKey = computed(() => keyValidation.hasError.value ? 'true' : undefined)
