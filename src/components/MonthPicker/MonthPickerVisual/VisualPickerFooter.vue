@@ -48,6 +48,7 @@
 	text-align: center;
 	font-weight: bold;
 	font-size: 0.875rem;
+	border-radius: 99px;
 	color: rgb(var(--v-theme-primary, 12, 65, 154));
 	margin-bottom: 2px;
 

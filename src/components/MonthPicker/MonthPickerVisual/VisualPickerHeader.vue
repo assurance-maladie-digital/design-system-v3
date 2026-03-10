@@ -136,6 +136,7 @@
 	gap: 4px;
 	margin: auto;
 	padding: 0.2rem 0.5rem;
+	border-radius: 99px;
 	font-size: 1rem;
 	font-weight: bold;
 	cursor: pointer;
