@@ -149,7 +149,6 @@
 		<slot name="title">
 			<SyHeading
 				:level="props.headingLevel"
-				class="text-h6 mb-2"
 				:class="headingLevel === 4 ? 'text-h6 mb-2' : 'mb-2'"
 			>
 				{{ title }}

@@ -8,16 +8,15 @@ exports[`UploadWorkflow > render the upload list 1`] = `
   "
   style="width: 100%;"
 >
-  <div
-    aria-level="4"
-    class="
-      mb-2
-      text-h6
-    "
-    role="heading"
-  >
+  <h4 class="
+    mb-2
+    mb-2
+    sy-heading
+    text-h6
+    text-h6
+  ">
     Documents à nous transmettre
-  </div>
+  </h4>
   <ul
     class="upload-list"
     style="width: 100%;"

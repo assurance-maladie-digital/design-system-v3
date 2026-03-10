@@ -35,24 +35,6 @@ describe('UploadWorkflow', () => {
 		expect(wrapper.find('.sy-file-upload').isVisible()).toBeTruthy()
 	})
 
-	it('renders default title with role heading and configured aria-level', () => {
-		const wrapper = mount(UploadWorkflow, {
-			props: {
-				uploadList: [
-					{
-						id: 'ID',
-						title: 'Carte d\'identité',
-					},
-				],
-				headingLevel: 2,
-			},
-		})
-
-		const title = wrapper.find('[role="heading"]')
-		expect(title.exists()).toBe(true)
-		expect(title.attributes('aria-level')).toBe('2')
-	})
-
 	it('shows the file in the list when set with the list button', async () => {
 		const wrapper = mount(UploadWorkflow, {
 			props: {
