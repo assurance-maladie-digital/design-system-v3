@@ -29,36 +29,43 @@ const applyThemeSidebar = (theme) => {
 			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
 			// First pass: identify if amelipro should be hidden
-            const hideAmelipro = theme === 'pa' || theme === 'cnam' || theme === 'ap'
-			// When AP theme is active, only show Amelipro components
-            const showOnlyAmelipro = theme === 'ap2026'
+            const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
+            // When AP theme is active, only show Amelipro components
+            const isAp2026 = theme === 'ap2026'
+            const isNotAp = theme !== 'ap'
 
-			// Hide or show items based on theme
-			items.forEach((item) => {
-				// Handle design tokens container page
-				if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
-					item.style.display = theme === 'cnam' ? 'block' : 'none'
-				}
+            const ap2026OnlyStories = [
+                'design-tokens-couleurs--border-section',
+                'design-tokens-couleurs--text-section',
+                'design-tokens-couleurs--icon-section',
+                'design-tokens-couleurs--accent-section',
+                'design-tokens-couleurs--interactive-section',
+            ]
+            const apOnlyStories = [
+                'footerbar--back-office',
+                'footerbar--with-phone-number'
+            ]
+
+            const matchesStory = (itemId, stories) =>
+                stories.some(story => itemId.includes(story))
+
+
+            // Hide or show items based on theme
+            items.forEach((item) => {
                 const itemId = item.getAttribute('data-item-id') || ''
-                // Hide New amelipro stories
 
-                const apOnlyStories = [
-                    'design-tokens-couleurs--border-section',
-                    'design-tokens-couleurs--text-section',
-                    'design-tokens-couleurs--icon-section',
-                    'design-tokens-couleurs--accent-section',
-                    'design-tokens-couleurs--interactive-section',
-                    'footerbar--back-office',
-                    'footerbar--with-phone-number'
-                ]
-
-                if (showOnlyAmelipro) {
-                    if (apOnlyStories.some(s => itemId.includes(s))) {
-                        item.style.display = 'none'
-                    }
+                // Handle design tokens container page
+                if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
+                    item.style.display = theme === 'cnam' ? 'block' : 'none'
                 }
 
-                // Handle amelipro components folder
+                if (isAp2026 && matchesStory(itemId, ap2026OnlyStories)) {
+                    item.style.display = 'none'
+                }
+
+                if (isNotAp && matchesStory(itemId, apOnlyStories)) {
+                    item.style.display = 'none'
+                }
 
 				// Handle amelipro components folder
 				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
@@ -67,7 +74,7 @@ const applyThemeSidebar = (theme) => {
 				}
 
 				// For AP theme, hide all components except those in Amelipro folder
-				if (showOnlyAmelipro) {
+                if (isAp2026) {
 					// Get item ID and text content
 					const itemId = item.getAttribute('data-item-id') || ''
 					const itemText = item.textContent || ''
@@ -81,52 +88,52 @@ const applyThemeSidebar = (theme) => {
 
 				// Handle the "Créer une issue" page - hide it when AP theme is active
 				if (item.querySelector('a[id^="démarrer-créer-une-issue--creeruneissue"]')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Conteneurs de page" page - hide it when AP theme is active
 				if (item.querySelector('a[id^="design-tokens-conteneurs-de-page"]')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Arrondis" page - hide it when AP theme is active
 				if (item.querySelector('a[id*="design-tokens-arrondis"]')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Elevations" page - hide it when AP theme is active
 				if (item.querySelector('a[id*="design-tokens-elevations"]')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Styles typographiques" page - hide it when AP theme is active
 				if (item.querySelector('a[id*="design-tokens-styles-typographiques"]')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Vue d'ensemble" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Vue d\'ensemble')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Migration depuis Bridge" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Migration depuis Bridge')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Migration depuis Vue2" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Migration depuis Vue2')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Breaking changes" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Breaking changes')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Handle the "Correspondance composants PAG" page - hide it when AP theme is active
 				if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
 				// Get item ID and text content once for all checks
@@ -140,7 +147,7 @@ const applyThemeSidebar = (theme) => {
 				// Target any element with Templates text - case insensitive
 				if (itemText && itemText.toLowerCase().includes('templates')) {
 					// console.log('Found element with Templates text:', itemText)
-                    item.style.display = showOnlyAmelipro ? 'none' : 'block'
+                    item.style.display = isAp2026 ? 'none' : 'block'
 				}
 			})
 
@@ -164,7 +171,7 @@ const applyThemeSidebar = (theme) => {
 			}
 
 			// Third pass: if AP theme, hide all component folders except Amelipro
-			if (showOnlyAmelipro) {
+            if (isAp2026) {
 				// First hide all templates related elements
 				// 1. Hide all template sections and their content completely
 				const templateSections = sidebar.querySelectorAll('.sidebar-item[data-item-id*="templates"], .sidebar-item[data-nodeid*="templates"]')
