@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import NotFoundPage from './NotFoundPage.vue'
 
-const meta = {
+const meta: Meta<typeof NotFoundPage> = {
 	title: 'Templates/NotFoundPage',
 	component: NotFoundPage,
 	parameters: {
