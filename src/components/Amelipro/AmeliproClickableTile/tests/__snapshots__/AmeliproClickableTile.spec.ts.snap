@@ -59,3 +59,101 @@ exports[`AmeliproClickableTile > Snapshots > renders the component with only req
   width="100%"
 ></v-btn-stub>
 `;
+
+exports[`AmeliproClickableTile > render correctly 1`] = `
+<button
+  class="
+    amelipro-clickable-tile
+    elevation-0
+    text-none
+    v-btn
+    v-btn--density-default
+    v-btn--elevated
+    v-btn--size-default
+    v-btn--variant-elevated
+    v-theme--light
+  "
+  id="my-clickable-tile-id"
+  style="
+    height: auto;
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #00749C !important;
+    color: #1A1B1B;
+    padding: 1rem;
+  "
+  type="button"
+>
+  <span class="v-btn__overlay"></span>
+  <span class="v-btn__underlay"></span>
+  <!---->
+  <span
+    class="v-btn__content"
+    data-no-activator=""
+  >
+    <span class="
+      align-center
+      d-flex
+    ">
+      <!-- v-if -->
+      <span
+        class="
+          amelipro-clickable-tile__icon
+          amelipro-icon
+        "
+        id="my-clickable-tile-id-icon"
+      >
+        <span
+          aria-hidden="true"
+          class="
+            amelipro-custom-icon
+            custom-color
+          "
+          focusable="false"
+          role="img"
+          style="
+            color: #FFFFFF;
+            height: 32px;
+            width: 32px;
+          "
+        >
+          <span></span>
+        </span>
+      </span>
+      <span class="
+        d-block
+        ml-3
+        mr-6
+      ">
+        titre de la tuile
+      </span>
+    </span>
+    <span
+      class="
+        amelipro-clickable-tile__icon-arrow
+        amelipro-icon
+      "
+      id="my-clickable-tile-id-icon-arrow"
+    >
+      <span
+        aria-hidden="true"
+        class="
+          amelipro-custom-icon
+          custom-color
+        "
+        focusable="false"
+        role="img"
+        style="
+          color: #00749C;
+          height: 16px;
+          width: 16px;
+        "
+      >
+        <span></span>
+      </span>
+    </span>
+  </span>
+  <!---->
+  <!---->
+</button>
+`;
