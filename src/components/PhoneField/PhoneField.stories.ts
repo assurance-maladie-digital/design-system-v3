@@ -1433,6 +1433,7 @@ export const DisabledErrorHandling: Story = {
 						<p>Ce champ est requis et affichera une erreur s'il est vide.</p>
 						<PhoneField
 							v-bind="args"
+							:disable-error-handling="false"
 						/>
 					</div>
 				</div>
