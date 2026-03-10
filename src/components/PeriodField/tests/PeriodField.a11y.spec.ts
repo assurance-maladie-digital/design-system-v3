@@ -21,12 +21,14 @@ describe('PeriodField – accessibility (axe)', () => {
 			attachTo: document.body,
 		})
 
+		const ignoreRules = ['region']
+
 		const results = await axe(wrapper.element as HTMLElement)
-		if (results.violations.length) {
+		if (results.violations.filter(violation => !ignoreRules.includes(violation.id)).length > 0) {
 			console.log(JSON.stringify(results.violations, null, 2))
 		}
 		assertNoA11yViolations(results, 'PeriodField – valid period', {
-			ignoreRules: ['region'],
+			ignoreRules: ignoreRules,
 		})
 
 		wrapper.unmount()
