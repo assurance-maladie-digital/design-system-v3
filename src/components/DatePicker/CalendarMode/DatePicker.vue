@@ -1275,6 +1275,10 @@
 	}
 }
 
+:deep(.v-date-picker-months) {
+	flex: 1;
+}
+
 :deep(.v-date-picker-months .v-btn__content) {
 	font-size: 1rem;
 }
@@ -1303,4 +1307,5 @@
 :deep(.v-picker__body .v-btn--active .v-btn__overlay) {
 	opacity: 0;
 }
+
 </style>
