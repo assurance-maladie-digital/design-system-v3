@@ -15,6 +15,8 @@
 	import type { FileItem, SelectedFile, UploadItem } from './types'
 	import useFileList from './useFileList'
 	import useFileUploadJourney from './useFileUploadJourney'
+	import useFileList from './useFileList'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = withDefaults(
 		defineProps<
@@ -145,13 +147,13 @@
 		class="sy-upload-workflow white"
 	>
 		<slot name="title">
-			<div
-				:aria-level="props.headingLevel"
-				role="heading"
+			<SyHeading
+				:level="props.headingLevel"
 				class="text-h6 mb-2"
+				:class="headingLevel === 4 ? 'text-h6 mb-2' : 'mb-2'"
 			>
 				{{ title }}
-			</div>
+			</SyHeading>
 		</slot>
 
 		<FileList

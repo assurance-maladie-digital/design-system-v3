@@ -13,9 +13,11 @@
 		type: CookieTypes
 		tableItems: Cookie[]
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelRadioGroup?: 1 | 2 | 3 | 4 | 5 | 6
 
 	}>(), {
 		headingLevel: 2,
+		headingLevelRadioGroup: 3,
 	})
 
 	const status = defineModel<boolean | undefined>()
@@ -137,14 +139,13 @@
 			</CookiesTable>
 		</details>
 
-		<div
+		<SyHeading
 			:id="`radio-group-${type}`"
-			role="heading"
-			aria-level="3"
+			:level="headingLevelRadioGroup"
 			class="vd-cookies-information__heading"
 		>
 			{{ locales.fieldLabel(locales[type].title) }}
-		</div>
+		</SyHeading>
 
 		<VRadioGroup
 			v-if="type !== 'essentials'"

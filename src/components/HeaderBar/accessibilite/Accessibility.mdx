@@ -13,23 +13,22 @@ import {
 
 <Meta of={HeaderBarStories}/>
 
+
 <AccessibilityGuideLayout
 	componentName="HeaderBar"
 	iconSrc={AccessibilityIcon}
 >
-
-<CriteriaCard icon="🧩" title="Gestion dynamique des titres">
-  <ul>
-    <li><strong>Composant paramétrable via la prop <code>headingLevel</code></strong> :  Le niveau du titre (h1-h6) est contrôlé par la prop déclarée dans le composant (<code>headingLevel?: 1 | 2 | 3 | 4 | 5 | 6</code>) ; vous pouvez passer directement un chiffre pour définir le niveau du titre</li>
-      <code>&lt;HeaderBar
-          :heading-level="2" /&gt; </code>
-    
-    <li><strong>Accessibilité</strong> : Hiérarchie sémantique respectée pour une meilleure lecture par les lecteurs d’écran</li>
-  </ul>
-</CriteriaCard>
-
-<div class="mt-2">
+		<div class="mt-6">
 <p>Rapport d’audit manuel : <a href="/audits/HeaderBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{color:'#0C41BD'}}>issue #643</a>)</p>
 </div>
+<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+  <ul>
+    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h2, défini dans l’implémentation du composant.</li>
+      <code>&lt;HeaderBar
+          :heading-level="2" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : utilisation appropriée de titres (critère 9.1.1 RGAA) on doit retrouver dans la page les titres (balise <code>hx</code> ou balise possédant un attribut WAI-ARIA role="heading" associé à un attribut WAI-ARIA aria-level) </li>
+  </ul>
+</CriteriaCard>
 </AccessibilityGuideLayout>
