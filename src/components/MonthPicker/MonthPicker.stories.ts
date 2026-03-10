@@ -1,8 +1,9 @@
 import { fn } from '@storybook/test'
-import { nextTick } from 'vue'
+import { nextTick, ref } from 'vue'
 import MonthPicker from './MonthPicker.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import type SyTextField from '../Customs/SyTextField/SyTextField.vue'
+import SyForm from '../Customs/SyForm/SyForm.vue'
 
 const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker',
@@ -474,4 +475,69 @@ export const CustomDisplayedYears: Story = {
 			},
 		],
 	},
+}
+
+export const Form: Story = {
+	args: {
+		modelValue: '11/2025',
+		label: 'Début du projet',
+		width: '400px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyForm @submit="handleSubmit">
+						<MonthPicker
+							v-model="selectedMonth"
+							label="Début du projet"
+							width="400px"
+							:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
+						/>
+						<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+					</SyForm>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { MonthPicker, SyForm } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedMonth = ref('11/2025')
+
+					const handleSubmit = (e: { isValid: boolean }) => {
+						alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
+					}
+				</script>
+				`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker, SyForm },
+		setup() {
+			const selectedMonth = ref('11/2025')
+
+			const handleSubmit = (e: { isValid: boolean }) => {
+				alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
+			}
+
+			return { args, selectedMonth, handleSubmit }
+		},
+		template: `
+			<SyForm @submit="handleSubmit">
+				<MonthPicker
+					v-bind="args"
+					v-model="selectedMonth"
+					width="400px"
+					:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
+				/>
+				<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+			</SyForm>
+		`,
+	}),
 }
