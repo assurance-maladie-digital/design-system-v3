@@ -90,6 +90,7 @@
 			disableClickButton?: boolean
 			autocomplete?: string
 			helpText?: string
+			maxlength?: string | number
 		}>(),
 		{
 			modelValue: undefined,
@@ -159,6 +160,7 @@
 			disableClickButton: true,
 			autocomplete: 'off',
 			helpText: '',
+			maxlength: undefined,
 		},
 	)
 
@@ -173,6 +175,8 @@
 
 	const emit = defineEmits([
 		'update:modelValue',
+		'input',
+		'keydown',
 		'clear',
 		'prepend-icon-click',
 		'append-icon-click',
@@ -305,7 +309,11 @@
 		}
 	})
 
-	const hasError = computed(() => validation.hasError.value || props.hasError)
+	const hasError = computed(() =>
+		validation.hasError.value
+		|| (props.errorMessages?.length ?? 0) > 0
+		|| props.hasError,
+	)
 	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
 	const hasSuccess = computed(() => ((validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess) && props.showSuccessMessages)
 
@@ -615,6 +623,7 @@
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
+			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
@@ -645,6 +654,8 @@
 				'basic-field': !hasError && !hasWarning && !hasSuccess
 			}"
 			@blur="checkErrorOnBlur"
+			@input="(e: Event) => emit('input', e)"
+			@keydown="(e: KeyboardEvent) => emit('keydown', e)"
 		>
 			<!-- Prepend -->
 			<template
