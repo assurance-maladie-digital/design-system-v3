@@ -13,7 +13,6 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import type { FileItem, SelectedFile, UploadItem } from './types'
-	import useFileList from './useFileList'
 	import useFileUploadJourney from './useFileUploadJourney'
 	import useFileList from './useFileList'
 	import SyHeading from '../SyHeading/SyHeading.vue'
