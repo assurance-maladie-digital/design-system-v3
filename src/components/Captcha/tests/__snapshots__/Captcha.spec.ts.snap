@@ -175,6 +175,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                   autocomplete="off"
                   class="v-field__input"
                   id="input-v-1"
+                  title="Caractères de l’audio"
                   type="text"
                 />
                 <!---->
@@ -561,6 +562,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                   autocomplete="off"
                   class="v-field__input"
                   id="input-v-0"
+                  title="Caractères de l’image"
                   type="text"
                 />
                 <!---->

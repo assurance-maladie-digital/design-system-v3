@@ -162,7 +162,7 @@
 			autocomplete: 'off',
 			helpText: '',
 			maxlength: undefined,
-			title: false,
+			title: undefined,
 		},
 	)
 
@@ -372,7 +372,9 @@
 
 	// Use title prop if provided, otherwise fall back to accessible label
 	const titleValue = computed(() => {
+		// If title is explicitly false, don't show any title
 		if (props.title === false) return undefined
+		// Otherwise use title if provided, or accessibleLabel as fallback
 		return props.title || accessibleLabel.value
 	})
 	const accessibleLabel = computed(() => {
