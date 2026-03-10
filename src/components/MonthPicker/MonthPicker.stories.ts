@@ -479,7 +479,7 @@ export const CustomDisplayedYears: Story = {
 
 export const Form: Story = {
 	args: {
-		modelValue: '11/2025',
+		modelValue: '',
 		label: 'Début du projet',
 		width: '400px',
 	},
