@@ -110,7 +110,7 @@
 	cursor: pointer;
 	text-align: center;
 	min-width: 33px;
-	font-size: 0.875rem;
+	font-size: var(--v-typography-body2-font-size, 1rem);
 	border-radius: 99px;
 	font-weight: bold;
 

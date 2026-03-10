@@ -109,7 +109,7 @@
 .visual-picker-header__title {
 	padding-inline: 24px 12px;
 	padding-bottom: 16px;
-	font-size: 0.875rem;
+	font-size: var(--v-typography-caption-font-size, 0.875rem);
 	font-weight: 400;
 	letter-spacing: 0.125rem;
 	line-height: 150%;
@@ -137,7 +137,7 @@
 	margin: auto;
 	padding: 0.2rem 0.5rem;
 	border-radius: 99px;
-	font-size: 1rem;
+	font-size: var(--v-typography-body1-font-size, 1.125rem);
 	font-weight: bold;
 	cursor: pointer;
 

@@ -47,7 +47,7 @@
 	padding: 8px;
 	text-align: center;
 	font-weight: bold;
-	font-size: 0.875rem;
+	font-size: var(--v-typography-body2-font-size, 1rem);
 	border-radius: 99px;
 	color: rgb(var(--v-theme-primary, 12, 65, 154));
 	margin-bottom: 2px;
