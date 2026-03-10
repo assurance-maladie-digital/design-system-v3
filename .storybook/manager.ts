@@ -4,12 +4,28 @@ import paTheme from './PaTheme'
 import apTheme from './ApTheme'
 import ap2026Theme from './Ap2026Theme'
 
+const channel = addons.getChannel()
+
 // Helper function to apply theme class to HTML root element
 const applyThemeClass = (theme) => {
 	const rootElement = document.documentElement // Always exists
     rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
 	rootElement.classList.add(`theme-${theme}`)
 }
+
+// Stories to hide depending theme
+const ap2026OnlyStories = [
+    'design-tokens-couleurs--border-section',
+    'design-tokens-couleurs--text-section',
+    'design-tokens-couleurs--icon-section',
+    'design-tokens-couleurs--accent-section',
+    'design-tokens-couleurs--interactive-section',
+]
+const apOnlyStories = [
+    'footerbar--back-office',
+    'footerbar--with-phone-number'
+]
+
 
 const applyThemeSidebar = (theme) => {
 	const processSidebar = () => {
@@ -34,24 +50,13 @@ const applyThemeSidebar = (theme) => {
             const isAp2026 = theme === 'ap2026'
             const isNotAp = theme !== 'ap'
 
-            const ap2026OnlyStories = [
-                'design-tokens-couleurs--border-section',
-                'design-tokens-couleurs--text-section',
-                'design-tokens-couleurs--icon-section',
-                'design-tokens-couleurs--accent-section',
-                'design-tokens-couleurs--interactive-section',
-            ]
-            const apOnlyStories = [
-                'footerbar--back-office',
-                'footerbar--with-phone-number'
-            ]
-
             const matchesStory = (itemId, stories) =>
                 stories.some(story => itemId.includes(story))
 
 
             // Hide or show items based on theme
             items.forEach((item) => {
+                item.style.display = 'block'
                 const itemId = item.getAttribute('data-item-id') || ''
 
                 // Handle design tokens container page
@@ -311,11 +316,52 @@ const applyThemeSidebar = (theme) => {
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 
+const observeSidebar = () => {
+    const attachObserver = () => {
+        const sidebar = document.querySelector('.sidebar-container')
+        if (sidebar) {
+            const observer = new MutationObserver(() => {
+                const theme = localStorage.getItem('storybook-theme')
+                const isAp2026 = theme === 'ap2026'
+                const isNotAp = theme !== 'ap'
+
+                const matchesStory = (itemId, stories) =>
+                    stories.some(story => itemId.includes(story))
+
+                const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
+
+                items.forEach((item) => {
+                    const itemId = item.getAttribute('data-item-id') || ''
+
+                    if (isAp2026 && matchesStory(itemId, ap2026OnlyStories)) {
+                        item.style.display = 'none'
+                    }
+
+                    if (isNotAp && matchesStory(itemId, apOnlyStories)) {
+                        item.style.display = 'none'
+                    }
+                })
+            })
+
+            observer.observe(sidebar, {childList: true, subtree: true})
+        }
+    }
+
+    attachObserver()
+
+    const bodyObserver = new MutationObserver(() => {
+        attachObserver()
+        const sidebar = document.querySelector('.sidebar-container')
+        if (sidebar) bodyObserver.disconnect()
+    })
+    bodyObserver.observe(document.body, {childList: true, subtree: true})
+}
 // Apply initial theme and sidebar
 if (typeof window !== 'undefined') {
 	applyThemeClass(storedTheme || 'cnam')
 	setTimeout(() => {
 		applyThemeSidebar(storedTheme || 'cnam')
+        observeSidebar()
 	}, 100)
 }
 
@@ -372,6 +418,7 @@ if (typeof window !== 'undefined') {
 		// If the theme is being changed, handle it
 		if (key === 'storybook-theme') {
 			handleThemeChange(value || 'cnam')
+            channel.emit('storybook-theme-change', value)
 		}
 	}
 
