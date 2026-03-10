@@ -44,11 +44,11 @@ const meta = {
 		},
 		'autocompleteCountryCode': {
 			control: 'text',
-			description: 'Valeur de l\'attribut autocomplete pour le champ indicatif pays (par défaut: "tel-country-code")',
+			description: 'Valeur de l\'attribut `autocomplete` pour le champ indicatif pays. Utiliser `tel-country-code` (défaut) lorsque le numéro est séparé en deux champs (indicatif + numéro national), conformément à [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-country-code) et [WCAG 1.3.5](https://www.w3.org/WAI/WCAG21/quickref/#identify-input-purpose).',
 		},
 		'autocompletePhone': {
 			control: 'text',
-			description: 'Valeur de l\'attribut autocomplete pour le champ numéro de téléphone (par défaut: "tel-national")',
+			description: 'Valeur de l\'attribut `autocomplete` pour le champ numéro de téléphone. Valeurs recommandées selon le scénario :\n\n- `tel-national` (défaut) — numéro sans indicatif, lorsque le composant est en mode deux champs (`withCountryCode`).\n- `tel` — numéro complet avec indicatif intégré, pour un champ unique sans sélecteur de pays.\n- `tel-extension` — poste ou extension téléphonique.',
 		},
 		'isValidatedOnBlur': { control: 'boolean' },
 		'displayAsterisk': { control: 'boolean' },
@@ -400,6 +400,20 @@ export const Autocomplete: Story = {
 	parameters: {
 		a11y: {
 			disable: false,
+		},
+		docs: {
+			description: {
+				story: `
+Les attributs \`autocomplete\` permettent aux navigateurs et aux outils d'assistance de remplir automatiquement les champs avec les bonnes informations utilisateur, conformément à [WCAG 1.3.5 — Identifier la finalité de la saisie](https://www.w3.org/WAI/WCAG21/quickref/#identify-input-purpose).
+
+| Scénario | Prop à utiliser | Valeur recommandée | Source |
+|---|---|---|---|
+| **Code pays** (ex : +33) — champ séparé | \`autocompleteCountryCode\` | \`tel-country-code\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-country-code) |
+| **Numéro sans indicatif** (ex : 06 12 34 56 78) — avec \`withCountryCode\` | \`autocompletePhone\` | \`tel-national\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-national) |
+| **Numéro complet** (indicatif intégré) — sans \`withCountryCode\` | \`autocompletePhone\` | \`tel\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel) |
+| **Extension / poste** | \`autocompletePhone\` | \`tel-extension\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-extension) |
+				`,
+			},
 		},
 		sourceCode: [
 			{

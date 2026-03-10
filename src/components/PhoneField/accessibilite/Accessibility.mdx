@@ -34,7 +34,46 @@ import '@/stories/styles/shared.css';
 			<ul>
 				<li><strong>Regroupement</strong> : Lorsque l'indicatif pays est affiché, les deux champs (indicatif et numéro) sont regroupés dans un <code>fieldset</code> avec une <code>legend</code> associée.</li>
 				<li><strong>Étiquetage explicite</strong> : Chaque champ dispose d'un label associé via la prop <code>label</code>.</li>
-				<li><strong>Attributs autocomplete</strong> : Les attributs <code>autocomplete</code> sont configurables via <code>autocompleteCountryCode</code> et <code>autocompletePhone</code> pour améliorer le remplissage automatique.</li>
+				<li>
+					<strong>Attributs autocomplete</strong> : Les attributs <code>autocomplete</code> sont configurables via <code>autocompleteCountryCode</code> et <code>autocompletePhone</code>.
+					Choisissez la valeur adaptée à votre scénario (<a href="https://www.w3.org/WAI/WCAG21/quickref/#identify-input-purpose" target="_blank" rel="noopener noreferrer">WCAG 1.3.5</a>) :
+					<table className="autocomplete-table">
+						<thead>
+							<tr>
+								<th>Scénario</th>
+								<th>Prop</th>
+								<th>Valeur recommandée</th>
+								<th>Source</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><strong>Code pays</strong> (ex : +33) — champ séparé</td>
+								<td><code>autocompleteCountryCode</code></td>
+								<td><code>tel-country-code</code></td>
+								<td><a href="https://html.spec.whatwg.org/#autofill-field-tel-country-code" target="_blank" rel="noopener noreferrer">WHATWG</a></td>
+							</tr>
+							<tr>
+								<td><strong>Numéro sans indicatif</strong> (ex : 06 12 34 56 78) — avec <code>withCountryCode</code></td>
+								<td><code>autocompletePhone</code></td>
+								<td><code>tel-national</code></td>
+								<td><a href="https://html.spec.whatwg.org/#autofill-field-tel-national" target="_blank" rel="noopener noreferrer">WHATWG</a></td>
+							</tr>
+							<tr>
+								<td><strong>Numéro complet</strong> (indicatif intégré) — sans <code>withCountryCode</code></td>
+								<td><code>autocompletePhone</code></td>
+								<td><code>tel</code></td>
+								<td><a href="https://html.spec.whatwg.org/#autofill-field-tel" target="_blank" rel="noopener noreferrer">WHATWG</a></td>
+							</tr>
+							<tr>
+								<td><strong>Extension / poste</strong></td>
+								<td><code>autocompletePhone</code></td>
+								<td><code>tel-extension</code></td>
+								<td><a href="https://html.spec.whatwg.org/#autofill-field-tel-extension" target="_blank" rel="noopener noreferrer">WHATWG</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
 			</ul>
 		</div>
 
@@ -235,6 +274,31 @@ import '@/stories/styles/shared.css';
 
   .resources-section a:hover {
     text-decoration: underline;
+  }
+
+  .autocomplete-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 0.9em;
+  }
+
+  .autocomplete-table th,
+  .autocomplete-table td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .autocomplete-table th {
+    background-color: #f0f4f8;
+    color: #0077cc;
+    font-weight: 600;
+  }
+
+  .autocomplete-table tr:nth-child(even) td {
+    background-color: #f9f9f9;
   }
 
   code {
