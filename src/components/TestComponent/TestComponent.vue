@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 	import { ref, toRef, useId, watch } from 'vue'
-	import { useValidation, type FieldValidationProps } from '../Customs/SyTextField/useValidation'
+	import { useValidation, type FieldValidationProps } from '../../composables/unifyValidation/useValidation'
 
 	const props = withDefaults(
 		defineProps<{

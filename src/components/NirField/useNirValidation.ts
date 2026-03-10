@@ -140,49 +140,33 @@ export function useNirValidation(
 	const isValidating = ref(false)
 	const shouldValidateOnBlur = ref(false)
 
-	const numberValidation = useValidation(
-		numberValue,
+	const numberValidation = useValidation({
+		modelValue: numberValue,
 		readonly,
 		disabled,
 		required,
-		ref(true), // isValidateOnBlur
+		isValidateOnBlur: ref(true),
 		showSuccessMessages,
 		disableErrorHandling,
-		false, // useVuetifyValidation
-		label, // label
-		undefined, // rules
-		computed(() => [...(defaultNumberRules.value ? defaultNumberRules.value : []), ...(customNumberRules.value ? customNumberRules.value : [])]), // Combinaison des règles par défaut et personnalisées
-		computed(() => unmaskedNumberValue.value.length === 13 ? customNumberWarningRules.value : []), // N'appliquer les warnings que si le numéro est complet
-		undefined, // customNumberSuccessRules,
-		undefined, // errorMessages
-		undefined, // warningMessages
-		undefined, // successMessages
-		undefined, // hasErrorProp
-		undefined, // hasWarningProp
-		undefined, // hasSuccessProp
-	)
+		useVuetifyValidation: false,
+		label,
+		customRules: computed(() => [...(defaultNumberRules.value ? defaultNumberRules.value : []), ...(customNumberRules.value ? customNumberRules.value : [])]),
+		customWarningRules: computed(() => unmaskedNumberValue.value.length === 13 ? customNumberWarningRules.value : []),
+	})
 
-	const keyValidation = useValidation(
-		keyValue,
+	const keyValidation = useValidation({
+		modelValue: keyValue,
 		readonly,
 		disabled,
 		required,
-		ref(true), // isValidateOnBlur
+		isValidateOnBlur: ref(true),
 		showSuccessMessages,
 		disableErrorHandling,
-		false, // useVuetifyValidation
-		label, // label
-		undefined, // rules
-		computed(() => [...(defaultKeyRules.value ? defaultKeyRules.value : []), ...(customKeyRules.value ? customKeyRules.value : [])]), // Combinaison des règles par défaut et personnalisées
-		computed(() => keyValue.value.length === 2 ? customKeyWarningRules.value : []), // N'appliquer les warnings que si la clé est complète
-		undefined, // customKeySuccessRules,
-		undefined, // errorMessages
-		undefined, // warningMessages
-		undefined, // successMessages
-		undefined, // hasErrorProp
-		undefined, // hasWarningProp
-		undefined, // hasSuccessProp
-	)
+		useVuetifyValidation: false,
+		label,
+		customRules: computed(() => displayKey.value ? [...(defaultKeyRules.value ? defaultKeyRules.value : []), ...(customKeyRules.value ? customKeyRules.value : [])] : []),
+		customWarningRules: computed(() => (displayKey.value && unmaskedKeyValue.value.length === 2) ? customKeyWarningRules.value : []),
+	})
 
 	// Validation des champs
 	const validateFields = async (onBlur = false) => {

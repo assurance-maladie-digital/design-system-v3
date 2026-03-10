@@ -15,7 +15,7 @@
 	import type { IconType, VariantStyle, ColorType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults, type FieldValidationProps } from './useValidation'
+	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '../../../composables/unifyValidation/useValidation'
 
 	const props = withDefaults(
 		defineProps<{
@@ -177,30 +177,30 @@
 		}]
 		: [],
 	)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation(
-		toRef(props, 'modelValue'),
-		toRef(props, 'readonly'),
-		toRef(props, 'disabled'),
-		toRef(props, 'required'),
-		toRef(props, 'isValidateOnBlur'),
-		toRef(props, 'showSuccessMessages'),
-		toRef(props, 'disableErrorHandling'),
-		toRef(props, 'useVuetifyValidation'),
-		toRef(props, 'label'),
-		toRef(props, 'rules'),
-		computed(() => {
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+		modelValue: toRef(props, 'modelValue'),
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		label: toRef(props, 'label'),
+		rules: toRef(props, 'rules'),
+		customRules: computed(() => {
 			const customRules = props.customRules ? props.customRules : []
 			return [...defaultRules.value, ...customRules]
 		}),
-		toRef(props, 'customWarningRules'),
-		toRef(props, 'customSuccessRules'),
-		toRef(props, 'errorMessages'),
-		toRef(props, 'warningMessages'),
-		toRef(props, 'successMessages'),
-		toRef(props, 'hasError'),
-		toRef(props, 'hasWarning'),
-		toRef(props, 'hasSuccess'),
-	)
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+	})
 
 	const forwardedAttrs = computed(() => {
 		const filteredAttrs = Object.fromEntries(

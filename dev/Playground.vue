@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyTextField, NirField } from '@/components'
-	const selectedValue = ref('')
+	const selectedValue = ref('33')
 
 	const rules = [
 		(value: string) => !!value || 'Required.',
