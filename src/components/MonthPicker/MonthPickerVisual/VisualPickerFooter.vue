@@ -35,11 +35,16 @@
 </template>
 
 <style scoped lang="scss">
+.month-picker-footer {
+	padding: 0 12px 12px;
+}
+
 .month-picker-footer__current-month-btn {
 	display: flex;
 	gap: 8px;
 	margin: auto;
-	padding: 16px 12px;
+	margin-block: 8px;
+	padding: 8px;
 	text-align: center;
 	font-weight: bold;
 	font-size: 0.875rem;

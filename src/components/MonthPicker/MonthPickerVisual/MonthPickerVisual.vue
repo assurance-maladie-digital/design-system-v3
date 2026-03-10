@@ -98,7 +98,7 @@
 		:close-on-content-click="false"
 		:max-width="328"
 		:min-width="328"
-		:max-height="455"
+		:min-height="455"
 		disable-initial-focus
 		:retain-focus="false"
 		:disabled="props.disabled"

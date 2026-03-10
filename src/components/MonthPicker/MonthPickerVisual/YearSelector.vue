@@ -97,16 +97,20 @@
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	padding: 16px 16px 12px;
+	max-height: 288px;
+	grid-gap: 0 24px;
+	padding-inline: 32px;
+	overflow: auto;
 }
 
 .year-selector__year {
-	padding: 8px;
-	margin: 4px;
+	height: 40px;
+	margin-block: 2px;
 	border: 2px solid #fff;
 	cursor: pointer;
 	text-align: center;
 	min-width: 33px;
+	font-size: 0.875rem;
 	border-radius: 99px;
 	font-weight: bold;
 

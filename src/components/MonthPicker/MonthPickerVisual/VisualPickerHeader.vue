@@ -109,10 +109,10 @@
 .visual-picker-header__title {
 	padding-inline: 24px 12px;
 	padding-bottom: 16px;
-	text-transform: uppercase;
-	font-size: 0.75rem;
+	font-size: 0.875rem;
 	font-weight: 400;
-	letter-spacing: 0.1667em;
+	letter-spacing: 0.125rem;
+	line-height: 150%;
 }
 
 .visual-picker-header__date {
@@ -125,7 +125,10 @@
 }
 
 .visual-picker-subheader {
-	padding-top: 16px;
+	height: 56px;
+	padding: 4px;
+	display: flex;
+	justify-content: center;
 }
 
 .visual-picker-year-btn {
@@ -135,7 +138,6 @@
 	padding: 0.2rem 0.5rem;
 	font-size: 1rem;
 	font-weight: bold;
-	color: rgb(var(--v-theme-primary, 12, 65, 154));
 	cursor: pointer;
 
 	&:focus-visible {
