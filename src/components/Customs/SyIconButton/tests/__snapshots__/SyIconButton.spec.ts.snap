@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SyIconButton > passes the color prop to v-icon 1`] = `
+<button
+  aria-label="Fermer"
+  class="rounded-xl"
+>
+  <span
+    aria-hidden="true"
+    class="v-icon"
+  >
+    mdi-close
+  </span>
+</button>
+`;
+
+exports[`SyIconButton > passes the size prop to v-btn 1`] = `
+<button
+  aria-label="Fermer"
+  class="rounded-xl"
+>
+  <span
+    aria-hidden="true"
+    class="v-icon"
+  >
+    mdi-close
+  </span>
+</button>
+`;
+
+exports[`SyIconButton > renders correctly 1`] = `
+<button
+  aria-label="Fermer"
+  class="rounded-xl"
+>
+  <span
+    aria-hidden="true"
+    class="v-icon"
+  >
+    mdi-close
+  </span>
+</button>
+`;

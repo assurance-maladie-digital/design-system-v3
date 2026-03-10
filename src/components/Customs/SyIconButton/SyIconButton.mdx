@@ -1,0 +1,86 @@
+import { Meta, Primary, Controls, Canvas } from '@storybook/blocks';
+import * as SyIconButtonStories from './SyIconButton.stories';
+import '@/stories/styles/shared.css';
+
+<Meta of={SyIconButtonStories} />
+
+<div className="header">
+  <h1>SyIconButton</h1>
+  <p>Bouton icône accessible basé sur `v-btn` de Vuetify</p>
+</div>
+
+## Utilisation
+
+Le composant `SyIconButton` est un bouton icône qui combine `v-btn` et `v-icon` de Vuetify en garantissant l'accessibilité via une prop `label` obligatoire portée par `aria-label`.
+
+<Primary />
+<Controls />
+
+<div className="header">
+  <h1>Accessibilité</h1>
+</div>
+
+Le composant `SyIconButton` gère automatiquement les attributs ARIA :
+
+- **Label obligatoire** : la prop `label` est portée par le bouton via `aria-label` — elle constitue le nom accessible du bouton
+- **Icône décorative** : le `v-icon` interne a toujours `:aria-hidden="true"` car le bouton porte déjà le nom accessible
+
+> **Important :** Le `label` doit décrire l'**action** du bouton et non l'icône elle-même (ex. _"Fermer"_ plutôt que _"Croix"_). Ne jamais fournir un `label` vide.
+
+Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'accessibilité](/docs/customs-syiconbutton-accessibilite--docs).
+
+## API
+
+## Exemples
+
+### Bouton icône par défaut
+
+<Canvas of={SyIconButtonStories.Default} />
+
+### Bouton icône désactivé
+
+<Canvas of={SyIconButtonStories.Disabled} />
+
+### Bouton icône avec couleur
+
+<Canvas of={SyIconButtonStories.WithColor} />
+
+### Bouton icône avec taille personnalisée
+
+<Canvas of={SyIconButtonStories.WithSize} />
+
+### Bouton icône avec couleur et taille
+
+<Canvas of={SyIconButtonStories.WithColorAndSize} />
+
+## Exemple d'utilisation
+
+```vue
+<template>
+  <!-- Bouton icône simple -->
+  <SyIconButton
+    icon="mdi-close"
+    label="Fermer"
+    @click-icon-button="handleClose"
+  />
+
+  <!-- Bouton icône avec couleur -->
+  <SyIconButton
+    icon="mdi-alert"
+    label="Alerte"
+    color="error"
+    @click-icon-button="handleAlert"
+  />
+
+  <!-- Bouton icône désactivé -->
+  <SyIconButton
+    icon="mdi-pencil"
+    label="Modifier"
+    :disabled="true"
+  />
+</template>
+
+<script setup>
+  import { SyIconButton } from '@cnam/design-system'
+</script>
+```

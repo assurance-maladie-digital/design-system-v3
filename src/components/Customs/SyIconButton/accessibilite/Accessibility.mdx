@@ -19,13 +19,19 @@ import {
 	<CriteriaSection>
 		<CriteriaCard icon="🔍" title="Structure sémantique">
 			<ul>
-				
+				<li><strong>Élément bouton</strong> : le composant repose sur un <code>v-btn</code> qui génère un élément <code>&lt;button&gt;</code> natif — il est nativement reconnu par les lecteurs d'écran et les outils d'assistance</li>
+				<li><strong>Prop <code>label</code> obligatoire</strong> : la prop <code>label</code> est requise et est portée par le bouton via <code>aria-label</code> — elle constitue le nom accessible du bouton</li>
+				<li><strong>Icône décorative</strong> : le <code>v-icon</code> interne est marqué <code>:aria-hidden="true"</code> car le bouton porte déjà le nom accessible via <code>aria-label</code></li>
+				<li><strong>Prop <code>disabled</code></strong> : lorsque <code>disabled</code> est à <code>true</code>, l'attribut <code>disabled</code> est appliqué nativement sur le <code>&lt;button&gt;</code>, le rendant inaccessible au clavier et annoncé comme désactivé par les lecteurs d'écran</li>
 			</ul>
 		</CriteriaCard>
 
 		<CriteriaCard icon="⌨️" title="Navigation clavier">
 			<ul>
-			
+				<li><strong>Focusable</strong> : le bouton est naturellement focusable via <kbd>Tab</kbd> grâce à l'élément <code>&lt;button&gt;</code> natif</li>
+				<li><strong>Activation</strong> : le bouton peut être activé via <kbd>Entrée</kbd> ou <kbd>Espace</kbd> nativement</li>
+				<li><strong>État désactivé</strong> : lorsque <code>disabled</code> est à <code>true</code>, le bouton est retiré de l'ordre de tabulation et ne peut pas être activé au clavier</li>
+				<li><strong>Événement</strong> : le composant émet <code>click-icon-button</code> au clic ou à l'activation clavier</li>
 			</ul>
 		</CriteriaCard>
 	</CriteriaSection>
@@ -36,10 +42,20 @@ import {
 
 	<BestPracticesSection>
 		<ul>
-			
+			<li>La prop <code>label</code> est <strong>obligatoire</strong> — sans elle, le bouton icône n'a pas de nom accessible et sera incompréhensible pour les utilisateurs de lecteurs d'écran</li>
+			<li>Le <code>label</code> doit décrire l'<strong>action</strong> du bouton et non l'icône elle-même (ex. <em>"Fermer"</em> plutôt que <em>"Croix"</em>)</li>
+			<li>Ne jamais fournir un <code>label</code> vide (<code>""</code>) — cela rendrait le bouton inaccessible</li>
+			<li>Utiliser <code>disabled</code> plutôt que de masquer le bouton lorsqu'il est temporairement indisponible, afin de préserver la cohérence de la mise en page</li>
+			<li>Ne pas ajouter d'<code>aria-label</code> supplémentaire sur le composant parent — celui du <code>v-btn</code> est suffisant</li>
 		</ul>
 	</BestPracticesSection>
 
 	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 4.1.2 – Name, Role, Value</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 1.1.1 – Non-text Content</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html" target="_blank" style={{ color: '#0C41BD' }}>WCAG 2.1.1 – Keyboard</a></li>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" style={{ color: '#0C41BD' }}>ARIA Authoring Practices – Button Pattern</a></li>
+		</ul>
 	</ResourcesSection>
 </AccessibilityGuideLayout>

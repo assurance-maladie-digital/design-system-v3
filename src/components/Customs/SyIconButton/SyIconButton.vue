@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
-	import SyIcon from '../SyIcon/SyIcon.vue'
 
 	const props = defineProps<{
 		icon: IconValue
@@ -11,24 +10,26 @@
 	}>()
 
 	defineEmits<{
-		'click-icon-button'
+		'click-icon-button': []
 	}>()
 </script>
 
 <template>
 	<v-btn
 		:disabled="props.disabled"
-		:label="props.label"
+		:aria-label="props.label"
 		class="rounded-xl"
 		:size="props.size"
 		variant="text"
 		icon
 		@click="$emit('click-icon-button')"
 	>
-		<SyIcon
-			:label="props.label"
-			:icon="props.icon"
+		<v-icon
+			:color="props.color"
 			:size="props.size"
-		/>
+			:aria-hidden="true"
+		>
+			{{ props.icon }}
+		</v-icon>
 	</v-btn>
 </template>

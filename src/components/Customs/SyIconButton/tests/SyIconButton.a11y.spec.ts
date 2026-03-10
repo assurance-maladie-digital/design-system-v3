@@ -3,33 +3,84 @@ import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
-import SyIconButton from './SyIconButton.vue'
+import SyIconButton from '../SyIconButton.vue'
 
-// Scénario d’accessibilité : icône informative avec label.
+const globalStubs = {
+	global: {
+		stubs: {
+			'v-btn': {
+				template: '<button :aria-label="ariaLabel" :disabled="disabled"><slot></slot></button>',
+				props: ['ariaLabel', 'disabled', 'size', 'variant', 'icon'],
+			},
+			'v-icon': {
+				template: '<span class="v-icon" aria-hidden="true"><slot></slot></span>',
+				props: ['color', 'size', 'aria-hidden'],
+			},
+		},
+	},
+}
 
 describe('SyIconButton – accessibility (axe)', () => {
-	it('has no obvious axe violations for informative icon with label', async () => {
+	it('has no obvious axe violations in default state', async () => {
 		const wrapper = mount(SyIconButton, {
 			props: {
-				icon: 'mdi-alert',
-				decorative: false,
-				label: 'Alerte importante',
+				icon: 'mdi-close',
+				label: 'Fermer',
 			},
-			global: {
-				stubs: {
-					'v-icon': {
-						template: '<span class="v-icon" role="img" :aria-label="ariaLabel"><slot></slot></span>',
-						props: ['color', 'size', 'role', 'aria-hidden', 'aria-label'],
-					},
-				},
-				directives: {
-					'rgaa-svg-fix': () => {},
-				},
-			},
+			...globalStubs,
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'SyIconButton – informative icon with label', {
+		assertNoA11yViolations(results, 'SyIconButton – default state', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has no obvious axe violations when disabled', async () => {
+		const wrapper = mount(SyIconButton, {
+			props: {
+				icon: 'mdi-close',
+				label: 'Fermer',
+				disabled: true,
+			},
+			...globalStubs,
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyIconButton – disabled', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has no obvious axe violations with color and size', async () => {
+		const wrapper = mount(SyIconButton, {
+			props: {
+				icon: 'mdi-alert',
+				label: 'Alerte importante',
+				color: 'primary',
+				size: 'large',
+			},
+			...globalStubs,
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyIconButton – color and size', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has aria-label on the button', async () => {
+		const wrapper = mount(SyIconButton, {
+			props: {
+				icon: 'mdi-close',
+				label: 'Fermer',
+			},
+			...globalStubs,
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+
+		assertNoA11yViolations(results, 'SyIconButton – aria-label on button', {
 			ignoreRules: ['region'],
 		})
 	})
