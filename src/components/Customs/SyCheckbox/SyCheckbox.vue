@@ -206,7 +206,7 @@
 
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
-		return model.value ? 'true' : 'false'
+		return model.value ? 'true' : undefined
 	})
 
 	const labelColor = computed(() => {
