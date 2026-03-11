@@ -15,7 +15,7 @@
 	import type { IconType, VariantStyle, ColorType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '../../../composables/unifyValidation/useValidation'
+	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 
 	const props = withDefaults(
 		defineProps<{
@@ -534,6 +534,7 @@
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
+			:max-errors
 			:max-width="props.maxWidth"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			:min-width="props.minWidth"

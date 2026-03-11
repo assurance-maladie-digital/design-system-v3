@@ -1332,16 +1332,20 @@ export const FormValidation: Story = {
 				},
 			}]
 
-			const handleSubmit = () => {
+			const handleSubmit = async () => {
 				const fields = [
 					{ ref: nomField, name: 'Nom' },
 					{ ref: prenomField, name: 'Prénom' },
 					{ ref: ageField, name: 'Âge' },
 				]
 
-				const invalidFields = fields
-					.filter(async ({ ref }) => !(await ref.value?.validateOnSubmit()))
-					.map(({ name }) => name)
+				const invalidFields: string[] = []
+				for (const { ref, name } of fields) {
+					const isValid = await ref.value?.validateOnSubmit()
+					if (!isValid) {
+						invalidFields.push(name)
+					}
+				}
 
 				if (invalidFields.length > 0) {
 					alert(`Les champs suivants sont invalides: ${invalidFields.join(', ')}`)
@@ -1557,9 +1561,13 @@ const nomField = ref()
 					{ ref: ageField, name: 'Âge' },
 				]
 
-				const invalidFields = fields
-					.filter(async ({ ref }) => !(await ref.value?.validateOnSubmit()))
-					.map(({ name }) => name)
+				const invalidFields: string[] = []
+				for (const { ref, name } of fields) {
+					const isValid = await ref.value?.validateOnSubmit()
+					if (!isValid) {
+						invalidFields.push(name)
+					}
+				}
 
 				if (invalidFields.length > 0) {
 					alert('Les champs suivants sont invalides: ' + invalidFields.join('\\n'))

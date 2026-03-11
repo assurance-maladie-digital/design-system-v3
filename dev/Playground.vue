@@ -5,7 +5,11 @@
 
 	const rules = [
 		(value: string) => !!value || 'Required.',
+		(value: string) => !!value || 'toto.',
+		(value: string) => !!value || 'tata.',
 		(value: string) => value.length >= 3 || 'Min 3 characters',
+		(value: string) => value.length >= 5 || 'Min 5 characters',
+		(value: string) => value.length >= 7 || 'Min 7 characters',
 	]
 
 	const customRules = [{
@@ -17,7 +21,7 @@
 		{
 			type: 'custom',
 			options: {
-				validate: (value: string) => !!value,
+				validate: (value: string) => !!value && value.length >= 5,
 				message: 'Required.',
 			},
 		}, {
@@ -53,6 +57,7 @@
 					use-vuetify-validation
 					label="Test"
 					:rules="rules"
+					:max-errors="2"
 				/>
 			</div>
 
@@ -64,6 +69,7 @@
 					v-model="selectedValue"
 					label="Test"
 					:custom-rules="customRules"
+					:max-errors="2"
 				/>
 			</div>
 

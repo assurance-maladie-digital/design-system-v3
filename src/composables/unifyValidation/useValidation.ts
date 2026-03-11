@@ -113,11 +113,11 @@ export function useValidation(params: {
 			params.hasErrorProp || ref(false),
 			computed(() => params.errorMessages?.value || []),
 			ref(false), // focused
-			params.maxErrors || ref(1), // maxErrors
+			params.maxErrors, // maxErrors
 			params.label,
 			params.label,
 			params.readonly,
-			'input',
+			params.isValidateOnBlur ? 'input' : 'blur',
 		)
 	}
 

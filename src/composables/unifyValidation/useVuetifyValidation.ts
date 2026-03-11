@@ -10,7 +10,7 @@ export function useVuetifyValidation(
 	error: Ref<boolean>,
 	errorMessages: Ref<string[]>,
 	focused: Ref<boolean>,
-	maxErrors: Ref<number>,
+	maxErrors: Ref<number> | undefined,
 	name: Ref<string>,
 	label: Ref<string>,
 	readonly: Ref<boolean>,
@@ -30,7 +30,8 @@ export function useVuetifyValidation(
 			return !!focused.value
 		},
 		get 'maxErrors'() {
-			return maxErrors.value
+			console.log('maxErrors.value', maxErrors?.value)
+			return maxErrors?.value || 1
 		},
 		get 'name'() {
 			return name.value
