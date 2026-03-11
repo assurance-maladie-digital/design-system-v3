@@ -1366,6 +1366,10 @@
 	}
 }
 
+:deep(.v-date-picker-months) {
+	flex: 1;
+}
+
 :deep(.v-date-picker-months .v-btn__content) {
 	font-size: 1rem;
 }
