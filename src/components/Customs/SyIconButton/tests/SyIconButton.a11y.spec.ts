@@ -12,9 +12,9 @@ const globalStubs = {
 				template: '<button :aria-label="ariaLabel" :disabled="disabled"><slot></slot></button>',
 				props: ['ariaLabel', 'disabled', 'size', 'variant', 'icon'],
 			},
-			'v-icon': {
-				template: '<span class="v-icon" aria-hidden="true"><slot></slot></span>',
-				props: ['color', 'size', 'aria-hidden'],
+			'SyIcon': {
+				template: '<span class="sy-icon" :aria-hidden="decorative ? true : undefined"></span>',
+				props: ['icon', 'color', 'size', 'decorative', 'label'],
 			},
 		},
 	},

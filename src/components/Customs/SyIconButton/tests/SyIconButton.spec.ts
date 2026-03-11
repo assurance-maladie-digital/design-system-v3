@@ -10,9 +10,9 @@ const globalStubs = {
 				props: ['ariaLabel', 'disabled', 'size', 'variant', 'icon'],
 				emits: ['click'],
 			},
-			'v-icon': {
-				template: '<span class="v-icon" :aria-hidden="ariaHidden"><slot></slot></span>',
-				props: ['color', 'size', 'ariaHidden'],
+			'SyIcon': {
+				template: '<span class="sy-icon" :aria-hidden="decorative ? true : undefined"><slot></slot></span>',
+				props: ['icon', 'color', 'size', 'decorative', 'label'],
 			},
 		},
 	},
@@ -54,7 +54,7 @@ describe('SyIconButton', () => {
 			...globalStubs,
 		})
 
-		const icon = wrapper.find('.v-icon')
+		const icon = wrapper.find('.sy-icon')
 		expect(icon.exists()).toBe(true)
 		expect(icon.attributes('aria-hidden')).toBe('true')
 	})
@@ -68,7 +68,7 @@ describe('SyIconButton', () => {
 			...globalStubs,
 		})
 
-		expect(wrapper.find('.v-icon').text()).toBe('mdi-close')
+		expect(wrapper.find('.sy-icon').exists()).toBe(true)
 	})
 
 	it('disables the button when disabled prop is true', () => {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
+	import SyIcon from '../SyIcon/SyIcon.vue'
 
 	const props = defineProps<{
 		icon: IconValue
@@ -24,12 +25,11 @@
 		icon
 		@click="$emit('click-icon-button')"
 	>
-		<v-icon
-			:color="props.color"
+		<SyIcon
+			:icon="props.icon"
 			:size="props.size"
-			:aria-hidden="true"
-		>
-			{{ props.icon }}
-		</v-icon>
+			:color="props.color"
+			:decorative="true"
+		/>
 	</v-btn>
 </template>

@@ -23,7 +23,7 @@ Le composant `SyIconButton` est un bouton icône qui combine `v-btn` et `v-icon`
 Le composant `SyIconButton` gère automatiquement les attributs ARIA :
 
 - **Label obligatoire** : la prop `label` est portée par le bouton via `aria-label` — elle constitue le nom accessible du bouton
-- **Icône décorative** : le `v-icon` interne a toujours `:aria-hidden="true"` car le bouton porte déjà le nom accessible
+- **Icône décorative** : `SyIcon` interne reçoit `:decorative="true"` car le bouton porte déjà le nom accessible via `aria-label` — l'icône est donc ignorée par les lecteurs d'écran
 
 > **Important :** Le `label` doit décrire l'**action** du bouton et non l'icône elle-même (ex. _"Fermer"_ plutôt que _"Croix"_). Ne jamais fournir un `label` vide.
 
@@ -59,14 +59,14 @@ Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'
 <template>
   <!-- Bouton icône simple -->
   <SyIconButton
-    icon="mdi-close"
+    :icon="mdiClose"
     label="Fermer"
     @click-icon-button="handleClose"
   />
 
   <!-- Bouton icône avec couleur -->
   <SyIconButton
-    icon="mdi-alert"
+    :icon="mdiAlert"
     label="Alerte"
     color="error"
     @click-icon-button="handleAlert"
@@ -74,13 +74,14 @@ Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'
 
   <!-- Bouton icône désactivé -->
   <SyIconButton
-    icon="mdi-pencil"
+    :icon="mdiPencil"
     label="Modifier"
     :disabled="true"
   />
 </template>
 
 <script setup>
+  import { mdiClose, mdiAlert, mdiPencil } from '@mdi/js'
   import { SyIconButton } from '@cnam/design-system'
 </script>
 ```

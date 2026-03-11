@@ -7,10 +7,8 @@ exports[`SyIconButton > passes the color prop to v-icon 1`] = `
 >
   <span
     aria-hidden="true"
-    class="v-icon"
-  >
-    mdi-close
-  </span>
+    class="sy-icon"
+  ></span>
 </button>
 `;
 
@@ -21,10 +19,8 @@ exports[`SyIconButton > passes the size prop to v-btn 1`] = `
 >
   <span
     aria-hidden="true"
-    class="v-icon"
-  >
-    mdi-close
-  </span>
+    class="sy-icon"
+  ></span>
 </button>
 `;
 
@@ -35,9 +31,7 @@ exports[`SyIconButton > renders correctly 1`] = `
 >
   <span
     aria-hidden="true"
-    class="v-icon"
-  >
-    mdi-close
-  </span>
+    class="sy-icon"
+  ></span>
 </button>
 `;
