@@ -7,6 +7,7 @@ describe('CollapsibleList', () => {
 	it('renders correctly', async () => {
 		const wrapper = mount(CollapsibleList, {
 			propsData: {
+				headingLevel: 4,
 				listTitle: 'Santé',
 				items: [
 					{
@@ -30,6 +31,7 @@ describe('CollapsibleList', () => {
 	it('renders correctly with in mobile mode', () => {
 		const wrapper = mount(CollapsibleList, {
 			propsData: {
+				headingLevel: 4,
 				listTitle: 'Santé',
 				items: [
 					{

@@ -23,6 +23,7 @@
 			to?: RouteLocationRaw
 			href?: string
 		}
+		headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
 	}
 
 	defineSlots<{
@@ -188,11 +189,13 @@
 							:home-aria-label
 							:service-title
 							:service-subtitle
+							:heading-level-title="headingLevelTitle"
 						>
 							<HeaderLogo
 								:aria-label="homeAriaLabel"
 								:service-title="serviceTitle"
 								:service-subtitle="serviceSubtitle"
+								:heading-level-title="headingLevelTitle"
 								:home-link
 							>
 								<template
@@ -205,6 +208,7 @@
 										:service-title
 										:service-subtitle
 										:home-link
+										:heading-level-title="headingLevelTitle"
 									/>
 								</template>
 							</HeaderLogo>

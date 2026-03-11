@@ -52,6 +52,7 @@ describe('HeaderLogo', () => {
 	it('sould display the service and the logo aria-label', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				headingLevelTitle: 2,
 				ariaLabel: 'Test aria label',
 				serviceTitle: 'Test service title',
 				serviceSubtitle: 'Test service subtitle',
@@ -68,6 +69,7 @@ describe('HeaderLogo', () => {
 	it('should render only the serviceTitle slot when set', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				headingLevelTitle: 2,
 				serviceTitle: 'Test service title',
 			},
 			slots: {
@@ -86,6 +88,7 @@ describe('HeaderLogo', () => {
 			global: {
 				stubs: ['RouterLink'] },
 			props: {
+				headingLevelTitle: 2,
 				homeLink: {
 					to: '/',
 				},
@@ -99,6 +102,7 @@ describe('HeaderLogo', () => {
 	it('render a div when there there is no `RouterLink` component registered', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				headingLevelTitle: 2,
 				homeLink: {
 					to: '/',
 				},
@@ -111,6 +115,7 @@ describe('HeaderLogo', () => {
 	it('render a div when the homeLink properties `to` and `href` are both set to `undefined`', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				headingLevelTitle: 2,
 				homeLink: {
 					to: undefined,
 					href: undefined,

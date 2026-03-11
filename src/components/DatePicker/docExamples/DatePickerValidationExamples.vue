@@ -1,6 +1,7 @@
 <script setup>
 	import { ref } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Exemple 1: Validation de base (required)
 	const date1 = ref('')
@@ -56,15 +57,15 @@
 
 <template>
 	<div class="date-picker-validation-examples">
-		<h1 class="text-h5 mb-6">
+		<SyHeading	:level="1">
 			Exemples de validation du DatePicker
-		</h1>
+		</SyHeading>
 
 		<!-- Exemple 1: Validation de base (required) -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading	:level="2">
 				Validation de base (required)
-			</h2>
+			</SyHeading>
 			<div class="mb-2">
 				<DatePicker
 					v-model="date1"
@@ -94,9 +95,12 @@
 
 		<!-- Exemple 2: notWeekend -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Validation notWeekend
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle vérifie que la date n'est pas un weekend
 			</p>
@@ -136,9 +140,12 @@
 
 		<!-- Exemple 3: notAfterToday -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Validation notAfterToday
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle vérifie que la date n'est pas postérieure à aujourd'hui
 			</p>
@@ -185,9 +192,12 @@
 
 		<!-- Exemple 4: notBeforeToday -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Validation notBeforeToday
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle vérifie que la date n'est pas antérieure à aujourd'hui
 			</p>
@@ -234,9 +244,12 @@
 
 		<!-- Exemple 5: notBeforeDate -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Validation notBeforeDate
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle vérifie que la date n'est pas antérieure à une date de référence
 			</p>
@@ -277,9 +290,12 @@
 
 		<!-- Exemple 6: notAfterDate -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Validation notAfterDate
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle vérifie que la date n'est pas postérieure à une date de référence
 			</p>
@@ -320,9 +336,12 @@
 
 		<!-- Exemple 7: dateExact -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Validation dateExact
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle vérifie que la date est exactement égale à une date de référence
 			</p>
@@ -363,9 +382,12 @@
 
 		<!-- Exemple 8: customRules (règle personnalisée) -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Règle personnalisée (custom)
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle vérifie que la date n'est pas en 2024
 			</p>
@@ -418,9 +440,12 @@
 
 		<!-- Exemple 9: customWarningRules -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Règle d'avertissement
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Cette règle affiche un avertissement si la date est en 2025
 			</p>
@@ -477,9 +502,12 @@
 
 		<!-- Exemple 10: Combinaison de plusieurs règles -->
 		<section class="mb-10">
-			<h2 class="text-h6 mb-3">
+			<SyHeading
+				class="text-h6 mb-3"
+				:level="2"
+			>
 				Combinaison de plusieurs règles
-			</h2>
+			</SyHeading>
 			<p class="text-body-2 mb-2">
 				Exemple de DatePicker avec plusieurs règles de validation
 			</p>

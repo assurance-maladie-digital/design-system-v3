@@ -13,8 +13,9 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import type { FileItem, SelectedFile, UploadItem } from './types'
-	import useFileList from './useFileList'
 	import useFileUploadJourney from './useFileUploadJourney'
+	import useFileList from './useFileList'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = withDefaults(
 		defineProps<
@@ -24,7 +25,7 @@
 				sectionTitle?: string
 				showFilePreview?: boolean
 				infoText?: string
-				headingLevel?: number
+				headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 				locales?: typeof defaultLocales
 			}
 		>(),
@@ -145,13 +146,12 @@
 		class="sy-upload-workflow white"
 	>
 		<slot name="title">
-			<div
-				:aria-level="props.headingLevel"
-				role="heading"
-				class="text-h6 mb-2"
+			<SyHeading
+				:level="props.headingLevel"
+				:class="headingLevel === 4 ? 'text-h6 mb-2' : 'mb-2'"
 			>
 				{{ title }}
-			</div>
+			</SyHeading>
 		</slot>
 
 		<FileList
@@ -183,6 +183,7 @@
 
 		<DialogBox
 			v-model="showSelectDialog"
+			:heading-level="props.headingLevel"
 			v-bind="options.dialog"
 			@cancel="showSelectDialog = false"
 			@confirm="dialogConfirm"
@@ -227,6 +228,7 @@
 
 		<DialogBox
 			v-model="showPreviewDialog"
+			:heading-level="props.headingLevel"
 			v-bind="options.previewDialog"
 			hide-actions
 		>

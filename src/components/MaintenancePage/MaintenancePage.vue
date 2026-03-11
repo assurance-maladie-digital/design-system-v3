@@ -12,6 +12,7 @@
 		code?: string
 		src?: string
 		uniqueId?: string
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}
 
 	const props = withDefaults(defineProps<Props>(), {
@@ -20,6 +21,7 @@
 		code: undefined,
 		src: undefined,
 		uniqueId: undefined,
+		headingLevel: 1,
 	})
 
 	// Utiliser les props de l'utilisateur en priorité, sinon les locales du thème
@@ -31,6 +33,7 @@
 
 <template>
 	<StatusPage
+		:heading-level="headingLevel"
 		:unique-id="props.uniqueId"
 		:page-title="pageTitle"
 		:message="message"

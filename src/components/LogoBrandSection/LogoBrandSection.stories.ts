@@ -5,6 +5,20 @@ const meta = {
 	title: 'Composants/Données/LogoBrandSection',
 	component: LogoBrandSection,
 	argTypes: {
+		'headingLevelTitle': {
+			control: {
+				type: 'select',
+			},
+			options: [1, 2, 3, 4, 5, 6],
+			description: 'Le niveau de titre pour le serviceTitle.',
+		},
+		'headingLevelSubtitle': {
+			control: {
+				type: 'select',
+			},
+			options: [1, 2, 3, 4, 5, 6],
+			description: 'Le niveau de titre pour le serviceSubTitle.',
+		},
 		'theme': {
 			description: 'Applique un preset de style à la section.',
 			control: {
@@ -72,6 +86,8 @@ const meta = {
 	},
 	args: {
 		theme: 'default',
+		headingLevelSubtitle: 2,
+		headingLevelTitle: 1,
 	},
 } satisfies Meta<typeof LogoBrandSection>
 
@@ -81,6 +97,8 @@ type Story = StoryObj<typeof LogoBrandSection>
 
 export const Default: Story = {
 	args: {
+		headingLevelSubtitle: 2,
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubTitle: 'Documentation du Design System',
 	},
@@ -91,6 +109,8 @@ export const Default: Story = {
 				code: `
 				<template>
 					<LogoBrandSection
+						:heading-level-title="headingLevelTitle"
+						:heading-level-subtitle="headingLevelSubtitle"
 						service-title="Synapse"
 						service-sub-title="Documentation du Design System"
 					/>
@@ -113,6 +133,8 @@ export const WithBrand: Story = {
 	args: {
 		serviceTitle: 'Synapse',
 		serviceSubTitle: ' Documentation du Design System',
+		headingLevelTitle: 1,
+		headingLevelSubtitle: 2,
 	},
 	render: (args) => {
 		return {

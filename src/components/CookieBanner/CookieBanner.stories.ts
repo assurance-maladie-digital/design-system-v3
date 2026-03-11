@@ -8,6 +8,14 @@ const meta = {
 	title: 'Composants/Feedback/CookieBanner',
 	component: CookieBanner,
 	argTypes: {
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
+		'headingLevelInformation': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 		'modelValue': {
 			description: 'V-model, control la visibilité de la bannière',
 			control: { type: 'boolean' },
@@ -193,6 +201,8 @@ const meta = {
 	},
 	args: {
 		modelValue: false,
+		headingLevel: 2,
+		headingLevelInformation: 2,
 	},
 } satisfies Meta<typeof CookieBanner>
 

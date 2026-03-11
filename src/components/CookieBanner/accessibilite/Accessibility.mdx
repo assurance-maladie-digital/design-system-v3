@@ -22,6 +22,15 @@ import {
 			<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/806" target="_blank" style={{color:'#0C41BD'}}>issue #806</a>)</p>
 		</div>
 	<CriteriaSection>
+<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+  <ul>
+    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h2, défini dans l’implémentation du composant.</li>
+      <code>&lt;CookieBanner
+          :heading-level="2" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
+  </ul>
+</CriteriaCard>
 		<CriteriaCard icon="🧭" title="Structure et nom accessible">
 			<ul>
 				<li><strong>Rôle</strong> : <code>role="dialog"</code> sur le conteneur principal de la bannière.</li>

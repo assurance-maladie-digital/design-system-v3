@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as Stories from '../UploadWorkflow.stories.ts';
+import '@/stories/styles/shared.css';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
-
 import {
 	AccessibilityGuideLayout,
 	CriteriaSection,
@@ -12,11 +12,22 @@ import {
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
-
 <AccessibilityGuideLayout
 	componentName="UploadWorkflow"
   iconSrc={AccessibilityIcon}
 >
+  <CriteriaSection>
+
+<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+  <ul>
+    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h4, défini dans l’implémentation du composant.</li>
+      <code>&lt;UploadWorkflow
+          :heading-level="4" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA)</li>
+  </ul>
+</CriteriaCard>
+</CriteriaSection>
   <CriteriaSection>
     <CriteriaCard icon="🔍" title="Structure sémantique">
       <ul>
@@ -48,4 +59,5 @@ import {
       <li><strong>Gérer les états de téléchargement</strong> : Fournir des indications visuelles et textuelles pour les différents états de téléchargement, y compris les erreurs et les succès.</li>
     </ul>
   </BestPracticesSection>
+
 </AccessibilityGuideLayout>
