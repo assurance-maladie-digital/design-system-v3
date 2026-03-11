@@ -209,7 +209,7 @@
 				>
 					<h3
 						:id="uniqueId ? `${uniqueId}-online-process-title` : undefined"
-						>
+					>
 						{{ locales.onlineProcessTitle }}
 					</h3>
 
