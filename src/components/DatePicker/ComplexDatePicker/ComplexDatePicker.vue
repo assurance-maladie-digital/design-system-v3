@@ -66,6 +66,40 @@
 		}
 	}
 
+	const focusFirstElement = () => {
+		const dialogEl = dialogContainerRef.value
+		if (!dialogEl) return
+		const focusable = dialogEl.querySelectorAll<HTMLElement>(focusableSelectors)
+		const first = focusable[0]
+		if (first) first.focus()
+	}
+
+	const handleDialogKeydown = (event: KeyboardEvent) => {
+		if (event.key !== 'Tab') return
+		const dialogEl = dialogContainerRef.value
+		if (!dialogEl) return
+		const focusable = dialogEl.querySelectorAll<HTMLElement>(focusableSelectors)
+		if (focusable.length === 0) return
+
+		const first = focusable[0]
+		const last = focusable[focusable.length - 1]
+		if (!first || !last) return
+		const target = event.target as HTMLElement | null
+
+		if (event.shiftKey) {
+			if (target === first || !dialogEl.contains(target)) {
+				event.preventDefault()
+				last.focus()
+			}
+			return
+		}
+
+		if (target === last || !dialogEl.contains(target)) {
+			event.preventDefault()
+			first.focus()
+		}
+	}
+
 	// const unifyAfterCalendarUpdate = async () => {
 	// 	if (!isDatePickerVisible.value) return
 	// 	await nextTick()
@@ -594,6 +628,18 @@
 	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
+	const dialogContainerRef = ref<HTMLElement | null>(null)
+	const lastActiveElement = ref<HTMLElement | null>(null)
+	const dialogTitleId = `${datePickerContentId}-title`
+
+	const focusableSelectors = [
+		'button',
+		'[href]',
+		'input',
+		'select',
+		'textarea',
+		'[tabindex]:not([tabindex="-1"])',
+	].join(',')
 
 	/**
 	 * Holiday marking (partagé via useHolidayHighlighting)
@@ -657,6 +703,11 @@
 				currentYear.value = newYear
 				currentYearName.value = newYear
 			}
+		},
+		closeDatePicker: () => {
+			isDatePickerVisible.value = false
+			emit('closed')
+			clearValidation()
 		},
 	})
 
@@ -978,6 +1029,20 @@
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit, clearValidation, reset)
 
+	watch(isDatePickerVisible, (visible) => {
+		if (visible) {
+			lastActiveElement.value = document.activeElement as HTMLElement | null
+			nextTick(() => {
+				focusFirstElement()
+			})
+		}
+		else {
+			nextTick(() => {
+				lastActiveElement.value?.focus()
+			})
+		}
+	})
+
 	defineExpose({
 		validateOnSubmit,
 		isDatePickerVisible,
@@ -1008,11 +1073,15 @@
 
 <template>
 	<div class="date-picker-container">
-		<!-- Hidden live region text holder (kept for potential a11y tooling) -->
+		<!-- Live region pour annoncer mois/année et date sélectionnée -->
 		<span
-			v-if="false"
 			ref="accessibilityDescriptionRef"
-		>{{ accessibilityDescription }}</span>
+			class="sr-only"
+			aria-live="polite"
+			role="status"
+		>
+			{{ accessibilityDescription }}
+		</span>
 
 		<template v-if="props.noCalendar">
 			<DateTextInput
@@ -1053,6 +1122,7 @@
 			<VMenu
 				v-model="isDatePickerVisible"
 				:activator="menuActivatorRef"
+				:activator-props="{ 'aria-haspopup': 'dialog' }"
 				:min-width="0"
 				location="bottom"
 				:close-on-content-click="false"
@@ -1060,6 +1130,10 @@
 				scroll-strategy="none"
 				transition="fade-transition"
 				:offset="[0, 10]"
+				:content-props="{
+					'aria-labelledby': dialogTitleId,
+					'aria-label': labelWithAsterisk || props.placeholder || props.label,
+				}"
 			>
 				<template #activator>
 					<div
@@ -1069,6 +1143,9 @@
 						aria-haspopup="dialog"
 						:aria-expanded="isDatePickerVisible"
 						:aria-controls="datePickerContentId"
+						:aria-label="labelWithAsterisk || props.placeholder || props.label"
+						:title="labelWithAsterisk || props.placeholder || props.label"
+						tabindex="-1"
 					>
 						<DateTextInput
 							ref="dateCalendarTextInputRef"
@@ -1078,10 +1155,11 @@
 							:placeholder="props.placeholder"
 							:format="props.format"
 							:date-format-return="props.dateFormatReturn"
+							:aria-label="labelWithAsterisk || props.placeholder || props.label"
 							:required="props.required"
 							:disabled="props.disabled"
 							:readonly="props.readonly"
-							:title="props.title"
+							:title="props.title || labelWithAsterisk || props.placeholder || props.label || undefined"
 							:is-outlined="props.isOutlined"
 							:display-icon="props.displayIcon"
 							:display-append-icon="props.displayAppendIcon"
@@ -1114,73 +1192,92 @@
 					</div>
 				</template>
 
-				<VDatePicker
+				<!--
+					Conteneur de dialogue accessible qui gère la navigation clavier.
+					Le handler clavier est nécessaire, on désactive la règle lint sur cet élément.
+				-->
+				<!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
+				<div
 					v-if="isDatePickerVisible"
 					:id="datePickerContentId"
-					ref="datePickerRef"
-					v-model="selectedDates"
-					color="primary"
-					:class="props.displayWeekendDays ? 'weekend' : ''"
-					:first-day-of-week="1"
-					:multiple="props.displayRange ? 'range' : false"
-					:show-adjacent-months="true"
-					:show-week="props.showWeekNumber"
-					:view-mode="currentViewMode"
-					:month="currentMonth !== null ? Number(currentMonth) : undefined"
-					:year="currentYear !== null ? Number(currentYear) : undefined"
-					:max="maxDate"
-					:min="minDate"
-					:custom-rules="props.customRules"
-					:custom-warning-rules="props.customWarningRules"
-					:display-holiday-days="props.displayHolidayDays"
-					:display-asterisk="props.displayAsterisk"
-					:is-validate-on-blur="props.isValidateOnBlur"
-					:error-messages="errorMessages"
-					:density="props.density"
-					:hint="props.hint"
-					:persistent-hint="props.persistentHint"
-					@update:model-value="updateDisplayFormattedDate"
-					@update:view-mode="handleViewModeUpdate"
-					@update:month="onUpdateMonth"
-					@update:year="onUpdateYear"
-					@click:date="updateSelectedDates"
-					@focus="props.displayHolidayDays ? markHolidayDays : undefined"
-					@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
+					ref="dialogContainerRef"
+					role="dialog"
+					aria-modal="true"
+					:aria-labelledby="dialogTitleId"
+					tabindex="-1"
+					@keydown.stop.capture="handleDialogKeydown"
 				>
-					<template #title>
-						<span class="date-picker-title">
-							Sélectionnez une date
-						</span>
-					</template>
-					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ selectedDates ? displayedDateString : headerDate }}
-						</h3>
-					</template>
-					<template
-						v-if="props.displayTodayButton"
-						#actions
+					<VDatePicker
+						ref="datePickerRef"
+						v-model="selectedDates"
+						color="primary"
+						:class="props.displayWeekendDays ? 'weekend' : ''"
+						:first-day-of-week="1"
+						:multiple="props.displayRange ? 'range' : false"
+						:show-adjacent-months="true"
+						:show-week="props.showWeekNumber"
+						:view-mode="currentViewMode"
+						:month="currentMonth !== null ? Number(currentMonth) : undefined"
+						:year="currentYear !== null ? Number(currentYear) : undefined"
+						:max="maxDate"
+						:min="minDate"
+						:custom-rules="props.customRules"
+						:custom-warning-rules="props.customWarningRules"
+						:display-holiday-days="props.displayHolidayDays"
+						:display-asterisk="props.displayAsterisk"
+						:is-validate-on-blur="props.isValidateOnBlur"
+						:error-messages="errorMessages"
+						:density="props.density"
+						:hint="props.hint"
+						:persistent-hint="props.persistentHint"
+						@update:model-value="updateDisplayFormattedDate"
+						@update:view-mode="handleViewModeUpdate"
+						@update:month="onUpdateMonth"
+						@update:year="onUpdateYear"
+						@click:date="updateSelectedDates"
+						@focus="props.displayHolidayDays ? markHolidayDays : undefined"
+						@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 					>
-						<div class="d-flex justify-center align-center w-100">
-							<v-btn
-								v-if="props.displayTodayButton"
-								size="x-small"
-								color="primary"
-								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
-								class="date-picker__today-button my-2 pa-2 mt-2"
-								:ripple="false"
-								@click="handleSelectToday"
+						<template #title>
+							<span
+								:id="dialogTitleId"
+								class="date-picker-title"
 							>
-								<SyIcon
-									size="16px"
-									decorative
-									:icon="mdiCalendarMonthOutline"
-								/>
-								{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
-							</v-btn>
-						</div>
-					</template>
-				</VDatePicker>
+								Sélectionnez une date
+							</span>
+						</template>
+						<template #header>
+							<h3 class="mx-auto my-auto ml-5 mb-4">
+								{{ selectedDates ? displayedDateString : headerDate }}
+							</h3>
+						</template>
+						<template
+							v-if="props.displayTodayButton"
+							#actions
+						>
+							<div class="d-flex justify-center align-center w-100">
+								<v-btn
+									v-if="props.displayTodayButton"
+									size="x-small"
+									color="primary"
+									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+									type="button"
+									:aria-label="`${DATE_PICKER_MESSAGES.BUTTON_TODAY}, ${headerDate}`"
+									class="date-picker__today-button my-2 pa-2 mt-2"
+									:ripple="false"
+									@click="handleSelectToday"
+								>
+									<SyIcon
+										size="16px"
+										decorative
+										:icon="mdiCalendarMonthOutline"
+									/>
+									{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+								</v-btn>
+							</div>
+						</template>
+					</VDatePicker>
+				</div>
 			</VMenu>
 		</template>
 	</div>

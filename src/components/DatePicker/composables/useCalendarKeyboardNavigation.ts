@@ -17,6 +17,9 @@ export interface CalendarKeyboardNavigationOptions {
 
 	// Applique la nouvelle date (typiquement via updateSelectedDates)
 	setCurrentDate: (date: Date) => void
+
+	// Ferme le date picker
+	closeDatePicker?: () => void
 }
 
 export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigationOptions) => {
@@ -102,6 +105,30 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		})
 	}
 
+	const handleTabNavigation = (event: KeyboardEvent) => {
+		if (event.key !== 'Tab') return
+		if (event.shiftKey) return
+
+		const { fromDayCell } = getBaseDateFromEvent(event)
+		if (!fromDayCell) return
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- access Vuetify root element
+		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+		if (!rootEl) return
+
+		const todayButton = rootEl.querySelector<HTMLElement>('.date-picker__today-button')
+		if (!todayButton) return
+
+		event.preventDefault()
+		todayButton.focus()
+	}
+
+	const handleEscape = (event: KeyboardEvent) => {
+		if (event.key !== 'Escape' && event.key !== 'Esc') return
+		if (!isDatePickerVisible.value) return
+		options.closeDatePicker?.()
+	}
+
 	const keydownListener = (event: Event) => {
 		const keyboardEvent = event as KeyboardEvent
 		const target = keyboardEvent.target as HTMLElement | null
@@ -115,6 +142,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		handleArrowNavigation(keyboardEvent)
+		handleTabNavigation(keyboardEvent)
+		handleEscape(keyboardEvent)
 	}
 
 	const attachListeners = () => {

@@ -60,9 +60,16 @@ export function useDatePickerAccessibility() {
 		const datePickerEl = document.querySelector('.v-date-picker')
 		if (!datePickerEl) return
 
-		// Ajouter un attribut role="application" au conteneur principal
-		datePickerEl.setAttribute('role', 'application')
-		datePickerEl.setAttribute('aria-label', 'Sélecteur de date')
+		// Supprimer le role application et l'aria-label générique pour conserver les rôles internes (grid)
+		datePickerEl.removeAttribute('role')
+		datePickerEl.removeAttribute('aria-label')
+
+		// Si le date picker est affiché dans une popup, appliquer les attributs de dialogue sur le conteneur
+		const popupContainer = datePickerEl.closest('.v-overlay__content')
+		if (popupContainer instanceof HTMLElement) {
+			popupContainer.setAttribute('role', 'dialog')
+			popupContainer.setAttribute('aria-modal', 'true')
+		}
 
 		// Sélectionner tous les boutons de navigation
 		const navigationButtons = datePickerEl.querySelectorAll('button')
@@ -149,46 +156,24 @@ export function useDatePickerAccessibility() {
 	 * Corrige les attributs ARIA invalides dans le composant
 	 * Supprime les attributs aria-haspopup, aria-expanded et aria-controls inappropriés
 	 */
-	const fixAriaAttributes = () => {
+	const fixAriaAttributes = (root?: HTMLElement) => {
 		try {
-			// Rechercher dans tout le document les éléments avec des attributs ARIA invalides
-			// Cibler les éléments dans les conteneurs CalendarMode et DateTextInput
-			const containers = document.querySelectorAll('.date-picker-container, .v-date-picker')
+			// Limiter le nettoyage au conteneur du date picker pour ne pas impacter les autres widgets
+			const container = root
+				?? document.querySelector('.date-picker-container')
+				?? document.querySelector('.v-date-picker')
 
-			if (containers.length === 0) {
-				return
+			if (!container) return
+
+			const datePicker = container.querySelector('.v-date-picker') ?? container
+			if (datePicker instanceof HTMLElement && datePicker.getAttribute('role') === 'application') {
+				datePicker.removeAttribute('role')
 			}
 
-			const allInputsWithAriaExpanded = document.querySelectorAll('input[aria-expanded]')
-			allInputsWithAriaExpanded.forEach((input) => {
-				if (input) {
-					input.removeAttribute('aria-expanded')
-				}
-			})
-
-			// Pour chaque conteneur, rechercher et corriger les attributs ARIA invalides
-			containers.forEach((container) => {
-				if (!container) return
-
-				container.removeAttribute('aria-expanded')
-				container.removeAttribute('aria-haspopup')
-				// Find all elements with invalid ARIA attributes
-				const elementsWithAriaHaspopup = container.querySelectorAll('[aria-haspopup="menu"]')
-				elementsWithAriaHaspopup.forEach((element) => {
-					if (!element) return
-					element.removeAttribute('aria-haspopup')
-					// Intentionally keep aria-controls intact so valid popup relationships remain
-				})
-
-				// Find input elements with invalid ARIA attributes
-				const inputElements = container.querySelectorAll('input[aria-haspopup="menu"]')
-				inputElements.forEach((input) => {
-					if (!input) return
-					input.removeAttribute('aria-haspopup')
-					input.removeAttribute('aria-expanded')
-					// Leave aria-controls untouched to avoid stripping required relationships
-				})
-			})
+			// Supprimer uniquement les aria-haspopup="menu" résiduels sur le date picker lui-même
+			if (datePicker instanceof HTMLElement && datePicker.getAttribute('aria-haspopup') === 'menu') {
+				datePicker.removeAttribute('aria-haspopup')
+			}
 		}
 		catch {
 			// Do nothing

@@ -133,13 +133,24 @@
 		selectedDates,
 		todayInString,
 	})
-
-	const onblur = ref(false)
-
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
+	const dialogContainerRef = ref<HTMLElement | null>(null)
+	const lastActiveElement = ref<HTMLElement | null>(null)
+	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
+	const dialogTitleId = `${datePickerContentId}-title`
+	const onblur = ref(false)
+
+	const focusableSelectors = [
+		'button',
+		'[href]',
+		'input',
+		'select',
+		'textarea',
+		'[tabindex]:not([tabindex="-1"])',
+	].join(',')
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
@@ -191,6 +202,40 @@
 	const { errors, warnings, successes, validateField: baseValidateField, clearValidation: baseClearValidation } = validation
 
 	const clearValidation = () => baseClearValidation()
+
+	const focusFirstElement = () => {
+		const dialogEl = dialogContainerRef.value
+		if (!dialogEl) return
+		const focusable = dialogEl.querySelectorAll<HTMLElement>(focusableSelectors)
+		const first = focusable[0]
+		if (first) first.focus()
+	}
+
+	const handleDialogKeydown = (event: KeyboardEvent) => {
+		if (event.key !== 'Tab') return
+		const dialogEl = dialogContainerRef.value
+		if (!dialogEl) return
+		const focusable = dialogEl.querySelectorAll<HTMLElement>(focusableSelectors)
+		if (focusable.length === 0) return
+
+		const first = focusable[0]
+		const last = focusable[focusable.length - 1]
+		if (!first || !last) return
+		const target = event.target as HTMLElement | null
+
+		if (event.shiftKey) {
+			if (target === first || !dialogEl.contains(target)) {
+				event.preventDefault()
+				last.focus()
+			}
+			return
+		}
+
+		if (target === last || !dialogEl.contains(target)) {
+			event.preventDefault()
+			first.focus()
+		}
+	}
 
 	watch(() => props.readonly, () => {
 		// When toggling readonly, reset validation state to avoid stale success/errors
@@ -403,7 +448,7 @@
 	})
 
 	// Utilisation du composable pour gérer la sélection de dates
-	const { updateSelectedDates, rangeBoundaryDates, resetRange } = useDateSelection(
+	const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(
 		parseDate,
 		selectedDates,
 		props.format,
@@ -640,6 +685,11 @@
 				preventCloseOnKeyboardNavigation.value = false
 			})
 		},
+		closeDatePicker: () => {
+			isDatePickerVisible.value = false
+			emit('closed')
+			validateDates()
+		},
 	})
 
 	const validateOnSubmit = () => {
@@ -706,7 +756,7 @@
 	})
 
 	// Utilisation du composable pour gérer le mode d'affichage du CalendarMode
-	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
+	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate } = useDatePickerViewMode(
 		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
 		() => props.isBirthDate || props.birthDate,
 		// Fonction qui retourne l'état de la date sélectionnée
@@ -721,39 +771,17 @@
 		}
 	}
 
-	watch(isDatePickerVisible, async (isVisible) => {
-		if (isVisible) {
-			// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
-			resetViewMode()
-			// Marquer les jours fériés lorsque le calendrier devient visible
-			markHolidayDays()
-			customizeMonthButton()
-		}
-		if (!isVisible && props.isBirthDate) {
-			// Réinitialiser le mode d'affichage au type birthdate
-			resetViewMode()
-		}
-
-		if (!isVisible) {
-			// set the focus on the text input
-			// wait for VMenu to finish DOM updates & transition
-
-			// Watch for changes on displayFormattedDate to handle clearing
-			watch(displayFormattedDate, (newValue) => {
-				if (!newValue) {
-					selectedDates.value = null
-					resetRange()
-				}
+	watch(isDatePickerVisible, (visible) => {
+		if (visible) {
+			lastActiveElement.value = document.activeElement as HTMLElement | null
+			nextTick(() => {
+				focusFirstElement()
 			})
-			setTimeout(() => {
-				requestAnimationFrame(() => {
-					const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
-					if (inputElement) {
-						inputElement.focus({ preventScroll: true })
-						isDatePickerVisible.value = false
-					}
-				})
-			}, 0)
+		}
+		else {
+			nextTick(() => {
+				lastActiveElement.value?.focus()
+			})
 		}
 	})
 
@@ -1017,60 +1045,79 @@
 						@append-icon-click="openDatePickerOnIconClick"
 					/>
 				</template>
-				<VDatePicker
+				<!--
+					Cette div joue le rôle de conteneur de dialogue accessible et gère le clavier.
+					Le handler clavier est nécessaire pour la navigation/fermeture, on désactive donc la règle lint.
+				-->
+				<!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
+				<div
 					v-if="isDatePickerVisible && !props.noCalendar"
-					ref="datePickerRef"
-					v-model="selectedDates"
-					color="primary"
-					:first-day-of-week="1"
-					:multiple="props.displayRange ? 'range' : false"
-					:show-adjacent-months="true"
-					:show-week="props.showWeekNumber"
-					:view-mode="currentViewMode"
-					:class="displayWeekendDays ? 'weekend' : ''"
-					:max="maxDate"
-					:min="minDate"
-					:display-holiday-days="props.displayHolidayDays"
-					@update:view-mode="handleViewModeUpdate"
-					@update:month="onUpdateMonth"
-					@update:year="onUpdateYear"
-					@click:date="updateSelectedDates"
-					@update:model-value="updateDisplayFormattedDate"
-					@focus="markHolidayDays"
-					@update:month-year="markHolidayDays"
+					:id="datePickerContentId"
+					ref="dialogContainerRef"
+					role="dialog"
+					aria-modal="true"
+					:aria-labelledby="dialogTitleId"
+					tabindex="-1"
+					@keydown.stop.capture="handleDialogKeydown"
 				>
-					<template #title>
-						Sélectionnez une date
-					</template>
-					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
-							{{ selectedDates ? displayedDateString : headerDate }}
-						</h3>
-					</template>
-					<template
-						v-if="props.displayTodayButton"
-						#actions
+					<VDatePicker
+						ref="datePickerRef"
+						v-model="selectedDates"
+						color="primary"
+						:first-day-of-week="1"
+						:multiple="props.displayRange ? 'range' : false"
+						:show-adjacent-months="true"
+						:show-week="props.showWeekNumber"
+						:view-mode="currentViewMode"
+						:class="displayWeekendDays ? 'weekend' : ''"
+						:max="maxDate"
+						:min="minDate"
+						:display-holiday-days="props.displayHolidayDays"
+						@update:view-mode="handleViewModeUpdate"
+						@update:month="onUpdateMonth"
+						@update:year="onUpdateYear"
+						@click:date="updateSelectedDates"
+						@update:model-value="updateDisplayFormattedDate"
+						@focus="markHolidayDays"
+						@update:month-year="markHolidayDays"
 					>
-						<div class="d-flex justify-center align-center w-100">
-							<v-btn
-								v-if="props.displayTodayButton"
-								size="x-small"
-								color="primary"
-								:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
-								class="date-picker__today-button my-2 pa-2 mt-2"
-								:ripple="false"
-								@click="handleSelectToday"
+						<template #title>
+							<span
+								:id="dialogTitleId"
 							>
-								<SyIcon
-									size="16px"
-									decorative
-									:icon="mdiCalendarMonthOutline"
-								/>
-								{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
-							</v-btn>
-						</div>
-					</template>
-				</VDatePicker>
+								Sélectionnez une date
+							</span>
+						</template>
+						<template #header>
+							<h3 class="mx-auto my-auto ml-5 mb-4">
+								{{ selectedDates ? displayedDateString : headerDate }}
+							</h3>
+						</template>
+						<template
+							v-if="props.displayTodayButton"
+							#actions
+						>
+							<div class="d-flex justify-center align-center w-100">
+								<v-btn
+									v-if="props.displayTodayButton"
+									size="x-small"
+									color="primary"
+									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+									class="date-picker__today-button my-2 pa-2 mt-2"
+									:ripple="false"
+									@click="handleSelectToday"
+								>
+									<SyIcon
+										size="16px"
+										decorative
+										:icon="mdiCalendarMonthOutline"
+									/>
+									{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+								</v-btn>
+							</div>
+						</template>
+					</VDatePicker>
+				</div>
 			</VMenu>
 		</template>
 	</div>

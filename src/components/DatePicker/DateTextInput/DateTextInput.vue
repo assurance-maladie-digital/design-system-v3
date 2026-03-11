@@ -251,8 +251,9 @@
 	const isDigitKey = (e: KeyboardEvent) =>
 		e.key.length === 1 && e.key >= '0' && e.key <= '9'
 
+	const PLACEHOLDER_CHAR = '\u2007' // figure space, visually subtle, not announced as underscore
 	const isSeparator = (skeletonFromFormatChar: string | undefined) =>
-		!!skeletonFromFormatChar && /[^A-Za-z_]/.test(skeletonFromFormatChar) // '/', ' ', '-'
+		!!skeletonFromFormatChar && skeletonFromFormatChar !== PLACEHOLDER_CHAR && /[^A-Za-z]/.test(skeletonFromFormatChar) // '/', ' ', '-'
 
 	function nextEditableIndex(skeletonFromFormat: string, from: number) {
 		let i = Math.min(from, skeletonFromFormat.length)
@@ -281,8 +282,8 @@
 	}
 
 	function skeletonFromFormat(dateFormat: string) {
-		// remplace les lettres du masque (D,M,Y...) par '_', conserve les séparateurs (/,-, espace…)
-		return dateFormat.replace(/[A-Za-z]/g, '_')
+		// remplace les lettres du masque (D,M,Y...) par un espace insécable visuel, conserve les séparateurs (/,-, espace…)
+		return dateFormat.replace(/[A-Za-z]/g, PLACEHOLDER_CHAR)
 	}
 
 	/**
@@ -356,7 +357,7 @@
 			const selectionStart = inputElement.selectionStart ?? 0
 			const selectionEnd = inputElement.selectionEnd ?? selectionStart
 			if (selectionStart !== selectionEnd) {
-				const updatedInputValue = overwriteSelection(inputElement.value, displayFormat.value, selectionStart, selectionEnd, () => '_')
+				const updatedInputValue = overwriteSelection(inputElement.value, displayFormat.value, selectionStart, selectionEnd, () => PLACEHOLDER_CHAR)
 				inputValue.value = updatedInputValue
 				requestAnimationFrame(() => {
 					inputElement.setSelectionRange(selectionStart, selectionStart)
@@ -366,7 +367,7 @@
 			}
 			const newCursorPosition = prevEditableIndex(displayFormat.value, selectionStart)
 			if (newCursorPosition >= 0) {
-				const updatedInputValue = overwriteAt(inputElement.value, newCursorPosition, '_')
+				const updatedInputValue = overwriteAt(inputElement.value, newCursorPosition, PLACEHOLDER_CHAR)
 				inputValue.value = updatedInputValue
 				requestAnimationFrame(() => {
 					inputElement.setSelectionRange(newCursorPosition, newCursorPosition)
@@ -386,7 +387,7 @@
 			const selectionEnd = inputElement.selectionEnd ?? cursorPosition
 
 			if (cursorPosition !== selectionEnd) {
-				let updatedInputValue = overwriteSelection(inputElement.value, displayFormat.value, cursorPosition, selectionEnd, () => '_')
+				let updatedInputValue = overwriteSelection(inputElement.value, displayFormat.value, cursorPosition, selectionEnd, () => PLACEHOLDER_CHAR)
 				if (!isSeparator(displayFormat.value[cursorPosition])) updatedInputValue = overwriteAt(updatedInputValue, cursorPosition, keyboardEvent.key)
 				inputValue.value = updatedInputValue
 				const nextCursorPosition = nextEditableIndex(displayFormat.value, cursorPosition + 1)
@@ -484,14 +485,14 @@
 					dateFormat,
 					localCursorPosition,
 					localSelectionEndPosition,
-					() => '_',
+					() => PLACEHOLDER_CHAR,
 				)
 				updateDateValue(updatedDateText, localCursorPosition)
 				return
 			}
 			const newCursorPosition = prevEditableIndex(dateFormat, localCursorPosition)
 			if (newCursorPosition >= 0) {
-				const updatedDateText = overwriteAt(currentDateText, newCursorPosition, '_')
+				const updatedDateText = overwriteAt(currentDateText, newCursorPosition, PLACEHOLDER_CHAR)
 				updateDateValue(updatedDateText, newCursorPosition)
 			}
 			return
@@ -505,7 +506,7 @@
 					dateFormat,
 					localCursorPosition,
 					localSelectionEndPosition,
-					() => '_',
+					() => PLACEHOLDER_CHAR,
 				)
 				if (!isSeparator(dateFormat[localCursorPosition])) {
 					updatedDateText = overwriteAt(updatedDateText, localCursorPosition, keyboardEvent.key)
@@ -670,7 +671,7 @@
 		if (!props.isValidateOnBlur) return
 
 		// Handle empty input
-		if (!inputValue.value || inputValue.value.trim() === '' || !inputValue.value.replace(/[_\s/-]/g, '')) {
+		if (!inputValue.value || inputValue.value.trim() === '' || !inputValue.value.replace(new RegExp(`[${PLACEHOLDER_CHAR}\\s/\\-]`, 'g'), '')) {
 			emitModel(null)
 			runRules('')
 			return
@@ -727,7 +728,7 @@
 	 */
 	watch(inputValue, async (nv, ov) => {
 		if (props.disabled) {
-			const isEmpty = !nv || nv.trim() === '' || /^[_/\-.\s]+$/.test(nv)
+			const isEmpty = !nv || nv.trim() === '' || new RegExp(`^[${PLACEHOLDER_CHAR}/\\-.\\s]+$`).test(nv)
 
 			if (isEmpty && ov && props.modelValue) {
 				isFormatting.value = true
@@ -774,7 +775,7 @@
 		try {
 			isFormatting.value = true
 
-			if (!nv || nv.trim() === '' || nv.match(/^[_/\-.\s]+$/)) {
+			if (!nv || nv.trim() === '' || nv.match(new RegExp(`^[${PLACEHOLDER_CHAR}/\\-.\\s]+$`))) {
 				emitModel(null)
 				runRules('')
 				if (isRange.value) {
@@ -892,7 +893,7 @@
 			else {
 				if (isOverwriteEditing.value) {
 					const formatted = inputValue.value
-					const complete = formatted && !formatted.includes('_')
+					const complete = formatted && !formatted.includes(PLACEHOLDER_CHAR)
 					if (complete) {
 						const formatValidationResult = validateDateFormatForSingleOrRange(formatted)
 						if (formatValidationResult.isValid) {
@@ -923,7 +924,7 @@
 				}
 
 				// Only emit model value for complete dates
-				const complete = !formatted.includes('_')
+				const complete = !formatted.includes(PLACEHOLDER_CHAR)
 				if (complete) {
 					const formatValidationResult = validateDateFormatForSingleOrRange(formatted)
 					if (formatValidationResult.isValid) {
