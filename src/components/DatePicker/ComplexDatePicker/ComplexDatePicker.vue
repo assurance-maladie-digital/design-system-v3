@@ -1123,6 +1123,7 @@
 					:id="datePickerContentId"
 					ref="datePickerRef"
 					v-model="selectedDates"
+					control-variant="modal"
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
