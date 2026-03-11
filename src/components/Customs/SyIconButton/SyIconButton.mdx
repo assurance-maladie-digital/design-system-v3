@@ -6,19 +6,17 @@ import '@/stories/styles/shared.css';
 
 <div className="header">
   <h1>SyIconButton</h1>
-  <p>Bouton icône accessible basé sur `v-btn` de Vuetify</p>
+  <p>Le composant `SyIconButton` est un bouton icône qui combine `v-btn` de Vuetify et `SyIcon` en garantissant l'accessibilité via une prop `label` obligatoire portée par `aria-label`.</p>
 </div>
 
-## Utilisation
+<Canvas of={SyIconButtonStories.Default} />
 
-Le composant `SyIconButton` est un bouton icône qui combine `v-btn` et `v-icon` de Vuetify en garantissant l'accessibilité via une prop `label` obligatoire portée par `aria-label`.
+# API
 
-<Primary />
-<Controls />
+<Controls of={SyIconButtonStories.Default} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+
+# Accessibilité
 
 Le composant `SyIconButton` gère automatiquement les attributs ARIA :
 
@@ -27,9 +25,7 @@ Le composant `SyIconButton` gère automatiquement les attributs ARIA :
 
 > **Important :** Le `label` doit décrire l'**action** du bouton et non l'icône elle-même (ex. _"Fermer"_ plutôt que _"Croix"_). Ne jamais fournir un `label` vide.
 
-Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'accessibilité](/docs/customs-syiconbutton-accessibilite--docs).
-
-## API
+Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'accessibilité](?path=/docs/customs-syiconbutton--accessibility).
 
 ## Exemples
 
@@ -48,40 +44,3 @@ Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'
 ### Bouton icône avec taille personnalisée
 
 <Canvas of={SyIconButtonStories.WithSize} />
-
-### Bouton icône avec couleur et taille
-
-<Canvas of={SyIconButtonStories.WithColorAndSize} />
-
-## Exemple d'utilisation
-
-```vue
-<template>
-  <!-- Bouton icône simple -->
-  <SyIconButton
-    :icon="mdiClose"
-    label="Fermer"
-    @click-icon-button="handleClose"
-  />
-
-  <!-- Bouton icône avec couleur -->
-  <SyIconButton
-    :icon="mdiAlert"
-    label="Alerte"
-    color="error"
-    @click-icon-button="handleAlert"
-  />
-
-  <!-- Bouton icône désactivé -->
-  <SyIconButton
-    :icon="mdiPencil"
-    label="Modifier"
-    :disabled="true"
-  />
-</template>
-
-<script setup>
-  import { mdiClose, mdiAlert, mdiPencil } from '@mdi/js'
-  import { SyIconButton } from '@cnam/design-system'
-</script>
-```

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SyIconButton from './SyIconButton.vue'
-import { mdiClose, mdiAlert, mdiMagnify, mdiPencil, mdiDelete } from '@mdi/js'
+import { mdiClose, mdiAlert, mdiMagnify } from '@mdi/js'
 
 const meta = {
-	title: 'Customs/SyIconButton',
+	title: 'Composants/Données/SyIconButton',
 	component: SyIconButton,
 	decorators: [
 		() => ({
@@ -164,72 +164,6 @@ export const WithSize: Story = {
 		template: `
 			<div class="pa-4">
 				<SyIconButton v-bind="args" />
-			</div>
-		`,
-	}),
-}
-
-export const WithColorAndSize: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				language: 'vue',
-				code: `
-				<template>
-					<SyIconButton :icon="mdiPencil" label="Modifier" color="red" size="large" />
-				</template>`,
-			},
-		],
-	},
-	args: {
-		icon: mdiPencil,
-		label: 'Modifier',
-		color: 'red',
-		size: 'large',
-	},
-	render: args => ({
-		components: { SyIconButton },
-		setup() {
-			return { args, mdiPencil }
-		},
-		template: `
-			<div class="pa-4">
-				<SyIconButton v-bind="args" />
-			</div>
-		`,
-	}),
-}
-
-export const Delete: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				language: 'vue',
-				code: `
-				<template>
-					<SyIconButton :icon="mdiDelete" label="Supprimer" color="error" @click-icon-button="handleClick" />
-				</template>`,
-			},
-		],
-	},
-	args: {
-		icon: mdiDelete,
-		label: 'Supprimer',
-		color: 'error',
-	},
-	render: args => ({
-		components: { SyIconButton },
-		setup() {
-			const handleClick = () => {
-				alert('Suppression !')
-			}
-			return { args, mdiDelete, handleClick }
-		},
-		template: `
-			<div class="pa-4">
-				<SyIconButton v-bind="args" @click-icon-button="handleClick" />
 			</div>
 		`,
 	}),
