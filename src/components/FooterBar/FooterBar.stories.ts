@@ -77,11 +77,15 @@ const meta = {
 	title: 'Composants/Structure/FooterBar',
 	component: FooterBar,
 	decorators: [
-		(story, context) => {
-			const theme = useTheme()
-			theme.global.name.value = context.globals.theme
-			return story()
-		},
+		(story, context) => ({
+			setup() {
+				const theme = useTheme()
+				theme.global.name.value = context.globals.theme
+				return story()
+			},
+			components: { story },
+			template: '<story />',
+		}),
 	],
 	parameters: {
 		layout: 'fullscreen',
