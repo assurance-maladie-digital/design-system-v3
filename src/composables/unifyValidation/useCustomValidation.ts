@@ -23,15 +23,12 @@ export function useCustomValidation(
 	})
 
 	async function validate() {
-		console.log('useCustomValidation - Validating field:', label.value, 'Value:', modelValue.value, 'Custom Rules:', customRules.value, 'Warning Rules:', customWarningRules.value, 'Success Rules:', customSuccessRules.value)
 		const result = await validator.validateField(
 			modelValue.value,
 			customRules.value,
 			customWarningRules.value,
 			customSuccessRules.value,
 		)
-
-		console.log('result:', result)
 
 		errors.value = result.state.errors
 		warnings.value = result.state.warnings

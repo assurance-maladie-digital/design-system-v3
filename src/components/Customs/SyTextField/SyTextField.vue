@@ -52,7 +52,6 @@
 			hint?: string
 			id?: string
 			loading?: string | boolean
-			maxErrors?: string | number
 			maxWidth?: string | number
 			messages?: string | string[]
 			minWidth?: string | number
@@ -108,7 +107,6 @@
 			hint: undefined,
 			id: undefined,
 			loading: false,
-			maxErrors: undefined,
 			maxWidth: undefined,
 			messages: undefined,
 			minWidth: undefined,
@@ -200,6 +198,7 @@
 		hasErrorProp: toRef(props, 'hasError'),
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
 	})
 
 	const forwardedAttrs = computed(() => {
@@ -535,7 +534,6 @@
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
-			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			:min-width="props.minWidth"

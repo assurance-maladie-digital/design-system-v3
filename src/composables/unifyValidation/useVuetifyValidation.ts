@@ -65,6 +65,9 @@ export function useVuetifyValidation(
 	)
 
 	watch (() => vuetifyValidator.errorMessages.value, (newVal) => {
+		if (vuetifyValidator.isPristine.value) {
+			return
+		}
 		errors.value = newVal
 	})
 

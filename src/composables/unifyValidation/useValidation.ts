@@ -24,6 +24,7 @@ export interface FieldValidationProps {
 	hasError?: boolean
 	hasWarning?: boolean
 	hasSuccess?: boolean
+	maxErrors?: number
 }
 
 export const validationPropsDefaults = {
@@ -43,6 +44,7 @@ export const validationPropsDefaults = {
 	hasError: false,
 	hasWarning: false,
 	hasSuccess: false,
+	maxErrors: 1,
 }
 
 export function useValidation(params: {
@@ -66,6 +68,7 @@ export function useValidation(params: {
 	customRules?: never
 	customWarningRules?: never
 	customSuccessRules?: never
+	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: false
 	customRules: Ref<SyValidationRule[]>
@@ -78,6 +81,7 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<ValidationRule[] | undefined>
+	maxErrors?: Ref<number>
 })) {
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
@@ -109,7 +113,7 @@ export function useValidation(params: {
 			params.hasErrorProp || ref(false),
 			computed(() => params.errorMessages?.value || []),
 			ref(false), // focused
-			ref(1), // maxErrors
+			params.maxErrors || ref(1), // maxErrors
 			params.label,
 			params.label,
 			params.readonly,
