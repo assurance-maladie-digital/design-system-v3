@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, useSlots } from 'vue'
 	import { type RouteLocationRaw } from 'vue-router'
+	import { useTheme } from 'vuetify'
 
 	import Logo from '@/components/Logo/Logo.vue'
 	import { LogoSize } from '@/components/Logo/LogoSize'
@@ -23,11 +24,13 @@
 		linkItems?: LinkItem[] | null
 		items?: LinkItem[] | null
 		sitemapRoute?: RouteLocationRaw
+		helpRoute?: RouteLocationRaw
 		cguRoute?: RouteLocationRaw
 		cookiesRoute?: RouteLocationRaw
 		legalNoticeRoute?: RouteLocationRaw
 		a11yStatementRoute?: RouteLocationRaw
 		hideSitemapLink?: boolean
+		hideHelpLink?: boolean
 		hideCguLink?: boolean
 		hideCookiesLink?: boolean
 		hideLegalNoticeLink?: boolean
@@ -37,16 +40,20 @@
 		hideSocialMediaLinks?: boolean
 		socialMediaLinks?: SocialMediaLink[]
 		light?: boolean
+		backOffice?: boolean
+		backOfficeText?: string
 	}>(), {
 		a11yCompliance: 'non-compliant',
 		linkItems: null,
 		items: null,
 		sitemapRoute: () => ({ name: 'sitemap' }),
+		helpRoute: () => ({ name: 'help' }),
 		cguRoute: () => ({ name: 'cgu' }),
 		cookiesRoute: () => ({ name: 'cookies' }),
 		legalNoticeRoute: () => ({ name: 'legalNotice' }),
 		a11yStatementRoute: () => ({ name: 'a11yStatement' }),
 		hideSitemapLink: false,
+		hideHelpLink: false,
 		hideCguLink: false,
 		hideCookiesLink: false,
 		hideLegalNoticeLink: false,
@@ -56,6 +63,8 @@
 		hideSocialMediaLinks: false,
 		socialMediaLinks: () => defaultSocialMediaLinks as SocialMediaLink[],
 		light: false,
+		backOffice: false,
+		backOfficeText: undefined,
 	})
 
 	const arrowTopIcon = mdiArrowUp
@@ -63,6 +72,11 @@
 	const slots = useSlots()
 	const display = useDisplay()
 	const options = useCustomizableOptions(config, props)
+	const vuetifyTheme = useTheme()
+
+	const emit = defineEmits<{
+		(e: 'event', item: string): void
+	}>()
 
 	const getLinkComponent = (item: LinkItem): string => {
 		return item.href ? 'a' : 'RouterLink'
@@ -96,7 +110,7 @@
 
 	const footerLinksMapping = computed(() => {
 		if (props.linkItems) {
-			return props.linkItems as LinkItem[]
+			return filterByTheme(props.linkItems as LinkItem[])
 		}
 
 		const linksMapping: LinkItem[] = [
@@ -104,6 +118,13 @@
 				text: locales.sitemapLabel,
 				to: props.sitemapRoute,
 				hidden: props.hideSitemapLink,
+				theme: 'cnam',
+			},
+			{
+				text: locales.HelpLabel,
+				to: props.helpRoute,
+				hidden: props.hideHelpLink,
+				theme: 'ap',
 			},
 			{
 				text: locales.cguLabel,
@@ -114,6 +135,7 @@
 				text: locales.cookiesLabel,
 				to: props.cookiesRoute,
 				hidden: props.hideCookiesLink,
+				theme: 'cnam',
 			},
 			{
 				text: locales.legalNoticeLabel,
@@ -127,8 +149,24 @@
 			},
 		] as LinkItem[]
 
-		return linksMapping.filter(item => !item.hidden)
+		return filterByTheme(linksMapping)
 	})
+
+	function filterByTheme(items: LinkItem[]): LinkItem[] {
+		return items
+			.filter(item => !item.hidden)
+			.filter(item =>
+				!vuetifyTheme.name.value || !item.theme || item.theme === vuetifyTheme.name.value,
+			)
+	}
+
+	const fontStyle = computed(() => ({
+		fontSize: vuetifyTheme.name.value === 'ap' ? '14px' : '',
+	}))
+
+	function emitEvent(item: LinkItem) {
+		emit('event', item.text)
+	}
 
 	defineExpose({
 		logoSize,
@@ -176,6 +214,7 @@
 
 				<VBtn
 					id="scroll-btn"
+					class="back-to-top"
 					v-bind="options.goTopBtn"
 					:aria-label="locales.goTopBtnLabel"
 					@click="scrollToTop"
@@ -205,7 +244,7 @@
 
 			<ul
 				:class="{ 'py-2 py-sm-0': !extendedMode }"
-				class="vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-start justify-center max-width-none mx-n3 my-n3"
+				class="vd-footer-bar-links text-sm-center d-flex flex-column flex-sm-row flex-wrap align-center justify-center max-width-none mx-n3 my-n3"
 			>
 				<slot name="prepend" />
 
@@ -215,20 +254,31 @@
 				>
 					<component
 						:is="getLinkComponent(item)"
+						v-if="!backOffice"
 						:href="item.href"
 						:to="item.to"
 						:aria-label="item.ariaLabel"
 						:target="item.openInNewTab ? '_blank' : undefined"
 						:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 						class="my-3 mx-4"
+						:style="fontStyle"
+						@click="emitEvent(item)"
 					>
 						{{ item.text }}
 					</component>
 				</li>
+				<li
+					v-if="props.backOffice"
+					class="my-3 mx-4"
+					:style="fontStyle"
+				>
+					CNAM - {{ props.backOfficeText }}
+				</li>
 
 				<li
 					v-if="props.version"
-					class="my-3 mx-4"
+					class="my-3 mx-4 version"
+					:style="fontStyle"
 				>
 					{{ locales.versionLabel }} {{ props.version }}
 				</li>
@@ -283,9 +333,17 @@ a {
 			color: rgb(var(--v-theme-primary));
 		}
 
+		a.v-btn {
+			border-radius: var(tokens.$radius-rounded) !important;
+		}
+
 		a.v-btn:hover {
 			background: rgb(0 0 0 / 5%);
 		}
+	}
+
+	.back-to-top {
+		border-radius: var(tokens.$radius-rounded) !important;
 	}
 
 	button.v-btn:hover {
@@ -297,11 +355,7 @@ a {
 	}
 
 	.v-divider {
-		border-color: rgba(tokens.$parma-darken-60, 1);
-	}
-
-	svg.logo {
-		fill: rgb(var(--v-theme-primary));
+		border-color: var(--footer-background);
 	}
 
 	.scroll {
@@ -314,6 +368,10 @@ a {
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
 		color: $white;
+
+		&.version {
+			color: tokens.$neutral-white-alpha;
+		}
 	}
 
 	p,
