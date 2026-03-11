@@ -76,6 +76,13 @@ const currentYear = new Date().getFullYear()
 const meta = {
 	title: 'Composants/Structure/FooterBar',
 	component: FooterBar,
+	decorators: [
+		(story, context) => {
+			const theme = useTheme()
+			theme.global.name.value = context.globals.theme
+			return story()
+		},
+	],
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['logoSize', 'onEvent'] },
@@ -106,6 +113,7 @@ const meta = {
 			control: {
 				type: 'boolean',
 			},
+			if: { global: 'theme', eq: 'ap' },
 			description: 'Masque le lien vers aide et configuation.',
 		},
 		hideCguLink: {
@@ -166,12 +174,14 @@ const meta = {
 			control: {
 				type: 'boolean',
 			},
+			if: { global: 'theme', eq: 'ap' },
 			description: 'Affichage du footer pour le back office.',
 		},
 		backOfficeText: {
 			control: {
 				type: 'text',
 			},
+			if: { global: 'theme', eq: 'ap' },
 			description: 'Nom du service en back office à afficher dans le footer.',
 		},
 		sitemapRoute: {
@@ -184,6 +194,7 @@ const meta = {
 			control: {
 				type: 'text',
 			},
+			if: { global: 'theme', eq: 'ap' },
 			description: 'La valeur de la prop `to` du lien vers aide et configuration.',
 		},
 		cguRoute: {

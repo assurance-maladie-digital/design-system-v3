@@ -334,7 +334,7 @@ a {
 		}
 
 		a.v-btn {
-			border-radius: 4px !important;
+      border-radius: var(tokens.$radius-rounded) !important;
 		}
 
 		a.v-btn:hover {
@@ -343,7 +343,7 @@ a {
 	}
 
 	.back-to-top {
-		border-radius: 4px !important;
+    border-radius: var(tokens.$radius-rounded) !important;
 	}
 
 	button.v-btn:hover {
