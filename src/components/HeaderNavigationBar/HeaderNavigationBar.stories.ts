@@ -278,6 +278,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
+		headingLevelTitle: 1,
 		items: [
 			{
 				label: 'Home',
@@ -319,6 +320,7 @@ export const Default: Story = {
 
 export const WithScroll: Story = {
 	args: {
+		headingLevelTitle: 1,
 		items: [
 			{
 				label: 'Home',
@@ -375,6 +377,7 @@ export const WithScroll: Story = {
 
 export const WithManyItems: Story = {
 	args: {
+		headingLevelTitle: 1,
 		items: [
 			{
 				label: 'Home',
@@ -906,6 +909,7 @@ export const WithVuetifyOptions: Story = {
 
 export const WithTabConfirmation: Story = {
 	args: {
+		headingLevelTitle: 1,
 		items: [
 			{ label: 'Home', href: '/home' },
 			{ label: 'Test avec href', href: '/test-avec-href' },

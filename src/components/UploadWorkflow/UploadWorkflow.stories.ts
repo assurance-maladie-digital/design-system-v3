@@ -259,7 +259,7 @@ const meta: Meta<typeof UploadWorkflow> = {
 			table: {
 				category: 'slots',
 				type: {
-					summary: '{}',
+					summary: '{ id: string }',
 				},
 			},
 			control: 'text',
@@ -386,7 +386,7 @@ export const OptionalDocument: Story = {
 	const uploadList = [
 		{
 			id: '1',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 		},
 		{
 			id: '2',
@@ -395,7 +395,7 @@ export const OptionalDocument: Story = {
 		},
 		{
 			id: '3',
-			title: 'Relevé d'identité bancaire',
+			title: 'Relevé d\\'identité bancaire',
 			optional: true,
 		},
 	]
@@ -447,7 +447,7 @@ export const WithPreviewStep: Story = {
 	const uploadList = [
 		{
 			id: 'ID',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 		},
 		{
 			id: 'Bill',
@@ -544,7 +544,7 @@ export const OneFile: Story = {
 	const uploadList = [
 		{
 			id: 'ID',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 		},
 	]
 
@@ -661,7 +661,7 @@ export const Events: Story = {
 	const uploadList = [
 		{
 			id: 'ID',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 			showPreviewBtn: true,
 		},
 		{
@@ -784,7 +784,7 @@ export const Slots: Story = {
 	const uploadList = [
 		{
 			id: 'ID',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 		},
 		{
 			id: 'Bill',
@@ -849,7 +849,7 @@ export const Customization: Story = {
 	const uploadList = [
 		{
 			id: '1',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 		},
 		{
 			id: '2',
@@ -931,7 +931,7 @@ export const ManuallySetFile: Story = {
 	const files = ref([
 		{
 			id: '1',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 			state: 'success',
 			fileName: 'carte_identite.jpg',
 			optional: false,
@@ -952,7 +952,7 @@ export const ManuallySetFile: Story = {
 	const uploadList = [
 		{
 			id: '1',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 		},
 		{
 			id: '2',
@@ -1021,7 +1021,7 @@ export const ManuallySetStates: Story = {
 	const files = ref([
 		{
 			id: '1',
-			title: 'Carte d'identité',
+			title: 'Carte d\\'identité',
 			state: 'error',
 			fileName: 'carte_identite.jpg',
 			optional: false,

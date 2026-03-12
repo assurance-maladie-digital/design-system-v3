@@ -46,6 +46,7 @@
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -170,6 +171,8 @@
 			density?: 'default' | 'comfortable' | 'compact'
 			hint?: string
 			persistentHint?: boolean
+			headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+
 		}>(),
 		{
 			modelValue: undefined,
@@ -207,6 +210,7 @@
 			density: 'default',
 			hint: undefined,
 			persistentHint: false,
+			headingLevel: 3,
 		},
 	)
 
@@ -1119,6 +1123,7 @@
 					:id="datePickerContentId"
 					ref="datePickerRef"
 					v-model="selectedDates"
+					control-variant="modal"
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
@@ -1153,9 +1158,12 @@
 						</span>
 					</template>
 					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
+						<SyHeading
+							class="mx-auto my-auto ml-5 mb-4"
+							:level="headingLevel"
+						>
 							{{ selectedDates ? displayedDateString : headerDate }}
-						</h3>
+						</SyHeading>
 					</template>
 					<template
 						v-if="props.displayTodayButton"
@@ -1364,6 +1372,10 @@
 	&::after {
 		display: none;
 	}
+}
+
+:deep(.v-date-picker-months) {
+	flex: 1;
 }
 
 :deep(.v-date-picker-months .v-btn__content) {

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import useCustomizableOptions, {
 		type CustomizableOptions,
 	} from '@/composables/useCustomizableOptions'
@@ -14,6 +15,7 @@
 	import type { FileItem, SelectedFile, UploadItem } from './types'
 	import useFileUploadJourney from './useFileUploadJourney'
 	import useFileList from './useFileList'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	const props = withDefaults(
 		defineProps<
@@ -23,7 +25,7 @@
 				sectionTitle?: string
 				showFilePreview?: boolean
 				infoText?: string
-				headingLevel?: number
+				headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 				locales?: typeof defaultLocales
 			}
 		>(),
@@ -40,6 +42,13 @@
 		(e: 'error', value: string[]): void
 		(e: 'preview', value: FileItem): void
 		(e: 'update:modelValue', value: SelectedFile[]): void
+	}>()
+
+	defineSlots<{
+		'title'?: () => undefined
+		'modal-title'?: (props: { id: string }) => undefined
+		'modal-description'?: () => undefined
+		'preview-description'?: () => undefined
 	}>()
 
 	const selectedFiles = defineModel<SelectedFile[]>({
@@ -137,13 +146,12 @@
 		class="sy-upload-workflow white"
 	>
 		<slot name="title">
-			<div
-				:aria-level="props.headingLevel"
-				role="heading"
-				class="text-h6 mb-2"
+			<SyHeading
+				:level="props.headingLevel"
+				:class="headingLevel === 4 ? 'text-h6 mb-2' : 'mb-2'"
 			>
 				{{ title }}
-			</div>
+			</SyHeading>
 		</slot>
 
 		<FileList
@@ -175,24 +183,32 @@
 
 		<DialogBox
 			v-model="showSelectDialog"
+			:heading-level="props.headingLevel"
 			v-bind="options.dialog"
 			@cancel="showSelectDialog = false"
 			@confirm="dialogConfirm"
 		>
-			<template #title>
-				<slot name="modal-title">
-					{{ locales.modalTitle }}
+			<template #title="titleSlotProps">
+				<slot
+					:id="titleSlotProps.id"
+					name="modal-title"
+				>
+					<div
+						:id="titleSlotProps.id"
+						class="text-h4 font-weight-medium"
+					>
+						{{ locales.modalTitle }}
+					</div>
 				</slot>
 			</template>
 			<slot name="modal-description" />
 
-			<VForm
-				v-if="true"
+			<div
 				ref="form"
 				v-bind="options.form"
 				class="mb-2"
 			>
-				<VSelect
+				<SySelect
 					v-model="selectedItem"
 					v-bind="options.select"
 					:items="selectItems"
@@ -201,7 +217,7 @@
 					:rules="[isRequired]"
 					color="primary"
 				/>
-			</VForm>
+			</div>
 
 			<FilePreview
 				v-if="showFilePreview"
@@ -212,6 +228,7 @@
 
 		<DialogBox
 			v-model="showPreviewDialog"
+			:heading-level="props.headingLevel"
 			v-bind="options.previewDialog"
 			hide-actions
 		>

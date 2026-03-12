@@ -48,13 +48,13 @@ describe('FileUpload', () => {
 			},
 		})
 
-		const label = wrapper.find('label')
+		const label = wrapper.find('.sy-file-upload')
 		const labelClasses = label.classes()
 
-		await wrapper.find('input').trigger('dragover')
+		await wrapper.find('.sy-file-upload').trigger('dragover')
 		expect(label.classes()).not.toEqual(labelClasses)
 
-		await wrapper.find('input').trigger('dragleave')
+		await wrapper.find('.sy-file-upload').trigger('dragleave')
 		expect(label.classes()).toEqual(labelClasses)
 	})
 
@@ -68,7 +68,7 @@ describe('FileUpload', () => {
 
 		const file: File = new File([''], 'filename.pdf', { type: 'application/pdf' })
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -89,13 +89,13 @@ describe('FileUpload', () => {
 
 		const file: File = new File([''], 'filename.pdf', { type: 'application/pdf' })
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
 		})
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file, file],
 			},
@@ -115,7 +115,7 @@ describe('FileUpload', () => {
 
 		const file: File = new File([''], 'filename.jpg', { type: 'image/jpeg' })
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -137,7 +137,7 @@ describe('FileUpload', () => {
 			},
 		})
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [jpgFile],
 			},
@@ -146,7 +146,7 @@ describe('FileUpload', () => {
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(undefined)
 		expect(wrapper.emitted('error')?.[0]).toEqual([['Le fichier filename.jpg a une extension invalide. Extensions acceptées : pdf']])
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [pdfFile],
 			},
@@ -166,7 +166,7 @@ describe('FileUpload', () => {
 
 		const file: File = new File(['42'], 'filename.jpg', { type: 'image/jpeg' })
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -183,7 +183,7 @@ describe('FileUpload', () => {
 			},
 		})
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [],
 			},
@@ -203,7 +203,7 @@ describe('FileUpload', () => {
 
 		const file: File = new File([''], 'filename.xyz', { type: 'unknown' })
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -221,7 +221,7 @@ describe('FileUpload', () => {
 			},
 		})
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -241,7 +241,7 @@ describe('FileUpload', () => {
 		const file1: File = new File([''], 'filename1.jpg', { type: 'image/jpeg' })
 		const file2: File = new File([''], 'filename2.jpg', { type: 'image/jpeg' })
 
-		await wrapper.find('label').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file1, file2],
 			},

@@ -42,6 +42,7 @@ describe('CookiesSelection – accessibility (axe)', () => {
 	it('has no obvious axe violations for full cookie preferences form', async () => {
 		const wrapper = mount(CookiesSelection, {
 			props: {
+				headingLevel: 2,
 				items: cookiesList,
 			},
 		})

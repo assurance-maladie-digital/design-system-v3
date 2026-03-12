@@ -8,6 +8,7 @@
 	import { locales } from './locales'
 	import { secondaryLogoMapping } from './secondaryLogoMapping'
 	import type { Theme } from './types'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(
 		defineProps<{
@@ -21,12 +22,16 @@
 				to?: RouteLocationRaw
 				href?: string
 			}
+			headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
+			headingLevelSubtitle?: 1 | 2 | 3 | 4
 		}>(), {
 			theme: 'default',
 			serviceTitle: undefined,
 			serviceSubTitle: undefined,
 			mobileVersion: false,
 			reduceLogo: false,
+			headingLevelTitle: 1,
+			headingLevelSubtitle: 2,
 			homeLink: () => ({
 				href: '/',
 			}),
@@ -246,12 +251,14 @@
 				class="vd-title-container d-flex justify-center flex-column text-primary"
 			>
 				<slot name="brand-content">
-					<h1
+					<SyHeading
 						v-if="service.title"
 						:class="{
 							'vd-compte-entreprise-title': isCompteEntreprise,
+							'vd-title text-caption text-md-subtitle-1 font-weight-medium': headingLevelTitle === 1,
+							'vd-title text-caption font-weight-medium': headingLevelTitle !== 1,
 						}"
-						class="vd-title text-caption text-md-subtitle-1 font-weight-medium"
+						:level="headingLevelTitle"
 					>
 						<template v-if="typeof service.title === 'string'">
 							<span>
@@ -267,14 +274,15 @@
 								{{ service.title.highlight }}
 							</span>
 						</template>
-					</h1>
+					</SyHeading>
 
-					<h2
+					<SyHeading
 						v-if="showServiceSubTitle"
 						class="vd-title text-caption"
+						:level="headingLevelSubtitle"
 					>
 						{{ service.subTitle }}
-					</h2>
+					</SyHeading>
 				</slot>
 			</div>
 		</slot>

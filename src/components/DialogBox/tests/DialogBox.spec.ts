@@ -20,7 +20,10 @@ describe('DialogBox', () => {
 	describe('rendering and props', () => {
 		it('renders correctly with props', () => {
 			const wrapper = mount(DialogBox, {
-				props: defaultProps,
+				props: {
+					...defaultProps,
+					headingLevel: 2,
+				},
 				global: {
 					stubs: {
 						VDialog: {
@@ -39,6 +42,8 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					modelValue: false,
+					headingLevel: 2,
+
 				},
 				attachTo: document.body,
 			})
@@ -49,7 +54,10 @@ describe('DialogBox', () => {
 
 		it('becomes visible when the model value is updated', async () => {
 			const wrapper = mount(DialogBox, {
-				props: defaultProps,
+				props: {
+					...defaultProps,
+					headingLevel: 2,
+				},
 			})
 
 			// Initially visible with modelValue: true
@@ -91,7 +99,10 @@ describe('DialogBox', () => {
 				slots: {
 					title: '<h2>Test title</h2>',
 				},
-				props: defaultProps,
+				props: {
+					...defaultProps,
+					headingLevel: 2,
+				},
 				attachTo: document.body,
 			})
 
@@ -120,6 +131,7 @@ describe('DialogBox', () => {
 					...defaultProps,
 					hideActions: true,
 					persistent: true,
+					headingLevel: 2,
 				},
 				attachTo: document.body,
 			})
@@ -156,6 +168,8 @@ describe('DialogBox', () => {
 					...defaultProps,
 					hideActions: true,
 					persistent: true,
+					headingLevel: 2,
+
 				},
 				attachTo: document.body,
 			})
@@ -283,6 +297,8 @@ describe('DialogBox', () => {
 			const wrapper = mount(DialogBox, {
 				props: {
 					modelValue: true,
+					headingLevel: 2,
+
 				},
 				attachTo: document.body,
 			})
@@ -300,7 +316,10 @@ describe('DialogBox', () => {
 
 		it('emits a cancel event when cancel button is clicked', async () => {
 			const wrapper = mount(DialogBox, {
-				props: defaultProps,
+				props: {
+					...defaultProps,
+					headingLevel: 2,
+				},
 				attachTo: document.body,
 			})
 
@@ -315,7 +334,10 @@ describe('DialogBox', () => {
 
 		it('emits a confirm event when confirm button is clicked', async () => {
 			const wrapper = mount(DialogBox, {
-				props: defaultProps,
+				props: {
+					...defaultProps,
+					headingLevel: 2,
+				},
 				attachTo: document.body,
 			})
 
@@ -332,7 +354,10 @@ describe('DialogBox', () => {
 	describe('Test methods', () => {
 		it('getSelectableElements if this.$refs.dialogContent.$el is undefined', async () => {
 			const wrapper = shallowMount(DialogBox, {
-				props: defaultProps,
+				props: {
+					...defaultProps,
+					headingLevel: 2,
+				},
 				attachTo: document.body,
 			})
 			// @ts-expect-error - Testing private method
@@ -347,6 +372,7 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				autofocusValidateBtn: true,
+				headingLevel: 2,
 			},
 			attachTo: document.body,
 		})
@@ -367,6 +393,7 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					draggable: true,
+					headingLevel: 2,
 				},
 				attachTo: document.body,
 			})
@@ -400,6 +427,7 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					draggable: true,
+					headingLevel: 2,
 				},
 				attachTo: document.body,
 			})
@@ -439,6 +467,7 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					draggable: true,
+					headingLevel: 2,
 				},
 				attachTo: document.body,
 			})
@@ -461,6 +490,7 @@ describe('DialogBox', () => {
 				props: {
 					...defaultProps,
 					draggable: true,
+					headingLevel: 2,
 				},
 				attachTo: document.body,
 			})
@@ -487,6 +517,7 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				draggable: true,
+				headingLevel: 2,
 			},
 			attachTo: document.body,
 		})
@@ -510,6 +541,7 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				draggable: true,
+				headingLevel: 2,
 			},
 			attachTo: document.body,
 		})
@@ -536,6 +568,7 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				draggable: true,
+				headingLevel: 2,
 			},
 			attachTo: document.body,
 		})
@@ -575,6 +608,7 @@ describe('DialogBox', () => {
 			props: {
 				...defaultProps,
 				draggable: true,
+				headingLevel: 2,
 			},
 			attachTo: document.body,
 		})

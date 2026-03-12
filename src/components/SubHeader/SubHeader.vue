@@ -13,6 +13,7 @@
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
 	import { VThemeProvider } from 'vuetify/components'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & Widthable & {
 		hideBackBtn?: boolean
@@ -25,6 +26,7 @@
 		dataListGroupItems?: DataListGroupItems | undefined
 		loading?: boolean
 		renderFixedHeight?: boolean
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
@@ -36,6 +38,7 @@
 		dataListGroupItems: undefined,
 		loading: false,
 		renderFixedHeight: false,
+		headingLevel: 1,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -118,13 +121,14 @@
 								theme="dark"
 								height="2rem"
 							/>
-							<h2
+							<SyHeading
 								v-else-if="titleText"
 								class="text-h5 font-weight-bold"
 								:aria-label="titleAccessibleName"
+								:level="headingLevel"
 							>
 								{{ titleText }}
-							</h2>
+							</SyHeading>
 						</VFadeTransition>
 					</slot>
 
@@ -230,5 +234,4 @@
 		background-color: #e6e6e6 !important;
 	}
 }
-
 </style>

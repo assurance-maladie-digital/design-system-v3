@@ -27,6 +27,7 @@ describe('CookiesInformation – accessibility (axe)', () => {
 	it('has no obvious axe violations for functional cookies section', async () => {
 		const wrapper = mount(CookiesInformation, {
 			props: {
+				headingLevel: 2,
 				tableItems: cookies,
 				type: 'functional',
 			},

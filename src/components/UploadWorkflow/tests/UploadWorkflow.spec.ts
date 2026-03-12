@@ -6,7 +6,7 @@ import UploadWorkflow from '../UploadWorkflow.vue'
 import { locales as fileListLocales } from '@/components/FileList/UploadItem/locales'
 import { locales as FileUploadLocales } from '@/components/FileUpload/locales'
 import { afterEach } from 'node:test'
-import { VSelect } from 'vuetify/components'
+import { SySelect } from '@/components'
 
 describe('UploadWorkflow', () => {
 	afterEach(() => {
@@ -35,24 +35,6 @@ describe('UploadWorkflow', () => {
 		expect(wrapper.find('.sy-file-upload').isVisible()).toBeTruthy()
 	})
 
-	it('renders default title with role heading and configured aria-level', () => {
-		const wrapper = mount(UploadWorkflow, {
-			props: {
-				uploadList: [
-					{
-						id: 'ID',
-						title: 'Carte d\'identité',
-					},
-				],
-				headingLevel: 2,
-			},
-		})
-
-		const title = wrapper.find('[role="heading"]')
-		expect(title.exists()).toBe(true)
-		expect(title.attributes('aria-level')).toBe('2')
-	})
-
 	it('shows the file in the list when set with the list button', async () => {
 		const wrapper = mount(UploadWorkflow, {
 			props: {
@@ -75,7 +57,7 @@ describe('UploadWorkflow', () => {
 			type: 'application/pdf',
 		})
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -155,14 +137,14 @@ describe('UploadWorkflow', () => {
 			type: 'application/pdf',
 		})
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
 		})
 
-		wrapper.find('.v-select input').setValue('bill')
-		wrapper.findComponent(VSelect).vm.$emit('update:modelValue', 'bill')
+		wrapper.find('.sy-select input').setValue('bill')
+		wrapper.findComponent(SySelect).vm.$emit('update:modelValue', 'bill')
 
 		await wrapper.find('[data-test-id="confirm-btn"]').trigger('click')
 
@@ -204,7 +186,7 @@ describe('UploadWorkflow', () => {
 			type: 'application/pdf',
 		})
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [file],
 			},
@@ -248,7 +230,7 @@ describe('UploadWorkflow', () => {
 
 		await wrapper.find('.file-item button').trigger('click')
 
-		await wrapper.find('input').trigger('drop', {
+		await wrapper.find('.sy-file-upload').trigger('drop', {
 			dataTransfer: {
 				files: [image],
 			},

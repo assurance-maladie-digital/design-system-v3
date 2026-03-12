@@ -115,7 +115,7 @@
 				>
 					<h3
 						:id="uniqueId ? `${uniqueId}-advantages` : undefined"
-						class="w-100 mb-2 font-weight-semibold"
+						class="w-100 mb-2"
 					>
 						{{ locales.advantagesTitle }}
 					</h3>
@@ -157,7 +157,7 @@
 				>
 					<h3
 						:id="uniqueId ? `${uniqueId}-services-title` : undefined"
-						class="mb-4 font-weight-semibold"
+						class="mb-4"
 					>
 						{{ locales.servicesTitle }}
 					</h3>
@@ -186,7 +186,7 @@
 								<div>
 									<h4
 										:id="uniqueId ? `${uniqueId}-services-item-${index}-subtitle` : undefined"
-										class="text-ap-blue-darken-2 text-uppercase font-weight-semibold"
+										class="text-ap-blue-darken-2 text-uppercase"
 									>
 										{{ items.title }}
 									</h4>
@@ -209,7 +209,6 @@
 				>
 					<h3
 						:id="uniqueId ? `${uniqueId}-online-process-title` : undefined"
-						class="font-weight-semibold"
 					>
 						{{ locales.onlineProcessTitle }}
 					</h3>

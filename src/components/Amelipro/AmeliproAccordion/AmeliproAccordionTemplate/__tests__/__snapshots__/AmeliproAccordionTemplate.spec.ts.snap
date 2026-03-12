@@ -31,7 +31,6 @@ exports[`AmeliproAccordionTemplate > render correctly 1`] = `
       <p
         aria-level="2"
         class="
-          font-weight-semibold
           mb-0
           text-h3
         "
@@ -45,7 +44,6 @@ exports[`AmeliproAccordionTemplate > render correctly 1`] = `
             accordion-btn
             align-center
             d-inline-flex
-            font-weight-semibold
             text-ap-grey-darken-1
             text-left
           "

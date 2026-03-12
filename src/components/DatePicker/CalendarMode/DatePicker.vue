@@ -16,6 +16,7 @@
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import type { DateObjectValue } from '../types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -74,6 +75,8 @@
 		isValidateOnBlur?: boolean
 		hint?: string
 		persistentHint?: boolean
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+
 	}>(), {
 		modelValue: undefined,
 		placeholder: undefined,
@@ -112,6 +115,7 @@
 		isValidateOnBlur: true,
 		hint: undefined,
 		persistentHint: false,
+		headingLevel: 3,
 	})
 
 	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
@@ -780,8 +784,8 @@
 					textInputValue.value = ''
 				}
 				else if (Array.isArray(newValue) && props.displayRange) {
-					// Pour les plages de dates, on ne modifie pas directement textInputValue
-					// car le DateTextInput gère son propre formatage
+				// Pour les plages de dates, on ne modifie pas directement textInputValue
+				// car le DateTextInput gère son propre formatage
 				}
 				else if (typeof newValue === 'string') {
 					// Pour une date unique
@@ -880,9 +884,7 @@
 </script>
 
 <template>
-	<div
-		class="date-picker-container"
-	>
+	<div class="date-picker-container">
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
@@ -925,6 +927,7 @@
 		<template v-else-if="props.useCombinedMode">
 			<ComplexDatePicker
 				ref="complexDatePickerRef"
+				:heading-level="headingLevel"
 				:model-value="props.modelValue"
 				:format="props.format"
 				:date-format-return="props.dateFormatReturn"
@@ -1022,6 +1025,7 @@
 					ref="datePickerRef"
 					v-model="selectedDates"
 					color="primary"
+					control-variant="modal"
 					:first-day-of-week="1"
 					:multiple="props.displayRange ? 'range' : false"
 					:show-adjacent-months="true"
@@ -1043,9 +1047,12 @@
 						Sélectionnez une date
 					</template>
 					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
+						<SyHeading
+							class="mx-auto my-auto ml-5 mb-4"
+							:level="headingLevel"
+						>
 							{{ selectedDates ? displayedDateString : headerDate }}
-						</h3>
+						</SyHeading>
 					</template>
 					<template
 						v-if="props.displayTodayButton"
@@ -1275,6 +1282,10 @@
 	}
 }
 
+:deep(.v-date-picker-months) {
+	flex: 1;
+}
+
 :deep(.v-date-picker-months .v-btn__content) {
 	font-size: 1rem;
 }
@@ -1303,4 +1314,5 @@
 :deep(.v-picker__body .v-btn--active .v-btn__overlay) {
 	opacity: 0;
 }
+
 </style>

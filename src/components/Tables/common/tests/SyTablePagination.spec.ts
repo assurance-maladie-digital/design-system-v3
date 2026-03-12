@@ -6,6 +6,7 @@ describe('SyTablePagination.vue', () => {
 	it('renders the component with default props', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -19,6 +20,7 @@ describe('SyTablePagination.vue', () => {
 	it('displays pagination when there are multiple pages', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -31,6 +33,7 @@ describe('SyTablePagination.vue', () => {
 	it('does not display pagination navigation when there is only one page', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 5,
@@ -44,6 +47,7 @@ describe('SyTablePagination.vue', () => {
 	it('always shows items per page selector even with only one page', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 5,
@@ -59,6 +63,7 @@ describe('SyTablePagination.vue', () => {
 		// Test with standard value
 		const wrapper1 = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10, // Standard value
 				itemsLength: 42,
@@ -66,16 +71,17 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		const vm1 = wrapper1.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-		expect(vm1.itemsPerPageOptions).toBeDefined()
+		const vm1 = wrapper1.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+		expect(vm1.formatedItemsPerPageOptions).toBeDefined()
 
-		const options1 = vm1.itemsPerPageOptions
+		const options1 = vm1.formatedItemsPerPageOptions
 		// Should have standard options 5, 10, 25, 50, 100) plus the 'All' option (-1)
 		expect(options1.map(o => o.value).sort((a, b) => a - b)).toEqual([-1, 5, 10, 25, 50, 100])
 
 		// Test with custom value
 		const wrapper2 = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 42, // Custom value
 				itemsLength: 100,
@@ -83,8 +89,8 @@ describe('SyTablePagination.vue', () => {
 			},
 		})
 
-		const vm2 = wrapper2.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-		const options2 = vm2.itemsPerPageOptions
+		const vm2 = wrapper2.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+		const options2 = vm2.formatedItemsPerPageOptions
 
 		// Should include the custom value (42)
 		const hasCustomValue = options2.some(option => option.value === 42)
@@ -97,6 +103,7 @@ describe('SyTablePagination.vue', () => {
 	it('shows correct range when "All" is selected', async () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: -1, // "All" option
 				itemsLength: 42,
@@ -111,6 +118,7 @@ describe('SyTablePagination.vue', () => {
 	it('emits update:page event when SyPagination emits update:modelValue', async () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -130,6 +138,7 @@ describe('SyTablePagination.vue', () => {
 	it('has the correct structure for items per page selection', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {
+				headingLevel: 2,
 				page: 1,
 				itemsPerPage: 10,
 				itemsLength: 100,
@@ -144,10 +153,11 @@ describe('SyTablePagination.vue', () => {
 	})
 
 	// Tests for itemsPerPageOptions functionality
-	describe('itemsPerPageOptions', () => {
-		it('should use default options when itemsPerPageOptions is not provided', () => {
+	describe('formatedItemsPerPageOptions', () => {
+		it('should use default options when formatedItemsPerPageOptions is not provided', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,
@@ -156,15 +166,16 @@ describe('SyTablePagination.vue', () => {
 			})
 
 			// Should have default options: 5, 10, 25, 50, 100, and "Tous" (-1)
-			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-			const selectOptions = vm.itemsPerPageOptions
+			const vm = wrapper.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.formatedItemsPerPageOptions
 			expect(selectOptions).toHaveLength(6)
 			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25, 50, 100, -1])
 		})
 
-		it('should limit options when itemsPerPageOptions is provided', () => {
+		it('should limit options when formatedItemsPerPageOptions is provided', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,
@@ -174,16 +185,17 @@ describe('SyTablePagination.vue', () => {
 			})
 
 			// Should only have the limited options, no "Tous" option
-			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-			const selectOptions = vm.itemsPerPageOptions
+			const vm = wrapper.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.formatedItemsPerPageOptions
 			expect(selectOptions).toHaveLength(3)
 			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25])
 			expect(selectOptions.map(opt => opt.text)).toEqual(['5', '10', '25'])
 		})
 
-		it('should include "Tous" option when explicitly allowed in itemsPerPageOptions', () => {
+		it('should include "Tous" option when explicitly allowed in formatedItemsPerPageOptions', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,
@@ -193,8 +205,8 @@ describe('SyTablePagination.vue', () => {
 			})
 
 			// Should have the limited options plus "Tous"
-			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-			const selectOptions = vm.itemsPerPageOptions
+			const vm = wrapper.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.formatedItemsPerPageOptions
 			expect(selectOptions).toHaveLength(4)
 			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25, -1])
 
@@ -207,6 +219,7 @@ describe('SyTablePagination.vue', () => {
 		it('should add current itemsPerPage to options if not already included', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 15, // Not in the itemsPerPageOptions
@@ -216,8 +229,8 @@ describe('SyTablePagination.vue', () => {
 			})
 
 			// Should include the current itemsPerPage value and sort numerically
-			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-			const selectOptions = vm.itemsPerPageOptions
+			const vm = wrapper.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.formatedItemsPerPageOptions
 			expect(selectOptions).toHaveLength(4)
 			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 15, 25])
 		})
@@ -225,6 +238,7 @@ describe('SyTablePagination.vue', () => {
 		it('should not add current itemsPerPage if it is -1 (Tous)', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: -1, // "Tous" option
@@ -233,9 +247,9 @@ describe('SyTablePagination.vue', () => {
 				},
 			})
 
-			// Should not add -1 to the options since itemsPerPageOptions doesn't include it
-			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-			const selectOptions = vm.itemsPerPageOptions
+			// Should not add -1 to the options since formatedItemsPerPageOptions doesn't include it
+			const vm = wrapper.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.formatedItemsPerPageOptions
 			expect(selectOptions).toHaveLength(3)
 			expect(selectOptions.map(opt => opt.value)).toEqual([5, 10, 25])
 			expect(selectOptions.find(opt => opt.value === -1)).toBeUndefined()
@@ -244,6 +258,7 @@ describe('SyTablePagination.vue', () => {
 		it('should work with very restrictive options', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 5,
@@ -253,8 +268,8 @@ describe('SyTablePagination.vue', () => {
 			})
 
 			// Should only have one option
-			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-			const selectOptions = vm.itemsPerPageOptions
+			const vm = wrapper.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.formatedItemsPerPageOptions
 			expect(selectOptions).toHaveLength(1)
 			expect(selectOptions.map(opt => opt.value)).toEqual([5])
 			expect(selectOptions.map(opt => opt.text)).toEqual(['5'])
@@ -263,6 +278,7 @@ describe('SyTablePagination.vue', () => {
 		it('should handle empty itemsPerPageOptions array', () => {
 			const wrapper = mount(SyTablePagination, {
 				props: {
+					headingLevel: 2,
 					page: 1,
 					pageCount: 5,
 					itemsPerPage: 10,
@@ -272,8 +288,8 @@ describe('SyTablePagination.vue', () => {
 			})
 
 			// Should only include the current itemsPerPage since base options are empty
-			const vm = wrapper.vm as unknown as { itemsPerPageOptions: Array<{ text: string, value: number }> }
-			const selectOptions = vm.itemsPerPageOptions
+			const vm = wrapper.vm as unknown as { formatedItemsPerPageOptions: Array<{ text: string, value: number }> }
+			const selectOptions = vm.formatedItemsPerPageOptions
 			expect(selectOptions).toHaveLength(1)
 			expect(selectOptions.map(opt => opt.value)).toEqual([10])
 		})

@@ -61,10 +61,10 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 					allItems.forEach((item) => {
 						if (item !== element) {
 							item.classList.remove('keyboard-focused')
+							item.setAttribute('tabindex', '-1')
 						}
 					})
 
-					element.setAttribute('tabindex', '0')
 					element.setAttribute('tabindex', focusListItem ? '0' : '-1')
 					if (focusListItem) {
 						element.focus()

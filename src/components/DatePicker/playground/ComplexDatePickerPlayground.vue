@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 	import { ref } from 'vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Valeurs pour les différents exemples
 	const standardDate = ref<string | null>(null)
@@ -15,12 +16,21 @@
 
 <template>
 	<div class="playground-container">
-		<h1>ComplexDatePicker Playground</h1>
-
+		<SyHeading
+			:level="1"
+		>
+			ComplexDatePicker Playground
+		</SyHeading>
 		<div class="demo-section">
-			<h2>Format standard (DD/MM/YYYY)</h2>
+			<SyHeading
+				:level="2"
+			>
+				Format standard (DD/MM/YYYY)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="standardDate"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				label="Date standard"
 				placeholder="15/03/2024"
 				format="DD/MM/YYYY"
@@ -32,10 +42,14 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format américain (MM/DD/YYYY)</h2>
+			<SyHeading	:level="2">
+				Format américain (MM/DD/YYYY)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="americanDate"
 				label="Date américaine"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="03/15/2024"
 				format="MM/DD/YYYY"
 				class="date-picker"
@@ -46,10 +60,14 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format ISO (YYYY-MM-DD)</h2>
+			<SyHeading	:level="2">
+				Format ISO (YYYY-MM-DD)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="isoDate"
 				label="Date ISO"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="2024-03-15"
 				format="YYYY-MM-DD"
 				class="date-picker"
@@ -60,10 +78,14 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format avec séparateur point (DD.MM.YYYY)</h2>
+			<SyHeading	:level="2">
+				Format avec séparateur point (DD.MM.YYYY)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="dotDate"
 				label="Date avec points"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="15.03.2024"
 				format="DD.MM.YYYY"
 				class="date-picker"
@@ -74,9 +96,13 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Champ requis</h2>
+			<SyHeading	:level="2">
+				Champ requis
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="requiredDate"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				label="Date requise"
 				placeholder="Veuillez sélectionner une date *"
 				format="DD/MM/YYYY"
@@ -89,10 +115,14 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Plage de dates</h2>
+			<SyHeading	:level="2">
+				Plage de dates
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="dateRange"
 				label="Plage de dates"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="01/01/2024 au 31/12/2024"
 				format="DD/MM/YYYY"
 				display-range
@@ -104,10 +134,14 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Date de naissance (année d'abord)</h2>
+			<SyHeading	:level="2">
+				Date de naissance (année d'abord)
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="birthDate"
 				label="Date de naissance"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				placeholder="25/12/1990"
 				format="DD/MM/YYYY"
 				is-birth-date
@@ -119,9 +153,13 @@
 		</div>
 
 		<div class="demo-section">
-			<h2>Format d'affichage vs format de retour</h2>
+			<SyHeading	:level="2">
+				Format d'affichage vs format de retour
+			</SyHeading>
 			<ComplexDatePicker
 				v-model="formattedDate"
+				:heading-level="2"
+				:heading-level-complex-date-picker="2"
 				label="Date avec format de retour"
 				placeholder="Affichage: 15/03/2024, Retour: 2024-03-15"
 				format="DD/MM/YYYY"

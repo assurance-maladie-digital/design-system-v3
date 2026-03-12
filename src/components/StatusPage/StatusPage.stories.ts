@@ -8,6 +8,10 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 		'code': {
 			description: 'Code d\'erreur affiché en premier plan',
 		},
@@ -58,6 +62,7 @@ type Story = StoryObj<typeof StatusPage>
 
 export const Default: Story = {
 	args: {
+		headingLevel: 1,
 		pageTitle: 'une erreur est survenue',
 		code: '500',
 		message: 'Une erreur est survenue de notre côté, veuillez réessayer plus tard. Si le problème persiste veuillez nous contacter par téléphone au 3646',
@@ -96,6 +101,7 @@ export const Default: Story = {
 export const WithLink: Story = {
 	args: {
 		...Default.args,
+		headingLevel: 1,
 		btnHref: '/',
 		btnText: 'Retour à l\'accueil',
 	},
@@ -137,6 +143,7 @@ export const CustomIllustration: Story = {
 		...Default.args,
 		btnHref: '/',
 		btnText: 'Retour à l\'accueil',
+		headingLevel: 1,
 	},
 	parameters: {
 		sourceCode: [

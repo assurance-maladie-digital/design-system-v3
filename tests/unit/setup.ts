@@ -318,3 +318,6 @@ config.global.stubs = {
 		template: '<button><slot /></button>',
 	},
 }
+
+// https://stackoverflow.com/questions/48828759/unit-test-raises-error-because-of-getcontext-is-not-implemented
+HTMLCanvasElement.prototype.getContext = (() => {}) as any

@@ -158,6 +158,18 @@ const meta = {
 				},
 			},
 		},
+		'headingLevelTitle': {
+			control: { type: 'select', options: [1, 2, 3, 4, 5, 6] },
+			description: 'Le niveau de titre pour le titre du service.',
+			table: {
+				type: {
+					summary: '1 | 2 | 3 | 4 | 5 | 6',
+				},
+				defaultValue: {
+					summary: '1',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof HeaderBar>
 
@@ -167,6 +179,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
@@ -184,6 +197,7 @@ export const Default: Story = {
 					<HeaderBar
 						service-title="Synapse"
 						service-subtitle="Design System"
+						:heading-level-title="1"
 					/>
 				</template>
 				`,
@@ -202,6 +216,7 @@ export const Default: Story = {
 
 export const WithRightMenu: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
@@ -309,6 +324,7 @@ export const WithRightMenu: Story = {
 
 export const CustomLogo: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 		sticky: false,
@@ -446,7 +462,7 @@ export const CustomLogo: Story = {
 }
 
 export const CustomBrand: Story = {
-	args: {},
+	args: { headingLevelTitle: 1 },
 	render: (args) => {
 		return {
 			components: { HeaderBar },
@@ -500,6 +516,7 @@ export const CustomBrand: Story = {
 
 export const Sticky: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
@@ -543,6 +560,7 @@ export const Sticky: Story = {
 
 export const WithHeaderToolbar: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
@@ -598,6 +616,7 @@ export const WithHeaderToolbar: Story = {
 
 export const WithSubHeader: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
@@ -657,6 +676,7 @@ export const WithSubHeader: Story = {
 
 export const DefaultSlot: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
@@ -722,6 +742,7 @@ export const DefaultSlot: Story = {
 
 export const PrependSlot: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},
@@ -776,6 +797,7 @@ export const PrependSlot: Story = {
 
 export const AppendSlot: Story = {
 	args: {
+		headingLevelTitle: 1,
 		serviceTitle: 'Synapse',
 		serviceSubtitle: 'Design System',
 	},

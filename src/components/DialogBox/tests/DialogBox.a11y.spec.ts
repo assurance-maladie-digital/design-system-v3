@@ -22,6 +22,7 @@ describe('DialogBox – accessibility (axe)', () => {
 	it('has no obvious axe violations with title, content and actions', async () => {
 		const wrapper = mount(DialogBox, {
 			props: {
+				headingLevel: 2,
 				modelValue: true,
 				title: 'Confirmation',
 				confirmBtnText: 'Valider',

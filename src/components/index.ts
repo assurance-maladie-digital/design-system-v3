@@ -12,6 +12,7 @@ export { default as HeaderMenuBtn } from './HeaderBar/HeaderMenuBtn/HeaderMenuBt
 export { default as HeaderLoading } from './HeaderLoading/HeaderLoading.vue'
 export { default as HeaderToolbar } from './HeaderToolbar/HeaderToolbar.vue'
 export { default as SubHeader } from './SubHeader/SubHeader.vue'
+export { default as SyHeading } from './SyHeading/SyHeading.vue'
 
 // ===========================
 // Layout
