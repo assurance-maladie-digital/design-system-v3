@@ -1,5 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/main'
+import { watch } from 'vue'
 import type { Ref } from 'vue'
 
 export function useCustomValidation(
@@ -12,6 +13,7 @@ export function useCustomValidation(
 	successes: Ref<string[]>,
 	showSuccessMessages: Ref<boolean>,
 	label: Ref<string>,
+	focused: Ref<boolean>,
 ) {
 	const validator = useValidation({
 		showSuccessMessages: showSuccessMessages.value,
@@ -48,6 +50,12 @@ export function useCustomValidation(
 		},
 		() => modelValue.value = undefined,
 	)
+
+	watch(focused, (newVal) => {
+		if (!newVal) {
+			validate()
+		}
+	})
 
 	return { validate }
 }

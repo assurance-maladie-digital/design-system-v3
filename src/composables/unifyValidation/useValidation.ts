@@ -56,6 +56,7 @@ export function useValidation(params: {
 	showSuccessMessages: Ref<boolean>
 	disableErrorHandling: Ref<boolean>
 	label: Ref<string>
+	focused: Ref<boolean>
 	errorMessages?: Ref<string[] | null | undefined>
 	warningMessages?: Ref<string[] | null | undefined>
 	successMessages?: Ref<string[] | null | undefined>
@@ -112,12 +113,12 @@ export function useValidation(params: {
 			errors,
 			params.hasErrorProp || ref(false),
 			computed(() => params.errorMessages?.value || []),
-			ref(false), // focused
-			params.maxErrors, // maxErrors
+			params.focused,
+			params.maxErrors,
 			params.label,
 			params.label,
 			params.readonly,
-			params.isValidateOnBlur ? 'input' : 'blur',
+			params.isValidateOnBlur ? 'blur' : 'input',
 		)
 	}
 
@@ -131,6 +132,7 @@ export function useValidation(params: {
 		successes,
 		params.showSuccessMessages,
 		params.label,
+		params.focused,
 	)
 
 	async function validate(): Promise<boolean> {

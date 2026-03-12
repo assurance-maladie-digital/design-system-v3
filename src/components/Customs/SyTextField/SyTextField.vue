@@ -164,6 +164,7 @@
 	})
 
 	const attrs = useAttrs()
+	const focused = ref(false)
 	// Construction des règles de validation
 	const defaultRules = computed<ValidationRule[]>(() => props.required
 		? [{
@@ -199,6 +200,7 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
+		focused: focused,
 	})
 
 	const forwardedAttrs = computed(() => {
@@ -563,7 +565,8 @@
 				'success-field': hasSuccess,
 				'basic-field': !hasError && !hasWarning && !hasSuccess
 			}"
-			@blur="validate"
+			@focus="focused = true"
+			@blur="focused = false"
 		>
 			<!-- Prepend -->
 			<template
