@@ -180,7 +180,6 @@ export const Default: Story = {
 						v-bind="args"
 					/>
 				</div>
-				<br/><br/><br/><br/>
 			`,
 		}
 	},
@@ -257,7 +256,6 @@ export const HelpText: Story = {
 						v-bind="args"
 					/>
 				</div>
-				<br/><br/><br/><br/>
 			`,
 		}
 	},

@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, type PropType } from 'vue'
+	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
@@ -164,6 +164,9 @@
 		},
 	})
 
+	// pr récupérer proprement aria-label
+	const attrs = useAttrs()
+
 	const ICONS: Record<NonNullable<IconType>, string> = {
 		info: mdiInformationOutline,
 		success: mdiCheck,
@@ -256,8 +259,40 @@
 		menuMinWidth.value = (controlEl ?? el).offsetWidth
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
+	// text d'aide
+	const helpTextId = computed(() => `${inputId.value}-help`)
+	// messages d'erreur, success avertissement
+	const messagesId = computed(() => `${inputId.value}-messages`)
+	// live region pour le lecteur ecran
+	const liveRegionId = computed(() => `${inputId.value}-live`)
+	// un libellé caché pour la popup/listbox
+	const overlayLabelId = computed(() => `${inputId.value}-overlay-label`)
+
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
+
+	const rawAriaLabel = computed(() => {
+		const ariaLabel = attrs['aria-label']
+		return typeof ariaLabel === 'string' && ariaLabel.trim().length > 0 ? ariaLabel.trim() : ''
+	})
+
+	// met en place un fallback robuste du nom accessible :
+	const accessibleLabel = computed(() => {
+		// si aria-label existant
+		if (rawAriaLabel.value) return rawAriaLabel.value
+
+		// return label
+		if (props.label?.trim()) return labelWithAsterisk.value
+
+		// message d'aide si aucun label fourni
+		if (typeof props.helpText === 'string' && props.helpText.trim()) return props.helpText.trim()
+
+		return 'Selectionnez une option'
+	})
+
+	const accessibleTitle = computed(() => {
+		return accessibleLabel.value
+	})
 
 	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
 		// Prevent default action if event is provided
@@ -511,6 +546,26 @@
 		return props.helpText && hasMessages.value && !props.hideMessages
 	})
 
+	// Ici on calcule dynamiquement la liste des ids à rattacher à l'input :
+	const describedByIds = computed(() => {
+		const ids: string[] = []
+
+		// help text / hint
+		if ((showHelpTextAsMessage.value || showHelpTextBelow.value) && props.helpText) {
+			ids.push(helpTextId.value)
+		}
+		// messages affichés
+		if (!props.hideMessages && hasMessages.value) {
+			ids.push(messagesId.value)
+		}
+		// live region si erreur
+		if (hasError.value || (Array.isArray(props.errorMessages) && props.errorMessages.length > 0)) {
+			ids.push(liveRegionId.value)
+		}
+
+		return ids.join(' ')
+	})
+
 	const calculatedWidth = computed(() => {
 		// If width prop is provided and not 'undefined', return it directly as a CSS value
 		if (props.width && props.width !== 'undefined') {
@@ -689,19 +744,33 @@
 	const ariaManager = {
 		cleanInputAttributes(inputElement: HTMLElement): void {
 			if (!inputElement) return
-
-			inputElement.removeAttribute('aria-describedby')
 			inputElement.removeAttribute('size')
 			inputElement.removeAttribute('tabindex')
 			inputElement.removeAttribute('aria-hidden')
 		},
 
-		updateInputState(inputElement: HTMLElement, isOpenValue: boolean, menuId: string, activeDescendant?: string): void {
+		updateInputState(
+			inputElement: HTMLElement,
+			isOpenValue: boolean,
+			menuId: string,
+			activeDescendant?: string,
+			describedBy?: string,
+		): void {
 			if (!inputElement) return
 
 			inputElement.setAttribute('role', 'combobox')
 			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
 			inputElement.setAttribute('aria-haspopup', 'listbox')
+			// On ajoute aria-autocomplete="list" pour le role combobox
+			inputElement.setAttribute('aria-autocomplete', 'list')
+
+			// On rattache aria-describedby à l'input
+			if (describedBy && describedBy.trim().length > 0) {
+				inputElement.setAttribute('aria-describedby', describedBy)
+			}
+			else {
+				inputElement.removeAttribute('aria-describedby')
+			}
 
 			if (isOpenValue) {
 				inputElement.setAttribute('aria-controls', menuId)
@@ -710,6 +779,7 @@
 				inputElement.removeAttribute('aria-controls')
 			}
 
+			// aria-activedescendant sur l'input
 			if (isOpenValue && activeDescendant) {
 				inputElement.setAttribute('aria-activedescendant', activeDescendant)
 			}
@@ -728,12 +798,7 @@
 				inputElement.removeAttribute('aria-required')
 			}
 
-			if (hasErrorValue) {
-				inputElement.setAttribute('aria-invalid', 'true')
-			}
-			else {
-				inputElement.removeAttribute('aria-invalid')
-			}
+			inputElement.setAttribute('aria-invalid', hasErrorValue ? 'true' : 'false')
 		},
 
 		cleanParentAttributes(parentElement: HTMLElement): void {
@@ -768,7 +833,14 @@
 
 		if (inputElement) {
 			ariaManager.cleanInputAttributes(inputElement)
-			ariaManager.updateInputState(inputElement, isOpen.value, uniqueMenuId.value, activeDescendantId.value)
+			ariaManager.updateInputState(
+				inputElement,
+				isOpen.value,
+				uniqueMenuId.value,
+				activeDescendantId.value,
+				// On injecte ici les ids calculés pour aria-describedby,
+				describedByIds.value,
+			)
 			ariaManager.updateValidationAttributes(inputElement, Boolean(isRequired.value), Boolean(hasError.value))
 		}
 
@@ -801,11 +873,16 @@
 		})
 	})
 
-	watch(isOpen, () => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el) return
-			setupAriaAttributes()
-		})
+	watch(isOpen, async (newValue) => {
+		await nextTick()
+
+		if (!textInput.value || !textInput.value.$el) return
+
+		setupAriaAttributes()
+
+		if (newValue) {
+			updateMenuAccessibility()
+		}
 	})
 
 	watch(activeDescendantId, (newValue) => {
@@ -882,6 +959,31 @@
 		closeList,
 		validateOnSubmit,
 	})
+	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)
+	const updateMenuAccessibility = async (): Promise<void> => {
+		await nextTick()
+
+		const listElement = list.value?.$el as HTMLElement | null
+		if (!listElement) return
+
+		// Nom accessible du contenu popup
+		listElement.setAttribute('role', 'listbox')
+		listElement.setAttribute('aria-label', accessibleLabel.value)
+
+		// En multisélection, exposer explicitement le mode de sélection multiple
+		if (props.multiple) {
+			listElement.setAttribute('aria-multiselectable', 'true')
+		}
+		else {
+			listElement.removeAttribute('aria-multiselectable')
+		}
+
+		// on lui applique aussi un nom accessible.
+		const overlayContent = listElement.closest('.v-overlay__content') as HTMLElement | null
+		if (overlayContent) {
+			overlayContent.setAttribute('aria-label', accessibleLabel.value)
+		}
+	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function initializeActivatorProps(activatorProps: Record<string, any>) {
@@ -938,11 +1040,11 @@
 						:id="inputId"
 						v-model="selectedItemText"
 						v-click-outside="closeList"
-						:title="$attrs['aria-label'] || labelWithAsterisk"
+						:title="accessibleTitle"
 						:color="props.color"
 						:disabled="disabled"
 						:label="labelWithAsterisk"
-						:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+						:aria-label="accessibleLabel"
 						:error-messages="props.disableErrorHandling ? [] : errorMessages"
 						:variant="variant"
 						:rules="validationRules"
@@ -1084,18 +1186,30 @@
 					class="hidden-label"
 				>{{ label }}</span>
 			</template>
+			<!--
+				Libellé caché utilisé pour nommer la popup/listbox.
+			-->
+			<span
+				:id="overlayLabelId"
+				class="sr-only"
+			>
+				{{ accessibleLabel }}
+			</span>
+
 			<VList
 				:id="uniqueMenuId"
 				ref="list"
 				class="v-list"
 				role="listbox"
-				:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-				:title="$attrs['aria-label'] || labelWithAsterisk"
+				:aria-label="accessibleLabel"
+				:aria-labelledby="overlayLabelId"
+				:title="accessibleTitle"
+				:aria-multiselectable="props.multiple ? 'true' : undefined"
 				:style="{
 					minWidth: `${textInput?.$el.offsetWidth}px`
 				}"
 				bg-color="white"
-				tabindex="0"
+				tabindex="-1"
 				@keydown.esc.prevent="closeList"
 				@keydown.tab="handleTabKey"
 				@keydown.enter.prevent="handleEnterKey"
@@ -1150,6 +1264,43 @@
 				</VListItem>
 			</VList>
 		</VMenu>
+
+		<div
+			v-if="(showHelpTextAsMessage || showHelpTextBelow) && props.helpText"
+			:id="helpTextId"
+			class="sr-only"
+		>
+			{{ props.helpText }}
+		</div>
+
+		<div
+			v-if="!props.hideMessages && hasMessages"
+			:id="messagesId"
+			class="sr-only"
+		>
+			{{
+				Array.isArray(props.errorMessages)
+					? props.errorMessages.join(' ')
+					: props.errorMessages
+			}}
+		</div>
+
+		<div
+			:id="liveRegionId"
+			class="sr-only"
+			aria-live="polite"
+			aria-atomic="true"
+		>
+			{{
+				hasError
+					? (
+						Array.isArray(props.errorMessages)
+							? props.errorMessages.join(' ')
+							: props.errorMessages || 'Le champ contient une erreur.'
+					)
+					: ''
+			}}
+		</div>
 
 		<div
 			v-if="showHelpTextBelow"
