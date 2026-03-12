@@ -1025,6 +1025,7 @@
 					ref="datePickerRef"
 					v-model="selectedDates"
 					color="primary"
+					control-variant="modal"
 					:first-day-of-week="1"
 					:multiple="props.displayRange ? 'range' : false"
 					:show-adjacent-months="true"

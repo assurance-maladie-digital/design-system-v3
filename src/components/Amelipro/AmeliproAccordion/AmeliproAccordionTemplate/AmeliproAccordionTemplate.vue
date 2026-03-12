@@ -111,14 +111,14 @@
 				<p
 					:id="uniqueId + 'title'"
 					:aria-level="titleLevel"
-					class="font-weight-semibold text-h3 mb-0"
+					class="text-h3 mb-0"
 					role="heading"
 				>
 					<button
 						:id="`${uniqueId}-header-btn-open-close`"
 						:aria-controls="uniqueId"
 						:aria-expanded="isOpen === true ? 'true' : 'false'"
-						class="text-ap-grey-darken-1 text-left d-inline-flex align-center accordion-btn font-weight-semibold"
+						class="text-ap-grey-darken-1 text-left d-inline-flex align-center accordion-btn"
 						:class="titleUppercase ? 'text-uppercase' : undefined"
 						type="button"
 						@blur="focus = false"

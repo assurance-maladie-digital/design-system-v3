@@ -1,6 +1,6 @@
 export const config = {
 	btn: {
-		variant: 'outlined',
+		variant: 'outlined' as const,
 		color: 'primary',
 		class: 'text-wrap',
 		minHeight: '36px',
