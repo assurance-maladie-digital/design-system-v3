@@ -937,14 +937,21 @@ exports[`AmeliproPatientLogged > render correctly 1`] = `
                       class="v-field__input"
                       data-no-activator=""
                     >
+                      <select hidden="">
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                      </select>
                       <!---->
                       <!---->
                       <input
-                        aria-label="Open"
+                        aria-controls="menu-v-14"
+                        aria-expanded="false"
+                        aria-labelledby="test-id-select-label"
                         id="test-id-select"
                         inputmode="none"
+                        role="combobox"
                         size="1"
-                        title="Open"
                         type="text"
                         value=""
                       />

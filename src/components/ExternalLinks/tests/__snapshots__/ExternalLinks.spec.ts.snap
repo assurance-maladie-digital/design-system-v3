@@ -7,6 +7,7 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
     aria-expanded="true"
     aria-haspopup="menu"
     aria-label="Menu : Consulter les données externes"
+    aria-owns="sy-external-links-menu-v-0"
     class="
       d-flex
       px-3
@@ -94,7 +95,7 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
       css="true"
       name="fade-transition"
       persisted="true"
-      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 sy-external-links-btn" style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row; top: 0px; bottom: auto; left: 0px; right: auto; z-index: 4;" aria-haspopup="menu" aria-expanded="true" aria-label="Menu : Consulter les données externes" aria-controls="sy-external-links-menu-v-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="mr-3 sy-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
+      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 sy-external-links-btn" style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: absolute; flex-direction: row; top: 0px; bottom: auto; left: 0px; right: auto; z-index: 4;" aria-haspopup="menu" aria-expanded="true" aria-owns="sy-external-links-menu-v-0" aria-label="Menu : Consulter les données externes" aria-controls="sy-external-links-menu-v-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="mr-3 sy-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
     >
       <div
         class="v-overlay__content"
@@ -304,6 +305,7 @@ exports[`ExternalLinks > renders correctly 1`] = `
   <v-menu-stub
     activatorprops="[object Object]"
     attach="true"
+    capturefocus="true"
     class="
       sy-external-links
       sy-external-links--left
@@ -325,10 +327,13 @@ exports[`ExternalLinks > renders correctly 1`] = `
     openonhover="false"
     origin="auto"
     persistent="false"
+    retainfocus="false"
     scrim="false"
     scrollstrategy="reposition"
+    sticktotarget="false"
     submenu="false"
     transition="fade-transition"
+    viewportmargin="12"
     zindex="4"
   ></v-menu-stub>
 </div>
@@ -341,6 +346,7 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
     aria-expanded="true"
     aria-haspopup="menu"
     aria-label="Menu : Consulter les données externes"
+    aria-owns="sy-external-links-menu-v-0"
     class="
       d-flex
       px-3
@@ -428,7 +434,7 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
       css="true"
       name="fade-transition"
       persisted="true"
-      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 sy-external-links-btn" style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: fixed; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;" aria-haspopup="menu" aria-expanded="true" aria-label="Menu : Consulter les données externes" aria-controls="sy-external-links-menu-v-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="ml-3 sy-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
+      target="<button data-v-353763df="" type="button" class="v-btn v-btn--elevated v-theme--light v-btn--density-default rounded-0 v-btn--size-default v-btn--variant-elevated d-flex px-3 sy-external-links-btn" style="background-color: #0c419a; color: #fff; caret-color: #fff; min-height: 48px; min-width: 328px; transform: translateX(0); position: fixed; flex-direction: row-reverse; top: auto; bottom: 0px; left: auto; right: 0px; z-index: 5;" aria-haspopup="menu" aria-expanded="true" aria-owns="sy-external-links-menu-v-0" aria-label="Menu : Consulter les données externes" aria-controls="sy-external-links-menu-v-0"><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!----><span class="v-btn__content" data-no-activator=""><span data-v-353763df="" class="ml-3 sy-external-links-btn-text white--text">Consulter les données externes</span><i data-v-353763df="" class="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z mdi v-icon notranslate v-theme--light v-icon--size-default text-white" aria-hidden="true"></i></span><!----><!----></button>"
     >
       <div
         class="v-overlay__content"
@@ -639,6 +645,7 @@ exports[`ExternalLinks > slides on hover or focus 1`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     aria-label="Menu : Consulter les données externes"
+    aria-owns="sy-external-links-menu-v-0"
     class="
       d-flex
       px-3
@@ -708,6 +715,7 @@ exports[`ExternalLinks > slides on hover or focus 2`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     aria-label="Menu : Consulter les données externes"
+    aria-owns="sy-external-links-menu-v-0"
     class="
       d-flex
       px-3
@@ -777,6 +785,7 @@ exports[`ExternalLinks > slides on hover or focus 3`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     aria-label="Menu : Consulter les données externes"
+    aria-owns="sy-external-links-menu-v-0"
     class="
       d-flex
       px-3
@@ -846,6 +855,7 @@ exports[`ExternalLinks > slides on hover or focus 4`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     aria-label="Menu : Consulter les données externes"
+    aria-owns="sy-external-links-menu-v-0"
     class="
       d-flex
       px-3
@@ -915,6 +925,7 @@ exports[`ExternalLinks > slides on hover or focus 5`] = `
     aria-expanded="false"
     aria-haspopup="menu"
     aria-label="Menu : Consulter les données externes"
+    aria-owns="sy-external-links-menu-v-0"
     class="
       d-flex
       px-3
