@@ -1,7 +1,14 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyTextField, NirField } from '@/components'
-	const selectedValue = ref('33')
+	const selectedValue1 = ref('')
+	const selectedValue2 = ref('')
+	const selectedValue3 = ref('')
+	const selectedValue4 = ref('')
+	const selectedValue5 = ref('')
+	const selectedValue6 = ref('')
+	const selectedValue7 = ref('')
+	const selectedValue8 = ref('')
 
 	const rules = [
 		(value: string) => !!value || 'Required.',
@@ -50,10 +57,10 @@
 		>
 			<div>
 				<p class="mb-4">
-					SyTextField vuetify validation
+					SyTextField vuetify validation on blur
 				</p>
 				<SyTextField
-					v-model="selectedValue"
+					v-model="selectedValue1"
 					use-vuetify-validation
 					label="Test"
 					:rules="rules"
@@ -63,22 +70,49 @@
 
 			<div>
 				<p class="mb-4">
-					SyTextField custom validation
+					SyTextField custom validation on blur
 				</p>
 				<SyTextField
-					v-model="selectedValue"
+					v-model="selectedValue2"
 					label="Test"
 					:custom-rules="customRules"
 					:max-errors="2"
 				/>
 			</div>
 
+						<div>
+				<p class="mb-4">
+					SyTextField vuetify validation on input
+				</p>
+				<SyTextField
+					v-model="selectedValue3"
+					use-vuetify-validation
+					label="Test"
+					:rules="rules"
+					:max-errors="2"
+					:is-validate-on-blur="false"
+				/>
+			</div>
+
 			<div>
 				<p class="mb-4">
-					NirField with vuetify validation
+					SyTextField custom validation on input
+				</p>
+				<SyTextField
+					v-model="selectedValue4"
+					label="Test"
+					:custom-rules="customRules"
+					:max-errors="2"
+					:is-validate-on-blur="false"
+				/>
+			</div>
+
+			<div>
+				<p class="mb-4">
+					NirField with vuetify validation on blur
 				</p>
 				<NirField
-					v-model="selectedValue"
+					v-model="selectedValue5"
 					use-vuetify-validation
 					label="Test"
 					:rules="nirRules"
@@ -87,12 +121,37 @@
 
 			<div>
 				<p class="mb-4">
-					NirField with custom validation
+					NirField with custom validation on blur
 				</p>
 				<NirField
-					v-model="selectedValue"
+					v-model="selectedValue6"
 					label="Test"
 					:custom-rules="customRules"
+				/>
+			</div>
+
+			<div>
+				<p class="mb-4">
+					NirField with vuetify validation on input
+				</p>
+				<NirField
+					v-model="selectedValue7"
+					use-vuetify-validation
+					label="Test"
+					:rules="nirRules"
+					:is-validate-on-blur="false"
+				/>
+			</div>
+
+			<div>
+				<p class="mb-4">
+					NirField with custom validation on input
+				</p>
+				<NirField
+					v-model="selectedValue8"
+					label="Test"
+					:custom-rules="customRules"
+					:is-validate-on-blur="false"
 				/>
 			</div>
 		</div>
