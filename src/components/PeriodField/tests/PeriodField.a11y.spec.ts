@@ -21,6 +21,7 @@ describe('PeriodField – accessibility (axe)', () => {
 			attachTo: document.body,
 		})
 
+		// TODO : https://github.com/assurance-maladie-digital/design-system-v3/issues/1960
 		// 'aria-valid-attr-value' is ignored because Vuetify sets aria-owns on the
 		// DatePicker input referencing the VMenu id, but in JSDOM the menu is
 		// rendered via <Teleport> and not present in the scanned subtree.
