@@ -1,0 +1,10 @@
+diff --git a/lib/components/VOtpInput/VOtpInput.sass b/lib/components/VOtpInput/VOtpInput.sass
+index 3c4423795d8f8772c06c789211dd9d0c961bf67a..a3d87c9aae32d9996d93bc79a089c634bf85ceb5 100644
+--- a/lib/components/VOtpInput/VOtpInput.sass
++++ b/lib/components/VOtpInput/VOtpInput.sass
+@@ -1,4 +1,4 @@
+-@use 'sass:math';
++@use 'sass:math'
+ @use '../../styles/settings'
+ @use '../../styles/tools'
+ @use './variables' as *
