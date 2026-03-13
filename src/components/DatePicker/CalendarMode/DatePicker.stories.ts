@@ -322,9 +322,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -387,9 +384,6 @@ export const Default: Story = {
 
 export const Required: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -463,9 +457,6 @@ export const Required: Story = {
 
 export const DateRange: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -533,9 +524,6 @@ export const DateRange: Story = {
 
 export const WithCustomPeriod: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -648,9 +636,6 @@ export const WithCustomPeriod: Story = {
 
 export const WithAppendIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -716,9 +701,6 @@ export const WithAppendIcon: Story = {
 
 export const WithoutIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -784,9 +766,6 @@ export const WithoutIcon: Story = {
 
 export const BirthDate: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -852,9 +831,6 @@ export const BirthDate: Story = {
 
 export const WithError: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -924,9 +900,6 @@ export const WithError: Story = {
 
 export const WithWarning: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1006,9 +979,6 @@ export const WithWarning: Story = {
 
 export const WithSuccess: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1079,9 +1049,6 @@ export const WithSuccess: Story = {
 
 export const DifferentFormats: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1185,9 +1152,6 @@ export const DifferentFormats: Story = {
 
 export const WithDateFormatReturn: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1297,9 +1261,6 @@ export const WithDateFormatReturn: Story = {
 
 export const WithDayjsFormat: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1406,9 +1367,6 @@ export const WithDayjsFormat: Story = {
 
 export const UTC: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1567,9 +1525,6 @@ export const UTC: Story = {
 export const BidirectionalValidation: Story = {
 	parameters: {
 		controls: { disable: true },
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1895,9 +1850,6 @@ export const BidirectionalValidation: Story = {
 
 export const WithFormSubmission: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

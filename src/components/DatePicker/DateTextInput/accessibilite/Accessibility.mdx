@@ -1,0 +1,66 @@
+import { Meta, Story } from '@storybook/addon-docs'
+import * as Stories from '../NoCalendar.stories.ts'
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
+import '@/stories/styles/shared.css'
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
+
+<Meta of={Stories} />
+
+<AccessibilityGuideLayout
+	componentName="DateTextInput (saisie manuelle)"
+	iconSrc={AccessibilityIcon}
+>
+	<CriteriaSection>
+		<CriteriaCard title="Structure sémantique" icon="🔍">
+			<ul>
+				<li><strong>Rôle</strong> : input type="text" (role implicite <code>textbox</code>), <code>aria-required</code> synchronisé quand <code>required</code>.</li>
+				<li><strong>Association</strong> : label natif ou <code>aria-label</code> / <code>aria-labelledby</code> pour les champs sans libellé visible (libellé calculé dynamiquement selon label/placeholder).</li>
+				<li><strong>Descriptions</strong> : <code>aria-describedby</code> relie aides contextuelles/hints et messages d’erreur/succès/avertissements.</li>
+				<li><strong>États</strong> : <code>aria-invalid</code>, <code>aria-disabled</code>, <code>aria-readonly</code> et zones de messages reflètent la validation et les props.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Saisie et clavier" icon="⌨️">
+			<ul>
+				<li><strong>Tab</strong> : entrée et sortie du champ sans piège de focus (pas de panneau).</li>
+				<li><strong>Masque léger</strong> : l’option <code>autoClamp</code> ajoute les séparateurs mais n’empêche pas la saisie ni la navigation au clavier (retours chariot, flèches, copier/coller conservés).</li>
+				<li><strong>Raccourcis</strong> : <kbd>Ctrl/Cmd+A</kbd>, <kbd>Ctrl/Cmd+C</kbd>, <kbd>Ctrl/Cmd+V</kbd> restent utilisables pour éditer la valeur.</li>
+				<li><strong>Plage de dates</strong> : la chaîne <code>start - end</code> est éditable (séparateur conservé), aucune navigation forcée.</li>
+				<li><strong>Lecture seule</strong> : aucune validation ni effacement, bouton clear désactivé.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Messages et retours" icon="📣">
+			<ul>
+				<li><strong>Statuts</strong> : erreurs/avertissements/succès affichés sous le champ (zone annoncée via <code>aria-live</code> si activé côté navigateur/lecteur).</li>
+				<li><strong>Formats attendus</strong> : placeholder et hint expliquent la structure (JJ/MM/AAAA…).</li>
+				<li><strong>Validation manuelle</strong> : <code>customRules</code> / <code>customWarningRules</code> exposent des messages dédiés.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection title="Saisie clavier et autoClamp">
+		<Story of={Stories.AutoClampFeature} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		- Fournir un libellé explicite ou <code>aria-label</code> quand le label visuel est masqué ou tronqué.
+		- Afficher un placeholder cohérent avec le format attendu et conserver un hint persistent pour les formats non standards.
+		- En lecture seule, désactiver les actions d’ouverture/validation et laisser l’icône décorative optionnelle mais non interactive.
+		- En mode plage, préciser dans le hint l’ordre attendu (début puis fin) et conserver la séparatrice <code>" - "</code>.
+		- Avec <code>autoClamp</code>, signaler que les séparateurs sont ajoutés automatiquement sans bloquer les corrections clavier.
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		- Stories : <code>Default</code> (champ requis), <code>AutoClampFeature</code> (saisie assistée), <code>DifferentFormats</code> (formats multiples), <code>CustomRules</code> / <code>WarningRules</code> (messages dédiés), <code>Range</code> (plage éditable).
+		- Spécification WAI-ARIA : rôle textbox et gestion de <code>aria-invalid</code> / <code>aria-required</code> / <code>aria-describedby</code>.
+		- Tests axe : <code>DateTextInput.a11y.spec.ts</code> (scénario champ requis, vérifie les attributs aria et les messages).
+	</ResourcesSection>
+</AccessibilityGuideLayout>

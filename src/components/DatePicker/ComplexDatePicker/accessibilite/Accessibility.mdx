@@ -1,0 +1,76 @@
+import { Meta, Story } from '@storybook/addon-docs'
+import * as Stories from '../ComplexDatePicker.stories.ts'
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
+import '@/stories/styles/shared.css'
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
+
+<Meta of={Stories} />
+
+<AccessibilityGuideLayout
+	componentName="ComplexDatePicker (mode combiné)"
+	iconSrc={AccessibilityIcon}
+>
+
+<CriteriaSection>
+	<CriteriaCard title="Structure sémantique" icon="🔍">
+		<ul>
+			<li><strong>Champ</strong> : conteneur <code>role="combobox"</code> qui expose <code>aria-controls</code> et <code>aria-expanded</code>; champ de saisie interne en <code>textbox</code> (DateTextInput) avec libellé dynamique.</li>
+			<li><strong>Panneau</strong> : calendrier dans un menu <code>role="presentation"</code>, grille de boutons natifs pour les jours.</li>
+			<li><strong>Relations</strong> : l’activateur référence le panneau via <code>aria-controls</code> quand ouvert; <code>aria-labelledby</code> et <code>aria-label</code> portés par l’input.</li>
+			<li><strong>États</strong> : <code>aria-expanded</code> synchronisé, <code>aria-disabled</code> / <code>aria-readonly</code> propagés aux champs et messages.</li>
+		</ul>
+	</CriteriaCard>
+
+	<CriteriaCard title="Ouverture et focus" icon="🧭">
+		<ul>
+			<li><strong>Ouverture</strong> : clic sur le champ ou l’icône; <kbd>Entrée</kbd> sur le champ ouvre; option <code>textFieldActivator</code> active toute la zone.</li>
+			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> via le piège de focus; fermeture valide et émet <code>closed</code>.</li>
+			<li><strong>Piège de focus</strong> : <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> circulent dans l’en-tête, la grille et le bouton « Aujourd’hui » tant que le panneau est ouvert.</li>
+			<li><strong>Lecture seule</strong> : aucun clear ni validation interactive, champs non éditables.</li>
+		</ul>
+	</CriteriaCard>
+
+	<CriteriaCard title="Navigation clavier dans le calendrier" icon="⌨️">
+		<ul>
+			<li><strong>Jours</strong> : flèches déplacent le focus; <code>PageUp/PageDown</code> changent de mois (<kbd>Shift</kbd> + touche change d’année).</li>
+			<li><strong>Home/End</strong> : premier/dernier jour du mois affiché.</li>
+			<li><strong>Activation</strong> : <kbd>Espace</kbd>/<kbd>Entrée</kbd> déclenchent les boutons de jour et de l’en-tête (mois/année/flèches).</li>
+			<li><strong>Dialogue mois/années</strong> : flèches et <kbd>Home</kbd>/<kbd>End</kbd>, <kbd>Espace</kbd>/<kbd>Entrée</kbd> sélectionnent l’option et conservent le focus.</li>
+		</ul>
+	</CriteriaCard>
+
+	<CriteriaCard title="Messages et annonces" icon="📣">
+		<ul>
+			<li><strong>Statuts</strong> : erreurs/avertissements/succès affichés sous le champ; bouton « Aujourd’hui » avec <code>title</code>.</li>
+			<li><strong>Formats attendus</strong> : placeholder + hint décrivent la saisie; autoClamp optionnel sur la saisie interne.</li>
+			<li><strong>Lecture/voix</strong> : libellé/placeholder alimentent <code>aria-label</code>; les messages sont reliés via <code>aria-describedby</code>.</li>
+		</ul>
+	</CriteriaCard>
+</CriteriaSection>
+
+<DemoSection title="Saisie + calendrier (mode combiné)">
+	<Story of={Stories.Default} />
+</DemoSection>
+
+<BestPracticesSection>
+- Fournir un libellé ou <code>aria-label</code> explicite, surtout si le label visuel est masqué ou tronqué.
+- Si <code>readonly</code>, laisser le calendrier fermé et désactiver l’effacement; ne pas surcharger les raccourcis.
+- En plage de dates, conserver la séparatrice <code>" - "</code> et préciser l’ordre début/fin dans le hint.
+- Ajuster <code>period</code> pour ne pas masquer des dates attendues; vérifier <code>min/max</code> cohérents avec la plage.
+- Avec <code>textFieldActivator</code>, s’assurer que le label reste lisible et que l’icône n’est pas le seul point d’entrée.
+</BestPracticesSection>
+
+<ResourcesSection>
+- Stories : <code>Default</code>, <code>DateRange</code>, <code>DisablePickerInteraction</code>, <code>AutoFormattingInput</code>, <code>WithTextFieldActivator</code>, <code>ReadonlyMode</code>.
+- Tests : <code>ComplexDatePicker.a11y.spec.ts</code> (axe) et <code>ComplexDatePicker.spec.ts</code> couvrent ouverture, focus et validation combinée.
+- Références : WAI-ARIA combobox + grid pour les schémas combobox + calendrier.
+</ResourcesSection>
+
+</AccessibilityGuideLayout>

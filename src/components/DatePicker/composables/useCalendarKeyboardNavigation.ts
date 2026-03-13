@@ -28,10 +28,133 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
+	const addMonths = (date: Date, amount: number) => dayjs(date).add(amount, 'month').toDate()
+	const addYears = (date: Date, amount: number) => dayjs(date).add(amount, 'year').toDate()
 
 	const toISO = (date: Date) => dayjs(date).format('YYYY-MM-DD')
 
 	let isListenerAttached = false
+
+	const focusMonthButton = (button: HTMLButtonElement | undefined | null) => {
+		button?.focus({ preventScroll: true })
+	}
+
+	const focusYearButton = (button: HTMLButtonElement | undefined | null) => {
+		if (!button) return
+		button.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+		button.focus({ preventScroll: true })
+	}
+
+	const handleMonthDialogNavigation = (event: KeyboardEvent): boolean => {
+		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-months button')
+		if (!targetBtn) return false
+
+		const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')).filter(btn => !btn.disabled)
+		if (buttons.length === 0) return false
+
+		const currentIndex = buttons.indexOf(targetBtn)
+		if (currentIndex === -1) return false
+
+		const key = event.key
+
+		// Enter/Space : click manuel sans scroll pour garantir l'activation
+		if (key === 'Enter' || key === ' ') {
+			event.preventDefault()
+			targetBtn.click()
+			focusMonthButton(targetBtn)
+			return true
+		}
+
+		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) return false
+
+		event.preventDefault()
+
+		const firstRowTop = buttons[0]?.offsetTop ?? 0
+		const columns = buttons.filter(btn => btn.offsetTop === firstRowTop).length || 3
+
+		const moveIndex = (delta: number) => {
+			const nextIndex = Math.min(Math.max(currentIndex + delta, 0), buttons.length - 1)
+			focusMonthButton(buttons[nextIndex])
+		}
+
+		switch (key) {
+			case 'ArrowLeft':
+				moveIndex(-1)
+				return true
+			case 'ArrowRight':
+				moveIndex(1)
+				return true
+			case 'ArrowUp':
+				moveIndex(-columns)
+				return true
+			case 'ArrowDown':
+				moveIndex(columns)
+				return true
+			case 'Home':
+				focusMonthButton(buttons[0])
+				return true
+			case 'End':
+				focusMonthButton(buttons[buttons.length - 1])
+				return true
+		}
+
+		return false
+	}
+
+	const handleYearDialogNavigation = (event: KeyboardEvent): boolean => {
+		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-years button')
+		if (!targetBtn) return false
+
+		const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')).filter(btn => !btn.disabled)
+		if (buttons.length === 0) return false
+
+		const currentIndex = buttons.indexOf(targetBtn)
+		if (currentIndex === -1) return false
+
+		const key = event.key
+
+		if (key === 'Enter' || key === ' ') {
+			event.preventDefault()
+			targetBtn.click()
+			focusYearButton(targetBtn)
+			return true
+		}
+
+		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) return false
+
+		event.preventDefault()
+
+		const firstRowTop = buttons[0]?.offsetTop ?? 0
+		const columns = buttons.filter(btn => btn.offsetTop === firstRowTop).length || 3
+
+		const moveIndex = (delta: number) => {
+			const nextIndex = Math.min(Math.max(currentIndex + delta, 0), buttons.length - 1)
+			focusYearButton(buttons[nextIndex])
+		}
+
+		switch (key) {
+			case 'ArrowLeft':
+				moveIndex(-1)
+				return true
+			case 'ArrowRight':
+				moveIndex(1)
+				return true
+			case 'ArrowUp':
+				moveIndex(-columns)
+				return true
+			case 'ArrowDown':
+				moveIndex(columns)
+				return true
+			case 'Home':
+				focusYearButton(buttons[0])
+				return true
+			case 'End':
+				focusYearButton(buttons[buttons.length - 1])
+				return true
+		}
+
+		return false
+	}
 
 	const getBaseDateFromEvent = (event: KeyboardEvent): { date: Date | null, fromDayCell: boolean } => {
 		const target = event.target as HTMLElement | null
@@ -49,6 +172,39 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		return { date: parsed.toDate(), fromDayCell: true }
 	}
 
+	const focusDateButton = (date: Date, attempt = 0) => {
+		nextTick(() => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+			if (!rootEl) return
+
+			const selector = `[data-v-date="${toISO(date)}"] > [type="button"]`
+			const dayButton = rootEl.querySelector<HTMLElement>(selector)
+
+			if (dayButton) {
+				dayButton.focus({ preventScroll: true })
+				return
+			}
+
+			// Lorsque le changement de mois re-render la grille, le bouton peut ne pas
+			// encore exister : on retente quelques fois pour conserver le focus clavier.
+			if (attempt < 3) {
+				setTimeout(() => focusDateButton(date, attempt + 1), 10)
+			}
+		})
+	}
+
+	const clickDateButton = (date: Date) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
+		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+		if (!rootEl) return
+
+		const selector = `[data-v-date="${toISO(date)}"] > [type="button"]`
+		const dayButton = rootEl.querySelector<HTMLButtonElement>(selector)
+		dayButton?.click()
+		dayButton?.focus()
+	}
+
 	const handleArrowNavigation = (event: KeyboardEvent) => {
 		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
 			return
@@ -58,6 +214,9 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (event.altKey || event.ctrlKey || event.metaKey) {
 			return
 		}
+
+		// Laisser les flèches fonctionner nativement dans les contrôles d'entête
+		if ((event.target as HTMLElement | null)?.closest('.v-date-picker-controls')) return
 
 		const { date: current, fromDayCell } = getBaseDateFromEvent(event)
 		if (!current) return
@@ -89,17 +248,66 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		setCurrentDate(nextDate)
+		focusDateButton(nextDate)
+	}
 
-		nextTick(() => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
-			if (!rootEl) return
+	const handleHomeEndPageNavigation = (event: KeyboardEvent) => {
+		if (!['Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) {
+			return
+		}
 
-			const selector = `[data-v-date="${toISO(nextDate)}"] > [type="button"]`
-			const dayButton = rootEl.querySelector<HTMLElement>(selector)
+		const { date: current } = getBaseDateFromEvent(event)
+		if (!current) return
 
-			dayButton?.focus()
-		})
+		// Respecter les combinaisons système (Ctrl/Alt/Meta), mais autoriser Shift pour année
+		if (event.altKey || event.ctrlKey || event.metaKey) {
+			return
+		}
+
+		event.preventDefault()
+
+		let nextDate = current
+		if (event.key === 'Home') {
+			nextDate = dayjs(current).startOf('month').toDate()
+		}
+		else if (event.key === 'End') {
+			nextDate = dayjs(current).endOf('month').toDate()
+		}
+		else if (event.key === 'PageUp') {
+			nextDate = event.shiftKey ? addYears(current, -1) : addMonths(current, -1)
+		}
+		else if (event.key === 'PageDown') {
+			nextDate = event.shiftKey ? addYears(current, 1) : addMonths(current, 1)
+		}
+
+		setCurrentDate(nextDate)
+		focusDateButton(nextDate)
+	}
+
+	const handleEnterSpaceNavigation = (event: KeyboardEvent) => {
+		if (!['Enter', ' '].includes(event.key)) {
+			return
+		}
+
+		// Gérer manuellement les contrôles d'entête (mois/année et flèches) car le composant natif est surchargé
+		const headerButton = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-controls button, .v-date-picker-header button')
+		if (headerButton) {
+			if (event.key === ' ' || event.key === 'Enter') {
+				event.preventDefault()
+				headerButton.click()
+				// Garder le focus sur le contrôle pour éviter la lecture de toute la grille
+				headerButton.focus({ preventScroll: true })
+				setTimeout(() => headerButton.focus({ preventScroll: true }), 0)
+			}
+			return
+		}
+
+		const { date: current, fromDayCell } = getBaseDateFromEvent(event)
+		if (!current || !fromDayCell) return
+
+		// Enter/Space : empêcher le scroll et déclencher la sélection explicite
+		event.preventDefault()
+		clickDateButton(current)
 	}
 
 	const keydownListener = (event: Event) => {
@@ -114,7 +322,11 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			}
 		}
 
+		if (handleMonthDialogNavigation(keyboardEvent)) return
+		if (handleYearDialogNavigation(keyboardEvent)) return
 		handleArrowNavigation(keyboardEvent)
+		handleHomeEndPageNavigation(keyboardEvent)
+		handleEnterSpaceNavigation(keyboardEvent)
 	}
 
 	const attachListeners = () => {

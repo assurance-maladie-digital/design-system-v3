@@ -200,7 +200,7 @@
 	const isUpdatingFromInternal = ref(false)
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
-	const ariaLabel = ref('')
+	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
 
 	const { validateDateFormat: _validateDateFormat } = useDateFormatValidation({
 		format: displayFormat.value,
@@ -231,7 +231,9 @@
 	const isValidating = ref(false)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
-	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
+	const updateAriaLabel = (ariaLabelText: string) => {
+		ariaLabel.value = ariaLabelText || props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT
+	}
 
 	const { formatDateInput, handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
 		format: displayFormat.value,

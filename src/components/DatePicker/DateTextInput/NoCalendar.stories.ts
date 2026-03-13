@@ -683,6 +683,7 @@ export const WithErrorDisabled: Story = {
 								v-model="date1"
 								format="DD/MM/YYYY"
 								placeholder="Date requise sans erreur"
+								label="Date requise sans erreur"
 								required
 								no-icon
 								no-calendar
@@ -695,6 +696,7 @@ export const WithErrorDisabled: Story = {
 								v-model="date2"
 								format="DD/MM/YYYY"
 								placeholder="Date requise avec erreur"
+								label="Date requise avec erreur"
 								required
 								no-icon
 								no-calendar
@@ -745,6 +747,7 @@ export const WithErrorDisabled: Story = {
 								v-model="date2"
 								format="DD/MM/YYYY"
 								placeholder="Date requise avec erreur"
+								label="Date requise avec erreur"
 								required
 								no-icon
 								no-calendar
