@@ -102,6 +102,7 @@
 		disable-initial-focus
 		:retain-focus="false"
 		:disabled="props.disabled"
+		transition="fade-transition"
 		:activator-props="{
 			'aria-haspopup': 'dialog',
 			'disabled': props.disabled ? 'true' : undefined,

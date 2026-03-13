@@ -2169,7 +2169,7 @@ exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
   <div class="visual-picker-header">
     <div
       class="visual-picker-header__title"
-      id="v-2-title"
+      id="v-3-title"
     >
       Sélectionner un mois
     </div>
@@ -2440,11 +2440,17 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
             >
               <!---->
               <div
-                class="v-progress-linear__background"
+                class="
+                  bg-primary
+                  v-progress-linear__background
+                "
                 style="opacity: NaN;"
               ></div>
               <div
-                class="v-progress-linear__buffer"
+                class="
+                  bg-primary
+                  v-progress-linear__buffer
+                "
                 style="
                   opacity: NaN;
                   width: 0%;
@@ -2458,10 +2464,12 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
               >
                 <div class="v-progress-linear__indeterminate">
                   <div class="
+                    bg-primary
                     long
                     v-progress-linear__indeterminate
                   "></div>
                   <div class="
+                    bg-primary
                     short
                     v-progress-linear__indeterminate
                   "></div>
@@ -2471,7 +2479,6 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
             </div>
           </div>
           <div class="v-field__prepend-inner">
-            <!---->
             <!-- v-if -->
             <!-- v-if -->
           </div>
@@ -2481,22 +2488,25 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
           >
             <!---->
             <label
+              aria-hidden="true"
               class="
                 v-field-label
                 v-label
               "
-              for="input-v-0"
+              id="input-v-1-label"
             >
               <!---->
               Début du projet
             </label>
             <!---->
             <input
-              aria-describedby="input-v-0-messages"
+              aria-describedby="input-v-1-messages"
               aria-label="Début du projet"
+              aria-labelledby="input-v-1-label"
               autocomplete="off"
               class="v-field__input"
-              id="input-v-0"
+              direction="horizontal"
+              id="input-v-1"
               size="1"
               title="Début du projet"
               type="text"
@@ -2510,7 +2520,6 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
             <!-- v-if -->
             <!-- v-if -->
             <!-- v-if -->
-            <!---->
           </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
@@ -2522,7 +2531,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-0"
+                for="input-v-1"
               >
                 <!---->
                 Début du projet
@@ -2534,7 +2543,6 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
         </div>
       </div>
       <div class="v-input__append">
-        <!---->
         <button
           aria-label="Ouvrir le sélecteur de mois"
           class="month-picker-input__toggle-btn"
@@ -2567,7 +2575,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-v-0-messages"
+        id="input-v-1-messages"
         role="alert"
       >
         <transition-group-stub

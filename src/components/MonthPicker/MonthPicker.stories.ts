@@ -281,13 +281,6 @@ export const MonthValidation: Story = {
 	play: async ({ canvasElement }) => {
 		const input = canvasElement.querySelector('input') as HTMLInputElement
 		const currentDate = new Date()
-		setTimeout(async () => {
-			input.focus()
-			input.value = '19/2025'
-			input.dispatchEvent(new Event('input'))
-			await nextTick()
-			input.dispatchEvent(new Event('blur'))
-		}, 1500)
 
 		setTimeout(async () => {
 			input.focus()
@@ -296,16 +289,7 @@ export const MonthValidation: Story = {
 			input.dispatchEvent(new Event('input'))
 			await nextTick()
 			input.dispatchEvent(new Event('blur'))
-		}, 3000)
-
-		setTimeout(async () => {
-			input.focus()
-			const validYear = currentDate.getFullYear() + 1
-			input.value = `11/${validYear}`
-			input.dispatchEvent(new Event('input'))
-			await nextTick()
-			input.dispatchEvent(new Event('blur'))
-		}, 4500)
+		}, 100)
 	},
 	parameters: {
 		sourceCode: [
