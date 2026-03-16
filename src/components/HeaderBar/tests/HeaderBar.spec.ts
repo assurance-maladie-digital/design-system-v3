@@ -17,6 +17,7 @@ describe('HeaderBar', () => {
 	it('should render the component', async () => {
 		const wrapper = mount(HeaderBar, {
 			props: {
+				headingLevelTitle: 1,
 				sticky: false,
 			},
 			attachTo: document.body,
@@ -121,6 +122,7 @@ describe('HeaderBar', () => {
 	it('should render in sticky mode', async () => {
 		const wrapper = mount(HeaderBar, {
 			props: {
+				headingLevelTitle: 1,
 				sticky: true,
 			},
 			attachTo: document.body,
@@ -150,6 +152,7 @@ describe('HeaderBar', () => {
 		window.happyDOM.setInnerWidth(600)
 		const wrapper = mount(HeaderBar, {
 			props: {
+				headingLevelTitle: 1,
 				hideWhenDown: true,
 			},
 			attachTo: document.body,

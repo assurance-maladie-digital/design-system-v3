@@ -17,7 +17,6 @@ exports[`AmeliproTooth > render correctly 1`] = `
   </span>
   <span
     aria-hidden="true"
-    class="font-weight-semibold"
     id="my-tooth-id-number"
   >
     36

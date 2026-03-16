@@ -98,6 +98,7 @@ exports[`StatusPage > renders correctly 1`] = `
             font-weight-bold
             mb-2
             mb-4
+            sy-heading
             text-h5
           ">
             Something went wrong
@@ -226,6 +227,7 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
             font-weight-bold
             mb-2
             mb-4
+            sy-heading
             text-h5
           ">
             Error

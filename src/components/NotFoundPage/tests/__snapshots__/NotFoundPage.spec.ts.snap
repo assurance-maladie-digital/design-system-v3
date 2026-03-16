@@ -107,6 +107,7 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
             font-weight-bold
             mb-2
             mb-4
+            sy-heading
             text-h5
           ">
             Page non trouvée
@@ -254,6 +255,7 @@ exports[`NotFoundPage > renders correctly 1`] = `
             font-weight-bold
             mb-2
             mb-4
+            sy-heading
             text-h5
           ">
             Page non trouvée

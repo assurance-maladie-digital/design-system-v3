@@ -2,6 +2,7 @@
 	import { ref, computed } from 'vue'
 	import { useFieldValidation } from '@/composables/rules/useFieldValidation'
 	import { useHolidayDay } from '@/composables/date/useHolidayDay'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const selectedDate = ref('')
 	const { generateRules } = useFieldValidation()
@@ -36,7 +37,11 @@
 
 <template>
 	<div class="date-picker-holiday-example">
-		<h2>DatePicker avec règle de validation pour jours fériés</h2>
+		<SyHeading
+			:level="2"
+		>
+			DatePicker avec règle de validation pour jours fériés
+		</SyHeading>
 		<p>
 			Cet exemple montre comment utiliser la règle <code>isHolidayDay</code> pour empêcher
 			la sélection de jours fériés dans un DatePicker.
@@ -53,7 +58,11 @@
 		</div>
 
 		<div class="info-container mt-4">
-			<h3>Informations</h3>
+			<SyHeading
+				:level="3"
+			>
+				Informations
+			</SyHeading>
 			<p>Date sélectionnée : <strong>{{ selectedDate || 'Aucune' }}</strong></p>
 
 			<div
@@ -78,7 +87,11 @@
 				v-if="currentYearHolidays.length"
 				class="holiday-list mt-4"
 			>
-				<h4>Jours fériés {{ currentYear }} :</h4>
+				<SyHeading
+					:level="4"
+				>
+					Jours fériés {{ currentYear }} :
+				</SyHeading>
 				<ul>
 					<li
 						v-for="(date, index) in currentYearHolidays"

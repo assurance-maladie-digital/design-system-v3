@@ -15,7 +15,7 @@
 	const isDark = computed(() => props.dark ?? false)
 	const iconColor = computed(() => isDark.value ? 'white' : 'primary')
 	const buttonVariant = computed(() => isDark.value ? 'outlined' : 'text')
-	const buttonTheme = computed(() => isDark.value ? 'dark' : 'light')
+	const buttonTheme = computed(() => isDark.value ? 'dark' : undefined)
 	const buttonColor = computed(() => isDark.value ? 'white' : 'primary')
 	const buttonBgColor = computed(() => isDark.value ? 'transparent' : props.backgroundColor)
 

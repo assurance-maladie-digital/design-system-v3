@@ -11,6 +11,10 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 		'hideBackBtn': {
 			type: 'boolean',
 			control: { type: 'boolean' },
@@ -160,6 +164,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 2,
 		'backBtnText': 'Retour',
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
@@ -222,6 +227,7 @@ export const BackgroundCustom: Story = {
 		],
 	},
 	args: {
+		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
@@ -303,6 +309,7 @@ export const DataList: Story = {
 		],
 	},
 	args: {
+		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
@@ -399,6 +406,7 @@ export const DataListFixedHeight: Story = {
 		],
 	},
 	args: {
+		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
@@ -503,6 +511,7 @@ export const ActionBtn: Story = {
 		],
 	},
 	args: {
+		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
@@ -718,6 +727,7 @@ export const Loading: Story = {
 		],
 	},
 	args: {
+		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
@@ -803,6 +813,7 @@ export const SlotAdditionalInformations: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 2,
 		'backBtnText': 'Retour',
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
@@ -898,6 +909,7 @@ export const SlotBackBtn: Story = {
 		'subTitleText': '1 69 08 75 125 456 75',
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
+		'headingLevel': 2,
 		'back-btn': `<template #back-btn>
 	<VBtn
 		color="white"
@@ -970,6 +982,7 @@ export const SlotBackBtnIcon: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 2,
 		'backBtnText': 'Retour',
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
@@ -1037,6 +1050,7 @@ export const SlotTitle: Story = {
 		],
 	},
 	args: {
+		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
 		titleText: 'Paul Dupont',
@@ -1102,6 +1116,7 @@ export const SlotSubTitle: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 2,
 		'backBtnText': 'Retour',
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',
@@ -1171,6 +1186,7 @@ export const SlotRightContent: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 2,
 		'backBtnText': 'Retour',
 		'hideBackBtn': false,
 		'titleText': 'Paul Dupont',

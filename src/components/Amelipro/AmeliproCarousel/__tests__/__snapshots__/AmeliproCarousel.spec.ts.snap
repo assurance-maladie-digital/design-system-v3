@@ -203,7 +203,6 @@ exports[`AmeliproCarousel > render correctly 1`] = `
               v-btn--variant-elevated
               v-theme--light
             "
-            disabled="true"
             href="href item 2"
             id="carousel-unique-id-item-1-btn"
             tabindex="-1"
@@ -248,7 +247,6 @@ exports[`AmeliproCarousel > render correctly 1`] = `
               v-btn--variant-elevated
               v-theme--light
             "
-            disabled="true"
             href="href item 3"
             id="carousel-unique-id-item-2-btn"
             tabindex="-1"

@@ -33,6 +33,7 @@
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
+		headingLevel: 2,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -439,6 +440,7 @@
 						v-if="filteredItems.length > 0"
 						:page="page"
 						:items-per-page="itemsPerPageValue"
+						:heading-level="props.headingLevel"
 						:page-count="pageCount"
 						:items-length="filteredItems.length"
 						:items-per-page-options="props.itemsPerPageOptions"

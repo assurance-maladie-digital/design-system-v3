@@ -6,6 +6,7 @@ describe('SyPagination', () => {
 	it('renders correctly with default props', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 1,
 				pages: 10,
 			},
@@ -20,6 +21,7 @@ describe('SyPagination', () => {
 	it('does not render pagination if pages is 1', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 1,
 				pages: 1,
 			},
@@ -31,6 +33,7 @@ describe('SyPagination', () => {
 	it('emits update:modelValue when page is changed', async () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 1,
 				pages: 10,
 			},
@@ -58,6 +61,7 @@ describe('SyPagination', () => {
 	it('disables previous button on first page', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 1,
 				pages: 10,
 			},
@@ -70,6 +74,7 @@ describe('SyPagination', () => {
 	it('disables next button on last page', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 10,
 				pages: 10,
 			},
@@ -82,6 +87,7 @@ describe('SyPagination', () => {
 	it('shows correct aria-current attribute', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 3,
 				pages: 10,
 			},
@@ -94,6 +100,7 @@ describe('SyPagination', () => {
 	it('respects visible prop for number of visible pages', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 5,
 				pages: 10,
 				visible: 3,
@@ -113,6 +120,7 @@ describe('SyPagination', () => {
 	it('uses custom label when provided', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 1,
 				pages: 10,
 				label: 'Test Pagination',
@@ -125,6 +133,7 @@ describe('SyPagination', () => {
 	it('sets aria-controls when provided', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 1,
 				pages: 10,
 				ariaControls: 'test-content',
@@ -137,6 +146,7 @@ describe('SyPagination', () => {
 	it('uses d-sr-only class for screen reader text', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 1,
 				pages: 10,
 			},
@@ -149,6 +159,7 @@ describe('SyPagination', () => {
 	it('shows start ellipsis when current page is far from first page', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 8, // Current page far from first page
 				pages: 10,
 				visible: 3, // Small visible count to ensure ellipsis appears
@@ -163,6 +174,7 @@ describe('SyPagination', () => {
 	it('shows both ellipses when current page is in the middle of a large range', () => {
 		const wrapper = mount(SyPagination, {
 			props: {
+				headingLevel: 2,
 				modelValue: 10, // Middle page
 				pages: 20,
 				visible: 3, // Small visible count to ensure ellipsis appears

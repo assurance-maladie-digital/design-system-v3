@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { computed, ref, watch, nextTick } from 'vue'
 	import type { PropType } from 'vue'
-	import { mdiPhone } from '@mdi/js'
+	import { mdiAlertOutline, mdiCheck, mdiInformation, mdiPhone } from '@mdi/js'
 	import { indicatifs } from './indicatifs'
 	import { Mask } from 'maska'
 	import { locales } from './locales'
@@ -10,11 +10,6 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
-	import {
-		mdiAlertOutline,
-		mdiCheck,
-		mdiInformation,
-	} from '@mdi/js'
 
 	type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 	type Indicatif = {
@@ -61,33 +56,77 @@
 	const phoneMask = ref('## ## ## ## ##')
 	const onBlur = ref(false)
 
-	function formatPhoneNumber(value: string): string {
-		if (!value) return ''
-		const cleaned = value.replace(/\D/g, '')
-		return cleaned.replace(/(.{2})/g, '$1 ').trim()
+	const buildDefaultMask = (length: number): string =>
+		'#'.repeat(length || 10).replace(/(.{2})/g, '$1 ').trim()
+
+	const toTrimmedDigits = (value: string, maxDigits: number): string => {
+		return value.replace(/\D/g, '').slice(0, maxDigits)
 	}
 
-	const computedValue = computed(() => formatPhoneNumber(phoneNumber.value))
+	// Cache the Mask instance — recreated only when phoneMask changes, not on every keystroke
+	const maskInstance = computed(() => new Mask({ mask: phoneMask.value }))
+	const applyMask = (digits: string): string => maskInstance.value.masked(digits)
+
+	// phoneNumber is always masked, so this is just a stable public alias
+	const computedValue = computed(() => phoneNumber.value)
 
 	watch(() => props.modelValue, (newVal) => {
 		if (newVal) {
 			// Apply mask to incoming value to ensure consistent formatting
-			const mask = new Mask({ mask: phoneMask.value })
-			phoneNumber.value = mask.masked(newVal)
+			const digits = toTrimmedDigits(newVal, counter.value)
+			phoneNumber.value = applyMask(digits)
 		}
 		else {
 			phoneNumber.value = ''
 		}
 	}, { immediate: true })
 
-	watch(dialCode, (newVal) => {
-		emit('update:selectedDialCode', newVal)
-		if (typeof newVal === 'object' && newVal !== null) {
-			counter.value = newVal.phoneLength || 10
-			phoneMask.value = newVal.mask || '#'.repeat(newVal.phoneLength || 10).replace(/(.{2})/g, '$1 ').trim()
-			const mask = new Mask({ mask: phoneMask.value })
-			const maskedValue = mask.masked(phoneNumber.value)
+	const isIndicatifLike = (value: unknown): value is Indicatif => {
+		return typeof value === 'object'
+			&& value !== null
+			&& 'code' in value
+			&& 'phoneLength' in value
+	}
+
+	watch(dialCode, async (newVal) => {
+		// Storybook / composants parents peuvent fournir un objet indicatif "stale" (mask/phoneLength obsolètes).
+		// On normalise donc TOUJOURS l'indicatif à partir de la liste dialCodeOptions
+		const dialCodeValue = typeof newVal === 'object' && newVal !== null
+			? newVal.code
+			: newVal
+		const resolvedDialCode = dialCodeOptions.value.find(opt => opt.code === dialCodeValue)
+			?? (isIndicatifLike(newVal) ? newVal : null)
+		const placeholdersCount = (resolvedDialCode?.mask?.match(/#/g) || []).length
+		const normalizedDialCode = resolvedDialCode
+			? {
+				...resolvedDialCode,
+				// Si le mask n'est pas cohérent avec phoneLength (ex: 10 placeholders mais phoneLength=9),
+				// on reconstruit un mask de secours à partir de phoneLength.
+				mask: resolvedDialCode.mask && placeholdersCount === resolvedDialCode.phoneLength
+					? resolvedDialCode.mask
+					: buildDefaultMask(resolvedDialCode.phoneLength),
+			}
+			: null
+
+		emit('update:selectedDialCode', normalizedDialCode ?? newVal)
+
+		if (normalizedDialCode) {
+			counter.value = normalizedDialCode.phoneLength || 10
+			phoneMask.value = normalizedDialCode.mask || buildDefaultMask(normalizedDialCode.phoneLength)
+			const digits = toTrimmedDigits(phoneNumber.value, counter.value)
+			const maskedValue = applyMask(digits)
+			phoneNumber.value = maskedValue
 			emit('update:modelValue', maskedValue)
+
+			await nextTick()
+			await nextTick()
+
+			// Le changement d'indicatif modifie les règles (longueur attendue), donc on revalide immédiatement
+			// si une valeur est déjà saisie. Objectif: messages à jour sans nécessiter un nouveau blur.
+			if (!shouldDisableErrorHandling.value && phoneNumber.value) {
+				onBlur.value = true
+				runValidation()
+			}
 		}
 	})
 
@@ -128,20 +167,44 @@
 		// Sauvegarder la position du curseur
 		const cursorPosition = inputElement.selectionStart || 0
 
-		// Appliquer le masque
-		const mask = new Mask({ mask: phoneMask.value })
-		const maskedValue = mask.masked(input)
+		// Appliquer le masque (en tronquant au nombre de chiffres attendu)
+		const digits = toTrimmedDigits(input, counter.value)
+		const maskedValue = applyMask(digits)
 
 		// Mettre à jour la valeur
 		phoneNumber.value = maskedValue
 		emit('update:modelValue', maskedValue)
-		emit('change', maskedValue)
 
 		// Restaurer la position du curseur sur le prochain cycle de rendu
 		nextTick(() => {
 			const adjustedPosition = calculateAdjustedPosition(cursorPosition, input, maskedValue)
 			inputElement.setSelectionRange(adjustedPosition, adjustedPosition)
 		})
+	}
+
+	const handlePhoneModelUpdate = (value: string | number | null) => {
+		const digits = toTrimmedDigits(String(value ?? ''), counter.value)
+		const maskedValue = applyMask(digits)
+		phoneNumber.value = maskedValue
+		emit('update:modelValue', maskedValue)
+	}
+
+	const handlePhoneKeydown = (event: KeyboardEvent) => {
+		if (counter.value <= 0) return
+		if (!event.key || !/\d/.test(event.key)) return
+
+		const inputElement = event.target as HTMLInputElement | null
+		const selectionStart = inputElement?.selectionStart ?? null
+		const selectionEnd = inputElement?.selectionEnd ?? null
+		const hasSelection
+			= selectionStart !== null
+				&& selectionEnd !== null
+				&& selectionEnd > selectionStart
+
+		const currentDigitsCount = phoneNumber.value.replace(/\D/g, '').length
+		if (currentDigitsCount >= counter.value && !hasSelection) {
+			event.preventDefault()
+		}
 	}
 
 	const mergedDialCodes = computed(() =>
@@ -152,68 +215,53 @@
 		mergedDialCodes.value.map(ind => ({
 			...ind,
 			displayText: generateDisplayText(ind),
-			plainDisplayText: generatePlainDisplayText(ind),
+			plainDisplayText: generateDisplayText(ind, true),
 		})),
 	)
 
 	watch(() => props.readonly, () => {
 		if (onBlur.value && !shouldDisableErrorHandling.value) {
-			const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-			validation.validateField(cleanedValue, validationRules.value)
+			runValidation()
 		}
 	})
+
+	const getFranceDefault = () =>
+		dialCodeOptions.value.find(opt => opt.code === '+33') ?? ''
 
 	// Watcher pour initialiser dialCode à partir de props.dialCodeModel
 	watch(() => props.dialCodeModel, (newVal) => {
 		if (!newVal) {
-			dialCode.value = ''
+			// Par défaut, pré-sélectionner la France (+33) quand l'indicatif est activé
+			dialCode.value = props.withCountryCode ? getFranceDefault() : ''
 			return
 		}
 
-		// Si c'est un objet, on cherche l'indicatif correspondant dans la liste des options
 		if (typeof newVal === 'object') {
-			// On cherche l'indicatif avec le même code
-			const matchingOption = dialCodeOptions.value.find((opt) => {
-				return opt.code === newVal.code
-			})
-
-			if (matchingOption) {
-				// On utilise directement l'objet de la liste pour éviter les problèmes de référence
-				dialCode.value = matchingOption
-			}
-			else {
-				dialCode.value = newVal
-			}
+			const matchingOption = dialCodeOptions.value.find(opt => opt.code === newVal.code)
+			dialCode.value = matchingOption ?? newVal
 		}
 		else {
-			// Si c'est une chaîne ou autre chose, on l'utilise directement
 			dialCode.value = newVal
 		}
 	}, { immediate: true })
 
-	function generateDisplayText(ind: Indicatif): string {
+	function generateDisplayText(ind: Indicatif, plain = false): string {
 		const countryName = ind.countryFr || ind.country
-		const format = {
+		const abbr = plain ? ind.abbreviation : `<abbr title="${countryName}">${ind.abbreviation}</abbr>`
+		const format: Record<DisplayFormat, string> = {
 			'code': ind.code,
-			'code-abbreviation': `${ind.code} (<abbr title="${countryName}">${ind.abbreviation}</abbr>)`,
+			'code-abbreviation': `${ind.code} (${abbr})`,
 			'code-country': `${ind.code} ${countryName}`,
 			'country': countryName,
-			'abbreviation': `<abbr title="${countryName}">${ind.abbreviation}</abbr>`,
+			'abbreviation': abbr,
 		}
-		return format[props.displayFormat] || ind.code
+		return format[props.displayFormat] ?? ind.code
 	}
 
-	function generatePlainDisplayText(ind: Indicatif): string {
-		const countryName = ind.countryFr || ind.country
-		const format = {
-			'code': ind.code,
-			'code-abbreviation': `${ind.code} (${ind.abbreviation})`,
-			'code-country': `${ind.code} ${countryName}`,
-			'country': countryName,
-			'abbreviation': ind.abbreviation,
-		}
-		return format[props.displayFormat] || ind.code
-	}
+	const phoneFieldIdentifier = computed(() => props.withCountryCode
+		? locales.phoneNumberWithoutCountryLabel
+		: locales.label,
+	)
 
 	const validationRules = computed<ValidationRule[]>(() => {
 		const rules = [{
@@ -222,7 +270,8 @@
 				length: counter.value,
 				ignoreSpace: true,
 				message: `Le numéro de téléphone doit contenir ${counter.value} chiffres.`,
-				fieldIdentifier: locales.label,
+				successMessage: `Le champ ${phoneFieldIdentifier.value} est valide.`,
+				fieldIdentifier: phoneFieldIdentifier.value,
 			},
 		}] as ValidationRule[]
 
@@ -232,8 +281,8 @@
 				options: {
 					length: counter.value,
 					ignoreSpace: true,
-					message: `Le champ ${locales.label} est requis.`,
-					fieldIdentifier: locales.label,
+					message: `Le champ ${phoneFieldIdentifier.value} est requis.`,
+					fieldIdentifier: phoneFieldIdentifier.value,
 				},
 			})
 		}
@@ -253,13 +302,17 @@
 	const validation = useValidation({
 		customRules: validationRules.value,
 		showSuccessMessages: true,
-		fieldIdentifier: locales.label,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
 	const hasError = computed(() => !shouldDisableErrorHandling.value && validation.hasError.value)
 	const hasWarning = computed(() => !shouldDisableErrorHandling.value && validation.hasWarning.value)
-	const hasSuccess = computed(() => !shouldDisableErrorHandling.value && validation.hasSuccess.value)
+	const hasSuccess = computed(() =>
+		!shouldDisableErrorHandling.value
+		&& !hasError.value
+		&& !hasWarning.value
+		&& validation.hasSuccess.value,
+	)
 
 	const iconColor = computed(() => {
 		if (shouldDisableErrorHandling.value) return '#222324'
@@ -271,32 +324,46 @@
 
 	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
 	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
-	const successes = computed(() => shouldDisableErrorHandling.value ? [] : validation.successes.value)
+	const successes = computed(() =>
+		shouldDisableErrorHandling.value || hasError.value || hasWarning.value
+			? []
+			: validation.successes.value,
+	)
 
-	const showHelpTextBelow = computed(() => {
-		// Display help text below by default if it exists
-		return props.helpText && props.helpText.trim() !== ''
-	})
+	const showHelpTextBelow = computed(() => !!props.helpText?.trim())
 
-	function validateInputOnBlur() {
-		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
-
-		onBlur.value = true
+	const runValidation = (): void => {
 		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
 		validation.validateField(cleanedValue, validationRules.value)
 	}
 
+	function validateInputOnBlur() {
+		emit('change', phoneNumber.value)
+
+		if (!props.isValidatedOnBlur || shouldDisableErrorHandling.value) return
+
+		onBlur.value = true
+		runValidation()
+	}
+
 	watch(phoneNumber, (newValue) => {
-		if ((!props.isValidatedOnBlur || onBlur.value) && !shouldDisableErrorHandling.value) {
+		if (shouldDisableErrorHandling.value) return
+
+		if (!props.isValidatedOnBlur) {
+			// Validation en temps réel (isValidatedOnBlur=false)
 			const cleanedValue = newValue.replace(/\s/g, '')
 			validation.validateField(cleanedValue, validationRules.value)
+		}
+		else if (onBlur.value) {
+			// Après un premier blur, effacer les erreurs pendant la frappe —
+			// la revalidation se fera au prochain blur (comme SyTextField)
+			validation.clearValidation()
 		}
 	})
 
 	watch(validationRules, () => {
 		if (onBlur.value && !shouldDisableErrorHandling.value) {
-			const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-			validation.validateField(cleanedValue, validationRules.value)
+			runValidation()
 		}
 	})
 
@@ -310,9 +377,7 @@
 		}
 
 		onBlur.value = true
-
-		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-		validation.validateField(cleanedValue, validationRules.value)
+		runValidation()
 
 		if (props.withCountryCode && props.countryCodeRequired && !dialCode.value) {
 			validation.errors.value.push(`Le champ ${locales.indicatifLabel} est requis.`)
@@ -331,9 +396,10 @@
 		phoneNumber.value = ''
 		emit('update:modelValue', '')
 
-		// Clear dial code and restore defaults
-		dialCode.value = ''
-		emit('update:selectedDialCode', '')
+		// Reset dial code : France par défaut si indicatif activé, sinon vide
+		const defaultDialCode = props.withCountryCode ? getFranceDefault() : ''
+		dialCode.value = defaultDialCode
+		emit('update:selectedDialCode', defaultDialCode)
 		counter.value = 10
 		phoneMask.value = '## ## ## ## ##'
 
@@ -402,7 +468,7 @@
 					ref="phoneField"
 					:model-value="phoneNumber"
 					:counter="counter"
-					:counter-value="(value: string) => value.replace(/\s/g, '').length"
+					:counter-value="(value: string) => value.replace(/\D/g, '').length"
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="required"
 					:aria-required="required"
@@ -410,6 +476,7 @@
 					:error-messages="errors"
 					:warning-messages="warnings"
 					:success-messages="successes"
+					:disable-error-handling="shouldDisableErrorHandling"
 					:variant="outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="displayAsterisk"
 					:readonly="readonly"
@@ -425,24 +492,26 @@
 					color="primary"
 					type="tel"
 					@blur="validateInputOnBlur"
+					@update:model-value="handlePhoneModelUpdate"
 					@input="handlePhoneInput"
+					@keydown="handlePhoneKeydown"
 				>
 					<template #append-inner>
 						<div class="d-flex align-center">
 							<SyIcon
-								v-if="hasError && !shouldDisableErrorHandling"
+								v-if="hasError"
 								color="error"
 								:icon="mdiInformation"
 								decorative
 							/>
 							<SyIcon
-								v-else-if="hasWarning && !shouldDisableErrorHandling"
+								v-else-if="hasWarning"
 								color="warning"
 								:icon="mdiAlertOutline"
 								decorative
 							/>
 							<SyIcon
-								v-else-if="hasSuccess && !shouldDisableErrorHandling"
+								v-else-if="hasSuccess"
 								color="success"
 								:icon="mdiCheck"
 								decorative

@@ -3,6 +3,7 @@
 	import uxUiRules from './datas/ux_ui_rules.json'
 	import { mdiChevronDown, mdiChevronUp, mdiMagnify, mdiRefresh } from '@mdi/js'
 	// import backRules from './datas/back_rules.json'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const mdiChevronDownIcon = mdiChevronDown
 	const mdiChevronUpIcon = mdiChevronUp
@@ -189,9 +190,12 @@
 			class="mt-4"
 		>
 			<v-card-text class="d-flex justify-space-between align-center px-4 py-2">
-				<h3 class="text-h6 text-primary">
+				<SyHeading
+					class="text-h6 text-primary"
+					:level="3"
+				>
 					Filtres
-				</h3>
+				</SyHeading>
 				<v-btn
 					variant="text"
 					:aria-label="showFilters ? 'Masquer les filtres' : 'Afficher les filtres'"
@@ -387,9 +391,11 @@
 			>
 				<v-card-item>
 					<div class="d-flex justify-space-between mb-2">
-						<h3>
+						<SyHeading
+							:level="3"
+						>
 							{{ selectedRule.finalite3mots }}
-						</h3>
+						</SyHeading>
 						<v-chip
 							:color="getBadgeColor(selectedRule.theme)"
 							size="small"

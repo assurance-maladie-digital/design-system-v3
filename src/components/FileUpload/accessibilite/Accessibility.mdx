@@ -1,12 +1,55 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as Stories from '../FileUpload.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="FileUpload"
+  iconSrc={AccessibilityIcon}
+>
+  <CriteriaSection>
+    <CriteriaCard icon="🔍" title="Structure sémantique">
+      <ul>
+        <li><strong>Utilisation d'un boutton</strong> : Le composant utilise un élément avec le role <code>button</code> pour déclencher l'ouverture du sélecteur de fichiers. Ceci permet de gérer l'interaction avec le clavier, le clic souris ainsi que le glisser-déposer simultanément tout en gardant une bonne sémantique.</li>
+        <li><strong>Disabled</strong> : Utilisation de l'attribut <code>disabled</code> sur le bouton si le champ est désactivé.</li>
+      </ul>
+    </CriteriaCard>
 
+    <CriteriaCard icon="⌨️" title="Navigation clavier">
+      <ul>
+        <li><strong>Navigation au clavier</strong> : La zone d'upload de fichier est focusable, l'utilisateur peut utiliser le clic souris, le clavier ainsi que le glisser-déposer.</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
 
+  <DemoSection componentName="FileUpload">
+    <Story name="Default" />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li><strong>Utiliser dans une balise de formulaire</strong> : Intégrer le composant dans une balise <code>form</code> ou le composant <code>SyForm</code> pour la sémantique et l'accessibilité.</li>
+      <li><strong>Fournir des messages d'erreur clairs</strong> : Utiliser des messages d'erreur explicites et accessibles pour informer les utilisateurs des problèmes de téléchargement.</li>
+      <li><strong>Gérer les états de téléchargement</strong> : Fournir des indications visuelles et textuelles pour les différents états de téléchargement, y compris les erreurs et les succès.</li>
+    </ul>
+  </BestPracticesSection>
+
+  	<ResourcesSection>
+		<ul>
+			<li><a href="https://react.carbondesignsystem.com/?path=/docs/components-fileuploader--overview" target="_blank" rel="noopener noreferrer">Design system d'IBM</a></li>
+			<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML/Reference/Elements/input/file" target="_blank" rel="noopener noreferrer">MDN: input type="file"</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

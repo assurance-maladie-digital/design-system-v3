@@ -11,6 +11,7 @@ exports[`FilterInline > renders correctly with an active filter 1`] = `
   <button
     aria-expanded="false"
     aria-haspopup="menu"
+    aria-owns="v-menu-v-0"
     class="
       bg-secondary
       ma-2
@@ -91,6 +92,7 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
   <button
     aria-expanded="false"
     aria-haspopup="menu"
+    aria-owns="v-menu-v-0"
     class="
       bg-secondary
       ma-2
@@ -160,6 +162,7 @@ exports[`FilterInline > renders correctly with multiple active filters 1`] = `
   <button
     aria-expanded="false"
     aria-haspopup="menu"
+    aria-owns="v-menu-v-2"
     class="
       bg-secondary
       ma-2

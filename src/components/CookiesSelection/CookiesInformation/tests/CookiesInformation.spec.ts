@@ -20,6 +20,7 @@ describe('CookiesInformation', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(CookiesInformation, {
 			props: {
+				headingLevel: 2,
 				tableItems: cookies,
 				type: 'functional',
 			},
@@ -38,6 +39,7 @@ describe('CookiesInformation', () => {
 	it('renders correctly without items', () => {
 		const wrapper = mount(CookiesInformation, {
 			props: {
+				headingLevel: 2,
 				type: 'functional',
 				tableItems: [],
 			},
@@ -49,6 +51,7 @@ describe('CookiesInformation', () => {
 	it('renders correctly when details is toggled', async () => {
 		const wrapper = mount(CookiesInformation, {
 			propsData: {
+				headingLevel: 2,
 				tableItems: cookies,
 				type: 'functional',
 			},
@@ -97,6 +100,7 @@ describe('CookiesInformation', () => {
 	it('update the radio when the modelValue change', async () => {
 		const wrapper = mount(CookiesInformation, {
 			props: {
+				headingLevel: 2,
 				tableItems: cookies,
 				type: 'functional',
 				modelValue: true,
@@ -117,6 +121,7 @@ describe('CookiesInformation', () => {
 	it('do not set the radio when the modelValue is undefined', async () => {
 		const wrapper = mount(CookiesInformation, {
 			props: {
+				headingLevel: 2,
 				tableItems: cookies,
 				type: 'functional',
 				modelValue: undefined,

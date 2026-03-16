@@ -6,6 +6,7 @@
 	import { locales } from './locales'
 	import LogoMobile from './logos/Logo-mobile.vue'
 	import Logo from './logos/Logo.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<{
 		ariaLabel?: string
@@ -16,6 +17,7 @@
 			to?: RouteLocationRaw
 			href?: string
 		}
+		headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		ariaLabel: locales.ariaLabel,
 		serviceTitle: undefined,
@@ -87,9 +89,12 @@
 			</svg>
 
 			<div v-if="serviceTitle">
-				<h1 class="service-title">
+				<SyHeading
+					class="service-title"
+					:level="headingLevelTitle"
+				>
 					{{ serviceTitle }}
-				</h1>
+				</SyHeading>
 				<div
 					v-if="serviceSubtitle"
 					class="service-subtitle"

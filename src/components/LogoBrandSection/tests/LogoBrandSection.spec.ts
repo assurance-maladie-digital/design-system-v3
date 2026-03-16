@@ -9,6 +9,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
@@ -28,6 +30,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
@@ -42,6 +46,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'compte-entreprise',
 			},
 		})
@@ -54,6 +60,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
@@ -74,6 +82,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
@@ -88,6 +98,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: '',
@@ -102,6 +114,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
 			},
@@ -116,6 +130,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'cnam',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
@@ -131,6 +147,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'compte-entreprise',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
@@ -146,6 +164,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'risque-pro',
 				reduceLogo: false,
 			},
@@ -160,6 +180,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'risque-pro',
 				reduceLogo: true,
 			},
@@ -173,6 +195,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'compte-entreprise',
 			},
 		})
@@ -185,6 +209,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'compte-ameli',
 				mobileVersion: true,
 			},
@@ -199,6 +225,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				reduceLogo: true,
 			},
@@ -212,6 +240,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				reduceLogo: false,
 			},
@@ -225,6 +255,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'compte-ameli',
 			},
 		})
@@ -237,6 +269,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				homeLink: {
 					href: '#',
@@ -252,6 +286,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				homeLink: {
 					to: '/',
@@ -267,6 +303,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				homeLink: {
 					href: undefined,
@@ -283,6 +321,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 			},
 		})
@@ -295,6 +335,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'ameli-pro',
 			},
 		})
@@ -307,6 +349,8 @@ describe('LogoBrandSection', () => {
 			global: {
 				stubs: ['RouterLink', 'Logo'] },
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'ameli',
 				homeLink: {
 					href: undefined,

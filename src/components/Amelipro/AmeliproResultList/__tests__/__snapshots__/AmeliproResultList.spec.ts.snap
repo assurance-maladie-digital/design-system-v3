@@ -19,7 +19,6 @@ exports[`AmeliproResultList > render correctly 1`] = `
       class="
         align-center
         d-inline-block
-        font-weight-semibold
         mb-0
         total-counter
       "
@@ -167,6 +166,17 @@ exports[`AmeliproResultList > render correctly 1`] = `
                     class="v-field__input"
                     data-no-activator=""
                   >
+                    <select hidden="">
+                      <option value="5"></option>
+                      <option
+                        selected=""
+                        value="10"
+                      ></option>
+                      <option value="20"></option>
+                      <option value="30"></option>
+                      <option value="50"></option>
+                      <option value="100"></option>
+                    </select>
                     <!---->
                     <!---->
                     <div class="v-select__selection">
@@ -176,11 +186,13 @@ exports[`AmeliproResultList > render correctly 1`] = `
                       </span>
                     </div>
                     <input
-                      aria-label="Open"
+                      aria-controls="menu-v-1"
+                      aria-expanded="false"
+                      aria-labelledby="amelipro-result-unique-id-pagination-select-label"
                       id="amelipro-result-unique-id-pagination-select"
                       inputmode="none"
+                      role="combobox"
                       size="1"
-                      title="Open"
                       type="text"
                       value="10"
                     />

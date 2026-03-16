@@ -1048,8 +1048,21 @@
 			<VList
 				:id="uniqueMenuId"
 				ref="list"
+				class="v-list"
+				role="listbox"
 				:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 				:title="$attrs['aria-label'] || labelWithAsterisk"
+				:style="{
+					minWidth: `${textInput?.$el.offsetWidth}px`
+				}"
+				bg-color="white"
+				tabindex="0"
+				@keydown.esc.prevent="closeList"
+				@keydown.tab="handleTabKey"
+				@keydown.enter.prevent="handleEnterKey"
+				@keydown.down.prevent="handleDownKey"
+				@keydown.up.prevent="handleUpKey"
+				@keydown.home.prevent="handleHomeKey"
 				@keydown.end.prevent="handleEndKey"
 				@keydown.page-up.prevent="handlePageUpKey"
 				@keydown.page-down.prevent="handlePageDownKey"
@@ -1182,6 +1195,10 @@
 	outline: 2px solid tokens.$primary-base;
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
+}
+
+.v-list-item :deep(.v-list-item__overlay) {
+	background-color: transparent;
 }
 
 /* Permettre le passage à la ligne pour les textes longs dans la liste déroulante */

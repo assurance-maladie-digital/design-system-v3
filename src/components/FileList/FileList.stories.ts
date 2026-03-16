@@ -42,8 +42,12 @@ const meta = {
 					detail: `{
 	optionalDocument: 'Document facultatif',
 	see: 'Voir',
+	import: 'Importer',
 	delete: 'Supprimer',
 	uploading: 'En cours',
+	importLabel: (title: string) => string,
+	seeLabel: (title: string) => string,
+	deleteLabel: (title: string) => string,
 	success: 'Téléchargé',
 	error: 'Erreur',
 	errorOccurred: 'Une erreur est survenue pendant le téléchargement.',

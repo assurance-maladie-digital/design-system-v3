@@ -90,6 +90,8 @@
 			disableClickButton?: boolean
 			autocomplete?: string
 			helpText?: string
+			maxlength?: string | number
+			title?: string | false
 		}>(),
 		{
 			modelValue: undefined,
@@ -159,6 +161,8 @@
 			disableClickButton: true,
 			autocomplete: 'off',
 			helpText: '',
+			maxlength: undefined,
+			title: undefined,
 		},
 	)
 
@@ -173,6 +177,8 @@
 
 	const emit = defineEmits([
 		'update:modelValue',
+		'input',
+		'keydown',
 		'clear',
 		'prepend-icon-click',
 		'append-icon-click',
@@ -305,7 +311,11 @@
 		}
 	})
 
-	const hasError = computed(() => validation.hasError.value || props.hasError)
+	const hasError = computed(() =>
+		validation.hasError.value
+		|| (props.errorMessages?.length ?? 0) > 0
+		|| props.hasError,
+	)
 	const hasWarning = computed(() => validation.hasWarning.value || props.hasWarning)
 	const hasSuccess = computed(() => ((validation.hasSuccess.value && !hasError.value && !hasWarning.value) || props.hasSuccess) && props.showSuccessMessages)
 
@@ -360,7 +370,13 @@
 		return props.helpText && hasMessages.value && !props.areDetailsHidden
 	})
 
-	// Accessible label that includes prefix and suffix content for screen readers
+	// Use title prop if provided, otherwise fall back to accessible label
+	const titleValue = computed(() => {
+		// If title is explicitly false, don't show any title
+		if (props.title === false) return undefined
+		// Otherwise use title if provided, or accessibleLabel as fallback
+		return props.title || accessibleLabel.value
+	})
 	const accessibleLabel = computed(() => {
 		let label = labelWithAsterisk.value
 
@@ -594,7 +610,7 @@
 			v-model="model"
 			:autocomplete="props.autocomplete"
 			:active="props.isActive"
-			:title="accessibleLabel"
+			:title="titleValue"
 			:aria-label="accessibleLabel"
 			:aria-required="props.required ? 'true' : undefined"
 			:base-color="props.baseColor"
@@ -615,6 +631,7 @@
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
+			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
@@ -645,6 +662,8 @@
 				'basic-field': !hasError && !hasWarning && !hasSuccess
 			}"
 			@blur="checkErrorOnBlur"
+			@input="(e: Event) => emit('input', e)"
+			@keydown="(e: KeyboardEvent) => emit('keydown', e)"
 		>
 			<!-- Prepend -->
 			<template

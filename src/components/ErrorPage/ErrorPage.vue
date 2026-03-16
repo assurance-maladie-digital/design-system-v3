@@ -15,6 +15,7 @@
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
+		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
 		uniqueId?: string
 		role?: PageAriaRole
 	}>()
