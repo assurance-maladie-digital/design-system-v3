@@ -95,7 +95,7 @@
 				<slot name="title">
 					<h1
 						:id="uniqueId ? `${uniqueId}-title` : undefined"
-						class="text-uppercase font-weight-semibold mb-4 amelipro-error-template__title"
+						class="text-uppercase mb-4 amelipro-error-template__title"
 					>
 						{{ customTitleText || titleText }}
 					</h1>
@@ -121,7 +121,7 @@
 					<slot name="contentTitle">
 						<h2
 							:id="uniqueId ? `${uniqueId}-content-title` : undefined"
-							class="text-ap-parme-darken-1 font-weight-semibold amelipro-error-template-content-title"
+							class="text-ap-parme-darken-1 amelipro-error-template-content-title"
 						>
 							{{ customContentTitle || contentTitle }}
 						</h2>

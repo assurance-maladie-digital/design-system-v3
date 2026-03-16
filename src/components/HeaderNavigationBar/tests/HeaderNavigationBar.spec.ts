@@ -26,6 +26,7 @@ describe('HeaderNavigationBar', () => {
 				},
 			},
 			props: {
+				headingLevelTitle: 1,
 				items: [
 					{
 						label: 'Home',
@@ -68,6 +69,7 @@ describe('HeaderNavigationBar', () => {
 				},
 			},
 			props: {
+				headingLevelTitle: 1,
 				items: [
 					{
 						label: 'Home',
@@ -102,6 +104,7 @@ describe('HeaderNavigationBar', () => {
 				},
 			},
 			props: {
+				headingLevelTitle: 1,
 				items: [
 					{
 						label: 'Home',

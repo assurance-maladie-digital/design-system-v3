@@ -34,10 +34,12 @@
 		size?: string
 	}>()
 
+	const resolvedDecorative = computed(() => props.decorative ?? true)
+
 	// Configuration pour la directive rgaaSvgFix
 	const rgaaSvgFixConfig = computed(() => {
 		return {
-			isDecorative: props.decorative,
+			isDecorative: resolvedDecorative.value,
 			role: props.role,
 			autoDetectButton: props.autoDetectButton,
 		}
@@ -45,16 +47,16 @@
 
 	// Vérification à l'initialisation du composant
 	onMounted(() => {
-		checkAccessibility(props.icon, props.decorative, props.label)
+		checkAccessibility(props.icon, resolvedDecorative.value, props.label)
 	})
 
 	// Vérification à chaque changement des props concernées
 	watch(
 		[() => props.decorative, () => props.label, () => props.icon],
-		([decorative, label, icon]) => {
+		([, label, icon]) => {
 			checkAccessibility(
 				icon as string,
-				decorative as boolean | undefined,
+				resolvedDecorative.value,
 				label as string | undefined,
 			)
 		},
@@ -66,7 +68,9 @@
 		v-rgaa-svg-fix="rgaaSvgFixConfig"
 		:color="props.color"
 		:size="props.size"
-		:aria-label="props.label"
+		:role="props.role"
+		:aria-label="resolvedDecorative ? undefined : props.label"
+		:aria-hidden="resolvedDecorative ? 'true' : undefined"
 	>
 		{{ icon }}
 	</v-icon>

@@ -183,7 +183,6 @@ exports[`AmeliproFirstLogin > render correctly 1`] = `
         >
           <h3
             class="
-              font-weight-semibold
               mb-2
               w-100
             "
@@ -557,10 +556,7 @@ exports[`AmeliproFirstLogin > render correctly 1`] = `
           id="modified-unique-id-services"
         >
           <h3
-            class="
-              font-weight-semibold
-              mb-4
-            "
+            class="mb-4"
             id="modified-unique-id-services-title"
           >
             Des services d’aide au suivi de votre activité accessibles où que vous soyez.
@@ -610,7 +606,6 @@ exports[`AmeliproFirstLogin > render correctly 1`] = `
                 <div>
                   <h4
                     class="
-                      font-weight-semibold
                       text-ap-blue-darken-2
                       text-uppercase
                     "
@@ -667,7 +662,6 @@ exports[`AmeliproFirstLogin > render correctly 1`] = `
                 <div>
                   <h4
                     class="
-                      font-weight-semibold
                       text-ap-blue-darken-2
                       text-uppercase
                     "
@@ -724,7 +718,6 @@ exports[`AmeliproFirstLogin > render correctly 1`] = `
                 <div>
                   <h4
                     class="
-                      font-weight-semibold
                       text-ap-blue-darken-2
                       text-uppercase
                     "
@@ -781,7 +774,6 @@ exports[`AmeliproFirstLogin > render correctly 1`] = `
                 <div>
                   <h4
                     class="
-                      font-weight-semibold
                       text-ap-blue-darken-2
                       text-uppercase
                     "
@@ -807,10 +799,7 @@ exports[`AmeliproFirstLogin > render correctly 1`] = `
           class="pa-6"
           id="modified-unique-id-online-process"
         >
-          <h3
-            class="font-weight-semibold"
-            id="modified-unique-id-online-process-title"
-          >
+          <h3 id="modified-unique-id-online-process-title">
             Des téléprocédures pour faciliter la prise en charge de vos patients.
           </h3>
           <p

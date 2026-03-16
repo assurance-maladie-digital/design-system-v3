@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { useWidthable, type Widthable } from '@/composables/widthable'
-	import { ref, useId, watch } from 'vue'
+	import { ref, useAttrs, useId, watch } from 'vue'
 	import { useTheme } from 'vuetify'
 	import FileUploadContent, { type FileUploadContentSlots } from './FileUploadContent.vue'
 	import { locales as defaultLocales } from './locales'
@@ -33,6 +33,8 @@
 		default(): void
 	} & FileUploadContentSlots>()
 
+	const attrs = useAttrs()
+
 	const dragover = ref(false)
 	const id = 'file-upload-' + useId()
 	const dropZone = ref<HTMLElement | null>(null)
@@ -41,6 +43,9 @@
 	const isDarkMode = useTheme().current.value.dark
 
 	function openFileDialog() {
+		if (props.disabled) {
+			return
+		}
 		fileInput.value?.click()
 	}
 
@@ -98,61 +103,79 @@
 		;(e.target as HTMLInputElement).value = ''
 	}
 </script>
-<!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
+
 <template>
-	<label
-		ref="dropZone"
-		:for="id"
-		:class="[
-			{
-				dragover: dragover,
-				'sy-file-upload--disabled': disabled,
-				'dark-mode': isDarkMode,
-			},
-		]"
-		:style="widthStyles"
-		class="sy-file-upload d-block pa-4"
-		@dragover.prevent="dragover = true"
-		@dragleave="dragover = false"
+	<div
+		class="sy-file-upload-wrapper"
 	>
 		<input
 			:id="id"
 			ref="fileInput"
 			type="file"
-			:disabled="disabled"
-			:multiple="multiple"
+			tabindex="-1"
+			aria-hidden="true"
+			:disabled="disabled ? true : undefined"
+			:multiple="multiple ? true : undefined"
 			:accept="allowedExtensions.map(el=>`.${el}`).join(', ')"
 			class="sy-file-upload-input"
 			@change="onFileChange"
 		>
-		<slot>
-			<FileUploadContent
-				:allowed-extensions="allowedExtensions"
-				:multiple="multiple"
-				:file-size-max="fileSizeMax"
-				:file-size-units="fileSizeUnits"
-			>
-				<template
-					v-for="(_, slotName) in $slots"
-					#[slotName]="slotProps"
+		<div
+			ref="dropZone"
+			:aria-disabled="disabled ? true : undefined"
+			:title="locales.fileUploadTitle"
+			role="button"
+			:tabindex="disabled ? -1 : 0"
+			:class="[
+				{
+					dragover: dragover,
+					'sy-file-upload--disabled': disabled,
+					'dark-mode': isDarkMode,
+				},
+			]"
+			:style="widthStyles"
+			class="sy-file-upload d-block pa-4"
+			v-bind="attrs"
+			@click="openFileDialog"
+			@keydown.enter.prevent="openFileDialog"
+			@keydown.space.prevent="openFileDialog"
+			@dragover.prevent="dragover = true"
+			@dragleave="dragover = false"
+			@drop="dragover = false"
+		>
+			<slot>
+				<FileUploadContent
+					:allowed-extensions="allowedExtensions"
+					:multiple="multiple"
+					:file-size-max="fileSizeMax"
+					:file-size-units="fileSizeUnits"
 				>
-					<slot
-						:name="slotName"
-						v-bind="slotProps || {}"
-					/>
-				</template>
-			</FileUploadContent>
-		</slot>
-	</label>
+					<template
+						v-for="(_, slotName) in $slots"
+						#[slotName]="slotProps"
+					>
+						<slot
+							:name="slotName"
+							v-bind="slotProps || {}"
+						/>
+					</template>
+				</FileUploadContent>
+			</slot>
+		</div>
+	</div>
 </template>
 
 <style lang="scss" scoped>
 @use '@/assets/tokens';
 
+.sy-file-upload-wrapper {
+	display: contents;
+}
+
 .sy-file-upload {
 	cursor: pointer;
 	position: relative;
-	border: 1px dashed tokens.$colors-border-accent;
+	border: 1px dashed tokens.$colors-border-accent-primary;
 	border-radius: tokens.$radius-rounded-lg;
 	transition: background 0.25s;
 

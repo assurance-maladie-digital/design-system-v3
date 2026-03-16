@@ -1,8 +1,54 @@
 @use '@/assets/amelipro/apTokens2026' as *;
+@use '@/assets/apTokens';
+@use '@/assets/tokens';
+
+.theme-cnam,
+.theme-pa {
+	--footer-background: #{tokens.$parma-darken-60};
+	--alert-warning-background: #{tokens.$colors-background-warning};
+	--alert-warning-accent: #{tokens.$colors-border-warning};
+	--alert-warning-border: #{tokens.$colors-border-warning};
+	--alert-warning-icon: #{tokens.$colors-icon-warning};
+	--alert-warning-icon-bg: #{tokens.$colors-background-warning-subdued};
+	--alert-info-background: #{tokens.$colors-background-info};
+	--alert-info-accent: #{tokens.$colors-border-info};
+	--alert-info-border: #{tokens.$colors-border-info};
+	--alert-info-icon: #{tokens.$colors-icon-info};
+	--alert-info-icon-bg: #{tokens.$colors-background-info-subdued};
+	--alert-success-background: #{tokens.$colors-background-success};
+	--alert-success-accent: #{tokens.$colors-border-success};
+	--alert-success-border: #{tokens.$colors-border-success};
+	--alert-success-icon: #{tokens.$colors-icon-success};
+	--alert-success-icon-bg: #{tokens.$colors-background-success-subdued};
+	--alert-error-background: #{tokens.$colors-background-error};
+	--alert-error-accent: #{tokens.$colors-border-error};
+	--alert-error-border: #{tokens.$colors-border-error};
+	--alert-error-icon: #{tokens.$colors-icon-error};
+	--alert-error-icon-bg: #{tokens.$colors-background-error-subdued};
+}
 
 .theme-ap,
 .theme-ap2026 {
-	.border-0 {
-		border: 0;
-	}
+	--footer-background: #{apTokens.$primary-darker};
+	--alert-background: #{apTokens.$primary-darker};
+	--alert-warning-background: #{apTokens.$colors-background-warning};
+	--alert-warning-accent: #{apTokens.$colors-border-warning};
+	--alert-warning-border: #{apTokens.$colors-border-warning};
+	--alert-warning-icon: #{apTokens.$colors-icon-warning};
+	--alert-warning-icon-bg: #{apTokens.$colors-background-warning-subdued};
+	--alert-info-background: #{apTokens.$colors-background-info};
+	--alert-info-accent: #{apTokens.$colors-border-info};
+	--alert-info-border: #{apTokens.$colors-border-info};
+	--alert-info-icon: #{apTokens.$colors-icon-info};
+	--alert-info-icon-bg: #{apTokens.$colors-background-info-subdued};
+	--alert-success-background: #{apTokens.$colors-background-success};
+	--alert-success-accent: #{apTokens.$colors-border-success};
+	--alert-success-border: #{apTokens.$colors-border-success};
+	--alert-success-icon: #{apTokens.$colors-icon-success};
+	--alert-success-icon-bg: #{apTokens.$colors-background-success-subdued};
+	--alert-error-background: #{apTokens.$colors-background-error};
+	--alert-error-accent: #{apTokens.$colors-border-error};
+	--alert-error-border: #{apTokens.$colors-border-error};
+	--alert-error-icon: #{apTokens.$colors-icon-error};
+	--alert-error-icon-bg: #{apTokens.$colors-background-error-subdued};
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { onMounted, ref } from 'vue'
+	import { computed, onMounted, ref } from 'vue'
 	import StatusPage from '../StatusPage/StatusPage.vue'
 	import { locales, SUPPORT_ID_PARAM_NAME, supportIdMessage } from './locales'
 	import type { RouteRecordRaw } from 'vue-router'
@@ -9,16 +9,23 @@
 
 	const supportId = ref<string | undefined>()
 
-	withDefaults(defineProps<{
+	interface Props {
 		btnText?: string
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
-	}>(), {
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		src?: string
+		uniqueId?: string
+	}
+	const props = withDefaults(defineProps<Props>(), {
 		btnText: undefined,
 		btnLink: '/',
 		btnHref: undefined,
 		hideBtn: false,
+		headingLevel: 1,
+		src: undefined,
+		uniqueId: undefined,
 	})
 
 	onMounted(() => {
@@ -31,17 +38,20 @@
 
 		supportId.value = supportIdParam.trim().match(/.{1,4}/g)?.join(' ')
 	})
+	const src = computed(() => props.src || themeLocales.value.src)
 </script>
 
 <template>
 	<StatusPage
 		:page-title="themeLocales.pageTitle"
+		:heading-level="headingLevel"
 		:message="themeLocales.message"
 		:code="themeLocales.code"
 		:btn-text="btnText"
 		:btn-href="btnHref"
 		:btn-link="btnLink"
 		:hide-btn="hideBtn"
+		:unique-id="uniqueId"
 	>
 		<template
 			v-if="supportId"
@@ -56,12 +66,13 @@
 		</template>
 
 		<template
-			v-if="themeLocales.src || $slots.illustration"
+			v-if="src || $slots.illustration"
 			#illustration
 		>
 			<slot name="illustration">
 				<img
-					:src="themeLocales.src"
+					v-if="src"
+					:src="src"
 					alt=""
 					aria-hidden="true"
 				>

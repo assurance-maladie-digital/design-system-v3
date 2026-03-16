@@ -25,7 +25,13 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 	}
 
 	function formatFilterName(name: string): string {
-		return slugify(name, { lower: true })
+		// Si le nom contient des espaces ou caractères spéciaux, comportement actuel
+		if (/\s|[^\w]/.test(name)) {
+			return slugify(name, { lower: true, strict: true })
+		}
+
+		// Si c'est un seul mot (camelCase ou autre), préserver la casse
+		return slugify(name, { strict: true })
 	}
 
 	/**

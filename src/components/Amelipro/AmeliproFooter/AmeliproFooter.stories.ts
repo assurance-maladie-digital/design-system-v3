@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproFooter from './AmeliproFooter.vue'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 const meta = {
 	argTypes: {
@@ -103,4 +104,10 @@ export const Default: Story = {
 />
 		`,
 	}),
+}
+export const DeprecationNotice = {
+	...createDeprecationNotice([
+		{ label: 'FooterBar', url: '/?path=/docs/composants-structure-footerbar--docs' },
+	]),
+	tags: ['!dev'],
 }

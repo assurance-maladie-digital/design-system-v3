@@ -172,13 +172,12 @@ export function useDatePickerAccessibility() {
 
 				container.removeAttribute('aria-expanded')
 				container.removeAttribute('aria-haspopup')
-				container.removeAttribute('aria-controls')
 				// Find all elements with invalid ARIA attributes
 				const elementsWithAriaHaspopup = container.querySelectorAll('[aria-haspopup="menu"]')
 				elementsWithAriaHaspopup.forEach((element) => {
 					if (!element) return
 					element.removeAttribute('aria-haspopup')
-					element.removeAttribute('aria-controls')
+					// Intentionally keep aria-controls intact so valid popup relationships remain
 				})
 
 				// Find input elements with invalid ARIA attributes
@@ -187,7 +186,7 @@ export function useDatePickerAccessibility() {
 					if (!input) return
 					input.removeAttribute('aria-haspopup')
 					input.removeAttribute('aria-expanded')
-					input.removeAttribute('aria-controls')
+					// Leave aria-controls untouched to avoid stripping required relationships
 				})
 			})
 		}

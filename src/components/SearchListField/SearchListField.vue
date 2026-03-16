@@ -91,7 +91,7 @@
 	}
 
 	const emitChangeEvent = (value: unknown[]) => {
-		emit('update:modelValue', value)
+		emit('update:modelValue', [...value])
 	}
 
 	defineExpose({

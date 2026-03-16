@@ -26,9 +26,7 @@ describe('SySelect – accessibility (axe)', () => {
 
 		// Ouvrir le menu pour inclure la liste déroulante dans l’analyse axe
 		const activator = wrapper.find('.sy-select')
-		if (activator.exists()) {
-			await activator.trigger('click')
-		}
+		await activator.trigger('click')
 
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'SySelect – required select with menu open', {

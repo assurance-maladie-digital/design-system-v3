@@ -1,16 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { ref } from 'vue'
 import { mount, flushPromises } from '@vue/test-utils'
 import NotFoundPage from '../NotFoundPage.vue'
 import StatusPage from '../../StatusPage/StatusPage.vue'
 
 vi.mock('@/utils/theme', () => ({
 	useThemeLocales: () => ({
-		themeLocales: {
+		themeLocales: ref({
 			code: '404',
 			pageTitle: 'Page non trouvée',
 			message: 'Cette page n\'existe pas ou a été déplacée.',
 			src: '/src/components/NotFoundPage/assets/not-found.svg',
-		},
+		}),
 	}),
 }))
 
@@ -112,5 +113,27 @@ describe('NotFoundPage', () => {
 		const img = wrapper.find('img')
 		expect(img.exists()).toBe(true)
 		expect(img.attributes('src')).toBe('/custom.svg')
+	})
+
+	it('passes a uniqueId prop to StatusPage', async () => {
+		const wrapper = mount(NotFoundPage)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		const statusPage = wrapper.findComponent(StatusPage)
+		expect(statusPage.props('uniqueId')).toBeDefined()
+	})
+
+	it('passes a custom uniqueId prop to StatusPage', async () => {
+		const wrapper = mount(NotFoundPage, {
+			props: {
+				uniqueId: 'custom-id',
+			},
+		})
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		const statusPage = wrapper.findComponent(StatusPage)
+		expect(statusPage.props('uniqueId')).toBe('custom-id')
 	})
 })

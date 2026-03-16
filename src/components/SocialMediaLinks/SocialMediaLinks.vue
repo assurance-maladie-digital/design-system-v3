@@ -91,7 +91,7 @@ li {
 }
 
 .vd-social-media-links-icon {
-	color: tokens.$grey-base;
+	color: tokens.$grey-base !important;
 }
 
 .vd-social-media-links-icon--x {

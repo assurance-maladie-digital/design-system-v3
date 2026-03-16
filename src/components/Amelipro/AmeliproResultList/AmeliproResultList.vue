@@ -155,7 +155,7 @@
 		>
 			<p
 				:id="`${uniqueId}-result-counter`"
-				class="d-inline-block align-center mb-0 total-counter font-weight-semibold"
+				class="d-inline-block align-center mb-0 total-counter"
 			>
 				<span class="d-sr-only">Nombre de lignes dans la liste ci-après :</span>
 				{{ items.length }} {{ counterLabel }}

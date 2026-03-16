@@ -35,6 +35,7 @@ describe('CookiesSelection', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(CookiesSelection, {
 			propsData: {
+				headingLevel: 2,
 				items: cookiesList,
 			},
 		})
@@ -49,6 +50,7 @@ describe('CookiesSelection', () => {
 	it('sets global preferences', async () => {
 		const wrapper = mount(CookiesSelection, {
 			props: {
+				headingLevel: 2,
 				items: cookiesList,
 			},
 		})
@@ -78,6 +80,7 @@ describe('CookiesSelection', () => {
 	it('sets preferences for each category', async () => {
 		const wrapper = mount(CookiesSelection, {
 			props: {
+				headingLevel: 2,
 				items: cookiesList,
 			},
 		})
@@ -118,6 +121,7 @@ describe('CookiesSelection', () => {
 	it('requires all categories to be set', async () => {
 		const wrapper = mount(CookiesSelection, {
 			props: {
+				headingLevel: 2,
 				items: cookiesList,
 				modelValue: undefined,
 			},
@@ -151,6 +155,7 @@ describe('CookiesSelection', () => {
 	it('displays the cookie description as a scoped slot', () => {
 		const wrapper = mount(CookiesSelection, {
 			props: {
+				headingLevel: 2,
 				items: cookiesList,
 			},
 			slots: {

@@ -166,6 +166,8 @@ Error: [a11y][DatePicker (CalendarMode) – default state] 1 violation(s) axe:
     at file:///C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/node_modules/.pnpm/@vitest+runner@3.2.4/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20
 ```
 
+# Fixed
+
 ## ComplexDatePicker
 Fichier: C:/Users/VACHETBENIMEL1-32214/Desktop/Dev/design-system-v3/src/components/DatePicker/ComplexDatePicker/tests/ComplexDatePicker.a11y.spec.ts
 

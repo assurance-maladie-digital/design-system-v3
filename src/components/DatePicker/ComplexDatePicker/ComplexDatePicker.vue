@@ -46,6 +46,7 @@
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -170,6 +171,8 @@
 			density?: 'default' | 'comfortable' | 'compact'
 			hint?: string
 			persistentHint?: boolean
+			headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+
 		}>(),
 		{
 			modelValue: undefined,
@@ -207,6 +210,7 @@
 			density: 'default',
 			hint: undefined,
 			persistentHint: false,
+			headingLevel: 3,
 		},
 	)
 
@@ -591,7 +595,9 @@
 	 */
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
+	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
 
 	/**
 	 * Holiday marking (partagé via useHolidayHighlighting)
@@ -1050,7 +1056,7 @@
 		<template v-else>
 			<VMenu
 				v-model="isDatePickerVisible"
-				activator="parent"
+				:activator="menuActivatorRef"
 				:min-width="0"
 				location="bottom"
 				:close-on-content-click="false"
@@ -1059,55 +1065,65 @@
 				transition="fade-transition"
 				:offset="[0, 10]"
 			>
-				<template #activator="{ props: menuProps }">
-					<DateTextInput
-						v-bind="menuProps"
-						ref="dateCalendarTextInputRef"
-						:key="fieldKey"
-						:model-value="textInputValue"
-						:label="labelWithAsterisk"
-						:placeholder="props.placeholder"
-						:format="props.format"
-						:date-format-return="props.dateFormatReturn"
-						:required="props.required"
-						:disabled="props.disabled"
-						:readonly="props.readonly"
-						:title="props.title"
-						:is-outlined="props.isOutlined"
-						:display-icon="props.displayIcon"
-						:display-append-icon="props.displayAppendIcon"
-						:display-prepend-icon="props.displayPrependIcon"
-						:no-icon="props.noIcon"
-						:custom-rules="props.customRules"
-						:custom-warning-rules="props.customWarningRules"
-						:display-asterisk="props.displayAsterisk"
-						:disable-error-handling="props.disableErrorHandling"
-						:show-success-messages="props.showSuccessMessages"
-						:bg-color="props.bgColor"
-						:display-range="props.displayRange"
-						:is-validate-on-blur="props.isValidateOnBlur"
-						:external-error-messages="errorMessages"
-						:class="[getMessageClasses(), 'label-hidden-on-focus']"
-						:auto-clamp="props.autoClamp"
-						:density="props.density"
-						:hint="props.hint"
-						:persistent-hint="props.persistentHint"
-						@update:model-value="handleDateTextInputUpdate"
-						@click="openDatePickerOnClick"
-						@focus="openDatePickerOnFocus"
-						@blur="handleInputBlur"
-						@input="handleInput"
-						@keydown="handleKeydown"
-						@date-selected="handleDateSelected"
-						@prepend-icon-click="openDatePickerOnIconClick"
-						@append-icon-click="openDatePickerOnIconClick"
-					/>
+				<template #activator>
+					<div
+						ref="menuActivatorRef"
+						class="date-text-input-activator"
+						role="combobox"
+						aria-haspopup="dialog"
+						:aria-expanded="isDatePickerVisible"
+						:aria-controls="datePickerContentId"
+					>
+						<DateTextInput
+							ref="dateCalendarTextInputRef"
+							:key="fieldKey"
+							:model-value="textInputValue"
+							:label="labelWithAsterisk"
+							:placeholder="props.placeholder"
+							:format="props.format"
+							:date-format-return="props.dateFormatReturn"
+							:required="props.required"
+							:disabled="props.disabled"
+							:readonly="props.readonly"
+							:title="props.title"
+							:is-outlined="props.isOutlined"
+							:display-icon="props.displayIcon"
+							:display-append-icon="props.displayAppendIcon"
+							:display-prepend-icon="props.displayPrependIcon"
+							:no-icon="props.noIcon"
+							:custom-rules="props.customRules"
+							:custom-warning-rules="props.customWarningRules"
+							:display-asterisk="props.displayAsterisk"
+							:disable-error-handling="props.disableErrorHandling"
+							:show-success-messages="props.showSuccessMessages"
+							:bg-color="props.bgColor"
+							:display-range="props.displayRange"
+							:is-validate-on-blur="props.isValidateOnBlur"
+							:external-error-messages="errorMessages"
+							:class="[getMessageClasses(), 'label-hidden-on-focus']"
+							:auto-clamp="props.autoClamp"
+							:density="props.density"
+							:hint="props.hint"
+							:persistent-hint="props.persistentHint"
+							@update:model-value="handleDateTextInputUpdate"
+							@click="openDatePickerOnClick"
+							@focus="openDatePickerOnFocus"
+							@blur="handleInputBlur"
+							@input="handleInput"
+							@keydown="handleKeydown"
+							@date-selected="handleDateSelected"
+							@prepend-icon-click="openDatePickerOnIconClick"
+							@append-icon-click="openDatePickerOnIconClick"
+						/>
+					</div>
 				</template>
 
 				<VDatePicker
 					v-if="isDatePickerVisible"
+					:id="datePickerContentId"
 					ref="datePickerRef"
 					v-model="selectedDates"
+					control-variant="modal"
 					color="primary"
 					:class="props.displayWeekendDays ? 'weekend' : ''"
 					:first-day-of-week="1"
@@ -1142,9 +1158,12 @@
 						</span>
 					</template>
 					<template #header>
-						<h3 class="mx-auto my-auto ml-5 mb-4">
+						<SyHeading
+							class="mx-auto my-auto ml-5 mb-4"
+							:level="headingLevel"
+						>
 							{{ selectedDates ? displayedDateString : headerDate }}
-						</h3>
+						</SyHeading>
 					</template>
 					<template
 						v-if="props.displayTodayButton"
@@ -1299,7 +1318,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: tokens.$colors-background-accent-contrasted !important;
+	background-color: tokens.$colors-background-accent-primary-contrasted !important;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
@@ -1353,6 +1372,10 @@
 	&::after {
 		display: none;
 	}
+}
+
+:deep(.v-date-picker-months) {
+	flex: 1;
 }
 
 :deep(.v-date-picker-months .v-btn__content) {

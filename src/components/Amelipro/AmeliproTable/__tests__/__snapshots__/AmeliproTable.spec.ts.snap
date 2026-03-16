@@ -220,7 +220,6 @@ exports[`AmeliproTable > Snapshots > renders the component with only required pr
     <p
       class="
         d-inline-block
-        font-weight-semibold
         mb-0
         total-counter
       "

@@ -41,6 +41,7 @@
 			confirmationMessage?: boolean
 			/** Largeur interne */
 			width?: string
+			headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
 		}>(),
 		{
 			// Confirmation related defaults
@@ -125,6 +126,7 @@
 <template>
 	<HeaderBar
 		:sticky="sticky"
+		:heading-level-title="headingLevelTitle"
 		:hide-when-down="hideWhenDown"
 		:home-aria-label="homeAriaLabel"
 		:service-title="serviceTitle"

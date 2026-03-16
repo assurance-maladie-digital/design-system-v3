@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	// useDateFormat n'est plus nécessaire avec les règles prédéfinies
 
 	// État des dates
@@ -142,9 +143,9 @@
 
 <template>
 	<div class="date-picker-bidirectional-validation">
-		<h1 class="text-h5 mb-6">
+		<SyHeading :level="1">
 			Validation bidirectionnelle entre deux DatePickers
-		</h1>
+		</SyHeading>
 
 		<div class="text-body-2 mb-4">
 			Ce composant démontre la validation bidirectionnelle entre deux DatePickers. Les règles de validation sont appliquées dans les deux sens :
@@ -158,12 +159,16 @@
 
 		<div class="date-range-container mb-6">
 			<div class="date-picker-wrapper">
-				<h2 class="text-subtitle-1 mb-2">
+				<SyHeading
+					class="text-subtitle-1 mb-2"
+					:level="2"
+				>
 					Date de début
-				</h2>
+				</SyHeading>
 				<DatePicker
 					ref="startDatePickerRef"
 					v-model="startDate"
+					:heading-level="2"
 					label="Date de début"
 					:custom-rules="startDateRules"
 					required
@@ -171,13 +176,18 @@
 				/>
 			</div>
 			<div class="date-picker-wrapper">
-				<h2 class="text-subtitle-1 mb-2">
+				<SyHeading
+					class="text-subtitle-1 mb-2"
+					:level="2"
+				>
 					Date de fin
-				</h2>
+				</SyHeading>
 				<DatePicker
 					ref="endDatePickerRef"
 					v-model="endDate"
 					label="Date de fin"
+					:heading-level="2"
+					:heading-level-complex-date-picker="2"
 					:custom-rules="endDateRules"
 					required
 					@update:model-value="validateStartDate"
@@ -219,9 +229,12 @@
 		</div>
 
 		<div class="mt-6 pa-4 bg-grey-lighten-4 rounded">
-			<h3 class="text-subtitle-1 mb-2">
+			<SyHeading
+				class="text-subtitle-1 mb-2"
+				:level="3"
+			>
 				Comment fonctionne la validation bidirectionnelle
-			</h3>
+			</SyHeading>
 			<p class="text-body-2">
 				La validation bidirectionnelle entre les DatePickers est implémentée grâce à des règles de validation personnalisées
 				qui vérifient la relation entre les deux dates. Chaque DatePicker a sa propre règle qui vérifie sa valeur par rapport à l'autre.

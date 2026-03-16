@@ -2,26 +2,38 @@ import FooterBar from '../FooterBar/FooterBar.vue'
 import Logo from '../Logo/Logo.vue'
 import CollapsibleList from '../CollapsibleList/CollapsibleList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from '@storybook/test'
 import { mdiLinkedin, mdiFacebook, mdiYoutube } from '@mdi/js'
+import imgUrl from '@/assets/amelipro/img/cartouche_nouveauTEL.svg'
+import ameliProLogo from '@/assets/amelipro/img/logo-amelipro.svg'
+import { useTheme } from 'vuetify'
+import { addons } from '@storybook/manager-api'
 
 const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
 
 const items = [
 	{
 		text: 'Plan du site',
-		href: '/sitemap',
+		href: 'javascript:void(0)',
+		theme: 'cnam',
+	},
+	{
+		text: 'Aide et configuration',
+		href: 'javascript:void(0)',
+		theme: 'ap',
 	},
 	{
 		text: 'Conditions générales d\'utilisation',
-		href: '/cgu',
+		href: 'javascript:void(0)',
 	},
 	{
 		text: 'Gestion des cookies',
-		href: '/cookies',
+		href: 'javascript:void(0)',
+		theme: 'cnam',
 	},
 	{
 		text: 'Mentions légales',
-		href: '/mentions-legales',
+		href: 'javascript:void(0)',
 	},
 ]
 
@@ -64,9 +76,23 @@ const currentYear = new Date().getFullYear()
 const meta = {
 	title: 'Composants/Structure/FooterBar',
 	component: FooterBar,
+	decorators: [
+		(story, context) => ({
+			setup() {
+				const theme = useTheme()
+				theme.global.name.value = context.globals.theme
+				return story()
+			},
+			components: { story },
+			template: '<story />',
+		}),
+	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['logoSize'] },
+		controls: { exclude: ['logoSize', 'onEvent'] },
+		actions: {
+			handles: ['event'],
+		},
 	},
 	argTypes: {
 		a11yCompliance: {
@@ -86,6 +112,13 @@ const meta = {
 				type: 'boolean',
 			},
 			description: 'Masque le lien vers le Plan du site.',
+		},
+		hideHelpLink: {
+			control: {
+				type: 'boolean',
+			},
+			if: { global: 'theme', eq: 'ap' },
+			description: 'Masque le lien vers aide et configuation.',
 		},
 		hideCguLink: {
 			control: {
@@ -141,11 +174,32 @@ const meta = {
 			},
 			description: 'Use the light theme for the footer.',
 		},
+		backOffice: {
+			control: {
+				type: 'boolean',
+			},
+			if: { global: 'theme', eq: 'ap' },
+			description: 'Affichage du footer pour le back office.',
+		},
+		backOfficeText: {
+			control: {
+				type: 'text',
+			},
+			if: { global: 'theme', eq: 'ap' },
+			description: 'Nom du service en back office à afficher dans le footer.',
+		},
 		sitemapRoute: {
 			control: {
 				type: 'text',
 			},
 			description: 'La valeur de la prop `to` du lien vers le Plan du site.',
+		},
+		helpRoute: {
+			control: {
+				type: 'text',
+			},
+			if: { global: 'theme', eq: 'ap' },
+			description: 'La valeur de la prop `to` du lien vers aide et configuration.',
 		},
 		cguRoute: {
 			control: {
@@ -208,7 +262,7 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<FooterBar v-bind="docProps" />
+	<FooterBar v-bind="docProps"  />
 </template>
 				`,
 			},
@@ -219,6 +273,7 @@ export const Default: Story = {
 	
 	const docProps = {
 		sitemapRoute: '/',
+		helpRoute: '/',
 		cguRoute: '/',
 		cookiesRoute: '/',
 		legalNoticeRoute: '/',
@@ -228,19 +283,21 @@ export const Default: Story = {
 				`,
 			},
 		],
-		controls: { exclude: ['logoSize', 'items'] },
+		controls: { exclude: ['logoSize', 'items', 'onEvent'] },
 	},
 	args: {
 		a11yCompliance: 'non-compliant',
 		items: items,
 		hideSitemapLink: false,
+		hideHelpLink: false,
 		hideCguLink: false,
 		hideCookiesLink: false,
 		hideLegalNoticeLink: false,
 		hideA11yLink: false,
 		hideLogo: false,
 		hideSocialMediaLinks: false,
-		version: '',
+		backOffice: false,
+		backOfficeText: 'Ameli Pro Back Office',
 		socialMediaLinks: [
 			{
 				icon: mdiFacebook,
@@ -260,6 +317,7 @@ export const Default: Story = {
 		],
 		light: false,
 		sitemapRoute: '/',
+		helpRoute: '/',
 		cguRoute: '/',
 		cookiesRoute: '/',
 		legalNoticeRoute: '/',
@@ -267,7 +325,7 @@ export const Default: Story = {
 		vuetifyOptions: {
 			footer: {
 				elevation: 3,
-				color: '#2f384d',
+				color: 'var(--footer-background)',
 				height: 'auto',
 			},
 			goTopBtn: {
@@ -280,6 +338,7 @@ export const Default: Story = {
 				color: 'primary',
 			},
 		},
+		onEvent: fn(),
 	},
 	render: (args) => {
 		return {
@@ -296,18 +355,23 @@ export const Default: Story = {
 					:hide-cgu-link="args.hideCguLink"
 					:hide-cookies-link="args.hideCookiesLink"
 					:hide-legal-notice-link="args.hideLegalNoticeLink"
-					:hide-sitemap-link="args.hideSitemapLink"
+                    :hide-sitemap-link="args.hideSitemapLink"
+                    :hide-help-link="args.hideHelpLink"
 					:hide-logo="args.hideLogo"
 					:hide-social-media-links="args.hideSocialMediaLinks"
 					:light="args.light"
-					:version="args.version"
-					:sitemap-route="args.sitemapRoute"
+                    :version="args.version"
+                    :back-office="args.backOffice"
+                    :back-office-text="args.backOfficeText"
+                    :sitemap-route="args.sitemapRoute"
+                    :help-route="args.helpRoute"
 					:cgu-route="args.cguRoute"
 					:cookies-route="args.cookiesRoute"
 					:legal-notice-route="args.legalNoticeRoute"
 					:a11y-statement-route="args.a11yStatementRoute"
 					:social-media-links="args.socialMediaLinks"
 					:vuetify-options="args.vuetifyOptions"
+                    @event="args.onEvent"
 				/>
 			`,
 		}
@@ -384,7 +448,7 @@ export const changeLinks: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.linkItems" />
+              <FooterBar :link-items="args.linkItems"/>
 			`,
 		}
 	},
@@ -446,7 +510,7 @@ export const slotPrepend: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :link-items="args.items">
 					<template #prepend>
 						<li class="text--secondary my-3 mx-4">
 							Texte ajouté
@@ -506,6 +570,7 @@ export const slotAppend: Story = {
 		controls: { include: ['append'] },
 	},
 	args: {
+
 		items: items,
 		append: '<li class="text--secondary my-3 mx-4">{{ currentYear }}</li>',
 	},
@@ -516,7 +581,7 @@ export const slotAppend: Story = {
 				return { args, currentYear }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :link-items="args.items">
 					<template #append>
 						<li class="text--secondary my-3 mx-4">
 							{{ currentYear }}
@@ -580,7 +645,7 @@ export const extendedMode: Story = {
 				return { args }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :link-items="args.items">
 					<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 				</FooterBar>
 			`,
@@ -597,10 +662,10 @@ export const slotLogo: Story = {
 	<FooterBar :link-items="items">
 		<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		<template #logo>
-			<Logo
-				:risque-pro="true"
-				aria-label="Risque Pro"
-			/>
+                    <Logo
+                        :risque-pro="true"
+                        aria-label="Risque Pro"
+                    />
 		</template>
 	</FooterBar>
 </template>
@@ -644,16 +709,27 @@ export const slotLogo: Story = {
 		return {
 			components: { FooterBar, Logo },
 			setup() {
-				return { args }
+				const theme = useTheme()
+				const channel = addons.getChannel()
+				channel.on('storybook-theme-change', (theme) => {
+					theme.name.value = theme
+				})
+				return { args, ameliProLogo, theme }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :link-items="args.items">
 					<p class="text--secondary mb-0">Contenu supplémentaire.</p>
 					<template #logo>
-						<Logo
-							:risque-pro="true"
-							aria-label="Risque Pro"
-						/>
+                      <img
+                          v-if="['ap', 'ap2026'].includes(theme.name.value)"
+                          :src="ameliProLogo"
+                          aria-label="AmeliPro"
+                      />
+                      <Logo
+                          v-else
+                          :risque-pro="true"
+                          aria-label="Risque Pro"
+                      />
 					</template>
 				</FooterBar>
 			`,
@@ -778,7 +854,7 @@ export const collapsibleList: Story = {
 				return { args, remboursementItems, healthItems }
 			},
 			template: `
-				<FooterBar :link-items="args.items">
+              <FooterBar :link-items="args.items">
 					<VRow class="max-width-none">
 						<VCol cols="12" sm="6">
 							<CollapsibleList
@@ -856,7 +932,7 @@ export const hideSectionLogo: Story = {
 				return { args }
 			},
 			template: `
-        <FooterBar :hide-logo="args.hideLogo" :link-items="args.items">
+              <FooterBar :hide-logo="args.hideLogo" :link-items="args.items">
           <p class="text--secondary mb-0">Contenu supplémentaire.</p>
         </FooterBar>
       `,
@@ -919,7 +995,9 @@ export const hideSectionSocialMediaLinks: Story = {
 				return { args }
 			},
 			template: `
-        <FooterBar :hide-social-media-links="args.hideSocialMediaLinks" :link-items="args.items">
+              <FooterBar :hide-social-media-links="args.hideSocialMediaLinks"
+                         :link-items="args.items"
+              >
           <p class="text--secondary mb-0">Contenu supplémentaire.</p>
         </FooterBar>
       `,
@@ -949,6 +1027,7 @@ export const customSocialMediaLinks: Story = {
 	import { mdiFacebook, mdiLinkedin, mdiYoutube } from '@mdi/js'
 	
 	const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
+
 	
 	const items = [
         {
@@ -978,7 +1057,7 @@ export const customSocialMediaLinks: Story = {
 		{
 			icon: xIcon,
 			name: 'X',
-			href: 'https://www.twitter.com',
+			href: 'https://x.com',
 		},
 		{
 			icon: mdiLinkedin,
@@ -1013,7 +1092,7 @@ export const customSocialMediaLinks: Story = {
 			{
 				icon: xIcon,
 				name: 'X',
-				href: 'https://www.twitter.com',
+				href: 'https://x.com',
 			},
 			{
 				icon: mdiYoutube,
@@ -1029,7 +1108,9 @@ export const customSocialMediaLinks: Story = {
 				return { args }
 			},
 			template: `
-		<FooterBar :social-media-links="args.socialMediaLinks" :link-items="args.items">
+              <FooterBar :social-media-links="args.socialMediaLinks"
+                         :link-items="args.items"
+              >
 		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
@@ -1092,7 +1173,7 @@ export const lightTheme: Story = {
 				return { args }
 			},
 			template: `
-		<FooterBar :light="args.light" :link-items="args.items">
+              <FooterBar :light="args.light" :link-items="args.items">
 		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
@@ -1175,10 +1256,193 @@ export const customTheme: Story = {
 				return { args }
 			},
 			template: `
-		<FooterBar :vuetify-options="args.vuetifyOptions" :link-items="args.items">
+              <FooterBar :vuetify-options="args.vuetifyOptions" :link-items="args.items">
 		  <p class="text--secondary mb-0">Contenu supplémentaire.</p>
 		</FooterBar>
 	  `,
+		}
+	},
+}
+export const BackOffice: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<FooterBar v-bind="docProps" />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { FooterBar } from '@cnamts/synapse'
+	
+	const docProps = {
+		sitemapRoute: '/',
+		helpRoute: '/',
+		cguRoute: '/',
+		cookiesRoute: '/',
+		legalNoticeRoute: '/',
+		a11yStatementRoute: '/',
+	}
+</script>
+				`,
+			},
+		],
+		controls: { exclude: ['logoSize', 'items'] },
+	},
+	args: {
+		a11yCompliance: 'non-compliant',
+		items: items,
+		version: '1.1.2',
+		backOffice: true,
+		backOfficeText: 'Ameli Pro Back Office',
+		socialMediaLinks: [
+			{
+				icon: mdiFacebook,
+				name: 'Facebook',
+				href: 'https://www.facebook.com',
+			},
+			{
+				icon: xIcon,
+				name: 'X',
+				href: 'https://x.com',
+			},
+			{
+				icon: mdiLinkedin,
+				name: 'LinkedIn',
+				href: 'https://www.linkedin.com',
+			},
+		],
+		light: false,
+		sitemapRoute: '/',
+		helpRoute: '/',
+		cguRoute: '/',
+		cookiesRoute: '/',
+		legalNoticeRoute: '/',
+		a11yStatementRoute: '/',
+		vuetifyOptions: {
+			footer: {
+				elevation: 3,
+				color: 'var(--footer-background)',
+				height: 'auto',
+			},
+			goTopBtn: {
+				density: 'compact',
+				icon: 'true',
+				variant: 'text',
+				elevation: 0,
+			},
+			goTopBtnIcon: {
+				color: 'primary',
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { FooterBar },
+			setup() {
+				return { args }
+			},
+			template: `
+              <FooterBar
+                  v-bind="args.docProps"
+                  :link-items="args.items"
+                  :a11y-compliance="args.a11yCompliance"
+                  :hide-a11y-link="args.hideA11yLink"
+                  :hide-cgu-link="args.hideCguLink"
+                  :hide-cookies-link="args.hideCookiesLink"
+                  :hide-legal-notice-link="args.hideLegalNoticeLink"
+                  :hide-sitemap-link="args.hideSitemapLink"
+                  :hide-help-link="args.hidehelpLink"
+                  :hide-logo="args.hideLogo"
+                  :hide-social-media-links="args.hideSocialMediaLinks"
+                  :light="args.light"
+                  :version="args.version"
+                  :back-office="args.backOffice"
+                  :back-office-text="args.backOfficeText"
+                  :sitemap-route="args.sitemapRoute"
+                  :help-route="args.helpRoute"
+                  :cgu-route="args.cguRoute"
+                  :cookies-route="args.cookiesRoute"
+                  :legal-notice-route="args.legalNoticeRoute"
+                  :a11y-statement-route="args.a11yStatementRoute"
+                  :social-media-links="args.socialMediaLinks"
+                  :vuetify-options="args.vuetifyOptions"
+              />
+            `,
+		}
+	},
+}
+export const withPhoneNumber: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+      <FooterBar :link-items="args.items" prepend>
+                <template #prepend>
+                  <img
+                      :src="imgUrl"
+                      alt="au 3608 : Service gratuit + prix appel"
+                      style="cursor: pointer;"
+                  />
+                </template>
+              </FooterBar>
+	</FooterBar>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { FooterBar } from '@cnamts/synapse'
+	
+	const items = [
+        {
+			text: 'Plan du site',
+			href: '/sitemap',
+		},
+		{
+			text: 'Conditions générales d\\'utilisation',
+			href: '/cgu',
+		},
+		{
+			text: 'Gestion des cookies',
+			href: '/cookies',
+		},
+		{
+			text: 'Mentions légales',
+			href: '/mentions-legales',
+		},
+	]
+</script>
+				`,
+			},
+		],
+		controls: { include: ['prepend'] },
+	},
+	args: {
+		items: items,
+	},
+	render: (args) => {
+		return {
+			components: { FooterBar },
+			setup() {
+				return { args, imgUrl }
+			},
+			template: `
+              <FooterBar :link-items="args.items" prepend>
+                <template #prepend>
+                  <img
+                      :src="imgUrl"
+                      alt="au 3608 : Service gratuit + prix appel"
+                      style="cursor: pointer;"
+                  />
+                </template>
+              </FooterBar>
+            `,
 		}
 	},
 }

@@ -18,14 +18,19 @@ import {
 >
 
     <CriteriaSection>
+    		<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+  <ul>
+    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h1, défini dans l’implémentation du composant.</li>
+      <code>&lt;StatusPage
+          :heading-level="1" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
+  </ul>
+</CriteriaCard>
         <CriteriaCard icon="🔍" title="Structure sémantique">
             <ul>
-                <li><strong>Titre de page</strong> : le titre est rendu dans une balise <code>h1</code>, unique et descriptif</li>
+                <li><strong>Titre de page</strong> : le titre est rendu dans une balise <code>h1</code>, unique et descriptif — lié au conteneur via <code>aria-labelledby</code> lorsque <code>role</code> est défini</li>
                 <li><strong>Code d'erreur</strong> : le code (ex. <code>500</code>, <code>404</code>) est précédé du texte masqué visuellement <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) pour les lecteurs d'écran</li>
-                <li><strong>Rôles ARIA hérités</strong> via <code>PageContainer</code> :</li>
-                <ul>
-                    <li>exemple : <code>role="main"</code> représente le contenu principal de la page</li>
-                </ul>
             </ul>
         </CriteriaCard>
 
@@ -52,10 +57,22 @@ import {
                 <li><strong>Slot <code>action</code></strong> : permet d'ajouter des actions supplémentaires accessibles au clavier</li>
             </ul>
         </CriteriaCard>
+
+        <CriteriaCard icon="🏷️" title="Rôle et identifiant ARIA">
+            <ul>
+                <li><strong>Prop <code>role</code></strong> : deux valeurs acceptées: <code>main</code> ou <code>region</code> — propagé au <code>PageContainer</code></li>
+                <li><strong>Prop <code>uniqueId</code></strong> : identifiant unique du conteneur, généré automatiquement via <code>useId()</code> si non fourni — utilisé pour lier le <code>h1</code> au conteneur via <code>aria-labelledby</code> lorsque <code>role</code> est défini</li>
+                <li><strong>Liaison automatique</strong> : quand <code>role</code> est défini, <code>aria-labelledby</code> est automatiquement appliqué sur le <code>PageContainer</code> et l'<code>id</code> correspondant sur le <code>h1</code></li>
+            </ul>
+        </CriteriaCard>
     </CriteriaSection>
 
     <DemoSection title="Avec illustration personnalisée" componentName="StatusPage">
         <Story of={StatusPageStories.CustomIllustration} />
+    </DemoSection>
+
+    <DemoSection title="Avec rôle défini" componentName="StatusPage">
+        <Story of={StatusPageStories.WithRole} />
     </DemoSection>
 
     <BestPracticesSection>
@@ -66,6 +83,8 @@ import {
             <li>Ne pas masquer le bouton (<code>hide-btn</code>) sans proposer une alternative de navigation claire</li>
             <li>Les illustrations doivent toujours être décoratives (<code>aria-hidden="true"</code>) — ne jamais y placer d'information essentielle</li>
             <li>Le contenu dans <code>additional-content</code> doit être lisible par les lecteurs d'écran : éviter le contenu purement visuel</li>
+            <li>Utiliser la prop <code>role</code> pour définir le rôle ARIA approprié au contexte</li>
+            <li>Fournir un <code>uniqueId</code> explicite si nécessaire pour garantir une liaison correcte entre le conteneur et le titre</li>
         </ul>
     </BestPracticesSection>
 

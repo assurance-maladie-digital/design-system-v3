@@ -1,15 +1,77 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../DownloadBtn.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks'
+import * as DownloadBtnStories from '../DownloadBtn.stories'
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+    AuditSection
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
 
-<Meta of={Stories} />
+<Meta of={DownloadBtnStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout componentName="DownloadBtn" iconSrc={AccessibilityIcon}>
 
+    <AuditSection>
+        <p>Rapport d’audit manuel : <a href="/audits/DownloadBtn.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></p>
+    </AuditSection>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/DownloadBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4007" target="_blank" style={{color:'#0C41BD'}}>issue #4007</a>)</p>
-	</div>
+    <CriteriaSection>
+
+        <CriteriaCard icon="🏷️" title="Nom accessible explicite">
+            <ul>
+                <li>Le bouton doit avoir un texte visible explicite.</li>
+                <li>Si icône seule, un aria-label est obligatoire.</li>
+                <li>L’icône doit être décorative.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="⌨️" title="Interaction clavier">
+            <ul>
+                <li>Activation via Entrée et Espace.</li>
+                <li>Ordre de tabulation cohérent.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🔄" title="Gestion des états">
+            <ul>
+                <li>Annonce du chargement via aria-live.</li>
+                <li>Message d’erreur accessible en cas d’échec.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="👁️" title="Focus visible">
+            <ul>
+                <li>Focus clavier visible.</li>
+                <li>Ne pas supprimer le focus natif.</li>
+            </ul>
+        </CriteriaCard>
+
+    </CriteriaSection>
+
+    <DemoSection componentName="DownloadBtn">
+        <Primary/>
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Indiquer le format et le poids du fichier.</li>
+            <li>Fournir un fallbackFilename explicite.</li>
+            <li>Désactiver le bouton pendant le chargement.</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li>
+                <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">
+                    RGAA 4.1 – Critères
+                </a>
+            </li>
+        </ul>
+    </ResourcesSection>
+
+</AccessibilityGuideLayout>

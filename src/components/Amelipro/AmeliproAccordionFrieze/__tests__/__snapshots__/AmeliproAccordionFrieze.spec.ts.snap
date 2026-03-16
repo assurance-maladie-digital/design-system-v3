@@ -116,10 +116,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-1"
               tabindex="0"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 1
               </span>
               <span class="
@@ -172,10 +169,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-2"
               tabindex="0"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 2
               </span>
               <span class="
@@ -243,10 +237,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-3"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 3
               </span>
               <span class="
@@ -299,10 +290,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-4"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 4
               </span>
               <span class="
@@ -355,10 +343,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-5"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 5
               </span>
               <span class="
@@ -411,10 +396,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-6"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 6
               </span>
               <span class="
@@ -467,10 +449,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-7"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 7
               </span>
               <span class="
@@ -523,10 +502,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-8"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 8
               </span>
               <span class="
@@ -594,10 +570,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-9"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 9
               </span>
               <span class="
@@ -650,10 +623,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-10"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 10
               </span>
               <span class="
@@ -706,10 +676,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-11"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 11
               </span>
               <span class="
@@ -762,10 +729,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-12"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 12
               </span>
               <span class="
@@ -818,10 +782,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-13"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 13
               </span>
               <span class="
@@ -874,10 +835,7 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               id="amelipro-accordion-frieze-unique-id-btn-14"
               tabindex="-1"
             >
-              <span class="
-                d-block
-                font-weight-semibold
-              ">
+              <span class="d-block">
                 titre 14
               </span>
               <span class="

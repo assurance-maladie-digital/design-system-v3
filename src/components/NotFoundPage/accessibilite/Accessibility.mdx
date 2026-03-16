@@ -29,6 +29,8 @@ import {
                 <li><strong>Titre de page</strong> : rendu dans une balise <code>h1</code> via <code>StatusPage</code>, sa valeur provient des locales du thème via <code>useThemeLocales</code></li>
                 <li><strong>Code d'erreur</strong> : le code <em>404</em> est précédé du texte masqué visuellement <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) pour les lecteurs d'écran</li>
                 <li><strong>Identifiant de support</strong> : si le paramètre <code>support_id</code> est présent dans l'URL, il est affiché dans le slot <code>#additional-content</code> avec un formatage espacé par groupes de 4 caractères pour faciliter la lecture</li>
+                <li><strong>Prop <code>uniqueId</code></strong> : permet de définir un identifiant unique sur le conteneur, facilitant le ciblage par <code>aria-labelledby</code> ou <code>aria-describedby</code> depuis d'autres éléments</li>
+                <li><strong>Prop <code>role</code></strong> : aucune prop <code>role</code> n'est exposée sur ce composant — la <code>NotFoundPage</code> est une page statique d'information, sa structure sémantique (<code>h1</code>, paragraphe) suffit à en exprimer le rôle sans qu'un attribut ARIA <code>role</code> supplémentaire soit nécessaire ; l'exposer risquerait d'introduire de mauvaises utilisations pouvant nuire à l'expérience des utilisateurs de lecteurs d'écran</li>
             </ul>
         </CriteriaCard>
 

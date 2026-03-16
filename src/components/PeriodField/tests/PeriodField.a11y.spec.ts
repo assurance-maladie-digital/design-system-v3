@@ -21,9 +21,18 @@ describe('PeriodField – accessibility (axe)', () => {
 			attachTo: document.body,
 		})
 
+		// TODO : https://github.com/assurance-maladie-digital/design-system-v3/issues/1960
+		// 'aria-valid-attr-value' is ignored because Vuetify sets aria-owns on the
+		// DatePicker input referencing the VMenu id, but in JSDOM the menu is
+		// rendered via <Teleport> and not present in the scanned subtree.
+		const ignoreRules = ['region', 'aria-valid-attr-value']
+
 		const results = await axe(wrapper.element as HTMLElement)
+		if (results.violations.filter(violation => !ignoreRules.includes(violation.id)).length > 0) {
+			console.log(JSON.stringify(results.violations, null, 2))
+		}
 		assertNoA11yViolations(results, 'PeriodField – valid period', {
-			ignoreRules: ['region'],
+			ignoreRules: ignoreRules,
 		})
 
 		wrapper.unmount()

@@ -54,6 +54,10 @@
 			type: Boolean,
 			default: true,
 		},
+		headingLevel: {
+			type: Number as () => 1 | 2 | 3 | 4 | 5 | 6,
+			default: 4,
+		},
 	})
 
 	const emit = defineEmits(['update:filters'])
@@ -120,6 +124,7 @@
 	<DatePicker
 		v-model="modelValue"
 		:label="header.title || 'Sélectionner une date'"
+		:heading-level="headingLevel"
 		:clearable="inputConfig?.clearable ?? clearable"
 		:density="inputConfig?.density ?? density"
 		:hide-details="inputConfig?.hideDetails ?? hideDetails"

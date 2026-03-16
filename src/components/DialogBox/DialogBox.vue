@@ -8,6 +8,7 @@
 	import { config } from './config'
 	import { locales } from './locales'
 	import { useDraggable } from './useDraggable'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<{
 		title?: string
@@ -18,6 +19,7 @@
 		persistent?: boolean
 		autofocusValidateBtn?: boolean
 		draggable?: boolean
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -26,12 +28,13 @@
 		hideActions: false,
 		persistent: false,
 		autofocusValidateBtn: false,
+		headingLevel: 2,
 	})
 
 	defineEmits(['cancel', 'confirm', 'update:modelValue'])
 	defineSlots<{
 		default?: () => undefined
-		title?: () => undefined
+		title?: (props: { id: string }) => undefined
 		actions?: () => undefined
 	}>()
 
@@ -151,14 +154,18 @@
 				@keydown.up.self="moveToTop"
 				@keydown.down.self="moveToBottom"
 			>
-				<slot name="title">
-					<h2
+				<slot
+					:id="id"
+					name="title"
+				>
+					<SyHeading
 						v-if="title"
 						:id="id"
-						class="text-h4 mr-6 font-weight-bold"
+						:class="headingLevel === 2 ? 'text-h4 mr-6 font-weight-bold' : 'mr-6 font-weight-bold'"
+						:level="headingLevel"
 					>
 						{{ props.title }}
-					</h2>
+					</SyHeading>
 				</slot>
 
 				<VSpacer v-bind="options.spacer" />

@@ -1,26 +1,53 @@
 <script setup lang="ts">
+	import { computed } from 'vue'
 	import StatusPage from '../StatusPage/StatusPage.vue'
 	import { locales } from './locales'
 	import { useThemeLocales } from '@/utils/theme'
 
 	const { themeLocales } = useThemeLocales(locales)
+
+	interface Props {
+		pageTitle?: string
+		message?: string
+		code?: string
+		src?: string
+		uniqueId?: string
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	}
+
+	const props = withDefaults(defineProps<Props>(), {
+		pageTitle: undefined,
+		message: undefined,
+		code: undefined,
+		src: undefined,
+		uniqueId: undefined,
+		headingLevel: 1,
+	})
+
+	// Utiliser les props de l'utilisateur en priorité, sinon les locales du thème
+	const pageTitle = computed(() => props.pageTitle || themeLocales.value.pageTitle)
+	const message = computed(() => props.message || themeLocales.value.message)
+	const code = computed(() => props.code || themeLocales.value.code)
+	const src = computed(() => props.src || themeLocales.value.src)
 </script>
 
 <template>
 	<StatusPage
-		:page-title="themeLocales.pageTitle"
-		:message="themeLocales.message"
-		:code="themeLocales.code"
+		:heading-level="headingLevel"
+		:unique-id="props.uniqueId"
+		:page-title="pageTitle"
+		:message="message"
+		:code="code"
 		:hide-btn="true"
 	>
 		<template
-			v-if="themeLocales.src || $slots.illustration"
+			v-if="src || $slots.illustration"
 			#illustration
 		>
 			<slot name="illustration">
 				<img
-					v-if="themeLocales.src"
-					:src="themeLocales.src"
+					v-if="src"
+					:src="src"
 					alt=""
 					aria-hidden="true"
 				>

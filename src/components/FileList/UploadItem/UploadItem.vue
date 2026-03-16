@@ -118,10 +118,12 @@
 						{{ message ?? locales.optionalDocument }}
 					</div>
 					<div
-						v-if="state === 'error'"
 						class="file-item__error-message text-error"
+						role="status"
 					>
-						{{ locales.error }}
+						<div v-if="state === 'error'">
+							{{ locales.error }}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -130,9 +132,10 @@
 					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
 					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
+					:aria-label="locales.importLabel(title)"
 					@click="$emit('upload', itemId)"
 				>
-					<span>Importer</span>
+					<span>{{ locales.import }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -145,6 +148,7 @@
 					v-if="state === 'success' && showPreviewBtn"
 					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
+					:aria-label="locales.seeLabel(title)"
 					@click="$emit('preview', itemId)"
 				>
 					<span>{{ locales.see }}</span>
@@ -160,6 +164,7 @@
 					v-if="state === 'success' && showDeleteBtn"
 					class="file-item__action file-item__action-delete text-error"
 					variant="text"
+					:aria-label="locales.deleteLabel(title)"
 					@click="$emit('delete', itemId)"
 				>
 					<span>{{ locales.delete }}</span>

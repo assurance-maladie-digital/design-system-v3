@@ -38,6 +38,10 @@ const meta = {
 		},
 	},
 	argTypes: {
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+		},
 		'onUpdate:modelValue': {
 			description: 'Émis lorsque la valeur du champ est mise à jour',
 			table: {
@@ -345,6 +349,7 @@ export const Default: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -417,6 +422,7 @@ export const Required: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -489,6 +495,7 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une période',
 		'label': 'Sélectionner une période',
 		'format': 'DD/MM/YYYY',
@@ -575,6 +582,7 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
@@ -671,6 +679,7 @@ export const WithAppendIcon: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -738,6 +747,7 @@ export const WithoutIcon: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -805,6 +815,7 @@ export const BirthDate: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Date de naissance',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -873,6 +884,7 @@ export const WithError: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -948,6 +960,7 @@ export const WithWarning: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Date avec avertissement',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -1026,6 +1039,7 @@ export const WithSuccess: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Date valide',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -1222,6 +1236,7 @@ export const WithDateFormatReturn: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -1333,6 +1348,7 @@ export const WithDayjsFormat: Story = {
 		],
 	},
 	args: {
+		headingLevel: 3,
 		placeholder: 'Sélectionner une date',
 		format: 'DD/MM/YYYY',
 		isBirthDate: false,
@@ -1465,6 +1481,7 @@ export const UTC: Story = {
 		],
 	},
 	args: {
+		'headingLevel': 3,
 		'placeholder': 'Sélectionner une date',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
@@ -1496,12 +1513,20 @@ export const UTC: Story = {
 
 				const dateString = computed({
 					get() {
-						return dayjs.utc(utcIso.value).tz(selectedTimeZone.value).format(DISPLAY_FORMAT.value)
+						return dayjs.utc(utcIso.value).format(DISPLAY_FORMAT.value)
 					},
 					set(v: string) {
-						const parsed = dayjs.tz(v, DISPLAY_FORMAT.value, selectedTimeZone.value)
+						const parsed = dayjs.utc(v, DISPLAY_FORMAT.value, true)
 						if (!parsed.isValid() || parsed.format(DISPLAY_FORMAT.value) !== v) return
-						utcIso.value = parsed.utc().toISOString()
+						utcIso.value = dayjs.utc()
+							.year(parsed.year())
+							.month(parsed.month())
+							.date(parsed.date())
+							.hour(0)
+							.minute(0)
+							.second(0)
+							.millisecond(0)
+							.toISOString()
 						args['onUpdate:modelValue']?.(v)
 					},
 				})

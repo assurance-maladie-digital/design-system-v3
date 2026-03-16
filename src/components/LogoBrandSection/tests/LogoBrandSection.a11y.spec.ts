@@ -17,6 +17,8 @@ describe('LogoBrandSection – accessibility (axe)', () => {
 				},
 			},
 			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
 				theme: 'default',
 				serviceTitle: 'Service Title',
 				serviceSubTitle: 'Service Sub Title',
