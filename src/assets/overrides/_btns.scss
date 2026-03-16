@@ -16,7 +16,8 @@
 	text-transform: uppercase !important;
 }
 
-.theme-ap .v-btn{
+.theme-ap .v-btn {
 	&:hover {
-	background-color: apTokens.$colors-interactive-positive-secondary-action-hover !important;}
+		background-color: apTokens.$colors-interactive-positive-secondary-action-hover !important;
+}
 }
