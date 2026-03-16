@@ -14,7 +14,7 @@ const globalStubs = {
 			},
 			'SyIcon': {
 				template: '<span class="sy-icon" :aria-hidden="decorative ? true : undefined"></span>',
-				props: ['icon', 'color', 'size', 'decorative', 'label'],
+				props: ['icon', 'color', 'size', 'decorative'],
 			},
 		},
 	},

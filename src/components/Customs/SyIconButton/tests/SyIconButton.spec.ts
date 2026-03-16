@@ -11,8 +11,8 @@ const globalStubs = {
 				emits: ['click'],
 			},
 			'SyIcon': {
-				template: '<span class="sy-icon" :aria-hidden="decorative ? true : undefined"><slot></slot></span>',
-				props: ['icon', 'color', 'size', 'decorative', 'label'],
+				template: '<span class="sy-icon" :aria-hidden="decorative ? true : undefined"></span>',
+				props: ['icon', 'color', 'size', 'decorative'],
 			},
 		},
 	},

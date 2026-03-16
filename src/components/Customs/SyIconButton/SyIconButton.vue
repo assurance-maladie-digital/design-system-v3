@@ -2,26 +2,29 @@
 	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
 	import SyIcon from '../SyIcon/SyIcon.vue'
 
+	type Size = 'x-small' | 'small' | 'default' | 'large' | 'x-large'
+	type Variant = 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
+	type Color = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | (string & {})
+
 	const props = defineProps<{
 		icon: IconValue
 		label: string
-		color?: string
-		size?: string
+		color?: Color
+		size?: Size
 		disabled?: boolean
+		variant?: Variant
 	}>()
 
-	defineEmits<{
-		'click-icon-button': []
-	}>()
+	defineEmits<{ 'click-icon-button': [] }>()
 </script>
 
 <template>
 	<v-btn
 		:disabled="props.disabled"
 		:aria-label="props.label"
-		class="rounded-xl"
+		:variant="props.variant ?? 'text'"
 		:size="props.size"
-		variant="text"
+		class="rounded-xl"
 		icon
 		@click="$emit('click-icon-button')"
 	>
