@@ -18,3 +18,12 @@
 		color: apTokens2026.$ap-blue-darken2 !important;
 	}
 }
+
+.v-theme--cnam .v-btn--icon .v-icon {
+	color: apTokens.$colors-icon-accent-primary !important;
+	transition: color 0.2s ease;
+
+	&:hover {
+		color: apTokens.$colors-icon-accent-secondary !important;
+	}
+}
