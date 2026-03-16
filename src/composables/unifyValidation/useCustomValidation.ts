@@ -14,6 +14,8 @@ export function useCustomValidation(
 	showSuccessMessages: Ref<boolean>,
 	label: Ref<string>,
 	focused: Ref<boolean>,
+	isValidateOnBlur: Ref<boolean>,
+	disableErrorHandling: Ref<boolean>,
 ) {
 	const validator = useValidation({
 		showSuccessMessages: showSuccessMessages.value,
@@ -21,7 +23,7 @@ export function useCustomValidation(
 		customRules: customRules.value,
 		warningRules: customWarningRules.value,
 		successRules: customSuccessRules.value,
-		disableErrorHandling: false,
+		disableErrorHandling: disableErrorHandling.value,
 	})
 
 	async function validate() {
@@ -52,7 +54,13 @@ export function useCustomValidation(
 	)
 
 	watch(focused, (newVal) => {
-		if (!newVal) {
+		if (!newVal && !disableErrorHandling.value) {
+			validate()
+		}
+	})
+
+	watch(modelValue, () => {
+		if (!isValidateOnBlur.value && !disableErrorHandling.value) {
 			validate()
 		}
 	})

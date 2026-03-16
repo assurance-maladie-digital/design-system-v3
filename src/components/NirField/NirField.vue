@@ -41,6 +41,7 @@
 		keyLabel: 'Clé de validation',
 		displayKey: true,
 		nirTooltip: undefined,
+		keyRules: () => [],
 		keyTooltip: undefined,
 		nirTooltipPosition: 'append',
 		keyTooltipPosition: 'append',
@@ -69,6 +70,7 @@
 		persistentHint: false,
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
+		numberRules: () => [],
 		nirType: 'simple',
 		withoutFieldset: false,
 		customLocale: () => locales,
@@ -250,6 +252,9 @@
 		toRef(props, 'showSuccessMessages'),
 		toRef(props, 'disableErrorHandling'),
 		toRef(props, 'isValidateOnBlur'),
+		toRef(props, 'useVuetifyValidation'),
+		toRef(props, 'numberRules'),
+		toRef(props, 'keyRules'),
 	)
 
 	const validateOnSubmit = () => {

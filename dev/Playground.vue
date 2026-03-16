@@ -43,7 +43,11 @@
 		}]
 
 	const nirRules = [
-		(value: string) => !!value || 'Required.',
+		(value: string) => {
+			console.log('testnir');
+			
+			return !!value || 'Required.'
+		},
 		(value: string) => value.at(0) == '1' || 'Should not be a female',
 	]
 
@@ -118,7 +122,7 @@
 					v-model="selectedValue5"
 					use-vuetify-validation
 					label="Test"
-					:rules="nirRules"
+					:number-rules="nirRules"
 				/>
 			</div>
 
@@ -141,7 +145,7 @@
 					v-model="selectedValue7"
 					use-vuetify-validation
 					label="Test"
-					:rules="nirRules"
+					:number-rules="nirRules"
 					:is-validate-on-blur="false"
 				/>
 			</div>

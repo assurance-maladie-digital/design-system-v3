@@ -1,24 +1,25 @@
-import { type ValidationRule } from '@/composables/validation/useValidation'
+import { type ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { checkNIR, isNIRKeyValid } from './nirValidation'
 import type { locales } from './locales'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { SyTextField } from '@/main'
+import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 
 export type NirValidationProps = {
-	customKeyRules?: ValidationRule[]
-	customKeyWarningRules?: ValidationRule[]
+	customKeyRules?: SyValidationRule[]
+	customKeyWarningRules?: SyValidationRule[]
 	customLocale: typeof locales
-	customNumberRules?: ValidationRule[]
-	customNumberWarningRules?: ValidationRule[]
+	customNumberRules?: SyValidationRule[]
+	customNumberWarningRules?: SyValidationRule[]
 	customRulesPrecedence?: boolean
 	disabled?: boolean
 	isValidateOnBlur?: boolean
 	keyLabel?: string
-	keyRules?: ValidationRule[]
+	keyRules?: VuetifyValidationRule[]
 	nirType?: 'simple' | 'complexe'
 	numberLabel?: string
-	numberRules?: ValidationRule[]
+	numberRules?: VuetifyValidationRule[]
 	readonly?: boolean
 	required?: boolean
 	showSuccessMessages?: boolean
@@ -38,10 +39,10 @@ export function useNirValidation(
 	customLocale: Ref<typeof locales>,
 	numberLabel: Ref<string>,
 	keyLabel: Ref<string>,
-	customNumberRules: Ref<ValidationRule[]>,
-	customKeyRules: Ref<ValidationRule[]>,
-	customNumberWarningRules: Ref<ValidationRule[]>,
-	customKeyWarningRules: Ref<ValidationRule[]>,
+	customNumberRules: Ref<SyValidationRule[]>,
+	customKeyRules: Ref<SyValidationRule[]>,
+	customNumberWarningRules: Ref<SyValidationRule[]>,
+	customKeyWarningRules: Ref<SyValidationRule[]>,
 	displayKey: Ref<boolean>,
 	customRulesPrecedence: Ref<boolean>,
 	nirType: Ref<'simple' | 'complexe'>,
@@ -49,10 +50,16 @@ export function useNirValidation(
 	showSuccessMessages: Ref<boolean>,
 	disableErrorHandling: Ref<boolean>,
 	isValidateOnBlur: Ref<boolean>,
+	useVuetifyValidation: Ref<boolean>,
+	vuetifyNumberRules: Ref<VuetifyValidationRule[]>,
+	vuetifyKeyRules: Ref<VuetifyValidationRule[]>,
 ) {
 	// Règles de validation
 	const numberRules = computed(() => {
-		const rules: ValidationRule[] = []
+		if (useVuetifyValidation.value) {
+			return []
+		}
+		const rules: SyValidationRule[] = []
 		if (required.value) {
 			rules.push({
 				type: 'required',
@@ -102,7 +109,10 @@ export function useNirValidation(
 	})
 
 	const keyRules = computed(() => {
-		const rules: ValidationRule[] = []
+		if (useVuetifyValidation.value) {
+			return []
+		}
+		const rules: SyValidationRule[] = []
 		if (required.value) {
 			rules.push({
 				type: 'required',
@@ -193,10 +203,11 @@ export function useNirValidation(
 		isValidateOnBlur,
 		showSuccessMessages,
 		disableErrorHandling,
-		useVuetifyValidation: false,
+		useVuetifyValidation,
 		label,
 		customRules: numberRules,
 		customWarningRules: computed(() => unmaskedNumberValue.value.length === 13 ? customNumberWarningRules.value : []),
+		rules: vuetifyNumberRules,
 		focused: numberFieldFocused,
 	})
 
@@ -208,10 +219,11 @@ export function useNirValidation(
 		isValidateOnBlur,
 		showSuccessMessages,
 		disableErrorHandling,
-		useVuetifyValidation: false,
+		useVuetifyValidation,
 		label,
 		customRules: keyRules,
 		customWarningRules: computed(() => (displayKey.value && unmaskedKeyValue.value.length === 2) ? customKeyWarningRules.value : []),
+		rules: vuetifyKeyRules,
 		focused: keyFieldFocused,
 	})
 
@@ -225,15 +237,12 @@ export function useNirValidation(
 
 		isValidating.value = true
 
-		// Valider le numéro
 		await numberValidation.validate()
 
-		// Valider la clé si elle est affichée
 		if (displayKey.value) {
 			await keyValidation.validate()
 		}
 
-		// Si on est en mode blur et qu'il y a des erreurs, focus sur le premier champ en erreur
 		if (onBlur || shouldValidateOnBlur.value) {
 			await nextTick()
 			if (numberValidation.hasError.value) {

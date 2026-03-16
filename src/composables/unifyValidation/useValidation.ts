@@ -1,8 +1,9 @@
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { computed, isRef, ref, toValue, watch, type Ref } from 'vue'
-import type { ValidationRule } from 'vuetify'
+import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
+
 export interface FieldValidationProps {
 	modelValue: unknown
 	readonly?: boolean
@@ -14,7 +15,7 @@ export interface FieldValidationProps {
 	// When true (Vuetify native mode), the controller should not handle errors/successes
 	useVuetifyValidation?: boolean
 	label: string
-	rules?: ValidationRule[]
+	rules?: VuetifyValidationRule[]
 	customRules?: SyValidationRule[]
 	customWarningRules?: SyValidationRule[]
 	customSuccessRules?: SyValidationRule[]
@@ -65,7 +66,7 @@ export function useValidation(params: {
 	hasSuccessProp?: Ref<boolean>
 } & ({
 	useVuetifyValidation: true
-	rules: Ref<ValidationRule[] | undefined>
+	rules: Ref<VuetifyValidationRule[] | undefined>
 	customRules?: never
 	customWarningRules?: never
 	customSuccessRules?: never
@@ -81,12 +82,24 @@ export function useValidation(params: {
 	customRules: Ref<SyValidationRule[]>
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
-	rules: Ref<ValidationRule[] | undefined>
+	rules: Ref<VuetifyValidationRule[] | undefined>
 	maxErrors?: Ref<number>
 })) {
+	if (params.disableErrorHandling.value) {
+		return {
+			errors: ref<string[]>([]),
+			warnings: ref<string[]>([]),
+			successes: ref<string[]>([]),
+			hasError: computed(() => false),
+			hasWarning: computed(() => false),
+			hasSuccess: computed(() => false),
+			validate: async () => true,
+		}
+	}
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
+	console.log('is validate on blur:', params.isValidateOnBlur.value, params.label.value, params.disableErrorHandling.value)
 
 	if (isRef(params.errorMessages)) {
 		watch(params.errorMessages, (newVal) => {
@@ -105,6 +118,7 @@ export function useValidation(params: {
 	}
 
 	let vuetifyValidator: ReturnType<typeof useVuetifyValidationComposable> | null = null
+	console.log('useVuetifyValidation:', toValue(params.useVuetifyValidation), params.label.value)
 	if (params.useVuetifyValidation !== false) {
 		vuetifyValidator = useVuetifyValidationComposable(
 			params.modelValue,
@@ -118,7 +132,7 @@ export function useValidation(params: {
 			params.label,
 			params.label,
 			params.readonly,
-			params.isValidateOnBlur ? 'blur' : 'input',
+			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
 		)
 	}
 
@@ -133,6 +147,8 @@ export function useValidation(params: {
 		params.showSuccessMessages,
 		params.label,
 		params.focused,
+		params.isValidateOnBlur,
+		params.disableErrorHandling,
 	)
 
 	async function validate(): Promise<boolean> {
@@ -154,13 +170,6 @@ export function useValidation(params: {
 			return result.state.errors.length === 0
 		}
 	}
-
-	watch(params.modelValue, () => {
-		console.log('modelValue changed:', params.modelValue.value)
-		if (!params.isValidateOnBlur.value) {
-			validate()
-		}
-	})
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
