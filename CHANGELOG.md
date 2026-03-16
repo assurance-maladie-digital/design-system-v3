@@ -11,7 +11,7 @@
     <tr style="vertical-align: top;">
       <td>- Vuetify: update to v3.12.2
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1951">#1951</a>
-        <br/><b>NB: Vous devez mettre à jour votre StarterKit pour profiter de cette mise à jour de Vuetify</b>
+        <br/><b>NB: You need to update your StarterKit to take advantage of this Vuetify update.</b>
       </td>
       <td>- FooterBar: add AP props + stories
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1845">#1845</a>
