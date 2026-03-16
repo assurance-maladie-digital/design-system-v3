@@ -58,6 +58,7 @@
 		density: 'default',
 		hideDetails: false,
 		hideSpinButtons: false,
+		isValidateOnBlur: true,
 		placeholder: undefined,
 		readonly: false,
 		variant: 'outlined',
@@ -248,16 +249,8 @@
 		toRef(props, 'label'),
 		toRef(props, 'showSuccessMessages'),
 		toRef(props, 'disableErrorHandling'),
+		toRef(props, 'isValidateOnBlur'),
 	)
-
-	// Fonction utilitaire pour créer une fonction debounced
-	const createDebouncedFunction = <T extends (...args: unknown[]) => void>(fn: T, delay: number) => {
-		let timeout: number | undefined
-		return (...args: Parameters<T>) => {
-			window.clearTimeout(timeout)
-			timeout = window.setTimeout(() => fn(...args), delay)
-		}
-	}
 
 	const validateOnSubmit = () => {
 		return validateFields(true)
@@ -276,21 +269,8 @@
 		return props.required && props.displayAsterisk ? `${props.keyLabel} *` : props.keyLabel
 	})
 
-	// Utilisation de debounce pour limiter les validations pendant la saisie
-	const debouncedValidate = createDebouncedFunction(() => {
-		validateFields(false)
-	}, 300) // 300ms de délai
-
-	const handleNumberInput = () => {
-		emitValue()
-		// Utiliser la validation debounced pour la saisie
-		debouncedValidate()
-	}
-
 	const handleKeyInput = () => {
 		emitValue()
-		// Utiliser la validation debounced pour la saisie
-		debouncedValidate()
 
 		// Si on supprime le contenu de la clé, on revient au champ NIR
 		if (props.displayKey && unmaskedKeyValue.value.length === 0) {
@@ -298,18 +278,6 @@
 				numberField.value?.$el?.querySelector?.('input')?.focus()
 			})
 		}
-	}
-
-	const handleNumberBlur = () => {
-		// Valider sans forcer le focus, pour permettre de quitter le champ
-		validateFields(false)
-		// On permet à l'utilisateur de quitter le champ même si la saisie est incomplète
-	}
-
-	const handleKeyBlur = () => {
-		// Valider sans forcer le focus, pour permettre de quitter le champ
-		validateFields(false)
-		// On permet à l'utilisateur de quitter le champ même si la saisie est incomplète
 	}
 
 	// Gestion des touches pour le champ NIR
@@ -410,6 +378,7 @@
 				:has-success="numberValidation.hasSuccess.value"
 				:aria-invalid="ariaInvalidNumber"
 				:disabled="disabled"
+				:disable-error-handling="true"
 				:bg-color="bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
@@ -428,8 +397,7 @@
 				:display-asterisk="false"
 				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
 				:show-success-messages="false"
-				@input="handleNumberInput"
-				@blur="handleNumberBlur"
+				@input="emitValue"
 			/>
 		</div>
 		<div
@@ -450,6 +418,7 @@
 				:disabled="disabled"
 				:bg-color="bgColor"
 				:density="props.density"
+				:disable-error-handling="true"
 				:hide-details="props.hideDetails"
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
@@ -472,7 +441,6 @@
 				:aria-describedby="keyFieldErrorId + ' ' + keyFieldWarningId + ' ' + keyFieldSuccessId"
 				:show-success-messages="false"
 				@input="handleKeyInput"
-				@blur="handleKeyBlur"
 			/>
 		</div>
 		<div

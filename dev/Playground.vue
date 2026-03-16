@@ -34,7 +34,10 @@
 		}, {
 			type: 'custom',
 			options: {
-				validate: (value: string) => value.length >= 3,
+				validate: (value: string) => {
+					// console.log('Validating value:', value)
+					return value.length >= 3
+				},
 				message: 'Min 3 characters',
 			},
 		}]
@@ -80,7 +83,7 @@
 				/>
 			</div>
 
-						<div>
+			<div>
 				<p class="mb-4">
 					SyTextField vuetify validation on input
 				</p>
@@ -126,7 +129,7 @@
 				<NirField
 					v-model="selectedValue6"
 					label="Test"
-					:custom-rules="customRules"
+					:custom-number-rules="customRules"
 				/>
 			</div>
 
@@ -150,7 +153,7 @@
 				<NirField
 					v-model="selectedValue8"
 					label="Test"
-					:custom-rules="customRules"
+					:custom-number-rules="customRules"
 					:is-validate-on-blur="false"
 				/>
 			</div>

@@ -231,9 +231,6 @@
 	}
 
 	watch(model, (newValue) => {
-		if (!props.isValidateOnBlur) {
-			validate()
-		}
 		if (props.isClearable && newValue === '') {
 			emit('clear')
 		}

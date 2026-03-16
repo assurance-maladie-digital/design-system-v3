@@ -155,6 +155,13 @@ export function useValidation(params: {
 		}
 	}
 
+	watch(params.modelValue, () => {
+		console.log('modelValue changed:', params.modelValue.value)
+		if (!params.isValidateOnBlur.value) {
+			validate()
+		}
+	})
+
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
 	const hasSuccess = computed(() => (successes.value.length > 0 && !hasError.value && !hasWarning.value) || params.hasSuccessProp?.value)

@@ -1,27 +1,28 @@
 import { type ValidationRule } from '@/composables/validation/useValidation'
-import { computed, nextTick, ref, type Ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { checkNIR, isNIRKeyValid } from './nirValidation'
 import type { locales } from './locales'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { SyTextField } from '@/main'
 
 export type NirValidationProps = {
-	numberRules?: ValidationRule[]
-	keyRules?: ValidationRule[]
-	useVuetifyValidation?: boolean
-	customNumberRules?: ValidationRule[]
 	customKeyRules?: ValidationRule[]
-	customNumberWarningRules?: ValidationRule[]
 	customKeyWarningRules?: ValidationRule[]
-	customRulesPrecedence?: boolean
-	showSuccessMessages?: boolean
-	disabled?: boolean
-	readonly?: boolean
 	customLocale: typeof locales
-	required?: boolean
-	numberLabel?: string
+	customNumberRules?: ValidationRule[]
+	customNumberWarningRules?: ValidationRule[]
+	customRulesPrecedence?: boolean
+	disabled?: boolean
+	isValidateOnBlur?: boolean
 	keyLabel?: string
+	keyRules?: ValidationRule[]
 	nirType?: 'simple' | 'complexe'
+	numberLabel?: string
+	numberRules?: ValidationRule[]
+	readonly?: boolean
+	required?: boolean
+	showSuccessMessages?: boolean
+	useVuetifyValidation?: boolean
 }
 
 export function useNirValidation(
@@ -47,9 +48,10 @@ export function useNirValidation(
 	label: Ref<string>,
 	showSuccessMessages: Ref<boolean>,
 	disableErrorHandling: Ref<boolean>,
+	isValidateOnBlur: Ref<boolean>,
 ) {
 	// Règles de validation
-	const defaultNumberRules = computed(() => {
+	const numberRules = computed(() => {
 		const rules: ValidationRule[] = []
 		if (required.value) {
 			rules.push({
@@ -99,7 +101,7 @@ export function useNirValidation(
 		return rules
 	})
 
-	const defaultKeyRules = computed(() => {
+	const keyRules = computed(() => {
 		const rules: ValidationRule[] = []
 		if (required.value) {
 			rules.push({
@@ -142,19 +144,60 @@ export function useNirValidation(
 	// État pour suivre si une validation est en cours
 	const isValidating = ref(false)
 	const shouldValidateOnBlur = ref(false)
+	const numberFieldFocused = ref(false)
+	const keyFieldFocused = ref(false)
+
+	// update focus state on blur and focus
+	const onNumberFocus = () => {
+		numberFieldFocused.value = true
+	}
+	const onNumberBlur = () => {
+		numberFieldFocused.value = false
+	}
+	const onKeyFocus = () => {
+		keyFieldFocused.value = true
+	}
+	const onKeyBlur = () => {
+		keyFieldFocused.value = false
+	}
+
+	let numberInput: HTMLInputElement | null = null
+	let keyInput: HTMLInputElement | null = null
+
+	onMounted(() => {
+		numberInput = numberField.value?.$el?.querySelector('input') ?? null
+		if (numberInput) {
+			numberInput.addEventListener('focus', onNumberFocus)
+			numberInput.addEventListener('blur', onNumberBlur)
+		}
+
+		keyInput = keyField.value?.$el?.querySelector('input') ?? null
+		if (keyInput) {
+			keyInput.addEventListener('focus', onKeyFocus)
+			keyInput.addEventListener('blur', onKeyBlur)
+		}
+	})
+
+	onBeforeUnmount(() => {
+		numberInput?.removeEventListener('focus', onNumberFocus)
+		numberInput?.removeEventListener('blur', onNumberBlur)
+		keyInput?.removeEventListener('focus', onKeyFocus)
+		keyInput?.removeEventListener('blur', onKeyBlur)
+	})
 
 	const numberValidation = useValidation({
 		modelValue: numberValue,
 		readonly,
 		disabled,
 		required,
-		isValidateOnBlur: ref(true),
+		isValidateOnBlur,
 		showSuccessMessages,
 		disableErrorHandling,
 		useVuetifyValidation: false,
 		label,
-		customRules: computed(() => [...(defaultNumberRules.value ? defaultNumberRules.value : []), ...(customNumberRules.value ? customNumberRules.value : [])]),
+		customRules: numberRules,
 		customWarningRules: computed(() => unmaskedNumberValue.value.length === 13 ? customNumberWarningRules.value : []),
+		focused: numberFieldFocused,
 	})
 
 	const keyValidation = useValidation({
@@ -162,13 +205,14 @@ export function useNirValidation(
 		readonly,
 		disabled,
 		required,
-		isValidateOnBlur: ref(true),
+		isValidateOnBlur,
 		showSuccessMessages,
 		disableErrorHandling,
 		useVuetifyValidation: false,
 		label,
-		customRules: computed(() => displayKey.value ? [...(defaultKeyRules.value ? defaultKeyRules.value : []), ...(customKeyRules.value ? customKeyRules.value : [])] : []),
+		customRules: keyRules,
 		customWarningRules: computed(() => (displayKey.value && unmaskedKeyValue.value.length === 2) ? customKeyWarningRules.value : []),
+		focused: keyFieldFocused,
 	})
 
 	// Validation des champs
