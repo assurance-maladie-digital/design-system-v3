@@ -26,6 +26,9 @@ export type NirValidationProps = {
 	useVuetifyValidation?: boolean
 }
 
+/**
+ * Handle validation for NIR fields, including both the number and the key
+ */
 export function useNirValidation(
 	numberValue: Ref<string>,
 	keyValue: Ref<string>,

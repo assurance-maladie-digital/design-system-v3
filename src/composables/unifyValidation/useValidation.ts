@@ -28,6 +28,11 @@ export interface FieldValidationProps {
 	maxErrors?: number
 }
 
+/**
+ * Entrypoint to handle validation in fields components.
+ * It handles both Vuetify native validation (if useVuetifyValidation is true) and Synapse custom validation (if customRules are provided).
+ * It also provides a unified interface to handle errors, warnings and successes, and to trigger validation on demand.
+ */
 export const validationPropsDefaults = {
 	readonly: false,
 	disabled: false,

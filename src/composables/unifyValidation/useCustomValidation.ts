@@ -3,6 +3,9 @@ import { useValidatable } from '@/main'
 import { watch } from 'vue'
 import type { Ref } from 'vue'
 
+/**
+ * Interface between the validation entrypoint "useValidation" composable and the custom validation logic.
+ */
 export function useCustomValidation(
 	modelValue: Ref<unknown>,
 	customRules: Ref<ValidationRule[]>,
