@@ -448,7 +448,10 @@
 </script>
 
 <template>
-	<div class="sy-autocomplete" :class="{ 'sy-autocomplete--has-selection-text': hasSelectionTextDisplay }">
+	<div
+		class="sy-autocomplete"
+		:class="{ 'sy-autocomplete--has-selection-text': hasSelectionTextDisplay }"
+	>
 		<VMenu
 			v-model="isOpen"
 			transition="slide-y-transition"
