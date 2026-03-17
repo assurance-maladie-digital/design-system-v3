@@ -481,7 +481,7 @@
 				>
 					<template #append-inner>
 						<button
-							v-if="clearable && hasSelectionToClear && !hasChips"
+							v-if="clearable && hasSelectionToClear"
 							type="button"
 							class="sy-autocomplete__clear-button"
 							:aria-label="'Réinitialiser la sélection'"
