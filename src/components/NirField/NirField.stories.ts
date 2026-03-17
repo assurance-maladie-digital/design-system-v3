@@ -483,48 +483,6 @@ const value = ref('')
 	},
 }
 
-export const ComplexNirType: Story = {
-	args: {
-		modelValue: '712125233333340',
-		required: false,
-		numberLabel: 'Numéro de sécurité sociale',
-		keyLabel: 'Clé',
-		displayKey: true,
-		nirType: 'complexe',
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-    <template>
-     <NirField
-      v-model="value"
-      :required="false"
-      numberLabel="Numéro de sécurité sociale"
-      keyLabel="Clé"
-      :nirType="complexe"
-      :displayKey="true"
-     />
-    </template>
-    `,
-			},
-			{
-				name: 'Script',
-				code: `
-    <script setup lang="ts">
-     import { NirField } from '@cnamts/synapse'
-     import { ref } from 'vue'
-     
-const value = ref('184027512345674')
-
-			return { value }    </script>
-    `,
-			},
-		],
-	},
-}
-
 export const WithoutKey: Story = {
 	args: {
 		...Default.args,
@@ -1427,6 +1385,49 @@ import { ref } from 'vue'
 
 const value = ref('')
 </script>`,
+			},
+		],
+	},
+
+}
+
+export const ComplexNirType: Story = {
+	args: {
+		modelValue: '712125233333340',
+		required: false,
+		numberLabel: 'Numéro de sécurité sociale',
+		keyLabel: 'Clé',
+		displayKey: true,
+		nirType: 'complexe',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :nirType="complexe"
+      :displayKey="true"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import { NirField } from '@cnamts/synapse'
+     import { ref } from 'vue'
+     
+const value = ref('184027512345674')
+
+			return { value }    </script>
+    `,
 			},
 		],
 	},
