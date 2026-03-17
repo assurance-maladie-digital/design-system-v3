@@ -169,7 +169,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 			const warningResolved = resolveRuleResults(warningRawResults)
 
 			if (warningResolved instanceof Promise) {
-				return warningResolved.then(warningResults => {
+				return warningResolved.then((warningResults) => {
 					for (const r of warningResults) {
 						if (r.warning) warnings.value.push(r.warning)
 					}
@@ -210,7 +210,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 			const successResolved = resolveRuleResults(successRawResults)
 
 			if (successResolved instanceof Promise) {
-				return successResolved.then(successResults => {
+				return successResolved.then((successResults) => {
 					for (const r of successResults) {
 						if (r.success && options.showSuccessMessages !== false) {
 							successes.value.push(r.success)
