@@ -142,6 +142,10 @@ const meta: Meta<typeof SyAutocomplete> = {
 			control: 'text',
 			description: 'Nom de la propriété qui contient la valeur à retourner',
 		},
+		selectionText: {
+			control: false,
+			description: 'Fonction de personnalisation du texte affiché dans l\'input en mode multiple. Reçoit le tableau des valeurs sélectionnées et retourne une chaîne.',
+		},
 		warningMessages: {
 			control: 'object',
 			description: 'Messages d\'avertissement personnalisés',
@@ -716,6 +720,84 @@ const items = [
 	},
 }
 
+export const ChipsWithCustomSelectionText: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'En mode multiple, `selectionText` permet d\'afficher un texte personnalisé dans l\'input à la place de la liste des éléments sélectionnés. Utile pour indiquer un nombre de sélections (ex : "3 colonnes sélectionnées") plutôt que d\'énumérer chaque valeur.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedColumns"
+    :items="columns"
+    label="Colonnes affichées"
+    multiple
+    clearable
+    :selection-text="(selected) => \`\${selected.length} colonne\${selected.length > 1 ? 's' : ''} sélectionnée\${selected.length > 1 ? 's' : ''}\`"
+  />
+  <div class="mt-4">Valeurs : {{ selectedColumns }}</div>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const selectedColumns = ref([])
+const columns = [
+  { text: 'Nom', value: 'name' },
+  { text: 'Prénom', value: 'firstname' },
+  { text: 'Date de naissance', value: 'birthdate' },
+  { text: 'Numéro de sécurité sociale', value: 'nss' },
+  { text: 'Adresse', value: 'address' },
+]
+</script>
+`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Nom', value: 'name' },
+			{ text: 'Prénom', value: 'firstname' },
+			{ text: 'Date de naissance', value: 'birthdate' },
+			{ text: 'Numéro de sécurité sociale', value: 'nss' },
+			{ text: 'Adresse', value: 'address' },
+		],
+		'label': 'Colonnes affichées',
+		'multiple': true,
+		'clearable': true,
+		'selectionText': (selected: unknown[]) => `${selected.length} colonne${selected.length > 1 ? 's' : ''} sélectionnée${selected.length > 1 ? 's' : ''}`,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedColumns = ref([])
+				return { args, selectedColumns }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedColumns"
+						v-bind="args"
+					/>
+					<div class="mt-4">Valeurs : {{ selectedColumns }}</div>
+				</div>
+			`,
+		}
+	},
+}
+
 export const LoadingState: Story = {
 	parameters: {
 
@@ -977,3 +1059,4 @@ const items = [
 		}
 	},
 }
+

@@ -298,6 +298,103 @@ describe('SyAutocomplete', () => {
 		expect(isMenuOverlayActive()).toBe(false)
 	})
 
+	describe('selectionText', () => {
+		const selectionText = (selected: unknown[]) => `${selected.length} élément${selected.length > 1 ? 's' : ''} sélectionné${selected.length > 1 ? 's' : ''}`
+
+		it('displays custom text in prepend-inner when items are selected', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: ['1', '2'],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+
+			const selectionTextEl = wrapper.find('.sy-autocomplete__selection-text')
+			expect(selectionTextEl.exists()).toBe(true)
+			expect(selectionTextEl.text()).toBe('2 éléments sélectionnés')
+			expect(getInputEl()?.value).toBe('')
+		})
+
+		it('does not display selection text element when no items are selected', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: [],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText vide',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.find('.sy-autocomplete__selection-text').exists()).toBe(false)
+		})
+
+		it('keeps custom text visible when menu is open', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: ['1', '2'],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText ouvert',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			// Custom text still visible in prepend-inner, input empty for searching
+			expect(wrapper.find('.sy-autocomplete__selection-text').text()).toBe('2 éléments sélectionnés')
+			expect(getInputEl()?.value).toBe('')
+		})
+
+		it('updates custom text when selection changes', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: ['1'],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText update',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.sy-autocomplete__selection-text').text()).toBe('1 élément sélectionné')
+
+			await wrapper.setProps({ modelValue: ['1', '2', '3'] })
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.sy-autocomplete__selection-text').text()).toBe('3 éléments sélectionnés')
+		})
+	})
+
 	it('selects and deselects items in multiple mode (mouse + keyboard)', async () => {
 		wrapper.unmount()
 		wrapper = mount(SyAutocomplete, {
