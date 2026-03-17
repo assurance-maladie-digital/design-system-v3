@@ -69,4 +69,42 @@ describe('SyAutocomplete – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations for selectionText with no selection', async () => {
+		const wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: [],
+				items,
+				label: 'Colonnes affichées',
+				textKey: 'text',
+				valueKey: 'value',
+				multiple: true,
+				selectionText: (selected: unknown[]) => `${selected.length} colonnes sélectionnées`,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyAutocomplete – selectionText empty', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has no obvious axe violations for selectionText with selection', async () => {
+		const wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: [items[0]!.value, items[1]!.value],
+				items,
+				label: 'Colonnes affichées',
+				textKey: 'text',
+				valueKey: 'value',
+				multiple: true,
+				selectionText: (selected: unknown[]) => `${selected.length} colonnes sélectionnées`,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyAutocomplete – selectionText with selection', {
+			ignoreRules: ['region'],
+		})
+	})
 })
