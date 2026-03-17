@@ -312,7 +312,7 @@
 		onBlur.value = true
 
 		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-		validation.validateField(cleanedValue, validationRules.value)
+		await validation.validateField(cleanedValue, validationRules.value)
 
 		if (props.withCountryCode && props.countryCodeRequired && !dialCode.value) {
 			validation.errors.value.push(`Le champ ${locales.indicatifLabel} est requis.`)

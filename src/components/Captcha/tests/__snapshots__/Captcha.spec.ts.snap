@@ -163,18 +163,18 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                     v-field-label
                     v-label
                   "
-                  for="input-v-1"
+                  for="input-v-2"
                 >
                   <!---->
                   Caractères de l’audio
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-1-messages"
+                  aria-describedby="input-v-2-messages"
                   aria-label="Caractères de l’audio"
                   autocomplete="off"
                   class="v-field__input"
-                  id="input-v-1"
+                  id="input-v-2"
                   title="Caractères de l’audio"
                   type="text"
                 />
@@ -198,7 +198,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                       v-field-label--floating
                       v-label
                     "
-                    for="input-v-1"
+                    for="input-v-2"
                   >
                     <!---->
                     Caractères de l’audio
@@ -215,7 +215,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               appear="false"
               class="v-messages"
               css="true"
-              id="input-v-1-messages"
+              id="input-v-2-messages"
               name="slide-y-transition"
               persisted="false"
               tag="div"
@@ -550,18 +550,18 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                     v-field-label
                     v-label
                   "
-                  for="input-v-0"
+                  for="input-v-1"
                 >
                   <!---->
                   Caractères de l’image
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-0-messages"
+                  aria-describedby="input-v-1-messages"
                   aria-label="Caractères de l’image"
                   autocomplete="off"
                   class="v-field__input"
-                  id="input-v-0"
+                  id="input-v-1"
                   title="Caractères de l’image"
                   type="text"
                 />
@@ -585,7 +585,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                       v-field-label--floating
                       v-label
                     "
-                    for="input-v-0"
+                    for="input-v-1"
                   >
                     <!---->
                     Caractères de l’image
@@ -602,7 +602,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               appear="false"
               class="v-messages"
               css="true"
-              id="input-v-0-messages"
+              id="input-v-1-messages"
               name="slide-y-transition"
               persisted="false"
               tag="div"

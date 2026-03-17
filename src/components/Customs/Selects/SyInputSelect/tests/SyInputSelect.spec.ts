@@ -96,7 +96,7 @@ describe('SyInputSelect', () => {
 		})
 	})
 
-	describe('Validation', () => {
+	describe('Validation', async () => {
 		it('validateField valide correctement un champ requis avec une valeur', async () => {
 			const wrapper = mount(SyInputSelect, {
 				props: {
@@ -105,7 +105,7 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const result = wrapper.vm.validateField({ text: 'Option 1', value: '1' })
+			const result = await wrapper.vm.validateField({ text: 'Option 1', value: '1' })
 			expect(result).toBe(true)
 			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
 		})
@@ -119,7 +119,7 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const result = wrapper.vm.validateField(null)
+			const result = await wrapper.vm.validateField(null)
 			expect(result).toBe(false)
 
 			await wrapper.setProps({ errorMessages: ['Test Label est requis'] })
@@ -134,15 +134,15 @@ describe('SyInputSelect', () => {
 				props: { required: true },
 			})
 
-			const result = wrapper.vm.validateOnSubmit()
+			const result = await wrapper.vm.validateOnSubmit()
 			expect(result).toBe(false)
 
 			await wrapper.setProps({ modelValue: { text: 'Option 1', value: '1' } })
-			const resultWithValue = wrapper.vm.validateOnSubmit()
+			const resultWithValue = await wrapper.vm.validateOnSubmit()
 			expect(resultWithValue).toBe(true)
 		})
 
-		it('vérifie que checkForErrors retourne le résultat de la validation', () => {
+		it('vérifie que checkForErrors retourne le résultat de la validation', async () => {
 			const wrapper1 = mount(SyInputSelect, {
 				props: {
 					required: true,
@@ -150,7 +150,7 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const result1 = wrapper1.vm.checkForErrors()
+			const result1 = await wrapper1.vm.checkForErrors()
 			expect(result1).toBe(false)
 
 			const wrapper2 = mount(SyInputSelect, {
@@ -160,13 +160,13 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const result2 = wrapper2.vm.checkForErrors()
+			const result2 = await wrapper2.vm.checkForErrors()
 			expect(result2).toBe(true)
 		})
 	})
 
 	describe('Mode readonly', () => {
-		it('désactive la validation en mode readonly', () => {
+		it('désactive la validation en mode readonly', async () => {
 			const wrapper = mount(SyInputSelect, {
 				props: {
 					readonly: true,
@@ -174,7 +174,7 @@ describe('SyInputSelect', () => {
 				},
 			})
 
-			const result = wrapper.vm.validateField(null)
+			const result = await wrapper.vm.validateField(null)
 			expect(result).toBe(true)
 			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
 		})

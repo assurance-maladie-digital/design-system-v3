@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { VIcon } from 'vuetify/components'
 
 import SyTextField from '../SyTextField.vue'
@@ -15,6 +15,7 @@ describe('SyTextField', () => {
 				required: true,
 				showSuccessMessages: true,
 				outlined: true,
+				label: 'Test Field',
 			},
 		})
 	})
@@ -26,7 +27,7 @@ describe('SyTextField', () => {
 
 	it('applies the correct variant style', () => {
 		wrapper = mount(SyTextField, {
-			props: { variantStyle: 'filled' },
+			props: { variantStyle: 'filled', label: 'Test Field' },
 		})
 		const textField = wrapper.findComponent({ name: 'VTextField' })
 		expect(textField.props('variant')).toBe('filled')
@@ -34,6 +35,7 @@ describe('SyTextField', () => {
 
 	it('renders default slots correctly', () => {
 		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field' },
 			slots: {
 				prepend: '<div data-testid="prepend-slot">Prepend Slot Content</div>',
 				append: '<div data-testid="append-slot">Append Slot Content</div>',
@@ -49,6 +51,7 @@ describe('SyTextField', () => {
 
 	it('renders inner slots correctly', () => {
 		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field' },
 			slots: {
 				'prepend-inner': '<div data-testid="prepend-inner-slot">Prepend Inner Slot Content</div>',
 				'append-inner': '<div data-testid="append-inner-slot">Append Inner Slot Content</div>',
@@ -66,35 +69,35 @@ describe('SyTextField', () => {
 
 	it('should update icon when validation state changes', async () => {
 		wrapper = mount(SyTextField, {
-			props: { appendInnerIcon: 'success' as IconType },
+			props: { appendInnerIcon: 'success' as IconType, label: 'Test Field' },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('success')
 	})
 
 	it('should update icon when validation state changes with warning', async () => {
 		wrapper = mount(SyTextField, {
-			props: { appendInnerIcon: 'warning' as IconType },
+			props: { appendInnerIcon: 'warning' as IconType, label: 'Test Field' },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('warning')
 	})
 
 	it('should update icon when validation state changes with error', async () => {
 		wrapper = mount(SyTextField, {
-			props: { appendInnerIcon: 'error' as IconType },
+			props: { appendInnerIcon: 'error' as IconType, label: 'Test Field' },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('error')
 	})
 
 	it('should update icon when validation state changes with success', async () => {
 		wrapper = mount(SyTextField, {
-			props: { appendInnerIcon: 'success' as IconType },
+			props: { appendInnerIcon: 'success' as IconType, label: 'Test Field' },
 		})
 		expect(wrapper.props('appendInnerIcon')).toBe('success')
 	})
 
 	it('emits prepend-icon-click event when prepend icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { prependIcon: 'info' as IconType },
+			props: { prependIcon: 'info' as IconType, label: 'Test Field' },
 		})
 
 		await wrapper.vm.$nextTick()
@@ -107,7 +110,7 @@ describe('SyTextField', () => {
 
 	it('emits append-icon-click event when append icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { appendIcon: 'info' as IconType },
+			props: { appendIcon: 'info' as IconType, label: 'Test Field' },
 		})
 
 		await wrapper.vm.$nextTick()
@@ -155,8 +158,13 @@ describe('SyTextField', () => {
 				label: 'Test Field',
 			},
 		})
+		await wrapper.find('input').trigger('focus')
+		await wrapper.vm.$nextTick()
 		await wrapper.find('input').trigger('blur')
 		await wrapper.vm.$nextTick()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
 		expect(wrapper.find('.v-messages').text()).toContain('Le champ Test Field est requis')
 	})
 
@@ -170,11 +178,15 @@ describe('SyTextField', () => {
 		}
 
 		wrapper = mount(SyTextField, {
-			props: { customRules: [customRule] },
+			props: { customRules: [customRule], label: 'Test Field' },
 		})
 
 		await wrapper.setProps({ modelValue: 'ab' })
+		await wrapper.find('input').trigger('focus')
+		await wrapper.vm.$nextTick()
 		await wrapper.find('input').trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
 		await wrapper.vm.$nextTick()
 
 		const messages = wrapper.find('.v-messages')
@@ -200,8 +212,11 @@ describe('SyTextField', () => {
 			},
 		})
 
+		await wrapper.find('input').trigger('focus')
 		await wrapper.vm.$nextTick()
 		await wrapper.find('input').trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
 		await wrapper.vm.$nextTick()
 
 		const messages = wrapper.find('.v-messages')
@@ -210,7 +225,9 @@ describe('SyTextField', () => {
 	})
 
 	it('maintains input value without validation rules', async () => {
-		wrapper = mount(SyTextField)
+		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field' },
+		})
 		const input = wrapper.find('input')
 
 		await input.setValue('test value')
@@ -228,6 +245,8 @@ describe('SyTextField', () => {
 
 		wrapper = mount(SyTextField, {
 			props: {
+				modelValue: '',
+				label: 'Test Field',
 				customRules: [customRule],
 				isValidateOnBlur: false,
 			},
@@ -236,12 +255,26 @@ describe('SyTextField', () => {
 		await wrapper.setProps({ modelValue: 'ab' })
 		await wrapper.vm.$nextTick()
 
+		// settle all pending promises to ensure validation has completed
+		await vi.waitUntil(() => {
+			const messages = wrapper.find('.v-messages')
+			return messages.text().includes('Test error message')
+		})
+
 		const messages = wrapper.find('.v-messages')
 		expect(messages.text()).toContain('Test error message')
 
 		// Vérifie que l'erreur disparaît quand la valeur devient valide
 		await wrapper.setProps({ modelValue: 'abc' })
 		await wrapper.vm.$nextTick()
+
+		// the async validation should have updated the error messages, so we wait for the next tick before checking the messages again
+		await wrapper.vm.$nextTick()
+
+		await vi.waitUntil(() => {
+			const messages = wrapper.find('.v-messages')
+			return !messages.text().includes('Test error message')
+		})
 
 		expect(messages.text()).not.toContain('Test error message')
 	})

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import { SyTextField, NirField } from '@/components'
+	import { SyTextField, NirField, PhoneField } from '@/components'
 	const selectedValue1 = ref('')
 	const selectedValue2 = ref('')
 	const selectedValue3 = ref('')
@@ -50,6 +50,8 @@
 		},
 		(value: string) => value.at(0) == '1' || 'Should not be a female',
 	]
+
+	const phone = ref('')
 
 </script>
 
@@ -160,6 +162,21 @@
 					:custom-number-rules="customRules"
 					:is-validate-on-blur="false"
 				/>
+			</div>
+
+			<div>
+				<p class="mb-4">
+					PhoneField with vuetify validation on blur
+				</p>
+				<PhoneField
+					ref="phone"
+					v-model="selectedValue9"
+					required
+					label="Test"
+				/>
+				<button @click="async () => {console.log(await $refs.phone.validateOnSubmit())}">
+					validate PhoneField
+				</button>
 			</div>
 		</div>
 	</div>

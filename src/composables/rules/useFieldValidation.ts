@@ -92,7 +92,7 @@ export function useFieldValidation() {
 
 	const createRule = (type: string, options: RuleOptions = {}): ValidationRule => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		return async (value: any): Promise<ValidationResult> => {
+		return (value: any): ValidationResult | Promise<ValidationResult> => {
 			// Gestion des champs vides non obligatoires
 			if (type !== 'required' && typeof value === 'string' && value.trim() === '') {
 				return {}
@@ -376,20 +376,33 @@ export function useFieldValidation() {
 				}
 
 				case 'custom': {
-					const result = await options.validate!(value)
-					if (result === true) {
-						return { success: options.successMessage || baseMessages.success }
-					}
-					// If result is undefined or falsy but not true, treat as invalid
-					if (result === false) {
+					if (!options.validate) {
 						return options.isWarning
 							? { warning: options.warningMessage || baseMessages.warning }
 							: { error: options.message || baseMessages.error }
 					}
-					// If result is a string, use it as error/warning message
-					return options.isWarning
-						? { warning: typeof result === 'string' ? result : options.warningMessage || baseMessages.warning }
-						: { error: typeof result === 'string' ? result : options.message || baseMessages.error }
+
+					const handleCustomResult = (res: boolean | string): ValidationResult => {
+						if (res === true) {
+							return { success: options.successMessage || baseMessages.success }
+						}
+						// If result is undefined or falsy but not true, treat as invalid
+						if (res === false) {
+							return options.isWarning
+								? { warning: options.warningMessage || baseMessages.warning }
+								: { error: options.message || baseMessages.error }
+						}
+						// If result is a string, use it as error/warning message
+						return options.isWarning
+							? { warning: typeof res === 'string' ? res : options.warningMessage || baseMessages.warning }
+							: { error: typeof res === 'string' ? res : options.message || baseMessages.error }
+					}
+
+					const result = options.validate(value)
+					if (result instanceof Promise) {
+						return result.then(handleCustomResult)
+					}
+					return handleCustomResult(result)
 				}
 
 				default:

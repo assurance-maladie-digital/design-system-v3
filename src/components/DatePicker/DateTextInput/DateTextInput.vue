@@ -149,11 +149,11 @@
 
 	const clearValidation = () => validationApi.value.clearValidation()
 
-	const validateField = (
+	const validateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): ValidationResult => validationApi.value.validateField(value, rules, warningRules)
+	): Promise<ValidationResult> => await validationApi.value.validateField(value, rules, warningRules)
 
 	// Agrégation des erreurs internes et externes
 	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
@@ -163,15 +163,15 @@
 	/**
 	 * Safe validate utility
 	 */
-	const safeValidateField = (
+	const safeValidateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): ValidationResult => {
+	): Promise<ValidationResult> => {
 		if (readonly.value) {
 			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
 		}
-		return validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
+		return await validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
 	}
 
 	/**
@@ -660,7 +660,7 @@
 		emit('focus')
 	}
 
-	function onBlur() {
+	async function onBlur() {
 		isFocused.value = false
 		hasInteracted.value = true
 
@@ -678,7 +678,7 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+			const customRulesValidationResult = await safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()

@@ -123,7 +123,7 @@
 			errors: ref<string[]>([]),
 			warnings: ref<string[]>([]),
 			successes: ref<string[]>([]),
-			validateField: () => {},
+			validateField: () => ({ hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }),
 		}
 
 	const hasError = computed(() => errors.value.length > 0)

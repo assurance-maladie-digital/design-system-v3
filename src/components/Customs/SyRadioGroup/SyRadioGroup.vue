@@ -108,7 +108,7 @@
 			: [],
 	)
 
-	const validateField = (value: PropertyKey | null) => {
+	const validateField = async (value: PropertyKey | null) => {
 		// const stringValue = value != null ? String(value) : null
 
 		if (props.readonly) {
@@ -121,7 +121,7 @@
 			return true
 		}
 
-		const result = validation.validateField(
+		const result = await validation.validateField(
 			value,
 			[...defaultRules.value, ...props.customRules],
 			props.customWarningRules,
@@ -130,9 +130,9 @@
 		return !result.hasError
 	}
 
-	const validateOnSubmit = () => {
+	const validateOnSubmit = async () => {
 		isSubmitted.value = true
-		return validateField(model.value)
+		return await validateField(model.value)
 	}
 
 	const checkErrorOnBlur = () => {

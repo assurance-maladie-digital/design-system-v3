@@ -17,7 +17,7 @@ export interface UseDateTextFieldManualValidationOptions {
 	isDateComplete: (value: string) => boolean
 	parseDate: (dateStr: string, format: string) => Date | null
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	validateField: (value: unknown, rules?: any[], warningRules?: any[]) => ValidationResult
+	validateField: (value: unknown, rules?: any[], warningRules?: any[]) => Promise<ValidationResult>
 }
 
 export interface UseDateTextFieldSubmitOptions {
@@ -71,7 +71,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 		isDateComplete: manualValidation.isDateComplete,
 		parseDate: manualValidation.parseDate,
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		validateField: manualValidation.validateField as (value: unknown, rules?: any[], warningRules?: any[]) => ValidationResult,
+		validateField: manualValidation.validateField as (value: unknown, rules?: any[], warningRules?: any[]) => Promise<ValidationResult>,
 	})
 
 	const validateOnSubmit = () => {
@@ -99,7 +99,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			const formattedStartDate = startDateValidation.clampedDate || ''
 			const formattedEndDate = endDateValidation.clampedDate || ''
 
-			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : formattedStartDate
+			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : `${formattedStartDate} - `
 		}
 
 		const dateValidationResult = autoClampDate(raw, displayFormat.value)

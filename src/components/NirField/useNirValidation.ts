@@ -9,7 +9,6 @@ import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 export type NirValidationProps = {
 	customKeyRules?: SyValidationRule[]
 	customKeyWarningRules?: SyValidationRule[]
-	customLocale: typeof locales
 	customNumberRules?: SyValidationRule[]
 	customNumberWarningRules?: SyValidationRule[]
 	customRulesPrecedence?: boolean

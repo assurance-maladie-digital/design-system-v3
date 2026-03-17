@@ -135,7 +135,7 @@
 		: [],
 	)
 
-	const validateField = (value: boolean | null) => {
+	const validateField = async (value: boolean | null) => {
 		// Si en lecture seule ou si la valeur est null et non requise, pas de validation
 		if (props.readonly) {
 			validation.clearValidation()
@@ -157,7 +157,7 @@
 		}
 
 		// Validation standard
-		const result = validation.validateField(
+		const result = await validation.validateField(
 			value,
 			[...defaultRules.value, ...props.customRules],
 			props.customWarningRules,
@@ -175,11 +175,11 @@
 		validateField(model.value)
 	}
 
-	watch(model, (newValue) => {
+	watch(model, async (newValue) => {
 		if (!props.isValidateOnBlur) {
 			// Si le formulaire a été soumis et que la valeur change, on valide à nouveau
 			if (isSubmitted.value) {
-				const isValid = validateField(newValue)
+				const isValid = await validateField(newValue)
 				if (isValid) {
 					// La validation a réussi, effacer les erreurs
 					validation.clearValidation()
@@ -187,7 +187,7 @@
 			}
 			else {
 				// Comportement normal (hors soumission)
-				const isValid = validateField(newValue)
+				const isValid = await validateField(newValue)
 				// Si la validation réussit, s'assurer que les erreurs sont effacées
 				if (isValid && validation.hasError.value) {
 					validation.clearValidation()

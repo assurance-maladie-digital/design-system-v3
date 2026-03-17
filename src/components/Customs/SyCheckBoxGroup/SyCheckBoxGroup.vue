@@ -135,7 +135,7 @@
 		return model.value as (string | number) | null
 	}
 
-	const validateField = (value: (string | number) | (string | number)[] | null) => {
+	const validateField = async (value: (string | number) | (string | number)[] | null) => {
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
@@ -146,7 +146,7 @@
 			return true
 		}
 
-		const result = validation.validateField(
+		const result = await validation.validateField(
 			value,
 			[...defaultRules.value, ...props.customRules],
 			props.customWarningRules,
@@ -155,18 +155,18 @@
 		return !result.hasError
 	}
 
-	const validateOnSubmit = () => {
+	const validateOnSubmit = async () => {
 		isSubmitted.value = true
-		return validateField(getValidationValue())
+		return await validateField(getValidationValue())
 	}
 
 	const checkErrorOnBlur = () => {
 		validateField(getValidationValue())
 	}
 
-	watch(model, (newValue) => {
+	watch(model, async (newValue) => {
 		if (!props.isValidateOnBlur || isSubmitted.value) {
-			validateField(newValue as (string | number) | (string | number)[] | null)
+			await validateField(newValue as (string | number) | (string | number)[] | null)
 		}
 	})
 

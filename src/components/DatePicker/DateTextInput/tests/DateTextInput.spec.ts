@@ -1,7 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import DateTextInput from '../DateTextInput.vue'
-import SyTextField from '../../../Customs/SyTextField/SyTextField.vue'
+import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
 describe('DateTextInput.clean', () => {
 	const mountComponent = (props: Record<string, unknown>) => mount(DateTextInput, {
