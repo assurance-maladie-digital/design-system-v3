@@ -1,8 +1,8 @@
 export const locales = {
 	optionalDocument: 'Document facultatif',
-	import: 'Importer',
-	see: 'Voir',
-	delete: 'Supprimer',
+	import: 'Importer le document',
+	see: 'Voir le document',
+	delete: 'Supprimer le document',
 	importLabel(title: string) {
 		return `Importer le fichier ${title}`
 	},
