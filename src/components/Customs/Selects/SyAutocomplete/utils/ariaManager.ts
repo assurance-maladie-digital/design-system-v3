@@ -145,9 +145,19 @@ export const ariaManager = {
 						popupRendered,
 					},
 				)
-				const labelToApply = inputLabel || inputEl.getAttribute('aria-label') || inputEl.getAttribute('placeholder') || ''
-				if (labelToApply) {
-					inputEl.setAttribute('aria-label', labelToApply)
+				const labelledById = inputEl.getAttribute('aria-labelledby')
+				const labelElement = labelledById ? document.getElementById(labelledById) : null
+				const labelElementHasText = Boolean(labelElement?.textContent?.trim())
+				if (labelElementHasText) {
+					// aria-labelledby references a visible label — aria-label is redundant and causes validator errors
+					inputEl.removeAttribute('aria-label')
+				}
+				else {
+					// No visible label element (e.g. chips mode with label="") — use aria-label as fallback
+					const labelToApply = inputLabel || inputEl.getAttribute('aria-label') || inputEl.getAttribute('placeholder') || ''
+					if (labelToApply) {
+						inputEl.setAttribute('aria-label', labelToApply)
+					}
 				}
 				inputEl.setAttribute('aria-haspopup', 'listbox')
 				if (!popupRendered) {
