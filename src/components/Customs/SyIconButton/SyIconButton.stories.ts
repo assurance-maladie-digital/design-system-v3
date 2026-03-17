@@ -3,7 +3,7 @@ import SyIconButton from './SyIconButton.vue'
 import { mdiClose, mdiAlert, mdiMagnify } from '@mdi/js'
 
 const meta = {
-	title: 'Composants/Données/SyIconButton',
+	title: 'Composants/Boutons/SyIconButton',
 	component: SyIconButton,
 	decorators: [
 		() => ({

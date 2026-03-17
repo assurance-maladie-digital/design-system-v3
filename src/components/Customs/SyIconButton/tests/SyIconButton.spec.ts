@@ -110,7 +110,7 @@ describe('SyIconButton', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
-	it('passes the color prop to v-icon', () => {
+	it('passes the color prop to SyIcon', () => {
 		const wrapper = mount(SyIconButton, {
 			props: {
 				icon: 'mdi-close',
@@ -120,6 +120,33 @@ describe('SyIconButton', () => {
 			...globalStubs,
 		})
 
+		expect(wrapper.html()).toMatchSnapshot()
+	})
+
+	it('passes the variant prop to v-btn', () => {
+		const wrapper = mount(SyIconButton, {
+			props: {
+				icon: 'mdi-close',
+				label: 'Fermer',
+				variant: 'outlined',
+			},
+			...globalStubs,
+		})
+
+		expect(wrapper.html()).toMatchSnapshot()
+	})
+
+	it('uses text variant by default', () => {
+		const wrapper = mount(SyIconButton, {
+			props: {
+				icon: 'mdi-close',
+				label: 'Fermer',
+			},
+			...globalStubs,
+		})
+
+		const button = wrapper.find('button')
+		expect(button.exists()).toBe(true)
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 })

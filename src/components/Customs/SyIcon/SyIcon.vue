@@ -70,7 +70,7 @@
 		:size="props.size"
 		:role="props.role"
 		:aria-label="resolvedDecorative ? undefined : props.label"
-		:aria-hidden="resolvedDecorative ? 'true' : undefined"
+		:aria-hidden="resolvedDecorative ? true : undefined"
 	>
 		{{ icon }}
 	</v-icon>
