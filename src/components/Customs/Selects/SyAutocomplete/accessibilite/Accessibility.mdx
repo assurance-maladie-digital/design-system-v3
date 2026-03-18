@@ -73,6 +73,11 @@ import '@/stories/styles/shared.css';
     <Story of={AccessStories.ComboboxKeyboardNavigation} />
   </div>
 
+  <div className="loading-section">
+    <h2>État de chargement</h2>
+    <Story of={AccessStories.LoadingAccessibility} />
+  </div>
+
   <div className="implementation-section">
     <h2>Spécificités d'implémentation</h2>
     <p>
@@ -172,7 +177,8 @@ import '@/stories/styles/shared.css';
     line-height: 1.5;
   }
 
-  .keyboard-section {
+  .keyboard-section,
+  .loading-section {
     background-color: #f0f7ff;
     padding: 20px;
     border-radius: 8px;
