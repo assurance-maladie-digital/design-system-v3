@@ -138,6 +138,10 @@
 			type: Array as PropType<string[] | null>,
 			default: null,
 		},
+		selectionText: {
+			type: Function as PropType<(selected: SelectArray) => string>,
+			default: undefined,
+		},
 		textKey: {
 			type: String,
 			default: 'text',
@@ -261,9 +265,13 @@
 	})
 
 	const hasChips = computed(() => props.multiple && props.chips && Array.isArray(selected.value) && selected.value.length > 0)
+	const hasSelectionTextDisplay = computed(() => !!props.selectionText && Array.isArray(selected.value) && (selected.value as SelectArray).length > 0)
 
 	const displayValue = computed(() => {
 		if (props.multiple && !props.chips) {
+			if (props.selectionText) {
+				return search.value
+			}
 			const selectedItems = Array.isArray(selected.value) ? selected.value : []
 			const selectedTexts: string[] = selectedItems.map(item => getChipLabel(item as ItemType | string | number))
 			const prefix = selectedTexts.length > 0 ? selectedTexts.join(', ') + ', ' : ''
@@ -363,7 +371,7 @@
 		const inputValue = getInputValue(value)
 		if (inputValue === null) return
 
-		if (props.multiple && !props.chips) {
+		if (props.multiple && !props.chips && !props.selectionText) {
 			const selectedItems = Array.isArray(selected.value) ? selected.value : []
 			const labels = selectedItems.map(item =>
 				getChipLabel(item as ItemType | string | number),
@@ -440,7 +448,10 @@
 </script>
 
 <template>
-	<div class="sy-autocomplete">
+	<div
+		class="sy-autocomplete"
+		:class="{ 'sy-autocomplete--has-selection-text': hasSelectionTextDisplay }"
+	>
 		<VMenu
 			v-model="isOpen"
 			transition="slide-y-transition"
@@ -459,7 +470,8 @@
 					ref="textFieldRef"
 					:model-value="displayValue"
 					:label="hasChips ? '' : label"
-					:placeholder="hasChips ? '' : placeholder"
+					:placeholder="hasChips || hasSelectionTextDisplay ? '' : placeholder"
+					:is-active="hasSelectionTextDisplay"
 					:readonly="readonly"
 					:bg-color="bgColor"
 					:density="density"
@@ -500,10 +512,13 @@
 						/>
 					</template>
 					<template
-						v-if="hasChips"
+						v-if="hasChips || hasSelectionTextDisplay"
 						#prepend-inner
 					>
-						<div class="sy-autocomplete__chips">
+						<div
+							v-if="hasChips"
+							class="sy-autocomplete__chips"
+						>
 							<VChip
 								v-for="(item, index) in selected as SelectArray"
 								:key="getChipKey(item, index)"
@@ -516,6 +531,12 @@
 								{{ getChipLabel(item as ItemType) }}
 							</VChip>
 						</div>
+						<span
+							v-else-if="hasSelectionTextDisplay"
+							class="sy-autocomplete__selection-text"
+						>
+							{{ selectionText!(selected as SelectArray) }}
+						</span>
 					</template>
 				</SyTextField>
 			</template>
@@ -524,8 +545,7 @@
 				:id="uniqueMenuId"
 				ref="listRef"
 				role="listbox"
-				:aria-label="label"
-				:aria-labelledby="`${uniqueMenuId}-input`"
+				:aria-labelledby="`${uniqueMenuId}-input-label`"
 				:aria-multiselectable="multiple ? 'true' : undefined"
 				:style="{ minWidth: `${textFieldRef?.$el?.offsetWidth || 0}px` }"
 				tag="ul"
@@ -627,6 +647,16 @@
 	flex-direction: row !important;
 	gap: 4px;
 	align-items: center;
+}
+
+.sy-autocomplete__selection-text {
+	padding: 0 4px;
+	white-space: nowrap;
+	font-size: inherit;
+}
+
+.sy-autocomplete--has-selection-text :deep(input) {
+	caret-color: transparent !important;
 }
 
 .v-list-item.active,
