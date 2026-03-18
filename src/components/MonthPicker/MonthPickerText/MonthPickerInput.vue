@@ -38,7 +38,13 @@
 		{ immediate: true },
 	)
 
-	watch(innerValue, (newValue) => {
+	watch(innerValue, async (newValue) => {
+		if (newValue?.length === mask.length) {
+			nextTick(() => {
+				input.value?.validateOnSubmit()
+			})
+		}
+
 		emits('update:modelValue', newValue)
 	})
 
