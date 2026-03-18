@@ -491,7 +491,7 @@ export const Form: Story = {
 					import { MonthPicker, SyForm } from '@cnamts/synapse'
 					import { ref } from 'vue'
 
-					const selectedMonth = ref('11/2025')
+					const selectedMonth = ref('')
 
 					const handleSubmit = (e: { isValid: boolean }) => {
 						alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
@@ -504,7 +504,7 @@ export const Form: Story = {
 	render: args => ({
 		components: { MonthPicker, SyForm },
 		setup() {
-			const selectedMonth = ref('11/2025')
+			const selectedMonth = ref('')
 
 			const handleSubmit = (e: { isValid: boolean }) => {
 				alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
