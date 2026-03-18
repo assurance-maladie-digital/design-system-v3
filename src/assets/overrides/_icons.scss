@@ -1,5 +1,6 @@
 @use '@/assets/apTokens';
 @use '@/assets/amelipro/apTokens2026';
+@use '@/assets/tokens';
 
 .v-theme--ap.v-btn--icon .v-icon {
 	color: apTokens.$colors-icon-accent-primary !important;
@@ -20,10 +21,10 @@
 }
 
 .v-theme--cnam .v-btn--icon .v-icon {
-	color: apTokens.$colors-icon-accent-primary !important;
+	color: tokens.$colors-icon-accent-primary !important;
 	transition: color 0.2s ease;
 
 	&:hover {
-		color: apTokens.$colors-icon-accent-secondary !important;
+		color: tokens.$colors-icon-accent-primary-contrasted !important;
 	}
 }
