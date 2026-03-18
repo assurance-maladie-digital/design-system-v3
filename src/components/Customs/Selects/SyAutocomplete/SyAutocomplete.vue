@@ -485,6 +485,7 @@
 					:has-success="displayHasSuccess"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
+					:loading="loading"
 					:aria-label="hasChips ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
@@ -552,13 +553,7 @@
 				tabindex="-1"
 				@click.stop
 			>
-				<template v-if="loading">
-					<VListItem
-						title="Chargement..."
-						tag="li"
-					/>
-				</template>
-				<template v-else-if="filteredItems.length === 0 && !hideNoData">
+				<template v-if="filteredItems.length === 0 && !hideNoData && !loading">
 					<VListItem
 						:title="noDataText"
 						disabled

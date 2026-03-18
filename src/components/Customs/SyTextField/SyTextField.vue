@@ -795,6 +795,17 @@
 			<template #details>
 				<slot name="details" />
 			</template>
+
+			<template
+				v-if="props.loading"
+				#loader
+			>
+				<VProgressLinear
+					indeterminate
+					color="primary"
+					:aria-label="props.label ? `Chargement de ${props.label}` : 'Chargement en cours'"
+				/>
+			</template>
 		</VTextField>
 
 		<div
