@@ -24,4 +24,21 @@ describe('SyTextField – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations when loading is true', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				label: 'Nom',
+				modelValue: '',
+				loading: true,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyTextField – loading state', {
+			ignoreRules: ['region'],
+		})
+	})
+
+
 })
