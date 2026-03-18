@@ -21,13 +21,13 @@
 }
 
 .v-theme--cnam.v-btn--icon .v-icon,
- .v-theme--pa.v-btn--icon .v-icon {
+.v-theme--pa.v-btn--icon .v-icon {
 	color: tokens.$colors-icon-accent-primary !important;
 	transition: color 0.2s ease;
 }
 
 .v-theme--cnam .v-btn--icon:hover,
- .v-theme--pa .v-btn--icon:hover {
+.v-theme--pa .v-btn--icon:hover {
 	opacity: 0.08;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .v-theme--cnam.v-icon,
- .v-theme--pa.v-icon {
+.v-theme--pa.v-icon {
 	color: tokens.$colors-icon-accent-primary !important;
 	transition: color 0.2s ease;
 }
