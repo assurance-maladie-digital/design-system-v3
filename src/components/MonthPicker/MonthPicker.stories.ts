@@ -84,7 +84,7 @@ const meta: Meta<typeof MonthPicker> = {
 				category: 'props',
 			},
 		},
-		'helpText': {
+		'hint': {
 			description: 'Texte d’aide affiché sous le champ de saisie.',
 			control: 'text',
 			table: {
