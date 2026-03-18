@@ -209,6 +209,42 @@ describe('SyTextField', () => {
 		expect(messages.text()).toContain('Attention : Test Field peut contenir une erreur')
 	})
 
+	describe('loading', () => {
+		it('shows progress bar when loading is true', async () => {
+			wrapper = mount(SyTextField, {
+				props: { loading: true, label: 'Nom' },
+			})
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-progress-linear').exists()).toBe(true)
+		})
+
+		it('does not show progress bar when loading is false', async () => {
+			wrapper = mount(SyTextField, {
+				props: { loading: false, label: 'Nom' },
+			})
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-progress-linear').exists()).toBe(false)
+		})
+
+		it('sets aria-label with field label when loading', async () => {
+			wrapper = mount(SyTextField, {
+				props: { loading: true, label: 'Nom' },
+			})
+			await wrapper.vm.$nextTick()
+			const bar = wrapper.find('.v-progress-linear')
+			expect(bar.attributes('aria-label')).toBe('Chargement de Nom')
+		})
+
+		it('sets generic aria-label when no label and loading', async () => {
+			wrapper = mount(SyTextField, {
+				props: { loading: true },
+			})
+			await wrapper.vm.$nextTick()
+			const bar = wrapper.find('.v-progress-linear')
+			expect(bar.attributes('aria-label')).toBe('Chargement en cours')
+		})
+	})
+
 	it('maintains input value without validation rules', async () => {
 		wrapper = mount(SyTextField)
 		const input = wrapper.find('input')
