@@ -16,7 +16,7 @@
 	} & TextFieldProps & ValidationProps & Partial<MonthPickerVisualProps>>(), {
 		modelValue: undefined,
 		locales: () => defaultLocales,
-		helpText: 'Format MM/AAAA',
+		hint: 'Format MM/AAAA',
 		showSuccessMessages: false,
 		...defaultMonthPickerVisualProps,
 		...defaultTextFieldProps,

@@ -3,7 +3,7 @@ import { computed } from 'vue'
 export type TextFieldProps = {
 	label: string
 	density?: 'default' | 'comfortable' | 'compact'
-	helpText?: string
+	hint?: string
 	placeholder?: string
 	disabled?: boolean
 	readonly?: boolean
@@ -19,7 +19,7 @@ export function useTextField(props: TextFieldProps) {
 	return computed(() => ({
 		label: props.label,
 		density: props.density,
-		helpText: props.helpText,
+		hint: props.hint,
 		placeholder: props.placeholder,
 		disabled: props.disabled ? true : undefined,
 		readonly: props.readonly ? true : undefined,
