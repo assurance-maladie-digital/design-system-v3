@@ -39,6 +39,4 @@ describe('SyTextField – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
-
-
 })
