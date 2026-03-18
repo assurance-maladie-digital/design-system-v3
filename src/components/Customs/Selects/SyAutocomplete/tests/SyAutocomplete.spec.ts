@@ -395,6 +395,84 @@ describe('SyAutocomplete', () => {
 		})
 	})
 
+	describe('loading', () => {
+		it('shows progress bar when loading is true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test Loading',
+					textKey: 'text',
+					valueKey: 'value',
+					loading: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			const progressBar = wrapper.find('.v-progress-linear')
+			expect(progressBar.exists()).toBe(true)
+		})
+
+		it('does not show progress bar when loading is false', async () => {
+			await wrapper.vm.$nextTick()
+			const progressBar = wrapper.find('.v-progress-linear')
+			expect(progressBar.exists()).toBe(false)
+		})
+
+		it('hides no-data message while loading', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items: [],
+					label: 'Test Loading No Data',
+					textKey: 'text',
+					valueKey: 'value',
+					loading: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			// No-data item should not appear while loading
+			const noDataItem = document.body.querySelector(`#${menuId} .v-list-item`)
+			expect(noDataItem).toBeNull()
+		})
+
+		it('shows no-data message once loading is done and items is empty', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items: [],
+					label: 'Test Loading Done',
+					textKey: 'text',
+					valueKey: 'value',
+					loading: false,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			const listItems = document.body.querySelectorAll(`#${menuId} .v-list-item`)
+			const texts = Array.from(listItems).map(el => el.textContent?.trim())
+			expect(texts).toContain('Aucune option')
+		})
+	})
+
 	it('selects and deselects items in multiple mode (mouse + keyboard)', async () => {
 		wrapper.unmount()
 		wrapper = mount(SyAutocomplete, {

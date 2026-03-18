@@ -89,6 +89,44 @@ describe('SyAutocomplete – accessibility (axe)', () => {
 		})
 	})
 
+	it('has no obvious axe violations when loading is true', async () => {
+		const wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: null,
+				items,
+				label: 'Choisir une option',
+				textKey: 'text',
+				valueKey: 'value',
+				loading: true,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyAutocomplete – loading state', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has no obvious axe violations when loading is true with no label (chips mode)', async () => {
+		const wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: ['1'],
+				items,
+				label: 'Options',
+				textKey: 'text',
+				valueKey: 'value',
+				multiple: true,
+				chips: true,
+				loading: true,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyAutocomplete – loading + chips', {
+			ignoreRules: ['region'],
+		})
+	})
+
 	it('has no obvious axe violations for selectionText with selection', async () => {
 		const wrapper = mount(SyAutocomplete, {
 			props: {
