@@ -2586,9 +2586,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
           persisted="false"
           tag="div"
         >
-          <div class="v-messages__message">
-            Format MM/AAAA
-          </div>
+          <!---->
         </transition-group-stub>
         <!---->
       </div>

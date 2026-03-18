@@ -1154,6 +1154,7 @@ describe('mounthpicker', () => {
 			const input = wrapper.find('input')
 			await input.setValue('12/2025')
 			await input.trigger('blur')
+			await input.trigger('focus')
 
 			expect(wrapper.find('.v-field--error').exists()).toBe(false)
 			expect(wrapper.find('.v-input__details').text()).toBe('Format MM/AAAA')
