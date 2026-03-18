@@ -14,3 +14,16 @@
 .v-theme--ap.v-tooltip .v-overlay__content {
 	font-size: apTokens.$font-size-link-label;
 }
+
+//errreur Aria accessibility
+[role='tooltip'] {
+	display: none;
+
+	.v-overlay__content {
+		display: block !important;
+	}
+
+	&.v-overlay--active {
+		display: block;
+	}
+}
