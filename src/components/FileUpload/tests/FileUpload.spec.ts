@@ -268,6 +268,53 @@ describe('FileUpload', () => {
 		expect(wrapper.emitted('error')).toBeFalsy()
 	})
 
+	it('accepts a file whose extension is uppercase (case-insensitive check)', async () => {
+		const wrapper = mount(FileUpload, {
+			props: {
+				modelValue: [],
+				allowedExtensions: ['png'],
+			},
+		})
+
+		const file: File = new File([''], 'image.PNG', { type: 'image/png' })
+
+		await wrapper.find('.sy-file-upload').trigger('drop', {
+			dataTransfer: { files: [file] },
+		})
+
+		expect(wrapper.emitted('error')).toBeFalsy()
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[file]])
+	})
+
+	it('uses custom locales error message when provided', async () => {
+		const customLocales = {
+			or: 'Ou',
+			chooseFile: (multiple: boolean) => multiple ? 'Choisir des fichiers' : 'Choisir un fichier',
+			infoText: (max: string, ext: string[]) => `Taille max. : ${max}. Formats : ${ext.join(', ')}`,
+			fileSizeUnits: ['o', 'Ko', 'Mo', 'Go', 'To'],
+			dropFilesHere: (multiple: boolean) => multiple ? 'Déposer vos fichiers ici' : 'Déposer votre fichier ici',
+			errorSize: (fileName: string, max: string) => `Fichier ${fileName} trop lourd. Max : ${max}`,
+			errorExtension: () => `Message erreur custom !`,
+			fileUploadTitle: '',
+		}
+
+		const wrapper = mount(FileUpload, {
+			props: {
+				modelValue: [],
+				allowedExtensions: ['pdf'],
+				locales: customLocales,
+			},
+		})
+
+		const file: File = new File([''], 'image.PNG', { type: 'image/png' })
+
+		await wrapper.find('.sy-file-upload').trigger('drop', {
+			dataTransfer: { files: [file] },
+		})
+
+		expect(wrapper.emitted('error')?.[0]).toEqual([['Message erreur custom !']])
+	})
+
 	it('add the new files to the existing ones when the input changes in multiple mode', async () => {
 		const file1 = new File([''], 'filename1.jpg', { type: 'image/jpeg' })
 		const file2 = new File([''], 'filename2.jpg', { type: 'image/jpeg' })
