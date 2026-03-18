@@ -22,27 +22,23 @@
 
 	const mask = '##/####'
 
-	const innerValue = ref<string | undefined>(undefined)
+	const innerValue = ref<string | undefined>(props.modelValue)
 	watch(
 		() => props.modelValue,
 		async (newValue) => {
-			if (newValue !== innerValue.value) {
-				innerValue.value = newValue
+			const shouldValidate = newValue !== innerValue.value
+			innerValue.value = newValue
+			if (shouldValidate) {
 				await nextTick()
-				input.value?.validateOnSubmit() // do not fire on mount
-			}
-			else {
-				innerValue.value = newValue
+				input.value?.validateOnSubmit()
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch(innerValue, async (newValue) => {
 		if (newValue?.length === mask.length) {
-			nextTick(() => {
-				input.value?.validateOnSubmit()
-			})
+			await nextTick()
+			input.value?.validateOnSubmit()
 		}
 
 		emits('update:modelValue', newValue)
