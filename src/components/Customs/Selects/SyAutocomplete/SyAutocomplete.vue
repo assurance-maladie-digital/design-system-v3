@@ -456,6 +456,7 @@
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
 					:loading="loading"
+					:disable-error-handling="disableErrorHandling"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"

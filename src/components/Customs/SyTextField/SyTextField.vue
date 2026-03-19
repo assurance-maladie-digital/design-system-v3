@@ -627,7 +627,7 @@
 			:error-messages="errors"
 			:flat="props.isFlat"
 			:focused="props.isFocused"
-			:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+			:hide-details="(props.areDetailsHidden || props.disableErrorHandling) && !showHelpTextAsMessage"
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
