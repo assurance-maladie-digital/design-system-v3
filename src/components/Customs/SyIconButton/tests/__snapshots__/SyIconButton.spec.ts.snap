@@ -3,7 +3,7 @@
 exports[`SyIconButton > passes the color prop to SyIcon 1`] = `
 <button
   aria-label="Fermer"
-  class="rounded-xl"
+  class="rounded-circle"
 >
   <span
     aria-hidden="true"
@@ -15,7 +15,7 @@ exports[`SyIconButton > passes the color prop to SyIcon 1`] = `
 exports[`SyIconButton > passes the size prop to v-btn 1`] = `
 <button
   aria-label="Fermer"
-  class="rounded-xl"
+  class="rounded-circle"
 >
   <span
     aria-hidden="true"
@@ -27,7 +27,7 @@ exports[`SyIconButton > passes the size prop to v-btn 1`] = `
 exports[`SyIconButton > passes the variant prop to v-btn 1`] = `
 <button
   aria-label="Fermer"
-  class="rounded-xl"
+  class="rounded-circle"
 >
   <span
     aria-hidden="true"
@@ -39,7 +39,7 @@ exports[`SyIconButton > passes the variant prop to v-btn 1`] = `
 exports[`SyIconButton > renders correctly 1`] = `
 <button
   aria-label="Fermer"
-  class="rounded-xl"
+  class="rounded-circle"
 >
   <span
     aria-hidden="true"
@@ -51,7 +51,7 @@ exports[`SyIconButton > renders correctly 1`] = `
 exports[`SyIconButton > uses text variant by default 1`] = `
 <button
   aria-label="Fermer"
-  class="rounded-xl"
+  class="rounded-circle"
 >
   <span
     aria-hidden="true"
