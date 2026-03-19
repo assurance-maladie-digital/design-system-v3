@@ -3,7 +3,7 @@
 @use '@/assets/tokens';
 
 .v-theme--ap.v-btn--icon .v-icon {
-	color: apTokens.$colors-icon-accent-primary !important;
+	color: apTokens.$colors-icon-accent-primary ;
 	transition: color 0.2s ease;
 }
 
@@ -11,8 +11,8 @@
 	opacity: 0.08;
 }
 
-.v-theme--ap2026.v-btn--icon .v-icon {
-	color: apTokens2026.$ap-blue-darken1 !important;
+.v-theme--ap2026.v-btn--icon.v-icon {
+	color: apTokens2026.$ap-blue-darken1;
 	transition: color 0.2s ease;
 }
 
@@ -22,7 +22,7 @@
 
 .v-theme--cnam.v-btn--icon .v-icon,
 .v-theme--pa.v-btn--icon .v-icon {
-	color: tokens.$colors-icon-accent-primary !important;
+	color: tokens.$colors-icon-accent-primary;
 	transition: color 0.2s ease;
 }
 
@@ -32,18 +32,16 @@
 }
 
 .v-theme--ap.v-icon {
-	color: apTokens.$colors-icon-accent-primary;
+	
 	transition: color 0.2s ease;
 }
 
 .v-theme--ap2026.v-icon {
-	color: apTokens2026.$ap-blue-darken1;
 	transition: color 0.2s ease;
 }
 
 .v-theme--cnam.v-icon,
 .v-theme--pa.v-icon {
-	color: tokens.$colors-icon-accent-primary;
 	transition: color 0.2s ease;
 }
 
