@@ -39,7 +39,7 @@
 		:btn-href="props.btnHref"
 		:btn-link="props.btnLink"
 		:hide-btn="props.hideBtn"
-		:unique-id="props.uniqueId"
+		:unique-id="props.uniqueId ?? undefined"
 		:role="props.role"
 	>
 		<template

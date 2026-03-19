@@ -9,6 +9,5 @@ exports[`ErrorPage > renders correctly 1`] = `
   hidebtn="false"
   message="Une erreur est survenue de notre côté, veuillez réessayer plus tard."
   pagetitle="Une erreur est survenue"
-  uniqueid=""
 ></status-page-stub>
 `;
