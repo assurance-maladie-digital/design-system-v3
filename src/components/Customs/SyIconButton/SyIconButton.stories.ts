@@ -41,6 +41,11 @@ const meta = {
 			action: 'click-icon-button',
 			description: 'Événement émis lors du clic sur le bouton',
 		},
+		'variant': {
+			options: ['flat', 'elevated', 'tonal', 'outlined', 'text', 'plain'],
+			control: { type: 'select' },
+			description: 'Variante visuelle du bouton',
+		},
 	},
 } satisfies Meta<typeof SyIconButton>
 
