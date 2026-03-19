@@ -10,6 +10,7 @@
 	} from '@mdi/js'
 	import type { VIcon } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 
 	defineOptions({
 		inheritAttrs: false,
