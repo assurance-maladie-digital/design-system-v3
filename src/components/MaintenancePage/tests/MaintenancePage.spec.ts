@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import StatusPage from '../../StatusPage/StatusPage.vue'
 import MaintenancePage from '../MaintenancePage.vue'
 
@@ -26,11 +26,10 @@ describe('MaintenancePage', () => {
 		expect(statusPage.props('code')).toBeDefined()
 	})
 
-	it('passes a uniqueId prop to StatusPage', () => {
-		const wrapper = shallowMount(MaintenancePage)
-		const statusPage = wrapper.findComponent(StatusPage)
+	it('uses a generated uniqueId', () => {
+		const wrapper = mount(MaintenancePage)
 
-		expect(statusPage.props('uniqueId')).toBeDefined()
+		expect(wrapper.find('.vd-page-container').attributes('id')).toMatch(/^[-a-z0-9]+-container$/)
 	})
 
 	it('passes a custom uniqueId prop to StatusPage', () => {

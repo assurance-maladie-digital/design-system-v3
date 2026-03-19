@@ -1,19 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
-<div class="
-  d-flex
-  justify-center
-  px-14
-  py-10
-  vd-page-container
-">
+<div
+  class="
+    d-flex
+    justify-center
+    px-14
+    py-10
+    vd-page-container
+  "
+  id="v-0-container"
+>
   <div
     class="
       bg-transparent
       v-sheet
       v-theme--light
     "
+    id="v-0-content"
     style="width: 800px;"
   >
     <div class="
@@ -149,19 +153,23 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
 `;
 
 exports[`NotFoundPage > renders correctly 1`] = `
-<div class="
-  d-flex
-  justify-center
-  px-14
-  py-10
-  vd-page-container
-">
+<div
+  class="
+    d-flex
+    justify-center
+    px-14
+    py-10
+    vd-page-container
+  "
+  id="v-0-container"
+>
   <div
     class="
       bg-transparent
       v-sheet
       v-theme--light
     "
+    id="v-0-content"
     style="width: 800px;"
   >
     <div class="

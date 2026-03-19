@@ -34,7 +34,7 @@
 <template>
 	<StatusPage
 		:heading-level="headingLevel"
-		:unique-id="props.uniqueId"
+		:unique-id="props.uniqueId ?? undefined"
 		:page-title="pageTitle"
 		:message="message"
 		:code="code"
