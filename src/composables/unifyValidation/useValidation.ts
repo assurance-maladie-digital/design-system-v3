@@ -123,7 +123,7 @@ export function useValidation(params: {
 	}
 
 	let vuetifyValidator: ReturnType<typeof useVuetifyValidationComposable> | null = null
-	console.log('useVuetifyValidation:', toValue(params.useVuetifyValidation), params.label.value)
+
 	if (params.useVuetifyValidation !== false) {
 		vuetifyValidator = useVuetifyValidationComposable(
 			params.modelValue,
