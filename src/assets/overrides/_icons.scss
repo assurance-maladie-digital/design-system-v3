@@ -2,12 +2,12 @@
 @use '@/assets/amelipro/apTokens2026';
 @use '@/assets/tokens';
 
-.v-theme--ap.v-btn--icon.v-icon {
+.v-theme--ap.v-btn--icon .v-icon {
 	color: apTokens.$colors-icon-accent-primary;
 	transition: color 0.2s ease;
 }
 
-.v-theme--ap2026.v-btn--icon.v-icon {
+.v-theme--ap2026.v-btn--icon .v-icon {
 	color: apTokens2026.$ap-blue-darken1;
 	transition: color 0.2s ease;
 }
