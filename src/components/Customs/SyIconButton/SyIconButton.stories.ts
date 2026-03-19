@@ -167,17 +167,17 @@ export const WithSize: Story = {
 	args: {
 		'icon': mdiMagnify,
 		'label': 'Rechercher',
-		'size': 'small',
 		'onClick-icon-button': fn(),
 	},
 	render: args => ({
 		components: { SyIconButton },
 		setup() {
-			return { args, mdiMagnify }
+			const sizes = ['x-small', 'small', 'default', 'large', 'x-large']
+			return { args, mdiMagnify, sizes }
 		},
 		template: `
-			<div class="pa-4">
-				<SyIconButton v-bind="args" />
+			<div class="pa-4 d-flex align-center ga-4">
+				<SyIconButton v-for="size in sizes" :key="size" v-bind="args" :size="size" />
 			</div>
 		`,
 	}),
