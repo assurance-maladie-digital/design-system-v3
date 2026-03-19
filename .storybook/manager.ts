@@ -26,6 +26,15 @@ const apOnlyStories = [
     'footerbar--with-phone-number'
 ]
 
+// Components to display in AP theme
+const apComponents = [
+    'composants-structure-footerbar',
+    'composants-structure-headerbar',
+    'composants-navigation-sypagination',
+    'composants-boutons-copybtn',
+    'composants-boutons-downloadbtn',
+]
+
 
 const applyThemeSidebar = (theme) => {
 	const processSidebar = () => {
@@ -323,15 +332,35 @@ const observeSidebar = () => {
             const observer = new MutationObserver(() => {
                 const theme = localStorage.getItem('storybook-theme')
                 const isAp2026 = theme === 'ap2026'
+                const isAp = theme === 'ap'
                 const isNotAp = theme !== 'ap'
 
-                const matchesStory = (itemId, stories) =>
-                    stories.some(story => itemId.includes(story))
+                const normalizeId = (id: string) => id.split('--')[0]
+
+                const matchesStory = (itemId: string, stories: string[]) => {
+                    const baseId = normalizeId(itemId)
+                    return stories.includes(baseId)
+                }
 
                 const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
                 items.forEach((item) => {
                     const itemId = item.getAttribute('data-item-id') || ''
+
+                    if (isAp) {
+                        const isComponent = itemId.startsWith('composants-')
+
+                        if (!isComponent) {
+                            // 👉 tout ce qui n'est pas un composant reste visible
+                            item.style.display = ''
+                        }
+
+                        // 👉 pour les composants, on filtre avec la whitelist
+                        const isAllowed = matchesStory(itemId, apComponents)
+                        item.style.display = isAllowed ? '' : 'none'
+                        return
+                    }
+
 
                     if (isAp2026 && matchesStory(itemId, ap2026OnlyStories)) {
                         item.style.display = 'none'

@@ -68,9 +68,9 @@ const themeItems = [
 	{ value: 'pa', title: 'Thème PA' },
 	...(!isDev
 		? []
-		: [{ value: 'ap', title: 'Thème AmeliPro New' }]
+            : [{value: 'ap2026', title: 'Thème AmeliPro 2026'}]
 	),
-	{ value: 'ap2026', title: 'Thème AmeliPro' },
+    {value: 'ap', title: 'Thème AmeliPro'},
 ]
 
 const globalTypes = {
