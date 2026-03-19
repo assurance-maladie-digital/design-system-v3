@@ -12,6 +12,7 @@
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSelectionLogic } from './utils/useSelectionLogic'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { locales } from './locales'
 
 	const props = defineProps({
 		bgColor: {
@@ -108,7 +109,7 @@
 		},
 		noDataText: {
 			type: String,
-			default: 'Aucune option',
+			default: locales.noData,
 		},
 		placeholder: {
 			type: String,
@@ -466,7 +467,7 @@
 							v-if="clearable && hasSelectionToClear"
 							type="button"
 							class="sy-autocomplete__clear-button"
-							:aria-label="'Réinitialiser la sélection'"
+							:aria-label="locales.clearSelection"
 							@click.stop.prevent="selectItem(null)"
 						>
 							<SyIcon
@@ -488,7 +489,7 @@
 							size="small"
 							class="sy-autocomplete__chip"
 							closable
-							:close-label="`Supprimer ${getChipLabel(item as ItemType)}`"
+							:close-label="locales.removeChip(getChipLabel(item as ItemType))"
 							@click:close="() => selectItem(item as ItemType)"
 						>
 							{{ getChipLabel(item as ItemType) }}
