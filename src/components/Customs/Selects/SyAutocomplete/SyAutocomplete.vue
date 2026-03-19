@@ -634,7 +634,6 @@
 
 :deep(.sy-autocomplete__field--has-chips .v-field__input) {
 	flex-wrap: wrap;
-	padding-block: 6px;
 }
 
 :deep(.sy-autocomplete__field--has-chips .v-field__input input) {
