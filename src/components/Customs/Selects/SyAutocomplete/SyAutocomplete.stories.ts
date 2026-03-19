@@ -930,6 +930,94 @@ const items = [
 	},
 }
 
+export const HideDetails: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <div class="d-flex flex-column gap-4">
+    <!-- Sans hide-details : la zone de messages est réservée (espace visible) -->
+    <SyAutocomplete
+      v-model="value1"
+      :items="items"
+      label="Avec zone de messages (défaut)"
+      has-success
+      :success-messages="['Sélection valide']"
+    />
+
+    <!-- Avec hide-details : la zone est masquée, même en état success -->
+    <SyAutocomplete
+      v-model="value2"
+      :items="items"
+      label="Sans zone de messages (hide-details)"
+      has-success
+      :success-messages="['Sélection valide']"
+      hide-details
+    />
+  </div>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+const value1 = ref('1')
+const value2 = ref('1')
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const value1 = ref('1')
+				const value2 = ref('1')
+				return { args, value1, value2 }
+			},
+			template: `
+				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
+					<SyAutocomplete
+						v-model="value1"
+						v-bind="args"
+						label="Avec zone de messages (défaut)"
+						:has-success="true"
+						:success-messages="['Sélection valide']"
+					/>
+					<SyAutocomplete
+						v-model="value2"
+						v-bind="args"
+						label="Sans zone de messages (hide-details)"
+						:has-success="true"
+						:success-messages="['Sélection valide']"
+						:hide-details="true"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const ReadonlyField: Story = {
 	parameters: {
 
