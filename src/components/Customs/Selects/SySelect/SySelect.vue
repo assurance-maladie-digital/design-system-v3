@@ -970,15 +970,15 @@
 								{{ getChipText(item) }}
 							</VChip>
 						</div>
-					<template v-else-if="hasMultipleSelections">
-						<span
-							v-for="item in (selectedItem as unknown[])"
-							:key="props.returnObject && item ? (item as ItemType)[props.valueKey] : (item as string | number)"
-							class="sy-select__label"
-						>
-							{{ getChipText(item) }}
-						</span>
-					</template>
+						<template v-else-if="hasMultipleSelections">
+							<span
+								v-for="item in (selectedItem as unknown[])"
+								:key="props.returnObject && item ? (item as ItemType)[props.valueKey] : (item as string | number)"
+								class="sy-select__label"
+							>
+								{{ getChipText(item) }}
+							</span>
+						</template>
 						<!-- Prepend -->
 						<template
 							v-if="$slots.prepend || props.prependIcon || props.prependTooltip"
