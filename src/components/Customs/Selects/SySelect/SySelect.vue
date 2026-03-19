@@ -973,7 +973,7 @@
 						<template v-else-if="hasMultipleSelections">
 							<span
 								v-for="item in (selectedItem as unknown[])"
-								:key="props.returnObject && item ? (item as ItemType)[props.valueKey] : (item as string | number)"
+								:key="props.returnObject && item ? String((item as ItemType)[props.valueKey]) : String(item)"
 								class="sy-select__label"
 							>
 								{{ getChipText(item) }}
