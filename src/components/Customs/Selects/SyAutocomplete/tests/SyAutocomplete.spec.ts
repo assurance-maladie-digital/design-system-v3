@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { VMenu, VChip } from 'vuetify/components'
+import { VMenu } from 'vuetify/components'
 
 import SyAutocomplete from '../SyAutocomplete.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -128,13 +128,13 @@ describe('SyAutocomplete', () => {
 
 		// Some environments can emit a follow-up input event with the previous DOM value.
 		// Ensure it doesn't re-populate the query after selection.
-		textField.vm.$emit('update:modelValue', 'Option 1, Opt')
+		textField.vm.$emit('update:modelValue', 'Opt')
 		await flushPromises()
 		await wrapper.vm.$nextTick()
 
-		// Query should be cleared, leaving only selected label prefix in input
+		// Search and input should be cleared; selected items render as inline labels, not in input value
 		expect(wrapper.vm.search).toBe('')
-		expect(getInputEl()!.value).toBe('Option 1, ')
+		expect(getInputEl()!.value).toBe('')
 	})
 
 	it('displays chips in multiple mode', async () => {
@@ -150,12 +150,13 @@ describe('SyAutocomplete', () => {
 				textKey: 'text',
 				valueKey: 'value',
 			},
+			attachTo: document.body,
 		})
 
 		await wrapper.vm.$nextTick()
-		const chips = wrapper.findAllComponents(VChip)
+		const chips = wrapper.findAll('.v-chip')
 		expect(chips.length).toBe(1)
-		expect(chips[0]!.text()).toBe('Option 1')
+		expect(chips[0]!.text()).toContain('Option 1')
 	})
 
 	it('removes chip when close button is clicked', async () => {
@@ -171,11 +172,12 @@ describe('SyAutocomplete', () => {
 				textKey: 'text',
 				valueKey: 'value',
 			},
+			attachTo: document.body,
 		})
 
 		await wrapper.vm.$nextTick()
-		const chip = wrapper.findComponent(VChip)
-		await chip.vm.$emit('click:close')
+		const closeBtn = wrapper.find('.v-chip__close')
+		await closeBtn.trigger('click')
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[]])

@@ -743,6 +743,14 @@
 				</slot>
 			</template>
 
+			<!-- Default slot passthrough: renders inside v-field__input (flex-wrap container) -->
+			<template
+				v-if="$slots.default"
+				#default
+			>
+				<slot />
+			</template>
+
 			<!-- Prepend inner -->
 			<template #prepend-inner>
 				<slot name="prepend-inner">
