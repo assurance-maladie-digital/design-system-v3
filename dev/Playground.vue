@@ -28,7 +28,7 @@
 <template>
 	<VContainer class="py-8">
 		<h2 class="mb-6">
-			SyAutocomplete — disableErrorHandling
+			SyAutocomplete — hideDetails
 		</h2>
 
 		<VRow>
@@ -65,7 +65,7 @@
 					label="Département"
 					text-key="text"
 					value-key="value"
-					:disable-error-handling="true"
+					:hide-details="true"
 					clearable
 				/>
 			</VCol>
@@ -87,7 +87,7 @@
 					value-key="value"
 					:multiple="true"
 					:chips="true"
-					:disable-error-handling="true"
+					:hide-details="true"
 					clearable
 				/>
 			</VCol>
@@ -106,7 +106,7 @@
 					text-key="text"
 					value-key="value"
 					:multiple="true"
-					:disable-error-handling="true"
+					:hide-details="true"
 					clearable
 				/>
 			</VCol>

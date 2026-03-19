@@ -75,6 +75,10 @@
 			type: Boolean,
 			default: false,
 		},
+		hideDetails: {
+			type: Boolean,
+			default: false,
+		},
 		hideNoData: {
 			type: Boolean,
 			default: false,
@@ -456,7 +460,7 @@
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
 					:loading="loading"
-					:disable-error-handling="disableErrorHandling"
+					:are-details-hidden="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
