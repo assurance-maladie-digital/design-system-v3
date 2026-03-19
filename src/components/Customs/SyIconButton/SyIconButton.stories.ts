@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from '@storybook/test'
 import SyIconButton from './SyIconButton.vue'
 import { mdiClose, mdiAlert, mdiMagnify } from '@mdi/js'
 
@@ -11,19 +12,19 @@ const meta = {
 		}),
 	],
 	argTypes: {
-		icon: {
+		'icon': {
 			control: { type: 'text' },
 			description: 'Nom de l\'icône à afficher (format Material Design Icons)',
 		},
-		label: {
+		'label': {
 			control: { type: 'text' },
 			description: 'Texte accessible obligatoire porté par `aria-label` sur le bouton',
 		},
-		color: {
+		'color': {
 			control: { type: 'text' },
 			description: 'Couleur de l\'icône (nom de couleur Vuetify)',
 		},
-		size: {
+		'size': {
 			options: ['x-small', 'small', 'default', 'large', 'x-large'],
 			control: {
 				type: 'select',
@@ -31,10 +32,14 @@ const meta = {
 			description: 'Taille du bouton et de l\'icône',
 			default: 'default',
 		},
-		disabled: {
+		'disabled': {
 			control: { type: 'boolean' },
 			description: 'Désactive le bouton',
 			default: false,
+		},
+		'onClick-icon-button': {
+			action: 'click-icon-button',
+			description: 'Événement émis lors du clic sur le bouton',
 		},
 	},
 } satisfies Meta<typeof SyIconButton>
@@ -57,8 +62,9 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		icon: mdiClose,
-		label: 'Fermer',
+		'icon': mdiClose,
+		'label': 'Fermer',
+		'onClick-icon-button': fn(),
 	},
 	render: args => ({
 		components: { SyIconButton },
@@ -90,9 +96,10 @@ export const Disabled: Story = {
 		],
 	},
 	args: {
-		icon: mdiClose,
-		label: 'Fermer',
-		disabled: true,
+		'icon': mdiClose,
+		'label': 'Fermer',
+		'disabled': true,
+		'onClick-icon-button': fn(),
 	},
 	render: args => ({
 		components: { SyIconButton },
@@ -121,9 +128,10 @@ export const WithColor: Story = {
 		],
 	},
 	args: {
-		icon: mdiAlert,
-		label: 'Alerte',
-		color: 'red',
+		'icon': mdiAlert,
+		'label': 'Alerte',
+		'color': 'red',
+		'onClick-icon-button': fn(),
 	},
 	render: args => ({
 		components: { SyIconButton },
@@ -152,9 +160,10 @@ export const WithSize: Story = {
 		],
 	},
 	args: {
-		icon: mdiMagnify,
-		label: 'Rechercher',
-		size: 'small',
+		'icon': mdiMagnify,
+		'label': 'Rechercher',
+		'size': 'small',
+		'onClick-icon-button': fn(),
 	},
 	render: args => ({
 		components: { SyIconButton },
