@@ -616,6 +616,11 @@
 	flex-shrink: 0;
 }
 
+/* Style spécifique pour les chips */
+:deep(.sy-autocomplete__chip .v-chip__close .v-icon__svg) {
+	fill: inherit !important
+}
+
 .sy-autocomplete__label {
 	align-self: center;
 	white-space: nowrap;

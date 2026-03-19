@@ -1245,6 +1245,11 @@
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
+/* Style spécifique pour les chips */
+:deep(.sy-autocomplete__chip .v-chip__close .v-icon__svg) {
+  fill: inherit !important
+}
+
 .sy-select__clear-button {
 	position: absolute;
 	background: transparent;
