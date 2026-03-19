@@ -123,7 +123,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
               data-no-activator=""
             >
               <span>
-                Importer le document Carte d'identité
+                Importer le fichier Carte d'identité
               </span>
             </span>
             <!---->
@@ -239,7 +239,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
               data-no-activator=""
             >
               <span>
-                Importer le document Facture de soin
+                Importer le fichier Facture de soin
               </span>
             </span>
             <!---->

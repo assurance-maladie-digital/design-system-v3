@@ -135,7 +135,7 @@
 					:aria-label="locales.importLabel(title)"
 					@click="$emit('upload', itemId)"
 				>
-					<span>{{ locales.import + ' ' + title }}</span>
+					<span>{{ locales.importLabel(title) }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -151,7 +151,7 @@
 					:aria-label="locales.seeLabel(title)"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ locales.see + ' ' + title }}</span>
+					<span>{{ locales.seeLabel(title) }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -167,7 +167,7 @@
 					:aria-label="locales.deleteLabel(title)"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ locales.delete + ' ' + title }}</span>
+					<span>{{ locales.deleteLabel(title) }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"
