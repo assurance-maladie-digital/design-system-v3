@@ -49,6 +49,7 @@ const applyThemeSidebar = (theme) => {
             // When AP theme is active, only show Amelipro components
             const isAp2026 = theme === 'ap2026'
             const isNotAp = theme !== 'ap'
+            const isPa = theme === 'pa'
 
             const matchesStory = (itemId, stories) =>
                 stories.some(story => itemId.includes(story))
@@ -76,6 +77,11 @@ const applyThemeSidebar = (theme) => {
 				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
 				if (isAmeliproFolder) {
 					item.style.display = hideAmelipro ? 'none' : 'block'
+				}
+
+				// Hide Structure folder and its components when PA theme is active
+				if (isPa && itemId.startsWith('composants-structure')) {
+					item.style.display = 'none'
 				}
 
 				// For AP theme, hide all components except those in Amelipro folder
