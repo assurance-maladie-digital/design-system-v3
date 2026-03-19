@@ -24,7 +24,7 @@
 		:aria-label="props.label"
 		:variant="props.variant ?? 'text'"
 		:size="props.size"
-		class="rounded-xl"
+		class="rounded-circle"
 		icon
 		@click="$emit('click-icon-button')"
 	>
