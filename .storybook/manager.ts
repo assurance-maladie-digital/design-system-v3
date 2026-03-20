@@ -28,6 +28,7 @@ const apOnlyStories = [
 
 // Components to display in AP theme
 const apComponents = [
+    "composants-vue-d-ensemble--docs",
     'composants-structure-footerbar',
     'composants-structure-headerbar',
     'composants-navigation-sypagination',
@@ -334,52 +335,61 @@ const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storyb
 const observeSidebar = () => {
     const attachObserver = () => {
         const sidebar = document.querySelector('.sidebar-container')
-        if (sidebar) {
-            const observer = new MutationObserver(() => {
-                const theme = localStorage.getItem('storybook-theme')
-                const isAp2026 = theme === 'ap2026'
-                const isAp = theme === 'ap'
-                const isNotAp = theme !== 'ap'
 
-                const normalizeId = (id: string) => id.split('--')[0]
+        if (!sidebar) return
 
-                const matchesStory = (itemId: string, stories: string[]) => {
-                    const baseId = normalizeId(itemId)
-                    return stories.includes(baseId)
-                }
+        const observer = new MutationObserver(() => {
+            const theme = localStorage.getItem('storybook-theme')
+            const isAp2026 = theme === 'ap2026'
+            const isAp = theme === 'ap'
+            const isNotAp = theme !== 'ap'
 
-                const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
+            const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
-                items.forEach((item) => {
-                    const itemId = item.getAttribute('data-item-id') || ''
+            const isExactMatch = (itemId: string, stories: string[]) =>
+                stories.includes(itemId)
 
-                    if (isAp) {
-                        const isComponent = itemId.startsWith('composants-')
+            const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
+                stories.some((story) => story.startsWith(`${itemId}-`))
 
-                        if (!isComponent) {
-                            // 👉 tout ce qui n'est pas un composant reste visible
-                            item.style.display = ''
-                        }
+            const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
+                stories.some((story) => itemId.startsWith(`${story}--`))
 
-                        // 👉 pour les composants, on filtre avec la whitelist
-                        const isAllowed = matchesStory(itemId, apComponents)
-                        item.style.display = isAllowed ? '' : 'none'
+            items.forEach((item) => {
+                const itemId = item.getAttribute('data-item-id') || ''
+
+                if (isAp) {
+                    const isComponentTree = itemId.startsWith('composants')
+
+                    if (!isComponentTree) {
+                        item.style.display = ''
                         return
                     }
 
+                    const shouldShow =
+                        isExactMatch(itemId, apComponents) ||
+                        isParentOfAllowedComponent(itemId, apComponents) ||
+                        isChildOfAllowedComponent(itemId, apComponents)
 
-                    if (isAp2026 && matchesStory(itemId, ap2026OnlyStories)) {
-                        item.style.display = 'none'
-                    }
+                    item.style.display = shouldShow ? '' : 'none'
+                    return
+                }
 
-                    if (isNotAp && matchesStory(itemId, apOnlyStories)) {
-                        item.style.display = 'none'
-                    }
-                })
+                if (isAp2026 && isExactMatch(itemId, ap2026OnlyStories)) {
+                    item.style.display = 'none'
+                    return
+                }
+
+                if (isNotAp && isExactMatch(itemId, apOnlyStories)) {
+                    item.style.display = 'none'
+                    return
+                }
+
+                item.style.display = ''
             })
+        })
 
-            observer.observe(sidebar, {childList: true, subtree: true})
-        }
+        observer.observe(sidebar, {childList: true, subtree: true})
     }
 
     attachObserver()
@@ -389,9 +399,9 @@ const observeSidebar = () => {
         const sidebar = document.querySelector('.sidebar-container')
         if (sidebar) bodyObserver.disconnect()
     })
+
     bodyObserver.observe(document.body, {childList: true, subtree: true})
 }
-// Apply initial theme and sidebar
 if (typeof window !== 'undefined') {
 	applyThemeClass(storedTheme || 'cnam')
 	setTimeout(() => {

@@ -1,5 +1,6 @@
 import { VCard, VCardText, VCardTitle, VRow, VCol, VIcon } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
+import {useTheme} from 'vuetify'
 
 export default {
 	title: 'Composants/Vue d\'ensemble',
@@ -24,6 +25,7 @@ export const ComponentsList: StoryObj = {
 		return {
 			components: { VCard, VCardText, VCardTitle, VRow, VCol, VIcon },
 			setup() {
+                const theme = useTheme()
 				const components = [
 					{
 						title: 'HeaderBar',
@@ -353,10 +355,35 @@ export const ComponentsList: StoryObj = {
 					'Feedback',
 				]
 
-				const groupedComponents = categoryOrder.map(category => ({
-					category,
-					components: components.filter(component => component.category === category),
-				}))
+                const apComponents = [
+                    'FooterBar',
+                    'HeaderBar',
+                    'HeaderToolbar',
+                    "HeaderLoading",
+                    "SubHeader",
+                    "PageContainer",
+                    "CopyBtn",
+                    "DownloadBtn"
+                    // 'sypagination', Pas de svg de disponible
+                ]
+                const isAp = theme.global.name.value === 'ap'
+
+                const shouldDisplayComponent = (component: { category: string; title: string }, category: string) => {
+                    if (isAp) {
+                        return (
+                            component.category === category &&
+                            apComponents.some(apComponent => component.title.includes(apComponent))
+                        )
+                    }
+
+                    return component.category === category
+                }
+
+
+                const groupedComponents = categoryOrder.map(category => ({
+                    category,
+                    components: components.filter(component => shouldDisplayComponent(component, category)),
+                })).filter(group => group.components.length > 0)
 
 				return {
 					groupedComponents,
