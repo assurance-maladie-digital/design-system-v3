@@ -370,6 +370,10 @@
 		const inputValue = getInputValue(value)
 		if (inputValue === null) return
 
+		// Ignore outside emissions (e.g. SyTextField.checkErrorOnBlur re-emitting
+		// the current value after a programmatic update): no actual user input occurred.
+		if (inputValue === search.value) return
+
 		search.value = inputValue
 		openAndFocus()
 	}
