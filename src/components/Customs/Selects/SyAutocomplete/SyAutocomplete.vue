@@ -375,6 +375,11 @@
 		if (inputValue === null) return
 
 		search.value = inputValue
+
+		if (!inputValue && !props.multiple && selected.value != null) {
+			updateValue(null)
+		}
+
 		openAndFocus()
 	}
 
