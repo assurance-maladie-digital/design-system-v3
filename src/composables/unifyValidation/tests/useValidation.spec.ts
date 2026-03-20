@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 import { describe, it, expect } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
@@ -161,6 +162,201 @@ describe('useValidation (unifyValidation)', () => {
 				expect(valid).toBe(false)
 				expect(result.errors.value).toContain('Requis')
 			})
+
+			it('supports custom rules with top-level validator function (sync)', async () => {
+				const params = makeParams({
+					useVuetifyValidation: false as const,
+					customRules: ref([
+						{
+							type: 'custom',
+							validator: (value: unknown) => value === 'ok' || 'Valeur personnalisée invalide',
+							options: {},
+						},
+					]),
+					modelValue: ref('ko'),
+				})
+				const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+				const valid = await result.validate()
+				expect(valid).toBe(false)
+				expect(result.errors.value).toContain('Valeur personnalisée invalide')
+			})
+
+			it('supports custom rules with top-level validator function (async)', async () => {
+				const params = makeParams({
+					useVuetifyValidation: false as const,
+					customRules: ref([
+						{
+							type: 'custom',
+							validator: async (value: unknown) => value === 'ok' || 'Erreur async',
+							options: {},
+						},
+					]),
+					modelValue: ref('ko'),
+				})
+				const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+				const valid = await result.validate()
+				expect(valid).toBe(false)
+				expect(result.errors.value).toContain('Erreur async')
+			})
+
+			it('populates warnings from custom warning rules', async () => {
+				const params = makeParams({
+					useVuetifyValidation: false as const,
+					customRules: ref([]),
+					customWarningRules: ref([
+						{
+							type: 'custom',
+							validator: (value: unknown) => value === 'ok' || 'Warning custom',
+							options: {},
+						},
+					]),
+					modelValue: ref('ko'),
+				})
+				const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+				const valid = await result.validate()
+				expect(valid).toBe(true)
+				expect(result.warnings.value).toContain('Warning custom')
+			})
+
+			it('populates successes from custom success rules', async () => {
+				const params = makeParams({
+					useVuetifyValidation: false as const,
+					customRules: ref([]),
+					customSuccessRules: ref([
+						{
+							type: 'custom',
+							validator: (value: unknown) => value === 'ok',
+							options: { successMessage: 'Succès custom' },
+						},
+					]),
+					modelValue: ref('ok'),
+				})
+				const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+				const valid = await result.validate()
+				expect(valid).toBe(true)
+				expect(result.successes.value).toContain('Succès custom')
+			})
+
+			describe('blur vs input validation triggers', () => {
+				it('with isValidateOnBlur=true, does not validate while focused then validates on blur', async () => {
+					const params = makeParams({
+						useVuetifyValidation: false as const,
+						isValidateOnBlur: ref(true),
+						focused: ref(true),
+						modelValue: ref(''),
+						customRules: ref([{ type: 'required', options: { message: 'Requis blur' } }]),
+					})
+					const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					params.focused.value = false
+					await nextTick()
+					expect(result.errors.value).toContain('Requis blur')
+				})
+
+				it('with isValidateOnBlur=false, does not validate while focused then validates on blur', async () => {
+					const params = makeParams({
+						useVuetifyValidation: false as const,
+						isValidateOnBlur: ref(false),
+						focused: ref(true),
+						modelValue: ref(''),
+						customRules: ref([{ type: 'required', options: { message: 'Requis blur input-mode' } }]),
+					})
+					const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					params.focused.value = false
+					await nextTick()
+					expect(result.errors.value).toContain('Requis blur input-mode')
+				})
+			})
+
+			describe('input events', () => {
+				it('with isValidateOnBlur=false, validates automatically on input change', async () => {
+					const params = makeParams({
+						useVuetifyValidation: false as const,
+						isValidateOnBlur: ref(false),
+						modelValue: ref('valeur initiale'),
+						customRules: ref([{ type: 'required', options: { message: 'Requis input event' } }]),
+					})
+					let result!: ReturnType<typeof useValidation>
+					const wrapper = mount(defineComponent({
+						setup() {
+							result = useValidation(params as Parameters<typeof useValidation>[0])
+							const onInput = (event: Event) => {
+								params.modelValue.value = (event.target as HTMLInputElement).value
+							}
+
+							return {
+								modelValue: params.modelValue,
+								onInput,
+							}
+						},
+						template: `<input data-test="field" :value="modelValue" @input="onInput">`,
+					}))
+
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					await wrapper.get('[data-test="field"]').setValue('')
+					await nextTick()
+					expect(result.errors.value).toContain('Requis input event')
+
+					wrapper.unmount()
+				})
+
+				it('with isValidateOnBlur=true, does not validate automatically on input change', async () => {
+					const params = makeParams({
+						useVuetifyValidation: false as const,
+						isValidateOnBlur: ref(true),
+						modelValue: ref('valeur initiale'),
+						focused: ref(false),
+						customRules: ref([{ type: 'required', options: { message: 'Requis on blur only' } }]),
+					})
+					let result!: ReturnType<typeof useValidation>
+					const wrapper = mount(defineComponent({
+						setup() {
+							result = useValidation(params as Parameters<typeof useValidation>[0])
+							const onInput = (event: Event) => {
+								params.modelValue.value = (event.target as HTMLInputElement).value
+							}
+							const onFocus = () => {
+								params.focused.value = true
+							}
+							const onBlur = () => {
+								params.focused.value = false
+							}
+
+							return {
+								modelValue: params.modelValue,
+								onInput,
+								onFocus,
+								onBlur,
+							}
+						},
+						template: `<input data-test="field" :value="modelValue" @input="onInput" @focus="onFocus" @blur="onBlur">`,
+					}))
+
+					await wrapper.get('[data-test="field"]').trigger('focus')
+					await wrapper.get('[data-test="field"]').setValue('')
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					await wrapper.get('[data-test="field"]').trigger('blur')
+					await nextTick()
+					expect(result.errors.value).toContain('Requis on blur only')
+
+					wrapper.unmount()
+				})
+			})
 		})
 
 		describe('when useVuetifyValidation = true', () => {
@@ -204,6 +400,188 @@ describe('useValidation (unifyValidation)', () => {
 
 				const valid = await result.validate()
 				expect(valid).toBe(false)
+			})
+
+			it('returns false when Vuetify custom sync rule fails', async () => {
+				const params = {
+					modelValue: ref<unknown>('ko'),
+					readonly: ref(false),
+					disabled: ref(false),
+					required: ref(false),
+					isValidateOnBlur: ref(true),
+					showSuccessMessages: ref(true),
+					disableErrorHandling: ref(false),
+					label: ref('Mon champ'),
+					focused: ref(false),
+					useVuetifyValidation: true as const,
+					rules: ref([(v: unknown) => v === 'ok' || 'Erreur sync Vuetify']),
+					maxErrors: ref(1),
+				}
+				const { result } = withSetup(() => useValidation(params))
+
+				const valid = await result.validate()
+				expect(valid).toBe(false)
+				expect(result.errors.value).toContain('Erreur sync Vuetify')
+			})
+
+			it('returns true when Vuetify custom sync rule passes', async () => {
+				const params = {
+					modelValue: ref<unknown>('ok'),
+					readonly: ref(false),
+					disabled: ref(false),
+					required: ref(false),
+					isValidateOnBlur: ref(true),
+					showSuccessMessages: ref(true),
+					disableErrorHandling: ref(false),
+					label: ref('Mon champ'),
+					focused: ref(false),
+					useVuetifyValidation: true as const,
+					rules: ref([(v: unknown) => v === 'ok' || 'Erreur sync Vuetify']),
+					maxErrors: ref(1),
+				}
+				const { result } = withSetup(() => useValidation(params))
+
+				const valid = await result.validate()
+				expect(valid).toBe(true)
+				expect(result.errors.value).toEqual([])
+			})
+
+			it('returns false when Vuetify custom async rule fails', async () => {
+				const params = {
+					modelValue: ref<unknown>('ko'),
+					readonly: ref(false),
+					disabled: ref(false),
+					required: ref(false),
+					isValidateOnBlur: ref(true),
+					showSuccessMessages: ref(true),
+					disableErrorHandling: ref(false),
+					label: ref('Mon champ'),
+					focused: ref(false),
+					useVuetifyValidation: true as const,
+					rules: ref([async (v: unknown) => v === 'ok' || 'Erreur async Vuetify']),
+					maxErrors: ref(1),
+				}
+				const { result } = withSetup(() => useValidation(params))
+
+				const valid = await result.validate()
+				expect(valid).toBe(false)
+				expect(result.errors.value).toContain('Erreur async Vuetify')
+			})
+
+			it('returns true when Vuetify custom async rule passes', async () => {
+				const params = {
+					modelValue: ref<unknown>('ok'),
+					readonly: ref(false),
+					disabled: ref(false),
+					required: ref(false),
+					isValidateOnBlur: ref(true),
+					showSuccessMessages: ref(true),
+					disableErrorHandling: ref(false),
+					label: ref('Mon champ'),
+					focused: ref(false),
+					useVuetifyValidation: true as const,
+					rules: ref([async (v: unknown) => v === 'ok' || 'Erreur async Vuetify']),
+					maxErrors: ref(1),
+				}
+				const { result } = withSetup(() => useValidation(params))
+
+				const valid = await result.validate()
+				expect(valid).toBe(true)
+				expect(result.errors.value).toEqual([])
+			})
+
+			describe('input events', () => {
+				it('with isValidateOnBlur=false, validates automatically on input change', async () => {
+					const params = {
+						modelValue: ref<unknown>('valeur initiale'),
+						readonly: ref(false),
+						disabled: ref(false),
+						required: ref(false),
+						isValidateOnBlur: ref(false),
+						showSuccessMessages: ref(true),
+						disableErrorHandling: ref(false),
+						label: ref('Mon champ'),
+						focused: ref(false),
+						useVuetifyValidation: true as const,
+						rules: ref([(v: unknown) => !!v || 'Requis Vuetify input event']),
+						maxErrors: ref(1),
+					}
+					let result!: ReturnType<typeof useValidation>
+					const wrapper = mount(defineComponent({
+						setup() {
+							result = useValidation(params)
+							const onInput = (event: Event) => {
+								params.modelValue.value = (event.target as HTMLInputElement).value
+							}
+
+							return {
+								modelValue: params.modelValue,
+								onInput,
+							}
+						},
+						template: `<input data-test="vuetify-field" :value="modelValue" @input="onInput">`,
+					}))
+
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					await wrapper.get('[data-test="vuetify-field"]').setValue('')
+					await nextTick()
+					expect(result.errors.value).toContain('Requis Vuetify input event')
+
+					wrapper.unmount()
+				})
+
+				it('with isValidateOnBlur=true, does not validate automatically on input change but validates on blur', async () => {
+					const params = {
+						modelValue: ref<unknown>('valeur initiale'),
+						readonly: ref(false),
+						disabled: ref(false),
+						required: ref(false),
+						isValidateOnBlur: ref(true),
+						showSuccessMessages: ref(true),
+						disableErrorHandling: ref(false),
+						label: ref('Mon champ'),
+						focused: ref(false),
+						useVuetifyValidation: true as const,
+						rules: ref([(v: unknown) => !!v || 'Requis Vuetify blur event']),
+						maxErrors: ref(1),
+					}
+					let result!: ReturnType<typeof useValidation>
+					const wrapper = mount(defineComponent({
+						setup() {
+							result = useValidation(params)
+							const onInput = (event: Event) => {
+								params.modelValue.value = (event.target as HTMLInputElement).value
+							}
+							const onFocus = () => {
+								params.focused.value = true
+							}
+							const onBlur = () => {
+								params.focused.value = false
+							}
+
+							return {
+								modelValue: params.modelValue,
+								onInput,
+								onFocus,
+								onBlur,
+							}
+						},
+						template: `<input data-test="vuetify-field" :value="modelValue" @input="onInput" @focus="onFocus" @blur="onBlur">`,
+					}))
+
+					await wrapper.get('[data-test="vuetify-field"]').trigger('focus')
+					await wrapper.get('[data-test="vuetify-field"]').setValue('')
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					await wrapper.get('[data-test="vuetify-field"]').trigger('blur')
+					await nextTick()
+					expect(result.errors.value).toContain('Requis Vuetify blur event')
+
+					wrapper.unmount()
+				})
 			})
 		})
 	})

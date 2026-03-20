@@ -104,7 +104,6 @@ export function useValidation(params: {
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
-	console.log('is validate on blur:', params.isValidateOnBlur.value, params.label.value, params.disableErrorHandling.value)
 
 	if (isRef(params.errorMessages)) {
 		watch(params.errorMessages, (newVal) => {
