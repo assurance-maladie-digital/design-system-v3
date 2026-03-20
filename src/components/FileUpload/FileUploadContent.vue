@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { calcHumanFileSize } from '@/utils/calcHumanFileSize'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import { mdiCloudUpload } from '@mdi/js'
 	import { computed } from 'vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -10,6 +10,7 @@
 		fileSizeUnits: Array<string>
 		fileSizeMax: number
 		multiple: boolean
+		locales: typeof defaultLocales
 	}>()
 
 	export interface FileUploadContentSlots {
