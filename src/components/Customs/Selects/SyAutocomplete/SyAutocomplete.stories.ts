@@ -18,146 +18,146 @@ const meta: Meta<typeof SyAutocomplete> = {
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
-		bgColor: {
+		'bgColor': {
 			control: 'text',
 			description: 'Couleur de fond du champ',
 		},
-		chips: {
+		'chips': {
 			control: 'boolean',
 			description: 'Affiche les options sélectionnées sous forme de chips',
 		},
-		clearable: {
+		'clearable': {
 			control: 'boolean',
 			description: 'Permet de vider la sélection',
 		},
-		customRules: {
+		'customRules': {
 			control: 'object',
 			description: 'Règles de validation personnalisées',
 		},
-		customSuccessRules: {
+		'customSuccessRules': {
 			control: 'object',
 			description: 'Règles de succès personnalisées',
 		},
-		customWarningRules: {
+		'customWarningRules': {
 			control: 'object',
 			description: 'Règles d\'avertissement personnalisées',
 		},
-		debounce: {
+		'debounce': {
 			control: 'number',
 			description: 'Délai en millisecondes avant le filtrage (défaut: 200)',
 		},
-		density: {
+		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Définit la densité du champ',
 		},
-		disableErrorHandling: {
+		'disableErrorHandling': {
 			control: 'boolean',
 			description: 'Désactive la gestion des erreurs',
 		},
-		displayAsterisk: {
+		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque pour les champs obligatoires',
 		},
-		errorMessages: {
+		'errorMessages': {
 			control: 'object',
 			description: 'Messages d\'erreur personnalisés',
 		},
-		filter: {
+		'filter': {
 			control: 'boolean',
 			description: 'Active le filtrage des options basé sur la saisie',
 		},
-		hasError: {
+		'hasError': {
 			control: 'boolean',
 			description: 'Indique si le champ a une erreur',
 		},
-		hasSuccess: {
+		'hasSuccess': {
 			control: 'boolean',
 			description: 'Indique si le champ est en succès',
 		},
-		hasWarning: {
+		'hasWarning': {
 			control: 'boolean',
 			description: 'Indique si le champ a un avertissement',
 		},
-		hideNoData: {
+		'hideNoData': {
 			control: 'boolean',
 			description: 'Cache le message "aucune option" quand la liste est vide',
 		},
-		isValidateOnBlur: {
+		'isValidateOnBlur': {
 			control: 'boolean',
 			description: 'Valide le champ à la perte de focus',
 		},
-		items: { control: 'object' },
-		label: {
+		'items': { control: 'object' },
+		'label': {
 			control: 'text',
 			description: 'Libellé du champ',
 		},
-		loading: {
+		'loading': {
 			control: 'boolean',
 			description: 'Affiche un indicateur de chargement',
 		},
-		menuId: {
+		'menuId': {
 			control: 'text',
 			description: 'ID personnalisé pour le menu',
 		},
-		modelValue: { control: 'text' },
-		multiple: {
+		'modelValue': { control: 'text' },
+		'multiple': {
 			control: 'boolean',
 			description: 'Permet la sélection multiple d\'options',
 		},
-		noDataText: {
+		'noDataText': {
 			control: 'text',
 			description: 'Texte affiché quand aucune option n\'est disponible',
 		},
-		placeholder: {
+		'placeholder': {
 			control: 'text',
 			description: 'Texte d\'indice affiché quand le champ est vide',
 		},
-		plainTextKey: {
+		'plainTextKey': {
 			control: 'text',
 			description: 'Nom de la propriété pour le texte brut de filtrage',
 		},
-		openOnSearch: {
+		'openOnSearch': {
 			control: 'boolean',
 			description: 'Le dropdown ne s\'ouvre que lors de la saisie. À utiliser avec l\'event `@search` pour les recherches asynchrones.',
 		},
-		readonly: {
+		'readonly': {
 			control: 'boolean',
 			description: 'Rend le champ en lecture seule',
 		},
-		required: {
+		'required': {
 			control: 'boolean',
 			description: 'Marque le champ comme obligatoire',
 		},
-		returnObject: {
+		'returnObject': {
 			control: 'boolean',
 			description: 'Retourne l\'objet complet sélectionné',
 		},
-		showSuccessMessages: {
+		'showSuccessMessages': {
 			control: 'boolean',
 			description: 'Affiche les messages de succès',
 		},
-		successMessages: {
+		'successMessages': {
 			control: 'object',
 			description: 'Messages de succès personnalisés',
 		},
-		textKey: {
+		'textKey': {
 			control: 'text',
 			description: 'Nom de la propriété qui contient le texte à afficher',
 		},
-		valueKey: {
+		'valueKey': {
 			control: 'text',
 			description: 'Nom de la propriété qui contient la valeur à retourner',
 		},
-		selectionText: {
+		'selectionText': {
 			control: false,
 			description: 'Fonction de personnalisation du texte affiché dans l\'input en mode multiple. Reçoit le tableau des valeurs sélectionnées et retourne une chaîne.',
 		},
-		warningMessages: {
+		'warningMessages': {
 			control: 'object',
 			description: 'Messages d\'avertissement personnalisés',
 		},
-		onSearch: {
+		'onSearch': {
 			action: 'search',
 			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. À utiliser avec `open-on-search` pour les recherches asynchrones.',
 		},
