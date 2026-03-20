@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useValidation } from '../useValidation'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 /** Run a composable inside a mounted Vue component to support lifecycle hooks. */
 function withSetup<T>(setup: () => T): { result: T, wrapper: ReturnType<typeof mount> } {
@@ -583,6 +584,349 @@ describe('useValidation (unifyValidation)', () => {
 					wrapper.unmount()
 				})
 			})
+		})
+	})
+
+	describe('additional coverage', () => {
+		it('clears warnings and successes when validate() short-circuits on readonly', async () => {
+			const params = makeParams({ readonly: ref(true) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			result.errors.value = ['e']
+			result.warnings.value = ['w']
+			result.successes.value = ['s']
+
+			const valid = await result.validate()
+			expect(valid).toBe(true)
+			expect(result.errors.value).toEqual([])
+			expect(result.warnings.value).toEqual([])
+			expect(result.successes.value).toEqual([])
+		})
+
+		it('hasSuccess is false when successes exist but warnings also exist', async () => {
+			const params = makeParams()
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			result.successes.value = ['ok']
+			result.warnings.value = ['warn']
+			expect(result.hasSuccess.value).toBeFalsy()
+		})
+
+		it('supports reactive switch between custom and Vuetify validation modes', async () => {
+			const params = {
+				modelValue: ref<unknown>(''),
+				readonly: ref(false),
+				disabled: ref(false),
+				required: ref(false),
+				isValidateOnBlur: ref(true),
+				showSuccessMessages: ref(true),
+				disableErrorHandling: ref(false),
+				label: ref('Champ hybride'),
+				focused: ref(false),
+				useVuetifyValidation: ref(false),
+				customRules: ref([{ type: 'required', options: { message: 'Erreur custom' } }]),
+				customWarningRules: ref([]),
+				customSuccessRules: ref([]),
+				rules: ref([(v: unknown) => !!v || 'Erreur vuetify']),
+				maxErrors: ref(1),
+			}
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			let valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Erreur custom')
+
+			params.useVuetifyValidation.value = true
+			valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Erreur vuetify')
+		})
+
+		it('respects maxErrors in Vuetify mode', async () => {
+			const params = {
+				modelValue: ref<unknown>('x'),
+				readonly: ref(false),
+				disabled: ref(false),
+				required: ref(false),
+				isValidateOnBlur: ref(true),
+				showSuccessMessages: ref(true),
+				disableErrorHandling: ref(false),
+				label: ref('Mon champ'),
+				focused: ref(false),
+				useVuetifyValidation: true as const,
+				rules: ref([
+					() => 'E1',
+					() => 'E2',
+					() => 'E3',
+				]),
+				maxErrors: ref(2),
+			}
+			const { result } = withSetup(() => useValidation(params))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toHaveLength(2)
+			expect(result.errors.value).toEqual(['E1', 'E2'])
+		})
+	})
+
+	describe('vform integration', () => {
+		const VForm = defineComponent({
+			emits: ['submit'],
+			template: `<form data-test="vform" @submit="$emit('submit', $event)"><slot /></form>`,
+		})
+
+		it('validates custom rules on VForm submit and blocks invalid state', async () => {
+			const params = makeParams({
+				useVuetifyValidation: false as const,
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis VForm custom' } }]),
+			})
+
+			let isValid = true
+			let result!: ReturnType<typeof useValidation>
+
+			const wrapper = mount(defineComponent({
+				components: { VForm },
+				setup() {
+					result = useValidation(params as Parameters<typeof useValidation>[0])
+					const onSubmit = async (e: Event) => {
+						e.preventDefault()
+						isValid = await result.validate()
+					}
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { onSubmit, modelValue: params.modelValue, onInput }
+				},
+				template: `
+					<VForm @submit="onSubmit">
+						<input data-test="field" :value="modelValue" @input="onInput">
+					</VForm>
+				`,
+			}))
+
+			await wrapper.get('[data-test="vform"]').trigger('submit')
+			await nextTick()
+
+			expect(isValid).toBe(false)
+			expect(result.errors.value).toContain('Requis VForm custom')
+
+			await wrapper.get('[data-test="field"]').setValue('ok')
+			await wrapper.get('[data-test="vform"]').trigger('submit')
+			await nextTick()
+
+			expect(isValid).toBe(true)
+			expect(result.errors.value).toEqual([])
+
+			wrapper.unmount()
+		})
+
+		it('validates Vuetify rules on VForm submit', async () => {
+			const params = {
+				modelValue: ref<unknown>(''),
+				readonly: ref(false),
+				disabled: ref(false),
+				required: ref(false),
+				isValidateOnBlur: ref(true),
+				showSuccessMessages: ref(true),
+				disableErrorHandling: ref(false),
+				label: ref('Mon champ'),
+				focused: ref(false),
+				useVuetifyValidation: true as const,
+				rules: ref([(v: unknown) => !!v || 'Requis VForm Vuetify']),
+				maxErrors: ref(1),
+			}
+
+			let isValid = true
+			let result!: ReturnType<typeof useValidation>
+
+			const wrapper = mount(defineComponent({
+				components: { VForm },
+				setup() {
+					result = useValidation(params)
+					const onSubmit = async (e: Event) => {
+						e.preventDefault()
+						isValid = await result.validate()
+					}
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { onSubmit, modelValue: params.modelValue, onInput }
+				},
+				template: `
+					<VForm @submit="onSubmit">
+						<input data-test="field" :value="modelValue" @input="onInput">
+					</VForm>
+				`,
+			}))
+
+			await wrapper.get('[data-test="vform"]').trigger('submit')
+			await nextTick()
+			expect(isValid).toBe(false)
+			expect(result.errors.value).toContain('Requis VForm Vuetify')
+
+			await wrapper.get('[data-test="field"]').setValue('ok')
+			await wrapper.get('[data-test="vform"]').trigger('submit')
+			await nextTick()
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+	})
+
+	describe('syform integration', () => {
+		it('validates custom rules when SyForm emits submit', async () => {
+			const params = makeParams({
+				useVuetifyValidation: false as const,
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis SyForm custom' } }]),
+			})
+
+			let isValid = true
+			let result!: ReturnType<typeof useValidation>
+
+			const wrapper = mount(defineComponent({
+				components: { SyForm },
+				setup() {
+					result = useValidation(params as Parameters<typeof useValidation>[0])
+					const onSubmit = async () => {
+						isValid = await result.validate()
+					}
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { onSubmit, modelValue: params.modelValue, onInput }
+				},
+				template: `
+					<SyForm data-test="syform" :validate-on-submit="false" @submit="onSubmit">
+						<input data-test="field" :value="modelValue" @input="onInput">
+					</SyForm>
+				`,
+			}))
+
+			await wrapper.get('[data-test="syform"]').trigger('submit')
+			await nextTick()
+
+			expect(isValid).toBe(false)
+			expect(result.errors.value).toContain('Requis SyForm custom')
+
+			await wrapper.get('[data-test="field"]').setValue('ok')
+			await wrapper.get('[data-test="syform"]').trigger('submit')
+			await nextTick()
+
+			expect(isValid).toBe(true)
+			expect(result.errors.value).toEqual([])
+
+			wrapper.unmount()
+		})
+
+		it('validates Vuetify rules when SyForm emits submit', async () => {
+			const params = {
+				modelValue: ref<unknown>(''),
+				readonly: ref(false),
+				disabled: ref(false),
+				required: ref(false),
+				isValidateOnBlur: ref(true),
+				showSuccessMessages: ref(true),
+				disableErrorHandling: ref(false),
+				label: ref('Mon champ'),
+				focused: ref(false),
+				useVuetifyValidation: true as const,
+				rules: ref([(v: unknown) => !!v || 'Requis SyForm Vuetify']),
+				maxErrors: ref(1),
+			}
+
+			let isValid = true
+			let result!: ReturnType<typeof useValidation>
+
+			const wrapper = mount(defineComponent({
+				components: { SyForm },
+				setup() {
+					result = useValidation(params)
+					const onSubmit = async () => {
+						isValid = await result.validate()
+					}
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { onSubmit, modelValue: params.modelValue, onInput }
+				},
+				template: `
+					<SyForm data-test="syform" :validate-on-submit="false" @submit="onSubmit">
+						<input data-test="field" :value="modelValue" @input="onInput">
+					</SyForm>
+				`,
+			}))
+
+			await wrapper.get('[data-test="syform"]').trigger('submit')
+			await nextTick()
+			expect(isValid).toBe(false)
+			expect(result.errors.value).toContain('Requis SyForm Vuetify')
+
+			await wrapper.get('[data-test="field"]').setValue('ok')
+			await wrapper.get('[data-test="syform"]').trigger('submit')
+			await nextTick()
+			expect(isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('emits reset and allows clearing validation state from parent handler', async () => {
+			const params = makeParams({
+				useVuetifyValidation: false as const,
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis SyForm reset' } }]),
+			})
+
+			let result!: ReturnType<typeof useValidation>
+			const resetCount = ref(0)
+
+			const wrapper = mount(defineComponent({
+				components: { SyForm },
+				setup() {
+					result = useValidation(params as Parameters<typeof useValidation>[0])
+					const onSubmit = async () => {
+						await result.validate()
+					}
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+					const onReset = () => {
+						resetCount.value += 1
+						params.modelValue.value = ''
+						result.errors.value = []
+						result.warnings.value = []
+						result.successes.value = []
+					}
+
+					return { onSubmit, onReset, modelValue: params.modelValue, onInput }
+				},
+				template: `
+					<SyForm data-test="syform" :validate-on-submit="false" @submit="onSubmit" @reset="onReset">
+						<input data-test="field" :value="modelValue" @input="onInput">
+					</SyForm>
+				`,
+			}))
+
+			await wrapper.get('[data-test="syform"]').trigger('submit')
+			await nextTick()
+			expect(result.errors.value).toContain('Requis SyForm reset')
+
+			await wrapper.get('[data-test="syform"]').trigger('reset')
+			await nextTick()
+
+			expect(resetCount.value).toBe(1)
+			expect(params.modelValue.value).toBe('')
+			expect(result.errors.value).toEqual([])
+			expect(result.warnings.value).toEqual([])
+			expect(result.successes.value).toEqual([])
+
+			wrapper.unmount()
 		})
 	})
 
