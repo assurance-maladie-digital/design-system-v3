@@ -14,6 +14,9 @@ const meta: Meta<typeof SyAutocomplete> = {
 		controls: { exclude: ['selectedValue', 'isOpen', 'closeList'] },
 		docs: { page: AccessibilityDocs },
 	},
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
 	argTypes: {
 		bgColor: {
 			control: 'text',
@@ -212,9 +215,8 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		'items': sampleItems,
-		'label': 'Rechercher un prénom',
-		'onUpdate:modelValue': fn(),
+		items: sampleItems,
+		label: 'Rechercher un prénom',
 	},
 	render: (args) => {
 		return {
@@ -289,15 +291,14 @@ const onSubmit = (event) => {
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 			{ text: 'Option 3', value: '3' },
 		],
-		'label': 'Recherche obligatoire',
-		'required': true,
-		'displayAsterisk': true,
-		'onUpdate:modelValue': fn(),
+		label: 'Recherche obligatoire',
+		required: true,
+		displayAsterisk: true,
 	},
 	render: (args) => {
 		return {
@@ -383,12 +384,11 @@ const clearError = () => {
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
-		'label': 'Erreur serveur',
-		'onUpdate:modelValue': fn(),
+		label: 'Erreur serveur',
 	},
 	render: (args) => {
 		return {
@@ -430,12 +430,11 @@ export const WarningSuccessMessages: Story = {
 		},
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
-		'label': 'Avec warning & succès',
-		'onUpdate:modelValue': fn(),
+		label: 'Avec warning & succès',
 	},
 	render: (args) => {
 		return {
@@ -524,18 +523,17 @@ const onSubmit = (event) => {
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ label: 'Premier choix', id: '1' },
 			{ label: 'Deuxième choix', id: '2' },
 			{ label: 'Troisième choix', id: '3' },
 		],
-		'label': 'Objet complet',
-		'textKey': 'label',
-		'valueKey': 'id',
-		'returnObject': true,
-		'required': true,
-		'displayAsterisk': true,
-		'onUpdate:modelValue': fn(),
+		label: 'Objet complet',
+		textKey: 'label',
+		valueKey: 'id',
+		returnObject: true,
+		required: true,
+		displayAsterisk: true,
 	},
 	render: (args) => {
 		return {
@@ -622,11 +620,10 @@ const items = [
 		],
 	},
 	args: {
-		'items': sampleItems,
-		'label': 'Sélectionner plusieurs prénoms',
-		'multiple': true,
-		'clearable': true,
-		'onUpdate:modelValue': fn(),
+		items: sampleItems,
+		label: 'Sélectionner plusieurs prénoms',
+		multiple: true,
+		clearable: true,
 	},
 	render: (args) => {
 		return {
@@ -694,12 +691,11 @@ const items = [
 		],
 	},
 	args: {
-		'items': sampleItems.slice(0, 4),
-		'label': 'Prénoms sélectionnés',
-		'multiple': true,
-		'chips': true,
-		'clearable': true,
-		'onUpdate:modelValue': fn(),
+		items: sampleItems.slice(0, 4),
+		label: 'Prénoms sélectionnés',
+		multiple: true,
+		chips: true,
+		clearable: true,
 	},
 	render: (args) => {
 		return {
@@ -765,18 +761,17 @@ const columns = [
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Nom', value: 'name' },
 			{ text: 'Prénom', value: 'firstname' },
 			{ text: 'Date de naissance', value: 'birthdate' },
 			{ text: 'Numéro de sécurité sociale', value: 'nss' },
 			{ text: 'Adresse', value: 'address' },
 		],
-		'label': 'Colonnes affichées',
-		'multiple': true,
-		'clearable': true,
-		'selectionText': (selected: unknown[]) => `${selected.length} colonne${selected.length > 1 ? 's' : ''} sélectionnée${selected.length > 1 ? 's' : ''}`,
-		'onUpdate:modelValue': fn(),
+		label: 'Colonnes affichées',
+		multiple: true,
+		clearable: true,
+		selectionText: (selected: unknown[]) => `${selected.length} colonne${selected.length > 1 ? 's' : ''} sélectionnée${selected.length > 1 ? 's' : ''}`,
 	},
 	render: (args) => {
 		return {
@@ -839,13 +834,12 @@ const items = [
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
-		'label': 'Recherche avec chargement',
-		'loading': true,
-		'onUpdate:modelValue': fn(),
+		label: 'Recherche avec chargement',
+		loading: true,
 	},
 	render: (args) => {
 		return {
@@ -902,14 +896,13 @@ const items = [
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
-		'label': 'Champ obligatoire',
-		'required': true,
-		'displayAsterisk': true,
-		'onUpdate:modelValue': fn(),
+		label: 'Champ obligatoire',
+		required: true,
+		displayAsterisk: true,
 	},
 	render: (args) => {
 		return {
@@ -980,12 +973,11 @@ const value2 = ref('1')
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 			{ text: 'Option 3', value: '3' },
 		],
-		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
@@ -1054,14 +1046,13 @@ const items = [
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ text: 'Adrien', value: 'Adrien' },
 			{ text: 'Axel', value: 'Axel' },
 			{ text: 'Baptiste', value: 'Baptiste' },
 		],
-		'label': 'Champ en lecture seule',
-		'readonly': true,
-		'onUpdate:modelValue': fn(),
+		label: 'Champ en lecture seule',
+		readonly: true,
 	},
 	render: (args) => {
 		return {
@@ -1119,15 +1110,14 @@ const items = [
 		],
 	},
 	args: {
-		'items': [
+		items: [
 			{ label: 'Premier choix', id: '1' },
 			{ label: 'Deuxième choix', id: '2' },
 			{ label: 'Troisième choix', id: '3' },
 		],
-		'label': 'Recherche avec clés personnalisées',
-		'textKey': 'label',
-		'valueKey': 'id',
-		'onUpdate:modelValue': fn(),
+		label: 'Recherche avec clés personnalisées',
+		textKey: 'label',
+		valueKey: 'id',
 	},
 	render: (args) => {
 		return {
