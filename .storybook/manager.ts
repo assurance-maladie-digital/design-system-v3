@@ -59,10 +59,18 @@ const applyThemeSidebar = (theme) => {
             // When AP theme is active, only show Amelipro components
             const isAp2026 = theme === 'ap2026'
             const isNotAp = theme !== 'ap'
+            const isAp = theme === 'ap'
             const isPa = theme === 'pa'
 
-            const matchesStory = (itemId, stories) =>
-                stories.some(story => itemId.includes(story))
+            const isExactMatch = (itemId: string, stories: string[]) =>
+                stories.includes(itemId)
+
+            const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
+                stories.some((story) => story.startsWith(`${itemId}-`))
+
+            const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
+                stories.some((story) => itemId.startsWith(`${story}--`))
+
 
 
             // Hide or show items based on theme
@@ -75,12 +83,29 @@ const applyThemeSidebar = (theme) => {
                     item.style.display = theme === 'cnam' ? 'block' : 'none'
                 }
 
-                if (isAp2026 && matchesStory(itemId, ap2026OnlyStories)) {
+                if (isAp2026 && isExactMatch(itemId, ap2026OnlyStories)) {
                     item.style.display = 'none'
                 }
 
-                if (isNotAp && matchesStory(itemId, apOnlyStories)) {
+                if (isNotAp && isExactMatch(itemId, apOnlyStories)) {
                     item.style.display = 'none'
+                }
+
+                if (isAp) {
+                    const isComponentTree = itemId.startsWith('composants')
+
+                    if (!isComponentTree) {
+                        item.style.display = ''
+                        return
+                    }
+
+                    const shouldShow =
+                        isExactMatch(itemId, apComponents) ||
+                        isParentOfAllowedComponent(itemId, apComponents) ||
+                        isChildOfAllowedComponent(itemId, apComponents)
+
+                    item.style.display = shouldShow ? '' : 'none'
+                    return
                 }
 
 				// Handle amelipro components folder
