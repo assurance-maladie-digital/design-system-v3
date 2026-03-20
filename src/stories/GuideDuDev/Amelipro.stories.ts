@@ -1,30 +1,30 @@
 import {
-    VDivider,
-    VExpansionPanel,
-    VExpansionPanels,
-    VExpansionPanelText,
-    VExpansionPanelTitle
+	VDivider,
+	VExpansionPanel,
+	VExpansionPanels,
+	VExpansionPanelText,
+	VExpansionPanelTitle,
 } from 'vuetify/components'
-import type {StoryObj} from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3'
 
 export default {
-    title: 'Guide Du Dev/Correspondance composants Amelipro',
+	title: 'Guide Du Dev/Correspondance composants Amelipro',
 }
 
 export const ApComponents: StoryObj = {
-    render: () => {
-        return {
-            components: {
-                VExpansionPanels,
-                VExpansionPanel,
-                VExpansionPanelTitle,
-                VExpansionPanelText,
-                VDivider,
-            },
-            setup() {
-                return {}
-            },
-            template: `
+	render: () => {
+		return {
+			components: {
+				VExpansionPanels,
+				VExpansionPanel,
+				VExpansionPanelTitle,
+				VExpansionPanelText,
+				VDivider,
+			},
+			setup() {
+				return {}
+			},
+			template: `
               <VExpansionPanels>
 
                 <VExpansionPanel>
@@ -193,7 +193,7 @@ export const ApComponents: StoryObj = {
                 </VExpansionPanel>
               </VExpansionPanels>
             `,
-        }
-    },
-    tags: ['!dev'],
+		}
+	},
+	tags: ['!dev'],
 }
