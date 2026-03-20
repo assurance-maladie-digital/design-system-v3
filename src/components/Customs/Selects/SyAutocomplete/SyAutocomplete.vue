@@ -123,6 +123,10 @@
 			type: String,
 			default: '',
 		},
+		openOnSearch: {
+			type: Boolean,
+			default: false,
+		},
 		readonly: {
 			type: Boolean,
 			default: false,
@@ -161,7 +165,7 @@
 		},
 	})
 
-	const emit = defineEmits(['update:modelValue'])
+	const emit = defineEmits(['update:modelValue', 'search'])
 
 	const isOpen = ref(false)
 	const search = ref('')
@@ -211,7 +215,7 @@
 	const normalizedSearch = computed(() => (search.value || '').toLowerCase())
 
 	const filteredItems = computed(() => {
-		if (!props.filter) return formattedItems.value
+		if (!props.filter || props.loading) return formattedItems.value
 		return formattedItems.value.filter((item) => {
 			const text = String(item[props.plainTextKey || props.textKey] ?? item[props.textKey] ?? '').toLowerCase()
 			return text.includes(normalizedSearch.value)
@@ -244,6 +248,11 @@
 	watch(search, () => {
 		if (suppressOpenOnSearch) {
 			suppressOpenOnSearch = false
+			return
+		}
+
+		if (props.openOnSearch && !search.value) {
+			isOpen.value = false
 			return
 		}
 
@@ -380,12 +389,15 @@
 			updateValue(null)
 		}
 
+		emit('search', inputValue)
 		openAndFocus()
 	}
 
 	const openAndFocus = () => {
 		markInteracted()
-		isOpen.value = true
+		if (!props.openOnSearch || search.value) {
+			isOpen.value = true
+		}
 		focusInput(textFieldRef)
 	}
 

@@ -117,6 +117,10 @@ const meta: Meta<typeof SyAutocomplete> = {
 			control: 'text',
 			description: 'Nom de la propriété pour le texte brut de filtrage',
 		},
+		openOnSearch: {
+			control: 'boolean',
+			description: 'Le dropdown ne s\'ouvre que lors de la saisie. À utiliser avec l\'event `@search` pour les recherches asynchrones.',
+		},
 		readonly: {
 			control: 'boolean',
 			description: 'Rend le champ en lecture seule',
@@ -152,6 +156,14 @@ const meta: Meta<typeof SyAutocomplete> = {
 		warningMessages: {
 			control: 'object',
 			description: 'Messages d\'avertissement personnalisés',
+		},
+		onSearch: {
+			action: 'search',
+			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. À utiliser avec `open-on-search` pour les recherches asynchrones.',
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
 		},
 	},
 } as Meta<typeof SyAutocomplete>
@@ -795,10 +807,9 @@ const columns = [
 
 export const LoadingState: Story = {
 	parameters: {
-
 		docs: {
 			description: {
-				story: 'État de chargement du composant SyAutocomplete.',
+				story: 'Simule un chargement asynchrone : grâce à `open-on-search`, le dropdown ne s\'ouvre qu\'à la saisie. L\'event `@search` déclenche la requête, le loader s\'active puis les résultats apparaissent.',
 			},
 		},
 		sourceCode: [
@@ -811,6 +822,8 @@ export const LoadingState: Story = {
     :items="items"
     label="Recherche avec chargement"
     :loading="isLoading"
+    open-on-search
+    @search="handleSearch"
   />
 </template>
         `,
@@ -823,36 +836,85 @@ import { ref } from 'vue'
 import { SyAutocomplete } from '@cnamts/synapse'
 
 const selectedValue = ref('')
-const isLoading = ref(true)
-const items = [
+const isLoading = ref(false)
+const items = ref([])
+let timeout = null
+
+const allItems = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+  { text: 'Option 4', value: '4' },
+  { text: 'Option 5', value: '5' },
 ]
+
+const handleSearch = (val) => {
+  if (!val) {
+    items.value = []
+    isLoading.value = false
+    if (timeout) clearTimeout(timeout)
+    return
+  }
+  isLoading.value = true
+  items.value = []
+  if (timeout) clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    items.value = allItems.filter(i => i.text.toLowerCase().includes(val.toLowerCase()))
+    isLoading.value = false
+  }, 1000)
+}
 </script>
         `,
 			},
 		],
 	},
 	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
 		label: 'Recherche avec chargement',
-		loading: true,
+		openOnSearch: true,
 	},
 	render: (args) => {
 		return {
 			components: { SyAutocomplete },
 			setup() {
 				const selectedValue = ref('')
-				return { args, selectedValue }
+				const isLoading = ref(false)
+				const items = ref<{ text: string, value: string }[]>([])
+				let timeout: ReturnType<typeof setTimeout> | null = null
+
+				const allItems = [
+					{ text: 'Option 1', value: '1' },
+					{ text: 'Option 2', value: '2' },
+					{ text: 'Option 3', value: '3' },
+					{ text: 'Option 4', value: '4' },
+					{ text: 'Option 5', value: '5' },
+				]
+
+				const handleSearch = (val: string) => {
+					if (!val) {
+						items.value = []
+						isLoading.value = false
+						if (timeout) clearTimeout(timeout)
+						return
+					}
+					isLoading.value = true
+					items.value = []
+					if (timeout) clearTimeout(timeout)
+					timeout = setTimeout(() => {
+						items.value = allItems.filter(i => i.text.toLowerCase().includes(val.toLowerCase()))
+						isLoading.value = false
+					}, 1000)
+				}
+
+				return { args, selectedValue, isLoading, items, handleSearch }
 			},
 			template: `
 				<div class="pa-4">
 					<SyAutocomplete
 						v-model="selectedValue"
 						v-bind="args"
+						:items="items"
+						:loading="isLoading"
+						@search="handleSearch"
 					/>
 				</div>
 			`,
