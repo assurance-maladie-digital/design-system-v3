@@ -48,11 +48,8 @@ export function useFormValidation() {
 	const clearAll = () => {
 		if (validatableComponents.value.length === 0) return
 		validatableComponents.value.forEach((component) => {
-			try {
-				component.clearValidation?.()
-			}
-			catch {
-				// no-op: un composant peut ne pas implémenter clearValidation
+			if (component.clearValidation) {
+				component.clearValidation()
 			}
 		})
 	}
