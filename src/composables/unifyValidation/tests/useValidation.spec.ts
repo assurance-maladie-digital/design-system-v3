@@ -112,6 +112,46 @@ describe('useValidation (unifyValidation)', () => {
 			await nextTick()
 			expect(result.errors.value).toContain('Nouvelle erreur')
 		})
+
+		it('combines rule validation errors with external errorMessages', async () => {
+			const errorMessages = ref<string[] | null>(['Erreur par défaut'])
+			const params = makeParams({
+				modelValue: ref(''),
+				errorMessages,
+				customRules: ref([{ type: 'required', options: { message: 'Erreur règle' } }]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toEqual(['Erreur règle', 'Erreur par défaut'])
+			expect(result.hasError.value).toBe(true)
+		})
+
+		it('combines Vuetify rule errors with external errorMessages when useVuetifyValidation is true', async () => {
+			const params = {
+				modelValue: ref<unknown>(''),
+				readonly: ref(false),
+				disabled: ref(false),
+				required: ref(false),
+				isValidateOnBlur: ref(true),
+				showSuccessMessages: ref(true),
+				disableErrorHandling: ref(false),
+				label: ref('Mon champ'),
+				focused: ref(false),
+				useVuetifyValidation: true as const,
+				rules: ref([(v: unknown) => !!v || 'Erreur règle vuetify']),
+				errorMessages: ref<string[] | null>(['Erreur par défaut']),
+				maxErrors: ref(2),
+			}
+			const { result } = withSetup(() => useValidation(params))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Erreur règle vuetify')
+			expect(result.errors.value).toContain('Erreur par défaut')
+			expect(result.hasError.value).toBe(true)
+		})
 	})
 
 	describe('validate()', () => {
