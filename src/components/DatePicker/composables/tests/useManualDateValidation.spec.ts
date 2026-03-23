@@ -238,4 +238,31 @@ describe('useManualDateValidation', () => {
 		result = validateManualInput('01/01/2023')
 		expect(result).toBe(false)
 	})
+
+	it('devrait gérer validateField asynchrone', async () => {
+		mockIsDateComplete.mockReturnValue(true)
+		mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
+		mockParseDate.mockReturnValue(new Date('2023-01-01'))
+		mockValidateField.mockResolvedValue({
+			hasError: false,
+			hasWarning: false,
+			hasSuccess: true,
+			state: { errors: [], warnings: [], successes: ['Valide async'] },
+		})
+
+		const { validateManualInput } = useManualDateValidation({
+			format: 'DD/MM/YYYY',
+			hasInteracted,
+			errors,
+			clearValidation: mockClearValidation,
+			validateDateFormat: mockValidateDateFormat,
+			isDateComplete: mockIsDateComplete,
+			parseDate: mockParseDate,
+			validateField: mockValidateField,
+		})
+
+		const result = await validateManualInput('01/01/2023')
+		expect(result).toBe(true)
+		expect(mockValidateField).toHaveBeenCalledTimes(1)
+	})
 })

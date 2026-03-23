@@ -27,7 +27,7 @@ describe('useDateValidation', () => {
 		getRangeValidationError.value = ''
 	})
 
-	it('devrait retourner valid=true en mode noCalendar', () => {
+	it('devrait retourner valid=true en mode noCalendar', async () => {
 		const { validateDates } = useDateValidation({
 			noCalendar: true,
 			required: true,
@@ -42,12 +42,12 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		const result = validateDates()
+		const result = await validateDates()
 		expect(result.hasError).toBe(false)
 		expect(mockClearValidation).not.toHaveBeenCalled()
 	})
 
-	it('devrait appeler clearValidation lors de la validation', () => {
+	it('devrait appeler clearValidation lors de la validation', async () => {
 		const { validateDates } = useDateValidation({
 			required: false,
 			selectedDates,
@@ -61,11 +61,11 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		validateDates()
+		await validateDates()
 		expect(mockClearValidation).toHaveBeenCalledTimes(1)
 	})
 
-	it('devrait retourner une erreur si le champ est requis et vide', () => {
+	it('devrait retourner une erreur si le champ est requis et vide', async () => {
 		const { validateDates } = useDateValidation({
 			required: true,
 			selectedDates,
@@ -79,13 +79,13 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		const result = validateDates()
+		const result = await validateDates()
 		expect(result.hasError).toBe(true)
 		expect(result.state.errors[0]).toBe('La date est requise.')
 		expect(errors.value).toContain('La date est requise.')
 	})
 
-	it('ne devrait pas afficher d\'erreur si disableErrorHandling=true', () => {
+	it('ne devrait pas afficher d\'erreur si disableErrorHandling=true', async () => {
 		const { validateDates } = useDateValidation({
 			required: true,
 			disableErrorHandling: true,
@@ -100,11 +100,11 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		validateDates()
+		await validateDates()
 		expect(errors.value).toHaveLength(0)
 	})
 
-	it('devrait appeler validateField pour chaque date dans un tableau', () => {
+	it('devrait appeler validateField pour chaque date dans un tableau', async () => {
 		const today = new Date()
 		const tomorrow = new Date(today)
 		tomorrow.setDate(today.getDate() + 1)
@@ -125,13 +125,13 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		validateDates()
+		await validateDates()
 		expect(mockValidateField).toHaveBeenCalledTimes(2)
 		expect(mockValidateField).toHaveBeenCalledWith(today, [], [])
 		expect(mockValidateField).toHaveBeenCalledWith(tomorrow, [], [])
 	})
 
-	it('devrait appeler validateField avec les règles personnalisées', () => {
+	it('devrait appeler validateField avec les règles personnalisées', async () => {
 		selectedDates.value = new Date()
 
 		const customRules = [{ type: 'custom', options: {} }]
@@ -153,7 +153,7 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		validateDates()
+		await validateDates()
 		expect(mockValidateField).toHaveBeenCalledWith(
 			selectedDates.value,
 			customRules,
@@ -161,7 +161,7 @@ describe('useDateValidation', () => {
 		)
 	})
 
-	it('devrait ajouter l\'erreur de plage si displayRange=true et la plage est invalide', () => {
+	it('devrait ajouter l\'erreur de plage si displayRange=true et la plage est invalide', async () => {
 		selectedDates.value = [new Date(), new Date()]
 		currentRangeIsValid.value = false
 		getRangeValidationError.value = 'La date de fin doit être postérieure ou égale à la date de début'
@@ -181,12 +181,12 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		const result = validateDates()
+		const result = await validateDates()
 		expect(result.hasError).toBe(true)
 		expect(errors.value).toContain('La date de fin doit être postérieure ou égale à la date de début')
 	})
 
-	it('devrait dédoublonner les messages d\'erreur', () => {
+	it('devrait dédoublonner les messages d\'erreur', async () => {
 		selectedDates.value = [new Date(), new Date()]
 
 		// Simuler des erreurs dupliquées
@@ -216,12 +216,12 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		validateDates()
+		await validateDates()
 		// Même avec 2 appels qui ajoutent la même erreur, on ne devrait avoir qu'une seule occurrence
 		expect(errors.value).toEqual(['Erreur dupliquée'])
 	})
 
-	it('devrait forcer la validation avec validateOnSubmit', () => {
+	it('devrait forcer la validation avec validateOnSubmit', async () => {
 		isUpdatingFromInternal.value = true
 		selectedDates.value = null
 
@@ -238,8 +238,64 @@ describe('useDateValidation', () => {
 			successes,
 		})
 
-		const result = validateOnSubmit()
+		const result = await validateOnSubmit()
 		expect(result.hasError).toBe(true)
 		expect(errors.value).toContain('La date est requise.')
+	})
+
+	it('gère validateField asynchrone dans validateDates', async () => {
+		selectedDates.value = new Date('2025-01-01')
+		mockValidateField.mockResolvedValue({
+			hasError: true,
+			hasWarning: false,
+			hasSuccess: false,
+			state: { errors: ['Erreur async'], warnings: [], successes: [] },
+		})
+
+		const { validateDates } = useDateValidation({
+			selectedDates,
+			isUpdatingFromInternal,
+			currentRangeIsValid,
+			getRangeValidationError,
+			clearValidation: mockClearValidation,
+			validateField: mockValidateField,
+			errors,
+			warnings,
+			successes,
+		})
+
+		const result = await validateDates()
+		expect(result.hasError).toBe(true)
+		expect(mockValidateField).toHaveBeenCalledTimes(1)
+	})
+
+	it('validateOnSubmit attend la validation asynchrone', async () => {
+		selectedDates.value = new Date('2025-01-01')
+		mockValidateField.mockImplementation(() => new Promise((resolve) => {
+			setTimeout(() => {
+				resolve({
+					hasError: true,
+					hasWarning: false,
+					hasSuccess: false,
+					state: { errors: ['Erreur async submit'], warnings: [], successes: [] },
+				})
+			}, 0)
+		}))
+
+		const { validateOnSubmit } = useDateValidation({
+			selectedDates,
+			isUpdatingFromInternal,
+			currentRangeIsValid,
+			getRangeValidationError,
+			clearValidation: mockClearValidation,
+			validateField: mockValidateField,
+			errors,
+			warnings,
+			successes,
+		})
+
+		const result = await validateOnSubmit()
+		expect(result.hasError).toBe(true)
+		expect(mockValidateField).toHaveBeenCalledTimes(1)
 	})
 })
