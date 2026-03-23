@@ -32,6 +32,9 @@
 		showPreviewBtn?: boolean
 		tag?: string
 		locales?: typeof defaultLocales
+		seeLabel?: string
+		deleteLabel?: string
+		importLabel?: string
 	}>(), {
 		fileName: undefined,
 		message: undefined,
@@ -43,6 +46,9 @@
 		showPreviewBtn: false,
 		tag: 'div',
 		locales: () => defaultLocales,
+		seeLabel: 'Voir le fichier',
+		deleteLabel: 'Supprimer le fichier',
+		importLabel: 'Importer le fichier',
 	})
 
 	defineSlots<{
@@ -135,7 +141,7 @@
 					:aria-label="locales.importLabel(title)"
 					@click="$emit('upload', itemId)"
 				>
-					<span>{{ locales.importLabel(title) }}</span>
+					<span>{{ importLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -151,7 +157,7 @@
 					:aria-label="locales.seeLabel(title)"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ locales.seeLabel(title) }}</span>
+					<span>{{ seeLabel + ' ' + title }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -167,7 +173,7 @@
 					:aria-label="locales.deleteLabel(title)"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ locales.deleteLabel(title) }}</span>
+					<span>{{ deleteLabel + ' ' + title }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"

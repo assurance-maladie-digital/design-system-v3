@@ -161,6 +161,44 @@ const meta = {
 				},
 			},
 		},
+		'seeLabel': {
+			description: 'Label du bouton de prévisualisation',
+			control: 'text',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Voir le fichier',
+				},
+			},
+		},
+		'deleteLabel': {
+			description: 'Label du bouton de suppression',
+			control: 'text',
+			table: {
+				category: 'props',
+				type: { summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Supprimer le fichier',
+				},
+			},
+		},
+		'importLabel': {
+			description: 'Label du bouton d\'upload',
+			control: 'text',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'Importer le fichier',
+				},
+			},
+		},
 	},
 	parameters: {
 		controls: {
