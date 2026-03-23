@@ -145,4 +145,24 @@ describe('SyAutocomplete – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations when hideDetails is true', async () => {
+		const wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: '1',
+				items,
+				label: 'Filtrer par option',
+				textKey: 'text',
+				valueKey: 'value',
+				hideDetails: true,
+				hasSuccess: true,
+				successMessages: ['Sélection valide'],
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyAutocomplete – hideDetails', {
+			ignoreRules: ['region'],
+		})
+	})
 })
