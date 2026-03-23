@@ -1,10 +1,13 @@
 import { provide, inject, ref, type InjectionKey, type Ref } from 'vue'
 
 // Type pour les composants pouvant être validés
-export interface ValidatableComponent {
+export type ValidatableComponent = {
 	validateOnSubmit: () => Promise<boolean> | boolean
 	clearValidation?: () => void
 	reset?: () => void
+	$props?: {
+		label?: string
+	}
 }
 
 // Clé d'injection pour le registre des composants validables
@@ -47,18 +50,28 @@ export function useFormValidation() {
 	// Fonction pour nettoyer les validations de tous les composants enregistrés
 	const clearAll = () => {
 		if (validatableComponents.value.length === 0) return
-		validatableComponents.value.forEach((component) => {
+		validatableComponents.value.forEach((component: ValidatableComponent) => {
 			if (component.clearValidation) {
-				component.clearValidation()
+				try {
+					component.clearValidation()
+				}
+				catch (error) {
+					console.warn('Error clearing validation for field: ' + (component?.$props?.label ?? 'unknown'), error)
+				}
 			}
 		})
 	}
 
 	const resetAll = () => {
 		if (validatableComponents.value.length === 0) return
-		validatableComponents.value.forEach((component) => {
+		validatableComponents.value.forEach((component: ValidatableComponent) => {
 			if (component.reset) {
-				component.reset()
+				try {
+					component.reset()
+				}
+				catch (error) {
+					console.warn('Error resetting field: ' + (component?.$props?.label ?? 'unknown'), error)
+				}
 			}
 		})
 	}
