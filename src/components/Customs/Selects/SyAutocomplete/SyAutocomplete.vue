@@ -385,7 +385,7 @@
 	const getOptionId = (index: number) => `${optionIdPrefixed.value}-${index}`
 
 	const resultsLiveText = computed(() => {
-		if (!hasInteracted.value) return ''
+		if (!hasInteracted.value) return
 		if (props.loading) return 'Chargement des résultats'
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
