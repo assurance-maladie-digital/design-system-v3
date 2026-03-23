@@ -1209,6 +1209,12 @@ export const ValidateOnBlur: Story = {
 			const value = ref(args.modelValue)
 			const fieldRef = ref()
 
+			watch(() => args.modelValue, (newValue) => {
+				if (value.value !== newValue) {
+					value.value = newValue
+				}
+			})
+
 			async function handleSubmit() {
 				const isValid = await fieldRef.value?.validateOnSubmit()
 				alert(isValid ? 'Formulaire valide !' : 'Formulaire invalide, veuillez corriger les erreurs.')
@@ -1223,9 +1229,8 @@ export const ValidateOnBlur: Story = {
 				</p>
 				<SyTextField
 					ref="fieldRef"
-					v-model="value"
 					v-bind="args"
-					@update:model-value="args.modelValue = $event"
+					v-model="value"
 				/>
 				<div class="mt-4">
 					<VBtn type="submit" color="primary">

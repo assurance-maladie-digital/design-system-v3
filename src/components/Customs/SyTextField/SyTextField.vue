@@ -185,7 +185,7 @@
 		: [],
 	)
 	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: toRef(props, 'modelValue'),
+		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
