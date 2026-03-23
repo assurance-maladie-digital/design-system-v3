@@ -246,9 +246,6 @@
 </script>
 
 <template>
-	errors {{ errors }}<br>
-	successes {{ successes }}<br>
-	- isValidateOnBlur{{ isValidateOnBlur }}
 	<SyTextField
 		v-bind="Object.fromEntries(Object.entries(options).filter(([key]) => key !== 'btn' && key !== 'icon' && key !== 'variant'))"
 		:id="passwordFieldId"
