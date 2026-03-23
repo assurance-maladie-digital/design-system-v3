@@ -60,11 +60,8 @@ export function useFormValidation() {
 	const resetAll = () => {
 		if (validatableComponents.value.length === 0) return
 		validatableComponents.value.forEach((component) => {
-			try {
-				component.reset?.()
-			}
-			catch {
-				// no-op: un composant peut ne pas implémenter reset
+			if (component.reset) {
+				component.reset()
 			}
 		})
 	}
