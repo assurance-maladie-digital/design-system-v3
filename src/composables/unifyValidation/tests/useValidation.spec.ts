@@ -852,6 +852,233 @@ describe('useValidation (unifyValidation)', () => {
 	})
 
 	describe('syform integration', () => {
+		it('uses SyForm validate() with a registered validatable child', async () => {
+			const params = makeParams({
+				useVuetifyValidation: false as const,
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis SyForm fnc' } }]),
+			})
+
+			let result!: ReturnType<typeof useValidation>
+
+			const FieldUnderTest = defineComponent({
+				setup() {
+					result = useValidation(params as Parameters<typeof useValidation>[0])
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { modelValue: params.modelValue, onInput }
+				},
+				template: `<input data-test="field" :value="modelValue" @input="onInput">`,
+			})
+
+			const wrapper = mount(defineComponent({
+				components: { SyForm, FieldUnderTest },
+				template: `
+					<SyForm data-test="syform">
+						<FieldUnderTest />
+					</SyForm>
+				`,
+			}))
+
+			await nextTick()
+			expect(result.errors.value).toEqual([])
+
+			const syFormVm = wrapper.getComponent(SyForm).vm as {
+				validate: () => Promise<boolean>
+				clearValidation: () => void
+			}
+
+			const invalid = await syFormVm.validate()
+			expect(invalid).toBe(false)
+			expect(result.errors.value).toContain('Requis SyForm fnc')
+
+			await wrapper.get('[data-test="field"]').setValue('ok')
+			const valid = await syFormVm.validate()
+			expect(valid).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('uses SyForm clearValidation() with a registered validatable child', async () => {
+			const params = makeParams({
+				useVuetifyValidation: false as const,
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis SyForm clear' } }]),
+			})
+
+			let result!: ReturnType<typeof useValidation>
+
+			const FieldUnderTest = defineComponent({
+				setup() {
+					result = useValidation(params as Parameters<typeof useValidation>[0])
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { modelValue: params.modelValue, onInput }
+				},
+				template: `<input data-test="field" :value="modelValue" @input="onInput">`,
+			})
+
+			const wrapper = mount(defineComponent({
+				components: { SyForm, FieldUnderTest },
+				template: `
+					<SyForm data-test="syform">
+						<FieldUnderTest />
+					</SyForm>
+				`,
+			}))
+
+			await nextTick()
+
+			const syFormVm = wrapper.getComponent(SyForm).vm as {
+				validate: () => Promise<boolean>
+				clearValidation: () => void
+			}
+
+			await syFormVm.validate()
+			expect(result.errors.value).toContain('Requis SyForm clear')
+
+			syFormVm.clearValidation()
+			await nextTick()
+			expect(result.errors.value).toEqual([])
+
+			wrapper.unmount()
+		})
+
+		it('uses SyForm reset() with a registered validatable child — clears errors, resets modelValue and emits reset', async () => {
+			const params = makeParams({
+				useVuetifyValidation: false as const,
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis SyForm reset' } }]),
+			})
+
+			let result!: ReturnType<typeof useValidation>
+
+			const FieldUnderTest = defineComponent({
+				setup() {
+					result = useValidation(params as Parameters<typeof useValidation>[0])
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { modelValue: params.modelValue, onInput }
+				},
+				template: `<input data-test="field" :value="modelValue" @input="onInput">`,
+			})
+
+			const wrapper = mount(defineComponent({
+				components: { SyForm, FieldUnderTest },
+				setup() {
+					const onReset = () => {
+						params.modelValue.value = ''
+					}
+
+					return { onReset }
+				},
+				template: `
+					<SyForm data-test="syform" @reset="onReset">
+						<FieldUnderTest />
+					</SyForm>
+				`,
+			}))
+
+			await nextTick()
+
+			const syFormVm = wrapper.getComponent(SyForm).vm as {
+				validate: () => Promise<boolean>
+				reset: () => void
+			}
+
+			// Fill the field then validate so errors are empty
+			await wrapper.get('[data-test="field"]').setValue('filled')
+			await syFormVm.validate()
+			expect(result.errors.value).toEqual([])
+			expect(params.modelValue.value).toBe('filled')
+
+			// Reset: clears errors, resets modelValue via @reset handler, emits reset
+			syFormVm.reset()
+			await nextTick()
+
+			expect(result.errors.value).toEqual([])
+			expect(params.modelValue.value).toBe('')
+			expect(wrapper.getComponent(SyForm).emitted('reset')).toHaveLength(1)
+
+			wrapper.unmount()
+		})
+
+		it('uses SyForm reset() with useVuetifyValidation — clears errors, resets modelValue and emits reset', async () => {
+			const params = {
+				modelValue: ref<unknown>(''),
+				readonly: ref(false),
+				disabled: ref(false),
+				required: ref(false),
+				isValidateOnBlur: ref(true),
+				showSuccessMessages: ref(true),
+				disableErrorHandling: ref(false),
+				label: ref('Mon champ'),
+				focused: ref(false),
+				useVuetifyValidation: true as const,
+				rules: ref([(v: unknown) => !!v || 'Requis SyForm Vuetify reset']),
+				maxErrors: ref(1),
+			}
+
+			let result!: ReturnType<typeof useValidation>
+
+			const FieldUnderTest = defineComponent({
+				setup() {
+					result = useValidation(params)
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { modelValue: params.modelValue, onInput }
+				},
+				template: `<input data-test="field" :value="modelValue" @input="onInput">`,
+			})
+
+			const wrapper = mount(defineComponent({
+				components: { SyForm, FieldUnderTest },
+				setup() {
+					const onReset = () => {
+						params.modelValue.value = ''
+					}
+
+					return { onReset }
+				},
+				template: `
+					<SyForm data-test="syform" @reset="onReset">
+						<FieldUnderTest />
+					</SyForm>
+				`,
+			}))
+
+			await nextTick()
+
+			const syFormVm = wrapper.getComponent(SyForm).vm as {
+				validate: () => Promise<boolean>
+				reset: () => void
+			}
+
+			// Fill the field then validate so errors are empty
+			await wrapper.get('[data-test="field"]').setValue('filled')
+			await syFormVm.validate()
+			expect(result.errors.value).toEqual([])
+			expect(params.modelValue.value).toBe('filled')
+
+			// Reset: clears errors, resets modelValue via @reset handler, emits reset
+			syFormVm.reset()
+			await nextTick()
+
+			expect(result.errors.value).toEqual([])
+			expect(params.modelValue.value).toBe('')
+			expect(wrapper.getComponent(SyForm).emitted('reset')).toHaveLength(1)
+
+			wrapper.unmount()
+		})
+
 		it('validates custom rules when SyForm emits submit', async () => {
 			const params = makeParams({
 				useVuetifyValidation: false as const,
