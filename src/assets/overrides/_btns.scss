@@ -1,3 +1,5 @@
+@use '@/assets/apTokens';
+
 .v-btn {
 	text-transform: inherit !important;
 	font-weight: 700 !important;
@@ -12,4 +14,10 @@
 
 .v-btn.v-tab {
 	text-transform: uppercase !important;
+}
+
+.theme-ap .v-btn {
+	&:hover {
+		background-color: apTokens.$colors-interactive-positive-secondary-action-hover !important;
+	}
 }
