@@ -203,7 +203,7 @@
 	<div class="number-filter-container">
 		<SyTextField
 			v-model="modelValue"
-			:label="header.title"
+			:label="header.title || ''"
 			type="text"
 			:clearable="inputConfig?.clearable ?? clearable"
 			:density="inputConfig?.density ?? density"

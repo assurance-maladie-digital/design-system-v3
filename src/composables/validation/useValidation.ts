@@ -36,6 +36,7 @@ export interface ValidationResult {
  * @returns Un objet contenant les états et méthodes de validation
  */
 export function useValidation(options: ValidationOptions = { showSuccessMessages: true }) {
+	console.log('validate')
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])

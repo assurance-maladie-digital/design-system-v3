@@ -279,17 +279,9 @@ const meta = {
 			description: 'Largeur du champ',
 			control: { type: 'text' },
 		},
-		'validation': {
-			description: 'Valide le champ avec la valeur donnée',
-			type: '(value: string | number | null) => void',
-		},
 		'validateOnSubmit': {
-			description: 'Valide le champ lors de la soumission du formulaire',
-			type: '() => void',
-		},
-		'checkErrorOnBlur': {
-			description: 'Vérifie les erreurs lors de la perte de focus',
-			type: '() => void',
+			description: 'Valide le champ avec la valeur donnée',
+			type: '(value: string | number | null) => Promise<void>',
 		},
 		'append': {
 			description: 'Slot pour ajouter du contenu à droite du champ',

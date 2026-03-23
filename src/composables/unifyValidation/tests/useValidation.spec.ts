@@ -117,10 +117,18 @@ describe('useValidation (unifyValidation)', () => {
 	describe('validate()', () => {
 		describe('when useVuetifyValidation = false', () => {
 			it('returns true and clears state when readonly is true', async () => {
-				const params = makeParams({ readonly: ref(true) })
+				const params = makeParams({
+					readonly: ref(false),
+					customRules: ref([{ type: 'required', options: { message: 'Requis readonly' } }]),
+					modelValue: ref(''),
+				})
 				const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-				result.errors.value = ['Une erreur']
+				const invalid = await result.validate()
+				expect(invalid).toBe(false)
+				expect(result.errors.value).toContain('Requis readonly')
+
+				params.readonly.value = true
 				const valid = await result.validate()
 
 				expect(valid).toBe(true)
@@ -128,10 +136,18 @@ describe('useValidation (unifyValidation)', () => {
 			})
 
 			it('returns true and clears state when disabled is true', async () => {
-				const params = makeParams({ disabled: ref(true) })
+				const params = makeParams({
+					disabled: ref(false),
+					customRules: ref([{ type: 'required', options: { message: 'Requis disabled' } }]),
+					modelValue: ref(''),
+				})
 				const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-				result.errors.value = ['Une erreur']
+				const invalid = await result.validate()
+				expect(invalid).toBe(false)
+				expect(result.errors.value).toContain('Requis disabled')
+
+				params.disabled.value = true
 				const valid = await result.validate()
 
 				expect(valid).toBe(true)
@@ -589,12 +605,18 @@ describe('useValidation (unifyValidation)', () => {
 
 	describe('additional coverage', () => {
 		it('clears warnings and successes when validate() short-circuits on readonly', async () => {
-			const params = makeParams({ readonly: ref(true) })
+			const params = makeParams({
+				readonly: ref(false),
+				customRules: ref([{ type: 'required', options: { message: 'Requis readonly short-circuit' } }]),
+				modelValue: ref(''),
+			})
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-			result.errors.value = ['e']
-			result.warnings.value = ['w']
-			result.successes.value = ['s']
+			const invalid = await result.validate()
+			expect(invalid).toBe(false)
+			expect(result.errors.value).toContain('Requis readonly short-circuit')
+
+			params.readonly.value = true
 
 			const valid = await result.validate()
 			expect(valid).toBe(true)
@@ -604,11 +626,23 @@ describe('useValidation (unifyValidation)', () => {
 		})
 
 		it('hasSuccess is false when successes exist but warnings also exist', async () => {
-			const params = makeParams()
+			const params = makeParams({
+				modelValue: ref('ok'),
+				hasWarningProp: ref(true),
+				customRules: ref([]),
+				customSuccessRules: ref([
+					{
+						type: 'custom',
+						validator: (value: unknown) => value === 'ok',
+						options: { successMessage: 'ok' },
+					},
+				]),
+			})
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-			result.successes.value = ['ok']
-			result.warnings.value = ['warn']
+			await result.validate()
+			expect(result.successes.value).toContain('ok')
+			expect(result.hasWarning.value).toBe(true)
 			expect(result.hasSuccess.value).toBeFalsy()
 		})
 
@@ -876,7 +910,7 @@ describe('useValidation (unifyValidation)', () => {
 			wrapper.unmount()
 		})
 
-		it('emits reset and allows clearing validation state from parent handler', async () => {
+		it('emits reset and allows parent side effects from reset handler', async () => {
 			const params = makeParams({
 				useVuetifyValidation: false as const,
 				modelValue: ref(''),
@@ -899,9 +933,6 @@ describe('useValidation (unifyValidation)', () => {
 					const onReset = () => {
 						resetCount.value += 1
 						params.modelValue.value = ''
-						result.errors.value = []
-						result.warnings.value = []
-						result.successes.value = []
 					}
 
 					return { onSubmit, onReset, modelValue: params.modelValue, onInput }
@@ -922,9 +953,7 @@ describe('useValidation (unifyValidation)', () => {
 
 			expect(resetCount.value).toBe(1)
 			expect(params.modelValue.value).toBe('')
-			expect(result.errors.value).toEqual([])
-			expect(result.warnings.value).toEqual([])
-			expect(result.successes.value).toEqual([])
+			expect(result.errors.value).toContain('Requis SyForm reset')
 
 			wrapper.unmount()
 		})
@@ -932,10 +961,14 @@ describe('useValidation (unifyValidation)', () => {
 
 	describe('computed hasError / hasWarning / hasSuccess', () => {
 		it('hasError is true when errors array is non-empty', async () => {
-			const params = makeParams()
+			const params = makeParams({
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Une erreur' } }]),
+			})
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-			result.errors.value = ['Une erreur']
+			await result.validate()
+			expect(result.errors.value).toContain('Une erreur')
 			expect(result.hasError.value).toBe(true)
 		})
 
@@ -947,10 +980,21 @@ describe('useValidation (unifyValidation)', () => {
 		})
 
 		it('hasWarning is true when warnings array is non-empty', async () => {
-			const params = makeParams()
+			const params = makeParams({
+				modelValue: ref('ko'),
+				customRules: ref([]),
+				customWarningRules: ref([
+					{
+						type: 'custom',
+						validator: (value: unknown) => value === 'ok' || 'Un avertissement',
+						options: {},
+					},
+				]),
+			})
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-			result.warnings.value = ['Un avertissement']
+			await result.validate()
+			expect(result.warnings.value).toContain('Un avertissement')
 			expect(result.hasWarning.value).toBe(true)
 		})
 
@@ -962,19 +1006,42 @@ describe('useValidation (unifyValidation)', () => {
 		})
 
 		it('hasSuccess is true when successes are non-empty and no errors or warnings', async () => {
-			const params = makeParams()
+			const params = makeParams({
+				modelValue: ref('ok'),
+				customRules: ref([]),
+				customSuccessRules: ref([
+					{
+						type: 'custom',
+						validator: (value: unknown) => value === 'ok',
+						options: { successMessage: 'Succès' },
+					},
+				]),
+			})
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-			result.successes.value = ['Succès']
+			await result.validate()
+			expect(result.successes.value).toContain('Succès')
 			expect(result.hasSuccess.value).toBe(true)
 		})
 
 		it('hasSuccess is falsy when there are both successes and errors', async () => {
-			const params = makeParams()
+			const params = makeParams({
+				modelValue: ref('ok'),
+				hasErrorProp: ref(true),
+				customRules: ref([]),
+				customSuccessRules: ref([
+					{
+						type: 'custom',
+						validator: (value: unknown) => value === 'ok',
+						options: { successMessage: 'Succès' },
+					},
+				]),
+			})
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
-			result.successes.value = ['Succès']
-			result.errors.value = ['Erreur']
+			await result.validate()
+			expect(result.successes.value).toContain('Succès')
+			expect(result.hasError.value).toBe(true)
 			expect(result.hasSuccess.value).toBeFalsy()
 		})
 

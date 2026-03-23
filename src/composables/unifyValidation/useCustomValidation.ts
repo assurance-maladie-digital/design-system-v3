@@ -8,9 +8,9 @@ import type { Ref } from 'vue'
  */
 export function useCustomValidation(
 	modelValue: Ref<unknown>,
-	customRules: Ref<ValidationRule[]>,
-	customWarningRules: Ref<ValidationRule[]>,
-	customSuccessRules: Ref<ValidationRule[]>,
+	customRules: Ref<ValidationRule[]> | undefined,
+	customWarningRules: Ref<ValidationRule[]> | undefined,
+	customSuccessRules: Ref<ValidationRule[]> | undefined,
 	errors: Ref<string[]>,
 	warnings: Ref<string[]>,
 	successes: Ref<string[]>,
@@ -23,18 +23,18 @@ export function useCustomValidation(
 	const validator = useValidation({
 		showSuccessMessages: showSuccessMessages.value,
 		fieldIdentifier: label.value,
-		customRules: customRules.value,
-		warningRules: customWarningRules.value,
-		successRules: customSuccessRules.value,
+		customRules: customRules?.value,
+		warningRules: customWarningRules?.value,
+		successRules: customSuccessRules?.value,
 		disableErrorHandling: disableErrorHandling.value,
 	})
 
 	async function validate() {
 		const result = await validator.validateField(
 			modelValue.value,
-			customRules.value,
-			customWarningRules.value,
-			customSuccessRules.value,
+			customRules?.value,
+			customWarningRules?.value,
+			customSuccessRules?.value,
 		)
 
 		errors.value = result.state.errors

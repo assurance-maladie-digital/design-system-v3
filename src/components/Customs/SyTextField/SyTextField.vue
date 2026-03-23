@@ -19,7 +19,7 @@
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: string | number | null
+			modelValue?: string | number | null | undefined
 			prependIcon?: IconType
 			appendIcon?: IconType
 			prependInnerIcon?: IconType
@@ -155,6 +155,8 @@
 		'clear',
 		'prepend-icon-click',
 		'append-icon-click',
+		'focus',
+		'blur',
 	])
 
 	const lastEmittedModelValue = ref(props.modelValue)
@@ -575,8 +577,8 @@
 				'success-field': hasSuccess,
 				'basic-field': !hasError && !hasWarning && !hasSuccess
 			}"
-			@focus="focused = true"
-			@blur="focused = false"
+			@focus="focused = true; emit('focus')"
+			@blur="focused = false; emit('blur')"
 			@input="(e: Event) => emit('input', e)"
 			@keydown="(e: KeyboardEvent) => emit('keydown', e)"
 		>

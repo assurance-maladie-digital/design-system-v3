@@ -1,11 +1,11 @@
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
-import { computed, isRef, ref, toValue, watch, type Ref } from 'vue'
+import { computed, ref, toValue, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
 
 export interface FieldValidationProps {
-	modelValue: unknown
+	modelValue?: unknown
 	readonly?: boolean
 	disabled?: boolean
 	required?: boolean
@@ -101,25 +101,9 @@ export function useValidation(params: {
 			validate: async () => true,
 		}
 	}
-	const errors = ref<string[]>([])
-	const warnings = ref<string[]>([])
-	const successes = ref<string[]>([])
-
-	if (isRef(params.errorMessages)) {
-		watch(params.errorMessages, (newVal) => {
-			errors.value = newVal || []
-		}, { immediate: true })
-	}
-	if (isRef(params.warningMessages)) {
-		watch(params.warningMessages, (newVal) => {
-			warnings.value = newVal || []
-		}, { immediate: true })
-	}
-	if (isRef(params.successMessages)) {
-		watch(params.successMessages, (newVal) => {
-			successes.value = newVal || []
-		}, { immediate: true })
-	}
+	const innerErrors = ref<string[]>([])
+	const innerWarnings = ref<string[]>([])
+	const innerSuccesses = ref<string[]>([])
 
 	let vuetifyValidator: ReturnType<typeof useVuetifyValidationComposable> | null = null
 
@@ -128,7 +112,7 @@ export function useValidation(params: {
 			params.modelValue,
 			params.rules,
 			params.disabled,
-			errors,
+			innerErrors,
 			params.hasErrorProp || ref(false),
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
@@ -142,12 +126,12 @@ export function useValidation(params: {
 
 	const customValidator = useCustomValidation(
 		params.modelValue,
-		params.customRules || ref([]),
-		params.customWarningRules || ref([]),
-		params.customSuccessRules || ref([]),
-		errors,
-		warnings,
-		successes,
+		params.customRules,
+		params.customWarningRules,
+		params.customSuccessRules,
+		innerErrors,
+		innerWarnings,
+		innerSuccesses,
 		params.showSuccessMessages,
 		params.label,
 		params.focused,
@@ -157,9 +141,9 @@ export function useValidation(params: {
 
 	async function validate(): Promise<boolean> {
 		if (params.readonly.value || params.disabled.value || params.disableErrorHandling.value) {
-			errors.value = []
-			warnings.value = []
-			successes.value = []
+			innerErrors.value = []
+			innerWarnings.value = []
+			innerSuccesses.value = []
 
 			return true
 		}
@@ -174,6 +158,19 @@ export function useValidation(params: {
 			return result.state.errors.length === 0
 		}
 	}
+
+	const errors = computed(() => [...new Set([
+		...innerErrors.value,
+		...(params.errorMessages?.value || []),
+	])])
+	const warnings = computed(() => [...new Set([
+		...innerWarnings.value,
+		...(params.warningMessages?.value || []),
+	])])
+	const successes = computed(() => [...new Set([
+		...(params.showSuccessMessages.value ? innerSuccesses.value : []),
+		...(params.successMessages?.value || []),
+	])])
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)

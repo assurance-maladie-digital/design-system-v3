@@ -252,7 +252,7 @@ describe('SyTextField', () => {
 
 		it('sets generic aria-label when no label and loading', async () => {
 			wrapper = mount(SyTextField, {
-				props: { loading: true },
+				props: { loading: true, label: '' },
 			})
 			await wrapper.vm.$nextTick()
 			const bar = wrapper.find('.v-progress-linear')
