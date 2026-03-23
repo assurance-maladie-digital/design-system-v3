@@ -35,6 +35,63 @@ const apComponents = [
     'composants-boutons-copybtn',
     'composants-boutons-downloadbtn',
 ]
+// Get stored theme or default to CNAM
+const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
+const theme = storedTheme || 'cnam'
+
+// First pass: identify if amelipro should be hidden
+const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
+// When AP theme is active, only show Amelipro components
+const isAp2026 = theme === 'ap2026'
+const isNotAp = theme !== 'ap'
+const isAp = theme === 'ap'
+const isPa = theme === 'pa'
+
+const isExactMatch = (itemId: string, stories: string[]) =>
+    stories.includes(itemId)
+
+const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
+    stories.some((story) => story.startsWith(`${itemId}-`))
+
+const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
+    stories.some((story) => itemId.startsWith(`${story}--`))
+
+
+const shouldShowApComponent = (item, itemId, theme) => {
+    if (theme === 'ap') {
+        if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
+            item.style.display = 'none'
+            return
+        }
+
+        const isComponentTree = itemId.startsWith('composants')
+
+        if (!isComponentTree) {
+            item.style.display = ''
+            return
+        }
+
+        const shouldShow =
+            isExactMatch(itemId, apComponents) ||
+            isParentOfAllowedComponent(itemId, apComponents) ||
+            isChildOfAllowedComponent(itemId, apComponents)
+
+        item.style.display = shouldShow ? '' : 'none'
+        return
+    }
+    if (isAp2026 && isExactMatch(itemId, ap2026OnlyStories)) {
+        item.style.display = 'none'
+        return
+    }
+
+    if (isNotAp && isExactMatch(itemId, apOnlyStories)) {
+        item.style.display = 'none'
+        return
+    }
+
+    item.style.display = ''
+}
+
 
 
 const applyThemeSidebar = (theme) => {
@@ -52,26 +109,7 @@ const applyThemeSidebar = (theme) => {
 				})
 			}
 
-			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
-
-			// First pass: identify if amelipro should be hidden
-            const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
-            // When AP theme is active, only show Amelipro components
-            const isAp2026 = theme === 'ap2026'
-            const isNotAp = theme !== 'ap'
-            const isAp = theme === 'ap'
-            const isPa = theme === 'pa'
-
-            const isExactMatch = (itemId: string, stories: string[]) =>
-                stories.includes(itemId)
-
-            const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
-                stories.some((story) => story.startsWith(`${itemId}-`))
-
-            const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
-                stories.some((story) => itemId.startsWith(`${story}--`))
-
-
+            const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
             // Hide or show items based on theme
             items.forEach((item) => {
@@ -91,22 +129,7 @@ const applyThemeSidebar = (theme) => {
                     item.style.display = 'none'
                 }
 
-                if (isAp) {
-                    const isComponentTree = itemId.startsWith('composants')
-
-                    if (!isComponentTree) {
-                        item.style.display = ''
-                        return
-                    }
-
-                    const shouldShow =
-                        isExactMatch(itemId, apComponents) ||
-                        isParentOfAllowedComponent(itemId, apComponents) ||
-                        isChildOfAllowedComponent(itemId, apComponents)
-
-                    item.style.display = shouldShow ? '' : 'none'
-                    return
-                }
+                shouldShowApComponent(item, itemId, theme)
 
 				// Handle amelipro components folder
 				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
@@ -354,9 +377,6 @@ const applyThemeSidebar = (theme) => {
 	}
 }
 
-// Get stored theme or default to CNAM
-const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
-
 const observeSidebar = () => {
     const attachObserver = () => {
         const sidebar = document.querySelector('.sidebar-container')
@@ -365,52 +385,13 @@ const observeSidebar = () => {
 
         const observer = new MutationObserver(() => {
             const theme = localStorage.getItem('storybook-theme')
-            const isAp2026 = theme === 'ap2026'
-            const isAp = theme === 'ap'
-            const isNotAp = theme !== 'ap'
 
             const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
-            const isExactMatch = (itemId: string, stories: string[]) =>
-                stories.includes(itemId)
-
-            const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
-                stories.some((story) => story.startsWith(`${itemId}-`))
-
-            const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
-                stories.some((story) => itemId.startsWith(`${story}--`))
-
             items.forEach((item) => {
                 const itemId = item.getAttribute('data-item-id') || ''
+                shouldShowApComponent(item, itemId, theme)
 
-                if (isAp) {
-                    const isComponentTree = itemId.startsWith('composants')
-
-                    if (!isComponentTree) {
-                        item.style.display = ''
-                        return
-                    }
-
-                    const shouldShow =
-                        isExactMatch(itemId, apComponents) ||
-                        isParentOfAllowedComponent(itemId, apComponents) ||
-                        isChildOfAllowedComponent(itemId, apComponents)
-
-                    item.style.display = shouldShow ? '' : 'none'
-                    return
-                }
-
-                if (isAp2026 && isExactMatch(itemId, ap2026OnlyStories)) {
-                    item.style.display = 'none'
-                    return
-                }
-
-                if (isNotAp && isExactMatch(itemId, apOnlyStories)) {
-                    item.style.display = 'none'
-                    return
-                }
-
-                item.style.display = ''
             })
         })
 
