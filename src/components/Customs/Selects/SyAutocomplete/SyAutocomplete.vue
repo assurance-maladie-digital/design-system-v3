@@ -123,10 +123,6 @@
 			type: String,
 			default: '',
 		},
-		openOnSearch: {
-			type: Boolean,
-			default: false,
-		},
 		readonly: {
 			type: Boolean,
 			default: false,
@@ -172,7 +168,6 @@
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
 	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
-	let suppressOpenOnSearch = false
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
 	const randomId = Math.random().toString(36).slice(2)
@@ -228,7 +223,6 @@
 
 	const selectItem = (item: ItemType | string | number | null | undefined) => {
 		markInteracted()
-		suppressOpenOnSearch = true
 		updateValue(item ?? null)
 		if (props.multiple) {
 			suppressNextInput.value = true
@@ -239,23 +233,12 @@
 
 	watch(() => props.modelValue, (val) => {
 		selected.value = val as SelectValue | SelectArray
-		suppressOpenOnSearch = true
 		syncSearchFromValue()
 	}, { immediate: true })
 
 	let debounceHandle: ReturnType<typeof setTimeout> | null = null
 
 	watch(search, () => {
-		if (suppressOpenOnSearch) {
-			suppressOpenOnSearch = false
-			return
-		}
-
-		if (props.openOnSearch && !search.value) {
-			isOpen.value = false
-			return
-		}
-
 		if (!isOpen.value) {
 			isOpen.value = true
 		}
@@ -395,9 +378,7 @@
 
 	const openAndFocus = () => {
 		markInteracted()
-		if (!props.openOnSearch || search.value) {
-			isOpen.value = true
-		}
+		isOpen.value = true
 		focusInput(textFieldRef)
 	}
 
@@ -423,7 +404,6 @@
 
 	watch(isOpen, (open) => {
 		if (!open && props.multiple) {
-			suppressOpenOnSearch = true
 			search.value = ''
 		}
 	})

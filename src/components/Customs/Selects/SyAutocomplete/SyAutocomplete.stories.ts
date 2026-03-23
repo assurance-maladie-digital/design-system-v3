@@ -117,9 +117,13 @@ const meta: Meta<typeof SyAutocomplete> = {
 			control: 'text',
 			description: 'Nom de la propriété pour le texte brut de filtrage',
 		},
-		'openOnSearch': {
-			control: 'boolean',
-			description: 'Le dropdown ne s\'ouvre que lors de la saisie. À utiliser avec l\'event `@search` pour les recherches asynchrones.',
+		'onSearch': {
+			action: 'search',
+			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. Utile pour déclencher des recherches asynchrones.',
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
 		},
 		'readonly': {
 			control: 'boolean',
@@ -156,14 +160,6 @@ const meta: Meta<typeof SyAutocomplete> = {
 		'warningMessages': {
 			control: 'object',
 			description: 'Messages d\'avertissement personnalisés',
-		},
-		'onSearch': {
-			action: 'search',
-			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. À utiliser avec `open-on-search` pour les recherches asynchrones.',
-		},
-		'onUpdate:modelValue': {
-			action: 'update:modelValue',
-			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
 		},
 	},
 } as Meta<typeof SyAutocomplete>
@@ -809,7 +805,7 @@ export const LoadingState: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Simule un chargement asynchrone : grâce à `open-on-search`, le dropdown ne s\'ouvre qu\'à la saisie. L\'event `@search` déclenche la requête, le loader s\'active puis les résultats apparaissent.',
+				story: 'Simule un chargement asynchrone : au clic le dropdown s\'ouvre, le loader s\'active puis les résultats apparaissent.',
 			},
 		},
 		sourceCode: [
@@ -822,8 +818,7 @@ export const LoadingState: Story = {
     :items="items"
     label="Recherche avec chargement"
     :loading="isLoading"
-    open-on-search
-    @search="handleSearch"
+	@click="loadOnClick"
   />
 </template>
         `,
@@ -848,18 +843,12 @@ const allItems = [
   { text: 'Option 5', value: '5' },
 ]
 
-const handleSearch = (val) => {
-  if (!val) {
-    items.value = []
-    isLoading.value = false
-    if (timeout) clearTimeout(timeout)
-    return
-  }
+const loadOnClick = () => {
   isLoading.value = true
   items.value = []
   if (timeout) clearTimeout(timeout)
   timeout = setTimeout(() => {
-    items.value = allItems.filter(i => i.text.toLowerCase().includes(val.toLowerCase()))
+    items.value = allItems
     isLoading.value = false
   }, 1000)
 }
@@ -870,7 +859,6 @@ const handleSearch = (val) => {
 	},
 	args: {
 		label: 'Recherche avec chargement',
-		openOnSearch: true,
 	},
 	render: (args) => {
 		return {
@@ -889,23 +877,17 @@ const handleSearch = (val) => {
 					{ text: 'Option 5', value: '5' },
 				]
 
-				const handleSearch = (val: string) => {
-					if (!val) {
-						items.value = []
-						isLoading.value = false
-						if (timeout) clearTimeout(timeout)
-						return
-					}
+				const loadOnClick = () => {
 					isLoading.value = true
 					items.value = []
 					if (timeout) clearTimeout(timeout)
 					timeout = setTimeout(() => {
-						items.value = allItems.filter(i => i.text.toLowerCase().includes(val.toLowerCase()))
+						items.value = allItems
 						isLoading.value = false
 					}, 1000)
 				}
 
-				return { args, selectedValue, isLoading, items, handleSearch }
+				return { args, selectedValue, isLoading, items, loadOnClick }
 			},
 			template: `
 				<div class="pa-4">
@@ -914,7 +896,7 @@ const handleSearch = (val) => {
 						v-bind="args"
 						:items="items"
 						:loading="isLoading"
-						@search="handleSearch"
+						@click="loadOnClick"
 					/>
 				</div>
 			`,
