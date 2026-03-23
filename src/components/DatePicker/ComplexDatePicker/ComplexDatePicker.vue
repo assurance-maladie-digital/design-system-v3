@@ -353,16 +353,16 @@
 	watch(() => props.customRules, () => {
 		if (selectedDates.value !== null) {
 			// Retarder légèrement pour s'assurer que les computed sont mis à jour
-			setTimeout(() => {
+			setTimeout(async () => {
 				clearValidation()
 				const datesToValidate = Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value]
-				datesToValidate.forEach((date) => {
-					validateField(
+				for (const date of datesToValidate) {
+					await Promise.resolve(validateField(
 						date,
 						props.customRules,
 						props.customWarningRules,
-					)
-				})
+					))
+				}
 			}, 5)
 		}
 	}, { deep: true })
@@ -404,9 +404,9 @@
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
 	})
 
-	const updateSelectedDates = (date: Date | null) => {
+	const updateSelectedDates = async (date: Date | null) => {
 		if (date !== null) {
-			const validationResult = validateField(date, props.customRules, props.customWarningRules)
+			const validationResult = await Promise.resolve(validateField(date, props.customRules, props.customWarningRules))
 			if (validationResult.hasError) {
 				errors.value = validationResult.state.errors
 				return
@@ -646,7 +646,7 @@
 		},
 		setCurrentDate: (date: Date) => {
 			preventCloseOnInternalUpdate.value = true
-			updateSelectedDates(date)
+			void updateSelectedDates(date)
 			queueMicrotask(() => {
 				preventCloseOnInternalUpdate.value = false
 			})
@@ -943,12 +943,12 @@
 	/**
 	 * Public API
 	 */
-	const validateOnSubmit = (): boolean => {
+	const validateOnSubmit = async (): Promise<boolean> => {
 		if (props.noCalendar) {
-			return dateTextInputRef.value?.validateOnSubmit() || false
+			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() || false)
 		}
-		const textInputValid = dateCalendarTextInputRef.value?.validateOnSubmit() || false
-		validateDates(true)
+		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() || false)
+		await Promise.resolve(validateDates(true))
 		return textInputValid && errors.value.length === 0
 	}
 
