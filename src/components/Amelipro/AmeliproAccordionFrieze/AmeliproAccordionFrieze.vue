@@ -289,7 +289,7 @@
 								:id="`${uniqueId}-btn-${item.uniqueId}`"
 								class="w-100 item-empty"
 							>
-								<span class="d-block font-weight-semibold">{{ item.title }}</span>
+								<span class="d-block">{{ item.title }}</span>
 								<span class="d-flex justify-center align-center item-btn__link-style-text">
 									{{ item.linkStyleText }}
 								</span>
@@ -304,7 +304,7 @@
 								:tabindex="currentSlide === index ? '0' : '-1'"
 								@click="emitOpenCloseEvent(item.uniqueId)"
 							>
-								<span class="d-block font-weight-semibold">{{ item.title }}</span>
+								<span class="d-block">{{ item.title }}</span>
 								<span class="d-flex justify-center align-center item-btn__link-style-text">
 									{{ item.linkStyleText }}
 

@@ -1,8 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-
 import Captcha from '../Captcha.vue'
-import { vuetify } from '@tests/unit/setup'
 
 describe('Captcha', () => {
 	afterEach(() => {
@@ -18,9 +16,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -60,9 +55,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -101,9 +93,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -124,9 +113,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -163,9 +149,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -193,9 +176,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -221,9 +201,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -251,9 +228,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -278,9 +252,6 @@ describe('Captcha', () => {
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
-			global: {
-				plugins: [vuetify],
-			},
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',

@@ -7,11 +7,18 @@
 	import type { CookieTypes, Cookie } from '../types'
 	import { locales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
-	defineProps<{
+	withDefaults(defineProps<{
 		type: CookieTypes
 		tableItems: Cookie[]
-	}>()
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelRadioGroup?: 1 | 2 | 3 | 4 | 5 | 6
+
+	}>(), {
+		headingLevel: 2,
+		headingLevelRadioGroup: 3,
+	})
 
 	const status = defineModel<boolean | undefined>()
 
@@ -93,9 +100,12 @@
 
 <template>
 	<div class="vd-cookies-information">
-		<h2 class="text-subtitle-1 font-weight-bold mb-2">
+		<SyHeading
+			:class="headingLevel === 2 ? 'text-subtitle-1 font-weight-bold mb-2' : 'font-weight-bold mb-2'"
+			:level="headingLevel"
+		>
 			{{ locales[type].title }}
-		</h2>
+		</SyHeading>
 
 		<p class="mb-4">
 			{{ locales[type].description }}
@@ -129,14 +139,13 @@
 			</CookiesTable>
 		</details>
 
-		<div
+		<SyHeading
 			:id="`radio-group-${type}`"
-			role="heading"
-			aria-level="3"
+			:level="headingLevelRadioGroup"
 			class="vd-cookies-information__heading"
 		>
 			{{ locales.fieldLabel(locales[type].title) }}
-		</div>
+		</SyHeading>
 
 		<VRadioGroup
 			v-if="type !== 'essentials'"

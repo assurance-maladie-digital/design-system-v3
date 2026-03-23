@@ -312,14 +312,16 @@
 	padding: 0;
 }
 
-// Styles pour le bouton de suppression
-.remove-chip {
+.sy-chip-list .remove-chip {
 	padding: 0 !important;
 	min-width: auto !important;
 	width: auto !important;
 	height: auto !important;
 	flex-shrink: 0 !important;
+}
 
+// Styles pour le bouton de suppression
+.remove-chip {
 	// Assurer que l'icône reste visible en zoom texte 200%
 	:deep(.v-icon) {
 		font-size: 1rem !important;

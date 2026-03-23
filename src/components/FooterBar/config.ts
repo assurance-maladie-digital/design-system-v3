@@ -3,7 +3,7 @@ import type { VariantType, DensityType } from '@/types/vuetifyTypes'
 export const config = {
 	footer: {
 		elevation: 3,
-		color: 'parma-darken60',
+		color: 'var(--footer-background)',
 		height: 'auto',
 	},
 	goTopBtn: {
@@ -11,7 +11,7 @@ export const config = {
 		density: 'compact' as DensityType,
 		icon: 'true',
 		variant: 'text' as VariantType,
-		color: 'parma-darken60',
+		color: 'var(--footer-background)',
 	},
 	goTopBtnIcon: {
 		color: 'white',

@@ -16,6 +16,11 @@ const meta: Meta<typeof DialogBox> = {
 		},
 	},
 	argTypes: {
+		'headingLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+			description: 'Niveau de titre pour le titre de la boîte de dialogue',
+		},
 		'modelValue': {
 			control: 'boolean',
 			description: 'Afficher la boîte de dialogue, a utiliser avec `v-model`',
@@ -203,6 +208,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
+		'headingLevel': 2,
 		'modelValue': false,
 		'title': 'DialogBox title',
 		'default': 'DialogBox content',
@@ -277,6 +283,7 @@ export const Default: Story = {
 
 export const ButtonTexts: Story = {
 	args: {
+		'headingLevel': 2,
 		'modelValue': false,
 		'title': 'DialogBox title',
 		'default': 'DialogBox content',
@@ -417,6 +424,7 @@ export const HideActions: Story = {
 
 export const Persistent: Story = {
 	args: {
+		'headingLevel': 2,
 		'modelValue': false,
 		'title': 'DialogBox title',
 		'default': 'DialogBox content',
@@ -491,6 +499,7 @@ export const ActionsSlot: Story = {
 		'modelValue': false,
 		'title': 'DialogBox title',
 		'default': 'DialogBox content',
+		'headingLevel': 2,
 		'onCancel': fn(),
 		'onConfirm': fn(),
 		'onUpdate:modelValue': fn(),
@@ -565,6 +574,7 @@ export const ActionsSlot: Story = {
 
 export const TitleSlot: Story = {
 	args: {
+		'headingLevel': 2,
 		'modelValue': false,
 		'default': 'DialogBox content',
 		'onCancel': fn(),
@@ -639,6 +649,7 @@ export const TitleSlot: Story = {
 
 export const Width: Story = {
 	args: {
+		'headingLevel': 2,
 		'modelValue': false,
 		'title': 'DialogBox title',
 		'default': 'DialogBox content',
@@ -710,6 +721,7 @@ export const Width: Story = {
 
 export const VuetifyOptions: Story = {
 	args: {
+		'headingLevel': 2,
 		'modelValue': false,
 		'title': 'DialogBox title',
 		'default': 'DialogBox content',
@@ -829,6 +841,7 @@ export const VuetifyOptions: Story = {
 
 export const Draggable: Story = {
 	args: {
+		'headingLevel': 2,
 		'modelValue': false,
 		'title': 'DialogBox title',
 		'default': 'DialogBox content',

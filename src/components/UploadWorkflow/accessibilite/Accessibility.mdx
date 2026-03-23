@@ -1,12 +1,63 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as Stories from '../UploadWorkflow.stories.ts';
 import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
+<AccessibilityGuideLayout
+	componentName="UploadWorkflow"
+  iconSrc={AccessibilityIcon}
+>
+  <CriteriaSection>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+  <ul>
+    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h4, défini dans l’implémentation du composant.</li>
+      <code>&lt;UploadWorkflow
+          :heading-level="4" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA)</li>
+  </ul>
+</CriteriaCard>
+</CriteriaSection>
+  <CriteriaSection>
+    <CriteriaCard icon="🔍" title="Structure sémantique">
+      <ul>
+        <li><strong>Niveaux de titres personnalisables</strong> : Permet de choisir le niveau de titre de la zone de contenu.</li>
+        <li><strong>Dialog</strong> : Voir la page d'accessibilité des dialogues pour plus d'informations.</li>
+        <li><strong>Liste des fichiers</strong> : Utilisation des balises <code>ul</code> et <code>li</code> pour présenter les fichiers téléchargés.</li>
+        <li><strong>Actions</strong> : Utilisation des balises <code>button</code> et <code>role="button"</code> pour les actions disponibles.</li>
+        <li><strong>Champs de fichier</strong> : Utilisation de <code>input type="file"</code>, <code>label</code> et <code>accept</code> pour les champs de téléchargement de fichiers.</li>
+      </ul>
+    </CriteriaCard>
 
-<br />
+    <CriteriaCard icon="⌨️" title="Navigation clavier complète">
+      <ul>
+        <li><strong>Boutons d'actions</strong> : Utilisation des touches Espace et Entrée.</li>
+        <li><strong>Modal</strong> : Navigation complète au clavier dans les dialogues, y compris la gestion du focus et des raccourcis clavier pour fermer les modals.</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="UploadWorkflow">
+    <Story name="Default" />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li><strong>Utiliser dans une balise de formulaire</strong> : Intégrer le composant dans une balise <code>form</code> ou le composant <code>SyForm</code> pour la sémantique et l'accessibilité.</li>
+      <li><strong>Fournir des messages d'erreur clairs</strong> : Utiliser des messages d'erreur explicites et accessibles pour informer les utilisateurs des problèmes de téléchargement.</li>
+      <li><strong>Renseigner le bon niveau de titre</strong> : Choisir le niveau de titre approprié pour la zone de contenu afin de maintenir une structure sémantique claire.</li>
+      <li><strong>Gérer les états de téléchargement</strong> : Fournir des indications visuelles et textuelles pour les différents états de téléchargement, y compris les erreurs et les succès.</li>
+    </ul>
+  </BestPracticesSection>
+
+</AccessibilityGuideLayout>

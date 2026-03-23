@@ -247,13 +247,8 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 			// Pour tous les SVG:
 			// 1. Toujours supprimer role="img"
 			svg.removeAttribute('role')
-			// 2. Toujours s'assurer que aria-hidden="true" est présent
-			if (config.isDecorative) {
-				svg.setAttribute('aria-hidden', 'true')
-			}
-			else {
-				svg.removeAttribute('aria-hidden')
-			}
+			// 2. Toujours masquer le SVG pour éviter un double énoncé, le conteneur porte le label si nécessaire
+			svg.setAttribute('aria-hidden', 'true')
 		}
 	}
 }

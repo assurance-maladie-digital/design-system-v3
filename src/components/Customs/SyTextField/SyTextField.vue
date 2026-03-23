@@ -76,6 +76,8 @@
 			disableClickButton?: boolean
 			autocomplete?: string
 			helpText?: string
+			maxlength?: string | number
+			title?: string | false
 		} & FieldValidationProps>(),
 		{
 			modelValue: undefined,
@@ -131,6 +133,8 @@
 			disableClickButton: true,
 			autocomplete: 'off',
 			helpText: '',
+			maxlength: undefined,
+			title: undefined,
 			...validationPropsDefaults,
 		},
 	)
@@ -146,6 +150,8 @@
 
 	const emit = defineEmits([
 		'update:modelValue',
+		'input',
+		'keydown',
 		'clear',
 		'prepend-icon-click',
 		'append-icon-click',
@@ -283,7 +289,13 @@
 		return props.helpText && hasMessages.value && !props.areDetailsHidden
 	})
 
-	// Accessible label that includes prefix and suffix content for screen readers
+	// Use title prop if provided, otherwise fall back to accessible label
+	const titleValue = computed(() => {
+		// If title is explicitly false, don't show any title
+		if (props.title === false) return undefined
+		// Otherwise use title if provided, or accessibleLabel as fallback
+		return props.title || accessibleLabel.value
+	})
 	const accessibleLabel = computed(() => {
 		let label = labelWithAsterisk.value
 
@@ -512,7 +524,7 @@
 			v-model="model"
 			:autocomplete="props.autocomplete"
 			:active="props.isActive"
-			:title="accessibleLabel"
+			:title="titleValue"
 			:aria-label="accessibleLabel"
 			:aria-required="props.required ? 'true' : undefined"
 			:base-color="props.baseColor"
@@ -533,7 +545,8 @@
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
-			:max-errors
+			:maxlength="props.maxlength"
+			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			:min-width="props.minWidth"
@@ -564,6 +577,8 @@
 			}"
 			@focus="focused = true"
 			@blur="focused = false"
+			@input="(e: Event) => emit('input', e)"
+			@keydown="(e: KeyboardEvent) => emit('keydown', e)"
 		>
 			<!-- Prepend -->
 			<template
@@ -643,6 +658,14 @@
 				</slot>
 			</template>
 
+			<!-- Default slot passthrough: renders inside v-field__input (flex-wrap container) -->
+			<template
+				v-if="$slots.default"
+				#default
+			>
+				<slot />
+			</template>
+
 			<!-- Prepend inner -->
 			<template #prepend-inner>
 				<slot name="prepend-inner">
@@ -694,6 +717,16 @@
 
 			<template #details>
 				<slot name="details" />
+			</template>
+
+			<template #loader="{ color: loaderColor, isActive: loaderActive }">
+				<VProgressLinear
+					v-if="loaderActive"
+					indeterminate
+					rounded
+					:color="loaderColor"
+					:aria-label="props.label ? `Chargement de ${props.label}` : 'Chargement en cours'"
+				/>
 			</template>
 		</VTextField>
 

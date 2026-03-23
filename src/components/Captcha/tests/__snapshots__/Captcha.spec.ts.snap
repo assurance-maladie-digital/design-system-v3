@@ -100,56 +100,9 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
             ">
               <div class="v-field__overlay"></div>
               <div class="v-field__loader">
-                <div
-                  aria-hidden="true"
-                  aria-valuemax="100"
-                  aria-valuemin="0"
-                  class="
-                    v-locale--is-ltr
-                    v-progress-linear
-                    v-theme--light
-                  "
-                  role="progressbar"
-                  style="
-                    top: 0px;
-                    height: 0px;
-                    --v-progress-linear-height: 2px;
-                  "
-                >
-                  <!---->
-                  <div
-                    class="v-progress-linear__background"
-                    style="opacity: NaN;"
-                  ></div>
-                  <div
-                    class="v-progress-linear__buffer"
-                    style="
-                      opacity: NaN;
-                      width: 0%;
-                    "
-                  ></div>
-                  <transition-stub
-                    appear="false"
-                    css="true"
-                    name="fade-transition"
-                    persisted="false"
-                  >
-                    <div class="v-progress-linear__indeterminate">
-                      <div class="
-                        long
-                        v-progress-linear__indeterminate
-                      "></div>
-                      <div class="
-                        short
-                        v-progress-linear__indeterminate
-                      "></div>
-                    </div>
-                  </transition-stub>
-                  <!---->
-                </div>
+                <!-- v-if -->
               </div>
               <div class="v-field__prepend-inner">
-                <!---->
                 <!-- v-if -->
                 <!-- v-if -->
               </div>
@@ -159,22 +112,26 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               >
                 <!---->
                 <label
+                  aria-hidden="false"
                   class="
                     v-field-label
                     v-label
                   "
-                  for="input-v-2"
+                  for="input-v-3"
+                  id="input-v-3-label"
                 >
                   <!---->
                   Caractères de l’audio
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-2-messages"
+                  aria-describedby="input-v-3-messages"
                   aria-label="Caractères de l’audio"
+                  aria-labelledby="input-v-3-label"
                   autocomplete="off"
                   class="v-field__input"
-                  id="input-v-2"
+                  direction="horizontal"
+                  id="input-v-3"
                   title="Caractères de l’audio"
                   type="text"
                 />
@@ -186,7 +143,6 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                 <!-- v-if -->
                 <!-- v-if -->
                 <!-- v-if -->
-                <!---->
               </div>
               <div class="v-field__outline">
                 <div class="v-field__outline__start"></div>
@@ -198,7 +154,6 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                       v-field-label--floating
                       v-label
                     "
-                    for="input-v-2"
                   >
                     <!---->
                     Caractères de l’audio
@@ -215,7 +170,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
               appear="false"
               class="v-messages"
               css="true"
-              id="input-v-2-messages"
+              id="input-v-3-messages"
               name="slide-y-transition"
               persisted="false"
               tag="div"
@@ -487,56 +442,9 @@ exports[`Captcha > renders correctly in image mode 1`] = `
             ">
               <div class="v-field__overlay"></div>
               <div class="v-field__loader">
-                <div
-                  aria-hidden="true"
-                  aria-valuemax="100"
-                  aria-valuemin="0"
-                  class="
-                    v-locale--is-ltr
-                    v-progress-linear
-                    v-theme--light
-                  "
-                  role="progressbar"
-                  style="
-                    top: 0px;
-                    height: 0px;
-                    --v-progress-linear-height: 2px;
-                  "
-                >
-                  <!---->
-                  <div
-                    class="v-progress-linear__background"
-                    style="opacity: NaN;"
-                  ></div>
-                  <div
-                    class="v-progress-linear__buffer"
-                    style="
-                      opacity: NaN;
-                      width: 0%;
-                    "
-                  ></div>
-                  <transition-stub
-                    appear="false"
-                    css="true"
-                    name="fade-transition"
-                    persisted="false"
-                  >
-                    <div class="v-progress-linear__indeterminate">
-                      <div class="
-                        long
-                        v-progress-linear__indeterminate
-                      "></div>
-                      <div class="
-                        short
-                        v-progress-linear__indeterminate
-                      "></div>
-                    </div>
-                  </transition-stub>
-                  <!---->
-                </div>
+                <!-- v-if -->
               </div>
               <div class="v-field__prepend-inner">
-                <!---->
                 <!-- v-if -->
                 <!-- v-if -->
               </div>
@@ -546,22 +454,26 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               >
                 <!---->
                 <label
+                  aria-hidden="false"
                   class="
                     v-field-label
                     v-label
                   "
-                  for="input-v-1"
+                  for="input-v-2"
+                  id="input-v-2-label"
                 >
                   <!---->
                   Caractères de l’image
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-1-messages"
+                  aria-describedby="input-v-2-messages"
                   aria-label="Caractères de l’image"
+                  aria-labelledby="input-v-2-label"
                   autocomplete="off"
                   class="v-field__input"
-                  id="input-v-1"
+                  direction="horizontal"
+                  id="input-v-2"
                   title="Caractères de l’image"
                   type="text"
                 />
@@ -573,7 +485,6 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                 <!-- v-if -->
                 <!-- v-if -->
                 <!-- v-if -->
-                <!---->
               </div>
               <div class="v-field__outline">
                 <div class="v-field__outline__start"></div>
@@ -585,7 +496,6 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                       v-field-label--floating
                       v-label
                     "
-                    for="input-v-1"
                   >
                     <!---->
                     Caractères de l’image
@@ -602,7 +512,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
               appear="false"
               class="v-messages"
               css="true"
-              id="input-v-1-messages"
+              id="input-v-2-messages"
               name="slide-y-transition"
               persisted="false"
               tag="div"

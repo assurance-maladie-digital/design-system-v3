@@ -1,15 +1,34 @@
 import { Meta, Story } from '@storybook/blocks'
 import * as HeaderBarStories from '../HeaderBar.stories';
 import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={HeaderBarStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
 
-
-<div class="mt-2">
+<AccessibilityGuideLayout
+	componentName="HeaderBar"
+	iconSrc={AccessibilityIcon}
+>
+		<div class="mt-6">
 <p>Rapport d’audit manuel : <a href="/audits/HeaderBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{color:'#0C41BD'}}>issue #643</a>)</p>
 </div>
+<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+  <ul>
+    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h2, défini dans l’implémentation du composant.</li>
+      <code>&lt;HeaderBar
+          :heading-level="2" /&gt; </code>
+    
+    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
+  </ul>
+</CriteriaCard>
+</AccessibilityGuideLayout>

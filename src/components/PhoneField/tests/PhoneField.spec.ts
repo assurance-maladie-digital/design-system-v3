@@ -18,6 +18,8 @@ describe('PhoneField', () => {
 		const input = wrapper.find('input')
 		await input.setValue('1234567890')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		// change est émis au blur, pas à chaque frappe
+		await input.trigger('blur')
 		expect(wrapper.emitted('change')).toBeTruthy()
 	})
 
@@ -53,6 +55,69 @@ describe('PhoneField', () => {
 		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
 	})
 
+	it('keeps a consistent success message before and after blur when withCountryCode is true', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				withCountryCode: true,
+				isValidatedOnBlur: false,
+				modelValue: '',
+			},
+		})
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		const input = textField.find('input')
+		await input.setValue('0123456789')
+		await wrapper.vm.$nextTick()
+
+		const messageBeforeBlur = textField.find('.v-messages__message')
+		expect(messageBeforeBlur.exists()).toBe(true)
+		expect(messageBeforeBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+		expect(messageBeforeBlur.text()).not.toBe('Le champ Numéro de téléphone est valide.')
+
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+
+		const messageAfterBlur = textField.find('.v-messages__message')
+		expect(messageAfterBlur.exists()).toBe(true)
+		expect(messageAfterBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+	})
+
+	it('trims input to the expected phoneLength', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				withCountryCode: true,
+				modelValue: '',
+			},
+		})
+
+		wrapper.vm.dialCode = { code: '+27', abbreviation: 'ZA', country: 'South Africa', phoneLength: 9, mask: '### ### ###' }
+		await wrapper.vm.$nextTick()
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		const input = textField.find('input')
+		await input.setValue('01234567890')
+		await wrapper.vm.$nextTick()
+
+		const lastModelValueEmission = wrapper.emitted('update:modelValue')?.at(-1)?.[0]
+		expect(typeof lastModelValueEmission).toBe('string')
+		expect(String(lastModelValueEmission).replace(/\D/g, '').length).toBe(9)
+	})
+
+	it('keeps counter max aligned with dial code phoneLength (+27 => 9)', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				withCountryCode: true,
+				modelValue: '',
+			},
+		})
+
+		wrapper.vm.dialCode = { code: '+27', abbreviation: 'ZA', country: 'South Africa', phoneLength: 9, mask: '### ### ###' }
+		await wrapper.vm.$nextTick()
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.props('counter')).toBe(9)
+	})
+
 	it('applies default phone mask correctly', async () => {
 		const wrapper = mount(PhoneField, {
 			props: { modelValue: '0619123456' },
@@ -76,6 +141,10 @@ describe('PhoneField', () => {
 			},
 		})
 
+		// Vider le code pays manuellement (France est sélectionnée par défaut)
+		wrapper.vm.dialCode = ''
+		await wrapper.vm.$nextTick()
+
 		const result = await wrapper.vm.validateOnSubmit()
 
 		expect(result).toBe(false)
@@ -91,7 +160,8 @@ describe('PhoneField', () => {
 		})
 		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
 		await wrapper.vm.$nextTick()
-		expect(wrapper.vm.phoneMask).toBe('###-###-####')
+		// dialCode is normalized against the canonical indicatifs list by code
+		expect(wrapper.vm.phoneMask).toBe('### ### ####')
 		expect(wrapper.vm.counter).toBe(10)
 	})
 
@@ -221,13 +291,14 @@ describe('PhoneField', () => {
 			},
 		})
 
-		const dialCodeValue = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
+		const dialCodeValue = { code: '+34', abbreviation: 'ES', country: 'Spain', phoneLength: 9, mask: '### ### ###' }
 		wrapper.vm.dialCode = dialCodeValue
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:selectedDialCode')).toBeTruthy()
 		const emittedEvents = wrapper.emitted('update:selectedDialCode')
-		expect(emittedEvents && emittedEvents[0]?.[0]).toEqual(dialCodeValue)
+		const lastEmitted = emittedEvents && emittedEvents[emittedEvents.length - 1]?.[0]
+		expect(lastEmitted).toHaveProperty('code', dialCodeValue.code)
 	})
 
 	it('validates phone number on submit', async () => {
@@ -288,7 +359,8 @@ describe('PhoneField', () => {
 		wrapper.vm.dialCode = { code: '+44', abbreviation: 'UK', country: 'United Kingdom', phoneLength: 11, mask: '### ### #####' }
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.vm.counter).toBe(11)
+		// dialCode is normalized against the canonical indicatifs list by code
+		expect(wrapper.vm.counter).toBe(10)
 	})
 
 	it('handles disabled state correctly', async () => {
@@ -351,7 +423,8 @@ describe('PhoneField', () => {
 			},
 		})
 
-		expect(wrapper.vm.dialCode).toBe('')
+		// France est sélectionnée par défaut quand withCountryCode=true
+		expect(wrapper.vm.dialCode).toMatchObject({ code: '+33' })
 
 		await wrapper.setProps({
 			dialCodeModel: { code: '+1', country: 'USA', abbreviation: 'US', phoneLength: 10, mask: '###-###-####' },
@@ -778,6 +851,10 @@ describe('PhoneField', () => {
 					countryCodeRequired: true,
 				},
 			})
+
+			// Vider le code pays manuellement (France est sélectionnée par défaut)
+			wrapper.vm.dialCode = ''
+			await wrapper.vm.$nextTick()
 
 			// Sans code pays, la validation échoue
 			const isValidWithoutCountry = await wrapper.vm.validateOnSubmit()

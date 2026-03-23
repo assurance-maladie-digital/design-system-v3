@@ -179,7 +179,7 @@ Pour répondre aux objectifs de mise en conformité des interfaces utilisateurs 
 
 <div className="key-element" style={{ marginBottom: '3rem', borderBottom: 'none' }}>
   <h3>👥 Accompagnement</h3>
-  <p>Accompagnement personnalisé des équipes-produits sur le sujet de l'accessibilité numérique.</p>
+  <p>Accompagnement personnalisé des équipes-produits sur le sujet de l'accessibilité numérique et réalisations d'audits.</p>
 </div>
 
 <div className="info-section">
@@ -195,12 +195,12 @@ Pour répondre aux objectifs de mise en conformité des interfaces utilisateurs 
     
     <div className="process-step">
       <h4>Anticipation des erreurs</h4>
-      <p>L'objectif est d'anticiper les erreurs et diluer l'effort de mise en conformité tout au long du processus de fabrication afin de ne pas attendre le résultat de l'audit pour réécrire le produit.</p>
+      <p>L'objectif est d'anticiper les erreurs et diluer l'effort de mise en conformité tout au long du processus de fabrication afin de ne pas attendre le résultat de l'audit pour réécrire le produit. Un temps de corrections doit être prévu par l'équipe produit entre la phase pré-audit et la phase audit.</p>
     </div>
     
     <div className="process-step">
       <h4>Audit et recommandations</h4>
-      <p>Une fois le produit éligible, l'équipe experte de la Filière Digital réalise un audit et communique à l'équipe-produit un rapport comportant des recommandations.</p>
+      <p>Une fois le produit éligible, l'équipe experte de la Filière Digital réalise un audit et communique à l'équipe-produit un rapport comportant des recommandations. Il pourra être demandé un contre-audit après une phase de corrections pilotée par l'équipe produit.</p>
     </div>
     
     <div className="process-step">
@@ -212,6 +212,25 @@ Pour répondre aux objectifs de mise en conformité des interfaces utilisateurs 
   <div className="alert">
     <h4 className="alert-title">À noter</h4>
     <p>Conscient que tous les produits ne peuvent pas utiliser dans l'immédiat le Design System thème Cnam ou thème Portail Agent, nous avons conçu le kit de pré-audit pour qu'il puisse fonctionner en autonomie.</p>
+  </div>
+
+  <div className="image-container">
+    <img
+      src={"/etapes-accompagnement-accessibilite.png"}
+      aria-labelledby="etapes-accompagnement-accessibilite-alt"
+    />
+    <div className="image-caption" id="etapes-accompagnement-accessibilite-alt">
+      Les étapes de l'accompagnement accessibilité sont :
+      <ol>
+        <li><b>Échantillonage :</b> Sélection des pages représentatives en atelier avec la Filière Digital.</li>
+        <li><b>Pré-audit en autonomie :</b> L'équipe produit réalise une vérification automatisée et manuelle sur l'échantillon (<a href="/?path=/docs/accessibilité-kit-de-pré-audit-introduction--docs">voir la page "Introduction" du Kit de pré-audit</a>).</li>
+        <li><b>Corrections du pré-audit :</b> L'équipe produit implémente des correctifs issus des non conformités détectées en pré-audit (autonomie). La Filière Digital apporte son aide sur les solutions techniques.</li>
+        <li><b>Audit RGAA :</b> La Filière Digital réalise un audit RGAA sur le même échantillon et communique les non-conformités  (<a href="/?path=/docs/accessibilité-audit-et-contre-audit-introduction--docs">voir la page "Introduction" de l'Audit et Contre-audit</a>).</li>
+        <li><b>Corrections de l'audit :</b> L'équipe produit implémente des correctifs issus des non-conformités détectées en audit. La Filière Digital apporte son aide sur les solutions techniques.</li>
+        <li><b>Contre-audit RGAA :</b> Si besoin, la Filière Digital réalise un contre-audit RGAA suite aux corrections, en se concentrant sur les non conformités relevées en audit (<a href="/?path=/docs/accessibilité-audit-et-contre-audit-introduction--docs">voir la page "Introduction" de l'Audit et Contre-audit</a>).</li>
+        <li><b>Déclaration d'accessibilité :</b> La Filière Digital aide pour la publication de la déclaration d'accessibilité, comportant le niveau de conformités, des moyens de recours et le schéma pluriannuel.</li>
+      </ol>
+    </div>
   </div>
 </div>
 

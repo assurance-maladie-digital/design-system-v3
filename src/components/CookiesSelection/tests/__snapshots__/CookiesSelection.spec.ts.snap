@@ -136,6 +136,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies requis
@@ -224,14 +225,15 @@ exports[`CookiesSelection > renders correctly 1`] = `
           <!---->
         </div>
       </details>
-      <div
-        aria-level="3"
-        class="vd-cookies-information__heading"
+      <h3
+        class="
+          sy-heading
+          vd-cookies-information__heading
+        "
         id="radio-group-essentials"
-        role="heading"
       >
         Accepter les cookies de type Cookies requis, ce champ est requis.
-      </div>
+      </h3>
       <!-- v-if -->
     </div>
     <div class="
@@ -241,6 +243,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies fonctionnels
@@ -318,14 +321,15 @@ exports[`CookiesSelection > renders correctly 1`] = `
           <!---->
         </div>
       </details>
-      <div
-        aria-level="3"
-        class="vd-cookies-information__heading"
+      <h3
+        class="
+          sy-heading
+          vd-cookies-information__heading
+        "
         id="radio-group-functional"
-        role="heading"
       >
         Accepter les cookies de type Cookies fonctionnels, ce champ est requis.
-      </div>
+      </h3>
       <div class="
         v-input
         v-input--center-affix
@@ -444,6 +448,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <h2 class="
         font-weight-bold
         mb-2
+        sy-heading
         text-subtitle-1
       ">
         Cookies d’analyse
@@ -521,14 +526,15 @@ exports[`CookiesSelection > renders correctly 1`] = `
           <!---->
         </div>
       </details>
-      <div
-        aria-level="3"
-        class="vd-cookies-information__heading"
+      <h3
+        class="
+          sy-heading
+          vd-cookies-information__heading
+        "
         id="radio-group-analytics"
-        role="heading"
       >
         Accepter les cookies de type Cookies d’analyse, ce champ est requis.
-      </div>
+      </h3>
       <div class="
         v-input
         v-input--center-affix

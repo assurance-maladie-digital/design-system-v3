@@ -102,7 +102,6 @@
 		<span
 			:id="`${uniqueId}-number`"
 			aria-hidden="true"
-			class="font-weight-semibold"
 		>
 			{{ toothNumber }}
 		</span>

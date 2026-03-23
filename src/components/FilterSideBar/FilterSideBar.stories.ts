@@ -644,9 +644,6 @@ export const FilterCombination: Story = {
 		`,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

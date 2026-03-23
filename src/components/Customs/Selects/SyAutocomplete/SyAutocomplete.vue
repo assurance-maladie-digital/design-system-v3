@@ -12,6 +12,7 @@
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSelectionLogic } from './utils/useSelectionLogic'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { locales } from './locales'
 
 	const props = defineProps({
 		bgColor: {
@@ -108,7 +109,7 @@
 		},
 		noDataText: {
 			type: String,
-			default: 'Aucune option',
+			default: locales.noData,
 		},
 		placeholder: {
 			type: String,
@@ -137,6 +138,10 @@
 		successMessages: {
 			type: Array as PropType<string[] | null>,
 			default: null,
+		},
+		selectionText: {
+			type: Function as PropType<(selected: SelectArray) => string>,
+			default: undefined,
 		},
 		textKey: {
 			type: String,
@@ -261,13 +266,15 @@
 	})
 
 	const hasChips = computed(() => props.multiple && props.chips && Array.isArray(selected.value) && selected.value.length > 0)
+	const hasSelectionTextDisplay = computed(() => !!props.selectionText && Array.isArray(selected.value) && (selected.value as SelectArray).length > 0)
+	const hasMultipleSelections = computed(() => props.multiple && !props.chips && !props.selectionText && Array.isArray(selected.value) && (selected.value as SelectArray).length > 0)
+	const hasInlineSelections = computed(() => hasChips.value || hasMultipleSelections.value)
 
 	const displayValue = computed(() => {
 		if (props.multiple && !props.chips) {
-			const selectedItems = Array.isArray(selected.value) ? selected.value : []
-			const selectedTexts: string[] = selectedItems.map(item => getChipLabel(item as ItemType | string | number))
-			const prefix = selectedTexts.length > 0 ? selectedTexts.join(', ') + ', ' : ''
-			return prefix + search.value
+			if (props.selectionText || hasMultipleSelections.value) {
+				return search.value
+			}
 		}
 		return search.value
 	})
@@ -363,36 +370,11 @@
 		const inputValue = getInputValue(value)
 		if (inputValue === null) return
 
-		if (props.multiple && !props.chips) {
-			const selectedItems = Array.isArray(selected.value) ? selected.value : []
-			const labels = selectedItems.map(item =>
-				getChipLabel(item as ItemType | string | number),
-			)
+		// Ignore outside emissions (e.g. SyTextField.checkErrorOnBlur re-emitting
+		// the current value after a programmatic update): no actual user input occurred.
+		if (inputValue === search.value) return
 
-			const parts = inputValue.split(',').map(p => p.trim())
-			let matched = 0
-			for (let i = 0; i < Math.min(parts.length, labels.length); i++) {
-				if (parts[i] === labels[i]) {
-					matched++
-				}
-				else {
-					break
-				}
-			}
-
-			if (matched < selectedItems.length) {
-				const kept = selectedItems.slice(0, matched)
-				selected.value = kept
-				emit('update:modelValue', kept)
-			}
-
-			const remainingParts = parts.slice(matched).filter(p => p !== '')
-			search.value = remainingParts.join(', ')
-		}
-		else {
-			search.value = inputValue
-		}
-
+		search.value = inputValue
 		openAndFocus()
 	}
 
@@ -440,7 +422,10 @@
 </script>
 
 <template>
-	<div class="sy-autocomplete">
+	<div
+		class="sy-autocomplete"
+		:class="{ 'sy-autocomplete--has-selection-text': hasSelectionTextDisplay }"
+	>
 		<VMenu
 			v-model="isOpen"
 			transition="slide-y-transition"
@@ -459,12 +444,13 @@
 					ref="textFieldRef"
 					:model-value="displayValue"
 					:label="hasChips ? '' : label"
-					:placeholder="hasChips ? '' : placeholder"
+					:placeholder="hasInlineSelections || hasSelectionTextDisplay ? '' : placeholder"
+					:is-active="hasInlineSelections || hasSelectionTextDisplay"
 					:readonly="readonly"
 					:bg-color="bgColor"
 					:density="density"
 					:autocomplete="'off'"
-					:class="{ 'sy-autocomplete--clearable': clearable }"
+					:class="{ 'sy-autocomplete--clearable': clearable, 'sy-autocomplete__field--has-chips': hasInlineSelections }"
 					:error-messages="displayErrors"
 					:warning-messages="displayWarnings"
 					:success-messages="displaySuccesses"
@@ -473,7 +459,8 @@
 					:has-success="displayHasSuccess"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
-					:aria-label="hasChips ? label : undefined"
+					:loading="loading"
+					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
 					@blur="checkErrorOnBlur"
@@ -481,10 +468,10 @@
 				>
 					<template #append-inner>
 						<button
-							v-if="clearable && hasSelectionToClear && !hasChips"
+							v-if="clearable && hasSelectionToClear"
 							type="button"
 							class="sy-autocomplete__clear-button"
-							:aria-label="'Réinitialiser la sélection'"
+							:aria-label="locales.clearSelection"
 							@click.stop.prevent="selectItem(null)"
 						>
 							<SyIcon
@@ -499,23 +486,35 @@
 							decorative
 						/>
 					</template>
+					<template v-if="hasChips">
+						<VChip
+							v-for="(item, index) in selected as SelectArray"
+							:key="getChipKey(item, index)"
+							size="small"
+							class="sy-autocomplete__chip"
+							closable
+							:close-label="locales.removeChip(getChipLabel(item as ItemType))"
+							@click:close="() => selectItem(item as ItemType)"
+						>
+							{{ getChipLabel(item as ItemType) }}
+						</VChip>
+					</template>
+					<template v-else-if="hasMultipleSelections">
+						<span
+							v-for="(item, index) in selected as SelectArray"
+							:key="getChipKey(item, index)"
+							class="sy-autocomplete__label"
+						>
+							{{ getChipLabel(item as ItemType) }}
+						</span>
+					</template>
 					<template
-						v-if="hasChips"
+						v-if="hasSelectionTextDisplay"
 						#prepend-inner
 					>
-						<div class="sy-autocomplete__chips">
-							<VChip
-								v-for="(item, index) in selected as SelectArray"
-								:key="getChipKey(item, index)"
-								size="small"
-								class="ma-1"
-								closable
-								:close-label="`Supprimer ${getChipLabel(item as ItemType)}`"
-								@click:close="() => selectItem(item as ItemType)"
-							>
-								{{ getChipLabel(item as ItemType) }}
-							</VChip>
-						</div>
+						<span class="sy-autocomplete__selection-text">
+							{{ selectionText!(selected as SelectArray) }}
+						</span>
 					</template>
 				</SyTextField>
 			</template>
@@ -524,21 +523,14 @@
 				:id="uniqueMenuId"
 				ref="listRef"
 				role="listbox"
-				:aria-label="label"
-				:aria-labelledby="`${uniqueMenuId}-input`"
+				:aria-labelledby="`${uniqueMenuId}-input-label`"
 				:aria-multiselectable="multiple ? 'true' : undefined"
 				:style="{ minWidth: `${textFieldRef?.$el?.offsetWidth || 0}px` }"
 				tag="ul"
 				tabindex="-1"
 				@click.stop
 			>
-				<template v-if="loading">
-					<VListItem
-						title="Chargement..."
-						tag="li"
-					/>
-				</template>
-				<template v-else-if="filteredItems.length === 0 && !hideNoData">
+				<template v-if="filteredItems.length === 0 && !hideNoData && !loading">
 					<VListItem
 						:title="noDataText"
 						disabled
@@ -622,11 +614,52 @@
 	color: rgb(0 0 0 / 54%);
 }
 
-.sy-autocomplete__chips {
-	display: flex;
-	flex-direction: row !important;
-	gap: 4px;
-	align-items: center;
+.sy-autocomplete__chip {
+	margin: 2px;
+	align-self: center;
+	flex-shrink: 0;
+}
+
+/* Style spécifique pour les chips */
+:deep(.sy-autocomplete__chip .v-chip__close .v-icon__svg) {
+	fill: inherit !important;
+}
+
+.sy-autocomplete__label {
+	align-self: center;
+	white-space: nowrap;
+	flex-shrink: 0;
+	font-size: inherit;
+
+	&:not(:last-of-type)::after {
+		content: ',';
+		margin-right: 4px;
+	}
+}
+
+:deep(.sy-autocomplete__field--has-chips .v-field) {
+	height: auto;
+	min-height: var(--v-input-control-height, 56px);
+}
+
+:deep(.sy-autocomplete__field--has-chips .v-field__input) {
+	flex-wrap: wrap;
+}
+
+:deep(.sy-autocomplete__field--has-chips .v-field__input input) {
+	flex: 1 1 auto;
+	min-width: 64px;
+	align-self: center;
+}
+
+.sy-autocomplete__selection-text {
+	padding: 0 4px;
+	white-space: nowrap;
+	font-size: inherit;
+}
+
+.sy-autocomplete--has-selection-text :deep(input) {
+	caret-color: transparent !important;
 }
 
 .v-list-item.active,

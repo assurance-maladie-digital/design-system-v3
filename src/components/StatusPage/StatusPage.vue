@@ -1,8 +1,9 @@
 <script setup lang="ts">
 	import type { RouteRecordRaw } from 'vue-router'
 	import PageContainer from '../PageContainer/PageContainer.vue'
-	import { useId } from 'vue'
+	import { computed, useId } from 'vue'
 	import type { PageAriaRole } from '../types'
+	import SyHeading from '../SyHeading/SyHeading.vue'
 
 	type MessagePart =
 		| { type: 'text', value: string }
@@ -45,7 +46,7 @@
 		return parts
 	}
 
-	withDefaults(defineProps<{
+	const props = withDefaults(defineProps<{
 		pageTitle?: string
 		message?: string
 		code?: string
@@ -56,6 +57,7 @@
 		hideBtn?: boolean
 		uniqueId?: string
 		role?: PageAriaRole
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		pageTitle: undefined,
 		message: undefined,
@@ -65,9 +67,12 @@
 		btnLink: '/',
 		btnHref: undefined,
 		hideBtn: false,
-		uniqueId: useId(),
+		uniqueId: undefined,
 		role: undefined,
+		headingLevel: 1,
 	})
+
+	const uniqueId = computed(() => props.uniqueId ?? useId())
 
 	const emit = defineEmits(['btn-click'])
 	const emitClickEvent = (): void => {
@@ -100,13 +105,14 @@
 						{{ code }}
 					</div>
 
-					<h1
+					<SyHeading
 						v-if="pageTitle"
 						:id="role ? `${uniqueId}-title` : undefined"
-						class="mb-2 font-weight-bold text-h5 mb-4"
+						:class="headingLevel === 1 ? 'mb-2 font-weight-bold text-h5 mb-4' : 'mb-2 font-weight-bold mb-4'"
+						:level="headingLevel"
 					>
 						{{ pageTitle }}
-					</h1>
+					</SyHeading>
 
 					<p v-if="message">
 						<template

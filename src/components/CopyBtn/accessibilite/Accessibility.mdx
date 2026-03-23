@@ -1,15 +1,86 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../CopyBtn.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as CopyBtnStories from '../CopyBtn.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+    AuditSection
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={CopyBtnStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+    componentName="CopyBtn"
+    iconSrc={AccessibilityIcon}
+>
+    <CriteriaSection>
+        <CriteriaCard icon="🔍" title="Structure sémantique">
+            <ul>
+                <li><strong>Bouton natif</strong> : utilisation du composant<code>VBtn</code> qui génère un élément <code>&lt;button&gt;</code>, garantissant un comportement accessible par défaut.</li>
+                <li><strong>Nom accessible</strong> : l’attribut <code>aria-label</code>permet de fournir une description explicite de l’action (ex. « Copier le numéro de compte »).</li>
+                <li><strong>Association ARIA</strong> : les attributs<code>aria-owns</code> et <code>aria-controls</code> peuvent être utilisés pour relier le bouton à un élément spécifique de l’interface.</li>
+                <li><strong>Identifiants uniques</strong> : l’utilisation de<code>useId()</code> garantit des identifiants uniques pour chaque instance du composant.</li>
+            </ul>
+        </CriteriaCard>
 
+        <CriteriaCard icon="⌨️" title="Navigation clavier">
+            <ul>
+                <li><strong>Tabulation</strong> : le bouton est accessible dans l’ordre de tabulation standard de la page.</li>
+                <li><strong>Activation</strong> : l’action de copie peut être déclenchée avec la touche <kbd>Entrée</kbd> ou <kbd>Espace</kbd>.</li>
+                <li><strong>Focus visible</strong> : un style de focus est appliqué via<code>:focus-visible</code> pour assurer un repère visuel lors de la navigation clavier.</li>
+            </ul>
+        </CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/CopyBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4008" target="_blank" style={{color:'#0C41BD'}}>issue #4008</a>)</p>
-</div>
+        <CriteriaCard icon="📢" title="Retour d’information">
+            <ul>
+                <li><strong>Tooltip informatif</strong> : un message visuel indique que l’action de copie a été effectuée.</li>
+                <li><strong>Annonce aux technologies d’assistance</strong> : le message est contenu dans un élément avec <code>role="status"</code>, permettant aux lecteurs d’écran d’annoncer l’information.</li>
+                <li><strong>Durée configurable</strong> : l’affichage du tooltip peut être contrôlé via la prop <code>tooltipDuration</code>.</li>
+                <li><strong>Désactivation possible</strong> : la prop<code>hideTooltip</code> permet de désactiver l’affichage du retour visuel si nécessaire.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🧩" title="Personnalisation accessible">
+            <ul>
+                <li><strong>Slots personnalisables</strong> : possibilité de remplacer l’icône ou le contenu du tooltip via les slots<code>icon</code> et <code>tooltip</code>.</li>
+                <li><strong>Libellés adaptables</strong> : les propriétés<code>ariaLabel</code> et <code>ariaOwns</code> permettent d’adapter les descriptions selon le contexte.</li>
+                <li><strong>Nettoyage du contenu copié</strong> : la prop<code>separatorsToRemove</code> permet de retirer des caractères visuels (ex. espaces ou tirets) avant la copie.</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
+
+    <DemoSection componentName="CopyBtn">
+        <Primary/>
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Fournir un <strong>aria-label explicite</strong> décrivant clairement l’action (ex. « Copier l’adresse email »).</li>
+            <li>Conserver un <strong>retour d’information visible ou vocal</strong>après l’action de copie pour informer l’utilisateur.</li>
+            <li>Si une icône seule est utilisée, toujours garantir la présence d’un<strong>nom accessible</strong>.</li>
+            <li>Veiller à une <strong>taille de cible suffisante</strong>(au moins 44px) pour les interactions tactiles.</li>
+            <li>S’assurer que le contenu copié correspond bien à ce que l’utilisateur attend (ex. numéro sans espaces).</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/WCAG22/quickref/#name-role-value" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les Name, role, value</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG22/Techniques/aria/ARIA22" target="_blank" rel="noopener noreferrer">WAI-ARIA – rôle « status »</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 - Focus Visible</a></li>
+        </ul>
+    </ResourcesSection>
+
+    <AuditSection>
+
+        <div class="mt-2">
+            <p>Rapport d’audit manuel : <a href="/audits/CopyBtn.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></p>
+            <p style={{color: 'grey', fontSize: '14px', marginTop: '0px'}}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4008" target="_blank" style={{color: '#0C41BD'}}>issue #4008</a>)</p>
+        </div>
+
+    </AuditSection>
+</AccessibilityGuideLayout>

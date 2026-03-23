@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import StatusPage from '../../StatusPage/StatusPage.vue'
 import MaintenancePage from '../MaintenancePage.vue'
 
@@ -24,6 +24,23 @@ describe('MaintenancePage', () => {
 		expect(statusPage.props('pageTitle')).toBeDefined()
 		expect(statusPage.props('message')).toBeDefined()
 		expect(statusPage.props('code')).toBeDefined()
+	})
+
+	it('uses a generated uniqueId', () => {
+		const wrapper = mount(MaintenancePage)
+
+		expect(wrapper.find('.vd-page-container').attributes('id')).toMatch(/^[-a-z0-9]+-container$/)
+	})
+
+	it('passes a custom uniqueId prop to StatusPage', () => {
+		const wrapper = shallowMount(MaintenancePage, {
+			props: {
+				uniqueId: 'custom-id',
+			},
+		})
+		const statusPage = wrapper.findComponent(StatusPage)
+
+		expect(statusPage.props('uniqueId')).toBe('custom-id')
 	})
 
 	it('renders default illustration when no slot is provided', () => {

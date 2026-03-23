@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, vi, afterEach } from 'vitest'
+import { ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -8,14 +9,14 @@ import StatusPage from '../../StatusPage/StatusPage.vue'
 
 const themeLocales = {
 	pageTitle: 'Maintenance en cours',
-	message: 'L’application n’est pas disponible pour le moment.',
+	message: 'L\'application n\'est pas disponible pour le moment.',
 	code: '503',
 	src: '/img/maintenance.svg',
 }
 
 vi.mock('@/utils/theme', () => ({
 	useThemeLocales: () => ({
-		themeLocales,
+		themeLocales: ref(themeLocales),
 	}),
 }))
 

@@ -4,11 +4,23 @@
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import { locales } from './locales'
 
+	const props = withDefaults(defineProps<{
+		page: number
+		pageCount: number
+		itemsPerPage: number
+		itemsLength: number
+		itemsPerPageOptions?: number[]
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	}>(), {
+		itemsPerPageOptions: undefined,
+		headingLevel: 2,
+	})
+
 	// Reference to the SySelect component
 	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
 
 	// Items per page options - standard options and current value
-	const itemsPerPageOptions = computed(() => {
+	const formatedItemsPerPageOptions = computed(() => {
 		// Use provided itemsPerPageOptions or default standard options
 		const baseOptions = props.itemsPerPageOptions || [5, 10, 25, 50, 100]
 		// Filter out -1 from base options since we'll handle it separately
@@ -39,14 +51,6 @@
 
 		return options
 	})
-
-	const props = defineProps<{
-		page: number
-		pageCount: number
-		itemsPerPage: number
-		itemsLength: number
-		itemsPerPageOptions?: number[]
-	}>()
 
 	const emit = defineEmits<{
 		/**
@@ -120,6 +124,7 @@
 			v-if="pageCount > 1"
 			:model-value="page"
 			:pages="pageCount"
+			:heading-level="headingLevel"
 			:visible="5"
 			:label="locales.pagination.paginationNavAriaLabel"
 			class="pagination"
@@ -138,10 +143,11 @@
 
 		<div class="rows-per-page">
 			<span class="rows-per-page-label">{{ locales.pagination.itemsPerPageText }}</span>
+
 			<SySelect
 				ref="selectRef"
 				v-model="localItemsPerPage"
-				:items="itemsPerPageOptions"
+				:items="formatedItemsPerPageOptions"
 				hide-details
 				hide-messages
 				density="compact"

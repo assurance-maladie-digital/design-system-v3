@@ -1,6 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 
 const meta = {
@@ -44,11 +44,11 @@ const meta = {
 		},
 		'autocompleteCountryCode': {
 			control: 'text',
-			description: 'Valeur de l\'attribut autocomplete pour le champ indicatif pays (par défaut: "tel-country-code")',
+			description: 'Valeur de l\'attribut `autocomplete` pour le champ indicatif pays. Utiliser `tel-country-code` (défaut) lorsque le numéro est séparé en deux champs (indicatif + numéro national), conformément à [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-country-code) et [WCAG 1.3.5](https://www.w3.org/WAI/WCAG21/quickref/#identify-input-purpose).',
 		},
 		'autocompletePhone': {
 			control: 'text',
-			description: 'Valeur de l\'attribut autocomplete pour le champ numéro de téléphone (par défaut: "tel-national")',
+			description: 'Valeur de l\'attribut `autocomplete` pour le champ numéro de téléphone. Valeurs recommandées selon le scénario :\n\n- `tel-national` (défaut) — numéro sans indicatif, lorsque le composant est en mode deux champs (`withCountryCode`).\n- `tel` — numéro complet avec indicatif intégré, pour un champ unique sans sélecteur de pays.\n- `tel-extension` — poste ou extension téléphonique.',
 		},
 		'isValidatedOnBlur': { control: 'boolean' },
 		'displayAsterisk': { control: 'boolean' },
@@ -65,7 +65,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -106,7 +106,7 @@ export const Default: Story = {
 	},
 	args: {
 		modelValue: '',
-		required: true,
+		required: false,
 		outlined: true,
 		outlinedIndicatif: true,
 		withCountryCode: true,
@@ -140,7 +140,7 @@ export const Default: Story = {
 export const Required: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -223,7 +223,7 @@ export const RequiredWithAsterisk: Story = {
 	},
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		docs: {
 			description: {
@@ -276,7 +276,7 @@ const phoneNumber = ref('')
 export const HelpText: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -399,7 +399,21 @@ const selectedDialCode = ref('')
 export const Autocomplete: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
+		},
+		docs: {
+			description: {
+				story: `
+Les attributs \`autocomplete\` permettent aux navigateurs et aux outils d'assistance de remplir automatiquement les champs avec les bonnes informations utilisateur, conformément à [WCAG 1.3.5 — Identifier la finalité de la saisie](https://www.w3.org/WAI/WCAG21/quickref/#identify-input-purpose).
+
+| Scénario | Prop à utiliser | Valeur recommandée | Source |
+|---|---|---|---|
+| **Code pays** (ex : +33) — champ séparé | \`autocompleteCountryCode\` | \`tel-country-code\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-country-code) |
+| **Numéro sans indicatif** (ex : 06 12 34 56 78) — avec \`withCountryCode\` | \`autocompletePhone\` | \`tel-national\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-national) |
+| **Numéro complet** (indicatif intégré) — sans \`withCountryCode\` | \`autocompletePhone\` | \`tel\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel) |
+| **Extension / poste** | \`autocompletePhone\` | \`tel-extension\` | [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-extension) |
+				`,
+			},
 		},
 		sourceCode: [
 			{
@@ -472,7 +486,7 @@ const phoneValue3 = ref('')
 		],
 	},
 	args: {
-		required: true,
+		required: false,
 		withCountryCode: true,
 		autocompleteCountryCode: 'tel-country-code',
 		autocompletePhone: 'tel-national',
@@ -554,7 +568,7 @@ const phoneValue3 = ref('')
 export const CustomIndicatifs: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -638,7 +652,7 @@ export const CustomIndicatifs: Story = {
 export const NotValidatedOnBlur: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -712,7 +726,7 @@ export const NotValidatedOnBlur: Story = {
 export const DisplayFormatCode: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -761,7 +775,7 @@ export const DisplayFormatCode: Story = {
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -786,7 +800,7 @@ export const DisplayFormatCode: Story = {
 export const DisplayFormatCodeAbbreviation: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -835,7 +849,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		displayFormat: 'code-abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -860,7 +874,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 export const DisplayFormatCodeCountry: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -909,7 +923,7 @@ export const DisplayFormatCodeCountry: Story = {
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -934,7 +948,7 @@ export const DisplayFormatCodeCountry: Story = {
 export const DisplayFormatCountry: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -983,7 +997,7 @@ export const DisplayFormatCountry: Story = {
 		displayFormat: 'country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -1008,7 +1022,7 @@ export const DisplayFormatCountry: Story = {
 export const DisplayFormatAbbreviation: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -1057,7 +1071,7 @@ export const DisplayFormatAbbreviation: Story = {
 		displayFormat: 'abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -1082,7 +1096,7 @@ export const DisplayFormatAbbreviation: Story = {
 export const DefaultDialCode: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -1136,7 +1150,7 @@ export const DefaultDialCode: Story = {
 	args: {
 		modelValue: '',
 		dialCodeModel: { code: '+3433', country: 'Exemple', abbreviation: 'EX', phoneLength: 10, mask: '## ## ## ## ##' },
-		required: true,
+		required: false,
 		outlined: true,
 		outlinedIndicatif: true,
 		withCountryCode: true,
@@ -1175,7 +1189,7 @@ export const DefaultDialCode: Story = {
 export const DefaultDialCodeStandard: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -1253,7 +1267,7 @@ export const DefaultDialCodeStandard: Story = {
 export const DisplayModels: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -1308,25 +1322,47 @@ export const DisplayModels: Story = {
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		readonly: false,
 		bgColor: 'white',
 	},
 	render: args => ({
 		components: { PhoneField },
 		setup() {
-			return { args }
+			const modelValue = ref(args.modelValue)
+			const selectedDialCode = ref(args.dialCodeModel)
+
+			// Sync ref -> args (pour afficher les modèles dans la story)
+			watch(modelValue, (val) => {
+				args.modelValue = val
+			})
+			watch(selectedDialCode, (val) => {
+				args.dialCodeModel = val
+			})
+			// Sync args -> ref (quand on change les controls Storybook)
+			watch(() => args.modelValue, (val) => {
+				modelValue.value = val
+			})
+			watch(() => args.dialCodeModel, (val) => {
+				selectedDialCode.value = val
+			})
+
+			return {
+				args,
+				modelValue,
+				selectedDialCode,
+			}
 		},
 		template: `
     <div class="pa-4">
       <div class="pa-4">
-        Indicatif: {{ args.dialCodeModel }}<br/>Numéro: {{ args.modelValue }}
+        Indicatif: {{ selectedDialCode }}<br/>Numéro: {{ modelValue }}
       </div>
 
       <PhoneField
         v-bind="args"
-        @update:modelValue="args.modelValue = $event"
-        @update:selectedDialCode="args.dialCodeModel = $event"
+        v-model="modelValue"
+        v-model:selectedDialCode="selectedDialCode"
       />
     </div>
   `,
@@ -1340,7 +1376,7 @@ export const DisplayModels: Story = {
 export const DisabledErrorHandling: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -1411,6 +1447,7 @@ export const DisabledErrorHandling: Story = {
 						<p>Ce champ est requis et affichera une erreur s'il est vide.</p>
 						<PhoneField
 							v-bind="args"
+							:disable-error-handling="false"
 						/>
 					</div>
 				</div>
@@ -1422,7 +1459,7 @@ export const DisabledErrorHandling: Story = {
 export const FormValidation: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -1438,7 +1475,7 @@ export const FormValidation: Story = {
 							:outlinedIndicatif="true"
 							:withCountryCode="true"
 							:country-code-required="true"
-							:isValidatedOnBlur="false"
+							:isValidatedOnBlur="true"
 							:readonly="readonly"
 							:disabled="disabled"
 						/>
@@ -1493,7 +1530,7 @@ export const FormValidation: Story = {
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidatedOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -1527,6 +1564,7 @@ export const FormValidation: Story = {
 				<div class="pa-4">
 					<form @submit.prevent="submitForm" class="d-flex flex-column">
 						<PhoneField
+							ref="phoneFieldRef"
 							v-bind="args"
 						/>
 						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>

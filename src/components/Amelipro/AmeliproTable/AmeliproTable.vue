@@ -206,7 +206,7 @@
 		>
 			<p
 				:id="`${uniqueId}-total-counter`"
-				class="d-inline-block mb-0 total-counter font-weight-semibold"
+				class="d-inline-block mb-0 total-counter"
 			>
 				<span class="d-sr-only">Nombre de lignes dans le tableau ci-après :</span>
 				{{ dataList.length }} {{ counterLabel }}

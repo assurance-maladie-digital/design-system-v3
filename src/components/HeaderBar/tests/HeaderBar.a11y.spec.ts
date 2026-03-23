@@ -16,6 +16,7 @@ describe('HeaderBar – accessibility (axe)', () => {
 	it('has no obvious axe violations with sticky header and logo', async () => {
 		const wrapper = mount(HeaderBar, {
 			props: {
+				headingLevelTitle: 1,
 				sticky: true,
 				serviceTitle: 'Synapse',
 				serviceSubtitle: 'Design System',

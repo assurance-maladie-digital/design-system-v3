@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -24,7 +24,7 @@
     "dev": "vite",
     "build": "vue-tsc -p tsconfig.app.json && vite build",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
     "lint:fix": "eslint \"src/**/*.{ts,vue}\" --fix && stylelint \"src/**/*.{css,scss,vue}\" --fix",
@@ -78,6 +78,7 @@
     "auto-changelog": "^2.4.0",
     "axe-core": "^4.11.0",
     "axios": "^1.7.7",
+    "cross-env": "^10.1.0",
     "eslint": "^9.13.0",
     "eslint-plugin-storybook": "^0.11.3",
     "eslint-plugin-vue": "^9.30.0",
@@ -112,7 +113,7 @@
   },
   "peerDependencies": {
     "vue": "^3.5.18",
-    "vuetify": "3.9.2"
+    "vuetify": "3.12.2"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
@@ -130,18 +131,23 @@
     "esbuild": "^0.25.0",
     "parse5": "7.1.2",
     "npm": "^11.8.1",
-    "undici": "^6.21.0",
-    "rollup": "^4.59.0"
+    "undici": "^6.24.0",
+    "rollup": "^4.59.0",
+    "immutable": ">=5.1.5"
   },
   "pnpm": {
     "overrides": {
       "esbuild": "^0.25.0",
-      "undici": "^6.21.0",
+      "undici": "^6.24.0",
       "glob": ">=10.5.0",
       "js-yaml": ">=4.1.1",
       "parse5": "7.1.2",
       "npm": "^11.8.1",
-      "minimatch": ">=10.2.3"
+      "minimatch": ">=10.2.3",
+      "immutable": ">=5.1.5"
+    },
+    "patchedDependencies": {
+      "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"
     }
   }
 }

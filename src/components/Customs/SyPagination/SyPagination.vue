@@ -1,8 +1,9 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Props definition
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		/**
 		 * Current page number
 		 */
@@ -23,7 +24,18 @@
 		 * ID of the element controlled by this pagination
 		 */
 		ariaControls?: string
-	}>()
+		/**
+		 * Heading level for the pagination label (for accessibility)
+		 */
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+
+	}>(), {
+		pages: undefined,
+		visible: undefined,
+		label: undefined,
+		ariaControls: undefined,
+		headingLevel: 2,
+	})
 
 	// Default values for optional props
 	const visiblePages = computed(() => props.visible || 5)
@@ -187,12 +199,13 @@
 			:aria-labelledby="uniqueId"
 			:aria-controls="ariaControls"
 		>
-			<h2
+			<SyHeading
 				:id="uniqueId"
 				class="d-sr-only"
+				:level="headingLevel"
 			>
 				{{ `${label}` }}
-			</h2>
+			</SyHeading>
 			<ul class="list">
 				<!-- First page button (optional) -->
 				<li v-if="$slots['first-page']">
@@ -371,8 +384,8 @@
 				display: inline-block;
 				padding: 0.5rem 0.75rem;
 				text-decoration: none;
-				color: tokens.$primary-base;
-				border: 1px solid tokens.$primary-base;
+				color: var(--pagination-color);
+				border: 1px solid var(--pagination-border);
 				border-radius: 4px;
 				transition: all 0.2s ease;
 				font-size: 0.875rem;
@@ -380,17 +393,19 @@
 
 				&:hover,
 				&:focus {
-					background-color: rgba(tokens.$primary-base, 0.1);
+					background-color: var(--pagination-focused-background-color);
 				}
 
 				&[aria-current='page'] {
-					background-color: tokens.$primary-base;
+					background-color: var(--pagination-background-color);
 					color: white;
 					font-weight: 500;
 				}
 
 				&.disabled {
-					color: rgb(0 0 0 / 60%); /* Increased from 40% to 60% for better contrast */
+					color: rgb(0 0 0 / 60%);
+
+					/* Increased from 40% to 60% for better contrast */
 					border-color: rgb(0 0 0 / 20%);
 					pointer-events: none;
 				}
@@ -399,7 +414,7 @@
 					border: none;
 					pointer-events: none;
 					display: inline-block;
-					color: tokens.$primary-base;
+					color: var(--pagination-ellipsis);
 					padding: 0.6rem;
 				}
 			}

@@ -2,15 +2,9 @@
 @use '@/assets/apTokens';
 @use '@/assets/tokens';
 
-.theme-ap,
-.theme-ap2026 {
-	.border-0 {
-		border: 0;
-	}
-}
-
 .theme-cnam,
 .theme-pa {
+	--footer-background: #{tokens.$parma-darken-60};
 	--alert-warning-background: #{tokens.$colors-background-warning};
 	--alert-warning-accent: #{tokens.$colors-border-warning};
 	--alert-warning-border: #{tokens.$colors-border-warning};
@@ -33,7 +27,9 @@
 	--alert-error-icon-bg: #{tokens.$colors-background-error-subdued};
 }
 
-.theme-ap {
+.theme-ap,
+.theme-ap2026 {
+	--footer-background: #{apTokens.$primary-darker};
 	--alert-background: #{apTokens.$primary-darker};
 	--alert-warning-background: #{apTokens.$colors-background-warning};
 	--alert-warning-accent: #{apTokens.$colors-border-warning};

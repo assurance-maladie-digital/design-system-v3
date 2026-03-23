@@ -76,9 +76,11 @@ exports[`AmeliproMenu > Snapshots > renders the component with all properties fi
     <v-divider-stub
       class="my-2"
       color="ap-white"
+      gradient="false"
       inset="false"
       style="opacity: 1 !important;"
       thickness="1px"
+      variant="solid"
       vertical="false"
     ></v-divider-stub>
     <ul
@@ -127,9 +129,11 @@ exports[`AmeliproMenu > Snapshots > renders the component with all properties fi
     <v-divider-stub
       class="my-2"
       color="ap-white"
+      gradient="false"
       inset="false"
       style="opacity: 1 !important;"
       thickness="1px"
+      variant="solid"
       vertical="false"
     ></v-divider-stub>
     <div>
@@ -242,9 +246,11 @@ exports[`AmeliproMenu > Snapshots > renders the component with only required pro
     <v-divider-stub
       class="my-2"
       color="ap-white"
+      gradient="false"
       inset="false"
       style="opacity: 1 !important;"
       thickness="1px"
+      variant="solid"
       vertical="false"
     ></v-divider-stub>
     <ul
@@ -257,9 +263,11 @@ exports[`AmeliproMenu > Snapshots > renders the component with only required pro
     <v-divider-stub
       class="my-2"
       color="ap-white"
+      gradient="false"
       inset="false"
       style="opacity: 1 !important;"
       thickness="1px"
+      variant="solid"
       vertical="false"
     ></v-divider-stub>
     <div>

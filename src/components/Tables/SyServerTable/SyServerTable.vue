@@ -34,6 +34,7 @@
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
+		headingLevel: 2,
 	})
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -466,6 +467,7 @@
 					<SyTablePagination
 						v-if="displayedItems.length > 0 ? displayedItemsLength : 0"
 						:page="page"
+						:heading-level="props.headingLevel"
 						:items-per-page="itemsPerPageValue"
 						:page-count="pageCount"
 						:items-length="displayedItemsLength"

@@ -116,7 +116,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -189,7 +189,7 @@ export const Default: Story = {
 export const HelpText: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -266,7 +266,7 @@ export const HelpText: Story = {
 export const Required: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -327,7 +327,7 @@ export const Required: Story = {
 export const RequiredWithAsterisk: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		docs: {
 			description: {
@@ -395,7 +395,7 @@ const items = [
 export const SlotPrepend: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -462,7 +462,7 @@ export const SlotPrepend: Story = {
 export const SlotAppend: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -562,7 +562,7 @@ export const WithTooltips: Story = {
 	},
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		docs: {
 			description: {
@@ -777,7 +777,7 @@ const options = [
 export const withCustomError: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -855,7 +855,7 @@ export const withCustomError: Story = {
 export const withCustomKey: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -936,7 +936,7 @@ export const Info: Story = {
 export const FormValidation: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		docs: {
 			description: {
