@@ -73,6 +73,7 @@ export const useFormFieldErrorHandling = (
 
 	const validateField = (value: unknown) => {
 		if (props.disableErrorHandling) {
+			validation.clearValidation()
 			return true
 		}
 
@@ -107,6 +108,12 @@ export const useFormFieldErrorHandling = (
 	watch(modelValue, (newValue) => {
 		if (!props.isValidateOnBlur) {
 			validateField(newValue)
+		}
+	})
+
+	watch(() => props.disableErrorHandling, (isDisabled) => {
+		if (isDisabled) {
+			validation.clearValidation()
 		}
 	})
 

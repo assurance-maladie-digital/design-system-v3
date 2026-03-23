@@ -333,13 +333,35 @@
 		return (textFieldRef.value?.$el as HTMLElement | undefined)?.querySelector('.v-field') ?? undefined
 	})
 
+	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling)
+
 	const externalErrors = computed(() => props.errorMessages || [])
-	const displayErrors = computed(() => externalErrors.value.length > 0 ? externalErrors.value : (hasInteracted.value ? errorHandling.errors.value : []))
-	const displayWarnings = computed(() => hasInteracted.value ? errorHandling.warnings.value : [])
-	const displaySuccesses = computed(() => hasInteracted.value ? errorHandling.successes.value : [])
-	const displayHasError = computed(() => externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value))
-	const displayHasWarning = computed(() => hasInteracted.value && errorHandling.hasWarning.value)
-	const displayHasSuccess = computed(() => hasInteracted.value && errorHandling.hasSuccess.value)
+	const displayErrors = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return externalErrors.value.length > 0
+			? externalErrors.value
+			: (hasInteracted.value ? errorHandling.errors.value : [])
+	})
+	const displayWarnings = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return hasInteracted.value ? errorHandling.warnings.value : []
+	})
+	const displaySuccesses = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return hasInteracted.value ? errorHandling.successes.value : []
+	})
+	const displayHasError = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value)
+	})
+	const displayHasWarning = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return hasInteracted.value && errorHandling.hasWarning.value
+	})
+	const displayHasSuccess = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return hasInteracted.value && errorHandling.hasSuccess.value
+	})
 
 	const validateOnSubmit = () => {
 		markInteracted()
@@ -459,6 +481,7 @@
 					:has-success="displayHasSuccess"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
+					:disable-error-handling="disableErrorHandling"
 					:loading="loading"
 					:are-details-hidden="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"

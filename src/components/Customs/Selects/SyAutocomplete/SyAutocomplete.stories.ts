@@ -1054,6 +1054,88 @@ const value2 = ref('1')
 	},
 }
 
+export const DisableErrorHandling: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<div class="d-flex flex-column gap-4">
+		<SyAutocomplete
+			v-model="value1"
+			:items="items"
+			label="Avec validation interne (défaut)"
+			required
+		/>
+
+		<SyAutocomplete
+			v-model="value2"
+			:items="items"
+			label="Validation interne désactivée"
+			required
+			disable-error-handling
+		/>
+	</div>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const items = [
+	{ text: 'Option 1', value: '1' },
+	{ text: 'Option 2', value: '2' },
+	{ text: 'Option 3', value: '3' },
+]
+
+const value1 = ref(null)
+const value2 = ref(null)
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const value1 = ref(null)
+				const value2 = ref(null)
+				return { args, value1, value2 }
+			},
+			template: `
+				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
+					<SyAutocomplete
+						v-model="value1"
+						v-bind="args"
+						label="Avec validation interne (défaut)"
+						required
+					/>
+					<SyAutocomplete
+						v-model="value2"
+						v-bind="args"
+						label="Validation interne désactivée"
+						required
+						disable-error-handling
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const ReadonlyField: Story = {
 	parameters: {
 
