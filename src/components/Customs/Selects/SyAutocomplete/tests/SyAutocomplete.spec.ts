@@ -180,7 +180,7 @@ describe('SyAutocomplete', () => {
 		await closeBtn.trigger('click')
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[]])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([null])
 	})
 
 	it('shows clear button when clearable and has selection', async () => {

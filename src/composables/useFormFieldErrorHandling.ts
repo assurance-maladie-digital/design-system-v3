@@ -76,8 +76,10 @@ export const useFormFieldErrorHandling = (
 			return true
 		}
 
-		// Ne pas valider si la valeur est null/undefined et non requise
-		if (value == null && !props.required) {
+		const isEmptyArray = Array.isArray(value) && value.length === 0
+
+		// Ne pas valider si la valeur est vide et non requise
+		if ((value == null || isEmptyArray) && !props.required) {
 			validation.clearValidation()
 			return true
 		}
