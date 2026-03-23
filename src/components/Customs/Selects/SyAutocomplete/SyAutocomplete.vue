@@ -463,7 +463,7 @@
 					:are-details-hidden="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
-					@update:modelValue="handleInput"
+					@update:model-value="handleInput"
 					@blur="checkErrorOnBlur"
 					@keydown.tab="handleTabKey"
 				>
