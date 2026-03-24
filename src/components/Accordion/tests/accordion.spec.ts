@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
-
 import Accordion from '../Accordion.vue'
 import { config } from '../config'
 
@@ -23,7 +22,7 @@ describe('Accordion', () => {
 
 	it('renders correctly', () => {
 		const wrapper = shallowMount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -34,7 +33,7 @@ describe('Accordion', () => {
 
 	it('renders the correct number of accordion items', () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -47,7 +46,7 @@ describe('Accordion', () => {
 	it('uses the correct heading level', () => {
 		const headingLevel = 3
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel,
 			},
@@ -59,7 +58,7 @@ describe('Accordion', () => {
 
 	it('toggles content visibility when button is clicked', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -82,7 +81,7 @@ describe('Accordion', () => {
 
 	it('renders string content correctly', () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: [defaultItems[0]!],
 				headingLevel: 2,
 			},
@@ -97,7 +96,7 @@ describe('Accordion', () => {
 
 	it('renders object content correctly', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: [defaultItems[2]!],
 				headingLevel: 2,
 			},
@@ -114,7 +113,7 @@ describe('Accordion', () => {
 
 	it('has correct accessibility attributes', () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -137,7 +136,7 @@ describe('Accordion', () => {
 
 	it('updates aria-expanded attribute when toggled', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -155,7 +154,7 @@ describe('Accordion', () => {
 
 	it('applies focus style when accordion is opened', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -185,7 +184,7 @@ describe('Accordion', () => {
 		})
 
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 				groupId: 'test-group',
@@ -209,7 +208,7 @@ describe('Accordion', () => {
 
 	it('applies primary color to the title', () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -224,7 +223,7 @@ describe('Accordion', () => {
 
 	it('updates tabindex when accordion is opened', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -246,7 +245,7 @@ describe('Accordion', () => {
 
 	it('renders semantic content structure for accessibility', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: [
 					{ id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
 					{
@@ -300,7 +299,7 @@ describe('Accordion', () => {
 		}
 
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 				...customOptions,
@@ -336,7 +335,7 @@ describe('Accordion', () => {
 
 	it('uses default colors from config when no custom options are provided', () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -363,7 +362,7 @@ describe('Accordion', () => {
 
 	it('can open multiple accordions simultaneously', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -387,7 +386,7 @@ describe('Accordion', () => {
 
 	it('transfers focus correctly when clicking on different accordion items', async () => {
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -417,7 +416,7 @@ describe('Accordion', () => {
 
 		// Monter le composant
 		const wrapper = mount(Accordion, {
-			propsData: {
+			props: {
 				items: defaultItems,
 				headingLevel: 2,
 			},
@@ -434,5 +433,118 @@ describe('Accordion', () => {
 
 		// Restaurer le spy
 		removeEventListenerSpy.mockRestore()
+	})
+
+	describe('v-model support', () => {
+		it('opens items specified in modelValue prop', () => {
+			const wrapper = mount(Accordion, {
+				props: {
+					items: defaultItems,
+					headingLevel: 2,
+					modelValue: ['item2'],
+				},
+			})
+
+			const contents = wrapper.findAll('.sy-accordion-content')
+			expect(contents[1]!.classes()).toContain('sy-accordion-content--open')
+			expect(contents[0]!.classes()).not.toContain('sy-accordion-content--open')
+		})
+
+		it('opens multiple items specified in modelValue', () => {
+			const wrapper = mount(Accordion, {
+				props: {
+					items: defaultItems,
+					headingLevel: 2,
+					modelValue: ['item1', 'item3'],
+				},
+			})
+
+			const contents = wrapper.findAll('.sy-accordion-content')
+			expect(contents[0]!.classes()).toContain('sy-accordion-content--open')
+			expect(contents[1]!.classes()).not.toContain('sy-accordion-content--open')
+			expect(contents[2]!.classes()).toContain('sy-accordion-content--open')
+		})
+
+		it('sets correct aria-expanded for pre-opened items', () => {
+			const wrapper = mount(Accordion, {
+				props: {
+					items: defaultItems,
+					headingLevel: 2,
+					modelValue: ['item1'],
+				},
+			})
+
+			const buttons = wrapper.findAll('.sy-accordion-button')
+			expect(buttons[0]!.attributes('aria-expanded')).toBe('true')
+			expect(buttons[1]!.attributes('aria-expanded')).toBe('false')
+		})
+
+		it('toggles an item and updates the DOM when clicked', async () => {
+			const wrapper = mount(Accordion, {
+				props: {
+					items: defaultItems,
+					headingLevel: 2,
+					modelValue: ['item1'],
+				},
+			})
+
+			// item1 is initially open
+			let contents = wrapper.findAll('.sy-accordion-content')
+			expect(contents[0]!.classes()).toContain('sy-accordion-content--open')
+
+			// Close item1
+			const firstButton = wrapper.find('.sy-accordion-button')
+			await firstButton.trigger('click')
+
+			contents = wrapper.findAll('.sy-accordion-content')
+			expect(contents[0]!.classes()).not.toContain('sy-accordion-content--open')
+		})
+
+		it('opens additional items while keeping existing ones open', async () => {
+			const wrapper = mount(Accordion, {
+				props: {
+					items: defaultItems,
+					headingLevel: 2,
+					modelValue: ['item1'],
+				},
+			})
+
+			// Open item2 as well
+			const buttons = wrapper.findAll('.sy-accordion-button')
+			await buttons[1]!.trigger('click')
+
+			const contents = wrapper.findAll('.sy-accordion-content')
+			expect(contents[0]!.classes()).toContain('sy-accordion-content--open')
+			expect(contents[1]!.classes()).toContain('sy-accordion-content--open')
+		})
+
+		it('defaults to no open items when no modelValue is provided', () => {
+			const wrapper = mount(Accordion, {
+				props: {
+					items: defaultItems,
+					headingLevel: 2,
+					modelValue: [],
+				},
+			})
+
+			const buttons = wrapper.findAll('.sy-accordion-button')
+			buttons.forEach((button) => {
+				expect(button.attributes('aria-expanded')).toBe('false')
+			})
+		})
+
+		it('sets correct tabindex on content region for pre-opened items', () => {
+			const wrapper = mount(Accordion, {
+				props: {
+					items: defaultItems,
+					headingLevel: 2,
+					modelValue: ['item1'],
+				},
+			})
+
+			const regions = wrapper.findAll('[role="region"]')
+			expect(regions[0]!.attributes('tabindex')).toBe('0')
+			expect(regions[1]!.attributes('tabindex')).toBe('-1')
+		})
 	})
 })

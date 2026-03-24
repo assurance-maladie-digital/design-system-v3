@@ -38,6 +38,8 @@
 		vuetifyOptions: () => ({}),
 	})
 
+	const openItems = defineModel<string[]>({ default: [] })
+
 	const options = useCustomizableOptions(config, props)
 
 	// Génération d'un ID unique pour cette instance d'accordéon
@@ -49,7 +51,7 @@
 		isItemOpen,
 		isItemFocused,
 		setFocus,
-	} = useAccordionState()
+	} = useAccordionState(openItems)
 
 	// Utilisation du composable pour gérer la communication entre accordéons
 	const { emitFocusChange } = useAccordionGroupCommunication(

@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from '@storybook/test'
 import Accordion from './Accordion.vue'
+import { ref } from 'vue'
 
 const meta: Meta<typeof Accordion> = {
 	title: 'Composants/Données/Accordion',
@@ -8,20 +10,40 @@ const meta: Meta<typeof Accordion> = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
-		items: {
+		'items': {
 			control: { type: 'object' },
 			description: 'Liste des éléments de l\'accordéon',
 		},
-		headingLevel: {
+		'headingLevel': {
 			control: { type: 'number', min: 1, max: 6 },
 			description: 'Niveau de titre pour les boutons de dévoilement',
 			default: 3,
 		},
-		groupId: {
+		'groupId': {
 			control: { type: 'text' },
 			description: 'Identifiant de groupe pour synchroniser le focus entre plusieurs accordions',
 			default: 'default',
 		},
+		'modelValue': {
+			control: 'object',
+			description: 'Liste des identifiants des éléments ouverts (v-model)',
+			table: {
+				type: { summary: 'string[]' },
+				category: 'props',
+				defaultValue: { summary: '[]' },
+			},
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			description: 'Événement émis lors de l\'ouverture ou la fermeture d\'un élément',
+			table: {
+				type: { summary: '(value: string[]) => void' },
+				category: 'events',
+			},
+		},
+	},
+	args: {
+		'onUpdate:modelValue': fn(),
 	},
 }
 
@@ -335,6 +357,134 @@ export const WithSlots: Story = {
 						</div>
 					</template>
 				</Accordion>
+			</div>
+		`,
+	}),
+}
+
+export const WithVModel: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				name: 'Template',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  import { Accordion } from '@cnamts/synapse'
+
+  const openItems = ref<string[]>([])
+
+  const items = [
+    { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+    { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
+    { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' },
+  ]
+
+  function openAll() {
+    openItems.value = items.map(i => i.id)
+  }
+
+  function closeAll() {
+    openItems.value = []
+  }
+</script>
+
+<template>
+  <Accordion
+    v-model="openItems"
+    :items="items"
+    :heading-level="3"
+  />
+
+  <p>Éléments ouverts : {{ openItems }}</p>
+
+  <button @click="openAll">Tout ouvrir</button>
+  <button @click="closeAll">Tout fermer</button>
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: defaultItems,
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: { Accordion },
+		setup() {
+			const openItems = ref<string[]>([])
+
+			const openAll = () => {
+				openItems.value = (args.items ?? []).map((i: { id: string }) => i.id)
+			}
+
+			const closeAll = () => {
+				openItems.value = []
+			}
+
+			return { args, openItems, openAll, closeAll }
+		},
+		template: `
+			<div class="pa-4">
+				<Accordion v-bind="args" v-model="openItems" />
+
+				<div class="mt-4" style="font-family: monospace; color: #666;">
+					Éléments ouverts : {{ openItems }}
+				</div>
+
+				<div class="mt-2 d-flex ga-2">
+					<v-btn variant="outlined" @click="openAll">Tout ouvrir</v-btn>
+					<v-btn variant="outlined" @click="closeAll">Tout fermer</v-btn>
+				</div>
+			</div>
+		`,
+	}),
+}
+
+export const PreOpened: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				name: 'Template',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  import { Accordion } from '@cnamts/synapse'
+
+  // Pré-ouvrir la section 2
+  const openItems = ref<string[]>(['item2'])
+</script>
+
+<template>
+  <Accordion
+    v-model="openItems"
+    :items="[
+      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
+      { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' },
+    ]"
+    :heading-level="3"
+  />
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: defaultItems,
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: { Accordion },
+		setup() {
+			const openItems = ref<string[]>(['item2'])
+			return { args, openItems }
+		},
+		template: `
+			<div class="pa-4">
+				<Accordion v-bind="args" v-model="openItems" />
+
+				<div class="mt-4" style="font-family: monospace; color: #666;">
+					Éléments ouverts : {{ openItems }}
+				</div>
 			</div>
 		`,
 	}),

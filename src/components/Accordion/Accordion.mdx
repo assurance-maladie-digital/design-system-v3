@@ -34,6 +34,19 @@ Vous pouvez également utiliser des slots pour personnaliser le rendu des titres
 
 <Canvas of={AccordionStories.WithSlots} />
 
+## Contrôle programmatique (v-model)
+
+Le composant supporte `v-model` pour contrôler programmatiquement les éléments ouverts.
+La valeur est un tableau de chaînes correspondant aux `id` des éléments ouverts.
+
+<Canvas of={AccordionStories.WithVModel} />
+
+## Éléments pré-ouverts
+
+Vous pouvez pré-ouvrir des éléments en initialisant le `v-model` avec les identifiants souhaités.
+
+<Canvas of={AccordionStories.PreOpened} />
+
 <div className="header">
   <h1>Accessibilité</h1>
 </div>
@@ -48,11 +61,21 @@ Le composant Accordion respecte les normes d'accessibilité ARIA :
 
 <Controls of={AccordionStories.Default} />
 
+## Événements
+
+### update:modelValue
+
+- **Type** : `(value: string[]) => void`
+- **Description** : Émis lors de l'ouverture ou la fermeture d'un élément. La valeur est le tableau mis à jour des identifiants des éléments ouverts.
+
 ## Exemple d'utilisation
 
 <Source dark code={`
 <script setup lang="ts">
+import { ref } from 'vue'
 import { Accordion } from '@cnamts/synapse'
+
+const openItems = ref<string[]>([])
 
 const accordionItems = [
   { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
@@ -71,6 +94,7 @@ const accordionItems = [
 <template>
   <main>
     <Accordion
+      v-model="openItems"
       :items="accordionItems"
       :heading-level="3"
     />
