@@ -199,6 +199,7 @@
 				height="7"
 				color="primary"
 				rounded="true"
+				:aria-label="title ? `Chargement de ${title}` : 'Chargement en cours'"
 			/>
 		</div>
 	</component>

@@ -235,6 +235,9 @@ export const Default: Story = {
 		onPreview: fn(),
 	},
 	parameters: {
+		a11y: {
+			disable: false,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -305,7 +308,7 @@ export const States: Story = {
 	},
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -377,6 +380,9 @@ export const OptionalDocument: Story = {
 		onPreview: fn(),
 	},
 	parameters: {
+		a11y: {
+			disable: false,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -453,6 +459,9 @@ export const Actions: Story = {
 		onPreview: fn(),
 	},
 	parameters: {
+		a11y: {
+			disable: false,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -550,6 +559,9 @@ export const Customization: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: false,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
