@@ -1406,6 +1406,7 @@ export const ComplexNirType: Story = {
 				name: 'Template',
 				code: `
     <template>
+	
      <NirField
       v-model="value"
       :required="false"
@@ -1431,4 +1432,29 @@ const value = ref('184027512345674')
 			},
 		],
 	},
+	render: () => ({
+		components: { NirField },
+		setup() {
+			const value = ref('712125233333340')
+
+			return { value }
+		},
+		template: `
+       
+          <div>
+            <p class="mt-2 mb-4">Pour plus d'informations sur le NirType voir la   <a href="/?path=/docs/composants-formulaires-nirfield--docs#ancre-nirtype">
+    doc
+  </a></p>
+           
+          </div>
+           <NirField
+				v-model="value"
+				:required="false"
+				numberLabel="Numéro de sécurité sociale"
+				keyLabel="Clé"
+				nirType="complexe"
+				:displayKey="true"
+			/>
+    `,
+	}),
 }
