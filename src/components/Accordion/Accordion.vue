@@ -12,7 +12,7 @@
 	interface AccordionItem {
 		id: string
 		title: string
-		content: string | Record<string, unknown>
+		content?: string | Record<string, unknown>
 		headingLevel?: number
 		disabled?: boolean
 	}
