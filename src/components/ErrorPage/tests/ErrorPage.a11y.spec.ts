@@ -22,7 +22,7 @@ describe('ErrorPage – accessibility (axe)', () => {
 	it('has no obvious axe violations with #action slot', async () => {
 		const wrapper = mount(ErrorPage, {
 			attachTo: document.body,
-			props: { hideBtn: true },
+			props: { headingLevel: 1, hideBtn: true },
 			slots: {
 				action: '<button>Retour à l\'accueil</button>',
 			},
