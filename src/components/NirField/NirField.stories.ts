@@ -1406,15 +1406,14 @@ export const ComplexNirType: Story = {
 				name: 'Template',
 				code: `
     <template>
-	
-     <NirField
-      v-model="value"
-      :required="false"
-      numberLabel="Numéro de sécurité sociale"
-      keyLabel="Clé"
-      :nirType="complexe"
-      :displayKey="true"
-     />
+		 <NirField
+		  v-model="value"
+		  :required="false"
+		  numberLabel="Numéro de sécurité sociale"
+		  keyLabel="Clé"
+		  :nirType="complexe"
+		  :displayKey="true"
+		 />
     </template>
     `,
 			},
@@ -1422,12 +1421,13 @@ export const ComplexNirType: Story = {
 				name: 'Script',
 				code: `
     <script setup lang="ts">
-     import { NirField } from '@cnamts/synapse'
-     import { ref } from 'vue'
+     	import { NirField } from '@cnamts/synapse'
+     	import { ref } from 'vue'
      
-const value = ref('184027512345674')
+		const value = ref('184027512345674')
 
-			return { value }    </script>
+		return { value }
+	</script>
     `,
 			},
 		],
@@ -1440,12 +1440,9 @@ const value = ref('184027512345674')
 			return { value }
 		},
 		template: `
-       
           <div>
-            <p class="mt-2">Cet exemple montre l'utilisation d'un NIR de type complexe. </p><p class="mb-4">Pour plus d'informations sur le NirType voir la <a href="/?path=/docs/composants-formulaires-nirfield--docs#ancre-nirtype">
-    documentation
-  </a></p>
-           
+            <p class="mt-2">Cet exemple montre l'utilisation d'un NIR de type complexe<br/>(commençant par 7).</p>
+			<p class="mb-4">Pour plus d'informations sur le NirType voir la <a href="/?path=/docs/composants-formulaires-nirfield--docs#ancre-nirtype">documentation</a>.</p>
           </div>
            <NirField
 				v-model="value"
