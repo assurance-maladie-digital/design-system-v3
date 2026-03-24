@@ -27,4 +27,26 @@ describe('StatusPage – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations with #action slot', async () => {
+		const wrapper = mount(StatusPage, {
+			attachTo: document.body,
+			props: {
+				headingLevel: 1,
+				pageTitle: 'Une erreur est survenue',
+				message: 'Un problème technique est survenu.',
+				hideBtn: true,
+			},
+			slots: {
+				action: '<button>Retour à l\'accueil</button>',
+			},
+		})
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'StatusPage – action slot', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })
