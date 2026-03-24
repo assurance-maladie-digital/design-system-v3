@@ -605,7 +605,7 @@ export const WithTooltips: Story = {
 export const MultipleSelection: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		docs: {
 			description: {
@@ -698,7 +698,7 @@ const options = [
 export const ChipsDisplay: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		docs: {
 			description: {
