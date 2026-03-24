@@ -144,7 +144,8 @@
       "parse5": "7.1.2",
       "npm": "^11.8.1",
       "minimatch": ">=10.2.3",
-      "immutable": ">=5.1.5"
+      "immutable": ">=5.1.5",
+      "flatted": ">=3.4.2"
     },
     "patchedDependencies": {
       "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"
