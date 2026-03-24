@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, inject, onMounted, onUnmounted, ref } from 'vue'
+	import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue'
 	import { useYearGrid } from './useYearGrid'
 	import { localesKey, type locales as defaultLocales } from '../locales'
 
@@ -54,6 +54,11 @@
 		}, 0)
 	})
 
+	watch(() => props.order, () => {
+		const selectedYearElement = yearSelector.value!.querySelector<HTMLElement>(`.year-${getFocusedYear()}`)
+		selectedYearElement!.focus()
+	})
+
 	onUnmounted(() => {
 		clearTimeout(focusTimeout)
 	})
@@ -80,10 +85,10 @@
 			}]"
 			:aria-pressed="year === props.modelValue"
 			@click="() => emits('update:modelValue', year)"
-			@keydown.left.prevent="selectPreviousYear"
-			@keydown.right.prevent="selectNextYear"
-			@keydown.up.prevent="selectPreviousRow"
-			@keydown.down.prevent="selectNextRow"
+			@keydown.left.prevent="props.order === 'asc' ? selectPreviousYear() : selectNextYear()"
+			@keydown.right.prevent="props.order === 'asc' ? selectNextYear() : selectPreviousYear()"
+			@keydown.up.prevent="props.order === 'asc' ? selectPreviousRow() : selectNextRow()"
+			@keydown.down.prevent="props.order === 'asc' ? selectNextRow() : selectPreviousRow()"
 			@keydown.enter.stop
 			@keydown.space.stop
 		>

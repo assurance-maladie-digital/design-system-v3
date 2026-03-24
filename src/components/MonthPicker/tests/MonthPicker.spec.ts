@@ -401,6 +401,52 @@ describe('mounthpicker', () => {
 
 				wrapper.unmount()
 			})
+
+			it('should navigate through years using arrow keys according to the yearsOrder prop', async () => {
+				const wrapper = mount(MonthPicker, {
+					props: {
+						label: 'Début du projet',
+						modelValue: '11/2025',
+						yearsOrder: 'desc',
+					},
+					attachTo: document.body,
+				})
+
+				// Wait for the VMenu to resolve the differents ref used to find the activator element
+				await nextTick()
+				await nextTick()
+
+				const toggleBtn = wrapper.find('.month-picker-input__toggle-btn')
+				await toggleBtn.trigger('click')
+
+				const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-1') // January button
+				await monthButton.trigger('click')
+
+				const yearSelector = wrapper.findComponent({ name: 'YearSelector' })
+
+				const yearButton = yearSelector.find('.year-2025')
+				await yearButton.trigger('keydown', { key: 'ArrowUp' })
+				expect(yearSelector.find('.year-2028').attributes('tabindex')).toBe('0')
+				await yearButton.trigger('keydown', { key: 'ArrowDown' })
+				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
+				await yearButton.trigger('keydown', { key: 'ArrowLeft' })
+				expect(yearSelector.find('.year-2026').attributes('tabindex')).toBe('0')
+				await yearButton.trigger('keydown', { key: 'ArrowRight' })
+				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
+
+				await wrapper.setProps({ yearsOrder: 'asc' })
+				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
+				await yearButton.trigger('keydown', { key: 'ArrowUp' })
+				expect(yearSelector.find('.year-2022').attributes('tabindex')).toBe('0')
+				await yearButton.trigger('keydown', { key: 'ArrowDown' })
+				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
+				await yearButton.trigger('keydown', { key: 'ArrowLeft' })
+				expect(yearSelector.find('.year-2024').attributes('tabindex')).toBe('0')
+				await yearButton.trigger('keydown', { key: 'ArrowRight' })
+				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
+
+				wrapper.unmount()
+			})
 		})
 
 		it ('show the years in the correct order according to the yearsOrder prop', async () => {
