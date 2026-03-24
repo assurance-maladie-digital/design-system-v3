@@ -46,9 +46,9 @@
 		showPreviewBtn: false,
 		tag: 'div',
 		locales: () => defaultLocales,
-		seeLabel: 'Voir le fichier',
-		deleteLabel: 'Supprimer le fichier',
-		importLabel: 'Importer le fichier',
+		seeLabel: defaultLocales.see,
+		deleteLabel: defaultLocales.delete,
+		importLabel: defaultLocales.import,
 	})
 
 	defineSlots<{
@@ -138,7 +138,7 @@
 					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
 					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
-					:aria-label="locales.importLabel(title)"
+					:aria-label="importLabel"
 					@click="$emit('upload', itemId)"
 				>
 					<span>{{ importLabel }}</span>
@@ -154,10 +154,10 @@
 					v-if="state === 'success' && showPreviewBtn"
 					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
-					:aria-label="locales.seeLabel(title)"
+					:aria-label="seeLabel"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ seeLabel + ' ' + title }}</span>
+					<span>{{ seeLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -170,10 +170,10 @@
 					v-if="state === 'success' && showDeleteBtn"
 					class="file-item__action file-item__action-delete text-error"
 					variant="text"
-					:aria-label="locales.deleteLabel(title)"
+					:aria-label="deleteLabel"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ deleteLabel + ' ' + title }}</span>
+					<span>{{ deleteLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"
