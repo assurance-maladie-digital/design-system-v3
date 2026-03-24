@@ -18,4 +18,21 @@ describe('ErrorPage – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations with #action slot', async () => {
+		const wrapper = mount(ErrorPage, {
+			attachTo: document.body,
+			props: { hideBtn: true },
+			slots: {
+				action: '<button>Retour à l\'accueil</button>',
+			},
+		})
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'ErrorPage – action slot', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })
