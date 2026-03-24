@@ -1442,8 +1442,8 @@ const value = ref('184027512345674')
 		template: `
        
           <div>
-            <p class="mt-2 mb-4">Pour plus d'informations sur le NirType voir la   <a href="/?path=/docs/composants-formulaires-nirfield--docs#ancre-nirtype">
-    doc
+            <p class="mt-2">Cet exemple montre l'utilisation d'un NIR de type complexe. </p><p class="mb-4">Pour plus d'informations sur le NirType voir la <a href="/?path=/docs/composants-formulaires-nirfield--docs#ancre-nirtype">
+    documentation
   </a></p>
            
           </div>
