@@ -16,16 +16,6 @@ L'accordéon standard affiche une liste d'éléments avec un titre et un contenu
 
 <Canvas of={AccordionStories.Default} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-Le composant Accordion respecte les normes d'accessibilité ARIA :
-
-- Chaque bouton de dévoilement est contenu dans un élément de titre (h1-h6)
-- Chaque bouton possède les attributs `aria-expanded` et `aria-controls`
-- Chaque section de contenu a l'attribut `role="region"` et `aria-labelledby` qui pointe vers l'ID du bouton
-
 ## API
 
 <Controls of={AccordionStories.Default} />
