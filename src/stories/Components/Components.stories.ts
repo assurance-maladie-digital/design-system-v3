@@ -26,12 +26,13 @@ export const ComponentsList: StoryObj = {
 			components: { VCard, VCardText, VCardTitle, VRow, VCol, VIcon },
 			setup() {
 				const theme = useTheme()
+                const isAp = theme.global.name.value === 'ap'
 				const components = [
 					{
 						title: 'HeaderBar',
 						description: 'Utilisé pour afficher l’en-tête d’une page ainsi qu’une barre de navigation.',
 						link: '/?path=/docs/composants-structure-headerbar--docs',
-						img: '/components/header-bar.svg',
+                        img: `/components/header-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -59,8 +60,8 @@ export const ComponentsList: StoryObj = {
 						title: 'FooterBar',
 						description: 'Utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.',
 						link: '/?path=/docs/composants-structure-footerbar--docs',
-						img: '/components/footer-bar.svg',
-						category: 'Structure',
+                        img: `/components/footer-bar${isAp ? '-ap' : ''}.svg`,
+                        category: 'Structure',
 					},
 					{
 						title: 'PageContainer',
@@ -97,6 +98,13 @@ export const ComponentsList: StoryObj = {
 						img: '/components/skip-link.svg',
 						category: 'Navigation',
 					},
+                    {
+                        title: 'SyPagination',
+                        description: 'Utilisé pour permettre la navigation entre plusieurs pages de contenu.',
+                        link: '/?path=/docs/composants-navigation-sypagination--docs',
+                        img: '/components/skip-link.svg',
+                        category: 'Navigation',
+                    },
 					{
 						title: 'BackBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de revenir à la page précédente.',
@@ -358,15 +366,12 @@ export const ComponentsList: StoryObj = {
 				const apComponents = [
 					'FooterBar',
 					'HeaderBar',
-					'HeaderToolbar',
 					'HeaderLoading',
-					'SubHeader',
 					'PageContainer',
 					'CopyBtn',
 					'DownloadBtn',
-					// 'sypagination', Pas de svg de disponible
+                    'SyPagination',
 				]
-				const isAp = theme.global.name.value === 'ap'
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
 					if (isAp) {

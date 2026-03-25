@@ -33,33 +33,19 @@ export const ApComponents: StoryObj = {
                   </VExpansionPanelTitle>
                   <VExpansionPanelText>
                     <p>
-                      Les composant de barre de tâches peuvent êtres crées en utilisant les composants Vuetify <span
-                        class="component-name"
-                    >VbtnGroup</span>, <span class="component-name">Vbtn</span> et <span class="component-name">VProgressLinear</span>.
+                      Le composant <span class="component-name">AmeliproFooter</span> est remplacé par le composant
+                      <span class="component-name">FooterBar</span> de Synapse.
+                      <br>
+                      <a href="https://cnam-design-system.netlify.app/?path=/docs/composants-structure-footerbar--docs"
+                         target="_blank" rel="noopener noreferrer"
+                      >
+                        Documentation du composant Synapse FooterBar
+                      </a>
                     </p>
-                    <ul class="mt-4">
-                      <li>
-                        <a href="https://vuetifyjs.com/api/v-btn-group" target="_blank" rel="noopener noreferrer">
-                          Documentation du composant Vuetify VbtnGroup
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://vuetifyjs.com/api/v-btn" target="_blank" rel="noopener noreferrer">
-                          Documentation du composant Vuetify Vbtn
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://vuetifyjs.com/components/progress-linear" target="_blank"
-                           rel="noopener noreferrer"
-                        >
-                          Documentation du composant Vuetify VProgressLinear
-                        </a>
-                      </li>
-                    </ul>
                     <p class="mt-4">
                       <VDivider class="pb-2"/>
-                      <a href="https://maloron.net/am/cnamuipav2/cnamui-barre-taches.htm">
-                        Documentation du composant Portail Barre de tâches correspondant
+                      <a href="https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-footer">
+                        Documentation du composant AmeliproFooter correspondant
                       </a>
                     </p>
                   </VExpansionPanelText>
@@ -68,6 +54,30 @@ export const ApComponents: StoryObj = {
                 <VExpansionPanel>
                   <VExpansionPanelTitle class="font-weight-bold">
                     HeaderBar
+                  </VExpansionPanelTitle>
+                  <VExpansionPanelText>
+                    <p>
+                      Le composant <span class="component-name">AmeliproHeader</span> est remplacé par le composant
+                      <span class="component-name">HeaderBar</span> de Synapse.
+                      <br>
+                      <a href="https://cnam-design-system.netlify.app/?path=/docs/composants-structure-headerbar--docs"
+                         target="_blank" rel="noopener noreferrer"
+                      >
+                        Documentation du composant Synapse HeaderBar
+                      </a>
+                    </p>
+                    <p class="mt-4">
+                      <VDivider class="pb-2"/>
+                      <a href="https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-header">
+                        Documentation du composant AmeliproHeader correspondant
+                      </a>
+                    </p>
+                  </VExpansionPanelText>
+                </VExpansionPanel>
+
+                <VExpansionPanel>
+                  <VExpansionPanelTitle class="font-weight-bold">
+                    Boutons
                   </VExpansionPanelTitle>
                   <VExpansionPanelText>
                     <p>
@@ -102,8 +112,8 @@ export const ApComponents: StoryObj = {
                     </p>
                     <p class="mt-6">
                       <VDivider class="pb-2"/>
-                      <a href="https://maloron.net/am/cnamuipav2/cnamui-buttons.htm">
-                        Documentation du composant Portail Buttons correspondant
+                      <a href="https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-btn">
+                        Documentation du composant AmeliproBtn correspondant
                       </a>
                     </p>
                   </VExpansionPanelText>
@@ -111,82 +121,82 @@ export const ApComponents: StoryObj = {
 
                 <VExpansionPanel>
                   <VExpansionPanelTitle class="font-weight-bold">
-                    Titres de page et de tableau
+                    Tooltips
                   </VExpansionPanelTitle>
                   <VExpansionPanelText>
                     <p>
-                      Synapse ne propose pas de remplacent au composent <span class="component-name"
-                    >Titres de page</span>, Il devra être réalisé en CSS par les développeurs.<br>
-                      Les boutons d’actions pourrons être réalisés avec le composant
-                      <a href="https://vuetifyjs.com/components/buttons" target="_blank" rel="noopener noreferrer">
-                        VBtn
-                      </a> de Vuetify.<br>
-                      Le composant
-                      <a href="https://vuetifyjs.com/api/v-badge" target="_blank" rel="noopener noreferrer">
-                        VBadge
-                      </a> pourra être utilisé pour ajouter des informations.
+                      Les tooltips de bases peuvent êtres crées en utilisant le composant <span class="component-name">Vtooltip</span>
+                      de Vuetify.
+                      <br>
+                      <a href="https://vuetifyjs.com/en/api/v-tooltip" target="_blank" rel="noopener noreferrer">
+                        Documentation du composant Vuetify Vtooltip
+                      </a>
                     </p>
+
                     <div class="mt-4">
-<pre>
-&lt;VBadge
-	color=&quot;primary&quot;
-	content=&quot;8&quot;
-	class=&quot;mb-4&quot;
-	label=&quot;8 notifications non lues&quot;
-&gt;
-	&lt;VBtn&gt;
-		Messagerie
-	&lt;/VBtn&gt;
-&lt;/VBadge&gt;
-</pre>
+								<pre>
+    &lt;v-tooltip text=&quot;Tooltip&quot;&gt;
+      &lt;template v-slot:activator=&quot;{ props }&quot;&gt;
+        &lt;v-btn v-bind=&quot;props&quot;&gt;
+          Hover Over Me
+        &lt;/v-btn&gt;
+      &lt;/template&gt;
+    &lt;/v-tooltip&gt;
+								</pre>
                     </div>
-                    <p class="mt-4">
+
+                    <p class="mt-6">
                       <VDivider class="pb-2"/>
-                      <a href="https://maloron.net/am/cnamuipav2/cnamui-titre.htm">
-                        Documentation du composant Portail Titres de page et de tableau correspondant
+                      <a href="https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tooltips">
+                        Documentation du composant AmeliproTooltips correspondant
                       </a>
                     </p>
                   </VExpansionPanelText>
                 </VExpansionPanel>
-
                 <VExpansionPanel>
                   <VExpansionPanelTitle class="font-weight-bold">
-                    Panels et sections
+                    Layout
                   </VExpansionPanelTitle>
                   <VExpansionPanelText>
                     <p>
-                      Le composant Synapse
-                      <a href="https://cnam-design-system.netlify.app/?path=/docs/composants-layout-panel--docs"
+                      Le composant <span class="component-name">AmeliproContentLayout</span> est remplacé par le
+                      composant
+                      <span class="component-name">PageContainer</span> de Synapse.
+                      <br>
+                      <a href="https://cnam-design-system.netlify.app/?path=/docs/composants-layout-pagecontainer--docs"
                          target="_blank" rel="noopener noreferrer"
                       >
-                        Accordion
+                        Documentation du composant Synapse PageContainer
                       </a>
-                      permet d’organiser sa page en différents panels.
-                    </p>
-                    <p class="mt-4">
-                      Il est également possibles d’utiliser le composant Vuetify
-                      <a href="https://vuetifyjs.com/api/v-divider" target="_blank" rel="noopener noreferrer">
-                        VDivider
-                      </a>
-                      pour séparer visuellement plusieurs sections de la page, que ce soit horizontalement ou
-                      verticalement,
-                    </p>
-                    <p class="mt-4">
-                      le composant Synapse
-                      <a href="/docs/composants-feedback-syalert--docs" target="_blank" rel="noopener noreferrer">
-                        SyAlert
-                      </a>
-                      peux également être utilisée pour mettre en exergue certaines informations.
-                    </p>
-                    <p class="mt-4">
-                      Pour créé des layouts plus complexes pour formater l’information, il est également possible
-                      d’utiliser le système de grid de Vuetify qui est fortement inspiré de celui de Bootstrap.
-                      https://vuetifyjs.com/components/grids
                     </p>
                     <p class="mt-4">
                       <VDivider class="pb-2"/>
-                      <a href="https://maloron.net/am/cnamuipav2/cnamui-panels.htm">
-                        Documentation du composant Portail Panel correspondant
+                      <a href="https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-content-layout">
+                        Documentation du composant AmeliproContentLayout correspondant
+                      </a>
+                    </p>
+                  </VExpansionPanelText>
+                </VExpansionPanel>
+                <VExpansionPanel>
+                  <VExpansionPanelTitle class="font-weight-bold">
+                    Pagination
+                  </VExpansionPanelTitle>
+                  <VExpansionPanelText>
+                    <p>
+                      Le composant <span class="component-name">AmeliproPagination</span> est remplacé par le
+                      composant
+                      <span class="component-name">SyPagination</span> de Synapse.
+                      <br>
+                      <a href="https://cnam-design-system.netlify.app/?path=/docs/composants-navigation-sypagination--docs"
+                         target="_blank" rel="noopener noreferrer"
+                      >
+                        Documentation du composant Synapse SyPagination
+                      </a>
+                    </p>
+                    <p class="mt-4">
+                      <VDivider class="pb-2"/>
+                      <a href="https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-pagination">
+                        Documentation du composant AmeliproPagination correspondant
                       </a>
                     </p>
                   </VExpansionPanelText>

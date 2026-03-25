@@ -31,6 +31,8 @@ const apComponents = [
     "composants-vue-d-ensemble--docs",
     'composants-structure-footerbar',
     'composants-structure-headerbar',
+    'composants-structure-headerloading',
+    'composants-layout-pagecontainer',
     'composants-navigation-sypagination',
     'composants-boutons-copybtn',
     'composants-boutons-downloadbtn',
