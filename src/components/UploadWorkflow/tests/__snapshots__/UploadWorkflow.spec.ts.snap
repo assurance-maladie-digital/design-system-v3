@@ -71,7 +71,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
         </div>
         <div class="file-item__actions">
           <button
-            aria-label="Importer le fichier"
+            aria-label="Importer le fichier Carte d'identité"
             class="
               file-item__action
               file-item__action-upload
@@ -187,7 +187,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
         </div>
         <div class="file-item__actions">
           <button
-            aria-label="Importer le fichier"
+            aria-label="Importer le fichier Facture de soin"
             class="
               file-item__action
               file-item__action-upload
