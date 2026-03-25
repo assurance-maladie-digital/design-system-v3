@@ -8,20 +8,34 @@ interface UseDatePickerFocusTrapOptions {
 	restoreFocus?: () => void
 }
 
-const focusableSelectors = 'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'
+const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
+	const allFocusable = Array.from(root.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'))
+	return allFocusable.filter(el => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden') && el.tabIndex !== -1)
+}
 
 export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	const { isDatePickerVisible, datePickerRef, onClose, restoreFocus } = options
 
 	const handleMenuKeydown = (event: KeyboardEvent) => {
 		if (!isDatePickerVisible.value) return
+
+		// Ne gérer que Escape et Tab, laisser toutes les autres touches passer
 		if (event.key === 'Escape' || event.key === 'Esc') {
 			isDatePickerVisible.value = false
 			onClose?.()
 			restoreFocus?.()
+			event.preventDefault()
+			event.stopPropagation()
 			return
 		}
-		if (event.key !== 'Tab') return
+
+		// Pour Tab, on gère mais on laisse les autres touches (flèches, etc.) passer complètement
+		if (event.key !== 'Tab') {
+			// Laisser toutes les autres touches passer sans aucune intervention
+			return
+		}
+
+		if (event.ctrlKey || event.altKey || event.metaKey) return // Laisser les combinaisons système
 
 		const root = (datePickerRef.value as ComponentPublicInstance | null)?.$el as HTMLElement | undefined
 		if (!root) return
@@ -32,8 +46,8 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 
 		const target = event.target as HTMLElement | null
 		const todayButton = root.querySelector<HTMLElement>('.date-picker__today-button')
-		const isFromDayCell = Boolean(target?.closest('[data-v-date]'))
-		const focusables = Array.from(root.querySelectorAll<HTMLElement>(focusableSelectors)).filter(el => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden'))
+		const isFromDayCell = Boolean(target?.closest('[data-v-date]') || target?.closest('.v-date-picker-month__day'))
+		const focusables = getFocusableElements(root)
 		const firstFocusable = focusables[0]
 		if (!firstFocusable) {
 			// Aucun focusable : rester dans le menu via le bouton Aujourd'hui si présent
@@ -62,7 +76,8 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		const currentIndex = focusables.indexOf(baseActive)
 		const safeIndex = currentIndex === -1 ? 0 : currentIndex
 		const nextIndex = event.shiftKey ? (safeIndex - 1 + focusables.length) % focusables.length : (safeIndex + 1) % focusables.length
-		focusables[nextIndex]?.focus({ preventScroll: true })
+		const nextFocusable = focusables[nextIndex]
+		nextFocusable?.focus({ preventScroll: true })
 	}
 
 	return { handleMenuKeydown }

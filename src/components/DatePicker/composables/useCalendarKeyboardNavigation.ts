@@ -158,14 +158,32 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	const getBaseDateFromEvent = (event: KeyboardEvent): { date: Date | null, fromDayCell: boolean } => {
 		const target = event.target as HTMLElement | null
+		// Chercher d'abord avec data-v-date, puis avec les classes Vuetify
 		const dayWrapper = target?.closest<HTMLElement>('[data-v-date]')
-		const iso = dayWrapper?.getAttribute('data-v-date')
+			|| target?.closest<HTMLElement>('.v-date-picker-month__day')
+
+		// Essayer d'abord l'attribut data-v-date
+		let iso = dayWrapper?.getAttribute('data-v-date')
+
+		// Si pas d'attribut data-v-date, essayer de récupérer la date depuis les classes Vuetify
+		if (!iso && dayWrapper) {
+			// Vuetify utilise souvent des classes spécifiques pour identifier les dates
+			// On peut essayer de récupérer la date depuis l'élément bouton lui-même
+			const button = dayWrapper.querySelector<HTMLElement>('.v-btn')
+			if (button) {
+				// Vuetify peut stocker la date dans un attribut data ou via aria-label
+				iso = button.getAttribute('data-date')
+					|| button.getAttribute('aria-label')?.split(' ').pop()
+			}
+		}
 
 		if (!iso) {
 			return { date: getCurrentDate(), fromDayCell: false }
 		}
 
-		const parsed = dayjs(iso, 'YYYY-MM-DD', true)
+		// Nettoyer le format si nécessaire (enlever le texte si c'est aria-label)
+		const cleanIso = iso.replace(/^\D+/, '')
+		const parsed = dayjs(cleanIso, 'YYYY-MM-DD', true)
 		if (!parsed.isValid()) {
 			return { date: getCurrentDate(), fromDayCell: false }
 		}
@@ -179,20 +197,48 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
 			if (!rootEl) return
 
+			const iso = toISO(date)
+
 			// Essayer plusieurs sélecteurs pour trouver le bouton du jour
 			const selectors = [
-				`[data-v-date="${toISO(date)}"] > [type="button"]`, // Bouton enfant direct
-				`[data-v-date="${toISO(date)}"] button`, // N'importe quel bouton dans l'élément
-				`[data-v-date="${toISO(date)}"] .v-btn`, // Bouton Vuetify spécifique
-				`[data-v-date="${toISO(date)}"] [role="button"]`, // Élément avec role="button"
+				`[data-v-date="${iso}"] > [type="button"]`, // Bouton enfant direct avec data-v-date
+				`[data-v-date="${iso}"] button`, // N'importe quel bouton dans l'élément avec data-v-date
+				`[data-v-date="${iso}"] .v-btn`, // Bouton Vuetify spécifique avec data-v-date
+				`[data-v-date="${iso}"] [role="button"]`, // Élément avec role="button" et data-v-date
+				// Sélecteurs Vuetify sans data-v-date
+				`.v-date-picker-month__day:has(.v-btn[aria-label*="${date.getDate()}"]) .v-btn`,
+				`.v-date-picker-month__day .v-btn[aria-label*="${date.getDate()}"]`,
 			]
 
 			let dayButton: HTMLElement | null = null
-			for (const selector of selectors) {
-				dayButton = rootEl.querySelector<HTMLElement>(selector)
-				if (dayButton) {
-					dayButton.focus({ preventScroll: true })
-					return
+			for (let i = 0; i < selectors.length; i++) {
+				const selector = selectors[i]
+				if (selector) {
+					const found = rootEl.querySelector(selector) as HTMLElement | null
+					if (found) {
+						dayButton = found
+						// Forcer le focus immédiatement et aussi après un court délai
+						dayButton.focus({ preventScroll: true })
+						setTimeout(() => {
+							dayButton?.focus({ preventScroll: true })
+						}, 10)
+						return
+					}
+				}
+			}
+
+			// Si aucun sélecteur précis ne fonctionne, chercher par aria-label complet
+			const ariaLabelPattern = new RegExp(`\\b${date.getDate()}\\b`)
+			const allButtons = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-month__day .v-btn')
+
+			for (let i = 0; i < allButtons.length; i++) {
+				const button = allButtons[i]
+				if (button) {
+					const ariaLabel = button.getAttribute('aria-label')
+					if (ariaLabel && ariaLabelPattern.test(ariaLabel)) {
+						button.focus({ preventScroll: true })
+						return
+					}
 				}
 			}
 
@@ -209,12 +255,17 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
 		if (!rootEl) return
 
+		const iso = toISO(date)
+
 		// Essayer plusieurs sélecteurs pour trouver le bouton du jour
 		const selectors = [
-			`[data-v-date="${toISO(date)}"] > [type="button"]`, // Bouton enfant direct
-			`[data-v-date="${toISO(date)}"] button`, // N'importe quel bouton dans l'élément
-			`[data-v-date="${toISO(date)}"] .v-btn`, // Bouton Vuetify spécifique
-			`[data-v-date="${toISO(date)}"] [role="button"]`, // Élément avec role="button"
+			`[data-v-date="${iso}"] > [type="button"]`, // Bouton enfant direct avec data-v-date
+			`[data-v-date="${iso}"] button`, // N'importe quel bouton dans l'élément avec data-v-date
+			`[data-v-date="${iso}"] .v-btn`, // Bouton Vuetify spécifique avec data-v-date
+			`[data-v-date="${iso}"] [role="button"]`, // Élément avec role="button" et data-v-date
+			// Sélecteurs Vuetify sans data-v-date
+			`.v-date-picker-month__day:has(.v-btn[aria-label*="${date.getDate()}"]) .v-btn`,
+			`.v-date-picker-month__day .v-btn[aria-label*="${date.getDate()}"]`,
 		]
 
 		let dayButton: HTMLButtonElement | null = null
@@ -222,6 +273,19 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			dayButton = rootEl.querySelector<HTMLButtonElement>(selector)
 			if (dayButton) {
 				break
+			}
+		}
+
+		// Si aucun sélecteur précis ne fonctionne, chercher par aria-label complet
+		if (!dayButton) {
+			const ariaLabelPattern = new RegExp(`\\b${date.getDate()}\\b`)
+			const allButtons = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-month__day .v-btn')
+			for (const button of allButtons) {
+				const ariaLabel = button.getAttribute('aria-label')
+				if (ariaLabel && ariaLabelPattern.test(ariaLabel)) {
+					dayButton = button as HTMLButtonElement
+					break
+				}
 			}
 		}
 
@@ -243,6 +307,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if ((event.target as HTMLElement | null)?.closest('.v-date-picker-controls')) return
 
 		const { date: current, fromDayCell } = getBaseDateFromEvent(event)
+
 		if (!current) return
 
 		event.preventDefault()
@@ -341,27 +406,89 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		// Ne pas interférer avec la saisie dans les champs de formulaire ou zones éditables
 		if (target) {
 			const tagName = target.tagName
-			if (tagName === 'INPUT' || tagName === 'TEXTAREA' || tagName === 'SELECT' || (target as HTMLElement).isContentEditable) {
+			if (tagName === 'INPUT' || tagName === 'TEXTAREA' || target.isContentEditable) {
 				return
 			}
 		}
 
-		if (handleMonthDialogNavigation(keyboardEvent)) return
-		if (handleYearDialogNavigation(keyboardEvent)) return
+		// Ignorer les modificateurs sauf Shift pour PageUp/PageDown (année)
+		if (keyboardEvent.ctrlKey || keyboardEvent.altKey || keyboardEvent.metaKey) {
+			return
+		}
+
+		// Gérer les dialogues mois/année ouverts
+		if (handleMonthDialogNavigation(keyboardEvent) || handleYearDialogNavigation(keyboardEvent)) {
+			return
+		}
+
+		// Gérer la navigation fléchée
 		handleArrowNavigation(keyboardEvent)
+
+		// Gérer Home/End/Page navigation
 		handleHomeEndPageNavigation(keyboardEvent)
+
+		// Gérer Enter/Espace pour sélectionner
 		handleEnterSpaceNavigation(keyboardEvent)
 	}
 
 	const attachListeners = () => {
 		if (isListenerAttached) return
-		document.addEventListener('keydown', keydownListener as EventListener, true)
-		isListenerAttached = true
+
+		// Utiliser un watcher pour attendre que le VDatePicker soit disponible
+		const tryAttach = () => {
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
+			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+
+			// Chercher le conteneur parent avec tabindex="-1" (le focusTrap)
+			const containerEl = rootEl?.parentElement?.querySelector('[tabindex="-1"]') as HTMLElement | undefined
+				|| rootEl?.closest('[tabindex="-1"]') as HTMLElement | undefined
+
+			// Chercher le VDatePicker lui-même
+			const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl
+
+			if (containerEl) {
+				// Attacher sur le conteneur du focusTrap (plus prioritaire que le document)
+				containerEl.addEventListener('keydown', keydownListener as EventListener, true)
+				isListenerAttached = true
+			}
+			else if (datePickerEl) {
+				// Attacher sur le VDatePicker directement
+				datePickerEl.addEventListener('keydown', keydownListener as EventListener, true)
+				isListenerAttached = true
+			}
+			else {
+				// Fallback : attacher sur le document
+				document.addEventListener('keydown', keydownListener as EventListener, true)
+				isListenerAttached = true
+			}
+		}
+
+		// Attendre plusieurs ticks pour être sûr que le focusTrap est déjà attaché
+		setTimeout(tryAttach, 100)
 	}
 
 	const detachListeners = () => {
 		if (!isListenerAttached) return
-		document.removeEventListener('keydown', keydownListener as EventListener, true)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
+		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+
+		// Chercher le conteneur parent avec tabindex="-1" (le focusTrap)
+		const containerEl = rootEl?.parentElement?.querySelector('[tabindex="-1"]') as HTMLElement | undefined
+			|| rootEl?.closest('[tabindex="-1"]') as HTMLElement | undefined
+
+		// Chercher le VDatePicker lui-même
+		const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl
+
+		if (containerEl) {
+			containerEl.removeEventListener('keydown', keydownListener as EventListener, true)
+		}
+		else if (datePickerEl) {
+			datePickerEl.removeEventListener('keydown', keydownListener as EventListener, true)
+		}
+		else {
+			document.removeEventListener('keydown', keydownListener as EventListener, true)
+		}
+
 		isListenerAttached = false
 	}
 

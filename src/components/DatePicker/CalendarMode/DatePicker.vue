@@ -149,15 +149,37 @@
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
 
-	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 	const isDatePickerVisible = ref(false)
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		onClose: () => emit('closed'),
 		restoreFocus: () => queueMicrotask(() => dateCalendarTextInputRef.value?.$el?.querySelector?.('input')?.focus({ preventScroll: true })),
+	})
+
+	// Utiliser le calendarKeyboardNavigation normalement
+	useCalendarKeyboardNavigation({
+		isDatePickerVisible,
+		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		getCurrentDate: () => {
+			const value = selectedDates.value
+			if (!value) return null
+			if (Array.isArray(value)) {
+				return value[0] ?? null
+			}
+			return value
+		},
+		setCurrentDate: (date: Date) => {
+			preventCloseOnKeyboardNavigation.value = true
+			updateSelectedDates([date])
+			syncDisplayedMonthYearFromDate(date)
+			queueMicrotask(() => {
+				preventCloseOnKeyboardNavigation.value = false
+			})
+		},
 	})
 
 	// Fonction pour sélectionner la date du jour
@@ -663,29 +685,6 @@
 
 	onBeforeUnmount(() => {
 		document.removeEventListener('click', handleClickOutside)
-	})
-
-	useCalendarKeyboardNavigation({
-		isDatePickerVisible,
-		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
-		getCurrentDate: () => {
-			const value = selectedDates.value
-			if (!value) return null
-
-			if (Array.isArray(value)) {
-				return value[0] ?? null
-			}
-
-			return value
-		},
-		setCurrentDate: (date: Date) => {
-			preventCloseOnKeyboardNavigation.value = true
-			updateSelectedDates([date])
-			syncDisplayedMonthYearFromDate(date)
-			queueMicrotask(() => {
-				preventCloseOnKeyboardNavigation.value = false
-			})
-		},
 	})
 
 	const validateOnSubmit = () => {

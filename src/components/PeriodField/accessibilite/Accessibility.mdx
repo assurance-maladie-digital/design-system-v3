@@ -1,12 +1,72 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../PeriodField.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Story } from '@storybook/addon-docs'
+import * as Stories from '../PeriodField.stories.ts'
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
+import '@/stories/styles/shared.css'
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="PeriodField"
+	iconSrc={AccessibilityIcon}
+>
+	<CriteriaSection>
+		<CriteriaCard title="Structure sémantique" icon="🔍">
+			<ul>
+				<li><strong>Rôles</strong> : Deux inputs avec <code>aria-required</code> synchronisé quand <code>required</code>.</li>
+				<li><strong>Association</strong> : Labels natifs pour chaque champ (date de début/fin) avec placeholders distinctifs "Début"/"Fin".</li>
+				<li><strong>Descriptions</strong> : <code>aria-describedby</code> relie aides contextuelles, messages de validation croisée (début ≤ fin).</li>
+				<li><strong>États</strong> : <code>aria-invalid</code>, <code>aria-disabled</code>, <code>aria-readonly</code> sur chaque champ indiquent validation et props.</li>
+			</ul>
+		</CriteriaCard>
 
-<br />
+		<CriteriaCard title="Saisie et clavier" icon="⌨️">
+			<ul>
+				<li><strong>Tab</strong> : Navigation séquentielle entre les deux champs sans piège de focus.</li>
+				<li><strong>Masque automatique</strong> : Formatage automatique des séparateurs sans bloquer la saisie ni les raccourcis clavier.</li>
+				<li><strong>Raccourcis</strong> : <kbd>Ctrl/C</kbd> fonctionnel sur chaque champ.</li>
+				<li><strong>Calendrier optionnel</strong> : Icône calendrier active un DatePicker accessible avec navigation clavier complète.</li>
+				<li><strong>Lecture seule</strong> : Désactive validation et effacement, icônes décoratives non interactives.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Validation croisée" icon="📣">
+			<ul>
+				<li><strong>Cohérence période</strong> : Validation automatique que début ≤ fin avec messages d'erreur croisés.</li>
+				<li><strong>Champs requis</strong> : Si required, les deux champs doivent être remplis ou aucun (logique flexible).</li>
+				<li><strong>Messages contextualisés</strong> : Erreurs/avertissements/succès sous chaque champ (associés via <code>aria-describedby</code>).</li>
+				<li><strong>Validation personnalisée</strong> : <code>customRules</code> / <code>customWarningRules</code> par champ.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Calendrier intégré" icon="📅">
+			<ul>
+				<li><strong>Icône accessible</strong> : Bouton avec <code>aria-label</code> explicite ("Ouvrir le calendrier").</li>
+				<li><strong>Navigation calendrier</strong> : Flèches, Home/End, PageUp/Down, Entrée/Espace pour sélectionner dates.</li>
+				<li><strong>Focus management</strong> : Retour automatique au champ après sélection dans calendrier.</li>
+				<li><strong>Format cohérent</strong> : Date sélectionnée respecte le format configuré (DD/MM/YYYY par défaut).</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection title="Période par défaut">
+		<Story of={Stories.Default} />
+	</DemoSection>
+
+	
+	<BestPracticesSection>
+		- Utiliser des placeholders distinctifs ("Début"/"Fin") et des labels clairs pour chaque champ.
+		- Afficher un hint persistant expliquant le format attendu et la logique de validation croisée.
+		- En mode requis, clarifier que les deux champs doivent être remplis ou aucun selon le cas d'usage.
+		- Conserver l'icône calendrier décorative mais non interactive en mode lecture seule ou désactivé.
+		- Avec validation personnalisée, synchroniser les messages entre les deux champs pour cohérence.
+		- Tester la navigation clavier entre les champs et l'interaction calendrier si activé.
+	</BestPracticesSection>
+</AccessibilityGuideLayout>
