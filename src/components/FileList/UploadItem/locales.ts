@@ -7,13 +7,4 @@ export const locales = {
 	success: 'Téléchargé',
 	error: 'Erreur',
 	errorOccurred: 'Une erreur est survenue pendant le téléchargement.',
-	importAriaLabel(title) {
-		return `${this.import} ${title}`
-	},
-	deleteAriaLabel(fileName) {
-		return `${this.delete} ${fileName}`
-	},
-	seeAriaLabel(fileName) {
-		return `${this.see} ${fileName}`
-	},
 }

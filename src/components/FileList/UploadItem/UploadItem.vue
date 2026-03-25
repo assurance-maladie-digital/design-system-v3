@@ -138,7 +138,7 @@
 					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
 					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
-					:aria-label="locales.importAriaLabel(title)"
+					:aria-label="`${locales.import} ${title}`"
 					@click="$emit('upload', itemId)"
 				>
 					<span>{{ importLabel }}</span>
@@ -154,7 +154,7 @@
 					v-if="state === 'success' && showPreviewBtn"
 					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
-					:aria-label="locales.seeAriaLabel(fileName)"
+					:aria-label="`${locales.see} ${fileName}`"
 					@click="$emit('preview', itemId)"
 				>
 					<span>{{ seeLabel }}</span>
@@ -170,7 +170,7 @@
 					v-if="state === 'success' && showDeleteBtn"
 					class="file-item__action file-item__action-delete text-error"
 					variant="text"
-					:aria-label="locales.deleteAriaLabel(fileName)"
+					:aria-label="`${locales.delete} ${fileName}`"
 					@click="$emit('delete', itemId)"
 				>
 					<span>{{ deleteLabel }}</span>
