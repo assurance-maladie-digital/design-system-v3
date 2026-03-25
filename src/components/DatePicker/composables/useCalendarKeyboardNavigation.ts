@@ -160,7 +160,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const target = event.target as HTMLElement | null
 		const dayWrapper = target?.closest<HTMLElement>('[data-v-date]')
 		const iso = dayWrapper?.getAttribute('data-v-date')
-		
+
 		if (!iso) {
 			return { date: getCurrentDate(), fromDayCell: false }
 		}
@@ -224,7 +224,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 				break
 			}
 		}
-		
+
 		dayButton?.click()
 		dayButton?.focus()
 	}
