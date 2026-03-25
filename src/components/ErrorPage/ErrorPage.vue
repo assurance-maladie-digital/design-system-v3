@@ -40,6 +40,7 @@
 		:btn-link="props.btnLink"
 		:hide-btn="props.hideBtn"
 		:unique-id="props.uniqueId ?? undefined"
+		:heading-level="props.headingLevel"
 		:role="props.role"
 	>
 		<template
