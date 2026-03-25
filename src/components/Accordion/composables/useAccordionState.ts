@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 
 export interface AccordionState {
 	openItems: { value: string[] }
@@ -9,8 +9,7 @@ export interface AccordionState {
 	setFocus: (itemId: string | null) => void
 }
 
-export default function useAccordionState(): AccordionState {
-	const openItems = ref<string[]>([])
+export default function useAccordionState(openItems: Ref<string[]>): AccordionState {
 	const focusedItemId = ref<string | null>(null)
 
 	const toggleItem = (itemId: string) => {
@@ -23,7 +22,7 @@ export default function useAccordionState(): AccordionState {
 			setFocus(itemId)
 		}
 		else {
-			openItems.value.splice(index, 1)
+			openItems.value = openItems.value.filter(id => id !== itemId)
 			if (!wasFocused) {
 				setFocus(itemId)
 			}
