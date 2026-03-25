@@ -55,6 +55,20 @@
 				>
 			</slot>
 		</template>
+
+		<template
+			v-if="$slots.action"
+			#action
+		>
+			<slot name="action" />
+		</template>
+
+		<template
+			v-if="$slots['additional-content']"
+			#additional-content
+		>
+			<slot name="additional-content" />
+		</template>
 	</StatusPage>
 </template>
 
