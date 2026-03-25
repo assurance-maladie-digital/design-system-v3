@@ -20,7 +20,7 @@ export function useCustomValidation(
 	isValidateOnBlur: Ref<boolean>,
 	disableErrorHandling: Ref<boolean>,
 ) {
-	const validator = useValidation({
+	let validator = useValidation({
 		showSuccessMessages: showSuccessMessages.value,
 		fieldIdentifier: label.value,
 		customRules: customRules?.value,
@@ -28,6 +28,26 @@ export function useCustomValidation(
 		successRules: customSuccessRules?.value,
 		disableErrorHandling: disableErrorHandling.value,
 	})
+
+	watch(
+		() => [showSuccessMessages.value, label.value, customRules?.value, customWarningRules?.value, customSuccessRules?.value, disableErrorHandling.value],
+		() => {
+			validator = useValidation({
+				showSuccessMessages: showSuccessMessages.value,
+				fieldIdentifier: label.value,
+				customRules: customRules?.value,
+				warningRules: customWarningRules?.value,
+				successRules: customSuccessRules?.value,
+				disableErrorHandling: disableErrorHandling.value,
+			})
+
+			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0
+			if (isDirty) {
+				validate()
+			}
+		},
+		{ deep: true },
+	)
 
 	async function validate() {
 		const result = await validator.validateField(

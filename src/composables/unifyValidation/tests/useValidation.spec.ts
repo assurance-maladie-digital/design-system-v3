@@ -4,6 +4,7 @@ import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useValidation } from '../useValidation'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+import type { ValidationRule } from '@/composables/validation/useValidation'
 
 /** Run a composable inside a mounted Vue component to support lifecycle hooks. */
 function withSetup<T>(setup: () => T): { result: T, wrapper: ReturnType<typeof mount> } {
@@ -31,9 +32,9 @@ describe('useValidation (unifyValidation)', () => {
 		label: ref('Mon champ'),
 		focused: ref(false),
 		useVuetifyValidation: false as const,
-		customRules: ref([]),
-		customWarningRules: ref([]),
-		customSuccessRules: ref([]),
+		customRules: ref<ValidationRule[]>([]),
+		customWarningRules: ref<ValidationRule[]>([]),
+		customSuccessRules: ref<ValidationRule[]>([]),
 		...overrides,
 	})
 
@@ -1317,6 +1318,177 @@ describe('useValidation (unifyValidation)', () => {
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			expect(result.hasSuccess.value).toBe(true)
+		})
+	})
+
+	describe('auto-revalidation on config change', () => {
+		it('auto-revalidates when customRules change and field is dirty', async () => {
+			const params = makeParams({
+				modelValue: ref('hello'),
+				customRules: ref<ValidationRule[]>([{ type: 'required', options: { message: 'Requis' } }]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// Make the field dirty
+			await result.validate()
+			expect(result.errors.value).toEqual([])
+
+			// Change rules to one the value doesn't satisfy
+			params.customRules.value = [{
+				type: 'minLength',
+				options: { length: 20, message: 'Trop court' },
+			}]
+			await nextTick()
+
+			// Should auto-validate since the field was dirty
+			expect(result.errors.value.length).toBeGreaterThan(0)
+		})
+
+		it('auto-revalidates when disableErrorHandling changes and field is dirty', async () => {
+			const params = makeParams({
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis' } }]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.errors.value).toContain('Requis')
+
+			params.disableErrorHandling.value = true
+			await nextTick()
+
+			// Should auto-clear errors
+			expect(result.errors.value).toEqual([])
+		})
+
+		it('auto-revalidates when showSuccessMessages changes and field is dirty', async () => {
+			const params = makeParams({
+				modelValue: ref('valid'),
+				customRules: ref([]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.successes.value.length).toBeGreaterThan(0)
+
+			params.showSuccessMessages.value = false
+			await nextTick()
+
+			expect(result.successes.value).toEqual([])
+		})
+
+		it('does not auto-revalidate when field is not dirty', async () => {
+			const params = makeParams({
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis' } }]),
+			})
+			withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// Don't validate — field is pristine
+			expect(result => result).toBeDefined()
+
+			params.customRules.value = [{
+				type: 'minLength',
+				options: { length: 20, message: 'Trop court' },
+			}]
+			await nextTick()
+
+			// Should NOT auto-validate
+			expect(params.modelValue.value).toBe('')
+		})
+
+		it('auto-revalidates when label changes and field is dirty', async () => {
+			const params = makeParams({
+				modelValue: ref('valid'),
+				customRules: ref([]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.successes.value.some((s: string) => s.includes('Mon champ'))).toBe(true)
+
+			params.label.value = 'Nouveau label'
+			await nextTick()
+
+			expect(result.successes.value.some((s: string) => s.includes('Nouveau label'))).toBe(true)
+		})
+	})
+
+	describe('deduplication and message merging', () => {
+		it('deduplicates errors when same message comes from rules and errorMessages', async () => {
+			const params = makeParams({
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Requis' } }]),
+				errorMessages: ref<string[] | null>(['Requis']),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			const requis = result.errors.value.filter((e: string) => e === 'Requis')
+			expect(requis).toHaveLength(1)
+		})
+
+		it('merges distinct errors from rules and errorMessages', async () => {
+			const params = makeParams({
+				modelValue: ref(''),
+				customRules: ref([{ type: 'required', options: { message: 'Champ requis' } }]),
+				errorMessages: ref<string[] | null>(['Erreur externe']),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.errors.value).toContain('Champ requis')
+			expect(result.errors.value).toContain('Erreur externe')
+		})
+
+		it('merges distinct warnings from rules and warningMessages', async () => {
+			const params = makeParams({
+				modelValue: ref('ko'),
+				customRules: ref([]),
+				customWarningRules: ref([{
+					type: 'custom',
+					validator: (value: unknown) => value === 'ok' || 'Warning interne',
+					options: {},
+				}]),
+				warningMessages: ref<string[] | null>(['Warning externe']),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.warnings.value).toContain('Warning interne')
+			expect(result.warnings.value).toContain('Warning externe')
+		})
+
+		it('keeps external successMessages even when showSuccessMessages is false', async () => {
+			const params = makeParams({
+				modelValue: ref('valid'),
+				showSuccessMessages: ref(false),
+				customRules: ref([]),
+				successMessages: ref<string[] | null>(['Succès externe']),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.successes.value).toContain('Succès externe')
+		})
+
+		it('hides inner successes but keeps external successMessages when showSuccessMessages is false', async () => {
+			const params = makeParams({
+				modelValue: ref('ok'),
+				showSuccessMessages: ref(false),
+				customRules: ref([]),
+				customSuccessRules: ref([{
+					type: 'custom',
+					validator: (value: unknown) => value === 'ok',
+					options: { successMessage: 'Succès interne' },
+				}]),
+				successMessages: ref<string[] | null>(['Succès externe']),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.successes.value).not.toContain('Succès interne')
+			expect(result.successes.value).toContain('Succès externe')
 		})
 	})
 })
