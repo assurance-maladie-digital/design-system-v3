@@ -1,0 +1,46 @@
+import { Meta, Primary, Controls, Canvas } from '@storybook/blocks';
+import * as SyIconButtonStories from './SyIconButton.stories';
+import '@/stories/styles/shared.css';
+
+<Meta of={SyIconButtonStories} />
+
+<div className="header">
+  <h1>SyIconButton</h1>
+  <p>Le composant `SyIconButton` est un bouton icône qui combine `v-btn` de Vuetify et `SyIcon` en garantissant l'accessibilité via une prop `label` obligatoire portée par `aria-label`.</p>
+</div>
+
+<Canvas of={SyIconButtonStories.Default} />
+
+# API
+
+<Controls of={SyIconButtonStories.Default} />
+
+
+# Accessibilité
+
+Le composant `SyIconButton` gère automatiquement les attributs ARIA :
+
+- **Label obligatoire** : la prop `label` est portée par le bouton via `aria-label` — elle constitue le nom accessible du bouton
+- **Icône décorative** : `SyIcon` interne reçoit `:decorative="true"` car le bouton porte déjà le nom accessible via `aria-label` — l'icône est donc ignorée par les lecteurs d'écran
+
+> **Important :** Le `label` doit décrire l'**action** du bouton et non l'icône elle-même (ex. _"Fermer"_ plutôt que _"Croix"_). Ne jamais fournir un `label` vide.
+
+Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'accessibilité](?path=/docs/customs-syiconbutton--accessibility).
+
+## Exemples
+
+### Bouton icône par défaut
+
+<Canvas of={SyIconButtonStories.Default} />
+
+### Bouton icône désactivé
+
+<Canvas of={SyIconButtonStories.Disabled} />
+
+### Bouton icône avec couleur
+
+<Canvas of={SyIconButtonStories.WithColor} />
+
+### Bouton icône avec taille personnalisée
+
+<Canvas of={SyIconButtonStories.WithSize} />

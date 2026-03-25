@@ -75,6 +75,10 @@
 			type: Boolean,
 			default: false,
 		},
+		hideDetails: {
+			type: Boolean,
+			default: false,
+		},
 		hideNoData: {
 			type: Boolean,
 			default: false,
@@ -157,14 +161,13 @@
 		},
 	})
 
-	const emit = defineEmits(['update:modelValue'])
+	const emit = defineEmits(['update:modelValue', 'search'])
 
 	const isOpen = ref(false)
 	const search = ref('')
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
 	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
-	let suppressOpenOnSearch = false
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
 	const randomId = Math.random().toString(36).slice(2)
@@ -207,7 +210,7 @@
 	const normalizedSearch = computed(() => (search.value || '').toLowerCase())
 
 	const filteredItems = computed(() => {
-		if (!props.filter) return formattedItems.value
+		if (!props.filter || props.loading) return formattedItems.value
 		return formattedItems.value.filter((item) => {
 			const text = String(item[props.plainTextKey || props.textKey] ?? item[props.textKey] ?? '').toLowerCase()
 			return text.includes(normalizedSearch.value)
@@ -220,7 +223,6 @@
 
 	const selectItem = (item: ItemType | string | number | null | undefined) => {
 		markInteracted()
-		suppressOpenOnSearch = true
 		updateValue(item ?? null)
 		if (props.multiple) {
 			suppressNextInput.value = true
@@ -230,19 +232,15 @@
 	}
 
 	watch(() => props.modelValue, (val) => {
-		selected.value = val as SelectValue | SelectArray
-		suppressOpenOnSearch = true
+		selected.value = props.multiple && (val === null || val === undefined)
+			? []
+			: val as SelectValue | SelectArray
 		syncSearchFromValue()
 	}, { immediate: true })
 
 	let debounceHandle: ReturnType<typeof setTimeout> | null = null
 
 	watch(search, () => {
-		if (suppressOpenOnSearch) {
-			suppressOpenOnSearch = false
-			return
-		}
-
 		if (!isOpen.value) {
 			isOpen.value = true
 		}
@@ -335,13 +333,35 @@
 		return (textFieldRef.value?.$el as HTMLElement | undefined)?.querySelector('.v-field') ?? undefined
 	})
 
+	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling)
+
 	const externalErrors = computed(() => props.errorMessages || [])
-	const displayErrors = computed(() => externalErrors.value.length > 0 ? externalErrors.value : (hasInteracted.value ? errorHandling.errors.value : []))
-	const displayWarnings = computed(() => hasInteracted.value ? errorHandling.warnings.value : [])
-	const displaySuccesses = computed(() => hasInteracted.value ? errorHandling.successes.value : [])
-	const displayHasError = computed(() => externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value))
-	const displayHasWarning = computed(() => hasInteracted.value && errorHandling.hasWarning.value)
-	const displayHasSuccess = computed(() => hasInteracted.value && errorHandling.hasSuccess.value)
+	const displayErrors = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return externalErrors.value.length > 0
+			? externalErrors.value
+			: (hasInteracted.value ? errorHandling.errors.value : [])
+	})
+	const displayWarnings = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return hasInteracted.value ? errorHandling.warnings.value : []
+	})
+	const displaySuccesses = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return hasInteracted.value ? errorHandling.successes.value : []
+	})
+	const displayHasError = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value)
+	})
+	const displayHasWarning = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return hasInteracted.value && errorHandling.hasWarning.value
+	})
+	const displayHasSuccess = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return hasInteracted.value && errorHandling.hasSuccess.value
+	})
 
 	const validateOnSubmit = () => {
 		markInteracted()
@@ -370,7 +390,17 @@
 		const inputValue = getInputValue(value)
 		if (inputValue === null) return
 
+		// Ignore outside emissions (e.g. SyTextField.checkErrorOnBlur re-emitting
+		// the current value after a programmatic update): no actual user input occurred.
+		if (inputValue === search.value) return
+
 		search.value = inputValue
+
+		if (!inputValue && !props.multiple && selected.value != null) {
+			updateValue(null)
+		}
+
+		emit('search', inputValue)
 		openAndFocus()
 	}
 
@@ -383,6 +413,7 @@
 	const getOptionId = (index: number) => `${optionIdPrefixed.value}-${index}`
 
 	const resultsLiveText = computed(() => {
+		if (!hasInteracted.value) return
 		if (props.loading) return 'Chargement des résultats'
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
@@ -402,7 +433,6 @@
 
 	watch(isOpen, (open) => {
 		if (!open && props.multiple) {
-			suppressOpenOnSearch = true
 			search.value = ''
 		}
 	})
@@ -455,7 +485,9 @@
 					:has-success="displayHasSuccess"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
+					:disable-error-handling="disableErrorHandling"
 					:loading="loading"
+					:are-details-hidden="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"

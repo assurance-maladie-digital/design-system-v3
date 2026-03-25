@@ -408,6 +408,160 @@ CustomCloseBtnText.parameters = {
 	],
 }
 
+export const DefaultSlot: Story = (args) => {
+	return {
+		components: { NotificationBar, VBtn },
+		setup() {
+			const { addNotification } = useNotificationService()
+
+			const envoyerNotification = () => {
+				const notification: Notification = {
+					id: Date.now().toString(),
+					message: 'Notification avec contenu principal personnalisé.',
+					type: 'info',
+					timeout: -1,
+				}
+				addNotification(notification)
+			}
+
+			return { args, envoyerNotification }
+		},
+		template: `
+          <div class="d-flex flex-wrap align-center justify-center">
+            <NotificationBar v-bind="args">
+              <template #default="{ notification }">
+                Contenu personnalisé pour <strong>{{ notification.id }}</strong>
+              </template>
+            </NotificationBar>
+            <VBtn
+                color="primary"
+                @click="envoyerNotification()"
+                class="ma-6"
+            >
+              Afficher la notification
+            </VBtn>
+          </div>
+        `,
+	}
+}
+
+DefaultSlot.args = {
+	...Default.args,
+}
+
+DefaultSlot.parameters = {
+	sourceCode: [
+		{
+			name: 'Template',
+			code: `
+			<NotificationBar>
+				<template #default="{ notification }">
+					Contenu personnalisé pour <strong>{{ notification.id }}</strong>
+				</template>
+			</NotificationBar>
+			`,
+		},
+		{
+			name: 'Script',
+			code: `
+			<script setup lang="ts">
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+
+				const { addNotification } = useNotificationService()
+
+				const envoyerNotification = () => {
+					addNotification({
+						id: Date.now().toString(),
+						message: 'Notification avec contenu principal personnalisé.',
+						type: 'info',
+						timeout: -1,
+					})
+				}
+			</script>
+			`,
+		},
+	],
+}
+
+export const ActionSlot: Story = (args) => {
+	return {
+		components: { NotificationBar, VBtn },
+		setup() {
+			const { addNotification } = useNotificationService()
+
+			const envoyerNotification = () => {
+				const notification: Notification = {
+					id: Date.now().toString(),
+					message: 'Notification avec contenu personnalisé via slot.',
+					type: 'info',
+					timeout: -1,
+				}
+				addNotification(notification)
+			}
+
+			return { args, envoyerNotification }
+		},
+		template: `
+          <div class="d-flex flex-wrap align-center justify-center">
+            <NotificationBar v-bind="args">
+              <template #action>
+                <VBtn variant="outlined">
+                  Voir le détail
+                </VBtn>
+              </template>
+            </NotificationBar>
+            <VBtn
+                color="primary"
+                @click="envoyerNotification()"
+                class="ma-6"
+            >
+              Afficher la notification
+            </VBtn>
+          </div>
+        `,
+	}
+}
+
+ActionSlot.args = {
+	...Default.args,
+}
+
+ActionSlot.parameters = {
+	sourceCode: [
+		{
+			name: 'Template',
+			code: `
+			<NotificationBar>
+				<template #action>
+					<VBtn variant="outlined">
+						Voir le détail
+					</VBtn>
+				</template>
+			</NotificationBar>
+			`,
+		},
+		{
+			name: 'Script',
+			code: `
+			<script setup lang="ts">
+				import { NotificationBar, useNotificationService } from '@cnamts/synapse'
+
+				const { addNotification } = useNotificationService()
+
+				const envoyerNotification = () => {
+					addNotification({
+						id: Date.now().toString(),
+						message: 'Notification avec contenu personnalisé via slot.',
+						type: 'info',
+						timeout: -1,
+					})
+				}
+			</script>
+			`,
+		},
+	],
+}
+
 export const Customization: Story = Default.bind({})
 Customization.args = {
 	...Default.args,

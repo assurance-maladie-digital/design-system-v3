@@ -180,7 +180,7 @@ describe('SyAutocomplete', () => {
 		await closeBtn.trigger('click')
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[]])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([null])
 	})
 
 	it('shows clear button when clearable and has selection', async () => {
@@ -518,5 +518,53 @@ describe('SyAutocomplete', () => {
 		await wrapper.vm.$nextTick()
 		option0 = getOption(0)
 		expect(option0?.getAttribute('aria-selected')).toBe('false')
+	})
+
+	describe('hideDetails', () => {
+		it('hides the details zone when hideDetails is true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test hideDetails',
+					textKey: 'text',
+					valueKey: 'value',
+					hideDetails: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-input__details').exists()).toBe(false)
+		})
+
+		it('shows the details zone when hideDetails is false', async () => {
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-input__details').exists()).toBe(true)
+		})
+
+		it('does not show error messages when hideDetails is true even with validation errors', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test hideDetails + erreur',
+					textKey: 'text',
+					valueKey: 'value',
+					hideDetails: true,
+					hasError: true,
+					errorMessages: ['Erreur de validation'],
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-input__details').exists()).toBe(false)
+			expect(wrapper.find('.v-messages').exists()).toBe(false)
+		})
 	})
 })
