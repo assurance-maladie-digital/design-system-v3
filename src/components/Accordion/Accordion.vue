@@ -2,7 +2,6 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
 	import { mdiChevronRight } from '@mdi/js'
-
 	// Importation des composables
 	import useAccordionState from './composables/useAccordionState'
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
@@ -38,7 +37,7 @@
 		vuetifyOptions: () => ({}),
 	})
 
-	const openItems = defineModel<string[]>({ default: [] })
+	const openItems = defineModel<string[]>({ default: () => [] })
 
 	const options = useCustomizableOptions(config, props)
 

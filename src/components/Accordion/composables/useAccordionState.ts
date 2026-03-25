@@ -18,7 +18,7 @@ export default function useAccordionState(openItems: Ref<string[]>): AccordionSt
 
 		const index = openItems.value.indexOf(itemId)
 		if (index === -1) {
-			openItems.value = [...openItems.value, itemId]
+			openItems.value.push(itemId)
 			setFocus(itemId)
 		}
 		else {
