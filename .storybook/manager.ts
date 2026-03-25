@@ -33,6 +33,7 @@ const apComponents = [
     'composants-structure-headerbar',
     'composants-structure-headerloading',
     'composants-layout-pagecontainer',
+    'composants-navigation-skiplink',
     'composants-navigation-sypagination',
     'composants-boutons-copybtn',
     'composants-boutons-downloadbtn',
