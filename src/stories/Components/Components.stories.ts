@@ -371,8 +371,8 @@ export const ComponentsList: StoryObj = {
 					'CopyBtn',
 					'DownloadBtn',
 					'SyPagination',
-                    'FranceConnectBtn',
-                    'SkipLink'
+					'FranceConnectBtn',
+					'SkipLink',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
