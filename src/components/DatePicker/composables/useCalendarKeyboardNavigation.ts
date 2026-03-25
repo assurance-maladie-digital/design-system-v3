@@ -436,7 +436,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		// Utiliser un watcher pour attendre que le VDatePicker soit disponible
 		const tryAttach = () => {
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
 
 			// Chercher le conteneur parent avec tabindex="-1" (le focusTrap)
