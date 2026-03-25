@@ -57,7 +57,7 @@
 			maxHorizontalMenuItems: 6,
 			items: undefined,
 			width: '1712px',
-			headingLevelTitle:1,
+			headingLevelTitle: 1,
 		})
 
 	// Définition des événements émis
