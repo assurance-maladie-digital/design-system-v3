@@ -160,6 +160,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const target = event.target as HTMLElement | null
 		const dayWrapper = target?.closest<HTMLElement>('[data-v-date]')
 		const iso = dayWrapper?.getAttribute('data-v-date')
+		
 		if (!iso) {
 			return { date: getCurrentDate(), fromDayCell: false }
 		}
@@ -178,12 +179,21 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
 			if (!rootEl) return
 
-			const selector = `[data-v-date="${toISO(date)}"] > [type="button"]`
-			const dayButton = rootEl.querySelector<HTMLElement>(selector)
+			// Essayer plusieurs sélecteurs pour trouver le bouton du jour
+			const selectors = [
+				`[data-v-date="${toISO(date)}"] > [type="button"]`, // Bouton enfant direct
+				`[data-v-date="${toISO(date)}"] button`, // N'importe quel bouton dans l'élément
+				`[data-v-date="${toISO(date)}"] .v-btn`, // Bouton Vuetify spécifique
+				`[data-v-date="${toISO(date)}"] [role="button"]`, // Élément avec role="button"
+			]
 
-			if (dayButton) {
-				dayButton.focus({ preventScroll: true })
-				return
+			let dayButton: HTMLElement | null = null
+			for (const selector of selectors) {
+				dayButton = rootEl.querySelector<HTMLElement>(selector)
+				if (dayButton) {
+					dayButton.focus({ preventScroll: true })
+					return
+				}
 			}
 
 			// Lorsque le changement de mois re-render la grille, le bouton peut ne pas
@@ -199,8 +209,22 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
 		if (!rootEl) return
 
-		const selector = `[data-v-date="${toISO(date)}"] > [type="button"]`
-		const dayButton = rootEl.querySelector<HTMLButtonElement>(selector)
+		// Essayer plusieurs sélecteurs pour trouver le bouton du jour
+		const selectors = [
+			`[data-v-date="${toISO(date)}"] > [type="button"]`, // Bouton enfant direct
+			`[data-v-date="${toISO(date)}"] button`, // N'importe quel bouton dans l'élément
+			`[data-v-date="${toISO(date)}"] .v-btn`, // Bouton Vuetify spécifique
+			`[data-v-date="${toISO(date)}"] [role="button"]`, // Élément avec role="button"
+		]
+
+		let dayButton: HTMLButtonElement | null = null
+		for (const selector of selectors) {
+			dayButton = rootEl.querySelector<HTMLButtonElement>(selector)
+			if (dayButton) {
+				break
+			}
+		}
+		
 		dayButton?.click()
 		dayButton?.focus()
 	}
