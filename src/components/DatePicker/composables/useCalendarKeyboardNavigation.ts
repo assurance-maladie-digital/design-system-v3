@@ -244,8 +244,10 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 			// Lorsque le changement de mois re-render la grille, le bouton peut ne pas
 			// encore exister : on retente quelques fois pour conserver le focus clavier.
-			if (attempt < 3) {
-				setTimeout(() => focusDateButton(date, attempt + 1), 10)
+			// Augmenter le nombre de tentatives et utiliser des délais progressifs
+			if (attempt < 6) {
+				const delay = Math.min(50 * Math.pow(1.5, attempt), 300) // Délai progressif max 300ms
+				setTimeout(() => focusDateButton(date, attempt + 1), delay)
 			}
 		})
 	}
@@ -334,6 +336,23 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 					nextDate = addDays(current, 7)
 					break
 			}
+		} else {
+			// Si le focus n'est pas sur un jour, utiliser la date courante et appliquer
+			// la navigation fléchée pour permettre la navigation même après changement de mois
+			switch (event.key) {
+				case 'ArrowLeft':
+					nextDate = addDays(current, -1)
+					break
+				case 'ArrowRight':
+					nextDate = addDays(current, 1)
+					break
+				case 'ArrowUp':
+					nextDate = addDays(current, -7)
+					break
+				case 'ArrowDown':
+					nextDate = addDays(current, 7)
+					break
+			}
 		}
 
 		setCurrentDate(nextDate)
@@ -345,7 +364,9 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			return
 		}
 
-		const { date: current } = getBaseDateFromEvent(event)
+		// Pour la navigation de mois, toujours utiliser la date courante sélectionnée
+		// plutôt que de dépendre du DOM qui peut ne pas avoir le focus sur un jour
+		const current = getCurrentDate()
 		if (!current) return
 
 		// Respecter les combinaisons système (Ctrl/Alt/Meta), mais autoriser Shift pour année
@@ -364,9 +385,13 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 		else if (event.key === 'PageUp') {
 			nextDate = event.shiftKey ? addYears(current, -1) : addMonths(current, -1)
+			// Focus sur le premier jour du mois précédent
+			nextDate = dayjs(nextDate).startOf('month').toDate()
 		}
 		else if (event.key === 'PageDown') {
 			nextDate = event.shiftKey ? addYears(current, 1) : addMonths(current, 1)
+			// Focus sur le premier jour du mois suivant
+			nextDate = dayjs(nextDate).startOf('month').toDate()
 		}
 
 		setCurrentDate(nextDate)
