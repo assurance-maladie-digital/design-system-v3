@@ -169,13 +169,13 @@
 								{{ item.content }}
 							</p>
 						</template>
-						<template v-else>
+						<template v-else-if="typeof item.content === 'object' && item.content !== null && 'title' in item.content && 'content' in item.content">
 							<div class="sy-accordion-content-item">
 								<p class="sy-accordion-content-text">
-									<strong>{{ (item.content as any).title }}</strong>
+									<strong>{{ item.content.title }}</strong>
 								</p>
 								<p class="sy-accordion-content-text">
-									{{ (item.content as any).content }}
+									{{ item.content.content }}
 								</p>
 							</div>
 						</template>
