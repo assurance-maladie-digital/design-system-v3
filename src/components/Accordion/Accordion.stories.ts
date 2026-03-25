@@ -398,8 +398,8 @@ export const WithVModel: Story = {
 
   <p>Éléments ouverts : {{ openItems }}</p>
 
-  <button @click="openAll">Tout ouvrir</button>
-  <button @click="closeAll">Tout fermer</button>
+  <v-btn variant="outlined" color="primary" @click="openAll">Tout ouvrir</v-btn>
+  <v-btn variant="outlined" color="primary" @click="closeAll">Tout fermer</v-btn>
 </template>`,
 			},
 		],
@@ -432,8 +432,8 @@ export const WithVModel: Story = {
 				</div>
 
 				<div class="mt-2 d-flex ga-2">
-					<v-btn variant="outlined" @click="openAll">Tout ouvrir</v-btn>
-					<v-btn variant="outlined" @click="closeAll">Tout fermer</v-btn>
+					<v-btn variant="outlined" color="primary" @click="openAll">Tout ouvrir</v-btn>
+					<v-btn variant="outlined" color="primary" @click="closeAll">Tout fermer</v-btn>
 				</div>
 			</div>
 		`,
