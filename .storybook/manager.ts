@@ -42,14 +42,6 @@ const apComponents = [
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
 const theme = storedTheme || 'cnam'
 
-// First pass: identify if amelipro should be hidden
-const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
-// When AP theme is active, only show Amelipro components
-const isAp2026 = theme === 'ap2026'
-const isNotAp = theme !== 'ap'
-const isAp = theme === 'ap'
-const isPa = theme === 'pa'
-
 const isExactMatch = (itemId: string, stories: string[]) =>
     stories.includes(itemId)
 
@@ -61,7 +53,11 @@ const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
 
 
 const shouldShowApComponent = (item, itemId, theme) => {
-    if (theme === 'ap') {
+    const isAp2026 = theme === 'ap2026'
+    const isNotAp = theme !== 'ap'
+    const isAp = theme === 'ap'
+
+    if (isAp) {
         if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
             item.style.display = 'none'
             return
@@ -101,10 +97,18 @@ const applyThemeSidebar = (theme) => {
 	const processSidebar = () => {
 		const sidebar = document.querySelector('.sidebar-container')
 
+        // First pass: identify if amelipro should be hidden
+        const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
+        // When AP theme is active, only show Amelipro components
+        const isAp2026 = theme === 'ap2026'
+        const isNotAp = theme !== 'ap'
+        const isAp = theme === 'ap'
+        const isPa = theme === 'pa'
+
 		if (sidebar) {
 			// First, reset display of all items if we're coming from AP theme
 			// This ensures components are properly restored when switching from AP to other themes
-			if (theme !== 'ap') {
+            if (isAp) {
 				const allItems = sidebar.querySelectorAll('.sidebar-item, .sidebar-subheading') as NodeListOf<HTMLElement>
 				allItems.forEach(item => {
 					// Reset display to default

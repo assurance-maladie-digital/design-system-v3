@@ -95,14 +95,14 @@ export const ComponentsList: StoryObj = {
 						title: 'SkipLink',
 						description: 'Utilisé pour permettre à l\'utilisateur utilisant la navigation au clavier de passer directement à une section de contenu.',
 						link: '/?path=/docs/composants-navigation-skiplink--docs',
-						img: '/components/skip-link.svg',
+						img: `/components/skip-link${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
 						title: 'SyPagination',
 						description: 'Utilisé pour permettre la navigation entre plusieurs pages de contenu.',
 						link: '/?path=/docs/composants-navigation-sypagination--docs',
-						img: '/components/skip-link.svg',
+						img: `/components/pagination${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -123,7 +123,7 @@ export const ComponentsList: StoryObj = {
 						title: 'CopyBtn',
 						description: 'Utilisé pour afficher un bouton permettant à l’utilisateur de copier du texte.',
 						link: '/?path=/docs/composants-boutons-copybtn--docs',
-						img: '/components/copy-btn.svg',
+						img: `/components/copy-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -137,7 +137,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DownloadBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de télécharger un document provenant d’une API.',
 						link: '/?path=/docs/composants-boutons-downloadbtn--docs',
-						img: '/components/download-btn.svg',
+						img: `/components/download-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
