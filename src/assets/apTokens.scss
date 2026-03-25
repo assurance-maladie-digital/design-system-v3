@@ -297,7 +297,7 @@ $colors-text-info: #465473;
 $colors-text-success: #007863;
 $colors-text-warning: #60480e;
 $colors-text-error: #b30e0e;
-$colors-text-disabled: #989b9b;
+$colors-text-disabled: #989b9b; // btns.scss
 $colors-text-ondark: #fff;
 $colors-text-subdued-ondark: rgb(255 255 255 / 70%);
 $colors-text-disabled-ondark: rgb(255 255 255 / 40%);
@@ -326,8 +326,8 @@ $colors-interactive-selection-selected-accent: #0084b2;
 $colors-interactive-selection-hover-on-selected-accent: #33b7e5;
 $colors-interactive-selection-disabled: rgb(255 255 255 / 0%);
 $colors-interactive-positive-primary-action-enabled: #0084b2;
-$colors-interactive-positive-primary-action-hover: #33b7e5;
-$colors-interactive-positive-primary-action-pressed: #66c9ec;
+$colors-interactive-positive-primary-action-hover: #33b7e5; // btns.scss
+$colors-interactive-positive-primary-action-pressed: #66c9ec; // btns.scss
 $colors-interactive-positive-primary-action-disabled: #dddede;
 $colors-interactive-negative-primary-action-enabled: #fff;
 $colors-interactive-negative-primary-action-hover: #99dbf2;
@@ -341,3 +341,6 @@ $colors-interactive-negative-secondary-action-enabled: rgb(255 255 255 / 0%);
 $colors-interactive-negative-secondary-action-hover: rgb(255 255 255 / 8%);
 $colors-interactive-negative-secondary-action-pressed: rgb(255 255 255 / 20%);
 $colors-interactive-negative-secondary-action-disabled: rgb(255 255 255 / 0%);
+
+// new tokens
+$colors-background-primary-hover: #006386;
