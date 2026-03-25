@@ -336,7 +336,28 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 					nextDate = addDays(current, 7)
 					break
 			}
-		} else {
+
+			// Vérifier si on a changé de mois avec les flèches gauche/droite
+			const currentMonth = dayjs(current).month()
+			const nextMonth = dayjs(nextDate).month()
+			const currentYear = dayjs(current).year()
+			const nextYear = dayjs(nextDate).year()
+
+			// Si on a changé de mois, forcer le focus sur le premier jour visible du nouveau mois
+			if (currentMonth !== nextMonth || currentYear !== nextYear) {
+				// Pour le mois suivant, aller au 1er jour du nouveau mois
+				// Pour le mois précédent, aller au dernier jour visible du nouveau mois
+				if (event.key === 'ArrowRight' && (nextMonth > currentMonth || nextYear > currentYear)) {
+					// Mois suivant : aller au premier jour
+					nextDate = dayjs(nextDate).startOf('month').toDate()
+				}
+				else if (event.key === 'ArrowLeft' && (nextMonth < currentMonth || nextYear < currentYear)) {
+					// Mois précédent : aller au dernier jour visible (fin de mois)
+					nextDate = dayjs(nextDate).endOf('month').toDate()
+				}
+			}
+		}
+		else {
 			// Si le focus n'est pas sur un jour, utiliser la date courante et appliquer
 			// la navigation fléchée pour permettre la navigation même après changement de mois
 			switch (event.key) {
