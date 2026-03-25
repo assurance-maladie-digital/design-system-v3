@@ -23,7 +23,7 @@
 			to?: RouteLocationRaw
 			href?: string
 		}
-		headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 	}
 
 	defineSlots<{
@@ -58,6 +58,7 @@
 			serviceSubtitle: undefined,
 			homeLink: undefined,
 			width: '1712px',
+			headingLevelTitle: 1,
 		})
 
 	function registerHeaderMenu(childMenuStatus: DeepReadonly<Ref<boolean>>) {
