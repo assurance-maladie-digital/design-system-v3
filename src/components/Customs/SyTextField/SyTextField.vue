@@ -667,7 +667,7 @@
 		>
 			<!-- Prepend -->
 			<template
-				v-if="props.prependIcon || props.prependTooltip"
+				v-if="props.prependIcon || props.prependTooltip || $slots['prepend']"
 				#prepend
 			>
 				<slot name="prepend">
@@ -706,7 +706,7 @@
 
 			<!-- Append -->
 			<template
-				v-if="props.appendIcon || props.appendTooltip"
+				v-if="props.appendIcon || props.appendTooltip || $slots['append']"
 				#append
 			>
 				<slot name="append">
