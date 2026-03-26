@@ -33,14 +33,14 @@ describe('useCalendarKeyboardNavigation', () => {
 
 		// When the date picker becomes visible, a keydown listener should be attached
 		isDatePickerVisible.value = true
-		await nextTick()
-		vi.runAllTimers() // Flush setTimeout inside tryAttach
-		await nextTick()
+		await nextTick() // watcher triggers and calls nextTick(attachListeners)
+		await nextTick() // attachListeners runs and sets setTimeout
+		vi.advanceTimersByTime(150) // Flush setTimeout inside tryAttach
 		expect(addEventListenerSpy).toHaveBeenCalled()
 
 		// When it becomes hidden, the listener should be detached
 		isDatePickerVisible.value = false
-		await nextTick()
+		await nextTick() // watcher triggers and calls detachListeners
 		expect(removeEventListenerSpy).toHaveBeenCalled()
 
 		addEventListenerSpy.mockRestore()
@@ -52,14 +52,14 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
 		const rootEl = document.createElement('div')
-		
+
 		const datePickerRef = ref<ComponentPublicInstance | null>({ $el: rootEl } as unknown as ComponentPublicInstance)
 		const getCurrentDate = vi.fn(() => new Date(2023, 0, 10))
 		const setCurrentDate = vi.fn()
 
 		let savedListener: ((e: KeyboardEvent) => void) | null = null
-		
-		const addEventListenerSpy = vi.spyOn(rootEl, 'addEventListener').mockImplementation((type, listener) => {
+
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
 			if (type === 'keydown') {
 				savedListener = listener as ((e: KeyboardEvent) => void)
 			}
@@ -73,17 +73,17 @@ describe('useCalendarKeyboardNavigation', () => {
 					getCurrentDate,
 					setCurrentDate,
 				})
-				
-				// Surcharger dynamiquement pour que ça ne cherche pas document.addEventListener
-				datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
-				
+
+				// Assurer qu'on ne trouve aucun des deux autres sélecteurs pour retomber sur document.addEventListener
+				datePickerRef.value = null
+
 				attachListeners()
+				vi.advanceTimersByTime(150) // Flush setTimeout inside tryAttach
 				return () => null
 			},
 		})
 
 		mount(TestComponent)
-		vi.runAllTimers() // Flush setTimeout inside tryAttach
 		expect(savedListener).toBeTruthy()
 
 		// ArrowRight: 10 Jan -> 11 Jan
@@ -98,32 +98,32 @@ describe('useCalendarKeyboardNavigation', () => {
 		if (savedListener) (savedListener as (e: KeyboardEvent) => void)(rightEvent)
 
 		expect(setCurrentDate).toHaveBeenCalled()
-		const nextDate = setCurrentDate.mock.calls[0][0] as Date
-		expect(nextDate.getDate()).toBe(11)
+		const nextDate = setCurrentDate.mock.calls[0]?.[0] as Date | undefined
+		expect(nextDate?.getDate()).toBe(11)
 
 		// ArrowLeft: 10 Jan -> 9 Jan
 		setCurrentDate.mockClear()
 		const leftEvent = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true })
 		Object.defineProperty(leftEvent, 'target', { value: currentButton })
 		if (savedListener) (savedListener as (e: KeyboardEvent) => void)(leftEvent)
-		const prevDate = setCurrentDate.mock.calls[0][0] as Date
-		expect(prevDate.getDate()).toBe(9)
+		const prevDate = setCurrentDate.mock.calls[0]?.[0] as Date | undefined
+		expect(prevDate?.getDate()).toBe(9)
 
 		// ArrowUp: 10 Jan -> 3 Jan
 		setCurrentDate.mockClear()
 		const upEvent = new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true })
 		Object.defineProperty(upEvent, 'target', { value: currentButton })
 		if (savedListener) (savedListener as (e: KeyboardEvent) => void)(upEvent)
-		const upDate = setCurrentDate.mock.calls[0][0] as Date
-		expect(upDate.getDate()).toBe(3)
+		const upDate = setCurrentDate.mock.calls[0]?.[0] as Date | undefined
+		expect(upDate?.getDate()).toBe(3)
 
 		// ArrowDown: 10 Jan -> 17 Jan
 		setCurrentDate.mockClear()
 		const downEvent = new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true })
 		Object.defineProperty(downEvent, 'target', { value: currentButton })
 		if (savedListener) (savedListener as (e: KeyboardEvent) => void)(downEvent)
-		const downDate = setCurrentDate.mock.calls[0][0] as Date
-		expect(downDate.getDate()).toBe(17)
+		const downDate = setCurrentDate.mock.calls[0]?.[0] as Date | undefined
+		expect(downDate?.getDate()).toBe(17)
 
 		addEventListenerSpy.mockRestore()
 		vi.useRealTimers()
@@ -139,8 +139,8 @@ describe('useCalendarKeyboardNavigation', () => {
 		const setCurrentDate = vi.fn()
 
 		let savedListener: ((e: KeyboardEvent) => void) | null = null
-		
-		const addEventListenerSpy = vi.spyOn(rootEl, 'addEventListener').mockImplementation((type, listener) => {
+
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
 			if (type === 'keydown') {
 				savedListener = listener as ((e: KeyboardEvent) => void)
 			}
@@ -155,9 +155,9 @@ describe('useCalendarKeyboardNavigation', () => {
 					getCurrentDate,
 					setCurrentDate,
 				})
-				
-				datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
-				
+
+				datePickerRef.value = null
+
 				attachListeners = result.attachListeners
 				return () => null
 			},
@@ -165,8 +165,10 @@ describe('useCalendarKeyboardNavigation', () => {
 
 		mount(TestComponent)
 
+		// Le setTimeout(..., 100) est appelé dans attachListeners, il faut l'avancer
 		attachListeners()
-		vi.runAllTimers() // Flush setTimeout inside tryAttach
+		vi.advanceTimersByTime(150)
+
 		expect(addEventListenerSpy).toHaveBeenCalled()
 		expect(savedListener).toBeTruthy()
 
@@ -184,7 +186,10 @@ describe('useCalendarKeyboardNavigation', () => {
 
 		expect(preventDefault).toHaveBeenCalled()
 		expect(setCurrentDate).toHaveBeenCalledTimes(1)
-		expect(setCurrentDate).toHaveBeenCalledWith(baseDate)
+
+		// When using ArrowRight from baseDate (10 Jan), it should compute 11 Jan
+		const nextDate = setCurrentDate.mock.calls[0]?.[0] as Date | undefined
+		expect(nextDate?.getDate()).toBe(11)
 
 		addEventListenerSpy.mockRestore()
 		vi.useRealTimers()
@@ -199,8 +204,8 @@ describe('useCalendarKeyboardNavigation', () => {
 		const setCurrentDate = vi.fn()
 
 		let savedListener: ((e: KeyboardEvent) => void) | null = null
-		
-		const addEventListenerSpy = vi.spyOn(rootEl, 'addEventListener').mockImplementation((type, listener) => {
+
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
 			if (type === 'keydown') {
 				savedListener = listener as ((e: KeyboardEvent) => void)
 			}
@@ -215,9 +220,9 @@ describe('useCalendarKeyboardNavigation', () => {
 					getCurrentDate,
 					setCurrentDate,
 				})
-				
-				datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
-				
+
+				datePickerRef.value = null
+
 				attachListeners = result.attachListeners
 				return () => null
 			},
@@ -226,6 +231,7 @@ describe('useCalendarKeyboardNavigation', () => {
 		mount(TestComponent)
 
 		attachListeners()
+		vi.advanceTimersByTime(150) // Flush setTimeout inside tryAttach
 		expect(savedListener).toBeTruthy()
 
 		const preventDefault = vi.fn()
@@ -256,8 +262,8 @@ describe('useCalendarKeyboardNavigation', () => {
 		const setCurrentDate = vi.fn()
 
 		let savedListener: ((e: KeyboardEvent) => void) | null = null
-		
-		const addEventListenerSpy = vi.spyOn(rootEl, 'addEventListener').mockImplementation((type, listener) => {
+
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
 			if (type === 'keydown') {
 				savedListener = listener as ((e: KeyboardEvent) => void)
 			}
@@ -272,9 +278,9 @@ describe('useCalendarKeyboardNavigation', () => {
 					getCurrentDate,
 					setCurrentDate,
 				})
-				
-				datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
-				
+
+				datePickerRef.value = null
+
 				attachListeners = result.attachListeners
 				return () => null
 			},
@@ -283,6 +289,8 @@ describe('useCalendarKeyboardNavigation', () => {
 		mount(TestComponent)
 
 		attachListeners()
+		vi.advanceTimersByTime(150)
+
 		expect(savedListener).toBeTruthy()
 
 		const preventDefault = vi.fn()

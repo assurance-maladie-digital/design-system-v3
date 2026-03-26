@@ -4,9 +4,13 @@ import { ref } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 
 describe('useDatePickerFocusTrap', () => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 	let isDatePickerVisible: any
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 	let datePickerRef: any
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 	let onClose: any
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 	let restoreFocus: any
 
 	beforeEach(() => {
@@ -35,7 +39,7 @@ describe('useDatePickerFocusTrap', () => {
 			isDatePickerVisible,
 			datePickerRef,
 			onClose,
-			restoreFocus
+			restoreFocus,
 		})
 
 		const event = new KeyboardEvent('keydown', { key: 'Escape' })
@@ -67,7 +71,7 @@ describe('useDatePickerFocusTrap', () => {
 
 	it('should focus Today button when Tab is pressed inside a date grid', () => {
 		const rootEl = document.createElement('div')
-		
+
 		// Create Today button
 		const todayButton = document.createElement('button')
 		todayButton.className = 'date-picker__today-button'
@@ -77,7 +81,7 @@ describe('useDatePickerFocusTrap', () => {
 		// Create grid
 		const grid = document.createElement('div')
 		grid.className = 'v-date-picker-month'
-		
+
 		// Create active cell inside grid
 		const cell = document.createElement('div')
 		const cellBtn = document.createElement('button')
@@ -104,10 +108,10 @@ describe('useDatePickerFocusTrap', () => {
 
 	it('should cycle focus normally if not in a grid', () => {
 		const rootEl = document.createElement('div')
-		
+
 		const btn1 = document.createElement('button')
 		btn1.focus = vi.fn()
-		
+
 		const btn2 = document.createElement('button')
 		btn2.focus = vi.fn()
 
@@ -126,7 +130,7 @@ describe('useDatePickerFocusTrap', () => {
 
 		const event = new KeyboardEvent('keydown', { key: 'Tab' })
 		Object.defineProperty(event, 'target', { value: btn1 })
-		
+
 		handleMenuKeydown(event)
 
 		expect(btn2.focus).toHaveBeenCalled()
