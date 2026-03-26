@@ -10,7 +10,7 @@ interface UseDatePickerFocusTrapOptions {
 
 const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
 	const allFocusable = Array.from(root.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'))
-	return allFocusable.filter(el => !el.hasAttribute('disabled') && !el.getAttribute('aria-hidden') && el.tabIndex !== -1)
+	return allFocusable.filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true' && el.tabIndex !== -1)
 }
 
 export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
