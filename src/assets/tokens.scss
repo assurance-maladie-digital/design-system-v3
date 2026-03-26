@@ -154,7 +154,7 @@ $primary-darker-2: #07275c;
 $primary-darker: #0a347b;
 $primary-base: #0c419a;
 $primary: #0c419a;
-$primary-light: #3d67ae; // btns.scss
+$primary-light: #3d67ae;
 $primary-lighter-2: #9eb3d7;
 $primary-lighter-3: #ced9eb;
 $primary-lighter-4: #e7ecf5;
@@ -268,7 +268,7 @@ $colors-background-warning-contrasted: #f0b323;
 $colors-background-error: #f9dcd7;
 $colors-background-error-subdued: #fcedeb;
 $colors-background-error-contrasted: #b33f2e;
-$colors-background-disabled: #dddede; // btns.scss
+$colors-background-disabled: #dddede;
 $colors-background-disabled-ondark: rgb(255 255 255 / 8%);
 $colors-background-assure: #ed76b3;
 $colors-background-professionnel: #66c9ec;
@@ -276,7 +276,7 @@ $colors-background-entreprise: #f0b323;
 $colors-border-darker: #222324;
 $colors-border-base: #989b9b;
 $colors-border-subdued: #dddede;
-$colors-border-accent-primary: #0c419a; // btns.scss
+$colors-border-accent-primary: #0c419a;
 $colors-border-accent-primary-contrasted: #07275c;
 $colors-border-accent-primary-ondark: #fff;
 $colors-border-accent-secondary: #00a5df;
@@ -297,7 +297,7 @@ $colors-text-info: #0c419a;
 $colors-text-success: #224e2d;
 $colors-text-warning: #60480e;
 $colors-text-error: #b33f2e;
-$colors-text-disabled: #989b9b; // btns.scss
+$colors-text-disabled: #989b9b;
 $colors-text-ondark: #fff;
 $colors-text-subdued-ondark: rgb(255 255 255 / 70%);
 $colors-text-disabled-ondark: rgb(255 255 255 / 40%);
@@ -327,15 +327,15 @@ $colors-interactive-selection-hover-on-selected-accent: #3d67ae;
 $colors-interactive-selection-disabled: rgb(255 255 255 / 0%);
 $colors-interactive-positive-primary-action-enabled: #0c419a;
 $colors-interactive-positive-primary-action-hover: #3d67ae;
-$colors-interactive-positive-primary-action-pressed: #9eb3d7; // btns.scss
-$colors-interactive-positive-primary-action-disabled: #dddede; // btns.scss
-$colors-interactive-negative-primary-action-enabled: #fff; // btns.scss
+$colors-interactive-positive-primary-action-pressed: #9eb3d7;
+$colors-interactive-positive-primary-action-disabled: #dddede;
+$colors-interactive-negative-primary-action-enabled: #fff;
 $colors-interactive-negative-primary-action-hover: #ced9eb;
 $colors-interactive-negative-primary-action-pressed: #9eb3d7;
 $colors-interactive-negative-primary-action-disabled: #dddede;
 $colors-interactive-positive-secondary-action-enabled: rgb(255 255 255 / 0%);
-$colors-interactive-positive-secondary-action-hover: #e7ecf5; // btns.scss
-$colors-interactive-positive-secondary-action-pressed: #ced9eb; // btns.scss
+$colors-interactive-positive-secondary-action-hover: #e7ecf5;
+$colors-interactive-positive-secondary-action-pressed: #ced9eb;
 $colors-interactive-positive-secondary-action-disabled: rgb(255 255 255 / 0%);
 $colors-interactive-negative-secondary-action-enabled: rgb(255 255 255 / 0%);
 $colors-interactive-negative-secondary-action-hover: rgb(255 255 255 / 8%);

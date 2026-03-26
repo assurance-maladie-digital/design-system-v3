@@ -12,24 +12,23 @@
 		>
 			start developing here
 		</VSheet>
-		<VBtn color="primary">
+		<VBtn class="primary">
 			Bouton d’action primaire
 		</VBtn>
-
-		<VBtn color="secondary">
+		<VBtn class="primary disabled">
+			Bouton d’action primaire disabled
+		</VBtn>
+		<VBtn class="secondary">
 			Bouton d’action secondaire
 		</VBtn>
-
-		<VBtn color="tertiary"
-		:disabled="true">
-			Bouton d’action tertiary désactivé
-		</VBtn>
-
-		<VBtn
-			:disabled="true"
-			color="secondary"
-		>
+		<VBtn class="secondary disabled">
 			Bouton d’action secondaire désactivé
+		</VBtn>
+		<VBtn class="tertiary">
+			Bouton d’action tertiary
+		</VBtn>
+		<VBtn class="tertiary disabled">
+			Bouton d’action tertiary désactivé
 		</VBtn>
 	</div>
 </template>

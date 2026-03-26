@@ -2,90 +2,140 @@
 @use '@/assets/apTokens';
 
 .v-btn {
-	text-transform: inherit !important;
-	font-weight: 700 !important;
+	text-transform: inherit;
+	font-weight: 700;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	padding: 0 var(--spacing-4);
 }
 
 .v-theme--cnam.v-btn,
 .v-theme--pa.v-btn {
-	&.bg-primary {
-		padding: 0 var(--spacing-4) !important;
+	&.primary {
+		background-color: tokens.$colors-interactive-positive-primary-action-enabled;
+		color: tokens.$colors-text-ondark;
 
 		&:hover {
-			background-color: tokens.$colors-background-accent-primary-light !important;
+			background-color: tokens.$colors-interactive-positive-primary-action-hover;
 		}
 
 		&:active {
-			background-color: tokens.$colors-interactive-positive-primary-action-pressed !important;
+			background-color: tokens.$colors-interactive-positive-primary-action-pressed;
 		}
 
-		&:disabled {
-			background-color: tokens.$colors-interactive-positive-primary-action-disabled !important;
-			color: tokens.$colors-text-disabled !important;
+		&.disabled {
+			background-color: tokens.$colors-interactive-positive-primary-action-disabled;
+			color: tokens.$colors-text-disabled;
+			pointer-events: none;
 		}
 	}
 
-	&.bg-secondary {
-		padding: 0 var(--spacing-4) !important;
-		background-color: tokens.$colors-interactive-negative-primary-action-enabled !important;
-		color: tokens.$colors-text-accent-primary !important;
-		border: 1px solid tokens.$colors-border-accent-primary !important;
+	&.secondary {
+		background-color: tokens.$colors-interactive-negative-primary-action-enabled;
+		color: tokens.$colors-text-accent-primary;
+		border: 1px solid tokens.$colors-border-accent-primary;
 
 		&:hover {
-			background-color: tokens.$colors-interactive-positive-secondary-action-hover !important;
+			background-color: tokens.$colors-interactive-positive-secondary-action-hover;
 		}
 
 		&:active {
-			background-color: tokens.$colors-interactive-positive-secondary-action-pressed !important;
+			background-color: tokens.$colors-interactive-positive-secondary-action-pressed;
 		}
 
-		&:disabled {
-			background-color: tokens.$colors-interactive-negative-primary-action-enabled !important;
-			color: tokens.$colors-text-disabled !important;
-			border: 1px solid tokens.$colors-text-disabled !important;
+		&.disabled {
+			background-color: tokens.$colors-interactive-negative-primary-action-enabled;
+			color: tokens.$colors-text-disabled;
+			border: 1px solid tokens.$colors-text-disabled;
+			pointer-events: none
 		}
 	}
 
-	&.bg-tertiary {
-		padding: 0 var(--spacing-4) !important;
-		background-color: tokens.$colors-interactive-negative-primary-action-enabled !important;
-		color: tokens.$colors-text-accent-primary !important;
-		border: none !important;
+	&.tertiary {
+		background-color: tokens.$colors-interactive-negative-primary-action-enabled;
+		color: tokens.$colors-text-accent-primary;
+		border: none;
 
 		&:hover {
-			background-color: tokens.$colors-interactive-positive-secondary-action-hover !important;
+			background-color: tokens.$colors-interactive-selection-hover;
 		}
 
 		&:active {
-			background-color: tokens.$colors-interactive-positive-secondary-action-pressed !important;
+			background-color: tokens.$colors-interactive-selection-pressed;
 		}
 
-		&.v-btn.v-btn--disabled {
-			background-color: tokens.$colors-interactive-negative-primary-action-enabled !important;
-			color: tokens.$colors-text-disabled !important;
+		&.disabled {
+			background-color: tokens.$colors-interactive-negative-primary-action-enabled;
+			color: tokens.$colors-text-disabled;
 			border: none;
+			pointer-events: none
 		}
 	}
 }
 
 .v-btn.v-tab {
-	text-transform: uppercase !important;
+	text-transform: uppercase;
 }
 
-.v-theme--ap2026 .v-btn.bg-primary,
-.v-theme--ap .v-btn.bg-primary {
-	&:hover {
-		background-color: apTokens.$colors-overlay-ondark !important;
+.v-theme--ap2026.v-btn,
+.v-theme--ap.v-btn {
+	&.primary {
+		background-color: apTokens.$colors-interactive-positive-primary-action-enabled;
+		color: apTokens.$colors-text-ondark;
+
+		&:hover {
+			background-color: apTokens.$colors-text-accent-secondary;
+		}
+
+		&:active {
+			background-color: apTokens.$colors-background-accent-primary-contrasted;
+		}
+
+		&.disabled {
+			background-color: apTokens.$colors-interactive-positive-primary-action-disabled;
+			color: apTokens.$colors-text-disabled;
+			pointer-events: none;
+		}
 	}
 
-	&:active {
-		background-color: apTokens.$colors-interactive-positive-primary-action-pressed !important;
+	&.secondary {
+		background-color: apTokens.$colors-interactive-negative-primary-action-enabled;
+		color: apTokens.$primary-darker-2;
+		border: 1px solid apTokens.$colors-border-accent-secondary;
+
+		&:hover {
+			background-color: apTokens.$colors-interactive-positive-secondary-action-hover;
+		}
+
+		&:active {
+			background-color: apTokens.$colors-interactive-positive-secondary-action-pressed;
+		}
+
+		&.disabled {
+			background-color: apTokens.$colors-interactive-negative-primary-action-enabled;
+			color: apTokens.$colors-text-disabled;
+			border: 1px solid apTokens.$colors-text-disabled;
+			pointer-events: none
+		}
 	}
 
-	&:disabled {
-		background-color: apTokens.$colors-interactive-positive-primary-action-disabled !important;
-		color: apTokens.$colors-text-disabled !important;
+	&.tertiary {
+		background-color: apTokens.$colors-interactive-negative-primary-action-enabled;
+		color: apTokens.$primary-darker-2;
+		border: none;
+
+		&:hover {
+			background-color: apTokens.$colors-interactive-positive-secondary-action-hover;
+		}
+
+		&:active {
+			background-color: apTokens.$colors-interactive-positive-secondary-action-pressed;
+		}
+
+		&.disabled {
+			background-color: apTokens.$colors-interactive-negative-primary-action-enabled;
+			color: apTokens.$colors-text-disabled;
+			pointer-events: none
+		}
 	}
 }
