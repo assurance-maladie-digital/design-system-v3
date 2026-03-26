@@ -225,7 +225,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		const candidates: HTMLElement[] = []
-		
+
 		// 1. Chercher par data-v-date
 		const dataDateElements = rootEl.querySelectorAll(`[data-v-date="${iso}"]`)
 		for (const el of Array.from(dataDateElements)) {
@@ -247,13 +247,13 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		// Filtrer ceux qui ne sont pas visibles
-		const visibleCandidates = candidates.filter(btn => {
+		const visibleCandidates = candidates.filter((btn) => {
 			// Autoriser les éléments en transition (opacity peut être 0 au tout début)
 			const windowItem = btn.closest('.v-window-item')
 			const isEntering = windowItem && Array.from(windowItem.classList).some(c => c.includes('enter-active') || c.includes('enter-to'))
-			
+
 			if (!isEntering && btn.offsetParent === null) return false
-			
+
 			const style = window.getComputedStyle(btn)
 			return style.display !== 'none' && style.visibility !== 'hidden'
 		})
@@ -372,7 +372,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		// Mettre à jour l'état (ce qui peut déclencher un changement de mois dans Vuetify)
 		setCurrentDate(nextDate)
-		
+
 		// Forcer le focus sur le nouveau jour de manière résiliente
 		focusDateButton(nextDate)
 	}

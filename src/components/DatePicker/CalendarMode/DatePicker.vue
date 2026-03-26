@@ -189,7 +189,7 @@
 			preventCloseOnKeyboardNavigation.value = true
 			updateSelectedDates([date])
 			syncDisplayedMonthYearFromDate(date)
-			
+
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
 			nextTick(() => {
 				// Forcer la mise à jour du mois affiché dans le VDatePicker
@@ -206,7 +206,7 @@
 					}
 				}
 			})
-			
+
 			queueMicrotask(() => {
 				preventCloseOnKeyboardNavigation.value = false
 			})

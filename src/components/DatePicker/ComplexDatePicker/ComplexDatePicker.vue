@@ -667,7 +667,7 @@
 		setCurrentDate: (date: Date) => {
 			preventCloseOnInternalUpdate.value = true
 			updateSelectedDates(date)
-			
+
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
 			nextTick(() => {
 				if (datePickerRef.value) {
