@@ -1,0 +1,96 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Composants/Boutons/Accessibilité" />
+
+# Accessibilité – Boutons
+
+Les boutons utilisent le composant `v-btn` de Vuetify. Les styles définis s'appliquent selon le thème actif sur le composant parent.
+
+---
+
+## Types de boutons
+
+### Primaire – `.primary`
+
+Le bouton primaire utilise la couleur d'action principale du thème.
+
+```html
+<v-btn class="primary">Bouton primaire</v-btn>
+<v-btn class="primary disabled">Bouton primaire désactivé</v-btn>
+```
+
+| État | Comportement |
+|------|-------------|
+| Enabled | Fond coloré principal du thème, texte clair |
+| Hover | Fond légèrement plus clair |
+| Pressed / Active | Fond encore plus clair |
+| Disabled | Fond grisé, texte grisé, `pointer-events: none` |
+
+---
+
+### Secondaire – `.secondary`
+
+Le bouton secondaire a un fond blanc avec une bordure colorée selon le thème.
+
+```html
+<v-btn class="secondary">Bouton secondaire</v-btn>
+<v-btn class="secondary disabled">Bouton secondaire désactivé</v-btn>
+```
+
+| État | Comportement |
+|------|-------------|
+| Enabled | Fond blanc, bordure et texte colorés selon le thème |
+| Hover | Fond légèrement coloré |
+| Pressed / Active | Fond plus coloré |
+| Disabled | Fond blanc, bordure grisée, texte grisé, `pointer-events: none` |
+
+---
+
+### Tertiaire – `.tertiary`
+
+Le bouton tertiaire a un fond blanc sans bordure.
+
+```html
+<v-btn class="tertiary">Bouton tertiaire</v-btn>
+<v-btn class="tertiary disabled">Bouton tertiaire désactivé</v-btn>
+```
+
+| État | Comportement |
+|------|-------------|
+| Enabled | Fond blanc, sans bordure, texte coloré selon le thème |
+| Hover | Fond légèrement coloré |
+| Pressed / Active | Fond plus coloré |
+| Disabled | Fond blanc, sans bordure, texte grisé, `pointer-events: none` |
+
+---
+
+## Règles d'accessibilité
+
+### Contraste des couleurs
+
+- Les états **enabled** et **hover** respectent un ratio de contraste minimum de **4.5:1** (WCAG AA) pour le texte.
+- L'état **focus** respecte un ratio de contraste minimum de **3:1** (WCAG AA) pour le contour visible.
+- L'état **disabled** est exempté des exigences de contraste selon les WCAG 2.1 (critère 1.4.3).
+
+### État désactivé
+
+- La classe `.disabled` bloque toutes les interactions via `pointer-events: none` (clic, ripple).
+- Elle est distincte de l'attribut HTML `disabled` : le bouton peut rester focusable si nécessaire.
+- Pour les lecteurs d'écran, ajouter `aria-disabled="true"` si le bouton doit rester dans le flux de navigation.
+
+### Texte des boutons
+
+- Chaque bouton doit avoir un libellé explicite et descriptif.
+- Éviter les libellés génériques comme "Cliquer ici" ou "En savoir plus" sans contexte.
+
+### Navigation au clavier
+
+- Les boutons sont accessibles via la touche `Tab`.
+- L'activation se fait via `Entrée` ou `Espace`.
+- L'état focus doit être visible avec un contour clairement identifiable.
+
+### ARIA
+
+- Ne pas utiliser `aria-label` si le texte du bouton est déjà explicite.
+- Utiliser `aria-disabled="true"` si le bouton doit rester focusable malgré l'état désactivé.
+- Ne pas utiliser `role="button"` sur un élément `<button>` natif.
