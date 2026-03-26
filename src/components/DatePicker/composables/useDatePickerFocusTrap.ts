@@ -55,15 +55,15 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		}
 
 		const active = document.activeElement as HTMLElement | null
-		
+
 		// Si on appuie sur Tab (sans Shift) depuis la grille des jours, des mois ou des années,
 		// on force le focus vers le bouton Aujourd'hui (s'il existe)
 		const isFromGrid = Boolean(
-			target?.closest('.v-date-picker-months') || 
-			target?.closest('.v-date-picker-years') || 
-			target?.closest('.v-date-picker-month')
+			target?.closest('.v-date-picker-months')
+			|| target?.closest('.v-date-picker-years')
+			|| target?.closest('.v-date-picker-month'),
 		)
-		
+
 		if (!event.shiftKey && isFromGrid && todayButton) {
 			todayButton.focus({ preventScroll: true })
 			return
