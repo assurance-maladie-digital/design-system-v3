@@ -47,7 +47,7 @@
 			background-color: tokens.$colors-interactive-negative-primary-action-enabled;
 			color: tokens.$colors-text-disabled;
 			border: 1px solid tokens.$colors-text-disabled;
-			pointer-events: none
+			pointer-events: none;
 		}
 	}
 
@@ -68,7 +68,7 @@
 			background-color: tokens.$colors-interactive-negative-primary-action-enabled;
 			color: tokens.$colors-text-disabled;
 			border: none;
-			pointer-events: none
+			pointer-events: none;
 		}
 	}
 }
@@ -115,7 +115,7 @@
 			background-color: apTokens.$colors-interactive-negative-primary-action-enabled;
 			color: apTokens.$colors-text-disabled;
 			border: 1px solid apTokens.$colors-text-disabled;
-			pointer-events: none
+			pointer-events: none;
 		}
 	}
 
@@ -135,7 +135,7 @@
 		&.disabled {
 			background-color: apTokens.$colors-interactive-negative-primary-action-enabled;
 			color: apTokens.$colors-text-disabled;
-			pointer-events: none
+			pointer-events: none;
 		}
 	}
 }
