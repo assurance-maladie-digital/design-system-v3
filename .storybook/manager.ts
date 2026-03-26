@@ -56,6 +56,12 @@ const shouldShowApComponent = (item, itemId, theme) => {
     const isAp2026 = theme === 'ap2026'
     const isNotAp = theme !== 'ap'
     const isAp = theme === 'ap'
+    const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
+
+    if (itemId === 'composants-amelipro') {
+        item.style.display = hideAmelipro ? 'none' : 'block'
+        return
+    }
 
     if (isAp) {
         if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
@@ -138,18 +144,15 @@ const applyThemeSidebar = (theme) => {
 
                 shouldShowApComponent(item, itemId, theme)
 
-				// Handle amelipro components folder
-				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
-				if (isAmeliproFolder) {
-					item.style.display = hideAmelipro ? 'none' : 'block'
-				}
-
 				// Hide Structure folder and its components when PA theme is active
 				if (isPa && itemId.startsWith('composants-structure')) {
 					item.style.display = 'none'
 				}
 
 				// For AP theme, hide all components except those in Amelipro folder
+                // Handle amelipro components folder
+                const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
+
                 if (isAp2026) {
 					// Get item ID and text content
 					const itemId = item.getAttribute('data-item-id') || ''
