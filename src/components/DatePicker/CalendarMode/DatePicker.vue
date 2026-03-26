@@ -1139,6 +1139,7 @@
 							<SyHeading
 								class="mx-auto my-auto ml-5 mb-4"
 								aria-live="polite"
+								aria-atomic="true"
 								:level="headingLevel"
 							>
 								{{ selectedDates ? displayedDateString : headerDate }}
