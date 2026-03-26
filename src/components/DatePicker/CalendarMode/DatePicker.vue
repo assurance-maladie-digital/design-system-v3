@@ -1050,13 +1050,11 @@
 				attach="body"
 				:offset="[-20, 5]"
 				role="presentation"
-				:aria-readonly="props.readonly ? 'true' : undefined"
-				:aria-disabled="props.disabled ? 'true' : undefined"
 				:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
 			>
 				<template #activator="{ props: menuProps }">
 					<div
-						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': datePickerContentId }"
+						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
 					>
 						<SyTextField
 							:id="`${datePickerContentId}-input`"
