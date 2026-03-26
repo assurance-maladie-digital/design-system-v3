@@ -667,20 +667,24 @@
 		setCurrentDate: (date: Date) => {
 			preventCloseOnInternalUpdate.value = true
 			updateSelectedDates(date)
+			
+			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
+			nextTick(() => {
+				if (datePickerRef.value) {
+					const newMonth = String(date.getMonth())
+					const newYear = String(date.getFullYear())
+					if (currentMonth.value !== newMonth || currentYear.value !== newYear) {
+						currentMonth.value = newMonth
+						currentYear.value = newYear
+						currentMonthName.value = dayjs(date).format('MMMM')
+						currentYearName.value = newYear
+					}
+				}
+			})
+
 			queueMicrotask(() => {
 				preventCloseOnInternalUpdate.value = false
 			})
-			// Synchroniser le mois et l'année visibles lorsque l'on franchit une limite de mois
-			const newMonth = String(date.getMonth())
-			const newYear = String(date.getFullYear())
-			if (currentMonth.value !== newMonth) {
-				currentMonth.value = newMonth
-				currentMonthName.value = dayjs().month(date.getMonth()).format('MMMM')
-			}
-			if (currentYear.value !== newYear) {
-				currentYear.value = newYear
-				currentYearName.value = newYear
-			}
 		},
 	})
 

@@ -166,16 +166,47 @@
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		getCurrentDate: () => {
 			const value = selectedDates.value
-			if (!value) return null
-			if (Array.isArray(value)) {
-				return value[0] ?? null
+			if (value) {
+				const date = Array.isArray(value) ? value[0] ?? null : value
+				// Vérifier si la date sélectionnée est dans le mois actuellement affiché
+				if (date && currentMonth.value !== null && currentYear.value !== null) {
+					const sameMonth = date.getMonth() === Number(currentMonth.value)
+					const sameYear = date.getFullYear() === Number(currentYear.value)
+					if (sameMonth && sameYear) {
+						return date
+					}
+				}
 			}
-			return value
+
+			// Fallback: retourner le 1er du mois actuellement affiché
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
+			}
+
+			return null
 		},
 		setCurrentDate: (date: Date) => {
 			preventCloseOnKeyboardNavigation.value = true
 			updateSelectedDates([date])
 			syncDisplayedMonthYearFromDate(date)
+			
+			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
+			nextTick(() => {
+				// Forcer la mise à jour du mois affiché dans le VDatePicker
+				if (datePickerRef.value) {
+					// Le VDatePicker devrait automatiquement suivre la date sélectionnée
+					// mais on s'assure que le mois/année est bien synchronisé
+					const month = date.getMonth().toString()
+					const year = date.getFullYear().toString()
+					if (currentMonth.value !== month || currentYear.value !== year) {
+						currentMonth.value = month
+						currentYear.value = year
+						currentMonthName.value = dayjs(date).format('MMMM')
+						currentYearName.value = year
+					}
+				}
+			})
+			
 			queueMicrotask(() => {
 				preventCloseOnKeyboardNavigation.value = false
 			})

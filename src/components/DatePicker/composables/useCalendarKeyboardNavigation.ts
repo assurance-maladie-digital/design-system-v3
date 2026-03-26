@@ -191,65 +191,102 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		return { date: parsed.toDate(), fromDayCell: true }
 	}
 
-	const focusDateButton = (date: Date, attempt = 0) => {
-		nextTick(() => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
-			if (!rootEl) return
+	let latestFocusToken = 0
 
-			const iso = toISO(date)
+	const focusDateButton = (date: Date, attempt = 0, token?: number) => {
+		if (attempt === 0) {
+			latestFocusToken++
+			token = latestFocusToken
+		}
 
-			// Essayer plusieurs sélecteurs pour trouver le bouton du jour
-			const selectors = [
-				`[data-v-date="${iso}"] > [type="button"]`, // Bouton enfant direct avec data-v-date
-				`[data-v-date="${iso}"] button`, // N'importe quel bouton dans l'élément avec data-v-date
-				`[data-v-date="${iso}"] .v-btn`, // Bouton Vuetify spécifique avec data-v-date
-				`[data-v-date="${iso}"] [role="button"]`, // Élément avec role="button" et data-v-date
-				// Sélecteurs Vuetify sans data-v-date
-				`.v-date-picker-month__day:has(.v-btn[aria-label*="${date.getDate()}"]) .v-btn`,
-				`.v-date-picker-month__day .v-btn[aria-label*="${date.getDate()}"]`,
-			]
+		// Si un autre focus a été demandé entre-temps, on annule
+		if (token !== latestFocusToken) return
 
-			let dayButton: HTMLElement | null = null
-			for (let i = 0; i < selectors.length; i++) {
-				const selector = selectors[i]
-				if (selector) {
-					const found = rootEl.querySelector(selector) as HTMLElement | null
-					if (found) {
-						dayButton = found
-						// Forcer le focus immédiatement et aussi après un court délai
-						dayButton.focus({ preventScroll: true })
-						setTimeout(() => {
-							dayButton?.focus({ preventScroll: true })
-						}, 10)
-						return
-					}
-				}
-			}
+		// Utiliser setTimeout pour la première tentative pour laisser Vue et Vuetify commencer la mise à jour du DOM
+		if (attempt === 0) {
+			setTimeout(() => focusDateButton(date, 1, token), 10)
+			return
+		}
 
-			// Si aucun sélecteur précis ne fonctionne, chercher par aria-label complet
-			const ariaLabelPattern = new RegExp(`\\b${date.getDate()}\\b`)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+		if (!rootEl) return
+
+		const iso = toISO(date)
+		const dayNum = date.getDate()
+
+		// Exclure les éléments qui sont dans une fenêtre en cours de disparition
+		const isActiveContext = (el: Element) => {
+			const windowItem = el.closest('.v-window-item')
+			if (!windowItem) return true
+			const classes = Array.from(windowItem.classList)
+			const isLeaving = classes.some(c => c.includes('leave-active') || c.includes('leave-to') || c === 'v-window-item--leave')
+			return !isLeaving
+		}
+
+		const candidates: HTMLElement[] = []
+		
+		// 1. Chercher par data-v-date
+		const dataDateElements = rootEl.querySelectorAll(`[data-v-date="${iso}"]`)
+		for (const el of Array.from(dataDateElements)) {
+			const btn = (el.tagName === 'BUTTON' ? el : el.querySelector('button')) as HTMLElement
+			if (btn && isActiveContext(btn)) candidates.push(btn)
+		}
+
+		// 2. Chercher par texte ou aria-label si vide
+		if (candidates.length === 0) {
 			const allButtons = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-month__day .v-btn')
-
-			for (let i = 0; i < allButtons.length; i++) {
-				const button = allButtons[i]
-				if (button) {
-					const ariaLabel = button.getAttribute('aria-label')
-					if (ariaLabel && ariaLabelPattern.test(ariaLabel)) {
-						button.focus({ preventScroll: true })
-						return
-					}
+			for (const btn of Array.from(allButtons)) {
+				if (!isActiveContext(btn)) continue
+				const text = btn.textContent?.trim() || ''
+				const ariaLabel = btn.getAttribute('aria-label') || ''
+				if (text === dayNum.toString() || new RegExp(`\\b${dayNum}\\b`).test(ariaLabel)) {
+					candidates.push(btn)
 				}
 			}
+		}
 
-			// Lorsque le changement de mois re-render la grille, le bouton peut ne pas
-			// encore exister : on retente quelques fois pour conserver le focus clavier.
-			// Augmenter le nombre de tentatives et utiliser des délais progressifs
-			if (attempt < 6) {
-				const delay = Math.min(50 * Math.pow(1.5, attempt), 300) // Délai progressif max 300ms
-				setTimeout(() => focusDateButton(date, attempt + 1), delay)
-			}
+		// Filtrer ceux qui ne sont pas visibles
+		const visibleCandidates = candidates.filter(btn => {
+			// Autoriser les éléments en transition (opacity peut être 0 au tout début)
+			const windowItem = btn.closest('.v-window-item')
+			const isEntering = windowItem && Array.from(windowItem.classList).some(c => c.includes('enter-active') || c.includes('enter-to'))
+			
+			if (!isEntering && btn.offsetParent === null) return false
+			
+			const style = window.getComputedStyle(btn)
+			return style.display !== 'none' && style.visibility !== 'hidden'
 		})
+
+		if (visibleCandidates.length > 0) {
+			// Préférer les non-adjacents
+			visibleCandidates.sort((a, b) => {
+				const aAdj = a.closest('.v-date-picker-month__day--adjacent') ? 1 : 0
+				const bAdj = b.closest('.v-date-picker-month__day--adjacent') ? 1 : 0
+				return aAdj - bAdj
+			})
+
+			const bestCandidate = visibleCandidates[0]
+			if (bestCandidate) {
+				bestCandidate.focus({ preventScroll: true })
+
+				// Revérifier le focus après la durée typique d'une transition Vuetify (~350ms)
+				// car le DOM peut être re-rendu et l'élément détruit, ou le focus perdu pendant l'animation
+				if (attempt === 1) {
+					setTimeout(() => {
+						if (token === latestFocusToken && (document.activeElement !== bestCandidate || !bestCandidate.isConnected)) {
+							// Forcer un retry silencieux
+							focusDateButton(date, 2, token)
+						}
+					}, 350)
+				}
+				return
+			}
+		}
+
+		if (attempt < 15) {
+			setTimeout(() => focusDateButton(date, attempt + 1, token), 30)
+		}
 	}
 
 	const clickDateButton = (date: Date) => {
@@ -308,75 +345,35 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		// Laisser les flèches fonctionner nativement dans les contrôles d'entête
 		if ((event.target as HTMLElement | null)?.closest('.v-date-picker-controls')) return
 
-		const { date: current, fromDayCell } = getBaseDateFromEvent(event)
+		// Si on n'a pas de date courante sélectionnée, on essaie de l'extraire du focus
+		const { date: current } = getBaseDateFromEvent(event)
 
+		// Si toujours aucune date n'est résolue, on abandonne
 		if (!current) return
 
 		event.preventDefault()
 
+		// Navigation normale des jours
 		let nextDate = current
-		// Si l'événement ne vient pas d'un jour du calendrier (par ex. après un
-		// changement de mois via les contrôles), on utilise la date de base
-		// telle quelle pour « entrer » dans le mois (souvent le 1er jour),
-		// sans appliquer immédiatement le décalage lié à la flèche. À partir du
-		// moment où le focus est sur un jour (fromDayCell = true), les flèches
-		// se comportent normalement.
-		if (fromDayCell) {
-			switch (event.key) {
-				case 'ArrowLeft':
-					nextDate = addDays(current, -1)
-					break
-				case 'ArrowRight':
-					nextDate = addDays(current, 1)
-					break
-				case 'ArrowUp':
-					nextDate = addDays(current, -7)
-					break
-				case 'ArrowDown':
-					nextDate = addDays(current, 7)
-					break
-			}
-
-			// Vérifier si on a changé de mois avec les flèches gauche/droite
-			const currentMonth = dayjs(current).month()
-			const nextMonth = dayjs(nextDate).month()
-			const currentYear = dayjs(current).year()
-			const nextYear = dayjs(nextDate).year()
-
-			// Si on a changé de mois, forcer le focus sur le premier jour visible du nouveau mois
-			if (currentMonth !== nextMonth || currentYear !== nextYear) {
-				// Pour le mois suivant, aller au 1er jour du nouveau mois
-				// Pour le mois précédent, aller au dernier jour visible du nouveau mois
-				if (event.key === 'ArrowRight' && (nextMonth > currentMonth || nextYear > currentYear)) {
-					// Mois suivant : aller au premier jour
-					nextDate = dayjs(nextDate).startOf('month').toDate()
-				}
-				else if (event.key === 'ArrowLeft' && (nextMonth < currentMonth || nextYear < currentYear)) {
-					// Mois précédent : aller au dernier jour visible (fin de mois)
-					nextDate = dayjs(nextDate).endOf('month').toDate()
-				}
-			}
-		}
-		else {
-			// Si le focus n'est pas sur un jour, utiliser la date courante et appliquer
-			// la navigation fléchée pour permettre la navigation même après changement de mois
-			switch (event.key) {
-				case 'ArrowLeft':
-					nextDate = addDays(current, -1)
-					break
-				case 'ArrowRight':
-					nextDate = addDays(current, 1)
-					break
-				case 'ArrowUp':
-					nextDate = addDays(current, -7)
-					break
-				case 'ArrowDown':
-					nextDate = addDays(current, 7)
-					break
-			}
+		switch (event.key) {
+			case 'ArrowLeft':
+				nextDate = addDays(current, -1)
+				break
+			case 'ArrowRight':
+				nextDate = addDays(current, 1)
+				break
+			case 'ArrowUp':
+				nextDate = addDays(current, -7)
+				break
+			case 'ArrowDown':
+				nextDate = addDays(current, 7)
+				break
 		}
 
+		// Mettre à jour l'état (ce qui peut déclencher un changement de mois dans Vuetify)
 		setCurrentDate(nextDate)
+		
+		// Forcer le focus sur le nouveau jour de manière résiliente
 		focusDateButton(nextDate)
 	}
 
