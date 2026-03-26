@@ -1,20 +1,24 @@
 import { ref, computed } from 'vue'
 import { useFieldValidation, type RuleOptions, type ValidationResult as FieldValidationResult } from '../rules/useFieldValidation'
 
-export type ValidationRule = {
-	type: string
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Support for validator at top level (e.g. SyCheckbox custom rules)
-	validator?: (...args: any[]) => any
+export type BuiltInRuleType = 'required' | 'email' | 'minLength' | 'maxLength'
+
+interface CustomValidationRule {
+	type: 'custom'
+	options: RuleOptions & { validate: NonNullable<RuleOptions['validate']> }
+}
+
+interface StandardValidationRule {
+	type: BuiltInRuleType | ({} & string)
 	options: RuleOptions
 }
 
+export type ValidationRule = CustomValidationRule | StandardValidationRule
+
 export interface ValidationOptions {
 	showSuccessMessages?: boolean
-	fieldIdentifier?: string
-	customRules?: ValidationRule[]
-	warningRules?: ValidationRule[]
-	successRules?: ValidationRule[]
 	disableErrorHandling?: boolean
+	fieldIdentifier?: string
 }
 
 export interface ValidationState {
@@ -40,6 +44,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
 
+	let currentValidationToken = 0
+
 	const { generateRules } = useFieldValidation()
 
 	const hasError = computed(() => errors.value.length > 0)
@@ -61,10 +67,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	const resolveRuleResults = (
 		results: (FieldValidationResult | Promise<FieldValidationResult>)[],
 	): FieldValidationResult[] | Promise<FieldValidationResult[]> => {
-		// If all results are synchronous, return them directly
 		if (results.every(r => !(r instanceof Promise))) return results as FieldValidationResult[]
 
-		// Wrap each result in a safe promise that catches async errors
 		const safePromises = results.map((r: FieldValidationResult | Promise<FieldValidationResult>) => {
 			if (!(r instanceof Promise)) return Promise.resolve(r)
 
@@ -75,6 +79,40 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		})
 
 		return Promise.all(safePromises)
+	}
+
+	/** Executes validation rules against a value, returning sync or async results. */
+	const executeRules = (
+		rules: ValidationRule[],
+		value: unknown,
+		extraOptions?: Record<string, boolean>,
+	): FieldValidationResult[] | Promise<FieldValidationResult[]> => {
+		for (const rule of rules) {
+			if ('validator' in rule) {
+				console.error('[useValidation] "validator" en top level de ValidationRule n\'est plus supporté. Utilisez rule.options.validate à la place.')
+			}
+		}
+
+		const prepared = rules.map(rule => ({
+			type: rule.type,
+			options: { ...rule.options, ...extraOptions, ...(options.fieldIdentifier && !rule.options?.fieldIdentifier ? { fieldIdentifier: options.fieldIdentifier } : {}) },
+		}))
+		const fns = generateRules(prepared)
+		return resolveRuleResults(fns.map(fn => fn(value)))
+	}
+
+	/** Applies a callback to a sync or async value, discarding stale results via token. */
+	const thenOrSync = <T>(
+		value: T | Promise<T>,
+		token: number,
+		fn: (resolved: T) => ValidationResult | Promise<ValidationResult>,
+	): ValidationResult | Promise<ValidationResult> => {
+		if (value instanceof Promise) {
+			return value.then(resolved =>
+				token !== currentValidationToken ? buildResult() : fn(resolved),
+			)
+		}
+		return fn(value)
 	}
 
 	const buildResult = (): ValidationResult => ({
@@ -88,158 +126,77 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		},
 	})
 
+	/** Adds a default success message when no custom success rules are provided. */
+	const addDefaultSuccessMessage = (rules: ValidationRule[]) => {
+		const customSuccessMessage = rules.find(rule => rule.options?.successMessage)?.options.successMessage
+		if (customSuccessMessage) {
+			successes.value.push(customSuccessMessage)
+		}
+		else {
+			const defaultMessage = options.fieldIdentifier ? `Le champ ${options.fieldIdentifier} est valide.` : 'Champ valide'
+			successes.value.push(defaultMessage)
+		}
+	}
+
 	const validateField = (
 		value: unknown,
 		rules: ValidationRule[] = [],
 		warningRules: ValidationRule[] = [],
 		successRules: ValidationRule[] = [],
 	): ValidationResult | Promise<ValidationResult> => {
+		const token = ++currentValidationToken
 		clearValidation()
 
-		// Si la gestion des erreurs est désactivée, on retourne un résultat sans erreurs
-		if (options.disableErrorHandling) {
-			return {
-				hasError: false,
-				hasWarning: false,
-				hasSuccess: false,
-				state: {
-					errors: [],
-					warnings: [],
-					successes: [],
-				},
+		if (options.disableErrorHandling) return buildResult()
+
+		const resolved = executeRules(rules, value)
+
+		return thenOrSync(resolved, token, (ruleResults) => {
+			let hasValidationError = false
+			for (const result of ruleResults) {
+				if (result.error) {
+					errors.value.push(result.error)
+					hasValidationError = true
+				}
 			}
-		}
 
-		// Validation des règles normales
-		const normalRules = rules.map(rule => ({
-			type: rule.type,
-			options: {
-				...rule.options,
-				fieldIdentifier: options.fieldIdentifier || rule.options?.fieldIdentifier,
-				// Support for validator function at top level of rule (e.g. SyCheckbox custom rules)
-				...(rule.validator && !rule.options?.validate ? { validate: rule.validator } : {}),
-			},
-		}))
-
-		const validationRules = generateRules(normalRules)
-		const rawResults = validationRules.map(fn => fn(value))
-		const resolved = resolveRuleResults(rawResults)
-
-		if (resolved instanceof Promise) {
-			return resolved.then(ruleResults => processResults(ruleResults, value, rules, warningRules, successRules))
-		}
-
-		return processResults(resolved, value, rules, warningRules, successRules)
-	}
-
-	/**
-	 * Processes resolved normal-rule results, then runs warning & success rules.
-	 */
-	const processResults = (
-		ruleResults: FieldValidationResult[],
-		value: unknown,
-		rules: ValidationRule[],
-		warningRules: ValidationRule[],
-		successRules: ValidationRule[],
-	): ValidationResult | Promise<ValidationResult> => {
-		let hasValidationError = false
-		for (const result of ruleResults) {
-			if (result.error) {
-				errors.value.push(result.error)
-				hasValidationError = true
+			if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0) {
+				addDefaultSuccessMessage(rules)
 			}
-		}
 
-		// Si pas d'erreur, ajouter le message de succès ou un message par défaut
-		// Mais seulement si aucun customSuccessRules n'est défini pour éviter la duplication
-		if (!hasValidationError && value && options.showSuccessMessages !== false && (!successRules || successRules.length === 0)) {
-			const customSuccessMessage = rules.find(rule => rule.options?.successMessage)?.options.successMessage
-			if (customSuccessMessage) {
-				successes.value.push(customSuccessMessage)
-			}
-			else {
-				const defaultMessage = options.fieldIdentifier ? `Le champ ${options.fieldIdentifier} est valide.` : 'Champ valide'
-				successes.value.push(defaultMessage)
-			}
-		}
-
-		// Validation des règles d'avertissement
-		if (!hasValidationError && warningRules.length > 0) {
-			const warningValidationRules = generateRules(
-				warningRules.map(rule => ({
-					type: rule.type,
-					options: {
-						...rule.options,
-						isWarning: true,
-						fieldIdentifier: options.fieldIdentifier || rule.options?.fieldIdentifier,
-						...(rule.validator && !rule.options?.validate ? { validate: rule.validator } : {}),
-					},
-				})),
-			)
-
-			const warningRawResults = warningValidationRules.map(fn => fn(value))
-			const warningResolved = resolveRuleResults(warningRawResults)
-
-			if (warningResolved instanceof Promise) {
-				return warningResolved.then((warningResults) => {
+			if (!hasValidationError && warningRules.length > 0) {
+				const warningResolved = executeRules(warningRules, value, { isWarning: true })
+				return thenOrSync(warningResolved, token, (warningResults) => {
 					for (const r of warningResults) {
 						if (r.warning) warnings.value.push(r.warning)
 					}
-					return processSuccessRules(hasValidationError, value, successRules)
+					return runSuccessRules(hasValidationError, value, successRules, token)
 				})
 			}
 
-			for (const r of warningResolved) {
-				if (r.warning) warnings.value.push(r.warning)
-			}
-		}
-
-		return processSuccessRules(hasValidationError, value, successRules)
+			return runSuccessRules(hasValidationError, value, successRules, token)
+		})
 	}
 
-	/**
-	 * Processes success rules after normal + warning rules.
-	 */
-	const processSuccessRules = (
+	/** Runs success rules after normal + warning rules. */
+	const runSuccessRules = (
 		hasValidationError: boolean,
 		value: unknown,
 		successRules: ValidationRule[],
+		token: number,
 	): ValidationResult | Promise<ValidationResult> => {
-		if (!hasValidationError && !hasWarning.value && successRules.length > 0) {
-			const successValidationRules = generateRules(
-				successRules.map(rule => ({
-					type: rule.type,
-					options: {
-						...rule.options,
-						isSuccess: true,
-						fieldIdentifier: options.fieldIdentifier || rule.options?.fieldIdentifier,
-						...(rule.validator && !rule.options?.validate ? { validate: rule.validator } : {}),
-					},
-				})),
-			)
+		if (hasValidationError || hasWarning.value || successRules.length === 0) return buildResult()
 
-			const successRawResults = successValidationRules.map(fn => fn(value))
-			const successResolved = resolveRuleResults(successRawResults)
+		const successResolved = executeRules(successRules, value, { isSuccess: true })
 
-			if (successResolved instanceof Promise) {
-				return successResolved.then((successResults) => {
-					for (const r of successResults) {
-						if (r.success && options.showSuccessMessages !== false) {
-							successes.value.push(r.success)
-						}
-					}
-					return buildResult()
-				})
-			}
-
-			for (const r of successResolved) {
+		return thenOrSync(successResolved, token, (successResults) => {
+			for (const r of successResults) {
 				if (r.success && options.showSuccessMessages !== false) {
 					successes.value.push(r.success)
 				}
 			}
-		}
-
-		return buildResult()
+			return buildResult()
+		})
 	}
 
 	const validateOnSubmit = (): boolean => {
@@ -247,15 +204,12 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	}
 
 	return {
-		// États
 		errors,
 		warnings,
 		successes,
 		hasError,
 		hasWarning,
 		hasSuccess,
-
-		// Méthodes
 		validateField,
 		validateOnSubmit,
 		clearValidation,

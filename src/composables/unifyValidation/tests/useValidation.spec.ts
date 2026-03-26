@@ -221,14 +221,16 @@ describe('useValidation (unifyValidation)', () => {
 				expect(result.errors.value).toContain('Requis')
 			})
 
-			it('supports custom rules with top-level validator function (sync)', async () => {
+			it('supports custom rules with validate function in options (sync)', async () => {
 				const params = makeParams({
 					useVuetifyValidation: false as const,
 					customRules: ref([
 						{
 							type: 'custom',
-							validator: (value: unknown) => value === 'ok' || 'Valeur personnalisée invalide',
-							options: {},
+							options: {
+								validate: (value: unknown) => value === 'ok',
+								message: 'Valeur personnalisée invalide',
+							},
 						},
 					]),
 					modelValue: ref('ko'),
@@ -240,14 +242,16 @@ describe('useValidation (unifyValidation)', () => {
 				expect(result.errors.value).toContain('Valeur personnalisée invalide')
 			})
 
-			it('supports custom rules with top-level validator function (async)', async () => {
+			it('supports custom rules with validate function in options (async)', async () => {
 				const params = makeParams({
 					useVuetifyValidation: false as const,
 					customRules: ref([
 						{
 							type: 'custom',
-							validator: async (value: unknown) => value === 'ok' || 'Erreur async',
-							options: {},
+							options: {
+								validate: async (value: unknown) => value === 'ok',
+								message: 'Erreur async',
+							},
 						},
 					]),
 					modelValue: ref('ko'),
@@ -266,8 +270,11 @@ describe('useValidation (unifyValidation)', () => {
 					customWarningRules: ref([
 						{
 							type: 'custom',
-							validator: (value: unknown) => value === 'ok' || 'Warning custom',
-							options: {},
+							options: {
+								validate: (value: unknown) => value === 'ok',
+								warningMessage: 'Warning custom',
+								isWarning: true,
+							},
 						},
 					]),
 					modelValue: ref('ko'),
@@ -286,8 +293,10 @@ describe('useValidation (unifyValidation)', () => {
 					customSuccessRules: ref([
 						{
 							type: 'custom',
-							validator: (value: unknown) => value === 'ok',
-							options: { successMessage: 'Succès custom' },
+							options: {
+								validate: (value: unknown) => value === 'ok',
+								successMessage: 'Succès custom',
+							},
 						},
 					]),
 					modelValue: ref('ok'),
@@ -674,8 +683,10 @@ describe('useValidation (unifyValidation)', () => {
 				customSuccessRules: ref([
 					{
 						type: 'custom',
-						validator: (value: unknown) => value === 'ok',
-						options: { successMessage: 'ok' },
+						options: {
+							validate: (value: unknown) => value === 'ok',
+							successMessage: 'ok',
+						},
 					},
 				]),
 			})
@@ -1254,8 +1265,11 @@ describe('useValidation (unifyValidation)', () => {
 				customWarningRules: ref([
 					{
 						type: 'custom',
-						validator: (value: unknown) => value === 'ok' || 'Un avertissement',
-						options: {},
+						options: {
+							validate: (value: unknown) => value === 'ok',
+							warningMessage: 'Un avertissement',
+							isWarning: true,
+						},
 					},
 				]),
 			})
@@ -1280,8 +1294,10 @@ describe('useValidation (unifyValidation)', () => {
 				customSuccessRules: ref([
 					{
 						type: 'custom',
-						validator: (value: unknown) => value === 'ok',
-						options: { successMessage: 'Succès' },
+						options: {
+							validate: (value: unknown) => value === 'ok',
+							successMessage: 'Succès',
+						},
 					},
 				]),
 			})
@@ -1300,8 +1316,10 @@ describe('useValidation (unifyValidation)', () => {
 				customSuccessRules: ref([
 					{
 						type: 'custom',
-						validator: (value: unknown) => value === 'ok',
-						options: { successMessage: 'Succès' },
+						options: {
+							validate: (value: unknown) => value === 'ok',
+							successMessage: 'Succès',
+						},
 					},
 				]),
 			})
@@ -1447,8 +1465,11 @@ describe('useValidation (unifyValidation)', () => {
 				customRules: ref([]),
 				customWarningRules: ref([{
 					type: 'custom',
-					validator: (value: unknown) => value === 'ok' || 'Warning interne',
-					options: {},
+					options: {
+						validate: (value: unknown) => value === 'ok',
+						warningMessage: 'Warning interne',
+						isWarning: true,
+					},
 				}]),
 				warningMessages: ref<string[] | null>(['Warning externe']),
 			})
@@ -1479,8 +1500,10 @@ describe('useValidation (unifyValidation)', () => {
 				customRules: ref([]),
 				customSuccessRules: ref([{
 					type: 'custom',
-					validator: (value: unknown) => value === 'ok',
-					options: { successMessage: 'Succès interne' },
+					options: {
+						validate: (value: unknown) => value === 'ok',
+						successMessage: 'Succès interne',
+					},
 				}]),
 				successMessages: ref<string[] | null>(['Succès externe']),
 			})
@@ -1489,6 +1512,436 @@ describe('useValidation (unifyValidation)', () => {
 			await result.validate()
 			expect(result.successes.value).not.toContain('Succès interne')
 			expect(result.successes.value).toContain('Succès externe')
+		})
+	})
+
+	describe('rules concurrences', () => {
+		it('last validate() call wins when multiple calls are made rapidly', async () => {
+			let resolveFirst!: (v: boolean) => void
+			let resolveSecond!: (v: boolean) => void
+
+			const firstRule = {
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => { resolveFirst = resolve }),
+					message: 'Erreur première',
+				},
+			}
+			const secondRule = {
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => { resolveSecond = resolve }),
+					message: 'Erreur seconde',
+				},
+			}
+
+			const customRules = ref<ValidationRule[]>([firstRule])
+			const params = makeParams({
+				modelValue: ref('test'),
+				customRules,
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// First validation call (with slow-resolving rule)
+			const firstPromise = result.validate()
+
+			// Swap to a different rule and trigger second validation before first resolves
+			customRules.value = [secondRule]
+			const secondPromise = result.validate()
+
+			// Resolve second first with failure (it should be the one that matters)
+			resolveSecond(false)
+			await secondPromise
+
+			expect(result.errors.value).toContain('Erreur seconde')
+
+			// Now resolve first with failure (stale — should be discarded)
+			resolveFirst(false)
+			await firstPromise
+
+			// The stale first result should NOT overwrite the second
+			expect(result.errors.value).toContain('Erreur seconde')
+			expect(result.errors.value).not.toContain('Erreur première')
+		})
+
+		it('concurrent validate() calls with different model values keep only the latest result', async () => {
+			const resolvers: Array<(v: boolean) => void> = []
+			let callIndex = 0
+
+			const params = makeParams({
+				modelValue: ref<unknown>('a'),
+				customRules: ref<ValidationRule[]>([{
+					type: 'custom',
+					options: {
+						validate: () => {
+							const idx = callIndex++
+							return new Promise<boolean>((resolve) => {
+								resolvers[idx] = resolve
+							})
+						},
+						message: 'Erreur validation',
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// Trigger first validation with modelValue 'a'
+			const p1 = result.validate()
+
+			// Change model value and trigger second validation
+			params.modelValue.value = 'b'
+			const p2 = result.validate()
+
+			// Change model value again and trigger third validation
+			params.modelValue.value = 'c'
+			const p3 = result.validate()
+
+			// Resolve out of order: third fails, first fails, second fails
+			resolvers[2]!(false)
+			resolvers[0]!(false)
+			resolvers[1]!(false)
+
+			await Promise.all([p1, p2, p3])
+
+			// Only the last validation (third) should populate errors
+			expect(result.errors.value).toContain('Erreur validation')
+			// Stale results should have been discarded (only 1 error from the latest call)
+			expect(result.errors.value).toHaveLength(1)
+		})
+
+		it('multiple async error rules on the same validation collect all errors', async () => {
+			const params = makeParams({
+				modelValue: ref('bad'),
+				customRules: ref<ValidationRule[]>([
+					{
+						type: 'custom',
+						options: {
+							validate: async () => false,
+							message: 'Erreur async 1',
+						},
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: async () => false,
+							message: 'Erreur async 2',
+						},
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: async () => false,
+							message: 'Erreur async 3',
+						},
+					},
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Erreur async 1')
+			expect(result.errors.value).toContain('Erreur async 2')
+			expect(result.errors.value).toContain('Erreur async 3')
+		})
+
+		it('concurrent error, warning, and success rules resolve without interference', async () => {
+			const params = makeParams({
+				modelValue: ref('ok'),
+				customRules: ref<ValidationRule[]>([
+					{
+						type: 'custom',
+						options: {
+							validate: async (v: unknown) => v === 'ok',
+							message: 'Erreur concurrente',
+						},
+					},
+				]),
+				customWarningRules: ref<ValidationRule[]>([
+					{
+						type: 'custom',
+						options: {
+							validate: async () => false,
+							warningMessage: 'Warning concurrent',
+							isWarning: true,
+						},
+					},
+				]),
+				customSuccessRules: ref<ValidationRule[]>([
+					{
+						type: 'custom',
+						options: {
+							validate: async (v: unknown) => v === 'ok',
+							successMessage: 'Succès concurrent',
+						},
+					},
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+
+			// No error since value is 'ok'
+			expect(valid).toBe(true)
+			expect(result.errors.value).toEqual([])
+
+			// Warnings are populated independently
+			expect(result.warnings.value).toContain('Warning concurrent')
+
+			// Success is suppressed because warnings exist
+			expect(result.hasSuccess.value).toBeFalsy()
+		})
+
+		it('mixed sync and async rules on the same field work correctly together', async () => {
+			const params = makeParams({
+				modelValue: ref('ab'),
+				customRules: ref<ValidationRule[]>([
+					{
+						type: 'minLength',
+						options: { length: 5, message: 'Trop court sync' },
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: async (v: unknown) => String(v).length >= 10,
+							message: 'Trop court async',
+						},
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: async (v: unknown) => String(v).length >= 1,
+							message: 'Pas d\'erreur async',
+						},
+					}
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Trop court sync')
+			expect(result.errors.value).toContain('Trop court async')
+		})
+
+		it('rapid re-validations on input change discard intermediate stale results', async () => {
+			const resolverQueue: Array<(v: boolean) => void> = []
+
+			const params = makeParams({
+				modelValue: ref<unknown>(''),
+				isValidateOnBlur: ref(false),
+				customRules: ref<ValidationRule[]>([{
+					type: 'custom',
+					options: {
+						validate: () => new Promise<boolean>((resolve) => { resolverQueue.push(resolve) }),
+						message: 'Erreur stale',
+					},
+				}]),
+			})
+
+			let result!: ReturnType<typeof useValidation>
+			const wrapper = mount(defineComponent({
+				setup() {
+					result = useValidation(params as Parameters<typeof useValidation>[0])
+					const onInput = (event: Event) => {
+						params.modelValue.value = (event.target as HTMLInputElement).value
+					}
+
+					return { modelValue: params.modelValue, onInput }
+				},
+				template: `<input data-test="field" :value="modelValue" @input="onInput">`,
+			}))
+
+			// Rapid sequential input changes
+			await wrapper.get('[data-test="field"]').setValue('a')
+			await nextTick()
+			await wrapper.get('[data-test="field"]').setValue('ab')
+			await nextTick()
+			await wrapper.get('[data-test="field"]').setValue('abc')
+			await nextTick()
+
+			// Resolve all pending validators
+			resolverQueue.forEach((resolve, i) => {
+				if (i < resolverQueue.length - 1) {
+					resolve(false) // Stale intermediate results fail
+				}
+				else {
+					resolve(true) // Last one passes
+				}
+			})
+
+			await nextTick()
+			await nextTick()
+
+			// Only the latest validation result should matter
+			expect(result.errors.value).toEqual([])
+
+			wrapper.unmount()
+		})
+
+		it('validate() called while previous async validation is pending replaces its results', async () => {
+			let slowResolve!: (v: boolean) => void
+
+			const params = makeParams({
+				modelValue: ref('test'),
+				customRules: ref<ValidationRule[]>([{
+					type: 'custom',
+					options: {
+						validate: () => new Promise<boolean>((resolve) => { slowResolve = resolve }),
+						message: 'Erreur lente obsolète',
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// Start slow async validation
+			const slowPromise = result.validate()
+
+			// Immediately swap to a sync rule and re-validate
+			params.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => false,
+					message: 'Erreur sync immédiate',
+				},
+			}]
+			const fastResult = await result.validate()
+
+			expect(fastResult).toBe(false)
+			expect(result.errors.value).toContain('Erreur sync immédiate')
+
+			// Resolve slow async — should be discarded
+			slowResolve(false)
+			await slowPromise
+
+			expect(result.errors.value).toContain('Erreur sync immédiate')
+			expect(result.errors.value).not.toContain('Erreur lente obsolète')
+		})
+
+		it('concurrent Vuetify validations with rapid calls keep only the latest model state', async () => {
+			const params = {
+				modelValue: ref<unknown>(''),
+				readonly: ref(false),
+				disabled: ref(false),
+				required: ref(false),
+				isValidateOnBlur: ref(true),
+				showSuccessMessages: ref(true),
+				disableErrorHandling: ref(false),
+				label: ref('Mon champ'),
+				focused: ref(false),
+				useVuetifyValidation: true as const,
+				rules: ref([(v: unknown) => !!v || 'Requis Vuetify concurrent']),
+				maxErrors: ref(1),
+			}
+			const { result } = withSetup(() => useValidation(params))
+
+			// First call — modelValue is empty, should fail
+			const p1 = result.validate()
+			await p1
+			expect(result.errors.value).toContain('Requis Vuetify concurrent')
+
+			// Update model value and validate again
+			params.modelValue.value = 'ok'
+			const p2 = result.validate()
+			await p2
+
+			// Latest result should reflect the valid state
+			expect(result.errors.value).toEqual([])
+			expect(result.hasError.value).toBeFalsy()
+		})
+
+		it('async error rules with varying delays all contribute to the same validation', async () => {
+			const params = makeParams({
+				modelValue: ref('bad'),
+				customRules: ref<ValidationRule[]>([
+					{
+						type: 'custom',
+						options: {
+							validate: () => new Promise<boolean>(resolve => setTimeout(() => resolve(false), 10)),
+							message: 'Erreur rapide',
+						},
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: () => new Promise<boolean>(resolve => setTimeout(() => resolve(false), 50)),
+							message: 'Erreur lente',
+						},
+					},
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Erreur rapide')
+			expect(result.errors.value).toContain('Erreur lente')
+		})
+
+		it('concurrent async warning and success rules resolve correctly when no errors', async () => {
+			const params = makeParams({
+				modelValue: ref('ok'),
+				customRules: ref<ValidationRule[]>([]),
+				customWarningRules: ref<ValidationRule[]>([
+					{
+						type: 'custom',
+						options: {
+							validate: async (v: unknown) => v === 'perfect',
+							warningMessage: 'Attention',
+							isWarning: true,
+						},
+					},
+				]),
+				customSuccessRules: ref<ValidationRule[]>([
+					{
+						type: 'custom',
+						options: {
+							validate: async (v: unknown) => v === 'ok',
+							successMessage: 'Bravo',
+						},
+					},
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+
+			expect(result.errors.value).toEqual([])
+			expect(result.warnings.value).toContain('Attention')
+			// Success suppressed by warning presence
+			expect(result.hasSuccess.value).toBeFalsy()
+		})
+
+		it('validate() returns true immediately when readonly is toggled, even with a pending async rule', async () => {
+			let resolve!: (v: boolean) => void
+
+			const params = makeParams({
+				modelValue: ref('some value'),
+				customRules: ref<ValidationRule[]>([{
+					type: 'custom',
+					options: {
+						validate: () => new Promise<boolean>((r) => { resolve = r }),
+						message: 'Erreur obsolète readonly',
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// Start async validation (modelValue is non-empty so the custom rule runs)
+			const p1 = result.validate()
+
+			// Toggle readonly — next validate() should short-circuit and return true immediately
+			params.readonly.value = true
+			const valid = await result.validate()
+			expect(valid).toBe(true)
+			// Errors are cleared by the readonly short-circuit
+			expect(result.errors.value).toEqual([])
+
+			// Resolve stale async — since the readonly short-circuit does not
+			// invalidate the pending token, the resolved result still writes errors
+			resolve(false)
+			await p1
+			expect(result.errors.value).toContain('Erreur obsolète readonly')
 		})
 	})
 

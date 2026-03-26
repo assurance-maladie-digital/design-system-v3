@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { useValidation } from '../useValidation'
 
 describe('useValidation', () => {
@@ -152,53 +152,98 @@ describe('useValidation', () => {
 		expect(validation.validateOnSubmit()).toBe(true)
 	})
 
-	it('should handle thrown error in async validation rules', async () => {
-		const validation = useValidation()
-		const rules = [{
-			type: 'custom',
-			options: {
-				validate: async () => {
-					throw new Error('Network error')
+	describe('Handle thrown errors in async rules', () => {
+		it('should handle thrown error in async validation rules', async () => {
+			const validation = useValidation()
+			const rules = [{
+				type: 'custom',
+				options: {
+					validate: async () => {
+						throw new Error('Network error')
+					},
+					message: 'Erreur personnalisée',
 				},
-				message: 'Erreur personnalisée',
-			},
-		}]
+			}]
 
-		const result = await validation.validateField('test', rules)
-		expect(result.hasError).toBe(true)
-		expect(result.state.errors[0]).toBe('Erreur personnalisée')
+			const result = await validation.validateField('test', rules)
+			expect(result.hasError).toBe(true)
+			expect(result.state.errors[0]).toBe('Erreur personnalisée')
+		})
+
+		it('should use thrown error message when no custom message is provided', async () => {
+			const validation = useValidation()
+			const rules = [{
+				type: 'custom',
+				options: {
+					validate: async () => {
+						throw new Error('Service unavailable')
+					},
+				},
+			}]
+
+			const result = await validation.validateField('test', rules)
+			expect(result.hasError).toBe(true)
+			expect(result.state.errors[0]).toBe('Service unavailable')
+		})
+
+		it('should handle thrown error in async warning rules', async () => {
+			const validation = useValidation()
+			const warningRules = [{
+				type: 'custom',
+				options: {
+					validate: async () => {
+						throw new Error('Warning service failed')
+					},
+					isWarning: true,
+				},
+			}]
+
+			const result = await validation.validateField('test', [], warningRules)
+			expect(result.hasWarning).toBe(true)
+			expect(result.state.warnings[0]).toBe('Warning service failed')
+		})
 	})
 
-	it('should use thrown error message when no custom message is provided', async () => {
+	it('should discard a slow async validation when a newer one is triggered after', async () => {
+		vi.useFakeTimers()
 		const validation = useValidation()
-		const rules = [{
+
+		// Slow rule: resolves after 100ms with an error
+		const slowRules = [{
 			type: 'custom',
 			options: {
-				validate: async () => {
-					throw new Error('Service unavailable')
-				},
+				validate: () => new Promise<boolean>(resolve => setTimeout(() => resolve(false), 100)),
+				message: 'Erreur lente',
 			},
 		}]
 
-		const result = await validation.validateField('test', rules)
-		expect(result.hasError).toBe(true)
-		expect(result.state.errors[0]).toBe('Service unavailable')
-	})
-
-	it('should handle thrown error in async warning rules', async () => {
-		const validation = useValidation()
-		const warningRules = [{
+		// Fast rule: resolves immediately with success
+		const fastRules = [{
 			type: 'custom',
 			options: {
-				validate: async () => {
-					throw new Error('Warning service failed')
-				},
-				isWarning: true,
+				validate: () => true,
+				successMessage: 'Validation rapide réussie',
 			},
 		}]
 
-		const result = await validation.validateField('test', [], warningRules)
-		expect(result.hasWarning).toBe(true)
-		expect(result.state.warnings[0]).toBe('Warning service failed')
+		// Launch slow validation first, then fast validation immediately after
+		const slowPromise = validation.validateField('test', slowRules)
+		const fastResult = await validation.validateField('test', fastRules)
+
+		// Fast validation should have succeeded
+		expect(fastResult.hasError).toBe(false)
+		expect(fastResult.hasSuccess).toBe(true)
+		expect(fastResult.state.successes).toContain('Validation rapide réussie')
+
+		// Wait for the slow validation to resolve
+		vi.advanceTimersByTime(100)
+		await slowPromise
+
+		// The slow validation must NOT have overwritten the fast result
+		expect(validation.errors.value).toEqual([])
+		expect(validation.hasError.value).toBe(false)
+		expect(validation.successes.value).toContain('Validation rapide réussie')
+
+		vi.useRealTimers()
 	})
 })

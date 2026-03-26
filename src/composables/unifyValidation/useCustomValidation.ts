@@ -23,9 +23,6 @@ export function useCustomValidation(
 	let validator = useValidation({
 		showSuccessMessages: showSuccessMessages.value,
 		fieldIdentifier: label.value,
-		customRules: customRules?.value,
-		warningRules: customWarningRules?.value,
-		successRules: customSuccessRules?.value,
 		disableErrorHandling: disableErrorHandling.value,
 	})
 
@@ -35,9 +32,6 @@ export function useCustomValidation(
 			validator = useValidation({
 				showSuccessMessages: showSuccessMessages.value,
 				fieldIdentifier: label.value,
-				customRules: customRules?.value,
-				warningRules: customWarningRules?.value,
-				successRules: customSuccessRules?.value,
 				disableErrorHandling: disableErrorHandling.value,
 			})
 
