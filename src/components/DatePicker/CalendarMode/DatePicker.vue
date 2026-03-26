@@ -37,94 +37,92 @@
 		return ''
 	})
 
-	const props = withDefaults(defineProps<{
-		modelValue?: DateInput
-		label: string
-		placeholder?: string
-		format?: string
-		dateFormatReturn?: string
-		isBirthDate?: boolean
-		birthDate?: boolean // Alias pour isBirthDate pour compatibilité avec l'attribut kebab-case birth-date
-		showWeekNumber?: boolean
-		required?: boolean
-		displayRange?: boolean
-		displayIcon?: boolean
-		displayAppendIcon?: boolean
-		displayPrependIcon?: boolean
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		customRules?: { type: string, options: any }[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		customWarningRules?: { type: string, options: any }[]
-		disabled?: boolean
-		noIcon?: boolean
-		noCalendar?: boolean
-		isOutlined?: boolean
-		readonly?: boolean
-		width?: string
-		disableErrorHandling?: boolean
-		showSuccessMessages?: boolean
-		bgColor?: string
-		density?: 'default' | 'comfortable' | 'compact'
-		hideDetails?: boolean | 'auto'
-		displayWeekendDays?: boolean
-		displayTodayButton?: boolean
-		displayHolidayDays?: boolean
-		useCombinedMode?: boolean
-		textFieldActivator?: boolean
-		title?: string | false
-		displayAsterisk?: boolean
-		period?: {
-			min?: string
-			max?: string
-		}
-		autoClamp?: boolean
-		isValidateOnBlur?: boolean
-		hint?: string
-		persistentHint?: boolean
-		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+const props = withDefaults(defineProps<{
+	autoClamp?: boolean
+	bgColor?: string
+	birthDate?: boolean // Alias pour isBirthDate pour compatibilité avec l'attribut kebab-case birth-date
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	customRules?: { type: string, options: any }[]
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	customWarningRules?: { type: string, options: any }[]
+	dateFormatReturn?: string
+	density?: 'default' | 'comfortable' | 'compact'
+	disableErrorHandling?: boolean
+	disabled?: boolean
+	displayAppendIcon?: boolean
+	displayAsterisk?: boolean
+	displayHolidayDays?: boolean
+	displayIcon?: boolean
+	displayPrependIcon?: boolean
+	displayRange?: boolean
+	displayTodayButton?: boolean
+	displayWeekendDays?: boolean
+	format?: string
+	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	hideDetails?: boolean | 'auto'
+	hint?: string
+	isBirthDate?: boolean
+	isOutlined?: boolean
+	isValidateOnBlur?: boolean
+	label: string
+	modelValue?: DateInput
+	noCalendar?: boolean
+	noIcon?: boolean
+	period?: {
+		max?: string
+		min?: string
+	}
+	persistentHint?: boolean
+	placeholder?: string
+	readonly?: boolean
+	required?: boolean
+	showSuccessMessages?: boolean
+	showWeekNumber?: boolean
+	textFieldActivator?: boolean
+	title?: string | false
+	useCombinedMode?: boolean
+	width?: string
+}>(), {
+	autoClamp: false,
+	bgColor: 'white',
+	birthDate: false,
+	customRules: () => [],
+	customWarningRules: () => [],
+	dateFormatReturn: '',
+	density: 'default',
+	disableErrorHandling: false,
+	disabled: false,
+	displayAppendIcon: false,
+	displayAsterisk: false,
+	displayHolidayDays: true,
+	displayIcon: true,
+	displayPrependIcon: true,
+	displayRange: false,
+	displayTodayButton: true,
+	displayWeekendDays: true,
+	format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
+	headingLevel: 3,
+	hideDetails: false,
+	hint: undefined,
+	isBirthDate: false,
+	isOutlined: true,
+	isValidateOnBlur: true,
+	modelValue: undefined,
+	noCalendar: false,
+	noIcon: false,
+	period: () => ({ min: '', max: '' }),
+	persistentHint: false,
+	placeholder: undefined,
+	readonly: false,
+	required: false,
+	showSuccessMessages: true,
+	showWeekNumber: false,
+	textFieldActivator: false,
+	title: false,
+	useCombinedMode: false,
+	width: '100%',
+})
 
-	}>(), {
-		modelValue: undefined,
-		placeholder: undefined,
-		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
-		dateFormatReturn: '',
-		isBirthDate: false,
-		birthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		displayPrependIcon: true,
-		customRules: () => [],
-		customWarningRules: () => [],
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		isOutlined: true,
-		readonly: false,
-		width: '100%',
-		disableErrorHandling: false,
-		showSuccessMessages: true,
-		bgColor: 'white',
-		density: 'default',
-		hideDetails: false,
-		displayWeekendDays: true,
-		displayTodayButton: true,
-		displayHolidayDays: true,
-		useCombinedMode: false,
-		textFieldActivator: false,
-		title: false,
-		displayAsterisk: false,
-		period: () => ({ min: '', max: '' }),
-		autoClamp: false,
-		isValidateOnBlur: true,
-		hint: undefined,
-		persistentHint: false,
-		headingLevel: 3,
-	})
-
-	// La compatibilité entre isBirthDate et birthDate est gérée directement dans l'appel au composable
 
 	// Utilisation des composables pour les fonctionnalités du CalendarMode
 	const { displayWeekendDays } = useWeekendDays(props)
@@ -148,14 +146,14 @@
 
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
-	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
 
 	const isDatePickerVisible = ref(false)
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
-		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		datePickerRef,
 		onClose: () => emit('closed'),
 		restoreFocus: () => queueMicrotask(() => dateCalendarTextInputRef.value?.$el?.querySelector?.('input')?.focus({ preventScroll: true })),
 	})
@@ -163,7 +161,7 @@
 	// Utiliser le calendarKeyboardNavigation normalement
 	useCalendarKeyboardNavigation({
 		isDatePickerVisible,
-		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		datePickerRef,
 		getCurrentDate: () => {
 			const value = selectedDates.value
 			if (value) {
@@ -1059,7 +1057,7 @@
 			>
 				<template #activator="{ props: menuProps }">
 					<div
-						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
+						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': datePickerContentId }"
 					>
 						<SyTextField
 							:id="`${datePickerContentId}-input`"
