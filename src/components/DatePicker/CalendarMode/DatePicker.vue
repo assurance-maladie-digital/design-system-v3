@@ -1152,7 +1152,6 @@
 						>
 							<div class="d-flex justify-center align-center w-100">
 								<v-btn
-									v-if="props.displayTodayButton"
 									size="x-small"
 									color="primary"
 									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
