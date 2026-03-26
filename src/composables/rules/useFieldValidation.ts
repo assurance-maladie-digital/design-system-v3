@@ -400,7 +400,12 @@ export function useFieldValidation() {
 
 					const result = options.validate(value)
 					if (result instanceof Promise) {
-						return result.then(handleCustomResult)
+						return result.then(handleCustomResult).catch((err: unknown) => {
+							const message = err instanceof Error ? err.message : String(err)
+							return options.isWarning
+								? { warning: options.warningMessage || message || baseMessages.warning } as ValidationResult
+								: { error: options.message || message || baseMessages.error } as ValidationResult
+						})
 					}
 					return handleCustomResult(result)
 				}

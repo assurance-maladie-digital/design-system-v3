@@ -61,8 +61,20 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	const resolveRuleResults = (
 		results: (FieldValidationResult | Promise<FieldValidationResult>)[],
 	): FieldValidationResult[] | Promise<FieldValidationResult[]> => {
+		// If all results are synchronous, return them directly
 		if (results.every(r => !(r instanceof Promise))) return results as FieldValidationResult[]
-		return Promise.all(results.map(r => r instanceof Promise ? r : Promise.resolve(r)))
+
+		// Wrap each result in a safe promise that catches async errors
+		const safePromises = results.map((r: FieldValidationResult | Promise<FieldValidationResult>) => {
+			if (!(r instanceof Promise)) return Promise.resolve(r)
+
+			return r.catch((err: unknown) => {
+				const message = err instanceof Error ? err.message : String(err)
+				return { error: message || 'Erreur de validation' } as FieldValidationResult
+			})
+		})
+
+		return Promise.all(safePromises)
 	}
 
 	const buildResult = (): ValidationResult => ({

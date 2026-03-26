@@ -1491,4 +1491,105 @@ describe('useValidation (unifyValidation)', () => {
 			expect(result.successes.value).toContain('Succès externe')
 		})
 	})
+
+	describe('async validation rules that throw errors', () => {
+		it('handles thrown error in async custom rules and uses the custom message', async () => {
+			const params = makeParams({
+				modelValue: ref('test'),
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: async () => {
+							throw new Error('Network error')
+						},
+						message: 'Erreur personnalisée',
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Erreur personnalisée')
+			expect(result.hasError.value).toBe(true)
+		})
+
+		it('uses the thrown error message when no custom message is provided', async () => {
+			const params = makeParams({
+				modelValue: ref('test'),
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: async () => {
+							throw new Error('Service unavailable')
+						},
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('Service unavailable')
+			expect(result.hasError.value).toBe(true)
+		})
+
+		it('handles thrown error in async warning rules', async () => {
+			const params = makeParams({
+				modelValue: ref('test'),
+				customWarningRules: ref([{
+					type: 'custom',
+					options: {
+						validate: async () => {
+							throw new Error('Warning service failed')
+						},
+						isWarning: true,
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.warnings.value).toContain('Warning service failed')
+			expect(result.hasWarning.value).toBe(true)
+		})
+
+		it('handles thrown error in async success rules gracefully', async () => {
+			const params = makeParams({
+				modelValue: ref('test'),
+				customSuccessRules: ref([{
+					type: 'custom',
+					options: {
+						validate: async () => {
+							throw new Error('Success check failed')
+						},
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			// The thrown error is caught and does not crash — no validation errors are surfaced
+			expect(result.errors.value).toEqual([])
+		})
+
+		it('handles non-Error thrown values in async rules', async () => {
+			const params = makeParams({
+				modelValue: ref('test'),
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: async () => {
+							throw 'string error'
+						},
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const valid = await result.validate()
+			expect(valid).toBe(false)
+			expect(result.errors.value).toContain('string error')
+		})
+	})
 })

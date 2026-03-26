@@ -151,4 +151,54 @@ describe('useValidation', () => {
 		await validation.validateField('test', rules)
 		expect(validation.validateOnSubmit()).toBe(true)
 	})
+
+	it('should handle thrown error in async validation rules', async () => {
+		const validation = useValidation()
+		const rules = [{
+			type: 'custom',
+			options: {
+				validate: async () => {
+					throw new Error('Network error')
+				},
+				message: 'Erreur personnalisée',
+			},
+		}]
+
+		const result = await validation.validateField('test', rules)
+		expect(result.hasError).toBe(true)
+		expect(result.state.errors[0]).toBe('Erreur personnalisée')
+	})
+
+	it('should use thrown error message when no custom message is provided', async () => {
+		const validation = useValidation()
+		const rules = [{
+			type: 'custom',
+			options: {
+				validate: async () => {
+					throw new Error('Service unavailable')
+				},
+			},
+		}]
+
+		const result = await validation.validateField('test', rules)
+		expect(result.hasError).toBe(true)
+		expect(result.state.errors[0]).toBe('Service unavailable')
+	})
+
+	it('should handle thrown error in async warning rules', async () => {
+		const validation = useValidation()
+		const warningRules = [{
+			type: 'custom',
+			options: {
+				validate: async () => {
+					throw new Error('Warning service failed')
+				},
+				isWarning: true,
+			},
+		}]
+
+		const result = await validation.validateField('test', [], warningRules)
+		expect(result.hasWarning).toBe(true)
+		expect(result.state.warnings[0]).toBe('Warning service failed')
+	})
 })
