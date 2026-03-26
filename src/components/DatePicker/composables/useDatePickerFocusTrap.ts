@@ -46,7 +46,6 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 
 		const target = event.target as HTMLElement | null
 		const todayButton = root.querySelector<HTMLElement>('.date-picker__today-button')
-		const isFromDayCell = Boolean(target?.closest('[data-v-date]') || target?.closest('.v-date-picker-month__day'))
 		const focusables = getFocusableElements(root)
 		const firstFocusable = focusables[0]
 		if (!firstFocusable) {
@@ -56,7 +55,16 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		}
 
 		const active = document.activeElement as HTMLElement | null
-		if (!event.shiftKey && isFromDayCell && todayButton) {
+		
+		// Si on appuie sur Tab (sans Shift) depuis la grille des jours, des mois ou des années,
+		// on force le focus vers le bouton Aujourd'hui (s'il existe)
+		const isFromGrid = Boolean(
+			target?.closest('.v-date-picker-months') || 
+			target?.closest('.v-date-picker-years') || 
+			target?.closest('.v-date-picker-month')
+		)
+		
+		if (!event.shiftKey && isFromGrid && todayButton) {
 			todayButton.focus({ preventScroll: true })
 			return
 		}
