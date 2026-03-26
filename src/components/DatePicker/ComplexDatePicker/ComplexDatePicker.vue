@@ -126,90 +126,90 @@
 		})
 	}
 
-const props = withDefaults(
-	defineProps<{
-		autoClamp?: boolean
-		bgColor?: string
-		birthDate?: boolean
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-		customRules?: { type: string, options: any }[]
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-		customWarningRules?: { type: string, options: any }[]
-		dateFormatReturn?: string
-		density?: 'default' | 'comfortable' | 'compact'
-		disableErrorHandling?: boolean
-		disabled?: boolean
-		displayAppendIcon?: boolean
-		displayAsterisk?: boolean
-		displayHolidayDays?: boolean
-		displayIcon?: boolean
-		displayPrependIcon?: boolean
-		displayRange?: boolean
-		displayTodayButton?: boolean
-		displayWeekendDays?: boolean
-		format?: string
-		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-		hint?: string
-		isBirthDate?: boolean
-		isOutlined?: boolean
-		isValidateOnBlur?: boolean
-		label: string
-		modelValue?: DateInput
-		noCalendar?: boolean
-		noIcon?: boolean
-		period?: {
-			max?: string
-			min?: string
-		}
-		persistentHint?: boolean
-		placeholder?: string
-		readonly?: boolean
-		required?: boolean
-		showSuccessMessages?: boolean
-		showWeekNumber?: boolean
-		textFieldActivator?: boolean
-		title?: string | false
-		width?: string
-	}>(),
-	{
-		autoClamp: false,
-		bgColor: 'white',
-		birthDate: false,
-		customRules: () => [],
-		customWarningRules: () => [],
-		dateFormatReturn: '',
-		density: 'default',
-		disableErrorHandling: false,
-		disabled: false,
-		displayAppendIcon: false,
-		displayAsterisk: false,
-		displayHolidayDays: true,
-		displayIcon: true,
-		displayPrependIcon: true,
-		displayRange: false,
-		displayTodayButton: true,
-		displayWeekendDays: true,
-		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
-		headingLevel: 3,
-		hint: undefined,
-		isBirthDate: false,
-		isOutlined: true,
-		isValidateOnBlur: true,
-		modelValue: undefined,
-		noCalendar: false,
-		noIcon: false,
-		period: () => ({ min: '', max: '' }),
-		persistentHint: false,
-		placeholder: undefined,
-		readonly: false,
-		required: false,
-		showSuccessMessages: true,
-		showWeekNumber: false,
-		textFieldActivator: false,
-		title: false,
-		width: '100%',
-	},
-)
+	const props = withDefaults(
+		defineProps<{
+			autoClamp?: boolean
+			bgColor?: string
+			birthDate?: boolean
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
+			customRules?: { type: string, options: any }[]
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
+			customWarningRules?: { type: string, options: any }[]
+			dateFormatReturn?: string
+			density?: 'default' | 'comfortable' | 'compact'
+			disableErrorHandling?: boolean
+			disabled?: boolean
+			displayAppendIcon?: boolean
+			displayAsterisk?: boolean
+			displayHolidayDays?: boolean
+			displayIcon?: boolean
+			displayPrependIcon?: boolean
+			displayRange?: boolean
+			displayTodayButton?: boolean
+			displayWeekendDays?: boolean
+			format?: string
+			headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+			hint?: string
+			isBirthDate?: boolean
+			isOutlined?: boolean
+			isValidateOnBlur?: boolean
+			label: string
+			modelValue?: DateInput
+			noCalendar?: boolean
+			noIcon?: boolean
+			period?: {
+				max?: string
+				min?: string
+			}
+			persistentHint?: boolean
+			placeholder?: string
+			readonly?: boolean
+			required?: boolean
+			showSuccessMessages?: boolean
+			showWeekNumber?: boolean
+			textFieldActivator?: boolean
+			title?: string | false
+			width?: string
+		}>(),
+		{
+			autoClamp: false,
+			bgColor: 'white',
+			birthDate: false,
+			customRules: () => [],
+			customWarningRules: () => [],
+			dateFormatReturn: '',
+			density: 'default',
+			disableErrorHandling: false,
+			disabled: false,
+			displayAppendIcon: false,
+			displayAsterisk: false,
+			displayHolidayDays: true,
+			displayIcon: true,
+			displayPrependIcon: true,
+			displayRange: false,
+			displayTodayButton: true,
+			displayWeekendDays: true,
+			format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
+			headingLevel: 3,
+			hint: undefined,
+			isBirthDate: false,
+			isOutlined: true,
+			isValidateOnBlur: true,
+			modelValue: undefined,
+			noCalendar: false,
+			noIcon: false,
+			period: () => ({ min: '', max: '' }),
+			persistentHint: false,
+			placeholder: undefined,
+			readonly: false,
+			required: false,
+			showSuccessMessages: true,
+			showWeekNumber: false,
+			textFieldActivator: false,
+			title: false,
+			width: '100%',
+		},
+	)
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: DateValue): void

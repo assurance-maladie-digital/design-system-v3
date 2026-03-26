@@ -20,61 +20,61 @@
 	import type { DateObjectValue } from '../types'
 
 	dayjs.extend(customParseFormat)
-	
-const props = withDefaults(defineProps<{
-	autoClamp?: boolean
-	bgColor?: string
-	customRules?: ValidationRule[]
-	customWarningRules?: ValidationRule[]
-	dateFormatReturn?: string
-	density?: 'default' | 'comfortable' | 'compact'
-	disableErrorHandling?: boolean
-	disabled?: boolean
-	displayAppendIcon?: boolean
-	displayIcon?: boolean
-	displayPrependIcon?: boolean
-	displayRange?: boolean
-	externalErrorMessages?: string[]
-	format?: string
-	hint?: string
-	isOutlined?: boolean
-	isValidateOnBlur?: boolean
-	label: string
-	modelValue?: DateValue
-	noIcon?: boolean
-	persistentHint?: boolean
-	placeholder?: string
-	readonly?: boolean
-	required?: boolean
-	showSuccessMessages?: boolean
-	title?: string | false
-}>(), {
-	autoClamp: true,
-	bgColor: 'white',
-	customRules: () => [],
-	customWarningRules: () => [],
-	dateFormatReturn: undefined,
-	density: 'default',
-	disableErrorHandling: false,
-	disabled: false,
-	displayAppendIcon: false,
-	displayIcon: true,
-	displayPrependIcon: true,
-	displayRange: false,
-	externalErrorMessages: () => [],
-	format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
-	hint: undefined,
-	isOutlined: true,
-	isValidateOnBlur: true,
-	modelValue: undefined,
-	noIcon: false,
-	persistentHint: false,
-	placeholder: undefined,
-	readonly: false,
-	required: false,
-	showSuccessMessages: true,
-	title: false,
-})
+
+	const props = withDefaults(defineProps<{
+		autoClamp?: boolean
+		bgColor?: string
+		customRules?: ValidationRule[]
+		customWarningRules?: ValidationRule[]
+		dateFormatReturn?: string
+		density?: 'default' | 'comfortable' | 'compact'
+		disableErrorHandling?: boolean
+		disabled?: boolean
+		displayAppendIcon?: boolean
+		displayIcon?: boolean
+		displayPrependIcon?: boolean
+		displayRange?: boolean
+		externalErrorMessages?: string[]
+		format?: string
+		hint?: string
+		isOutlined?: boolean
+		isValidateOnBlur?: boolean
+		label: string
+		modelValue?: DateValue
+		noIcon?: boolean
+		persistentHint?: boolean
+		placeholder?: string
+		readonly?: boolean
+		required?: boolean
+		showSuccessMessages?: boolean
+		title?: string | false
+	}>(), {
+		autoClamp: true,
+		bgColor: 'white',
+		customRules: () => [],
+		customWarningRules: () => [],
+		dateFormatReturn: undefined,
+		density: 'default',
+		disableErrorHandling: false,
+		disabled: false,
+		displayAppendIcon: false,
+		displayIcon: true,
+		displayPrependIcon: true,
+		displayRange: false,
+		externalErrorMessages: () => [],
+		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
+		hint: undefined,
+		isOutlined: true,
+		isValidateOnBlur: true,
+		modelValue: undefined,
+		noIcon: false,
+		persistentHint: false,
+		placeholder: undefined,
+		readonly: false,
+		required: false,
+		showSuccessMessages: true,
+		title: false,
+	})
 
 	const emit = defineEmits<{
 		(e: 'update:model-value', value: DateValue): void
