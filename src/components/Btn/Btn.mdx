@@ -1,0 +1,41 @@
+import { Meta, Canvas, Story } from '@storybook/blocks'
+import * as BtnStories from './Btn.stories'
+
+<Meta of={BtnStories} />
+
+<div className="header">
+  <h1>Btn</h1>
+<p>L’élément `Btn` utilise le composant `v-btn` de Vuetify avec des classes CSS définies.
+Les styles s'appliquent utilsant simplement une class (primary, secondary, tertiary ou disabled). Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-btn/#props)</p>
+</div>
+
+### Primaire
+
+Le bouton primaire utilise la couleur d'action principale du thème.
+
+<Canvas of={BtnStories.Primaire} />
+
+### Primaire désactivé
+<Canvas of={BtnStories.PrimaireDisabled} />
+
+---
+
+### Secondaire
+
+Le bouton secondaire a un fond blanc avec une bordure colorée selon le thème.
+
+<Canvas of={BtnStories.Secondaire} />
+
+### Secondaire désactivé
+<Canvas of={BtnStories.SecondaireDisabled} />
+
+---
+
+### Tertiaire
+
+Le bouton tertiaire a un fond blanc sans bordure.
+
+<Canvas of={BtnStories.Tertiaire} />
+
+### Tertiaire désactivé
+<Canvas of={BtnStories.TertiaireDisabled} />
