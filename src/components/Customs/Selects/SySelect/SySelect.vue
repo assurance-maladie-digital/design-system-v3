@@ -913,7 +913,10 @@
 			<template #activator="{ props: activatorProps }">
 				<div
 					class="sy-select"
-					:class="{ 'sy-select--clearable': props.clearable }"
+					:class="{
+						'sy-select--clearable': props.clearable,
+						'sy-select--with-chips': hasChips,
+					}"
 				>
 					<VTextField
 						:id="inputId"
@@ -1308,5 +1311,10 @@
 	visibility: hidden;
 	position: absolute;
 	white-space: nowrap;
+}
+
+.sy-select--with-chips :deep(.v-field__input input) {
+	position: absolute;
+	z-index: -1;
 }
 </style>
