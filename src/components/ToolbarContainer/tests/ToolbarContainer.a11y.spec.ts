@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import ToolbarContainer from '../ToolbarContainer.vue'
-import { VBtn } from 'vuetify/components'
 
 // Scénario d'accessibilité : barre d'outils avec des boutons de navigation
 // Le composant doit avoir un rôle toolbar et gérer la navigation au clavier
@@ -86,7 +85,7 @@ describe('ToolbarContainer – accessibility (axe)', () => {
 		})
 
 		const toolbar = wrapper.find('.sy-toolbar')
-		
+
 		expect(toolbar.exists()).toBe(true)
 		expect(toolbar.attributes('role')).toBe('toolbar')
 		expect(toolbar.attributes('tabindex')).toBe('0')
@@ -111,15 +110,15 @@ describe('ToolbarContainer – accessibility (axe)', () => {
 		const buttons = wrapper.findAll('button.v-btn')
 
 		// Vérifier que les boutons ont le tabindex approprié
-		expect(buttons[0].attributes('tabindex')).toBe('-1')
-		expect(buttons[1].attributes('tabindex')).toBe('-1')
-		expect(buttons[2].attributes('tabindex')).toBe('-1')
+		expect(buttons[0]?.attributes('tabindex')).toBe('-1')
+		expect(buttons[1]?.attributes('tabindex')).toBe('-1')
+		expect(buttons[2]?.attributes('tabindex')).toBe('-1')
 
 		// Simuler le focus sur la toolbar
 		await toolbar.trigger('focus')
 
 		// Après le focus, le premier bouton devrait être focusable
-		expect(buttons[0].attributes('tabindex')).toBe('0')
+		expect(buttons[0]?.attributes('tabindex')).toBe('0')
 
 		const results = await axe(wrapper.element)
 		assertNoA11yViolations(results, 'ToolbarContainer keyboard navigation')
