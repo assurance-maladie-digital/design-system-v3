@@ -10,53 +10,53 @@
 	type DateInput = string | null
 	type PeriodValue = { from: DateInput, to: DateInput }
 
-const props = withDefaults(defineProps<{
-	bgColor?: string
-	customRules?: ValidationRule[]
-	customWarningRules?: ValidationRule[]
-	dateFormatReturn?: string
-	density?: 'default' | 'comfortable' | 'compact'
-	disableErrorHandling?: boolean
-	disabled?: boolean
-	displayAppendIcon?: boolean
-	displayIcon?: boolean
-	format?: string
-	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-	hideDetails?: boolean | 'auto'
-	isOutlined?: boolean
-	modelValue?: PeriodValue
-	noCalendar?: boolean
-	noIcon?: boolean
-	placeholderFrom?: string
-	placeholderTo?: string
-	readonly?: boolean
-	required?: boolean
-	showSuccessMessages?: boolean
-	showWeekNumber?: boolean
-}>(), {
-	bgColor: 'white',
-	customRules: () => [],
-	customWarningRules: () => [],
-	dateFormatReturn: '',
-	density: 'default',
-	disableErrorHandling: false,
-	disabled: false,
-	displayAppendIcon: false,
-	displayIcon: true,
-	format: 'DD/MM/YYYY',
-	headingLevel: 2,
-	hideDetails: false,
-	isOutlined: true,
-	modelValue: () => ({ from: null, to: null }),
-	noCalendar: false,
-	noIcon: false,
-	placeholderFrom: 'Début',
-	placeholderTo: 'Fin',
-	readonly: false,
-	required: false,
-	showSuccessMessages: true,
-	showWeekNumber: false,
-})
+	const props = withDefaults(defineProps<{
+		bgColor?: string
+		customRules?: ValidationRule[]
+		customWarningRules?: ValidationRule[]
+		dateFormatReturn?: string
+		density?: 'default' | 'comfortable' | 'compact'
+		disableErrorHandling?: boolean
+		disabled?: boolean
+		displayAppendIcon?: boolean
+		displayIcon?: boolean
+		format?: string
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		hideDetails?: boolean | 'auto'
+		isOutlined?: boolean
+		modelValue?: PeriodValue
+		noCalendar?: boolean
+		noIcon?: boolean
+		placeholderFrom?: string
+		placeholderTo?: string
+		readonly?: boolean
+		required?: boolean
+		showSuccessMessages?: boolean
+		showWeekNumber?: boolean
+	}>(), {
+		bgColor: 'white',
+		customRules: () => [],
+		customWarningRules: () => [],
+		dateFormatReturn: '',
+		density: 'default',
+		disableErrorHandling: false,
+		disabled: false,
+		displayAppendIcon: false,
+		displayIcon: true,
+		format: 'DD/MM/YYYY',
+		headingLevel: 2,
+		hideDetails: false,
+		isOutlined: true,
+		modelValue: () => ({ from: null, to: null }),
+		noCalendar: false,
+		noIcon: false,
+		placeholderFrom: 'Début',
+		placeholderTo: 'Fin',
+		readonly: false,
+		required: false,
+		showSuccessMessages: true,
+		showWeekNumber: false,
+	})
 
 	const emit = defineEmits(['update:modelValue'])
 
