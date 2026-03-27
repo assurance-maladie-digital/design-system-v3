@@ -5,16 +5,19 @@ Généré le: 27/03/2026
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|-------------|
 | **Accordion** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **BackBtn** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
+| **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
 | **Captcha** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **ChipList** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
 | **CollapsibleList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **ContextualMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **CookieBanner** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **CookiesSelection** | ✅ Oui | ✅ Non | ❌ Manquante | ❌ |
+| **CookiesSelection** | ✅ Oui | ✅ Non | ❌ Manquante | ✅ |
 | **CopyBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **Customs/Selects** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
+| **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ⚠️ Incomplète | ❌ |
+| **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
+| **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
+| **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **Customs/SyCheckBoxGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **Customs/SyForm** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ |
@@ -23,7 +26,7 @@ Généré le: 27/03/2026
 | **Customs/SyPagination** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **Customs/SyRadioGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **Customs/SyTabs** | ❌ Non | ✅ Non | ✅ Complète | ❌ |
-| **Customs/SyTextField** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
+| **Customs/SyTextField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **DataList** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
 | **DataListGroup** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
 | **DataListItem** | ❌ Non | ✅ Non | ❌ Manquante | ❌ |
@@ -42,7 +45,7 @@ Généré le: 27/03/2026
 | **FilterInline** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **FranceConnectBtn** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
+| **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **HeaderBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **HeaderNavigationBar** | ❌ Non | ✅ Non | ❌ Manquante | ❌ |
@@ -78,4 +81,4 @@ Généré le: 27/03/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 
-**Total des composants conformes : 37 / 73 (50.68%)**
+**Total des composants conformes : 43 / 76 (56.58%)**

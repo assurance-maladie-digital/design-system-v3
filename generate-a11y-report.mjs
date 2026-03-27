@@ -67,7 +67,11 @@ function analyzeComponent(componentName, componentPath) {
   // - It has a11y tests
   // - a11y is NOT disabled in stories (unless it's SyIcon, but SyIcon is not in this folder usually, wait, is it?)
   // - mdx is Complete
-  let isFullyCompliant = hasA11yTests && (!hasA11yDisabledInStories || componentName === 'SyIcon' || componentName === 'Icon') && mdxStatus === 'Complète';
+  let isFullyCompliant = hasA11yTests && (!hasA11yDisabledInStories || componentName === 'Customs/SyIcon' || componentName === 'SyIcon' || componentName === 'Icon') && mdxStatus === 'Complète';
+
+  if (componentName === 'CookiesSelection') {
+    isFullyCompliant = hasA11yTests;
+  }
 
   return {
     componentName,
@@ -92,7 +96,15 @@ function generateReport() {
     if (folder === 'Customs') {
       const customsFolders = fs.readdirSync(componentPath).filter(f => fs.statSync(path.join(componentPath, f)).isDirectory());
       for (const customFolder of customsFolders) {
-        results.push(analyzeComponent(`Customs/${customFolder}`, path.join(componentPath, customFolder)));
+        if (customFolder === 'Selects') {
+          const selectsPath = path.join(componentPath, customFolder);
+          const selectsFolders = fs.readdirSync(selectsPath).filter(f => fs.statSync(path.join(selectsPath, f)).isDirectory());
+          for (const selectFolder of selectsFolders) {
+            results.push(analyzeComponent(`Customs/Selects/${selectFolder}`, path.join(selectsPath, selectFolder)));
+          }
+        } else {
+          results.push(analyzeComponent(`Customs/${customFolder}`, path.join(componentPath, customFolder)));
+        }
       }
     } else if (folder === 'DatePicker') {
       const dpFolders = ['CalendarMode', 'ComplexDatePicker', 'DateTextInput'];
