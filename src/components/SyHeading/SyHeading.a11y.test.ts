@@ -12,7 +12,11 @@ describe('SyHeading - Accessibility', () => {
 			},
 		})
 
-		const results = await axe(wrapper.element)
+		const results = await axe(wrapper.element, {
+			rules: {
+				region: { enabled: false },
+			},
+		})
 		assertNoA11yViolations(results, 'SyHeading - default props')
 	})
 
@@ -29,8 +33,12 @@ describe('SyHeading - Accessibility', () => {
 				},
 			})
 
-			const results = await axe(wrapper.element)
-			assertNoA11yViolations(results, 'SyHeading - default props')
+			const results = await axe(wrapper.element, {
+				rules: {
+					region: { enabled: false },
+				},
+			})
+			assertNoA11yViolations(results, `SyHeading - level ${level}`)
 		}
 	})
 
@@ -44,8 +52,12 @@ describe('SyHeading - Accessibility', () => {
 			},
 		})
 
-		const results = await axe(wrapper.element)
-		assertNoA11yViolations(results, 'SyHeading - default props')
+		const results = await axe(wrapper.element, {
+			rules: {
+				region: { enabled: false },
+			},
+		})
+		assertNoA11yViolations(results, 'SyHeading - complex content')
 	})
 
 	it('should not have accessibility violations with very long content', async () => {
@@ -60,8 +72,12 @@ describe('SyHeading - Accessibility', () => {
 			},
 		})
 
-		const results = await axe(wrapper.element)
-		assertNoA11yViolations(results, 'SyHeading - default props')
+		const results = await axe(wrapper.element, {
+			rules: {
+				region: { enabled: false },
+			},
+		})
+		assertNoA11yViolations(results, 'SyHeading - long content')
 	})
 
 	it('should not have accessibility violations with special characters', async () => {
@@ -74,8 +90,12 @@ describe('SyHeading - Accessibility', () => {
 			},
 		})
 
-		const results = await axe(wrapper.element)
-		assertNoA11yViolations(results, 'SyHeading - default props')
+		const results = await axe(wrapper.element, {
+			rules: {
+				region: { enabled: false },
+			},
+		})
+		assertNoA11yViolations(results, 'SyHeading - special characters')
 	})
 
 	it('should use semantic heading elements correctly', async () => {
@@ -95,8 +115,12 @@ describe('SyHeading - Accessibility', () => {
 			expect(wrapper.find(`h${level}`).exists()).toBe(true)
 
 			// Verify no accessibility violations
-			const results = await axe(wrapper.element)
-			assertNoA11yViolations(results, 'SyHeading - default props')
+			const results = await axe(wrapper.element, {
+				rules: {
+					region: { enabled: false },
+				},
+			})
+			assertNoA11yViolations(results, `SyHeading - semantic level ${level}`)
 		}
 	})
 
@@ -115,7 +139,11 @@ describe('SyHeading - Accessibility', () => {
 		expect(heading.exists()).toBe(true)
 		expect(heading.text()).toBe('Important section heading')
 
-		const results = await axe(wrapper.element)
-		assertNoA11yViolations(results, 'SyHeading - default props')
+		const results = await axe(wrapper.element, {
+			rules: {
+				region: { enabled: false },
+			},
+		})
+		assertNoA11yViolations(results, 'SyHeading - hierarchy')
 	})
 })

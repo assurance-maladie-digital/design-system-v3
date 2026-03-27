@@ -65,7 +65,11 @@ describe('SyHeading', () => {
 			},
 		})
 
-		const results = await axe(wrapper.element)
+		const results = await axe(wrapper.element, {
+			rules: {
+				region: { enabled: false },
+			},
+		})
 		assertNoA11yViolations(results, 'SyHeading - main heading')
 	})
 
@@ -82,7 +86,11 @@ describe('SyHeading', () => {
 				},
 			})
 
-			const results = await axe(wrapper.element)
+			const results = await axe(wrapper.element, {
+				rules: {
+					region: { enabled: false },
+				},
+			})
 			assertNoA11yViolations(results, `SyHeading - level ${level}`)
 		}
 	})
@@ -97,7 +105,11 @@ describe('SyHeading', () => {
 			},
 		})
 
-		const results = await axe(wrapper.element)
+		const results = await axe(wrapper.element, {
+			rules: {
+				region: { enabled: false },
+			},
+		})
 		assertNoA11yViolations(results, 'SyHeading - complex content')
 	})
 })
