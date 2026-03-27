@@ -48,16 +48,16 @@ function analyzeComponent(componentName, componentPath) {
   
   if (mdxFiles.length > 0) {
     const mdxContent = fs.readFileSync(mdxFiles[0], 'utf-8');
-    const isPlaceholder1 = /Rapport d’audit manuel\s*:\s*\[?(Voir le rapport|À venir)/i.test(mdxContent);
+    
+    // Un fichier complet utilise généralement AccessibilityGuideLayout ou a un contenu substantiel (> 1000 chars)
+    const hasGuideLayout = /AccessibilityGuideLayout/.test(mdxContent);
     const isPlaceholder2 = /Cette page sera bientôt disponible/i.test(mdxContent);
     
-    // Check if it ONLY has placeholder (very short or explicitly just that)
-    // Or if it contains real content
     if (isPlaceholder2) {
       mdxStatus = 'Bientôt disponible';
-    } else if (isPlaceholder1 && mdxContent.length < 500) {
-        // If it just has the audit link and is very short, it's likely incomplete
-      mdxStatus = 'Incomplète (Seulement lien audit)';
+    } else if (!hasGuideLayout && mdxContent.length < 800) {
+      // Si ce n'est pas le layout complet et que le fichier est court (comme SyAlert avec juste le lien d'audit)
+      mdxStatus = 'Incomplète';
     } else {
       mdxStatus = 'Complète';
     }
@@ -133,7 +133,9 @@ function generateReport() {
     mdReport += `| **${res.componentName}** | ${testIcon} | ${disabledIcon} | ${mdxIcon} | ${compliantIcon} |\n`;
   }
 
-  mdReport += `\n**Total des composants conformes : ${compliantCount} / ${results.length}**\n`;
+  const percentage = ((compliantCount / results.length) * 100).toFixed(2);
+
+  mdReport += `\n**Total des composants conformes : ${compliantCount} / ${results.length} (${percentage}%)**\n`;
 
   fs.writeFileSync(reportPath, mdReport);
   console.log(`Report generated at ${reportPath}`);
