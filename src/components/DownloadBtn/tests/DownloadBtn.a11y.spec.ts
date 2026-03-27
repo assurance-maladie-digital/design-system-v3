@@ -10,7 +10,7 @@ describe('DownloadBtn – accessibility (axe)', () => {
 	it('has no obvious axe violations', async () => {
 		const wrapper = mount(DownloadBtn, {
 			props: {
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- deso
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- deso
 				filePromise: () => Promise.resolve({ data: new Blob(), status: 200, statusText: 'OK', headers: {}, config: {} as any }),
 				fallbackFilename: 'file.pdf',
 			},
