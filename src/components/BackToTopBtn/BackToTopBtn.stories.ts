@@ -92,7 +92,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -104,6 +104,7 @@ export const Default: Story = {
 		max-height="200px"
 		class="overflow-y-auto"
 		style="scroll-behavior: smooth"
+		tabindex="0"
 	>
 		<VSheet
 			height="600px"
@@ -166,6 +167,7 @@ export const Default: Story = {
 				max-height="200px"
 				class="overflow-y-auto"
 				style="scroll-behavior: smooth"
+				tabindex="0"
 			>
 					<VSheet
 						height="600px"
@@ -192,7 +194,7 @@ export const Default: Story = {
 export const Customization: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -204,6 +206,7 @@ export const Customization: Story = {
 		max-height="200px"
 		class="overflow-y-auto"
 		style="scroll-behavior: smooth"
+		tabindex="0"
 	>
 		<VSheet
 			height="600px"
@@ -276,6 +279,7 @@ export const Customization: Story = {
 					max-height="200px"
 					class="overflow-y-auto"
 					style="scroll-behavior: smooth"
+					tabindex="0"
 				>
 					<VSheet
 						height="600px"
@@ -302,7 +306,7 @@ export const Customization: Story = {
 export const CustomPosition: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -314,6 +318,7 @@ export const CustomPosition: Story = {
 		max-height="200px"
 		class="overflow-y-auto"
 		style="scroll-behavior: smooth"
+		tabindex="0"
 	>
 		<VSheet
 			height="600px"
@@ -386,6 +391,7 @@ export const CustomPosition: Story = {
 					max-height="200px"
 					class="overflow-y-auto"
 					style="scroll-behavior: smooth"
+					tabindex="0"
 				>
 					<VSheet
 						height="600px"
