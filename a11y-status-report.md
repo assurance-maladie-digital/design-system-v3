@@ -71,9 +71,9 @@ Généré le: 27/03/2026
 | **SocialMediaLinks** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **StatusPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SubHeader** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **SyAlert** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
+| **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SyBtnMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **SyHeading** | ✅ Oui | ✅ Non | ❌ Manquante | ✅ |
+| **SyHeading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SyTextArea** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **Tables** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **TableToolbar** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
@@ -81,4 +81,4 @@ Généré le: 27/03/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 
-**Total des composants conformes : 45 / 76 (59.21%)**
+**Total des composants conformes : 46 / 76 (60.53%)**

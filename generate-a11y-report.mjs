@@ -74,7 +74,7 @@ function analyzeComponent(componentName, componentPath) {
   }
 
   if (componentName === 'SyHeading') {
-    isFullyCompliant = hasA11yTests;
+    isFullyCompliant = hasA11yTests && !hasA11yDisabledInStories && mdxStatus === 'Complète';
   }
 
   return {
