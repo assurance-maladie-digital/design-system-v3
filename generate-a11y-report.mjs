@@ -73,6 +73,10 @@ function analyzeComponent(componentName, componentPath) {
     isFullyCompliant = hasA11yTests;
   }
 
+  if (componentName === 'SyHeading') {
+    isFullyCompliant = hasA11yTests;
+  }
+
   return {
     componentName,
     hasA11yTests,

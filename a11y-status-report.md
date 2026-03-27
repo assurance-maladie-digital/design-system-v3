@@ -14,7 +14,7 @@ Généré le: 27/03/2026
 | **CookieBanner** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **CookiesSelection** | ✅ Oui | ✅ Non | ❌ Manquante | ✅ |
 | **CopyBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ⚠️ Incomplète | ❌ |
+| **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ✅ Complète | ❌ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
@@ -73,7 +73,7 @@ Généré le: 27/03/2026
 | **SubHeader** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SyAlert** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
 | **SyBtnMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **SyHeading** | ❌ Non | ✅ Non | ❌ Manquante | ❌ |
+| **SyHeading** | ✅ Oui | ✅ Non | ❌ Manquante | ✅ |
 | **SyTextArea** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **Tables** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **TableToolbar** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
@@ -81,4 +81,4 @@ Généré le: 27/03/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 
-**Total des composants conformes : 43 / 76 (56.58%)**
+**Total des composants conformes : 44 / 76 (57.89%)**
