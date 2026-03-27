@@ -74,7 +74,7 @@ Généré le: 27/03/2026
 | **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SyBtnMenu** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ |
 | **SyHeading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **SyTextArea** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
+| **SyTextArea** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **Tables** | ❌ Non | ❌ Oui | ⚠️ Bientôt disponible | ❌ |
 | **TableToolbar** | ❌ Non | ❌ Oui | ⚠️ Bientôt disponible | ❌ |
 | **ToolbarContainer** | ❌ Non | ✅ Non | ✅ Complète | ❌ |

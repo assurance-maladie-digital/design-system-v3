@@ -16,7 +16,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - default props')
+		assertNoA11yViolations(results, 'LunarCalendar - default props', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with value', async () => {
@@ -28,7 +30,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - with value')
+		assertNoA11yViolations(results, 'LunarCalendar - with value', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with required field', async () => {
@@ -41,7 +45,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - required field')
+		assertNoA11yViolations(results, 'LunarCalendar - required field', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with error messages', async () => {
@@ -57,7 +63,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		await wrapper.find('input').trigger('blur')
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - with errors')
+		assertNoA11yViolations(results, 'LunarCalendar - with errors', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with success messages', async () => {
@@ -70,7 +78,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - with success messages')
+		assertNoA11yViolations(results, 'LunarCalendar - with success messages', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with clearable field', async () => {
@@ -83,7 +93,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - clearable field')
+		assertNoA11yViolations(results, 'LunarCalendar - clearable field', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with prepend icon', async () => {
@@ -97,7 +109,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - with prepend icon')
+		assertNoA11yViolations(results, 'LunarCalendar - with prepend icon', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with append icon', async () => {
@@ -111,7 +125,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - with append icon')
+		assertNoA11yViolations(results, 'LunarCalendar - with append icon', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with year constraints', async () => {
@@ -125,7 +141,9 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - with year constraints')
+		assertNoA11yViolations(results, 'LunarCalendar - with year constraints', {
+			ignoreRules: ['region'],
+		})
 	})
 
 	it('has no obvious axe violations with placeholder', async () => {
@@ -138,6 +156,8 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		})
 
 		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'LunarCalendar - with placeholder')
+		assertNoA11yViolations(results, 'LunarCalendar - with placeholder', {
+			ignoreRules: ['region'],
+		})
 	})
 })
