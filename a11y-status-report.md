@@ -53,7 +53,7 @@ Généré le: 27/03/2026
 | **LangBtn** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
 | **Logo** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ |
-| **LunarCalendar** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ |
+| **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **MonthPicker** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **NirField** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
@@ -81,4 +81,4 @@ Généré le: 27/03/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 
-**Total des composants conformes : 44 / 76 (57.89%)**
+**Total des composants conformes : 45 / 76 (59.21%)**

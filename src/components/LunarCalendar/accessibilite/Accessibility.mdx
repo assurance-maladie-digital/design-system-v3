@@ -1,10 +1,76 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as LunarCalendar from '../LunarCalendar.stories';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as Stories from '../LunarCalendar.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={LunarCalendar} />
+<Meta of={Stories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="LunarCalendar"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/textfield/"
+>
+
+<CriteriaSection>
+
+<CriteriaCard title="Structure sémantique">
+- **Champ de saisie natif** : Utilise un élément `input` de type texte avec masque de formatage
+- **Label associé** : Le label est correctement associé au champ via le composant SyTextField
+- **Masque de saisie** : Le format `JJ/MM/AAAA` est appliqué via la directive `v-maska`
+- **Icônes décoratives** : Les icônes calendrier sont marquées comme décoratives
+</CriteriaCard>
+
+<CriteriaCard title="États et feedback">
+- **Messages d'erreur** : Les erreurs de validation sont annoncées via `aria-describedby`
+- **Messages de succès** : Les confirmations sont également annoncées aux lecteurs d'écran
+- **Champ requis** : L'attribut `required` est correctement appliqué quand nécessaire
+- **Contraintes de dates** : Validation des années min/max avec feedback approprié
+</CriteriaCard>
+
+<CriteriaCard title="Navigation au clavier">
+- **Tabulation** : Navigation au clavier standard via le composant SyTextField
+- **Saisie guidée** : Le masque facilite la saisie en indiquant le format attendu
+- **Effacement** : Support du bouton d'effacement quand `isClearable` est activé
+- **Focus visible** : Indication claire du focus pour les utilisateurs clavier
+</CriteriaCard>
+
+</CriteriaSection>
+
+<DemoSection componentName="LunarCalendar">
+	<Primary />
+</DemoSection>
+
+## Bonnes pratiques
+
+<BestPracticesSection>
+	<ul>
+		<li><strong>Label descriptif</strong> : Utiliser un label qui explique clairement qu'il s'agit d'une date lunaire et indiquer le format attendu JJ/MM/AAAA.</li>
+		<li><strong>Messages clairs</strong> : Fournir des messages d'erreur qui expliquent le format attendu et les contraintes de validité.</li>
+		<li><strong>Contraintes pertinentes</strong> : Définir des plages d'années logiques pour le contexte d'utilisation.</li>
+		<li><strong>Feedback immédiat</strong> : Valider dès la perte du focus pour guider l'utilisateur dans sa saisie.</li>
+		<li><strong>Placeholder utile</strong> : Utiliser JJ/MM/AAAA comme placeholder pour renforcer le format attendu.</li>
+		<li><strong>Icônes appropriées</strong> : Les icônes calendrier aident à identifier visuellement le type de saisie attendue.</li>
+		<li><strong>Effacement facilité</strong> : Activer isClearable pour permettre aux utilisateurs de corriger facilement leur saisie.</li>
+	</ul>
+</BestPracticesSection>
+
+## Ressources
+
+<ResourcesSection>
+	<ul>
+		<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/textfield/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices - Text Input</a></li>
+		<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/input" target="_blank" rel="noopener noreferrer">MDN Web Docs - input element</a></li>
+		<li><a href="https://developer.mozilla.org/fr/docs/Web/Accessibility/ARIA/Roles/textbox_role" target="_blank" rel="noopener noreferrer">MDN Web Docs - ARIA: textbox role</a></li>
+		<li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#critere-118-champs-de-saisie" target="_blank" rel="noopener noreferrer">RGAA - Critère 11.8 - Champs de saisie</a></li>
+		<li><a href="/docs/components-customs-sytextfield--docs" target="_blank" rel="noopener noreferrer">Documentation SyTextField</a></li>
+	</ul>
+</ResourcesSection>
+
+</AccessibilityGuideLayout>

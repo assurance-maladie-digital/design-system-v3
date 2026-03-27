@@ -50,7 +50,7 @@ describe('SyHeading - Accessibility', () => {
 
 	it('should not have accessibility violations with very long content', async () => {
 		const longContent = 'This is a very long heading text that might wrap across multiple lines and should still be accessible to screen readers and other assistive technologies without any issues.'
-		
+
 		const wrapper = mount(SyHeading, {
 			props: {
 				level: 2,
@@ -93,7 +93,7 @@ describe('SyHeading - Accessibility', () => {
 
 			// Verify the correct semantic heading element is used
 			expect(wrapper.find(`h${level}`).exists()).toBe(true)
-			
+
 			// Verify no accessibility violations
 			const results = await axe(wrapper.element)
 			assertNoA11yViolations(results, 'SyHeading - default props')
