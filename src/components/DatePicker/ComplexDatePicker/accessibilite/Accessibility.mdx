@@ -21,7 +21,7 @@ import {
 <CriteriaSection>
 	<CriteriaCard title="Structure sémantique" icon="🔍">
 		<ul>
-			<li><strong>Champ</strong> : conteneur <code>role="combobox"</code> qui expose <code>aria-controls</code> et <code>aria-expanded</code>; champ de saisie interne en <code>textbox</code> (DateTextInput) avec libellé dynamique.</li>
+			<li><strong>Champ</strong> : conteneur <code>role="combobox"</code> qui expose <code>aria-controls</code> et <code>aria-expanded</code>; champ de saisie interne en <code>textbox</code> avec libellé dynamique. À la différence du mode calendrier simple, ce mode permet la saisie libre, justifiant l'utilisation du pattern combobox.</li>
 			<li><strong>Panneau</strong> : calendrier dans un menu <code>role="presentation"</code>, grille de boutons natifs pour les jours.</li>
 			<li><strong>Relations</strong> : l’activateur référence le panneau via <code>aria-controls</code> quand ouvert; <code>aria-labelledby</code> et <code>aria-label</code> portés par l’input.</li>
 			<li><strong>États</strong> : <code>aria-expanded</code> synchronisé, <code>aria-disabled</code> / <code>aria-readonly</code> propagés aux champs et messages.</li>

@@ -48,7 +48,7 @@ import {
 
 		<CriteriaCard title="Calendrier intégré" icon="📅">
 			<ul>
-				<li><strong>Icône accessible</strong> : Bouton avec <code>aria-label</code> explicite ("Ouvrir le calendrier").</li>
+				<li><strong>Icône accessible</strong> : Bouton avec <code>aria-label</code> explicite ("Ouvrir le calendrier"). Les attributs <code>aria-expanded</code> et <code>aria-haspopup</code> ne sont pas appliqués directement sur les champs textes pour respecter leur rôle natif.</li>
 				<li><strong>Navigation calendrier</strong> : Flèches, Home/End, PageUp/Down, Entrée/Espace pour sélectionner dates.</li>
 				<li><strong>Focus management</strong> : Retour automatique au champ après sélection dans calendrier.</li>
 				<li><strong>Format cohérent</strong> : Date sélectionnée respecte le format configuré (DD/MM/YYYY par défaut).</li>
