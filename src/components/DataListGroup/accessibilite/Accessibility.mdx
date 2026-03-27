@@ -1,14 +1,83 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../DataListGroup.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as DataListGroupStories from '../DataListGroup.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={DataListGroupStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/DataListGroup.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="DataListGroup"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+>
+	<div class="mt-8">
+		<p>Rapport d'audit manuel : <a href="/audits/DataListGroup.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/651" target="_blank" style={{color:'#0C41BD'}}>issue #651</a>)</p>
 	</div>
+
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique des groupes">
+			<ul>
+				<li><strong>Élément ul/li</strong> : Utilisation native de liste non ordonnée pour regrouper les DataList</li>
+				<li><strong>Composition sémantique</strong> : Chaque élément contient un DataList avec structure dl/dt/dd héritée</li>
+				<li><strong>Titres hiérarchiques</strong> : Tags de titre configurables (<code>titlesTag</code>) pour chaque sous-liste</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation et interactions">
+			<ul>
+				<li><strong>Focus séquentiel</strong> : Navigation logique entre les différents groupes et leurs éléments</li>
+				<li><strong>Actions contextualisées</strong> : Événements <code>click:list-item</code> avec indices doubles (dataListIndex, itemIndex)</li>
+				<li><strong>Boutons accessibles</strong> : Actions héritées des DataList avec focus clavier correct</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Mise en page et responsive">
+			<ul>
+				<li><strong>Layout flexbox</strong> : Utilisation de <code>d-flex</code> pour l'affichage horizontal des groupes</li>
+				<li><strong>Largeurs configurables</strong> : <code>itemWidth</code> pour contrôler la taille de chaque groupe</li>
+				<li><strong>Marges négatives</strong> : <code>ma-n4</code> sur le conteneur avec <code>ma-4</code> sur les éléments pour un espacement optimal</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="📱" title="États et chargement">
+			<ul>
+				<li><strong>États de chargement</strong> : Propagation de <code>loading</code> à tous les DataList enfants</li>
+				<li><strong>Slots avancés</strong> : Slot <code>item</code> avec contexte enrichi (dataListIndex inclus)</li>
+				<li><strong>Gestion HTML</strong> : Support de <code>renderHtmlValue</code> avec avertissement de dépréciation</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="DataListGroup">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li><strong>Groupes cohérents</strong> : Organisez les DataList par thématiques logiques (informations personnelles, coordonnées, etc.)</li>
+			<li><strong>Titres distinctifs</strong> : Utilisez des <code>title</code> uniques et descriptifs pour chaque groupe</li>
+			<li><strong>Largeurs adaptées</strong> : Choisissez <code>itemWidth</code> en fonction du contenu (plus large pour les textes longs)</li>
+			<li><strong>Actions groupées</strong> : Maintenez la cohérence des actions entre les différents groupes</li>
+			<li><strong>États synchronisés</strong> : Utilisez <code>loading</code> au niveau du groupe pour des chargements coordonnés</li>
+			<li><strong>Slots contextuels</strong> : Exploitez le <code>data-list-index</code> dans les slots pour des personnalisations avancées</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Listbox</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.10" target="_blank" rel="noopener noreferrer">RGAA Critère 11.10 : Listes de définitions</a></li>
+			<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/ul" target="_blank" rel="noopener noreferrer">MDN : Élément ul - Liste non ordonnée</a></li>
+		</ul>
+	</ResourcesSection>
+
+</AccessibilityGuideLayout>

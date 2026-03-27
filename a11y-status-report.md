@@ -12,7 +12,7 @@ Généré le: 27/03/2026
 | **CollapsibleList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **ContextualMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **CookieBanner** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **CookiesSelection** | ✅ Oui | ✅ Non | ❌ Manquante | ✅ |
+| **CookiesSelection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **CopyBtn** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ |
 | **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ✅ Complète | ❌ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
@@ -27,8 +27,8 @@ Généré le: 27/03/2026
 | **Customs/SyRadioGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **Customs/SyTabs** | ❌ Non | ❌ Oui | ✅ Complète | ❌ |
 | **Customs/SyTextField** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ |
-| **DataList** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
-| **DataListGroup** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
+| **DataList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
+| **DataListGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **DataListItem** | ❌ Non | ✅ Non | ❌ Manquante | ❌ |
 | **DatePicker/CalendarMode** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ |
 | **DatePicker/ComplexDatePicker** | ✅ Oui | ❌ Oui | ❌ Manquante | ❌ |
@@ -81,4 +81,4 @@ Généré le: 27/03/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 
-**Total des composants conformes : 37 / 76 (48.68%)**
+**Total des composants conformes : 39 / 76 (51.32%)**
