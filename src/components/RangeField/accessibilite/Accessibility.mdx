@@ -1,15 +1,83 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../RangeField.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as RangeFieldStories from '../RangeField.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={RangeFieldStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+  componentName="RangeField"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/slider/"
+>
+  <div class="mt-8">
+    <p>Rapport d'audit manuel : <a href="/audits/RangeField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/908" target="_blank" style={{color:'#0C41BD'}}>issue #908</a>)</p>
+  </div>
 
+  <CriteriaSection>
+    <CriteriaCard icon="🔍" title="Structure sémantique et regroupement">
+      <ul>
+        <li><strong>Fieldset/Legend</strong> : Utilisation de <code>&lt;fieldset&gt;</code> et <code>&lt;legend&gt;</code> lorsque <code>fieldsetLabel</code> est fourni pour regrouper sémantiquement les champs</li>
+        <li><strong>Double entrée</strong> : Composant hybride avec slider visuel et champs textuels pour une accessibilité maximale</li>
+        <li><strong>Labels explicites</strong> : Champs texte avec labels personnalisables via <code>textFieldMinLabel</code> et <code>textFieldMaxLabel</code></li>
+      </ul>
+    </CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/RangeField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/908" target="_blank" style={{color:'#0C41BD'}}>issue #908</a>)</p>
-	</div>
+    <CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+      <ul>
+        <li><strong>Input numérique</strong> : Champs texte avec <code>inputmode="numeric"</code> pour optimiser le clavier mobile</li>
+        <li><strong>Validation synchrone</strong> : Mise à jour bidirectionnelle entre slider et champs texte pour une cohérence immédiate</li>
+        <li><strong>Contraintes logiques</strong> : Validation automatique pour garantir min ≤ max avec corrections appropriées</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🎨" title="Masque saisie et formatage">
+      <ul>
+        <li><strong>vMaska</strong> : Masque de saisie personnalisé pour gérer nombres négatifs et décimaux</li>
+        <li><strong>Pattern flexible</strong> : Support des formats comme "-123.45" avec tokens adaptés</li>
+        <li><strong>Clamp automatique</strong> : Correction des valeurs hors limites avec <code>clamp()</code></li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="📱" title="Responsive et adaptabilité">
+      <ul>
+        <li><strong>Layout adaptatif</strong> : Orientation des champs qui passe de horizontal à vertical sur mobile</li>
+        <li><strong>Display Vuetify</strong> : Utilisation de <code>useDisplay()</code> pour détecter les tailles d'écran</li>
+        <li><strong>Options personnalisables</strong> : Composant entièrement configurable via <code>useCustomizableOptions</code></li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="RangeField">
+    <Primary />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li><strong>Labels descriptifs</strong> : Utilisez des labels clairs pour les champs min/max ("Prix minimum", "Âge maximum")</li>
+      <li><strong>Fieldset cohérent</strong> : Regroupez les champs avec un <code>fieldsetLabel</code> pertinent ("Fourchette de prix", "Plage d'âge")</li>
+      <li><strong>Valeurs par défaut</strong> : Initialisez toujours <code>modelValue</code> avec une plage valide [min, max]</li>
+      <li><strong>Step approprié</strong> : Choisissez un <code>step</code> logique (1 pour les entiers, 0.1 pour les décimales)</li>
+      <li><strong>Validation côté serveur</strong> : Complétez la validation client avec des vérifications serveur pour la sécurité</li>
+      <li><strong>Feedback utilisateur</strong> : Ajoutez des messages d'aide ou d'erreur pour guider l'utilisateur</li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/slider/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Sliders</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.9" target="_blank" rel="noopener noreferrer">RGAA Critère 11.9 : Champs de saisie numérique</a></li>
+      <li><a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/number" target="_blank" rel="noopener noreferrer">MDN : Champs input number et inputmode</a></li>
+    </ul>
+  </ResourcesSection>
+
+</AccessibilityGuideLayout>

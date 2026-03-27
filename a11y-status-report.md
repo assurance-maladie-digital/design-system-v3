@@ -64,7 +64,7 @@ Généré le: 27/03/2026
 | **PasswordField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **PeriodField** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ |
 | **PhoneField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **RangeField** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ❌ |
+| **RangeField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **RatingPicker** | ❌ Non | ✅ Non | ⚠️ Incomplète | ❌ |
 | **SearchListField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SkipLink** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
@@ -81,4 +81,4 @@ Généré le: 27/03/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 
-**Total des composants conformes : 46 / 76 (60.53%)**
+**Total des composants conformes : 47 / 76 (61.84%)**
