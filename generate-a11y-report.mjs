@@ -36,7 +36,7 @@ function analyzeComponent(componentName, componentPath) {
   for (const storyFile of storyFiles) {
     const content = fs.readFileSync(storyFile, 'utf-8');
     // Regex to match a11y: { disable: true } with possible whitespace/newlines
-    if (/a11y\s*:\s*\{\s*disable\s*:\s*true\s*\}/.test(content)) {
+    if (/a11y\s*:\s*\{\s*[\s\S]*?disable\s*:\s*true[\s\S]*?\}/.test(content)) {
       hasA11yDisabledInStories = true;
       break;
     }
