@@ -8,14 +8,29 @@
     "dist",
     "src"
   ],
-  "main": "./dist/design-system-v3.umd.cjs",
+  "main": "./dist/design-system-v3.cjs",
   "module": "./dist/design-system-v3.js",
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
       "import": "./dist/design-system-v3.js",
-      "require": "./dist/design-system-v3.umd.cjs"
+      "require": "./dist/design-system-v3.cjs"
+    },
+    "./designTokens": {
+      "types": "./dist/designTokens/index.d.ts",
+      "import": "./dist/designTokens/index.js",
+      "require": "./dist/designTokens/index.cjs"
+    },
+    "./designTokens/utils": {
+      "types": "./dist/designTokens/utils/index.d.ts",
+      "import": "./dist/designTokens/utils/index.js",
+      "require": "./dist/designTokens/utils/index.cjs"
+    },
+    "./vuetifyConfig": {
+      "types": "./dist/vuetifyConfig.d.ts",
+      "import": "./dist/vuetifyConfig.js",
+      "require": "./dist/vuetifyConfig.cjs"
     },
     "./style.css": "./dist/style.css",
     "./*": {

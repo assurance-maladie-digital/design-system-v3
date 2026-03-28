@@ -94,13 +94,24 @@ export default defineConfig({
 	},
 	build: {
 		lib: {
-			entry: resolve(__dirname, 'src/main.ts'),
+			entry: {
+				main: resolve(__dirname, 'src/main.ts'),
+				'designTokens/index': resolve(__dirname, 'src/designTokens/index.ts'),
+				'designTokens/utils/index': resolve(__dirname, 'src/designTokens/utils/index.ts'),
+				'vuetifyConfig': resolve(__dirname, 'src/vuetifyConfig.ts'),
+			},
 			name: 'DesignSystemV3',
-			fileName: 'design-system-v3',
+			fileName: (format, entryName) => {
+				if (entryName === 'main') {
+					return format === 'es' ? 'design-system-v3.js' : 'design-system-v3.cjs'
+				}
+
+				return format === 'es' ? `${entryName}.js` : `${entryName}.cjs`
+			},
 		},
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
-			external: ['vue', /vuetify/],
+			external: ['vue', /^vuetify(?:\/|$)/],
 			output: {
 				globals: {
 					'vue': 'Vue',
