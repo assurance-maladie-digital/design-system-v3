@@ -172,7 +172,7 @@ export const Indeterminate: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -208,7 +208,7 @@ Cette case à cocher est dans un état indéterminé, généralement utilisé lo
 export const WithControlsIds: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
