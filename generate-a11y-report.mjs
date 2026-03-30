@@ -169,6 +169,18 @@ function generateReport() {
 
   fs.writeFileSync(reportPath, mdReport);
   console.log(`Report generated at ${reportPath}`);
+
+  // Also write JSON for dynamic Vue component hydration
+  const jsonReportPath = path.join(__dirname, 'src', 'stories', 'Accessibilite', 'DesignSystem', 'a11y-status.json');
+  fs.mkdirSync(path.dirname(jsonReportPath), { recursive: true });
+  fs.writeFileSync(jsonReportPath, JSON.stringify({
+    date: new Date().toISOString(),
+    compliantCount,
+    totalCount: results.length,
+    percentage,
+    results
+  }, null, 2));
+  console.log(`JSON Data generated at ${jsonReportPath}`);
 }
 
 generateReport();

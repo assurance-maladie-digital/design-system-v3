@@ -1,0 +1,554 @@
+{
+  "date": "2026-03-30T17:09:05.012Z",
+  "compliantCount": 47,
+  "totalCount": 78,
+  "percentage": "60.26",
+  "results": [
+    {
+      "componentName": "AccessibilityProgressPage",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Manquante",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Accordion",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "BackBtn",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "BackToTopBtn",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Captcha",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "ChipList",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Incomplète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "CollapsibleList",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "ContextualMenu",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "CookieBanner",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "CookiesSelection",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "CopyBtn",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Customs/Selects/SelectBtnField",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Customs/Selects/SyAutocomplete",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Customs/Selects/SyInputSelect",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Bientôt disponible",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Customs/Selects/SySelect",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Customs/SyCheckbox",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Customs/SyCheckBoxGroup",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Customs/SyForm",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Bientôt disponible",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Customs/SyIcon",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Customs/SyIconButton",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Customs/SyPagination",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Customs/SyRadioGroup",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Customs/SyTabs",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Customs/SyTextField",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "DataList",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "DataListGroup",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "DataListItem",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Manquante",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "DatePicker/CalendarMode",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Manquante",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "DatePicker/ComplexDatePicker",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Manquante",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "DatePicker/DateTextInput",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Manquante",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "DeclarationAccessibilityPage",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "DiacriticPicker",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "DialogBox",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "DownloadBtn",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "ErrorPage",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "ExternalLinks",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Incomplète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "FileList",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "FilePreview",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Bientôt disponible",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "FileUpload",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "FilterInline",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "FilterSideBar",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "FooterBar",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "FranceConnectBtn",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "HeaderBar",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "HeaderLoading",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "HeaderNavigationBar",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Manquante",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "HeaderToolbar",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Incomplète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "LangBtn",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Incomplète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "Logo",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "LogoBrandSection",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "LunarCalendar",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "MaintenancePage",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "MonthPicker",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "NirField",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Incomplète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "NotFoundPage",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "NotificationBar",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "PageContainer",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "PaginatedTable",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Bientôt disponible",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "PasswordField",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "PeriodField",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Bientôt disponible",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "PhoneField",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "RangeField",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "RatingPicker",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Incomplète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "SearchListField",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "SkipLink",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "SocialMediaLinks",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "StatusPage",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "stories",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Manquante",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "SubHeader",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "SyAlert",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "SyBtnMenu",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "SyHeading",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "SyTextArea",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "Tables",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Bientôt disponible",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "TableToolbar",
+      "hasA11yTests": false,
+      "hasA11yDisabledInStories": true,
+      "mdxStatus": "Bientôt disponible",
+      "isFullyCompliant": false
+    },
+    {
+      "componentName": "ToolbarContainer",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "UploadWorkflow",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    },
+    {
+      "componentName": "UserMenuBtn",
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true
+    }
+  ]
+}
