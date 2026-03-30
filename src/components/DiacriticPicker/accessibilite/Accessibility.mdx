@@ -1,10 +1,78 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as DiacriticPicker from '../DiacriticPicker.stories';
-import '@/stories/styles/shared.css';
+import { Meta, Story } from '@storybook/blocks';
+import * as DiacriticPickerStories from '../DiacriticPicker.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={DiacriticPicker} />
+<Meta of={DiacriticPickerStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="DiacriticPicker"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/dialogmodal/"
+>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique et rôles ARIA">
+			<ul>
+				<li><strong>Bouton déclencheur</strong> : Utilise <code>aria-controls</code> et <code>aria-haspopup="dialog"</code> pour indiquer la relation avec le dialogue.</li>
+				<li><strong>État du dialogue</strong> : <code>aria-expanded</code> reflète l'état d'ouverture/fermeture du dialogue.</li>
+				<li><strong>Rôle du dialogue</strong> : <code>role="dialog"</code> et <code>aria-modal="true"</code> sur le VDialog.</li>
+				<li><strong>Labellisation</strong> : <code>aria-labelledby</code> lie le dialogue au bouton déclencheur.</li>
+				<li><strong>Groupes de caractères</strong> : Utilisation de <code>role="group"</code> avec <code>aria-label</code> pour organiser les caractères minuscules et majuscules.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation clavier et focus">
+			<ul>
+				<li><strong>Gestion du focus</strong> : Le focus retourne automatiquement au champ après insertion d'un caractère.</li>
+				<li><strong>Position du curseur</strong> : Maintien et restauration précise de la position du curseur après insertion.</li>
+				<li><strong>Focus trap</strong> : <code>retain-focus="false"</code> sur le VDialog.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Styles et contrastes">
+			<ul>
+				<li><strong>Dialogue</strong> : Fond <code>grey-lighten-2</code> sur le VCard.</li>
+				<li><strong>Boutons du dialogue</strong> : Taille "small" avec classe <code>ma-1</code>.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🔧" title="Accessibilité du champ associé">
+			<ul>
+				<li><strong>Labellisation automatique</strong> : Ajout de <code>aria-label</code> si le champ n'a ni <code>aria-label</code> ni <code>aria-labelledby</code>.</li>
+				<li><strong>Détection du champ</strong> : Recherche automatique des inputs/textarea dans le slot via <code>getNativeInput()</code>.</li>
+				<li><strong>Wrapper</strong> : Conteneur avec <code>role="textbox"</code> et <code>tabindex="0"</code>.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="DiacriticPicker">
+		<Story of={DiacriticPickerStories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournissez un <code>inputAriaLabel</code> descriptif si le champ n'a pas de label visible.</li>
+			<li>Personnalisez <code>btnTitle</code> pour refléter les caractères utilisés.</li>
+			<li>Adaptez la liste des <code>diacritics</code> selon les besoins linguistiques.</li>
+			<li>Vérifiez que les caractères affichés dans <code>btnTitle</code> sont inclus dans la liste <code>diacritics</code>.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialogmodal/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Dialogues modaux</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/keyboard-operation.html" target="_blank" rel="noopener noreferrer">WCAG : Opération au clavier</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#7.1" target="_blank" rel="noopener noreferrer">RGAA : Consultation par navigation clavier</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.9" target="_blank" rel="noopener noreferrer">RGAA : Structuration de l'information</a></li>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Boutons</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>
