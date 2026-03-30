@@ -4302,6 +4302,96 @@ export const ResizableColumns: Story = {
 	},
 }
 
+export const PinnedColumns: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			page: 1,
+		},
+		'headers': [
+			{ title: 'ID', key: 'id', width: 80 },
+			{ title: 'Nom', key: 'lastname', width: 160 },
+			{ title: 'Prénom', key: 'firstname', width: 160 },
+			{ title: 'Email', key: 'email', width: 240 },
+			{ title: 'Ville', key: 'city', width: 160 },
+			{ title: 'Pays', key: 'country', width: 160 },
+			{ title: 'Téléphone', key: 'phone', width: 180 },
+			{ title: 'Statut', key: 'status', width: 140 },
+			{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+			{ title: 'Actions', key: 'actions', width: 140 },
+		],
+		'serverItemsLength': 30,
+		'suffix': 'server-pinned-columns',
+		'showSelect': true,
+		'pinnedColumns': [
+			'data-table-select',
+			{ key: 'lastname', side: 'left' },
+			{ key: 'actions', side: 'right' },
+		],
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const users = ref<Record<string, unknown>[]>([])
+				const totalUsers = ref(args.serverItemsLength)
+				const state = ref(StateEnum.IDLE)
+				const options = ref({ ...args.options } as DataOptions)
+
+				const getUsers = (): Record<string, unknown>[] => {
+					return Array.from({ length: 30 }).map((_, i) => ({
+						id: i + 1,
+						lastname: `Nom ${i + 1}`,
+						firstname: `Prénom ${i + 1}`,
+						email: `user${i + 1}@example.com`,
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					}))
+				}
+
+				const fetchData = async (): Promise<void> => {
+					state.value = StateEnum.PENDING
+					await new Promise(resolve => setTimeout(resolve, 250))
+					const all = getUsers()
+					const start = ((options.value.page ?? 1) - 1) * (options.value.itemsPerPage ?? 5)
+					const end = start + (options.value.itemsPerPage ?? 5)
+					users.value = all.slice(start, end)
+					totalUsers.value = all.length
+					state.value = StateEnum.RESOLVED
+				}
+
+				watch(options, () => {
+					fetchData()
+				}, { deep: true, immediate: true })
+
+				return { args, users, totalUsers, state, options, fetchData, StateEnum }
+			},
+			template: `
+				<div style="max-width: 900px; overflow: auto; border: 1px solid #e0e0e0;">
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						v-bind="args"
+						@update:options="fetchData"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {

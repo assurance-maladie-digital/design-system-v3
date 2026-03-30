@@ -8,7 +8,7 @@
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, SyTableProps } from '../common/types'
+	import type { DataOptions, SyTableProps, TableColumnHeader } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
@@ -85,6 +85,10 @@
 		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
 	})
+
+	const getHeaderForColumnCompat = (column: unknown) => {
+		return getHeaderForColumn(column)
+	}
 
 	const { filteredItems } = useTableItems({
 		items: computed(() => props.items),
@@ -196,6 +200,144 @@
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
 
+	const parseWidthPx = (val: unknown): number => {
+		if (typeof val === 'number' && Number.isFinite(val)) return val
+		if (typeof val === 'string') {
+			const trimmed = val.trim()
+			if (trimmed.endsWith('px')) {
+				const n = Number.parseFloat(trimmed.slice(0, -2))
+				return Number.isFinite(n) ? n : 0
+			}
+			const n = Number.parseFloat(trimmed)
+			return Number.isFinite(n) ? n : 0
+		}
+		return 0
+	}
+
+	const normalizedPinnedColumns = computed(() => {
+		const raw = props.pinnedColumns ?? (props.pinnedColumnKey ? [props.pinnedColumnKey] : [])
+		return raw.map((c) => {
+			if (typeof c === 'string') return { key: c, side: 'left' as const }
+			return { key: c.key, side: c.side ?? 'left' as const }
+		})
+	})
+
+	const pinnedLeftKeys = computed(() =>
+		normalizedPinnedColumns.value
+			.filter(c => c.side !== 'right')
+			.map(c => c.key),
+	)
+
+	const pinnedRightKeys = computed(() =>
+		normalizedPinnedColumns.value
+			.filter(c => c.side === 'right')
+			.map(c => c.key),
+	)
+
+	const getColumnWidthPx = (headersList: TableColumnHeader[], key: string): number => {
+		if (key === 'data-table-select' || key === 'data-table-expand' || key === 'data-table-group') return 48
+		const storedWidth = reactiveColumnWidths.value[key]
+		if (storedWidth != null) return parseWidthPx(storedWidth)
+		const h = headersList.find(x => (x.key ?? x.value) === key)
+		return parseWidthPx(h?.width ?? h?.minWidth ?? h?.maxWidth)
+	}
+
+	const pinnedMeta = computed(() => {
+		const headersList = displayHeaders.value
+		if (!headersList) return { left: {}, right: {} } as { left: Record<string, number>, right: Record<string, number> }
+
+		const left: Record<string, number> = {}
+		let accLeft = 0
+		for (const h of headersList) {
+			const key = (h.key ?? h.value) as string | undefined
+			if (!key) continue
+			if (pinnedLeftKeys.value.includes(key)) {
+				left[key] = accLeft
+				accLeft += getColumnWidthPx(headersList as TableColumnHeader[], key)
+			}
+		}
+
+		const right: Record<string, number> = {}
+		let accRight = 0
+		for (const h of [...headersList].reverse()) {
+			const key = (h.key ?? h.value) as string | undefined
+			if (!key) continue
+			if (pinnedRightKeys.value.includes(key)) {
+				right[key] = accRight
+				accRight += getColumnWidthPx(headersList as TableColumnHeader[], key)
+			}
+		}
+
+		return { left, right }
+	})
+
+	const displayHeadersWithPinned = computed(() => {
+		const headersList = displayHeaders.value
+		if (!headersList) return headersList
+
+		const leftOffsets = pinnedMeta.value.left
+		const rightOffsets = pinnedMeta.value.right
+
+		if (Object.keys(leftOffsets).length === 0 && Object.keys(rightOffsets).length === 0) return headersList
+
+		return headersList.map((h) => {
+			const key = (h.key ?? h.value) as string | undefined
+			if (!key) return h
+
+			const left = leftOffsets[key]
+			const right = rightOffsets[key]
+			if (left === undefined && right === undefined) return h
+
+			const headerProps = (h.headerProps ?? {}) as Record<string, unknown>
+			const headerStyle = (headerProps.style ?? {}) as Record<string, string | number>
+
+			const cellProps = (h.cellProps ?? {}) as Record<string, unknown>
+			const cellStyle = (cellProps.style ?? {}) as Record<string, string | number>
+
+			const stickyStyle: Record<string, string | number> = {
+				position: 'sticky',
+				zIndex: 4,
+				background: 'inherit',
+			}
+
+			const stickyCellStyle: Record<string, string | number> = {
+				position: 'sticky',
+				zIndex: 3,
+				background: 'inherit',
+			}
+
+			const sideClass = left !== undefined ? 'sy-table__pinned--left' : 'sy-table__pinned--right'
+			if (left !== undefined) {
+				stickyStyle.left = `${left}px`
+				stickyCellStyle.left = `${left}px`
+			}
+			else if (right !== undefined) {
+				stickyStyle.right = `${right}px`
+				stickyCellStyle.right = `${right}px`
+			}
+
+			return {
+				...h,
+				headerProps: {
+					...headerProps,
+					class: ['sy-table__pinned', sideClass, headerProps.class].filter(Boolean),
+					style: {
+						...headerStyle,
+						...stickyStyle,
+					},
+				},
+				cellProps: {
+					...cellProps,
+					class: ['sy-table__pinned', sideClass, cellProps.class].filter(Boolean),
+					style: {
+						...cellStyle,
+						...stickyCellStyle,
+					},
+				},
+			}
+		})
+	})
+
 	// Provide column widths and update function to child components
 	provide('columnWidths', reactiveColumnWidths)
 	provide('updateColumnWidth', (key: string, width: number | string) => {
@@ -239,7 +381,7 @@
 			ref="table"
 			v-model="model"
 			color="primary"
-			:headers="displayHeaders"
+			:headers="displayHeadersWithPinned"
 			v-bind="propsFacade"
 			:items="filteredItems"
 			:density="props.density"
@@ -271,9 +413,15 @@
 							<th
 								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									...(getHeaderForColumnCompat(column)?.maxWidth ? { maxWidth: getHeaderForColumnCompat(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumnCompat(column)?.minWidth ? { minWidth: getHeaderForColumnCompat(column)?.minWidth as any } : {}),
+									...(getHeaderForColumnCompat(column)?.width ? { width: getHeaderForColumnCompat(column)?.width as any } : {}),
+									...(pinnedMeta.left[column.key!] !== undefined
+										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 5, background: 'inherit' }
+										: {}),
+									...(pinnedMeta.right[column.key!] !== undefined
+										? { position: 'sticky', right: `${pinnedMeta.right[column.key!] }px`, zIndex: 5, background: 'inherit' }
+										: {}),
 								}"
 							>
 								<template v-if="column.key === 'data-table-select' && props.showSelect && !props.showSelectSingle">
@@ -326,9 +474,9 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									...(getHeaderForColumnCompat(column)?.maxWidth ? { maxWidth: getHeaderForColumnCompat(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumnCompat(column)?.minWidth ? { minWidth: getHeaderForColumnCompat(column)?.minWidth as any } : {}),
+									...(getHeaderForColumnCompat(column)?.width ? { width: getHeaderForColumnCompat(column)?.width as any } : {}),
 								}"
 							>
 								<SyTableFilter
@@ -473,6 +621,10 @@
 
 .checkbox-column {
 	max-width: fit-content;
+}
+
+.sy-table :deep(.sy-table__pinned) {
+	box-shadow: 1px 0 0 rgba(tokens.$grey-base, 0.2);
 }
 
 </style>

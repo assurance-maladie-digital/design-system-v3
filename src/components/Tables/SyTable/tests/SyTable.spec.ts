@@ -348,6 +348,39 @@ describe('SyTable', () => {
 		expect(wrapper.text()).toContain('No data available')
 	})
 
+	it('applies sticky styles for pinnedColumns (left/right) including data-table-select', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'pinned-columns-test',
+				showSelect: true,
+				pinnedColumns: [
+					'data-table-select',
+					{ key: 'name', side: 'left' },
+					{ key: 'age', side: 'right' },
+				],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const pinnedTh = wrapper.findAll('th[style*="position: sticky"]')
+		expect(pinnedTh.length).toBeGreaterThan(0)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('right:'))).toBe(true)
+
+		const pinnedTd = wrapper.findAll('tbody td[style*="position: sticky"]')
+		expect(pinnedTd.length).toBeGreaterThan(0)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
+	})
+
 	it('enables selection when showSelect is true', async () => {
 		const wrapper = mount(SyTable, {
 			props: {

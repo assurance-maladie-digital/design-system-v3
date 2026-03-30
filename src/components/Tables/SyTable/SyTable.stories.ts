@@ -2770,6 +2770,67 @@ export const ResizableColumns: Story = {
 	},
 }
 
+export const PinnedColumns: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+	},
+	args: {
+		'headers': [
+			{ title: 'ID', key: 'id', width: 80 },
+			{ title: 'Nom', key: 'lastname', width: 160 },
+			{ title: 'Prénom', key: 'firstname', width: 160 },
+			{ title: 'Email', key: 'email', width: 240 },
+			{ title: 'Ville', key: 'city', width: 160 },
+			{ title: 'Pays', key: 'country', width: 160 },
+			{ title: 'Téléphone', key: 'phone', width: 180 },
+			{ title: 'Statut', key: 'status', width: 140 },
+			{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+			{ title: 'Actions', key: 'actions', width: 140 },
+		],
+		'items': Array.from({ length: 12 }).map((_, i) => ({
+			id: i + 1,
+			lastname: `Nom ${i + 1}`,
+			firstname: `Prénom ${i + 1}`,
+			email: `user${i + 1}@example.com`,
+			city: 'Paris',
+			country: 'France',
+			phone: '01 02 03 04 05',
+			status: i % 2 === 0 ? 'Actif' : 'Inactif',
+			lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+			actions: '…',
+		})),
+		'options': {
+			itemsPerPage: 5,
+		},
+		'suffix': 'pinned-columns-table',
+		'showSelect': true,
+		'pinnedColumns': [
+			'data-table-select',
+			{ key: 'lastname', side: 'left' },
+			{ key: 'actions', side: 'right' },
+		],
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div style="max-width: 900px; overflow: auto; border: 1px solid #e0e0e0;">
+					<SyTable
+						v-model:options="args.options"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {
