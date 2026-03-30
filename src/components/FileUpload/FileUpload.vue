@@ -74,7 +74,7 @@
 			files = files.slice(0, 1)
 		}
 		const { errors, validFiles } = validateFiles(
-			files, props.fileSizeMax, props.allowedExtensions, props.fileSizeUnits,
+			files, props.fileSizeMax, props.allowedExtensions, props.fileSizeUnits, props.locales,
 		)
 
 		if (errors.length) {
@@ -149,6 +149,7 @@
 					:multiple="multiple"
 					:file-size-max="fileSizeMax"
 					:file-size-units="fileSizeUnits"
+					:locales="locales"
 				>
 					<template
 						v-for="(_, slotName) in $slots"

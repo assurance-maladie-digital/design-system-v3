@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import type { RouteRecordRaw } from 'vue-router'
 	import PageContainer from '../PageContainer/PageContainer.vue'
-	import { useId } from 'vue'
+	import { computed, useId } from 'vue'
 	import type { PageAriaRole } from '../types'
 	import SyHeading from '../SyHeading/SyHeading.vue'
 
@@ -46,7 +46,7 @@
 		return parts
 	}
 
-	withDefaults(defineProps<{
+	const props = withDefaults(defineProps<{
 		pageTitle?: string
 		message?: string
 		code?: string
@@ -67,10 +67,12 @@
 		btnLink: '/',
 		btnHref: undefined,
 		hideBtn: false,
-		uniqueId: useId(),
+		uniqueId: undefined,
 		role: undefined,
 		headingLevel: 1,
 	})
+
+	const uniqueId = computed(() => props.uniqueId ?? useId())
 
 	const emit = defineEmits(['btn-click'])
 	const emitClickEvent = (): void => {

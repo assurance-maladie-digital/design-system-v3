@@ -1,15 +1,68 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/blocks';
 import * as Stories from '../FranceConnectBtn.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/FranceConnectBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="FranceConnectBtn"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/button/"
+>
+	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/FranceConnectBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4005" target="_blank" style={{color:'#0C41BD'}}>issue #4005</a>)</p>
 	</div>
+
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique et attributs">
+			<ul>
+				<li><strong>Liens natifs</strong> : Utilisation de balises <code>&lt;a&gt;</code> pour le bouton principal et le lien d'information, garantissant une sémantique correcte.</li>
+				<li><strong>Labels explicites</strong> : Utilisation de l'attribut <code>aria-label</code> sur les liens pour fournir une description claire aux lecteurs d'écran (ex: "S'identifier avec FranceConnect" ou "S'identifier avec FranceConnect+").</li>
+				<li><strong>SVG masqué</strong> : Le logo SVG complexe est masqué aux technologies d'assistance avec <code>aria-hidden="true"</code> et <code>role="presentation"</code> car l'information est déjà portée par l'attribut <code>aria-label</code> du lien parent.</li>
+				<li><strong>Ouverture de fenêtre</strong> : Le lien externe informe l'utilisateur de l'ouverture d'un nouvel onglet, avec une icône explicitement masquée (<code>decorative=true</code>).</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+			<ul>
+				<li><strong>Focus natif</strong> : Les liens sont naturellement accessibles via la touche <kbd>Tab</kbd>.</li>
+				<li><strong>Indicateur de focus</strong> : Un style de focus clair, visible et avec un décalage (<code>outline-offset</code>) est implémenté pour garantir une bonne visibilité lors de la navigation au clavier.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Styles et contrastes">
+			<ul>
+				<li><strong>Couleurs institutionnelles</strong> : Respect strict des couleurs et contrastes de la charte FranceConnect (Bleu France), garantissant un ratio de contraste suffisant.</li>
+				<li><strong>Adaptation au thème sombre</strong> : Ajustement des couleurs de fond (ex: <code>#8585f6</code>) et de texte en mode sombre pour maintenir la lisibilité et l'accessibilité visuelle.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="FranceConnectBtn">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li><strong>Positionnement</strong> : Placez toujours ce bouton dans un contexte de connexion ou d'authentification.</li>
+			<li><strong>Respect de la charte</strong> : Ne modifiez pas les proportions, les couleurs (en dehors du mode sombre) ou les libellés de ce bouton, car ils sont soumis aux règles strictes de la direction interministérielle du numérique (DINUM).</li>
+			<li>Assurez-vous que le lien <code>href</code> fourni pointe vers la véritable interface de redirection d'authentification.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://franceconnect.gouv.fr/partenaires" target="_blank" rel="noopener noreferrer">Documentation et charte FranceConnect</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#6.1" target="_blank" rel="noopener noreferrer">RGAA : Liens et navigation</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

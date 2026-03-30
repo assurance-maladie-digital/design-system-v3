@@ -12,6 +12,7 @@
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSelectionLogic } from './utils/useSelectionLogic'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { locales } from './locales'
 
 	const props = defineProps({
 		bgColor: {
@@ -74,6 +75,10 @@
 			type: Boolean,
 			default: false,
 		},
+		hideDetails: {
+			type: Boolean,
+			default: false,
+		},
 		hideNoData: {
 			type: Boolean,
 			default: false,
@@ -108,7 +113,7 @@
 		},
 		noDataText: {
 			type: String,
-			default: 'Aucune option',
+			default: locales.noData,
 		},
 		placeholder: {
 			type: String,
@@ -138,6 +143,10 @@
 			type: Array as PropType<string[] | null>,
 			default: null,
 		},
+		selectionText: {
+			type: Function as PropType<(selected: SelectArray) => string>,
+			default: undefined,
+		},
 		textKey: {
 			type: String,
 			default: 'text',
@@ -152,14 +161,13 @@
 		},
 	})
 
-	const emit = defineEmits(['update:modelValue'])
+	const emit = defineEmits(['update:modelValue', 'search'])
 
 	const isOpen = ref(false)
 	const search = ref('')
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
 	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
-	let suppressOpenOnSearch = false
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
 	const randomId = Math.random().toString(36).slice(2)
@@ -202,7 +210,7 @@
 	const normalizedSearch = computed(() => (search.value || '').toLowerCase())
 
 	const filteredItems = computed(() => {
-		if (!props.filter) return formattedItems.value
+		if (!props.filter || props.loading) return formattedItems.value
 		return formattedItems.value.filter((item) => {
 			const text = String(item[props.plainTextKey || props.textKey] ?? item[props.textKey] ?? '').toLowerCase()
 			return text.includes(normalizedSearch.value)
@@ -215,7 +223,6 @@
 
 	const selectItem = (item: ItemType | string | number | null | undefined) => {
 		markInteracted()
-		suppressOpenOnSearch = true
 		updateValue(item ?? null)
 		if (props.multiple) {
 			suppressNextInput.value = true
@@ -225,19 +232,15 @@
 	}
 
 	watch(() => props.modelValue, (val) => {
-		selected.value = val as SelectValue | SelectArray
-		suppressOpenOnSearch = true
+		selected.value = props.multiple && (val === null || val === undefined)
+			? []
+			: val as SelectValue | SelectArray
 		syncSearchFromValue()
 	}, { immediate: true })
 
 	let debounceHandle: ReturnType<typeof setTimeout> | null = null
 
 	watch(search, () => {
-		if (suppressOpenOnSearch) {
-			suppressOpenOnSearch = false
-			return
-		}
-
 		if (!isOpen.value) {
 			isOpen.value = true
 		}
@@ -261,13 +264,15 @@
 	})
 
 	const hasChips = computed(() => props.multiple && props.chips && Array.isArray(selected.value) && selected.value.length > 0)
+	const hasSelectionTextDisplay = computed(() => !!props.selectionText && Array.isArray(selected.value) && (selected.value as SelectArray).length > 0)
+	const hasMultipleSelections = computed(() => props.multiple && !props.chips && !props.selectionText && Array.isArray(selected.value) && (selected.value as SelectArray).length > 0)
+	const hasInlineSelections = computed(() => hasChips.value || hasMultipleSelections.value)
 
 	const displayValue = computed(() => {
 		if (props.multiple && !props.chips) {
-			const selectedItems = Array.isArray(selected.value) ? selected.value : []
-			const selectedTexts: string[] = selectedItems.map(item => getChipLabel(item as ItemType | string | number))
-			const prefix = selectedTexts.length > 0 ? selectedTexts.join(', ') + ', ' : ''
-			return prefix + search.value
+			if (props.selectionText || hasMultipleSelections.value) {
+				return search.value
+			}
 		}
 		return search.value
 	})
@@ -328,13 +333,35 @@
 		return (textFieldRef.value?.$el as HTMLElement | undefined)?.querySelector('.v-field') ?? undefined
 	})
 
+	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling)
+
 	const externalErrors = computed(() => props.errorMessages || [])
-	const displayErrors = computed(() => externalErrors.value.length > 0 ? externalErrors.value : (hasInteracted.value ? errorHandling.errors.value : []))
-	const displayWarnings = computed(() => hasInteracted.value ? errorHandling.warnings.value : [])
-	const displaySuccesses = computed(() => hasInteracted.value ? errorHandling.successes.value : [])
-	const displayHasError = computed(() => externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value))
-	const displayHasWarning = computed(() => hasInteracted.value && errorHandling.hasWarning.value)
-	const displayHasSuccess = computed(() => hasInteracted.value && errorHandling.hasSuccess.value)
+	const displayErrors = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return externalErrors.value.length > 0
+			? externalErrors.value
+			: (hasInteracted.value ? errorHandling.errors.value : [])
+	})
+	const displayWarnings = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return hasInteracted.value ? errorHandling.warnings.value : []
+	})
+	const displaySuccesses = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		return hasInteracted.value ? errorHandling.successes.value : []
+	})
+	const displayHasError = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value)
+	})
+	const displayHasWarning = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return hasInteracted.value && errorHandling.hasWarning.value
+	})
+	const displayHasSuccess = computed(() => {
+		if (shouldDisableErrorHandling.value) return false
+		return hasInteracted.value && errorHandling.hasSuccess.value
+	})
 
 	const validateOnSubmit = () => {
 		markInteracted()
@@ -363,36 +390,17 @@
 		const inputValue = getInputValue(value)
 		if (inputValue === null) return
 
-		if (props.multiple && !props.chips) {
-			const selectedItems = Array.isArray(selected.value) ? selected.value : []
-			const labels = selectedItems.map(item =>
-				getChipLabel(item as ItemType | string | number),
-			)
+		// Ignore outside emissions (e.g. SyTextField.checkErrorOnBlur re-emitting
+		// the current value after a programmatic update): no actual user input occurred.
+		if (inputValue === search.value) return
 
-			const parts = inputValue.split(',').map(p => p.trim())
-			let matched = 0
-			for (let i = 0; i < Math.min(parts.length, labels.length); i++) {
-				if (parts[i] === labels[i]) {
-					matched++
-				}
-				else {
-					break
-				}
-			}
+		search.value = inputValue
 
-			if (matched < selectedItems.length) {
-				const kept = selectedItems.slice(0, matched)
-				selected.value = kept
-				emit('update:modelValue', kept)
-			}
-
-			const remainingParts = parts.slice(matched).filter(p => p !== '')
-			search.value = remainingParts.join(', ')
-		}
-		else {
-			search.value = inputValue
+		if (!inputValue && !props.multiple && selected.value != null) {
+			updateValue(null)
 		}
 
+		emit('search', inputValue)
 		openAndFocus()
 	}
 
@@ -405,6 +413,7 @@
 	const getOptionId = (index: number) => `${optionIdPrefixed.value}-${index}`
 
 	const resultsLiveText = computed(() => {
+		if (!hasInteracted.value) return
 		if (props.loading) return 'Chargement des résultats'
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
@@ -424,7 +433,6 @@
 
 	watch(isOpen, (open) => {
 		if (!open && props.multiple) {
-			suppressOpenOnSearch = true
 			search.value = ''
 		}
 	})
@@ -440,7 +448,10 @@
 </script>
 
 <template>
-	<div class="sy-autocomplete">
+	<div
+		class="sy-autocomplete"
+		:class="{ 'sy-autocomplete--has-selection-text': hasSelectionTextDisplay }"
+	>
 		<VMenu
 			v-model="isOpen"
 			transition="slide-y-transition"
@@ -459,12 +470,13 @@
 					ref="textFieldRef"
 					:model-value="displayValue"
 					:label="hasChips ? '' : label"
-					:placeholder="hasChips ? '' : placeholder"
+					:placeholder="hasInlineSelections || hasSelectionTextDisplay ? '' : placeholder"
+					:is-active="hasInlineSelections || hasSelectionTextDisplay"
 					:readonly="readonly"
 					:bg-color="bgColor"
 					:density="density"
 					:autocomplete="'off'"
-					:class="{ 'sy-autocomplete--clearable': clearable }"
+					:class="{ 'sy-autocomplete--clearable': clearable, 'sy-autocomplete__field--has-chips': hasInlineSelections }"
 					:error-messages="displayErrors"
 					:warning-messages="displayWarnings"
 					:success-messages="displaySuccesses"
@@ -473,7 +485,10 @@
 					:has-success="displayHasSuccess"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
-					:aria-label="hasChips ? label : undefined"
+					:disable-error-handling="disableErrorHandling"
+					:loading="loading"
+					:are-details-hidden="hideDetails"
+					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
 					@blur="checkErrorOnBlur"
@@ -481,10 +496,10 @@
 				>
 					<template #append-inner>
 						<button
-							v-if="clearable && hasSelectionToClear && !hasChips"
+							v-if="clearable && hasSelectionToClear"
 							type="button"
 							class="sy-autocomplete__clear-button"
-							:aria-label="'Réinitialiser la sélection'"
+							:aria-label="locales.clearSelection"
 							@click.stop.prevent="selectItem(null)"
 						>
 							<SyIcon
@@ -499,23 +514,35 @@
 							decorative
 						/>
 					</template>
+					<template v-if="hasChips">
+						<VChip
+							v-for="(item, index) in selected as SelectArray"
+							:key="getChipKey(item, index)"
+							size="small"
+							class="sy-autocomplete__chip"
+							closable
+							:close-label="locales.removeChip(getChipLabel(item as ItemType))"
+							@click:close="() => selectItem(item as ItemType)"
+						>
+							{{ getChipLabel(item as ItemType) }}
+						</VChip>
+					</template>
+					<template v-else-if="hasMultipleSelections">
+						<span
+							v-for="(item, index) in selected as SelectArray"
+							:key="getChipKey(item, index)"
+							class="sy-autocomplete__label"
+						>
+							{{ getChipLabel(item as ItemType) }}
+						</span>
+					</template>
 					<template
-						v-if="hasChips"
+						v-if="hasSelectionTextDisplay"
 						#prepend-inner
 					>
-						<div class="sy-autocomplete__chips">
-							<VChip
-								v-for="(item, index) in selected as SelectArray"
-								:key="getChipKey(item, index)"
-								size="small"
-								class="ma-1"
-								closable
-								:close-label="`Supprimer ${getChipLabel(item as ItemType)}`"
-								@click:close="() => selectItem(item as ItemType)"
-							>
-								{{ getChipLabel(item as ItemType) }}
-							</VChip>
-						</div>
+						<span class="sy-autocomplete__selection-text">
+							{{ selectionText!(selected as SelectArray) }}
+						</span>
 					</template>
 				</SyTextField>
 			</template>
@@ -524,21 +551,14 @@
 				:id="uniqueMenuId"
 				ref="listRef"
 				role="listbox"
-				:aria-label="label"
-				:aria-labelledby="`${uniqueMenuId}-input`"
+				:aria-labelledby="`${uniqueMenuId}-input-label`"
 				:aria-multiselectable="multiple ? 'true' : undefined"
 				:style="{ minWidth: `${textFieldRef?.$el?.offsetWidth || 0}px` }"
 				tag="ul"
 				tabindex="-1"
 				@click.stop
 			>
-				<template v-if="loading">
-					<VListItem
-						title="Chargement..."
-						tag="li"
-					/>
-				</template>
-				<template v-else-if="filteredItems.length === 0 && !hideNoData">
+				<template v-if="filteredItems.length === 0 && !hideNoData && !loading">
 					<VListItem
 						:title="noDataText"
 						disabled
@@ -622,11 +642,52 @@
 	color: rgb(0 0 0 / 54%);
 }
 
-.sy-autocomplete__chips {
-	display: flex;
-	flex-direction: row !important;
-	gap: 4px;
-	align-items: center;
+.sy-autocomplete__chip {
+	margin: 2px;
+	align-self: center;
+	flex-shrink: 0;
+}
+
+/* Style spécifique pour les chips */
+:deep(.sy-autocomplete__chip .v-chip__close .v-icon__svg) {
+	fill: inherit !important;
+}
+
+.sy-autocomplete__label {
+	align-self: center;
+	white-space: nowrap;
+	flex-shrink: 0;
+	font-size: inherit;
+
+	&:not(:last-of-type)::after {
+		content: ',';
+		margin-right: 4px;
+	}
+}
+
+:deep(.sy-autocomplete__field--has-chips .v-field) {
+	height: auto;
+	min-height: var(--v-input-control-height, 56px);
+}
+
+:deep(.sy-autocomplete__field--has-chips .v-field__input) {
+	flex-wrap: wrap;
+}
+
+:deep(.sy-autocomplete__field--has-chips .v-field__input input) {
+	flex: 1 1 auto;
+	min-width: 64px;
+	align-self: center;
+}
+
+.sy-autocomplete__selection-text {
+	padding: 0 4px;
+	white-space: nowrap;
+	font-size: inherit;
+}
+
+.sy-autocomplete--has-selection-text :deep(input) {
+	caret-color: transparent !important;
 }
 
 .v-list-item.active,

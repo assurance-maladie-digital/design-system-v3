@@ -414,6 +414,11 @@
 			return ''
 		}
 
+		// If inline labels are shown, return empty string to hide input text
+		if (hasMultipleSelections.value) {
+			return ''
+		}
+
 		// For multiple mode, show default option text when nothing is selected
 		if (props.multiple) {
 			if (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)) {
@@ -455,6 +460,10 @@
 
 	const hasChips = computed(() => {
 		return props.chips && props.multiple && Array.isArray(selectedItem.value) && selectedItem.value.length > 0
+	})
+
+	const hasMultipleSelections = computed(() => {
+		return !props.chips && props.multiple && Array.isArray(selectedItem.value) && (selectedItem.value as unknown[]).length > 0
 	})
 
 	const hasSelectionToClear = computed(() => {
@@ -904,7 +913,10 @@
 			<template #activator="{ props: activatorProps }">
 				<div
 					class="sy-select"
-					:class="{ 'sy-select--clearable': props.clearable }"
+					:class="{
+						'sy-select--clearable': props.clearable,
+						'sy-select--with-chips': hasChips,
+					}"
 				>
 					<VTextField
 						:id="inputId"
@@ -920,7 +932,7 @@
 						:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
 						:bg-color="props.bgColor"
 						:density="props.density"
-						:active="hasChips || isOpen"
+						:active="hasChips || hasMultipleSelections || isOpen"
 						readonly
 						:hide-details="props.hideMessages && !showHelpTextAsMessage"
 						:hint="showHelpTextAsMessage ? props.helpText : ''"
@@ -955,12 +967,21 @@
 								size="small"
 								class="ma-1"
 								closable
-								:close-label="`Supprimer ${getChipText(item)}`"
+								:close-label="locales.removeChip(getChipText(item))"
 								@click:close="removeChip(item)"
 							>
 								{{ getChipText(item) }}
 							</VChip>
 						</div>
+						<template v-else-if="hasMultipleSelections">
+							<span
+								v-for="item in (selectedItem as unknown[])"
+								:key="props.returnObject && item ? String((item as ItemType)[props.valueKey]) : String(item)"
+								class="sy-select__label"
+							>
+								{{ getChipText(item) }}
+							</span>
+						</template>
 						<!-- Prepend -->
 						<template
 							v-if="$slots.prepend || props.prependIcon || props.prependTooltip"
@@ -1227,6 +1248,11 @@
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
+/* Style spécifique pour les chips */
+:deep(.v-chip .v-chip__close .v-icon__svg) {
+	fill: inherit !important;
+}
+
 .sy-select__clear-button {
 	position: absolute;
 	background: transparent;
@@ -1247,6 +1273,18 @@
 
 .v-chip {
 	margin: 2px;
+}
+
+.sy-select__label {
+	align-self: center;
+	white-space: nowrap;
+	flex-shrink: 0;
+	font-size: inherit;
+
+	&:not(:last-of-type)::after {
+		content: ',';
+		margin-right: 4px;
+	}
 }
 
 .sy-select :deep(.v-field__input) {
@@ -1273,5 +1311,10 @@
 	visibility: hidden;
 	position: absolute;
 	white-space: nowrap;
+}
+
+.sy-select--with-chips :deep(.v-field__input input) {
+	position: absolute;
+	z-index: -1;
 }
 </style>

@@ -667,7 +667,7 @@
 		>
 			<!-- Prepend -->
 			<template
-				v-if="props.prependIcon || props.prependTooltip"
+				v-if="props.prependIcon || props.prependTooltip || $slots['prepend']"
 				#prepend
 			>
 				<slot name="prepend">
@@ -706,7 +706,7 @@
 
 			<!-- Append -->
 			<template
-				v-if="props.appendIcon || props.appendTooltip"
+				v-if="props.appendIcon || props.appendTooltip || $slots['append']"
 				#append
 			>
 				<slot name="append">
@@ -741,6 +741,14 @@
 						@keydown.space.prevent="handleAppendIconClick"
 					/>
 				</slot>
+			</template>
+
+			<!-- Default slot passthrough: renders inside v-field__input (flex-wrap container) -->
+			<template
+				v-if="$slots.default"
+				#default
+			>
+				<slot />
 			</template>
 
 			<!-- Prepend inner -->
@@ -794,6 +802,16 @@
 
 			<template #details>
 				<slot name="details" />
+			</template>
+
+			<template #loader="{ color: loaderColor, isActive: loaderActive }">
+				<VProgressLinear
+					v-if="loaderActive"
+					indeterminate
+					rounded
+					:color="loaderColor"
+					:aria-label="props.label ? `Chargement de ${props.label}` : 'Chargement en cours'"
+				/>
 			</template>
 		</VTextField>
 

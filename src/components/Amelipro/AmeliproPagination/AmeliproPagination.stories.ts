@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import AmeliproPagination from './AmeliproPagination.vue'
+import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 
 const meta = {
 	argTypes: {
@@ -173,4 +174,11 @@ function onPageClick(page: number) {
 <AmeliproPagination v-bind="args" @click="onPageClick" />
         `,
 	}),
+}
+
+export const DeprecationNotice = {
+	...createDeprecationNotice([
+		{ label: 'SyPagination', url: '/?path=/docs/composants-navigation-sypagination--docs&globals=theme:ap' },
+	]),
+	tags: ['!dev'],
 }

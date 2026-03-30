@@ -1,3 +1,125 @@
+## v1.0.23 (30-03-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Components: add accessibility documentation + tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2034">#2034</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2035">#2035</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2032">#2032</a>
+      </td>
+      <td>- SyIconButton: add AP tokens + improve accessibility documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1969">#1969</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: improve display on multiple mode
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2028">#2028</a>
+      </td>
+      <td>SyPagination: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1843">#1843</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Exports: fix types
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2027">#2027</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FileList: improve accessibility (aria-label)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1985">#1985</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- MonthPicker: add component
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1863">#1863</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Accordion: prop `content` optional to allow custom content with slots + expose expanded state
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2021">#2021</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ErrorPage / StatusPage: fix slots and add documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2020">#2020</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: improve documentation (complexNirType)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1981">#1981</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NotificationBar: improve slots + add tests and documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2011">#2011</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2008">#2008</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: add `hideDetails` prop + documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2000">#2000</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: ignore outside emissions
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2001">#2001</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: fix chips and multiple display
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1994">#1994</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Tests: fix warning
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1998">#1998</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FileUpload: fix `locales` and `allowed-extensions` props
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1989">#1989</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: add loading state + documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1987">#1987</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: add custom value on multiple mode + documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1984">#1984</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: fix clear button on chips mode
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1982">#1982</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.22 (16-03-2026)
 
 <table>

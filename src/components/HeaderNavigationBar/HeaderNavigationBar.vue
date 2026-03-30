@@ -41,7 +41,7 @@
 			confirmationMessage?: boolean
 			/** Largeur interne */
 			width?: string
-			headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
+			headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 		}>(),
 		{
 			// Confirmation related defaults
@@ -57,6 +57,7 @@
 			maxHorizontalMenuItems: 6,
 			items: undefined,
 			width: '1712px',
+			headingLevelTitle: 1,
 		})
 
 	// Définition des événements émis

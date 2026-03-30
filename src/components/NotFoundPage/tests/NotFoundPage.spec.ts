@@ -115,13 +115,12 @@ describe('NotFoundPage', () => {
 		expect(img.attributes('src')).toBe('/custom.svg')
 	})
 
-	it('passes a uniqueId prop to StatusPage', async () => {
+	it('uses a generated uniqueId', async () => {
 		const wrapper = mount(NotFoundPage)
 		await flushPromises()
 		await wrapper.vm.$nextTick()
 
-		const statusPage = wrapper.findComponent(StatusPage)
-		expect(statusPage.props('uniqueId')).toBeDefined()
+		expect(wrapper.find('.vd-page-container').attributes('id')).toMatch(/^[-a-z0-9]+-container$/)
 	})
 
 	it('passes a custom uniqueId prop to StatusPage', async () => {

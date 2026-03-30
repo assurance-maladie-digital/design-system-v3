@@ -12,3 +12,12 @@
 .v-radio .v-selection-control {
 	min-height: 40px;
 }
+
+// AP theme: inset the loader bar to match the larger field border-radius (12px)
+.theme-ap,
+.theme-ap2026 {
+	.v-field__loader .v-progress-linear {
+		margin-inline: 10px;
+		width: calc(100% - 20px);
+	}
+}

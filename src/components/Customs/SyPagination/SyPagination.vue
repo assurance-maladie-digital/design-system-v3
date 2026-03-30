@@ -384,8 +384,8 @@
 				display: inline-block;
 				padding: 0.5rem 0.75rem;
 				text-decoration: none;
-				color: tokens.$primary-base;
-				border: 1px solid tokens.$primary-base;
+				color: var(--pagination-color);
+				border: 1px solid var(--pagination-border);
 				border-radius: 4px;
 				transition: all 0.2s ease;
 				font-size: 0.875rem;
@@ -393,11 +393,11 @@
 
 				&:hover,
 				&:focus {
-					background-color: rgba(tokens.$primary-base, 0.1);
+					background-color: var(--pagination-focused-background-color);
 				}
 
 				&[aria-current='page'] {
-					background-color: tokens.$primary-base;
+					background-color: var(--pagination-background-color);
 					color: white;
 					font-weight: 500;
 				}
@@ -414,7 +414,7 @@
 					border: none;
 					pointer-events: none;
 					display: inline-block;
-					color: tokens.$primary-base;
+					color: var(--pagination-ellipsis);
 					padding: 0.6rem;
 				}
 			}

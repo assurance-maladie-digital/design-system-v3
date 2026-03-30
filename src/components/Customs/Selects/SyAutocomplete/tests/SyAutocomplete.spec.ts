@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { VMenu, VChip } from 'vuetify/components'
+import { VMenu } from 'vuetify/components'
 
 import SyAutocomplete from '../SyAutocomplete.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -128,13 +128,13 @@ describe('SyAutocomplete', () => {
 
 		// Some environments can emit a follow-up input event with the previous DOM value.
 		// Ensure it doesn't re-populate the query after selection.
-		textField.vm.$emit('update:modelValue', 'Option 1, Opt')
+		textField.vm.$emit('update:modelValue', 'Opt')
 		await flushPromises()
 		await wrapper.vm.$nextTick()
 
-		// Query should be cleared, leaving only selected label prefix in input
+		// Search and input should be cleared; selected items render as inline labels, not in input value
 		expect(wrapper.vm.search).toBe('')
-		expect(getInputEl()!.value).toBe('Option 1, ')
+		expect(getInputEl()!.value).toBe('')
 	})
 
 	it('displays chips in multiple mode', async () => {
@@ -150,12 +150,13 @@ describe('SyAutocomplete', () => {
 				textKey: 'text',
 				valueKey: 'value',
 			},
+			attachTo: document.body,
 		})
 
 		await wrapper.vm.$nextTick()
-		const chips = wrapper.findAllComponents(VChip)
+		const chips = wrapper.findAll('.v-chip')
 		expect(chips.length).toBe(1)
-		expect(chips[0]!.text()).toBe('Option 1')
+		expect(chips[0]!.text()).toContain('Option 1')
 	})
 
 	it('removes chip when close button is clicked', async () => {
@@ -171,14 +172,15 @@ describe('SyAutocomplete', () => {
 				textKey: 'text',
 				valueKey: 'value',
 			},
+			attachTo: document.body,
 		})
 
 		await wrapper.vm.$nextTick()
-		const chip = wrapper.findComponent(VChip)
-		await chip.vm.$emit('click:close')
+		const closeBtn = wrapper.find('.v-chip__close')
+		await closeBtn.trigger('click')
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[]])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([null])
 	})
 
 	it('shows clear button when clearable and has selection', async () => {
@@ -298,6 +300,181 @@ describe('SyAutocomplete', () => {
 		expect(isMenuOverlayActive()).toBe(false)
 	})
 
+	describe('selectionText', () => {
+		const selectionText = (selected: unknown[]) => `${selected.length} élément${selected.length > 1 ? 's' : ''} sélectionné${selected.length > 1 ? 's' : ''}`
+
+		it('displays custom text in prepend-inner when items are selected', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: ['1', '2'],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+
+			const selectionTextEl = wrapper.find('.sy-autocomplete__selection-text')
+			expect(selectionTextEl.exists()).toBe(true)
+			expect(selectionTextEl.text()).toBe('2 éléments sélectionnés')
+			expect(getInputEl()?.value).toBe('')
+		})
+
+		it('does not display selection text element when no items are selected', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: [],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText vide',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.find('.sy-autocomplete__selection-text').exists()).toBe(false)
+		})
+
+		it('keeps custom text visible when menu is open', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: ['1', '2'],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText ouvert',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			// Custom text still visible in prepend-inner, input empty for searching
+			expect(wrapper.find('.sy-autocomplete__selection-text').text()).toBe('2 éléments sélectionnés')
+			expect(getInputEl()?.value).toBe('')
+		})
+
+		it('updates custom text when selection changes', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: ['1'],
+					items,
+					multiple: true,
+					selectionText,
+					label: 'Test selectionText update',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.sy-autocomplete__selection-text').text()).toBe('1 élément sélectionné')
+
+			await wrapper.setProps({ modelValue: ['1', '2', '3'] })
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.sy-autocomplete__selection-text').text()).toBe('3 éléments sélectionnés')
+		})
+	})
+
+	describe('loading', () => {
+		it('shows progress bar when loading is true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test Loading',
+					textKey: 'text',
+					valueKey: 'value',
+					loading: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			const progressBar = wrapper.find('.v-progress-linear')
+			expect(progressBar.exists()).toBe(true)
+		})
+
+		it('does not show progress bar when loading is false', async () => {
+			await wrapper.vm.$nextTick()
+			const progressBar = wrapper.find('.v-progress-linear')
+			expect(progressBar.exists()).toBe(false)
+		})
+
+		it('hides no-data message while loading', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items: [],
+					label: 'Test Loading No Data',
+					textKey: 'text',
+					valueKey: 'value',
+					loading: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			// No-data item should not appear while loading
+			const noDataItem = document.body.querySelector(`#${menuId} .v-list-item`)
+			expect(noDataItem).toBeNull()
+		})
+
+		it('shows no-data message once loading is done and items is empty', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items: [],
+					label: 'Test Loading Done',
+					textKey: 'text',
+					valueKey: 'value',
+					loading: false,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			const listItems = document.body.querySelectorAll(`#${menuId} .v-list-item`)
+			const texts = Array.from(listItems).map(el => el.textContent?.trim())
+			expect(texts).toContain('Aucune option')
+		})
+	})
+
 	it('selects and deselects items in multiple mode (mouse + keyboard)', async () => {
 		wrapper.unmount()
 		wrapper = mount(SyAutocomplete, {
@@ -341,5 +518,53 @@ describe('SyAutocomplete', () => {
 		await wrapper.vm.$nextTick()
 		option0 = getOption(0)
 		expect(option0?.getAttribute('aria-selected')).toBe('false')
+	})
+
+	describe('hideDetails', () => {
+		it('hides the details zone when hideDetails is true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test hideDetails',
+					textKey: 'text',
+					valueKey: 'value',
+					hideDetails: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-input__details').exists()).toBe(false)
+		})
+
+		it('shows the details zone when hideDetails is false', async () => {
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-input__details').exists()).toBe(true)
+		})
+
+		it('does not show error messages when hideDetails is true even with validation errors', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test hideDetails + erreur',
+					textKey: 'text',
+					valueKey: 'value',
+					hideDetails: true,
+					hasError: true,
+					errorMessages: ['Erreur de validation'],
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-input__details').exists()).toBe(false)
+			expect(wrapper.find('.v-messages').exists()).toBe(false)
+		})
 	})
 })
