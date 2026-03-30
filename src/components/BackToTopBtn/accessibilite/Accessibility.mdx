@@ -1,15 +1,95 @@
 import { Meta, Story } from '@storybook/addon-docs';
 import * as Stories from '../BackToTopBtn.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
+<AccessibilityGuideLayout
+    componentName="BackToTopBtn"
+    iconSrc={AccessibilityIcon}
+    apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/button/"
+    apgLabel="WAI-ARIA Authoring Practices pour les boutons"
+>
 
 <div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/BackToTopBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4022" target="_blank" style={{color:'#0C41BD'}}>issue #4022</a>)</p>
+    <p>Rapport d'audit manuel : <a href="/audits/BackToTopBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4022" target="_blank" style={{color:'#0C41BD'}}>issue #4022</a>)</p>
 </div>
+
+    <CriteriaSection>
+        <CriteriaCard icon="⌨️" title="Navigation au clavier">
+            <ul>
+                <li><strong>Accessibilité native</strong> : Le bouton est un élément focusable via la touche Tab</li>
+                <li><strong>Activation clavier</strong> : Peut être activé avec les touches Entrée et Espace</li>
+                <li><strong>Focus visible</strong> : Indicateur de focus clair pour les utilisateurs du clavier</li>
+                <li><strong>Positionnement cohérent</strong> : Le bouton reste toujours accessible et n'interfère pas avec la navigation</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🔊" title="Lecteurs d'écran">
+            <ul>
+                <li><strong>Texte descriptif</strong> : Le bouton contient un texte clair indiquant sa fonction ("Retour en haut")</li>
+                <li><strong>Icône décorative</strong> : L'icône flèche est marquée comme décorative pour éviter la redondance</li>
+                <li><strong>Annonce sémantique</strong> : La fonction du bouton est clairement annoncée par les technologies d'assistance</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="📱" title="Adaptation responsive">
+            <ul>
+                <li><strong>Mode mobile</strong> : Le texte est masqué visuellement sur mobile (screen reader only)</li>
+                <li><strong>Taille minimale</strong> : Le bouton maintient une taille de 36px minimum sur mobile pour le toucher</li>
+                <li><strong>Positionnement optimisé</strong> : Le positionnement s'adapte aux différentes tailles d'écran</li>
+                <li><strong>Comportement cohérent</strong> : La fonctionnalité reste identique quel que soit l'appareil utilisé</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🎯" title="Critères RGAA respectés">
+            <ul>
+                <li><strong>Critère 7.1</strong> : Chaque script est compatible avec les technologies d'assistance</li>
+                <li><strong>Critère 7.3</strong> : Chaque script est contrôlable par le clavier et par tout dispositif de pointage</li>
+                <li><strong>Critère 11.2</strong> : Chaque conteneur d'informations possède une balise permettant de le rendre accessible</li>
+                <li><strong>Critère 12.4</strong> : Chaque texte est lisible lorsque la taille des caractères est modifiée</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
+
+    <DemoSection>
+        <p>
+            Explorez ci-dessous un exemple de BackToTopBtn entièrement accessible.
+            Essayez de modifier les propriétés pour voir comment le composant s'adapte.
+        </p>
+        <Story of={Stories.Default} />
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li><strong>Rendre les conteneurs accessibles</strong> : Ajouter <code>tabindex="0"</code> sur les conteneurs scrollables pour permettre l'accès au clavier</li>
+            <li><strong>Choisir le bon seuil</strong> : Utiliser un threshold raisonnable (100-200px) pour éviter que le bouton n'apparaisse trop tôt</li>
+            <li><strong>Positionnement cohérent</strong> : Maintenir une position cohérente du bouton pour ne pas dérouter les utilisateurs</li>
+            <li><strong>Texte clair et concis</strong> : Utiliser un texte descriptif mais court pour le bouton (ex: "Retour en haut", "Haut de page")</li>
+            <li><strong>Contraste suffisant</strong> : S'assurer que le bouton a un contraste suffisant avec l'arrière-plan dans tous les thèmes</li>
+            <li><strong>Ne pas surcharger</strong> : Éviter d'utiliser plusieurs boutons de retour en haut sur la même page</li>
+            <li><strong>Test mobile</strong> : Vérifier que le bouton reste facilement accessible sur les écrans tactiles</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/keyboard.html" target="_blank" rel="noopener noreferrer">WCAG 2.1 - Keyboard Accessibility</a> - Guide complet sur l'accessibilité au clavier</li>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener noreferrer">ARIA Authoring Practices - Button Pattern</a> - Bonnes pratiques pour les boutons accessibles</li>
+            <li><a href="https://rgaa_numerique.gitbook.io/rgaa-accessibilite/criteres-techniques/" target="_blank" rel="noopener noreferrer">Référentiel Général d'Amélioration de l'Accessibilité (RGAA)</a> - Critères techniques français</li>
+            <li><a href="https://web.dev/focus-visible/" target="_blank" rel="noopener noreferrer">Focus Visible Best Practices</a> - Guide sur les indicateurs de focus visibles</li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/focus-visible.html" target="_blank" rel="noopener noreferrer">WCAG Understanding Focus Visible</a> - Comprendre l'exigence de focus visible</li>
+        </ul>
+    </ResourcesSection>
+
+</AccessibilityGuideLayout>
