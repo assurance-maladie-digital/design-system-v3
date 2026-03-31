@@ -1,554 +1,616 @@
 {
-  "date": "2026-03-30T17:09:05.012Z",
+  "date": "2026-03-31T07:26:54.235Z",
   "compliantCount": 47,
-  "totalCount": 78,
-  "percentage": "60.26",
+  "totalCount": 76,
+  "percentage": "61.84",
   "results": [
-    {
-      "componentName": "AccessibilityProgressPage",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": false,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false
-    },
     {
       "componentName": "Accordion",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Données/Accordion"
     },
     {
       "componentName": "BackBtn",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Boutons/BackBtn"
     },
     {
       "componentName": "BackToTopBtn",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Boutons/BackToTopBtn"
     },
     {
       "componentName": "Captcha",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/Captcha"
     },
     {
       "componentName": "ChipList",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Incomplète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Données/ChipList"
     },
     {
       "componentName": "CollapsibleList",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Données/CollapsibleList"
     },
     {
       "componentName": "ContextualMenu",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Navigation/ContextualMenu"
     },
     {
       "componentName": "CookieBanner",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Feedback/CookieBanner"
     },
     {
       "componentName": "CookiesSelection",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Feedback/CookiesSelection"
     },
     {
       "componentName": "CopyBtn",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Boutons/CopyBtn"
     },
     {
       "componentName": "Customs/Selects/SelectBtnField",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField"
     },
     {
       "componentName": "Customs/Selects/SyAutocomplete",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete"
     },
     {
       "componentName": "Customs/Selects/SyInputSelect",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect"
     },
     {
       "componentName": "Customs/Selects/SySelect",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/Selects/SySelect"
     },
     {
       "componentName": "Customs/SyCheckbox",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/SyCheckbox"
     },
     {
       "componentName": "Customs/SyCheckBoxGroup",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup"
     },
     {
       "componentName": "Customs/SyForm",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/SyForm"
     },
     {
       "componentName": "Customs/SyIcon",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Données/SyIcon"
     },
     {
       "componentName": "Customs/SyIconButton",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Boutons/SyIconButton"
     },
     {
       "componentName": "Customs/SyPagination",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Navigation/SyPagination"
     },
     {
       "componentName": "Customs/SyRadioGroup",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/SyRadioGroup"
     },
     {
       "componentName": "Customs/SyTabs",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Navigation/SyTabs"
     },
     {
       "componentName": "Customs/SyTextField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/SyTextField"
     },
     {
       "componentName": "DataList",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Données/DataList"
     },
     {
       "componentName": "DataListGroup",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Données/DataListGroup"
     },
     {
       "componentName": "DataListItem",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Manquante",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": null
     },
     {
       "componentName": "DatePicker/CalendarMode",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Manquante",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode"
     },
     {
       "componentName": "DatePicker/ComplexDatePicker",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Manquante",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode"
     },
     {
       "componentName": "DatePicker/DateTextInput",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Manquante",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/DatePicker/DateInput/DateRange"
     },
     {
       "componentName": "DeclarationAccessibilityPage",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Templates/DeclarationAccessibilityPage"
     },
     {
       "componentName": "DiacriticPicker",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/DiacriticPicker"
     },
     {
       "componentName": "DialogBox",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Feedback/DialogBox"
     },
     {
       "componentName": "DownloadBtn",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Boutons/DownloadBtn"
     },
     {
       "componentName": "ErrorPage",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Templates/ErrorPage"
     },
     {
       "componentName": "ExternalLinks",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Incomplète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Navigation/ExternalLinks"
     },
     {
       "componentName": "FileList",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Données/FileList"
     },
     {
       "componentName": "FilePreview",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Données/FilePreview"
     },
     {
       "componentName": "FileUpload",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/FileUpload"
     },
     {
       "componentName": "FilterInline",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Filtres/FilterInline"
     },
     {
       "componentName": "FilterSideBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Filtres/FiltersSideBar"
     },
     {
       "componentName": "FooterBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Structure/FooterBar"
     },
     {
       "componentName": "FranceConnectBtn",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Boutons/FranceConnectBtn"
     },
     {
       "componentName": "HeaderBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "mdxStatus": "Incomplète",
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Structure/HeaderBar"
     },
     {
       "componentName": "HeaderLoading",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Structure/HeaderLoading"
     },
     {
       "componentName": "HeaderNavigationBar",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Manquante",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Structure/HeaderBar/HeaderNavigationBar"
     },
     {
       "componentName": "HeaderToolbar",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Incomplète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Structure/HeaderToolbar"
     },
     {
       "componentName": "LangBtn",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Incomplète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Boutons/LangBtn"
     },
     {
       "componentName": "Logo",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Données/Logo"
     },
     {
       "componentName": "LogoBrandSection",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Données/LogoBrandSection"
     },
     {
       "componentName": "LunarCalendar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/LunarCalendar"
     },
     {
       "componentName": "MaintenancePage",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Templates/MaintenancePage"
     },
     {
       "componentName": "MonthPicker",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/MonthPicker"
     },
     {
       "componentName": "NirField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Incomplète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/NirField"
     },
     {
       "componentName": "NotFoundPage",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Templates/NotFoundPage"
     },
     {
       "componentName": "NotificationBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Feedback/NotificationBar"
     },
     {
       "componentName": "PageContainer",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Layout/PageContainer"
     },
     {
       "componentName": "PaginatedTable",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Tableaux/PaginatedTable"
     },
     {
       "componentName": "PasswordField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/PasswordField"
     },
     {
       "componentName": "PeriodField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Formulaires/PeriodField"
     },
     {
       "componentName": "PhoneField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/PhoneField"
     },
     {
       "componentName": "RangeField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/RangeField"
     },
     {
       "componentName": "RatingPicker",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Incomplète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Feedback/RatingPicker"
     },
     {
       "componentName": "SearchListField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/SearchListField"
     },
     {
       "componentName": "SkipLink",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Navigation/SkipLink"
     },
     {
       "componentName": "SocialMediaLinks",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Navigation/SocialMediaLinks"
     },
     {
       "componentName": "StatusPage",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
-    },
-    {
-      "componentName": "stories",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": false,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false
+      "isFullyCompliant": true,
+      "storybookTitle": "Templates/StatusPage"
     },
     {
       "componentName": "SubHeader",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Structure/SubHeader"
     },
     {
       "componentName": "SyAlert",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Feedback/SyAlert"
     },
     {
       "componentName": "SyBtnMenu",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Navigation/SyBtnMenu"
     },
     {
       "componentName": "SyHeading",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Customs/SyHeading"
     },
     {
       "componentName": "SyTextArea",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/SyTextArea"
     },
     {
       "componentName": "Tables",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Tableaux/SyServerTable/Rules"
     },
     {
       "componentName": "TableToolbar",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Tableaux/TableToolbar"
     },
     {
       "componentName": "ToolbarContainer",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Layout/ToolbarContainer"
     },
     {
       "componentName": "UploadWorkflow",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Formulaires/UploadWorkflow"
     },
     {
       "componentName": "UserMenuBtn",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": true
+      "isFullyCompliant": true,
+      "storybookTitle": "Composants/Boutons/UserMenuBtn"
     }
   ]
 }
