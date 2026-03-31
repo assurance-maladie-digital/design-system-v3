@@ -12,8 +12,15 @@ jobs:
     if: contains(github.event.head_commit.message, '[update a11y report]')
     
     steps:
+      - name: Debug - Print commit message
+        run: |
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+          echo "Contains flag: ${{ contains(github.event.head_commit.message, '[update a11y report]') }}"
+      
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,10 +37,22 @@ jobs:
       - name: Generate A11y Status Report
         run: pnpm a11y:status
         
+      - name: Check for changes
+        id: verify-changed-files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Files have changed"
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No files changed"
+          fi
+        
       - name: Commit and Push changes
+        if: steps.verify-changed-files.outputs.changed == 'true'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add a11y-status-report.md src/stories/Accessibilite/DesignSystem/a11y-status.json
-          # Only commit if there are changes
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(a11y): auto-update accessibility status report [skip ci]" && git push)
+          git commit -m "chore(a11y): auto-update accessibility status report [skip ci]"
+          git push
