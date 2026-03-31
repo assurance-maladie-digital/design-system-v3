@@ -30,15 +30,23 @@ function analyzeComponent(componentName, componentPath) {
   const testFiles = findFilesRecursively(componentPath, /\.a11y\.(spec|test)\.ts$/);
   const hasA11yTests = testFiles.length > 0;
 
-  // 2. Check for a11y: { disable: true } in stories
+  // 2. Check for a11y: { disable: true } in stories and extract Storybook title
   const storyFiles = findFilesRecursively(componentPath, /\.stories\.ts$/);
   let hasA11yDisabledInStories = false;
+  let storybookTitle = null;
+  
   for (const storyFile of storyFiles) {
     const content = fs.readFileSync(storyFile, 'utf-8');
+    
+    // Extract Storybook title
+    const titleMatch = content.match(/title\s*:\s*['"`]([^'"`]+)['"`]/);
+    if (titleMatch && !storybookTitle) {
+      storybookTitle = titleMatch[1];
+    }
+    
     // Regex to match a11y: { disable: true } with possible whitespace/newlines
     if (/a11y\s*:\s*\{\s*[\s\S]*?disable\s*:\s*true[\s\S]*?\}/.test(content)) {
       hasA11yDisabledInStories = true;
-      break;
     }
   }
 
@@ -76,7 +84,8 @@ function analyzeComponent(componentName, componentPath) {
       hasA11yTests: true,
       hasA11yDisabledInStories: false,
       mdxStatus: 'Complète',
-      isFullyCompliant: true
+      isFullyCompliant: true,
+      storybookTitle: 'Composants/Customs/SyHeading'
     };
   }
 
@@ -87,7 +96,8 @@ function analyzeComponent(componentName, componentPath) {
       hasA11yTests: true,
       hasA11yDisabledInStories: false,
       mdxStatus: 'Complète',
-      isFullyCompliant: true
+      isFullyCompliant: true,
+      storybookTitle: 'Composants/Feedback/CookiesSelection'
     };
   }
 
@@ -96,7 +106,8 @@ function analyzeComponent(componentName, componentPath) {
     hasA11yTests,
     hasA11yDisabledInStories,
     mdxStatus,
-    isFullyCompliant
+    isFullyCompliant,
+    storybookTitle
   };
 }
 
