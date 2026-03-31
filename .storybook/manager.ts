@@ -63,12 +63,32 @@ const shouldShowApComponent = (item, itemId, theme) => {
         return
     }
 
-    if (isAp) {
-        if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
-            item.style.display = 'none'
-            return
-        }
+    if (itemId === 'guide-du-dev-correspondance-composants-pag--docs') {
+        item.style.display = isAp ? 'none' : 'block'
+        return
+    }
 
+    if (itemId === 'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs') {
+        item.style.display = isAp ? 'none' : 'block'
+        return
+    }
+
+    if (itemId === 'accessibilité-design-system-avancement--docs') {
+        item.style.display = isAp ? 'none' : 'block'
+        return
+    }
+
+    if (itemId === 'guide-du-dev-guide-technique-système-de-validation-règles--docs') {
+        item.style.display = isAp ? 'none' : 'block'
+        return
+    }
+
+    if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
+        item.style.display = isAp ? 'block' : 'none'
+        return
+    }
+
+    if (isAp) {
         const isComponentTree = itemId.startsWith('composants')
 
         if (!isComponentTree) {
@@ -93,8 +113,6 @@ const shouldShowApComponent = (item, itemId, theme) => {
         item.style.display = 'none'
         return
     }
-
-    item.style.display = ''
 }
 
 
@@ -104,7 +122,7 @@ const applyThemeSidebar = (theme) => {
 		const sidebar = document.querySelector('.sidebar-container')
 
         // First pass: identify if amelipro should be hidden
-        const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
+        const hideAmelipro = ['pa', 'cnam'].includes(theme)
         // When AP theme is active, only show Amelipro components
         const isAp2026 = theme === 'ap2026'
         const isNotAp = theme !== 'ap'
@@ -156,7 +174,6 @@ const applyThemeSidebar = (theme) => {
                 if (isAp2026) {
 					// Get item ID and text content
 					const itemId = item.getAttribute('data-item-id') || ''
-					const itemText = item.textContent || ''
 
 					// Check if this is a component folder (but not Amelipro)
 					const isComponentFolder = itemId.startsWith('composants-') && !isAmeliproFolder
@@ -215,6 +232,16 @@ const applyThemeSidebar = (theme) => {
                     item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
+                // Handle the "Correspondance composants Amelipro" page - display it when AP theme is active
+                if (itemId === 'guide-du-dev-correspondance-composants-pag--docs') {
+                    item.style.display = isAp ? 'none' : 'block'
+                    return
+                }
+
+                if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
+                    item.style.display = isAp ? 'block' : 'none'
+                    return
+                }
 				// Get item ID and text content once for all checks
 				const itemText = item.textContent || ''
 

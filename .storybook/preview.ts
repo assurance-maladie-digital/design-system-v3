@@ -161,6 +161,7 @@ const preview: Preview = {
 						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes'],
 						'Configuration du thème',
 						'Correspondance composants PAG',
+                        'Correspondance composants Amelipro',
 						'Règles De Validation',
 						'Utiliser les rules',
 						'Services',

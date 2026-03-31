@@ -197,12 +197,6 @@
 	}
 }
 
-.theme-ap {
-	a {
-		color: apTokens.$colors-text-accent-primary;
-	}
-}
-
 .theme-ap2026 {
 	a {
 		color: $ap-blue-darken1;
@@ -222,10 +216,7 @@
 	a {
 		font-size: $font-size-xs;
 
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+    }
 
 	[class*='text-'] {
 		font-family: Arial, Helvetica, sans-serif !important;
