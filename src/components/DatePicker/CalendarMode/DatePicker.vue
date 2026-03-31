@@ -4,7 +4,7 @@
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useValidation, type ValidationResult } from '@/composables/validation/useValidation'
+	import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
@@ -202,15 +202,11 @@
 	})
 
 	const validateField = (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		value: any,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		rules: any[] = [],
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		warningRules: any[] = [],
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		successRules: any[] = [],
-	): ValidationResult => {
+		value: unknown,
+		rules: ValidationRule[] = [],
+		warningRules: ValidationRule[] = [],
+		successRules: ValidationRule[] = [],
+	): Promise<ValidationResult> | ValidationResult => {
 		if (props.readonly) {
 			return {
 				hasError: false,
@@ -220,7 +216,7 @@
 			}
 		}
 
-		return baseValidateField(value, rules, warningRules, successRules) as ValidationResult
+		return baseValidateField(value, rules, warningRules, successRules)
 	}
 
 	const validateFieldForDateValidation = (
@@ -644,14 +640,14 @@
 		},
 	})
 
-	const validateOnSubmit = () => {
+	const validateOnSubmit = async () => {
 		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
 		if (props.noCalendar) {
-			return dateTextInputRef.value?.validateOnSubmit()
+			return await dateTextInputRef.value?.validateOnSubmit()
 		}
 		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
 		else if (props.useCombinedMode) {
-			return complexDatePickerRef.value?.validateOnSubmit()
+			return await complexDatePickerRef.value?.validateOnSubmit()
 		}
 		// Forcer la validation pour ignorer les conditions de validation interactive
 		validateDates(true)
