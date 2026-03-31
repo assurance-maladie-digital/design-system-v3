@@ -300,7 +300,6 @@
 	})
 
 	const validation = useValidation({
-		customRules: validationRules.value,
 		showSuccessMessages: true,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})

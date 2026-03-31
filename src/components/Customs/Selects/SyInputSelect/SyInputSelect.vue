@@ -50,7 +50,6 @@
 
 	// Initialisation du composable de validation
 	const validation = useValidation({
-		customRules: props.customRules,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})

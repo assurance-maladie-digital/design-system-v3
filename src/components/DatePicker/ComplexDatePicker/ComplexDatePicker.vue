@@ -237,8 +237,6 @@
 	const validation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: 'Date',
-		customRules: props.customRules,
-		warningRules: props.customWarningRules,
 		disableErrorHandling: props.disableErrorHandling,
 	})
 	const { errors, warnings, successes, validateField, clearValidation } = validation

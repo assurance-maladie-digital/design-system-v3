@@ -1713,7 +1713,7 @@ describe('useValidation (unifyValidation)', () => {
 							validate: async (v: unknown) => String(v).length >= 1,
 							message: 'Pas d\'erreur async',
 						},
-					}
+					},
 				]),
 			})
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))

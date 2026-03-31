@@ -83,9 +83,6 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		customRules: props.customRules,
-		warningRules: props.customWarningRules,
-		successRules: props.customSuccessRules,
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,

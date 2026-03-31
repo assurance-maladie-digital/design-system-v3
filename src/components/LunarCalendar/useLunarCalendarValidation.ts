@@ -20,7 +20,6 @@ export function useLunarCalendarValidation(
 	)
 
 	const validation = useValidation({
-		customRules: rules.value,
 		showSuccessMessages: successMessage !== undefined,
 		fieldIdentifier: toValue(label),
 	})
