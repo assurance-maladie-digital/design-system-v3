@@ -194,6 +194,31 @@ describe('SyServerTable', () => {
 		activeWrappers.push(wrapper)
 	})
 
+	it('makes selection column sticky when stickySelect is true', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5, page: 1 } as DataOptions,
+				serverItemsLength: 10,
+				suffix: 'sticky-select-test',
+				showSelect: true,
+				stickySelect: true,
+				pinnedColumns: [{ key: 'age', side: 'right' }],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.classes()).toContain('sy-server-table--pinned-select-left')
+
+		activeWrappers.push(wrapper)
+	})
+
 	it('stores the options in local storage', async () => {
 		const setItemMock = vi.spyOn(LocalStorageUtility.prototype, 'setItem')
 

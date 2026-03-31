@@ -413,6 +413,28 @@ describe('SyTable', () => {
 		expect(dataTable.props('showSelect')).toBe(false)
 	})
 
+	it('makes selection column sticky when stickySelect is true', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'sticky-select-test',
+				showSelect: true,
+				stickySelect: true,
+				pinnedColumns: [{ key: 'age', side: 'right' }],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		expect(wrapper.classes()).toContain('sy-table--pinned-select-left')
+	})
+
 	it('passes the correct item-value function to the data table', async () => {
 		const wrapper = mount(SyTable, {
 			props: {

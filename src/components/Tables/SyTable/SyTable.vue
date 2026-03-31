@@ -30,6 +30,7 @@
 		striped: false,
 		showSelect: false,
 		showSelectSingle: false,
+		stickySelect: false,
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
@@ -256,6 +257,9 @@
 			.map(c => c.key),
 	)
 
+	const stickySelectActive = computed(() => Boolean(props.stickySelect) && (props.showSelect || props.showSelectSingle))
+	const hasPinnedSelectLeft = computed(() => pinnedLeftKeys.value.includes('data-table-select') || stickySelectActive.value)
+
 	const getColumnWidthPx = (headersList: TableColumnHeader[], key: string): number => {
 		if (key === 'data-table-select' || key === 'data-table-expand' || key === 'data-table-group') return 48
 		const storedWidth = reactiveColumnWidths.value[key]
@@ -270,6 +274,10 @@
 
 		const left: Record<string, number> = {}
 		let accLeft = 0
+		if (hasPinnedSelectLeft.value) {
+			left['data-table-select'] = 0
+			accLeft = getColumnWidthPx(headersList as TableColumnHeader[], 'data-table-select')
+		}
 		for (const h of headersList) {
 			const key = (h.key ?? h.value) as string | undefined
 			if (!key) continue
@@ -402,6 +410,8 @@
 				'sy-table--striped': props.striped,
 				'sy-table--pinned-left-shadow': showPinnedLeftShadow,
 				'sy-table--pinned-right-shadow': showPinnedRightShadow,
+				'sy-table--pinned-select-left': hasPinnedSelectLeft,
+				'sy-table--select-single': props.showSelectSingle,
 			},
 		]"
 		:style="pinnedEdgeVars"
@@ -449,7 +459,14 @@
 							:key="column.key!"
 						>
 							<th
-								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
+								:class="[
+									{ 'checkbox-column': column.key === 'data-table-select' },
+									{
+										'sy-table__pinned': pinnedMeta.left[column.key!] !== undefined || pinnedMeta.right[column.key!] !== undefined,
+										'sy-table__pinned--left': pinnedMeta.left[column.key!] !== undefined,
+										'sy-table__pinned--right': pinnedMeta.right[column.key!] !== undefined,
+									},
+								]"
 								:style="{
 									...(getHeaderForColumnCompat(column)?.maxWidth ? { maxWidth: getHeaderForColumnCompat(column)?.maxWidth as any } : {}),
 									...(getHeaderForColumnCompat(column)?.minWidth ? { minWidth: getHeaderForColumnCompat(column)?.minWidth as any } : {}),
@@ -672,5 +689,42 @@
 .sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
 	box-shadow: -2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
 }
+
+.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
+	position: sticky;
+	left: 0;
+	z-index: 5;
+	background: var(--sy-table-header-bg-pinned);
+}
+
+.sy-table--select-single.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+/* stylelint-disable @stylistic/max-line-length */
+.sy-table--select-single.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > thead > tr > th:first-child) {
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > td:first-child),
+.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td:first-child),
+.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr > .v-data-table__td:first-child),
+.sy-table--pinned-select-left :deep(.v-data-table__tbody tr > td:first-child) {
+	position: sticky !important;
+	left: 0 !important;
+	z-index: 3;
+	background: rgb(var(--v-theme-surface)) !important;
+}
+
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > td:first-child),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td:first-child),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr > .v-data-table__td:first-child),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody tr > td:first-child) {
+	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+}
+/* stylelint-enable @stylistic/max-line-length */
 
 </style>

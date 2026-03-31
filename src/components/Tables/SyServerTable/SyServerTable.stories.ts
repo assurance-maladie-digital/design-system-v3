@@ -170,6 +170,17 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
+		'stickySelect': {
+			description: 'Rend la colonne de sélection (cases à cocher) sticky à gauche quand showSelect ou showSelectSingle est activé.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
 		'selectionKey': {
 			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
 			control: { type: 'text' },
@@ -4319,6 +4330,7 @@ export const PinnedColumns: Story = {
 							:items="items"
 							:server-items-length="serverItemsLength"
 							show-select
+							sticky-select
 							:pinned-columns="pinnedColumns"
 							suffix="server-pinned-columns"
 							@update:options="fetchData"
@@ -4350,8 +4362,6 @@ export const PinnedColumns: Story = {
 						{ title: 'Actions', key: 'actions', width: 140 },
 					])
 					const pinnedColumns = ref([
-						'data-table-select',
-						{ key: 'lastname', side: 'left' },
 						{ key: 'actions', side: 'right' },
 					])
 					const serverItemsLength = ref(30)
@@ -4408,9 +4418,8 @@ export const PinnedColumns: Story = {
 		'serverItemsLength': 30,
 		'suffix': 'server-pinned-columns',
 		'showSelect': true,
+		'stickySelect': true,
 		'pinnedColumns': [
-			'data-table-select',
-			{ key: 'lastname', side: 'left' },
 			{ key: 'actions', side: 'right' },
 		],
 		'onUpdate:options': fn(),

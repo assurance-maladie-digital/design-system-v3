@@ -95,6 +95,7 @@ export type SyTableProps = {
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
 	showSelectSingle?: boolean
+	stickySelect?: boolean
 	showExpand?: boolean
 	selectionKey?: string
 	multiSort?: boolean
@@ -120,6 +121,7 @@ export type SyServerTableProps = {
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
 	showSelectSingle?: boolean
+	stickySelect?: boolean
 	showExpand?: boolean
 	selectionKey?: string
 	multiSort?: boolean
