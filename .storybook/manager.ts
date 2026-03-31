@@ -40,7 +40,6 @@ const apComponents = [
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
-const theme = storedTheme || 'cnam'
 
 const isExactMatch = (itemId: string, stories: string[]) =>
     stories.includes(itemId)
