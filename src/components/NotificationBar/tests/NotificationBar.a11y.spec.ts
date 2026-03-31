@@ -41,6 +41,32 @@ describe('NotificationBar – accessibility (axe)', () => {
 		vi.restoreAllMocks()
 	})
 
+	it('has no obvious axe violations with default slot content', async () => {
+		const notification: Notification = {
+			id: '1',
+			message: 'Message original',
+			type: 'info',
+			timeout: -1,
+			icon: null,
+		}
+
+		useNotificationService().notificationQueue.value = [notification]
+
+		const wrapper = mount(NotificationBar, {
+			attachTo: document.body,
+			slots: {
+				default: '<span>Contenu personnalisé via slot default</span>',
+			},
+		})
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'NotificationBar – default slot content', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
+
 	it('has no obvious axe violations with visible info notification', async () => {
 		const notification: Notification = {
 			id: '1',

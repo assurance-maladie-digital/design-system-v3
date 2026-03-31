@@ -25,6 +25,47 @@ describe('ChipList – accessibility (axe)', () => {
 		},
 	]
 
+	it('has no obvious axe violations with overflow chip', async () => {
+		const overflowItems: ChipItem[] = [
+			{
+				text: 'Email',
+				value: 'email',
+				state: 'success' as ChipState,
+			},
+			{
+				text: 'SMS',
+				value: 'sms',
+				state: 'info' as ChipState,
+			},
+			{
+				text: 'Téléphone',
+				value: 'telephone',
+				state: 'warning' as ChipState,
+			},
+			{
+				text: 'Courrier',
+				value: 'courrier',
+				state: 'error' as ChipState,
+			},
+			{
+				text: 'Notification',
+				value: 'notification',
+			},
+		]
+
+		const wrapper = mount(ChipList, {
+			props: {
+				items: overflowItems,
+				overflowLimit: 3,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'ChipList – overflow chip', {
+			ignoreRules: ['region'],
+		})
+	})
+
 	it('has no obvious axe violations with default items', async () => {
 		const wrapper = mount(ChipList, {
 			props: {

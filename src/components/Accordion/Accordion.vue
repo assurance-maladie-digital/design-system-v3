@@ -2,7 +2,6 @@
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
 	import { mdiChevronRight } from '@mdi/js'
-
 	// Importation des composables
 	import useAccordionState from './composables/useAccordionState'
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
@@ -12,7 +11,7 @@
 	interface AccordionItem {
 		id: string
 		title: string
-		content: string | Record<string, unknown>
+		content?: string | { title: string, content: string }
 		headingLevel?: number
 		disabled?: boolean
 	}
@@ -38,6 +37,8 @@
 		vuetifyOptions: () => ({}),
 	})
 
+	const openItems = defineModel<string[]>({ default: () => [] })
+
 	const options = useCustomizableOptions(config, props)
 
 	// Génération d'un ID unique pour cette instance d'accordéon
@@ -49,7 +50,7 @@
 		isItemOpen,
 		isItemFocused,
 		setFocus,
-	} = useAccordionState()
+	} = useAccordionState(openItems)
 
 	// Utilisation du composable pour gérer la communication entre accordéons
 	const { emitFocusChange } = useAccordionGroupCommunication(
@@ -167,13 +168,13 @@
 								{{ item.content }}
 							</p>
 						</template>
-						<template v-else>
+						<template v-else-if="typeof item.content === 'object' && item.content !== null && 'title' in item.content && 'content' in item.content">
 							<div class="sy-accordion-content-item">
 								<p class="sy-accordion-content-text">
-									<strong>{{ (item.content as any).title }}</strong>
+									<strong>{{ item.content.title }}</strong>
 								</p>
 								<p class="sy-accordion-content-text">
-									{{ (item.content as any).content }}
+									{{ item.content.content }}
 								</p>
 							</div>
 						</template>

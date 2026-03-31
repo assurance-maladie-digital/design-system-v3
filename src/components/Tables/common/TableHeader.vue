@@ -217,7 +217,7 @@
 			<div
 				class="col-title"
 				:class="[textAlignClass, headerClassRaw]"
-				:style="[{ width: '100%' }, headerStyle]"
+				:style="headerStyle"
 			>
 				{{ column.title }}
 			</div>
@@ -266,6 +266,10 @@
 </template>
 
 <style lang="scss" scoped>
+.v-data-table-header__content {
+	column-gap: 4px;
+}
+
 .sort-order-indicator {
 	font-size: 0.75rem;
 	font-weight: bold;

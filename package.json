@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -18,7 +18,10 @@
       "require": "./dist/design-system-v3.umd.cjs"
     },
     "./style.css": "./dist/style.css",
-    "./*": "./src/*"
+    "./*": {
+      "types": "./src/*",
+      "default": "./src/*"
+    }
   },
   "scripts": {
     "dev": "vite",
@@ -31,6 +34,7 @@
     "test:unit": "vitest run --exclude='**/*.a11y.spec.ts'",
     "test:a11y": "pnpm vitest run a11y.spec.ts",
     "a11y:report": "node ./scripts/a11y-report.mjs",
+    "a11y:status": "node generate-a11y-report.mjs",
     "prepare": "husky",
     "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
   },
@@ -83,7 +87,7 @@
     "eslint-plugin-storybook": "^0.11.3",
     "eslint-plugin-vue": "^9.30.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
-    "happy-dom": "^20.0.0",
+    "happy-dom": "^20.8.8",
     "husky": "^9.1.6",
     "jsdom": "^27.3.0",
     "marked": "^16.0.0",
@@ -144,7 +148,9 @@
       "parse5": "7.1.2",
       "npm": "^11.8.1",
       "minimatch": ">=10.2.3",
-      "immutable": ">=5.1.5"
+      "immutable": ">=5.1.5",
+      "flatted": ">=3.4.2",
+      "handlebars": ">=4.7.9"
     },
     "patchedDependencies": {
       "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"

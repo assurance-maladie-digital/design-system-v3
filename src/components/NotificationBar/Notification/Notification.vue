@@ -74,7 +74,9 @@
 			decorative
 		/>
 
-		<span class="notification__message">{{ notification.message }}</span>
+		<span class="notification__message">
+			<slot :notification="props.notification">{{ notification.message }}</slot>
+		</span>
 		<div
 			class="d-flex ga-2 notification__actions"
 			:class="notification.message.length > 50 ? 'action-section-long-text' : 'action-section-short-text'"

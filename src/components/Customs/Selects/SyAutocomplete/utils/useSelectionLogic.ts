@@ -19,15 +19,9 @@ export function useSelectionLogic(
 	emit: EmitFunction,
 ) {
 	const resetValue = () => {
-		if (props.multiple) {
-			selected.value = []
-			emit('update:modelValue', [])
-		}
-		else {
-			selected.value = null
-			search.value = ''
-			emit('update:modelValue', null)
-		}
+		selected.value = null
+		search.value = ''
+		emit('update:modelValue', null)
 	}
 
 	const updateMultipleSelection = (valueKeyValue: string | number, valueToStore: ItemType | string | number) => {
@@ -44,7 +38,12 @@ export function useSelectionLogic(
 			arr.push(valueToStore)
 		}
 		selected.value = arr as SelectArray
-		emit('update:modelValue', arr as SelectArray)
+		if (arr.length === 0) {
+			emit('update:modelValue', null)
+		}
+		else {
+			emit('update:modelValue', arr as SelectArray)
+		}
 	}
 
 	const updateSingleSelection = (valueToStore: SelectValue, item: ItemType) => {

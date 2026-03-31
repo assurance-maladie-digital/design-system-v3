@@ -1,15 +1,73 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/blocks';
 import * as Stories from '../SyTextField.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/SyTextField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="SyTextField"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/textinput/"
+>
+	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/SyTextField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/935" target="_blank" style={{color:'#0C41BD'}}>issue #935</a>), (<a href="https://github.com/assurance-maladie-digital/design-system/issues/4028" target="_blank" style={{color:'#0C41BD'}}>issue #4028</a>)</p>
 	</div>
+
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique et attributs">
+			<ul>
+				<li><strong>Élément input natif</strong> : Utilisation de <code>&lt;input&gt;</code> via VTextField pour une sémantique correcte.</li>
+				<li><strong>Labels explicites</strong> : Gestion automatique du <code>aria-label</code> combinant label, préfixe et suffixe. L'attribut <code>aria-required</code> est ajouté si le champ est requis.</li>
+				<li><strong>Association avec les messages</strong> : Implémentation dynamique de <code>aria-describedby</code> pour lier le champ à ses messages d'erreur, d'avertissement ou de succès.</li>
+				<li><strong>Icônes décoratives</strong> : Les icônes de validation (erreur, avertissement, succès) sont masquées aux lecteurs d'écran (<code>role="presentation"</code>) pour éviter la redondance avec les messages textuels.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+			<ul>
+				<li><strong>Focus natif</strong> : Le champ est naturellement focusable via <kbd>Tab</kbd>.</li>
+				<li><strong>Boutons accessibles</strong> : Les icônes interactives (prepend/append) sont des boutons focusables avec des labels descriptifs et gèrent les événements <kbd>Entrée</kbd> et <kbd>Espace</kbd>.</li>
+				<li><strong>Bouton de vidage</strong> : Le bouton "clear" possède un <code>aria-label</code> descriptif ("Vider [label]") et est accessible au clavier.</li>
+				<li><strong>Indicateur de focus</strong> : Styles de focus visibles sur le champ et les icônes interactives.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Styles et états visuels">
+			<ul>
+				<li><strong>Contrastes garantis</strong> : Couleurs distinctes pour les états erreur (rouge), avertissement (orange) et succès (vert) respectant les critères WCAG.</li>
+				<li><strong>États cohérents</strong> : Changements visuels clairs entre les états normal, erreur, avertissement et succès.</li>
+				<li><strong>Astérisque optionnel</strong> : Possibilité d'afficher un astérisque visuel pour les champs requis via la prop <code>display-asterisk</code>.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SyTextField">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li><strong>Labels descriptifs</strong> : Utilisez toujours un <code>label</code> clair et concis. Évitez les placeholders comme seuls indicateurs de champ.</li>
+			<li><strong>Messages d'erreur utiles</strong> : Fournissez des messages d'erreur spécifiques qui aident l'utilisateur à corriger sa saisie.</li>
+			<li><strong>Validation appropriée</strong> : Utilisez la validation au blur (<code>isValidateOnBlur</code>) pour ne pas surcharger l'utilisateur pendant la saisie.</li>
+			<li><strong>Évitez les changements de contexte automatiques</strong> : Ne soumettez pas automatiquement le formulaire ou ne changez pas de page lors de la saisie.</li>
+			<li><strong>Préfixes et suffixes accessibles</strong> : Le composant ajoute automatiquement des spans screen-reader-only pour le contenu textuel des préfixes/suffixes.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/textinput/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Champs de texte</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.9" target="_blank" rel="noopener noreferrer">RGAA : Champs de formulaire</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

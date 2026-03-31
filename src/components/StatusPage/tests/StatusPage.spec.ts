@@ -50,4 +50,26 @@ describe('StatusPage', () => {
 		expect(link.attributes('href')).toBe('https://google.com')
 		expect(link.attributes('to')).toBeUndefined()
 	})
+
+	it('renders #action slot content', () => {
+		const wrapper = mount(StatusPage, {
+			props: { headingLevel: 1 },
+			slots: {
+				action: '<button>Retour à l\'accueil</button>',
+			},
+		})
+
+		expect(wrapper.html()).toContain('Retour à l\'accueil')
+	})
+
+	it('renders #additional-content slot content', () => {
+		const wrapper = mount(StatusPage, {
+			props: { headingLevel: 1 },
+			slots: {
+				'additional-content': '<p>Contenu additionnel</p>',
+			},
+		})
+
+		expect(wrapper.html()).toContain('Contenu additionnel')
+	})
 })

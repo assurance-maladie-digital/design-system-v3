@@ -70,11 +70,14 @@ export const useFormFieldErrorHandling = (
 
 	const validateField = async (value: unknown) => {
 		if (props.disableErrorHandling) {
+			validation.clearValidation()
 			return true
 		}
 
-		// Ne pas valider si la valeur est null/undefined et non requise
-		if (value == null && !props.required) {
+		const isEmptyArray = Array.isArray(value) && value.length === 0
+
+		// Ne pas valider si la valeur est vide et non requise
+		if ((value == null || isEmptyArray) && !props.required) {
 			validation.clearValidation()
 			return true
 		}
@@ -102,6 +105,12 @@ export const useFormFieldErrorHandling = (
 	watch(modelValue, (newValue) => {
 		if (!props.isValidateOnBlur) {
 			validateField(newValue)
+		}
+	})
+
+	watch(() => props.disableErrorHandling, (isDisabled) => {
+		if (isDisabled) {
+			validation.clearValidation()
 		}
 	})
 

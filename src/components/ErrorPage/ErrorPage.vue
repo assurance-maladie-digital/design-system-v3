@@ -15,7 +15,7 @@
 		btnHref?: string
 		btnLink?: RouteRecordRaw | string
 		hideBtn?: boolean
-		headingLevel: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 		uniqueId?: string
 		role?: PageAriaRole
 	}>()
@@ -40,6 +40,7 @@
 		:btn-link="props.btnLink"
 		:hide-btn="props.hideBtn"
 		:unique-id="props.uniqueId ?? undefined"
+		:heading-level="props.headingLevel"
 		:role="props.role"
 	>
 		<template
@@ -54,6 +55,20 @@
 					aria-hidden="true"
 				>
 			</slot>
+		</template>
+
+		<template
+			v-if="$slots.action"
+			#action
+		>
+			<slot name="action" />
+		</template>
+
+		<template
+			v-if="$slots['additional-content']"
+			#additional-content
+		>
+			<slot name="additional-content" />
 		</template>
 	</StatusPage>
 </template>

@@ -186,6 +186,66 @@ describe('NotificationBar.vue', () => {
 		expect(wrapper.html()).not.toContain('Test message 1')
 	})
 
+	it('should render default slot content instead of message', async () => {
+		const notification: Notification = {
+			id: '1',
+			message: 'Message original',
+			type: 'info',
+			timeout: -1,
+			icon: null,
+		}
+		notificationServiceMock.notificationQueue.value = [notification]
+
+		const wrapper = mount(NotificationBar, {
+			slots: {
+				default: '<span>Contenu personnalisé</span>',
+			},
+		})
+		vi.runAllTimers()
+		await nextTick()
+
+		expect(wrapper.html()).toContain('Contenu personnalisé')
+		expect(wrapper.html()).not.toContain('Message original')
+	})
+
+	it('should expose notification slotProp in default slot', async () => {
+		const notification: Notification = {
+			id: 'abc',
+			message: 'Message original',
+			type: 'info',
+			timeout: -1,
+			icon: null,
+		}
+		notificationServiceMock.notificationQueue.value = [notification]
+
+		const wrapper = mount(NotificationBar, {
+			slots: {
+				default: `<template #default="{ notification }"><span>id: {{ notification.id }}</span></template>`,
+			},
+		})
+		vi.runAllTimers()
+		await nextTick()
+
+		expect(wrapper.html()).toContain('id: abc')
+	})
+
+	it('should fall back to message when no default slot is provided', async () => {
+		const notification: Notification = {
+			id: '1',
+			message: 'Message fallback',
+			type: 'info',
+			timeout: -1,
+			icon: null,
+		}
+		notificationServiceMock.notificationQueue.value = [notification]
+
+		const wrapper = mount(NotificationBar)
+		vi.runAllTimers()
+		await nextTick()
+
+		expect(wrapper.html()).toContain('Message fallback')
+	})
+
 	it('should compute action', async () => {
 		const notification: Notification = {
 			id: '1',

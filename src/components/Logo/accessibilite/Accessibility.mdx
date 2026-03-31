@@ -1,17 +1,79 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../Logo.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Story } from '@storybook/blocks';
+import * as LogoStories from '../Logo.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={LogoStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="Logo"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+		<div>Rapport d'audit manuel : <a href="/audits/Logo.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></div>
+		<div style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+			Aucune correction nécessaire.
+		</div>
+	</AuditSection>
+	
+	<CriteriaSection>
+		<CriteriaCard icon="🏷️" title="Structure sémantique et rôles">
+			<ul>
+				<li><strong>Rôle image</strong> : Utilise <code>role="img"</code> sur l'élément SVG.</li>
+				<li><strong>Focus</strong> : <code>focusable="false"</code> pour éviter le focus sur le SVG.</li>
+				<li><strong>Labellisation</strong> : <code>aria-label</code> avec label calculé automatiquement ou personnalisé.</li>
+				<li><strong>Avatar</strong> : <code>aria-hidden="true"</code> quand <code>avatar=true</code>.</li>
+				<li><strong>Éléments décoratifs</strong> : <code>aria-hidden="true"</code> et <code>role="presentation"</code> sur les groupes de texte.</li>
+			</ul>
+		</CriteriaCard>
 
+		<CriteriaCard icon="📝" title="Gestion du label">
+			<ul>
+				<li><strong>Label personnalisé</strong> : Prop <code>ariaLabel</code> prioritaire sur le calcul automatique.</li>
+				<li><strong>Label avatar</strong> : Chaîne vide pour les avatars (illustration décorative).</li>
+				<li><strong>Label calculé</strong> : Construction dynamique avec organism, assurance maladie, signature selon les props.</li>
+				<li><strong>Risque pro</strong> : Label spécifique quand <code>risquePro=true</code>.</li>
+			</ul>
+		</CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/Logo.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Aucune correction nécéssaire.</p>
-	</div>
+		<CriteriaCard icon="🎨" title="Styles et adaptation">
+			<ul>
+				<li><strong>Couleur</strong> : Adaptation automatique avec <code>dark</code> (blanc/sombre).</li>
+				<li><strong>Dimensions</strong> : Mapping selon taille et mode avatar.</li>
+				<li><strong>ViewBox</strong> : Ajustement dynamique selon les éléments affichés.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
 
+	<DemoSection componentName="Logo">
+		<Story of={LogoStories.Default} />
+	</DemoSection>
 
+	<BestPracticesSection>
+		<ul>
+			<li>Utilisez <code>avatar=true</code> pour les logos décoratifs sans signification sémantique.</li>
+			<li>Fournissez un <code>ariaLabel</code> personnalisé pour les contextes spécifiques.</li>
+			<li>Adaptez la taille avec <code>size</code> selon le contexte d'utilisation.</li>
+			<li>Utilisez <code>dark=true</code> sur les fonds sombres pour maintenir le contraste.</li>
+			<li>Cachez la signature (<code>hideSignature</code>) dans les espaces contraints.</li>
+			<li>Cachez l'organisme (<code>hideOrganism</code>) si le contexte est déjà clair.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" rel="noopener noreferrer">WCAG : Contenu non textuel</a></li>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/img/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Images</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.2" target="_blank" rel="noopener noreferrer">RGAA : Images décoratives</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.3" target="_blank" rel="noopener noreferrer">RGAA : Images porteuses d'informations</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

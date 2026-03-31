@@ -1,15 +1,83 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../DataList.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as DataListStories from '../DataList.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={DataListStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+  componentName="DataList"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+>
+  <div class="mt-8">
+    <p>Rapport d'audit manuel : <a href="/audits/DataList.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4030" target="_blank" style={{color:'#0C41BD'}}>issue #4030</a>)</p>
+  </div>
 
+  <CriteriaSection>
+    <CriteriaCard icon="🔍" title="Structure sémantique des listes">
+      <ul>
+        <li><strong>Élément dl/dt/dd</strong> : Utilisation native des balises de liste de définitions pour une sémantique correcte</li>
+        <li><strong>Section avec titre</strong> : Conteneur <code>&lt;section&gt;</code> avec <code>aria-labelledby</code> lorsque <code>listTitle</code> est fourni</li>
+        <li><strong>Titre personnalisable</strong> : Tag de titre configurable (<code>titleTag</code>) avec ID unique pour l'association ARIA</li>
+      </ul>
+    </CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/DataList.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4030" target="_blank" style={{color:'#0C41BD'}}>issue #4030</a>)</p>
-	</div>
+    <CriteriaCard icon="⌨️" title="Navigation et interaction">
+      <ul>
+        <li><strong>Boutons d'action</strong> : Utilisation de <code>VBtn</code> natif pour les actions avec focus clavier correct</li>
+        <li><strong>Focus visible</strong> : Style <code>:focus-visible::after</code> pour une indication claire de navigation</li>
+        <li><strong>Événements accessibles</strong> : Émission d'événements <code>click:item-action</code> pour les interactions</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🎨" title="Icônes et éléments visuels">
+      <ul>
+        <li><strong>Icônes décoratives</strong> : Icônes avec <code>decorative="true"</code> pour masquer aux lecteurs d'écran</li>
+        <li><strong>Contrastes adaptatifs</strong> : Couleurs de label adaptées au thème clair/sombre</li>
+        <li><strong>Chips accessibles</strong> : Utilisation de <code>VChip</code> pour les valeurs avec contraste approprié</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="📱" title="Flexibilité et responsive">
+      <ul>
+        <li><strong>Layout adaptable</strong> : Mode <code>row</code> pour les affichages horizontaux avec flexbox</li>
+        <li><strong>Widthable</strong> : Gestion des dimensions via <code>useWidthable</code> pour le responsive</li>
+        <li><strong>Slots personnalisables</strong> : Slots <code>value</code>, <code>action</code>, <code>icon</code> pour une flexibilité maximale</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="DataList">
+    <Primary />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li><strong>Titres descriptifs</strong> : Utilisez toujours <code>listTitle</code> pour fournir un contexte aux listes importantes</li>
+      <li><strong>Labels clairs</strong> : Assurez-vous que les <code>key</code> (labels) sont concis et descriptifs</li>
+      <li><strong>Actions explicites</strong> : Utilisez des verbes d'action clairs pour les boutons ("Modifier", "Supprimer", "Voir")</li>
+      <li><strong>Ordre logique</strong> : Maintenez un ordre cohérent des paires label/valeur dans toute l'application</li>
+      <li><strong>Slots sécurisés</strong> : Préférez le slot <code>value</code> à <code>renderHtmlValue</code> pour le contenu HTML</li>
+      <li><strong>États de chargement</strong> : Utilisez <code>loading</code> avec <code>DataListLoading</code> pour les données asynchrones</li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Listbox</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.10" target="_blank" rel="noopener noreferrer">RGAA Critère 11.10 : Listes de définitions</a></li>
+      <li><a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/dl" target="_blank" rel="noopener noreferrer">MDN : Élément dl - Liste de définitions</a></li>
+    </ul>
+  </ResourcesSection>
+
+</AccessibilityGuideLayout>

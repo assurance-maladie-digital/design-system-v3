@@ -878,9 +878,6 @@ export const WithNirTooltip: Story = {
 		nirTooltipPosition: 'prepend',
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: `
@@ -929,9 +926,6 @@ export const WithKeyTooltip: Story = {
 		keyTooltipPosition: 'append',
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: `
@@ -1398,4 +1392,70 @@ const value = ref('')
 			},
 		],
 	},
+
+}
+
+export const ComplexNirType: Story = {
+	args: {
+		modelValue: '712125233333340',
+		required: false,
+		numberLabel: 'Numéro de sécurité sociale',
+		keyLabel: 'Clé',
+		displayKey: true,
+		nirType: 'complexe',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+		 <NirField
+		  v-model="value"
+		  :required="false"
+		  numberLabel="Numéro de sécurité sociale"
+		  keyLabel="Clé"
+		  :nirType="complexe"
+		  :displayKey="true"
+		 />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     	import { NirField } from '@cnamts/synapse'
+     	import { ref } from 'vue'
+     
+		const value = ref('184027512345674')
+
+		return { value }
+	</script>
+    `,
+			},
+		],
+	},
+	render: () => ({
+		components: { NirField },
+		setup() {
+			const value = ref('712125233333340')
+
+			return { value }
+		},
+		template: `
+          <div>
+            <p class="mt-2">Cet exemple montre l'utilisation d'un NIR de type complexe<br/>(commençant par 7).</p>
+			<p class="mb-4">Pour plus d'informations sur le NirType voir la <a href="/?path=/docs/composants-formulaires-nirfield--docs#ancre-nirtype">documentation</a>.</p>
+          </div>
+           <NirField
+				v-model="value"
+				:required="false"
+				numberLabel="Numéro de sécurité sociale"
+				keyLabel="Clé"
+				nirType="complexe"
+				:displayKey="true"
+			/>
+    `,
+	}),
 }

@@ -203,7 +203,7 @@
 
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
-		return model.value ? 'true' : undefined
+		return model.value ? 'true' : 'false'
 	})
 
 	const labelColor = computed(() => {
@@ -240,9 +240,17 @@
 	const removeAriaAttributes = () => {
 		nextTick(() => {
 			if (checkboxRef.value) {
-				const checkboxInput = checkboxRef.value.$el.querySelector('input[type="checkbox"][aria-disabled="false"]')
+				const checkboxInput = checkboxRef.value.$el?.querySelector('input[type="checkbox"]')
 				if (checkboxInput) {
-					checkboxInput.removeAttribute('aria-disabled')
+					// Supprimer aria-disabled="false" car il est redondant
+					if (checkboxInput.getAttribute('aria-disabled') === 'false') {
+						checkboxInput.removeAttribute('aria-disabled')
+					}
+					// Supprimer aria-checked natif de Vuetify pour éviter les conflits
+					// Notre composant gère aria-checked au niveau du wrapper VCheckbox
+					if (checkboxInput.hasAttribute('aria-checked')) {
+						checkboxInput.removeAttribute('aria-checked')
+					}
 				}
 			}
 		})

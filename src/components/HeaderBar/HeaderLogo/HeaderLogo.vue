@@ -17,7 +17,7 @@
 			to?: RouteLocationRaw
 			href?: string
 		}
-		headingLevelTitle: 1 | 2 | 3 | 4 | 5 | 6
+		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		ariaLabel: locales.ariaLabel,
 		serviceTitle: undefined,
@@ -25,6 +25,7 @@
 		homeLink: () => ({
 			href: '/',
 		}),
+		headingLevelTitle: 1,
 	})
 
 	defineSlots<{
