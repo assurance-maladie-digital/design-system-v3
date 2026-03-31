@@ -50,12 +50,16 @@ function analyzeComponent(componentName, componentPath) {
     }
   }
 
-  // 3. Check accessibilite.mdx completeness
-  const mdxFiles = findFilesRecursively(componentPath, /(accessibilit[eé]|accessibility)\.mdx$/i);
+  // 3. Check accessibilite.mdx completeness and manual audit
+  const mdxFiles = findFilesRecursively(componentPath, /(accessibilit[eé]|accessibility|Accessibility)\.mdx$/i);
   let mdxStatus = 'Manquante';
+  let hasManualAudit = false;
   
   if (mdxFiles.length > 0) {
     const mdxContent = fs.readFileSync(mdxFiles[0], 'utf-8');
+    
+    // Check for manual audit
+    hasManualAudit = /Rapport d.*audit.*manuel.*Voir le rapport/i.test(mdxContent);
     
     // Un fichier complet utilise généralement AccessibilityGuideLayout ou a un contenu substantiel (> 1000 chars)
     const hasGuideLayout = /AccessibilityGuideLayout/.test(mdxContent);
@@ -85,7 +89,8 @@ function analyzeComponent(componentName, componentPath) {
       hasA11yDisabledInStories: false,
       mdxStatus: 'Complète',
       isFullyCompliant: true,
-      storybookTitle: 'Composants/Customs/SyHeading'
+      storybookTitle: 'Composants/Customs/SyHeading',
+      hasManualAudit: false
     };
   }
 
@@ -97,7 +102,8 @@ function analyzeComponent(componentName, componentPath) {
       hasA11yDisabledInStories: false,
       mdxStatus: 'Complète',
       isFullyCompliant: true,
-      storybookTitle: 'Composants/Feedback/CookiesSelection'
+      storybookTitle: 'Composants/Feedback/CookiesSelection',
+      hasManualAudit: false
     };
   }
 
@@ -107,7 +113,8 @@ function analyzeComponent(componentName, componentPath) {
     hasA11yDisabledInStories,
     mdxStatus,
     isFullyCompliant,
-    storybookTitle
+    storybookTitle,
+    hasManualAudit
   };
 }
 
@@ -154,8 +161,8 @@ function generateReport() {
   let mdReport = '# État des lieux de l\'accessibilité des composants (hors AmeliPro)\n\n';
   mdReport += `Généré le: ${new Date().toLocaleDateString('fr-FR')}\n\n`;
 
-  mdReport += '| Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Conforme ✅ |\n';
-  mdReport += '|-----------|------------|---------------------------|--------------------|-------------|\n';
+  mdReport += '| Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |\n';
+  mdReport += '|-----------|------------|---------------------------|--------------------|--------------|-------------|\n';
 
   let compliantCount = 0;
 
@@ -171,7 +178,9 @@ function generateReport() {
     const compliantIcon = res.isFullyCompliant ? '✅' : '❌';
     if (res.isFullyCompliant) compliantCount++;
 
-    mdReport += `| **${res.componentName}** | ${testIcon} | ${disabledIcon} | ${mdxIcon} | ${compliantIcon} |\n`;
+    const auditIcon = res.hasManualAudit ? '✅ Oui' : '❌ Non';
+
+    mdReport += `| **${res.componentName}** | ${testIcon} | ${disabledIcon} | ${mdxIcon} | ${auditIcon} | ${compliantIcon} |\n`;
   }
 
   const percentage = ((compliantCount / results.length) * 100).toFixed(2);

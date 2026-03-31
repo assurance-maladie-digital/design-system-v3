@@ -3,7 +3,7 @@ import statusData from './a11y-status.json';
 import '../../styles/shared.css';
 import { useState } from 'react';
 
-<Meta title="Accessibilite/Design System/Avancement" />
+<Meta title="Accessibilité/Design System/Avancement2" />
 
 <style>
 {`
@@ -116,6 +116,11 @@ import { useState } from 'react';
 .tag-cyan {
   background-color: #9ef0f0;
   color: #161616;
+}
+
+.tag-gray {
+  background-color: #f4f4f4;
+  color: #525252;
 }
 
 /* Tooltip Styles */
@@ -257,7 +262,7 @@ import { useState } from 'react';
           <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
           <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
         </svg>
-        <span className="carbon-tooltip-content">Cet indicateur reflète l'état global d'avancement de la mise en accessibilité des composants du Design System.</span>
+        <span className="carbon-tooltip-content">Cet indicateur reflète l'état global d'avancement de la mise en accessibilité des composants du Design System. Le pourcentage de conformité se base sur les tests automatisés, la configuration des stories et la documentation complète. Les audits manuels sont affichés à titre informatif mais ne sont pas comptabilisés dans ce pourcentage.</span>
       </span>
     </h2>
     <div className="meta-info">
@@ -321,6 +326,18 @@ import { useState } from 'react';
                   <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
                 </svg>
                 <span className="carbon-tooltip-content">Vérifie la présence et la complétude de la page MDX guidant sur l'accessibilité de ce composant.</span>
+              </span>
+            </div>
+          </th>
+          <th>
+            <div className="th-content">
+              Audit Manuel
+              <span className="carbon-tooltip-container">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+                </svg>
+                <span className="carbon-tooltip-content">Indique si un rapport d'audit manuel a été réalisé pour ce composant.</span>
               </span>
             </div>
           </th>
@@ -411,6 +428,11 @@ import { useState } from 'react';
                     item.mdxStatus === 'Manquante' ? 'tag-red' : 'tag-blue'
                   }`}>
                     {item.mdxStatus}
+                  </span>
+                </td>
+                <td>
+                  <span className={`carbon-tag ${item.hasManualAudit ? 'tag-green' : 'tag-gray'}`}>
+                    {item.hasManualAudit ? 'Oui' : 'Non'}
                   </span>
                 </td>
               </tr>
