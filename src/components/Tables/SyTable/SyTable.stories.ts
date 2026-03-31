@@ -2775,6 +2775,66 @@ export const PinnedColumns: Story = {
 		a11y: {
 			disable: true,
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="max-width: 900px; overflow: auto;">
+						<SyTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							show-select
+							:pinned-columns="pinnedColumns"
+							suffix="pinned-columns-table"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					import dayjs from 'dayjs'
+				
+					const options = ref({ itemsPerPage: 5 })
+					const headers = ref([
+						{ title: 'ID', key: 'id', width: 80 },
+						{ title: 'Nom', key: 'lastname', width: 160 },
+						{ title: 'Prénom', key: 'firstname', width: 160 },
+						{ title: 'Email', key: 'email', width: 240 },
+						{ title: 'Ville', key: 'city', width: 160 },
+						{ title: 'Pays', key: 'country', width: 160 },
+						{ title: 'Téléphone', key: 'phone', width: 180 },
+						{ title: 'Statut', key: 'status', width: 140 },
+						{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+						{ title: 'Actions', key: 'actions', width: 140 },
+					])
+					const items = ref(Array.from({ length: 12 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					})))
+					const pinnedColumns = ref([
+						'data-table-select',
+						{ key: 'lastname', side: 'left' },
+						{ key: 'actions', side: 'right' },
+					])
+				</script>
+				`,
+			},
+		],
 	},
 	args: {
 		'headers': [
@@ -2791,9 +2851,9 @@ export const PinnedColumns: Story = {
 		],
 		'items': Array.from({ length: 12 }).map((_, i) => ({
 			id: i + 1,
-			lastname: `Nom ${i + 1}`,
-			firstname: `Prénom ${i + 1}`,
-			email: `user${i + 1}@example.com`,
+			lastname: 'Nom ' + (i + 1),
+			firstname: 'Prénom ' + (i + 1),
+			email: 'user' + (i + 1) + '@example.com',
 			city: 'Paris',
 			country: 'France',
 			phone: '01 02 03 04 05',
@@ -2820,7 +2880,7 @@ export const PinnedColumns: Story = {
 				return { args }
 			},
 			template: `
-				<div style="max-width: 900px; overflow: auto; border: 1px solid #e0e0e0;">
+				<div style="max-width: 900px; overflow: auto;">
 					<SyTable
 						v-model:options="args.options"
 						v-bind="args"

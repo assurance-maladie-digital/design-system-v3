@@ -1,8 +1,11 @@
+@use 'sass:color';
 @use '@/assets/tokens';
 
 @mixin tablestyles {
 	.v-table {
 		border: 1px solid tokens.$grey-lighten-80;
+
+		--sy-table-header-bg-pinned: #{color.mix(tokens.$blue-lighten-80, #fff, 20%)};
 	}
 
 	table thead tr {

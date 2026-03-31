@@ -105,6 +105,20 @@
 		itemsLength,
 	})
 
+	const tableWrapperEl = ref<HTMLElement | null>(null)
+	const showPinnedLeftShadow = ref(false)
+	const showPinnedRightShadow = ref(false)
+
+	const updatePinnedShadows = () => {
+		const el = tableWrapperEl.value
+		if (!el) return
+		const max = el.scrollWidth - el.clientWidth
+		const leftActive = pinnedMeta.value.totalLeft > 0
+		const rightActive = pinnedMeta.value.totalRight > 0
+		showPinnedLeftShadow.value = leftActive && el.scrollLeft > 0
+		showPinnedRightShadow.value = rightActive && max > 0 && el.scrollLeft < max - 1
+	}
+
 	// Defines a function to handle updating the data table options
 	function onUpdateOptions(newOptions: Partial<DataOptions>) {
 		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
@@ -187,6 +201,12 @@
 	onMounted(() => {
 		accessibilityRowCheckboxes()
 		setupAria()
+		nextTick(() => {
+			tableWrapperEl.value = (table.value?.$el as HTMLElement | undefined)?.querySelector('.v-table__wrapper') ?? null
+			updatePinnedShadows()
+			tableWrapperEl.value?.addEventListener('scroll', updatePinnedShadows, { passive: true })
+			window.addEventListener('resize', updatePinnedShadows)
+		})
 	})
 
 	// Clean up timeouts on unmount to prevent unhandled errors
@@ -195,6 +215,8 @@
 			clearTimeout(timeoutId)
 		})
 		timeouts.value = []
+		tableWrapperEl.value?.removeEventListener('scroll', updatePinnedShadows)
+		window.removeEventListener('resize', updatePinnedShadows)
 	})
 
 	// Create a reactive reference to column widths that will be provided to children
@@ -244,7 +266,7 @@
 
 	const pinnedMeta = computed(() => {
 		const headersList = displayHeaders.value
-		if (!headersList) return { left: {}, right: {} } as { left: Record<string, number>, right: Record<string, number> }
+		if (!headersList) return { left: {}, right: {}, totalLeft: 0, totalRight: 0 } as { left: Record<string, number>, right: Record<string, number>, totalLeft: number, totalRight: number }
 
 		const left: Record<string, number> = {}
 		let accLeft = 0
@@ -268,7 +290,15 @@
 			}
 		}
 
-		return { left, right }
+		return { left, right, totalLeft: accLeft, totalRight: accRight }
+	})
+
+	const pinnedEdgeVars = computed<Record<string, string>>(() => {
+		const { totalLeft, totalRight } = pinnedMeta.value
+		return {
+			...(totalLeft > 0 ? { '--sy-pinned-left-edge': `${totalLeft}px` } : {}),
+			...(totalRight > 0 ? { '--sy-pinned-right-edge': `${totalRight}px` } : {}),
+		}
 	})
 
 	const displayHeadersWithPinned = computed(() => {
@@ -297,13 +327,13 @@
 			const stickyStyle: Record<string, string | number> = {
 				position: 'sticky',
 				zIndex: 4,
-				background: 'inherit',
+				background: 'var(--sy-table-header-bg-pinned)',
 			}
 
 			const stickyCellStyle: Record<string, string | number> = {
 				position: 'sticky',
 				zIndex: 3,
-				background: 'inherit',
+				background: 'rgb(var(--v-theme-surface))',
 			}
 
 			const sideClass = left !== undefined ? 'sy-table__pinned--left' : 'sy-table__pinned--right'
@@ -366,7 +396,15 @@
 <template>
 	<div
 		:id="uniqueTableId"
-		:class="['sy-table', { 'sy-table--striped': props.striped }]"
+		:class="[
+			'sy-table',
+			{
+				'sy-table--striped': props.striped,
+				'sy-table--pinned-left-shadow': showPinnedLeftShadow,
+				'sy-table--pinned-right-shadow': showPinnedRightShadow,
+			},
+		]"
+		:style="pinnedEdgeVars"
 	>
 		<!-- ARIA status region for row count announcements -->
 		<div
@@ -417,10 +455,10 @@
 									...(getHeaderForColumnCompat(column)?.minWidth ? { minWidth: getHeaderForColumnCompat(column)?.minWidth as any } : {}),
 									...(getHeaderForColumnCompat(column)?.width ? { width: getHeaderForColumnCompat(column)?.width as any } : {}),
 									...(pinnedMeta.left[column.key!] !== undefined
-										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 5, background: 'inherit' }
+										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 5, background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
 									...(pinnedMeta.right[column.key!] !== undefined
-										? { position: 'sticky', right: `${pinnedMeta.right[column.key!] }px`, zIndex: 5, background: 'inherit' }
+										? { position: 'sticky', right: `${pinnedMeta.right[column.key!] }px`, zIndex: 5, background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
 								}"
 							>
@@ -624,7 +662,15 @@
 }
 
 .sy-table :deep(.sy-table__pinned) {
-	box-shadow: 1px 0 0 rgba(tokens.$grey-base, 0.2);
+	box-shadow: none;
+}
+
+.sy-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
+	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+}
+
+.sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
+	box-shadow: -2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
 }
 
 </style>

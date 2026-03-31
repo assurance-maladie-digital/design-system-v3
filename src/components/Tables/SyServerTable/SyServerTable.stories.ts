@@ -4307,6 +4307,86 @@ export const PinnedColumns: Story = {
 		a11y: {
 			disable: true,
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="max-width: 900px; overflow: auto;">
+						<SyServerTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							:server-items-length="serverItemsLength"
+							show-select
+							:pinned-columns="pinnedColumns"
+							suffix="server-pinned-columns"
+							@update:options="fetchData"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+					import dayjs from 'dayjs'
+				
+					const headers = ref([
+						{ title: 'ID', key: 'id', width: 80 },
+						{ title: 'Nom', key: 'lastname', width: 160 },
+						{ title: 'Prénom', key: 'firstname', width: 160 },
+						{ title: 'Email', key: 'email', width: 240 },
+						{ title: 'Ville', key: 'city', width: 160 },
+						{ title: 'Pays', key: 'country', width: 160 },
+						{ title: 'Téléphone', key: 'phone', width: 180 },
+						{ title: 'Statut', key: 'status', width: 140 },
+						{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+						{ title: 'Actions', key: 'actions', width: 140 },
+					])
+					const pinnedColumns = ref([
+						'data-table-select',
+						{ key: 'lastname', side: 'left' },
+						{ key: 'actions', side: 'right' },
+					])
+					const serverItemsLength = ref(30)
+					const items = ref<any[]>([])
+					const state = ref(StateEnum.IDLE)
+					const options = ref<DataOptions>({ itemsPerPage: 5, page: 1, sortBy: [] })
+				
+					const getAll = () => Array.from({ length: 30 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					}))
+				
+					const fetchData = async () => {
+						state.value = StateEnum.PENDING
+						await new Promise(r => setTimeout(r, 250))
+						const all = getAll()
+						const start = (options.value.page - 1) * options.value.itemsPerPage
+						items.value = all.slice(start, start + options.value.itemsPerPage)
+						serverItemsLength.value = all.length
+						state.value = StateEnum.RESOLVED
+					}
+				
+					watch(options, fetchData, { deep: true, immediate: true })
+				</script>
+				`,
+			},
+		],
 	},
 	args: {
 		'options': {
@@ -4347,9 +4427,9 @@ export const PinnedColumns: Story = {
 				const getUsers = (): Record<string, unknown>[] => {
 					return Array.from({ length: 30 }).map((_, i) => ({
 						id: i + 1,
-						lastname: `Nom ${i + 1}`,
-						firstname: `Prénom ${i + 1}`,
-						email: `user${i + 1}@example.com`,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
 						city: 'Paris',
 						country: 'France',
 						phone: '01 02 03 04 05',
@@ -4377,7 +4457,7 @@ export const PinnedColumns: Story = {
 				return { args, users, totalUsers, state, options, fetchData, StateEnum }
 			},
 			template: `
-				<div style="max-width: 900px; overflow: auto; border: 1px solid #e0e0e0;">
+				<div style="max-width: 900px; overflow: auto;">
 					<SyServerTable
 						v-model:options="options"
 						:items="users"
