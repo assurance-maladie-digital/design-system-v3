@@ -158,7 +158,7 @@ function generateReport() {
   // Sort alphabetically
   results.sort((a, b) => a.componentName.localeCompare(b.componentName));
 
-  let mdReport = '# État des lieux de l\'accessibilité des composants (hors AmeliPro)\n\n';
+  let mdReport = '# État des lieux de l\'accessibilité des composants\n\n';
   mdReport += `Généré le: ${new Date().toLocaleDateString('fr-FR')}\n\n`;
 
   mdReport += '| Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |\n';

@@ -1,4 +1,4 @@
-# État des lieux de l'accessibilité des composants (hors AmeliPro)
+# État des lieux de l'accessibilité des composants
 
 Généré le: 31/03/2026
 
