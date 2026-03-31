@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, onUnmounted, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -8,7 +8,7 @@
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, SyTableProps, TableColumnHeader } from '../common/types'
+	import type { DataOptions, SyTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
@@ -18,6 +18,8 @@
 	import { useTableAria } from '../common/useTableAria'
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import useStoredOptions from '../common/useStoredOptions'
+	import { usePinnedColumns } from '../common/usePinnedColumns'
+	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -60,7 +62,7 @@
 	const componentAttributes = useAttrs()
 
 	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
+	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substring(2, 11)}`)
 
 	const { storedOptions, storeOptions } = useStoredOptions({
 		key: computed(() => props.suffix ? `table-${props.suffix}` : 'table'),
@@ -87,10 +89,6 @@
 		filterInputConfig: props.filterInputConfig,
 	})
 
-	const getHeaderForColumnCompat = (column: unknown) => {
-		return getHeaderForColumn(column)
-	}
-
 	const { filteredItems } = useTableItems({
 		items: computed(() => props.items),
 		headers,
@@ -101,38 +99,11 @@
 
 	// Use the pagination composable
 	const itemsLength = computed(() => filteredItems.value.length)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, onUpdateOptions } = usePagination({
 		options,
 		itemsLength,
+		updateOptions,
 	})
-
-	const tableWrapperEl = ref<HTMLElement | null>(null)
-	const showPinnedLeftShadow = ref(false)
-	const showPinnedRightShadow = ref(false)
-
-	const updatePinnedShadows = () => {
-		const el = tableWrapperEl.value
-		if (!el) return
-		const max = el.scrollWidth - el.clientWidth
-		const leftActive = pinnedMeta.value.totalLeft > 0
-		const rightActive = pinnedMeta.value.totalRight > 0
-		showPinnedLeftShadow.value = leftActive && el.scrollLeft > 0
-		showPinnedRightShadow.value = rightActive && max > 0 && el.scrollLeft < max - 1
-	}
-
-	// Defines a function to handle updating the data table options
-	function onUpdateOptions(newOptions: Partial<DataOptions>) {
-		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
-			// Creates a copy of the received options
-			const rest = { ...newOptions }
-			delete (rest as Record<string, unknown>).itemsPerPage
-			// Updates the other options without modifying itemsPerPage
-			updateOptions(rest)
-			return
-		}
-		// In all other cases, simply updates the options with the new values
-		updateOptions(newOptions)
-	}
 
 	// Use the table checkbox composable
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
@@ -166,214 +137,38 @@
 	// Initialize generic accessibility adjustments (tabbable elements, etc.)
 	setupAccessibility()
 
-	// Timeout management for cleanup
-	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
-
-	// Function to add accessibility attributes to row checkboxes
-	const accessibilityRowCheckboxes = () => {
-		nextTick(() => {
-			const timeoutId = setTimeout(() => {
-				// Check if document is available (for test environment)
-				if (typeof document === 'undefined') return
-
-				const tableElement = document.getElementById(uniqueTableId.value)
-				if (!tableElement) return
-
-				// Find all row checkboxes
-				const rowCheckboxes = tableElement.querySelectorAll('td .v-selection-control input[type="checkbox"]')
-				rowCheckboxes.forEach((checkbox, index) => {
-					const rowLabel = `${locales.selectRow} ${index + 1}`
-					checkbox.setAttribute('aria-label', rowLabel)
-					checkbox.setAttribute('title', rowLabel)
-				})
-			}, 100) // Small delay to ensure DOM is updated
-
-			// Track timeout for cleanup
-			timeouts.value.push(timeoutId)
-		})
-	}
+	const { accessibilityRowCheckboxes } = useTableRowCheckboxAccessibility({
+		uniqueTableId: uniqueTableId.value,
+	})
 
 	// Watch for changes that might affect the table and update accessibility
 	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
 	watch(() => filteredItems.value, accessibilityRowCheckboxes)
 	watch(() => page.value, accessibilityRowCheckboxes)
 
-	// Apply accessibility attributes when component is mounted
 	onMounted(() => {
-		accessibilityRowCheckboxes()
 		setupAria()
-		nextTick(() => {
-			tableWrapperEl.value = (table.value?.$el as HTMLElement | undefined)?.querySelector('.v-table__wrapper') ?? null
-			updatePinnedShadows()
-			tableWrapperEl.value?.addEventListener('scroll', updatePinnedShadows, { passive: true })
-			window.addEventListener('resize', updatePinnedShadows)
-		})
-	})
-
-	// Clean up timeouts on unmount to prevent unhandled errors
-	onUnmounted(() => {
-		timeouts.value.forEach((timeoutId) => {
-			clearTimeout(timeoutId)
-		})
-		timeouts.value = []
-		tableWrapperEl.value?.removeEventListener('scroll', updatePinnedShadows)
-		window.removeEventListener('resize', updatePinnedShadows)
 	})
 
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
 
-	const parseWidthPx = (val: unknown): number => {
-		if (typeof val === 'number' && Number.isFinite(val)) return val
-		if (typeof val === 'string') {
-			const trimmed = val.trim()
-			if (trimmed.endsWith('px')) {
-				const n = Number.parseFloat(trimmed.slice(0, -2))
-				return Number.isFinite(n) ? n : 0
-			}
-			const n = Number.parseFloat(trimmed)
-			return Number.isFinite(n) ? n : 0
-		}
-		return 0
-	}
-
-	const normalizedPinnedColumns = computed(() => {
-		const raw = props.pinnedColumns ?? (props.pinnedColumnKey ? [props.pinnedColumnKey] : [])
-		return raw.map((c) => {
-			if (typeof c === 'string') return { key: c, side: 'left' as const }
-			return { key: c.key, side: c.side ?? 'left' as const }
-		})
-	})
-
-	const pinnedLeftKeys = computed(() =>
-		normalizedPinnedColumns.value
-			.filter(c => c.side !== 'right')
-			.map(c => c.key),
-	)
-
-	const pinnedRightKeys = computed(() =>
-		normalizedPinnedColumns.value
-			.filter(c => c.side === 'right')
-			.map(c => c.key),
-	)
-
-	const stickySelectActive = computed(() => Boolean(props.stickySelect) && (props.showSelect || props.showSelectSingle))
-	const hasPinnedSelectLeft = computed(() => pinnedLeftKeys.value.includes('data-table-select') || stickySelectActive.value)
-
-	const getColumnWidthPx = (headersList: TableColumnHeader[], key: string): number => {
-		if (key === 'data-table-select' || key === 'data-table-expand' || key === 'data-table-group') return 48
-		const storedWidth = reactiveColumnWidths.value[key]
-		if (storedWidth != null) return parseWidthPx(storedWidth)
-		const h = headersList.find(x => (x.key ?? x.value) === key)
-		return parseWidthPx(h?.width ?? h?.minWidth ?? h?.maxWidth)
-	}
-
-	const pinnedMeta = computed(() => {
-		const headersList = displayHeaders.value
-		if (!headersList) return { left: {}, right: {}, totalLeft: 0, totalRight: 0 } as { left: Record<string, number>, right: Record<string, number>, totalLeft: number, totalRight: number }
-
-		const left: Record<string, number> = {}
-		let accLeft = 0
-		if (hasPinnedSelectLeft.value) {
-			left['data-table-select'] = 0
-			accLeft = getColumnWidthPx(headersList as TableColumnHeader[], 'data-table-select')
-		}
-		for (const h of headersList) {
-			const key = (h.key ?? h.value) as string | undefined
-			if (!key) continue
-			if (pinnedLeftKeys.value.includes(key)) {
-				left[key] = accLeft
-				accLeft += getColumnWidthPx(headersList as TableColumnHeader[], key)
-			}
-		}
-
-		const right: Record<string, number> = {}
-		let accRight = 0
-		for (const h of [...headersList].reverse()) {
-			const key = (h.key ?? h.value) as string | undefined
-			if (!key) continue
-			if (pinnedRightKeys.value.includes(key)) {
-				right[key] = accRight
-				accRight += getColumnWidthPx(headersList as TableColumnHeader[], key)
-			}
-		}
-
-		return { left, right, totalLeft: accLeft, totalRight: accRight }
-	})
-
-	const pinnedEdgeVars = computed<Record<string, string>>(() => {
-		const { totalLeft, totalRight } = pinnedMeta.value
-		return {
-			...(totalLeft > 0 ? { '--sy-pinned-left-edge': `${totalLeft}px` } : {}),
-			...(totalRight > 0 ? { '--sy-pinned-right-edge': `${totalRight}px` } : {}),
-		}
-	})
-
-	const displayHeadersWithPinned = computed(() => {
-		const headersList = displayHeaders.value
-		if (!headersList) return headersList
-
-		const leftOffsets = pinnedMeta.value.left
-		const rightOffsets = pinnedMeta.value.right
-
-		if (Object.keys(leftOffsets).length === 0 && Object.keys(rightOffsets).length === 0) return headersList
-
-		return headersList.map((h) => {
-			const key = (h.key ?? h.value) as string | undefined
-			if (!key) return h
-
-			const left = leftOffsets[key]
-			const right = rightOffsets[key]
-			if (left === undefined && right === undefined) return h
-
-			const headerProps = (h.headerProps ?? {}) as Record<string, unknown>
-			const headerStyle = (headerProps.style ?? {}) as Record<string, string | number>
-
-			const cellProps = (h.cellProps ?? {}) as Record<string, unknown>
-			const cellStyle = (cellProps.style ?? {}) as Record<string, string | number>
-
-			const stickyStyle: Record<string, string | number> = {
-				position: 'sticky',
-				zIndex: 4,
-				background: 'var(--sy-table-header-bg-pinned)',
-			}
-
-			const stickyCellStyle: Record<string, string | number> = {
-				position: 'sticky',
-				zIndex: 3,
-				background: 'rgb(var(--v-theme-surface))',
-			}
-
-			const sideClass = left !== undefined ? 'sy-table__pinned--left' : 'sy-table__pinned--right'
-			if (left !== undefined) {
-				stickyStyle.left = `${left}px`
-				stickyCellStyle.left = `${left}px`
-			}
-			else if (right !== undefined) {
-				stickyStyle.right = `${right}px`
-				stickyCellStyle.right = `${right}px`
-			}
-
-			return {
-				...h,
-				headerProps: {
-					...headerProps,
-					class: ['sy-table__pinned', sideClass, headerProps.class].filter(Boolean),
-					style: {
-						...headerStyle,
-						...stickyStyle,
-					},
-				},
-				cellProps: {
-					...cellProps,
-					class: ['sy-table__pinned', sideClass, cellProps.class].filter(Boolean),
-					style: {
-						...cellStyle,
-						...stickyCellStyle,
-					},
-				},
-			}
-		})
+	const {
+		showPinnedLeftShadow,
+		showPinnedRightShadow,
+		hasPinnedSelectLeft,
+		pinnedMeta,
+		pinnedEdgeVars,
+		displayHeadersWithPinned,
+	} = usePinnedColumns({
+		displayHeaders,
+		reactiveColumnWidths,
+		pinnedColumns: toRef(props, 'pinnedColumns'),
+		pinnedColumnKey: toRef(props, 'pinnedColumnKey'),
+		stickySelect: toRef(props, 'stickySelect'),
+		showSelect: toRef(props, 'showSelect'),
+		showSelectSingle: toRef(props, 'showSelectSingle'),
+		tableRef: table,
 	})
 
 	// Provide column widths and update function to child components
@@ -468,9 +263,9 @@
 									},
 								]"
 								:style="{
-									...(getHeaderForColumnCompat(column)?.maxWidth ? { maxWidth: getHeaderForColumnCompat(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumnCompat(column)?.minWidth ? { minWidth: getHeaderForColumnCompat(column)?.minWidth as any } : {}),
-									...(getHeaderForColumnCompat(column)?.width ? { width: getHeaderForColumnCompat(column)?.width as any } : {}),
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
 									...(pinnedMeta.left[column.key!] !== undefined
 										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 5, background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
@@ -529,9 +324,9 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumnCompat(column)?.maxWidth ? { maxWidth: getHeaderForColumnCompat(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumnCompat(column)?.minWidth ? { minWidth: getHeaderForColumnCompat(column)?.minWidth as any } : {}),
-									...(getHeaderForColumnCompat(column)?.width ? { width: getHeaderForColumnCompat(column)?.width as any } : {}),
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
 								}"
 							>
 								<SyTableFilter

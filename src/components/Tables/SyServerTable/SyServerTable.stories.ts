@@ -4980,7 +4980,7 @@ export const PinnedColumns: Story = {
 				
 					const fetchData = async () => {
 						state.value = StateEnum.PENDING
-						await new Promise(r => setTimeout(r, 250))
+						await new Promise(r => setTimeout(r, 1000))
 						const all = getAll()
 						const start = (options.value.page - 1) * options.value.itemsPerPage
 						items.value = all.slice(start, start + options.value.itemsPerPage)
@@ -5024,6 +5024,9 @@ export const PinnedColumns: Story = {
 		return {
 			components: { SyServerTable },
 			setup() {
+				const argsWithoutOptions = Object.fromEntries(
+					Object.entries(args as Record<string, unknown>).filter(([k]) => k !== 'options'),
+				)
 				const users = ref<Record<string, unknown>[]>([])
 				const totalUsers = ref(args.serverItemsLength)
 				const state = ref(StateEnum.IDLE)
@@ -5046,7 +5049,7 @@ export const PinnedColumns: Story = {
 
 				const fetchData = async (): Promise<void> => {
 					state.value = StateEnum.PENDING
-					await new Promise(resolve => setTimeout(resolve, 250))
+					await new Promise(resolve => setTimeout(resolve, 1000))
 					const all = getUsers()
 					const start = ((options.value.page ?? 1) - 1) * (options.value.itemsPerPage ?? 5)
 					const end = start + (options.value.itemsPerPage ?? 5)
@@ -5055,11 +5058,14 @@ export const PinnedColumns: Story = {
 					state.value = StateEnum.RESOLVED
 				}
 
-				watch(options, () => {
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
 					fetchData()
 				}, { deep: true, immediate: true })
 
-				return { args, users, totalUsers, state, options, fetchData, StateEnum }
+				return { args: argsWithoutOptions, users, totalUsers, state, options, fetchData, StateEnum }
 			},
 			template: `
 				<div style="max-width: 900px; overflow: auto;">

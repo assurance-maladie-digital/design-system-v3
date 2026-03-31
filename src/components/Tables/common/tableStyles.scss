@@ -84,4 +84,17 @@
 	.v-data-table-rows-no-data {
 		color: tokens.$grey-base;
 	}
+
+	// Ensure loading progress bar appears above sticky/pinned header cells (z-index: 5)
+	.v-data-table__progress {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+	}
+
+	.v-data-table__progress th,
+	.v-data-table__progress td {
+		position: relative;
+		z-index: 10;
+	}
 }
