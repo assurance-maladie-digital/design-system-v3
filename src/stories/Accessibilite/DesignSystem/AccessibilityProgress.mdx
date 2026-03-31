@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/addon-docs';
 import statusData from './a11y-status.json';
+import '../../styles/shared.css';
 
 <Meta title="Accessibilite/Design System/Avancement" />
 
@@ -22,7 +23,7 @@ import statusData from './a11y-status.json';
   font-size: 1.75rem;
   font-weight: 400;
   margin-bottom: 1rem;
-  color: #161616;
+  color: #0C419A;
   line-height: 1.2;
   display: flex;
   align-items: center;
@@ -68,10 +69,15 @@ import statusData from './a11y-status.json';
 
 .component-name {
   font-weight: 400;
+  color: #0C419A !important;
+}
+
+.css-ajfpqr {
+  color: #0C419A !important;
 }
 
 .carbon-link {
-  color: #0f62fe;
+  color: #0C419A;
   text-decoration: none;
 }
 
@@ -170,10 +176,10 @@ import statusData from './a11y-status.json';
 `}
 </style>
 
-# État d'avancement de l'accessibilité du Design System
-
-Cette page présente l'état d'avancement de la mise en accessibilité des composants du Design System (hors AmeliPro). 
-Les données présentées ici sont générées automatiquement à chaque mise à jour du script d'audit d'accessibilité.
+<div className="header">
+  <h1>Avancement de l'accessibilité</h1>
+  <p>Cette page présente l'état d'avancement de la mise en accessibilité des composants du Design System (hors AmeliPro). Les données présentées ici sont générées automatiquement à chaque mise à jour du script d'audit d'accessibilité.</p>
+</div>
 
 <div className="carbon-a11y-container">
   <div className="header-section">
@@ -306,7 +312,7 @@ Les données présentées ici sont générées automatiquement à chaque mise à
                 </td>
                 <td>
                   <span className={`carbon-tag ${item.hasA11yDisabledInStories ? 'tag-red' : 'tag-green'}`}>
-                    {item.hasA11yDisabledInStories ? 'Absent' : 'Présent'}
+                    {item.hasA11yDisabledInStories ? 'Absente' : 'Présente'}
                   </span>
                 </td>
                 <td>

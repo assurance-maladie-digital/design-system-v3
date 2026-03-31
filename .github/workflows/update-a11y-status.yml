@@ -2,14 +2,14 @@ name: Update Accessibility Status Report
 
 on:
   push:
-    paths:
-      - 'generate-a11y-report.mjs'
     branches:
       - '**'
+  workflow_dispatch:  # Permet le déclenchement manuel
 
 jobs:
   update-a11y-status:
     runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[update a11y report]')
     
     steps:
       - name: Checkout repository
