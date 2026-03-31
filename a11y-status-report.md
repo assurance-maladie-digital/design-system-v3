@@ -1,10 +1,9 @@
 # État des lieux de l'accessibilité des composants (hors AmeliPro)
 
-Généré le: 30/03/2026
+Généré le: 31/03/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|-------------|
-| **AccessibilityProgressPage** | ❌ Non | ✅ Non | ❌ Manquante | ❌ |
 | **Accordion** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ |
 | **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
@@ -47,7 +46,7 @@ Généré le: 30/03/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **HeaderNavigationBar** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ |
 | **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ❌ |
@@ -71,7 +70,6 @@ Généré le: 30/03/2026
 | **SkipLink** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SocialMediaLinks** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **StatusPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
-| **stories** | ❌ Non | ✅ Non | ❌ Manquante | ❌ |
 | **SubHeader** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ |
 | **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **SyBtnMenu** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ |
@@ -83,4 +81,4 @@ Généré le: 30/03/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ |
 
-**Total des composants conformes : 47 / 78 (60.26%)**
+**Total des composants conformes : 47 / 76 (61.84%)**
