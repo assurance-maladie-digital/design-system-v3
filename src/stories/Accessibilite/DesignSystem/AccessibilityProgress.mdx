@@ -152,7 +152,7 @@ import { useState } from 'react';
   visibility: hidden;
   opacity: 0;
   width: max-content;
-  max-width: 250px;
+  max-width: 350px;
   background-color: #393939;
   color: #ffffff;
   text-align: left;
@@ -161,8 +161,8 @@ import { useState } from 'react';
   position: absolute;
   z-index: 9999;
   top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
+  transform: translateX(0);
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.4;
@@ -175,8 +175,8 @@ import { useState } from 'react';
   content: "";
   position: absolute;
   bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
+  right: 10px;
+  margin-right: -5px;
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent #393939 transparent;
@@ -244,8 +244,18 @@ import { useState } from 'react';
 {(() => {
   const [searchTerm, setSearchTerm] = useState('');
   
-  const filteredComponents = statusData.results
-    .filter(item => item.componentName !== 'AccessibilityProgressPage')
+  // Exclure les composants non pertinents des statistiques
+  const validComponents = statusData.results.filter(item => 
+    item.componentName !== 'AccessibilityProgressPage' && 
+    item.componentName !== 'stories' && 
+    item.componentName !== 'Tables'
+  );
+  
+  const compliantCount = validComponents.filter(item => item.isFullyCompliant).length;
+  const totalCount = validComponents.length;
+  const percentage = totalCount > 0 ? ((compliantCount / totalCount) * 100).toFixed(2) : '0.00';
+  
+  const filteredComponents = validComponents
     .filter(item => 
       searchTerm === '' || 
       item.componentName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -265,7 +275,7 @@ import { useState } from 'react';
       </span>
     </h2>
     <div className="meta-info">
-      <strong>Statut :</strong> {statusData.compliantCount} / {statusData.totalCount} composants conformes ({statusData.percentage}%) | <strong>Dernière mise à jour :</strong> {new Date(statusData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+      <strong>Statut :</strong> {compliantCount} / {totalCount} composants conformes ({percentage}%) | <strong>Dernière mise à jour :</strong> {new Date(statusData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
     </div>
   </div>
 
@@ -300,7 +310,7 @@ import { useState } from 'react';
                   <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
                   <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
                 </svg>
-                <span className="carbon-tooltip-content">Indique si des tests automatisés d'accessibilité (vitest-axe) sont implémentés et fonctionnels.</span>
+                <span className="carbon-tooltip-content">Indique si des tests d'accessibilité (vitest-axe) sont implémentés et fonctionnels pour la CI.</span>
               </span>
             </div>
           </th>
@@ -312,7 +322,7 @@ import { useState } from 'react';
                   <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
                   <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
                 </svg>
-                <span className="carbon-tooltip-content">Indique si les règles d'accessibilité sont activées ou ont été désactivées (a11y: disable) dans Storybook.</span>
+                <span className="carbon-tooltip-content">Tests d'accessibilité en temps réel avec Storybook.</span>
               </span>
             </div>
           </th>
@@ -409,7 +419,7 @@ import { useState } from 'react';
             return (
               <tr key={item.componentName}>
                 <td className="component-name">
-                  <a href="#" className="carbon-link">{item.componentName}</a>
+                  <a href="#" className="carbon-link">{item.componentName.split('/').pop()}</a>
                 </td>
                 <td>
                   <span className={`carbon-tag ${item.hasA11yTests ? 'tag-green' : 'tag-red'}`}>
