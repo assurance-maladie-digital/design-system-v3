@@ -1,12 +1,88 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../LogoBrandSection.stories.ts';
-import '@/stories/styles/shared.css';
+import { Meta, Story } from '@storybook/blocks';
+import * as LogoBrandSectionStories from '../LogoBrandSection.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={LogoBrandSectionStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="LogoBrandSection"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+		<div>Rapport d'audit manuel : <a href="/audits/LogoBrandSection.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></div>
+		<div style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+			Aucune correction nécessaire.
+		</div>
+	</AuditSection>
+	
+	<CriteriaSection>
+		<CriteriaCard icon="🔗" title="Liens et navigation">
+			<ul>
+				<li><strong>Composant dynamique</strong> : Détecte automatiquement <code>router-link</code>, <code>&lt;a&gt;</code> ou <code>&lt;div&gt;</code> selon <code>homeLink</code>.</li>
+				<li><strong>Label du lien principal</strong> : <code>ariaLabel</code> concaténé avec " Retour vers accueil du site".</li>
+				<li><strong>Label du logo secondaire</strong> : Calculé avec <code>homeLinkPrefix</code> et <code>alt</code> du logo.</li>
+				<li><strong>Lien secondaire</strong> : Uniquement pour les thèmes <code>ameli-pro</code> et <code>ameli</code>.</li>
+			</ul>
+		</CriteriaCard>
 
-<br />
+		<CriteriaCard icon="📝" title="Structure sémantique et titres">
+			<ul>
+				<li><strong>Titre principal</strong> : Utilise <code>SyHeading</code> avec <code>headingLevelTitle</code> (1-6).</li>
+				<li><strong>Sous-titre</strong> : Utilise <code>SyHeading</code> avec <code>headingLevelSubtitle</code> (1-4).</li>
+				<li><strong>Contenu conditionnel</strong> : Affichage du sous-titre uniquement si titre présent et non-mobile.</li>
+				<li><strong>Texte structuré</strong> : Support des titres avec <code>text</code> et <code>highlight</code>.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Éléments décoratifs et styles">
+			<ul>
+				<li><strong>Séparateur SVG</strong> : <code>focusable="false"</code> et <code>aria-hidden="true"</code>.</li>
+				<li><strong>Couleur du séparateur</strong> : Adaptée selon le thème (secondaire, primaire, #cd545b).</li>
+				<li><strong>Dimensions adaptatives</strong> : Responsive selon <code>mobileVersion</code> et présence logo secondaire.</li>
+				<li><strong>Logo principal</strong> : Props transmises au composant Logo (avatar, taille, signature).</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🖼️" title="Images et logos secondaires">
+			<ul>
+				<li><strong>Logo secondaire</strong> : Balise <code>&lt;img&gt;</code> avec attribut <code>alt</code> descriptif.</li>
+				<li><strong>Mapping des thèmes</strong> : Association automatique du logo selon <code>secondaryLogoMapping</code>.</li>
+				<li><strong>Avatar conditionnel</strong> : Mode avatar si <code>reduceLogo</code> et logo secondaire présent.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="LogoBrandSection">
+		<Story of={LogoBrandSectionStories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournissez toujours un <code>homeLink.ariaLabel</code> descriptif pour le lien vers l'accueil.</li>
+			<li>Choisissez des niveaux de titres cohérents avec la hiérarchie de votre page.</li>
+			<li>Utilisez <code>mobileVersion</code> pour adapter l'affichage sur petits écrans.</li>
+			<li>Activez <code>reduceLogo</code> dans les espaces contraints ou avec logo secondaire.</li>
+			<li>Vérifiez que les <code>serviceTitle</code> et <code>serviceSubTitle</code> sont pertinents pour le contexte.</li>
+			<li>Testez les différents thèmes pour vous assurer que les contrastes sont maintenus.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" rel="noopener noreferrer">WCAG : Contenu non textuel</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/headings-and-labels.html" target="_blank" rel="noopener noreferrer">WCAG : Titres et étiquettes</a></li>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/link/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Liens</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#9.1" target="_blank" rel="noopener noreferrer">RGAA : Structuration de l'information</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#12.6" target="_blank" rel="noopener noreferrer">RGAA : Liens</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

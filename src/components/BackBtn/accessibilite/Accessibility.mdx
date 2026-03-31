@@ -1,15 +1,67 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/blocks';
 import * as Stories from '../BackBtn.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={Stories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/BackBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="BackBtn"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/button/"
+>
+	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/BackBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4006" target="_blank" style={{color:'#0C41BD'}}>issue #4006</a>)</p>
-</div>
+	</div>
+
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique et attributs">
+			<ul>
+				<li><strong>Rôle natif</strong> : Utilisation de l'élément <code>&lt;button&gt;</code> natif (via <code>VBtn</code>) pour un comportement sémantique correct par défaut.</li>
+				<li><strong>Icône décorative</strong> : L'icône de retour (si présente) est masquée aux lecteurs d'écran (<code>decorative=true</code>) pour éviter la redondance d'information avec le texte du bouton.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+			<ul>
+				<li><strong>Focus natif</strong> : Le bouton est focusable via la touche <kbd>Tab</kbd> de manière naturelle.</li>
+				<li><strong>Activation</strong> : Le bouton peut être activé avec les touches <kbd>Entrée</kbd> ou <kbd>Espace</kbd>.</li>
+				<li><strong>Indicateur de focus</strong> : Un style de focus clair et visible (<code>:focus-visible</code>) est implémenté pour garantir que les utilisateurs naviguant au clavier savent quel élément est actif.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Styles et contrastes">
+			<ul>
+				<li><strong>Contrastes garantis</strong> : Couleurs de texte adaptées ("primary" ou "white") selon le thème clair ou sombre (<code>dark</code>) pour répondre aux critères WCAG de contraste.</li>
+				<li><strong>États distincts</strong> : Apparence distincte entre le mode clair (bouton texte) et sombre (bouton contour) tout en maintenant l'accessibilité visuelle.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="BackBtn">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li><strong>Texte descriptif</strong> : Assurez-vous que le texte du bouton explique clairement l'action (par ex. "Retour à la page précédente" plutôt que juste "Retour") si le contexte n'est pas explicite.</li>
+			<li><strong>Cohérence de placement</strong> : Placez le bouton de retour à un endroit prévisible et constant sur vos différentes pages (généralement en haut à gauche).</li>
+			<li>Ne surchargez pas le bouton avec des attributs <code>aria-label</code> si le texte affiché à l'écran est déjà suffisamment clair.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Boutons</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.1" target="_blank" rel="noopener noreferrer">RGAA : Formulaires et boutons</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

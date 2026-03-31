@@ -1,12 +1,82 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as SyAlertStorie from '../SyAlert.stories';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as SyAlertStories from '../SyAlert.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={SyAlertStorie} />
+<Meta of={SyAlertStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="SyAlert"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/alert/"
+>
+	<div class="mt-8">
+		<p>Rapport d'audit manuel : <a href="/audits/SyAlert.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4010" target="_blank" style={{color:'#0C41BD'}}>issue #4010</a>)</p>
+	</div>
 
-  <p>Rapport d’audit manuel : <a href="/audits/SyAlert.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-  <p style={{ color: 'grey', fontSize: '14px', margin: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4010" target="_blank" style={{color:'#0C41BD'}}>issue #4010</a>)</p>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Rôle ARIA et structure sémantique">
+			<ul>
+				<li><strong>Rôle alert</strong> : Le composant utilise <code>role="alert"</code> pour annoncer automatiquement le message aux lecteurs d'écran</li>
+				<li><strong>Types sémantiques</strong> : Quatre types disponibles (<code>success</code>, <code>info</code>, <code>warning</code>, <code>error</code>) avec icônes appropriées</li>
+				<li><strong>Gestion Vuetify</strong> : Le rôle <code>role="undefined"</code> sur VAlert évite les conflits de rôles avec le conteneur parent</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Icônes et éléments décoratifs">
+			<ul>
+				<li><strong>Rôle presentation</strong> : Les SVG des icônes reçoivent <code>role="presentation"</code> via <code>v-rgaa-svg-fix</code> pour éviter la lecture superflue</li>
+				<li><strong>Icône décorative</strong> : L'icône de fermeture utilise <code>decorative</code> pour être masquée aux lecteurs d'écran</li>
+				<li><strong>Texte visible</strong> : Le bouton de fermeture contient le texte "Fermer" pour une accessibilité complète</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Interaction et fermeture">
+			<ul>
+				<li><strong>Bouton natif</strong> : Utilisation de <code>VBtn</code> pour la fermeture, garantissant un comportement clavier natif</li>
+				<li><strong>Focus visible</strong> : Style <code>:focus-visible</code> avec outline clair pour la navigation au clavier</li>
+				<li><strong>Contrôle modelValue</strong> : Fermeture gérée via <code>v-model</code> pour une cohérence réactive</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="📱" title="Variantes et styles accessibles">
+			<ul>
+				<li><strong>Deux variantes</strong> : <code>tonal</code> (fond coloré) et <code>outlined</code> (contour) avec contrastes adaptés</li>
+				<li><strong>Thème sombre</strong> : Styles spécifiques pour le mode dark avec contrastes inversés</li>
+				<li><strong>Responsive</strong> : Adaptation mobile avec flexbox et espacement optimisé</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SyAlert">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li><strong>Type approprié</strong> : Choisissez <code>error</code> pour les erreurs bloquantes, <code>warning</code> pour les avertissements, <code>success</code> pour les confirmations, <code>info</code> pour les informations</li>
+			<li><strong>Fermeture conditionnelle</strong> : Utilisez <code>closable={true}</code> uniquement si l'utilisateur peut ignorer l'alerte en toute sécurité</li>
+			<li><strong>Messages concis</strong> : Gardez les textes clairs et directs pour une compréhension rapide</li>
+			<li><strong>Positionnement</strong> : Placez les alertes de manière visible mais non intrusive dans le flux de navigation</li>
+			<li><strong>Évitez les multiples</strong> : Ne cumulez pas plusieurs alertes simultanément pour éviter la surcharge cognitive</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/alert/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Alertes</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#10.6" target="_blank" rel="noopener noreferrer">RGAA Critère 10.6 : Messages d'erreur</a></li>
+			<li><a href="https://inclusive-components.design/notifications/" target="_blank" rel="noopener noreferrer">Inclusive Components: Notifications</a></li>
+		</ul>
+	</ResourcesSection>
+
+</AccessibilityGuideLayout>

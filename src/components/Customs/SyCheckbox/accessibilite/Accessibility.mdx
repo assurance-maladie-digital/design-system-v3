@@ -79,6 +79,23 @@ import '@/stories/styles/shared.css';
     </div>
   </div>
 
+  <div className="aria-management-section">
+    <h2>Gestion des attributs ARIA</h2>
+    <p>
+      Pour garantir la conformité ARIA, le composant SyCheckbox gère activement les conflits potentiels 
+      avec l'implémentation native de Vuetify :
+    </p>
+    <ul>
+      <li><strong>Suppression des attributs conflictuels</strong> : Les attributs ARIA natifs de Vuetify sont automatiquement supprimés de l'élément input pour éviter les doublons</li>
+      <li><strong>Gestion centralisée</strong> : L'attribut <code>aria-checked</code> est géré au niveau du composant SyCheckbox et non au niveau de l'input natif</li>
+      <li><strong>Conformité garantie</strong> : Cette approche garantit que l'attribut <code>aria-checked</code> reflète toujours l'état réel du composant (true, false ou mixed)</li>
+    </ul>
+    <p>
+      Cette gestion préventive évite les erreurs d'audit d'accessibilité qui pourraient survenir 
+      lorsque plusieurs attributs ARIA contradictoires sont présents sur le même élément.
+    </p>
+  </div>
+
   <div className="tri-state-section">
     <h2>Fonctionnalité tri-état (indéterminé)</h2>
     <p>
@@ -190,6 +207,7 @@ import '@/stories/styles/shared.css';
 
   .criteria-section h2,
   .demo-section h2,
+  .aria-management-section h2,
   .tri-state-section h2,
   .parent-child-section h2,
   .best-practices h2,
@@ -241,6 +259,23 @@ import '@/stories/styles/shared.css';
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 40px;
+  }
+
+  .aria-management-section {
+    background-color: #fff9e6;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border-left: 5px solid #ff9800;
+  }
+
+  .aria-management-section ul {
+    padding-left: 20px;
+  }
+
+  .aria-management-section li {
+    margin-bottom: 8px;
+    line-height: 1.5;
   }
 
   .tri-state-section,

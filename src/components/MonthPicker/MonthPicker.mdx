@@ -1,0 +1,35 @@
+import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import * as MonthPicker from './MonthPicker.stories';
+
+<Meta of={MonthPicker} />
+
+<div className="header">
+  <h1>MonthPicker</h1>
+  <p>L’élément `MonthPicker` est utilisé pour sélectionner un mois et une année. Il est composé d'un champ de saisie et d'un sélecteur visuel.</p>
+</div>
+
+<Canvas
+    of={MonthPicker.Default}
+/>
+
+# API
+
+<Controls of={MonthPicker.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+    import { MonthPicker } from '@cnamts/synapse'
+    import { ref } from 'vue'
+
+    const selectedMonth = ref<string | undefined>(undefined) // format: MM/YYYY
+</script>
+
+<template>
+    <MonthPicker
+        label="Début du projet"
+        v-model="selectedMonth"
+    />
+</template>
+`} />

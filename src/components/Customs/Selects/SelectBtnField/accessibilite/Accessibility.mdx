@@ -1,15 +1,129 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/blocks';
 import * as Stories from '../SelectBtnField.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={Stories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+	componentName="SelectBtnField"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+>
+
+<CriteriaSection>
+
+<CriteriaCard title="Structure sémantique">
+- **Rôle listbox** : Utilise `role="listbox"` sur le conteneur principal pour identifier une liste de sélection
+- **Rôle option** : Chaque élément utilise `role="option"` pour identifier les options sélectionnables
+- **Labels** : Supporte `aria-label` et `aria-labelledby` pour l'étiquetage du composant
+- **États** : Utilise `aria-selected` (sélection simple) et `aria-checked` (sélection multiple) pour indiquer l'état de sélection
+</CriteriaCard>
+
+<CriteriaCard title="Navigation au clavier">
+- **Flèches directionnelles** : Navigation entre les options avec les flèches haut/bas ou gauche/droite selon l'orientation
+- **Home/End** : Accès rapide à la première et dernière option
+- **Espace** : Activation/désactivation de l'option avec la barre d'espace
+- **Tab** : Navigation dans et hors du composant avec gestion du focus
+- **Auto-sélection** : En mode sélection simple, l'option est automatiquement sélectionnée lors du focus clavier
+</CriteriaCard>
+
+<CriteriaCard title="États et feedback visuel">
+- **Focus visible** : Style `focus-visible` avec outline clair pour l'indication du focus
+- **États de sélection** : Changement de couleur et de fond pour l'option sélectionnée
+- **États d'erreur** : Support des messages d'erreur avec `aria-invalid="true"`
+- **Lecture seule** : Support du mode readonly avec `aria-readonly="true"`
+- **Icônes décoratives** : L'icône de validation est marquée comme décorative (`decorative="true"`)
+</CriteriaCard>
+
+</CriteriaSection>
+
+<DemoSection>
+
+```vue
+<template>
+  <!-- Sélection simple avec label -->
+  <SelectBtnField
+    v-model="selectedOption"
+    :items="options"
+    label="Choisissez une option"
+  />
+
+  <!-- Sélection multiple -->
+  <SelectBtnField
+    v-model="selectedOptions"
+    :items="options"
+    :multiple="true"
+    label="Sélectionnez plusieurs options"
+  />
+
+  <!-- Mode inline avec gestion d'erreur -->
+  <SelectBtnField
+    v-model="selectedOption"
+    :items="options"
+    :inline="true"
+    label="Options disponibles"
+    :error="hasError"
+    :error-messages="errorMessages"
+  />
+
+  <!-- Mode lecture seule -->
+  <SelectBtnField
+    v-model="selectedOption"
+    :items="options"
+    label="Options en lecture seule"
+    :readonly="true"
+  />
+</template>
+```
+
+</DemoSection>
 
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/SelectBtnField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/916" target="_blank" style={{color:'#0C41BD'}}>issue #916</a>)</p>
-</div>
+<BestPracticesSection>
+
+<CriteriaCard title="Étiquetage">
+- **Label descriptif** : Toujours fournir un label clair via la prop `label` ou `ariaLabelledby`
+- **Éviter les labels génériques** : Utiliser des labels qui décrivent précisément les options proposées
+- **Contexte** : Assurer que le label donne suffisamment de contexte pour comprendre le choix à faire
+</CriteriaCard>
+
+<CriteriaCard title="Navigation">
+- **Logique de sélection** : En mode sélection simple, l'auto-sélection au focus facilite l'utilisation
+- **Mode multiple** : En mode multiple, l'utilisateur doit explicitement activer chaque option
+- **Orientation** : Respecter l'orientation (horizontal/vertical) pour la cohérence de la navigation
+</CriteriaCard>
+
+<CriteriaCard title="Contenu des options">
+- **Texte clair** : Utiliser des textes d'options concis et compréhensibles
+- **Hiérarchie** : Organiser les options de manière logique et prévisible
+- **États cohérents** : Maintenir une indication visuelle claire de l'état de sélection
+</CriteriaCard>
+
+<CriteriaCard title="Gestion des erreurs">
+- **Messages clairs** : Fournir des messages d'erreur spécifiques et actionnables
+- **Validation appropriée** : Valider la sélection uniquement lorsque nécessaire
+- **Feedback immédiat** : Afficher les erreurs dès que possible après l'interaction
+</CriteriaCard>
+
+</BestPracticesSection>
+
+<ResourcesSection>
+
+- [WAI-ARIA Authoring Practices - Listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/)
+- [WAI-ARIA Authoring Practices - Grid](https://www.w3.org/WAI/ARIA/apg/patterns/grid/)
+- [MDN Web Docs - ARIA: listbox role](https://developer.mozilla.org/fr/docs/Web/Accessibility/ARIA/Roles/listbox_role)
+- [RGAA - Critère 11.9 - Listes de choix](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/#critere-119-listes-de-choix)
+- [Audit du composant](/audits/SelectBtnField.xlsx)
+- [Correctifs associés](https://github.com/assurance-maladie-digital/design-system-v3/issues/916)
+
+</ResourcesSection>
+
+</AccessibilityGuideLayout>

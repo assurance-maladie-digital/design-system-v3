@@ -32,6 +32,9 @@
 		showPreviewBtn?: boolean
 		tag?: string
 		locales?: typeof defaultLocales
+		seeLabel?: string
+		deleteLabel?: string
+		importLabel?: string
 	}>(), {
 		fileName: undefined,
 		message: undefined,
@@ -43,6 +46,9 @@
 		showPreviewBtn: false,
 		tag: 'div',
 		locales: () => defaultLocales,
+		seeLabel: defaultLocales.see,
+		deleteLabel: defaultLocales.delete,
+		importLabel: defaultLocales.import,
 	})
 
 	defineSlots<{
@@ -132,10 +138,10 @@
 					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
 					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
-					:aria-label="locales.importLabel(title)"
+					:aria-label="`${locales.import} ${title}`"
 					@click="$emit('upload', itemId)"
 				>
-					<span>{{ locales.import }}</span>
+					<span>{{ importLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -148,10 +154,10 @@
 					v-if="state === 'success' && showPreviewBtn"
 					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
-					:aria-label="locales.seeLabel(title)"
+					:aria-label="`${locales.see} ${fileName}`"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ locales.see }}</span>
+					<span>{{ seeLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -164,10 +170,10 @@
 					v-if="state === 'success' && showDeleteBtn"
 					class="file-item__action file-item__action-delete text-error"
 					variant="text"
-					:aria-label="locales.deleteLabel(title)"
+					:aria-label="`${locales.delete} ${fileName}`"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ locales.delete }}</span>
+					<span>{{ deleteLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"
@@ -193,6 +199,7 @@
 				height="7"
 				color="primary"
 				rounded="true"
+				:aria-label="title ? `Chargement de ${title}` : 'Chargement en cours'"
 			/>
 		</div>
 	</component>

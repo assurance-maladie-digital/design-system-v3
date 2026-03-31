@@ -1,10 +1,82 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as SyTextArea from '../SyTextArea.stories';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/blocks';
+import * as Stories from '../SyTextArea.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={SyTextArea} />
+<Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="SyTextArea"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/textinput/"
+>
+
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Structure sémantique et attributs">
+			<ul>
+				<li><strong>Élément textarea natif</strong> : Utilisation de <code>&lt;textarea&gt;</code> via VTextarea pour une sémantique correcte adaptée aux textes multilignes.</li>
+				<li><strong>Labels explicites</strong> : Gestion automatique du <code>aria-label</code> basé sur la prop <code>label</code>. L'attribut <code>aria-required</code> est ajouté si le champ est requis.</li>
+				<li><strong>Association avec les messages</strong> : Implémentation native de <code>aria-describedby</code> par Vuetify pour lier le champ à ses messages d'erreur.</li>
+				<li><strong>Validation accessible</strong> : Les messages d'erreur sont automatiquement associés au textarea via les attributs ARIA.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+			<ul>
+				<li><strong>Focus natif</strong> : Le textarea est naturellement focusable via <kbd>Tab</kbd> et permet la navigation dans le contenu avec les flèches.</li>
+				<li><strong>Saisie multiligne</strong> : Support natif des sauts de ligne avec <kbd>Entrée</kbd> et navigation entre les lignes avec les flèches directionnelles.</li>
+				<li><strong>Défilement automatique</strong> : Le composant gère automatiquement le défilement lorsque le contenu dépasse la hauteur visible.</li>
+				<li><strong>Indicateur de focus</strong> : Styles de focus visibles conformes aux standards d'accessibilité.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎨" title="Styles et états visuels">
+			<ul>
+				<li><strong>Contrastes garantis</strong> : Couleurs distinctes pour les états erreur et validation respectant les critères WCAG.</li>
+				<li><strong>États cohérents</strong> : Changements visuels clairs entre les états normal, erreur et focus.</li>
+				<li><strong>Zone de saisie claire</strong> : Délimitation visuelle évidente de la zone de saisie multiligne.</li>
+				<li><strong>Styles personnalisables</strong> : Support des variantes (outlined, filled) et couleurs personnalisées tout en maintenant l'accessibilité.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="📝" title="Validation et contraintes">
+			<ul>
+				<li><strong>Champ requis</strong> : Validation automatique avec message "Ce champ est requis" lorsque <code>required</code> est true.</li>
+				<li><strong>Limite de lignes</strong> : Validation du nombre maximum de lignes avec message d'erreur spécifique via la prop <code>maxLines</code>.</li>
+				<li><strong>Règles personnalisées</strong> : Support des règles de validation personnalisées avec messages d'erreur accessibles.</li>
+				<li><strong>Validation au blur</strong> : Déclenchement de la validation lors de la perte de focus pour une expérience utilisateur optimale.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SyTextArea">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li><strong>Labels descriptifs</strong> : Utilisez toujours un <code>label</code> clair qui indique la nature du contenu attendu (ex: "Description", "Commentaires").</li>
+			<li><strong>Limites appropriées</strong> : Définissez une <code>maxLines</code> raisonnable pour guider l'utilisateur sans trop contraindre la saisie.</li>
+			<li><strong>Messages d'erreur utiles</strong> : Complétez les règles de validation avec des messages spécifiques qui aident à corriger la saisie.</li>
+			<li><strong>Évitez les placeholders comme seuls indicateurs</strong> : Le placeholder disparaît lors de la saisie, il doit compléter le label mais pas le remplacer.</li>
+			<li><strong>Traitement du texte</strong> : Utilisez les options de traitement (<code>trim</code>, <code>normalize</code>, <code>replaceTabs</code>) pour améliorer la qualité des données saisies.</li>
+			<li><strong>Saisie confortable</strong> : Assurez-vous que la hauteur du textarea est suffisante pour une saisie confortable du contenu attendu.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/textinput/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Champs de texte</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11.9" target="_blank" rel="noopener noreferrer">RGAA : Champs de formulaire</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Techniques/html/H91.html" target="_blank" rel="noopener noreferrer">WCAG Technique H91 : Utiliser les éléments HTML sémantiques</a></li>
+			<li><a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/textarea" target="_blank" rel="noopener noreferrer">MDN : Élément textarea</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

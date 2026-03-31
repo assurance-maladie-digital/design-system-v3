@@ -1,10 +1,88 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as CaptchaStorie from '../Captcha.stories';
-import '@/stories/styles/shared.css';
+import { Meta, Story } from '@storybook/blocks';
+import * as CaptchaStories from '../Captcha.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={CaptchaStorie} />
+<Meta of={CaptchaStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+	componentName="Captcha"
+	iconSrc={AccessibilityIcon}
+>
+	
+	<CriteriaSection>
+		<CriteriaCard icon="🖼️" title="Images et alternatives textuelles">
+			<ul>
+				<li><strong>Image captcha</strong> : Attribut <code>alt</code> avec <code>locales.captchaImgAlt</code> ("Le captcha à saisir").</li>
+				<li><strong>Skeleton loader</strong> : <code>aria-label</code> avec <code>locales.captchaImgLoading</code> pendant le chargement.</li>
+				<li><strong>Gestion des erreurs</strong> : Émission de l'événement <code>imageError</code> en cas d'échec de chargement.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🎵" title="Captcha audio et contrôles">
+			<ul>
+				<li><strong>Bouton audio</strong> : <code>aria-label</code> dynamique avec <code>locales.audio.loading</code> pendant le chargement.</li>
+				<li><strong>Icônes décoratives</strong> : <code>aria-hidden="true"</code> sur les icônes volume-up et SyIcon décoratives.</li>
+				<li><strong>États lecture/pause</strong> : Texte alternatif avec <code>locales.pause</code> et <code>locales.play</code>.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="📝" title="Formulaires et champs de saisie">
+			<ul>
+				<li><strong>Champ de saisie</strong> : Utilise <code>SyTextField</code> avec label descriptif selon le type (image/audio).</li>
+				<li><strong>Validation</strong> : Règle personnalisée avec message <code>locales.required</code>.</li>
+				<li><strong>États du champ</strong> : Désactivé si rejeté, readonly si succès, messages d'erreur.</li>
+				<li><strong>Labellisation</strong> : Labels spécifiques avec <code>locales.image.textfieldLabel</code> et <code>locales.audio.textfieldLabel</code>.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="🔄" title="Boutons d'action et navigation">
+			<ul>
+				<li><strong>Texte masqué</strong> : <code>&lt;p class="d-sr-only"&gt;</code> avec <code>locales.renew</code> pour le bouton de renouvellement.</li>
+				<li><strong>Icônes décoratives</strong> : Attribut <code>decorative</code> sur les SyIcon pour ne pas polluer les lecteurs d'écran.</li>
+				<li><strong>Boutons configurables</strong> : Utilisation de <code>CaptchaBtn</code> avec icônes et textes appropriés.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard icon="⚠️" title="Alertes et messages d'erreur">
+			<ul>
+				<li><strong>Composant d'alerte</strong> : Utilise <code>VAlert</code> avec couleur "error" et variant "text".</li>
+				<li><strong>Icône d'erreur</strong> : SyIcon décoratif avec <code>mdiAlertCircleOutline</code>.</li>
+				<li><strong>Cliquabilité</strong> : L'alerte est cliquable pour renouveler le captcha.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="Captcha">
+		<Story of={CaptchaStories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Fournissez toujours les URLs requises (<code>urlCreate</code>, <code>urlGetImage</code>, <code>urlGetAudio</code>).</li>
+			<li>Personnalisez les <code>locales</code> pour adapter les messages à votre langue.</li>
+			<li>Configurez un <code>helpDesk</code> approprié pour les utilisateurs en difficulté.</li>
+			<li>Utilisez <code>tagTitle</code> pour un niveau de titre cohérent avec votre page.</li>
+			<li>Gérez les erreurs avec <code>errorMessage</code> pour un feedback clair.</li>
+			<li>Testez les deux modes (image et audio) pour une accessibilité complète.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html" target="_blank" rel="noopener noreferrer">WCAG : Contenu non textuel</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/error-identification.html" target="_blank" rel="noopener noreferrer">WCAG : Identification des erreurs</a></li>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/alert/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Alertes</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.4" target="_blank" rel="noopener noreferrer">RGAA : Captchas</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#1.5" target="_blank" rel="noopener noreferrer">RGAA : Solution d’accès alternatif</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

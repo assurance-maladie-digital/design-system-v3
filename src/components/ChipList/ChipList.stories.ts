@@ -713,9 +713,6 @@ export const CustomResetText: Story = {
 
 export const WithOverflow: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -809,9 +806,6 @@ export const WithOverflow: Story = {
 
 export const WithEvents: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -923,9 +917,6 @@ const handleReset = () => {
 
 export const WithPrependStateIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1004,9 +995,6 @@ const items: ChipItem[] = [
 
 export const WithAppendStateIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1085,9 +1073,6 @@ const items: ChipItem[] = [
 
 export const WithCustomIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
