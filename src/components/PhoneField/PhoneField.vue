@@ -345,13 +345,13 @@
 		runValidation()
 	}
 
-	watch(phoneNumber, (newValue) => {
+	watch(phoneNumber, async (newValue) => {
 		if (shouldDisableErrorHandling.value) return
 
 		if (!props.isValidatedOnBlur) {
 			// Validation en temps réel (isValidatedOnBlur=false)
 			const cleanedValue = newValue.replace(/\s/g, '')
-			validation.validateField(cleanedValue, validationRules.value)
+			await validation.validateField(cleanedValue, validationRules.value)
 		}
 		else if (onBlur.value) {
 			// Après un premier blur, effacer les erreurs pendant la frappe —

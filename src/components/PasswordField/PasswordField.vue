@@ -185,9 +185,9 @@
 		})
 	}
 
-	function handleKeydown(event: KeyboardEvent): void {
+	async function handleKeydown(event: KeyboardEvent): Promise<void> {
 		if (event.key === 'Enter') {
-			validateOnSubmit()
+			await validateOnSubmit()
 		}
 	}
 
@@ -266,12 +266,16 @@
 		:autocomplete="props.autocompleteType"
 		class="vd-password"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
-		@blur="props.isValidateOnBlur && !props.readonly ? validateField(
-			password,
-			[...defaultRules, ...(props.customRules || [])],
-			props.customWarningRules || [],
-			props.customSuccessRules || []
-		) : () => {}"
+		@blur="async () => {
+			if (props.isValidateOnBlur && !props.readonly) {
+				await validateField(
+					password,
+					[...defaultRules, ...(props.customRules || [])],
+					props.customWarningRules || [],
+					props.customSuccessRules || []
+				)
+			}
+		}"
 		@keydown="handleKeydown"
 	>
 		<template #append-inner>
