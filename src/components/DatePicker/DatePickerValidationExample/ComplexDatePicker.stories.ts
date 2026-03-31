@@ -212,7 +212,6 @@ export const NotRequired: StoryObj = {
 	}),
 }
 
-
 export const WithCustomRulesAndRequired: StoryObj = {
 	parameters: {
 		sourceCode: [

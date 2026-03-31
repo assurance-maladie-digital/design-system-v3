@@ -582,7 +582,7 @@
 
 	function runRules(value: string): boolean {
 		clearValidation()
-		
+
 		// Vérifier si la valeur est vide ou est un squelette (ex: "__//____" pour DD/MM/YYYY)
 		// Un squelette ne contient que des underscores, des espaces et les séparateurs du format
 		const formatSeparators = props.format.replace(/[A-Za-z]/g, '')
@@ -590,7 +590,7 @@
 		const allowedChars = ['_', ' ', ...new Set(formatSeparators.split(''))].map(char => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('')
 		const skeletonPattern = new RegExp(`^[${allowedChars}]+$`)
 		const isEmptyOrSkeleton = !value || value.trim() === '' || skeletonPattern.test(value)
-		
+
 		if (isEmptyOrSkeleton) {
 			if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
 				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
