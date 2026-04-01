@@ -87,6 +87,18 @@ const shouldShowApComponent = (item, itemId, theme) => {
         return
     }
 
+    if (itemId === 'guide-du-dev-migration') {
+        item.style.display = isAp ? 'none' : 'block'
+        return
+    }
+
+    if (itemId === 'guide-du-dev-installation--docs') {
+        item.style.display = isAp ? 'none' : 'block'
+        return
+    }
+
+
+
     if (isAp) {
         const isComponentTree = itemId.startsWith('composants')
 
