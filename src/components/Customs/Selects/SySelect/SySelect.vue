@@ -891,6 +891,9 @@
 		if (newValue) {
 			updateMenuAccessibility()
 		}
+		else {
+			focusInput()
+		}
 	})
 
 	watch(activeDescendantId, (newValue) => {
@@ -981,6 +984,14 @@
 		if (overlayContent) {
 			overlayContent.setAttribute('aria-label', accessibleLabel.value)
 		}
+	}
+
+	const focusInput = () => {
+		// eviter un focus inutile si le composant est disebled ou readonly
+		if (props.disabled || props.readonly) return
+
+		const inputElement = textInput.value?.$el?.querySelector('input') as HTMLInputElement | null
+		inputElement?.focus()
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
