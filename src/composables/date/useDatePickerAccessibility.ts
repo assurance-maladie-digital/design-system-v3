@@ -8,46 +8,6 @@ import { nextTick, onBeforeUnmount, onMounted } from 'vue'
  * @returns Des fonctions pour mettre à jour l'accessibilité du CalendarMode et gérer les événements clavier
  */
 export function useDatePickerAccessibility() {
-	// Référence pour suivre si l'événement a déjà été traité
-	let isProcessingEnterKey = false
-
-	/**
-	 * Gestionnaire d'événements clavier pour simuler le comportement de la touche espace avec la touche entrée
-	 * @param event L'événement clavier
-	 */
-	const handleKeyDown = (event: Event): void => {
-		const keyboardEvent = event as KeyboardEvent
-		// Si la touche entrée est pressée et que nous ne sommes pas déjà en train de traiter un événement
-		if (keyboardEvent.key === 'Enter' && !isProcessingEnterKey) {
-			// Marquer que nous sommes en train de traiter l'événement pour éviter les doublons
-			isProcessingEnterKey = true
-
-			// Empêcher le comportement par défaut de la touche entrée
-			keyboardEvent.preventDefault()
-
-			// Récupérer l'élément actuellement focalisé
-			const focusedElement = document.activeElement
-
-			// Simuler un événement de touche espace
-			if (focusedElement && focusedElement instanceof HTMLElement) {
-				// Créer et déclencher un événement de clic qui simule le comportement de l'espace
-				const clickEvent = new MouseEvent('click', {
-					bubbles: true,
-					cancelable: true,
-					view: window,
-				})
-
-				// Déclencher un seul événement de clic
-				focusedElement.dispatchEvent(clickEvent)
-			}
-
-			// Réinitialiser l'état après un délai pour permettre le traitement des autres événements
-			setTimeout(() => {
-				isProcessingEnterKey = false
-			}, 100)
-		}
-	}
-
 	/**
 	 * Met à jour les attributs d'accessibilité du CalendarMode
 	 * Ajoute des attributs ARIA et des instructions pour les lecteurs d'écran
@@ -60,189 +20,67 @@ export function useDatePickerAccessibility() {
 		const datePickerEl = document.querySelector('.v-date-picker')
 		if (!datePickerEl) return
 
-		// Ajouter un attribut role="application" au conteneur principal
-		datePickerEl.setAttribute('role', 'application')
-		datePickerEl.setAttribute('aria-label', 'Sélecteur de date')
-
-		// Sélectionner tous les boutons de navigation
-		const navigationButtons = datePickerEl.querySelectorAll('button')
-
-		// Attribuer des labels significatifs basés sur la position ou l'icône
-		navigationButtons.forEach(async (button) => {
-			// find btn with aria-label contain item
-			if (button.className.includes('v-date-picker-controls__mode-btn')) {
-				button.removeAttribute('aria-label')
-			}
-			// Vérifier si le bouton contient un SVG ou une icône
-			const svgEl = button.querySelector('svg')
-			const iconEl = button.querySelector('.v-icon')
-
-			// Get any existing visible text content
-			const buttonText = button.textContent?.trim() || ''
-
-			// Traiter les boutons avec SVG
-			if (svgEl) {
-				const svgContent = svgEl.innerHTML
-
-				// Left arrow (previous month)
-				if (svgContent.includes('M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z')) {
-					const accessibleName = buttonText ? `${buttonText} (Mois précédent)` : 'Mois précédent'
-					button.setAttribute('aria-label', accessibleName)
-				}
-				// Right arrow (next month)
-				else if (svgContent.includes('M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z')) {
-					const accessibleName = buttonText ? `${buttonText} (Mois suivant)` : 'Mois suivant'
-					button.setAttribute('aria-label', accessibleName)
-				}
-				// Calendar icon
-				else if (svgContent.includes('M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z')) {
-					const accessibleName = buttonText ? `${buttonText} (Ouvrir le calendrier)` : 'Ouvrir le calendrier'
-					button.setAttribute('aria-label', accessibleName)
-				}
-			}
-			// Traiter les boutons avec icônes Material Design
-			else if (iconEl) {
-				// Left arrow (previous month)
-				if (iconEl.classList.contains('mdi-chevron-left')) {
-					const accessibleName = buttonText ? `${buttonText} (Mois précédent)` : 'Mois précédent'
-					button.setAttribute('aria-label', accessibleName)
-				}
-				// Right arrow (next month)
-				else if (iconEl.classList.contains('mdi-chevron-right')) {
-					const accessibleName = buttonText ? `${buttonText} (Mois suivant)` : 'Mois suivant'
-					button.setAttribute('aria-label', accessibleName)
-				}
-			}
-		})
-
-		// Ajouter des instructions pour les lecteurs d'écran
-		let srOnlyEl = datePickerEl.querySelector('.sr-only-instructions')
-		if (!srOnlyEl) {
-			srOnlyEl = document.createElement('span')
-			srOnlyEl.className = 'sr-only-instructions'
-			srOnlyEl.setAttribute('aria-live', 'polite')
-			// Utiliser HTMLElement pour accéder aux propriétés de style
-			const srOnlyHtmlEl = srOnlyEl as HTMLElement
-			srOnlyHtmlEl.style.position = 'absolute'
-			srOnlyHtmlEl.style.width = '1px'
-			srOnlyHtmlEl.style.height = '1px'
-			srOnlyHtmlEl.style.padding = '0'
-			srOnlyHtmlEl.style.margin = '-1px'
-			srOnlyHtmlEl.style.overflow = 'hidden'
-			srOnlyHtmlEl.style.clip = 'rect(0, 0, 0, 0)'
-			srOnlyHtmlEl.style.whiteSpace = 'nowrap'
-			srOnlyHtmlEl.style.border = '0'
-			srOnlyEl.textContent = 'Utilisez tab pour naviguer entre les dates et Entrée ou Espace pour sélectionner une date'
-			datePickerEl.prepend(srOnlyEl)
-		}
-
-		// Ajouter un gestionnaire d'événements clavier pour la touche entrée
-		// Utiliser des casts explicites pour rassurer TypeScript sur les types
-		datePickerEl.removeEventListener('keydown', handleKeyDown as EventListener) // Supprimer d'abord pour éviter les doublons
-		datePickerEl.addEventListener('keydown', handleKeyDown as EventListener)
-	}
-
-	// Référence pour le MutationObserver
-	let observer: MutationObserver | null = null
-
-	/**
-	 * Corrige les attributs ARIA invalides dans le composant
-	 * Supprime les attributs aria-haspopup, aria-expanded et aria-controls inappropriés
-	 */
-	const fixAriaAttributes = () => {
-		try {
-			// Rechercher dans tout le document les éléments avec des attributs ARIA invalides
-			// Cibler les éléments dans les conteneurs CalendarMode et DateTextInput
-			const containers = document.querySelectorAll('.date-picker-container, .v-date-picker')
-
-			if (containers.length === 0) {
+		// Ajouter des labels de navigation sur les boutons comportant les icônes attendues
+		const navButtons = datePickerEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-header button')
+		navButtons.forEach((button) => {
+			const icon = button.querySelector('i')
+			if (icon?.classList.contains('mdi-chevron-left')) {
+				button.setAttribute('aria-label', 'Mois précédent')
 				return
 			}
 
-			const allInputsWithAriaExpanded = document.querySelectorAll('input[aria-expanded]')
-			allInputsWithAriaExpanded.forEach((input) => {
-				if (input) {
-					input.removeAttribute('aria-expanded')
-				}
-			})
+			if (icon?.classList.contains('mdi-chevron-right')) {
+				button.setAttribute('aria-label', 'Mois suivant')
+				return
+			}
 
-			// Pour chaque conteneur, rechercher et corriger les attributs ARIA invalides
-			containers.forEach((container) => {
-				if (!container) return
+			button.removeAttribute('aria-label')
+		})
 
-				container.removeAttribute('aria-expanded')
-				container.removeAttribute('aria-haspopup')
-				// Find all elements with invalid ARIA attributes
-				const elementsWithAriaHaspopup = container.querySelectorAll('[aria-haspopup="menu"]')
-				elementsWithAriaHaspopup.forEach((element) => {
-					if (!element) return
-					element.removeAttribute('aria-haspopup')
-					// Intentionally keep aria-controls intact so valid popup relationships remain
-				})
+		// Ajouter les instructions pour lecteurs d'écran si elles n'existent pas déjà
+		// if (!datePickerEl.querySelector('.sr-only-instructions')) {
+		// 	const srOnly = document.createElement('div')
+		// 	srOnly.className = 'sr-only sr-only-instructions'
+		// 	srOnly.textContent = 'Utilisez tab pour naviguer entre les dates et Entrée ou Espace pour sélectionner une date'
+		// 	datePickerEl.prepend(srOnly)
+		// }
 
-				// Find input elements with invalid ARIA attributes
-				const inputElements = container.querySelectorAll('input[aria-haspopup="menu"]')
-				inputElements.forEach((input) => {
-					if (!input) return
-					input.removeAttribute('aria-haspopup')
-					input.removeAttribute('aria-expanded')
-					// Leave aria-controls untouched to avoid stripping required relationships
-				})
-			})
-		}
-		catch {
-			// Do nothing
+		// Ajouter un attribut role="application" au conteneur principal
+		// Ne pas forcer role="application" ni aria-label générique : on laisse les rôles natifs du picker (grille/boutons) et les labels existants.
+
+		// Ne pas surcharger Enter/Espace : laisser les comportements natifs des boutons
+	}
+
+	// Référence pour le MutationObserver (désactivé)
+	// const observer: MutationObserver | null = null
+
+	/**
+	 * Corrige les attributs ARIA invalides dans le composant
+	 * Ici on ne supprime plus globalement aria-expanded/aria-haspopup pour éviter de casser la combobox.
+	 */
+	const fixAriaAttributes = () => {
+		// Désormais no-op pour éviter de retirer des attributs utiles.
+	}
+
+	/**
+	 * Simule un clic sur l'élément focalisé lorsque la touche Entrée est pressée.
+	 * Ne touche pas aux autres touches (espace, etc.).
+	 */
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if (event.key !== 'Enter') return
+
+		event.preventDefault()
+		const target = document.activeElement
+		if (target instanceof HTMLElement) {
+			target.click()
 		}
 	}
 
 	/**
-	 * Configure un MutationObserver pour surveiller les changements dans le DOM
-	 * et réexécuter fixAriaAttributes lorsque nécessaire
+	 * (Observer désactivé) : on évite de muter globalement les attributs aria du document.
 	 */
 	const setupMutationObserver = () => {
-		// Nettoyer l'observateur existant s'il y en a un
-		if (observer) {
-			observer.disconnect()
-		}
-
-		// Créer un nouvel observateur
-		observer = new MutationObserver((mutations) => {
-			if (!Array.isArray(mutations)) return
-			// Vérifier si les mutations concernent des attributs ARIA ou des éléments pertinents
-			const shouldFix = mutations.some((mutation) => {
-				if (!mutation) return false
-				// Vérification défensive pour s'assurer que mutation.el existe avant d'accéder à ses propriétés
-				if (mutation.target === undefined || mutation.target === null) return false
-
-				// Si un attribut a été modifié
-				if (mutation.type === 'attributes') {
-					const attributeName = mutation.attributeName
-					return attributeName && (
-						attributeName.startsWith('aria-')
-						|| attributeName === 'class'
-						|| attributeName === 'style'
-					)
-				}
-				// Si des nœuds ont été ajoutés ou supprimés
-				return mutation.type === 'childList'
-			})
-
-			// Si des modifications pertinentes ont été détectées, corriger les attributs ARIA
-			if (shouldFix) {
-				// Utiliser nextTick pour s'assurer que le DOM est stable avant de faire les corrections
-				nextTick(() => {
-					fixAriaAttributes()
-				})
-			}
-		})
-
-		// Observer le document entier pour les changements
-		observer.observe(document.body, {
-			childList: true, // Observer les ajouts/suppressions d'enfants
-			subtree: true, // Observer les descendants
-			attributes: true, // Observer les changements d'attributs
-			attributeFilter: ['aria-expanded', 'aria-haspopup', 'aria-controls', 'class'], // Filtrer les attributs à observer
-		})
+		// noop
 	}
 
 	// Configurer l'observateur au montage du composant
@@ -253,12 +91,9 @@ export function useDatePickerAccessibility() {
 		setupMutationObserver()
 	})
 
-	// Nettoyer l'observateur avant de démonter le composant
+	// Nettoyer l'observateur avant de démonter le composant (noop ici)
 	onBeforeUnmount(() => {
-		if (observer) {
-			observer.disconnect()
-			observer = null
-		}
+		/* noop */
 	})
 
 	return {

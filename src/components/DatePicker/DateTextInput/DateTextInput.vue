@@ -21,64 +21,59 @@
 
 	dayjs.extend(customParseFormat)
 
-	/**
-	 * =====================
-	 * Props / Emits
-	 * =====================
-	 */
 	const props = withDefaults(defineProps<{
-		modelValue?: DateValue
-		placeholder?: string
-		format?: string
-		dateFormatReturn?: string
-		label: string
-		required?: boolean
-		disabled?: boolean
-		readonly?: boolean
-		title?: string | false
-		isOutlined?: boolean
-		displayIcon?: boolean
-		displayAppendIcon?: boolean
-		noIcon?: boolean
+		autoClamp?: boolean
+		bgColor?: string
 		customRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
-		displayPrependIcon?: boolean
-		disableErrorHandling?: boolean
-		showSuccessMessages?: boolean
-		bgColor?: string
-		displayRange?: boolean
-		autoClamp?: boolean
-		isValidateOnBlur?: boolean
+		dateFormatReturn?: string
 		density?: 'default' | 'comfortable' | 'compact'
-		hint?: string
-		persistentHint?: boolean
+		disableErrorHandling?: boolean
+		disabled?: boolean
+		displayAppendIcon?: boolean
+		displayIcon?: boolean
+		displayPrependIcon?: boolean
+		displayRange?: boolean
 		externalErrorMessages?: string[]
+		format?: string
+		hint?: string
+		isOutlined?: boolean
+		isValidateOnBlur?: boolean
+		label: string
+		modelValue?: DateValue
+		noIcon?: boolean
+		persistentHint?: boolean
+		placeholder?: string
+		readonly?: boolean
+		required?: boolean
+		showSuccessMessages?: boolean
+		title?: string | false
 	}>(), {
-		modelValue: undefined,
-		placeholder: undefined,
-		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
-		dateFormatReturn: undefined,
-		required: false,
-		disabled: false,
-		readonly: false,
-		title: false,
-		isOutlined: true,
-		displayIcon: true,
-		displayAppendIcon: false,
-		noIcon: false,
+		autoClamp: true,
+		bgColor: 'white',
 		customRules: () => [],
 		customWarningRules: () => [],
-		displayPrependIcon: true,
-		disableErrorHandling: false,
-		showSuccessMessages: true,
-		bgColor: 'white',
-		displayRange: false,
-		autoClamp: true,
-		isValidateOnBlur: true,
+		dateFormatReturn: undefined,
 		density: 'default',
-		hint: undefined,
-		persistentHint: false,
+		disableErrorHandling: false,
+		disabled: false,
+		displayAppendIcon: false,
+		displayIcon: true,
+		displayPrependIcon: true,
+		displayRange: false,
 		externalErrorMessages: () => [],
+		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
+		hint: undefined,
+		isOutlined: true,
+		isValidateOnBlur: true,
+		modelValue: undefined,
+		noIcon: false,
+		persistentHint: false,
+		placeholder: undefined,
+		readonly: false,
+		required: false,
+		showSuccessMessages: true,
+		title: false,
 	})
 
 	const emit = defineEmits<{
@@ -200,7 +195,7 @@
 	const isUpdatingFromInternal = ref(false)
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
-	const ariaLabel = ref('')
+	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
 
 	const { validateDateFormat: _validateDateFormat } = useDateFormatValidation({
 		format: displayFormat.value,
@@ -231,7 +226,9 @@
 	const isValidating = ref(false)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
-	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
+	const updateAriaLabel = (ariaLabelText: string) => {
+		ariaLabel.value = ariaLabelText || props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT
+	}
 
 	const { formatDateInput, handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
 		format: displayFormat.value,
