@@ -57,27 +57,21 @@ const shouldShowApComponent = (item, itemId, theme) => {
     const isAp = theme === 'ap'
     const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
 
+    const hiddenWhenAp = new Set([
+        'guide-du-dev-correspondance-composants-pag--docs',
+        'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs',
+        'accessibilité-design-system-avancement--docs',
+        'guide-du-dev-guide-technique-système-de-validation-règles--docs',
+        'guide-du-dev-migration',
+        'guide-du-dev-installation--docs',
+    ])
+
     if (itemId === 'composants-amelipro') {
         item.style.display = hideAmelipro ? 'none' : 'block'
         return
     }
 
-    if (itemId === 'guide-du-dev-correspondance-composants-pag--docs') {
-        item.style.display = isAp ? 'none' : 'block'
-        return
-    }
-
-    if (itemId === 'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs') {
-        item.style.display = isAp ? 'none' : 'block'
-        return
-    }
-
-    if (itemId === 'accessibilité-design-system-avancement--docs') {
-        item.style.display = isAp ? 'none' : 'block'
-        return
-    }
-
-    if (itemId === 'guide-du-dev-guide-technique-système-de-validation-règles--docs') {
+    if (hiddenWhenAp.has(itemId)) {
         item.style.display = isAp ? 'none' : 'block'
         return
     }
@@ -86,18 +80,6 @@ const shouldShowApComponent = (item, itemId, theme) => {
         item.style.display = isAp ? 'block' : 'none'
         return
     }
-
-    if (itemId === 'guide-du-dev-migration') {
-        item.style.display = isAp ? 'none' : 'block'
-        return
-    }
-
-    if (itemId === 'guide-du-dev-installation--docs') {
-        item.style.display = isAp ? 'none' : 'block'
-        return
-    }
-
-
 
     if (isAp) {
         const isComponentTree = itemId.startsWith('composants')
