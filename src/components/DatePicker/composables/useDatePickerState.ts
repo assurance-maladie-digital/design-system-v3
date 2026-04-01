@@ -12,6 +12,7 @@ export interface UseDatePickerStateOptions {
 	initializeSelectedDates: (value: DateInput | null, format: string, dateFormatReturn?: string) => Date | (Date | null)[] | null
 	validateDates: (forceValidation?: boolean) => void
 	updateModel: (value: DateValue) => void
+	generateDateRange?: (start: Date, end: Date) => Date[]
 }
 
 export interface UseDatePickerStateResult {
@@ -114,7 +115,18 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			return
 		}
 
+
 		selectedDates.value = initializeSelectedDates(newValue ?? null, format, dateFormatReturn)
+
+		if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length === 2) {
+			const startDate = selectedDates.value[0]
+			const endDate = selectedDates.value[1]
+			if (startDate && endDate && options.generateDateRange) {
+				// Regenerate intermediate dates for Vuetify range selection
+				selectedDates.value = options.generateDateRange(startDate, endDate)
+			}
+		}
+
 		if (selectedDates.value) {
 			const firstDate = Array.isArray(selectedDates.value)
 				? selectedDates.value[0]
