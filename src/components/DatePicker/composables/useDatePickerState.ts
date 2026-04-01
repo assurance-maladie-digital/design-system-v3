@@ -115,7 +115,6 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			return
 		}
 
-
 		selectedDates.value = initializeSelectedDates(newValue ?? null, format, dateFormatReturn)
 
 		if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length === 2) {
