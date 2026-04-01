@@ -124,6 +124,8 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
+				method: 'alpha',
+				locales: 'fr-FR',
 				order: [
 					'Démarrer',
 					['Accueil', 'Introduction', 'Politique de confidentialité', 'Releases', 'Signaler une anomalie', 'Enrichir le Design System'],

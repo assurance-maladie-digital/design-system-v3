@@ -152,6 +152,18 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			return
 		}
 
+		if (displayRange && Array.isArray(value) && value.length >= 2) {
+			const startDate = value[0]
+			const endDate = value[value.length - 1]
+			if (startDate && endDate) {
+				const formattedForInput = `${formatDate(startDate, format)} - ${formatDate(endDate, format)}`
+				if (textInputValue.value !== formattedForInput) {
+					textInputValue.value = formattedForInput
+				}
+				return
+			}
+		}
+
 		const firstDate = Array.isArray(value) ? (value[0] ?? null) : value
 		if (!firstDate) return
 

@@ -856,7 +856,7 @@
 
 		try {
 			isUpdatingFromInternal.value = true
-
+			
 			// 1) Propager la valeur brute vers le v-model externe
 			updateModel(value)
 
