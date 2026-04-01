@@ -4925,6 +4925,7 @@ export const PinnedColumns: Story = {
 							:headers="headers"
 							:items="items"
 							:server-items-length="serverItemsLength"
+							:loading="state === StateEnum.PENDING"
 							show-select
 							sticky-select
 							:pinned-columns="pinnedColumns"
