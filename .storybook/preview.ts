@@ -122,6 +122,7 @@ const preview: Preview = {
 		interactions: {
 			disable: true,
 		},
+		docs: { controls: { sort: 'alpha' } },
 		options: {
 			storySort: {
 				order: [
