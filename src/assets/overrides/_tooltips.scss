@@ -16,7 +16,7 @@
 }
 
 // errreur Aria accessibility
-[role='tooltip'] {
+.v-tooltip[role='tooltip'] {
 	display: none;
 
 	.v-overlay__content {

@@ -290,10 +290,6 @@
 		return 'Selectionnez une option'
 	})
 
-	const accessibleTitle = computed(() => {
-		return accessibleLabel.value
-	})
-
 	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
 		// Prevent default action if event is provided
 		event?.preventDefault()
@@ -590,6 +586,18 @@
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
 		if (!rootEl) return undefined
 		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
+	})
+
+	const formattedErrorMessages = computed(() => {
+		return Array.isArray(props.errorMessages)
+			? props.errorMessages.join(' ')
+			: props.errorMessages
+	})
+
+	const liveRegionMessage = computed(() => {
+		if (!hasError.value) return ''
+
+		return formattedErrorMessages.value || 'Le champ contient une erreur.'
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -966,19 +974,9 @@
 		const listElement = list.value?.$el as HTMLElement | null
 		if (!listElement) return
 
-		// Nom accessible du contenu popup
 		listElement.setAttribute('role', 'listbox')
-		listElement.setAttribute('aria-label', accessibleLabel.value)
+		listElement.setAttribute('aria-labelledby', overlayLabelId.value)
 
-		// En multisélection, exposer explicitement le mode de sélection multiple
-		if (props.multiple) {
-			listElement.setAttribute('aria-multiselectable', 'true')
-		}
-		else {
-			listElement.removeAttribute('aria-multiselectable')
-		}
-
-		// on lui applique aussi un nom accessible.
 		const overlayContent = listElement.closest('.v-overlay__content') as HTMLElement | null
 		if (overlayContent) {
 			overlayContent.setAttribute('aria-label', accessibleLabel.value)
@@ -1040,7 +1038,7 @@
 						:id="inputId"
 						v-model="selectedItemText"
 						v-click-outside="closeList"
-						:title="accessibleTitle"
+						:title="accessibleLabel"
 						:color="props.color"
 						:disabled="disabled"
 						:label="labelWithAsterisk"
@@ -1191,7 +1189,7 @@
 			-->
 			<span
 				:id="overlayLabelId"
-				class="sr-only"
+				class="d-sr-only"
 			>
 				{{ accessibleLabel }}
 			</span>
@@ -1201,9 +1199,8 @@
 				ref="list"
 				class="v-list"
 				role="listbox"
-				:aria-label="accessibleLabel"
 				:aria-labelledby="overlayLabelId"
-				:title="accessibleTitle"
+				:title="accessibleLabel"
 				:aria-multiselectable="props.multiple ? 'true' : undefined"
 				:style="{
 					minWidth: `${textInput?.$el.offsetWidth}px`
@@ -1268,7 +1265,7 @@
 		<div
 			v-if="(showHelpTextAsMessage || showHelpTextBelow) && props.helpText"
 			:id="helpTextId"
-			class="sr-only"
+			class="d-sr-only"
 		>
 			{{ props.helpText }}
 		</div>
@@ -1276,30 +1273,18 @@
 		<div
 			v-if="!props.hideMessages && hasMessages"
 			:id="messagesId"
-			class="sr-only"
+			class="d-sr-only"
 		>
-			{{
-				Array.isArray(props.errorMessages)
-					? props.errorMessages.join(' ')
-					: props.errorMessages
-			}}
+			{{ formattedErrorMessages }}
 		</div>
 
 		<div
 			:id="liveRegionId"
-			class="sr-only"
+			class="d-sr-only"
 			aria-live="polite"
 			aria-atomic="true"
 		>
-			{{
-				hasError
-					? (
-						Array.isArray(props.errorMessages)
-							? props.errorMessages.join(' ')
-							: props.errorMessages || 'Le champ contient une erreur.'
-					)
-					: ''
-			}}
+			{{ liveRegionMessage }}
 		</div>
 
 		<div

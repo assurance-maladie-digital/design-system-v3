@@ -11,7 +11,7 @@ const meta: Meta<typeof SySelect> = {
 	component: SySelect,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['selectedValue', 'isOpen', 'closeList'] },
+		controls: { exclude: ['onUpdate:modelValue', 'selectedValue', 'isOpen', 'closeList'] },
 	},
 	argTypes: {
 		selectedValue: { control: 'text' },
@@ -115,9 +115,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -187,9 +184,6 @@ export const Default: Story = {
 
 export const HelpText: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -263,9 +257,6 @@ export const HelpText: Story = {
 
 export const Required: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -324,9 +315,6 @@ export const Required: Story = {
 
 export const RequiredWithAsterisk: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		docs: {
 			description: {
 				story: 'Version du champ de sélection requis avec un astérisque visuel.',
@@ -392,9 +380,6 @@ const items = [
 
 export const SlotPrepend: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -459,9 +444,6 @@ export const SlotPrepend: Story = {
 
 export const SlotAppend: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -559,9 +541,6 @@ export const WithTooltips: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		docs: {
 			description: {
 				story: 'Exemple de champ avec des tooltips d\'information. Les icônes d\'information apparaissent automatiquement lorsque les props prependTooltip et/ou appendTooltip sont renseignées. La position des tooltips peut être contrôlée avec la prop tooltipLocation.',
@@ -604,9 +583,6 @@ export const WithTooltips: Story = {
 
 export const MultipleSelection: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		docs: {
 			description: {
 				story: 'Exemple de sélection multiple avec SySelect. Les options dans le menu déroulant sont affichées avec des cases à cocher pour faciliter la sélection multiple.',
@@ -697,9 +673,6 @@ const options = [
 
 export const ChipsDisplay: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		docs: {
 			description: {
 				story: 'Exemple de sélection multiple avec affichage en chips. Les options sélectionnées sont affichées sous forme de chips dans le champ, et les options dans le menu déroulant sont affichées avec des cases à cocher.',
@@ -774,9 +747,6 @@ const options = [
 
 export const withCustomError: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -852,9 +822,6 @@ export const withCustomError: Story = {
 
 export const withCustomKey: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -933,9 +900,6 @@ export const Info: Story = {
 
 export const FormValidation: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		docs: {
 			description: {
 				story: 'Exemple d\'utilisation du SySelect dans un formulaire.',
