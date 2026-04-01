@@ -5075,6 +5075,7 @@ export const PinnedColumns: Story = {
 						:items="users"
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
+						suffix="server-pinned-columns"
 						v-bind="args"
 						@update:options="fetchData"
 					/>

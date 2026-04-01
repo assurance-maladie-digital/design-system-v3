@@ -155,7 +155,7 @@ export function usePinnedColumns({
 				...h,
 				cellProps: {
 					...cellProps,
-					class: ['sy-table__pinned', sideClass, cellProps.class].filter(Boolean),
+					class: ['sy-table__pinned', sideClass, 'v-data-table-column--fixed', cellProps.class].filter(Boolean),
 					style: { ...cellStyle, ...stickyCellStyle },
 				},
 			}

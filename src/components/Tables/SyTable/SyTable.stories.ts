@@ -3255,6 +3255,7 @@ export const PinnedColumns: Story = {
 					<SyTable
 						v-model:options="args.options"
 						v-bind="args"
+						suffix="pinned-columns-table"
 					/>
 				</div>
 			`,

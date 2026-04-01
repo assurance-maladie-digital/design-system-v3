@@ -279,6 +279,7 @@
 										'sy-table__pinned': pinnedMeta.left[column.key!] !== undefined || pinnedMeta.right[column.key!] !== undefined,
 										'sy-table__pinned--left': pinnedMeta.left[column.key!] !== undefined,
 										'sy-table__pinned--right': pinnedMeta.right[column.key!] !== undefined,
+										'v-data-table-column--fixed': pinnedMeta.left[column.key!] !== undefined || pinnedMeta.right[column.key!] !== undefined,
 									},
 								]"
 								:style="{
@@ -485,6 +486,7 @@
 
 .sy-server-table :deep(.sy-table__pinned) {
 	box-shadow: none;
+	opacity: 1 !important;
 }
 
 .sy-server-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
@@ -493,6 +495,11 @@
 
 .sy-server-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
 	box-shadow: -2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+}
+
+.sy-server-table--pinned-select-left :deep(.v-data-table__th--select),
+.sy-server-table--pinned-select-left :deep(.v-data-table__td--select-row) {
+	opacity: 1 !important;
 }
 
 .sy-server-table--pinned-select-left :deep(.v-data-table__th--select) {
@@ -513,10 +520,10 @@
 	background: transparent !important;
 }
 
-.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > td:first-child),
-.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td:first-child),
-.sy-server-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr > .v-data-table__td:first-child),
-.sy-server-table--pinned-select-left :deep(.v-data-table__tbody tr > td:first-child) {
+.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
+.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-server-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-server-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
 	position: sticky !important;
 	left: 0 !important;
 	z-index: 3;
@@ -524,10 +531,10 @@
 }
 
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left:not(.sy-server-table--select-single) :deep(.v-data-table__th--select),
-.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > td:first-child),
-.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td:first-child),
-.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr > .v-data-table__td:first-child),
-.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody tr > td:first-child) {
+.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
+.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
 	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
 }
 /* stylelint-enable @stylistic/max-line-length */
