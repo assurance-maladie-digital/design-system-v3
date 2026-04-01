@@ -9,11 +9,11 @@ const meta = {
 	parameters: {
 		docs: {
 			controls: {
-				exclude: ['rules', 'validateOn', 'update:modelValue', 'onUpdate:modelValue'],
+				exclude: ['validateOn', 'update:modelValue', 'onUpdate:modelValue'],
 			},
 		},
 		controls: {
-			exclude: ['rules', 'validateOn', 'onUpdate:modelValue'],
+			exclude: ['validateOn', 'onUpdate:modelValue'],
 		},
 	},
 	argTypes: {
@@ -89,6 +89,142 @@ const meta = {
 			table: {
 				type: { summary: 'boolean' },
 				defaultValue: { summary: 'false' },
+				category: 'validation',
+			},
+		},
+		rules: {
+			control: { type: 'object' },
+			description: 'Règles de validation Vuetify (mode useVuetifyValidation=true)',
+			table: {
+				type: { summary: 'Array<(value: string) => boolean | string>' },
+				defaultValue: { summary: '[]' },
+				category: 'validation',
+			},
+		},
+		useVuetifyValidation: {
+			control: { type: 'boolean' },
+			description: 'Active la validation Vuetify (sinon validation unifiée customRules)',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'validation',
+			},
+		},
+		isValidateOnBlur: {
+			control: { type: 'boolean' },
+			description: 'Déclenche la validation au blur (sinon à la saisie)',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'true' },
+				category: 'validation',
+			},
+		},
+		disableErrorHandling: {
+			control: { type: 'boolean' },
+			description: 'Désactive la gestion des messages d\'erreur/alerte/succès',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'validation',
+			},
+		},
+		showSuccessMessages: {
+			control: { type: 'boolean' },
+			description: 'Affiche les messages de succès',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'true' },
+				category: 'validation',
+			},
+		},
+		customRules: {
+			control: { type: 'object' },
+			description: 'Règles d\'erreur pour le mode validation unifiée',
+			table: {
+				type: { summary: 'ValidationRule[]' },
+				defaultValue: { summary: '[]' },
+				category: 'validation',
+			},
+		},
+		customWarningRules: {
+			control: { type: 'object' },
+			description: 'Règles d\'alerte pour le mode validation unifiée',
+			table: {
+				type: { summary: 'ValidationRule[]' },
+				defaultValue: { summary: '[]' },
+				category: 'validation',
+			},
+		},
+		customSuccessRules: {
+			control: { type: 'object' },
+			description: 'Règles de succès pour le mode validation unifiée',
+			table: {
+				type: { summary: 'ValidationRule[]' },
+				defaultValue: { summary: '[]' },
+				category: 'validation',
+			},
+		},
+		errorMessages: {
+			control: { type: 'object' },
+			description: 'Messages d\'erreur externes ajoutés au résultat de validation',
+			table: {
+				type: { summary: 'string[] | null' },
+				defaultValue: { summary: 'null' },
+				category: 'validation',
+			},
+		},
+		warningMessages: {
+			control: { type: 'object' },
+			description: 'Messages d\'alerte externes ajoutés au résultat de validation',
+			table: {
+				type: { summary: 'string[] | null' },
+				defaultValue: { summary: 'null' },
+				category: 'validation',
+			},
+		},
+		successMessages: {
+			control: { type: 'object' },
+			description: 'Messages de succès externes ajoutés au résultat de validation',
+			table: {
+				type: { summary: 'string[] | null' },
+				defaultValue: { summary: 'null' },
+				category: 'validation',
+			},
+		},
+		hasError: {
+			control: { type: 'boolean' },
+			description: 'Force l\'état erreur',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'validation',
+			},
+		},
+		hasWarning: {
+			control: { type: 'boolean' },
+			description: 'Force l\'état alerte',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'validation',
+			},
+		},
+		hasSuccess: {
+			control: { type: 'boolean' },
+			description: 'Force l\'état succès',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'validation',
+			},
+		},
+		maxErrors: {
+			control: { type: 'number' },
+			description: 'Nombre maximum de messages d\'erreur affichés',
+			table: {
+				type: { summary: 'number' },
+				defaultValue: { summary: '1' },
+				category: 'validation',
 			},
 		},
 	},
