@@ -24,7 +24,7 @@ Prenons l'exemple d'un bouton (VBtn).
 Voici un exemple d'utilisation du composant :
 
 <Source dark code={`
-<MyButton
+<VBtn
     :title="'Cliquez ici'"
     :vuetifyOptions="{ btn: { color: 'secondary', icon: true } }"
 />
@@ -47,7 +47,7 @@ Dans cet exemple :
 Voici un exemple plus complet :
 
 <Source dark code={`
-<MyButton
+<VBtn
     :title="'Valider'"
     :vuetifyOptions="{ btn: { color: 'primary', outlined: false, icon: true } }"
  />
@@ -69,7 +69,7 @@ Exemple de bouton par défaut
 Sans fournir de vuetifyOptions, le bouton pourrait ressembler à ceci :
 
 <Source dark code={`
-<MyButton :title="'Par défaut'" />
+<VBtn :title="'Par défaut'" />
 `} />
 
 Ce bouton utilisera les options par défaut définies dans le design system, telles que la couleur, le style de bordure ou les icônes.

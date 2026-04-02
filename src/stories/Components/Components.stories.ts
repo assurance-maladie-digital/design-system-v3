@@ -1,5 +1,6 @@
 import { VCard, VCardText, VCardTitle, VRow, VCol, VIcon } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3'
+import { useTheme } from 'vuetify'
 
 export default {
 	title: 'Composants/Vue d\'ensemble',
@@ -24,12 +25,14 @@ export const ComponentsList: StoryObj = {
 		return {
 			components: { VCard, VCardText, VCardTitle, VRow, VCol, VIcon },
 			setup() {
+				const theme = useTheme()
+				const isAp = theme.global.name.value === 'ap'
 				const components = [
 					{
 						title: 'HeaderBar',
 						description: 'Utilisé pour afficher l’en-tête d’une page ainsi qu’une barre de navigation.',
 						link: '/?path=/docs/composants-structure-headerbar--docs',
-						img: '/components/header-bar.svg',
+						img: `/components/header-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -57,7 +60,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FooterBar',
 						description: 'Utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.',
 						link: '/?path=/docs/composants-structure-footerbar--docs',
-						img: '/components/footer-bar.svg',
+						img: `/components/footer-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -92,7 +95,14 @@ export const ComponentsList: StoryObj = {
 						title: 'SkipLink',
 						description: 'Utilisé pour permettre à l\'utilisateur utilisant la navigation au clavier de passer directement à une section de contenu.',
 						link: '/?path=/docs/composants-navigation-skiplink--docs',
-						img: '/components/skip-link.svg',
+						img: `/components/skip-link${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
+						title: 'SyPagination',
+						description: 'Utilisé pour permettre la navigation entre plusieurs pages de contenu.',
+						link: '/?path=/docs/composants-navigation-sypagination--docs',
+						img: `/components/pagination${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -113,7 +123,7 @@ export const ComponentsList: StoryObj = {
 						title: 'CopyBtn',
 						description: 'Utilisé pour afficher un bouton permettant à l’utilisateur de copier du texte.',
 						link: '/?path=/docs/composants-boutons-copybtn--docs',
-						img: '/components/copy-btn.svg',
+						img: `/components/copy-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -127,7 +137,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DownloadBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de télécharger un document provenant d’une API.',
 						link: '/?path=/docs/composants-boutons-downloadbtn--docs',
-						img: '/components/download-btn.svg',
+						img: `/components/download-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -353,10 +363,33 @@ export const ComponentsList: StoryObj = {
 					'Feedback',
 				]
 
+				const apComponents = [
+					'FooterBar',
+					'HeaderBar',
+					'HeaderLoading',
+					'PageContainer',
+					'CopyBtn',
+					'DownloadBtn',
+					'SyPagination',
+					'FranceConnectBtn',
+					'SkipLink',
+				]
+
+				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
+					if (isAp) {
+						return (
+							component.category === category
+							&& apComponents.some(apComponent => component.title.includes(apComponent))
+						)
+					}
+
+					return component.category === category
+				}
+
 				const groupedComponents = categoryOrder.map(category => ({
 					category,
-					components: components.filter(component => component.category === category),
-				}))
+					components: components.filter(component => shouldDisplayComponent(component, category)),
+				})).filter(group => group.components.length > 0)
 
 				return {
 					groupedComponents,

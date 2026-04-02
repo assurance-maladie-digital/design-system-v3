@@ -63,9 +63,9 @@ const themeItems = [
 	{ value: 'pa', title: 'Thème PA' },
 	...(!isDev
 		? []
-		: [{ value: 'ap', title: 'Thème AmeliPro New' }]
+            : [{value: 'ap2026', title: 'Thème AmeliPro 2026'}]
 	),
-	{ value: 'ap2026', title: 'Thème AmeliPro' },
+    {value: 'ap', title: 'Thème AmeliPro'},
 ]
 
 const globalTypes = {
@@ -154,6 +154,7 @@ const preview: Preview = {
 						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes'],
 						'Configuration du thème',
 						'Correspondance composants PAG',
+                        'Correspondance composants Amelipro',
 						'Règles De Validation',
 						'Utiliser les rules',
 						'Services',

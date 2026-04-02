@@ -26,15 +26,106 @@ const apOnlyStories = [
     'footerbar--with-phone-number'
 ]
 
+// Components to display in AP theme
+const apComponents = [
+    "composants-vue-d-ensemble--docs",
+    'composants-structure-footerbar',
+    'composants-structure-headerbar',
+    'composants-structure-headerloading',
+    'composants-layout-pagecontainer',
+    'composants-navigation-skiplink',
+    'composants-navigation-sypagination',
+    'composants-boutons-copybtn',
+    'composants-boutons-downloadbtn',
+]
+// Get stored theme or default to CNAM
+const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
+
+const isExactMatch = (itemId: string, stories: string[]) =>
+    stories.includes(itemId)
+
+const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
+    stories.some((story) => story.startsWith(`${itemId}-`))
+
+const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
+    stories.some((story) => itemId.startsWith(`${story}--`))
+
+
+const shouldShowApComponent = (item, itemId, theme) => {
+    const isAp2026 = theme === 'ap2026'
+    const isNotAp = theme !== 'ap'
+    const isAp = theme === 'ap'
+    const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
+
+    const hiddenWhenAp = new Set([
+        'guide-du-dev-correspondance-composants-pag--docs',
+        'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs',
+        'accessibilité-design-system',
+        'guide-du-dev-guide-technique-système-de-validation-règles--docs',
+        'guide-du-dev-migration',
+        'guide-du-dev-installation--docs',
+    ])
+
+    if (itemId === 'composants-amelipro') {
+        item.style.display = hideAmelipro ? 'none' : 'block'
+        return
+    }
+
+    if (hiddenWhenAp.has(itemId)) {
+        item.style.display = isAp ? 'none' : 'block'
+        return
+    }
+
+    if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
+        item.style.display = isAp ? 'block' : 'none'
+        return
+    }
+
+    if (isAp) {
+        const isComponentTree = itemId.startsWith('composants')
+
+        if (!isComponentTree) {
+            item.style.display = ''
+            return
+        }
+
+        const shouldShow =
+            isExactMatch(itemId, apComponents) ||
+            isParentOfAllowedComponent(itemId, apComponents) ||
+            isChildOfAllowedComponent(itemId, apComponents)
+
+        item.style.display = shouldShow ? '' : 'none'
+        return
+    }
+    if (isAp2026 && isExactMatch(itemId, ap2026OnlyStories)) {
+        item.style.display = 'none'
+        return
+    }
+
+    if (isNotAp && isExactMatch(itemId, apOnlyStories)) {
+        item.style.display = 'none'
+        return
+    }
+}
+
+
 
 const applyThemeSidebar = (theme) => {
 	const processSidebar = () => {
 		const sidebar = document.querySelector('.sidebar-container')
 
+        // First pass: identify if amelipro should be hidden
+        const hideAmelipro = ['pa', 'cnam'].includes(theme)
+        // When AP theme is active, only show Amelipro components
+        const isAp2026 = theme === 'ap2026'
+        const isNotAp = theme !== 'ap'
+        const isAp = theme === 'ap'
+        const isPa = theme === 'pa'
+
 		if (sidebar) {
 			// First, reset display of all items if we're coming from AP theme
 			// This ensures components are properly restored when switching from AP to other themes
-			if (theme !== 'ap') {
+            if (isAp) {
 				const allItems = sidebar.querySelectorAll('.sidebar-item, .sidebar-subheading') as NodeListOf<HTMLElement>
 				allItems.forEach(item => {
 					// Reset display to default
@@ -42,18 +133,7 @@ const applyThemeSidebar = (theme) => {
 				})
 			}
 
-			const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
-
-			// First pass: identify if amelipro should be hidden
-            const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
-            // When AP theme is active, only show Amelipro components
-            const isAp2026 = theme === 'ap2026'
-            const isNotAp = theme !== 'ap'
-            const isPa = theme === 'pa'
-
-            const matchesStory = (itemId, stories) =>
-                stories.some(story => itemId.includes(story))
-
+            const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
             // Hide or show items based on theme
             items.forEach((item) => {
@@ -65,19 +145,15 @@ const applyThemeSidebar = (theme) => {
                     item.style.display = theme === 'cnam' ? 'block' : 'none'
                 }
 
-                if (isAp2026 && matchesStory(itemId, ap2026OnlyStories)) {
+                if (isAp2026 && isExactMatch(itemId, ap2026OnlyStories)) {
                     item.style.display = 'none'
                 }
 
-                if (isNotAp && matchesStory(itemId, apOnlyStories)) {
+                if (isNotAp && isExactMatch(itemId, apOnlyStories)) {
                     item.style.display = 'none'
                 }
 
-				// Handle amelipro components folder
-				const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
-				if (isAmeliproFolder) {
-					item.style.display = hideAmelipro ? 'none' : 'block'
-				}
+                shouldShowApComponent(item, itemId, theme)
 
 				// Hide Structure folder and its components when PA theme is active
 				if (isPa && itemId.startsWith('composants-structure')) {
@@ -85,10 +161,12 @@ const applyThemeSidebar = (theme) => {
 				}
 
 				// For AP theme, hide all components except those in Amelipro folder
+                // Handle amelipro components folder
+                const isAmeliproFolder = item.getAttribute('data-item-id') === 'composants-amelipro'
+
                 if (isAp2026) {
 					// Get item ID and text content
 					const itemId = item.getAttribute('data-item-id') || ''
-					const itemText = item.textContent || ''
 
 					// Check if this is a component folder (but not Amelipro)
 					const isComponentFolder = itemId.startsWith('composants-') && !isAmeliproFolder
@@ -147,6 +225,16 @@ const applyThemeSidebar = (theme) => {
                     item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
+                // Handle the "Correspondance composants Amelipro" page - display it when AP theme is active
+                if (itemId === 'guide-du-dev-correspondance-composants-pag--docs') {
+                    item.style.display = isAp ? 'none' : 'block'
+                    return
+                }
+
+                if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
+                    item.style.display = isAp ? 'block' : 'none'
+                    return
+                }
 				// Get item ID and text content once for all checks
 				const itemText = item.textContent || ''
 
@@ -319,38 +407,25 @@ const applyThemeSidebar = (theme) => {
 	}
 }
 
-// Get stored theme or default to CNAM
-const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
-
 const observeSidebar = () => {
     const attachObserver = () => {
         const sidebar = document.querySelector('.sidebar-container')
-        if (sidebar) {
-            const observer = new MutationObserver(() => {
-                const theme = localStorage.getItem('storybook-theme')
-                const isAp2026 = theme === 'ap2026'
-                const isNotAp = theme !== 'ap'
 
-                const matchesStory = (itemId, stories) =>
-                    stories.some(story => itemId.includes(story))
+        if (!sidebar) return
 
-                const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
+        const observer = new MutationObserver(() => {
+            const theme = localStorage.getItem('storybook-theme')
 
-                items.forEach((item) => {
-                    const itemId = item.getAttribute('data-item-id') || ''
+            const items = sidebar.querySelectorAll('.sidebar-item') as NodeListOf<HTMLElement>
 
-                    if (isAp2026 && matchesStory(itemId, ap2026OnlyStories)) {
-                        item.style.display = 'none'
-                    }
+            items.forEach((item) => {
+                const itemId = item.getAttribute('data-item-id') || ''
+                shouldShowApComponent(item, itemId, theme)
 
-                    if (isNotAp && matchesStory(itemId, apOnlyStories)) {
-                        item.style.display = 'none'
-                    }
-                })
             })
+        })
 
-            observer.observe(sidebar, {childList: true, subtree: true})
-        }
+        observer.observe(sidebar, {childList: true, subtree: true})
     }
 
     attachObserver()
@@ -360,9 +435,9 @@ const observeSidebar = () => {
         const sidebar = document.querySelector('.sidebar-container')
         if (sidebar) bodyObserver.disconnect()
     })
+
     bodyObserver.observe(document.body, {childList: true, subtree: true})
 }
-// Apply initial theme and sidebar
 if (typeof window !== 'undefined') {
 	applyThemeClass(storedTheme || 'cnam')
 	setTimeout(() => {
@@ -382,9 +457,43 @@ addons.setConfig({
                     : cnamTheme,
 })
 
-// Create a function to handle theme changes that can be called from anywhere
+const getCurrentItemIdFromUrl = () => {
+    const params = new URLSearchParams(window.location.search)
+    const path = params.get('path') || ''
+    const match = path.match(/docs\/(.+)$/)
+    return match ? match[1] : null
+}
+
+const navigateToDocsStory = (itemId: string) => {
+    const params = new URLSearchParams(window.location.search)
+    const globals = params.get('globals')
+
+    const newUrl = `?path=/docs/${encodeURIComponent(itemId)}${
+        globals ? `&globals=${globals}` : ''
+    }`
+
+    window.location.replace(newUrl)
+}
+
 const handleThemeChange = (newTheme) => {
-	// Update Storybook theme
+    document.documentElement.style.opacity = '0'
+
+    const currentItemId = getCurrentItemIdFromUrl()
+
+    if (currentItemId) {
+        const currentItem = document.querySelector(
+            `.sidebar-item[data-item-id="${currentItemId}"]`
+        ) as HTMLElement | null
+
+        const isHidden = currentItem && currentItem.style.display === 'none'
+
+        if (isHidden) {
+            navigateToDocsStory('démarrer-accueil--docs')
+            return
+        }
+    }
+
+    // Update Storybook theme
     addons.setConfig({
         theme:
             newTheme === 'pa'
@@ -396,23 +505,20 @@ const handleThemeChange = (newTheme) => {
                         : cnamTheme,
     })
 
-	// Apply theme class to HTML root
-	applyThemeClass(newTheme)
+    applyThemeClass(newTheme)
 
-	// Apply theme menu sidebar with a slightly longer delay to ensure DOM is ready
-	// Especially important when switching from AP theme to other themes
-	setTimeout(() => {
-		applyThemeSidebar(newTheme)
-		
-		// For non-AP themes, apply a second pass after a delay to ensure all components are visible
-		if (newTheme !== 'ap') {
-			setTimeout(() => {
-				applyThemeSidebar(newTheme)
-			}, 200)
-		}
-	}, 100)
+    applyThemeSidebar(newTheme)
+
+    if (newTheme !== 'ap') {
+        setTimeout(() => {
+            applyThemeSidebar(newTheme)
+        }, 0)
+    }
+
+    setTimeout(() => {
+        document.documentElement.style.opacity = '1'
+    }, 0)
 }
-
 // Listen for theme changes from other tabs (storage event)
 if (typeof window !== 'undefined') {
 	// Override the localStorage.setItem method to detect changes in the current tab
