@@ -445,14 +445,13 @@ if (typeof window !== 'undefined') {
 }
 
 addons.setConfig({
-	theme:
-        storedTheme === 'pa'
-        	? paTheme
-        	: storedTheme === 'ap'
-        		? apTheme
-        		: storedTheme === 'ap2026'
-        			? ap2026Theme
-        			: cnamTheme,
+	theme: storedTheme === 'pa'
+		? paTheme
+		: storedTheme === 'ap'
+			? apTheme
+			: storedTheme === 'ap2026'
+				? ap2026Theme
+				: cnamTheme,
 })
 
 const getCurrentItemIdFromUrl = () => {
@@ -493,14 +492,13 @@ const handleThemeChange = (newTheme) => {
 
 	// Update Storybook theme
 	addons.setConfig({
-		theme:
-            newTheme === 'pa'
-            	? paTheme
-            	: newTheme === 'ap'
-            		? apTheme
-            		: newTheme === 'ap2026'
-            			? ap2026Theme
-            			: cnamTheme,
+		theme: newTheme === 'pa'
+			? paTheme
+			: newTheme === 'ap'
+				? apTheme
+				: newTheme === 'ap2026'
+					? ap2026Theme
+					: cnamTheme,
 	})
 
 	applyThemeClass(newTheme)
