@@ -11,51 +11,51 @@
 	type PeriodValue = { from: DateInput, to: DateInput }
 
 	const props = withDefaults(defineProps<{
-		modelValue?: PeriodValue
-		placeholderFrom?: string
-		placeholderTo?: string
-		format?: string
-		dateFormatReturn?: string
-		showWeekNumber?: boolean
-		required?: boolean
-		displayIcon?: boolean
-		displayAppendIcon?: boolean
-		disabled?: boolean
-		noIcon?: boolean
-		noCalendar?: boolean
-		isOutlined?: boolean
-		showSuccessMessages?: boolean
+		bgColor?: string
 		customRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
-		disableErrorHandling?: boolean
-		readonly?: boolean
-		bgColor?: string
+		dateFormatReturn?: string
 		density?: 'default' | 'comfortable' | 'compact'
-		hideDetails?: boolean | 'auto'
+		disableErrorHandling?: boolean
+		disabled?: boolean
+		displayAppendIcon?: boolean
+		displayIcon?: boolean
+		format?: string
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		hideDetails?: boolean | 'auto'
+		isOutlined?: boolean
+		modelValue?: PeriodValue
+		noCalendar?: boolean
+		noIcon?: boolean
+		placeholderFrom?: string
+		placeholderTo?: string
+		readonly?: boolean
+		required?: boolean
+		showSuccessMessages?: boolean
+		showWeekNumber?: boolean
 	}>(), {
-		modelValue: () => ({ from: null, to: null }),
-		placeholderFrom: 'Début',
-		placeholderTo: 'Fin',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		showWeekNumber: false,
-		required: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		isOutlined: true,
-		showSuccessMessages: true,
+		bgColor: 'white',
 		customRules: () => [],
 		customWarningRules: () => [],
-		disableErrorHandling: false,
-		readonly: false,
-		bgColor: 'white',
+		dateFormatReturn: '',
 		density: 'default',
-		hideDetails: false,
+		disableErrorHandling: false,
+		disabled: false,
+		displayAppendIcon: false,
+		displayIcon: true,
+		format: 'DD/MM/YYYY',
 		headingLevel: 2,
+		hideDetails: false,
+		isOutlined: true,
+		modelValue: () => ({ from: null, to: null }),
+		noCalendar: false,
+		noIcon: false,
+		placeholderFrom: 'Début',
+		placeholderTo: 'Fin',
+		readonly: false,
+		required: false,
+		showSuccessMessages: true,
+		showWeekNumber: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
