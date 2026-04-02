@@ -457,9 +457,43 @@ addons.setConfig({
                     : cnamTheme,
 })
 
-// Create a function to handle theme changes that can be called from anywhere
+const getCurrentItemIdFromUrl = () => {
+    const params = new URLSearchParams(window.location.search)
+    const path = params.get('path') || ''
+    const match = path.match(/docs\/(.+)$/)
+    return match ? match[1] : null
+}
+
+const navigateToDocsStory = (itemId: string) => {
+    const params = new URLSearchParams(window.location.search)
+    const globals = params.get('globals')
+
+    const newUrl = `?path=/docs/${encodeURIComponent(itemId)}${
+        globals ? `&globals=${globals}` : ''
+    }`
+
+    window.location.replace(newUrl)
+}
+
 const handleThemeChange = (newTheme) => {
-	// Update Storybook theme
+    document.documentElement.style.opacity = '0'
+
+    const currentItemId = getCurrentItemIdFromUrl()
+
+    if (currentItemId) {
+        const currentItem = document.querySelector(
+            `.sidebar-item[data-item-id="${currentItemId}"]`
+        ) as HTMLElement | null
+
+        const isHidden = currentItem && currentItem.style.display === 'none'
+
+        if (isHidden) {
+            navigateToDocsStory('démarrer-accueil--docs')
+            return
+        }
+    }
+
+    // Update Storybook theme
     addons.setConfig({
         theme:
             newTheme === 'pa'
@@ -471,23 +505,20 @@ const handleThemeChange = (newTheme) => {
                         : cnamTheme,
     })
 
-	// Apply theme class to HTML root
-	applyThemeClass(newTheme)
+    applyThemeClass(newTheme)
 
-	// Apply theme menu sidebar with a slightly longer delay to ensure DOM is ready
-	// Especially important when switching from AP theme to other themes
-	setTimeout(() => {
-		applyThemeSidebar(newTheme)
-		
-		// For non-AP themes, apply a second pass after a delay to ensure all components are visible
-		if (newTheme !== 'ap') {
-			setTimeout(() => {
-				applyThemeSidebar(newTheme)
-			}, 200)
-		}
-	}, 100)
+    applyThemeSidebar(newTheme)
+
+    if (newTheme !== 'ap') {
+        setTimeout(() => {
+            applyThemeSidebar(newTheme)
+        }, 0)
+    }
+
+    setTimeout(() => {
+        document.documentElement.style.opacity = '1'
+    }, 0)
 }
-
 // Listen for theme changes from other tabs (storage event)
 if (typeof window !== 'undefined') {
 	// Override the localStorage.setItem method to detect changes in the current tab
