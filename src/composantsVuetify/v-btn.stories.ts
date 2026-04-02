@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 
 const meta: Meta = {
-	parameters: {
-		docsOnly: true,
-	},
+	title: 'Composants/Composants Vuetify/VBtn',
+	tags: ['!dev'],
 	render: args => ({
 		setup() {
 			return { args }
