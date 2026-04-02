@@ -1,5 +1,4 @@
 import 'vuetify/styles'
-import { watch } from 'vue'
 import './storybook.css'
 import type { Preview } from '@storybook/vue3'
 import { setup } from '@storybook/vue3'
@@ -7,6 +6,24 @@ import { createVuetifyInstance } from '../src/vuetifyConfig'
 
 const vuetify = createVuetifyInstance()
 const isDev = process.env.NODE_ENV === 'development'
+
+const applyTheme = (theme: string) => {
+	vuetify.theme.change(theme)
+	const rootElement = document.documentElement
+	rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
+	rootElement.classList.add(`theme-${theme}`)
+	localStorage.setItem('storybook-theme', theme)
+}
+
+// Listen to Storybook globals changes — fires on all pages including pure MDX.
+// __STORYBOOK_ADDONS_CHANNEL__ is the shared channel injected by Storybook into the preview iframe.
+if (typeof window !== 'undefined') {
+	const channel = (window as Window & { __STORYBOOK_ADDONS_CHANNEL__?: { on: (event: string, cb: (data: unknown) => void) => void } }).__STORYBOOK_ADDONS_CHANNEL__
+	channel?.on('globalsUpdated', (data) => {
+		const theme = (data as { globals?: Record<string, string> })?.globals?.theme
+		if (theme) applyTheme(theme)
+	})
+}
 
 setup((app, { globals }) => {
 	app.use(vuetify)
@@ -35,32 +52,10 @@ setup((app, { globals }) => {
 
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
-	// Apply theme class to <html> (document.documentElement) instead of #root
-	const applyThemeClass = (theme) => {
-		const rootElement = document.documentElement // Always exists
-		rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
-		rootElement.classList.add(`theme-${theme}`)
-	}
-
 	// Apply theme immediately on load
 	if (typeof window !== 'undefined') {
-		applyThemeClass(globals.theme)
+		applyTheme(globals.theme)
 	}
-
-	watch(
-		() => globals.theme,
-		(newTheme) => {
-			// Update Vuetify theme
-			vuetify.theme.change(newTheme)
-
-			// Apply the new theme class
-			applyThemeClass(newTheme)
-
-			// Store theme in localStorage
-			localStorage.setItem('storybook-theme', newTheme)
-		},
-		{ immediate: true },
-	)
 })
 
 const themeItems = [
@@ -97,12 +92,9 @@ const preview: Preview = {
 	},
 	decorators: [
 		(story, context) => {
-			// Handle theme changes
+			// Handle theme changes for story renders (channel event handles MDX pages)
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
-				vuetify.theme.change(context.globals.theme)
-				document.documentElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
-				document.documentElement.classList.add(`theme-${context.globals.theme}`)
-				localStorage.setItem('storybook-theme', context.globals.theme)
+				applyTheme(context.globals.theme)
 			}
 
 			// Check if we're in docs mode to apply special handling for dropdowns
