@@ -18,6 +18,11 @@
       "require": "./dist/design-system-v3.umd.cjs"
     },
     "./style.css": "./dist/style.css",
+    "./vuetifyConfig": {
+      "types": "./dist/vuetifyConfig.d.ts",
+      "import": "./dist/vuetifyConfig.js",
+      "require": "./dist/vuetifyConfig.umd.cjs"
+    },
     "./*": {
       "types": "./src/*",
       "default": "./src/*"

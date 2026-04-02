@@ -5,5 +5,3 @@ export * from './services'
 export * from './composables'
 export * from './utils/rules'
 export * from './utils'
-
-export { createVuetifyInstance } from './vuetifyConfig'
