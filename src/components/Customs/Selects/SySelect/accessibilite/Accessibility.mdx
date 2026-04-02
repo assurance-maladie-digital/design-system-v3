@@ -1,274 +1,192 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/blocks';
 import * as Stories from '../SySelect.stories.ts';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
-import '@/stories/styles/shared.css';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
+<AccessibilityGuideLayout
+	componentName="SySelect"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/"
+>
 
-<div className="accessibility-guide">
-  <h1>Guide d'Accessibilité du Composant SySelect</h1>
+  	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/SySelect.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/787" target="_blank" style={{color:'#0C41BD'}}>issue #787</a>), (<a href="https://github.com/assurance-maladie-digital/design-system/issues/4028" target="_blank" style={{color:'#0C41BD'}}>issue #931</a>)</p>
+	</div>
 
-  
-  <div className="intro-section">
-    <img 
-      src={AccessibilityIcon} 
-      alt="Icône d'accessibilité" 
-      className="accessibility-icon"
-    />
-    <p className="intro-text">
-      Le composant SySelect a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
-      notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les combobox select-only</a>. 
-      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
-    </p>
-</div>
+	<CriteriaSection>
+		<CriteriaCard icon="🔍" title="Nom accessible, rôle et associations programmatiques">
+			<ul>
+				<li>
+					<strong>Nom accessible du champ</strong> : le composant calcule un nom
+					accessible robuste en priorisant <code>aria-label</code>, puis le
+					<code>label</code>, puis le texte d’aide.
+				</li>
+				<li>
+					<strong>Gestion du libellé</strong> : le champ conserve un libellé visible via
+					la prop <code>label</code>, avec gestion optionnelle de l’astérisque pour les
+					champs requis.
+				</li>
+				<li>
+					<strong>Rôle du composant</strong> : l’input exposé par le composant reçoit
+					le rôle <code>combobox</code> avec les états et propriétés associés
+					(<code>aria-expanded</code>, <code>aria-controls</code>,
+					<code>aria-activedescendant</code>, <code>aria-autocomplete</code>).
+				</li>
+				<li>
+					<strong>Popup nommée</strong> : la liste déroulante est exposée avec le rôle
+					<code>grid</code> et associée à un libellé caché via
+					<code>aria-labelledby</code>.
+				</li>
+				<li>
+					<strong>Descriptions associées</strong> : le composant construit
+					dynamiquement <code>aria-describedby</code> pour relier le champ au texte
+					d’aide, aux messages et à la zone de statut selon le contexte.
+				</li>
+			</ul>
+		</CriteriaCard>
 
-  <div className="criteria-section">
-    <h2>Critères d'accessibilité respectés</h2>
-    
-    <div className="criteria-card">
-      <div className="criteria-header">
-        <span className="criteria-icon">🔍</span>
-        <h3>Structure sémantique</h3>
-      </div>
-      <ul>
-        <li><strong>Rôles ARIA appropriés</strong> : <code>role="combobox"</code> sur l'input, <code>role="listbox"</code> sur le menu déroulant</li>
-        <li><strong>Relations entre éléments</strong> : <code>aria-controls</code> pour lier le combobox au listbox</li>
-        <li><strong>Type d'interaction</strong> : <code>aria-haspopup="listbox"</code> et <code>aria-autocomplete="list"</code></li>
-        <li><strong>État du menu</strong> : <code>aria-expanded</code> indique si le menu est ouvert ou fermé</li>
-      </ul>
-    </div>
-    
-    <div className="criteria-card">
-      <div className="criteria-header">
-        <span className="criteria-icon">⌨️</span>
-        <h3>Navigation clavier complète</h3>
-      </div>
-      <ul>
-        <li><strong>Flèches haut/bas</strong> : Navigation entre les options sans modifier la sélection</li>
-        <li><strong>Entrée</strong> : Sélection de l'option active et fermeture du menu</li>
-        <li><strong>Échap</strong> : Fermeture du menu sans modifier la sélection</li>
-        <li><strong>Caractères imprimables</strong> : Navigation vers l'option commençant par le(s) caractère(s) saisi(s)</li>
-      </ul>
-    </div>
-    
-    <div className="criteria-card">
-      <div className="criteria-header">
-        <span className="criteria-icon">📱</span>
-        <h3>États et retours d'information</h3>
-      </div>
-      <ul>
-        <li><strong>Sélection active</strong> : <code>aria-activedescendant</code> indique l'option active pendant la navigation</li>
-        <li><strong>Option sélectionnée</strong> : <code>aria-selected="true"</code> sur l'option sélectionnée</li>
-        <li><strong>État de validation</strong> : <code>aria-required="true"</code> et <code>aria-invalid="true"</code> pour les champs obligatoires et en erreur</li>
-        <li><strong>Scroll automatique</strong> : Les options sont automatiquement scrollées dans la vue lors de la navigation</li>
-      </ul>
-    </div>
-  </div>
+		<CriteriaCard icon="⌨️" title="Navigation clavier et gestion du focus">
+			<ul>
+				<li>
+					<strong>Ouverture et navigation</strong> : la navigation clavier est gérée sur
+					le champ avec <kbd>Entrée</kbd>, <kbd>Espace</kbd>, <kbd>Flèche bas</kbd>,
+					<kbd>Flèche haut</kbd>, <kbd>Home</kbd>, <kbd>End</kbd>,
+					<kbd>Page Up</kbd>, <kbd>Page Down</kbd>, <kbd>Tab</kbd> et
+					<kbd>Échap</kbd>.
+				</li>
+				<li>
+					<strong>Focus DOM conservé sur le champ</strong> : le focus reste sur l’input
+					et l’option active est exposée via <code>aria-activedescendant</code>.
+				</li>
+				<li>
+					<strong>Focus visible</strong> : un style de focus spécifique est prévu pour
+					les éléments interactifs et pour les lignes actives de la liste.
+				</li>
+				<li>
+					<strong>Pas de suppression arbitraire du focus</strong> : à la fermeture, le
+					composant peut restaurer le focus sur l’input afin de conserver un parcours
+					clavier cohérent.
+				</li>
+				<li>
+					<strong>Bouton de réinitialisation</strong> : le bouton de suppression de la
+					sélection est un vrai <code>button</code>, actionnable à la souris, à
+					<kbd>Entrée</kbd> et à <kbd>Espace</kbd>, avec un libellé accessible.
+				</li>
+			</ul>
+		</CriteriaCard>
 
-  <div className="keyboard-section">
-    <h2>Détail de la navigation clavier</h2>
-    Le composant **SySelect** implémente le pattern de navigation au clavier recommandé par le W3C pour les *combobox select-only*.
- <table
-    style={{
-      width: '100%',
-      borderCollapse: 'collapse',
-      marginTop: '1em',
-    }}
-  >
-    <thead>
-      <tr style={{ borderBottom: '1px solid #ddd', textAlign: 'left' }}>
-        <th style={{ padding: '8px' }}>Touche</th>
-        <th style={{ padding: '8px' }}>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Flèche bas</code></td>
-        <td style={{ padding: '8px' }}>
-          Ouvre le menu et déplace le focus sur la première option (ou la suivante si une option est déjà sélectionnée)
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Flèche haut</code></td>
-        <td style={{ padding: '8px' }}>
-          Ouvre le menu et déplace le focus sur la dernière option
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Flèches haut/bas</code></td>
-        <td style={{ padding: '8px' }}>
-          Déplace le focus dans la liste des options (sans modifier la sélection)
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Entrée</code></td>
-        <td style={{ padding: '8px' }}>
-          Sélectionne l'option active et ferme le menu
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Échap</code></td>
-        <td style={{ padding: '8px' }}>
-          Ferme le menu sans modifier la sélection
-        </td>
-      </tr>
-      <tr>
-        <td style={{ padding: '8px' }}><code>Caractères imprimables</code></td>
-        <td style={{ padding: '8px' }}>
-          Déplace le focus sur l'option commençant par le(s) caractère(s) saisi(s)
-        </td>
-      </tr>
-    </tbody>
-  </table>
- <p style={{ marginTop: '1em' }}>
-    <strong>Note :</strong> Le focus DOM reste toujours sur l'élément <em>combobox</em>, tandis que le focus visuel est géré via <code>aria-activedescendant</code>.
-  </p>
-  </div>
+		<CriteriaCard icon="🧾" title="États, erreurs et aide à la saisie">
+			<ul>
+				<li>
+					<strong>Champ requis</strong> : le composant expose <code>aria-required</code>
+					lorsque cela est nécessaire.
+				</li>
+				<li>
+					<strong>Champ invalide</strong> : le composant expose
+					<code>aria-invalid="true"</code> lorsque la validation échoue ou lorsque des
+					messages d’erreur sont présents.
+				</li>
+				<li>
+					<strong>Messages associés</strong> : les messages d’erreur et le texte d’aide
+					sont liés au champ par des identifiants dédiés.
+				</li>
+				<li>
+					<strong>Annonce dynamique</strong> : une zone de statut en
+					<code>aria-live="polite"</code> et <code>aria-atomic="true"</code> est
+					prévue pour annoncer les erreurs.
+				</li>
+				<li>
+					<strong>Indications visibles</strong> : le texte d’aide peut être affiché
+					dans la zone de message ou sous le champ selon l’état du composant.
+				</li>
+			</ul>
+		</CriteriaCard>
 
-  <div className="implementation-section">
-    <h2>Spécificités d'implémentation</h2>
-    <p>
-      Conformément aux recommandations WAI-ARIA pour les combobox avec auto-complétion, notre implémentation :
-    </p>
-    <ul>
-      <li>Maintient le focus DOM sur l'input combobox pendant toute l'interaction</li>
-      <li>Utilise <code>aria-activedescendant</code> pour indiquer l'option active aux technologies d'assistance</li>
-      <li>Sépare clairement la navigation (flèches) de la sélection (Entrée)</li>
-      <li>Gère correctement les états visuels et programmatiques des options</li>
-      <li>Implémente un filtrage en temps réel des options basé sur la saisie utilisateur</li>
-      <li>Désactive l'auto-complétion du navigateur pour éviter les conflits</li>
-    </ul>
-  </div>
-</div>
+		<CriteriaCard icon="✅" title="Sélection simple, multiple et commandes associées">
+			<ul>
+				<li>
+					<strong>Sélection simple</strong> : la sélection d’une option met à jour la
+					valeur puis referme la liste.
+				</li>
+				<li>
+					<strong>Sélection multiple</strong> : le composant permet de conserver la
+					liste ouverte pendant la sélection de plusieurs options.
+				</li>
+				<li>
+					<strong>Restitution des sélections</strong> : les valeurs sélectionnées sont
+					affichées soit sous forme de texte, soit sous forme de <em>chips</em>.
+				</li>
+				<li>
+					<strong>Suppression d’une sélection</strong> : chaque <em>chip</em> peut être
+					retirée via son contrôle de fermeture avec un libellé dédié.
+				</li>
+				<li>
+					<strong>Cas particulier de l’option par défaut</strong> : une option
+					placeholder de type « choisir / sélectionner » est traitée spécifiquement
+					pour éviter une sélection non pertinente.
+				</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
 
-<div className="accessibility-guide">
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+	<DemoSection componentName="SySelect">
+		<Primary />
+	</DemoSection>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/SySelect.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/787" target="_blank" style={{color:'#0C41BD'}}>issue #787</a>), (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/931" target="_blank" style={{color:'#0C41BD'}}>issue #931</a>)</p>
-</div>
+	<BestPracticesSection>
+		<ul>
+			<li>
+				<strong>Conserver un libellé visible pertinent</strong> : utilisez un
+				<code>label</code> explicite décrivant clairement la donnée attendue.
+			</li>
+			<li>
+				<strong>Ne pas s’appuyer uniquement sur un placeholder</strong> : le nom du
+				champ doit rester disponible même lorsque la valeur change.
+			</li>
+			<li>
+				<strong>Afficher les indications utiles avant validation</strong> : pour un
+				champ obligatoire ou avec format attendu, affichez l’information dans le
+				libellé ou le texte associé.
+			</li>
+			<li>
+				<strong>Rédiger des messages d’erreur explicites</strong> : les messages
+				doivent identifier le champ concerné et, si nécessaire, suggérer le format ou
+				un exemple de valeur attendue.
+			</li>
+			<li>
+				<strong>Vérifier manuellement la restitution</strong> : pour un composant piloté
+				par script, testez la restitution avec les technologies d’assistance de la
+				base de référence, et pas uniquement avec l’inspection DOM.
+			</li>
+			<li>
+				<strong>Surveiller les contenus HTML autorisés</strong> : lorsque
+				<code>allowHtml</code> est activé, vérifier que le contenu injecté reste
+				compréhensible, lisible et compatible avec les technologies d’assistance.
+			</li>
+			<li>
+				<strong>Préserver l’ordre de tabulation</strong> : l’ouverture, la fermeture,
+				la sélection multiple et la suppression de sélection ne doivent pas créer de
+				rupture dans le parcours clavier.
+			</li>
+		</ul>
+	</BestPracticesSection>
 
-<br />
-
-</div>
-
-<style>
-{
-`
-  .accessibility-guide {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-
-  .intro-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 5px solid #0077cc;
-  }
-
-  .accessibility-icon {
-    width: 60px;
-    height: 60px;
-    margin-right: 20px;
-    flex-shrink: 0;
-  }
-
-  .intro-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .criteria-section {
-    margin-bottom: 40px;
-  }
-
-  .criteria-section h2,
-  .keyboard-section h2,
-  .implementation-section h2 {
-    border-bottom: 2px solid #eaecef;
-    padding-bottom: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    color: #0077cc;
-  }
-
-  .criteria-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .criteria-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .criteria-icon {
-    font-size: 1.8em;
-    margin-right: 15px;
-  }
-
-  .criteria-header h3 {
-    margin: 0;
-    font-size: 1.3em;
-    color: #0077cc;
-  }
-
-  .criteria-card ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  .criteria-card li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .keyboard-section {
-    background-color: #f0f7ff;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .implementation-section {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .implementation-section ul {
-    padding-left: 20px;
-  }
-
-  .implementation-section li {
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  code {
-    background-color: #f0f0f0;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 0.9em;
-  }
-`
-}
-</style>
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank"	rel="noopener noreferrer">RGAA 4.1 — Critères et tests</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/doc/RGAA-v4.1.pdf"	target="_blank"	rel="noopener noreferrer">RGAA 4.1 — Référentiel technique (PDF)</a></li>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices — Combobox pattern</a></li>
+			<li><a href="https://www.w3.org/TR/wai-aria-1.2/#combobox" target="_blank" rel="noopener noreferrer">WAI-ARIA 1.2 — Combobox role</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

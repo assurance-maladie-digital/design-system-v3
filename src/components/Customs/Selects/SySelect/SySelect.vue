@@ -265,7 +265,7 @@
 	const messagesId = computed(() => `${inputId.value}-messages`)
 	// live region pour le lecteur ecran
 	const liveRegionId = computed(() => `${inputId.value}-live`)
-	// un libellé caché pour la popup/listbox
+	// un libellé caché pour la popup/grid
 	const overlayLabelId = computed(() => `${inputId.value}-overlay-label`)
 
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
@@ -768,7 +768,7 @@
 
 			inputElement.setAttribute('role', 'combobox')
 			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
-			inputElement.setAttribute('aria-haspopup', 'listbox')
+			inputElement.setAttribute('aria-haspopup', 'grid')
 			// On ajoute aria-autocomplete="list" pour le role combobox
 			inputElement.setAttribute('aria-autocomplete', 'list')
 
@@ -970,6 +970,7 @@
 		closeList,
 		validateOnSubmit,
 	})
+
 	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)
 	const updateMenuAccessibility = async (): Promise<void> => {
 		await nextTick()
@@ -977,13 +978,8 @@
 		const listElement = list.value?.$el as HTMLElement | null
 		if (!listElement) return
 
-		listElement.setAttribute('role', 'listbox')
+		listElement.setAttribute('role', 'grid')
 		listElement.setAttribute('aria-labelledby', overlayLabelId.value)
-
-		const overlayContent = listElement.closest('.v-overlay__content') as HTMLElement | null
-		if (overlayContent) {
-			overlayContent.setAttribute('aria-label', accessibleLabel.value)
-		}
 	}
 
 	const focusInput = () => {
@@ -1066,7 +1062,7 @@
 						:persistent-hint="!!showHelpTextAsMessage"
 						:autocomplete="props.autocomplete"
 						:width="calculatedWidth"
-						:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
+						:style="hasError ? { minWidth: `${labelWidth + 18}px`} : { minWidth: `${labelWidth}px` }"
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
 							...initializeActivatorProps(activatorProps),
@@ -1102,6 +1098,7 @@
 								{{ getChipText(item) }}
 							</VChip>
 						</div>
+
 						<template v-else-if="hasMultipleSelections">
 							<span
 								v-for="item in (selectedItem as unknown[])"
@@ -1111,6 +1108,7 @@
 								{{ getChipText(item) }}
 							</span>
 						</template>
+
 						<!-- Prepend -->
 						<template
 							v-if="$slots.prepend || props.prependIcon || props.prependTooltip"
@@ -1156,6 +1154,7 @@
 								/>
 							</IconSlot>
 						</template>
+
 						<template #append-inner>
 							<SyIcon
 								v-if="hasError"
@@ -1195,8 +1194,9 @@
 					class="hidden-label"
 				>{{ label }}</span>
 			</template>
+
 			<!--
-				Libellé caché utilisé pour nommer la popup/listbox.
+				Libellé caché utilisé pour nommer la popup/grid.
 			-->
 			<span
 				:id="overlayLabelId"
@@ -1208,11 +1208,10 @@
 			<VList
 				:id="uniqueMenuId"
 				ref="list"
-				class="v-list"
-				role="listbox"
+				class="v-list sy-select-grid"
+				role="grid"
 				:aria-labelledby="overlayLabelId"
 				:title="accessibleLabel"
-				:aria-multiselectable="props.multiple ? 'true' : undefined"
 				:style="{
 					minWidth: `${textInput?.$el.offsetWidth}px`
 				}"
@@ -1229,21 +1228,26 @@
 				@keydown.page-down.prevent="handlePageDownKey"
 				@click.stop
 			>
-				<VListItem
+				<div
 					v-for="(item, index) in formattedItems"
 					:id="`option-${index}`"
 					:key="index"
 					:ref="'options-' + index"
-					role="option"
-					class="v-list-item"
-					:aria-selected="isItemSelected(item) ? 'true' : 'false'"
+					role="row"
+					class="v-list-item sy-select-grid__row"
 					tabindex="-1"
-					:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
+					:class="{
+						active: isItemSelected(item) || `option-${index}` === activeDescendantId,
+						'v-list-item--selected': isItemSelected(item),
+					}"
 					@click.stop="(event) => selectItem(item, event)"
+					@keydown.enter.prevent="(event) => selectItem(item, event)"
+					@keydown.space.prevent="(event) => selectItem(item, event)"
 				>
-					<template
+					<div
 						v-if="props.multiple && !isDefaultOption(item)"
-						#prepend
+						role="gridcell"
+						class="sy-select-grid__cell sy-select-grid__cell--checkbox"
 					>
 						<SyCheckbox
 							:model-value="isItemSelected(item)"
@@ -1255,21 +1259,27 @@
 							:aria-label="getItemText(item)"
 							@click.stop="(event) => selectItem(item, event)"
 						/>
-					</template>
-					<VListItemTitle>
-						<span
-							v-if="allowHtml"
-							ref="htmlItemRefs"
-							class="item-text"
-						/>
-						<span
-							v-else
-							class="item-text"
-						>
-							{{ getItemText(item) }}
-						</span>
-					</VListItemTitle>
-				</VListItem>
+					</div>
+
+					<div
+						role="gridcell"
+						class="sy-select-grid__cell sy-select-grid__cell--label"
+					>
+						<VListItemTitle>
+							<span
+								v-if="allowHtml"
+								ref="htmlItemRefs"
+								class="item-text"
+							/>
+							<span
+								v-else
+								class="item-text"
+							>
+								{{ getItemText(item) }}
+							</span>
+						</VListItemTitle>
+					</div>
+				</div>
 			</VList>
 		</VMenu>
 
@@ -1345,7 +1355,7 @@
 	background-color: rgb(0 0 0 / 4%);
 }
 
-.v-list-item[aria-selected='true'] {
+.v-list-item--selected {
 	background-color: rgb(0 0 0 / 8%);
 }
 
@@ -1479,5 +1489,27 @@
 .sy-select--with-chips :deep(.v-field__input input) {
 	position: absolute;
 	z-index: -1;
+}
+
+.sy-select-grid__row {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
+}
+
+.sy-select-grid__cell {
+	display: flex;
+	align-items: center;
+	min-width: 0;
+}
+
+.sy-select-grid__cell--checkbox {
+	padding-left: 16px;
+	padding-right: 4px;
+}
+
+.sy-select-grid__cell--label {
+	padding-right: 16px;
+	min-width: 0;
 }
 </style>
