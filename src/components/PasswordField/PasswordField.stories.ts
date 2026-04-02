@@ -962,9 +962,9 @@ export const WithFormValidation: Story = {
 					]
 					
 					// Fonction de soumission du formulaire
-					const handleSubmit = () => {
+					const handleSubmit = async (): Promise<void> => {
 						if (passwordFieldRef.value) {
-							const isValid = passwordFieldRef.value.validateOnSubmit()
+							const isValid = await passwordFieldRef.value.validateOnSubmit()
 							if (isValid) {
 								formStatus.value = 'Formulaire soumis avec succès !'
 							} else {

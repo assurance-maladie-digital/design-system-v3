@@ -153,8 +153,8 @@ export const WithCustomRulesAndRequired: StoryObj = {
                     const datePicker1 = ref()
                     const date1 = ref('01/01/2100')
 
-                    const handleSubmit = () => {
-                        const isValid1 = datePicker1.value?.validateOnSubmit()
+                    const handleSubmit = async (): Promise<void> => {
+                        const isValid1 = await datePicker1.value?.validateOnSubmit()
                         
                         if (!isValid1) {
                             alert('Corrigez les erreurs avant de soumettre !')
@@ -173,8 +173,8 @@ export const WithCustomRulesAndRequired: StoryObj = {
 			const datePicker1 = ref()
 			const date1 = ref('01/01/2100')
 
-			const handleSubmit = () => {
-				const isValid1 = datePicker1.value?.validateOnSubmit()
+			const handleSubmit = async (): Promise<void> => {
+				const isValid1 = await datePicker1.value?.validateOnSubmit()
 
 				if (!isValid1) {
 					alert('Corrigez les erreurs avant de soumettre !')

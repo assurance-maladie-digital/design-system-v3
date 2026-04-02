@@ -137,6 +137,8 @@ export function useValidation(params: {
 		params.focused,
 		params.isValidateOnBlur,
 		params.disableErrorHandling,
+		params.readonly,
+		params.disabled,
 	)
 
 	async function validate(): Promise<boolean> {

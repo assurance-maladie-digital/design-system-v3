@@ -19,6 +19,8 @@ export function useCustomValidation(
 	focused: Ref<boolean>,
 	isValidateOnBlur: Ref<boolean>,
 	disableErrorHandling: Ref<boolean>,
+	readonly?: Ref<boolean>,
+	disabled?: Ref<boolean>,
 ) {
 	let validator = useValidation({
 		showSuccessMessages: showSuccessMessages.value,
@@ -44,6 +46,13 @@ export function useCustomValidation(
 	)
 
 	async function validate() {
+		if (readonly?.value || disabled?.value) {
+			errors.value = []
+			warnings.value = []
+			successes.value = []
+			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [] as string[], warnings: [] as string[], successes: [] as string[] } }
+		}
+
 		const result = await validator.validateField(
 			modelValue.value,
 			customRules?.value,
