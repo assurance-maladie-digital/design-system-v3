@@ -269,10 +269,10 @@
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
 									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
 									...(pinnedMeta.left[column.key!] !== undefined
-										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 5, background: 'var(--sy-table-header-bg-pinned)' }
+										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 'var(--sy-table-z-pinned-header)', background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
 									...(pinnedMeta.right[column.key!] !== undefined
-										? { position: 'sticky', right: `${pinnedMeta.right[column.key!] }px`, zIndex: 5, background: 'var(--sy-table-header-bg-pinned)' }
+										? { position: 'sticky', right: `${pinnedMeta.right[column.key!] }px`, zIndex: 'var(--sy-table-z-pinned-header)', background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
 								}"
 							>

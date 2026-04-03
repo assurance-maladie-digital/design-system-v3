@@ -1,6 +1,19 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, type Ref } from 'vue'
 import type { DataTableHeaders, TableColumnHeader } from './types'
 
+// Fonction de throttling simple pour optimiser les performances
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const useThrottleFn = <T extends (...args: any[]) => void>(fn: T, delay: number): T => {
+	let lastCall = 0
+	return ((...args: Parameters<T>) => {
+		const now = Date.now()
+		if (now - lastCall >= delay) {
+			lastCall = now
+			return fn(...args)
+		}
+	}) as T
+}
+
 interface UsePinnedColumnsOptions {
 	displayHeaders: Ref<DataTableHeaders[] | undefined>
 	reactiveColumnWidths: Ref<Record<string, number | string>>
@@ -25,6 +38,9 @@ export function usePinnedColumns({
 	const tableWrapperEl = ref<HTMLElement | null>(null)
 	const showPinnedLeftShadow = ref(false)
 	const showPinnedRightShadow = ref(false)
+
+	// Stocker la référence de la fonction pour éviter les fuites mémoire
+	const updatePinnedShadowsRef = ref<(() => void) | null>(null)
 
 	const parseWidthPx = (val: unknown): number => {
 		if (typeof val === 'number' && Number.isFinite(val)) return val
@@ -108,6 +124,18 @@ export function usePinnedColumns({
 		showPinnedRightShadow.value = pinnedMeta.value.totalRight > 0 && max > 0 && el.scrollLeft < max - 1
 	}
 
+	// Fonction pour trouver le wrapper du tableau avec retry
+	const findTableWrapper = (): HTMLElement | null => {
+		const el = tableRef.value?.$el as HTMLElement | undefined
+		return el?.querySelector('.v-table__wrapper') as HTMLElement | null
+	}
+
+	// Initialiser la référence de la fonction
+	updatePinnedShadowsRef.value = updatePinnedShadows
+
+	// Appliquer le throttling pour optimiser les performances (60fps)
+	const updatePinnedShadowsThrottled = useThrottleFn(updatePinnedShadows, 16)
+
 	const pinnedEdgeVars = computed<Record<string, string>>(() => {
 		const { totalLeft, totalRight } = pinnedMeta.value
 		return {
@@ -139,7 +167,7 @@ export function usePinnedColumns({
 
 			const stickyCellStyle: Record<string, string | number> = {
 				position: 'sticky',
-				zIndex: 3,
+				zIndex: 'var(--sy-table-z-pinned-cell)',
 				background: 'rgb(var(--v-theme-surface))',
 			}
 
@@ -164,16 +192,38 @@ export function usePinnedColumns({
 
 	onMounted(() => {
 		nextTick(() => {
-			tableWrapperEl.value = (tableRef.value?.$el as HTMLElement | undefined)?.querySelector('.v-table__wrapper') ?? null
-			updatePinnedShadows()
-			tableWrapperEl.value?.addEventListener('scroll', updatePinnedShadows, { passive: true })
-			window.addEventListener('resize', updatePinnedShadows)
+			let attempts = 0
+			const maxAttempts = 5
+
+			const tryFindWrapper = () => {
+				tableWrapperEl.value = findTableWrapper()
+				if (tableWrapperEl.value || attempts >= maxAttempts) {
+					if (tableWrapperEl.value && updatePinnedShadowsRef.value) {
+						updatePinnedShadowsRef.value()
+						tableWrapperEl.value.addEventListener('scroll', updatePinnedShadowsThrottled, { passive: true })
+					}
+					if (updatePinnedShadowsRef.value) {
+						window.addEventListener('resize', updatePinnedShadowsThrottled)
+					}
+				}
+				else {
+					attempts++
+					setTimeout(tryFindWrapper, 50)
+				}
+			}
+
+			tryFindWrapper()
 		})
 	})
 
 	onUnmounted(() => {
-		tableWrapperEl.value?.removeEventListener('scroll', updatePinnedShadows)
-		window.removeEventListener('resize', updatePinnedShadows)
+		if (tableWrapperEl.value && updatePinnedShadowsRef.value) {
+			tableWrapperEl.value.removeEventListener('scroll', updatePinnedShadowsThrottled)
+		}
+		if (updatePinnedShadowsRef.value) {
+			window.removeEventListener('resize', updatePinnedShadowsThrottled)
+		}
+		updatePinnedShadowsRef.value = null
 	})
 
 	return {
