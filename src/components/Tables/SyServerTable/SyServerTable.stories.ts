@@ -170,6 +170,35 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
+		'stickySelect': {
+			description: 'Rend la colonne de sélection (cases à cocher) sticky à gauche quand showSelect ou showSelectSingle est activé.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		'pinnedColumns': {
+			description: 'Liste des colonnes à épingler (sticky). Chaque entrée peut être une clé de colonne (string) ou un objet `{ key: string, side?: \'left\' | \'right\' }`. Par défaut, les colonnes sont épinglées à gauche.',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'Array<string | { key: string, side?: \'left\' | \'right\' }>' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
+		'pinnedColumnKey': {
+			description: 'Raccourci pour épingler une seule colonne à gauche. Équivalent à `pinnedColumns: [key]`. Ignoré si `pinnedColumns` est défini.',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
 		'selectionKey': {
 			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
 			control: { type: 'text' },
@@ -4892,6 +4921,182 @@ fetchData()
 							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : allUsers.find(i => JSON.stringify(i) === item)?.email }}</div>
 						</div>
 					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const PinnedColumns: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="max-width: 900px; overflow: auto;">
+						<SyServerTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							:server-items-length="serverItemsLength"
+							:loading="state === StateEnum.PENDING"
+							show-select
+							sticky-select
+							:pinned-columns="pinnedColumns"
+							suffix="server-pinned-columns"
+							@update:options="fetchData"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+					import dayjs from 'dayjs'
+				
+					const headers = ref([
+						{ title: 'ID', key: 'id', width: 80 },
+						{ title: 'Nom', key: 'lastname', width: 160 },
+						{ title: 'Prénom', key: 'firstname', width: 160 },
+						{ title: 'Email', key: 'email', width: 240 },
+						{ title: 'Ville', key: 'city', width: 160 },
+						{ title: 'Pays', key: 'country', width: 160 },
+						{ title: 'Téléphone', key: 'phone', width: 180 },
+						{ title: 'Statut', key: 'status', width: 140 },
+						{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+						{ title: 'Actions', key: 'actions', width: 140 },
+					])
+					const pinnedColumns = ref([
+						{ key: 'actions', side: 'right' },
+					])
+					const serverItemsLength = ref(30)
+					const items = ref<any[]>([])
+					const state = ref(StateEnum.IDLE)
+					const options = ref<DataOptions>({ itemsPerPage: 5, page: 1, sortBy: [] })
+				
+					const getAll = () => Array.from({ length: 30 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					}))
+				
+					const fetchData = async () => {
+						state.value = StateEnum.PENDING
+						await new Promise(r => setTimeout(r, 1000))
+						const all = getAll()
+						const start = (options.value.page - 1) * options.value.itemsPerPage
+						items.value = all.slice(start, start + options.value.itemsPerPage)
+						serverItemsLength.value = all.length
+						state.value = StateEnum.RESOLVED
+					}
+				
+					watch(options, fetchData, { deep: true, immediate: true })
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			page: 1,
+		},
+		'headers': [
+			{ title: 'ID', key: 'id', width: 80 },
+			{ title: 'Nom', key: 'lastname', width: 160 },
+			{ title: 'Prénom', key: 'firstname', width: 160 },
+			{ title: 'Email', key: 'email', width: 240 },
+			{ title: 'Ville', key: 'city', width: 160 },
+			{ title: 'Pays', key: 'country', width: 160 },
+			{ title: 'Téléphone', key: 'phone', width: 180 },
+			{ title: 'Statut', key: 'status', width: 140 },
+			{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+			{ title: 'Actions', key: 'actions', width: 140 },
+		],
+		'serverItemsLength': 30,
+		'suffix': 'server-pinned-columns',
+		'showSelect': true,
+		'stickySelect': true,
+		'pinnedColumns': [
+			{ key: 'actions', side: 'right' },
+		],
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const argsWithoutOptions = Object.fromEntries(
+					Object.entries(args as Record<string, unknown>).filter(([k]) => k !== 'options'),
+				)
+				const users = ref<Record<string, unknown>[]>([])
+				const totalUsers = ref(args.serverItemsLength)
+				const state = ref(StateEnum.IDLE)
+				const options = ref({ ...args.options } as DataOptions)
+
+				const getUsers = (): Record<string, unknown>[] => {
+					return Array.from({ length: 30 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					}))
+				}
+
+				const fetchData = async (): Promise<void> => {
+					state.value = StateEnum.PENDING
+					await new Promise(resolve => setTimeout(resolve, 1000))
+					const all = getUsers()
+					const start = ((options.value.page ?? 1) - 1) * (options.value.itemsPerPage ?? 5)
+					const end = start + (options.value.itemsPerPage ?? 5)
+					users.value = all.slice(start, end)
+					totalUsers.value = all.length
+					state.value = StateEnum.RESOLVED
+				}
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+					fetchData()
+				}, { deep: true, immediate: true })
+
+				return { args: argsWithoutOptions, users, totalUsers, state, options, fetchData, StateEnum }
+			},
+			template: `
+				<div style="max-width: 900px; overflow: auto;">
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-pinned-columns"
+						v-bind="args"
+						@update:options="fetchData"
+					/>
 				</div>
 			`,
 		}

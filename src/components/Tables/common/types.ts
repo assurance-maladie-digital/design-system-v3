@@ -53,6 +53,7 @@ export type DataTableHeaders = {
 	maxWidth?: string | number
 	minWidth?: string | number
 	headerProps?: Record<string, unknown>
+	cellProps?: Record<string, unknown>
 }
 
 // Type to handle both Vuetify internal headers and our custom headers
@@ -74,7 +75,8 @@ export type TableColumnHeader = {
 	children?: unknown[]
 	maxWidth?: string | number
 	minWidth?: string | number
-	headerProps?: Record<string, unknown>
+	headerProps?: unknown
+	cellProps?: unknown
 	[key: string]: unknown // Allow for any additional properties from Vuetify
 }
 
@@ -93,12 +95,15 @@ export type SyTableProps = {
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
 	showSelectSingle?: boolean
+	stickySelect?: boolean
 	showExpand?: boolean
 	selectionKey?: string
 	multiSort?: boolean
 	mustSort?: boolean
 	itemsPerPageOptions?: number[]
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	pinnedColumns?: Array<string | { key: string, side?: 'left' | 'right' }>
+	pinnedColumnKey?: string
 }
 
 export type SyServerTableProps = {
@@ -116,11 +121,14 @@ export type SyServerTableProps = {
 	headers?: DataTableHeaders[]
 	showSelect?: boolean
 	showSelectSingle?: boolean
+	stickySelect?: boolean
 	showExpand?: boolean
 	selectionKey?: string
 	multiSort?: boolean
 	mustSort?: boolean
 	itemsPerPageOptions?: number[]
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+	pinnedColumns?: Array<string | { key: string, side?: 'left' | 'right' }>
+	pinnedColumnKey?: string
 
 }

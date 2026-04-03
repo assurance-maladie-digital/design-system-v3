@@ -11,9 +11,11 @@ import type { DataOptions } from './types'
 export function usePagination({
 	options,
 	itemsLength,
+	updateOptions,
 }: {
 	options: Ref<Partial<DataOptions>>
 	itemsLength: Ref<number>
+	updateOptions: (opts: Partial<DataOptions>) => void
 }) {
 	// Flag to indicate an ongoing items-per-page update cycle
 	const isUpdatingItemsPerPage = ref(false)
@@ -58,11 +60,22 @@ export function usePagination({
 		isUpdatingItemsPerPage.value = false
 	}
 
+	function onUpdateOptions(newOptions: Partial<DataOptions>) {
+		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
+			const rest = { ...newOptions }
+			delete (rest as Record<string, unknown>).itemsPerPage
+			updateOptions(rest)
+			return
+		}
+		updateOptions(newOptions)
+	}
+
 	return {
 		page,
 		pageCount,
 		itemsPerPageValue,
 		updateItemsPerPage,
 		isUpdatingItemsPerPage,
+		onUpdateOptions,
 	}
 }

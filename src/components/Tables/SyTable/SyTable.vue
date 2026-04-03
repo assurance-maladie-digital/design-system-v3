@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, onUnmounted, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
@@ -18,6 +18,8 @@
 	import { useTableAria } from '../common/useTableAria'
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import useStoredOptions from '../common/useStoredOptions'
+	import { usePinnedColumns } from '../common/usePinnedColumns'
+	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -30,6 +32,7 @@
 		striped: false,
 		showSelect: false,
 		showSelectSingle: false,
+		stickySelect: false,
 		multiSort: false,
 		mustSort: false,
 		itemsPerPageOptions: undefined,
@@ -59,7 +62,7 @@
 	const componentAttributes = useAttrs()
 
 	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substr(2, 9)}`)
+	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substring(2, 11)}`)
 
 	const { storedOptions, storeOptions } = useStoredOptions({
 		key: computed(() => props.suffix ? `table-${props.suffix}` : 'table'),
@@ -96,24 +99,11 @@
 
 	// Use the pagination composable
 	const itemsLength = computed(() => filteredItems.value.length)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, isUpdatingItemsPerPage } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, onUpdateOptions } = usePagination({
 		options,
 		itemsLength,
+		updateOptions,
 	})
-
-	// Defines a function to handle updating the data table options
-	function onUpdateOptions(newOptions: Partial<DataOptions>) {
-		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
-			// Creates a copy of the received options
-			const rest = { ...newOptions }
-			delete (rest as Record<string, unknown>).itemsPerPage
-			// Updates the other options without modifying itemsPerPage
-			updateOptions(rest)
-			return
-		}
-		// In all other cases, simply updates the options with the new values
-		updateOptions(newOptions)
-	}
 
 	// Use the table checkbox composable
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
@@ -147,54 +137,40 @@
 	// Initialize generic accessibility adjustments (tabbable elements, etc.)
 	setupAccessibility()
 
-	// Timeout management for cleanup
-	const timeouts = ref<ReturnType<typeof setTimeout>[]>([])
-
-	// Function to add accessibility attributes to row checkboxes
-	const accessibilityRowCheckboxes = () => {
-		nextTick(() => {
-			const timeoutId = setTimeout(() => {
-				// Check if document is available (for test environment)
-				if (typeof document === 'undefined') return
-
-				const tableElement = document.getElementById(uniqueTableId.value)
-				if (!tableElement) return
-
-				// Find all row checkboxes
-				const rowCheckboxes = tableElement.querySelectorAll('td .v-selection-control input[type="checkbox"]')
-				rowCheckboxes.forEach((checkbox, index) => {
-					const rowLabel = `${locales.selectRow} ${index + 1}`
-					checkbox.setAttribute('aria-label', rowLabel)
-					checkbox.setAttribute('title', rowLabel)
-				})
-			}, 100) // Small delay to ensure DOM is updated
-
-			// Track timeout for cleanup
-			timeouts.value.push(timeoutId)
-		})
-	}
+	const { accessibilityRowCheckboxes } = useTableRowCheckboxAccessibility({
+		uniqueTableId: uniqueTableId.value,
+	})
 
 	// Watch for changes that might affect the table and update accessibility
 	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
 	watch(() => filteredItems.value, accessibilityRowCheckboxes)
 	watch(() => page.value, accessibilityRowCheckboxes)
+	watch(() => itemsPerPageValue.value, accessibilityRowCheckboxes)
 
-	// Apply accessibility attributes when component is mounted
 	onMounted(() => {
-		accessibilityRowCheckboxes()
 		setupAria()
-	})
-
-	// Clean up timeouts on unmount to prevent unhandled errors
-	onUnmounted(() => {
-		timeouts.value.forEach((timeoutId) => {
-			clearTimeout(timeoutId)
-		})
-		timeouts.value = []
 	})
 
 	// Create a reactive reference to column widths that will be provided to children
 	const reactiveColumnWidths = ref(storedOptions.columnWidths || {})
+
+	const {
+		showPinnedLeftShadow,
+		showPinnedRightShadow,
+		hasPinnedSelectLeft,
+		pinnedMeta,
+		pinnedEdgeVars,
+		displayHeadersWithPinned,
+	} = usePinnedColumns({
+		displayHeaders,
+		reactiveColumnWidths,
+		pinnedColumns: toRef(props, 'pinnedColumns'),
+		pinnedColumnKey: toRef(props, 'pinnedColumnKey'),
+		stickySelect: toRef(props, 'stickySelect'),
+		showSelect: toRef(props, 'showSelect'),
+		showSelectSingle: toRef(props, 'showSelectSingle'),
+		tableRef: table,
+	})
 
 	// Provide column widths and update function to child components
 	provide('columnWidths', reactiveColumnWidths)
@@ -224,7 +200,17 @@
 <template>
 	<div
 		:id="uniqueTableId"
-		:class="['sy-table', { 'sy-table--striped': props.striped }]"
+		:class="[
+			'sy-table',
+			{
+				'sy-table--striped': props.striped,
+				'sy-table--pinned-left-shadow': showPinnedLeftShadow,
+				'sy-table--pinned-right-shadow': showPinnedRightShadow,
+				'sy-table--pinned-select-left': hasPinnedSelectLeft,
+				'sy-table--select-single': props.showSelectSingle,
+			},
+		]"
+		:style="pinnedEdgeVars"
 	>
 		<!-- ARIA status region for row count announcements -->
 		<div
@@ -239,7 +225,7 @@
 			ref="table"
 			v-model="model"
 			color="primary"
-			:headers="displayHeaders"
+			:headers="displayHeadersWithPinned"
 			v-bind="propsFacade"
 			:items="filteredItems"
 			:density="props.density"
@@ -269,11 +255,25 @@
 							:key="column.key!"
 						>
 							<th
-								:class="{ 'checkbox-column': column.key === 'data-table-select' }"
+								:class="[
+									{ 'checkbox-column': column.key === 'data-table-select' },
+									{
+										'sy-table__pinned': pinnedMeta.left[column.key!] !== undefined || pinnedMeta.right[column.key!] !== undefined,
+										'sy-table__pinned--left': pinnedMeta.left[column.key!] !== undefined,
+										'sy-table__pinned--right': pinnedMeta.right[column.key!] !== undefined,
+										'v-data-table-column--fixed': pinnedMeta.left[column.key!] !== undefined || pinnedMeta.right[column.key!] !== undefined,
+									},
+								]"
 								:style="{
 									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
 									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									...(pinnedMeta.left[column.key!] !== undefined
+										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 'var(--sy-table-z-pinned-header)', background: 'var(--sy-table-header-bg-pinned)' }
+										: {}),
+									...(pinnedMeta.right[column.key!] !== undefined
+										? { position: 'sticky', right: `${pinnedMeta.right[column.key!] }px`, zIndex: 'var(--sy-table-z-pinned-header)', background: 'var(--sy-table-header-bg-pinned)' }
+										: {}),
 								}"
 							>
 								<template v-if="column.key === 'data-table-select' && props.showSelect && !props.showSelectSingle">
@@ -474,5 +474,60 @@
 .checkbox-column {
 	max-width: fit-content;
 }
+
+.sy-table :deep(.sy-table__pinned) {
+	box-shadow: none;
+	opacity: 1 !important;
+}
+
+.sy-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
+	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+}
+
+.sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
+	box-shadow: -2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+}
+
+.sy-table--pinned-select-left :deep(.v-data-table__th--select),
+.sy-table--pinned-select-left :deep(.v-data-table__td--select-row) {
+	opacity: 1 !important;
+}
+
+.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
+	position: sticky;
+	left: 0;
+	z-index: 5;
+	background: var(--sy-table-header-bg-pinned);
+}
+
+.sy-table--select-single.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+/* stylelint-disable @stylistic/max-line-length */
+.sy-table--select-single.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > thead > tr > th:first-child) {
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
+.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
+.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
+	position: sticky !important;
+	left: 0 !important;
+	z-index: 3;
+	background: rgb(var(--v-theme-surface)) !important;
+}
+
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
+	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+}
+/* stylelint-enable @stylistic/max-line-length */
 
 </style>

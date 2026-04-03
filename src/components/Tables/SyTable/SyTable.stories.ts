@@ -156,6 +156,35 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
+		'stickySelect': {
+			description: 'Rend la colonne de sélection (cases à cocher) sticky à gauche quand showSelect ou showSelectSingle est activé.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		'pinnedColumns': {
+			description: 'Liste des colonnes à épingler (sticky). Chaque entrée peut être une clé de colonne (string) ou un objet `{ key: string, side?: \'left\' | \'right\' }`. Par défaut, les colonnes sont épinglées à gauche.',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'Array<string | { key: string, side?: \'left\' | \'right\' }>' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
+		'pinnedColumnKey': {
+			description: 'Raccourci pour épingler une seule colonne à gauche. Équivalent à `pinnedColumns: [key]`. Ignoré si `pinnedColumns` est défini.',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
 		'selectionKey': {
 			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
 			control: { type: 'text' },
@@ -3126,6 +3155,126 @@ export const SingleRowSelection: Story = {
 							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : args.items.find(i => JSON.stringify(i) === item)?.email }}</div>
 						</div>
 					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const PinnedColumns: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="max-width: 900px; overflow: auto;">
+						<SyTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							show-select
+							sticky-select
+							:pinned-columns="pinnedColumns"
+							suffix="pinned-columns-table"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					import dayjs from 'dayjs'
+				
+					const options = ref({ itemsPerPage: 5 })
+					const headers = ref([
+						{ title: 'ID', key: 'id', width: 80 },
+						{ title: 'Nom', key: 'lastname', width: 160 },
+						{ title: 'Prénom', key: 'firstname', width: 160 },
+						{ title: 'Email', key: 'email', width: 240 },
+						{ title: 'Ville', key: 'city', width: 160 },
+						{ title: 'Pays', key: 'country', width: 160 },
+						{ title: 'Téléphone', key: 'phone', width: 180 },
+						{ title: 'Statut', key: 'status', width: 140 },
+						{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+						{ title: 'Actions', key: 'actions', width: 140 },
+					])
+					const items = ref(Array.from({ length: 12 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					})))
+					const pinnedColumns = ref([
+						{ key: 'actions', side: 'right' },
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'ID', key: 'id', width: 80 },
+			{ title: 'Nom', key: 'lastname', width: 160 },
+			{ title: 'Prénom', key: 'firstname', width: 160 },
+			{ title: 'Email', key: 'email', width: 240 },
+			{ title: 'Ville', key: 'city', width: 160 },
+			{ title: 'Pays', key: 'country', width: 160 },
+			{ title: 'Téléphone', key: 'phone', width: 180 },
+			{ title: 'Statut', key: 'status', width: 140 },
+			{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+			{ title: 'Actions', key: 'actions', width: 140 },
+		],
+		'items': Array.from({ length: 12 }).map((_, i) => ({
+			id: i + 1,
+			lastname: 'Nom ' + (i + 1),
+			firstname: 'Prénom ' + (i + 1),
+			email: 'user' + (i + 1) + '@example.com',
+			city: 'Paris',
+			country: 'France',
+			phone: '01 02 03 04 05',
+			status: i % 2 === 0 ? 'Actif' : 'Inactif',
+			lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+			actions: '…',
+		})),
+		'options': {
+			itemsPerPage: 5,
+		},
+		'suffix': 'pinned-columns-table',
+		'showSelect': true,
+		'stickySelect': true,
+		'pinnedColumns': [
+			{ key: 'actions', side: 'right' },
+		],
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div style="max-width: 900px; overflow: auto;">
+					<SyTable
+						v-model:options="args.options"
+						v-bind="args"
+						suffix="pinned-columns-table"
+					/>
 				</div>
 			`,
 		}
