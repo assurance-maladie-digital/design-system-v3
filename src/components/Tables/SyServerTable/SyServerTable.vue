@@ -162,6 +162,7 @@
 	watch(() => props.items, accessibilityRowCheckboxes, { deep: true })
 	watch(() => displayedItemsLength.value, accessibilityRowCheckboxes)
 	watch(() => page.value, accessibilityRowCheckboxes)
+	watch(() => itemsPerPageValue.value, accessibilityRowCheckboxes)
 
 	onMounted(() => {
 		setupAria()
