@@ -580,7 +580,7 @@
 		emit('update:model-value', val)
 	}
 
-	function runRules(value: string): boolean {
+	async function runRules(value: string): Promise<boolean> {
 		clearValidation()
 
 		// Vérifier si la valeur est vide ou est un squelette (ex: "__//____" pour DD/MM/YYYY)
@@ -608,7 +608,7 @@
 
 		if (isRange.value && value.includes(' - ')) {
 			const [startDateText, endDateText] = value.split(' - ')
-			if (startDateText && !endDateText) return !!validateManualInput(startDateText)
+			if (startDateText && !endDateText) return !!(await validateManualInput(startDateText))
 
 			if (startDateText && endDateText) {
 				const formatValidationResult = validateDateFormatForSingleOrRange(value)
@@ -624,14 +624,14 @@
 						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						return false
 					}
-					safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-					if (errors.value.length === 0) safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					await safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					if (errors.value.length === 0) await safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				}
 			}
 			return !hasError.value
 		}
 
-		return !!validateManualInput(value)
+		return !!(await validateManualInput(value))
 	}
 
 	/**

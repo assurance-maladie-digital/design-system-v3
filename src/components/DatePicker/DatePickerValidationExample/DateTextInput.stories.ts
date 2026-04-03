@@ -131,7 +131,7 @@ export const WithCustomRulesAndRequired: StoryObj = {
                                     placeholder="Date requise"
                                     noCalendar
                                     :customRules="[
-            { type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
+            { type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\\'hui' } },
         ]"
                                 />
                             </div>
@@ -170,7 +170,7 @@ export const WithCustomRulesAndRequired: StoryObj = {
 	render: () => ({
 		components: { DatePicker },
 		setup() {
-			const datePicker1 = ref()
+			const datePicker1 = ref<typeof DatePicker>()
 			const date1 = ref('01/01/2100')
 
 			const handleSubmit = async (): Promise<void> => {
@@ -197,13 +197,14 @@ export const WithCustomRulesAndRequired: StoryObj = {
                         <div>
                             <DatePicker
                                 ref="datePicker1"
+                                label="Date"
                                 v-model="date1"
                                 required
                                 format="DD/MM/YYYY"
                                 placeholder="Date requise"
                                 noCalendar
                                 :custom-rules="[
-            { 		type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourdhui' } },
+            { 		type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\\'hui' } },
         ]"
                             />
                         </div>

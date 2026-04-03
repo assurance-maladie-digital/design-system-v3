@@ -282,6 +282,57 @@ describe('DateTextInput.clean', () => {
 		expect(input.element.value).toContain('01/01/2025')
 	})
 
+	it('validateOnSubmit succeeds with a valid date', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			required: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('15/06/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		const result = await wrapper.vm.validateOnSubmit()
+		expect(result).toBe(true)
+	})
+
+	it('validateOnSubmit fails with an invalid date', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			required: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('99/99/9999')
+		await input.trigger('blur')
+		await flushPromises()
+
+		const result = await wrapper.vm.validateOnSubmit()
+		expect(result).toBe(false)
+	})
+
+	it('validateOnSubmit fails with a future date and notAfterToday custom rule', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			required: true,
+			customRules: [
+				{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
+			],
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('01/01/2100')
+		await input.trigger('blur')
+		await flushPromises()
+
+		const result = await wrapper.vm.validateOnSubmit()
+		expect(result).toBe(false)
+	})
+
 	it('does not validate on blur when isValidateOnBlur is false but validateOnSubmit still applies', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',
