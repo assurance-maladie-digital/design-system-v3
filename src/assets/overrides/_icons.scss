@@ -3,8 +3,12 @@
 @use '@/assets/tokens';
 
 .v-theme--ap.v-btn--icon .v-icon {
-	color: apTokens.$colors-icon-accent-primary;
+	color: apTokens.$colors-icon-accent-primary !important;
 	transition: color 0.2s ease;
+
+	&:hover {
+		color: apTokens.$colors-icon-accent-secondary !important;
+	}
 }
 
 .v-theme--ap2026.v-btn--icon .v-icon {

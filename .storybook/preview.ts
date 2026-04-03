@@ -63,9 +63,9 @@ const themeItems = [
 	{ value: 'pa', title: 'Thème PA' },
 	...(!isDev
 		? []
-		: [{ value: 'ap', title: 'Thème AmeliPro New' }]
+		: [{ value: 'ap2026', title: 'Thème AmeliPro 2026' }]
 	),
-	{ value: 'ap2026', title: 'Thème AmeliPro' },
+	{ value: 'ap', title: 'Thème AmeliPro' },
 ]
 
 const globalTypes = {
@@ -147,6 +147,7 @@ const preview: Preview = {
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
+						'Composants Vuetify', ['Introduction', 'VBtn'],
 					],
 					'Templates', ['Vue d\'ensemble', 'StatusPage', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Guide Du Dev', [
@@ -154,6 +155,7 @@ const preview: Preview = {
 						'Migration', ['Migration depuis Bridge', 'Migration depuis Vue2', 'Breaking changes'],
 						'Configuration du thème',
 						'Correspondance composants PAG',
+						'Correspondance composants Amelipro',
 						'Règles De Validation',
 						'Utiliser les rules',
 						'Services',
