@@ -153,7 +153,7 @@ export const DesignSystem: StoryObj = {
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-migration-depuis-bridge--docs">
+						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-installation--docs">
 							  <img src="/home-card-dev.svg" alt="Guide du dev" class="w-100" />
                               <VCardTitle><b>Guides du dev</b></VCardTitle>
                               <VCardText>Les Guides du Dev accompagnent les équipes techniques dans l'implémentation du Design System en garantissant une intégration fluide et efficace.</VCardText>
