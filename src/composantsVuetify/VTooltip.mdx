@@ -1,0 +1,38 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VTooltipStories from './v-tooltip.stories'
+
+<Meta title="Composants/Composants Vuetify/VTooltip" />
+
+<div className="header">
+    <h1>VTooltip</h1>
+Ce composant utilise directement le composant natif `v-tooltip` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-tooltip/#props).
+</div>
+
+---
+
+## Positions
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '50px', alignItems: 'center', padding: '24px' }}>
+  <Canvas of={VTooltipStories.Top} />
+  <Canvas of={VTooltipStories.Bottom} />
+  <Canvas of={VTooltipStories.Left} />
+  <Canvas of={VTooltipStories.Right} />
+</div>
+
+---
+
+## Désactivé
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', alignItems: 'center', padding: '24px' }}>
+  <Canvas of={VTooltipStories.Disabled} />
+</div>
+
+---
+
+## Locations disponibles
+
+- `top` – Tooltip au dessus de l'élément (défaut)
+- `bottom` – Tooltip en dessous de l'élément
+- `left` – Tooltip à gauche de l'élément
+- `right` – Tooltip à droite de l'élément
