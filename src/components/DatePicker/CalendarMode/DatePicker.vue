@@ -1043,6 +1043,7 @@
 				transition="fade-transition"
 				attach="body"
 				:offset="[-20, 5]"
+				content-class="date-picker-overlay-content"
 				role="presentation"
 				:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
 			>
@@ -1412,4 +1413,13 @@
 	opacity: 0;
 }
 
+</style>
+
+<style lang="scss">
+.date-picker-overlay-content .v-date-picker {
+	box-shadow:
+		0 5px 5px -3px rgb(0 0 0 / 20%),
+		0 8px 10px 1px rgb(0 0 0 / 14%),
+		0 3px 14px 2px rgb(0 0 0 / 12%) !important;
+}
 </style>

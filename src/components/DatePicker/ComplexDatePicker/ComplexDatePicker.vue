@@ -1083,6 +1083,7 @@
 				scroll-strategy="none"
 				transition="fade-transition"
 				:offset="[0, 10]"
+				content-class="date-picker-overlay-content"
 			>
 				<template #activator>
 					<div
@@ -1431,5 +1432,14 @@
 
 :deep(.v-picker__body .v-btn--active .v-btn__overlay) {
 	opacity: 0;
+}
+</style>
+
+<style lang="scss">
+.date-picker-overlay-content .v-date-picker {
+	box-shadow:
+		0 5px 5px -3px rgb(0 0 0 / 20%),
+		0 8px 10px 1px rgb(0 0 0 / 14%),
+		0 3px 14px 2px rgb(0 0 0 / 12%) !important;
 }
 </style>
