@@ -6,7 +6,7 @@
 		border: 1px solid tokens.$grey-lighten-80;
 
 		--sy-table-header-bg-pinned: #{color.mix(tokens.$blue-lighten-80, #fff, 20%)};
-		
+
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
 		--sy-table-z-pinned-cell: calc(var(--sy-table-z-base) + 2);
