@@ -32,6 +32,10 @@ dev/Playground.vue
 # Tests coverage
 **/tests/**/coverage
 
+# Cypress visual regression (garder uniquement les snapshots de base)
+cypress/snapshots/actual
+cypress/snapshots/diff
+
 *storybook.log
 
 # Change log

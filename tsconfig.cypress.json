@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "composite": true,
+    "types": [
+      "cypress"
+    ],
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.cypress.tsbuildinfo"
+  },
+  "include": [
+    "cypress/**/*.ts",
+    "src/**/*.visual.cy.ts"
+  ]
+}
