@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest'
 interface PasswordFieldVM {
 	showEyeIcon: boolean
 	errors: string[]
-	validateOnSubmit: () => boolean
+	validateOnSubmit: () => Promise<boolean>
 	hasError: boolean
 	hasWarning: boolean
 	hasSuccess: boolean
@@ -65,12 +65,12 @@ describe('PasswordField.vue', () => {
 		})
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
-		const result = vm.validateOnSubmit()
+		const result = await vm.validateOnSubmit()
 		expect(result).toBe(false)
 		expect(vm.errors).toContain('Le mot de passe est requis')
 
 		await wrapper.setProps({ modelValue: 'valid-password' })
-		const validResult = vm.validateOnSubmit()
+		const validResult = await vm.validateOnSubmit()
 		expect(validResult).toBe(true)
 		expect(wrapper.emitted().submit).toBeTruthy()
 	})
@@ -78,6 +78,7 @@ describe('PasswordField.vue', () => {
 	it('displays warning and success messages', async () => {
 		const wrapper = mount(PasswordField, {
 			props: {
+				label: 'Password',
 				modelValue: 'test',
 				warningMessages: ['Attention: mot de passe court'],
 				successMessages: ['Mot de passe valide'],
@@ -97,6 +98,7 @@ describe('PasswordField.vue', () => {
 	it('handles custom validation rules', async () => {
 		const wrapper = mount(PasswordField, {
 			props: {
+				label: 'Password',
 				modelValue: 'test',
 				customRules: [{
 					type: 'custom',
@@ -141,6 +143,7 @@ describe('PasswordField.vue', () => {
 	it('displays validation states based on validation rules', async () => {
 		const wrapper = mount(PasswordField, {
 			props: {
+				label: 'Password',
 				modelValue: 'test',
 				customRules: [{
 					type: 'custom',

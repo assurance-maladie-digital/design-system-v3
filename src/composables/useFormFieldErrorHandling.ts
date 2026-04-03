@@ -27,8 +27,8 @@ export interface UseFormFieldErrorHandlingReturn {
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
 	successes: Ref<string[]>
-	validateField: (value: unknown) => boolean
-	validateOnSubmit: () => boolean
+	validateField: (value: unknown) => Promise<boolean>
+	validateOnSubmit: () => Promise<boolean>
 	checkErrorOnBlur: () => void
 }
 
@@ -38,9 +38,6 @@ export const useFormFieldErrorHandling = (
 	emitUpdate?: () => void,
 ): UseFormFieldErrorHandlingReturn => {
 	const validation = useValidation({
-		customRules: props.customRules || [],
-		warningRules: props.customWarningRules || [],
-		successRules: props.customSuccessRules || [],
 		showSuccessMessages: props.showSuccessMessages ?? true,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling ?? false,
@@ -71,7 +68,7 @@ export const useFormFieldErrorHandling = (
 		: [],
 	)
 
-	const validateField = (value: unknown) => {
+	const validateField = async (value: unknown) => {
 		if (props.disableErrorHandling) {
 			validation.clearValidation()
 			return true
@@ -85,7 +82,7 @@ export const useFormFieldErrorHandling = (
 			return true
 		}
 
-		const result = validation.validateField(
+		const result = await validation.validateField(
 			value,
 			[...defaultRules.value, ...props.customRules!],
 			props.customWarningRules!,

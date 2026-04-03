@@ -52,8 +52,8 @@ export const Required: StoryObj = {
                     const datePicker1 = ref()
                     const date1 = ref('')
 
-                    const handleSubmit = () => {
-                        const isValid1 = datePicker1.value?.validateOnSubmit()
+                    const handleSubmit = async () => {
+                        const isValid1 = await datePicker1.value?.validateOnSubmit()
                         
                         if (!isValid1) {
                             alert('Corrigez les erreurs avant de soumettre !')
@@ -72,8 +72,8 @@ export const Required: StoryObj = {
 			const datePicker1 = ref()
 			const date1 = ref('')
 
-			const handleSubmit = () => {
-				const isValid1 = datePicker1.value?.validateOnSubmit()
+			const handleSubmit = async () => {
+				const isValid1 = await datePicker1.value?.validateOnSubmit()
 				if (!isValid1) {
 					alert('Corrigez les erreurs avant de soumettre !')
 				}
@@ -131,7 +131,7 @@ export const WithCustomRulesAndRequired: StoryObj = {
                                     placeholder="Date requise"
                                     noCalendar
                                     :customRules="[
-            { type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
+            { type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\\'hui' } },
         ]"
                                 />
                             </div>
@@ -153,8 +153,8 @@ export const WithCustomRulesAndRequired: StoryObj = {
                     const datePicker1 = ref()
                     const date1 = ref('01/01/2100')
 
-                    const handleSubmit = () => {
-                        const isValid1 = datePicker1.value?.validateOnSubmit()
+                    const handleSubmit = async (): Promise<void> => {
+                        const isValid1 = await datePicker1.value?.validateOnSubmit()
                         
                         if (!isValid1) {
                             alert('Corrigez les erreurs avant de soumettre !')
@@ -170,11 +170,11 @@ export const WithCustomRulesAndRequired: StoryObj = {
 	render: () => ({
 		components: { DatePicker },
 		setup() {
-			const datePicker1 = ref()
+			const datePicker1 = ref<typeof DatePicker>()
 			const date1 = ref('01/01/2100')
 
-			const handleSubmit = () => {
-				const isValid1 = datePicker1.value?.validateOnSubmit()
+			const handleSubmit = async (): Promise<void> => {
+				const isValid1 = await datePicker1.value?.validateOnSubmit()
 
 				if (!isValid1) {
 					alert('Corrigez les erreurs avant de soumettre !')
@@ -197,13 +197,14 @@ export const WithCustomRulesAndRequired: StoryObj = {
                         <div>
                             <DatePicker
                                 ref="datePicker1"
+                                label="Date"
                                 v-model="date1"
                                 required
                                 format="DD/MM/YYYY"
                                 placeholder="Date requise"
                                 noCalendar
                                 :custom-rules="[
-            { 		type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourdhui' } },
+            { 		type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\\'hui' } },
         ]"
                             />
                         </div>

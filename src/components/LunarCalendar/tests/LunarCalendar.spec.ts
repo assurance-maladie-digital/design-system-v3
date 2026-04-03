@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import LunarCalendar from '../LunarCalendar.vue'
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 describe('LunarCalendar', () => {
 	it('renders correctly', () => {
@@ -56,6 +56,7 @@ describe('LunarCalendar', () => {
 			const input = wrapper.find('input')
 			await input.setValue('10/19/1995')
 			await input.trigger('blur')
+			await flushPromises()
 
 			expect(wrapper.html()).toContain('L\'année doit être supérieure ou égale à 1996.')
 		})
@@ -72,6 +73,7 @@ describe('LunarCalendar', () => {
 			const input = wrapper.find('input')
 			await input.setValue('10/19/1995')
 			await input.trigger('blur')
+			await flushPromises()
 
 			expect(wrapper.html()).toContain('L\'année doit être inférieure ou égale à 1994.')
 		})

@@ -300,7 +300,6 @@
 	})
 
 	const validation = useValidation({
-		customRules: validationRules.value,
 		showSuccessMessages: true,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
@@ -332,9 +331,9 @@
 
 	const showHelpTextBelow = computed(() => !!props.helpText?.trim())
 
-	const runValidation = (): void => {
+	const runValidation = async (): Promise<void> => {
 		const cleanedValue = phoneNumber.value.replace(/\s/g, '')
-		validation.validateField(cleanedValue, validationRules.value)
+		await validation.validateField(cleanedValue, validationRules.value)
 	}
 
 	function validateInputOnBlur() {
@@ -346,13 +345,13 @@
 		runValidation()
 	}
 
-	watch(phoneNumber, (newValue) => {
+	watch(phoneNumber, async (newValue) => {
 		if (shouldDisableErrorHandling.value) return
 
 		if (!props.isValidatedOnBlur) {
 			// Validation en temps réel (isValidatedOnBlur=false)
 			const cleanedValue = newValue.replace(/\s/g, '')
-			validation.validateField(cleanedValue, validationRules.value)
+			await validation.validateField(cleanedValue, validationRules.value)
 		}
 		else if (onBlur.value) {
 			// Après un premier blur, effacer les erreurs pendant la frappe —
@@ -377,7 +376,7 @@
 		}
 
 		onBlur.value = true
-		runValidation()
+		await runValidation()
 
 		if (props.withCountryCode && props.countryCodeRequired && !dialCode.value) {
 			validation.errors.value.push(`Le champ ${locales.indicatifLabel} est requis.`)

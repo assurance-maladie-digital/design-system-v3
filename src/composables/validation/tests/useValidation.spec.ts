@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { useValidation } from '../useValidation'
 
 describe('useValidation', () => {
@@ -13,7 +13,7 @@ describe('useValidation', () => {
 		expect(validation.hasSuccess.value).toBe(false)
 	})
 
-	it('should handle basic validation rules', () => {
+	it('should handle basic validation rules', async () => {
 		const validation = useValidation()
 		const rules = [{
 			type: 'required',
@@ -24,17 +24,17 @@ describe('useValidation', () => {
 		}]
 
 		// Test avec une valeur vide
-		const emptyResult = validation.validateField('', rules)
+		const emptyResult = await validation.validateField('', rules)
 		expect(emptyResult.hasError).toBe(true)
 		expect(emptyResult.state.errors).toContain('Ce champ est requis')
 
 		// Test avec une valeur valide
-		const validResult = validation.validateField('test', rules)
+		const validResult = await validation.validateField('test', rules)
 		expect(validResult.hasSuccess).toBe(true)
 		expect(validResult.state.successes).toContain('Champ valide')
 	})
 
-	it('should handle warning rules', () => {
+	it('should handle warning rules', async () => {
 		const validation = useValidation()
 		const warningRules = [{
 			type: 'custom',
@@ -46,17 +46,17 @@ describe('useValidation', () => {
 		}]
 
 		// Test avec une valeur courte
-		const shortResult = validation.validateField('test', [], warningRules)
+		const shortResult = await validation.validateField('test', [], warningRules)
 		expect(shortResult.hasWarning).toBe(true)
 		expect(shortResult.state.warnings[0]).toContain('8 caractères')
 
 		// Test avec une valeur valide
-		const validResult = validation.validateField('test_long', [], warningRules)
+		const validResult = await validation.validateField('test_long', [], warningRules)
 		expect(validResult.hasWarning).toBe(false)
 		expect(validResult.state.warnings).toEqual([])
 	})
 
-	it('should handle multiple validation rules', () => {
+	it('should handle multiple validation rules', async () => {
 		const validation = useValidation()
 		const rules = [
 			{
@@ -75,22 +75,22 @@ describe('useValidation', () => {
 		]
 
 		// Test avec une valeur vide
-		const emptyResult = validation.validateField('', rules)
+		const emptyResult = await validation.validateField('', rules)
 		expect(emptyResult.hasError).toBe(true)
 		expect(emptyResult.state.errors).toContain('Ce champ est requis')
 
 		// Test avec une valeur trop courte
-		const shortResult = validation.validateField('ab', rules)
+		const shortResult = await validation.validateField('ab', rules)
 		expect(shortResult.hasError).toBe(true)
 		expect(shortResult.state.errors).toContain('Minimum 3 caractères requis')
 
 		// Test avec une valeur valide
-		const validResult = validation.validateField('abc', rules)
+		const validResult = await validation.validateField('abc', rules)
 		expect(validResult.hasError).toBe(false)
 		expect(validResult.hasSuccess).toBe(true)
 	})
 
-	it('should respect showSuccessMessages option', () => {
+	it('should respect showSuccessMessages option', async () => {
 		const validation = useValidation({ showSuccessMessages: false })
 		const rules = [{
 			type: 'required',
@@ -100,12 +100,12 @@ describe('useValidation', () => {
 			},
 		}]
 
-		const result = validation.validateField('test', rules)
+		const result = await validation.validateField('test', rules)
 		expect(result.hasSuccess).toBe(false)
 		expect(result.state.successes).toEqual([])
 	})
 
-	it('should use fieldIdentifier in messages', () => {
+	it('should use fieldIdentifier in messages', async () => {
 		const validation = useValidation({ fieldIdentifier: 'Email' })
 		const rules = [{
 			type: 'required',
@@ -114,11 +114,11 @@ describe('useValidation', () => {
 			},
 		}]
 
-		const result = validation.validateField('', rules)
+		const result = await validation.validateField('', rules)
 		expect(result.state.errors[0]).toContain('Email')
 	})
 
-	it('should clear validation state', () => {
+	it('should clear validation state', async () => {
 		const validation = useValidation()
 		const rules = [{
 			type: 'required',
@@ -127,7 +127,7 @@ describe('useValidation', () => {
 			},
 		}]
 
-		validation.validateField('', rules)
+		await validation.validateField('', rules)
 		expect(validation.hasError.value).toBe(true)
 
 		validation.clearValidation()
@@ -145,10 +145,105 @@ describe('useValidation', () => {
 			},
 		}]
 
-		validation.validateField('', rules)
-		expect(await validation.validateOnSubmit()).toBe(false)
+		await validation.validateField('', rules)
+		expect(validation.validateOnSubmit()).toBe(false)
 
-		validation.validateField('test', rules)
-		expect(await validation.validateOnSubmit()).toBe(true)
+		await validation.validateField('test', rules)
+		expect(validation.validateOnSubmit()).toBe(true)
+	})
+
+	describe('Handle thrown errors in async rules', () => {
+		it('should handle thrown error in async validation rules', async () => {
+			const validation = useValidation()
+			const rules = [{
+				type: 'custom',
+				options: {
+					validate: async () => {
+						throw new Error('Network error')
+					},
+					message: 'Erreur personnalisée',
+				},
+			}]
+
+			const result = await validation.validateField('test', rules)
+			expect(result.hasError).toBe(true)
+			expect(result.state.errors[0]).toBe('Erreur personnalisée')
+		})
+
+		it('should use thrown error message when no custom message is provided', async () => {
+			const validation = useValidation()
+			const rules = [{
+				type: 'custom',
+				options: {
+					validate: async () => {
+						throw new Error('Service unavailable')
+					},
+				},
+			}]
+
+			const result = await validation.validateField('test', rules)
+			expect(result.hasError).toBe(true)
+			expect(result.state.errors[0]).toBe('Service unavailable')
+		})
+
+		it('should handle thrown error in async warning rules', async () => {
+			const validation = useValidation()
+			const warningRules = [{
+				type: 'custom',
+				options: {
+					validate: async () => {
+						throw new Error('Warning service failed')
+					},
+					isWarning: true,
+				},
+			}]
+
+			const result = await validation.validateField('test', [], warningRules)
+			expect(result.hasWarning).toBe(true)
+			expect(result.state.warnings[0]).toBe('Warning service failed')
+		})
+	})
+
+	it('should discard a slow async validation when a newer one is triggered after', async () => {
+		vi.useFakeTimers()
+		const validation = useValidation()
+
+		// Slow rule: resolves after 100ms with an error
+		const slowRules = [{
+			type: 'custom',
+			options: {
+				validate: () => new Promise<boolean>(resolve => setTimeout(() => resolve(false), 100)),
+				message: 'Erreur lente',
+			},
+		}]
+
+		// Fast rule: resolves immediately with success
+		const fastRules = [{
+			type: 'custom',
+			options: {
+				validate: () => true,
+				successMessage: 'Validation rapide réussie',
+			},
+		}]
+
+		// Launch slow validation first, then fast validation immediately after
+		const slowPromise = validation.validateField('test', slowRules)
+		const fastResult = await validation.validateField('test', fastRules)
+
+		// Fast validation should have succeeded
+		expect(fastResult.hasError).toBe(false)
+		expect(fastResult.hasSuccess).toBe(true)
+		expect(fastResult.state.successes).toContain('Validation rapide réussie')
+
+		// Wait for the slow validation to resolve
+		vi.advanceTimersByTime(100)
+		await slowPromise
+
+		// The slow validation must NOT have overwritten the fast result
+		expect(validation.errors.value).toEqual([])
+		expect(validation.hasError.value).toBe(false)
+		expect(validation.successes.value).toContain('Validation rapide réussie')
+
+		vi.useRealTimers()
 	})
 })

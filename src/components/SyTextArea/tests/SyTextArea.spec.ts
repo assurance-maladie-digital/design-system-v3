@@ -1,6 +1,5 @@
 import { it, describe, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
+import { flushPromises, mount } from '@vue/test-utils'
 import SyTextArea from '../SyTextArea.vue'
 
 describe('SyTextArea', () => {
@@ -126,11 +125,16 @@ describe('SyTextArea', () => {
 			},
 		})
 		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent\ncontent')
+		await textarea.trigger('blur')
+
 		expect(wrapper.text()).toContain('Ce champ ne peut pas dépasser 5 lignes')
 
+		await textarea.trigger('focus')
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent')
-		await nextTick()
+		await textarea.trigger('blur')
+
 		expect(wrapper.text()).not.toContain('Ce champ ne peut pas dépasser 5 lignes')
 	})
 
@@ -200,5 +204,124 @@ describe('SyTextArea', () => {
 		await wrapper.setProps({ modelValue: 'new	value\n' })
 
 		expect(textarea.element.value).toBe('new  value')
+	})
+
+	it('shows custom error from customRules in custom validation mode', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				isValidateOnBlur: false,
+				customRules: [
+					{
+						type: 'custom',
+						options: {
+							validate: (value: string) => value.includes('ok'),
+							message: 'Le texte doit contenir ok',
+						},
+					},
+				],
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('test')
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		const isValid = await (wrapper.vm as { validateOnSubmit: () => Promise<boolean> }).validateOnSubmit()
+		expect(isValid).toBe(false)
+	})
+
+	it('shows vuetify rule error when useVuetifyValidation is true', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				useVuetifyValidation: true,
+				rules: [
+					(value: string) => value.includes('ok') || 'Erreur Vuetify personnalisée',
+				],
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('test')
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Erreur Vuetify personnalisée')
+	})
+
+	it('shows custom warning from customWarningRules in custom validation mode', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				isValidateOnBlur: false,
+				customRules: [
+					{
+						type: 'custom',
+						options: {
+							validate: () => true,
+						},
+					},
+				],
+				customWarningRules: [
+					{
+						type: 'custom',
+						options: {
+							warningMessage: 'Avertissement personnalisé',
+							validate: () => false,
+						},
+					},
+				],
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('valeur')
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Avertissement personnalisé')
+	})
+
+	it('shows custom success from customSuccessRules in custom validation mode', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				isValidateOnBlur: false,
+				customRules: [
+					{
+						type: 'custom',
+						options: {
+							validate: () => true,
+						},
+					},
+				],
+				customSuccessRules: [
+					{
+						type: 'custom',
+						options: {
+							successMessage: 'Succès personnalisé',
+							validate: () => true,
+						},
+					},
+				],
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('valeur')
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Succès personnalisé')
 	})
 })
