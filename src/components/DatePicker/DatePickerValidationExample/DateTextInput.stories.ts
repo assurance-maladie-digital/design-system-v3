@@ -52,8 +52,8 @@ export const Required: StoryObj = {
                     const datePicker1 = ref()
                     const date1 = ref('')
 
-                    const handleSubmit = () => {
-                        const isValid1 = datePicker1.value?.validateOnSubmit()
+                    const handleSubmit = async () => {
+                        const isValid1 = await datePicker1.value?.validateOnSubmit()
                         
                         if (!isValid1) {
                             alert('Corrigez les erreurs avant de soumettre !')
@@ -72,8 +72,8 @@ export const Required: StoryObj = {
 			const datePicker1 = ref()
 			const date1 = ref('')
 
-			const handleSubmit = () => {
-				const isValid1 = datePicker1.value?.validateOnSubmit()
+			const handleSubmit = async () => {
+				const isValid1 = await datePicker1.value?.validateOnSubmit()
 				if (!isValid1) {
 					alert('Corrigez les erreurs avant de soumettre !')
 				}
