@@ -167,6 +167,24 @@ const meta = {
 				},
 			},
 		},
+		'pinnedColumns': {
+			description: 'Liste des colonnes à épingler (sticky). Chaque entrée peut être une clé de colonne (string) ou un objet `{ key: string, side?: \'left\' | \'right\' }`. Par défaut, les colonnes sont épinglées à gauche.',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'Array<string | { key: string, side?: \'left\' | \'right\' }>' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
+		'pinnedColumnKey': {
+			description: 'Raccourci pour épingler une seule colonne à gauche. Équivalent à `pinnedColumns: [key]`. Ignoré si `pinnedColumns` est défini.',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
 		'selectionKey': {
 			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
 			control: { type: 'text' },
