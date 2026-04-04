@@ -43,7 +43,6 @@
     "test:visual": "cypress run --component",
     "test:visual:open": "cypress open --component",
     "test:visual:update": "cypress run --component --env updateSnapshots=true",
-    "generate:visual-test": "node scripts/generate-visual-test.mjs",
     "prepare": "husky",
     "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
   },
