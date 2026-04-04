@@ -1,14 +1,14 @@
 import BackBtn from '../BackBtn.vue'
 
-describe('BackBtn - Tests de non-régression visuelle', () => {
-	it('affiche le bouton retour par défaut', () => {
+describe('BackBtn - Visual regression tests', () => {
+	it('displays the btn by default', () => {
 		cy.mountWithVuetify(BackBtn)
 
 		cy.get('.v-btn').should('be.visible')
 		cy.matchImageSnapshot('back-btn-default')
 	})
 
-	it('affiche le bouton retour sans icône', () => {
+	it('displays the btn without icon', () => {
 		cy.mountWithVuetify(BackBtn, {
 			props: { hideBackIcon: true },
 		})
@@ -17,21 +17,20 @@ describe('BackBtn - Tests de non-régression visuelle', () => {
 		cy.matchImageSnapshot('back-btn-no-icon')
 	})
 
-	it('affiche le bouton retour en mode sombre', () => {
-		// Forcer un background sombre pour s'assurer que le bouton est bien visible
-
+	it('displays the btn in dark mode', () => {
+		cy.get('body').invoke('css', 'background-color', '#121212')
 		cy.mountWithVuetify(BackBtn, {
 			props: {
 				dark: true,
-				backgroundColor: '#333333',
 			},
 		})
 
 		cy.get('.v-btn').should('be.visible')
 		cy.matchImageSnapshot('back-btn-dark-mode')
+		cy.get('body').invoke('css', 'background-color', '')
 	})
 
-	it('affiche le bouton retour avec un fond personnalisé', () => {
+	it('displays the btn with custom background', () => {
 		cy.mountWithVuetify(BackBtn, {
 			props: { backgroundColor: '#f5f5f5' },
 		})

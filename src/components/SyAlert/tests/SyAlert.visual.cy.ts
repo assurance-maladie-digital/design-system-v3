@@ -1,11 +1,11 @@
 import SyAlert from '../SyAlert.vue'
 
-describe('SyAlert - Tests de non-régression visuelle', () => {
+describe('SyAlert - Visual regression tests', () => {
 	const types = ['info', 'success', 'warning', 'error'] as const
 	const variants = ['tonal', 'outlined'] as const
 
 	types.forEach((type) => {
-		it(`affiche correctement le type "${type}"`, () => {
+		it(`displays the "${type}" type correctly`, () => {
 			cy.mountWithVuetify(SyAlert, {
 				props: { type },
 				slots: {
@@ -19,7 +19,7 @@ describe('SyAlert - Tests de non-régression visuelle', () => {
 	})
 
 	variants.forEach((variant) => {
-		it(`affiche correctement la variante "${variant}"`, () => {
+		it(`displays the "${variant}" variant correctly`, () => {
 			cy.mountWithVuetify(SyAlert, {
 				props: { type: 'info', variant },
 				slots: {
@@ -32,7 +32,7 @@ describe('SyAlert - Tests de non-régression visuelle', () => {
 		})
 	})
 
-	it('affiche le bouton de fermeture quand closable', () => {
+	it('displays the close button when closable', () => {
 		cy.mountWithVuetify(SyAlert, {
 			props: { type: 'info', closable: true },
 			slots: {

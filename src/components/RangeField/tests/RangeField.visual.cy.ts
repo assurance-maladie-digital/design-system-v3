@@ -1,14 +1,14 @@
 import RangeField from '../RangeField.vue'
 
-describe('RangeField - Tests de non-régression visuelle', () => {
-	it('affiche le composant par défaut', () => {
+describe('RangeField - Visual regression tests', () => {
+	it('displays the component by default', () => {
 		cy.mountWithVuetify(RangeField)
 
 		cy.get('[data-cy-root]').children().should('exist')
 		cy.matchImageSnapshot('range-field-default')
 	})
 
-	it('affiche avec des valeurs min/max personnalisées', () => {
+	it('displays with custom min/max values', () => {
 		cy.mountWithVuetify(RangeField, {
 			props: {
 				'min': 0,
@@ -22,7 +22,7 @@ describe('RangeField - Tests de non-régression visuelle', () => {
 		cy.matchImageSnapshot('range-field-custom-range')
 	})
 
-	it('affiche avec un pas personnalisé', () => {
+	it('displays with custom step', () => {
 		cy.mountWithVuetify(RangeField, {
 			props: {
 				'min': 0,
@@ -37,7 +37,7 @@ describe('RangeField - Tests de non-régression visuelle', () => {
 		cy.matchImageSnapshot('range-field-step')
 	})
 
-	it('affiche avec un label de fieldset', () => {
+	it('displays with fieldset label', () => {
 		cy.mountWithVuetify(RangeField, {
 			props: {
 				'fieldsetLabel': 'Fourchette de prix (€)',
@@ -52,7 +52,7 @@ describe('RangeField - Tests de non-régression visuelle', () => {
 		cy.matchImageSnapshot('range-field-with-label')
 	})
 
-	it('affiche avec un fond personnalisé', () => {
+	it('displays with custom background', () => {
 		cy.mountWithVuetify(RangeField, {
 			props: {
 				bgColor: '#f0f0f0',

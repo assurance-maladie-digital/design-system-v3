@@ -23,5 +23,9 @@
     "tests/**/*",
     "package.json",
     "src/vuetifyConfig.ts"
+  ],
+  "exclude": [
+    "**/*.visual.cy.ts",
+    "cypress/**/*"
   ]
 }

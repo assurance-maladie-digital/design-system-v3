@@ -1,8 +1,24 @@
 import DialogBox from '../DialogBox.vue'
 
-describe('DialogBox - Tests de non-régression visuelle', () => {
-	it('affiche la boîte de dialogue ouverte', () => {
+const dialogTransitionOptions = {
+	global: {
+		stubs: {
+			'transition': false,
+			'transition-group': false,
+		},
+	},
+} as const
+
+function waitForDialogTransitionEnd() {
+	cy.get('.v-overlay__content')
+		.should('be.visible')
+		.and('not.have.class', 'dialog-transition-enter-active')
+}
+
+describe('DialogBox - Visual regression tests', () => {
+	it('displays the opened dialog box', () => {
 		cy.mountWithVuetify(DialogBox, {
+			...dialogTransitionOptions,
 			props: {
 				'modelValue': true,
 				'title': 'Confirmer la suppression',
@@ -14,13 +30,13 @@ describe('DialogBox - Tests de non-régression visuelle', () => {
 		})
 
 		cy.get('.v-dialog').should('be.visible')
-		// Attendre l'animation d'ouverture
-		cy.wait(500)
+		waitForDialogTransitionEnd()
 		cy.matchImageSnapshot('dialog-box-default')
 	})
 
-	it('affiche la boîte de dialogue sans actions', () => {
+	it('displays the dialog box without actions', () => {
 		cy.mountWithVuetify(DialogBox, {
+			...dialogTransitionOptions,
 			props: {
 				'modelValue': true,
 				'title': 'Information',
@@ -33,13 +49,13 @@ describe('DialogBox - Tests de non-régression visuelle', () => {
 		})
 
 		cy.get('.v-dialog').should('be.visible')
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(500)
+		waitForDialogTransitionEnd()
 		cy.matchImageSnapshot('dialog-box-no-actions')
 	})
 
-	it('affiche la boîte de dialogue avec textes personnalisés', () => {
+	it('displays the dialog box with custom texts', () => {
 		cy.mountWithVuetify(DialogBox, {
+			...dialogTransitionOptions,
 			props: {
 				'modelValue': true,
 				'title': 'Valider le formulaire',
@@ -53,8 +69,7 @@ describe('DialogBox - Tests de non-régression visuelle', () => {
 		})
 
 		cy.get('.v-dialog').should('be.visible')
-		// eslint-disable-next-line cypress/no-unnecessary-waiting
-		cy.wait(500)
+		waitForDialogTransitionEnd()
 		cy.matchImageSnapshot('dialog-box-custom-texts')
 	})
 })
