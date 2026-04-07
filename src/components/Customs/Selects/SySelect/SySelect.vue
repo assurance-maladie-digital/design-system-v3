@@ -286,7 +286,10 @@
 			emit('update:modelValue', props.multiple ? [] : null)
 
 			// Garder la liste ouverte après une suppression et réinitialiser la navigation au clavier
-			if (event?.type === 'keydown' || event?.type === 'click') {
+			const target = event?.target as HTMLElement | undefined
+			const listElement = list.value?.$el as HTMLElement | undefined
+			const isClickFromList = Boolean(listElement && target && listElement.contains(target))
+			if (event?.type === 'keydown' || isClickFromList) {
 				if (!isOpen.value) {
 					isOpen.value = true
 				}
