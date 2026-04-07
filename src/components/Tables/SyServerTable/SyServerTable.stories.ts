@@ -2418,6 +2418,7 @@ export const ServerFilterByAutocomplete: Story = {
 				],
 			},
 		],
+		'serverItemsLength': 0,
 		'suffix': 'server-filter-autocomplete',
 		'showFilters': true,
 		'onUpdate:options': fn(),
