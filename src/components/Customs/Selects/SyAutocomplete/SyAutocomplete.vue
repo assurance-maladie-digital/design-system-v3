@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, ref, watch, type PropType } from 'vue'
+	import { computed, nextTick, onMounted, ref, watch, type PropType } from 'vue'
 	import { VMenu, VList, VListItem, VListItemTitle, VChip } from 'vuetify/components'
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -375,7 +375,15 @@
 		return errorHandling.validateOnSubmit()
 	}
 
-	const checkErrorOnBlur = () => {
+	const checkErrorOnBlur = (event?: FocusEvent) => {
+		const relatedTarget = event?.relatedTarget as HTMLElement | null | undefined
+		if (relatedTarget?.closest('.sy-autocomplete__chip') || relatedTarget?.closest('.sy-autocomplete__clear-button')) {
+			isOpen.value = true
+			nextTick(() => {
+				focusInput(textFieldRef)
+			})
+			return
+		}
 		markInteracted()
 		return errorHandling.checkErrorOnBlur()
 	}
@@ -529,7 +537,9 @@
 							class="sy-autocomplete__chip"
 							closable
 							:close-label="locales.removeChip(getChipLabel(item as ItemType))"
-							@click:close="() => selectItem(item as ItemType)"
+							@click:close.stop.prevent="() => selectItem(item as ItemType)"
+							@keydown.enter.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && selectItem(item as ItemType)"
+							@keydown.space.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && selectItem(item as ItemType)"
 						>
 							{{ getChipLabel(item as ItemType) }}
 						</VChip>

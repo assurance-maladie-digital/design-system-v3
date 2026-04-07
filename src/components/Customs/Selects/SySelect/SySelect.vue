@@ -971,7 +971,9 @@
 								class="ma-1"
 								closable
 								:close-label="locales.removeChip(getChipText(item))"
-								@click:close="removeChip(item)"
+								@click:close.stop.prevent="removeChip(item)"
+								@keydown.enter.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && removeChip(item)"
+								@keydown.space.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && removeChip(item)"
 							>
 								{{ getChipText(item) }}
 							</VChip>

@@ -160,21 +160,25 @@ export const ariaManager = {
 					}
 				}
 				inputEl.setAttribute('aria-haspopup', 'listbox')
-				if (!popupRendered) {
+				if (!isOpen.value) {
 					inputEl.removeAttribute('aria-controls')
-					if (isOpen.value) {
-						nextTick(() => {
-							const popupNowRendered = Boolean(document.getElementById(menuId))
-							if (popupNowRendered) {
-								inputEl.setAttribute('aria-controls', menuId)
-							}
-						})
-					}
+				}
+				else if (!popupRendered) {
+					inputEl.removeAttribute('aria-controls')
+					nextTick(() => {
+						const popupNowRendered = Boolean(document.getElementById(menuId))
+						if (isOpen.value && popupNowRendered) {
+							inputEl.setAttribute('aria-controls', menuId)
+						}
+						else {
+							inputEl.removeAttribute('aria-controls')
+						}
+					})
 				}
 				ariaManager.updateValidationAttributes(inputEl, false, false)
 				nextTick(() => {
 					const popupStillThere = Boolean(document.getElementById(menuId))
-					if (popupStillThere) {
+					if (isOpen.value && popupStillThere) {
 						inputEl.setAttribute('aria-controls', menuId)
 					}
 					else {
