@@ -1160,7 +1160,6 @@
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-    /* stylelint-disable-next-line custom-property-pattern */
     outline: 2px solid rgb(var(--v-theme-accentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
@@ -1212,7 +1211,6 @@
 /* Ensure focus styles match selection styles for keyboard navigation */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
-  /* stylelint-disable-next-line custom-property-pattern */
   outline: 2px solid rgb(var(--v-theme-accentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
@@ -1240,12 +1238,10 @@
 .v-icon.arrow {
 	position: absolute;
 	right: 10px;
-  /* stylelint-disable-next-line custom-property-pattern */
   color: rgb(var(--v-theme-iconBase));
 }
 
 .sy-select__clear-icon {
-  /* stylelint-disable-next-line custom-property-pattern */
   color: rgb(var(--v-theme-iconBase)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
@@ -1291,7 +1287,6 @@
 
 .sy-select :deep(.v-field__input) {
 	opacity: 1;
-  /* stylelint-disable-next-line custom-property-pattern */
   color: rgb(var(--v-theme-iconBase)) !important;
 	cursor: pointer;
 	caret-color: transparent;
