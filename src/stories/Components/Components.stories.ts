@@ -245,6 +245,13 @@ export const ComponentsList: StoryObj = {
 						img: '/components/select-btn-field.svg',
 						category: 'Formulaires',
 					},
+                    {
+                        title: 'SyRadioGroup',
+                        description: 'Utilisé pour permettre à l\'utilisateur de choisir une option parmi plusieurs..',
+                        link: '/?path=/docs/composants-formulaires-syradiogroup--docs',
+                        img: '/components/range-field.svg',
+                        category: 'Formulaires',
+                    },
 					{
 						title: 'PaginatedTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify avec une pagination persistante.',
@@ -373,6 +380,7 @@ export const ComponentsList: StoryObj = {
 					'SyPagination',
 					'FranceConnectBtn',
 					'SkipLink',
+                    'SyRadioGroup'
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
