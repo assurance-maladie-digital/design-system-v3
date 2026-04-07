@@ -1664,6 +1664,8 @@ export const ServerFilterBySelect: Story = {
 			  key: 'department',
 			  filterable: true,
 			  filterType: 'select',
+			  multiple: false,
+			  chips: false,
 			  hideMessages: true,
 			  filterOptions: [
 				{ text: 'RH', value: 'RH' },
@@ -1677,6 +1679,8 @@ export const ServerFilterBySelect: Story = {
 			  key: 'status',
 			  filterable: true,
 			  filterType: 'select',
+			  multiple: false,
+			  chips: false,
 			  hideMessages: true,
 			  filterOptions: [
 				{ text: 'Actif', value: 'Actif' },
@@ -1783,6 +1787,8 @@ export const ServerFilterBySelect: Story = {
 				key: 'department',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'RH', value: 'RH' },
@@ -1796,6 +1802,8 @@ export const ServerFilterBySelect: Story = {
 				key: 'status',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'Actif', value: 'Actif' },
