@@ -2261,6 +2261,244 @@ export const ServerFilterBySelectMultiple: Story = {
 	},
 }
 
+export const ServerFilterByAutocomplete: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+		<template>
+			<SyServerTable
+				v-model:options="options"
+				:items="filteredUsers"
+				:headers="headers"
+				:server-items-length="totalFilteredUsers"
+				:loading="state === StateEnum.PENDING"
+				suffix="server-filter-autocomplete"
+				:show-filters="true"
+				@update:options="fetchData"
+			/>
+		</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+		<script setup lang="ts">
+			import { ref } from 'vue'
+			import { SyServerTable } from '@cnamts/synapse'
+			import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+			import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
+
+			interface User {
+				name: string
+				department: string
+				status: string
+			}
+
+			const totalFilteredUsers = ref(0)
+			const filteredUsers = ref<User[]>([])
+			const state = ref(StateEnum.IDLE)
+
+			const options = ref<DataOptions>({
+				itemsPerPage: 5,
+				page: 1,
+				filters: [],
+			})
+
+			const headers = [
+				{
+					title: 'Nom',
+					key: 'name',
+					filterable: true,
+					filterType: 'text' as const,
+				},
+				{
+					title: 'Département',
+					key: 'department',
+					filterable: true,
+					filterType: 'autocomplete' as const,
+					filterOptions: [
+						{ text: 'RH', value: 'RH' },
+						{ text: 'IT', value: 'IT' },
+						{ text: 'Finance', value: 'Finance' },
+						{ text: 'Marketing', value: 'Marketing' },
+					],
+				},
+				{
+					title: 'Statut',
+					key: 'status',
+					filterable: true,
+					filterType: 'autocomplete' as const,
+					multiple: true,
+					chips: true,
+					filterOptions: [
+						{ text: 'Actif', value: 'Actif' },
+						{ text: 'En congé', value: 'En congé' },
+						{ text: 'Inactif', value: 'Inactif' },
+					],
+				},
+			]
+
+			const getUsers = (): User[] => [
+				{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+				{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+				{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+				{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+				{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+			]
+
+			const fetchData = async (): Promise<void> => {
+				state.value = StateEnum.PENDING
+				await new Promise(resolve => setTimeout(resolve, 500))
+				let items = getUsers()
+				if (options.value.filters?.length) {
+					options.value.filters.forEach((filter: FilterOption) => {
+						const { key, value, type } = filter
+						items = items.filter((item) => {
+							const itemValue = item[key as keyof User]
+							if (type === 'autocomplete') {
+								if (Array.isArray(value)) {
+									return value.length === 0 || value.includes(itemValue)
+								}
+								return itemValue === value
+							}
+							return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+						})
+					})
+				}
+				totalFilteredUsers.value = items.length
+				const { page = 1, itemsPerPage = 5 } = options.value
+				filteredUsers.value = itemsPerPage > 0
+					? items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+					: items
+				state.value = StateEnum.RESOLVED
+			}
+
+			fetchData()
+		</script>
+		`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text' as FilterType,
+			},
+			{
+				title: 'Département',
+				key: 'department',
+				filterable: true,
+				filterType: 'autocomplete' as FilterType,
+				filterOptions: [
+					{ text: 'RH', value: 'RH' },
+					{ text: 'IT', value: 'IT' },
+					{ text: 'Finance', value: 'Finance' },
+					{ text: 'Marketing', value: 'Marketing' },
+				],
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'autocomplete' as FilterType,
+				multiple: true,
+				chips: true,
+				filterOptions: [
+					{ text: 'Actif', value: 'Actif' },
+					{ text: 'En congé', value: 'En congé' },
+					{ text: 'Inactif', value: 'Inactif' },
+				],
+			},
+		],
+		'suffix': 'server-filter-autocomplete',
+		'showFilters': true,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const options = ref<DataOptions>({
+					itemsPerPage: 5,
+					page: 1,
+					sortBy: [],
+					filters: [],
+				})
+				const filteredUsers = ref<Record<string, unknown>[]>([])
+				const totalFilteredUsers = ref(0)
+				const state = ref(StateEnum.IDLE)
+
+				const getUsers = () => [
+					{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+					{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+					{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+					{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+					{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+				]
+
+				const fetchData = async () => {
+					state.value = StateEnum.PENDING
+					await new Promise(resolve => setTimeout(resolve, 500))
+					let items = getUsers()
+					if (options.value.filters?.length) {
+						options.value.filters.forEach((filter) => {
+							const { key, value, type } = filter
+							items = items.filter((item) => {
+								const itemValue = item[key as keyof typeof item]
+								if (type === 'autocomplete') {
+									if (Array.isArray(value)) {
+										return value.length === 0 || value.includes(itemValue)
+									}
+									return itemValue === value
+								}
+								return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+							})
+						})
+					}
+					totalFilteredUsers.value = items.length
+					const { page = 1, itemsPerPage = 5 } = options.value
+					filteredUsers.value = itemsPerPage > 0
+						? items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						: items
+					state.value = StateEnum.RESOLVED
+				}
+
+				fetchData()
+
+				return {
+					args,
+					filteredUsers,
+					totalFilteredUsers,
+					options,
+					state,
+					fetchData,
+					StateEnum,
+				}
+			},
+			template: `
+				<div>
+					<SyServerTable
+						v-bind="args"
+						v-model:options="options"
+						:items="filteredUsers"
+						:server-items-length="totalFilteredUsers"
+						:loading="state === StateEnum.PENDING"
+						@update:options="fetchData"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const ServerFilterByExacteDate: Story = {
 	parameters: {
 		a11y: {

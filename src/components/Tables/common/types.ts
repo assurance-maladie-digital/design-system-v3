@@ -3,7 +3,7 @@ export type SortOptions = {
 	order: 'desc' | 'asc'
 }
 
-export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select' | 'custom'
+export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select' | 'autocomplete' | 'custom'
 type FilterValue =
 	| string
 	| number
