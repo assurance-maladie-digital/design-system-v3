@@ -168,6 +168,7 @@
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
 	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
+	const suppressMenuOpen = ref(false)
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
 	const randomId = Math.random().toString(36).slice(2)
@@ -199,6 +200,7 @@
 
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
+		suppressMenuOpen.value = true
 		if (!selected.value) {
 			search.value = ''
 			return
@@ -241,6 +243,11 @@
 	let debounceHandle: ReturnType<typeof setTimeout> | null = null
 
 	watch(search, () => {
+		if (suppressMenuOpen.value) {
+			suppressMenuOpen.value = false
+			return
+		}
+
 		if (!isOpen.value) {
 			isOpen.value = true
 		}
