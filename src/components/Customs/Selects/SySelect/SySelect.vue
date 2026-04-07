@@ -1160,7 +1160,7 @@
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-    outline: 2px solid rgb(var(--v-theme-accentPrimary));
+		outline: 2px solid rgb(var(--v-theme-accentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
@@ -1211,7 +1211,7 @@
 /* Ensure focus styles match selection styles for keyboard navigation */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
-  outline: 2px solid rgb(var(--v-theme-accentPrimary));
+	outline: 2px solid rgb(var(--v-theme-accentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }
@@ -1238,11 +1238,11 @@
 .v-icon.arrow {
 	position: absolute;
 	right: 10px;
-  color: rgb(var(--v-theme-iconBase));
+	color: rgb(var(--v-theme-iconBase));
 }
 
 .sy-select__clear-icon {
-  color: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-iconBase)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
@@ -1287,7 +1287,7 @@
 
 .sy-select :deep(.v-field__input) {
 	opacity: 1;
-  color: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-iconBase)) !important;
 	cursor: pointer;
 	caret-color: transparent;
 	padding-right: 25px;
