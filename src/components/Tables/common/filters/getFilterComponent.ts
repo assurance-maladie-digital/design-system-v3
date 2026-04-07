@@ -6,7 +6,10 @@ export default function getFilterComponent(filterType?: string, filterOptions?: 
 	// Déterminer le type de composant à charger
 	let componentType = 'text'
 
-	if (filterType === 'select' || filterOptions) {
+	if (filterType === 'autocomplete') {
+		componentType = 'autocomplete'
+	}
+	else if (filterType === 'select' || filterOptions) {
 		componentType = 'select'
 	}
 	else if (filterType === 'date') {
@@ -27,6 +30,10 @@ export default function getFilterComponent(filterType?: string, filterOptions?: 
 	// Sinon, charger le composant de manière asynchrone
 	let asyncComponent
 	switch (componentType) {
+		case 'autocomplete':
+			asyncComponent = markRaw(defineAsyncComponent(() => import('./AutocompleteFilter.vue')))
+			Object.defineProperty(asyncComponent, 'name', { value: 'AutocompleteFilter' })
+			break
 		case 'select':
 			asyncComponent = markRaw(defineAsyncComponent(() => import('./SelectFilter.vue')))
 			Object.defineProperty(asyncComponent, 'name', { value: 'SelectFilter' })
