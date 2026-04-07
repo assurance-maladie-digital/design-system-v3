@@ -171,3 +171,9 @@
 		</div>
 	</component>
 </template>
+
+<style lang="scss">
+.sy-range-field .sy-textfield-container {
+	flex: 1;
+}
+</style>
