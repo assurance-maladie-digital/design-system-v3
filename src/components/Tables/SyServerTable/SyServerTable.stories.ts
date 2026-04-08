@@ -4608,10 +4608,12 @@ export const ClickableRow: Story = {
 						<SyServerTable
 							v-model:options="options"
 							:headers="headers"
-							:items="items"
-							:server-items-length="items.length"
+							:items="users"
+							:server-items-length="totalUsers"
+							:loading="state === StateEnum.PENDING"
 							clickable-row
 							suffix="clickable-row-server-table"
+							@update:options="fetchData"
 							@row-click="selectedRow = $event"
 						/>
 						<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
@@ -4632,9 +4634,14 @@ export const ClickableRow: Story = {
 				<script setup lang="ts">
 					import { ref } from 'vue'
 					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
 
 					const options = ref({ itemsPerPage: 5, filters: [] })
 					const selectedRow = ref(null)
+					const state = ref(StateEnum.IDLE)
+					const totalUsers = ref(0)
+					const users = ref([])
 
 					const headers = [
 						{ title: 'Nom', key: 'lastname' },
@@ -4642,12 +4649,27 @@ export const ClickableRow: Story = {
 						{ title: 'Email', key: 'email' },
 					]
 
-					const items = [
+					const allUsers = [
 						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
 						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
 						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
 						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
 					]
+
+					const fetchData = async (): Promise<void> => {
+						state.value = StateEnum.PENDING
+						await new Promise(resolve => setTimeout(resolve, 500))
+
+						const { page = 1, itemsPerPage = 5 } = options.value as DataOptions
+						totalUsers.value = allUsers.length
+						users.value = itemsPerPage > 0
+							? allUsers.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							: allUsers
+
+						state.value = StateEnum.RESOLVED
+					}
+
+					fetchData()
 				</script>
 				`,
 			},
@@ -4681,16 +4703,72 @@ export const ClickableRow: Story = {
 					components: { SyServerTable },
 					emits: ['row-click'],
 					setup() {
+						const options = ref<DataOptions>({
+							itemsPerPage: 5,
+							page: 1,
+							sortBy: [],
+							filters: [],
+							...(args.options ?? {}),
+						})
+						const state = ref(StateEnum.IDLE)
+						const totalUsers = ref(0)
+						const users = ref<Record<string, unknown>[]>([])
+						const allUsers = [
+							{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+							{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+							{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+							{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+						]
 						const boundArgs = computed(() => {
-							return Object.fromEntries(Object.entries(args).filter(([key]) => key !== 'onRow-click'))
+							return Object.fromEntries(
+								Object.entries(args).filter(([key]) => !['items', 'options', 'serverItemsLength', 'onRow-click'].includes(key)),
+							)
 						})
 
-						return { args, boundArgs }
+						const fetchData = async (nextOptions?: DataOptions) => {
+							if (nextOptions) {
+								options.value = { ...options.value, ...nextOptions }
+							}
+
+							state.value = StateEnum.PENDING
+							await new Promise(resolve => setTimeout(resolve, 500))
+
+							const items = [...allUsers]
+							const { page = 1, itemsPerPage = 5, sortBy = [] } = options.value
+
+							if (sortBy.length > 0) {
+								const [firstSort] = sortBy
+								if (firstSort?.key && firstSort.order) {
+									items.sort((a, b) => {
+										const left = String(a[firstSort.key] ?? '')
+										const right = String(b[firstSort.key] ?? '')
+										return firstSort.order === 'asc'
+											? left.localeCompare(right)
+											: right.localeCompare(left)
+									})
+								}
+							}
+
+							totalUsers.value = items.length
+							users.value = itemsPerPage > 0
+								? items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+								: items
+
+							state.value = StateEnum.RESOLVED
+						}
+
+						fetchData()
+
+						return { boundArgs, fetchData, options, state, totalUsers, users, StateEnum }
 					},
 					template: `
 						<SyServerTable
-							v-model:options="args.options"
+							v-model:options="options"
 							v-bind="boundArgs"
+							:items="users"
+							:server-items-length="totalUsers"
+							:loading="state === StateEnum.PENDING"
+							@update:options="[fetchData, boundArgs['onUpdate:options']]"
 							@row-click="$emit('row-click', $event)"
 						/>
 					`,
