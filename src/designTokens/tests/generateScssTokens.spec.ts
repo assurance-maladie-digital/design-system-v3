@@ -25,11 +25,16 @@ describe('generate-scss-tokens', () => {
 		})
 
 		const tokensScss = fs.readFileSync(path.join(rootDir, 'src/assets/tokens.generated.scss'), 'utf8')
+		const paTokensScss = fs.readFileSync(path.join(rootDir, 'src/assets/paTokens.generated.scss'), 'utf8')
 		const apTokensScss = fs.readFileSync(path.join(rootDir, 'src/assets/apTokens.generated.scss'), 'utf8')
 
 		expect(tokensScss).toContain('$gap-3: 12px;')
 		expect(tokensScss).toContain('$colors-border-accent-primary: $primary-base;')
 		expect(tokensScss).toContain('$heading-1-font-size: 24px;')
+
+		expect(paTokensScss).toContain('$gap-3: 12px;')
+		expect(paTokensScss).toContain('$colors-text-accent-primary: $primary-base;')
+		expect(paTokensScss).toContain('$colors-overlay-onlight: $primary-base;')
 
 		expect(apTokensScss).toContain('$gap-3: 12px;')
 		expect(apTokensScss).toContain('$colors-text-accent-primary: $primary-base;')
