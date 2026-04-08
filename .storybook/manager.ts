@@ -43,9 +43,9 @@ const apComponents = [
 	'composants-formulaires-sycheckboxgroup',
 	'composants-formulaires-sycheckbox',
 	'composants-composants-vuetify-vtooltip--docs',
-    'composants-formulaires-selects-syselect',
-    'composants-formulaires-selects-syautocomplete',
-    'composants-formulaires-syradiogroup'
+	'composants-formulaires-selects-syselect',
+	'composants-formulaires-selects-syautocomplete',
+	'composants-formulaires-syradiogroup',
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
@@ -72,6 +72,7 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		'guide-du-dev-guide-technique-système-de-validation-règles--docs',
 		'guide-du-dev-migration',
 		'guide-du-dev-installation--docs',
+		'composants-structure-headerbar--prepend-slot',
 	])
 
 	if (itemId === 'composants-amelipro') {
