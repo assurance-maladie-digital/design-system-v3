@@ -208,6 +208,15 @@ const meta = {
 				defaultValue: { summary: 'undefined (fallback: id | objet complet)' },
 			},
 		},
+		'clickableRow': {
+			description: 'Rend chaque ligne cliquable. Quand cette prop est activée, la ligne devient focusable au clavier et émet `row-click` sur clic, `Entrée` ou `Espace`, sans interférer avec les éléments interactifs imbriqués.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'header.<columnKey>': {
@@ -230,7 +239,7 @@ const meta = {
 			},
 		},
 		'onRow-click': {
-			description: 'Émis lorsqu\'une ligne est cliquée (ou activée au clavier) quand `clickable-row` est activé. Reçoit les données de la ligne en paramètre.',
+			description: 'Émis lorsqu\'une ligne est activée alors que `clickableRow` est à `true`. Reçoit l\'objet de la ligne en paramètre. Les interactions avec des éléments déjà interactifs dans la ligne ne déclenchent pas cet événement.',
 			table: {
 				category: 'events',
 				type: { summary: '(item: Record<string, unknown>) => void' },

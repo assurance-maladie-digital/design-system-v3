@@ -67,6 +67,31 @@ Exemple d'utilisation :
 />
 `}/>
 
+### Click des lignes
+
+La prop `clickableRow` active le clic sur toute la ligne du tableau. Quand cette prop vaut `true`, un clic sur une ligne émet l'événement `row-click` avec l'item correspondant.
+
+Les lignes deviennent également focusables au clavier afin de pouvoir être activées avec <kbd>Entrée</kbd> ou <kbd>Espace</kbd>.
+
+Les éléments interactifs déjà présents dans la ligne, comme les cases à cocher, liens ou boutons, conservent leur comportement propre et ne déclenchent pas `row-click`.
+
+L'événement `row-click` est  lorsqu'une ligne est activée alors que `clickableRow` est à `true`.
+
+- Payload : l'objet de la ligne cliquée
+- Cas pris en charge : clic souris sur la ligne, activation clavier via <kbd>Entrée</kbd> ou <kbd>Espace</kbd>
+- Cas exclus : interaction avec un élément interactif imbriqué dans la ligne
+
+Exemple :
+<Source dark code={`
+<SyServerTable
+  :items="items"
+  :headers="headers"
+  :server-items-length="totalItems"
+  clickable-row
+  @row-click="handleRowClick"
+/>
+`}/>
+
 ### Slot item
 Le composant permet de personnaliser l'affichage des contenus en utilisant le slot `item`. Vous pouvez définir la structure de chaque contenu en fonction de vos besoins.
 
