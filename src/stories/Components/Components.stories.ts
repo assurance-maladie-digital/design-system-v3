@@ -163,7 +163,7 @@ export const ComponentsList: StoryObj = {
 					},
 					{
 						title: 'SyAutocomplete',
-						description: 'Utilisé pour permettre à l’utilisateur de rechercher et sélectionner une valeur dans une liste d\'options.',
+						description: 'Utilisé pour permettre à l’utilisateur de rechercher et sélectionner une valeur dans une liste d\'options (alternative au v-autocomplete de Vuetify).',
 						link: '/?path=/docs/composants-formulaires-selects-syautocomplete--docs',
 						img: `/components/sy-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
