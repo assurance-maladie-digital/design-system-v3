@@ -33,14 +33,11 @@
     }
   },
   "scripts": {
-    "predev": "pnpm generate:tokens",
-    "dev": "vite",
-    "prebuild": "pnpm generate:tokens",
-    "build": "vue-tsc -p tsconfig.app.json && vite build",
-    "prestorybook": "pnpm generate:tokens",
-    "storybook": "storybook dev -p 6006",
-    "prebuild-storybook": "pnpm generate:tokens",
-    "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook build",
+    "with:tokens": "pnpm generate:tokens",
+    "dev": "pnpm with:tokens && vite",
+    "build": "pnpm with:tokens && vue-tsc -p tsconfig.app.json && vite build",
+    "storybook": "pnpm with:tokens && storybook dev -p 6006",
+    "build-storybook": "pnpm with:tokens && cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
     "lint:fix": "eslint \"src/**/*.{ts,vue}\" --fix && stylelint \"src/**/*.{css,scss,vue}\" --fix",
@@ -50,7 +47,7 @@
     "a11y:status": "node generate-a11y-report.mjs",
     "prepare": "husky",
     "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10",
-    "generate:tokens": "node ./scripts/generate-scss-tokens.mjs"
+    "generate:tokens": "node ./scripts/generate-scss-tokens.mjs && pnpm exec stylelint src/assets/tokens.generated.scss src/assets/paTokens.generated.scss src/assets/apTokens.generated.scss --fix"
   },
   "keywords": [
     "cnam",
