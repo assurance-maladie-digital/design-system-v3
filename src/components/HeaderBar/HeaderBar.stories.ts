@@ -8,6 +8,8 @@ import SubHeader from '../SubHeader/SubHeader.vue'
 import UserMenuBtn from '../UserMenuBtn/UserMenuBtn.vue'
 import HeaderBar from './HeaderBar.vue'
 import SyIcon from '../Customs/SyIcon/SyIcon.vue'
+import { useTheme } from 'vuetify'
+import { addons } from '@storybook/manager-api'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar',
@@ -805,14 +807,24 @@ export const AppendSlot: Story = {
 		return {
 			components: { HeaderBar },
 			setup() {
-				return { args }
+				const theme = useTheme()
+				const channel = addons.getChannel()
+				channel.on('storybook-theme-change', (theme) => {
+					theme.name.value = theme
+				})
+				return { args, HeaderBar, theme }
 			},
 			template: `
 				<HeaderBar v-bind="args">
 					<template #append>
-						<div style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+						<div v-if="['ap', 'ap2026'].includes(theme.name.value)"style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
 							<div>
 								contenu
+							</div>
+						</div>
+						<div v-else style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0084B2;" class="pl-md-14 pl-4 text-white">
+							<div>
+								titre de service
 							</div>
 						</div>
 					</template>
