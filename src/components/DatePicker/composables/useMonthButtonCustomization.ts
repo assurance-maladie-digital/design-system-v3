@@ -14,6 +14,7 @@ export function useMonthButtonCustomization(
 	const monthButtonText = ref('')
 	const yearText = ref('')
 	const monthButtonObservers: MutationObserver[] = []
+	const primaryThemeColor = 'rgb(var(--v-theme-primary, 12, 65, 154))'
 
 	onBeforeUnmount(() => {
 		monthButtonObservers.forEach(observer => observer.disconnect())
@@ -111,12 +112,12 @@ export function useMonthButtonCustomization(
 						)
 						monthBtnElement.setAttribute('data-ripple', 'false')
 						monthBtnElement.setAttribute('aria-label', monthText)
-						monthBtnElement.style.color = 'var(--v-theme-primary)'
+						monthBtnElement.style.color = primaryThemeColor
 
 						const buttonContentHTML = `
-							<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-								<span style="color: var(--v-theme-primary);">${monthText}</span> 
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+							<div class="v-btn__content" data-no-activator="" style="color: ${primaryThemeColor};">
+								<span style="color: ${primaryThemeColor};">${monthText}</span> 
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: ${primaryThemeColor};" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
 							</div>
 						`
 
@@ -167,12 +168,12 @@ export function useMonthButtonCustomization(
 						)
 						yearBtnElement.setAttribute('data-ripple', 'false')
 						yearBtnElement.setAttribute('aria-label', displayedYear)
-						yearBtnElement.style.color = 'var(--v-theme-primary)'
+						yearBtnElement.style.color = primaryThemeColor
 
 						const yearButtonContentHTML = `
-							<div class="v-btn__content" data-no-activator="" style="color: var(--v-theme-primary);">
-								<span style="color: var(--v-theme-primary);">${displayedYear}</span> 
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: var(--v-theme-primary);" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
+							<div class="v-btn__content" data-no-activator="" style="color: ${primaryThemeColor};">
+								<span style="color: ${primaryThemeColor};">${displayedYear}</span> 
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" class="ms-1" style="fill: ${primaryThemeColor};" aria-hidden="true"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
 							</div>
 						`
 
