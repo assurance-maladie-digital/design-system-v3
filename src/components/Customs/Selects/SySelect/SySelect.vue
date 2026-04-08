@@ -1160,7 +1160,7 @@
 
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
-    fill: rgb(var(--v-theme-iconBase));;
+		fill: rgb(var(--v-theme-iconBase));
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
