@@ -21,6 +21,7 @@
             }
         ],
         "@stylistic/indentation": "tab",
-        "@stylistic/string-quotes": "single"
+      "@stylistic/string-quotes": "single",
+      "custom-property-pattern": null
     }
 }
