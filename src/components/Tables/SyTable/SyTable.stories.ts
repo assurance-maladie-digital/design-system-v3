@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
-import { ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import SyTable from './SyTable.vue'
 import type { DataOptions, FilterType } from '../common/types'
 import type { VDataTable } from 'vuetify/components'
@@ -213,6 +213,13 @@ const meta = {
 						allSelected: boolean
 					}`,
 				},
+			},
+		},
+		'onRow-click': {
+			description: 'Émis lorsqu\'une ligne est cliquée (ou activée au clavier) quand `clickable-row` est activé. Reçoit les données de la ligne en paramètre.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
 			},
 		},
 	},
@@ -2961,6 +2968,130 @@ export const ResizableColumns: Story = {
 	},
 }
 
+export const ClickableRow: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<SyTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							clickable-row
+							suffix="clickable-row-table"
+							@row-click="selectedRow = $event"
+						/>
+						<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+							<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+							<div class="pa-2 bg-grey-lighten-3">
+								<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+								<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+								<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+							</div>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+
+					const options = ref({ itemsPerPage: 5, filters: [] })
+					const selectedRow = ref(null)
+
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+
+					const items = [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'items': [
+			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+			{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+			{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+		],
+		'options': { itemsPerPage: 5, filters: [] },
+		'clickableRow': true,
+		'suffix': 'clickable-row-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+		'onRow-click': fn(),
+	},
+	render: (args) => {
+		return {
+			components: {
+				ClickableRowTableCanvas: defineComponent({
+					components: { SyTable },
+					emits: ['row-click'],
+					setup() {
+						const boundArgs = computed(() => {
+							return Object.fromEntries(Object.entries(args).filter(([key]) => key !== 'onRow-click'))
+						})
+
+						return { args, boundArgs }
+					},
+					template: `
+						<SyTable
+							v-model:options="args.options"
+							v-bind="boundArgs"
+							@row-click="$emit('row-click', $event)"
+						/>
+					`,
+				}),
+			},
+			setup() {
+				const selectedRow = ref<Record<string, unknown> | null>(null)
+				const handleRowClick = (item: Record<string, unknown>) => {
+					selectedRow.value = item
+					args['onRow-click']?.(item)
+				}
+				return { selectedRow, handleRowClick }
+			},
+			template: `
+				<div>
+					<ClickableRowTableCanvas @row-click="handleRowClick" />
+					<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+						<div class="pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+							<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+						</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {
@@ -4768,102 +4899,6 @@ export const ComplexItemsDisplay: Story = {
 						Depuis le {{ item.period.start }} jusqu'au {{ item.period.end }}
 					</template>
 				</SyTable>
-			`,
-		}
-	},
-}
-
-export const ClickableRow: Story = {
-	parameters: {
-		a11y: {
-			disable: true,
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div>
-						<p v-if="selectedRow" class="mb-4">
-							Ligne sélectionnée : <strong>{{ selectedRow.firstname }} {{ selectedRow.lastname }}</strong>
-						</p>
-						<SyTable
-							v-model:options="options"
-							:headers="headers"
-							:items="items"
-							clickable-row
-							suffix="clickable-row-table"
-							@row-click="selectedRow = $event"
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyTable } from '@cnamts/synapse'
-
-					const options = ref({ itemsPerPage: 5, filters: [] })
-					const selectedRow = ref(null)
-
-					const headers = [
-						{ title: 'Nom', key: 'lastname' },
-						{ title: 'Prénom', key: 'firstname' },
-						{ title: 'Email', key: 'email' },
-					]
-
-					const items = [
-						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
-						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
-						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
-					]
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headers': [
-			{ title: 'Nom', key: 'lastname' },
-			{ title: 'Prénom', key: 'firstname' },
-			{ title: 'Email', key: 'email' },
-		],
-		'items': [
-			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
-			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-			{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
-			{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
-		],
-		'options': { itemsPerPage: 5, filters: [] },
-		'clickableRow': true,
-		'suffix': 'clickable-row-table',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onRow-click': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { SyTable },
-			setup() {
-				const selectedRow = ref<Record<string, unknown> | null>(null)
-				return { args, selectedRow }
-			},
-			template: `
-				<div>
-					<p v-if="selectedRow" style="margin-bottom: 16px;">
-						Ligne sélectionnée : <strong>{{ selectedRow.firstname }} {{ selectedRow.lastname }}</strong>
-					</p>
-					<SyTable
-						v-model:options="args.options"
-						v-bind="args"
-						@row-click="selectedRow = $event; args['onRow-click']?.($event)"
-					/>
-				</div>
 			`,
 		}
 	},

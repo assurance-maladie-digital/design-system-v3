@@ -18,7 +18,9 @@
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import useStoredOptions from '../common/useStoredOptions'
 	import { usePinnedColumns } from '../common/usePinnedColumns'
+	import { useClickableTableRow } from '../common/useClickableTableRow'
 	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
+	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
@@ -82,6 +84,16 @@
 		componentAttributes,
 		options,
 		storedOptions: storedOptions.options,
+	})
+
+	const forwardedRowProps = computed<ClickableTableRowPropsInput>(() => {
+		return (propsFacade.value.rowProps ?? propsFacade.value['row-props']) as ClickableTableRowPropsInput
+	})
+
+	const { clickableRowProps } = useClickableTableRow({
+		clickableRow: toRef(props, 'clickableRow'),
+		rowProps: forwardedRowProps,
+		onRowClick: item => emit('row-click', item),
 	})
 
 	const { setupAccessibility } = useTableAccessibility({
@@ -231,7 +243,6 @@
 				'sy-server-table--pinned-right-shadow': showPinnedRightShadow,
 				'sy-server-table--pinned-select-left': hasPinnedSelectLeft,
 				'sy-server-table--select-single': props.showSelectSingle,
-				'row-clickable': props.clickableRow,
 			},
 		]"
 		:style="pinnedEdgeVars"
@@ -250,6 +261,7 @@
 			v-bind="propsFacade"
 			v-model="model"
 			:headers="displayHeadersWithPinned"
+			:row-props="clickableRowProps"
 			color="primary"
 			:items="displayedItems"
 			:items-length="displayedItemsLength || 0"
@@ -435,34 +447,6 @@
 				</template>
 			</template>
 
-			<!-- Clickable row: wraps the default item rendering with a click handler -->
-			<template
-				v-if="props.clickableRow && !$slots['item']"
-				#item="slotProps"
-			>
-				<tr
-					class="v-data-table__tr"
-					:class="{ 'v-data-table__tr--clickable': props.clickableRow }"
-					tabindex="0"
-					role="button"
-					@click="emit('row-click', slotProps.item as Record<string, unknown>)"
-					@keydown.enter.prevent="emit('row-click', slotProps.item as Record<string, unknown>)"
-					@keydown.space.prevent="emit('row-click', slotProps.item as Record<string, unknown>)"
-				>
-					<td
-						v-for="column in slotProps.columns"
-						:key="column.key!"
-					>
-						<slot
-							:name="`item.${column.key}`"
-							v-bind="slotProps"
-						>
-							{{ slotProps.item[column.key!] }}
-						</slot>
-					</td>
-				</tr>
-			</template>
-
 			<!-- Dynamically forward all slots to maintain flexibility -->
 			<template
 				v-for="slotName in Object.keys($slots)"
@@ -503,6 +487,7 @@
 
 .sy-server-table :deep() {
 	@include tablestyles;
+	@include clickable-row-styles;
 }
 
 @mixin striped-rows {

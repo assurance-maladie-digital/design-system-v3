@@ -219,6 +219,65 @@ describe('SyServerTable', () => {
 		activeWrappers.push(wrapper)
 	})
 
+	it('makes rows clickable and emits row-click events', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: fakeItems.length,
+				suffix: 'clickable-row-test',
+				clickableRow: true,
+				headers,
+				items: fakeItems,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const firstRow = wrapper.find('tbody tr')
+
+		expect(firstRow.classes()).toContain('v-data-table__tr--clickable')
+		expect(firstRow.classes()).toContain('sy-table__clickable-row')
+		expect(firstRow.attributes('data-clickable-row')).toBe('true')
+		expect(firstRow.attributes('tabindex')).toBe('0')
+		expect(firstRow.attributes('role')).toBeUndefined()
+
+		await firstRow.trigger('click')
+
+		expect(wrapper.emitted('row-click')).toEqual([[fakeItems[0]]])
+
+		activeWrappers.push(wrapper)
+	})
+
+	it('does not emit row-click when an interactive element inside the row is clicked', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: fakeItems.length,
+				suffix: 'clickable-row-nested-interactive-test',
+				clickableRow: true,
+				showSelect: true,
+				headers,
+				items: fakeItems,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const nestedCheckbox = wrapper.find('tbody .v-selection-control input')
+
+		expect(nestedCheckbox.exists()).toBe(true)
+
+		await nestedCheckbox.trigger('click')
+
+		expect(wrapper.emitted('row-click')).toBeUndefined()
+
+		activeWrappers.push(wrapper)
+	})
+
 	it('stores the options in local storage', async () => {
 		const setItemMock = vi.spyOn(LocalStorageUtility.prototype, 'setItem')
 

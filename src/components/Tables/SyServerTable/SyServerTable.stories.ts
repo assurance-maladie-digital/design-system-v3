@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyServerTable from './SyServerTable.vue'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions, FilterType } from '../common/types'
-import { ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
 import { fn } from '@storybook/test'
@@ -227,6 +227,13 @@ const meta = {
 						allSelected: boolean
 					}`,
 				},
+			},
+		},
+		'onRow-click': {
+			description: 'Émis lorsqu\'une ligne est cliquée (ou activée au clavier) quand `clickable-row` est activé. Reçoit les données de la ligne en paramètre.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
 			},
 		},
 	},
@@ -4578,6 +4585,132 @@ export const ResizableColumns: Story = {
 	},
 }
 
+export const ClickableRow: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<SyServerTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							:server-items-length="items.length"
+							clickable-row
+							suffix="clickable-row-server-table"
+							@row-click="selectedRow = $event"
+						/>
+						<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+							<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+							<div class="pa-2 bg-grey-lighten-3">
+								<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+								<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+								<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+							</div>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+
+					const options = ref({ itemsPerPage: 5, filters: [] })
+					const selectedRow = ref(null)
+
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+
+					const items = [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'items': [
+			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+			{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+			{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+		],
+		'serverItemsLength': 4,
+		'options': { itemsPerPage: 5, filters: [] },
+		'clickableRow': true,
+		'suffix': 'clickable-row-server-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+		'onRow-click': fn(),
+	},
+	render: (args) => {
+		return {
+			components: {
+				ClickableRowServerTableCanvas: defineComponent({
+					components: { SyServerTable },
+					emits: ['row-click'],
+					setup() {
+						const boundArgs = computed(() => {
+							return Object.fromEntries(Object.entries(args).filter(([key]) => key !== 'onRow-click'))
+						})
+
+						return { args, boundArgs }
+					},
+					template: `
+						<SyServerTable
+							v-model:options="args.options"
+							v-bind="boundArgs"
+							@row-click="$emit('row-click', $event)"
+						/>
+					`,
+				}),
+			},
+			setup() {
+				const selectedRow = ref<Record<string, unknown> | null>(null)
+				const handleRowClick = (item: Record<string, unknown>) => {
+					selectedRow.value = item
+					args['onRow-click']?.(item)
+				}
+				return { selectedRow, handleRowClick }
+			},
+			template: `
+				<div>
+					<ClickableRowServerTableCanvas @row-click="handleRowClick" />
+					<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+						<div class="pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+							<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+						</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {
@@ -7118,104 +7251,6 @@ export const ComplexItemsDisplay: Story = {
 					</template>
 				</SyServerTable>
 			</div>
-			`,
-		}
-	},
-}
-
-export const ClickableRow: Story = {
-	parameters: {
-		a11y: {
-			disable: true,
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div>
-						<p v-if="selectedRow" class="mb-4">
-							Ligne sélectionnée : <strong>{{ selectedRow.firstname }} {{ selectedRow.lastname }}</strong>
-						</p>
-						<SyServerTable
-							v-model:options="options"
-							:headers="headers"
-							:items="items"
-							:server-items-length="items.length"
-							clickable-row
-							suffix="clickable-row-server-table"
-							@row-click="selectedRow = $event"
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyServerTable } from '@cnamts/synapse'
-
-					const options = ref({ itemsPerPage: 5, filters: [] })
-					const selectedRow = ref(null)
-
-					const headers = [
-						{ title: 'Nom', key: 'lastname' },
-						{ title: 'Prénom', key: 'firstname' },
-						{ title: 'Email', key: 'email' },
-					]
-
-					const items = [
-						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
-						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
-						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
-					]
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headers': [
-			{ title: 'Nom', key: 'lastname' },
-			{ title: 'Prénom', key: 'firstname' },
-			{ title: 'Email', key: 'email' },
-		],
-		'items': [
-			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
-			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-			{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
-			{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
-		],
-		'serverItemsLength': 4,
-		'options': { itemsPerPage: 5, filters: [] },
-		'clickableRow': true,
-		'suffix': 'clickable-row-server-table',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onRow-click': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { SyServerTable },
-			setup() {
-				const selectedRow = ref<Record<string, unknown> | null>(null)
-				return { args, selectedRow }
-			},
-			template: `
-				<div>
-					<p v-if="selectedRow" style="margin-bottom: 16px;">
-						Ligne sélectionnée : <strong>{{ selectedRow.firstname }} {{ selectedRow.lastname }}</strong>
-					</p>
-					<SyServerTable
-						v-model:options="args.options"
-						v-bind="args"
-						@row-click="selectedRow = $event; args['onRow-click']?.($event)"
-					/>
-				</div>
 			`,
 		}
 	},
