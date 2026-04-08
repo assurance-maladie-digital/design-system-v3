@@ -247,7 +247,7 @@ export const ComponentsList: StoryObj = {
 					},
 					{
 						title: 'SyRadioGroup',
-                        description: 'Utilisé pour permettre à l\'utilisateur de choisir une option parmi plusieurs.',
+						description: 'Utilisé pour permettre à l\'utilisateur de choisir une option parmi plusieurs.',
 						link: '/?path=/docs/composants-formulaires-syradiogroup--docs',
 						img: `/components/sy-radiogroup${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
