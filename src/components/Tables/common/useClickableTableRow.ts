@@ -71,17 +71,17 @@ export function useClickableTableRow({
 
 			return {
 				...baseRowProps,
-				class: ['sy-table__clickable-row', baseRowProps.class].filter(Boolean),
+				'class': ['sy-table__clickable-row', baseRowProps.class].filter(Boolean),
 				'data-clickable-row': true,
-				tabindex: baseRowProps.tabindex ?? 0,
-				onClick: (event: MouseEvent) => {
+				'tabindex': baseRowProps.tabindex ?? 0,
+				'onClick': (event: MouseEvent) => {
 					callEventHandler(baseRowProps.onClick as TableRowEventHandler<MouseEvent> | unknown, event)
 
 					if (!event.defaultPrevented && !isFromNestedInteractiveElement(event)) {
 						onRowClick(data.item)
 					}
 				},
-				onKeydown: (event: KeyboardEvent) => {
+				'onKeydown': (event: KeyboardEvent) => {
 					callEventHandler(baseRowProps.onKeydown as TableRowEventHandler<KeyboardEvent> | unknown, event)
 
 					if (event.defaultPrevented || isFromNestedInteractiveElement(event)) {
