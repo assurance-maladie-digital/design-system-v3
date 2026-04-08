@@ -33,9 +33,13 @@
     }
   },
   "scripts": {
+    "predev": "pnpm generate:tokens",
     "dev": "vite",
+    "prebuild": "pnpm generate:tokens",
     "build": "vue-tsc -p tsconfig.app.json && vite build",
+    "prestorybook": "pnpm generate:tokens",
     "storybook": "storybook dev -p 6006",
+    "prebuild-storybook": "pnpm generate:tokens",
     "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
