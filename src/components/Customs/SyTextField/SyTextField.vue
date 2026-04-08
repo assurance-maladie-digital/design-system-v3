@@ -743,7 +743,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-textfield-container {
 	display: flex;
 	flex-direction: column;
@@ -758,14 +757,14 @@
 	}
 
 	:deep(.v-icon__svg) {
-    fill: rgb(var(--v-theme-textWarning)) !important;
+		fill: rgb(var(--v-theme-textWarning)) !important;
 	}
 
 	:deep(.v-field) {
-    color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-borderWarning)) !important;
 
 		.v-field__outline {
-      color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-borderWarning)) !important;
 		}
 	}
 
@@ -773,7 +772,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-      color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-borderWarning)) !important;
 		}
 	}
 }
@@ -786,10 +785,10 @@
 	}
 
 	:deep(.v-field) {
-    color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-borderError)) !important;
 
 		.v-field__outline {
-      color: rgb(var(--v-theme-borderError)) !important;
+			color: rgb(var(--v-theme-borderError)) !important;
 		}
 	}
 
@@ -797,7 +796,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-      color: rgb(var(--v-theme-borderError)) !important;
+			color: rgb(var(--v-theme-borderError)) !important;
 		}
 	}
 }
@@ -810,16 +809,16 @@
 	}
 
 	:deep(.v-icon__svg) {
-    fill: rgb(var(--v-theme-textSuccess)) !important;
+		fill: rgb(var(--v-theme-textSuccess)) !important;
 	}
 
 	:deep(.v-field) {
-    color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
-      color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-borderSuccess)) !important;
 		}
 	}
 
@@ -827,7 +826,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-      color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-borderSuccess)) !important;
 		}
 	}
 }
@@ -838,13 +837,13 @@
 	}
 
 	:deep(.v-field--focused .v-field__outline) {
-    color: rgb(var(--v-theme-accentPrimary)) !important;
+		color: rgb(var(--v-theme-accentPrimary)) !important;
 		opacity: 1 !important;
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-    outline: 2px solid rgb(var(--v-theme-accentPrimary));
+		outline: 2px solid rgb(var(--v-theme-accentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
