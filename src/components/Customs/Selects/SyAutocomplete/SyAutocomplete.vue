@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, ref, watch, type PropType } from 'vue'
+	import { computed, nextTick, onMounted, ref, watch, type PropType } from 'vue'
 	import { VMenu, VList, VListItem, VListItemTitle, VChip } from 'vuetify/components'
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -168,6 +168,7 @@
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
 	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
+	const suppressMenuOpen = ref(false)
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
 	const randomId = Math.random().toString(36).slice(2)
@@ -199,6 +200,7 @@
 
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
+		suppressMenuOpen.value = true
 		if (!selected.value) {
 			search.value = ''
 			return
@@ -241,6 +243,11 @@
 	let debounceHandle: ReturnType<typeof setTimeout> | null = null
 
 	watch(search, () => {
+		if (suppressMenuOpen.value) {
+			suppressMenuOpen.value = false
+			return
+		}
+
 		if (!isOpen.value) {
 			isOpen.value = true
 		}
@@ -368,7 +375,15 @@
 		return errorHandling.validateOnSubmit()
 	}
 
-	const checkErrorOnBlur = () => {
+	const checkErrorOnBlur = (event?: FocusEvent) => {
+		const relatedTarget = event?.relatedTarget as HTMLElement | null | undefined
+		if (relatedTarget?.closest('.sy-autocomplete__chip') || relatedTarget?.closest('.sy-autocomplete__clear-button')) {
+			isOpen.value = true
+			nextTick(() => {
+				focusInput(textFieldRef)
+			})
+			return
+		}
 		markInteracted()
 		return errorHandling.checkErrorOnBlur()
 	}
@@ -522,7 +537,9 @@
 							class="sy-autocomplete__chip"
 							closable
 							:close-label="locales.removeChip(getChipLabel(item as ItemType))"
-							@click:close="() => selectItem(item as ItemType)"
+							@click:close.stop.prevent="() => selectItem(item as ItemType)"
+							@keydown.enter.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && selectItem(item as ItemType)"
+							@keydown.space.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && selectItem(item as ItemType)"
 						>
 							{{ getChipLabel(item as ItemType) }}
 						</VChip>
@@ -707,7 +724,7 @@ li:hover {
 .v-list-item.keyboard-focused,
 li:focus-visible,
 li.keyboard-focused {
-	outline: 2px solid tokens.$primary-base;
+	outline: 2px solid rgb(var(--v-theme-accentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }

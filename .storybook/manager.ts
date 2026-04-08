@@ -41,7 +41,8 @@ const apComponents = [
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbtn--docs',
 	'composants-composants-vuetify-vtooltip--docs',
-    'composants-formulaires-selects-syselect'
+    'composants-formulaires-selects-syselect',
+    'composants-formulaires-selects-syautocomplete'
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'

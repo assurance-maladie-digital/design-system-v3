@@ -743,8 +743,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .sy-textfield-container {
 	display: flex;
 	flex-direction: column;
@@ -759,14 +757,14 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: tokens.$colors-text-warning !important;
+		fill: rgb(var(--v-theme-textWarning)) !important;
 	}
 
 	:deep(.v-field) {
-		color: tokens.$colors-border-warning !important;
+		color: rgb(var(--v-theme-borderWarning)) !important;
 
 		.v-field__outline {
-			color: tokens.$colors-border-warning !important;
+			color: rgb(var(--v-theme-borderWarning)) !important;
 		}
 	}
 
@@ -774,7 +772,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: tokens.$colors-border-warning !important;
+			color: rgb(var(--v-theme-borderWarning)) !important;
 		}
 	}
 }
@@ -787,10 +785,10 @@
 	}
 
 	:deep(.v-field) {
-		color: tokens.$colors-border-error !important;
+		color: rgb(var(--v-theme-borderError)) !important;
 
 		.v-field__outline {
-			color: tokens.$colors-border-error !important;
+			color: rgb(var(--v-theme-borderError)) !important;
 		}
 	}
 
@@ -798,7 +796,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: tokens.$colors-border-error !important;
+			color: rgb(var(--v-theme-borderError)) !important;
 		}
 	}
 }
@@ -811,16 +809,16 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: tokens.$colors-text-success !important;
+		fill: rgb(var(--v-theme-textSuccess)) !important;
 	}
 
 	:deep(.v-field) {
-		color: tokens.$colors-border-success !important;
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
-			color: tokens.$colors-border-success !important;
+			color: rgb(var(--v-theme-borderSuccess)) !important;
 		}
 	}
 
@@ -828,7 +826,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: tokens.$colors-border-success !important;
+			color: rgb(var(--v-theme-borderSuccess)) !important;
 		}
 	}
 }
@@ -839,13 +837,13 @@
 	}
 
 	:deep(.v-field--focused .v-field__outline) {
-		color: tokens.$primary-base !important;
+		color: rgb(var(--v-theme-accentPrimary)) !important;
 		opacity: 1 !important;
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid tokens.$primary-base;
+		outline: 2px solid rgb(var(--v-theme-accentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
 	}

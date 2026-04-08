@@ -162,6 +162,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyAutocomplete',
+						description: 'Utilisé pour permettre à l’utilisateur de rechercher et sélectionner une valeur dans une liste d\'options (alternative au v-autocomplete de Vuetify).',
+						link: '/?path=/docs/composants-formulaires-selects-syautocomplete--docs',
+						img: `/components/sy-select${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
 						link: '/?path=/docs/composants-formulaires-syselect--docs',
@@ -184,7 +191,7 @@ export const ComponentsList: StoryObj = {
 					},
 					{
 						title: 'DatePicker',
-						description: ' Utilisé pour permettre à l’utilisateur de sélectionner ou de saisir une date.',
+						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de saisir une date.',
 						link: '/?path=/docs/composants-formulaires-datepicker--docs',
 						img: '/components/date-picker.svg',
 						category: 'Formulaires',
@@ -373,6 +380,7 @@ export const ComponentsList: StoryObj = {
 					'SyPagination',
 					'FranceConnectBtn',
 					'SkipLink',
+					'SyAutocomplete',
 					'SySelect',
 				]
 
