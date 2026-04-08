@@ -270,6 +270,82 @@ describe('SyTextField', () => {
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['test value'])
 	})
 
+	it('filters alphabetic characters when type is number', async () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Test Field',
+				type: 'number',
+			},
+		})
+
+		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
+		inputElement.value = '12ab.3e-4'
+
+		await input.trigger('input')
+
+		expect(inputElement.value).toBe('12.3e-4')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['12.3e-4'])
+	})
+
+	it('prevents invalid beforeinput data when type is number', async () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Test Field',
+				type: 'number',
+			},
+		})
+
+		const input = wrapper.find('input')
+		const event = new InputEvent('beforeinput', {
+			data: 'a',
+			cancelable: true,
+			bubbles: true,
+		})
+
+		input.element.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(true)
+	})
+
+	it('filters alphabetic characters when type is tel', async () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Telephone',
+				type: 'tel',
+			},
+		})
+
+		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
+		inputElement.value = '+33 ab(0)1-23.45'
+
+		await input.trigger('input')
+
+		expect(inputElement.value).toBe('+33 (0)1-23.45')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['+33 (0)1-23.45'])
+	})
+
+	it('prevents invalid beforeinput data when type is tel', async () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Telephone',
+				type: 'tel',
+			},
+		})
+
+		const input = wrapper.find('input')
+		const event = new InputEvent('beforeinput', {
+			data: 'a',
+			cancelable: true,
+			bubbles: true,
+		})
+
+		input.element.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(true)
+	})
+
 	it('validates field immediately when isValidateOnBlur is false', async () => {
 		const customRule = {
 			type: 'custom',
