@@ -43,6 +43,7 @@ const apComponents = [
 	'composants-formulaires-sycheckboxgroup',
 	'composants-formulaires-sycheckbox',
 	'composants-composants-vuetify-vtooltip--docs',
+    'composants-formulaires-selects-syautocomplete'
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
