@@ -37,7 +37,12 @@
 		mustSort: false,
 		itemsPerPageOptions: undefined,
 		headingLevel: 2,
+		clickableRow: false,
 	})
+
+	const emit = defineEmits<{
+		'row-click': [item: Record<string, unknown>]
+	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -208,6 +213,7 @@
 				'sy-table--pinned-right-shadow': showPinnedRightShadow,
 				'sy-table--pinned-select-left': hasPinnedSelectLeft,
 				'sy-table--select-single': props.showSelectSingle,
+				'row-clickable': props.clickableRow,
 			},
 		]"
 		:style="pinnedEdgeVars"
@@ -417,6 +423,34 @@
 						</th>
 					</tr>
 				</template>
+			</template>
+
+			<!-- Clickable row: wraps the default item rendering with a click handler -->
+			<template
+				v-if="props.clickableRow && !$slots['item']"
+				#item="slotProps"
+			>
+				<tr
+					class="v-data-table__tr"
+					:class="{ 'v-data-table__tr--clickable': props.clickableRow }"
+					tabindex="0"
+					role="button"
+					@click="emit('row-click', slotProps.item as Record<string, unknown>)"
+					@keydown.enter.prevent="emit('row-click', slotProps.item as Record<string, unknown>)"
+					@keydown.space.prevent="emit('row-click', slotProps.item as Record<string, unknown>)"
+				>
+					<td
+						v-for="column in slotProps.columns"
+						:key="column.key!"
+					>
+						<slot
+							:name="`item.${column.key}`"
+							v-bind="slotProps"
+						>
+							{{ slotProps.item[column.key!] }}
+						</slot>
+					</td>
+				</tr>
 			</template>
 
 			<!-- Dynamically forward all slots to maintain flexibility -->

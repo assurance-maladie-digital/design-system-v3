@@ -7122,3 +7122,101 @@ export const ComplexItemsDisplay: Story = {
 		}
 	},
 }
+
+export const ClickableRow: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<p v-if="selectedRow" class="mb-4">
+							Ligne sélectionnée : <strong>{{ selectedRow.firstname }} {{ selectedRow.lastname }}</strong>
+						</p>
+						<SyServerTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							:server-items-length="items.length"
+							clickable-row
+							suffix="clickable-row-server-table"
+							@row-click="selectedRow = $event"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+
+					const options = ref({ itemsPerPage: 5, filters: [] })
+					const selectedRow = ref(null)
+
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+
+					const items = [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'items': [
+			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+			{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+			{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+		],
+		'serverItemsLength': 4,
+		'options': { itemsPerPage: 5, filters: [] },
+		'clickableRow': true,
+		'suffix': 'clickable-row-server-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+		'onRow-click': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const selectedRow = ref<Record<string, unknown> | null>(null)
+				return { args, selectedRow }
+			},
+			template: `
+				<div>
+					<p v-if="selectedRow" style="margin-bottom: 16px;">
+						Ligne sélectionnée : <strong>{{ selectedRow.firstname }} {{ selectedRow.lastname }}</strong>
+					</p>
+					<SyServerTable
+						v-model:options="args.options"
+						v-bind="args"
+						@row-click="selectedRow = $event; args['onRow-click']?.($event)"
+					/>
+				</div>
+			`,
+		}
+	},
+}
