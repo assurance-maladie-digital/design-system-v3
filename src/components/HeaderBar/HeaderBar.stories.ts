@@ -817,14 +817,14 @@ export const AppendSlot: Story = {
 			template: `
 				<HeaderBar v-bind="args">
 					<template #append>
-						<div v-if="['ap', 'ap2026'].includes(theme.name.value)"style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
+						<div v-if="['ap', 'ap2026'].includes(theme.name.value)" style="max-width: 1712px; margin: 0 auto; min-height: 48px; background-color: #0084B2; display: flex; align-items: center; justify-content: center;" class="text-white">
 							<div>
-								contenu
+								TITRE DU SERVICE
 							</div>
 						</div>
-						<div v-else style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0084B2;" class="pl-md-14 pl-4 text-white">
+						<div v-else style="max-width: 1712px; margin: 0 auto; height: 26px; background-color: #0c419a;" class="pl-md-14 pl-4 text-white">
 							<div>
-								titre de service
+								contenu
 							</div>
 						</div>
 					</template>
