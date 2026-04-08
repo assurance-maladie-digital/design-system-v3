@@ -45,7 +45,8 @@
     "a11y:report": "node ./scripts/a11y-report.mjs",
     "a11y:status": "node generate-a11y-report.mjs",
     "prepare": "husky",
-    "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
+    "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10",
+    "generate:tokens": "node ./scripts/generate-scss-tokens.mjs"
   },
   "keywords": [
     "cnam",
