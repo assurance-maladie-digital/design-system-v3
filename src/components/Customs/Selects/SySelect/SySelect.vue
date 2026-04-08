@@ -193,7 +193,7 @@
 
 	const iconColor = computed(() => {
 		if (hasError.value || Boolean(isRequired.value) || props.errorMessages.length > 0) return 'error'
-		return 'rgb(0 0 0 / 70%)'
+		return 'rgb(var(--v-theme-iconBase));'
 	})
 
 	const variant = computed(() => {
@@ -1160,7 +1160,7 @@
 
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
-		fill: rgb(0 0 0 / 70%);
+    fill: rgb(var(--v-theme-iconBase));;
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
