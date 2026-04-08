@@ -41,6 +41,7 @@ const apComponents = [
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbtn--docs',
 	'composants-composants-vuetify-vtooltip--docs',
+    'composants-formulaires-selects-syautocomplete',
     'composants-formulaires-syradiogroup'
 ]
 // Get stored theme or default to CNAM

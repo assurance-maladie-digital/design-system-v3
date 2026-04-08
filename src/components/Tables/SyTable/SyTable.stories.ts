@@ -1158,6 +1158,8 @@ export const FilterBySelect: Story = {
 							key: 'department',
 							filterable: true,
 							filterType: 'select',
+							multiple: false,
+							chips: false,
 							hideMessages: true,
 							filterOptions: [
 								{ text: 'RH', value: 'RH' },
@@ -1171,6 +1173,8 @@ export const FilterBySelect: Story = {
 							key: 'status',
 							filterable: true,
 							filterType: 'select',
+							multiple: false,
+							chips: false,
 							hideMessages: true,
 							filterOptions: [
 								{ text: 'Actif', value: 'Actif' },
@@ -1225,6 +1229,8 @@ export const FilterBySelect: Story = {
 				key: 'department',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'RH', value: 'RH' },
@@ -1238,6 +1244,8 @@ export const FilterBySelect: Story = {
 				key: 'status',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'Actif', value: 'Actif' },
@@ -1506,6 +1514,160 @@ export const FilterBySelectMultiple: Story = {
 					v-model:options="args.options"
 					v-bind="args"
 					suffix="filter-select-table"
+				/>
+			`,
+		}
+	},
+}
+
+export const FilterByAutocomplete: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-filters
+						suffix="filter-autocomplete-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+
+					const options = ref({
+						itemsPerPage: 5,
+						filters: []
+					})
+
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'name',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Département',
+							key: 'department',
+							filterable: true,
+							filterType: 'autocomplete',
+							filterOptions: [
+								{ text: 'RH', value: 'RH' },
+								{ text: 'IT', value: 'IT' },
+								{ text: 'Finance', value: 'Finance' },
+								{ text: 'Marketing', value: 'Marketing' },
+							]
+						},
+						{
+							title: 'Statut',
+							key: 'status',
+							filterable: true,
+							filterType: 'autocomplete',
+							multiple: true,
+							chips: true,
+							filterOptions: [
+								{ text: 'Actif', value: 'Actif' },
+								{ text: 'En congé', value: 'En congé' },
+								{ text: 'Inactif', value: 'Inactif' },
+							]
+						},
+					])
+
+					const items = ref([
+						{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+						{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+						{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+						{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+						{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Département',
+				key: 'department',
+				filterable: true,
+				filterType: 'autocomplete',
+				filterOptions: [
+					{ text: 'RH', value: 'RH' },
+					{ text: 'IT', value: 'IT' },
+					{ text: 'Finance', value: 'Finance' },
+					{ text: 'Marketing', value: 'Marketing' },
+				],
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'autocomplete',
+				multiple: true,
+				chips: true,
+				filterOptions: [
+					{ text: 'Actif', value: 'Actif' },
+					{ text: 'En congé', value: 'En congé' },
+					{ text: 'Inactif', value: 'Inactif' },
+				],
+			},
+		],
+		'items': [
+			{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+			{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+			{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+			{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+			{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+		],
+		'caption': '',
+		'options': {
+			itemsPerPage: 5,
+			filters: [],
+		},
+		'showFilters': true,
+		'suffix': 'filter-autocomplete-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				const options = ref(args.options)
+				const items = ref(args.items)
+
+				return {
+					args,
+					options,
+					items,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					v-bind="args"
+					suffix="filter-autocomplete-table"
 				/>
 			`,
 		}

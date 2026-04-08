@@ -32,6 +32,9 @@ function applyFilter<T extends Items[0]>(item: T, filter: FilterOption): boolean
 		case 'select': {
 			return filterBySelect(itemValue, filterValue)
 		}
+		case 'autocomplete': {
+			return filterBySelect(itemValue, filterValue)
+		}
 		case 'custom': {
 			// Traiter les filtres personnalisés comme des filtres de sélection
 			return filterBySelect(itemValue, filterValue)

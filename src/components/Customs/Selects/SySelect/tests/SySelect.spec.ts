@@ -964,6 +964,60 @@ describe('SySelect.vue', () => {
 
 			wrapper.unmount()
 		})
+
+		it('removes chip when Enter key is pressed on chip close button', async () => {
+			const items = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					chips: true,
+					modelValue: ['1', '2'],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			const closeButton = wrapper.find('.v-chip__close')
+			closeButton.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }))
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual([['2']])
+
+			wrapper.unmount()
+		})
+
+		it('removes chip when Space key is pressed on chip close button', async () => {
+			const items = [
+				{ text: 'Option 1', value: '1' },
+				{ text: 'Option 2', value: '2' },
+			]
+			const wrapper = mount(SySelect, {
+				props: {
+					items,
+					multiple: true,
+					chips: true,
+					modelValue: ['1', '2'],
+					textKey: 'text',
+					valueKey: 'value',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			const closeButton = wrapper.find('.v-chip__close')
+			closeButton.element.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }))
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual([['2']])
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('keyboard navigation', () => {
