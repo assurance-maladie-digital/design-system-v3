@@ -348,6 +348,41 @@ describe('SyTable', () => {
 		expect(wrapper.text()).toContain('No data available')
 	})
 
+	it('applies sticky styles for pinnedColumns (left/right) including data-table-select', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'pinned-columns-test',
+				showSelect: true,
+				pinnedColumns: [
+					'data-table-select',
+					{ key: 'name', side: 'left' },
+					{ key: 'age', side: 'right' },
+				],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const pinnedTh = wrapper.findAll('th[style*="position: sticky"]')
+		expect(pinnedTh.length).toBeGreaterThan(0)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('right:'))).toBe(true)
+		expect(pinnedTh.every(th => (th.attributes('style') || '').includes('background: var(--sy-table-header-bg-pinned)'))).toBe(true)
+
+		const pinnedTd = wrapper.findAll('tbody td[style*="position: sticky"]')
+		expect(pinnedTd.length).toBeGreaterThan(0)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
+		expect(pinnedTd.every(td => (td.attributes('style') || '').includes('background: rgb(var(--v-theme-surface))'))).toBe(true)
+	})
+
 	it('enables selection when showSelect is true', async () => {
 		const wrapper = mount(SyTable, {
 			props: {
@@ -376,6 +411,28 @@ describe('SyTable', () => {
 		// Check that the VDataTable has showSelect prop set to false
 		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
 		expect(dataTable.props('showSelect')).toBe(false)
+	})
+
+	it('makes selection column sticky when stickySelect is true', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'sticky-select-test',
+				showSelect: true,
+				stickySelect: true,
+				pinnedColumns: [{ key: 'age', side: 'right' }],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		expect(wrapper.classes()).toContain('sy-table--pinned-select-left')
 	})
 
 	it('passes the correct item-value function to the data table', async () => {

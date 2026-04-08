@@ -28,7 +28,7 @@ export const useInputBlurHandler = (options: {
 	parseDate: (dateStr: string, format: string) => Date | null
 	formatDate: (date: Date, format: string) => string
 	updateModel: (value: DateValue) => void
-	validateManualInput: (value: string) => boolean
+	validateManualInput: (value: string) => boolean | Promise<boolean>
 
 	// Émetteurs d'événements
 	emitBlur: () => void
@@ -54,7 +54,7 @@ export const useInputBlurHandler = (options: {
 	/**
 	 * Gère la perte de focus du champ de saisie de date
 	 */
-	const handleInputBlur = () => {
+	const handleInputBlur = async () => {
 		// Émettre l'événement blur
 		emitBlur()
 
@@ -155,7 +155,7 @@ export const useInputBlurHandler = (options: {
 		// Note: La vérification du type string a déjà été faite plus haut
 		// et on retourne si ce n'est pas une chaîne, donc ici displayFormattedDate.value est forcément une chaîne
 		if (displayFormattedDate.value) {
-			validateManualInput(displayFormattedDate.value || '')
+			await Promise.resolve(validateManualInput(displayFormattedDate.value || ''))
 		}
 	}
 

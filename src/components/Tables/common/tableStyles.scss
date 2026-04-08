@@ -1,8 +1,17 @@
+@use 'sass:color';
 @use '@/assets/tokens';
 
 @mixin tablestyles {
 	.v-table {
 		border: 1px solid tokens.$grey-lighten-80;
+
+		--sy-table-header-bg-pinned: #{color.mix(tokens.$blue-lighten-80, #fff, 20%)};
+
+		// Standardisation des z-index pour les tableaux
+		--sy-table-z-base: 1;
+		--sy-table-z-pinned-cell: calc(var(--sy-table-z-base) + 2);
+		--sy-table-z-pinned-header: calc(var(--sy-table-z-base) + 4);
+		--sy-table-z-progress: calc(var(--sy-table-z-base) + 5);
 	}
 
 	table thead tr {
@@ -80,5 +89,12 @@
 
 	.v-data-table-rows-no-data {
 		color: tokens.$grey-base;
+	}
+
+	// Ensure loading progress bar appears above sticky/pinned header cells
+	.v-data-table-progress th {
+		position: sticky;
+		top: 0;
+		z-index: var(--sy-table-z-progress);
 	}
 }

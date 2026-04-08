@@ -291,6 +291,45 @@ describe('useInputBlurHandler', () => {
 			// au lieu d'appeler validateManualInput
 			expect(mockUpdateModel).toHaveBeenCalledWith(null)
 		})
+
+		it('attend validateManualInput quand il est asynchrone', async () => {
+			displayFormattedDate.value = '01/01/2023'
+
+			let resolveValidation: ((value: boolean) => void) | undefined
+			mockValidateManualInput.mockImplementation(() => new Promise<boolean>((resolve) => {
+				resolveValidation = resolve
+			}))
+
+			const { handleInputBlur } = useInputBlurHandler({
+				format: 'DD/MM/YYYY',
+				displayFormattedDate,
+				hasInteracted,
+				isManualInputActive,
+				isUpdatingFromInternal,
+				selectedDates,
+				errors,
+				validateDateFormat: mockValidateDateFormat,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				updateModel: mockUpdateModel,
+				validateManualInput: mockValidateManualInput,
+				emitBlur: mockEmitBlur,
+			})
+
+			let resolved = false
+			const blurPromise = handleInputBlur().then(() => {
+				resolved = true
+			})
+
+			await Promise.resolve()
+			expect(resolved).toBe(false)
+
+			resolveValidation?.(true)
+			await blurPromise
+
+			expect(resolved).toBe(true)
+			expect(mockValidateManualInput).toHaveBeenCalledWith('01/01/2023')
+		})
 	})
 
 	// Nouveaux tests pour les plages de dates

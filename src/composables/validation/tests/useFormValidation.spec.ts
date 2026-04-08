@@ -10,6 +10,12 @@ let lastChildApi: ReturnType<typeof useValidatableComponent> | null = null
 
 const ChildComponent = {
 	name: 'ValidatableChild',
+	props: {
+		label: {
+			type: String,
+			default: 'Child Field',
+		},
+	},
 	setup() {
 		const api = useValidatableComponent()
 		lastChildApi = api
@@ -81,6 +87,7 @@ describe('useFormValidation', () => {
 
 	it('clearAll calls clearValidation on registered components and ignores missing or throwing ones', () => {
 		lastChildApi = null
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
 		const wrapper = mount(ParentWithForm)
 		const form = (wrapper.vm as { form: FormValidationApi }).form
@@ -102,6 +109,7 @@ describe('useFormValidation', () => {
 		const componentThrowing: ValidatableComponent = {
 			validateOnSubmit: vi.fn(() => true),
 			clearValidation: throwingClear,
+			$props: { label: 'Champ test clear' },
 		}
 
 		childApi.register(componentWithClear)
@@ -112,6 +120,8 @@ describe('useFormValidation', () => {
 
 		expect(clearSpy).toHaveBeenCalledTimes(1)
 		expect(throwingClear).toHaveBeenCalledTimes(1)
+		expect(warnSpy).toHaveBeenCalledWith('Error clearing validation for field: Champ test clear', expect.any(Error))
+		warnSpy.mockRestore()
 	})
 
 	it('clearAll returns early when there are no registered components', () => {
@@ -126,6 +136,7 @@ describe('useFormValidation', () => {
 
 	it('resetAll calls reset on registered components and ignores missing or throwing ones', () => {
 		lastChildApi = null
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
 		const wrapper = mount(ParentWithForm)
 		const form = (wrapper.vm as { form: FormValidationApi }).form
@@ -147,6 +158,7 @@ describe('useFormValidation', () => {
 		const componentThrowingReset: ValidatableComponent = {
 			validateOnSubmit: vi.fn(() => true),
 			reset: throwingReset,
+			$props: { label: 'Champ test reset' },
 		}
 
 		childApi.register(componentWithReset)
@@ -157,6 +169,8 @@ describe('useFormValidation', () => {
 
 		expect(resetSpy).toHaveBeenCalledTimes(1)
 		expect(throwingReset).toHaveBeenCalledTimes(1)
+		expect(warnSpy).toHaveBeenCalledWith('Error resetting field: Champ test reset', expect.any(Error))
+		warnSpy.mockRestore()
 	})
 
 	it('resetAll returns early when there are no registered components', () => {

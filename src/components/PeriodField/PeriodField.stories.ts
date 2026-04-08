@@ -995,9 +995,9 @@ export const FormValidation: Story = {
 				]
 				
 				// Soumission du formulaire
-				const submitForm = () => {
+				const submitForm = async (): Promise<void> => {
 				if (periodFieldRef.value) {
-					const isValid = periodFieldRef.value.validateOnSubmit()
+					const isValid = await periodFieldRef.value.validateOnSubmit()
 					if (isValid) {
 						formStatus.value = 'Formulaire soumis avec succès !'
 						isFormSubmitted.value = true
@@ -1035,9 +1035,9 @@ export const FormValidation: Story = {
 			]
 
 			// Soumission du formulaire
-			const submitForm = () => {
+			const submitForm = async (): Promise<void> => {
 				if (periodFieldRef.value) {
-					const isValid = periodFieldRef.value.validateOnSubmit()
+					const isValid = await periodFieldRef.value.validateOnSubmit()
 					if (isValid) {
 						formStatus.value = 'Formulaire soumis avec succès !'
 						isFormSubmitted.value = true

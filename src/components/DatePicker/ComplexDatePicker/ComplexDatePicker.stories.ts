@@ -1495,9 +1495,9 @@ export const WithFormSubmission: Story = {
 				const datePicker = ref<InstanceType<typeof DatePicker> | null>(null)
 				const submitted = ref(false)
 
-				const submitForm = () => {
+				const submitForm = async () => {
 					if (!datePicker.value) return
-					const isValid = datePicker.value.validateOnSubmit()
+					const isValid = await datePicker.value.validateOnSubmit()
 					if (isValid) {
 						submitted.value = true
 					}

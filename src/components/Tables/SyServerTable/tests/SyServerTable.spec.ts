@@ -156,6 +156,69 @@ describe('SyServerTable', () => {
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
+	it('applies sticky styles for pinnedColumns (left/right) including data-table-select', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5, page: 1 } as DataOptions,
+				serverItemsLength: 10,
+				suffix: 'pinned-columns-test',
+				showSelect: true,
+				pinnedColumns: [
+					'data-table-select',
+					{ key: 'name', side: 'left' },
+					{ key: 'age', side: 'right' },
+				],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const pinnedTh = wrapper.findAll('th[style*="position: sticky"]')
+		expect(pinnedTh.length).toBeGreaterThan(0)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('right:'))).toBe(true)
+		expect(pinnedTh.every(th => (th.attributes('style') || '').includes('background: var(--sy-table-header-bg-pinned)'))).toBe(true)
+
+		const pinnedTd = wrapper.findAll('tbody td[style*="position: sticky"]')
+		expect(pinnedTd.length).toBeGreaterThan(0)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
+		expect(pinnedTd.every(td => (td.attributes('style') || '').includes('background: rgb(var(--v-theme-surface))'))).toBe(true)
+
+		activeWrappers.push(wrapper)
+	})
+
+	it('makes selection column sticky when stickySelect is true', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5, page: 1 } as DataOptions,
+				serverItemsLength: 10,
+				suffix: 'sticky-select-test',
+				showSelect: true,
+				stickySelect: true,
+				pinnedColumns: [{ key: 'age', side: 'right' }],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.classes()).toContain('sy-server-table--pinned-select-left')
+
+		activeWrappers.push(wrapper)
+	})
+
 	it('stores the options in local storage', async () => {
 		const setItemMock = vi.spyOn(LocalStorageUtility.prototype, 'setItem')
 
