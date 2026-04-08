@@ -724,7 +724,7 @@ li:hover {
 .v-list-item.keyboard-focused,
 li:focus-visible,
 li.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-accentPrimary));
+	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }

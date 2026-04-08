@@ -919,23 +919,23 @@
 	}
 }
 
-.basic-field {
-	:deep(.v-icon__svg) {
-		fill: rgb(0 0 0 / 70%);
-	}
+	.basic-field {
+		:deep(.v-icon__svg) {
+			fill: rgb(0 0 0 / 70%);
+		}
 
-	:deep(.v-field--focused .v-field__outline) {
-		color: rgb(var(--v-theme-accentPrimary)) !important;
-		opacity: 1 !important;
-	}
+		:deep(.v-field--focused .v-field__outline) {
+			color: rgb(var(--v-theme-borderAccentPrimary)) !important;
+			opacity: 1 !important;
+		}
 
-	:deep(.v-input__prepend .v-icon:focus-visible),
-	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-accentPrimary));
-		outline-offset: 2px;
-		opacity: 1;
+		:deep(.v-input__prepend .v-icon:focus-visible),
+		:deep(.v-input__append .v-icon:focus-visible) {
+			outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+			outline-offset: 2px;
+			opacity: 1;
+		}
 	}
-}
 
 .help-text-below {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
