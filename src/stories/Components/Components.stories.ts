@@ -172,7 +172,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
 						link: '/?path=/docs/composants-formulaires-syselect--docs',
-						img: '/components/sy-select.svg',
+						img: `/components/sy-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -388,6 +388,7 @@ export const ComponentsList: StoryObj = {
 					'FranceConnectBtn',
 					'SkipLink',
 					'SyAutocomplete',
+					'SySelect',
 					'SyRadioGroup',
 				]
 
