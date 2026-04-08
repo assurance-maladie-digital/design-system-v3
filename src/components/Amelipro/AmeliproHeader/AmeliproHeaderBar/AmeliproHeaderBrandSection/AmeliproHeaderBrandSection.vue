@@ -79,7 +79,7 @@
 
 	const showDivider = computed<boolean>(() => Boolean(ameliproLogo.value || props.serviceTitle))
 	const showServiceSubTitle = computed<boolean>(() => Boolean(props.serviceTitle && props.serviceSubTitle))
-	const dividerColor = computed<string>(() => (props.themeAmelipro ? '#006386' : convertToHex('ap-blue')))
+	const dividerColor = computed<string>(() => (props.themeAmelipro ? convertToHex('secondary') : convertToHex('ap-blue')))
 	const dividerDimensions = computed(() => {
 		const { xSmall, small, normal } = dividerDimensionsMapping
 
