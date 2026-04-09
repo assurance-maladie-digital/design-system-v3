@@ -4,73 +4,35 @@
 
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import fs from 'node:fs'
-import vm from 'node:vm'
-import ts from 'typescript'
+import { loadTsModule } from './loadTsModule.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const rootDir = path.resolve(__dirname, '..')
-const cache = new Map()
-
-function loadTsModule(filePath) {
-	const normalizedPath = path.resolve(filePath)
-
-	if (cache.has(normalizedPath))
-		return cache.get(normalizedPath)
-
-	const source = fs.readFileSync(normalizedPath, 'utf8')
-	const transpiled = ts.transpileModule(source, {
-		compilerOptions: {
-			module: ts.ModuleKind.CommonJS,
-			target: ts.ScriptTarget.ES2020,
-			esModuleInterop: true,
-		},
-		fileName: normalizedPath,
-	})
-
-	const module = { exports: {} }
-	const dirname = path.dirname(normalizedPath)
-
-	const localRequire = (specifier) => {
-		if (!specifier.startsWith('.'))
-			throw new Error(`Unsupported import "${specifier}" in ${normalizedPath}`)
-
-		const resolved = path.resolve(dirname, specifier.endsWith('.ts') ? specifier : `${specifier}.ts`)
-		return loadTsModule(resolved)
-	}
-
-	const context = {
-		module,
-		exports: module.exports,
-		require: localRequire,
-		__dirname: dirname,
-		__filename: normalizedPath,
-		console,
-	}
-
-	vm.runInNewContext(transpiled.outputText, context, { filename: normalizedPath })
-	cache.set(normalizedPath, module.exports)
-	return module.exports
-}
 
 const cnam = loadTsModule(path.join(rootDir, 'src/designTokens/tokens/cnam/cnamVariantConfig.ts'))
 const pa = loadTsModule(path.join(rootDir, 'src/designTokens/tokens/pa/paVariantConfig.ts'))
 const ap = loadTsModule(path.join(rootDir, 'src/designTokens/tokens/amelipro/apVariantConfig.ts'))
 
 export const cnamVariantConfig = {
+	colors: cnam.cnamColorsTokens,
+	contextual: cnam.cnamContextualTokens,
 	semanticValues: cnam.cnamSemanticValues,
 	additionalContextual: cnam.cnamAdditionalContextual,
 	spacingTokens: cnam.cnamSpacingTokens,
 }
 
 export const paVariantConfig = {
+	colors: pa.paColorsTokens,
+	contextual: pa.paContextualTokens,
 	semanticValues: pa.paSemanticValues,
 	additionalContextual: pa.paAdditionalContextual,
 	spacingTokens: pa.paSpacingTokens,
 }
 
 export const apVariantConfig = {
+	colors: ap.apColorsTokens,
+	contextual: ap.apContextualTokens,
 	semanticValues: ap.apSemanticValues,
 	additionalContextual: ap.apAdditionalContextual,
 }

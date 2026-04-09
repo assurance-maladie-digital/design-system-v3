@@ -4,3 +4,5 @@ import { cnamAdditionalContextual, cnamSemanticValues } from '../cnam/cnamVarian
 export const paSemanticValues: Record<string, string> = { ...cnamSemanticValues }
 export const paAdditionalContextual: Record<string, string> = { ...cnamAdditionalContextual }
 export { cnamSpacingTokens as paSpacingTokens } from '../cnam/cnamVariantConfig'
+export { paColorsTokens } from './paColors'
+export { paContextualTokens } from './paContextual'

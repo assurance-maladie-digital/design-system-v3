@@ -18,9 +18,7 @@ describe('buildColorClassMap', () => {
 	})
 
 	it('apColorClasses matches buildColorClassMap output for apColorsTokens2026', () => {
-		const generated = buildColorClassMap(
-			apColorsTokens2026 as unknown as Record<string, Record<string, string>>,
-		)
+		const generated = buildColorClassMap(apColorsTokens2026)
 		expect(apColorClasses).toEqual(generated)
 	})
 

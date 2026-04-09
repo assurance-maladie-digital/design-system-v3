@@ -193,7 +193,6 @@ $white-70: rgba(255, 255, 255, 0.70);
 $white-08: rgba(255, 255, 255, 0.080);
 $white-base: #ffffff;
 $white-00: rgba(255, 255, 255, 0);
-$none-value: undefined;
 $transparent-blue-18: rgba(12, 65, 154, 0.18);
 $transparent-blue-08: rgba(12, 65, 154, 0.08);
 $transparent-blue-00: rgba(12, 65, 154, 0);"

@@ -66,6 +66,4 @@ export const apColorsTokens2026 = {
 	},
 }
 
-export const apColorClasses: IndexedObject = buildColorClassMap(
-	apColorsTokens2026 as unknown as Record<string, Record<string, string>>,
-)
+export const apColorClasses: IndexedObject = buildColorClassMap(apColorsTokens2026)

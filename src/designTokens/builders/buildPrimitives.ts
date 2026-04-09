@@ -1,6 +1,17 @@
 import type { ColorsTokens } from './types'
 import { formatColor, toKebabCase, toTokenSuffix } from './formatters'
 
+// Maps white scale step names to their output token suffixes.
+// Add entries here when new white shades are added to the color tokens.
+const WHITE_STEP_NAMES: Record<string, string> = {
+	base: 'base',
+	lighten8: '08',
+	lighten20: '20',
+	lighten38: '38',
+	lighten40: '40',
+	lighten70: '70',
+}
+
 export function buildPrimitives(colorsTokens: ColorsTokens): string[] {
 	const lines: string[] = ['// Primitives']
 
@@ -14,18 +25,9 @@ export function buildPrimitives(colorsTokens: ColorsTokens): string[] {
 			const value = formatColor(rawValue)
 
 			if (colorName === 'white') {
-				if (step === 'base')
-					lines.push(`$white-base: ${value};`)
-				else if (step === 'lighten8')
-					lines.push(`$white-08: ${value};`)
-				else if (step === 'lighten20')
-					lines.push(`$white-20: ${value};`)
-				else if (step === 'lighten38')
-					lines.push(`$white-38: ${value};`)
-				else if (step === 'lighten40')
-					lines.push(`$white-40: ${value};`)
-				else if (step === 'lighten70')
-					lines.push(`$white-70: ${value};`)
+				const suffix = WHITE_STEP_NAMES[step]
+				if (suffix)
+					lines.push(`$white-${suffix}: ${value};`)
 				continue
 			}
 
@@ -34,7 +36,6 @@ export function buildPrimitives(colorsTokens: ColorsTokens): string[] {
 	}
 
 	lines.push('$white-00: rgba(255, 255, 255, 0);')
-	lines.push('$none-value: undefined;')
 	lines.push('$transparent-blue-18: rgba(12, 65, 154, 0.18);')
 	lines.push('$transparent-blue-08: rgba(12, 65, 154, 0.08);')
 	lines.push('$transparent-blue-00: rgba(12, 65, 154, 0);')
