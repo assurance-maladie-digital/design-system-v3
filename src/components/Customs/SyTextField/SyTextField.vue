@@ -159,6 +159,31 @@
 		'blur',
 	])
 
+	const NUMBER_ALLOWED_CHARACTERS_PATTERN = /[^0-9eE+.-]/g
+	const NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9eE+.-]$/
+	const TEL_ALLOWED_CHARACTERS_PATTERN = /[^0-9+().\-\s]/g
+	const TEL_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9+().\-\s]$/
+
+	const sanitizeNumberValue = (value: string | number | null | undefined) => {
+		if (props.type !== 'number' || typeof value !== 'string') {
+			return value
+		}
+
+		return value.replace(NUMBER_ALLOWED_CHARACTERS_PATTERN, '')
+	}
+
+	const sanitizeTelValue = (value: string | number | null | undefined) => {
+		if (props.type !== 'tel' || typeof value !== 'string') {
+			return value
+		}
+
+		return value.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '')
+	}
+
+	const sanitizeTypedValue = (value: string | number | null | undefined) => {
+		return sanitizeTelValue(sanitizeNumberValue(value))
+	}
+
 	const lastEmittedModelValue = ref(props.modelValue)
 
 	const model = computed({
@@ -166,8 +191,9 @@
 			return props.modelValue
 		},
 		set(value) {
-			emit('update:modelValue', value)
-			lastEmittedModelValue.value = value
+			const sanitizedValue = sanitizeTypedValue(value)
+			emit('update:modelValue', sanitizedValue)
+			lastEmittedModelValue.value = sanitizedValue
 		},
 	})
 
@@ -257,6 +283,66 @@
 
 	const handleAppendIconClick = () => {
 		emit('append-icon-click')
+	}
+
+	const handleInput = (event: Event) => {
+		if (props.type === 'number' || props.type === 'tel') {
+			const target = event.target as HTMLInputElement | null
+
+			if (target) {
+				const sanitizedValue = sanitizeTypedValue(target.value)
+				if (typeof sanitizedValue === 'string' && target.value !== sanitizedValue) {
+					target.value = sanitizedValue
+				}
+			}
+		}
+
+		emit('input', event)
+	}
+
+	const handleBeforeInput = (event: InputEvent) => {
+		if (props.type !== 'number' && props.type !== 'tel') {
+			return
+		}
+
+		if (!event.data) {
+			return
+		}
+
+		const allowedPattern = props.type === 'number'
+			? NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN
+			: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN
+
+		if (!allowedPattern.test(event.data)) {
+			event.preventDefault()
+		}
+	}
+
+	const handleKeydown = (event: KeyboardEvent) => {
+		if ((props.type === 'number' || props.type === 'tel') && !event.ctrlKey && !event.metaKey && !event.altKey) {
+			const allowedNonCharacterKeys = [
+				'Backspace',
+				'Delete',
+				'Tab',
+				'Escape',
+				'Enter',
+				'ArrowLeft',
+				'ArrowRight',
+				'ArrowUp',
+				'ArrowDown',
+				'Home',
+				'End',
+			]
+			const allowedPattern = props.type === 'number'
+				? NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN
+				: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN
+
+			if (!allowedNonCharacterKeys.includes(event.key) && event.key.length === 1 && !allowedPattern.test(event.key)) {
+				event.preventDefault()
+			}
+		}
+
+		emit('keydown', event)
 	}
 
 	const validationIcon = computed(() => {
@@ -568,6 +654,7 @@
 			:theme="props.theme"
 			:tile="props.isTiled"
 			:type="props.type"
+			:inputmode="props.type === 'number' ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
 			:variant="props.variantStyle"
 			:width="props.width"
 			v-bind="forwardedAttrs"
@@ -579,8 +666,9 @@
 			}"
 			@focus="focused = true; emit('focus')"
 			@blur="focused = false; emit('blur')"
-			@input="(e: Event) => emit('input', e)"
-			@keydown="(e: KeyboardEvent) => emit('keydown', e)"
+			@beforeinput="handleBeforeInput"
+			@input="handleInput"
+			@keydown="handleKeydown"
 		>
 			<!-- Prepend -->
 			<template

@@ -40,6 +40,8 @@ const apComponents = [
 	'composants-composants-vuetify',
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbtn--docs',
+	'composants-formulaires-sycheckboxgroup',
+	'composants-formulaires-sycheckbox',
 	'composants-composants-vuetify-vtooltip--docs',
     'composants-formulaires-selects-syselect',
     'composants-formulaires-selects-syautocomplete',
