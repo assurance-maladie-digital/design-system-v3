@@ -61,17 +61,16 @@ const ap = loadTsModule(path.join(rootDir, 'src/designTokens/tokens/amelipro/apV
 export const cnamVariantConfig = {
 	semanticValues: cnam.cnamSemanticValues,
 	additionalContextual: cnam.cnamAdditionalContextual,
-	includeContainerAliases: cnam.cnamIncludeContainerAliases,
+	spacingTokens: cnam.cnamSpacingTokens,
 }
 
 export const paVariantConfig = {
 	semanticValues: pa.paSemanticValues,
 	additionalContextual: pa.paAdditionalContextual,
-	includeContainerAliases: pa.paIncludeContainerAliases,
+	spacingTokens: pa.paSpacingTokens,
 }
 
 export const apVariantConfig = {
 	semanticValues: ap.apSemanticValues,
 	additionalContextual: ap.apAdditionalContextual,
-	includeContainerAliases: ap.apIncludeContainerAliases,
 }

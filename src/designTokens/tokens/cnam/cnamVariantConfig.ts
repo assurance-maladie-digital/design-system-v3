@@ -150,4 +150,4 @@ export const cnamAdditionalContextual: Record<string, string> = {
 	'heading-4-font-size': '14px',
 }
 
-export const cnamIncludeContainerAliases = true
+export { cnamSpacingTokens } from './cnamSpacingTokens'
