@@ -144,5 +144,3 @@ export const apAdditionalContextual: Record<string, string> = {
 	'colors-interactive-negative-secondary-action-pressed': '$white-20',
 	'colors-interactive-negative-secondary-action-disabled': '$white-00',
 }
-
-export const apIncludeContainerAliases = false

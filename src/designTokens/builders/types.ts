@@ -12,25 +12,25 @@ export interface ContextualColors {
 
 export interface ContextualTokens {
 	colors: ContextualColors
-	gap: Record<string | number, string | number>
+	gap: Record<number, string>
 	iconSize: {
-		xsmall: string | number
-		small: string | number
-		default: string | number
-		large: string | number
+		xsmall: string
+		small: string
+		default: string
+		large: string
 	}
 	radius: {
-		rounded0: string | number
-		rounded: string | number
-		roundedLg: string | number
-		roundedPill: string | number
+		rounded0: string
+		rounded: string
+		roundedLg: string
+		roundedPill: string
 	}
-	padding: Record<string | number, string | number>
+	padding: Record<number, string>
 	fontSize: {
-		titres: string | number
-		titresAlternatifs: string | number
-		corpsDeTexte: string | number
-		liensEtLibelles: string | number
+		titres: string
+		titresAlternatifs: string
+		corpsDeTexte: string
+		liensEtLibelles: string
 	}
 }
 
