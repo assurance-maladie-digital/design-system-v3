@@ -73,6 +73,7 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		'guide-du-dev-migration',
 		'guide-du-dev-installation--docs',
 		'composants-structure-headerbar--prepend-slot',
+		'composants-structure-headerbar--with-header-toolbar',
 	])
 
 	if (itemId === 'composants-amelipro') {
