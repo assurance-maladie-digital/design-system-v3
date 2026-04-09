@@ -1,13 +1,31 @@
-import type { ContextualTokens } from './types'
-import { formatColor, formatLength } from './formatters'
+import type { ContextualTokens, SpacingTokens } from './types'
+import { formatColor, formatLength, toKebabCase } from './formatters'
 
 const GAP_KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'] as const
 const PADDING_KEYS = ['0', '2', '3', '4', '6', '8', '10', '14', '16'] as const
 
+function buildSpacingSection(spacing: SpacingTokens): string[] {
+	const lines: string[] = []
+
+	lines.push('', '// vertical spacing')
+	for (const [name, value] of Object.entries(spacing.vertical))
+		lines.push(`$spacing-${toKebabCase(name)}: ${value};`)
+
+	lines.push('', '// horizontal spacing')
+	for (const [name, value] of Object.entries(spacing.horizontal))
+		lines.push(`$spacing-horizontal-${toKebabCase(name)}: ${value};`)
+
+	lines.push('', '// container')
+	for (const [name, value] of Object.entries(spacing.container))
+		lines.push(`$container-${toKebabCase(name)}: ${value};`)
+
+	return lines
+}
+
 export function buildContextual(
 	contextual: ContextualTokens,
 	additionalContextual: Record<string, string>,
-	includeContainerAliases: boolean,
+	spacingTokens?: SpacingTokens,
 ): string[] {
 	const lines: string[] = ['', '// Contextual Tokens']
 
@@ -44,34 +62,8 @@ export function buildContextual(
 	for (const [name, value] of Object.entries(additionalContextual))
 		lines.push(`$${name}: ${value};`)
 
-	if (includeContainerAliases) {
-		lines.push('', '// vertical spacing')
-		lines.push('$spacing-none: 0;')
-		lines.push('$spacing-xx-small: 4px;')
-		lines.push('$spacing-x-small: 8px;')
-		lines.push('$spacing-small: 16px;')
-		lines.push('$spacing-medium: 24px;')
-		lines.push('$spacing-large: 32px;')
-		lines.push('$spacing-x-large: 40px;')
-		lines.push('$spacing-xx-large: 56px;')
-		lines.push('$spacing-xxx-large: 64px;')
-		lines.push('$spacing-huge: 80px;')
-		lines.push('', '// horizontal spacing')
-		lines.push('$spacing-horizontal-none: 0;')
-		lines.push('$spacing-horizontal-xx-small: 4px;')
-		lines.push('$spacing-horizontal-x-small: 8px;')
-		lines.push('$spacing-horizontal-small: 16px;')
-		lines.push('$spacing-horizontal-medium: 24px;')
-		lines.push('$spacing-horizontal-large: 32px;')
-		lines.push('$spacing-horizontal-x-large: 40px;')
-		lines.push('$spacing-horizontal-xx-large: 56px;')
-		lines.push('$spacing-horizontal-xxx-large: 64px;')
-		lines.push('$spacing-horizontal-huge: 80px;')
-		lines.push('', '// container')
-		lines.push('$container-mobile-max-width: 600px;')
-		lines.push('$container-tablet-max-width: 960px;')
-		lines.push('$container-desktop-max-width: 960px;')
-	}
+	if (spacingTokens)
+		lines.push(...buildSpacingSection(spacingTokens))
 
 	return lines
 }

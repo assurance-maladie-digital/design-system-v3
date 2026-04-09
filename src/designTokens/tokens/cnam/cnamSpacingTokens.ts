@@ -1,0 +1,31 @@
+export const cnamSpacingTokens = {
+	vertical: {
+		none: '0',
+		xxSmall: '4px',
+		xSmall: '8px',
+		small: '16px',
+		medium: '24px',
+		large: '32px',
+		xLarge: '40px',
+		xxLarge: '56px',
+		xxxLarge: '64px',
+		huge: '80px',
+	},
+	horizontal: {
+		none: '0',
+		xxSmall: '4px',
+		xSmall: '8px',
+		small: '16px',
+		medium: '24px',
+		large: '32px',
+		xLarge: '40px',
+		xxLarge: '56px',
+		xxxLarge: '64px',
+		huge: '80px',
+	},
+	container: {
+		mobileMaxWidth: '600px',
+		tabletMaxWidth: '960px',
+		desktopMaxWidth: '960px',
+	},
+}

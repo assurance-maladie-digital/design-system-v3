@@ -3,7 +3,7 @@ import { buildPrimitives } from './buildPrimitives'
 import { buildSemantic } from './buildSemantic'
 import { buildContextual } from './buildContextual'
 
-export function buildVariant({ colors, contextual, semanticValues, additionalContextual, includeContainerAliases }: VariantInput): string {
+export function buildVariant({ colors, contextual, semanticValues, additionalContextual, spacingTokens }: VariantInput): string {
 	const lines = [
 		'/*',
 		' * Generated from src/designTokens.',
@@ -12,7 +12,7 @@ export function buildVariant({ colors, contextual, semanticValues, additionalCon
 		'',
 		...buildPrimitives(colors),
 		...buildSemantic(semanticValues),
-		...buildContextual(contextual, additionalContextual, includeContainerAliases),
+		...buildContextual(contextual, additionalContextual, spacingTokens),
 		'',
 	]
 

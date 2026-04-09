@@ -4,6 +4,7 @@ import { buildSemantic } from '../builders/buildSemantic'
 import { buildContextual } from '../builders/buildContextual'
 import { cnamColorsTokens } from '../tokens/cnam/cnamColors'
 import { cnamContextualTokens } from '../tokens/cnam/cnamContextual'
+import { cnamSpacingTokens } from '../tokens/cnam/cnamSpacingTokens'
 import { paContextualTokens } from '../tokens/pa/paContextual'
 import { apContextualTokens } from '../tokens/amelipro/apContextual'
 
@@ -75,14 +76,14 @@ describe('buildContextual', () => {
 		}
 	})
 
-	it('includes spacing aliases when includeContainerAliases is true', () => {
-		const lines = buildContextual(cnamContextualTokens, {}, true)
+	it('includes spacing section when spacingTokens is provided', () => {
+		const lines = buildContextual(cnamContextualTokens, {}, cnamSpacingTokens)
 		expect(lines).toContain('$spacing-none: 0;')
 		expect(lines).toContain('$container-mobile-max-width: 600px;')
 	})
 
-	it('omits spacing aliases when includeContainerAliases is false', () => {
-		const lines = buildContextual(cnamContextualTokens, {}, false)
+	it('omits spacing section when spacingTokens is not provided', () => {
+		const lines = buildContextual(cnamContextualTokens, {})
 		expect(lines).not.toContain('$spacing-none: 0;')
 		expect(lines).not.toContain('$container-mobile-max-width: 600px;')
 	})

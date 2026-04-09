@@ -34,10 +34,16 @@ export interface ContextualTokens {
 	}
 }
 
+export interface SpacingTokens {
+	vertical: Record<string, string>
+	horizontal: Record<string, string>
+	container: Record<string, string>
+}
+
 export interface VariantInput {
 	colors: ColorsTokens
 	contextual: ContextualTokens
 	semanticValues: Record<string, string>
 	additionalContextual: Record<string, string>
-	includeContainerAliases: boolean
+	spacingTokens?: SpacingTokens
 }
