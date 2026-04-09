@@ -81,8 +81,8 @@
 	const showServiceSubTitle = computed<boolean>(() => Boolean(props.serviceTitle && props.serviceSubTitle))
 	// SVG fill requires a hex literal — use token references directly instead of going through convertToHex
 	const dividerColor = computed<string>(() => props.themeAmelipro
-		? apColorsTokens2026.apBlue.darken2  // = theme secondary
-		: apColorsTokens2026.apBlue.base,    // = ap-blue
+		? apColorsTokens2026.apBlue.darken2 // = theme secondary
+		: apColorsTokens2026.apBlue.base, // = ap-blue
 	)
 	const dividerDimensions = computed(() => {
 		const { xSmall, small, normal } = dividerDimensionsMapping
