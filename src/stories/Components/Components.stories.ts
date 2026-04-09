@@ -253,6 +253,20 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyCheckBox',
+						description: 'Utilisé pour permettre à l’utilisateur de selectionner une option.',
+						link: '/?path=/docs/composants-formulaires-sycheckbox--docs',
+						img: `/components/sy-checkbox${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
+						title: 'SyCheckBoxGroup',
+						description: 'Utilisé pour permettre à l’utilisateur de selectionner plusieurs options.',
+						link: '/?path=/docs/composants-formulaires-sycheckboxgroup--docs',
+						img: `/components/sy-checkbox-group${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
 						title: 'PaginatedTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify avec une pagination persistante.',
 						link: '/?path=/docs/composants-tableaux-paginatedtable--docs',
@@ -378,8 +392,9 @@ export const ComponentsList: StoryObj = {
 					'CopyBtn',
 					'DownloadBtn',
 					'SyPagination',
-					'FranceConnectBtn',
 					'SkipLink',
+					'SyCheckBox',
+					'SyCheckBoxGroup',
 					'SyAutocomplete',
 					'SySelect',
 				]
