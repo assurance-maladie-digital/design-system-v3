@@ -30,7 +30,7 @@ const apOnlyStories = [
 const apComponents = [
 	'composants-vue-d-ensemble--docs',
 	'composants-structure-footerbar',
-	'composants-structure-headerbar',
+    'composants-structure-headerbar',
 	'composants-structure-headerloading',
 	'composants-layout-pagecontainer',
 	'composants-navigation-skiplink',
@@ -57,7 +57,11 @@ const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
 	stories.some(story => story.startsWith(`${itemId}-`))
 
 const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
-	stories.some(story => itemId.startsWith(`${story}--`))
+    stories.some(
+        story =>
+            itemId.startsWith(`${story}--`) ||
+            itemId.startsWith(`${story}-`)
+    )
 
 const shouldShowApComponent = (item, itemId, theme) => {
 	const isAp2026 = theme === 'ap2026'
@@ -74,6 +78,7 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		'guide-du-dev-installation--docs',
 		'composants-structure-headerbar--prepend-slot',
 		'composants-structure-headerbar--with-header-toolbar',
+        'composants-structure-headerbar-headernavigationbar'
 	])
 
 	if (itemId === 'composants-amelipro') {
@@ -98,6 +103,7 @@ const shouldShowApComponent = (item, itemId, theme) => {
 			item.style.display = ''
 			return
 		}
+        console.log(itemId, apComponents)
 
 		const shouldShow = isExactMatch(itemId, apComponents)
 			|| isParentOfAllowedComponent(itemId, apComponents)
