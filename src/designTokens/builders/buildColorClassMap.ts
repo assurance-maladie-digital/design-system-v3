@@ -1,7 +1,5 @@
 import { toKebabCase } from './formatters'
 
-type ColorTokens = Record<string, Record<string, string>>
-
 /**
  * Generates a flat class-name → hex value map from a color token object.
  *
@@ -13,7 +11,7 @@ type ColorTokens = Record<string, Record<string, string>>
  * The 'base' variation is dropped from the class name (e.g. apBlue-base → ap-blue).
  * Numeric suffixes in variation names are separated with a dash (darken1 → darken-1).
  */
-export function buildColorClassMap(tokens: ColorTokens): Record<string, string> {
+export function buildColorClassMap<T extends Record<string, Record<string, string>>>(tokens: T): Record<string, string> {
 	const map: Record<string, string> = {}
 
 	for (const [colorName, colorValues] of Object.entries(tokens)) {

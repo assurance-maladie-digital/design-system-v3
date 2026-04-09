@@ -151,3 +151,5 @@ export const cnamAdditionalContextual: Record<string, string> = {
 }
 
 export { cnamSpacingTokens } from './cnamSpacingTokens'
+export { cnamColorsTokens } from './cnamColors'
+export { cnamContextualTokens } from './cnamContextual'
