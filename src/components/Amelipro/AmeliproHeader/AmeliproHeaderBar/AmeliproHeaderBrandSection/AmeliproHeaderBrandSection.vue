@@ -4,7 +4,7 @@
 	import type { LogoInfo } from './types'
 	import { LogoSizeEnum } from '../AmeliproLogoAm/LogoSizeEnum'
 	import { type RouteLocationRaw } from 'vue-router'
-	import { convertToHex } from '@/utils/functions/convertToHex'
+	import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
 	import { locales } from './locales'
 	import { useDisplay } from 'vuetify'
@@ -79,7 +79,11 @@
 
 	const showDivider = computed<boolean>(() => Boolean(ameliproLogo.value || props.serviceTitle))
 	const showServiceSubTitle = computed<boolean>(() => Boolean(props.serviceTitle && props.serviceSubTitle))
-	const dividerColor = computed<string>(() => (props.themeAmelipro ? convertToHex('secondary') : convertToHex('ap-blue')))
+	// SVG fill requires a hex literal — use token references directly instead of going through convertToHex
+	const dividerColor = computed<string>(() => props.themeAmelipro
+		? apColorsTokens2026.apBlue.darken2  // = theme secondary
+		: apColorsTokens2026.apBlue.base,    // = ap-blue
+	)
 	const dividerDimensions = computed(() => {
 		const { xSmall, small, normal } = dividerDimensionsMapping
 

@@ -5,7 +5,7 @@
 	import { computed, onMounted, onUnmounted, type PropType, ref } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { ValidationRule } from '@/utils/rules/types'
-	import { convertToHex } from '@/utils/functions/convertToHex'
+	import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 	import { isRequired } from '@/utils/rules/isRequired'
 
 	const props = defineProps({
@@ -185,17 +185,11 @@
 	})
 
 	const inputBorderStyle = computed<string>(() => {
-		let borderColor = convertToHex('ap-grey-darken-1')
-		if (focused.value) {
-			borderColor = convertToHex('ap-blue-darken-1')
-		}
-		if (displayError.value) {
-			borderColor = convertToHex('ap-red')
-		}
-		if (props.disabled) {
-			borderColor = convertToHex('ap-grey-lighten-2')
-		}
-		return borderColor
+		const { apBlue, apGrey, apRed } = apColorsTokens2026
+		if (props.disabled) return apGrey.lighten2
+		if (displayError.value) return apRed.base
+		if (focused.value) return apBlue.darken1
+		return apGrey.darken1
 	})
 
 	const fixAccessibility = () => {
