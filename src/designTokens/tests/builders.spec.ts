@@ -56,12 +56,12 @@ describe('buildSemantic', () => {
 
 describe('buildContextual', () => {
 	it('generates CNAM contextual section snapshot', () => {
-		const lines = buildContextual(cnamContextualTokens, {}, false)
+		const lines = buildContextual(cnamContextualTokens, {})
 		expect(lines.join('\n')).toMatchSnapshot()
 	})
 
 	it('reads gap values from the contextual token object (no hardcoded overrides)', () => {
-		const lines = buildContextual(cnamContextualTokens, {}, false)
+		const lines = buildContextual(cnamContextualTokens, {})
 		expect(lines).toContain(`$gap-3: ${cnamContextualTokens.gap[3]};`)
 		expect(lines).toContain(`$gap-0: ${cnamContextualTokens.gap[0]};`)
 		expect(lines).toContain(`$gap-16: ${cnamContextualTokens.gap[16]};`)
@@ -90,7 +90,7 @@ describe('buildContextual', () => {
 
 	it('includes additionalContextual entries', () => {
 		const additional = { 'colors-background-main': '$primary-lighter-4' }
-		const lines = buildContextual(cnamContextualTokens, additional, false)
+		const lines = buildContextual(cnamContextualTokens, additional)
 		expect(lines).toContain('$colors-background-main: $primary-lighter-4;')
 	})
 })
