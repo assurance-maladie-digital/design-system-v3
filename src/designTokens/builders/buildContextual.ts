@@ -37,7 +37,7 @@ export function buildContextual(
 	lines.push(`$colors-interactive: ${formatColor(contextual.colors.interactive)};`)
 
 	for (const key of GAP_KEYS)
-		lines.push(`$gap-${key}: ${formatLength(contextual.gap[key]!)};`)
+		lines.push(`$gap-${key}: ${formatLength(contextual.gap[Number(key)]!)};`)
 
 	lines.push(`$icon-size-xsmall: ${formatLength(contextual.iconSize.xsmall)};`)
 	lines.push(`$icon-size-small: ${formatLength(contextual.iconSize.small)};`)
@@ -50,7 +50,7 @@ export function buildContextual(
 	lines.push(`$radius-rounded-pill: ${formatLength(contextual.radius.roundedPill)};`)
 
 	for (const key of PADDING_KEYS)
-		lines.push(`$padding-${key}: ${formatLength(contextual.padding[key]!)};`)
+		lines.push(`$padding-${key}: ${formatLength(contextual.padding[Number(key)]!)};`)
 
 	lines.push(`$font-size-title: ${formatLength(contextual.fontSize.titres)};`)
 	lines.push(`$font-size-alt-title: ${formatLength(contextual.fontSize.titresAlternatifs)};`)
