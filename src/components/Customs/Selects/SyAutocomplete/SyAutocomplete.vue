@@ -656,7 +656,7 @@
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(0 0 0 / 54%);
+	color: rgb(var(--v-theme-iconBase));
 }
 
 .sy-autocomplete__chip {

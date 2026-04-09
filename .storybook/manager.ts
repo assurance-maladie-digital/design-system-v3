@@ -40,8 +40,12 @@ const apComponents = [
 	'composants-composants-vuetify',
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbtn--docs',
+	'composants-formulaires-sycheckboxgroup',
+	'composants-formulaires-sycheckbox',
 	'composants-composants-vuetify-vtooltip--docs',
+	'composants-formulaires-selects-syselect',
 	'composants-formulaires-selects-syautocomplete',
+	'composants-formulaires-syradiogroup',
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
@@ -69,6 +73,7 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		'guide-du-dev-migration',
 		'guide-du-dev-installation--docs',
 		'composants-structure-headerbar--prepend-slot',
+		'composants-structure-headerbar--with-header-toolbar',
 	])
 
 	if (itemId === 'composants-amelipro') {

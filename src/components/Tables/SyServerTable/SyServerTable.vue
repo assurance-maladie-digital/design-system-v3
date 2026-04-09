@@ -18,7 +18,9 @@
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import useStoredOptions from '../common/useStoredOptions'
 	import { usePinnedColumns } from '../common/usePinnedColumns'
+	import { useClickableTableRow } from '../common/useClickableTableRow'
 	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
+	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
@@ -38,7 +40,12 @@
 		mustSort: false,
 		itemsPerPageOptions: undefined,
 		headingLevel: 2,
+		clickableRow: false,
 	})
+
+	const emit = defineEmits<{
+		'row-click': [item: Record<string, unknown>]
+	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -77,6 +84,16 @@
 		componentAttributes,
 		options,
 		storedOptions: storedOptions.options,
+	})
+
+	const forwardedRowProps = computed<ClickableTableRowPropsInput>(() => {
+		return (propsFacade.value.rowProps ?? propsFacade.value['row-props']) as ClickableTableRowPropsInput
+	})
+
+	const { clickableRowProps } = useClickableTableRow({
+		clickableRow: toRef(props, 'clickableRow'),
+		rowProps: forwardedRowProps,
+		onRowClick: item => emit('row-click', item),
 	})
 
 	const { setupAccessibility } = useTableAccessibility({
@@ -244,6 +261,7 @@
 			v-bind="propsFacade"
 			v-model="model"
 			:headers="displayHeadersWithPinned"
+			:row-props="clickableRowProps"
 			color="primary"
 			:items="displayedItems"
 			:items-length="displayedItemsLength || 0"
@@ -469,6 +487,7 @@
 
 .sy-server-table :deep() {
 	@include tablestyles;
+	@include clickable-row-styles;
 }
 
 @mixin striped-rows {

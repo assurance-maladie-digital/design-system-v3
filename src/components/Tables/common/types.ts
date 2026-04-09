@@ -104,6 +104,7 @@ export type SyTableProps = {
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	pinnedColumns?: Array<string | { key: string, side?: 'left' | 'right' }>
 	pinnedColumnKey?: string
+	clickableRow?: boolean
 }
 
 export type SyServerTableProps = {
@@ -130,5 +131,5 @@ export type SyServerTableProps = {
 	headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	pinnedColumns?: Array<string | { key: string, side?: 'left' | 'right' }>
 	pinnedColumnKey?: string
-
+	clickableRow?: boolean
 }

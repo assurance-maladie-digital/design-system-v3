@@ -172,7 +172,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
 						link: '/?path=/docs/composants-formulaires-syselect--docs',
-						img: '/components/sy-select.svg',
+						img: `/components/sy-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -250,6 +250,27 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.',
 						link: '/?path=/docs/composants-formulaires-selectbtnfield--docs',
 						img: '/components/select-btn-field.svg',
+						category: 'Formulaires',
+					},
+					{
+						title: 'SyCheckBox',
+						description: 'Utilisé pour permettre à l’utilisateur de selectionner une option.',
+						link: '/?path=/docs/composants-formulaires-sycheckbox--docs',
+						img: `/components/sy-checkbox${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
+						title: 'SyCheckBoxGroup',
+						description: 'Utilisé pour permettre à l’utilisateur de selectionner plusieurs options.',
+						link: '/?path=/docs/composants-formulaires-sycheckboxgroup--docs',
+						img: `/components/sy-checkbox-group${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
+						title: 'SyRadioGroup',
+						description: 'Utilisé pour permettre à l\'utilisateur de choisir une option parmi plusieurs.',
+						link: '/?path=/docs/composants-formulaires-syradiogroup--docs',
+						img: `/components/sy-radiogroup${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -378,9 +399,12 @@ export const ComponentsList: StoryObj = {
 					'CopyBtn',
 					'DownloadBtn',
 					'SyPagination',
-					'FranceConnectBtn',
 					'SkipLink',
+					'SyCheckBox',
+					'SyCheckBoxGroup',
 					'SyAutocomplete',
+					'SySelect',
+					'SyRadioGroup',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
