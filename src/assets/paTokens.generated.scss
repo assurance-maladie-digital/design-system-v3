@@ -134,19 +134,19 @@ $grey-lighten-20: #76797a;
 $grey-lighten-40: #989b9b;
 $grey-lighten-60: #bbbcbd;
 $grey-lighten-80: #dddede;
-$grey-lighten-90: #eeeeee;
+$grey-lighten-90: #eee;
 $grey-lighten-97: #fafafa;
-$white-20: rgba(255, 255, 255, 0.20);
-$white-38: rgba(255, 255, 255, 0.38);
-$white-40: rgba(255, 255, 255, 0.40);
-$white-70: rgba(255, 255, 255, 0.70);
-$white-08: rgba(255, 255, 255, 0.080);
-$white-base: #ffffff;
-$white-00: rgba(255, 255, 255, 0);
+$white-20: rgb(255 255 255 / 20%);
+$white-38: rgb(255 255 255 / 38%);
+$white-40: rgb(255 255 255 / 40%);
+$white-70: rgb(255 255 255 / 70%);
+$white-08: rgb(255 255 255 / 8%);
+$white-base: #fff;
+$white-00: rgb(255 255 255 / 0%);
 $none-value: undefined;
-$transparent-blue-18: rgba(12, 65, 154, 0.18);
-$transparent-blue-08: rgba(12, 65, 154, 0.08);
-$transparent-blue-00: rgba(12, 65, 154, 0);
+$transparent-blue-18: rgb(12 65 154 / 18%);
+$transparent-blue-08: rgb(12 65 154 / 8%);
+$transparent-blue-00: rgb(12 65 154 / 0%);
 
 // Semantic Tokens
 $primary-darker-2: $blue-darken-40;
@@ -195,11 +195,11 @@ $user-assure: $pink-lighten-40;
 $user-entreprise: $yellow-base;
 
 // Contextual Tokens
-$colors-background: #ffffff;
-$colors-border: #dddddd;
-$colors-text: #333333;
-$colors-icon: #666666;
-$colors-overlay: rgba(0, 0, 0, 0.5);
+$colors-background: #fff;
+$colors-border: #ddd;
+$colors-text: #333;
+$colors-icon: #666;
+$colors-overlay: rgb(0 0 0 / 50%);
 $colors-interactive: #007bff;
 $gap-0: 0;
 $gap-1: 4px;
@@ -373,4 +373,3 @@ $spacing-horizontal-huge: 80px;
 $container-mobile-max-width: 600px;
 $container-tablet-max-width: 960px;
 $container-desktop-max-width: 960px;
-
