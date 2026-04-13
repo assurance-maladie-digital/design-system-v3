@@ -4,6 +4,7 @@ import { VIcon } from 'vuetify/components'
 import { ref, watch } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 import { VBtn } from 'vuetify/components'
+import { documentationValidationProps } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
 	title: 'Composants/Formulaires/SyTextField',
@@ -15,7 +16,6 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['modelValue', 'appendInnerIconColor', 'errorMessages', 'warningMessages', 'successMessages'] },
 		docs: {
 			description: {
 				component: `SyTextField`,
@@ -23,6 +23,7 @@ const meta = {
 		},
 	},
 	argTypes: {
+		...documentationValidationProps,
 		'modelValue': { control: 'text' },
 		'label': {
 			description: 'Texte affiché comme label du champ',
@@ -62,27 +63,6 @@ const meta = {
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Densité du champ',
 		},
-		'customRules': {
-			description: 'Règles de validation personnalisées',
-			control: 'object',
-		},
-		'customWarningRules': {
-			description: 'Règles d\'avertissement personnalisées',
-			control: 'object',
-		},
-		'showSuccessMessages': {
-			description: 'Afficher les messages de succès',
-			control: 'boolean',
-		},
-		'isValidateOnBlur': {
-			description: 'Vérifie la validité lors de la perte de focus',
-			control: 'boolean',
-			default: true,
-		},
-		'disableErrorHandling': {
-			control: 'boolean',
-			description: 'Désactive complètement la validation des règles et l\'affichage des erreurs',
-		},
 		'isActive': {
 			description: 'Force l\'état actif du champ (label flottant et styles visuels)',
 			control: 'boolean',
@@ -107,18 +87,8 @@ const meta = {
 			options: ['top', 'bottom', 'start', 'end'],
 			default: 'top',
 		},
-		'required': {
-			description: 'Indique si le champ est obligatoire',
-			control: 'boolean',
-			default: false,
-		},
 		'displayAsterisk': {
 			description: 'Affiche un astérisque à côté du label',
-			control: 'boolean',
-			default: false,
-		},
-		'disabled': {
-			description: 'Désactive le champ',
 			control: 'boolean',
 			default: false,
 		},
@@ -126,11 +96,6 @@ const meta = {
 			description: 'Désactive le click sur les icônes append et prepend',
 			control: 'boolean',
 			default: true,
-		},
-		'readonly': {
-			description: 'Rend le champ en lecture seule',
-			control: 'boolean',
-			default: false,
 		},
 		'baseColor': {
 			description: 'Couleur de base du champ (par défaut hérite de color)',
@@ -192,10 +157,6 @@ const meta = {
 		'loading': {
 			description: 'Affiche un indicateur de chargement',
 			control: 'boolean',
-		},
-		'maxErrors': {
-			description: 'Nombre maximum de messages d\'erreur à afficher',
-			control: { type: 'text' },
 		},
 		'maxWidth': {
 			description: 'Largeur maximale du champ',
@@ -321,6 +282,15 @@ const meta = {
 			table: {
 				type: { summary: 'VNode' },
 				category: 'slots',
+			},
+		},
+		'showDivider': {
+			description: 'Affiche une ligne de séparation entre le champ et les icônes prepend-inner et append-inner',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
 			},
 		},
 	},
