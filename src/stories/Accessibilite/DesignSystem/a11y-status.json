@@ -1,8 +1,8 @@
 {
-  "date": "2026-03-31T08:30:08.809Z",
-  "compliantCount": 47,
+  "date": "2026-04-13T13:52:27.289Z",
+  "compliantCount": 53,
   "totalCount": 78,
-  "percentage": "60.26",
+  "percentage": "67.95",
   "results": [
     {
       "componentName": "AccessibilityProgressPage",
@@ -52,9 +52,9 @@
     {
       "componentName": "ChipList",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
-      "isFullyCompliant": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/ChipList",
       "hasManualAudit": true
     },
@@ -214,9 +214,9 @@
     {
       "componentName": "Customs/SyTextField",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "hasManualAudit": true
     },
@@ -249,28 +249,28 @@
     },
     {
       "componentName": "DatePicker/CalendarMode",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "hasManualAudit": false
     },
     {
       "componentName": "DatePicker/ComplexDatePicker",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "hasManualAudit": false
     },
     {
       "componentName": "DatePicker/DateTextInput",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput/DateRange",
       "hasManualAudit": false
     },
@@ -539,8 +539,8 @@
       "componentName": "PeriodField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
-      "mdxStatus": "Bientôt disponible",
-      "isFullyCompliant": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/PeriodField",
       "hasManualAudit": false
     },
@@ -663,7 +663,7 @@
     },
     {
       "componentName": "Tables",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Bientôt disponible",
       "isFullyCompliant": false,

@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 31/03/2026
+Généré le: 13/04/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -9,7 +9,7 @@ Généré le: 31/03/2026
 | **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Captcha** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **ChipList** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **ChipList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CollapsibleList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ContextualMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CookieBanner** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -27,13 +27,13 @@ Généré le: 31/03/2026
 | **Customs/SyPagination** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyRadioGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyTabs** | ❌ Non | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
-| **Customs/SyTextField** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **Customs/SyTextField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListItem** | ❌ Non | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
-| **DatePicker/CalendarMode** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
-| **DatePicker/ComplexDatePicker** | ✅ Oui | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
-| **DatePicker/DateTextInput** | ✅ Oui | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
+| **DatePicker/CalendarMode** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
+| **DatePicker/ComplexDatePicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
+| **DatePicker/DateTextInput** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DeclarationAccessibilityPage** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DiacriticPicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DialogBox** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
@@ -63,7 +63,7 @@ Généré le: 31/03/2026
 | **PageContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PaginatedTable** | ❌ Non | ❌ Oui | ⚠️ Bientôt disponible | ❌ Non | ❌ |
 | **PasswordField** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
-| **PeriodField** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ Non | ❌ |
+| **PeriodField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **PhoneField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **RangeField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **RatingPicker** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
@@ -77,10 +77,10 @@ Généré le: 31/03/2026
 | **SyBtnMenu** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **SyHeading** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SyTextArea** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Tables** | ❌ Non | ❌ Oui | ⚠️ Bientôt disponible | ❌ Non | ❌ |
+| **Tables** | ✅ Oui | ❌ Oui | ⚠️ Bientôt disponible | ❌ Non | ❌ |
 | **TableToolbar** | ❌ Non | ❌ Oui | ⚠️ Bientôt disponible | ❌ Non | ❌ |
 | **ToolbarContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 47 / 78 (60.26%)**
+**Total des composants conformes : 53 / 78 (67.95%)**
