@@ -20,13 +20,12 @@ export function useLunarCalendarValidation(
 	)
 
 	const validation = useValidation({
-		customRules: rules.value,
 		showSuccessMessages: successMessage !== undefined,
 		fieldIdentifier: toValue(label),
 	})
 
-	function validateOnSubmit() {
-		const result = validation.validateField(
+	async function validateOnSubmit() {
+		const result = await validation.validateField(
 			modelValue.value,
 			rules.value,
 		)
@@ -36,8 +35,8 @@ export function useLunarCalendarValidation(
 
 	useValidatable(validateOnSubmit, validation.clearValidation)
 
-	function validate() {
-		return validation.validateField(
+	async function validate() {
+		return await validation.validateField(
 			modelValue.value,
 			rules.value,
 		)

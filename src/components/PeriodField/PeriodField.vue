@@ -11,51 +11,51 @@
 	type PeriodValue = { from: DateInput, to: DateInput }
 
 	const props = withDefaults(defineProps<{
-		modelValue?: PeriodValue
-		placeholderFrom?: string
-		placeholderTo?: string
-		format?: string
-		dateFormatReturn?: string
-		showWeekNumber?: boolean
-		required?: boolean
-		displayIcon?: boolean
-		displayAppendIcon?: boolean
-		disabled?: boolean
-		noIcon?: boolean
-		noCalendar?: boolean
-		isOutlined?: boolean
-		showSuccessMessages?: boolean
+		bgColor?: string
 		customRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
-		disableErrorHandling?: boolean
-		readonly?: boolean
-		bgColor?: string
+		dateFormatReturn?: string
 		density?: 'default' | 'comfortable' | 'compact'
-		hideDetails?: boolean | 'auto'
+		disableErrorHandling?: boolean
+		disabled?: boolean
+		displayAppendIcon?: boolean
+		displayIcon?: boolean
+		format?: string
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		hideDetails?: boolean | 'auto'
+		isOutlined?: boolean
+		modelValue?: PeriodValue
+		noCalendar?: boolean
+		noIcon?: boolean
+		placeholderFrom?: string
+		placeholderTo?: string
+		readonly?: boolean
+		required?: boolean
+		showSuccessMessages?: boolean
+		showWeekNumber?: boolean
 	}>(), {
-		modelValue: () => ({ from: null, to: null }),
-		placeholderFrom: 'Début',
-		placeholderTo: 'Fin',
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: '',
-		showWeekNumber: false,
-		required: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		isOutlined: true,
-		showSuccessMessages: true,
+		bgColor: 'white',
 		customRules: () => [],
 		customWarningRules: () => [],
-		disableErrorHandling: false,
-		readonly: false,
-		bgColor: 'white',
+		dateFormatReturn: '',
 		density: 'default',
-		hideDetails: false,
+		disableErrorHandling: false,
+		disabled: false,
+		displayAppendIcon: false,
+		displayIcon: true,
+		format: 'DD/MM/YYYY',
 		headingLevel: 2,
+		hideDetails: false,
+		isOutlined: true,
+		modelValue: () => ({ from: null, to: null }),
+		noCalendar: false,
+		noIcon: false,
+		placeholderFrom: 'Début',
+		placeholderTo: 'Fin',
+		readonly: false,
+		required: false,
+		showSuccessMessages: true,
+		showWeekNumber: false,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -230,42 +230,42 @@
 	})
 
 	// Synchronisation lorsque l'une des dates change
-	function validateBothDates() {
+	async function validateBothDates() {
 		if (fromDateRef.value) {
 			fromDateRef.value.validateOnSubmit()
 		}
 		if (toDateRef.value) {
-			toDateRef.value.validateOnSubmit()
+			await toDateRef.value.validateOnSubmit()
 		}
 	}
 
 	// Validation complète du PeriodField
-	function validateFields() {
-		fromDateValidation.validateField(parsedFromDate.value, fromDateRules.value, props.customWarningRules)
-		toDateValidation.validateField(parsedToDate.value, toDateRules.value, props.customWarningRules)
+	async function validateFields() {
+		await fromDateValidation.validateField(parsedFromDate.value, fromDateRules.value, props.customWarningRules)
+		await toDateValidation.validateField(parsedToDate.value, toDateRules.value, props.customWarningRules)
 	}
 
 	// Gestionnaires d'événements closed
-	function handleFromDateClosed() {
-		validateBothDates()
+	async function handleFromDateClosed() {
+		await validateBothDates()
 	}
 
-	function handleToDateClosed() {
-		validateBothDates()
+	async function handleToDateClosed() {
+		await validateBothDates()
 	}
 
 	// Watch pour les changements des dates - validation croisée
-	watch(formattedFromDate, () => {
-		validateFields()
+	watch(formattedFromDate, async () => {
+		await validateFields()
 		if (formattedToDate.value && toDateRef.value) {
-			toDateRef.value.validateOnSubmit()
+			await toDateRef.value.validateOnSubmit()
 		}
 	})
 
-	watch(formattedToDate, () => {
-		validateFields()
+	watch(formattedToDate, async () => {
+		await validateFields()
 		if (formattedFromDate.value && fromDateRef.value) {
-			fromDateRef.value.validateOnSubmit()
+			await fromDateRef.value.validateOnSubmit()
 		}
 	})
 
@@ -278,7 +278,7 @@
 	})
 
 	// Watch pour les changements externes - Synchronisation
-	watch(() => props.modelValue, (newValue) => {
+	watch(() => props.modelValue, async (newValue) => {
 		if (!newValue) return
 
 		const newFromDate = formatDateValue(newValue.from)
@@ -291,28 +291,28 @@
 			internalToDate.value = newToDate
 		}
 		// Valider les champs après la mise à jour des valeurs
-		validateFields()
+		await validateFields()
 	}, { deep: true, immediate: true })
 
 	// Fonction publique de validation
-	const validateOnSubmit = (): boolean => {
+	const validateOnSubmit = async (): Promise<boolean> => {
 		// Valider les deux CalendarMode
-		const fromDateValid = fromDateRef.value?.validateOnSubmit() ?? true
-		const toDateValid = toDateRef.value?.validateOnSubmit() ?? true
+		const fromDateValid = await fromDateRef.value?.validateOnSubmit() ?? true
+		const toDateValid = await toDateRef.value?.validateOnSubmit() ?? true
 
 		// Valider avec les règles personnalisées
-		validateFields()
+		await validateFields()
 
 		// Retourner true seulement si tout est valide
 		return fromDateValid && toDateValid && isValid.value
 	}
 
 	// Initialisation
-	onMounted(() => {
+	onMounted(async () => {
 		internalFromDate.value = formatDateValue(props.modelValue?.from)
 		internalToDate.value = formatDateValue(props.modelValue?.to)
 		// Validation initiale
-		validateFields()
+		await validateFields()
 	})
 
 	defineExpose({

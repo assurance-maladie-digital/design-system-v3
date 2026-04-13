@@ -62,15 +62,15 @@
 		return String(props.header.key || props.header.value || (props.header.title ? `filter_${props.header.title}` : `filter_${Date.now()}`))
 	}
 
-	// Ajouter l'option "- choisir -" et gérer les valeurs vides
+	// Gérer les valeurs vides dans les options
 	const filterOptions = computed(() => {
 		if (!props.header.filterOptions || !Array.isArray(props.header.filterOptions)) {
-			return [{ text: locales.defaultOption, value: locales.defaultOption }]
+			return []
 		}
 
 		// Définir le type des options pour accepter null et unknown
 		type FilterOptionValue = { text: string, value: unknown | null }
-		const options: FilterOptionValue[] = [{ text: locales.defaultOption, value: locales.defaultOption }]
+		const options: FilterOptionValue[] = []
 
 		// Traiter les options existantes et remplacer les valeurs vides par "(vide)"
 		props.header.filterOptions.forEach((option) => {
@@ -87,8 +87,8 @@
 
 	const modelValue = computed({
 		get: () => {
-			if (props.filterValue === null) {
-				return props.header.multiple ? [] : locales.defaultOption
+			if (props.filterValue === null || props.filterValue === undefined) {
+				return props.header.multiple ? [] : null
 			}
 			return props.filterValue
 		},
@@ -125,9 +125,9 @@
 				return
 			}
 
-			// Pour la sélection simple (comportement existant)
-			if (newValue === undefined || newValue === null || newValue === locales.defaultOption) {
-				// Effacer le filtre si la valeur est vide ou "-choisir-"
+			// Pour la sélection simple
+			if (newValue === undefined || newValue === null) {
+				// Effacer le filtre si la valeur est vide
 				const newFilters = props.filters.filter(f => f.key !== key)
 				emit('update:filters', newFilters)
 				return
@@ -178,11 +178,10 @@
 		if (import.meta.env?.MODE === 'test' || import.meta.env?.NODE_ENV === 'test') {
 			return true
 		}
-		// En mode normal, cacher le bouton quand l'option par défaut est sélectionnée
 		if (props.header.multiple) {
 			return Array.isArray(modelValue.value) && modelValue.value.length > 0
 		}
-		return modelValue.value !== locales.defaultOption
+		return modelValue.value !== null
 	})
 </script>
 
@@ -200,7 +199,7 @@
 			:variant="inputConfig?.variant ?? variant"
 			:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
-			:multiple="props.header.multiple"
+			:multiple="props.header.multiple === true"
 			:chips="props.header.chips"
 			class="filter-input"
 			:aria-label="props.header.title || 'Filtre'"

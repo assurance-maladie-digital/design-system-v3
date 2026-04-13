@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
-import { ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import SyTable from './SyTable.vue'
 import type { DataOptions, FilterType } from '../common/types'
 import type { VDataTable } from 'vuetify/components'
@@ -156,6 +156,35 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
+		'stickySelect': {
+			description: 'Rend la colonne de sélection (cases à cocher) sticky à gauche quand showSelect ou showSelectSingle est activé.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		'pinnedColumns': {
+			description: 'Liste des colonnes à épingler (sticky). Chaque entrée peut être une clé de colonne (string) ou un objet `{ key: string, side?: \'left\' | \'right\' }`. Par défaut, les colonnes sont épinglées à gauche.',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'Array<string | { key: string, side?: \'left\' | \'right\' }>' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
+		'pinnedColumnKey': {
+			description: 'Raccourci pour épingler une seule colonne à gauche. Équivalent à `pinnedColumns: [key]`. Ignoré si `pinnedColumns` est défini.',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
 		'selectionKey': {
 			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
 			control: { type: 'text' },
@@ -163,6 +192,15 @@ const meta = {
 				category: 'props',
 				type: { summary: 'string' },
 				defaultValue: { summary: 'undefined (fallback: id | objet complet)' },
+			},
+		},
+		'clickableRow': {
+			description: 'Rend chaque ligne cliquable. Quand cette prop est activée, la ligne devient focusable au clavier et émet `row-click` sur clic, `Entrée` ou `Espace`, sans interférer avec les éléments interactifs imbriqués.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
 			},
 		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -184,6 +222,13 @@ const meta = {
 						allSelected: boolean
 					}`,
 				},
+			},
+		},
+		'onRow-click': {
+			description: 'Émis lorsqu\'une ligne est activée alors que `clickableRow` est à `true`. Reçoit l\'objet de la ligne en paramètre. Les interactions avec des éléments déjà interactifs dans la ligne ne déclenchent pas cet événement.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
 			},
 		},
 	},
@@ -1129,6 +1174,8 @@ export const FilterBySelect: Story = {
 							key: 'department',
 							filterable: true,
 							filterType: 'select',
+							multiple: false,
+							chips: false,
 							hideMessages: true,
 							filterOptions: [
 								{ text: 'RH', value: 'RH' },
@@ -1142,6 +1189,8 @@ export const FilterBySelect: Story = {
 							key: 'status',
 							filterable: true,
 							filterType: 'select',
+							multiple: false,
+							chips: false,
 							hideMessages: true,
 							filterOptions: [
 								{ text: 'Actif', value: 'Actif' },
@@ -1196,6 +1245,8 @@ export const FilterBySelect: Story = {
 				key: 'department',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'RH', value: 'RH' },
@@ -1209,6 +1260,8 @@ export const FilterBySelect: Story = {
 				key: 'status',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'Actif', value: 'Actif' },
@@ -1477,6 +1530,160 @@ export const FilterBySelectMultiple: Story = {
 					v-model:options="args.options"
 					v-bind="args"
 					suffix="filter-select-table"
+				/>
+			`,
+		}
+	},
+}
+
+export const FilterByAutocomplete: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						show-filters
+						suffix="filter-autocomplete-table"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+
+					const options = ref({
+						itemsPerPage: 5,
+						filters: []
+					})
+
+					const headers = ref([
+						{
+							title: 'Nom',
+							key: 'name',
+							filterable: true,
+							filterType: 'text'
+						},
+						{
+							title: 'Département',
+							key: 'department',
+							filterable: true,
+							filterType: 'autocomplete',
+							filterOptions: [
+								{ text: 'RH', value: 'RH' },
+								{ text: 'IT', value: 'IT' },
+								{ text: 'Finance', value: 'Finance' },
+								{ text: 'Marketing', value: 'Marketing' },
+							]
+						},
+						{
+							title: 'Statut',
+							key: 'status',
+							filterable: true,
+							filterType: 'autocomplete',
+							multiple: true,
+							chips: true,
+							filterOptions: [
+								{ text: 'Actif', value: 'Actif' },
+								{ text: 'En congé', value: 'En congé' },
+								{ text: 'Inactif', value: 'Inactif' },
+							]
+						},
+					])
+
+					const items = ref([
+						{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+						{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+						{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+						{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+						{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text',
+			},
+			{
+				title: 'Département',
+				key: 'department',
+				filterable: true,
+				filterType: 'autocomplete',
+				filterOptions: [
+					{ text: 'RH', value: 'RH' },
+					{ text: 'IT', value: 'IT' },
+					{ text: 'Finance', value: 'Finance' },
+					{ text: 'Marketing', value: 'Marketing' },
+				],
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'autocomplete',
+				multiple: true,
+				chips: true,
+				filterOptions: [
+					{ text: 'Actif', value: 'Actif' },
+					{ text: 'En congé', value: 'En congé' },
+					{ text: 'Inactif', value: 'Inactif' },
+				],
+			},
+		],
+		'items': [
+			{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+			{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+			{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+			{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+			{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+		],
+		'caption': '',
+		'options': {
+			itemsPerPage: 5,
+			filters: [],
+		},
+		'showFilters': true,
+		'suffix': 'filter-autocomplete-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				const options = ref(args.options)
+				const items = ref(args.items)
+
+				return {
+					args,
+					options,
+					items,
+				}
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					v-bind="args"
+					suffix="filter-autocomplete-table"
 				/>
 			`,
 		}
@@ -2770,6 +2977,130 @@ export const ResizableColumns: Story = {
 	},
 }
 
+export const ClickableRow: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<SyTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							clickable-row
+							suffix="clickable-row-table"
+							@row-click="selectedRow = $event"
+						/>
+						<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+							<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+							<div class="pa-2 bg-grey-lighten-3">
+								<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+								<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+								<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+							</div>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+
+					const options = ref({ itemsPerPage: 5, filters: [] })
+					const selectedRow = ref(null)
+
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+
+					const items = [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'items': [
+			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+			{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+			{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+		],
+		'options': { itemsPerPage: 5, filters: [] },
+		'clickableRow': true,
+		'suffix': 'clickable-row-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+		'onRow-click': fn(),
+	},
+	render: (args) => {
+		return {
+			components: {
+				ClickableRowTableCanvas: defineComponent({
+					components: { SyTable },
+					emits: ['row-click'],
+					setup() {
+						const boundArgs = computed(() => {
+							return Object.fromEntries(Object.entries(args).filter(([key]) => key !== 'onRow-click'))
+						})
+
+						return { args, boundArgs }
+					},
+					template: `
+						<SyTable
+							v-model:options="args.options"
+							v-bind="boundArgs"
+							@row-click="$emit('row-click', $event)"
+						/>
+					`,
+				}),
+			},
+			setup() {
+				const selectedRow = ref<Record<string, unknown> | null>(null)
+				const handleRowClick = (item: Record<string, unknown>) => {
+					selectedRow.value = item
+					args['onRow-click']?.(item)
+				}
+				return { selectedRow, handleRowClick }
+			},
+			template: `
+				<div>
+					<ClickableRowTableCanvas @row-click="handleRowClick" />
+					<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+						<div class="pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+							<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+						</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {
@@ -3126,6 +3457,126 @@ export const SingleRowSelection: Story = {
 							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : args.items.find(i => JSON.stringify(i) === item)?.email }}</div>
 						</div>
 					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const PinnedColumns: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="max-width: 900px; overflow: auto;">
+						<SyTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							show-select
+							sticky-select
+							:pinned-columns="pinnedColumns"
+							suffix="pinned-columns-table"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+					import dayjs from 'dayjs'
+				
+					const options = ref({ itemsPerPage: 5 })
+					const headers = ref([
+						{ title: 'ID', key: 'id', width: 80 },
+						{ title: 'Nom', key: 'lastname', width: 160 },
+						{ title: 'Prénom', key: 'firstname', width: 160 },
+						{ title: 'Email', key: 'email', width: 240 },
+						{ title: 'Ville', key: 'city', width: 160 },
+						{ title: 'Pays', key: 'country', width: 160 },
+						{ title: 'Téléphone', key: 'phone', width: 180 },
+						{ title: 'Statut', key: 'status', width: 140 },
+						{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+						{ title: 'Actions', key: 'actions', width: 140 },
+					])
+					const items = ref(Array.from({ length: 12 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					})))
+					const pinnedColumns = ref([
+						{ key: 'actions', side: 'right' },
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'ID', key: 'id', width: 80 },
+			{ title: 'Nom', key: 'lastname', width: 160 },
+			{ title: 'Prénom', key: 'firstname', width: 160 },
+			{ title: 'Email', key: 'email', width: 240 },
+			{ title: 'Ville', key: 'city', width: 160 },
+			{ title: 'Pays', key: 'country', width: 160 },
+			{ title: 'Téléphone', key: 'phone', width: 180 },
+			{ title: 'Statut', key: 'status', width: 140 },
+			{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+			{ title: 'Actions', key: 'actions', width: 140 },
+		],
+		'items': Array.from({ length: 12 }).map((_, i) => ({
+			id: i + 1,
+			lastname: 'Nom ' + (i + 1),
+			firstname: 'Prénom ' + (i + 1),
+			email: 'user' + (i + 1) + '@example.com',
+			city: 'Paris',
+			country: 'France',
+			phone: '01 02 03 04 05',
+			status: i % 2 === 0 ? 'Actif' : 'Inactif',
+			lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+			actions: '…',
+		})),
+		'options': {
+			itemsPerPage: 5,
+		},
+		'suffix': 'pinned-columns-table',
+		'showSelect': true,
+		'stickySelect': true,
+		'pinnedColumns': [
+			{ key: 'actions', side: 'right' },
+		],
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div style="max-width: 900px; overflow: auto;">
+					<SyTable
+						v-model:options="args.options"
+						v-bind="args"
+						suffix="pinned-columns-table"
+					/>
 				</div>
 			`,
 		}

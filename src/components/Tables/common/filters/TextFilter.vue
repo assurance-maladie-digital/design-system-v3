@@ -161,7 +161,7 @@
 	<div class="text-filter-container">
 		<SyTextField
 			v-model="modelValue"
-			:label="header.title"
+			:label="header.title || ''"
 			:clearable="inputConfig?.clearable ?? clearable"
 			:density="inputConfig?.density ?? density"
 			:hide-details="inputConfig?.hideDetails ?? hideDetails"

@@ -67,8 +67,8 @@ exports[`AmeliproTextArea > Snapshots > renders the component with all propertie
       valid = value.trim() !== "";
     } else {
       valid = value !== null && value !== void 0;
-    }
-    return valid || __vite_ssr_import_0__.ruleMessage(errorMessages, "default");
+    };
+    return valid || (0,__vite_ssr_import_0__.ruleMessage)(errorMessages, "default");
   }"
     style="
       max-width: 150px;

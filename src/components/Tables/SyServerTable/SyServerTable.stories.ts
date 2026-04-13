@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyServerTable from './SyServerTable.vue'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions, FilterType } from '../common/types'
-import { ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
 import { fn } from '@storybook/test'
@@ -170,6 +170,35 @@ const meta = {
 				type: { summary: 'boolean' },
 			},
 		},
+		'stickySelect': {
+			description: 'Rend la colonne de sélection (cases à cocher) sticky à gauche quand showSelect ou showSelectSingle est activé.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
+		'pinnedColumns': {
+			description: 'Liste des colonnes à épingler (sticky). Chaque entrée peut être une clé de colonne (string) ou un objet `{ key: string, side?: \'left\' | \'right\' }`. Par défaut, les colonnes sont épinglées à gauche.',
+			control: { type: 'object' },
+			table: {
+				category: 'props',
+				type: { summary: 'Array<string | { key: string, side?: \'left\' | \'right\' }>' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
+		'pinnedColumnKey': {
+			description: 'Raccourci pour épingler une seule colonne à gauche. Équivalent à `pinnedColumns: [key]`. Ignoré si `pinnedColumns` est défini.',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+			},
+		},
 		'selectionKey': {
 			description: 'Clé utilisée pour identifier chaque ligne lors de la sélection. Par défaut, utilise "id" si présent, sinon l\'objet complet.',
 			control: { type: 'text' },
@@ -177,6 +206,15 @@ const meta = {
 				category: 'props',
 				type: { summary: 'string' },
 				defaultValue: { summary: 'undefined (fallback: id | objet complet)' },
+			},
+		},
+		'clickableRow': {
+			description: 'Rend chaque ligne cliquable. Quand cette prop est activée, la ligne devient focusable au clavier et émet `row-click` sur clic, `Entrée` ou `Espace`, sans interférer avec les éléments interactifs imbriqués.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
 			},
 		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -198,6 +236,13 @@ const meta = {
 						allSelected: boolean
 					}`,
 				},
+			},
+		},
+		'onRow-click': {
+			description: 'Émis lorsqu\'une ligne est activée alors que `clickableRow` est à `true`. Reçoit l\'objet de la ligne en paramètre. Les interactions avec des éléments déjà interactifs dans la ligne ne déclenchent pas cet événement.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
 			},
 		},
 	},
@@ -1635,6 +1680,8 @@ export const ServerFilterBySelect: Story = {
 			  key: 'department',
 			  filterable: true,
 			  filterType: 'select',
+			  multiple: false,
+			  chips: false,
 			  hideMessages: true,
 			  filterOptions: [
 				{ text: 'RH', value: 'RH' },
@@ -1648,6 +1695,8 @@ export const ServerFilterBySelect: Story = {
 			  key: 'status',
 			  filterable: true,
 			  filterType: 'select',
+			  multiple: false,
+			  chips: false,
 			  hideMessages: true,
 			  filterOptions: [
 				{ text: 'Actif', value: 'Actif' },
@@ -1754,6 +1803,8 @@ export const ServerFilterBySelect: Story = {
 				key: 'department',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'RH', value: 'RH' },
@@ -1767,6 +1818,8 @@ export const ServerFilterBySelect: Story = {
 				key: 'status',
 				filterable: true,
 				filterType: 'select',
+				multiple: false,
+				chips: false,
 				hideMessages: true,
 				filterOptions: [
 					{ text: 'Actif', value: 'Actif' },
@@ -2204,6 +2257,245 @@ export const ServerFilterBySelectMultiple: Story = {
 				}
 
 				// Initialize data
+				fetchData()
+
+				return {
+					args,
+					filteredUsers,
+					totalFilteredUsers,
+					options,
+					state,
+					fetchData,
+					StateEnum,
+				}
+			},
+			template: `
+				<div>
+					<SyServerTable
+						v-bind="args"
+						v-model:options="options"
+						:items="filteredUsers"
+						:server-items-length="totalFilteredUsers"
+						:loading="state === StateEnum.PENDING"
+						@update:options="fetchData"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const ServerFilterByAutocomplete: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+		<template>
+			<SyServerTable
+				v-model:options="options"
+				:items="filteredUsers"
+				:headers="headers"
+				:server-items-length="totalFilteredUsers"
+				:loading="state === StateEnum.PENDING"
+				suffix="server-filter-autocomplete"
+				:show-filters="true"
+				@update:options="fetchData"
+			/>
+		</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+		<script setup lang="ts">
+			import { ref } from 'vue'
+			import { SyServerTable } from '@cnamts/synapse'
+			import { StateEnum } from '@cnamts/synapse/components/Tables/common/constants/StateEnum'
+			import type { DataOptions, FilterOption } from '@cnamts/synapse/components/Tables/common/types'
+
+			interface User {
+				name: string
+				department: string
+				status: string
+			}
+
+			const totalFilteredUsers = ref(0)
+			const filteredUsers = ref<User[]>([])
+			const state = ref(StateEnum.IDLE)
+
+			const options = ref<DataOptions>({
+				itemsPerPage: 5,
+				page: 1,
+				filters: [],
+			})
+
+			const headers = [
+				{
+					title: 'Nom',
+					key: 'name',
+					filterable: true,
+					filterType: 'text' as const,
+				},
+				{
+					title: 'Département',
+					key: 'department',
+					filterable: true,
+					filterType: 'autocomplete' as const,
+					filterOptions: [
+						{ text: 'RH', value: 'RH' },
+						{ text: 'IT', value: 'IT' },
+						{ text: 'Finance', value: 'Finance' },
+						{ text: 'Marketing', value: 'Marketing' },
+					],
+				},
+				{
+					title: 'Statut',
+					key: 'status',
+					filterable: true,
+					filterType: 'autocomplete' as const,
+					multiple: true,
+					chips: true,
+					filterOptions: [
+						{ text: 'Actif', value: 'Actif' },
+						{ text: 'En congé', value: 'En congé' },
+						{ text: 'Inactif', value: 'Inactif' },
+					],
+				},
+			]
+
+			const getUsers = (): User[] => [
+				{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+				{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+				{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+				{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+				{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+			]
+
+			const fetchData = async (): Promise<void> => {
+				state.value = StateEnum.PENDING
+				await new Promise(resolve => setTimeout(resolve, 500))
+				let items = getUsers()
+				if (options.value.filters?.length) {
+					options.value.filters.forEach((filter: FilterOption) => {
+						const { key, value, type } = filter
+						items = items.filter((item) => {
+							const itemValue = item[key as keyof User]
+							if (type === 'autocomplete') {
+								if (Array.isArray(value)) {
+									return value.length === 0 || value.includes(itemValue)
+								}
+								return itemValue === value
+							}
+							return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+						})
+					})
+				}
+				totalFilteredUsers.value = items.length
+				const { page = 1, itemsPerPage = 5 } = options.value
+				filteredUsers.value = itemsPerPage > 0
+					? items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+					: items
+				state.value = StateEnum.RESOLVED
+			}
+
+			fetchData()
+		</script>
+		`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{
+				title: 'Nom',
+				key: 'name',
+				filterable: true,
+				filterType: 'text' as FilterType,
+			},
+			{
+				title: 'Département',
+				key: 'department',
+				filterable: true,
+				filterType: 'autocomplete' as FilterType,
+				filterOptions: [
+					{ text: 'RH', value: 'RH' },
+					{ text: 'IT', value: 'IT' },
+					{ text: 'Finance', value: 'Finance' },
+					{ text: 'Marketing', value: 'Marketing' },
+				],
+			},
+			{
+				title: 'Statut',
+				key: 'status',
+				filterable: true,
+				filterType: 'autocomplete' as FilterType,
+				multiple: true,
+				chips: true,
+				filterOptions: [
+					{ text: 'Actif', value: 'Actif' },
+					{ text: 'En congé', value: 'En congé' },
+					{ text: 'Inactif', value: 'Inactif' },
+				],
+			},
+		],
+		'serverItemsLength': 0,
+		'suffix': 'server-filter-autocomplete',
+		'showFilters': true,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const options = ref<DataOptions>({
+					itemsPerPage: 5,
+					page: 1,
+					sortBy: [],
+					filters: [],
+				})
+				const filteredUsers = ref<Record<string, unknown>[]>([])
+				const totalFilteredUsers = ref(0)
+				const state = ref(StateEnum.IDLE)
+
+				const getUsers = () => [
+					{ name: 'Jean Dupont', department: 'RH', status: 'Actif' },
+					{ name: 'Marie Martin', department: 'IT', status: 'En congé' },
+					{ name: 'Pierre Durand', department: 'Finance', status: 'Actif' },
+					{ name: 'Sophie Petit', department: 'Marketing', status: 'Actif' },
+					{ name: 'Thomas Leroy', department: 'IT', status: 'Inactif' },
+				]
+
+				const fetchData = async () => {
+					state.value = StateEnum.PENDING
+					await new Promise(resolve => setTimeout(resolve, 500))
+					let items = getUsers()
+					if (options.value.filters?.length) {
+						options.value.filters.forEach((filter) => {
+							const { key, value, type } = filter
+							items = items.filter((item) => {
+								const itemValue = item[key as keyof typeof item]
+								if (type === 'autocomplete') {
+									if (Array.isArray(value)) {
+										return value.length === 0 || value.includes(itemValue)
+									}
+									return itemValue === value
+								}
+								return String(itemValue).toLowerCase().includes(String(value).toLowerCase())
+							})
+						})
+					}
+					totalFilteredUsers.value = items.length
+					const { page = 1, itemsPerPage = 5 } = options.value
+					filteredUsers.value = itemsPerPage > 0
+						? items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+						: items
+					state.value = StateEnum.RESOLVED
+				}
+
 				fetchData()
 
 				return {
@@ -4302,6 +4594,210 @@ export const ResizableColumns: Story = {
 	},
 }
 
+export const ClickableRow: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div>
+						<SyServerTable
+							v-model:options="options"
+							:headers="headers"
+							:items="users"
+							:server-items-length="totalUsers"
+							:loading="state === StateEnum.PENDING"
+							clickable-row
+							suffix="clickable-row-server-table"
+							@update:options="fetchData"
+							@row-click="selectedRow = $event"
+						/>
+						<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+							<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+							<div class="pa-2 bg-grey-lighten-3">
+								<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+								<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+								<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+							</div>
+						</div>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+
+					const options = ref({ itemsPerPage: 5, filters: [] })
+					const selectedRow = ref(null)
+					const state = ref(StateEnum.IDLE)
+					const totalUsers = ref(0)
+					const users = ref([])
+
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+
+					const allUsers = [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+						{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+					]
+
+					const fetchData = async (): Promise<void> => {
+						state.value = StateEnum.PENDING
+						await new Promise(resolve => setTimeout(resolve, 500))
+
+						const { page = 1, itemsPerPage = 5 } = options.value as DataOptions
+						totalUsers.value = allUsers.length
+						users.value = itemsPerPage > 0
+							? allUsers.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							: allUsers
+
+						state.value = StateEnum.RESOLVED
+					}
+
+					fetchData()
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'items': [
+			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+			{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+			{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+		],
+		'serverItemsLength': 4,
+		'options': { itemsPerPage: 5, filters: [] },
+		'clickableRow': true,
+		'suffix': 'clickable-row-server-table',
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+		'onRow-click': fn(),
+	},
+	render: (args) => {
+		return {
+			components: {
+				ClickableRowServerTableCanvas: defineComponent({
+					components: { SyServerTable },
+					emits: ['row-click'],
+					setup() {
+						const options = ref<DataOptions>({
+							itemsPerPage: 5,
+							page: 1,
+							sortBy: [],
+							filters: [],
+							...(args.options ?? {}),
+						})
+						const state = ref(StateEnum.IDLE)
+						const totalUsers = ref(0)
+						const users = ref<Record<string, unknown>[]>([])
+						const allUsers = [
+							{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+							{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+							{ firstname: 'Alice', lastname: 'Dupont', email: 'alice.dupont@example.com' },
+							{ firstname: 'Marc', lastname: 'Lefevre', email: 'marc.lefevre@example.com' },
+						]
+						const boundArgs = computed(() => {
+							return Object.fromEntries(
+								Object.entries(args).filter(([key]) => !['items', 'options', 'serverItemsLength', 'onRow-click'].includes(key)),
+							)
+						})
+
+						const fetchData = async (nextOptions?: DataOptions) => {
+							if (nextOptions) {
+								options.value = { ...options.value, ...nextOptions }
+							}
+
+							state.value = StateEnum.PENDING
+							await new Promise(resolve => setTimeout(resolve, 500))
+
+							const items = [...allUsers]
+							const { page = 1, itemsPerPage = 5, sortBy = [] } = options.value
+
+							if (sortBy.length > 0) {
+								const [firstSort] = sortBy
+								if (firstSort?.key && firstSort.order) {
+									items.sort((a, b) => {
+										const left = String(a[firstSort.key] ?? '')
+										const right = String(b[firstSort.key] ?? '')
+										return firstSort.order === 'asc'
+											? left.localeCompare(right)
+											: right.localeCompare(left)
+									})
+								}
+							}
+
+							totalUsers.value = items.length
+							users.value = itemsPerPage > 0
+								? items.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+								: items
+
+							state.value = StateEnum.RESOLVED
+						}
+
+						fetchData()
+
+						return { boundArgs, fetchData, options, state, totalUsers, users, StateEnum }
+					},
+					template: `
+						<SyServerTable
+							v-model:options="options"
+							v-bind="boundArgs"
+							:items="users"
+							:server-items-length="totalUsers"
+							:loading="state === StateEnum.PENDING"
+							@update:options="[fetchData, boundArgs['onUpdate:options']]"
+							@row-click="$emit('row-click', $event)"
+						/>
+					`,
+				}),
+			},
+			setup() {
+				const selectedRow = ref<Record<string, unknown> | null>(null)
+				const handleRowClick = (item: Record<string, unknown>) => {
+					selectedRow.value = item
+					args['onRow-click']?.(item)
+				}
+				return { selectedRow, handleRowClick }
+			},
+			template: `
+				<div>
+					<ClickableRowServerTableCanvas @row-click="handleRowClick" />
+					<div v-if="selectedRow" class="mt-4 pa-4 bg-grey-lighten-4">
+						<h3 class="text-h6 mb-3">Ligne cliquée</h3>
+						<div class="pa-2 bg-grey-lighten-3">
+							<div><strong>Nom:</strong> {{ selectedRow.lastname }}</div>
+							<div><strong>Prénom:</strong> {{ selectedRow.firstname }}</div>
+							<div><strong>Email:</strong> {{ selectedRow.email }}</div>
+						</div>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
 export const RowSelection: Story = {
 	name: 'Row Selection',
 	parameters: {
@@ -4892,6 +5388,182 @@ fetchData()
 							<div><strong>Email:</strong> {{ typeof item === 'object' ? item.email : allUsers.find(i => JSON.stringify(i) === item)?.email }}</div>
 						</div>
 					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const PinnedColumns: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<div style="max-width: 900px; overflow: auto;">
+						<SyServerTable
+							v-model:options="options"
+							:headers="headers"
+							:items="items"
+							:server-items-length="serverItemsLength"
+							:loading="state === StateEnum.PENDING"
+							show-select
+							sticky-select
+							:pinned-columns="pinnedColumns"
+							suffix="server-pinned-columns"
+							@update:options="fetchData"
+						/>
+					</div>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+					import dayjs from 'dayjs'
+				
+					const headers = ref([
+						{ title: 'ID', key: 'id', width: 80 },
+						{ title: 'Nom', key: 'lastname', width: 160 },
+						{ title: 'Prénom', key: 'firstname', width: 160 },
+						{ title: 'Email', key: 'email', width: 240 },
+						{ title: 'Ville', key: 'city', width: 160 },
+						{ title: 'Pays', key: 'country', width: 160 },
+						{ title: 'Téléphone', key: 'phone', width: 180 },
+						{ title: 'Statut', key: 'status', width: 140 },
+						{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+						{ title: 'Actions', key: 'actions', width: 140 },
+					])
+					const pinnedColumns = ref([
+						{ key: 'actions', side: 'right' },
+					])
+					const serverItemsLength = ref(30)
+					const items = ref<any[]>([])
+					const state = ref(StateEnum.IDLE)
+					const options = ref<DataOptions>({ itemsPerPage: 5, page: 1, sortBy: [] })
+				
+					const getAll = () => Array.from({ length: 30 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					}))
+				
+					const fetchData = async () => {
+						state.value = StateEnum.PENDING
+						await new Promise(r => setTimeout(r, 1000))
+						const all = getAll()
+						const start = (options.value.page - 1) * options.value.itemsPerPage
+						items.value = all.slice(start, start + options.value.itemsPerPage)
+						serverItemsLength.value = all.length
+						state.value = StateEnum.RESOLVED
+					}
+				
+					watch(options, fetchData, { deep: true, immediate: true })
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': {
+			itemsPerPage: 5,
+			page: 1,
+		},
+		'headers': [
+			{ title: 'ID', key: 'id', width: 80 },
+			{ title: 'Nom', key: 'lastname', width: 160 },
+			{ title: 'Prénom', key: 'firstname', width: 160 },
+			{ title: 'Email', key: 'email', width: 240 },
+			{ title: 'Ville', key: 'city', width: 160 },
+			{ title: 'Pays', key: 'country', width: 160 },
+			{ title: 'Téléphone', key: 'phone', width: 180 },
+			{ title: 'Statut', key: 'status', width: 140 },
+			{ title: 'Dernière connexion', key: 'lastLogin', width: 200 },
+			{ title: 'Actions', key: 'actions', width: 140 },
+		],
+		'serverItemsLength': 30,
+		'suffix': 'server-pinned-columns',
+		'showSelect': true,
+		'stickySelect': true,
+		'pinnedColumns': [
+			{ key: 'actions', side: 'right' },
+		],
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const argsWithoutOptions = Object.fromEntries(
+					Object.entries(args as Record<string, unknown>).filter(([k]) => k !== 'options'),
+				)
+				const users = ref<Record<string, unknown>[]>([])
+				const totalUsers = ref(args.serverItemsLength)
+				const state = ref(StateEnum.IDLE)
+				const options = ref({ ...args.options } as DataOptions)
+
+				const getUsers = (): Record<string, unknown>[] => {
+					return Array.from({ length: 30 }).map((_, i) => ({
+						id: i + 1,
+						lastname: 'Nom ' + (i + 1),
+						firstname: 'Prénom ' + (i + 1),
+						email: 'user' + (i + 1) + '@example.com',
+						city: 'Paris',
+						country: 'France',
+						phone: '01 02 03 04 05',
+						status: i % 2 === 0 ? 'Actif' : 'Inactif',
+						lastLogin: dayjs().subtract(i, 'day').format('DD/MM/YYYY'),
+						actions: '…',
+					}))
+				}
+
+				const fetchData = async (): Promise<void> => {
+					state.value = StateEnum.PENDING
+					await new Promise(resolve => setTimeout(resolve, 1000))
+					const all = getUsers()
+					const start = ((options.value.page ?? 1) - 1) * (options.value.itemsPerPage ?? 5)
+					const end = start + (options.value.itemsPerPage ?? 5)
+					users.value = all.slice(start, end)
+					totalUsers.value = all.length
+					state.value = StateEnum.RESOLVED
+				}
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+					fetchData()
+				}, { deep: true, immediate: true })
+
+				return { args: argsWithoutOptions, users, totalUsers, state, options, fetchData, StateEnum }
+			},
+			template: `
+				<div style="max-width: 900px; overflow: auto;">
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-pinned-columns"
+						v-bind="args"
+						@update:options="fetchData"
+					/>
 				</div>
 			`,
 		}

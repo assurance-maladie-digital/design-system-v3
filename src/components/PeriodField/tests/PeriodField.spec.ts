@@ -1,6 +1,6 @@
-import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils'
+import { DOMWrapper, flushPromises, mount, VueWrapper } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import type { ComponentPublicInstance } from 'vue'
+import { nextTick, type ComponentPublicInstance } from 'vue'
 
 import PeriodField from '../PeriodField.vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
@@ -114,6 +114,32 @@ describe('PeriodField.vue', () => {
 
 			expect(wrapper.text()).toContain('La date de fin ne peut pas être inférieure à la date de début')
 			expect(wrapper.vm.isValid).toBe(false)
+		})
+
+		it('shows error when from date is after to date when updated', async () => {
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '2024-01-01', to: '2024-01-31' },
+				},
+			})
+
+			// Find both DatePicker components
+			const datePickers = wrapper.findAllComponents({ name: 'DatePicker' })
+			expect(datePickers.length).toBe(2)
+
+			const fromInput = datePickers[0]!.find('input')
+			await fromInput.setValue('15/01/2024')
+			await fromInput.trigger('blur')
+			await flushPromises()
+
+			const toInput = datePickers[1]!.find('input')
+			await toInput.setValue('10/01/2024')
+			await toInput.trigger('blur')
+			await flushPromises()
+			await nextTick()
+
+			expect(datePickers[0]?.text()).toContain('date de début ne peut pas être supérieure à la date de fin')
+			expect(datePickers[1]?.text()).toContain('La date de fin ne peut pas être inférieure à la date de début')
 		})
 
 		it('validates when required and both dates are missing', async () => {

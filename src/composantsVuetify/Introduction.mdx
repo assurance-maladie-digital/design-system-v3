@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Composants/Composants Vuetify/Introduction" />
+
+<div className="header">
+    <h1>Composants Vuetify</h1>
+Pour certains composants, nous avons fait le choix d'utiliser directement les composants natifs de Vuetify en leur appliquant un thème via les tokens du design system. Cela permet de bénéficier de toute la puissance et la flexibilité de Vuetify tout en respectant la charte graphique de chaque thème.
+</div>
+
+## Pourquoi utiliser les composants Vuetify directement ?
+
+Certains composants sont suffisamment couverts par Vuetify et ne nécessitent pas d'encapsulation supplémentaire. Dans ce cas, nous appliquons simplement les bonnes props Vuetify en combinaison avec les tokens de couleur de chaque thème.
+Cela signifie que vous pouvez utiliser toute l'API Vuetify native sur ces composants, sans restriction.
+
+## Utilisation
+
+Pour ces composants, il vous suffit d'utiliser directement le composant Vuetify avec les props adéquates.
+
+### Exemple avec `v-btn`
+
+```html
+<!-- Bouton primaire -->
+<v-btn color="primary">Button</v-btn>
+
+<!-- Bouton outlined -->
+<v-btn color="primary" variant="outlined">Button</v-btn>
+
+<!-- Bouton tonal -->
+<v-btn color="primary" variant="tonal">Button</v-btn>
+
+<!-- Bouton texte -->
+<v-btn color="primary" variant="text">Button</v-btn>
+
+<!-- Bouton désactivé -->
+<v-btn color="primary" disabled>Button</v-btn>
+```
+
+## Props Vuetify disponibles
+
+Vous pouvez utiliser n'importe quelle prop reconnue par Vuetify sur ces composants. Par exemple, pour un bouton `v-btn` la liste complète des props est disponible sur la [documentation Vuetify](https://vuetifyjs.com/en/api/v-btn/#props) du composant.
+
+## Thèmes supportés
+
+Pour le `v-btn` par exemple les couleurs `primary`, `secondary` et `tertiary` sont définies différemment selon le thème actif.
+
+## Conclusion
+
+L'utilisation directe des composants Vuetify avec les thèmes du design system vous offre une flexibilité maximale. Vous bénéficiez de toute l'API Vuetify tout en respectant automatiquement la charte graphique du thème actif. Il vous suffit d'utiliser les bonnes valeurs pour obtenir un rendu cohérent avec le design system.

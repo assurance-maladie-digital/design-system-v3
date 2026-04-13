@@ -335,9 +335,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: false,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -409,9 +406,6 @@ export const Default: Story = {
 
 export const Required: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -495,9 +489,6 @@ export const Required: Story = {
 
 export const DateRange: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -568,9 +559,6 @@ export const DateRange: Story = {
 
 export const BirthDate: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -635,9 +623,6 @@ export const BirthDate: Story = {
 
 export const WithValidation: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -725,9 +710,6 @@ export const WithValidation: Story = {
 
 export const DifferentFormats: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -819,9 +801,6 @@ export const DifferentFormats: Story = {
 
 export const WithDateFormatReturn: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -881,9 +860,6 @@ export const WithDateFormatReturn: Story = {
 
 export const DisablePickerInteraction: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -943,9 +919,6 @@ export const DisablePickerInteraction: Story = {
 
 export const AutoFormattingInput: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1001,9 +974,6 @@ export const AutoFormattingInput: Story = {
 
 export const CustomDateFormat: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1060,9 +1030,6 @@ export const CustomDateFormat: Story = {
 
 export const ReadonlyMode: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1131,9 +1098,6 @@ export const ReadonlyMode: Story = {
 
 export const AppendIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1194,9 +1158,6 @@ export const AppendIcon: Story = {
 
 export const WithCustomPeriod: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1311,9 +1272,6 @@ export const WithCustomPeriod: Story = {
 
 export const WithTextFieldActivator: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1372,9 +1330,6 @@ export const WithTextFieldActivator: Story = {
 
 export const AutoClampFeature: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1485,9 +1440,6 @@ export const AutoClampFeature: Story = {
 
 export const WithFormSubmission: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1543,9 +1495,9 @@ export const WithFormSubmission: Story = {
 				const datePicker = ref<InstanceType<typeof DatePicker> | null>(null)
 				const submitted = ref(false)
 
-				const submitForm = () => {
+				const submitForm = async () => {
 					if (!datePicker.value) return
-					const isValid = datePicker.value.validateOnSubmit()
+					const isValid = await datePicker.value.validateOnSubmit()
 					if (isValid) {
 						submitted.value = true
 					}
@@ -1582,9 +1534,6 @@ export const WithFormSubmission: Story = {
 
 export const CustomRules: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1661,9 +1610,6 @@ export const CustomRules: Story = {
 
 export const CustomWarningRules: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

@@ -31,7 +31,7 @@ export const useManualDateValidation = (options: {
 	validateDateFormat: (dateStr: string) => { isValid: boolean, message: string }
 	isDateComplete: (value: string) => boolean
 	parseDate: (dateStr: string, format: string) => Date | null
-	validateField: (value: unknown, rules?: CustomRule[], warningRules?: CustomRule[]) => ValidationResult
+	validateField: (value: unknown, rules?: CustomRule[], warningRules?: CustomRule[]) => ValidationResult | Promise<ValidationResult>
 }) => {
 	const {
 		format,
@@ -57,7 +57,7 @@ export const useManualDateValidation = (options: {
 	 * @param value - Chaîne de date à valider
 	 * @returns Booléen indiquant si la saisie est valide
 	 */
-	const validateManualInput = (value: string): boolean => {
+	const validateManualInput = (value: string): boolean | Promise<boolean> => {
 		// Réinitialiser la validation
 		clearValidation()
 
@@ -128,6 +128,10 @@ export const useManualDateValidation = (options: {
 				safeCustomRules,
 				safeWarningRules,
 			)
+
+			if (result instanceof Promise) {
+				return result.then(resolvedResult => !resolvedResult.hasError)
+			}
 
 			return !result.hasError
 		}

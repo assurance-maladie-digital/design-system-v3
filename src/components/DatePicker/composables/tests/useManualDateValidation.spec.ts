@@ -98,6 +98,70 @@ describe('useManualDateValidation', () => {
 
 		expect(result).toBe(true)
 		expect(errors.value).toHaveLength(0)
+		expect(mockValidateDateFormat).not.toHaveBeenCalled()
+	})
+
+	it('devrait retourner true pour un squelette avec format DD/MM/YYYY', () => {
+		mockIsDateComplete.mockReturnValue(false)
+
+		const { validateManualInput } = useManualDateValidation({
+			format: 'DD/MM/YYYY',
+			hasInteracted,
+			errors,
+			clearValidation: mockClearValidation,
+			validateDateFormat: mockValidateDateFormat,
+			isDateComplete: mockIsDateComplete,
+			parseDate: mockParseDate,
+			validateField: mockValidateField,
+		})
+
+		const result = validateManualInput('__//____')
+
+		expect(result).toBe(true)
+		expect(errors.value).toHaveLength(0)
+		expect(mockValidateDateFormat).not.toHaveBeenCalled()
+	})
+
+	it('devrait retourner true pour un squelette avec format YYYY-MM-DD', () => {
+		mockIsDateComplete.mockReturnValue(false)
+
+		const { validateManualInput } = useManualDateValidation({
+			format: 'YYYY-MM-DD',
+			hasInteracted,
+			errors,
+			clearValidation: mockClearValidation,
+			validateDateFormat: mockValidateDateFormat,
+			isDateComplete: mockIsDateComplete,
+			parseDate: mockParseDate,
+			validateField: mockValidateField,
+		})
+
+		const result = validateManualInput('____-__-__')
+
+		expect(result).toBe(true)
+		expect(errors.value).toHaveLength(0)
+		expect(mockValidateDateFormat).not.toHaveBeenCalled()
+	})
+
+	it('devrait retourner true pour un squelette avec format DD.MM.YYYY', () => {
+		mockIsDateComplete.mockReturnValue(false)
+
+		const { validateManualInput } = useManualDateValidation({
+			format: 'DD.MM.YYYY',
+			hasInteracted,
+			errors,
+			clearValidation: mockClearValidation,
+			validateDateFormat: mockValidateDateFormat,
+			isDateComplete: mockIsDateComplete,
+			parseDate: mockParseDate,
+			validateField: mockValidateField,
+		})
+
+		const result = validateManualInput('__.__.____')
+
+		expect(result).toBe(true)
+		expect(errors.value).toHaveLength(0)
+		expect(mockValidateDateFormat).not.toHaveBeenCalled()
 	})
 
 	it('devrait retourner false et ajouter une erreur si le format est invalide', () => {
@@ -237,5 +301,32 @@ describe('useManualDateValidation', () => {
 
 		result = validateManualInput('01/01/2023')
 		expect(result).toBe(false)
+	})
+
+	it('devrait gérer validateField asynchrone', async () => {
+		mockIsDateComplete.mockReturnValue(true)
+		mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
+		mockParseDate.mockReturnValue(new Date('2023-01-01'))
+		mockValidateField.mockResolvedValue({
+			hasError: false,
+			hasWarning: false,
+			hasSuccess: true,
+			state: { errors: [], warnings: [], successes: ['Valide async'] },
+		})
+
+		const { validateManualInput } = useManualDateValidation({
+			format: 'DD/MM/YYYY',
+			hasInteracted,
+			errors,
+			clearValidation: mockClearValidation,
+			validateDateFormat: mockValidateDateFormat,
+			isDateComplete: mockIsDateComplete,
+			parseDate: mockParseDate,
+			validateField: mockValidateField,
+		})
+
+		const result = await validateManualInput('01/01/2023')
+		expect(result).toBe(true)
+		expect(mockValidateField).toHaveBeenCalledTimes(1)
 	})
 })

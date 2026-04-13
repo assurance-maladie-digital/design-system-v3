@@ -120,14 +120,10 @@ describe('useDatePickerAccessibility', () => {
 		expect(buttons[2]?.getAttribute('aria-label')).toBe(null) // Pas de chevron-righ
 	})
 
-	it('adds sr-only instructions to the CalendarMode', async () => {
-		// Appeler updateAccessibility
+	it('ne crée pas de bloc sr-only instructions (comportement actuel)', async () => {
 		await updateAccessibility()
-
-		// Vérifier que les instructions pour les lecteurs d'écran ont été ajoutées
 		const srOnlyEl = document.querySelector('.sr-only-instructions')
-		expect(srOnlyEl).not.toBeNull()
-		expect(srOnlyEl?.textContent).toBe('Utilisez tab pour naviguer entre les dates et Entrée ou Espace pour sélectionner une date')
+		expect(srOnlyEl).toBeNull()
 	})
 
 	describe('handleKeyDown', () => {

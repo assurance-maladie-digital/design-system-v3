@@ -5,6 +5,12 @@ import SelectFilter from '../SelectFilter.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import type { FilterType } from '../../types'
 
+const sySelectStub = {
+	template: '<div class="sy-select-stub" data-testid="sy-select" :label="label" :items="items" :clearable="clearable" :density="density" :hideDetails="hideDetails" :multiple="multiple"></div>',
+	props: ['modelValue', 'label', 'items', 'clearable', 'density', 'hideDetails', 'hideMessages', 'disableErrorHandling', 'variant', 'multiple', 'chips'],
+	emits: ['update:modelValue', 'click:clear'],
+}
+
 describe('SelectFilter.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof SelectFilter>>
 	const header = {
@@ -21,10 +27,7 @@ describe('SelectFilter.vue', () => {
 		wrapper = mount(SelectFilter, {
 			global: {
 				stubs: {
-					SySelect: {
-						template: '<div class="sy-select-stub" data-testid="sy-select" :label="label" :items="items" :clearable="clearable" :density="density" :hideDetails="hideDetails"></div>',
-						props: ['modelValue', 'label', 'items', 'clearable', 'density', 'hideDetails', 'hideMessages', 'disableErrorHandling', 'variant'],
-					},
+					SySelect: sySelectStub,
 				},
 			},
 			props: {
@@ -139,12 +142,7 @@ describe('SelectFilter.vue', () => {
 		}
 		const newWrapper = mount(SelectFilter, {
 			global: {
-				stubs: {
-					SySelect: {
-						template: '<div class="sy-select-stub" data-testid="sy-select"></div>',
-						props: ['modelValue', 'label', 'items', 'clearable', 'density', 'hideDetails'],
-					},
-				},
+				stubs: { SySelect: sySelectStub },
 			},
 			props: {
 				header: headerWithoutKey,
@@ -181,12 +179,7 @@ describe('SelectFilter.vue', () => {
 		}
 		const newWrapper = mount(SelectFilter, {
 			global: {
-				stubs: {
-					SySelect: {
-						template: '<div class="sy-select-stub" data-testid="sy-select"></div>',
-						props: ['modelValue', 'label', 'items', 'clearable', 'density', 'hideDetails'],
-					},
-				},
+				stubs: { SySelect: sySelectStub },
 			},
 			props: {
 				header: emptyHeader,
@@ -208,5 +201,148 @@ describe('SelectFilter.vue', () => {
 		expect(emittedFilters[0]?.type).toBe('select')
 		// Restaurer Date.now
 		global.Date.now = originalDateNow
+	})
+
+	describe('filterOptions – removed default option', () => {
+		it('returns empty array when header has no filterOptions', () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: {
+					header: { title: 'Test', key: 'test' },
+					filters: [],
+					filterValue: undefined,
+				},
+			})
+
+			// SySelect receives items=[] — no "- choisir -" option injected
+			const sySelect = newWrapper.findComponent(SySelect)
+			expect(sySelect.props('items')).toEqual([])
+		})
+
+		it('does not prepend a default "- choisir -" option to filterOptions', () => {
+			const sySelect = wrapper.findComponent(SySelect)
+			const items = sySelect.props('items') as Array<{ text: string, value: unknown }>
+			const hasDefaultOption = items.some(i => i.text === '- choisir -')
+			expect(hasDefaultOption).toBe(false)
+		})
+
+		it('replaces empty-string option text with "(vide)"', () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: {
+					header: {
+						title: 'Test',
+						key: 'test',
+						filterOptions: [{ text: '', value: '' }],
+					},
+					filters: [],
+					filterValue: undefined,
+				},
+			})
+
+			const sySelect = newWrapper.findComponent(SySelect)
+			const items = sySelect.props('items') as Array<{ text: string, value: unknown }>
+			expect(items[0]?.text).toBe('(vide)')
+		})
+	})
+
+	describe('modelValue – null-based empty state (no defaultOption)', () => {
+		it('passes null to SySelect when filterValue is null', () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: { header, filters: [], filterValue: null },
+			})
+
+			const sySelect = newWrapper.findComponent(SySelect)
+			expect(sySelect.props('modelValue')).toBeNull()
+		})
+
+		it('passes null to SySelect when filterValue is undefined', () => {
+			const sySelect = wrapper.findComponent(SySelect)
+			expect(sySelect.props('modelValue')).toBeNull()
+		})
+
+		it('passes empty array to SySelect when filterValue is null and multiple=true', () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: {
+					header: { ...header, multiple: true },
+					filters: [],
+					filterValue: null,
+				},
+			})
+
+			const sySelect = newWrapper.findComponent(SySelect)
+			expect(sySelect.props('modelValue')).toEqual([])
+		})
+	})
+
+	describe('multiple prop – strict equality', () => {
+		it('does not enable multiple when header.multiple is undefined', () => {
+			const sySelect = wrapper.findComponent(SySelect)
+			expect(sySelect.props('multiple')).toBe(false)
+		})
+
+		it('does not enable multiple when header.multiple is a truthy non-boolean (e.g. string)', () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: {
+					header: { ...header, multiple: 'true' as unknown as boolean },
+					filters: [],
+					filterValue: undefined,
+				},
+			})
+
+			const sySelect = newWrapper.findComponent(SySelect)
+			expect(sySelect.props('multiple')).toBe(false)
+		})
+
+		it('enables multiple when header.multiple === true', () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: {
+					header: { ...header, multiple: true },
+					filters: [],
+					filterValue: undefined,
+				},
+			})
+
+			const sySelect = newWrapper.findComponent(SySelect)
+			expect(sySelect.props('multiple')).toBe(true)
+		})
+
+		it('emits array value when multiple=true and items are selected', async () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: {
+					header: { ...header, multiple: true },
+					filters: [],
+					filterValue: undefined,
+				},
+			})
+
+			const sySelect = newWrapper.findComponent(SySelect)
+			sySelect.vm.$emit('update:modelValue', ['option1', 'option2'])
+
+			expect(newWrapper.emitted('update:filters')![0]?.[0]).toEqual([
+				{ key: 'test', value: ['option1', 'option2'], type: 'select' as FilterType },
+			])
+		})
+
+		it('removes filter when multiple=true selection is cleared to empty array', async () => {
+			const newWrapper = mount(SelectFilter, {
+				global: { stubs: { SySelect: sySelectStub } },
+				props: {
+					header: { ...header, multiple: true },
+					filters: [{ key: 'test', value: ['option1'], type: 'select' as FilterType }],
+					filterValue: ['option1'],
+				},
+			})
+
+			const sySelect = newWrapper.findComponent(SySelect)
+			sySelect.vm.$emit('update:modelValue', [])
+
+			expect(newWrapper.emitted('update:filters')![0]?.[0]).toEqual([])
+		})
 	})
 })

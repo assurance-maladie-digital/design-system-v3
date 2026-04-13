@@ -29,7 +29,7 @@ export const useDateValidation = (options: {
 	// Fonctions de validation
 	clearValidation: () => void
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Règles personnalisées
-	validateField: (value: any, rules?: any[], warningRules?: any[]) => ValidationResult
+	validateField: (value: any, rules?: any[], warningRules?: any[]) => ValidationResult | Promise<ValidationResult>
 
 	// Références aux messages
 	errors: Ref<string[]>
@@ -60,7 +60,7 @@ export const useDateValidation = (options: {
    * @param forceValidation - Force la validation même si isUpdatingFromInternal est vrai
    * @returns Résultat de la validation
    */
-	const validateDates = (forceValidation = false): ValidationResult => {
+	const validateDates = (forceValidation = false): ValidationResult | Promise<ValidationResult> => {
 		const currentCustomRules = unref(customRules)
 		const currentCustomWarningRules = unref(customWarningRules)
 
@@ -152,64 +152,65 @@ export const useDateValidation = (options: {
 			? selectedDates.value.filter(Boolean) // Filtrer les valeurs null
 			: [selectedDates.value]
 
-		let isValid = true
-
-		// Valider chaque date
-		if (shouldDisplayErrors) {
-			datesToValidate.forEach((date) => {
-				if (!date) return // Ignorer les dates null
-
-				const result = validateField(
-					date,
-					currentCustomRules,
-					currentCustomWarningRules,
-				)
-				if (result.hasError) {
-					isValid = false
-				}
-			})
+		const finalizeValidation = (isValid: boolean): ValidationResult => {
+			let finalIsValid = isValid
 
 			// Vérifier la validité de la plage de dates si en mode plage
 			if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
-				// Récupérer les dates de début et de fin
 				const startDate = selectedDates.value[0]
 				const endDate = selectedDates.value[selectedDates.value.length - 1]
 
-				// Vérifier si les deux dates sont présentes et si la plage est valide
 				if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
-					// La date de fin est antérieure à la date de début
 					const rangeError = DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START
 					if (!errors.value.includes(rangeError)) {
 						errors.value.push(rangeError)
-						isValid = false
+						finalIsValid = false
 					}
 				}
-				// Utiliser également la validation du composable useDateRangeValidation
 				else if (!currentRangeIsValid.value) {
 					const rangeError = getRangeValidationError.value
 					if (rangeError && !errors.value.includes(rangeError)) {
 						errors.value.push(rangeError)
-						isValid = false
+						finalIsValid = false
 					}
 				}
 			}
 
-			// Dédoublonner les messages (au cas où plusieurs dates auraient les mêmes messages)
 			errors.value = [...new Set(errors.value)]
 			warnings.value = [...new Set(warnings.value)]
 			successes.value = [...new Set(successes.value)]
+
+			return {
+				hasError: !finalIsValid,
+				hasWarning: warnings.value.length > 0,
+				hasSuccess: successes.value.length > 0 && finalIsValid && warnings.value.length === 0,
+				state: {
+					errors: errors.value,
+					warnings: warnings.value,
+					successes: successes.value,
+				},
+			}
 		}
 
-		return {
-			hasError: !isValid,
-			hasWarning: warnings.value.length > 0,
-			hasSuccess: successes.value.length > 0 && isValid && warnings.value.length === 0,
-			state: {
-				errors: errors.value,
-				warnings: warnings.value,
-				successes: successes.value,
-			},
+		if (!shouldDisplayErrors) {
+			return finalizeValidation(true)
 		}
+
+		const validationResults = datesToValidate
+			.filter(Boolean)
+			.map(date => validateField(date, currentCustomRules, currentCustomWarningRules))
+
+		if (validationResults.some(result => result instanceof Promise)) {
+			return Promise
+				.all(validationResults.map(result => Promise.resolve(result)))
+				.then((resolvedResults) => {
+					const hasError = resolvedResults.some(result => result.hasError)
+					return finalizeValidation(!hasError)
+				})
+		}
+
+		const hasError = (validationResults as ValidationResult[]).some(result => result.hasError)
+		return finalizeValidation(!hasError)
 	}
 
 	/**
@@ -217,7 +218,7 @@ export const useDateValidation = (options: {
    *
    * @returns Résultat de la validation
    */
-	const validateOnSubmit = (): ValidationResult => {
+	const validateOnSubmit = (): ValidationResult | Promise<ValidationResult> => {
 		return validateDates(true)
 	}
 

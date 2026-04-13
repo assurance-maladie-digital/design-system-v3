@@ -10,25 +10,24 @@ export type ValidationResult = {
 	warning?: string
 }
 
-export type RuleOptions = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RuleOptions<T = any> = {
 	message?: string
 	successMessage?: string
 	warningMessage?: string
 	fieldName?: string
 	fieldIdentifier?: string
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	value?: any
+	value?: T
 	length?: number
 	pattern?: RegExp
 	ignoreSpace?: boolean
 	isWarning?: boolean // Si true, la règle génère un warning au lieu d'une erreur
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	validate?: (value: any) => boolean | string
+	validate?: ((value: T) => boolean | string) | ((value: T) => Promise<boolean | string>) // Fonction de validation personnalisée pour les règles de type 'custom'
 	date?: string | Date // Date de référence pour les règles notBeforeDate et notAfterDate
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-export type ValidationRule = (value: any) => ValidationResult
+export type ValidationRule = (value: any) => ValidationResult | Promise<ValidationResult>
 
 export function useFieldValidation() {
 	const getValueLength = (value: string, ignoreSpace?: boolean): number => {
@@ -93,7 +92,7 @@ export function useFieldValidation() {
 
 	const createRule = (type: string, options: RuleOptions = {}): ValidationRule => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		return (value: any): ValidationResult => {
+		return (value: any): ValidationResult | Promise<ValidationResult> => {
 			// Gestion des champs vides non obligatoires
 			if (type !== 'required' && typeof value === 'string' && value.trim() === '') {
 				return {}
@@ -377,20 +376,38 @@ export function useFieldValidation() {
 				}
 
 				case 'custom': {
-					const result = options.validate?.(value)
-					if (result === true) {
-						return { success: options.successMessage || baseMessages.success }
-					}
-					// If result is undefined or falsy but not true, treat as invalid
-					if (result === false) {
+					if (!options.validate) {
 						return options.isWarning
 							? { warning: options.warningMessage || baseMessages.warning }
 							: { error: options.message || baseMessages.error }
 					}
-					// If result is a string, use it as error/warning message
-					return options.isWarning
-						? { warning: typeof result === 'string' ? result : options.warningMessage || baseMessages.warning }
-						: { error: typeof result === 'string' ? result : options.message || baseMessages.error }
+
+					const handleCustomResult = (res: boolean | string): ValidationResult => {
+						if (res === true) {
+							return { success: options.successMessage || baseMessages.success }
+						}
+						// If result is undefined or falsy but not true, treat as invalid
+						if (res === false) {
+							return options.isWarning
+								? { warning: options.warningMessage || baseMessages.warning }
+								: { error: options.message || baseMessages.error }
+						}
+						// If result is a string, use it as error/warning message
+						return options.isWarning
+							? { warning: typeof res === 'string' ? res : options.warningMessage || baseMessages.warning }
+							: { error: typeof res === 'string' ? res : options.message || baseMessages.error }
+					}
+
+					const result = options.validate(value)
+					if (result instanceof Promise) {
+						return result.then(handleCustomResult).catch((err: unknown) => {
+							const message = err instanceof Error ? err.message : String(err)
+							return options.isWarning
+								? { warning: options.warningMessage || message || baseMessages.warning } as ValidationResult
+								: { error: options.message || message || baseMessages.error } as ValidationResult
+						})
+					}
+					return handleCustomResult(result)
 				}
 
 				default:
