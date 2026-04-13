@@ -44,17 +44,18 @@ describe('UploadWorkflow', () => {
 
 		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.findAll('.file-item')).toHaveLength(0)
-		expect(wrapper.find('.sy-file-upload').isVisible()).toBeTruthy()
+		expect(wrapper.find('.sy-file-upload').exists()).toBeFalsy()
 	})
 
 	it('handles undefined upload list without crashing', async () => {
 		const wrapper = mount(UploadWorkflow, {
+			/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 			props: {} as any,
 		})
 
 		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.findAll('.file-item')).toHaveLength(0)
-		expect(wrapper.find('.sy-file-upload').isVisible()).toBeTruthy()
+		expect(wrapper.find('.sy-file-upload').exists()).toBeFalsy()
 	})
 
 	it('shows the file in the list when set with the list button', async () => {
