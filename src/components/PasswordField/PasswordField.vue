@@ -20,7 +20,7 @@
 		modelValue?: string | null
 		variantStyle?: 'outlined' | 'underlined'
 		color?: ColorType
-		label?: string
+		label: string
 		required?: boolean
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
@@ -41,7 +41,6 @@
 		modelValue: null,
 		variantStyle: 'outlined',
 		color: 'primary',
-		label: undefined,
 		required: false,
 		errorMessages: null,
 		warningMessages: null,
@@ -96,25 +95,12 @@
 			})
 		}
 
-		// Règle pour le message de succès
-		// rules.push({
-		// 	type: 'custom',
-		// 	options: {
-		// 		validate: (value: string) => value ? true : 'Ce champ est requis',
-		// 		successMessage: 'Mot de passe fort',
-		// 		fieldIdentifier: props.label || 'password',
-		// 	},
-		// })
-
 		return rules
 	})
 
 	// Initialisation du composable de validation
 	const { errors, warnings, successes, validateField } = !props.readonly
 		? useValidation({
-			customRules: defaultRules.value,
-			warningRules: props.customWarningRules || [],
-			successRules: props.customSuccessRules || [],
 			showSuccessMessages: props.showSuccessMessages,
 			fieldIdentifier: props.label || 'password',
 			disableErrorHandling: props.disableErrorHandling,
@@ -123,7 +109,7 @@
 			errors: ref<string[]>([]),
 			warnings: ref<string[]>([]),
 			successes: ref<string[]>([]),
-			validateField: () => {},
+			validateField: () => ({ hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }),
 		}
 
 	const hasError = computed(() => errors.value.length > 0)
@@ -199,15 +185,15 @@
 		})
 	}
 
-	function handleKeydown(event: KeyboardEvent): void {
+	async function handleKeydown(event: KeyboardEvent): Promise<void> {
 		if (event.key === 'Enter') {
-			validateOnSubmit()
+			await validateOnSubmit()
 		}
 	}
 
-	const validateOnSubmit = (): boolean => {
+	const validateOnSubmit = async (): Promise<boolean> => {
 		if (props.readonly) return true // Retourner true au lieu de undefined
-		validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
+		await validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
 		const isValid = errors.value.length === 0
 		if (isValid) {
 			emit('submit')
@@ -280,7 +266,16 @@
 		:autocomplete="props.autocompleteType"
 		class="vd-password"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
-		@blur="props.isValidateOnBlur && !props.readonly ? validateField(password, [...defaultRules, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || []) : () => {}"
+		@blur="async () => {
+			if (props.isValidateOnBlur && !props.readonly) {
+				await validateField(
+					password,
+					[...defaultRules, ...(props.customRules || [])],
+					props.customWarningRules || [],
+					props.customSuccessRules || []
+				)
+			}
+		}"
 		@keydown="handleKeydown"
 	>
 		<template #append-inner>
@@ -293,8 +288,7 @@
 					decorative
 					class="mr-2"
 				/>
-				<!-- Utiliser un vrai élément button plutôt qu'une icône avec role="button" -->
-				<v-button
+				<VBtn
 					type="button"
 					class="password-toggle-button"
 					:aria-label="btnLabel"
@@ -311,7 +305,7 @@
 						:aria-hidden="true"
 						decorative
 					/>
-				</v-button>
+				</VBtn>
 			</div>
 			<div
 				:id="`${passwordFieldId}-status`"

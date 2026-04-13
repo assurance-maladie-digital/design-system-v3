@@ -21,64 +21,59 @@
 
 	dayjs.extend(customParseFormat)
 
-	/**
-	 * =====================
-	 * Props / Emits
-	 * =====================
-	 */
 	const props = withDefaults(defineProps<{
-		modelValue?: DateValue
-		placeholder?: string
-		format?: string
-		dateFormatReturn?: string
-		label: string
-		required?: boolean
-		disabled?: boolean
-		readonly?: boolean
-		title?: string | false
-		isOutlined?: boolean
-		displayIcon?: boolean
-		displayAppendIcon?: boolean
-		noIcon?: boolean
+		autoClamp?: boolean
+		bgColor?: string
 		customRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
-		displayPrependIcon?: boolean
-		disableErrorHandling?: boolean
-		showSuccessMessages?: boolean
-		bgColor?: string
-		displayRange?: boolean
-		autoClamp?: boolean
-		isValidateOnBlur?: boolean
+		dateFormatReturn?: string
 		density?: 'default' | 'comfortable' | 'compact'
-		hint?: string
-		persistentHint?: boolean
+		disableErrorHandling?: boolean
+		disabled?: boolean
+		displayAppendIcon?: boolean
+		displayIcon?: boolean
+		displayPrependIcon?: boolean
+		displayRange?: boolean
 		externalErrorMessages?: string[]
+		format?: string
+		hint?: string
+		isOutlined?: boolean
+		isValidateOnBlur?: boolean
+		label: string
+		modelValue?: DateValue
+		noIcon?: boolean
+		persistentHint?: boolean
+		placeholder?: string
+		readonly?: boolean
+		required?: boolean
+		showSuccessMessages?: boolean
+		title?: string | false
 	}>(), {
-		modelValue: undefined,
-		placeholder: undefined,
-		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
-		dateFormatReturn: undefined,
-		required: false,
-		disabled: false,
-		readonly: false,
-		title: false,
-		isOutlined: true,
-		displayIcon: true,
-		displayAppendIcon: false,
-		noIcon: false,
+		autoClamp: true,
+		bgColor: 'white',
 		customRules: () => [],
 		customWarningRules: () => [],
-		displayPrependIcon: true,
-		disableErrorHandling: false,
-		showSuccessMessages: true,
-		bgColor: 'white',
-		displayRange: false,
-		autoClamp: true,
-		isValidateOnBlur: true,
+		dateFormatReturn: undefined,
 		density: 'default',
-		hint: undefined,
-		persistentHint: false,
+		disableErrorHandling: false,
+		disabled: false,
+		displayAppendIcon: false,
+		displayIcon: true,
+		displayPrependIcon: true,
+		displayRange: false,
 		externalErrorMessages: () => [],
+		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
+		hint: undefined,
+		isOutlined: true,
+		isValidateOnBlur: true,
+		modelValue: undefined,
+		noIcon: false,
+		persistentHint: false,
+		placeholder: undefined,
+		readonly: false,
+		required: false,
+		showSuccessMessages: true,
+		title: false,
 	})
 
 	const emit = defineEmits<{
@@ -149,11 +144,11 @@
 
 	const clearValidation = () => validationApi.value.clearValidation()
 
-	const validateField = (
+	const validateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): ValidationResult => validationApi.value.validateField(value, rules, warningRules)
+	): Promise<ValidationResult> => await validationApi.value.validateField(value, rules, warningRules)
 
 	// Agrégation des erreurs internes et externes
 	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
@@ -163,15 +158,15 @@
 	/**
 	 * Safe validate utility
 	 */
-	const safeValidateField = (
+	const safeValidateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): ValidationResult => {
+	): Promise<ValidationResult> => {
 		if (readonly.value) {
 			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
 		}
-		return validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
+		return await validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
 	}
 
 	/**
@@ -200,7 +195,7 @@
 	const isUpdatingFromInternal = ref(false)
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
-	const ariaLabel = ref('')
+	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
 
 	const { validateDateFormat: _validateDateFormat } = useDateFormatValidation({
 		format: displayFormat.value,
@@ -231,7 +226,9 @@
 	const isValidating = ref(false)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
-	const updateAriaLabel = (ariaLabelText: string) => (ariaLabel.value = ariaLabelText)
+	const updateAriaLabel = (ariaLabelText: string) => {
+		ariaLabel.value = ariaLabelText || props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT
+	}
 
 	const { formatDateInput, handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
 		format: displayFormat.value,
@@ -583,9 +580,18 @@
 		emit('update:model-value', val)
 	}
 
-	function runRules(value: string): boolean {
+	async function runRules(value: string): Promise<boolean> {
 		clearValidation()
-		if (!value) {
+
+		// Vérifier si la valeur est vide ou est un squelette (ex: "__//____" pour DD/MM/YYYY)
+		// Un squelette ne contient que des underscores, des espaces et les séparateurs du format
+		const formatSeparators = props.format.replace(/[A-Za-z]/g, '')
+		// Créer un pattern qui autorise uniquement underscores, espaces et séparateurs du format
+		const allowedChars = ['_', ' ', ...new Set(formatSeparators.split(''))].map(char => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('')
+		const skeletonPattern = new RegExp(`^[${allowedChars}]+$`)
+		const isEmptyOrSkeleton = !value || value.trim() === '' || skeletonPattern.test(value)
+
+		if (isEmptyOrSkeleton) {
 			if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
 				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
 				return false
@@ -602,7 +608,7 @@
 
 		if (isRange.value && value.includes(' - ')) {
 			const [startDateText, endDateText] = value.split(' - ')
-			if (startDateText && !endDateText) return !!validateManualInput(startDateText)
+			if (startDateText && !endDateText) return !!(await validateManualInput(startDateText))
 
 			if (startDateText && endDateText) {
 				const formatValidationResult = validateDateFormatForSingleOrRange(value)
@@ -618,14 +624,14 @@
 						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						return false
 					}
-					safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-					if (errors.value.length === 0) safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					await safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					if (errors.value.length === 0) await safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				}
 			}
 			return !hasError.value
 		}
 
-		return !!validateManualInput(value)
+		return !!(await validateManualInput(value))
 	}
 
 	/**
@@ -660,7 +666,7 @@
 		emit('focus')
 	}
 
-	function onBlur() {
+	async function onBlur() {
 		isFocused.value = false
 		hasInteracted.value = true
 
@@ -678,7 +684,7 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+			const customRulesValidationResult = await safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()

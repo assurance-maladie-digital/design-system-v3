@@ -245,7 +245,7 @@
 						<SyIcon
 							v-bind="options.icon"
 							:icon="deleteIcon"
-							:color="item.state"
+							:color="item.state || 'white'"
 							decorative
 						/>
 					</VBtn>
@@ -260,7 +260,11 @@
 					v-bind="options.chip"
 					class="overflow-chip text-cyan-darken-40 ma-1"
 					:aria-label="overflowAriaLabel"
+					role="button"
+					tabindex="0"
 					@click="toggleShowAllItems"
+					@keydown.enter.prevent="toggleShowAllItems"
+					@keydown.space.prevent="toggleShowAllItems"
 				>
 					{{ overflowText }}
 				</VChip>

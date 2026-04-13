@@ -67,6 +67,7 @@ describe('NirField.vue', () => {
 	})
 
 	it('displays error message for invalid NIR length', async () => {
+		await wrapper.find('.number-field input').trigger('focus')
 		await wrapper.find('.number-field input').setValue('123')
 		await wrapper.vm.$nextTick()
 		await wrapper.find('.number-field input').trigger('blur')
@@ -76,6 +77,7 @@ describe('NirField.vue', () => {
 	})
 
 	it('validates the NIR field successfully', async () => {
+		await wrapper.find('.number-field input').trigger('focus')
 		await wrapper.find('.number-field input').setValue('2940375120005')
 		await wrapper.vm.$nextTick()
 		await wrapper.find('.number-field input').trigger('blur')
@@ -87,6 +89,7 @@ describe('NirField.vue', () => {
 	it('displays error message for invalid key length', async () => {
 		await wrapper.find('.number-field input').setValue('2940375120005')
 		await wrapper.vm.$nextTick()
+		await wrapper.find('.key-field input').trigger('focus')
 		await wrapper.find('.key-field input').setValue('1')
 		await wrapper.vm.$nextTick()
 		await wrapper.find('.key-field input').trigger('blur')
@@ -98,6 +101,7 @@ describe('NirField.vue', () => {
 	it('validates the key field successfully', async () => {
 		await wrapper.find('.number-field input').setValue('2940375120005')
 		await wrapper.vm.$nextTick()
+		await wrapper.find('.key-field input').trigger('focus')
 		await wrapper.find('.key-field input').setValue('91')
 		await wrapper.vm.$nextTick()
 		await wrapper.find('.key-field input').trigger('blur')
@@ -149,6 +153,7 @@ describe('NirField.vue', () => {
 
 		const customWrapper = mount(NirField, {
 			props: {
+				label: 'NIR Field with custom key validation',
 				modelValue: undefined,
 				customKeyRules,
 				showSuccessMessages: true,
@@ -164,6 +169,7 @@ describe('NirField.vue', () => {
 		const numberField = customWrapper.find('.number-field input')
 		const keyField = customWrapper.find('.key-field input')
 		await numberField.setValue('2940375120005')
+		await keyField.trigger('focus')
 		await keyField.setValue('91')
 		await keyField.trigger('blur')
 		await customWrapper.vm.$nextTick()

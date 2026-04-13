@@ -1,0 +1,15 @@
+import { Meta, Story } from '@storybook/blocks';
+import * as AmeliproStories from './Amelipro.stories';
+import '../styles/shared.css';
+
+<Meta of={AmeliproStories}/>
+
+
+
+<div className="header">
+    <h1>Equivalence des composants Amelipro avec la stack front VueJs 3</h1>
+</div>
+
+Suite au besoin de migration de l'ensemble des applications du parc de Amelipro vers Vue.js 3, les composants graphiques ont été unifiés. Voici les composants Amelipro et leur équivalence dans la stack front Vue.js 3.
+
+<Story of={AmeliproStories.ApComponents}/>

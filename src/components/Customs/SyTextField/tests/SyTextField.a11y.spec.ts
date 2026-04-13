@@ -39,4 +39,36 @@ describe('SyTextField – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations for number input', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				label: 'Montant',
+				modelValue: '12.5',
+				type: 'number',
+				helpText: 'Saisissez un montant numerique',
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyTextField – number input', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has no obvious axe violations for tel input', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				label: 'Telephone',
+				modelValue: '+33 1 23 45 67 89',
+				type: 'tel',
+				helpText: 'Saisissez un numero de telephone',
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyTextField – tel input', {
+			ignoreRules: ['region'],
+		})
+	})
 })

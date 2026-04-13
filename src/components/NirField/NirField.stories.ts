@@ -1332,6 +1332,10 @@ export const WithCustomLocale: Story = {
 		required: true,
 		showSuccessMessages: true,
 		customLocale: {
+			numberLabel: 'Numéro de sécurité sociale',
+			keyLabel: 'Clé',
+			numberHint: '',
+			keyHint: '',
 			errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
 			errorInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',
 			errorRequiredKey: 'La clé (2 chiffres) est requise.',

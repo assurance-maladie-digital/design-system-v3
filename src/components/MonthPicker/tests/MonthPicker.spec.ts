@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { describe, afterEach, expect, it, vi } from 'vitest'
 import MonthPicker from '../MonthPicker.vue'
 import { nextTick } from 'vue'
@@ -1238,6 +1238,7 @@ describe('mounthpicker', () => {
 
 			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2025')
 			await yearButton.trigger('click')
+			await flushPromises()
 
 			expect(wrapper.find('.v-field--error').exists()).toBe(true)
 			expect(wrapper.find('.v-input__details').text()).toBe('The year must be 2026 or later.')

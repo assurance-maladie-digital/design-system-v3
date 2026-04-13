@@ -1,8 +1,17 @@
+@use 'sass:color';
 @use '@/assets/tokens';
 
 @mixin tablestyles {
 	.v-table {
 		border: 1px solid tokens.$grey-lighten-80;
+
+		--sy-table-header-bg-pinned: #{color.mix(tokens.$blue-lighten-80, #fff, 20%)};
+
+		// Standardisation des z-index pour les tableaux
+		--sy-table-z-base: 1;
+		--sy-table-z-pinned-cell: calc(var(--sy-table-z-base) + 2);
+		--sy-table-z-pinned-header: calc(var(--sy-table-z-base) + 4);
+		--sy-table-z-progress: calc(var(--sy-table-z-base) + 5);
 	}
 
 	table thead tr {
@@ -18,10 +27,6 @@
 	table thead tr.headers,
 	table thead tr.reset {
 		background-color: rgba(tokens.$blue-lighten-80, 0.2);
-	}
-
-	&.row-clickable table tbody tr {
-		cursor: pointer;
 	}
 
 	&.fixed-min-height {
@@ -80,5 +85,44 @@
 
 	.v-data-table-rows-no-data {
 		color: tokens.$grey-base;
+	}
+
+	// Ensure loading progress bar appears above sticky/pinned header cells
+	.v-data-table-progress th {
+		position: sticky;
+		top: 0;
+		z-index: var(--sy-table-z-progress);
+	}
+}
+
+@mixin clickable-row-styles {
+	.v-table tbody > tr.sy-table__clickable-row,
+	.v-data-table__tbody > tr.sy-table__clickable-row {
+		cursor: pointer !important;
+		outline-offset: -2px;
+	}
+
+	.v-table tbody > tr.sy-table__clickable-row:focus-visible,
+	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible {
+		outline: 2px solid tokens.$primary-base;
+	}
+
+	.v-table tbody > tr.sy-table__clickable-row > td,
+	.v-table tbody > tr.sy-table__clickable-row > .v-data-table__td,
+	.v-data-table__tbody > tr.sy-table__clickable-row > td,
+	.v-data-table__tbody > tr.sy-table__clickable-row > .v-data-table__td {
+		cursor: pointer !important;
+		transition: background-color 0.15s ease;
+	}
+
+	.v-table tbody > tr.sy-table__clickable-row:hover > td,
+	.v-table tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
+	.v-table tbody > tr.sy-table__clickable-row:focus-visible > td,
+	.v-table tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:hover > td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td {
+		background-color: rgba(tokens.$primary-base, 0.08) !important;
 	}
 }

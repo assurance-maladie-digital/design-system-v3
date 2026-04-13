@@ -124,13 +124,13 @@ export function useTableHeaders({
 	 */
 	function getHeaderForColumn(column: TableColumnHeader): TableColumnHeader | undefined {
 		if (!normalizedHeaders.value) return undefined
-		const key = column.key as string | undefined
+		const key = column.key ?? undefined
 		if (key) {
 			const byKey = normalizedHeaders.value.find(h => h.key === key)
 			if (byKey) return byKey
 		}
-		// Fallback: try matching by value when key is not present or didn’t match
-		const val = column.value as string | undefined
+		// Fallback: try matching by value when key is not present or didn't match
+		const val = typeof column.value === 'string' ? column.value : undefined
 		if (val) {
 			const byValue = normalizedHeaders.value.find(h => h.value === val)
 			if (byValue) return byValue

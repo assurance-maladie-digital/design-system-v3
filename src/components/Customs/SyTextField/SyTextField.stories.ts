@@ -279,17 +279,9 @@ const meta = {
 			description: 'Largeur du champ',
 			control: { type: 'text' },
 		},
-		'validation': {
-			description: 'Valide le champ avec la valeur donnée',
-			type: '(value: string | number | null) => void',
-		},
 		'validateOnSubmit': {
-			description: 'Valide le champ lors de la soumission du formulaire',
-			type: '() => void',
-		},
-		'checkErrorOnBlur': {
-			description: 'Vérifie les erreurs lors de la perte de focus',
-			type: '() => void',
+			description: 'Valide le champ avec la valeur donnée',
+			type: '(value: string | number | null) => Promise<void>',
 		},
 		'append': {
 			description: 'Slot pour ajouter du contenu à droite du champ',
@@ -1165,9 +1157,6 @@ export const WithTooltips: Story = {
 		`,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Exemple de champ avec des tooltips d\'information. Les icônes d\'information apparaissent automatiquement lorsque les props prependTooltip et/ou appendTooltip sont renseignées. La position des tooltips peut être contrôlée avec la prop tooltipLocation.',
@@ -1217,8 +1206,14 @@ export const ValidateOnBlur: Story = {
 			const value = ref(args.modelValue)
 			const fieldRef = ref()
 
-			function handleSubmit() {
-				const isValid = fieldRef.value?.validateOnSubmit()
+			watch(() => args.modelValue, (newValue) => {
+				if (value.value !== newValue) {
+					value.value = newValue
+				}
+			})
+
+			async function handleSubmit() {
+				const isValid = await fieldRef.value?.validateOnSubmit()
 				alert(isValid ? 'Formulaire valide !' : 'Formulaire invalide, veuillez corriger les erreurs.')
 			}
 
@@ -1231,9 +1226,8 @@ export const ValidateOnBlur: Story = {
 				</p>
 				<SyTextField
 					ref="fieldRef"
-					v-model="value"
 					v-bind="args"
-					@update:model-value="args.modelValue = $event"
+					v-model="value"
 				/>
 				<div class="mt-4">
 					<VBtn type="submit" color="primary">
@@ -1288,8 +1282,8 @@ import { SyTextField } from '@cnamts/synapse'
 const value = ref('')
 const fieldRef = ref()
 
-function handleSubmit() {
-	const isValid = fieldRef.value?.validateOnSubmit()
+async function handleSubmit() {
+	const isValid = await fieldRef.value?.validateOnSubmit()
 	if (!isValid) {
 		// Gérer l'erreur
 		return
@@ -1336,19 +1330,23 @@ export const FormValidation: Story = {
 				},
 			}]
 
-			const handleSubmit = () => {
+			const handleSubmit = async () => {
 				const fields = [
 					{ ref: nomField, name: 'Nom' },
 					{ ref: prenomField, name: 'Prénom' },
 					{ ref: ageField, name: 'Âge' },
 				]
 
-				const invalidFields = fields
-					.filter(({ ref }) => !ref.value?.validateOnSubmit())
-					.map(({ name }) => name)
+				const invalidFields: string[] = []
+				for (const { ref, name } of fields) {
+					const isValid = await ref.value?.validateOnSubmit()
+					if (!isValid) {
+						invalidFields.push(name)
+					}
+				}
 
 				if (invalidFields.length > 0) {
-					alert(`Les champs suivants sont invalides: ${invalidFields.join('\\n')}`)
+					alert(`Les champs suivants sont invalides: ${invalidFields.join(', ')}`)
 				}
 				else {
 					alert('Formulaire soumis avec succès !')
@@ -1561,9 +1559,13 @@ const nomField = ref()
 					{ ref: ageField, name: 'Âge' },
 				]
 
-				const invalidFields = fields
-					.filter(({ ref }) => !ref.value?.validateOnSubmit())
-					.map(({ name }) => name)
+				const invalidFields: string[] = []
+				for (const { ref, name } of fields) {
+					const isValid = await ref.value?.validateOnSubmit()
+					if (!isValid) {
+						invalidFields.push(name)
+					}
+				}
 
 				if (invalidFields.length > 0) {
 					alert('Les champs suivants sont invalides: ' + invalidFields.join('\\n'))
