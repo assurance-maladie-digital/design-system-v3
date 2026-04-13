@@ -755,6 +755,7 @@
 			inputElement.removeAttribute('size')
 			inputElement.removeAttribute('tabindex')
 			inputElement.removeAttribute('aria-hidden')
+			inputElement.removeAttribute('aria-owns')
 		},
 
 		updateInputState(
@@ -765,6 +766,7 @@
 			describedBy?: string,
 		): void {
 			if (!inputElement) return
+			inputElement.removeAttribute('aria-owns')
 
 			inputElement.setAttribute('role', 'combobox')
 			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
