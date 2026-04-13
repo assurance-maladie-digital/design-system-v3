@@ -487,6 +487,41 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 
+		it('n\'affiche pas d\'erreur à l\'ouverture du menu mais seulement à la fermeture', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+
+			// Au départ, pas d'erreur
+			expect(instance.hasError).toBe(false)
+
+			// Ouverture du menu - l'erreur ne doit pas s'afficher
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			expect(instance.hasError).toBe(false)
+			expect(instance.isOpen).toBe(true)
+
+			// Fermeture du menu sans sélection - l'erreur doit s'afficher
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			expect(instance.hasError).toBe(true)
+			expect(instance.isOpen).toBe(false)
+
+			wrapper.unmount()
+		})
+
 		it('n\'affiche pas d\'erreur quand disableErrorHandling est true', async () => {
 			const wrapper = mount(SySelect, {
 				props: {
