@@ -192,7 +192,7 @@
 	const disableClickButton = computed(() => props.disableClickButton)
 
 	const iconColor = computed(() => {
-		if (hasError.value || Boolean(isRequired.value) || props.errorMessages.length > 0) return 'error'
+		if (hasError.value || props.errorMessages.length > 0) return 'error'
 		return 'rgb(var(--v-theme-iconBase));'
 	})
 
@@ -527,6 +527,10 @@
 		return undefined
 	})
 
+	const validationRules = computed(() => {
+		return hasError.value && !props.disableErrorHandling ? ['Le champ est requis.'] : []
+	})
+
 	const menuTarget = computed<HTMLElement | undefined>(() => {
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
 		if (!rootEl) return undefined
@@ -653,18 +657,27 @@
 		}
 	}
 
-	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
+	watch(isOpen, (newIsOpen) => {
 		if (!newIsOpen) {
+			// Valider uniquement à la fermeture du menu
 			if (props.disableErrorHandling || props.readonly) {
 				hasError.value = false
 			}
 			else {
-				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+				const shouldHaveError = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+				hasError.value = shouldHaveError
+
+				// Forcer la validation du VTextField avec nextTick pour que le DOM soit à jour
+				nextTick(() => {
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					if (textInput.value && (textInput.value as any).validate) {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						;(textInput.value as any).validate()
+					}
+				})
 			}
 		}
-		else {
-			hasError.value = newHasError
-		}
+		// Ne rien faire à l'ouverture pour préserver l'état actuel
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
@@ -932,7 +945,7 @@
 						:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 						:error-messages="props.disableErrorHandling ? [] : errorMessages"
 						:variant="variant"
-						:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+						:rules="validationRules"
 						:bg-color="props.bgColor"
 						:density="props.density"
 						:active="hasChips || hasMultipleSelections || isOpen"
