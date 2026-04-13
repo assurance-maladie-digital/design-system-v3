@@ -17,7 +17,8 @@
       "import": "./dist/design-system-v3.js",
       "require": "./dist/design-system-v3.umd.cjs"
     },
-    "./style.css": "./dist/style.css",
+    "./style.css": "./dist/synapse.css",
+    "./synapse.css": "./dist/synapse.css",
     "./vuetifyConfig": {
       "types": "./dist/vuetifyConfig.d.ts",
       "import": "./dist/vuetifyConfig.js",
