@@ -30,6 +30,7 @@
 			}
 		>(),
 		{
+			uploadList: () => [],
 			sectionTitle: undefined,
 			showFilePreview: false,
 			infoText: '',
