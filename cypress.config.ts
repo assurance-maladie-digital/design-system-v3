@@ -16,7 +16,7 @@ async function createCypressViteConfig() {
 				template: { transformAssetUrls },
 			}),
 			vuetify({
-				autoImport: true,
+				autoImport: false,
 				styles: { configFile: 'src/assets/settings.scss' },
 			}),
 		],
@@ -34,13 +34,7 @@ async function createCypressViteConfig() {
 			},
 		},
 		optimizeDeps: {
-			include: [
-				'vuetify',
-				'vuetify/components',
-				'vuetify/directives',
-				'vuetify/iconsets/mdi-svg',
-				'vuetify/locale',
-			],
+			include: ['vuetify', 'vuetify/components', 'vuetify/directives', 'vuetify/iconsets/mdi-svg', 'vuetify/locale'],
 		},
 	}
 }
