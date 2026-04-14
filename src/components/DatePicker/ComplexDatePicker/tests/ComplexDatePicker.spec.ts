@@ -160,6 +160,29 @@ describe('ComplexDatePicker.clean', () => {
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - ')
 	})
 
+	it('generates all intermediate dates when selecting a range in range mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+		})
+
+		await wrapper.vm.handleDateSelected(['01/01/2025', '05/01/2025'])
+		await flushPromises()
+
+		const selection = wrapper.vm.selectedDates as Date[]
+		expect(Array.isArray(selection)).toBe(true)
+		// Should contain 5 dates: 01/01, 02/01, 03/01, 04/01, 05/01
+		expect(selection).toHaveLength(5)
+		
+		// Verify start and end dates are correct (handle timezone differences)
+		expect(selection[0]).toBeInstanceOf(Date)
+		expect(selection[selection.length - 1]).toBeInstanceOf(Date)
+		// Use local date string to avoid timezone issues
+		expect(selection[0]?.toLocaleDateString('fr-FR')).toContain('01/01/2025')
+		expect(selection[selection.length - 1]?.toLocaleDateString('fr-FR')).toContain('05/01/2025')
+	})
+
 	it('formatDateInput formats raw digits according to the format and computes cursor position', () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
