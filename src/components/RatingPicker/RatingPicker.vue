@@ -44,13 +44,28 @@
 			type: Boolean,
 			default: false,
 		},
+		enableFreeText: {
+			type: Boolean,
+			default: true,
+		},
+		freeTextLabel: {
+			type: String,
+			default: 'Pouvez-vous nous en dire plus ?',
+		},
+		freeTextValue: {
+			type: String,
+			default: '',
+		},
 	})
 
-	const emit = defineEmits(['update:modelValue'])
+	const emit = defineEmits<{
+		(e: 'update:modelValue', value: number): void
+		(e: 'update:freeTextValue', value: string): void
+	}>()
 
 	const alertTypeEnumRef = ref(AlertTypeEnum)
 	const internalValue = ref(-1)
-	const displayAdditionalContent = ref(false)
+	const internalFreeTextValue = ref('')
 
 	const ratingComponent = computed(() => {
 		if (props.type === RatingEnum.EMOTION) {
@@ -73,26 +88,71 @@
 
 	const hasAnswered = computed(() => props.modelValue !== -1)
 
-	function showAdditionalContent(value: number): void {
-		const starsUnsatisfied = props.type === RatingEnum.STARS && value <= 3
-		const numberUnsatisfied = props.type === RatingEnum.NUMBER && value <= 7
-		const isEmotion = props.type === RatingEnum.EMOTION
-		const isEmotionLow = props.twoEmotions ? value < 2 : value < 3
-		const emotionUnsatisfied = isEmotion && isEmotionLow
-		if (starsUnsatisfied || numberUnsatisfied || emotionUnsatisfied) {
-			displayAdditionalContent.value = true
+	function shouldDisplayAdditionalContent(value: number): boolean {
+		if (value === -1) {
+			return false
 		}
+
+		if (props.type === RatingEnum.EMOTION) {
+			// 3 émotions : gauche + milieu => 1 ou 2
+			// 2 émotions : uniquement la gauche => 1
+			return props.twoEmotions ? value === 1 : value <= 2
+		}
+
+		if (props.type === RatingEnum.STARS) {
+			// Seulement 1 ou 2 étoiles
+			return value <= 2
+		}
+
+		if (props.type === RatingEnum.NUMBER) {
+			// comportement existant conservé
+			return value <= 7
+		}
+
+		return false
 	}
+
+	const displayAdditionalContent = computed(() => {
+		if (!props.enableFreeText) {
+			return false
+		}
+
+		return shouldDisplayAdditionalContent(internalValue.value)
+	})
 
 	function setValue(value: number): void {
 		internalValue.value = value
-		showAdditionalContent(value)
+
+		// si la note ne nécessite plus de commentaire, on vide le texte
+		if (!shouldDisplayAdditionalContent(value) && internalFreeTextValue.value) {
+			internalFreeTextValue.value = ''
+			emit('update:freeTextValue', '')
+		}
+
 		emit('update:modelValue', value)
 	}
 
-	watch(() => props.modelValue, (newVal) => {
-		internalValue.value = newVal
-	}, { immediate: true })
+	function setFreeTextValue(event: Event): void {
+		const target = event.target as HTMLTextAreaElement
+		internalFreeTextValue.value = target.value
+		emit('update:freeTextValue', target.value)
+	}
+
+	watch(
+		() => props.modelValue,
+		(newVal) => {
+			internalValue.value = newVal
+		},
+		{ immediate: true },
+	)
+
+	watch(
+		() => props.freeTextValue,
+		(newVal) => {
+			internalFreeTextValue.value = newVal
+		},
+		{ immediate: true },
+	)
 </script>
 
 <template>
@@ -130,6 +190,27 @@
 				{{ locales.thanks }}
 			</SyAlert>
 
+			<div
+				v-if="displayAdditionalContent"
+				class="sy-rating-picker__free-text mt-4"
+			>
+				<div>
+					<label
+						class="sy-rating-picker__free-text-label"
+						for="sy-rating-picker-free-text"
+					>
+						{{ props.freeTextLabel }}
+						<textarea
+							id="sy-rating-picker-free-text"
+							class="sy-rating-picker__free-text-textarea"
+							:value="internalFreeTextValue"
+							:readonly="props.readonly"
+							@input="setFreeTextValue"
+						/>
+					</label>
+				</div>
+			</div>
+
 			<slot v-if="displayAdditionalContent" />
 		</template>
 	</div>
@@ -146,4 +227,22 @@
 	text-align: center;
 }
 
+.sy-rating-picker__free-text {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.sy-rating-picker__free-text-label {
+	font-weight: 600;
+}
+
+.sy-rating-picker__free-text-textarea {
+	min-height: 120px;
+	padding: 0.75rem;
+	border: 1px solid #ccc;
+	border-radius: 0.375rem;
+	resize: vertical;
+	font: inherit;
+}
 </style>
