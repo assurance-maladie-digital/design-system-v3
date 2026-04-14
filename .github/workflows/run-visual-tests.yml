@@ -1,0 +1,50 @@
+name: Run Visual Tests (Manual)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  visual-tests:
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+      TZ: "Europe/Paris"
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+      - name: Install pnpm
+        run: npm install -g pnpm@8
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run visual regression tests
+        run: pnpm test:visual
+      - name: Upload visual test diffs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-visual-diffs
+          path: cypress/snapshots/diff
+          retention-days: 7
+      - name: Upload visual test screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-visual-screenshots
+          path: cypress/screenshots
+          retention-days: 7
