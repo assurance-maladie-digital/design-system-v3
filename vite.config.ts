@@ -99,6 +99,7 @@ export default defineConfig({
 				'vuetifyConfig': resolve(__dirname, 'src/vuetifyConfig.ts'),
 			},
 			name: 'DesignSystemV3',
+			cssFileName: 'synapse',
 			formats: ['es', 'cjs'],
 			fileName: (format, entryAlias) => {
 				if (format === 'cjs') return `${entryAlias}.umd.cjs`
