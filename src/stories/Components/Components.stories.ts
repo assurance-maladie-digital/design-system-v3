@@ -169,6 +169,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'Switch',
+						description: 'Utilisé pour permettre à l’utilisateur de choisir entre deux valeurs distinctes. Il est très similaire à un bouton bascule (toggle) ou à un interrupteur marche/arrêt.',
+						link: '/?path=/docs/composants-composants-vuetify-vswitch--docs',
+						img: `/components/switch${isAp ? '-ap' : ''}.svg`,
+						category: 'Boutons',
+					},
+					{
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
 						link: '/?path=/docs/composants-formulaires-syselect--docs',
