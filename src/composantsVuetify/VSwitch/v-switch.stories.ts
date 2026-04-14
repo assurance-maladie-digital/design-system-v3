@@ -136,7 +136,7 @@ export const SecondaryInsetOn: Story = {
 export const SecondaryInsetOff: Story = {
 	args: {
 		modelValue: false,
-		label: 'OFF(inset)',
+		label: 'OFF (inset)',
 		color: 'secondary',
 		inset: true,
 		hideDetails: true,
