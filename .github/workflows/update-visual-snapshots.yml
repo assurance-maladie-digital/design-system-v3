@@ -12,6 +12,9 @@ on:
       - 'src/components/**'
       - 'cypress/**'
       - '.github/workflows/**'
+  push:
+    branches:
+      - 'feat/visual-snapshots'
 
 jobs:
   update-snapshots:
