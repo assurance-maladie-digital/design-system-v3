@@ -1,20 +1,38 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { VSkeletonLoader } from 'vuetify/components'
 
-const meta: Meta = {
+const meta: Meta<typeof VSkeletonLoader> = {
 	title: 'Composants/Composants Vuetify/VSkeletonLoader',
 	tags: ['!dev'],
-	render: args => ({
-		components: { VSkeletonLoader },
-		setup() {
-			return { args }
+	component: VSkeletonLoader,
+	parameters: {
+		docs: {
+			source: {
+				transform: (src: string) =>
+					src.replace(/VSkeletonLoader/g, 'v-skeleton-loader'),
+			},
 		},
-		template: '<v-skeleton-loader v-bind="args" />',
-	}),
+	},
+	argTypes: {
+		type: {
+			control: { type: 'select' },
+			options: ['article', 'avatar', 'card', 'list-item-avatar'],
+			description: 'Type de skeleton loader',
+		},
+		loading: {
+			control: { type: 'boolean' },
+			description: 'Affiche le skeleton loader',
+		},
+		boilerplate: {
+			control: { type: 'boolean' },
+			description: 'Affiche une version simplifiée du skeleton loader',
+		},
+	},
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+
+type Story = StoryObj<typeof VSkeletonLoader>
 
 export const Default: Story = {
 	args: {
