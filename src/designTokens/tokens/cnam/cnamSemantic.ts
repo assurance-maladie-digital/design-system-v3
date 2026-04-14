@@ -88,7 +88,7 @@ export const cnamSemanticTokens = {
 			selectionPressed: cnamColorsTokens.blue.lighten80,
 			selectionSelected: cnamColorsTokens.blue.lighten90,
 			selectionHoverOnSelected: cnamColorsTokens.blue.lighten80,
-			selectionselectedAccent: cnamColorsTokens.blue.base,
+			selectionSelectedAccent: cnamColorsTokens.blue.base,
 			selectionHoverOnSelectedAccent: cnamColorsTokens.blue.lighten20,
 			selectionDisabled: cnamColorsTokens.white.base,
 		},
