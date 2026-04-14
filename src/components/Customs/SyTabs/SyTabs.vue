@@ -12,8 +12,9 @@
 		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 		confirmTabChange?: boolean
 		/** Message affiché dans la boîte de dialogue de confirmation */
-		confirmationMessage?: boolean
-		/** Options personnalisées pour les composants Vuetify */
+		confirmationMessage?: string
+		/** Si activé, le contenu des onglets ne sera rendu que lorsqu'ils deviendront actifs */
+		lazy?: boolean
 		vuetifyOptions?: {
 			sheet?: {
 				theme?: string
@@ -34,7 +35,8 @@
 	}>(), {
 		modelValue: undefined,
 		confirmTabChange: false,
-		confirmationMessage: false,
+		confirmationMessage: 'Voulez-vous vraiment changer d\'onglet ?',
+		lazy: false,
 		vuetifyOptions: () => ({}),
 	})
 
@@ -43,7 +45,11 @@
 		inheritAttrs: false,
 	})
 
-	const emit = defineEmits(['update:modelValue', 'cancel-navigation', 'confirm-tab-change'])
+	const emit = defineEmits<{
+		'update:modelValue': [value: number | string]
+		'cancel-navigation': []
+		'confirm-tab-change': [message: string, resolve: (confirmed: boolean) => void]
+	}>()
 
 	defineSlots<{
 		'tabs-prepend': () => unknown
@@ -63,6 +69,16 @@
 	const activeItemIndex = ref<number>(0)
 	// Élément actuellement focusé (pour la navigation clavier)
 	const focusedItemIndex = ref<number>(-1)
+
+	// Keep track of rendered panels for lazy loading
+	const renderedPanels = ref<Set<number>>(new Set([0]))
+
+	// Observer les changements pour le lazy loading
+	watch(activeItemIndex, (newIndex) => {
+		if (props.lazy && !renderedPanels.value.has(newIndex)) {
+			renderedPanels.value.add(newIndex)
+		}
+	}, { immediate: true })
 
 	// Émet un événement pour gérer la confirmation de changement d'onglet
 	async function handleTabChangeConfirmation(message: string): Promise<boolean> {
@@ -192,8 +208,8 @@
 		// Configurer l'accessibilité
 		setupAccessibilityFeatures()
 
-		// Si les items ne sont pas un tableau ou vides, ne rien faire
-		if (!Array.isArray(props.items) || props.items.length === 0) return
+		// Si les items sont vides, ne rien faire
+		if (!props.items?.length) return
 
 		// Si modelValue est défini, utiliser cette valeur pour déterminer l'index actif
 		if (props.modelValue !== undefined) {
@@ -319,20 +335,16 @@
 		<div class="sy-tabs px-xl-0 px-4">
 			<slot name="tabs-prepend" />
 			<slot>
-				<nav
-					role="tablist"
-					aria-label="Onglets de navigation"
-					class="sy-tabs__nav"
-				>
-					<ul
+				<div class="sy-tabs__nav">
+					<div
 						ref="tablist"
+						role="tablist"
+						aria-label="Onglets de navigation"
 						class="sy-tabs__list"
 					>
-						<li
-							v-for="(item, index) in Array.isArray(items) ? items : []"
+						<template
+							v-for="(item, index) in items"
 							:key="item.label || index"
-							class="sy-tabs__item"
-							role="presentation"
 						>
 							<!-- Use RouterLink for internal navigation -->
 							<RouterLink
@@ -348,7 +360,7 @@
 								:aria-selected="activeItemIndex === index"
 								:aria-controls="`panel-${index}`"
 								:aria-disabled="item.disabled || undefined"
-								:tabindex="item.disabled ? -1 : 0"
+								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								@click="item.disabled ? undefined : setActiveItem(index)"
 								@keydown="(event) => {
 									if (!item.disabled) {
@@ -385,7 +397,7 @@
 								:aria-selected="activeItemIndex === index"
 								:aria-controls="`panel-${index}`"
 								:aria-disabled="item.disabled || undefined"
-								:tabindex="item.disabled ? -1 : 0"
+								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								@click="(event) => {
 									if (item.disabled) {
 										event.preventDefault();
@@ -489,7 +501,7 @@
 								:aria-selected="activeItemIndex === index"
 								:aria-controls="`panel-${index}`"
 								:aria-disabled="item.disabled || undefined"
-								:tabindex="item.disabled ? -1 : 0"
+								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								:disabled="item.disabled"
 								@click="setActiveItem(index)"
 								@keydown="(event) => {
@@ -513,9 +525,9 @@
 									:is-active="activeItemIndex === index"
 								/>
 							</button>
-						</li>
-					</ul>
-				</nav>
+						</template>
+					</div>
+				</div>
 			</slot>
 			<slot name="tabs-append" />
 		</div>
@@ -524,7 +536,7 @@
 	<!-- Panneau de contenu des onglets -->
 	<div class="sy-tabs-panels">
 		<div
-			v-for="(item, index) in Array.isArray(items) ? items : []"
+			v-for="(item, index) in items"
 			:id="`panel-${index}`"
 			:key="`panel-${index}`"
 			class="sy-tabs-panel"
@@ -532,12 +544,14 @@
 			:aria-labelledby="`tab-${index}`"
 			:hidden="activeItemIndex !== index"
 		>
-			<slot
-				:name="`panel-${index}`"
-				:active="activeItemIndex === index"
-			>
-				{{ item.content || '' }}
-			</slot>
+			<template v-if="!lazy || renderedPanels.has(index)">
+				<slot
+					:name="`panel-${index}`"
+					:active="activeItemIndex === index"
+				>
+					{{ item.content || '' }}
+				</slot>
+			</template>
 		</div>
 	</div>
 </template>
@@ -558,7 +572,6 @@
 .sy-tabs__list {
 	display: flex;
 	position: relative;
-	list-style-type: none;
 	padding: 0;
 	margin: 0;
 	width: 100%;
@@ -574,12 +587,6 @@
 	translate: v-bind("xPosition + 'px'");
 	transition: translate 0.2s ease-in-out, width 0.2s ease-in-out;
 	background-color: v-bind("options.tab['slider-color']");
-}
-
-.sy-tabs__item {
-	cursor: pointer;
-	display: flex;
-	align-items: stretch;
 }
 
 .sy-tabs__button {

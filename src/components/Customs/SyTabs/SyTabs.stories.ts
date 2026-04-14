@@ -52,7 +52,7 @@ export const Default: Story = {
 	args: {},
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -86,7 +86,7 @@ export const Disabled: Story = {
 	},
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -135,7 +135,7 @@ export const WithVModel: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -195,7 +195,7 @@ export const WithTabsPrependSlot: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -235,7 +235,7 @@ export const WithTabsAppendSlot: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -278,7 +278,7 @@ export const WithTabPrependSlot: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -329,7 +329,7 @@ export const WithTabAppendSlot: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -384,7 +384,7 @@ export const WithCustomContent: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -423,7 +423,7 @@ export const ManyTabs: Story = {
 	},
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -467,7 +467,7 @@ export const CustomTheme: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{
@@ -534,7 +534,7 @@ export const WithTabConfirmation: Story = {
 	}),
 	parameters: {
 		a11y: {
-			disable: true,
+			disable: false,
 		},
 		sourceCode: [
 			{

@@ -434,7 +434,7 @@ describe('SyTabs', () => {
 			expect(tabList.exists()).toBe(true)
 
 			// Vérifier que tous les items sont rendus
-			const tabItems = wrapper.findAll('.sy-tabs__item')
+			const tabItems = wrapper.findAll('.sy-tabs__button')
 			expect(tabItems.length).toBe(testItems.length)
 		})
 	})
