@@ -8,6 +8,12 @@ export interface ContextualColors {
 	icon: string
 	overlay: string
 	interactive: string
+	// Vuetify theme keys — not output as SCSS tokens; consumed by Vuetify's theme system
+	interactiveHover?: string
+	interactivePressed?: string
+	interactiveFocus?: string
+	interactiveDisabled?: string
+	interactiveHoverOnSelected?: string
 }
 
 export interface ContextualTokens {

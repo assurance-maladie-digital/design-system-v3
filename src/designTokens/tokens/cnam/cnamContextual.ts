@@ -1,4 +1,7 @@
+import { baseContextualTokens } from '../baseContextualTokens'
+
 export const cnamContextualTokens = {
+	...baseContextualTokens,
 	colors: {
 		background: '#ffffff',
 		border: '#dddddd',
@@ -6,58 +9,11 @@ export const cnamContextualTokens = {
 		icon: '#666666',
 		overlay: 'rgba(0, 0, 0, 0.5)',
 		interactive: '#fff',
+		// Vuetify theme keys — not output as SCSS tokens; consumed by Vuetify's theme system
 		interactiveHover: '#E7ECF5',
 		interactivePressed: '#CED9EB',
 		interactiveFocus: '#E7ECF5',
 		interactiveDisabled: '#fff',
 		interactiveHoverOnSelected: '#CED9EB',
-	},
-	gap: {
-		0: '0',
-		1: '4px',
-		2: '8px',
-		3: '12px',
-		4: '16px',
-		5: '20px',
-		6: '24px',
-		7: '28px',
-		8: '32px',
-		9: '36px',
-		10: '40px',
-		11: '44px',
-		12: '48px',
-		13: '52px',
-		14: '56px',
-		15: '60px',
-		16: '64px',
-	},
-	iconSize: {
-		xsmall: '8px',
-		small: '16px',
-		default: '24px',
-		large: '32px',
-	},
-	radius: {
-		rounded0: '0',
-		rounded: '4px',
-		roundedLg: '8px',
-		roundedPill: '64px',
-	},
-	padding: {
-		0: '0',
-		2: '8px',
-		3: '12px',
-		4: '16px',
-		6: '24px',
-		8: '32px',
-		10: '40px',
-		14: '56px',
-		16: '64px',
-	},
-	fontSize: {
-		titres: '24px',
-		titresAlternatifs: '20px',
-		corpsDeTexte: '16px',
-		liensEtLibelles: '14px',
 	},
 }
