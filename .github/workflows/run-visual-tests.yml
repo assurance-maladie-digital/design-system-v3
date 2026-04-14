@@ -2,8 +2,10 @@ name: Run Visual Tests (Manual)
 
 on:
   workflow_dispatch:
+  push:
+    branches: ['**']
   pull_request:
-    branches: [dev]
+    branches: ['**']
 
 jobs:
   visual-tests:
