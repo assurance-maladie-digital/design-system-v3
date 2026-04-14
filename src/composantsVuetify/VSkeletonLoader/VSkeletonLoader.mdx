@@ -1,0 +1,42 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VSkeletonLoaderStories from './v-skeleton-loader.stories'
+
+<Meta of={VSkeletonLoaderStories} />
+
+<div className="header">
+    <h1>VSkeletonLoader</h1>
+Ce composant utilise directement le composant natif `v-skeleton-loader` de Vuetify. 
+Il est utilisé pour fournir une indication visuelle qu'un contenu est en cours de chargement. 
+Il améliore l'expérience utilisateur en montrant une structure de placeholder pendant le chargement des données. 
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-skeleton-loader/#props).
+</div>
+
+## Utilisation de base
+
+<Canvas of={VSkeletonLoaderStories.Default} withToolbar={false} />
+
+## Types disponibles
+
+Le composant offre plusieurs types prédéfinis pour différents cas d'usage :
+
+### Article
+<Canvas of={VSkeletonLoaderStories.Article} withToolbar={false} />
+
+### Avatar
+<Canvas of={VSkeletonLoaderStories.Avatar} withToolbar={false} />
+
+### Card
+<Canvas of={VSkeletonLoaderStories.Card} withToolbar={false} />
+
+### List Item
+<Canvas of={VSkeletonLoaderStories.ListItem} withToolbar={false} />
+
+### Boilerplate
+Sans animation (statique) :
+<Canvas of={VSkeletonLoaderStories.Boilerplate} withToolbar={false} />
+
+## Bonnes pratiques
+
+- Utilisez des skeletons qui correspondent à la structure du contenu final
+- Privilégiez l'utilisation de types prédéfinis pour une cohérence visuelle
+- Désactivez l'animation (`boilerplate`) si vous avez de nombreux skeletons sur la page pour améliorer les performances
