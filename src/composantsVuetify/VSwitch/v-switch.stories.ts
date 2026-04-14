@@ -5,6 +5,14 @@ const meta: Meta<typeof VSwitch> = {
 	title: 'Composants/Composants Vuetify/VSwitch',
 	tags: ['!dev'],
 	component: VSwitch,
+	parameters: {
+		docs: {
+			source: {
+				transform: (src: string) =>
+					src.replace(/VSwitch/g, 'v-switch'),
+			},
+		},
+	},
 	argTypes: {
 		color: {
 			control: { type: 'text' },
