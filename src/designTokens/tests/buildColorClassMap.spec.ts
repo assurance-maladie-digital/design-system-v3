@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildColorClassMap } from '@/designTokens/builders'
+import { buildColorClassMap } from '../builders/buildColorClassMap'
 import { apColorClasses, apColorsTokens2026 } from '../tokens/amelipro/apColors2026'
 
 describe('buildColorClassMap', () => {

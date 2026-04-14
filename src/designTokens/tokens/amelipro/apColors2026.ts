@@ -2,7 +2,7 @@
 // apColors.ts is the legacy palette still used by the SCSS token generator (apVariantConfig).
 // Once the SCSS generator is migrated to this palette, apColors.ts can be removed.
 import type { IndexedObject } from '@/components/Amelipro/types.ts'
-import { buildColorClassMap } from '@/designTokens/builders'
+import { buildColorClassMap } from '../../builders/buildColorClassMap'
 
 export const apColorsTokens2026 = {
 	apBlack: { base: '#000000' },
