@@ -40,9 +40,9 @@
     "test:a11y": "pnpm vitest run a11y.spec.ts",
     "a11y:report": "node ./scripts/a11y-report.mjs",
     "a11y:status": "node generate-a11y-report.mjs",
-    "test:visual": "cypress run --component",
-    "test:visual:open": "cypress open --component",
-    "test:visual:update": "cypress run --component --env updateSnapshots=true",
+    "test:visual": "cypress run --component --browser electron",
+    "test:visual:open": "cypress open --component --browser electron",
+    "test:visual:update": "cypress run --component --browser electron --env updateSnapshots=true",
     "prepare": "husky",
     "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
   },
