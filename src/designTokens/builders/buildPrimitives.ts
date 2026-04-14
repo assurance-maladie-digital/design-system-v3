@@ -12,7 +12,7 @@ const WHITE_STEP_NAMES: Record<string, string> = {
 	lighten70: '70',
 }
 
-export function buildPrimitives(colorsTokens: ColorsTokens): string[] {
+export function buildPrimitives(colorsTokens: ColorsTokens, extraPrimitives?: string[]): string[] {
 	const lines: string[] = ['// Primitives']
 
 	for (const [colorName, scale] of Object.entries(colorsTokens)) {
@@ -36,9 +36,9 @@ export function buildPrimitives(colorsTokens: ColorsTokens): string[] {
 	}
 
 	lines.push('$white-00: rgba(255, 255, 255, 0);')
-	lines.push('$transparent-blue-18: rgba(12, 65, 154, 0.18);')
-	lines.push('$transparent-blue-08: rgba(12, 65, 154, 0.08);')
-	lines.push('$transparent-blue-00: rgba(12, 65, 154, 0);')
+
+	if (extraPrimitives)
+		lines.push(...extraPrimitives)
 
 	return lines
 }

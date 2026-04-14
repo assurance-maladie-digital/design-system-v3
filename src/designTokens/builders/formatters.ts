@@ -14,7 +14,6 @@ export function toKebabCase(value: string): string {
 
 export function toTokenSuffix(value: string): string {
 	return toKebabCase(value)
-		.replace(/(darken|lighten)(\d+)$/, '$1-$2')
 }
 
 function normalizeColorWhitespace(value: string): string {

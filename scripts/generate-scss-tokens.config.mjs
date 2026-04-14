@@ -20,6 +20,7 @@ export const cnamVariantConfig = {
 	semanticValues: cnam.cnamSemanticValues,
 	additionalContextual: cnam.cnamAdditionalContextual,
 	spacingTokens: cnam.cnamSpacingTokens,
+	extraPrimitives: cnam.cnamExtraPrimitives,
 }
 
 export const paVariantConfig = {
@@ -28,6 +29,7 @@ export const paVariantConfig = {
 	semanticValues: pa.paSemanticValues,
 	additionalContextual: pa.paAdditionalContextual,
 	spacingTokens: pa.paSpacingTokens,
+	extraPrimitives: cnam.cnamExtraPrimitives,
 }
 
 export const apVariantConfig = {

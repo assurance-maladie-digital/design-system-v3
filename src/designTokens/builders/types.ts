@@ -46,4 +46,5 @@ export interface VariantInput {
 	semanticValues: Record<string, string>
 	additionalContextual: Record<string, string>
 	spacingTokens?: SpacingTokens
+	extraPrimitives?: string[]
 }
