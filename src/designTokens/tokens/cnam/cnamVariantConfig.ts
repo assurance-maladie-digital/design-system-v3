@@ -144,11 +144,20 @@ export const cnamAdditionalContextual: Record<string, string> = {
 	'colors-interactive-negative-secondary-action-hover': '$white-08',
 	'colors-interactive-negative-secondary-action-pressed': '$white-20',
 	'colors-interactive-negative-secondary-action-disabled': '$white-00',
+	// CNAM-specific heading sizes; not defined for AP (which inherits Vuetify defaults).
 	'heading-1-font-size': '24px',
 	'heading-2-font-size': '20px',
 	'heading-3-font-size': '16px',
 	'heading-4-font-size': '14px',
 }
+
+// Brand-specific transparent primitive values derived from CNAM/PA blue (#0c419a).
+// Not part of the generic color scale; passed via extraPrimitives to buildVariant.
+export const cnamExtraPrimitives: string[] = [
+	'$transparent-blue-18: rgba(12, 65, 154, 0.18);',
+	'$transparent-blue-08: rgba(12, 65, 154, 0.08);',
+	'$transparent-blue-00: rgba(12, 65, 154, 0);',
+]
 
 export { cnamSpacingTokens } from './cnamSpacingTokens'
 export { cnamColorsTokens } from './cnamColors'

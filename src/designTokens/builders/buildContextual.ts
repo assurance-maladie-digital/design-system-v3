@@ -1,9 +1,6 @@
 import type { ContextualTokens, SpacingTokens } from './types'
 import { formatColor, formatLength, toKebabCase } from './formatters'
 
-const GAP_KEYS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'] as const
-const PADDING_KEYS = ['0', '2', '3', '4', '6', '8', '10', '14', '16'] as const
-
 function buildSpacingSection(spacing: SpacingTokens): string[] {
 	const lines: string[] = []
 
@@ -36,8 +33,8 @@ export function buildContextual(
 	lines.push(`$colors-overlay: ${formatColor(contextual.colors.overlay)};`)
 	lines.push(`$colors-interactive: ${formatColor(contextual.colors.interactive)};`)
 
-	for (const key of GAP_KEYS)
-		lines.push(`$gap-${key}: ${formatLength(contextual.gap[Number(key)]!)};`)
+	for (const [key, value] of Object.entries(contextual.gap).sort(([a], [b]) => Number(a) - Number(b)))
+		lines.push(`$gap-${key}: ${formatLength(value)};`)
 
 	lines.push(`$icon-size-xsmall: ${formatLength(contextual.iconSize.xsmall)};`)
 	lines.push(`$icon-size-small: ${formatLength(contextual.iconSize.small)};`)
@@ -45,12 +42,12 @@ export function buildContextual(
 	lines.push(`$icon-size-large: ${formatLength(contextual.iconSize.large)};`)
 	lines.push(`$radius-rounded-0: ${formatLength(contextual.radius.rounded0)};`)
 	lines.push(`$radius-rounded: ${formatLength(contextual.radius.rounded)};`)
-	lines.push(`$radius-rounded-md: ${formatLength(contextual.radius.rounded)};`)
+	lines.push(`$radius-rounded-md: ${formatLength(contextual.radius.rounded)};`) // alias for backwards compatibility
 	lines.push(`$radius-rounded-lg: ${formatLength(contextual.radius.roundedLg)};`)
 	lines.push(`$radius-rounded-pill: ${formatLength(contextual.radius.roundedPill)};`)
 
-	for (const key of PADDING_KEYS)
-		lines.push(`$padding-${key}: ${formatLength(contextual.padding[Number(key)]!)};`)
+	for (const [key, value] of Object.entries(contextual.padding).sort(([a], [b]) => Number(a) - Number(b)))
+		lines.push(`$padding-${key}: ${formatLength(value)};`)
 
 	lines.push(`$font-size-title: ${formatLength(contextual.fontSize.titres)};`)
 	lines.push(`$font-size-alt-title: ${formatLength(contextual.fontSize.titresAlternatifs)};`)
@@ -59,8 +56,11 @@ export function buildContextual(
 
 	lines.push('', '// Additional Contextual Tokens')
 
-	for (const [name, value] of Object.entries(additionalContextual))
+	for (const [name, value] of Object.entries(additionalContextual)) {
+		if (!value.trim())
+			throw new TypeError(`Expected additional contextual token "${name}" to be a non-empty string, received ${JSON.stringify(value)}`)
 		lines.push(`$${name}: ${value};`)
+	}
 
 	if (spacingTokens)
 		lines.push(...buildSpacingSection(spacingTokens))

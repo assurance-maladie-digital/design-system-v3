@@ -19,10 +19,10 @@ describe('buildPrimitives', () => {
 		expect(lines[0]).toBe('// Primitives')
 	})
 
-	it('appends hardcoded transparent-blue variables at the end', () => {
-		const lines = buildPrimitives(cnamColorsTokens)
+	it('appends extraPrimitives at the end when provided', () => {
+		const extra = ['$transparent-blue-18: rgba(12, 65, 154, 0.18);', '$transparent-blue-00: rgba(12, 65, 154, 0);']
+		const lines = buildPrimitives(cnamColorsTokens, extra)
 		expect(lines).toContain('$transparent-blue-18: rgba(12, 65, 154, 0.18);')
-		expect(lines).toContain('$transparent-blue-08: rgba(12, 65, 154, 0.08);')
 		expect(lines).toContain('$transparent-blue-00: rgba(12, 65, 154, 0);')
 	})
 
