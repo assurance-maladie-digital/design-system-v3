@@ -172,7 +172,7 @@ export const ComponentsList: StoryObj = {
 						title: 'Switch',
 						description: 'Utilisé pour permettre à l’utilisateur de choisir entre deux valeurs distinctes. Il est très similaire à un bouton bascule (toggle) ou à un interrupteur marche/arrêt.',
 						link: '/?path=/docs/composants-composants-vuetify-vswitch--docs',
-						img: '',
+						img: `/components/switch${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
