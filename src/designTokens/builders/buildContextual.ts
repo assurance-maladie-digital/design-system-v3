@@ -9,15 +9,15 @@ function buildSpacingSection(spacing: SpacingTokens): string[] {
 
 	lines.push('', '// vertical spacing')
 	for (const [name, value] of Object.entries(spacing.vertical))
-		lines.push(`$spacing-${toKebabCase(name)}: ${value};`)
+		lines.push(`$spacing-${toKebabCase(name)}: ${formatLength(value)};`)
 
 	lines.push('', '// horizontal spacing')
 	for (const [name, value] of Object.entries(spacing.horizontal))
-		lines.push(`$spacing-horizontal-${toKebabCase(name)}: ${value};`)
+		lines.push(`$spacing-horizontal-${toKebabCase(name)}: ${formatLength(value)};`)
 
 	lines.push('', '// container')
 	for (const [name, value] of Object.entries(spacing.container))
-		lines.push(`$container-${toKebabCase(name)}: ${value};`)
+		lines.push(`$container-${toKebabCase(name)}: ${formatLength(value)};`)
 
 	return lines
 }
