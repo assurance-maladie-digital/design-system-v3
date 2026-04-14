@@ -158,7 +158,7 @@ export const SecondaryOnDisabled: Story = {
 export const SecondaryOffDisabled: Story = {
 	args: {
 		modelValue: false,
-		label: 'OFF– désactivé',
+		label: 'OFF – désactivé',
 		color: 'secondary',
 		disabled: true,
 		hideDetails: true,
