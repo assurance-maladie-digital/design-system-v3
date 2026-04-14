@@ -31,7 +31,7 @@ export const cnamLightTheme = {
 	interactiveSelectionPressed: cnamSemanticTokens.colors.interactive.selectionPressed,
 	interactiveSelectionSelected: cnamSemanticTokens.colors.interactive.selectionSelected,
 	interactiveSelectionHoverOnSelected: cnamSemanticTokens.colors.interactive.selectionHoverOnSelected,
-	interactiveSelectionSelectedAccent: cnamSemanticTokens.colors.interactive.selectionselectedAccent,
+	interactiveSelectionSelectedAccent: cnamSemanticTokens.colors.interactive.selectionSelectedAccent,
 	interactiveSelectionHoverOnSelectedAccent: cnamSemanticTokens.colors.interactive.selectionHoverOnSelectedAccent,
 	interactiveSelectionDisabled: cnamSemanticTokens.colors.interactive.selectionDisabled,
 	backgroundMain: cnamSemanticTokens.colors.background.main,

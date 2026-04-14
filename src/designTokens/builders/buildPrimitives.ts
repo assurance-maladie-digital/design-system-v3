@@ -1,5 +1,5 @@
 import type { ColorsTokens } from './types'
-import { formatColor, toKebabCase, toTokenSuffix } from './formatters'
+import { formatColor, toKebabCase } from './formatters'
 
 // Maps white scale step names to their output token suffixes.
 // Add entries here when new white shades are added to the color tokens.
@@ -31,7 +31,7 @@ export function buildPrimitives(colorsTokens: ColorsTokens, extraPrimitives?: st
 				continue
 			}
 
-			lines.push(`$${colorToken}-${toTokenSuffix(step)}: ${value};`)
+			lines.push(`$${colorToken}-${toKebabCase(step)}: ${value};`)
 		}
 	}
 

@@ -31,7 +31,7 @@ export const apLightTheme = {
 	interactiveSelectionPressed: apSemanticTokens.colors.interactive.selectionPressed,
 	interactiveSelectionSelected: apSemanticTokens.colors.interactive.selectionSelected,
 	interactiveSelectionHoverOnSelected: apSemanticTokens.colors.interactive.selectionHoverOnSelected,
-	interactiveSelectionSelectedAccent: apSemanticTokens.colors.interactive.selectionselectedAccent,
+	interactiveSelectionSelectedAccent: apSemanticTokens.colors.interactive.selectionSelectedAccent,
 	interactiveSelectionHoverOnSelectedAccent: apSemanticTokens.colors.interactive.selectionHoverOnSelectedAccent,
 	interactiveSelectionDisabled: apSemanticTokens.colors.interactive.selectionDisabled,
 	backgroundMain: apSemanticTokens.colors.background.main,

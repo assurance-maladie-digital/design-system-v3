@@ -12,10 +12,6 @@ export function toKebabCase(value: string): string {
 		.toLowerCase()
 }
 
-export function toTokenSuffix(value: string): string {
-	return toKebabCase(value)
-}
-
 function normalizeColorWhitespace(value: string): string {
 	return value
 		.trim()
