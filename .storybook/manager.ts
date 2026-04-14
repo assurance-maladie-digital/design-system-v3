@@ -105,7 +105,6 @@ const shouldShowApComponent = (item, itemId, theme) => {
 			item.style.display = ''
 			return
 		}
-		console.log(itemId, apComponents)
 
 		const shouldShow = isExactMatch(itemId, apComponents)
 			|| isParentOfAllowedComponent(itemId, apComponents)
