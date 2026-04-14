@@ -73,6 +73,7 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		'guide-du-dev-correspondance-composants-pag--docs',
 		'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs',
 		'accessibilité-design-system',
+		'accessibilité-kit-de-pré-audit-avancement',
 		'guide-du-dev-guide-technique-système-de-validation-règles--docs',
 		'guide-du-dev-migration',
 		'guide-du-dev-installation--docs',
