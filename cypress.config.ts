@@ -33,6 +33,15 @@ async function createCypressViteConfig() {
 				sass: { api: 'modern' },
 			},
 		},
+		optimizeDeps: {
+			include: [
+				'vuetify',
+				'vuetify/components',
+				'vuetify/directives',
+				'vuetify/iconsets/mdi-svg',
+				'vuetify/locale',
+			],
+		},
 	}
 }
 
