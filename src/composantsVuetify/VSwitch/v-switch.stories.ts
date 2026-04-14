@@ -46,7 +46,7 @@ type Story = StoryObj<typeof VSwitch>
 export const PrimaryOn: Story = {
 	args: {
 		modelValue: true,
-		label: 'Activé',
+		label: 'ON',
 		color: 'primary',
 		hideDetails: true,
 	},
@@ -55,7 +55,7 @@ export const PrimaryOn: Story = {
 export const PrimaryOff: Story = {
 	args: {
 		modelValue: false,
-		label: 'Désactivé',
+		label: 'OFF',
 		color: 'primary',
 		hideDetails: true,
 	},
@@ -64,7 +64,7 @@ export const PrimaryOff: Story = {
 export const PrimaryInsetOn: Story = {
 	args: {
 		modelValue: true,
-		label: 'Activé (inset)',
+		label: 'ON (inset)',
 		color: 'primary',
 		inset: true,
 		hideDetails: true,
@@ -74,7 +74,7 @@ export const PrimaryInsetOn: Story = {
 export const PrimaryInsetOff: Story = {
 	args: {
 		modelValue: false,
-		label: 'Désactivé (inset)',
+		label: 'OFF (inset)',
 		color: 'primary',
 		inset: true,
 		hideDetails: true,
@@ -86,7 +86,7 @@ export const PrimaryInsetOff: Story = {
 export const PrimaryOnDisabled: Story = {
 	args: {
 		modelValue: true,
-		label: 'Activé – désactivé',
+		label: 'ON – désactivé',
 		color: 'primary',
 		disabled: true,
 		hideDetails: true,
@@ -96,7 +96,7 @@ export const PrimaryOnDisabled: Story = {
 export const PrimaryOffDisabled: Story = {
 	args: {
 		modelValue: false,
-		label: 'Désactivé – désactivé',
+		label: 'OFF – désactivé',
 		color: 'primary',
 		disabled: true,
 		hideDetails: true,
@@ -108,7 +108,7 @@ export const PrimaryOffDisabled: Story = {
 export const SecondaryOn: Story = {
 	args: {
 		modelValue: true,
-		label: 'Activé',
+		label: 'ON',
 		color: 'secondary',
 		hideDetails: true,
 	},
@@ -117,7 +117,7 @@ export const SecondaryOn: Story = {
 export const SecondaryOff: Story = {
 	args: {
 		modelValue: false,
-		label: 'Désactivé',
+		label: 'OFF',
 		color: 'secondary',
 		hideDetails: true,
 	},
@@ -126,7 +126,7 @@ export const SecondaryOff: Story = {
 export const SecondaryInsetOn: Story = {
 	args: {
 		modelValue: true,
-		label: 'Activé (inset)',
+		label: 'ON (inset)',
 		color: 'secondary',
 		inset: true,
 		hideDetails: true,
@@ -136,7 +136,7 @@ export const SecondaryInsetOn: Story = {
 export const SecondaryInsetOff: Story = {
 	args: {
 		modelValue: false,
-		label: 'Désactivé (inset)',
+		label: 'OFF(inset)',
 		color: 'secondary',
 		inset: true,
 		hideDetails: true,
@@ -148,7 +148,7 @@ export const SecondaryInsetOff: Story = {
 export const SecondaryOnDisabled: Story = {
 	args: {
 		modelValue: true,
-		label: 'Activé – désactivé',
+		label: 'ON – désactivé',
 		color: 'secondary',
 		disabled: true,
 		hideDetails: true,
@@ -158,7 +158,7 @@ export const SecondaryOnDisabled: Story = {
 export const SecondaryOffDisabled: Story = {
 	args: {
 		modelValue: false,
-		label: 'Désactivé – désactivé',
+		label: 'OFF– désactivé',
 		color: 'secondary',
 		disabled: true,
 		hideDetails: true,
