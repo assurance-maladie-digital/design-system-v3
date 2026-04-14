@@ -22,7 +22,7 @@ describe('useDatePickerState', () => {
 			const startDate = new Date('2023-01-01')
 			const endDate = new Date('2023-01-05')
 			const intermediateDate = new Date('2023-01-03')
-			
+
 			mockInitializeSelectedDates.mockReturnValue([startDate, endDate])
 			mockFormatDate.mockImplementation((date) => {
 				if (date === startDate) return '01/01/2023'

@@ -174,7 +174,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(Array.isArray(selection)).toBe(true)
 		// Should contain 5 dates: 01/01, 02/01, 03/01, 04/01, 05/01
 		expect(selection).toHaveLength(5)
-		
+
 		// Verify start and end dates are correct (handle timezone differences)
 		expect(selection[0]).toBeInstanceOf(Date)
 		expect(selection[selection.length - 1]).toBeInstanceOf(Date)
