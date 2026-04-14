@@ -334,7 +334,12 @@
 			const dateObjects = value
 				.map(dateStr => parseDate(dateStr, returnFormat.value))
 				.filter(Boolean) as Date[]
-			selectedDates.value = dateObjects
+			if (props.displayRange && dateObjects.length >= 2) {
+				selectedDates.value = dateSelectionResult.generateDateRange(dateObjects[0]!, dateObjects[dateObjects.length - 1]!)
+			}
+			else {
+				selectedDates.value = dateObjects
+			}
 		}
 		else {
 			const dateObject = parseDate(value, returnFormat.value)
@@ -390,6 +395,7 @@
 		initializeSelectedDates,
 		validateDates,
 		updateModel,
+		generateDateRange: dateSelectionResult.generateDateRange,
 	})
 
 	// Display helpers (centralised in useDatePickerState)
@@ -772,7 +778,7 @@
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
 					if (startDate && endDate) {
-						selectedDates.value = [startDate, endDate]
+						selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
 						validateDates()
 					}
 				}
@@ -866,7 +872,7 @@
 				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
 
 				if (startDate && endDate) {
-					selectedDates.value = [startDate, endDate]
+					selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
 					displayFormattedDate.value
 						= `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
 				}

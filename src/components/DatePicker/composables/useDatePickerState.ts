@@ -12,6 +12,7 @@ export interface UseDatePickerStateOptions {
 	initializeSelectedDates: (value: DateInput | null, format: string, dateFormatReturn?: string) => Date | (Date | null)[] | null
 	validateDates: (forceValidation?: boolean) => void
 	updateModel: (value: DateValue) => void
+	generateDateRange?: (start: Date, end: Date) => Date[]
 }
 
 export interface UseDatePickerStateResult {
@@ -37,6 +38,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		initializeSelectedDates,
 		validateDates,
 		// updateModel,
+		generateDateRange,
 	} = options
 
 	const textInputValue = ref('')
@@ -115,6 +117,15 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		}
 
 		selectedDates.value = initializeSelectedDates(newValue ?? null, format, dateFormatReturn)
+		if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length === 2) {
+			const startDate = selectedDates.value[0]
+			const endDate = selectedDates.value[1]
+			if (startDate && endDate && generateDateRange) {
+				// Regenerate intermediate dates for Vuetify range selection
+				selectedDates.value = generateDateRange(startDate, endDate)
+			}
+		}
+
 		if (selectedDates.value) {
 			const firstDate = Array.isArray(selectedDates.value)
 				? selectedDates.value[0]
@@ -139,6 +150,18 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		if (!value) {
 			textInputValue.value = ''
 			return
+		}
+
+		if (displayRange && Array.isArray(value) && value.length >= 2) {
+			const startDate = value[0]
+			const endDate = value[value.length - 1]
+			if (startDate && endDate) {
+				const formattedForInput = `${formatDate(startDate, format)} - ${formatDate(endDate, format)}`
+				if (textInputValue.value !== formattedForInput) {
+					textInputValue.value = formattedForInput
+				}
+				return
+			}
 		}
 
 		const firstDate = Array.isArray(value) ? (value[0] ?? null) : value
