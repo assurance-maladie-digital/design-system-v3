@@ -1,14 +1,27 @@
-import { mount } from 'cypress/vue'
-import { createVuetifyInstance } from '@/vuetifyConfig'
-import type { Component } from 'vue'
-import type { CyMountOptions } from 'cypress/vue'
+/* eslint-disable vue/one-component-per-file */
 import 'vuetify/styles'
 import '@/assets/themes.scss'
+import { mount } from 'cypress/vue'
+import { createVuetifyInstance } from '@/vuetifyConfig'
+import { VApp } from 'vuetify/components'
+import { defineComponent, h, type Component } from 'vue'
+import type { CyMountOptions } from 'cypress/vue'
 
 // Noms des tasks enregistrés par le plugin @simonsmith/cypress-image-snapshot
 const TASK_MATCH = 'Matching image snapshot'
 const TASK_RECORD = 'Recording snapshot result'
 const SNAPSHOTS_DIR = '__snapshots__'
+const VISUAL_STABILITY_STYLE_ID = 'cy-visual-stability-style'
+
+type SnapshotResult = {
+	added?: boolean
+	updated?: boolean
+	pass?: boolean
+	diffSize?: boolean
+	diffOutputPath?: string
+	diffRatio?: number
+	diffPixelCount?: number
+}
 
 function getVisualSnapshotPaths(specRelative: string) {
 	const lastSlashIndex = specRelative.lastIndexOf('/')
@@ -21,6 +34,32 @@ function getVisualSnapshotPaths(specRelative: string) {
 	}
 }
 
+function ensureVisualStability() {
+	return cy.document({ log: false }).then((doc) => {
+		if (!doc.getElementById(VISUAL_STABILITY_STYLE_ID)) {
+			const style = doc.createElement('style')
+			style.id = VISUAL_STABILITY_STYLE_ID
+			style.textContent = `
+*,:before,:after {
+	animation: none !important;
+	transition: none !important;
+	caret-color: transparent !important;
+	scroll-behavior: auto !important;
+}`
+			doc.head.appendChild(style)
+		}
+
+		if (doc.fonts?.ready) {
+			return doc.fonts.ready
+		}
+	})
+		.then(() => {
+			return cy.window({ log: false }).then(win => new Cypress.Promise<void>((resolve) => {
+				win.requestAnimationFrame(() => win.requestAnimationFrame(() => resolve()))
+			}))
+		})
+}
+
 // Déclarations de types pour les commandes Cypress personnalisées
 declare global {
 	// eslint-disable-next-line @typescript-eslint/no-namespace
@@ -30,7 +69,7 @@ declare global {
 				component: Component,
 				options?: CyMountOptions<Record<string, unknown>>
 			): ReturnType<typeof mount>
-			matchImageSnapshot(name?: string): void
+			matchImageSnapshot(name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>>): void
 		}
 	}
 }
@@ -39,7 +78,7 @@ declare global {
  * Commande de comparaison de snapshots visuels
  * Reproduit la logique de addMatchImageSnapshotCommand sans import CJS top-level
  */
-Cypress.Commands.add('matchImageSnapshot', (name?: string) => {
+Cypress.Commands.add('matchImageSnapshot', (name?: string, elem?: Cypress.Chainable<JQuery<HTMLElement>> = cy.get('body')) => {
 	const screenshotName = name || Cypress.currentTest.titlePath.join(' -- ')
 	const specRelative = Cypress.spec.relative
 	const snapshotPaths = getVisualSnapshotPaths(specRelative)
@@ -47,7 +86,8 @@ Cypress.Commands.add('matchImageSnapshot', (name?: string) => {
 	cy.env<{
 		updateSnapshots?: boolean
 		debugSnapshots?: boolean
-	}>(['updateSnapshots', 'debugSnapshots']).then((env) => {
+		snapshotFailureThreshold?: number
+	}>(['updateSnapshots', 'debugSnapshots', 'snapshotFailureThreshold']).then((env) => {
 		const options = {
 			screenshotsFolder: Cypress.config('screenshotsFolder') || 'cypress/screenshots',
 			isUpdateSnapshots: env.updateSnapshots ?? false,
@@ -67,13 +107,23 @@ Cypress.Commands.add('matchImageSnapshot', (name?: string) => {
 		// 1. Envoyer les options au plugin (active le mode snapshot)
 		cy.task(TASK_MATCH, options, { log: false })
 
+		// 2. Stabiliser le rendu (fonts + animations + paint) avant capture
+		ensureVisualStability()
+
 		// 2. Prendre le screenshot (le hook after:screenshot dans le plugin fait le diff)
-		cy.screenshot(screenshotName, { capture: 'viewport', overwrite: true })
+		elem.screenshot(screenshotName, {
+			capture: 'viewport',
+			overwrite: true,
+			disableTimersAndAnimations: true,
+		})
 	})
 
 	// 3. Récupérer le résultat de la comparaison
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	cy.task(TASK_RECORD, null, { log: false }).then((result: any) => {
+	cy.task<SnapshotResult>(TASK_RECORD, null, { log: false }).then((result) => {
+		if (!result) {
+			throw new Error('Résultat de snapshot introuvable. Vérifier la configuration du plugin cypress-image-snapshot.')
+		}
+
 		if (result.added) {
 			Cypress.log({
 				name: 'matchImageSnapshot',
@@ -91,9 +141,10 @@ Cypress.Commands.add('matchImageSnapshot', (name?: string) => {
 		}
 
 		if (!result.pass) {
+			const diffOutputPath = result.diffOutputPath || 'chemin de diff indisponible'
 			const message = result.diffSize
-				? `Taille d'image différente. Voir le diff : ${result.diffOutputPath}`
-				: `Image différente de ${(result.diffRatio * 100).toFixed(2)}% (${result.diffPixelCount} pixels).\nVoir le diff : ${result.diffOutputPath}`
+				? `Taille d'image différente. Voir le diff : ${diffOutputPath}`
+				: `Image différente de ${((result.diffRatio ?? 0) * 100).toFixed(2)}% (${result.diffPixelCount ?? 0} pixels).\nVoir le diff : ${diffOutputPath}`
 			throw new Error(message)
 		}
 	})
@@ -107,18 +158,31 @@ const mountComponent = mount as MountWithVuetifyCommand
 function mountWithVuetify(component: Component, options: MountWithVuetifyOptions = {}) {
 	const vuetify = createVuetifyInstance()
 
-	return mountComponent(component, {
-		...options,
+	// Extract slots from options: we handle them manually so mount()
+	// does not try to attach them to the wrapper component.
+	const { slots, ...mountOptions } = options
+
+	const testComponent = defineComponent({
+		inheritAttrs: false,
+		setup(_, { attrs }) {
+			return () => h(VApp, null, () =>
+				h(component as Parameters<typeof h>[0], { ...attrs }, slots),
+			)
+		},
+	})
+
+	return mountComponent(testComponent, {
+		...mountOptions,
 		global: {
-			...options.global,
+			...mountOptions.global,
 			plugins: [
-				...(options.global?.plugins || []),
+				...(mountOptions.global?.plugins || []),
 				vuetify,
 			],
 			stubs: {
 				'transition': true,
 				'transition-group': true,
-				...options.global?.stubs,
+				...mountOptions.global?.stubs,
 			},
 		},
 	})

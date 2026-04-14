@@ -1,3 +1,4 @@
+import { h } from 'vue'
 import HeaderBar from '../HeaderBar.vue'
 
 describe('HeaderBar - Visual regression tests', () => {
@@ -42,7 +43,7 @@ describe('HeaderBar - Visual regression tests', () => {
 				serviceTitle: 'Mon Service',
 			},
 			slots: {
-				'header-side': '<button>Connexion</button>',
+				'header-side': () => h('button', 'Connexion'),
 			},
 		})
 
@@ -57,7 +58,7 @@ describe('HeaderBar - Visual regression tests', () => {
 				serviceTitle: 'Mon Service',
 			},
 			slots: {
-				prepend: '<div style="background:#005AA1;color:#fff;padding:4px 16px;font-size:14px;">Bandeau info</div>',
+				prepend: () => h('div', { style: 'background:#005AA1;color:#fff;padding:4px 16px;font-size:14px;' }, 'Bandeau info'),
 			},
 		})
 

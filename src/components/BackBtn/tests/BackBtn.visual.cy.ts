@@ -5,7 +5,7 @@ describe('BackBtn - Visual regression tests', () => {
 		cy.mountWithVuetify(BackBtn)
 
 		cy.get('.v-btn').should('be.visible')
-		cy.matchImageSnapshot('back-btn-default')
+		cy.matchImageSnapshot('back-btn-default', cy.get('.v-btn'))
 	})
 
 	it('displays the btn without icon', () => {
@@ -14,20 +14,20 @@ describe('BackBtn - Visual regression tests', () => {
 		})
 
 		cy.get('.v-btn').should('be.visible')
-		cy.matchImageSnapshot('back-btn-no-icon')
+		cy.matchImageSnapshot('back-btn-no-icon', cy.get('.v-btn'))
 	})
 
 	it('displays the btn in dark mode', () => {
-		cy.get('body').invoke('css', 'background-color', '#121212')
 		cy.mountWithVuetify(BackBtn, {
 			props: {
 				dark: true,
 			},
 		})
+		cy.get('.v-application').invoke('css', 'background-color', '#121212')
 
 		cy.get('.v-btn').should('be.visible')
-		cy.matchImageSnapshot('back-btn-dark-mode')
-		cy.get('body').invoke('css', 'background-color', '')
+		cy.get('.v-btn').matchImageSnapshot('back-btn-dark-mode', cy.get('.v-btn'))
+		cy.get('.v-application').invoke('css', 'background-color', '')
 	})
 
 	it('displays the btn with custom background', () => {
@@ -36,6 +36,8 @@ describe('BackBtn - Visual regression tests', () => {
 		})
 
 		cy.get('.v-btn').should('be.visible')
-		cy.matchImageSnapshot('back-btn-custom-bg')
+		// cy.get('.v-btn').matchImageSnapshot('back-btn-custom-bg')
+		// take a snapshot of the button and not the whole page to avoid snapshotting the background color of the page
+		cy.matchImageSnapshot('back-btn-custom-bg', cy.get('.v-btn'))
 	})
 })

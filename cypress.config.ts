@@ -22,6 +22,7 @@ async function createCypressViteConfig() {
 		],
 		resolve: {
 			alias: {
+				'vue': 'vue/dist/vue.esm-bundler.js',
 				'@': fileURLToPath(new URL('./src', import.meta.url)),
 				'@tests': fileURLToPath(new URL('./tests', import.meta.url)),
 			},

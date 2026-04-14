@@ -14,7 +14,7 @@ describe('SyAlert - Visual regression tests', () => {
 			})
 
 			cy.get('.v-alert').should('be.visible')
-			cy.matchImageSnapshot(`sy-alert-${type}`)
+			cy.matchImageSnapshot(`sy-alert-${type}`, cy.get('.v-alert'))
 		})
 	})
 
@@ -28,7 +28,7 @@ describe('SyAlert - Visual regression tests', () => {
 			})
 
 			cy.get('.v-alert').should('be.visible')
-			cy.matchImageSnapshot(`sy-alert-variant-${variant}`)
+			cy.matchImageSnapshot(`sy-alert-variant-${variant}`, cy.get('.v-alert'))
 		})
 	})
 
@@ -41,6 +41,6 @@ describe('SyAlert - Visual regression tests', () => {
 		})
 
 		cy.get('.v-alert').should('be.visible')
-		cy.matchImageSnapshot('sy-alert-closable')
+		cy.matchImageSnapshot('sy-alert-closable', cy.get('.v-alert'))
 	})
 })

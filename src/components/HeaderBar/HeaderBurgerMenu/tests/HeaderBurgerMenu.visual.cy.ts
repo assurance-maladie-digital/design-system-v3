@@ -170,7 +170,7 @@ function mountGeneratedMenu(width = 375, height = 900) {
 			},
 		},
 		slots: {
-			default: GeneratedMenuContent,
+			default: () => h(GeneratedMenuContent),
 		},
 	})
 

@@ -5,7 +5,7 @@ describe('Logo - Visual regression tests', () => {
 		cy.mountWithVuetify(Logo)
 
 		cy.get('svg').should('be.visible')
-		cy.matchImageSnapshot('logo-default')
+		cy.matchImageSnapshot('logo-default', cy.get('svg'))
 	})
 
 	it('displays the logo without signature', () => {
@@ -14,7 +14,7 @@ describe('Logo - Visual regression tests', () => {
 		})
 
 		cy.get('svg').should('be.visible')
-		cy.matchImageSnapshot('logo-no-signature')
+		cy.matchImageSnapshot('logo-no-signature', cy.get('svg'))
 	})
 
 	it('displays the logo without organism', () => {
@@ -23,7 +23,7 @@ describe('Logo - Visual regression tests', () => {
 		})
 
 		cy.get('svg').should('be.visible')
-		cy.matchImageSnapshot('logo-no-organism')
+		cy.matchImageSnapshot('logo-no-organism', cy.get('svg'))
 	})
 
 	it('displays the logo with occupational risk variant', () => {
@@ -32,18 +32,18 @@ describe('Logo - Visual regression tests', () => {
 		})
 
 		cy.get('svg').should('be.visible')
-		cy.matchImageSnapshot('logo-risque-pro')
+		cy.matchImageSnapshot('logo-risque-pro', cy.get('svg'))
 	})
 
 	it('displays the logo in dark mode', () => {
-		cy.get('body').invoke('css', 'background-color', '#121212')
 		cy.mountWithVuetify(Logo, {
 			props: { dark: true },
 		})
+		cy.get('.v-application').invoke('css', 'background-color', '#121212')
 
 		cy.get('svg').should('be.visible')
-		cy.matchImageSnapshot('logo-dark')
-		cy.get('body').invoke('css', 'background-color', '')
+		cy.matchImageSnapshot('logo-dark', cy.get('svg'))
+		cy.get('.v-application').invoke('css', 'background-color', '')
 	})
 
 	it('displays the logo as avatar', () => {
@@ -52,6 +52,6 @@ describe('Logo - Visual regression tests', () => {
 		})
 
 		cy.get('svg').should('be.visible')
-		cy.matchImageSnapshot('logo-avatar')
+		cy.matchImageSnapshot('logo-avatar', cy.get('svg'))
 	})
 })

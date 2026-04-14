@@ -1,3 +1,4 @@
+import { h } from 'vue'
 import DialogBox from '../DialogBox.vue'
 
 const dialogTransitionOptions = {
@@ -25,7 +26,7 @@ describe('DialogBox - Visual regression tests', () => {
 				'onUpdate:modelValue': () => {},
 			},
 			slots: {
-				default: '<p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>',
+				default: () => h('p', 'Êtes-vous sûr de vouloir supprimer cet élément ?'),
 			},
 		})
 
@@ -44,7 +45,7 @@ describe('DialogBox - Visual regression tests', () => {
 				'onUpdate:modelValue': () => {},
 			},
 			slots: {
-				default: '<p>Ceci est un message informatif.</p>',
+				default: () => h('p', 'Ceci est un message informatif.'),
 			},
 		})
 
@@ -64,7 +65,7 @@ describe('DialogBox - Visual regression tests', () => {
 				'onUpdate:modelValue': () => {},
 			},
 			slots: {
-				default: '<p>Souhaitez-vous valider ce formulaire ?</p>',
+				default: () => h('p', 'Souhaitez-vous valider ce formulaire ?'),
 			},
 		})
 
