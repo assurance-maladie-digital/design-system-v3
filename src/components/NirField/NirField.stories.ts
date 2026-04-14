@@ -1415,7 +1415,7 @@ export const ComplexNirType: Story = {
 		  :required="false"
 		  numberLabel="Numéro de sécurité sociale"
 		  keyLabel="Clé"
-		  :nirType="complexe"
+		  nirType="complexe"
 		  :displayKey="true"
 		 />
     </template>
@@ -1428,7 +1428,7 @@ export const ComplexNirType: Story = {
      	import { NirField } from '@cnamts/synapse'
      	import { ref } from 'vue'
      
-		const value = ref('184027512345674')
+			const value = ref('712125233333340')
 
 		return { value }
 	</script>
