@@ -130,5 +130,9 @@ export function formatLength(value: string | number): string {
 	if (typeof value === 'number')
 		return `${value}px`
 
-	return String(value)
+	const normalizedValue = String(value).trim()
+	if (!normalizedValue)
+		throw new TypeError(`Expected length token to be a non-empty string or number, received ${String(value)}`)
+
+	return normalizedValue
 }
