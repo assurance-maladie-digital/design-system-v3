@@ -1,4 +1,4 @@
-import { toKebabCase } from './formatters'
+import { formatColor, toKebabCase } from './formatters'
 
 /**
  * Generates a flat class-name → hex value map from a color token object.
@@ -21,7 +21,7 @@ export function buildColorClassMap<T extends Record<string, Record<string, strin
 				.replace('-base', '')
 
 			const colorClass = toKebabCase(rawClass)
-			map[colorClass] = colorValue
+			map[colorClass] = formatColor(colorValue)
 		}
 	}
 

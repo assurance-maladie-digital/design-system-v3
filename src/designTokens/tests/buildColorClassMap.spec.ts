@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildColorClassMap } from '../builders/buildColorClassMap'
+import { buildColorClassMap } from '@/designTokens/builders'
 import { apColorClasses, apColorsTokens2026 } from '../tokens/amelipro/apColors2026'
 
 describe('buildColorClassMap', () => {
@@ -23,9 +23,9 @@ describe('buildColorClassMap', () => {
 	})
 
 	it('includes all colors from apColorsTokens2026', () => {
-		expect(apColorClasses['ap-blue']).toBe('#0C419A')
-		expect(apColorClasses['ap-blue-darken-1']).toBe('#00749C')
-		expect(apColorClasses['ap-grey-lighten-6']).toBe('#F4F8F9')
+		expect(apColorClasses['ap-blue']).toBe('#0c419a')
+		expect(apColorClasses['ap-blue-darken-1']).toBe('#00749c')
+		expect(apColorClasses['ap-grey-lighten-6']).toBe('#f4f8f9')
 		expect(apColorClasses['ap-turquoise-darken-3']).toBe('#005647')
 	})
 })
