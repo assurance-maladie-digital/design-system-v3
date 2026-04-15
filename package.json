@@ -23,6 +23,10 @@
       "import": "./dist/vuetifyConfig.js",
       "require": "./dist/vuetifyConfig.umd.cjs"
     },
+    "./modules/notification": {
+      "types": "./src/modules/notification/index.ts",
+      "default": "./src/modules/notification/index.ts"
+    },
     "./*": {
       "types": "./src/*",
       "default": "./src/*"
