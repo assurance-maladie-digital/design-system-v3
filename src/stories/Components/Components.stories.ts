@@ -448,7 +448,9 @@ export const ComponentsList: StoryObj = {
 
 				const groupedComponents = categoryOrder.map(category => ({
 					category,
-					components: components.filter(component => shouldDisplayComponent(component, category)),
+					components: components
+						.filter(component => shouldDisplayComponent(component, category))
+						.sort((a, b) => a.title.localeCompare(b.title)),
 				})).filter(group => group.components.length > 0)
 
 				return {
