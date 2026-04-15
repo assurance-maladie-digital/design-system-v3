@@ -1058,7 +1058,7 @@ describe('SyServerTable', () => {
 					suffix: 'truncate-test',
 					headers: truncateHeaders,
 					items: truncateItems,
-					itemsLength: truncateItems.length,
+					serverItemsLength: truncateItems.length,
 				},
 				attachTo: document.body,
 			})
@@ -1082,7 +1082,7 @@ describe('SyServerTable', () => {
 					suffix: 'no-truncate-test',
 					headers: truncateHeaders,
 					items: truncateItems,
-					itemsLength: truncateItems.length,
+					serverItemsLength: truncateItems.length,
 				},
 				attachTo: document.body,
 			})
@@ -1104,7 +1104,7 @@ describe('SyServerTable', () => {
 					suffix: 'truncate-td-test',
 					headers: truncateHeaders,
 					items: truncateItems,
-					itemsLength: truncateItems.length,
+					serverItemsLength: truncateItems.length,
 				},
 				attachTo: document.body,
 			})
@@ -1128,7 +1128,7 @@ describe('SyServerTable', () => {
 					showFilters: true,
 					headers: truncateHeaders,
 					items: truncateItems,
-					itemsLength: truncateItems.length,
+					serverItemsLength: truncateItems.length,
 				},
 				attachTo: document.body,
 			})
