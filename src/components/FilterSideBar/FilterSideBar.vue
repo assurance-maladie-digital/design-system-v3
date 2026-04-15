@@ -44,6 +44,10 @@
 		}, 0)
 	})
 
+	const zIndexStyle = computed(() =>
+		props.zIndex != null ? { zIndex: props.zIndex } : undefined,
+	)
+
 	const drawerRef = ref<VNavigationDrawer | null>(null)
 	const drawerBtnRef = ref<VBtn | null>(null)
 
@@ -124,7 +128,7 @@
 				:inert="drawer ? undefined : 'true'"
 				:aria-modal="props.modale"
 				:aria-label="locales.modaleLabel"
-				:style="props.zIndex !== undefined ? { zIndex: props.zIndex } : undefined"
+				:style="zIndexStyle"
 				@keydown.escape.prevent="drawer = false"
 			>
 				<form
