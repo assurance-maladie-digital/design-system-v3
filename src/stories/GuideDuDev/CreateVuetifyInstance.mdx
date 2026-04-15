@@ -1,0 +1,95 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
+
+<Meta title="Guide Du Dev/createVuetifyInstance" />
+
+<div className="header">
+  <h1>createVuetifyInstance</h1>
+</div>
+
+`createVuetifyInstance` est une fonction exportée par le design system qui retourne une instance Vuetify pré-configurée avec l'ensemble des thèmes, icônes et options propres à l'écosystème CNAM/PA/Amelipro.
+
+Elle remplace l'appel manuel à `createVuetify` et garantit une configuration cohérente entre tous les projets.
+
+## Importation
+
+<Source dark code={`import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'`} />
+
+> **Note** : il s'agit d'un point d'entrée dédié (`/vuetifyConfig`), distinct de l'import principal `@cnamts/synapse`.
+
+## Utilisation dans `main.ts`
+
+<Source dark code={`
+import 'vuetify/styles'
+import { createApp } from 'vue'
+import App from './App.vue'
+import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'
+
+const vuetify = createVuetifyInstance()
+
+createApp(App)
+  .use(vuetify)
+  .mount('#app')
+`} />
+
+## Thèmes disponibles
+
+L'instance inclut les thèmes suivants, utilisables via la prop `theme` sur un composant ou via `defaultTheme` :
+
+<table>
+  <thead>
+    <tr>
+      <th>Identifiant</th>
+      <th>Application</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>cnam</code></td>
+      <td>CNAM (défaut)</td>
+    </tr>
+    <tr>
+      <td><code>pa</code></td>
+      <td>Portail Agent</td>
+    </tr>
+    <tr>
+      <td><code>ap</code></td>
+      <td>Amelipro</td>
+    </tr>
+  </tbody>
+</table>
+
+## Changer le thème par défaut
+
+Pour appliquer un thème différent de `cnam`, passez l'identifiant souhaité à la prop `theme` du composant racine ou via la configuration Vuetify.
+
+### Via le composant racine (recommandé)
+
+<Source dark code={`
+<template>
+  <VApp theme="pa">
+    <!-- votre application -->
+  </VApp>
+</template>
+`} />
+
+### Via la configuration Vuetify (alternative)
+
+Si vous devez forcer le thème globalement sans modifier le composant racine, vous pouvez accéder à l'instance Vuetify après création :
+
+<Source dark code={`
+import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'
+
+const vuetify = createVuetifyInstance()
+vuetify.theme.global.name.value = 'pa'
+`} />
+
+## Ce que la fonction configure
+
+`createVuetifyInstance` encapsule les éléments suivants :
+
+- **Tous les composants et directives Vuetify** (`vuetify/components`, `vuetify/directives`)
+- **Icônes MDI** via `mdi-svg`
+- **Locale française** (`fr`)
+- **Tokens de design** : couleurs, typographie et variables CSS injectées pour chaque thème
+- **Trois thèmes complets** : `cnam`, `pa`, `ap`
