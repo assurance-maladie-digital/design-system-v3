@@ -57,6 +57,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Structure',
 					},
 					{
+						title: 'VSkeletonLoader',
+						description: 'Utilisé pour améliorer l’expérience utilisateur pendant le chargement des données, affiche une structure visuelle temporaire qui ressemble au contenu final.',
+						link: '/?path=/docs/composants-composants-vuetify-vskeletonloader--docs',
+						img: '/components/v-skeleton-loader.svg',
+						category: 'Structure',
+					},
+					{
 						title: 'FooterBar',
 						description: 'Utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.',
 						link: '/?path=/docs/composants-structure-footerbar--docs',
