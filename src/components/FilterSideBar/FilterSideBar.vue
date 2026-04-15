@@ -13,10 +13,12 @@
 		modelValue?: FilterProp
 		modale?: boolean
 		locales?: typeof defaultLocales
+		zIndex?: number
 	}>(), {
 		modelValue: () => [],
 		modale: false,
 		locales: () => defaultLocales,
+		zIndex: undefined,
 	})
 
 	const emits = defineEmits<{
@@ -122,6 +124,7 @@
 				:inert="drawer ? undefined : 'true'"
 				:aria-modal="props.modale"
 				:aria-label="locales.modaleLabel"
+				:style="props.zIndex !== undefined ? { zIndex: props.zIndex } : undefined"
 				@keydown.escape.prevent="drawer = false"
 			>
 				<form

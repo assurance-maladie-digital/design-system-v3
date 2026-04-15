@@ -1,4 +1,4 @@
-import { Controls, Canvas, Meta, Source } from '@storybook/blocks';
+import { Controls, Canvas, Meta, Source, Description } from '@storybook/blocks';
 import * as FilterSideBarStories from './FilterSideBar.stories.ts';
 
 <Meta of={FilterSideBarStories} />
@@ -236,3 +236,46 @@ const professionList = [
 		`
 	}}
 />
+
+## Gestion du z-index
+
+Le `FilterSideBar` utilise un `VNavigationDrawer` de Vuetify dont le z-index par défaut est **1000**.
+
+Dans la plupart des cas cette valeur convient. Deux situations particulières nécessitent de la surcharger via la prop `zIndex` :
+
+<table>
+  <thead>
+    <tr>
+      <th>Situation</th>
+      <th>Valeur recommandée</th>
+      <th>Exemple</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Le FilterSideBar s'affiche <strong>dans</strong> une modale ou une bottom sheet et doit rester visible</td>
+      <td>z-index de la modale + 1 (ex. <code>2401</code>)</td>
+      <td>Filtres dans un <code>VDialog</code> (z-index 2400)</td>
+    </tr>
+    <tr>
+      <td>Une modale de confirmation doit s'afficher <strong>par-dessus</strong> un FilterSideBar ouvert</td>
+      <td>Laisser le FilterSideBar à <code>1000</code> (défaut) et laisser la modale à <code>2400</code></td>
+      <td>Dialog de confirmation sur une page avec FilterSideBar</td>
+    </tr>
+  </tbody>
+</table>
+
+> **Préconisation** : ne surchargez `zIndex` que lorsque c'est strictement nécessaire. Une valeur arbitraire élevée (ex. `9999`) peut masquer des composants systèmes (tooltips, snackbars) et crée des effets de bord difficiles à diagnostiquer.
+
+<Description of={FilterSideBarStories.ZIndex} />
+
+<Canvas of={FilterSideBarStories.ZIndex} />
+
+<Source dark code={`
+<FilterSideBar
+  v-model="filters"
+  :z-index="2401"
+>
+  <!-- filtres -->
+</FilterSideBar>
+`} />

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import FilterSideBar from './FilterSideBar.vue'
 import { fn } from '@storybook/test'
-import { VDivider, VSelect } from 'vuetify/components'
+import { VBtn, VDialog, VCard, VCardText, VCardActions, VDivider, VSelect } from 'vuetify/components'
 import PeriodField from '../PeriodField/PeriodField.vue'
 import SearchListField from '../SearchListField/SearchListField.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import FilterInline from '../FilterInline/FilterInline.vue'
 import RangeField from '../RangeField/RangeField.vue'
 import SyTextField from '../Customs/SyTextField/SyTextField.vue'
@@ -71,6 +71,21 @@ const meta = {
 	close: 'Fermer',
 	apply: 'Appliquer',
 }`,
+				},
+			},
+		},
+		'zIndex': {
+			description: 'Surcharge le z-index du panneau. À utiliser uniquement lorsque le FilterSideBar doit s\'afficher par-dessus ou en-dessous d\'un composant en surimpression (modale, bottom sheet…). Voir la section <em>Gestion du z-index</em> ci-dessous pour les préconisations.',
+			control: {
+				type: 'number',
+			},
+			table: {
+				category: 'props',
+				type: {
+					summary: 'number',
+				},
+				defaultValue: {
+					summary: 'undefined',
 				},
 			},
 		},
@@ -815,5 +830,94 @@ const professionList = [
 </script>`,
 			},
 		],
+	},
+}
+
+export const ZIndex: Story = {
+	args: {
+		'onUpdate:modelValue': fn(),
+	},
+	decorators: [
+		() => ({
+			template: `
+			<VApp style="height: 600px; overflow-y: hidden;">
+				<div class="pa-4">
+					<story />
+				</div>
+			</VApp>
+		`,
+		}),
+	],
+	render: args => ({
+		components: { FilterSideBar, VBtn, VDialog, VCard, VCardText, VCardActions, VSelect, VDivider },
+		setup() {
+			const filters1 = ref([{ name: 'folder', title: 'Type de dossier' }])
+			const filters2 = ref([{ name: 'folder', title: 'Type de dossier' }])
+
+			const folderTypes = [
+				{ title: 'AT', value: 'at' },
+				{ title: 'MP', value: 'mp' },
+				{ title: 'Autre', value: 'other' },
+			]
+
+			const dialog1 = ref(false)
+			const dialog2 = ref(false)
+
+			return { args, filters1, filters2, folderTypes, dialog1, dialog2 }
+		},
+		template: `
+			<div>
+				<p class="text-subtitle-2 mb-2">Sans zIndex — la modale s'affiche par-dessus le panneau (comportement par défaut)</p>
+				<div class="d-flex align-center ga-4 mb-6">
+					<FilterSideBar v-bind="args" v-model="filters1">
+						<template #folder="{ props }">
+							<VSelect v-bind="props" :items="folderTypes" label="Type de dossier" multiple variant="outlined" return-object hide-details color="primary" />
+						</template>
+					</FilterSideBar>
+					<VBtn color="primary" variant="outlined" @click="dialog1 = true">
+						Ouvrir une modale de confirmation
+					</VBtn>
+				</div>
+				<VDialog v-model="dialog1" max-width="400">
+					<VCard>
+						<VCardText>Confirmez-vous la réinitialisation des filtres ?</VCardText>
+						<VCardActions class="justify-end">
+							<VBtn variant="text" @click="dialog1 = false">Annuler</VBtn>
+							<VBtn color="primary" variant="elevated" @click="dialog1 = false">Confirmer</VBtn>
+						</VCardActions>
+					</VCard>
+				</VDialog>
+
+				<VDivider class="mb-6" />
+
+				<p class="text-subtitle-2 mb-2">Avec zIndex="2401" — le panneau s'affiche par-dessus la modale</p>
+				<div class="d-flex align-center ga-4">
+					<FilterSideBar v-bind="args" v-model="filters2" :z-index="2401">
+						<template #folder="{ props }">
+							<VSelect v-bind="props" :items="folderTypes" label="Type de dossier" multiple variant="outlined" return-object hide-details color="primary" />
+						</template>
+					</FilterSideBar>
+					<VBtn color="primary" variant="outlined" @click="dialog2 = true">
+						Ouvrir une modale de confirmation
+					</VBtn>
+				</div>
+				<VDialog v-model="dialog2" max-width="400">
+					<VCard>
+						<VCardText>Confirmez-vous la réinitialisation des filtres ?</VCardText>
+						<VCardActions class="justify-end">
+							<VBtn variant="text" @click="dialog2 = false">Annuler</VBtn>
+							<VBtn color="primary" variant="elevated" @click="dialog2 = false">Confirmer</VBtn>
+						</VCardActions>
+					</VCard>
+				</VDialog>
+			</div>
+		`,
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Deux exemples côte à côte : sans <code>zIndex</code>, la modale s\'affiche par-dessus le panneau (comportement par défaut) ; avec <code>zIndex: 2401</code>, le panneau passe au premier plan.',
+			},
+		},
 	},
 }
