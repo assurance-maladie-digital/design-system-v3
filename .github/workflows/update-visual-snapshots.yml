@@ -13,8 +13,9 @@ on:
       - 'cypress/**'
       - '.github/workflows/**'
   push:
-    branches:
-      - 'feat/visual-snapshots'
+    tags:
+      - 'update-snapshots'
+      - 'update-snapshots-*'
 
 permissions:
   contents: write
