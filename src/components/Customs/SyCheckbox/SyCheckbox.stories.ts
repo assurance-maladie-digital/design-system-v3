@@ -5,7 +5,7 @@ import { fn } from '@storybook/test'
 
 // Interface pour typer correctement le composant SyCheckbox avec sa méthode validateOnSubmit
 interface SyCheckboxInstance {
-	validateOnSubmit: () => boolean
+	validateOnSubmit: () => Promise<boolean>
 }
 
 const meta = {
@@ -696,11 +696,11 @@ const rules = [
   },
 ]
 
-const validateForm = () => {
+const validateForm = async (): Promise<void> => {
   if (!checkbox.value || !checkbox2.value) return
   hasError.value = true
-  const isValid = checkbox.value.validateOnSubmit()
-  const isValid2 = checkbox2.value.validateOnSubmit()
+  const isValid = await checkbox.value.validateOnSubmit()
+  const isValid2 = await checkbox2.value.validateOnSubmit()
   if (isValid && isValid2) {
     formSubmitted.value = true
     hasError.value = false
@@ -729,18 +729,18 @@ Cette case à cocher utilise des règles de validation personnalisées et valide
 			const hasError = ref(false)
 
 			// Revalider quand les valeurs changent
-			watch([checked, checked2], () => {
+			watch([checked, checked2], async () => {
 				if (hasError.value && checkbox.value && checkbox2.value) {
-					checkbox.value.validateOnSubmit()
-					checkbox2.value.validateOnSubmit()
+					await checkbox.value.validateOnSubmit()
+					await checkbox2.value.validateOnSubmit()
 				}
 			})
 
-			const validateForm = () => {
+			const validateForm = async (): Promise<void> => {
 				if (!checkbox.value || !checkbox2.value) return
 				hasError.value = true
-				const isValid = checkbox.value.validateOnSubmit()
-				const isValid2 = checkbox2.value.validateOnSubmit()
+				const isValid = await checkbox.value.validateOnSubmit()
+				const isValid2 = await checkbox2.value.validateOnSubmit()
 				if (isValid && isValid2) {
 					formSubmitted.value = true
 					hasError.value = false

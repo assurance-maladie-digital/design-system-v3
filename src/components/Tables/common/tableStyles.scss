@@ -29,10 +29,6 @@
 		background-color: rgba(tokens.$blue-lighten-80, 0.2);
 	}
 
-	&.row-clickable table tbody tr {
-		cursor: pointer;
-	}
-
 	&.fixed-min-height {
 		.v-data-table__wrapper {
 			min-height: 540px;
@@ -96,5 +92,37 @@
 		position: sticky;
 		top: 0;
 		z-index: var(--sy-table-z-progress);
+	}
+}
+
+@mixin clickable-row-styles {
+	.v-table tbody > tr.sy-table__clickable-row,
+	.v-data-table__tbody > tr.sy-table__clickable-row {
+		cursor: pointer !important;
+		outline-offset: -2px;
+	}
+
+	.v-table tbody > tr.sy-table__clickable-row:focus-visible,
+	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible {
+		outline: 2px solid tokens.$primary-base;
+	}
+
+	.v-table tbody > tr.sy-table__clickable-row > td,
+	.v-table tbody > tr.sy-table__clickable-row > .v-data-table__td,
+	.v-data-table__tbody > tr.sy-table__clickable-row > td,
+	.v-data-table__tbody > tr.sy-table__clickable-row > .v-data-table__td {
+		cursor: pointer !important;
+		transition: background-color 0.15s ease;
+	}
+
+	.v-table tbody > tr.sy-table__clickable-row:hover > td,
+	.v-table tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
+	.v-table tbody > tr.sy-table__clickable-row:focus-visible > td,
+	.v-table tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:hover > td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > td,
+	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td {
+		background-color: rgba(tokens.$primary-base, 0.08) !important;
 	}
 }

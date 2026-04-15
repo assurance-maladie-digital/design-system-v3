@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -17,11 +17,15 @@
       "import": "./dist/design-system-v3.js",
       "require": "./dist/design-system-v3.umd.cjs"
     },
-    "./style.css": "./dist/style.css",
+    "./synapse.css": "./dist/synapse.css",
     "./vuetifyConfig": {
       "types": "./dist/vuetifyConfig.d.ts",
       "import": "./dist/vuetifyConfig.js",
       "require": "./dist/vuetifyConfig.umd.cjs"
+    },
+    "./modules/notification": {
+      "types": "./src/modules/notification/index.ts",
+      "default": "./src/modules/notification/index.ts"
     },
     "./*": {
       "types": "./src/*",
@@ -115,7 +119,7 @@
     "stylelint-config-standard-scss": "^14.0.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.11.0",
-    "vite": "^5.3.5",
+    "vite": "^6.4.2",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-vuetify": "^2.1.1",
     "vitest": "^3.2.4",
@@ -162,7 +166,8 @@
       "immutable": ">=5.1.5",
       "flatted": ">=3.4.2",
       "handlebars": ">=4.7.9",
-      "lodash": ">=4.18.0"
+      "lodash": ">=4.18.0",
+      "follow-redirects": ">=1.16.0"
     },
     "patchedDependencies": {
       "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"

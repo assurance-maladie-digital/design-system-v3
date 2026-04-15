@@ -508,12 +508,12 @@ const options = [
   { text: 'Option 3', value: '3' },
 ]
 
-const validateForm = () => {
+const validateForm = async (): Promise<void> => {
   // Réinitialiser
   formSubmitted.value = false
   
   // Valider le champ avec la méthode validateOnSubmit
-  const isValid = selectField.value.validateOnSubmit()
+  const isValid = await selectField.value.validateOnSubmit()
   
   if (!isValid) {
     return
@@ -551,7 +551,7 @@ const validateForm = () => {
 				const errorMessages = ref([])
 				const formSubmitted = ref(false)
 
-				const validateForm = () => {
+				const validateForm = async (): Promise<void> => {
 					// Réinitialiser
 					formSubmitted.value = false
 
@@ -562,7 +562,7 @@ const validateForm = () => {
 					}
 
 					// Valider le champ avec la méthode validateOnSubmit
-					const isValid = selectField.value.validateOnSubmit()
+					const isValid = await selectField.value.validateOnSubmit()
 
 					if (!isValid) {
 						return

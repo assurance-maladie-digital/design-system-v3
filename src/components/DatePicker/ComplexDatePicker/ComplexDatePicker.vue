@@ -234,8 +234,6 @@
 	const validation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: 'Date',
-		customRules: props.customRules,
-		warningRules: props.customWarningRules,
 		disableErrorHandling: props.disableErrorHandling,
 	})
 	const { errors, warnings, successes, validateField, clearValidation } = validation
@@ -336,7 +334,12 @@
 			const dateObjects = value
 				.map(dateStr => parseDate(dateStr, returnFormat.value))
 				.filter(Boolean) as Date[]
-			selectedDates.value = dateObjects
+			if (props.displayRange && dateObjects.length >= 2) {
+				selectedDates.value = dateSelectionResult.generateDateRange(dateObjects[0]!, dateObjects[dateObjects.length - 1]!)
+			}
+			else {
+				selectedDates.value = dateObjects
+			}
 		}
 		else {
 			const dateObject = parseDate(value, returnFormat.value)
@@ -350,16 +353,16 @@
 	watch(() => props.customRules, () => {
 		if (selectedDates.value !== null) {
 			// Retarder légèrement pour s'assurer que les computed sont mis à jour
-			setTimeout(() => {
+			setTimeout(async () => {
 				clearValidation()
 				const datesToValidate = Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value]
-				datesToValidate.forEach((date) => {
-					validateField(
+				for (const date of datesToValidate) {
+					await Promise.resolve(validateField(
 						date,
 						props.customRules,
 						props.customWarningRules,
-					)
-				})
+					))
+				}
 			}, 5)
 		}
 	}, { deep: true })
@@ -392,6 +395,7 @@
 		initializeSelectedDates,
 		validateDates,
 		updateModel,
+		generateDateRange: dateSelectionResult.generateDateRange,
 	})
 
 	// Display helpers (centralised in useDatePickerState)
@@ -401,9 +405,9 @@
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
 	})
 
-	const updateSelectedDates = (date: Date | null) => {
+	const updateSelectedDates = async (date: Date | null) => {
 		if (date !== null) {
-			const validationResult = validateField(date, props.customRules, props.customWarningRules)
+			const validationResult = await Promise.resolve(validateField(date, props.customRules, props.customWarningRules))
 			if (validationResult.hasError) {
 				errors.value = validationResult.state.errors
 				return
@@ -774,7 +778,7 @@
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
 					if (startDate && endDate) {
-						selectedDates.value = [startDate, endDate]
+						selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
 						validateDates()
 					}
 				}
@@ -868,7 +872,7 @@
 				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
 
 				if (startDate && endDate) {
-					selectedDates.value = [startDate, endDate]
+					selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
 					displayFormattedDate.value
 						= `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
 				}
@@ -963,12 +967,12 @@
 	/**
 	 * Public API
 	 */
-	const validateOnSubmit = (): boolean => {
+	const validateOnSubmit = async (): Promise<boolean> => {
 		if (props.noCalendar) {
-			return dateTextInputRef.value?.validateOnSubmit() || false
+			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() || false)
 		}
-		const textInputValid = dateCalendarTextInputRef.value?.validateOnSubmit() || false
-		validateDates(true)
+		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() || false)
+		await Promise.resolve(validateDates(true))
 		return textInputValid && errors.value.length === 0
 	}
 
@@ -1085,6 +1089,7 @@
 				scroll-strategy="none"
 				transition="fade-transition"
 				:offset="[0, 10]"
+				content-class="date-picker-overlay-content"
 			>
 				<template #activator>
 					<div
@@ -1433,5 +1438,14 @@
 
 :deep(.v-picker__body .v-btn--active .v-btn__overlay) {
 	opacity: 0;
+}
+</style>
+
+<style lang="scss">
+.date-picker-overlay-content .v-date-picker {
+	box-shadow:
+		0 5px 5px -3px rgb(0 0 0 / 20%),
+		0 8px 10px 1px rgb(0 0 0 / 14%),
+		0 3px 14px 2px rgb(0 0 0 / 12%) !important;
 }
 </style>

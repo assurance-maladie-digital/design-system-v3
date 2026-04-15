@@ -72,6 +72,9 @@ export default function useFileList(
 	}
 
 	const filledUploadList = computed<FileItem[]>(() => {
+		if (!uploadList.value) {
+			return []
+		}
 		return uploadList.value.map((uploadItem) => {
 			const matchingUploadedItem = findSelectedFile(uploadItem.id)
 			const error = errorSelectedFiles.value.includes(uploadItem.id)

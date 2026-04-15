@@ -1,10 +1,10 @@
 <script setup lang="ts">
 	import { computed, ref, toRef, watch } from 'vue'
 	import type { VTextarea } from 'vuetify/components'
-	import { locales } from './locales'
 	import useTextActions from './useTextActions'
-
-	type Rule = (value: string) => boolean | string
+	import { useDefaultValidationRules, type TextareaRule as Rule } from './useDefaultValidationRules'
+	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string
@@ -20,12 +20,11 @@
 		color?: string
 		label: string
 		bgColor?: string
-	}>(), {
+	} & FieldValidationProps>(), {
 		modelValue: '',
 		trim: false,
 		replaceTabs: undefined,
 		rules: () => [],
-		required: false,
 		maxLines: undefined,
 		autoWrap: undefined,
 		normalize: false,
@@ -33,6 +32,7 @@
 		variant: 'outlined',
 		color: 'primary',
 		bgColor: 'white',
+		...validationPropsDefaults,
 	})
 
 	const emits = defineEmits<{
@@ -41,6 +41,7 @@
 
 	const textAreaRef = ref<VTextarea | null>(null)
 	const hasInteracted = ref(false)
+	const focused = ref(false)
 
 	const internalValue = ref(props.modelValue)
 	watch(
@@ -87,25 +88,48 @@
 		internalValue.value = value
 	}
 
-	const internalRules = computed<Rule[]>(() => {
-		const internalRules: Rule[] = []
+	const { vuetifyRules: defaultVuetifyRules, customRules: defaultCustomRules } = useDefaultValidationRules({
+		required: toRef(props, 'required'),
+		maxLines: toRef(props, 'maxLines'),
+		hasInteracted,
+	})
 
-		internalRules.push((value: string) => {
-			if (props.required && hasInteracted.value && !value) {
-				return locales.required
-			}
-			return true
-		})
+	const mergedCustomRules = computed<SyValidationRule[]>(() => [
+		...defaultCustomRules.value,
+		...(props.customRules || []),
+	])
 
-		internalRules.push((value: string) => {
-			const lines = value.split('\n').length
-			if (lines > (props.maxLines as number)) {
-				return locales.maxLines(props.maxLines as number)
-			}
-			return true
-		})
+	const mergedVuetifyRules = computed<Rule[]>(() => [
+		...(props.rules || []),
+		...defaultVuetifyRules.value,
+	])
 
-		return internalRules
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+		modelValue: internalValue,
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		label: toRef(props, 'label'),
+		rules: mergedVuetifyRules,
+		customRules: mergedCustomRules,
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
+		focused,
+	})
+
+	defineExpose({
+		validateOnSubmit: validate,
 	})
 
 </script>
@@ -117,13 +141,19 @@
 		:variant="variant"
 		:color="color"
 		:bg-color="props.bgColor"
+		:error="hasError"
+		:error-messages="errors"
+		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+		:max-errors="props.maxErrors"
+		:disabled="props.disabled"
+		:readonly="props.readonly"
 		:validate-on="validateOn"
-		:rules="[...props.rules, ...internalRules]"
+		:rules="props.useVuetifyValidation ? mergedVuetifyRules : undefined"
 		:label="label"
 		:aria-label="label"
 		:required="required"
 		:aria-required="required ? 'true' : undefined"
 		@update:model-value="execValueChange"
-		@update:focused="(e: boolean) => !e ? execBlurChange() : null"
+		@update:focused="(e: boolean) => { focused = e; if (!e) execBlurChange() }"
 	/>
 </template>

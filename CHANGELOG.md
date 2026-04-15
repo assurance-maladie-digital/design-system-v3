@@ -1,3 +1,132 @@
+## v1.0.24 (13-04-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: fix number and tel input on firefox
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2076">#2076</a>
+      </td>
+      <td>- HeaderBar: Ajout de la story appendSlot dans le theme AmeliPro
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2074">#2074</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: add clickable row option
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2075">#2075</a>
+      </td>
+      <td>- SyRadioGroup: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2072">#2072</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: update vite plugin
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2079">#2079</a>
+      </td>
+      <td>- SyCheckbox and SyCheckboxGroup: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2070">#2070</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: add autocomplete filter
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2079">#2079</a>
+      </td>
+      <td>- SySelect: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2071">#2071</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- RangeField: fix layout
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2066">#2066</a>
+      </td>
+      <td>- SyAutocomplete: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2073">#2073</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Forms: improve validation system
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1902">#1902</a>
+      </td>
+      <td>- VTooltip: add integration exemples in documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2065">#2065</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: add pinned columns option
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2044">#2044</a>
+      </td>
+      <td>- CopyBtn: fix color in Amelipro theme <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2059">#2059</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: improve a11y tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2062">#2062</a>
+      </td>
+      <td>- VBtn: add integration exemples in documentation <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2054">#2054</a></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: fix lodash and axios vulnerability
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2060">#2060</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2048">#2048</a>
+      </td>
+      <td>- Documentation: improve display on Amelipro theme switch 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2022">#2022</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2057">#2057</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Config: fix vuetifyConfig export error
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2050">#2050</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix validation to treat skeleton patterns
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2046">#2046</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: improve accessibiity
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1964">#1964</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: enable alphabetical sorting of controls
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2052">#2052</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ChipList: improve accessibility and style
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2043">#2043</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: fix sort display
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2042">#2042</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckbox: improve accessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2040">#2040</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: add a11y information on DiacriticPicker, Captcha, Logo and LogoBrandSection components
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2037">#2037</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.23 (30-03-2026)
 
 <table>

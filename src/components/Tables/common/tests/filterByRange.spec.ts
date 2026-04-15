@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import SyTable from '../../SyTable/SyTable.vue'
 import DateFilter from '../filters/DateFilter.vue'
@@ -189,6 +189,7 @@ describe('SyTable - filterByRange', () => {
 		})
 
 		await endDate.setValue('01/01/1995')
+		await flushPromises()
 
 		filteredNames = ['Alice']
 		filteredNames.forEach((element) => {

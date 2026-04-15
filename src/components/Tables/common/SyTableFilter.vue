@@ -62,12 +62,14 @@
 		date: Record<string, DateValue>
 		period: Record<string, { from: string | null, to: string | null }>
 		select: Record<string, string | number | Record<string, unknown> | undefined>
+		autocomplete: Record<string, string | number | Record<string, unknown> | Array<string | number | Record<string, unknown>> | undefined>
 	}>({
 		text: {},
 		number: {},
 		date: {},
 		period: {},
 		select: {},
+		autocomplete: {},
 	})
 
 	// Computed properties pour accéder aux différents types de filtres
@@ -76,6 +78,7 @@
 	const dateFilters = computed(() => filtersMap.value.date)
 	const periodFilters = computed(() => filtersMap.value.period)
 	const selectFilters = computed(() => filtersMap.value.select)
+	const autocompleteFilters = computed(() => filtersMap.value.autocomplete)
 
 	// Fonction pour traiter un filtre individuel
 	function processFilter(filter: FilterOption) {
@@ -110,6 +113,9 @@
 		case 'select':
 			filtersMap.value.select[key] = value !== null ? value as string | number | Record<string, unknown> : undefined
 			break
+		case 'autocomplete':
+			filtersMap.value.autocomplete[key] = value !== null ? value as string | number | Record<string, unknown> | Array<string | number | Record<string, unknown>> : undefined
+			break
 		}
 	}
 
@@ -123,6 +129,7 @@
 				date: {},
 				period: {},
 				select: {},
+				autocomplete: {},
 			}
 			return
 		}
@@ -146,7 +153,10 @@
 	function getFilterValue(header: TableColumnHeader) {
 		const key = String(header.key || header.value || '')
 
-		if (header.filterType === 'select' || header.filterOptions) {
+		if (header.filterType === 'autocomplete') {
+			return autocompleteFilters.value[key]
+		}
+		else if (header.filterType === 'select' || header.filterOptions) {
 			return selectFilters.value[key]
 		}
 		else if (header.filterType === 'date') {
@@ -167,7 +177,10 @@
 	function updateFilter(header: TableColumnHeader, value: unknown) {
 		const key = String(header.key || header.value || '')
 
-		if (header.filterType === 'select' || header.filterOptions) {
+		if (header.filterType === 'autocomplete') {
+			filtersMap.value.autocomplete[key] = value as string | number | Record<string, unknown> | Array<string | number | Record<string, unknown>> | undefined
+		}
+		else if (header.filterType === 'select' || header.filterOptions) {
 			filtersMap.value.select[key] = value as string | number | Record<string, unknown> | undefined
 		}
 		else if (header.filterType === 'date') {
@@ -226,6 +239,13 @@
 				const matchingHeader = props.header.key === filterKey || props.header.value === filterKey
 				const filterType = matchingHeader && props.header.filterType === 'custom' ? 'custom' : 'select'
 				newFilters.push({ key: filterKey, value: filterValue, type: filterType })
+			}
+		})
+
+		// Ajouter les filtres autocomplete
+		Object.entries(filtersMap.value.autocomplete).forEach(([filterKey, filterValue]) => {
+			if (filterValue !== undefined && filterValue !== null && !(Array.isArray(filterValue) && filterValue.length === 0)) {
+				newFilters.push({ key: filterKey, value: filterValue, type: 'autocomplete' })
 			}
 		})
 

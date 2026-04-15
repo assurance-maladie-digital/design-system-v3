@@ -183,6 +183,149 @@ describe('SyAutocomplete', () => {
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([null])
 	})
 
+	it('removes chip when Enter key is pressed on chip close button', async () => {
+		wrapper.unmount()
+		wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: [items[0]!, items[1]!],
+				items,
+				multiple: true,
+				chips: true,
+				returnObject: true,
+				label: 'Test Chips Keyboard',
+				textKey: 'text',
+				valueKey: 'value',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		const closeBtn = wrapper.find('.v-chip__close')
+		closeBtn.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }))
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		// First item was removed — remaining is [items[1]]
+		const emitted = wrapper.emitted('update:modelValue')?.[0]?.[0] as unknown[]
+		expect(emitted).toHaveLength(1)
+		expect((emitted[0] as { value: string }).value).toBe('2')
+	})
+
+	it('removes chip when Space key is pressed on chip close button', async () => {
+		wrapper.unmount()
+		wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: [items[0]!, items[1]!],
+				items,
+				multiple: true,
+				chips: true,
+				returnObject: true,
+				label: 'Test Chips Space',
+				textKey: 'text',
+				valueKey: 'value',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		const closeBtn = wrapper.find('.v-chip__close')
+		closeBtn.element.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }))
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		const emitted = wrapper.emitted('update:modelValue')?.[0]?.[0] as unknown[]
+		expect(emitted).toHaveLength(1)
+	})
+
+	it('does not open menu when modelValue is set programmatically (suppressMenuOpen)', async () => {
+		// Menu must be closed initially
+		expect(isMenuOverlayActive()).toBe(false)
+
+		// Programmatic update (e.g., filter reset sets a value) should NOT open the menu
+		await wrapper.setProps({ modelValue: items[0] })
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		expect(isMenuOverlayActive()).toBe(false)
+	})
+
+	it('keeps menu open when blur target is a chip (checkErrorOnBlur)', async () => {
+		wrapper.unmount()
+		wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: ['1'],
+				items,
+				multiple: true,
+				chips: true,
+				label: 'Test blur chip',
+				textKey: 'text',
+				valueKey: 'value',
+				menuId,
+			},
+			attachTo: document.body,
+		})
+
+		// Open menu
+		const input = wrapper.find('input')
+		await input.trigger('click')
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+		expect(isMenuOverlayActive()).toBe(true)
+
+		// Create a chip DOM element as blur relatedTarget
+		const chipEl = document.createElement('span')
+		chipEl.className = 'sy-autocomplete__chip'
+		document.body.appendChild(chipEl)
+
+		const inputEl = getInputEl()!
+		inputEl.dispatchEvent(new FocusEvent('blur', { relatedTarget: chipEl, bubbles: true }))
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		// Menu should remain open
+		expect(isMenuOverlayActive()).toBe(true)
+
+		document.body.removeChild(chipEl)
+	})
+
+	it('keeps menu open when blur target is the clear button (checkErrorOnBlur)', async () => {
+		wrapper.unmount()
+		wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: items[0],
+				items,
+				clearable: true,
+				label: 'Test blur clear',
+				textKey: 'text',
+				valueKey: 'value',
+				menuId,
+			},
+			attachTo: document.body,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('click')
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+		expect(isMenuOverlayActive()).toBe(true)
+
+		// Create a clear-button DOM element as blur relatedTarget
+		const clearBtn = document.createElement('button')
+		clearBtn.className = 'sy-autocomplete__clear-button'
+		document.body.appendChild(clearBtn)
+
+		const inputEl = getInputEl()!
+		inputEl.dispatchEvent(new FocusEvent('blur', { relatedTarget: clearBtn, bubbles: true }))
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		expect(isMenuOverlayActive()).toBe(true)
+
+		document.body.removeChild(clearBtn)
+	})
+
 	it('shows clear button when clearable and has selection', async () => {
 		wrapper.unmount()
 		wrapper = mount(SyAutocomplete, {

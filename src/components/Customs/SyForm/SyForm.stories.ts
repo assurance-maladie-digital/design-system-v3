@@ -5,6 +5,7 @@ import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { VBtn } from 'vuetify/components'
+import { fn } from '@storybook/test'
 
 export default {
 	title: 'Composants/Formulaires/SyForm',
@@ -42,6 +43,10 @@ export default {
 type Story = StoryObj<typeof SyForm>
 
 export const Basic: Story = {
+	args: {
+		onReset: fn(),
+		onSubmit: fn(),
+	},
 	render: args => ({
 		components: { SyForm, SyTextField, VBtn },
 		setup() {
@@ -126,6 +131,11 @@ const onSubmit = (event: { isValid: boolean }) => {
 }
 
 export const CustomValidation: Story = {
+	args: {
+		validateOnSubmit: false,
+		onReset: fn(),
+		onSubmit: fn(),
+	},
 	render: args => ({
 		components: { SyForm, SyTextField, VBtn },
 		setup() {
@@ -142,7 +152,7 @@ export const CustomValidation: Story = {
 
 			const confirmPasswordRules = computed(() => [
 				{ type: 'custom', options: {
-					validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
+					validate: (value: string) => value === password.value,
 					message: 'Les mots de passe ne correspondent pas',
 				} },
 				{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
@@ -150,7 +160,7 @@ export const CustomValidation: Story = {
 
 			const submitForm = async (e: { isValid: boolean }) => {
 				if (e.isValid) {
-					alert('Inscription réussie !')
+					alert('Inscription réussie ! (validate on submit = ' + args.validateOnSubmit + ')')
 				}
 				else {
 					alert('Formulaire invalide, veuillez corriger les erreurs.')
@@ -171,7 +181,7 @@ export const CustomValidation: Story = {
 		},
 		template: `
       <div>
-        <SyForm ref="form" v-bind="args" @submit="submitForm" :validate-on-submit="false">
+        <SyForm ref="form" v-bind="args" @submit="submitForm" :validate-on-submit="args.validateOnSubmit">
           <div class="d-flex flex-column gap-4">
             <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
             <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
@@ -238,7 +248,7 @@ const passwordRules = computed(() => [
 
 const confirmPasswordRules = computed(() => [
 	{ type: 'custom', options: {
-		validate: value => value === password.value || 'Les mots de passe ne correspondent pas',
+		validate: (value: string) => value === password.value,
 		message: 'Les mots de passe ne correspondent pas',
 	} },
 	{ type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
@@ -267,6 +277,10 @@ const validateManually = () => {
 }
 
 export const MixedFields: Story = {
+	args: {
+		onReset: fn(),
+		onSubmit: fn(),
+	},
 	render: args => ({
 		components: { SyForm, SyTextField, SySelect, SyCheckbox, VBtn },
 		setup() {
@@ -372,6 +386,9 @@ export const MixedFields: Story = {
 				if (event.isValid) {
 					alert('Formulaire valide ! Données: ' + JSON.stringify(formData.value))
 				}
+				else {
+					alert('Formulaire invalide, veuillez corriger les erreurs.')
+				}
 			}
 		</script>
 `,
@@ -381,6 +398,10 @@ export const MixedFields: Story = {
 }
 
 export const Reset: Story = {
+	args: {
+		onReset: fn(),
+		onSubmit: fn(),
+	},
 	render: args => ({
 		components: { SyForm, SyTextField, VBtn },
 		setup() {
@@ -408,7 +429,12 @@ export const Reset: Story = {
 				form.value?.clearValidation()
 			}
 
-			return { name, email, emailRules, form, submitForm, clearAll, args }
+			function onFormReset() {
+				alert('Formulaire réinitialisé !')
+				args.onReset?.()
+			}
+
+			return { name, email, emailRules, form, submitForm, clearAll, onFormReset, args }
 		},
 		template: `
       <SyForm ref="form" v-bind="args" @submit="submitForm" @reset="onFormReset">

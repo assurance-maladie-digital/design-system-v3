@@ -160,6 +160,29 @@ describe('ComplexDatePicker.clean', () => {
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - ')
 	})
 
+	it('generates all intermediate dates when selecting a range in range mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+		})
+
+		await wrapper.vm.handleDateSelected(['01/01/2025', '05/01/2025'])
+		await flushPromises()
+
+		const selection = wrapper.vm.selectedDates as Date[]
+		expect(Array.isArray(selection)).toBe(true)
+		// Should contain 5 dates: 01/01, 02/01, 03/01, 04/01, 05/01
+		expect(selection).toHaveLength(5)
+
+		// Verify start and end dates are correct (handle timezone differences)
+		expect(selection[0]).toBeInstanceOf(Date)
+		expect(selection[selection.length - 1]).toBeInstanceOf(Date)
+		// Use local date string to avoid timezone issues
+		expect(selection[0]?.toLocaleDateString('fr-FR')).toContain('01/01/2025')
+		expect(selection[selection.length - 1]?.toLocaleDateString('fr-FR')).toContain('05/01/2025')
+	})
+
 	it('formatDateInput formats raw digits according to the format and computes cursor position', () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -247,7 +270,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.currentYearName).toBe('2030')
 	})
 
-	it('validateOnSubmit returns false when required and empty in text-only mode', () => {
+	it('validateOnSubmit returns false when required and empty in text-only mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			noCalendar: true,
@@ -255,7 +278,7 @@ describe('ComplexDatePicker.clean', () => {
 			format: 'DD/MM/YYYY',
 		})
 
-		const result = wrapper.vm.validateOnSubmit()
+		const result = await wrapper.vm.validateOnSubmit()
 		expect(result).toBe(false)
 	})
 
@@ -269,7 +292,7 @@ describe('ComplexDatePicker.clean', () => {
 		})
 
 		await nextTick()
-		const result = wrapper.vm.validateOnSubmit()
+		const result = await wrapper.vm.validateOnSubmit()
 		expect(result).toBe(true)
 	})
 
@@ -283,20 +306,20 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.exists()).toBe(true)
 	})
 
-	it('validateOnSubmit returns false when required and empty in calendar mode', () => {
+	it('validateOnSubmit returns false when required and empty in calendar mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			required: true,
 			format: 'DD/MM/YYYY',
 		})
 
-		const result = wrapper.vm.validateOnSubmit()
+		const result = await wrapper.vm.validateOnSubmit()
 		expect(result).toBe(false)
 		// Should surface at least one error message
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
 	})
 
-	it('validateDates flags an error when end date is before start date in range mode', () => {
+	it('validateDates flags an error when end date is before start date in range mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			format: 'DD/MM/YYYY',
@@ -309,12 +332,12 @@ describe('ComplexDatePicker.clean', () => {
 			new Date(2025, 0, 1),
 		]
 
-		const result = wrapper.vm.validateDates(true)
+		const result = await wrapper.vm.validateDates(true)
 		expect(result.hasError).toBe(true)
-		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
+		expect(result.state.errors.length).toBeGreaterThan(0)
 	})
 
-	it('validateDates does not flag an error for an incomplete range when not forced', () => {
+	it('validateDates does not flag an error for an incomplete range when not forced', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			format: 'DD/MM/YYYY',
@@ -341,7 +364,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		// Simuler une erreur required
 		wrapper.vm.selectedDates = null
-		wrapper.vm.validateDates(true)
+		await wrapper.vm.validateDates(true)
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
 
 		// Ouvrir le calendrier puis réinitialiser

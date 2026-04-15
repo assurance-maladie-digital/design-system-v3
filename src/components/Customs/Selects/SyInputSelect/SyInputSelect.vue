@@ -50,7 +50,6 @@
 
 	// Initialisation du composable de validation
 	const validation = useValidation({
-		customRules: props.customRules,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -90,11 +89,11 @@
 	const inputId = ref(`sy-input-select-${Math.random().toString(36).substring(7)}`)
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const selectItem = (item: any) => {
+	const selectItem = async (item: any) => {
 		selectedItem.value = item
 		emit('update:modelValue', item)
 		isOpen.value = false
-		validateField(item)
+		await validateField(item)
 		emit('update:errorMessages', localErrorMessages.value)
 	}
 
@@ -182,7 +181,7 @@
 		: [],
 	)
 
-	const validateField = (value: unknown) => {
+	const validateField = async (value: unknown) => {
 		if (props.readonly) {
 			validation.clearValidation()
 			localErrorMessages.value = []
@@ -195,7 +194,7 @@
 			return true
 		}
 
-		const result = validation.validateField(
+		const result = await validation.validateField(
 			value,
 			[...defaultRules.value, ...(props.customRules || [])],
 		)
@@ -204,14 +203,14 @@
 		return !result.hasError
 	}
 
-	const validateOnSubmit = () => {
-		const isValid = validateField(selectedItem.value)
+	const validateOnSubmit = async () => {
+		const isValid = await validateField(selectedItem.value)
 		hasError.value = !isValid
 		return isValid
 	}
 
-	const checkForErrors = () => {
-		return validateField(selectedItem.value)
+	const checkForErrors = async () => {
+		return await validateField(selectedItem.value)
 	}
 
 	defineExpose({

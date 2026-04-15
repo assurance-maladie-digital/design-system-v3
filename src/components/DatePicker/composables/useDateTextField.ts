@@ -17,14 +17,14 @@ export interface UseDateTextFieldManualValidationOptions {
 	isDateComplete: (value: string) => boolean
 	parseDate: (dateStr: string, format: string) => Date | null
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	validateField: (value: unknown, rules?: any[], warningRules?: any[]) => ValidationResult
+	validateField: (value: unknown, rules?: any[], warningRules?: any[]) => Promise<ValidationResult>
 }
 
 export interface UseDateTextFieldSubmitOptions {
 	isValidating: Ref<boolean>
 	hasInteracted: Ref<boolean>
 	inputValue: Ref<string>
-	runRules: (value: string) => boolean
+	runRules: (value: string) => Promise<boolean>
 }
 
 export interface UseDateTextFieldResetOptions {
@@ -71,15 +71,16 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 		isDateComplete: manualValidation.isDateComplete,
 		parseDate: manualValidation.parseDate,
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		validateField: manualValidation.validateField as (value: unknown, rules?: any[], warningRules?: any[]) => ValidationResult,
+		validateField: manualValidation.validateField as (value: unknown, rules?: any[], warningRules?: any[]) => Promise<ValidationResult>,
 	})
 
-	const validateOnSubmit = () => {
+	const validateOnSubmit = async () => {
 		if (!submit) return true
 		const { isValidating, hasInteracted, inputValue, runRules } = submit
 		isValidating.value = true
 		hasInteracted.value = true
-		const ok = runRules(inputValue.value)
+		const ok = await runRules(inputValue.value)
+		console.log('ok from validateOnSubmit:', ok)
 		isValidating.value = false
 		return ok
 	}
@@ -99,7 +100,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			const formattedStartDate = startDateValidation.clampedDate || ''
 			const formattedEndDate = endDateValidation.clampedDate || ''
 
-			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : formattedStartDate
+			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : `${formattedStartDate} - `
 		}
 
 		const dateValidationResult = autoClampDate(raw, displayFormat.value)

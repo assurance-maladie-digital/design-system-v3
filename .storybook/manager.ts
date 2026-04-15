@@ -40,7 +40,14 @@ const apComponents = [
 	'composants-composants-vuetify',
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbtn--docs',
+	'composants-formulaires-sycheckboxgroup',
+	'composants-formulaires-sycheckbox',
 	'composants-composants-vuetify-vtooltip--docs',
+	'composants-formulaires-selects-syselect',
+	'composants-formulaires-selects-syautocomplete',
+	'composants-formulaires-syradiogroup',
+	'composants-composants-vuetify-vswitch--docs',
+	'composants-composants-vuetify-vskeletonloaderstories--docs',
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
@@ -52,7 +59,11 @@ const isParentOfAllowedComponent = (itemId: string, stories: string[]) =>
 	stories.some(story => story.startsWith(`${itemId}-`))
 
 const isChildOfAllowedComponent = (itemId: string, stories: string[]) =>
-	stories.some(story => itemId.startsWith(`${story}--`))
+	stories.some(
+		story =>
+			itemId.startsWith(`${story}--`)
+			|| itemId.startsWith(`${story}-`),
+	)
 
 const shouldShowApComponent = (item, itemId, theme) => {
 	const isAp2026 = theme === 'ap2026'
@@ -64,9 +75,14 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		'guide-du-dev-correspondance-composants-pag--docs',
 		'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs',
 		'accessibilité-design-system',
+		'accessibilité-kit-de-pré-audit-avancement',
 		'guide-du-dev-guide-technique-système-de-validation-règles--docs',
 		'guide-du-dev-migration',
 		'guide-du-dev-installation--docs',
+		'composants-structure-headerbar--prepend-slot',
+		'composants-structure-headerbar--with-header-toolbar',
+		'composants-structure-headerbar-headernavigationbar',
+		'composants-structure-headerbar--usages',
 	])
 
 	if (itemId === 'composants-amelipro') {
