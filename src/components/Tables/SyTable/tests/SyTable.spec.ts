@@ -892,4 +892,110 @@ describe('SyTable selectionKey', () => {
 		const result = itemValue(item as unknown as Record<string, unknown>)
 		expect(result).toBe(item) // same object reference
 	})
+
+	describe('maxWidth truncation', () => {
+		const truncateHeaders = [
+			{
+				title: 'Nom de la colonne super longue',
+				key: 'nom',
+				maxWidth: '100px',
+			},
+			{
+				title: 'Prénom',
+				key: 'prenom',
+			},
+		]
+
+		const truncateItems = [
+			{ nom: 'Valeur très longue qui dépasse la largeur maximale', prenom: 'Court' },
+		]
+
+		it('applies truncation styles and title on <th> when maxWidth is set', async () => {
+			const wrapper = mount(SyTable, {
+				props: {
+					suffix: 'truncate-test',
+					headers: truncateHeaders,
+					items: truncateItems,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const ths = wrapper.findAll('tr.headers th')
+			const truncatedTh = ths.find(th => (th.attributes('style') || '').includes('max-width'))
+
+			expect(truncatedTh).toBeDefined()
+			expect(truncatedTh!.classes()).toContain('sy-table__th--truncate')
+			expect(truncatedTh!.attributes('style')).toContain('max-width: 100px')
+			expect(truncatedTh!.attributes('style')).toContain('overflow: hidden')
+			expect(truncatedTh!.attributes('title')).toBe('Nom de la colonne super longue')
+		})
+
+		it('does not apply truncation styles on <th> without maxWidth', async () => {
+			const wrapper = mount(SyTable, {
+				props: {
+					suffix: 'no-truncate-test',
+					headers: truncateHeaders,
+					items: truncateItems,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const ths = wrapper.findAll('tr.headers th')
+			const normalTh = ths.find(th => !(th.attributes('style') || '').includes('max-width'))
+
+			expect(normalTh).toBeDefined()
+			expect(normalTh!.classes()).not.toContain('sy-table__th--truncate')
+			expect(normalTh!.attributes('title')).toBeUndefined()
+		})
+
+		it('applies truncation styles and title on <td> when maxWidth is set', async () => {
+			const wrapper = mount(SyTable, {
+				props: {
+					suffix: 'truncate-td-test',
+					headers: truncateHeaders,
+					items: truncateItems,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const tds = wrapper.findAll('tbody tr td')
+			const truncatedTd = tds.find(td => (td.attributes('style') || '').includes('max-width'))
+
+			expect(truncatedTd).toBeDefined()
+			expect(truncatedTd!.attributes('style')).toContain('max-width: 100px')
+			expect(truncatedTd!.attributes('style')).toContain('overflow: hidden')
+			expect(truncatedTd!.attributes('title')).toBe('Valeur très longue qui dépasse la largeur maximale')
+		})
+
+		it('applies truncation on filter row <th> when maxWidth is set with showFilters', async () => {
+			const wrapper = mount(SyTable, {
+				props: {
+					suffix: 'truncate-filter-test',
+					showFilters: true,
+					headers: truncateHeaders,
+					items: truncateItems,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const filterThs = wrapper.findAll('tr.filters th')
+			const truncatedFilterTh = filterThs.find(th => (th.attributes('style') || '').includes('max-width'))
+
+			expect(truncatedFilterTh).toBeDefined()
+			expect(truncatedFilterTh!.attributes('style')).toContain('max-width: 100px')
+			expect(truncatedFilterTh!.attributes('style')).toContain('overflow: hidden')
+		})
+	})
 })
