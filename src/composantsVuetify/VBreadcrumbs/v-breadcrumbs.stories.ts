@@ -43,38 +43,17 @@ export const Default: Story = {
 			{
 				title: 'Accueil',
 				disabled: false,
-				href: '#',
+				href: 'javascript:void(0)',
 			},
 			{
 				title: 'Catégorie',
 				disabled: false,
-				href: '#',
+				href: 'javascript:void(0)',
 			},
 			{
 				title: 'Page actuelle',
 				disabled: true,
-			},
-		],
-	},
-}
-
-export const PrimaryColor: Story = {
-	args: {
-		color: 'primary',
-		items: [
-			{
-				title: 'Accueil',
-				disabled: false,
-				href: '#',
-			},
-			{
-				title: 'Catégorie',
-				disabled: false,
-				href: '#',
-			},
-			{
-				title: 'Page actuelle',
-				disabled: true,
+				href: 'javascript:void(0)',
 			},
 		],
 	},
@@ -88,17 +67,17 @@ export const CustomDivider: Story = {
 			{
 				title: 'Accueil',
 				disabled: false,
-				href: '#',
+				href: 'javascript:void(0)',
 			},
 			{
 				title: 'Catégorie',
 				disabled: false,
-				href: '#',
+				href: 'javascript:void(0)',
 			},
 			{
 				title: 'Sous-catégorie',
 				disabled: false,
-				href: '#',
+				href: 'javascript:void(0)',
 			},
 			{
 				title: 'Page actuelle',
@@ -113,12 +92,12 @@ export const Disabled: Story = {
 		items: [
 			{
 				title: 'Accueil',
-				href: '#',
+				href: 'javascript:void(0)',
 				disabled: true,
 			},
 			{
 				title: 'Catégorie',
-				href: '#',
+				href: 'javascript:void(0)',
 				disabled: true,
 			},
 			{
