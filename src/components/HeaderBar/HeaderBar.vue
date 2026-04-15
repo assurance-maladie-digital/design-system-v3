@@ -163,7 +163,6 @@
 		role="banner"
 		:style="headerStyle"
 	>
-		<p>lorem ipsum</p>
 		<div
 			ref="headerSticky"
 			class="sticky-header"
@@ -251,7 +250,6 @@
 .header {
 	position: relative;
 	z-index: 1;
-	background-color: pink;
 }
 
 .sticky-header {
