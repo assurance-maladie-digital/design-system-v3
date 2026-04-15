@@ -85,6 +85,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Navigation',
 					},
 					{
+						title: 'Breadcrumbs',
+						description: 'Utilisé comme un outil d’aide à la navigation et comme une structure hiérarchique pour les pages.',
+						link: '/?path=/docs/composants-composants-vuetify--vbreadcrumbs--docs',
+						img: '/components/breadcrumbs.svg',
+						category: 'Navigation',
+					},
+					{
 						title: 'ExternalLinks',
 						description: 'Utilisé pour afficher un menu avec une liste vers des liens externes.',
 						link: '/?path=/docs/composants-navigation-externallinks--docs',
