@@ -250,7 +250,7 @@
 .header {
 	position: relative;
 	z-index: 1;
-	background-color: yellowgreen;
+	background-color: pink;
 }
 
 .sticky-header {
