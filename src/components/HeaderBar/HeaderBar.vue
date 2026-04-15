@@ -163,6 +163,7 @@
 		role="banner"
 		:style="headerStyle"
 	>
+		<p>lorem ipsum</p>
 		<div
 			ref="headerSticky"
 			class="sticky-header"
