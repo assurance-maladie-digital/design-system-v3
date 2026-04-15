@@ -283,6 +283,7 @@
 										'sy-table__th--truncate': !!getHeaderForColumn(column)?.maxWidth && !props.resizableColumns,
 									},
 								]"
+								:title="getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? String(column.title ?? '') : undefined"
 								:style="{
 									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any, overflow: 'hidden', textOverflow: 'ellipsis' } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),

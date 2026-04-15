@@ -77,16 +77,18 @@ export function useTableHeaders({
 			if (mapped.maxWidth != null) {
 				const existingCellProps = (mapped.cellProps ?? {}) as Record<string, unknown>
 				const existingStyle = (existingCellProps.style ?? {}) as Record<string, unknown>
-				mapped.cellProps = {
-					...existingCellProps,
-					style: {
-						...existingStyle,
-						maxWidth: mapped.maxWidth,
-						overflow: 'hidden',
-						whiteSpace: 'nowrap',
-						textOverflow: 'ellipsis',
-					},
-				} as TableColumnHeader['cellProps']
+				const truncateStyle = {
+					...existingStyle,
+					maxWidth: mapped.maxWidth,
+					overflow: 'hidden',
+					whiteSpace: 'nowrap',
+					textOverflow: 'ellipsis',
+				}
+				const baseProps = { ...existingCellProps, style: truncateStyle }
+				mapped.cellProps = ({ value }: { value: unknown }) => ({
+					...baseProps,
+					title: value != null ? String(value) : undefined,
+				})
 			}
 
 			return mapped as unknown as DataTableHeaders
