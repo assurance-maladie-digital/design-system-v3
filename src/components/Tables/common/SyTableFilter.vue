@@ -301,7 +301,8 @@
 	border-bottom: 1px solid var(--v-border-color);
 
 	&-item {
-		min-width: 200px;
+		min-width: 0;
+		width: 100%;
 		flex: 1;
 	}
 }
