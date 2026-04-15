@@ -6,7 +6,7 @@
 		{
 			title: 'Nom de la colonne super longue',
 			key: 'nom',
-			maxWidth: '100px',
+			maxWidth: '200px',
 		},
 		{
 			title: 'Un autre nom vachement long',
@@ -40,6 +40,5 @@
 		]"
 		suffix="cog-table"
 		show-filters
-		:server-items-length="12"
 	/>
 </template>

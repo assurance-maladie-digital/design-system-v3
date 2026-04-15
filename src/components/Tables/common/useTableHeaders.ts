@@ -73,6 +73,22 @@ export function useTableHeaders({
 				mapped.width = mapped.maxWidth
 			}
 
+			// Si maxWidth est défini → l'appliquer aussi aux <td> via cellProps
+			if (mapped.maxWidth != null) {
+				const existingCellProps = (mapped.cellProps ?? {}) as Record<string, unknown>
+				const existingStyle = (existingCellProps.style ?? {}) as Record<string, unknown>
+				mapped.cellProps = {
+					...existingCellProps,
+					style: {
+						...existingStyle,
+						maxWidth: mapped.maxWidth,
+						overflow: 'hidden',
+						whiteSpace: 'nowrap',
+						textOverflow: 'ellipsis',
+					},
+				} as TableColumnHeader['cellProps']
+			}
+
 			return mapped as unknown as DataTableHeaders
 		})
 	})
