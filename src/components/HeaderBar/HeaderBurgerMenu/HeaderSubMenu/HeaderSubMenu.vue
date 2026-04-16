@@ -139,7 +139,7 @@
 			width: 100%;
 			height: 100%;
 			overflow-y: auto;
-			background-color: rgb(var(--v-theme-backgroundSurface));
+			background-color: rgb(var(--v-theme-surface));
 			padding-top: 40px;
 			z-index: 10;
 		}

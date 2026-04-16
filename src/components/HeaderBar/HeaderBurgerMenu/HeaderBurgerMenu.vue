@@ -143,7 +143,7 @@
 
 .menu-wrapper {
 	height: 100dvh;
-	background-color: rgb(var(--v-theme-backgroundSurface));
+	background-color: rgb(var(--v-theme-surface));
 	display: flex;
 	flex-direction: column;
 }
@@ -171,7 +171,7 @@
 	}
 
 	.header-menu {
-		background-color: rgb(var(--v-theme-backgroundSurface));
+		background-color: rgb(var(--v-theme-surface));
 		overflow: hidden auto;
 		height: 100%;
 	}

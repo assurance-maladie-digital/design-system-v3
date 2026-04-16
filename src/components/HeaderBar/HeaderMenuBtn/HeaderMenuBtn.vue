@@ -62,7 +62,7 @@
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border 0.15s 0.1s;
 
 	&:focus-visible {
-		background-color: rgb(var(--v-theme-backgroundSurface));
+		background-color: rgb(var(--v-theme-surface));
 		color: rgb(var(--v-theme-primary));
 		outline: none;
 		border: 2px solid rgb(var(--v-theme-primary));
@@ -70,7 +70,7 @@
 }
 
 .header-menu-btn__open {
-	background-color: rgb(var(--v-theme-backgroundSurface));
+	background-color: rgb(var(--v-theme-surface));
 	color: rgb(var(--v-theme-primary));
 	border-color: rgb(var(--v-theme-textOnDark));
 }
