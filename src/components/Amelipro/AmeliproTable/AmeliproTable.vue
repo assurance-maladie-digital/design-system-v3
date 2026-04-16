@@ -416,11 +416,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-table__wrapper--desktop > div,
 .amelipro-table__wrapper--mobile > div {
-	border: 1px solid apTokens.$ap-grey;
+	border: 1px solid rgb(var(--v-theme-ap-grey));
 	border-radius: 8px;
 }
 
@@ -434,7 +433,7 @@ table {
 th,
 td {
 	padding: 0.5rem 0.75rem;
-	border-bottom: 1px solid apTokens.$ap-grey;
+	border-bottom: 1px solid rgb(var(--v-theme-ap-grey));
 
 	.amelipro-table__wrapper--mobile table tr:last-child & {
 		border-bottom: 0;
@@ -443,7 +442,7 @@ td {
 
 .amelipro-table__wrapper--mobile {
 	& td {
-		border-left: 1px solid apTokens.$ap-grey;
+		border-left: 1px solid rgb(var(--v-theme-ap-grey));
 	}
 
 	& table tr:first-child th {
@@ -468,8 +467,8 @@ td {
 .vertical-border {
 	td,
 	th {
-		border-left: 1px solid apTokens.$ap-grey;
-		border-right: 1px solid apTokens.$ap-grey;
+		border-left: 1px solid rgb(var(--v-theme-ap-grey));
+		border-right: 1px solid rgb(var(--v-theme-ap-grey));
 	}
 
 	& tr td:first-child,
@@ -488,9 +487,9 @@ tr:last-child td {
 }
 
 .total-counter {
-	background-color: apTokens.$ap-grey-lighten2;
-	border: 1px solid apTokens.$ap-grey-darken1;
-	border-radius: apTokens.$btn-radius;
+	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
+	border: 1px solid rgb(var(--v-theme-ap-grey-darken-1));
+	border-radius: 0.75rem;
 	padding: 0.5rem 0.75rem;
 }
 

@@ -177,10 +177,9 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .tabs-btn-wrapper {
-	@media #{apTokens.$media-only-xs} {
+	@media (max-width: 599.99px) {
 		width: 100% !important;
 	}
 }

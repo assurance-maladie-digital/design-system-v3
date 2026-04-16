@@ -1171,7 +1171,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .date-picker-title {
 	display: block;
@@ -1186,7 +1185,7 @@
 /* Style pour les jours fériés */
 :deep(.holiday-day) {
 	background-color: rgb(255 193 7 / 10%);
-	border: 2px dotted tokens.$neutral-black;
+	border: 2px dotted rgb(var(--v-theme-grey-darken60));
 	border-radius: 50%;
 }
 
@@ -1217,13 +1216,13 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: tokens.$colors-text-success !important;
+		color: rgb(var(--v-theme-textSuccess)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-border-success !important;
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 	}
 }
 
@@ -1241,38 +1240,38 @@
 
 .v-messages__message--error {
 	:deep(.v-input__control) {
-		color: tokens.$colors-text-error !important;
+		color: rgb(var(--v-theme-textError)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: tokens.$colors-text-error !important;
+		color: rgb(var(--v-theme-textError)) !important;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-border-error !important;
+		color: rgb(var(--v-theme-borderError)) !important;
 	}
 }
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: tokens.$colors-text-warning !important;
+		color: rgb(var(--v-theme-textWarning)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: tokens.$colors-text-warning !important;
+		color: rgb(var(--v-theme-textWarning)) !important;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-text-warning !important;
+		color: rgb(var(--v-theme-textWarning)) !important;
 	}
 }
 
 :deep(.v-btn__content) {
-	font-size: tokens.$font-size-body-text + 3;
+	font-size: var(--v-theme-fontSize-corpsDeTexte) + 3;
 	font-weight: bold;
 }
 
@@ -1308,7 +1307,7 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: tokens.$colors-background-main;
+	background-color: rgb(var(--v-theme-backgroundMain));
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
@@ -1316,7 +1315,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: tokens.$colors-background-accent-primary-contrasted !important;
+	background-color: rgb(var(--v-theme-backgroundAccentContrasted)) !important;
 }
 
 .fade-enter-active,

@@ -64,7 +64,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .accordion-btn {
 	padding: 0;
@@ -72,7 +71,7 @@
 	border: 0;
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 }
 </style>

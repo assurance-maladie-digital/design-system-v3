@@ -153,11 +153,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .item-spacing {
 	&:not(:last-child) {
-		@media #{apTokens.$media-up-sm} {
+		@media (min-width: 600px) {
 			margin-right: 16px;
 		}
 	}
@@ -176,22 +175,22 @@ input {
 }
 
 .filter {
-	padding: apTokens.$filter-padding-y apTokens.$filter-padding-x;
-	font-weight: apTokens.$filter-font-weight;
+	padding: 0.75rem 2rem;
+	font-weight: 700;
 
 	input + &,
 	.amelipro-filters__filter-input & {
 		position: relative;
-		border-radius: apTokens.$filter-radius;
-		border: 1px solid apTokens.$ap-blue-darken1;
-		background-color: apTokens.$ap-white;
-		color: apTokens.$ap-blue-darken1;
+		border-radius: 0.75rem;
+		border: 1px solid rgb(var(--v-theme-primary));
+		background-color: #fff;
+		color: rgb(var(--v-theme-primary));
 		cursor: pointer;
 	}
 
 	input:checked + &,
 	.amelipro-filters__filter-input[aria-checked='true'] & {
-		background-color: apTokens.$ap-blue-lighten3;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3));
 
 		&::after {
 			position: absolute;
@@ -199,8 +198,8 @@ input {
 			left: 1.1rem;
 			width: 1rem;
 			height: 0.5rem;
-			border-bottom: 2px solid apTokens.$ap-blue-darken1;
-			border-left: 2px solid apTokens.$ap-blue-darken1;
+			border-bottom: 2px solid rgb(var(--v-theme-primary));
+			border-left: 2px solid rgb(var(--v-theme-primary));
 			transform: rotate(-50deg);
 			content: '';
 		}
@@ -208,11 +207,11 @@ input {
 
 	input:focus + &,
 	.amelipro-filters__filter-input:focus & {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 }
 
 .amelipro-filters__label {
-	font-weight: apTokens.$label-font-weight;
+	font-weight: 700;
 }
 </style>

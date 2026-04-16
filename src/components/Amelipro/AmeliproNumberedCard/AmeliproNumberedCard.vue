@@ -101,7 +101,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-card--numbered-wrapper {
 	padding-top: 1rem;
@@ -110,26 +109,26 @@
 .amelipro-card--numbered {
 	display: block;
 	position: relative;
-	padding: apTokens.$card-padding-desktop;
+	padding: 1rem;
 	max-width: 100%;
-	border-radius: apTokens.$card-radius;
+	border-radius: 0.75rem;
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 
-	@media #{apTokens.$media-down-md} {
-		padding: apTokens.$card-padding-tablet;
+	@media (max-width: 959.99px) {
+		padding: 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding: apTokens.$card-padding-mobile;
+	@media (max-width: 599.99px) {
+		padding: 0.75rem;
 	}
 }
 
 .amelipro-card--numbered-content {
 	width: 100%;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	font-size: 0.875rem;
+	font-weight: 400;
 }
 
 .numbered-card-item__wrapper {
@@ -143,10 +142,10 @@
 .number {
 	display: block;
 	width: 100%;
-	font-size: apTokens.$font-size-sm;
+	font-size: 1rem;
 
-	@media #{apTokens.$media-down-sm} {
-		font-size: apTokens.$font-size-xs;
+	@media (max-width: 599.99px) {
+		font-size: 0.875rem;
 	}
 
 	&::before {
@@ -156,12 +155,12 @@
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
-		border: 1px solid apTokens.$ap-blue-darken1;
-		background-color: apTokens.$ap-white;
+		border: 1px solid rgb(var(--v-theme-primary));
+		background-color: #fff;
 		content: '';
 		z-index: 1;
 
-		@media #{apTokens.$media-down-sm} {
+		@media (max-width: 599.99px) {
 			left: calc(50% - 0.75rem);
 			width: 1.5rem;
 			height: 1.5rem;
@@ -173,11 +172,11 @@
 		position: absolute;
 		top: 0.25rem;
 		width: 100%;
-		font-weight: apTokens.$ap-font-weight-bold;
+		font-weight: 700;
 		text-align: center;
 		z-index: 2;
 
-		@media #{apTokens.$media-down-sm} {
+		@media (max-width: 599.99px) {
 			top: 0.375rem;
 		}
 	}
@@ -190,7 +189,7 @@
 		max-width: calc(50% - 5px);
 
 		&:nth-child(2n+2) {
-			@media #{apTokens.$media-up-md} {
+			@media (min-width: 960px) {
 				margin-left: 10px;
 			}
 		}
@@ -199,27 +198,27 @@
 
 .items-per-line-3 {
 	& > li {
-		@media #{apTokens.$media-up-lg} {
+		@media (min-width: 1264px) {
 			width: calc((100% - 20px) / 3);
 			min-width: calc((100% - 20px) / 3);
 			max-width: calc((100% - 20px) / 3);
 		}
 
-		@media #{apTokens.$media-only-md} {
+		@media (min-width: 960px) and (max-width: 1263.99px) {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media #{apTokens.$media-only-md} {
+			@media (min-width: 960px) and (max-width: 1263.99px) {
 				margin-left: 10px;
 			}
 		}
 
 		&:nth-child(3n+2),
 		&:nth-child(3n+3) {
-			@media #{apTokens.$media-up-lg} {
+			@media (min-width: 1264px) {
 				margin-left: 10px;
 			}
 		}
@@ -228,20 +227,20 @@
 
 .items-per-line-4 {
 	& > li {
-		@media #{apTokens.$media-up-lg} {
+		@media (min-width: 1264px) {
 			width: calc(25% - 9px);
 			min-width: calc(25% - 9px);
 			max-width: calc(25% - 9px);
 		}
 
-		@media #{apTokens.$media-only-md} {
+		@media (min-width: 960px) and (max-width: 1263.99px) {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media #{apTokens.$media-only-md} {
+			@media (min-width: 960px) and (max-width: 1263.99px) {
 				margin-left: 10px;
 			}
 		}
@@ -249,7 +248,7 @@
 		&:nth-child(4n+2),
 		&:nth-child(4n+3),
 		&:nth-child(4n+4) {
-			@media #{apTokens.$media-up-lg} {
+			@media (min-width: 1264px) {
 				margin-left: 12px;
 			}
 		}
@@ -260,7 +259,7 @@
 .items-per-line-3,
 .items-per-line-4 {
 	& > li {
-		@media #{apTokens.$media-down-md} {
+		@media (max-width: 959.99px) {
 			width: 100%;
 			min-width: 100%;
 			max-width: 100%;

@@ -107,16 +107,15 @@
 	</div>
 </template>
 <style scoped lang="scss">
-	@use '@/assets/tokens';
-
+	
 	.notification {
 		display: flex;
 		align-items: center;
 		width: 100%;
 		transform: translateX(-50%);
-		padding: tokens.$gap-2 tokens.$gap-4;
-		margin-block: tokens.$gap-1;
-		gap: tokens.$gap-2 tokens.$gap-4;
+		padding: var(--v-theme-gap-2) var(--v-theme-gap-4);
+		margin-block: var(--v-theme-gap-1);
+		gap: var(--v-theme-gap-2) var(--v-theme-gap-4);
 		box-shadow:
 			0 3px 5px -1px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)),
 			0 6px 10px 0 var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)),
@@ -180,10 +179,10 @@
 
 	.notification--long-text {
 		/* stylelint-disable-next-line */
-		@media screen and (width <= tokens.$container-mobile-max-width) {
+		@media screen and (width <= 600px) {
 			flex-direction: column;
 			align-items: flex-start;
-			padding: tokens.$gap-4;
+			padding: var(--v-theme-gap-4);
 
 			.notification__actions {
 				justify-content: space-between;

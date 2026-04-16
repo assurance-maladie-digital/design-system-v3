@@ -143,7 +143,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-checkbox-input {
 	& .checkbox-label {
@@ -160,7 +159,7 @@
 			width: 1.5rem;
 			height: 1.5rem;
 			border-radius: 0.4rem;
-			border: 3px solid apTokens.$ap-blue-darken1;
+			border: 3px solid rgb(var(--v-theme-primary));
 			background-color: transparent;
 			content: '';
 		}
@@ -169,7 +168,7 @@
 	&[aria-checked='true'] {
 		& .checkbox-label {
 			&::before {
-				background-color: apTokens.$ap-blue-darken1;
+				background-color: rgb(var(--v-theme-primary));
 			}
 
 			&::after {
@@ -179,8 +178,8 @@
 				width: 0.9rem;
 				height: 0.5rem;
 				border-radius: 2px;
-				border-bottom: 3px solid apTokens.$ap-white;
-				border-left: 3px solid apTokens.$ap-white;
+				border-bottom: 3px solid #fff;
+				border-left: 3px solid #fff;
 				transform: rotate(-50deg);
 				content: '';
 			}
@@ -211,22 +210,22 @@
 			padding-left: 4rem;
 
 			&::before {
-				height: apTokens.$switch-track-height;
-				width: apTokens.$switch-track-width;
-				top: apTokens.$switch-track-top;
+				height: 2rem;
+				width: 3.5rem;
+				top: 0;
 				border-radius: 24px;
-				background-color: apTokens.$ap-grey;
+				background-color: rgb(var(--v-theme-ap-grey));
 				border: 0;
 			}
 
 			&::after {
 				position: absolute;
-				height: apTokens.$switch-thumb-height;
-				width: apTokens.$switch-thumb-width;
-				top: apTokens.$switch-thumb-top;
+				height: 1.5rem;
+				width: 1.5rem;
+				top: 0.25rem;
 				left: 4px;
 				border-radius: 24px;
-				background-color: apTokens.$ap-white;
+				background-color: #fff;
 				border: 0;
 				transition: transform 0.3s ease-in-out;
 				content: '';
@@ -236,7 +235,7 @@
 		&[aria-checked='true'] {
 			& .checkbox-label {
 				&::before {
-					background-color: apTokens.$ap-blue-darken1;
+					background-color: rgb(var(--v-theme-primary));
 				}
 
 				&::after {

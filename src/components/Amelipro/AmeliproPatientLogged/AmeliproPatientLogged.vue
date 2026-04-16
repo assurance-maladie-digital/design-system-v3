@@ -559,7 +559,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .dialog-btn {
 	white-space: normal;
@@ -572,8 +571,8 @@
 }
 
 .ident-title {
-	font-size: apTokens.$font-size-xs !important;
-	font-weight: apTokens.$ap-font-weight-bold;
+	font-size: 0.875rem !important;
+	font-weight: 700;
 	text-transform: uppercase;
 }
 </style>

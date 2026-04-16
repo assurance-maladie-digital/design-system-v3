@@ -113,7 +113,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .header-bar {
 	z-index: 1;
@@ -129,6 +128,6 @@
 }
 
 .navigation-bar {
-	background-color: apTokens.$ap-blue-darken1;
+	background-color: rgb(var(--v-theme-primary));
 }
 </style>

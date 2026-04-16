@@ -58,7 +58,6 @@
 	</div>
 </template>
 <style scoped lang="scss">
-@use '@/assets/tokens';
 
 /* stylelint-disable-next-line selector-class-pattern */
 :deep(.v-field__outline__notch, .v-field-label) {
@@ -75,12 +74,12 @@
 }
 
 :deep(.v-pagination) button:focus-visible {
-	outline: 2px solid tokens.$colors-interactive;
+	outline: 2px solid var(--v-theme-colors-interactive);
 	outline-offset: -2px;
 }
 
 :deep(.v-pagination) .v-pagination__list [aria-disabled='false'] svg {
-	color: tokens.$colors-icon-base;
+	color: rgb(var(--v-theme-iconBase));
 }
 
 :deep(.v-pagination) .v-btn--variant-plain[aria-disabled='false'] {

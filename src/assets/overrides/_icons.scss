@@ -1,24 +1,20 @@
-@use '@/assets/apTokens';
-@use '@/assets/amelipro/apTokens2026';
-@use '@/assets/tokens';
-
 .v-theme--ap.v-btn--icon .v-icon {
-	color: apTokens.$colors-icon-accent-primary !important;
+	color: rgb(var(--v-theme-iconAccentPrimary)) !important;
 	transition: color 0.2s ease;
 
 	&:hover {
-		color: apTokens.$colors-icon-accent-secondary !important;
+		color: rgb(var(--v-theme-iconAccentSecondary)) !important;
 	}
 }
 
 .v-theme--ap2026.v-btn--icon .v-icon {
-	color: apTokens2026.$ap-blue-darken1;
+	color: rgb(var(--v-theme-primary));
 	transition: color 0.2s ease;
 }
 
 .v-theme--cnam.v-btn--icon .v-icon,
 .v-theme--pa.v-btn--icon .v-icon {
-	color: tokens.$colors-icon-accent-primary;
+	color: rgb(var(--v-theme-iconAccentPrimary));
 	transition: color 0.2s ease;
 }
 
@@ -41,17 +37,17 @@
 }
 
 .v-theme--ap.v-btn--icon .v-ripple__animation {
-	background-color: apTokens.$colors-icon-accent-primary !important;
+	background-color: rgb(var(--v-theme-iconAccentPrimary)) !important;
 	opacity: 0.18;
 }
 
 .v-theme--ap2026.v-btn--icon .v-ripple__animation {
-	background-color: apTokens2026.$ap-blue-darken1 !important;
+	background-color: rgb(var(--v-theme-primary)) !important;
 	opacity: 0.18;
 }
 
 .v-theme--cnam.v-btn--icon .v-ripple__animation,
 .v-theme--pa.v-btn--icon .v-ripple__animation {
-	background-color: tokens.$colors-icon-accent-primary !important;
+	background-color: rgb(var(--v-theme-iconAccentPrimary)) !important;
 	opacity: 0.18;
 }

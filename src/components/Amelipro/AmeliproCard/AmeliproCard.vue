@@ -227,22 +227,21 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-card {
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: apTokens.$card-radius;
+	border-radius: 0.75rem;
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 }
 
 .amelipro-card__header {
-	padding-top: apTokens.$card-padding-desktop;
-	padding-left: apTokens.$card-padding-desktop;
-	padding-right: apTokens.$card-padding-desktop;
+	padding-top: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
 	padding-bottom: 0 !important;
 	word-break: break-all;
 }
@@ -253,26 +252,26 @@
 
 .amelipro-card__content {
 	width: 100%;
-	padding: apTokens.$card-padding-desktop;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	padding: 1rem;
+	font-size: 0.875rem;
+	font-weight: 400;
 
-	@media #{apTokens.$media-down-md} {
-		padding-left: apTokens.$card-padding-tablet;
-		padding-right: apTokens.$card-padding-tablet;
-		padding-bottom: apTokens.$card-padding-tablet;
+	@media (max-width: 959.99px) {
+		padding-left: 1rem;
+		padding-right: 1rem;
+		padding-bottom: 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-left: apTokens.$card-padding-mobile;
-		padding-right: apTokens.$card-padding-mobile;
-		padding-bottom: apTokens.$card-padding-tablet;
+	@media (max-width: 599.99px) {
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+		padding-bottom: 1rem;
 	}
 }
 
 .amelipro-card__header--left,
 .amelipro-card__content--left {
-	@media #{apTokens.$media-up-md} {
+	@media (min-width: 960px) {
 		padding-right: 1rem;
 	}
 }
@@ -282,31 +281,31 @@
 }
 
 .amelipro-card__right-part {
-	padding: apTokens.$card-padding-desktop apTokens.$card-padding-desktop apTokens.$card-padding-desktop 0;
+	padding: 1rem 1rem 1rem 0;
 
-	@media #{apTokens.$media-down-md} {
-		padding: 0 apTokens.$card-padding-tablet apTokens.$card-padding-tablet apTokens.$card-padding-tablet;
+	@media (max-width: 959.99px) {
+		padding: 0 1rem 1rem 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding: 0 apTokens.$card-padding-mobile apTokens.$card-padding-mobile apTokens.$card-padding-mobile;
+	@media (max-width: 599.99px) {
+		padding: 0 0.75rem 0.75rem 0.75rem;
 	}
 }
 
 .amelipro-card__right-part-content {
-	@media #{apTokens.$media-up-md} {
+	@media (min-width: 960px) {
 		padding-left: 1rem;
 		min-height: 100%;
 		border-left: 1px solid v-bind(borderColorValue);
 	}
 
-	@media #{apTokens.$media-down-md} {
-		padding-top: apTokens.$card-padding-tablet;
+	@media (max-width: 959.99px) {
+		padding-top: 1rem;
 		border-top: 1px solid v-bind(borderColorValue);
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-top: apTokens.$card-padding-mobile;
+	@media (max-width: 599.99px) {
+		padding-top: 0.75rem;
 	}
 }
 </style>

@@ -249,13 +249,12 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-clickable-tile {
 	position: relative;
 	display: flex;
-	background-color: apTokens.$ap-white;
-	border: 1px solid apTokens.$ap-grey-lighten2 !important;
+	background-color: #fff;
+	border: 1px solid rgb(var(--v-theme-primary)) !important;
 	border-radius: var(--radius-md) !important;
 	white-space: normal;
 	font-size: 1rem;
@@ -263,17 +262,17 @@
 	text-align: left;
 	align-items: center;
 	justify-content: space-between;
-	color: apTokens.$ap-grey-darken1;
+	color: rgb(var(--v-theme-ap-grey-darken-1));
 	padding: 1rem;
 
 	&--hover {
-		border-color: apTokens.$ap-blue-darken2 !important;
+		border-color: rgb(var(--v-theme-secondary)) !important;
 	}
 
 	&--disabled {
-		color: apTokens.$ap-grey-darken1 !important;
-		background-color: apTokens.$ap-grey-lighten2 !important;
-		border-color: apTokens.$ap-grey-lighten2 !important;
+		color: rgb(var(--v-theme-ap-grey-darken-1)) !important;
+		background-color: rgb(var(--v-theme-ap-grey-lighten-2)) !important;
+		border-color: rgb(var(--v-theme-ap-grey-lighten-2)) !important;
 	}
 
 	&__icon-button {
@@ -314,7 +313,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
 	& :deep(.v-btn__content) {

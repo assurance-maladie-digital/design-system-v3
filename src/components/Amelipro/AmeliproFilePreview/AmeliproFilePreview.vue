@@ -140,7 +140,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .download-file-link {
 	&:hover {
@@ -149,12 +148,12 @@
 }
 
 .download-file-link-text {
-	color: apTokens.$ap-blue-darken1;
-	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$ap-font-weight-bold;
+	color: rgb(var(--v-theme-primary));
+	font-size: 1rem;
+	font-weight: 700;
 
 	a:hover & {
-		color: apTokens.$ap-blue-darken2;
+		color: rgb(var(--v-theme-secondary));
 		text-decoration: underline;
 	}
 }

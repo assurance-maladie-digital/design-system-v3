@@ -136,7 +136,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .sy-notification-content {
 	min-width: 0;
@@ -202,7 +201,7 @@
 		opacity: 0;
 		height: 0;
 		padding-block: 0;
-		margin-block: tokens.$gap-0;
+		margin-block: var(--v-theme-gap-0);
 	}
 }
 </style>

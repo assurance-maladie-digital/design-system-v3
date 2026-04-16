@@ -254,7 +254,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 $virtual-thumb-size: 40px;
 

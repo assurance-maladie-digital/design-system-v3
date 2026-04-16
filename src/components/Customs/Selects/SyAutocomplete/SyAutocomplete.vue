@@ -627,7 +627,6 @@
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/tokens';
 
 .sy-autocomplete {
 	width: 100%;

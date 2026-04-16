@@ -499,7 +499,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .postal-code-field {
 	min-width: 140px;
@@ -531,7 +530,7 @@
 
 	label {
 		margin-bottom: 4px;
-		font-weight: apTokens.$label-font-weight;
+		font-weight: 700;
 	}
 }
 

@@ -104,7 +104,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-accordion-result {
 	display: block;
@@ -119,15 +118,15 @@
 .amelipro-accordion-result__content {
 	width: 100%;
 	padding: 1rem;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	font-size: 0.875rem;
+	font-weight: 400;
 }
 
 .heading-content {
 	width: 100%;
 	padding: 1rem 0 0 1rem;
 
-	@media #{apTokens.$media-up-md} {
+	@media (min-width: 960px) {
 		width: calc(100% - 30px);
 		padding: 1rem 0 1rem 1rem;
 	}
@@ -136,7 +135,7 @@
 .heading-content-btn {
 	padding: 1rem;
 
-	@media #{apTokens.$media-down-md} {
+	@media (max-width: 959.99px) {
 		width: 100% !important;
 		margin-top: 0.5rem;
 		padding: 0.5rem 1rem 1rem;

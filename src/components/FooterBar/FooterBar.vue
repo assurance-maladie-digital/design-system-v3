@@ -290,7 +290,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 $white: #fff;
 
@@ -334,7 +333,7 @@ a {
 		}
 
 		a.v-btn {
-			border-radius: var(tokens.$radius-rounded) !important;
+			border-radius: var(var(--v-theme-radius-rounded)) !important;
 		}
 
 		a.v-btn:hover {
@@ -343,7 +342,7 @@ a {
 	}
 
 	.back-to-top {
-		border-radius: var(tokens.$radius-rounded) !important;
+		border-radius: var(var(--v-theme-radius-rounded)) !important;
 	}
 
 	button.v-btn:hover {
@@ -370,7 +369,7 @@ a {
 		color: $white;
 
 		&.version {
-			color: tokens.$neutral-white-alpha;
+			color: #fff-alpha;
 		}
 	}
 
@@ -388,7 +387,7 @@ a {
 	}
 
 	.v-divider {
-		border-color: rgba(tokens.$colors-border-subdued, 1);
+		border-color: rgba(var(--v-theme-borderSubdued), 1);
 	}
 
 	svg {

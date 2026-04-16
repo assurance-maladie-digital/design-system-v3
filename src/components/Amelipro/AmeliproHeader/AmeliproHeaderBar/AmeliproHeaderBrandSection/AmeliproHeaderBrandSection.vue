@@ -183,7 +183,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .header-brand-section {
 	overflow: hidden;
@@ -193,30 +192,30 @@
 	}
 
 	h1.header-title {
-		font-size: apTokens.$font-size-xxl !important;
+		font-size: 1.5rem !important;
 		letter-spacing: -0.48px !important;
 
-		@media #{apTokens.$media-down-md} {
-			font-size: apTokens.$font-size-lg !important;
+		@media (max-width: 959.99px) {
+			font-size: 1.25rem !important;
 			letter-spacing: -0.4px !important;
 		}
 
-		@media #{apTokens.$media-only-xs} {
-			font-size: apTokens.$font-size-md !important;
+		@media (max-width: 599.99px) {
+			font-size: 1.125rem !important;
 			letter-spacing: -0.32px !important;
 		}
 	}
 
 	h2.header-title {
-		font-size: apTokens.$font-size-md !important;
-		color: apTokens.$ap-grey-darken1;
+		font-size: 1.125rem !important;
+		color: rgb(var(--v-theme-ap-grey-darken-1));
 
-		@media #{apTokens.$media-down-md} {
-			font-size: apTokens.$font-size-sm !important;
+		@media (max-width: 959.99px) {
+			font-size: 1rem !important;
 		}
 
-		@media #{apTokens.$media-only-xs} {
-			font-size: apTokens.$font-size-xs !important;
+		@media (max-width: 599.99px) {
+			font-size: 0.875rem !important;
 		}
 	}
 
@@ -229,11 +228,11 @@
 	.logo-amelipro {
 		width: 98px;
 
-		@media #{apTokens.$media-down-md} {
+		@media (max-width: 959.99px) {
 			width: 77px;
 		}
 
-		@media #{apTokens.$media-only-xs} {
+		@media (max-width: 599.99px) {
 			width: 52px;
 		}
 	}

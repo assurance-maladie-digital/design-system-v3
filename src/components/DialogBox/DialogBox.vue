@@ -244,8 +244,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens' as *;
-
 .sy-dialog-box-actions :deep(.v-btn) {
 	box-shadow: none;
 }
@@ -255,7 +253,7 @@
 }
 
 .v-btn--icon {
-	color: $colors-icon-base;
+	color: rgb(var(--v-theme-iconBase));
 	position: absolute;
 	right: 24px;
 }
@@ -285,7 +283,7 @@ h2 {
 	display: flex;
 	flex-direction: column;
 	justify-content: stretch;
-	gap: $spacing-small;
+	gap: 16px;
 }
 
 .sy-dialog-box-draggable .sy-dialog-box-title {
@@ -303,7 +301,7 @@ h2 {
 	user-select: none;
 }
 
-@media screen and (min-width: $container-mobile-max-width) {
+@media screen and (min-width: 600px) {
 	.sy-dialog-box-actions-ctn {
 		flex-direction: row;
 	}

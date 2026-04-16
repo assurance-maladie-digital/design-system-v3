@@ -125,7 +125,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .v-btn:deep() {
 	.v-btn__underlay,
@@ -143,6 +142,6 @@
 }
 
 .v-btn--icon .v-icon {
-	color: tokens.$grey-lighten-20;
+	color: rgb(var(--v-theme-grey-lighten20));
 }
 </style>

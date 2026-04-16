@@ -52,7 +52,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-copy-btn-wrapper {
 	position: relative;
@@ -65,9 +64,9 @@
 	right: 30px;
 	padding: 8px 16px;
 	max-width: 200px;
-	background: apTokens.$ap-white;
-	border: 1px solid apTokens.$ap-grey-lighten3;
-	border-radius: apTokens.$card-radius;
+	background: #fff;
+	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
+	border-radius: 0.75rem;
 	z-index: 10;
 }
 </style>

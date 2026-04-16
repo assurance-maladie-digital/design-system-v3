@@ -446,7 +446,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-text-field {
 	& :deep(.v-field__outline) {
@@ -465,19 +464,19 @@
 }
 
 .amelipro-validation-rules {
-	font-size: apTokens.$font-size-xs;
-	color: apTokens.$ap-grey;
+	font-size: 0.875rem;
+	color: rgb(var(--v-theme-ap-grey));
 
 	.amelipro-validation-rule {
 		&.is-valid {
-			color: apTokens.$ap-turquoise-darken1;
+			color: rgb(var(--v-theme-success));
 		}
 	}
 }
 
 .amelipro-text-field__label {
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$label-font-weight;
+	font-size: 0.875rem;
+	font-weight: 700;
 }
 
 .v-input {

@@ -310,7 +310,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 ul {
 	list-style: none;
@@ -321,7 +320,7 @@ ul {
 	min-height: unset !important;
 	padding: 0.5rem 1rem !important;
 	border-radius: 0 !important;
-	font-size: apTokens.$font-size-sm;
+	font-size: 1rem;
 
 	&.amelipro-menu__btn--open {
 		padding: 0 !important;
@@ -345,29 +344,29 @@ ul {
 .menu-btn,
 .home-menu-btn {
 	&:focus {
-		color: apTokens.$ap-blue-darken2 !important;
-		background-color: apTokens.$ap-blue-lighten3 !important;
+		color: rgb(var(--v-theme-secondary)) !important;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3)) !important;
 	}
 }
 
 .menu-btn {
 	&:focus :deep(.v-icon) {
-		color: apTokens.$ap-blue-darken2 !important;
+		color: rgb(var(--v-theme-secondary)) !important;
 	}
 }
 
 .menu-btn-close {
 	&:focus {
-		outline: 1px dotted apTokens.$ap-blue-lighten3;
+		outline: 1px dotted rgb(var(--v-theme-ap-blue-lighten-3));
 	}
 }
 
 .amelipro-menu__item--level-2,
 .amelipro-menu__item--level-3 {
 	& .v-btn {
-		font-size: apTokens.$font-size-xs;
+		font-size: 0.875rem;
 		text-transform: unset;
-		font-weight: apTokens.$ap-font-weight-regular;
+		font-weight: 400;
 	}
 }
 
@@ -379,7 +378,7 @@ ul {
 	& .amelipro-menu__item--level-3 {
 		& .v-btn {
 			padding: 0.5rem 1rem 0.5rem 2rem !important;
-			font-weight: apTokens.$ap-font-weight-regular;
+			font-weight: 400;
 		}
 	}
 }

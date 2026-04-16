@@ -540,7 +540,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .phone-field-fieldset {
 	border: 1px solid #b9b9b9;

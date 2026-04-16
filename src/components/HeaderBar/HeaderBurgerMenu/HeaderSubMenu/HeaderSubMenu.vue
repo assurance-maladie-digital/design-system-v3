@@ -93,7 +93,6 @@
 </template>
 
 <style lang="scss" scoped>
-	@use '@/assets/tokens.scss' as *;
 	@use '../../consts' as *;
 	@use '../menu';
 
@@ -112,11 +111,11 @@
 
 		&:hover {
 			background-color: rgb(var(--v-theme-primary));
-			color: $neutral-white;
+			color: #fff;
 			text-decoration: underline;
 
 			> :deep(*) {
-				color: $neutral-white !important;
+				color: #fff !important;
 			}
 		}
 
@@ -140,7 +139,7 @@
 			width: 100%;
 			height: 100%;
 			overflow-y: auto;
-			background-color: $neutral-white;
+			background-color: #fff;
 			padding-top: 40px;
 			z-index: 10;
 		}
@@ -178,11 +177,11 @@
 
 		.sub-menu--open > .sub-menu-btn {
 			background-color: rgb(var(--v-theme-primary));
-			color: $neutral-white;
+			color: #fff;
 			transition: color 0.15s linear, background-color 0.15s linear;
 
 			> :deep(*) {
-				color: $neutral-white !important;
+				color: #fff !important;
 			}
 		}
 

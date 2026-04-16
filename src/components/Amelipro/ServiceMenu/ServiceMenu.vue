@@ -174,7 +174,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 :deep(.v-overlay__content) {
 	top: 40px;
@@ -183,7 +182,7 @@
 	z-index: 8;
 	border-radius: 4px;
 
-	@media #{apTokens.$media-up-md} {
+	@media (min-width: 960px) {
 		left: -800px;
 	}
 }

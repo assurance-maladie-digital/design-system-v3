@@ -226,12 +226,11 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .total-counter {
-	background-color: apTokens.$ap-grey-lighten2;
-	border: 1px solid apTokens.$ap-grey-darken1;
-	border-radius: apTokens.$btn-radius;
+	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
+	border: 1px solid rgb(var(--v-theme-ap-grey-darken-1));
+	border-radius: 0.75rem;
 	padding: 0.75rem 1rem;
 }
 </style>

@@ -364,7 +364,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-text-field {
 	& :deep(.v-field__outline) {
@@ -379,8 +378,8 @@
 }
 
 .amelipro-autocomplete__label {
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$label-font-weight;
+	font-size: 0.875rem;
+	font-weight: 700;
 }
 
 .v-input {

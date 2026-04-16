@@ -302,7 +302,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 // Styles pour la liste HTML native
 .sy-chip-list ul {
@@ -342,30 +341,30 @@
 }
 
 .sy-chip-success {
-	color: tokens.$colors-text-success !important;
-	border: 1px solid tokens.$colors-border-success !important;
+	color: rgb(var(--v-theme-textSuccess)) !important;
+	border: 1px solid rgb(var(--v-theme-borderSuccess)) !important;
 }
 
 .sy-chip-error {
-	color: tokens.$colors-text-error !important;
-	border: 1px solid tokens.$colors-border-error !important;
+	color: rgb(var(--v-theme-textError)) !important;
+	border: 1px solid rgb(var(--v-theme-borderError)) !important;
 }
 
 .sy-chip-info {
-	color: tokens.$colors-text-info !important;
-	border: 1px solid tokens.$colors-border-info !important;
+	color: rgb(var(--v-theme-textInfo)) !important;
+	border: 1px solid rgb(var(--v-theme-borderInfo)) !important;
 }
 
 .sy-chip-warning {
-	color: tokens.$colors-text-warning !important;
-	border: 1px solid tokens.$colors-border-warning !important;
+	color: rgb(var(--v-theme-textWarning)) !important;
+	border: 1px solid rgb(var(--v-theme-borderWarning)) !important;
 }
 
 .overflow-chip {
 	cursor: pointer;
 
 	&:focus-visible {
-		outline: 2px solid tokens.$primary-base !important;
+		outline: 2px solid rgb(var(--v-theme-primary)) !important;
 		outline-offset: 2px !important;
 	}
 }
@@ -377,27 +376,27 @@
 
 // Bouton "Réinitialiser le filtre" - améliorer le contraste de la bordure de focus
 .overflow-btn:focus-visible {
-	outline: 2px solid tokens.$primary-base !important;
+	outline: 2px solid rgb(var(--v-theme-primary)) !important;
 }
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
-	outline: 2px solid tokens.$colors-border-success !important;
+	outline: 2px solid rgb(var(--v-theme-borderSuccess)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
-	outline: 2px solid tokens.$colors-border-info !important;
+	outline: 2px solid rgb(var(--v-theme-borderInfo)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
-	outline: 2px solid tokens.$colors-border-warning !important;
+	outline: 2px solid rgb(var(--v-theme-borderWarning)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
-	outline: 2px solid tokens.$colors-border-error !important;
+	outline: 2px solid rgb(var(--v-theme-borderError)) !important;
 	outline-offset: -2px !important;
 }
 </style>

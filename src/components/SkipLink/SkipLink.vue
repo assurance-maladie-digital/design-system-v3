@@ -37,8 +37,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '/src/assets/tokens';
-
 .sy-skip-link {
 	z-index: 150;
 	position: fixed;
@@ -48,6 +46,6 @@
 	width: 100%;
 	background: #fff;
 	outline: none; // Disable outline to use border
-	border: 2px solid tokens.$blue-darken-60;
+	border: 2px solid rgb(var(--v-theme-blue-darken60));
 }
 </style>

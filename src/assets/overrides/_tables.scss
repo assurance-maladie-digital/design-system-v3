@@ -1,6 +1,3 @@
-@use '@/assets/tokens';
-@use '@/assets/apTokens';
-
 .v-data-table thead th .v-data-table-header__content {
 	opacity: 0.65;
 	font-size: 0.875rem;
@@ -14,24 +11,18 @@
 
 	.v-progress-linear__background,
 	.v-progress-linear__indeterminate {
-		background: tokens.$primary-base !important;
+		background: rgb(var(--v-theme-primary)) !important;
 	}
 }
 
-// Pagination color variables
+// Pagination color variables — uses Vuetify theme CSS custom properties, theme-aware
 .theme-cnam,
-.theme-pa {
-	--pagination-color: #{tokens.$primary-base};
-	--pagination-border: #{tokens.$primary-base};
-	--pagination-ellipsis: #{tokens.$primary-base};
-	--pagination-focused-background-color: rgba(tokens.$primary-base, 0.1);
-	--pagination-background-color: #{tokens.$primary-base};
-}
-
-.theme-ap {
-	--pagination-color: #{apTokens.$primary-base};
-	--pagination-border: #{apTokens.$primary-base};
-	--pagination-ellipsis: #{apTokens.$primary-base};
-	--pagination-focused-background-color: rgba(apTokens.$primary-base, 0.1);
-	--pagination-background-color: #{apTokens.$primary-base};
+.theme-pa,
+.theme-ap,
+.theme-ap2026 {
+	--pagination-color: rgb(var(--v-theme-primary));
+	--pagination-border: rgb(var(--v-theme-primary));
+	--pagination-ellipsis: rgb(var(--v-theme-primary));
+	--pagination-focused-background-color: rgba(var(--v-theme-primary), 0.1);
+	--pagination-background-color: rgb(var(--v-theme-primary));
 }

@@ -329,7 +329,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .v-select {
 	& :deep(.v-select__selection--comma) {
@@ -352,8 +351,8 @@
 }
 
 :deep(.v-input__slot) {
-	min-height: apTokens.$input-min-height !important;
-	border-radius: apTokens.$input-radius;
+	min-height: 2.625rem !important;
+	border-radius: 0.5rem;
 
 	fieldset {
 		border: 0;
@@ -361,8 +360,8 @@
 }
 
 .amelipro-select__label {
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$label-font-weight;
+	font-size: 0.875rem;
+	font-weight: 700;
 }
 
 .v-list {
@@ -373,13 +372,12 @@
 </style>
 
 <style lang="scss">
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-select-menu {
 	.v-list-item--active .v-list-item__overlay,
 	.v-list-item--selected .v-list-item__overlay,
 	.v-list-item[aria-selected='true'] .v-list-item__overlay {
-		background-color: apTokens.$ap-blue-lighten3 !important;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3)) !important;
 		opacity: 1;
 	}
 
@@ -401,7 +399,7 @@
 	.v-list-item[aria-selected='true'] .v-list-item-subtitle,
 	.v-list-item[aria-selected='true'] .v-list-item__title,
 	.v-list-item[aria-selected='true'] .v-list-item__subtitle {
-		color: apTokens.$ap-blue-darken1 !important;
+		color: rgb(var(--v-theme-primary)) !important;
 		position: relative;
 		z-index: 1;
 	}

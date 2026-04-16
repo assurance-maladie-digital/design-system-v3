@@ -107,7 +107,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 input {
 	position: absolute;
@@ -122,17 +121,17 @@ input {
 
 .hover-style {
 	&:hover {
-		background-color: apTokens.$ap-blue-lighten3 !important;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3)) !important;
 	}
 }
 
 .selected-border {
-	border: 1px solid apTokens.$ap-blue;
+	border: 1px solid rgb(var(--v-theme-ap-blue));
 }
 
 .structure {
-	font-size: apTokens.$font-size-xs;
-	color: apTokens.$ap-grey-darken1;
+	font-size: 0.875rem;
+	color: rgb(var(--v-theme-ap-grey-darken-1));
 
 	.name {
 		font-weight: 600;

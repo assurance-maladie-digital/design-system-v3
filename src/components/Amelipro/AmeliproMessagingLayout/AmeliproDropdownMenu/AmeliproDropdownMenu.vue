@@ -194,14 +194,13 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .dropdown-menu {
 	position: relative;
 }
 
 .dropdown-menu__open-btn {
-	border: 1px solid apTokens.$ap-grey !important;
+	border: 1px solid rgb(var(--v-theme-ap-grey)) !important;
 
 	& :deep(.v-btn__content) {
 		justify-content: space-between;
@@ -219,7 +218,7 @@
 	top: 100%;
 	left: 0;
 	width: 100%;
-	border: 1px solid apTokens.$ap-grey !important;
+	border: 1px solid rgb(var(--v-theme-ap-grey)) !important;
 	z-index: 10;
 }
 </style>

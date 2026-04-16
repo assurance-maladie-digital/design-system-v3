@@ -283,86 +283,85 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-card--multi-folding {
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: apTokens.$card-radius;
+	border-radius: 0.75rem;
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 }
 
 .amelipro-card--multi-folding-header {
-	padding-top: apTokens.$card-padding-desktop;
-	padding-left: apTokens.$card-padding-desktop;
-	padding-right: apTokens.$card-padding-desktop;
+	padding-top: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
 	padding-bottom: 0 !important;
 	word-break: break-all;
 
-	@media #{apTokens.$media-down-md} {
-		padding-top: apTokens.$card-padding-tablet;
-		padding-left: apTokens.$card-padding-tablet;
-		padding-right: apTokens.$card-padding-tablet;
+	@media (max-width: 959.99px) {
+		padding-top: 1rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-top: apTokens.$card-padding-mobile;
-		padding-left: apTokens.$card-padding-mobile;
-		padding-right: apTokens.$card-padding-mobile;
+	@media (max-width: 599.99px) {
+		padding-top: 0.75rem;
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
 	}
 }
 
 .amelipro-card--multi-folding-content {
 	width: 100%;
-	padding: apTokens.$card-padding-desktop;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	padding: 1rem;
+	font-size: 0.875rem;
+	font-weight: 400;
 
-	@media #{apTokens.$media-down-md} {
-		padding-left: apTokens.$card-padding-tablet;
-		padding-right: apTokens.$card-padding-tablet;
-		padding-bottom: apTokens.$card-padding-tablet;
+	@media (max-width: 959.99px) {
+		padding-left: 1rem;
+		padding-right: 1rem;
+		padding-bottom: 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-left: apTokens.$card-padding-mobile;
-		padding-right: apTokens.$card-padding-mobile;
-		padding-bottom: apTokens.$card-padding-mobile;
+	@media (max-width: 599.99px) {
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+		padding-bottom: 0.75rem;
 	}
 }
 
 .classic-btn {
 	position: relative;
-	padding: apTokens.$multi-folding-btn-padding-y apTokens.$multi-folding-btn-padding-x;
-	border: 1px solid apTokens.$ap-blue-darken1;
-	border-radius: apTokens.$multi-folding-btn-radius;
-	background-color: apTokens.$ap-white;
-	color: apTokens.$ap-blue-darken1;
-	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$multi-folding-btn-font-weight;
+	padding: 0.5rem 2rem;
+	border: 1px solid rgb(var(--v-theme-primary));
+	border-radius: 0.75rem;
+	background-color: #fff;
+	color: rgb(var(--v-theme-primary));
+	font-size: 1rem;
+	font-weight: 700;
 	cursor: pointer;
 
 	&.active-btn {
-		background-color: apTokens.$ap-blue-lighten3;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3));
 	}
 
 	&.checked-btn {
-		border: 1px solid apTokens.$ap-turquoise-darken1;
-		background-color: apTokens.$ap-turquoise-lighten1;
-		color: apTokens.$ap-turquoise-darken1;
+		border: 1px solid rgb(var(--v-theme-success));
+		background-color: rgb(var(--v-theme-ap-turquoise-lighten-1));
+		color: rgb(var(--v-theme-success));
 	}
 
 	&.error-btn {
-		border: 1px solid apTokens.$ap-red-darken1;
-		background-color: apTokens.$ap-red-lighten3;
-		color: apTokens.$ap-red-darken1;
+		border: 1px solid rgb(var(--v-theme-ap-red-darken-1));
+		background-color: rgb(var(--v-theme-ap-red-lighten-3));
+		color: rgb(var(--v-theme-ap-red-darken-1));
 	}
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
 	&:disabled {

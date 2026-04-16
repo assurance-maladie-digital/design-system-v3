@@ -109,7 +109,6 @@
 
 <style scoped lang="scss">
 @use '../consts' as *;
-@use '@/assets/tokens.scss' as *;
 
 .logo {
 	display: flex;

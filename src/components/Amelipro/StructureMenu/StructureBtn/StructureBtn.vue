@@ -52,7 +52,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .v-btn {
 	letter-spacing: unset;
@@ -74,10 +73,10 @@
 	}
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
-	@media #{apTokens.$media-only-xs} {
+	@media (max-width: 599.99px) {
 		margin-bottom: 8px;
 		width: 100% !important;
 	}
@@ -87,7 +86,7 @@
 	opacity: 1 !important;
 
 	:deep(.v-btn__content) {
-		color: apTokens.$ap-grey !important;
+		color: rgb(var(--v-theme-ap-grey)) !important;
 	}
 }
 </style>

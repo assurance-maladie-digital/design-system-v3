@@ -207,13 +207,12 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .patient-banner__separator {
 	height: 3px;
 	width: 100%;
 	margin: 1rem 0;
 	border: 0;
-	background-color: apTokens.$ap-grey-lighten2;
+	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 }
 </style>

@@ -1,11 +1,8 @@
-@use 'sass:color';
-@use '@/assets/tokens';
-
 @mixin tablestyles {
 	.v-table {
-		border: 1px solid tokens.$grey-lighten-80;
+		border: 1px solid rgb(var(--v-theme-grey-lighten80));
 
-		--sy-table-header-bg-pinned: #{color.mix(tokens.$blue-lighten-80, #fff, 20%)};
+		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-blue-lighten80)) 20%, white);
 
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
@@ -20,13 +17,13 @@
 
 	table thead tr.filters,
 	table thead tr.reset {
-		background-color: tokens.$blue-lighten-90;
+		background-color: rgb(var(--v-theme-blue-lighten90));
 	}
 
 	caption,
 	table thead tr.headers,
 	table thead tr.reset {
-		background-color: rgba(tokens.$blue-lighten-80, 0.2);
+		background-color: rgba(var(--v-theme-blue-lighten80), 0.2);
 	}
 
 	&.fixed-min-height {
@@ -47,13 +44,13 @@
 			.v-field__append-inner > .v-icon,
 			.v-field__clearable > .v-icon {
 				opacity: 1;
-				color: tokens.$primary-base;
+				color: rgb(var(--v-theme-primary));
 			}
 		}
 
 		&--focused {
-			border-color: tokens.$primary-base;
-			color: tokens.$primary-base;
+			border-color: rgb(var(--v-theme-primary));
+			color: rgb(var(--v-theme-primary));
 		}
 	}
 
@@ -84,7 +81,7 @@
 	}
 
 	.v-data-table-rows-no-data {
-		color: tokens.$grey-base;
+		color: rgb(var(--v-theme-grey-base));
 	}
 
 	// Ensure loading progress bar appears above sticky/pinned header cells
@@ -104,7 +101,7 @@
 
 	.v-table tbody > tr.sy-table__clickable-row:focus-visible,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible {
-		outline: 2px solid tokens.$primary-base;
+		outline: 2px solid rgb(var(--v-theme-primary));
 	}
 
 	.v-table tbody > tr.sy-table__clickable-row > td,
@@ -123,6 +120,6 @@
 	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td {
-		background-color: rgba(tokens.$primary-base, 0.08) !important;
+		background-color: rgba(var(--v-theme-primary), 0.08) !important;
 	}
 }

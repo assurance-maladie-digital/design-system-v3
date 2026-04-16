@@ -147,7 +147,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .tooth-btn {
 	border-radius: 8px;
@@ -155,7 +154,7 @@
 	min-height: 100%;
 
 	&:hover {
-		background-color: apTokens.$ap-blue-lighten4;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-4));
 	}
 
 	& img {

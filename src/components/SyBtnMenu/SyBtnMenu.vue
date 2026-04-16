@@ -260,7 +260,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .sy-user-menu-btn-ctn {
 	position: relative;
@@ -285,12 +284,12 @@
 	}
 
 	&:focus::before {
-		background: tokens.$blue-base;
+		background: rgb(var(--v-theme-blue-base));
 		opacity: 0.08;
 	}
 
 	&:focus {
-		background: rgba(tokens.$blue-base, 0.08) !important;
+		background: rgba(var(--v-theme-blue-base), 0.08) !important;
 	}
 
 	.subtitle {

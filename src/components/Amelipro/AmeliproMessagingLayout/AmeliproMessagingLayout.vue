@@ -143,38 +143,37 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .messaging-menu {
-	@media #{apTokens.$media-only-xs} {
+	@media (max-width: 599.99px) {
 		padding: 0 10px 24px;
 	}
 
-	@media #{apTokens.$media-only-sm} {
+	@media (min-width: 600px) and (max-width: 959.99px) {
 		padding: 10px 16px;
 	}
 }
 
 .messaging-menu__new-message {
-	@media #{apTokens.$media-up-md} {
+	@media (min-width: 960px) {
 		display: flex;
 		justify-content: center;
 		width: 100%;
 		margin: 38px auto;
 	}
 
-	@media #{apTokens.$media-only-xs} {
+	@media (max-width: 599.99px) {
 		width: 100%;
 		margin: 24px 0 16px;
 	}
 
-	@media #{apTokens.$media-only-sm} {
+	@media (min-width: 600px) and (max-width: 959.99px) {
 		margin-right: 20px;
 	}
 }
 
 .messaging-menu__new-message-btn {
-	@media #{apTokens.$media-only-xs} {
+	@media (max-width: 599.99px) {
 		width: 100%;
 	}
 
@@ -184,7 +183,7 @@
 }
 
 .messaging-menu--desktop {
-	@media #{apTokens.$media-up-md} {
+	@media (min-width: 960px) {
 		margin-bottom: 30px;
 	}
 }

@@ -227,7 +227,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .v-input.amelipro-switch {
 	margin-top: 0;
@@ -237,7 +236,7 @@
 	width: 50% !important;
 	max-width: 50% !important;
 
-	@media #{apTokens.$media-down-md} {
+	@media (max-width: 959.99px) {
 		width: 100% !important;
 		max-width: 100% !important;
 	}

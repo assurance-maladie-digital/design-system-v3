@@ -216,15 +216,14 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .ident-title {
-	font-size: apTokens.$font-size-xs !important;
+	font-size: 0.875rem !important;
 	text-align: center;
-	font-weight: apTokens.$ap-font-weight-bold;
+	font-weight: 700;
 	text-transform: uppercase;
 
-	@media #{apTokens.$media-up-md} {
+	@media (min-width: 960px) {
 		text-align: left;
 	}
 }

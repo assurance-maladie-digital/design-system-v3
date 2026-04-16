@@ -282,7 +282,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss' as *;
 @use '@/components/HeaderBar/consts' as *;
 
 .horizontal-menu {

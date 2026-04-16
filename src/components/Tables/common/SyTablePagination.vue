@@ -224,7 +224,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .sy-table-pagination {
 	display: flex;

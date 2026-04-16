@@ -119,8 +119,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-@use '@/assets/apTokens';
 @use 'sass:map';
 
 .sy-alert {
@@ -128,7 +126,7 @@
 }
 
 .alert {
-	padding: tokens.$padding-4;
+	padding: var(--v-theme-padding-4);
 }
 
 .alert-icon {
@@ -187,15 +185,15 @@
 	.alert {
 		display: flex;
 		flex-direction: column;
-		background-color: tokens.$white-base;
+		background-color: #fff;
 
 		:deep(.v-alert__content) {
 			align-self: flex-start !important;
-			margin-top: tokens.$padding-4;
+			margin-top: var(--v-theme-padding-4);
 		}
 
 		:deep(.v-alert__close) {
-			margin-top: tokens.$padding-4;
+			margin-top: var(--v-theme-padding-4);
 			align-self: flex-end;
 		}
 
@@ -219,7 +217,7 @@
 @mixin redesign($type, $map) {
 	&.alert--#{$type}.v-alert--variant-tonal {
 		background: map.get($map, 'background') !important;
-		color: tokens.$colors-text-base !important;
+		color: rgb(var(--v-theme-textBase)) !important;
 
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;
@@ -299,7 +297,7 @@
 
 .v-alert.v-theme--dark {
 	&.v-alert--variant-outlined {
-		background-color: tokens.$white-base !important;
+		background-color: #fff !important;
 	}
 
 	.alert-close-btn {

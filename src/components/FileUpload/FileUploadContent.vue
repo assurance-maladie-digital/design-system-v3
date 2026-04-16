@@ -88,7 +88,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .sy-file-upload-placeholder {
 	display: flex;
@@ -98,14 +97,14 @@
 
 .sy-file-upload-caption {
 	font-size: 0.875rem;
-	color: tokens.$colors-text-subdued;
+	color: rgb(var(--v-theme-textSubdued));
 }
 
 .sy-file-upload-btn {
-	border-radius: tokens.$radius-rounded;
+	border-radius: var(--v-theme-radius-rounded);
 	transition: background 0.25s;
 	font-weight: 700 !important;
-	font-size: tokens.$heading-3-font-size;
+	font-size: 16px;
 	padding: 10px 16px;
 }
 </style>

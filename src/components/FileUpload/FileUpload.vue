@@ -167,7 +167,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .sy-file-upload-wrapper {
 	display: contents;
@@ -176,14 +175,14 @@
 .sy-file-upload {
 	cursor: pointer;
 	position: relative;
-	border: 1px dashed tokens.$colors-border-accent-primary;
-	border-radius: tokens.$radius-rounded-lg;
+	border: 1px dashed rgb(var(--v-theme-borderAccentPrimary));
+	border-radius: var(--v-theme-radius-rounded)-lg;
 	transition: background 0.25s;
 
 	&:hover,
 	&:focus-within,
 	&.dragover {
-		background: tokens.$colors-background-surface-alt;
+		background: rgb(var(--v-theme-backgroundSurfaceAlt));
 	}
 
 	&.dark-mode {

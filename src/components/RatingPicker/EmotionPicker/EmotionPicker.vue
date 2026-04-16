@@ -179,7 +179,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 
 .sy-emotion-picker {
 	display: flex;
@@ -201,15 +200,15 @@
 	flex-direction: column;
 
 	&.sad {
-		color: tokens.$orange-darken-20 !important;
+		color: rgb(var(--v-theme-orange-darken20)) !important;
 	}
 
 	&.neutral {
-		color: tokens.$yellow-darken-60 !important;
+		color: rgb(var(--v-theme-yellow-darken60)) !important;
 	}
 
 	&.happy {
-		color: tokens.$turquoise-darken-60 !important;
+		color: rgb(var(--v-theme-turquoise-darken60)) !important;
 	}
 
 	&--active.sy-emotion-picker__item--disabled .v-icon {
@@ -228,15 +227,15 @@
 	&:focus,
 	&:hover {
 		&.sad {
-			background: tokens.$orange-lighten-90;
+			background: rgb(var(--v-theme-orange-lighten90));
 		}
 
 		&.neutral {
-			background: tokens.$yellow-lighten-90;
+			background: rgb(var(--v-theme-yellow-lighten90));
 		}
 
 		&.happy {
-			background: tokens.$turquoise-lighten-90;
+			background: rgb(var(--v-theme-turquoise-lighten90));
 		}
 	}
 

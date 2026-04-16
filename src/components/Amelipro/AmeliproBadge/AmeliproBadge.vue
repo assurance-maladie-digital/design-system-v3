@@ -52,7 +52,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
 
 .amelipro-badge {
 	display: inline-block;
@@ -70,7 +69,7 @@
 
 .amelipro-badge__content {
 	display: inline-block;
-	font-size: apTokens.$font-size-sm !important;
-	font-weight: apTokens.$ap-font-weight-bold !important;
+	font-size: 1rem !important;
+	font-weight: 700 !important;
 }
 </style>
