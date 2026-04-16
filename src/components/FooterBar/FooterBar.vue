@@ -330,7 +330,7 @@ a {
 		}
 
 		a.v-btn {
-			border-radius: var(var(--v-theme-radius-rounded)) !important;
+			border-radius: var(--v-radius-rounded) !important;
 		}
 
 		a.v-btn:hover {
@@ -339,7 +339,7 @@ a {
 	}
 
 	.back-to-top {
-		border-radius: var(var(--v-theme-radius-rounded)) !important;
+		border-radius: var(--v-radius-rounded) !important;
 	}
 
 	button.v-btn:hover {

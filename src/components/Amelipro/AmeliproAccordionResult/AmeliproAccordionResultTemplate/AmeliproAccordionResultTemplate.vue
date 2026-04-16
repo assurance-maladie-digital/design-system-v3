@@ -119,8 +119,8 @@
 .amelipro-accordion-result__content {
 	width: 100%;
 	padding: 1rem;
-	font-size: var(--v-theme-ap-fontSizeXs);
-	font-weight: var(--v-theme-ap-fontWeightRegular);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 }
 
 .heading-content {

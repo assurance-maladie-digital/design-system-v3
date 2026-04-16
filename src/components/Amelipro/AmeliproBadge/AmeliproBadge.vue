@@ -55,10 +55,10 @@
 .amelipro-badge {
 	display: inline-block;
 	margin-left: 0.5rem;
-	padding: var(--v-theme-ap-btnPaddingY) var(--v-theme-ap-btnPaddingX) !important;
+	padding: var(--v-ap-btnPaddingY) var(--v-ap-btnPaddingX) !important;
 
 	&.round-custom {
-		border-radius: var(--v-theme-ap-inputRadius) 1rem 1rem 0.5rem;
+		border-radius: var(--v-ap-inputRadius) 1rem 1rem 0.5rem;
 	}
 
 	&.round-classic {
@@ -68,7 +68,7 @@
 
 .amelipro-badge__content {
 	display: inline-block;
-	font-size: var(--v-theme-ap-fontSizeSm) !important;
-	font-weight: var(--v-theme-ap-fontWeightBold) !important;
+	font-size: var(--v-ap-fontSizeSm) !important;
+	font-weight: var(--v-ap-fontWeightBold) !important;
 }
 </style>

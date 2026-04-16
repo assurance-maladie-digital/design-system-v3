@@ -308,7 +308,7 @@
 .captcha-audio :deep(.v-btn__content) span {
 	display: flex;
 	align-items: center;
-	gap: var(--v-theme-gap-2);
+	gap: var(--v-gap-2);
 	letter-spacing: 0%;
 }
 

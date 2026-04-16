@@ -64,10 +64,10 @@
 .v-btn {
 	padding: 0 !important;
 	border-radius: 0 !important;
-	min-height: var(--v-theme-ap-btnMinHeight) !important;
+	min-height: var(--v-ap-btnMinHeight) !important;
 	min-width: 2.5rem !important;
-	font-size: var(--v-theme-ap-fontSizeMd) !important;
-	font-weight: var(--v-theme-ap-fontWeightBold) !important;
+	font-size: var(--v-ap-fontSizeMd) !important;
+	font-weight: var(--v-ap-fontWeightBold) !important;
 	text-align: center !important;
 
 	& :deep(.v-btn__content) {

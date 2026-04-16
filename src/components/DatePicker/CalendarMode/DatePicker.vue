@@ -1270,7 +1270,7 @@
 }
 
 :deep(.v-btn__content) {
-	font-size: var(--v-theme-fontSize-corpsDeTexte) + 3;
+	font-size: var(--v-fontSize-corpsDeTexte) + 3;
 	font-weight: bold;
 }
 

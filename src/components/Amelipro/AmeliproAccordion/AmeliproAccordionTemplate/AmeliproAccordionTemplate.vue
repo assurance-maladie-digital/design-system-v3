@@ -183,7 +183,7 @@
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: var(--v-theme-ap-btnRadius);
+	border-radius: var(--v-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
@@ -213,8 +213,8 @@
 .amelipro-accordion__wrapper {
 	width: 100%;
 	padding: 0 1rem;
-	font-size: var(--v-theme-ap-fontSizeXs);
-	font-weight: var(--v-theme-ap-fontWeightRegular);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 
 	@media #{bp.$down-sm} {
 		padding: 0 1rem;

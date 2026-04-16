@@ -219,9 +219,9 @@
 @use '@/assets/overrides/breakpoints' as bp;
 
 .ident-title {
-	font-size: var(--v-theme-ap-fontSizeXs) !important;
+	font-size: var(--v-ap-fontSizeXs) !important;
 	text-align: center;
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-weight: var(--v-ap-fontWeightBold);
 	text-transform: uppercase;
 
 	@media #{bp.$up-md} {

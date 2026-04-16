@@ -352,7 +352,7 @@
 	position: relative;
 	padding: 1rem 3rem 1rem 1rem;
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-2));
-	border-radius: var(--v-theme-ap-inputRadius);
+	border-radius: var(--v-ap-inputRadius);
 
 	.mail-btn--editable & {
 		border-top-left-radius: 0;

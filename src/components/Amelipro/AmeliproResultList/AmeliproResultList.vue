@@ -229,7 +229,7 @@
 .total-counter {
 	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 	border: 1px solid rgb(var(--v-theme-ap-grey-darken-1));
-	border-radius: var(--v-theme-ap-btnRadius);
-	padding: var(--v-theme-ap-cardPaddingMobile) var(--v-theme-ap-cardPaddingDesktop);
+	border-radius: var(--v-ap-btnRadius);
+	padding: var(--v-ap-cardPaddingMobile) var(--v-ap-cardPaddingDesktop);
 }
 </style>

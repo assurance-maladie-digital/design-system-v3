@@ -126,7 +126,7 @@
 }
 
 .alert {
-	padding: var(--v-theme-padding-4);
+	padding: var(--v-padding-4);
 }
 
 .alert-icon {
@@ -163,7 +163,7 @@
 	letter-spacing: normal;
 
 	span {
-		font-size: var(--v-theme-fontSize-liensEtLibelles);
+		font-size: var(--v-fontSize-liensEtLibelles);
 	}
 
 	&:focus-visible {
@@ -189,11 +189,11 @@
 
 		:deep(.v-alert__content) {
 			align-self: flex-start !important;
-			margin-top: var(--v-theme-padding-4);
+			margin-top: var(--v-padding-4);
 		}
 
 		:deep(.v-alert__close) {
-			margin-top: var(--v-theme-padding-4);
+			margin-top: var(--v-padding-4);
 			align-self: flex-end;
 		}
 

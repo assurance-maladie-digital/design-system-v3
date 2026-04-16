@@ -317,9 +317,9 @@ ul {
 .v-btn {
 	display: flex;
 	min-height: unset !important;
-	padding: var(--v-theme-ap-btnPaddingY) var(--v-theme-ap-btnPaddingX) !important;
+	padding: var(--v-ap-btnPaddingY) var(--v-ap-btnPaddingX) !important;
 	border-radius: 0 !important;
-	font-size: var(--v-theme-ap-fontSizeSm);
+	font-size: var(--v-ap-fontSizeSm);
 
 	&.amelipro-menu__btn--open {
 		padding: 0 !important;
@@ -363,21 +363,21 @@ ul {
 .amelipro-menu__item--level-2,
 .amelipro-menu__item--level-3 {
 	& .v-btn {
-		font-size: var(--v-theme-ap-fontSizeXs);
+		font-size: var(--v-ap-fontSizeXs);
 		text-transform: unset;
-		font-weight: var(--v-theme-ap-fontWeightRegular);
+		font-weight: var(--v-ap-fontWeightRegular);
 	}
 }
 
 .amelipro-menu__item--level-2 {
 	& .v-btn {
-		padding: var(--v-theme-ap-btnPaddingY) var(--v-theme-ap-btnPaddingX) !important;
+		padding: var(--v-ap-btnPaddingY) var(--v-ap-btnPaddingX) !important;
 	}
 
 	& .amelipro-menu__item--level-3 {
 		& .v-btn {
-			padding: var(--v-theme-ap-btnPaddingY) var(--v-theme-ap-btnPaddingX) 0.5rem 2rem !important;
-			font-weight: var(--v-theme-ap-fontWeightRegular);
+			padding: var(--v-ap-btnPaddingY) var(--v-ap-btnPaddingX) 0.5rem 2rem !important;
+			font-weight: var(--v-ap-fontWeightRegular);
 		}
 	}
 }

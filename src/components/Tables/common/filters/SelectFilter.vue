@@ -225,7 +225,7 @@
 	top: 1px;
 	left: 12px;
 	color: rgb(0 0 0 / 60%);
-	font-size: var(--v-theme-fontSize-liensEtLibelles);
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 36px; /* Adjust based on your select height */
 	pointer-events: none;
 	width: calc(100% - 40px); /* Leave space for the dropdown icon */

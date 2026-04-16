@@ -112,7 +112,7 @@
 	position: relative;
 	padding: 1rem;
 	max-width: 100%;
-	border-radius: var(--v-theme-ap-btnRadius);
+	border-radius: var(--v-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
@@ -128,8 +128,8 @@
 
 .amelipro-card--numbered-content {
 	width: 100%;
-	font-size: var(--v-theme-ap-fontSizeXs);
-	font-weight: var(--v-theme-ap-fontWeightRegular);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 }
 
 .numbered-card-item__wrapper {
@@ -143,10 +143,10 @@
 .number {
 	display: block;
 	width: 100%;
-	font-size: var(--v-theme-ap-fontSizeSm);
+	font-size: var(--v-ap-fontSizeSm);
 
 	@media #{bp.$down-xs} {
-		font-size: var(--v-theme-ap-fontSizeXs);
+		font-size: var(--v-ap-fontSizeXs);
 	}
 
 	&::before {
@@ -173,7 +173,7 @@
 		position: absolute;
 		top: 0.25rem;
 		width: 100%;
-		font-weight: var(--v-theme-ap-fontWeightBold);
+		font-weight: var(--v-ap-fontWeightBold);
 		text-align: center;
 		z-index: 2;
 

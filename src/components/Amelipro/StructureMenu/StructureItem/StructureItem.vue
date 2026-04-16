@@ -129,7 +129,7 @@ input {
 }
 
 .structure {
-	font-size: var(--v-theme-ap-fontSizeXs);
+	font-size: var(--v-ap-fontSizeXs);
 	color: rgb(var(--v-theme-ap-grey-darken-1));
 
 	.name {

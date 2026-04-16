@@ -61,11 +61,11 @@
 	position: absolute;
 	top: -10px;
 	right: 30px;
-	padding: var(--v-theme-padding-2) var(--v-theme-padding-4);
+	padding: var(--v-padding-2) var(--v-padding-4);
 	max-width: 200px;
 	background: rgb(var(--v-theme-surface));
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
-	border-radius: var(--v-theme-ap-btnRadius);
+	border-radius: var(--v-ap-btnRadius);
 	z-index: 10;
 }
 </style>

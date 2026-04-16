@@ -309,21 +309,21 @@
 	}
 
 	&.dialog-radius :deep(.v-overlay__content) {
-		border-radius: var(--v-theme-ap-btnRadius);
+		border-radius: var(--v-ap-btnRadius);
 	}
 }
 
 .dialog {
-	padding: var(--v-theme-ap-dialogPadding);
+	padding: var(--v-ap-dialogPadding);
 }
 
 .dialog__header {
-	padding-bottom: var(--v-theme-ap-btnPaddingY);
+	padding-bottom: var(--v-ap-btnPaddingY);
 	border-bottom: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 }
 
 .dialog__title {
 	width: calc(100% - 60px);
-	font-size: var(--v-theme-ap-fontSizeLg);
+	font-size: var(--v-ap-fontSizeLg);
 }
 </style>

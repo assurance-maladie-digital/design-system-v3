@@ -266,8 +266,8 @@
 @use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-custom-selector__label {
-	font-size: var(--v-theme-ap-fontSizeSm);
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-size: var(--v-ap-fontSizeSm);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 .amelipro-custom-selector__item {

@@ -297,7 +297,6 @@
 	flex-wrap: wrap;
 	gap: 16px;
 	padding: 16px 0;
-	background-color: rgb(var(--v-theme-surface, 255, 255, 255));
 	border-bottom: 1px solid var(--v-border-color);
 
 	&-item {

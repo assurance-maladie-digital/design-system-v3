@@ -100,10 +100,10 @@
 }
 
 .sy-file-upload-btn {
-	border-radius: var(--v-theme-radius-rounded);
+	border-radius: var(--v-radius-rounded);
 	transition: background 0.25s;
 	font-weight: 700 !important;
-	font-size: var(--v-theme-fontSize-corpsDeTexte);
+	font-size: var(--v-fontSize-corpsDeTexte);
 	padding: 10px 16px;
 }
 </style>

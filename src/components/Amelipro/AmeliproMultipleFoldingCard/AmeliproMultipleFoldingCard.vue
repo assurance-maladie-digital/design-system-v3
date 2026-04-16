@@ -289,60 +289,60 @@
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: var(--v-theme-ap-btnRadius);
+	border-radius: var(--v-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 }
 
 .amelipro-card--multi-folding-header {
-	padding-top: var(--v-theme-ap-cardPaddingDesktop);
-	padding-left: var(--v-theme-ap-cardPaddingDesktop);
-	padding-right: var(--v-theme-ap-cardPaddingDesktop);
+	padding-top: var(--v-ap-cardPaddingDesktop);
+	padding-left: var(--v-ap-cardPaddingDesktop);
+	padding-right: var(--v-ap-cardPaddingDesktop);
 	padding-bottom: 0 !important;
 	word-break: break-all;
 
 	@media #{bp.$down-sm} {
-		padding-top: var(--v-theme-ap-cardPaddingDesktop);
-		padding-left: var(--v-theme-ap-cardPaddingDesktop);
-		padding-right: var(--v-theme-ap-cardPaddingDesktop);
+		padding-top: var(--v-ap-cardPaddingDesktop);
+		padding-left: var(--v-ap-cardPaddingDesktop);
+		padding-right: var(--v-ap-cardPaddingDesktop);
 	}
 
 	@media #{bp.$down-xs} {
-		padding-top: var(--v-theme-ap-cardPaddingMobile);
-		padding-left: var(--v-theme-ap-cardPaddingMobile);
-		padding-right: var(--v-theme-ap-cardPaddingMobile);
+		padding-top: var(--v-ap-cardPaddingMobile);
+		padding-left: var(--v-ap-cardPaddingMobile);
+		padding-right: var(--v-ap-cardPaddingMobile);
 	}
 }
 
 .amelipro-card--multi-folding-content {
 	width: 100%;
-	padding: var(--v-theme-ap-cardPaddingDesktop);
-	font-size: var(--v-theme-ap-fontSizeXs);
-	font-weight: var(--v-theme-ap-fontWeightRegular);
+	padding: var(--v-ap-cardPaddingDesktop);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 
 	@media #{bp.$down-sm} {
-		padding-left: var(--v-theme-ap-cardPaddingDesktop);
-		padding-right: var(--v-theme-ap-cardPaddingDesktop);
-		padding-bottom: var(--v-theme-ap-cardPaddingDesktop);
+		padding-left: var(--v-ap-cardPaddingDesktop);
+		padding-right: var(--v-ap-cardPaddingDesktop);
+		padding-bottom: var(--v-ap-cardPaddingDesktop);
 	}
 
 	@media #{bp.$down-xs} {
-		padding-left: var(--v-theme-ap-cardPaddingMobile);
-		padding-right: var(--v-theme-ap-cardPaddingMobile);
-		padding-bottom: var(--v-theme-ap-cardPaddingMobile);
+		padding-left: var(--v-ap-cardPaddingMobile);
+		padding-right: var(--v-ap-cardPaddingMobile);
+		padding-bottom: var(--v-ap-cardPaddingMobile);
 	}
 }
 
 .classic-btn {
 	position: relative;
-	padding: var(--v-theme-ap-multiFoldingBtnPaddingY) var(--v-theme-ap-multiFoldingBtnPaddingX);
+	padding: var(--v-ap-multiFoldingBtnPaddingY) var(--v-ap-multiFoldingBtnPaddingX);
 	border: 1px solid rgb(var(--v-theme-primary));
-	border-radius: var(--v-theme-ap-btnRadius);
+	border-radius: var(--v-ap-btnRadius);
 	background-color: rgb(var(--v-theme-surface));
 	color: rgb(var(--v-theme-primary));
-	font-size: var(--v-theme-ap-fontSizeSm);
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-size: var(--v-ap-fontSizeSm);
+	font-weight: var(--v-ap-fontWeightBold);
 	cursor: pointer;
 
 	&.active-btn {

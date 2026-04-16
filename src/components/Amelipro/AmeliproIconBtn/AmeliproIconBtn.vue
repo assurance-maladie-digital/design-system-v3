@@ -306,7 +306,7 @@
 	min-height: 1.25rem;
 	padding: 0 0.125rem;
 	border-radius: 50%;
-	font-size: var(--v-theme-ap-fontSizeXxs);
+	font-size: var(--v-ap-fontSizeXxs);
 
 	& span {
 		display: block;

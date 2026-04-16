@@ -179,19 +179,19 @@
 	}
 
 	.title {
-		font-size: var(--v-theme-fontSize-titres);
+		font-size: var(--v-fontSize-titres);
 	}
 
 	.alt-title {
-		font-size: var(--v-theme-fontSize-titresAlternatifs);
+		font-size: var(--v-fontSize-titresAlternatifs);
 	}
 
 	.body-text {
-		font-size: var(--v-theme-fontSize-corpsDeTexte);
+		font-size: var(--v-fontSize-corpsDeTexte);
 	}
 
 	.link-label {
-		font-size: var(--v-theme-fontSize-liensEtLibelles);
+		font-size: var(--v-fontSize-liensEtLibelles);
 	}
 }
 
@@ -208,11 +208,11 @@
 .theme-ap,
 .theme-ap2026 {
 	p {
-		font-size: var(--v-theme-ap-fontSizeXs);
+		font-size: var(--v-ap-fontSizeXs);
 	}
 
 	a {
-		font-size: var(--v-theme-ap-fontSizeXs);
+		font-size: var(--v-ap-fontSizeXs);
 	}
 
 	[class*='text-'] {
@@ -224,36 +224,36 @@
 	// sets the service title text style
 	[class*='text-service-title'] {
 		font-family: Arial, Helvetica, sans-serif !important;
-		font-size: var(--v-theme-ap-fontSizeXxl) !important;
+		font-size: var(--v-ap-fontSizeXxl) !important;
 		font-weight: 700 !important;
 		text-transform: uppercase !important;
 
 		@media #{bp.$down-sm} {
-			font-size: var(--v-theme-ap-fontSizeMd) !important;
+			font-size: var(--v-ap-fontSizeMd) !important;
 		}
 	}
 
 	// sets classes font sizes
 	[class*='text-'][class*='-h1'],
 	h1 {
-		font-size: var(--v-theme-ap-fontSizeXxl) !important;
+		font-size: var(--v-ap-fontSizeXxl) !important;
 		font-weight: 700 !important;
 	}
 
 	[class*='text-'][class*='-h2'],
 	h2 {
-		font-size: var(--v-theme-ap-fontSizeLg) !important;
+		font-size: var(--v-ap-fontSizeLg) !important;
 		font-weight: 700;
 	}
 
 	[class*='text-'][class*='-h3'],
 	h3 {
-		font-size: var(--v-theme-ap-fontSizeMd) !important;
+		font-size: var(--v-ap-fontSizeMd) !important;
 	}
 
 	[class*='text-'][class*='-h4'],
 	h4 {
-		font-size: var(--v-theme-ap-fontSizeSm) !important;
+		font-size: var(--v-ap-fontSizeSm) !important;
 		font-weight: 700;
 	}
 
@@ -261,7 +261,7 @@
 	[class*='text-'][class*='-h6'],
 	h5,
 	h6 {
-		font-size: var(--v-theme-ap-fontSizeSm) !important;
+		font-size: var(--v-ap-fontSizeSm) !important;
 		font-weight: 700;
 	}
 
@@ -271,11 +271,11 @@
 	[class*='text-'][class*='-body-2'],
 	[class*='text-'][class*='-button'],
 	[class*='text-'][class*='-overline'] {
-		font-size: var(--v-theme-ap-fontSizeXs) !important;
+		font-size: var(--v-ap-fontSizeXs) !important;
 	}
 
 	[class*='text-'][class*='-caption'] {
-		font-size: var(--v-theme-ap-fontSizeXxs) !important;
+		font-size: var(--v-ap-fontSizeXxs) !important;
 	}
 
 	// sets font weight
@@ -289,31 +289,31 @@
 	}
 
 	.font-size-xxs {
-		font-size: var(--v-theme-ap-fontSizeXxs);
+		font-size: var(--v-ap-fontSizeXxs);
 	}
 
 	.font-size-xs {
-		font-size: var(--v-theme-ap-fontSizeXs);
+		font-size: var(--v-ap-fontSizeXs);
 	}
 
 	.font-size-sm {
-		font-size: var(--v-theme-ap-fontSizeSm);
+		font-size: var(--v-ap-fontSizeSm);
 	}
 
 	.font-size-md {
-		font-size: var(--v-theme-ap-fontSizeMd);
+		font-size: var(--v-ap-fontSizeMd);
 	}
 
 	.font-size-lg {
-		font-size: var(--v-theme-ap-fontSizeLg);
+		font-size: var(--v-ap-fontSizeLg);
 	}
 
 	.font-size-xl {
-		font-size: var(--v-theme-ap-fontSizeXl);
+		font-size: var(--v-ap-fontSizeXl);
 	}
 
 	.font-size-xxl {
-		font-size: var(--v-theme-ap-fontSizeXxl);
+		font-size: var(--v-ap-fontSizeXxl);
 	}
 
 	.relative {

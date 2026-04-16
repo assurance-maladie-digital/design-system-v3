@@ -1208,7 +1208,7 @@
 
 .help-text {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: var(--v-theme-fontSize-liensEtLibelles);
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
@@ -1218,7 +1218,7 @@
 
 .help-text-below {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: var(--v-theme-fontSize-liensEtLibelles);
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 

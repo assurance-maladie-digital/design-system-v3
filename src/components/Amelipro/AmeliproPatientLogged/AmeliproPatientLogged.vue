@@ -570,8 +570,8 @@
 }
 
 .ident-title {
-	font-size: var(--v-theme-ap-fontSizeXs) !important;
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-size: var(--v-ap-fontSizeXs) !important;
+	font-weight: var(--v-ap-fontWeightBold);
 	text-transform: uppercase;
 }
 </style>

@@ -335,7 +335,7 @@
 }
 
 .step-number {
-	font-size: var(--v-theme-ap-fontSizeSm);
+	font-size: var(--v-ap-fontSizeSm);
 
 	&::before {
 		position: absolute;

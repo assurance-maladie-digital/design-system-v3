@@ -233,47 +233,47 @@
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: var(--v-theme-ap-btnRadius);
+	border-radius: var(--v-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 }
 
 .amelipro-card__header {
-	padding-top: var(--v-theme-ap-cardPaddingDesktop);
-	padding-left: var(--v-theme-ap-cardPaddingDesktop);
-	padding-right: var(--v-theme-ap-cardPaddingDesktop);
+	padding-top: var(--v-ap-cardPaddingDesktop);
+	padding-left: var(--v-ap-cardPaddingDesktop);
+	padding-right: var(--v-ap-cardPaddingDesktop);
 	padding-bottom: 0 !important;
 	word-break: break-all;
 }
 
 .amelipro-card__header-content {
-	padding-bottom: var(--v-theme-ap-cardPaddingDesktop);
+	padding-bottom: var(--v-ap-cardPaddingDesktop);
 }
 
 .amelipro-card__content {
 	width: 100%;
-	padding: var(--v-theme-ap-cardPaddingDesktop);
-	font-size: var(--v-theme-ap-fontSizeXs);
-	font-weight: var(--v-theme-ap-fontWeightRegular);
+	padding: var(--v-ap-cardPaddingDesktop);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 
 	@media #{bp.$down-sm} {
-		padding-left: var(--v-theme-ap-cardPaddingDesktop);
-		padding-right: var(--v-theme-ap-cardPaddingDesktop);
-		padding-bottom: var(--v-theme-ap-cardPaddingDesktop);
+		padding-left: var(--v-ap-cardPaddingDesktop);
+		padding-right: var(--v-ap-cardPaddingDesktop);
+		padding-bottom: var(--v-ap-cardPaddingDesktop);
 	}
 
 	@media #{bp.$down-xs} {
-		padding-left: var(--v-theme-ap-cardPaddingMobile);
-		padding-right: var(--v-theme-ap-cardPaddingMobile);
-		padding-bottom: var(--v-theme-ap-cardPaddingDesktop);
+		padding-left: var(--v-ap-cardPaddingMobile);
+		padding-right: var(--v-ap-cardPaddingMobile);
+		padding-bottom: var(--v-ap-cardPaddingDesktop);
 	}
 }
 
 .amelipro-card__header--left,
 .amelipro-card__content--left {
 	@media #{bp.$up-md} {
-		padding-right: var(--v-theme-ap-cardPaddingDesktop);
+		padding-right: var(--v-ap-cardPaddingDesktop);
 	}
 }
 
@@ -282,7 +282,7 @@
 }
 
 .amelipro-card__right-part {
-	padding: var(--v-theme-ap-cardPaddingDesktop) 1rem 1rem 0;
+	padding: var(--v-ap-cardPaddingDesktop) 1rem 1rem 0;
 
 	@media #{bp.$down-sm} {
 		padding: 0 1rem 1rem;
@@ -295,18 +295,18 @@
 
 .amelipro-card__right-part-content {
 	@media #{bp.$up-md} {
-		padding-left: var(--v-theme-ap-cardPaddingDesktop);
+		padding-left: var(--v-ap-cardPaddingDesktop);
 		min-height: 100%;
 		border-left: 1px solid v-bind(borderColorValue);
 	}
 
 	@media #{bp.$down-sm} {
-		padding-top: var(--v-theme-ap-cardPaddingDesktop);
+		padding-top: var(--v-ap-cardPaddingDesktop);
 		border-top: 1px solid v-bind(borderColorValue);
 	}
 
 	@media #{bp.$down-xs} {
-		padding-top: var(--v-theme-ap-cardPaddingMobile);
+		padding-top: var(--v-ap-cardPaddingMobile);
 	}
 }
 </style>

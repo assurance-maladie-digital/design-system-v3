@@ -184,8 +184,8 @@
 }
 
 .amelipro-illustrated-radio-group__label {
-	font-size: var(--v-theme-ap-fontSizeXs);
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 input {
@@ -245,6 +245,6 @@ input {
 }
 
 .amelipro-illustrated-radio-group__item-label-text {
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 </style>

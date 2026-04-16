@@ -304,14 +304,14 @@
 }
 
 .amelipro-textarea__label {
-	font-size: var(--v-theme-ap-fontSizeXs);
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 .v-input {
 	& :deep(.v-field__input) {
-		padding-left: var(--v-theme-padding-3);
-		padding-right: var(--v-theme-padding-3);
+		padding-left: var(--v-padding-3);
+		padding-right: var(--v-padding-3);
 	}
 
 	& :deep(.v-field--disabled) {

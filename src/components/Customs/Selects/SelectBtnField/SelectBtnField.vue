@@ -313,7 +313,7 @@
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	gap: var(--v-theme-gap-2);
+	gap: var(--v-gap-2);
 }
 
 .select-btn-field__options--inline {
@@ -333,7 +333,7 @@
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
-	background-color: rgb(var(--v-theme-backgroundSurface));
+	background-color: rgb(var(--v-theme-surface));
 
 	&--selected {
 		color: rgb(var(--v-theme-textOnDark));

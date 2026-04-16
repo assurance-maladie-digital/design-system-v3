@@ -326,10 +326,10 @@
 }
 
 .btn-styled-text {
-	min-height: var(--v-theme-ap-btnMinHeight);
-	padding: var(--v-theme-padding-3) 24px;
-	border-radius: var(--v-theme-ap-btnRadius);
-	font-size: var(--v-theme-ap-fontSizeSm);
+	min-height: var(--v-ap-btnMinHeight);
+	padding: var(--v-padding-3) 24px;
+	border-radius: var(--v-ap-btnRadius);
+	font-size: var(--v-ap-fontSizeSm);
 }
 
 .state-tile-icon {

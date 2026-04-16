@@ -308,7 +308,7 @@
 <style lang="scss" scoped>
 .v-btn {
 	letter-spacing: 0.64px;
-	font-weight: var(--v-theme-ap-fontWeightBold);
+	font-weight: var(--v-ap-fontWeightBold);
 	text-indent: unset;
 
 	& :deep(.v-btn__overlay),
@@ -333,7 +333,7 @@
 	}
 
 	&.amelipro-btn--style {
-		padding: var(--v-theme-ap-btnPaddingY) var(--v-theme-ap-btnPaddingX);
+		padding: var(--v-ap-btnPaddingY) var(--v-ap-btnPaddingX);
 	}
 
 	&.v-btn--active::before,
@@ -368,7 +368,7 @@
 		min-height: 1.25rem;
 		padding: 0 0.125rem;
 		border-radius: 50%;
-		font-size: var(--v-theme-ap-fontSizeXxs);
+		font-size: var(--v-ap-fontSizeXxs);
 		z-index: 1;
 
 		& span {

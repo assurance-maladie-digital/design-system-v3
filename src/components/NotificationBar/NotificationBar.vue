@@ -200,7 +200,7 @@
 		opacity: 0;
 		height: 0;
 		padding-block: 0;
-		margin-block: var(--v-theme-gap-0);
+		margin-block: var(--v-gap-0);
 	}
 }
 </style>

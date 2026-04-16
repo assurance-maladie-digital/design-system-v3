@@ -646,11 +646,11 @@
 @use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-upload {
-	padding: var(--v-theme-ap-cardPaddingDesktop);
-	border-radius: var(--v-theme-ap-btnRadius);
+	padding: var(--v-ap-cardPaddingDesktop);
+	border-radius: var(--v-ap-btnRadius);
 
 	@media #{bp.$down-xs} {
-		padding: var(--v-theme-ap-cardPaddingMobile);
+		padding: var(--v-ap-cardPaddingMobile);
 	}
 }
 
