@@ -77,17 +77,16 @@ export function useTableHeaders({
 			if (mapped.maxWidth != null) {
 				const existingCellProps = (mapped.cellProps ?? {}) as Record<string, unknown>
 				const existingStyle = (existingCellProps.style ?? {}) as Record<string, unknown>
-				const truncateStyle = {
+				const multilineStyle = {
 					...existingStyle,
 					maxWidth: mapped.maxWidth,
-					overflow: 'hidden',
-					whiteSpace: 'nowrap',
-					textOverflow: 'ellipsis',
+					whiteSpace: 'normal',
+					overflowWrap: 'anywhere',
+					wordBreak: 'break-word',
 				}
-				const baseProps = { ...existingCellProps, style: truncateStyle }
-				mapped.cellProps = ({ value }: { value: unknown }) => ({
+				const baseProps = { ...existingCellProps, style: multilineStyle }
+				mapped.cellProps = () => ({
 					...baseProps,
-					title: value != null ? String(value) : undefined,
 				})
 			}
 

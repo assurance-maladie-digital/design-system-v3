@@ -299,12 +299,10 @@
 										'sy-table__pinned--left': pinnedMeta.left[column.key!] !== undefined,
 										'sy-table__pinned--right': pinnedMeta.right[column.key!] !== undefined,
 										'v-data-table-column--fixed': pinnedMeta.left[column.key!] !== undefined || pinnedMeta.right[column.key!] !== undefined,
-										'sy-table__th--truncate': !!getHeaderForColumn(column)?.maxWidth && !props.resizableColumns,
 									},
 								]"
-								:title="getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? String(column.title ?? '') : undefined"
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any, overflow: 'hidden', textOverflow: 'ellipsis' } : {}),
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
 									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
 									...(pinnedMeta.left[column.key!] !== undefined
@@ -339,6 +337,7 @@
 										:column="column"
 										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
+										:wrap-title="props.resizableColumns || !!getHeaderForColumn(column)?.maxWidth"
 									>
 										<template
 											v-for="slotName in Object.keys($slots)"
@@ -365,7 +364,7 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any, overflow: 'hidden', textOverflow: 'ellipsis' } : {}),
+									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
 									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) as any || undefined,
 								}"
@@ -504,11 +503,6 @@
 
 .checkbox-column {
 	max-width: fit-content;
-}
-
-.sy-server-table :deep(th.sy-table__th--truncate .col-title) {
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 
 .sy-server-table :deep(.sy-table__pinned) {

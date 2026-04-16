@@ -1052,7 +1052,7 @@ describe('SyServerTable', () => {
 			{ nom: 'Valeur très longue qui dépasse la largeur maximale', prenom: 'Court' },
 		]
 
-		it('applies truncation styles and title on <th> when maxWidth is set', async () => {
+		it('applies maxWidth and wraps the header title on <th> when maxWidth is set', async () => {
 			const wrapper = mount(SyServerTable, {
 				props: {
 					suffix: 'truncate-test',
@@ -1070,13 +1070,13 @@ describe('SyServerTable', () => {
 			const truncatedTh = ths.find(th => (th.attributes('style') || '').includes('max-width'))
 
 			expect(truncatedTh).toBeDefined()
-			expect(truncatedTh!.classes()).toContain('sy-table__th--truncate')
 			expect(truncatedTh!.attributes('style')).toContain('max-width: 100px')
-			expect(truncatedTh!.attributes('style')).toContain('overflow: hidden')
-			expect(truncatedTh!.attributes('title')).toBe('Nom de la colonne super longue')
+			expect(truncatedTh!.attributes('style')).not.toContain('overflow: hidden')
+			expect(truncatedTh!.attributes('title')).toBeUndefined()
+			expect(truncatedTh!.find('.col-title').classes()).toContain('col-title--wrap')
 		})
 
-		it('does not apply truncation styles on <th> without maxWidth', async () => {
+		it('does not apply multiline header styles on <th> without maxWidth', async () => {
 			const wrapper = mount(SyServerTable, {
 				props: {
 					suffix: 'no-truncate-test',
@@ -1094,11 +1094,11 @@ describe('SyServerTable', () => {
 			const normalTh = ths.find(th => !(th.attributes('style') || '').includes('max-width'))
 
 			expect(normalTh).toBeDefined()
-			expect(normalTh!.classes()).not.toContain('sy-table__th--truncate')
 			expect(normalTh!.attributes('title')).toBeUndefined()
+			expect(normalTh!.find('.col-title').classes()).not.toContain('col-title--wrap')
 		})
 
-		it('applies truncation styles and title on <td> when maxWidth is set', async () => {
+		it('applies multiline styles on <td> when maxWidth is set', async () => {
 			const wrapper = mount(SyServerTable, {
 				props: {
 					suffix: 'truncate-td-test',
@@ -1117,11 +1117,14 @@ describe('SyServerTable', () => {
 
 			expect(truncatedTd).toBeDefined()
 			expect(truncatedTd!.attributes('style')).toContain('max-width: 100px')
-			expect(truncatedTd!.attributes('style')).toContain('overflow: hidden')
-			expect(truncatedTd!.attributes('title')).toBe('Valeur très longue qui dépasse la largeur maximale')
+			expect(truncatedTd!.attributes('style')).toContain('white-space: normal')
+			expect(truncatedTd!.attributes('style')).toContain('overflow-wrap: anywhere')
+			expect(truncatedTd!.attributes('style')).toContain('word-break: break-word')
+			expect(truncatedTd!.attributes('style')).not.toContain('overflow: hidden')
+			expect(truncatedTd!.attributes('title')).toBeUndefined()
 		})
 
-		it('applies truncation on filter row <th> when maxWidth is set with showFilters', async () => {
+		it('applies maxWidth without truncation on filter row <th> when maxWidth is set with showFilters', async () => {
 			const wrapper = mount(SyServerTable, {
 				props: {
 					suffix: 'truncate-filter-test',
@@ -1141,7 +1144,7 @@ describe('SyServerTable', () => {
 
 			expect(truncatedFilterTh).toBeDefined()
 			expect(truncatedFilterTh!.attributes('style')).toContain('max-width: 100px')
-			expect(truncatedFilterTh!.attributes('style')).toContain('overflow: hidden')
+			expect(truncatedFilterTh!.attributes('style')).not.toContain('overflow: hidden')
 		})
 	})
 })

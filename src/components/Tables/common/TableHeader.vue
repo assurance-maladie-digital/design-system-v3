@@ -14,10 +14,12 @@
 		headerParams: Parameters<VDataTable['$slots']['headers']>['0']
 		table: VDataTable | VDataTableServer | null | undefined
 		resizableColumns?: boolean
+		wrapTitle?: boolean
 		storageKey?: string
 		headerPropsRaw?: HeaderPropsRaw
 	}>(), {
 		resizableColumns: false,
+		wrapTitle: false,
 		storageKey: undefined,
 		headerPropsRaw: undefined,
 	})
@@ -198,6 +200,12 @@
 		const index = props.headerParams.sortBy.findIndex(sort => sort.key === props.column.key)
 		return index !== -1 ? index + 1 : null
 	})
+
+	const titleClasses = computed(() => [
+		textAlignClass.value,
+		headerClassRaw.value,
+		{ 'col-title--wrap': props.wrapTitle },
+	])
 </script>
 
 <template>
@@ -216,7 +224,7 @@
 		>
 			<div
 				class="col-title"
-				:class="[textAlignClass, headerClassRaw]"
+				:class="titleClasses"
 				:style="headerStyle"
 			>
 				{{ column.title }}
@@ -268,6 +276,23 @@
 <style lang="scss" scoped>
 .v-data-table-header__content {
 	column-gap: 4px;
+	min-width: 0;
+}
+
+.col-title {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.col-title--wrap {
+	white-space: normal;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	line-height: 1.25;
+}
+
+.sort-container {
+	flex: 0 0 auto;
 }
 
 .sort-order-indicator {
