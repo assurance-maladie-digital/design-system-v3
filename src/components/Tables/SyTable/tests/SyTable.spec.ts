@@ -1000,5 +1000,49 @@ describe('SyTable selectionKey', () => {
 			expect(truncatedFilterTh!.attributes('style')).toContain('max-width: 100px')
 			expect(truncatedFilterTh!.attributes('style')).not.toContain('overflow: hidden')
 		})
+
+		it('keeps multiline td styles after reordering a maxWidth column with column controls', async () => {
+			const mockOrganizeColumns = {
+				name: 'OrganizeColumns',
+				props: ['headers'],
+				template: '<div></div>',
+				emits: ['update:headers'],
+			}
+
+			const wrapper = mount(SyTable, {
+				props: {
+					suffix: 'truncate-reorder-test',
+					headers: truncateHeaders.map((header, index) => ({
+						...header,
+						order: index + 1,
+					})),
+					items: truncateItems,
+					enableColumnControls: true,
+				},
+				global: {
+					stubs: {
+						OrganizeColumns: mockOrganizeColumns,
+					},
+				},
+				attachTo: document.body,
+			})
+
+			const organizeColumnsComponent = wrapper.findComponent({ name: 'OrganizeColumns' })
+			const reorderedHeaders = JSON.parse(JSON.stringify([
+				{ ...truncateHeaders[0], order: 2 },
+				{ ...truncateHeaders[1], order: 1 },
+			]))
+
+			organizeColumnsComponent.vm.$emit('update:headers', reorderedHeaders)
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const tds = wrapper.findAll('tbody tr td')
+			expect(tds[0]!.text()).toBe('Court')
+			expect(tds[1]!.text()).toBe('Valeur très longue qui dépasse la largeur maximale')
+			expect(tds[1]!.attributes('style')).toContain('max-width: 100px')
+			expect(tds[1]!.attributes('style')).toContain('white-space: normal')
+			expect(tds[1]!.attributes('style')).toContain('overflow-wrap: anywhere')
+		})
 	})
 })
