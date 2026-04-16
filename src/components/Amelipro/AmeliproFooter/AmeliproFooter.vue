@@ -402,7 +402,7 @@
 
 <style lang="scss" scoped>
 :deep(.v-btn):focus {
-	outline-color: #fff;
+	outline-color: rgb(var(--v-theme-apWhite-base));
 }
 
 :deep(.v-btn).v-btn--size-default {

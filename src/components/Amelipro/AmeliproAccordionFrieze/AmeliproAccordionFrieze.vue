@@ -372,7 +372,7 @@
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 	border-radius: 8px;
 	text-align: center;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 
 	&:hover,
 	&:focus {

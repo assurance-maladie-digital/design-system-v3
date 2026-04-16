@@ -224,7 +224,7 @@
 				top: 0.25rem;
 				left: 4px;
 				border-radius: 24px;
-				background-color: #fff;
+				background-color: rgb(var(--v-theme-surface));
 				border: 0;
 				transition: transform 0.3s ease-in-out;
 				content: '';

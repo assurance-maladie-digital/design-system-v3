@@ -364,7 +364,7 @@
 		}
 
 		& span {
-			color: #fff;
+			color: rgb(var(--v-theme-apWhite-base));
 		}
 	}
 
@@ -390,7 +390,7 @@
 	background-color: rgb(var(--v-theme-primary));
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
-	color: #fff;
+	color: rgb(var(--v-theme-apWhite-base));
 	text-align: center;
 	z-index: 1;
 }
@@ -403,7 +403,7 @@
 
 .amelipro-stepper__content--default {
 	padding: 3rem 1rem 1rem;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 	border: 1px solid rgb(var(--v-theme-ap-green-lighten-2));
 	border-radius: 8px;
 	border-top-left-radius: 0;

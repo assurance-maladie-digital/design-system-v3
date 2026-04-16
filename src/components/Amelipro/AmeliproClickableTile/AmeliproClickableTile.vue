@@ -252,7 +252,7 @@
 .amelipro-clickable-tile {
 	position: relative;
 	display: flex;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 	border: 1px solid rgb(var(--v-theme-primary)) !important;
 	border-radius: var(--radius-md) !important;
 	white-space: normal;

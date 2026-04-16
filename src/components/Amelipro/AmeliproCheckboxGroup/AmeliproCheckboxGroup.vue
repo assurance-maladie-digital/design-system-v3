@@ -343,7 +343,7 @@
 			padding: 0.75rem 2rem;
 			border-radius: var(--v-theme-ap-btnRadius);
 			border: 1px solid rgb(var(--v-theme-primary));
-			background-color: #fff;
+			background-color: rgb(var(--v-theme-surface));
 			color: rgb(var(--v-theme-primary));
 
 			&.amelipro-checkbox-group__item-label-span-error {

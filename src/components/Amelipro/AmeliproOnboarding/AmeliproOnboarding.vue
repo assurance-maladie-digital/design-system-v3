@@ -227,7 +227,7 @@
 	height: 14px;
 	border-radius: 50%;
 	border: 2px solid rgb(var(--v-theme-primary));
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 
 	&.amelipro-onboarding__active-dot {
 		background-color: rgb(var(--v-theme-primary));

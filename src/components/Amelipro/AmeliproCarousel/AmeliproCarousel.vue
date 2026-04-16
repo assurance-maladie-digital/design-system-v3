@@ -262,7 +262,7 @@
 	height: 1rem;
 	border-radius: 50%;
 	border: 1px solid rgb(var(--v-theme-primary));
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 
 	&.active-dot {
 		background-color: rgb(var(--v-theme-primary));

@@ -246,7 +246,7 @@
 	top: 0;
 	left: 0;
 	color: rgb(var(--v-theme-primary));
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 	text-decoration: underline;
 	z-index: 10;
 }

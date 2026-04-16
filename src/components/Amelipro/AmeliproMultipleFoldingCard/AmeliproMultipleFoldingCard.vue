@@ -339,7 +339,7 @@
 	padding: 0.5rem 2rem;
 	border: 1px solid rgb(var(--v-theme-primary));
 	border-radius: var(--v-theme-ap-btnRadius);
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 	color: rgb(var(--v-theme-primary));
 	font-size: var(--v-theme-ap-fontSizeSm);
 	font-weight: var(--v-theme-ap-fontWeightBold);

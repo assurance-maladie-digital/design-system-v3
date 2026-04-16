@@ -316,7 +316,7 @@ input {
 		padding: 0.75rem 3rem 0.75rem 1rem;
 		border-radius: 5px;
 		border: 1px solid rgb(var(--v-theme-ap-grey));
-		background-color: #fff;
+		background-color: rgb(var(--v-theme-surface));
 		cursor: pointer;
 	}
 

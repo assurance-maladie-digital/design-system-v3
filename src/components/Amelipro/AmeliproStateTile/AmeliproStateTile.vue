@@ -295,14 +295,14 @@
 }
 
 .amelipro-state-tile__pdf-download--white {
-	color: #fff;
+	color: rgb(var(--v-theme-apWhite-base));
 }
 
 .amelipro-state-tile {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 
 	& span {
 		white-space: normal;
@@ -315,7 +315,7 @@
 		}
 
 		& .amelipro-state-tile__pdf-download--white {
-			color: #fff;
+			color: rgb(var(--v-theme-apWhite-base));
 		}
 	}
 }
