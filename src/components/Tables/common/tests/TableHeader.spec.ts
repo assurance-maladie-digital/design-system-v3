@@ -170,6 +170,8 @@ describe('TableHeader', () => {
 		})
 
 		expect(wrapper.find('.col-title').classes()).toContain('col-title--wrap')
+		expect(wrapper.find('.v-data-table-header__content').classes()).toContain('v-data-table-header__content--wrap')
+		expect(wrapper.find('.v-data-table-header__content').classes()).not.toContain('h-100')
 	})
 
 	// Test for correct sort order when multiple columns are sorted

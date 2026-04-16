@@ -206,13 +206,21 @@
 		headerClassRaw.value,
 		{ 'col-title--wrap': props.wrapTitle },
 	])
+
+	const wrapperClasses = computed(() => [
+		alignClass.value,
+		{
+			'h-100': !props.wrapTitle,
+			'v-data-table-header__content--wrap': props.wrapTitle,
+		},
+	])
 </script>
 
 <template>
 	<div
 		ref="wrapper"
-		class="v-data-table-header__content d-flex align-center h-100 w-100"
-		:class="alignClass"
+		class="v-data-table-header__content d-flex align-center w-100"
+		:class="wrapperClasses"
 	>
 		<slot
 			:name="`header.${column.key}`"
@@ -277,6 +285,10 @@
 .v-data-table-header__content {
 	column-gap: 4px;
 	min-width: 0;
+}
+
+.v-data-table-header__content--wrap {
+	height: auto;
 }
 
 .col-title {
