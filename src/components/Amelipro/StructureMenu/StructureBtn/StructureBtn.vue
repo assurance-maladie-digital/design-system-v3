@@ -52,7 +52,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .v-btn {
 	letter-spacing: unset;

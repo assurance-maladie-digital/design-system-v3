@@ -177,7 +177,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .tabs-btn-wrapper {
 	@media #{bp.$down-xs} {

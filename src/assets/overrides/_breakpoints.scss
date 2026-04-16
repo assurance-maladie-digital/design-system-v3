@@ -1,5 +1,5 @@
 // Shared responsive breakpoints
-// Usage: @use '@/assets/breakpoints' as bp;
+// Usage: @use '@/assets/overrides/breakpoints' as bp;
 //        @media #{bp.$up-md} { ... }
 
 // Up variants (mobile-first)

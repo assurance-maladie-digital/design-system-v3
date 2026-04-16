@@ -263,7 +263,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-custom-selector__label {
 	font-size: var(--v-theme-ap-fontSizeSm);

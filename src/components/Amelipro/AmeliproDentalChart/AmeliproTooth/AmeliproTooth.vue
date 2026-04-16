@@ -147,7 +147,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .tooth-btn {
 	border-radius: 8px;

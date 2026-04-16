@@ -183,7 +183,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .header-brand-section {
 	overflow: hidden;

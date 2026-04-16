@@ -325,7 +325,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .first-tab-btn {
 	border-top-left-radius: 8px;

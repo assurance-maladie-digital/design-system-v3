@@ -101,7 +101,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-card--numbered-wrapper {
 	padding-top: 1rem;

@@ -158,7 +158,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/breakpoints' as bp;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-callback__retry-btn {
 	margin-left: 0;
