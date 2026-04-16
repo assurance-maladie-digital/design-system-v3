@@ -1,14 +1,20 @@
-import { formatColor, toKebabCase } from './formatters'
+function toKebabCase(value: string): string {
+	return value
+		.replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+		.replace(/([a-zA-Z])(\d)/g, '$1-$2')
+		.replace(/_/g, '-')
+		.toLowerCase()
+}
 
 /**
  * Generates a flat class-name → hex value map from a color token object.
  *
  * Example:
- *   { apBlue: { base: '#0c419a', darken1: '#00749c' } }
+ *   { apBlue: { base: '#0C419A', darken1: '#00749C' } }
  *   →
  *   { 'ap-blue': '#0c419a', 'ap-blue-darken-1': '#00749c' }
  *
- * The 'base' variation is dropped from the class name (e.g. apBlue-base → ap-blue).
+ * The 'base' variation is dropped from the class name (e.g. apBlue.base → ap-blue).
  * Numeric suffixes in variation names are separated with a dash (darken1 → darken-1).
  */
 export function buildColorClassMap<T extends Record<string, Record<string, string>>>(tokens: T): Record<string, string> {
@@ -20,8 +26,7 @@ export function buildColorClassMap<T extends Record<string, Record<string, strin
 				.replace(/(\d+)/, '-$1')
 				.replace('-base', '')
 
-			const colorClass = toKebabCase(rawClass)
-			map[colorClass] = formatColor(colorValue)
+			map[toKebabCase(rawClass)] = colorValue.toLowerCase()
 		}
 	}
 
