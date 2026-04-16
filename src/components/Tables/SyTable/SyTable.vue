@@ -40,6 +40,7 @@
 		itemsPerPageOptions: undefined,
 		headingLevel: 2,
 		clickableRow: false,
+		pageInput: false,
 	})
 
 	const emit = defineEmits<{
@@ -463,6 +464,7 @@
 						:page-count="pageCount"
 						:items-length="filteredItems.length"
 						:items-per-page-options="props.itemsPerPageOptions"
+						:page-input="props.pageInput"
 						@update:page="updateOptions({ page: $event })"
 						@update:items-per-page="updateItemsPerPage"
 					/>

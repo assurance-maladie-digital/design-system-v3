@@ -36,6 +36,29 @@ describe('SyServerTable - accessibility (axe)', () => {
 		}
 	})
 
+	it('has no obvious axe violations with pageInput enabled', async () => {
+		const manyItems = Array.from({ length: 11 }, (_, i) => ({ id: i + 1, name: `User ${i + 1}`, age: 20 + i }))
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: 11,
+				suffix: 'a11y-page-input-test',
+				pageInput: true,
+				headers,
+				items: manyItems,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyServerTable - pageInput', {
+			ignoreRules: ['region', 'aria-prohibited-attr'],
+		})
+	})
+
 	it('has no obvious axe violations when rows are clickable and contain nested actions', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {

@@ -1046,3 +1046,124 @@ describe('SyTable selectionKey', () => {
 		})
 	})
 })
+
+describe('SyTable pageInput', () => {
+	const manyItems = Array.from({ length: 11 }, (_, i) => ({
+		id: i + 1,
+		name: `User ${i + 1}`,
+		age: 20 + i,
+	}))
+
+	it('does not render page-input when pageInput is false', () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-test',
+				pageInput: false,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		expect(wrapper.find('.page-input').exists()).toBe(false)
+	})
+
+	it('renders page-input field when pageInput is true and pageCount > 1', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-test',
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		expect(wrapper.find('.page-input').exists()).toBe(true)
+		expect(wrapper.find('.page-input__field').exists()).toBe(true)
+		expect(wrapper.find('.page-input__label').exists()).toBe(true)
+	})
+
+	it('page-input field has correct min/max attributes', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-test',
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const input = wrapper.find('.page-input__field')
+		expect(input.attributes('min')).toBe('1')
+		expect(input.attributes('max')).toBe('3')
+		expect(input.attributes('type')).toBe('number')
+	})
+
+	it('page-input field has accessible aria-label', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-test',
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const input = wrapper.find('.page-input__field')
+		expect(input.attributes('aria-label')).toContain('3')
+	})
+
+	it('navigates to page on Enter key', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-test',
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const input = wrapper.find('.page-input__field')
+		await input.setValue(2)
+		await input.trigger('keydown', { key: 'Enter' })
+
+		const emitted = wrapper.emitted('update:options')
+		expect(emitted).toBeTruthy()
+		const lastEmit = emitted![emitted!.length - 1]![0] as DataOptions
+		expect(lastEmit.page).toBe(2)
+	})
+
+	it('clamps out-of-range values on blur', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-test',
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const input = wrapper.find('.page-input__field')
+		await input.setValue(99)
+		await input.trigger('blur')
+
+		const emitted = wrapper.emitted('update:options')
+		expect(emitted).toBeTruthy()
+		const lastEmit = emitted![emitted!.length - 1]![0] as DataOptions
+		expect(lastEmit.page).toBe(3)
+	})
+})
