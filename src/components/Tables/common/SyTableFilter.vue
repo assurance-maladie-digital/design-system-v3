@@ -301,8 +301,34 @@
 	border-bottom: 1px solid var(--v-border-color);
 
 	&-item {
-		min-width: 200px;
+		min-width: 0;
+		width: 100%;
 		flex: 1;
+	}
+
+	:deep(.v-field) {
+		height: auto;
+		min-height: var(--v-input-control-height, 56px);
+	}
+
+	:deep(.v-field__field),
+	:deep(.v-field__input) {
+		min-width: 0;
+	}
+
+	:deep(.sy-select .v-field__input),
+	:deep(.sy-autocomplete .v-field__input) {
+		flex-wrap: wrap;
+	}
+
+	:deep(.sy-select__label),
+	:deep(.sy-autocomplete__label),
+	:deep(.sy-autocomplete__selection-text) {
+		white-space: normal;
+		overflow-wrap: anywhere;
+		word-break: break-word;
+		line-height: 1.25;
+		flex-shrink: 1;
 	}
 }
 

@@ -337,6 +337,7 @@
 										:column="column"
 										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
 										:resizable-columns="props.resizableColumns"
+										:wrap-title="props.resizableColumns || !!getHeaderForColumn(column)?.maxWidth"
 									>
 										<template
 											v-for="slotName in Object.keys($slots)"
@@ -363,9 +364,9 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) as any || undefined,
 								}"
 							>
 								<!-- Check if the column is filterable based on the headers prop -->
