@@ -132,9 +132,6 @@ export const Default: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -185,9 +182,6 @@ export const TwoEmotions: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -238,9 +232,6 @@ export const Numbers: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -290,9 +281,6 @@ export const Stars: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -343,9 +331,6 @@ export const ReadOnly: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -397,9 +382,6 @@ export const HideAlert: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -481,9 +463,6 @@ export const DefaultSlot: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

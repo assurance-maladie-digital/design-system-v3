@@ -122,8 +122,7 @@
 						ref="ratingElement"
 						v-ripple="!(props.readonly || hasAnswered)"
 						role="radio"
-						:aria-checked="props.modelValue === index ? 'true' : undefined"
-						:aria-label="locales.ariaLabel(index, props.length)"
+						:aria-checked="props.modelValue === index ? 'true' : 'false'"
 						class="sy-number-picker__item text-body-2 pa-0"
 						:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
 						@click="emitInputEvent(index); setFocus(index - 1)"
@@ -135,6 +134,9 @@
 						@keyup.down="focusNextElement(index - 1)"
 					>
 						{{ index }}
+						<span class="d-sr-only">
+							{{ locales.ariaLabel(index, props.length) }}
+						</span>
 					</div>
 				</div>
 				<div
@@ -159,15 +161,17 @@
 			</div>
 			<div
 				v-else
-				:aria-label="locales.ariaLabel(props.modelValue, props.length)"
 				class="mb-0 d-flex align-center"
 			>
+				<span class="d-sr-only">
+					{{ locales.ariaLabel(props.modelValue, props.length) }}
+				</span>
 				<div
 					class="sy-btn-answer text-body-2 mr-1 pa-0"
 				>
 					{{ props.modelValue }}
 				</div>
-				<span>
+				<span aria-hidden="true">
 					/ {{ props.length }}
 				</span>
 			</div>

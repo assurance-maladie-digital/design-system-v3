@@ -144,7 +144,7 @@
 				v-ripple="!(props.readonly || hasAnswered)"
 				role="radio"
 				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
-				:aria-checked="isActive(index) ? 'true' : undefined"
+				:aria-checked="isActive(index) ? 'true' : 'false'"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
 				:style="{
 					'min-height': btnSize,

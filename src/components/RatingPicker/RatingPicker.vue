@@ -194,21 +194,19 @@
 				v-if="displayAdditionalContent"
 				class="sy-rating-picker__free-text mt-4"
 			>
-				<div>
-					<label
-						class="sy-rating-picker__free-text-label"
-						for="sy-rating-picker-free-text"
-					>
-						{{ props.freeTextLabel }}
-						<textarea
-							id="sy-rating-picker-free-text"
-							class="sy-rating-picker__free-text-textarea"
-							:value="internalFreeTextValue"
-							:readonly="props.readonly"
-							@input="setFreeTextValue"
-						/>
-					</label>
-				</div>
+				<label
+					class="sy-rating-picker__free-text-label"
+					for="sy-rating-picker-free-text"
+				>
+					{{ props.freeTextLabel }}
+					<textarea
+						id="sy-rating-picker-free-text"
+						class="sy-rating-picker__free-text-textarea"
+						:value="internalFreeTextValue"
+						:readonly="props.readonly"
+						@input="setFreeTextValue"
+					/>
+				</label>
 			</div>
 
 			<slot v-if="displayAdditionalContent" />
@@ -235,6 +233,8 @@
 
 .sy-rating-picker__free-text-label {
 	font-weight: 600;
+	display: flex;
+	flex-direction: column;
 }
 
 .sy-rating-picker__free-text-textarea {

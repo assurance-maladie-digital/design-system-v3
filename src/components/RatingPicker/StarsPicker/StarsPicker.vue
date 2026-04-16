@@ -94,7 +94,7 @@
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
 				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
-				:aria-checked="isActive(index) ? 'true' : undefined"
+				:aria-checked="isActive(index) ? 'true' : false"
 				@mouseover="hoverIndex = index"
 				@focus="hoverIndex = index"
 				@mouseleave="hoverIndex = -1"
