@@ -183,6 +183,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .header-brand-section {
 	overflow: hidden;
 
@@ -194,12 +196,12 @@
 		font-size: var(--v-theme-ap-fontSizeXxl) !important;
 		letter-spacing: -0.48px !important;
 
-		@media (width <= 959.99px) {
+		@media #{bp.$down-sm} {
 			font-size: var(--v-theme-ap-fontSizeLg) !important;
 			letter-spacing: -0.4px !important;
 		}
 
-		@media (width <= 599.99px) {
+		@media #{bp.$down-xs} {
 			font-size: var(--v-theme-ap-fontSizeMd) !important;
 			letter-spacing: -0.32px !important;
 		}
@@ -209,11 +211,11 @@
 		font-size: var(--v-theme-ap-fontSizeMd) !important;
 		color: rgb(var(--v-theme-ap-grey-darken-1));
 
-		@media (width <= 959.99px) {
+		@media #{bp.$down-sm} {
 			font-size: var(--v-theme-ap-fontSizeSm) !important;
 		}
 
-		@media (width <= 599.99px) {
+		@media #{bp.$down-xs} {
 			font-size: var(--v-theme-ap-fontSizeXs) !important;
 		}
 	}
@@ -227,11 +229,11 @@
 	.logo-amelipro {
 		width: 98px;
 
-		@media (width <= 959.99px) {
+		@media #{bp.$down-sm} {
 			width: 77px;
 		}
 
-		@media (width <= 599.99px) {
+		@media #{bp.$down-xs} {
 			width: 52px;
 		}
 	}

@@ -216,13 +216,15 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .ident-title {
 	font-size: var(--v-theme-ap-fontSizeXs) !important;
 	text-align: center;
 	font-weight: var(--v-theme-ap-fontWeightBold);
 	text-transform: uppercase;
 
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		text-align: left;
 	}
 }

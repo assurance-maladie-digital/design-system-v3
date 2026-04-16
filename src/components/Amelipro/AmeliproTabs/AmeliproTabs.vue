@@ -325,6 +325,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .first-tab-btn {
 	border-top-left-radius: 8px;
 }
@@ -345,7 +347,7 @@
 }
 
 .border-top-left {
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		border-top-left-radius: 0;
 	}
 }

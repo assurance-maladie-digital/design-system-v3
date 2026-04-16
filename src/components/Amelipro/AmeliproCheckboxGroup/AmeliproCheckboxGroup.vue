@@ -267,6 +267,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-checkbox-group__item-input {
 	& .checkbox-label {
 		position: relative;
@@ -387,7 +389,7 @@
 }
 
 .margin-label {
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		margin-top: 3px;
 	}
 }

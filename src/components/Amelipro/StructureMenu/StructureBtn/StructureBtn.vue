@@ -52,6 +52,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .v-btn {
 	letter-spacing: unset;
 
@@ -75,7 +77,7 @@
 		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		margin-bottom: 8px;
 		width: 100% !important;
 	}

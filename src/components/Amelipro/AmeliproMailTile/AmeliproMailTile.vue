@@ -264,6 +264,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .mail-status-btn {
 	position: relative;
 	min-width: 3rem;
@@ -383,17 +385,17 @@
 }
 
 .mail-info__text {
-	@media (width >= 600px) {
+	@media #{bp.$up-sm} {
 		width: 100%;
 	}
 }
 
 .mail-info__date {
-	@media (width >= 600px) {
+	@media #{bp.$up-sm} {
 		padding: 0 1.25rem;
 	}
 
-	@media (width >= 1264px) {
+	@media #{bp.$up-lg} {
 		padding: 0 3rem 0 1.25rem;
 	}
 }

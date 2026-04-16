@@ -147,6 +147,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .tooth-btn {
 	border-radius: 8px;
 	max-width: 100%;
@@ -160,11 +162,11 @@
 		max-width: 90%;
 		margin: 8px 0;
 
-		@media (width <= 1239.999px) {
+		@media #{bp.$down-dental} {
 			width: 2.5rem;
 		}
 
-		@media (width >= 1240px) {
+		@media #{bp.$up-dental} {
 			width: 3.125rem;
 		}
 	}

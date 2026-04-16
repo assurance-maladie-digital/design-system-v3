@@ -643,11 +643,13 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-upload {
 	padding: 1rem;
 	border-radius: var(--v-theme-ap-btnRadius);
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding: 0.75rem;
 	}
 }

@@ -143,36 +143,38 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .messaging-menu {
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding: 0 10px 24px;
 	}
 
-	@media (width >= 600px) and (width <= 959.99px) {
+	@media #{bp.$sm-only} {
 		padding: 10px 16px;
 	}
 }
 
 .messaging-menu__new-message {
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		display: flex;
 		justify-content: center;
 		width: 100%;
 		margin: 38px auto;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		width: 100%;
 		margin: 24px 0 16px;
 	}
 
-	@media (width >= 600px) and (width <= 959.99px) {
+	@media #{bp.$sm-only} {
 		margin-right: 20px;
 	}
 }
 
 .messaging-menu__new-message-btn {
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		width: 100%;
 	}
 
@@ -182,7 +184,7 @@
 }
 
 .messaging-menu--desktop {
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		margin-bottom: 30px;
 	}
 }

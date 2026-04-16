@@ -254,8 +254,10 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .margin-label {
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		margin-top: 3px;
 	}
 }
@@ -330,7 +332,7 @@ input {
 .amelipro-radio-group.pills {
 	& label {
 		&:not(:last-child) {
-			@media (width >= 600px) {
+			@media #{bp.$up-sm} {
 				margin-right: 16px;
 			}
 		}

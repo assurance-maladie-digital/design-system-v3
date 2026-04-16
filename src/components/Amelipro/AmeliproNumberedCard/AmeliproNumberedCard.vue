@@ -101,6 +101,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-card--numbered-wrapper {
 	padding-top: 1rem;
 }
@@ -115,11 +117,11 @@
 	overflow-wrap: break-word;
 	white-space: normal;
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding: 1rem;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding: 0.75rem;
 	}
 }
@@ -143,7 +145,7 @@
 	width: 100%;
 	font-size: var(--v-theme-ap-fontSizeSm);
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		font-size: var(--v-theme-ap-fontSizeXs);
 	}
 
@@ -159,7 +161,7 @@
 		content: '';
 		z-index: 1;
 
-		@media (width <= 599.99px) {
+		@media #{bp.$down-xs} {
 			left: calc(50% - 0.75rem);
 			width: 1.5rem;
 			height: 1.5rem;
@@ -175,7 +177,7 @@
 		text-align: center;
 		z-index: 2;
 
-		@media (width <= 599.99px) {
+		@media #{bp.$down-xs} {
 			top: 0.375rem;
 		}
 	}
@@ -188,7 +190,7 @@
 		max-width: calc(50% - 5px);
 
 		&:nth-child(2n+2) {
-			@media (width >= 960px) {
+			@media #{bp.$up-md} {
 				margin-left: 10px;
 			}
 		}
@@ -197,27 +199,27 @@
 
 .items-per-line-3 {
 	& > li {
-		@media (width >= 1264px) {
+		@media #{bp.$up-lg} {
 			width: calc((100% - 20px) / 3);
 			min-width: calc((100% - 20px) / 3);
 			max-width: calc((100% - 20px) / 3);
 		}
 
-		@media (width >= 960px) and (width <= 1263.99px) {
+		@media #{bp.$md-only} {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media (width >= 960px) and (width <= 1263.99px) {
+			@media #{bp.$md-only} {
 				margin-left: 10px;
 			}
 		}
 
 		&:nth-child(3n+2),
 		&:nth-child(3n+3) {
-			@media (width >= 1264px) {
+			@media #{bp.$up-lg} {
 				margin-left: 10px;
 			}
 		}
@@ -226,20 +228,20 @@
 
 .items-per-line-4 {
 	& > li {
-		@media (width >= 1264px) {
+		@media #{bp.$up-lg} {
 			width: calc(25% - 9px);
 			min-width: calc(25% - 9px);
 			max-width: calc(25% - 9px);
 		}
 
-		@media (width >= 960px) and (width <= 1263.99px) {
+		@media #{bp.$md-only} {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media (width >= 960px) and (width <= 1263.99px) {
+			@media #{bp.$md-only} {
 				margin-left: 10px;
 			}
 		}
@@ -247,7 +249,7 @@
 		&:nth-child(4n+2),
 		&:nth-child(4n+3),
 		&:nth-child(4n+4) {
-			@media (width >= 1264px) {
+			@media #{bp.$up-lg} {
 				margin-left: 12px;
 			}
 		}
@@ -258,7 +260,7 @@
 .items-per-line-3,
 .items-per-line-4 {
 	& > li {
-		@media (width <= 959.99px) {
+		@media #{bp.$down-sm} {
 			width: 100%;
 			min-width: 100%;
 			max-width: 100%;

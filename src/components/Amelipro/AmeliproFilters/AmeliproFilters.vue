@@ -153,9 +153,11 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .item-spacing {
 	&:not(:last-child) {
-		@media (width >= 600px) {
+		@media #{bp.$up-sm} {
 			margin-right: 16px;
 		}
 	}

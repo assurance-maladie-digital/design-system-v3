@@ -263,6 +263,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-custom-selector__label {
 	font-size: var(--v-theme-ap-fontSizeSm);
 	font-weight: var(--v-theme-ap-fontWeightBold);
@@ -272,7 +274,7 @@
 	width: 100%;
 
 	&.item-per-line-2 {
-		@media (width >= 600px) {
+		@media #{bp.$up-sm} {
 			width: calc(50% - 8px);
 			margin-left: 8px;
 
@@ -283,7 +285,7 @@
 	}
 
 	&.item-per-line-3 {
-		@media (width >= 600px) {
+		@media #{bp.$up-sm} {
 			width: calc((100% / 3) - (16px / 3));
 			margin-left: 8px;
 

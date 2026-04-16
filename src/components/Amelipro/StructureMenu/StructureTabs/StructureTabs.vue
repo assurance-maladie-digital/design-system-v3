@@ -177,8 +177,10 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .tabs-btn-wrapper {
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		width: 100% !important;
 	}
 }

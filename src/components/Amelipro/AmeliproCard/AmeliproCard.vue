@@ -227,6 +227,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-card {
 	display: block;
 	position: relative;
@@ -255,13 +257,13 @@
 	font-size: var(--v-theme-ap-fontSizeXs);
 	font-weight: var(--v-theme-ap-fontWeightRegular);
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding-left: 1rem;
 		padding-right: 1rem;
 		padding-bottom: 1rem;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
 		padding-bottom: 1rem;
@@ -270,7 +272,7 @@
 
 .amelipro-card__header--left,
 .amelipro-card__content--left {
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		padding-right: 1rem;
 	}
 }
@@ -282,28 +284,28 @@
 .amelipro-card__right-part {
 	padding: 1rem 1rem 1rem 0;
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding: 0 1rem 1rem;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding: 0 0.75rem 0.75rem;
 	}
 }
 
 .amelipro-card__right-part-content {
-	@media (width >= 960px) {
+	@media #{bp.$up-md} {
 		padding-left: 1rem;
 		min-height: 100%;
 		border-left: 1px solid v-bind(borderColorValue);
 	}
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding-top: 1rem;
 		border-top: 1px solid v-bind(borderColorValue);
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding-top: 0.75rem;
 	}
 }

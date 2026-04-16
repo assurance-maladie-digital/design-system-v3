@@ -158,10 +158,12 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-callback__retry-btn {
 	margin-left: 0;
 
-	@media (width >= 600px) {
+	@media #{bp.$up-sm} {
 		margin-left: 1rem;
 	}
 }

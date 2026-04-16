@@ -283,6 +283,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-card--multi-folding {
 	display: block;
 	position: relative;
@@ -300,13 +302,13 @@
 	padding-bottom: 0 !important;
 	word-break: break-all;
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding-top: 1rem;
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding-top: 0.75rem;
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
@@ -319,13 +321,13 @@
 	font-size: var(--v-theme-ap-fontSizeXs);
 	font-weight: var(--v-theme-ap-fontWeightRegular);
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding-left: 1rem;
 		padding-right: 1rem;
 		padding-bottom: 1rem;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
 		padding-bottom: 0.75rem;

@@ -318,6 +318,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .amelipro-stepper__list li {
 	&:first-child {
 		& .amelipro-step-btn {
@@ -394,7 +396,7 @@
 }
 
 .next-step-btn__wrapper {
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		width: 100%;
 	}
 }
@@ -406,7 +408,7 @@
 	border-radius: 8px;
 	border-top-left-radius: 0;
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding: 3rem 0.75rem 0.75rem;
 		border-top-left-radius: 8px;
 	}

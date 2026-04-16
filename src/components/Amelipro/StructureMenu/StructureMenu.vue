@@ -227,6 +227,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .v-input.amelipro-switch {
 	margin-top: 0;
 }
@@ -235,7 +237,7 @@
 	width: 50% !important;
 	max-width: 50% !important;
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		width: 100% !important;
 		max-width: 100% !important;
 	}

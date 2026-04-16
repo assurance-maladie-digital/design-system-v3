@@ -167,6 +167,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .accordion-btn {
 	padding: 0;
 	background-color: transparent;
@@ -191,11 +193,11 @@
 	padding: 1rem;
 	word-break: break-all;
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding: 1rem;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding: 0.75rem;
 	}
 
@@ -214,11 +216,11 @@
 	font-size: var(--v-theme-ap-fontSizeXs);
 	font-weight: var(--v-theme-ap-fontWeightRegular);
 
-	@media (width <= 959.99px) {
+	@media #{bp.$down-sm} {
 		padding: 0 1rem;
 	}
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding: 0 0.75rem;
 	}
 }
@@ -227,7 +229,7 @@
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 
-	@media (width <= 599.99px) {
+	@media #{bp.$down-xs} {
 		padding-bottom: 0.75rem;
 	}
 }

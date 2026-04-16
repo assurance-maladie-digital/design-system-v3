@@ -145,16 +145,18 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/breakpoints' as bp;
+
 .tooth-item {
 	min-width: 2.5rem;
 	margin-left: 4px;
 	margin-right: 4px;
 
-	@media (width <= 1239.999px) {
+	@media #{bp.$down-dental} {
 		width: 2.5rem;
 	}
 
-	@media (width >= 1240px) {
+	@media #{bp.$up-dental} {
 		width: 3.125rem;
 		margin-left: 8px;
 		margin-right: 8px;
