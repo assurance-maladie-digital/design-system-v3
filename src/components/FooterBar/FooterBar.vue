@@ -290,7 +290,6 @@
 </template>
 
 <style lang="scss" scoped>
-$white: #fff;
 
 a {
 	cursor: pointer;
@@ -365,24 +364,24 @@ a {
 .vd-footer-bar.v-theme--dark :deep() {
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
-		color: $white;
+		color: rgb(var(--v-theme-textOnDark));
 
 		&.version {
-			color: #fff-alpha;
+			color: rgb(var(--v-theme-textSubduedOnDark));
 		}
 	}
 
 	p,
 	.text--primary {
-		color: rgba($white, 0.87);
+		color: rgba(var(--v-theme-textOnDark), 0.87);
 	}
 
 	.text--secondary {
-		color: rgba($white, 0.6);
+		color: rgba(var(--v-theme-textOnDark), 0.6);
 	}
 
 	a.text--primary {
-		color: $white;
+		color: rgb(var(--v-theme-textOnDark));
 	}
 
 	.v-divider {
@@ -390,7 +389,7 @@ a {
 	}
 
 	svg {
-		fill: $white;
+		fill: rgb(var(--v-theme-textOnDark));
 	}
 }
 

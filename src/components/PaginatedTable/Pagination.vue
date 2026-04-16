@@ -86,6 +86,6 @@
 }
 
 :deep(.v-pagination) .v-btn--variant-plain:hover[aria-disabled='false'] svg {
-	color: #000;
+	color: rgb(var(--v-theme-textBase));
 }
 </style>

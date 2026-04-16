@@ -135,7 +135,7 @@
 .holiday-list {
 	max-height: 200px;
 	overflow-y: auto;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-backgroundSurface));
 	padding: 10px;
 	border-radius: 4px;
 	border: 1px solid #e0e0e0;

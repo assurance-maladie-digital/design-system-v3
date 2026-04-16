@@ -185,7 +185,7 @@
 	.alert {
 		display: flex;
 		flex-direction: column;
-		background-color: #fff;
+		background-color: rgb(var(--v-theme-backgroundSurface));
 
 		:deep(.v-alert__content) {
 			align-self: flex-start !important;
@@ -297,7 +297,7 @@
 
 .v-alert.v-theme--dark {
 	&.v-alert--variant-outlined {
-		background-color: #fff !important;
+		background-color: rgb(var(--v-theme-backgroundSurface)) !important;
 	}
 
 	.alert-close-btn {

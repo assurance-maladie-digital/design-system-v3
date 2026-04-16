@@ -49,7 +49,7 @@
 	justify-content: center;
 	font-weight: 700;
 	background-color: rgb(var(--v-theme-primary));
-	color: #fff;
+	color: rgb(var(--v-theme-textOnDark));
 	border: 2px solid transparent;
 	border-bottom:
 		solid 2px linear-gradient(
@@ -62,7 +62,7 @@
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border 0.15s 0.1s;
 
 	&:focus-visible {
-		background-color: #fff;
+		background-color: rgb(var(--v-theme-backgroundSurface));
 		color: rgb(var(--v-theme-primary));
 		outline: none;
 		border: 2px solid rgb(var(--v-theme-primary));
@@ -70,9 +70,9 @@
 }
 
 .header-menu-btn__open {
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-backgroundSurface));
 	color: rgb(var(--v-theme-primary));
-	border-color: #fff;
+	border-color: rgb(var(--v-theme-textOnDark));
 }
 
 @media screen and (max-width: ($header-breakpoint + 1)) {

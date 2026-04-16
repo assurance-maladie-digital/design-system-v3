@@ -44,7 +44,7 @@
 	right: 0;
 	transition: none;
 	width: 100%;
-	background: #fff;
+	background: rgb(var(--v-theme-backgroundSurface));
 	outline: none; // Disable outline to use border
 	border: 2px solid rgb(var(--v-theme-blue-darken60));
 }

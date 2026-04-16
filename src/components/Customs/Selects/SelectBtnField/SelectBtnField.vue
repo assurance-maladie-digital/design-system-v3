@@ -333,10 +333,10 @@
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-backgroundSurface));
 
 	&--selected {
-		color: #fff;
+		color: rgb(var(--v-theme-textOnDark));
 		background-color: rgb(var(--v-theme-primary));
 	}
 

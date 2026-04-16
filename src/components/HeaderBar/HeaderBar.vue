@@ -243,7 +243,7 @@
 @use './consts' as *;
 
 .global-container {
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-backgroundSurface));
 }
 
 .header {

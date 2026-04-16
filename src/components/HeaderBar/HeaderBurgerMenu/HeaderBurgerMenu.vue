@@ -143,7 +143,7 @@
 
 .menu-wrapper {
 	height: 100dvh;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-backgroundSurface));
 	display: flex;
 	flex-direction: column;
 }
@@ -171,7 +171,7 @@
 	}
 
 	.header-menu {
-		background-color: #fff;
+		background-color: rgb(var(--v-theme-backgroundSurface));
 		overflow: hidden auto;
 		height: 100%;
 	}

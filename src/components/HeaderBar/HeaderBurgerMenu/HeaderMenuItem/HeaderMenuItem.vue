@@ -55,10 +55,10 @@
 
 	.header-menu-item:hover {
 		background-color: rgb(var(--v-theme-primary));
-		color: #fff;
+		color: rgb(var(--v-theme-textOnDark));
 
 		> :deep(a > *) {
-			color: #fff !important;
+			color: rgb(var(--v-theme-textOnDark)) !important;
 		}
 	}
 </style>
