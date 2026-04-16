@@ -333,7 +333,7 @@
 	}
 
 	&.amelipro-btn--style {
-		padding: 0.5rem 1rem;
+		padding: var(--v-theme-ap-btnPaddingY) var(--v-theme-ap-btnPaddingX);
 	}
 
 	&.v-btn--active::before,

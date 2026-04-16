@@ -61,7 +61,7 @@
 	position: absolute;
 	top: -10px;
 	right: 30px;
-	padding: 8px 16px;
+	padding: var(--v-theme-padding-2) var(--v-theme-padding-4);
 	max-width: 200px;
 	background: rgb(var(--v-theme-surface));
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));

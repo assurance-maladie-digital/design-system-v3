@@ -347,8 +347,8 @@
 
 .v-input {
 	& :deep(.v-field__input) {
-		padding-left: 12px;
-		padding-right: 12px;
+		padding-left: var(--v-theme-padding-3);
+		padding-right: var(--v-theme-padding-3);
 	}
 
 	& :deep(.v-field--disabled) {

@@ -368,7 +368,7 @@
 
 .item-btn {
 	box-sizing: border-box !important;
-	padding: 12px;
+	padding: var(--v-theme-padding-3);
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 	border-radius: 8px;
 	text-align: center;
@@ -390,7 +390,7 @@
 
 .item-empty {
 	box-sizing: border-box !important;
-	padding: 12px;
+	padding: var(--v-theme-padding-3);
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-2));
 	border-radius: 8px;
 	color: rgb(var(--v-theme-ap-grey));

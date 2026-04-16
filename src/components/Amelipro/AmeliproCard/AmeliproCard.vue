@@ -240,40 +240,40 @@
 }
 
 .amelipro-card__header {
-	padding-top: 1rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
+	padding-top: var(--v-theme-ap-cardPaddingDesktop);
+	padding-left: var(--v-theme-ap-cardPaddingDesktop);
+	padding-right: var(--v-theme-ap-cardPaddingDesktop);
 	padding-bottom: 0 !important;
 	word-break: break-all;
 }
 
 .amelipro-card__header-content {
-	padding-bottom: 1rem;
+	padding-bottom: var(--v-theme-ap-cardPaddingDesktop);
 }
 
 .amelipro-card__content {
 	width: 100%;
-	padding: 1rem;
+	padding: var(--v-theme-ap-cardPaddingDesktop);
 	font-size: var(--v-theme-ap-fontSizeXs);
 	font-weight: var(--v-theme-ap-fontWeightRegular);
 
 	@media #{bp.$down-sm} {
-		padding-left: 1rem;
-		padding-right: 1rem;
-		padding-bottom: 1rem;
+		padding-left: var(--v-theme-ap-cardPaddingDesktop);
+		padding-right: var(--v-theme-ap-cardPaddingDesktop);
+		padding-bottom: var(--v-theme-ap-cardPaddingDesktop);
 	}
 
 	@media #{bp.$down-xs} {
-		padding-left: 0.75rem;
-		padding-right: 0.75rem;
-		padding-bottom: 1rem;
+		padding-left: var(--v-theme-ap-cardPaddingMobile);
+		padding-right: var(--v-theme-ap-cardPaddingMobile);
+		padding-bottom: var(--v-theme-ap-cardPaddingDesktop);
 	}
 }
 
 .amelipro-card__header--left,
 .amelipro-card__content--left {
 	@media #{bp.$up-md} {
-		padding-right: 1rem;
+		padding-right: var(--v-theme-ap-cardPaddingDesktop);
 	}
 }
 
@@ -282,7 +282,7 @@
 }
 
 .amelipro-card__right-part {
-	padding: 1rem 1rem 1rem 0;
+	padding: var(--v-theme-ap-cardPaddingDesktop) 1rem 1rem 0;
 
 	@media #{bp.$down-sm} {
 		padding: 0 1rem 1rem;
@@ -295,18 +295,18 @@
 
 .amelipro-card__right-part-content {
 	@media #{bp.$up-md} {
-		padding-left: 1rem;
+		padding-left: var(--v-theme-ap-cardPaddingDesktop);
 		min-height: 100%;
 		border-left: 1px solid v-bind(borderColorValue);
 	}
 
 	@media #{bp.$down-sm} {
-		padding-top: 1rem;
+		padding-top: var(--v-theme-ap-cardPaddingDesktop);
 		border-top: 1px solid v-bind(borderColorValue);
 	}
 
 	@media #{bp.$down-xs} {
-		padding-top: 0.75rem;
+		padding-top: var(--v-theme-ap-cardPaddingMobile);
 	}
 }
 </style>

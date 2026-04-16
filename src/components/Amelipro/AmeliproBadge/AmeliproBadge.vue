@@ -55,7 +55,7 @@
 .amelipro-badge {
 	display: inline-block;
 	margin-left: 0.5rem;
-	padding: 0.5rem 1rem !important;
+	padding: var(--v-theme-ap-btnPaddingY) var(--v-theme-ap-btnPaddingX) !important;
 
 	&.round-custom {
 		border-radius: var(--v-theme-ap-inputRadius) 1rem 1rem 0.5rem;

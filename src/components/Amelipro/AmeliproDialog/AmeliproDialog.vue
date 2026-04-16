@@ -314,11 +314,11 @@
 }
 
 .dialog {
-	padding: 1.5rem;
+	padding: var(--v-theme-ap-dialogPadding);
 }
 
 .dialog__header {
-	padding-bottom: 0.5rem;
+	padding-bottom: var(--v-theme-ap-btnPaddingY);
 	border-bottom: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 }
 

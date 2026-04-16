@@ -279,6 +279,6 @@
 	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 	border: 1px solid rgb(var(--v-theme-ap-grey-darken-1));
 	border-radius: var(--v-theme-ap-btnRadius);
-	padding: 0.75rem 1rem;
+	padding: var(--v-theme-ap-cardPaddingMobile) var(--v-theme-ap-cardPaddingDesktop);
 }
 </style>

@@ -327,7 +327,7 @@
 
 .btn-styled-text {
 	min-height: var(--v-theme-ap-btnMinHeight);
-	padding: 12px 24px;
+	padding: var(--v-theme-padding-3) 24px;
 	border-radius: var(--v-theme-ap-btnRadius);
 	font-size: var(--v-theme-ap-fontSizeSm);
 }
