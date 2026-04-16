@@ -62,6 +62,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/overrides/breakpoints' as bp;
+
 .vd-social-media-links {
 	display: flex;
 	flex-direction: column;
@@ -119,7 +121,7 @@ li {
 	}
 }
 
-@media (width >= 768px) {
+@media #{bp.$up-tablet} {
 	.vd-social-media-links-label {
 		text-align: right;
 	}
@@ -129,7 +131,7 @@ li {
 	}
 }
 
-@media (width <= 767px) {
+@media #{bp.$down-mobile} {
 	.vd-social-media-links-label {
 		text-align: left;
 	}

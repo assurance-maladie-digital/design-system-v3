@@ -540,6 +540,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/overrides/breakpoints' as bp;
+
 .phone-field-fieldset {
 	border: 1px solid #b9b9b9;
 	border-radius: 4px;
@@ -579,7 +581,7 @@
 	width: 100%;
 }
 
-@media (width >= 600px) {
+@media #{bp.$up-sm} {
 	.phone-field-container {
 		flex-direction: row;
 		align-items: stretch;

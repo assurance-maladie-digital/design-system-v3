@@ -19,3 +19,7 @@ $md-only: '(width >= 960px) and (width <= 1263.99px)';
 // Component-specific (AmeliproDentalChart)
 $up-dental: '(width >= 1240px)';
 $down-dental: '(width <= 1239.999px)';
+
+// Component-specific (SocialMediaLinks)
+$up-tablet: '(width >= 768px)';
+$down-mobile: '(width <= 767px)';

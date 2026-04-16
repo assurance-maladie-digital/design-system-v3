@@ -1,4 +1,5 @@
 /* Typography styles for CNAM and PA themes */
+@use 'breakpoints' as bp;
 
 .theme-cnam,
 .theme-pa {
@@ -227,7 +228,7 @@
 		font-weight: 700 !important;
 		text-transform: uppercase !important;
 
-		@media (width <= 959.99px) {
+		@media #{bp.$down-sm} {
 			font-size: var(--v-theme-ap-fontSizeMd) !important;
 		}
 	}
