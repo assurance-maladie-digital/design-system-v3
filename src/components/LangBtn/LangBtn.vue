@@ -204,7 +204,7 @@
 }
 
 .vd-lang-btn {
-	font-size: 16px;
+	font-size: var(--v-theme-fontSize-corpsDeTexte);
 	text-transform: none;
 	letter-spacing: inherit;
 

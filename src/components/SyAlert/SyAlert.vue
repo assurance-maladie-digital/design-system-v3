@@ -163,7 +163,7 @@
 	letter-spacing: normal;
 
 	span {
-		font-size: 14px;
+		font-size: var(--v-theme-fontSize-liensEtLibelles);
 	}
 
 	&:focus-visible {

@@ -179,19 +179,19 @@
 	}
 
 	.title {
-		font-size: 24px;
+		font-size: var(--v-theme-fontSize-titres);
 	}
 
 	.alt-title {
-		font-size: 20px;
+		font-size: var(--v-theme-fontSize-titresAlternatifs);
 	}
 
 	.body-text {
-		font-size: 16px;
+		font-size: var(--v-theme-fontSize-corpsDeTexte);
 	}
 
 	.link-label {
-		font-size: 14px;
+		font-size: var(--v-theme-fontSize-liensEtLibelles);
 	}
 }
 

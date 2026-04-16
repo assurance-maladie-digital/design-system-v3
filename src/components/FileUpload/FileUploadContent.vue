@@ -103,7 +103,7 @@
 	border-radius: var(--v-theme-radius-rounded);
 	transition: background 0.25s;
 	font-weight: 700 !important;
-	font-size: 16px;
+	font-size: var(--v-theme-fontSize-corpsDeTexte);
 	padding: 10px 16px;
 }
 </style>

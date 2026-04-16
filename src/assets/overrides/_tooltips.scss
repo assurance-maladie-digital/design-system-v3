@@ -9,5 +9,5 @@
 }
 
 .v-theme--ap.v-tooltip .v-overlay__content {
-	font-size: 14px;
+	font-size: var(--v-theme-fontSize-liensEtLibelles);
 }

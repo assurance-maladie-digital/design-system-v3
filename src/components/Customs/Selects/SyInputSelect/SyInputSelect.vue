@@ -305,7 +305,7 @@
 <style lang="scss" scoped>
 .sy-input-select {
 	text-transform: none !important;
-	font-size: 16px;
+	font-size: var(--v-theme-fontSize-corpsDeTexte);
 }
 
 .v-input {

@@ -937,7 +937,7 @@
 
 .help-text-below {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: 14px;
+	font-size: var(--v-theme-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
