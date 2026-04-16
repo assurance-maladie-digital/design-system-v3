@@ -152,7 +152,7 @@
 }
 
 .user-menu-last-connexion {
-	font-size: 0.875rem;
+	font-size: var(--v-theme-ap-fontSizeXs);
 }
 
 .user-menu__btn--account,

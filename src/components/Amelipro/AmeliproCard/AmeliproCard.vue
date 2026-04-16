@@ -231,7 +231,7 @@
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: 0.75rem;
+	border-radius: var(--v-theme-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
@@ -252,8 +252,8 @@
 .amelipro-card__content {
 	width: 100%;
 	padding: 1rem;
-	font-size: 0.875rem;
-	font-weight: 400;
+	font-size: var(--v-theme-ap-fontSizeXs);
+	font-weight: var(--v-theme-ap-fontWeightRegular);
 
 	@media (width <= 959.99px) {
 		padding-left: 1rem;

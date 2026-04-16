@@ -645,7 +645,7 @@
 <style lang="scss" scoped>
 .amelipro-upload {
 	padding: 1rem;
-	border-radius: 0.75rem;
+	border-radius: var(--v-theme-ap-btnRadius);
 
 	@media (width <= 599.99px) {
 		padding: 0.75rem;

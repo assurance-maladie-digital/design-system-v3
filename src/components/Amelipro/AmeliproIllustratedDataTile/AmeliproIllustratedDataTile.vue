@@ -143,7 +143,7 @@
 
 <style lang="scss" scoped>
 .illustrated-data-tile__wrapper {
-	border-radius: 0.5rem;
+	border-radius: var(--v-theme-ap-inputRadius);
 	transform: translateY(0);
 	transition: transform 0.1s ease-in-out;
 
@@ -155,14 +155,14 @@
 .illustrated-data-tile__label-line-1 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
-	font-size: 1rem;
-	font-weight: 700;
+	font-size: var(--v-theme-ap-fontSizeSm);
+	font-weight: var(--v-theme-ap-fontWeightBold);
 }
 
 .illustrated-data-tile__label-line-2 {
 	margin-bottom: 2rem;
-	font-size: 0.875rem;
-	font-weight: 400;
+	font-size: var(--v-theme-ap-fontSizeXs);
+	font-weight: var(--v-theme-ap-fontWeightRegular);
 }
 
 .illustrated-data-tile__img {

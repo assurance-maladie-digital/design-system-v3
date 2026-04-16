@@ -333,7 +333,7 @@
 }
 
 .step-number {
-	font-size: 1rem;
+	font-size: var(--v-theme-ap-fontSizeSm);
 
 	&::before {
 		position: absolute;

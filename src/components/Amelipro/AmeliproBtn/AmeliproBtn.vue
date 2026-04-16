@@ -308,7 +308,7 @@
 <style lang="scss" scoped>
 .v-btn {
 	letter-spacing: 0.64px;
-	font-weight: 700;
+	font-weight: var(--v-theme-ap-fontWeightBold);
 	text-indent: unset;
 
 	& :deep(.v-btn__overlay),
@@ -368,7 +368,7 @@
 		min-height: 1.25rem;
 		padding: 0 0.125rem;
 		border-radius: 50%;
-		font-size: 0.75rem;
+		font-size: var(--v-theme-ap-fontSizeXxs);
 		z-index: 1;
 
 		& span {

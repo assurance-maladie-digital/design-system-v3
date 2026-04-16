@@ -207,11 +207,11 @@
 .theme-ap,
 .theme-ap2026 {
 	p {
-		font-size: 0.875rem;
+		font-size: var(--v-theme-ap-fontSizeXs);
 	}
 
 	a {
-		font-size: 0.875rem;
+		font-size: var(--v-theme-ap-fontSizeXs);
 	}
 
 	[class*='text-'] {
@@ -223,36 +223,36 @@
 	// sets the service title text style
 	[class*='text-service-title'] {
 		font-family: Arial, Helvetica, sans-serif !important;
-		font-size: 1.5rem !important;
+		font-size: var(--v-theme-ap-fontSizeXxl) !important;
 		font-weight: 700 !important;
 		text-transform: uppercase !important;
 
 		@media (width <= 959.99px) {
-			font-size: 1.125rem !important;
+			font-size: var(--v-theme-ap-fontSizeMd) !important;
 		}
 	}
 
 	// sets classes font sizes
 	[class*='text-'][class*='-h1'],
 	h1 {
-		font-size: 1.5rem !important;
+		font-size: var(--v-theme-ap-fontSizeXxl) !important;
 		font-weight: 700 !important;
 	}
 
 	[class*='text-'][class*='-h2'],
 	h2 {
-		font-size: 1.25rem !important;
+		font-size: var(--v-theme-ap-fontSizeLg) !important;
 		font-weight: 700;
 	}
 
 	[class*='text-'][class*='-h3'],
 	h3 {
-		font-size: 1.125rem !important;
+		font-size: var(--v-theme-ap-fontSizeMd) !important;
 	}
 
 	[class*='text-'][class*='-h4'],
 	h4 {
-		font-size: 1rem !important;
+		font-size: var(--v-theme-ap-fontSizeSm) !important;
 		font-weight: 700;
 	}
 
@@ -260,7 +260,7 @@
 	[class*='text-'][class*='-h6'],
 	h5,
 	h6 {
-		font-size: 1rem !important;
+		font-size: var(--v-theme-ap-fontSizeSm) !important;
 		font-weight: 700;
 	}
 
@@ -270,11 +270,11 @@
 	[class*='text-'][class*='-body-2'],
 	[class*='text-'][class*='-button'],
 	[class*='text-'][class*='-overline'] {
-		font-size: 0.875rem !important;
+		font-size: var(--v-theme-ap-fontSizeXs) !important;
 	}
 
 	[class*='text-'][class*='-caption'] {
-		font-size: 0.75rem !important;
+		font-size: var(--v-theme-ap-fontSizeXxs) !important;
 	}
 
 	// sets font weight
@@ -288,31 +288,31 @@
 	}
 
 	.font-size-xxs {
-		font-size: 0.75rem;
+		font-size: var(--v-theme-ap-fontSizeXxs);
 	}
 
 	.font-size-xs {
-		font-size: 0.875rem;
+		font-size: var(--v-theme-ap-fontSizeXs);
 	}
 
 	.font-size-sm {
-		font-size: 1rem;
+		font-size: var(--v-theme-ap-fontSizeSm);
 	}
 
 	.font-size-md {
-		font-size: 1.125rem;
+		font-size: var(--v-theme-ap-fontSizeMd);
 	}
 
 	.font-size-lg {
-		font-size: 1.25rem;
+		font-size: var(--v-theme-ap-fontSizeLg);
 	}
 
 	.font-size-xl {
-		font-size: 1.375rem;
+		font-size: var(--v-theme-ap-fontSizeXl);
 	}
 
 	.font-size-xxl {
-		font-size: 1.5rem;
+		font-size: var(--v-theme-ap-fontSizeXxl);
 	}
 
 	.relative {

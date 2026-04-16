@@ -309,7 +309,7 @@
 	}
 
 	&.dialog-radius :deep(.v-overlay__content) {
-		border-radius: 0.75rem;
+		border-radius: var(--v-theme-ap-btnRadius);
 	}
 }
 
@@ -324,6 +324,6 @@
 
 .dialog__title {
 	width: calc(100% - 60px);
-	font-size: 1.25rem;
+	font-size: var(--v-theme-ap-fontSizeLg);
 }
 </style>

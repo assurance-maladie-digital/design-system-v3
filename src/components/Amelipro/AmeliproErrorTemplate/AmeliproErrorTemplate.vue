@@ -176,10 +176,10 @@
 
 .amelipro-error-template__title,
 .amelipro-error-template-content-title {
-	font-size: 1.125rem;
+	font-size: var(--v-theme-ap-fontSizeMd);
 }
 
 .amelipro-error-template-content-btn {
-	font-size: 1rem;
+	font-size: var(--v-theme-ap-fontSizeSm);
 }
 </style>

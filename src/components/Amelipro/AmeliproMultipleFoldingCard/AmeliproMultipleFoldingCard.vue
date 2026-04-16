@@ -287,7 +287,7 @@
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: 0.75rem;
+	border-radius: var(--v-theme-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
@@ -316,8 +316,8 @@
 .amelipro-card--multi-folding-content {
 	width: 100%;
 	padding: 1rem;
-	font-size: 0.875rem;
-	font-weight: 400;
+	font-size: var(--v-theme-ap-fontSizeXs);
+	font-weight: var(--v-theme-ap-fontWeightRegular);
 
 	@media (width <= 959.99px) {
 		padding-left: 1rem;
@@ -336,11 +336,11 @@
 	position: relative;
 	padding: 0.5rem 2rem;
 	border: 1px solid rgb(var(--v-theme-primary));
-	border-radius: 0.75rem;
+	border-radius: var(--v-theme-ap-btnRadius);
 	background-color: #fff;
 	color: rgb(var(--v-theme-primary));
-	font-size: 1rem;
-	font-weight: 700;
+	font-size: var(--v-theme-ap-fontSizeSm);
+	font-weight: var(--v-theme-ap-fontWeightBold);
 	cursor: pointer;
 
 	&.active-btn {

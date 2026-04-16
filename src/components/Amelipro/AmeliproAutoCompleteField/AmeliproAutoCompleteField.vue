@@ -377,8 +377,8 @@
 }
 
 .amelipro-autocomplete__label {
-	font-size: 0.875rem;
-	font-weight: 700;
+	font-size: var(--v-theme-ap-fontSizeXs);
+	font-weight: var(--v-theme-ap-fontWeightBold);
 }
 
 .v-input {

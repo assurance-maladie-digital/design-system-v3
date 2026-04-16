@@ -338,10 +338,10 @@ input {
 
 	& input {
 		& + span {
-			font-size: 1rem;
-			font-weight: 700;
+			font-size: var(--v-theme-ap-fontSizeSm);
+			font-weight: var(--v-theme-ap-fontWeightBold);
 			padding: 0.75rem 2rem;
-			border-radius: 0.75rem;
+			border-radius: var(--v-theme-ap-btnRadius);
 			border: 1px solid rgb(var(--v-theme-primary));
 			background-color: #fff;
 			color: rgb(var(--v-theme-primary));
@@ -385,6 +385,6 @@ input {
 }
 
 .radio-group__label {
-	font-weight: 700;
+	font-weight: var(--v-theme-ap-fontWeightBold);
 }
 </style>

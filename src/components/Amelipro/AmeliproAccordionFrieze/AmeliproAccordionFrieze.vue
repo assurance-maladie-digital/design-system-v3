@@ -384,7 +384,7 @@
 
 .item-btn__link-style-text {
 	color: rgb(var(--v-theme-primary));
-	font-size: 0.875rem;
+	font-size: var(--v-theme-ap-fontSizeXs);
 	text-decoration: underline;
 }
 

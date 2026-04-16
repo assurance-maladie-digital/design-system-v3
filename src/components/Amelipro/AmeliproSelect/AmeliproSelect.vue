@@ -350,8 +350,8 @@
 }
 
 :deep(.v-input__slot) {
-	min-height: 2.625rem !important;
-	border-radius: 0.5rem;
+	min-height: var(--v-theme-ap-inputMinHeight) !important;
+	border-radius: var(--v-theme-ap-inputRadius);
 
 	fieldset {
 		border: 0;
@@ -359,8 +359,8 @@
 }
 
 .amelipro-select__label {
-	font-size: 0.875rem;
-	font-weight: 700;
+	font-size: var(--v-theme-ap-fontSizeXs);
+	font-weight: var(--v-theme-ap-fontWeightBold);
 }
 
 .v-list {

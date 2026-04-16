@@ -463,7 +463,7 @@
 }
 
 .amelipro-validation-rules {
-	font-size: 0.875rem;
+	font-size: var(--v-theme-ap-fontSizeXs);
 	color: rgb(var(--v-theme-ap-grey));
 
 	.amelipro-validation-rule {
@@ -474,8 +474,8 @@
 }
 
 .amelipro-text-field__label {
-	font-size: 0.875rem;
-	font-weight: 700;
+	font-size: var(--v-theme-ap-fontSizeXs);
+	font-weight: var(--v-theme-ap-fontWeightBold);
 }
 
 .v-input {

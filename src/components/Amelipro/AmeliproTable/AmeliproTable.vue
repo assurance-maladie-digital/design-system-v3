@@ -488,7 +488,7 @@ tr:last-child td {
 .total-counter {
 	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 	border: 1px solid rgb(var(--v-theme-ap-grey-darken-1));
-	border-radius: 0.75rem;
+	border-radius: var(--v-theme-ap-btnRadius);
 	padding: 0.5rem 0.75rem;
 }
 

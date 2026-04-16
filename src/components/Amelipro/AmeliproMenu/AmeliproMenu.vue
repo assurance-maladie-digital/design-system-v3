@@ -319,7 +319,7 @@ ul {
 	min-height: unset !important;
 	padding: 0.5rem 1rem !important;
 	border-radius: 0 !important;
-	font-size: 1rem;
+	font-size: var(--v-theme-ap-fontSizeSm);
 
 	&.amelipro-menu__btn--open {
 		padding: 0 !important;
@@ -363,9 +363,9 @@ ul {
 .amelipro-menu__item--level-2,
 .amelipro-menu__item--level-3 {
 	& .v-btn {
-		font-size: 0.875rem;
+		font-size: var(--v-theme-ap-fontSizeXs);
 		text-transform: unset;
-		font-weight: 400;
+		font-weight: var(--v-theme-ap-fontWeightRegular);
 	}
 }
 
@@ -377,7 +377,7 @@ ul {
 	& .amelipro-menu__item--level-3 {
 		& .v-btn {
 			padding: 0.5rem 1rem 0.5rem 2rem !important;
-			font-weight: 400;
+			font-weight: var(--v-theme-ap-fontWeightRegular);
 		}
 	}
 }

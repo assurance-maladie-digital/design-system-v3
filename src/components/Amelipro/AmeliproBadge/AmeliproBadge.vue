@@ -58,7 +58,7 @@
 	padding: 0.5rem 1rem !important;
 
 	&.round-custom {
-		border-radius: 0.5rem 1rem 1rem 0.5rem;
+		border-radius: var(--v-theme-ap-inputRadius) 1rem 1rem 0.5rem;
 	}
 
 	&.round-classic {
@@ -68,7 +68,7 @@
 
 .amelipro-badge__content {
 	display: inline-block;
-	font-size: 1rem !important;
-	font-weight: 700 !important;
+	font-size: var(--v-theme-ap-fontSizeSm) !important;
+	font-weight: var(--v-theme-ap-fontWeightBold) !important;
 }
 </style>

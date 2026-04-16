@@ -65,7 +65,7 @@
 	max-width: 200px;
 	background: #fff;
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
-	border-radius: 0.75rem;
+	border-radius: var(--v-theme-ap-btnRadius);
 	z-index: 10;
 }
 </style>

@@ -191,30 +191,30 @@
 	}
 
 	h1.header-title {
-		font-size: 1.5rem !important;
+		font-size: var(--v-theme-ap-fontSizeXxl) !important;
 		letter-spacing: -0.48px !important;
 
 		@media (width <= 959.99px) {
-			font-size: 1.25rem !important;
+			font-size: var(--v-theme-ap-fontSizeLg) !important;
 			letter-spacing: -0.4px !important;
 		}
 
 		@media (width <= 599.99px) {
-			font-size: 1.125rem !important;
+			font-size: var(--v-theme-ap-fontSizeMd) !important;
 			letter-spacing: -0.32px !important;
 		}
 	}
 
 	h2.header-title {
-		font-size: 1.125rem !important;
+		font-size: var(--v-theme-ap-fontSizeMd) !important;
 		color: rgb(var(--v-theme-ap-grey-darken-1));
 
 		@media (width <= 959.99px) {
-			font-size: 1rem !important;
+			font-size: var(--v-theme-ap-fontSizeSm) !important;
 		}
 
 		@media (width <= 599.99px) {
-			font-size: 0.875rem !important;
+			font-size: var(--v-theme-ap-fontSizeXs) !important;
 		}
 	}
 

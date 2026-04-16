@@ -151,10 +151,10 @@
 
 .amelipro-tab__btn--pills {
 	position: relative;
-	border-radius: 0.75rem;
+	border-radius: var(--v-theme-ap-btnRadius);
 	cursor: pointer;
 	padding: 0.5rem 2rem;
-	font-weight: 700;
+	font-weight: var(--v-theme-ap-fontWeightBold);
 
 	&.selected {
 		&::after {

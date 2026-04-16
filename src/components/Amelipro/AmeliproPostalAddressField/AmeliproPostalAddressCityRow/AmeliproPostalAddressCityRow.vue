@@ -529,7 +529,7 @@
 
 	label {
 		margin-bottom: 4px;
-		font-weight: 700;
+		font-weight: var(--v-theme-ap-fontWeightBold);
 	}
 }
 

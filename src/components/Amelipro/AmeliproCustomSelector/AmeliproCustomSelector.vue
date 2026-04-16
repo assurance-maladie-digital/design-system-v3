@@ -264,8 +264,8 @@
 
 <style lang="scss" scoped>
 .amelipro-custom-selector__label {
-	font-size: 1rem;
-	font-weight: 700;
+	font-size: var(--v-theme-ap-fontSizeSm);
+	font-weight: var(--v-theme-ap-fontWeightBold);
 }
 
 .amelipro-custom-selector__item {

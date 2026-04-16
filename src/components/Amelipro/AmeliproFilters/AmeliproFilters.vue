@@ -175,12 +175,12 @@ input {
 
 .filter {
 	padding: 0.75rem 2rem;
-	font-weight: 700;
+	font-weight: var(--v-theme-ap-fontWeightBold);
 
 	input + &,
 	.amelipro-filters__filter-input & {
 		position: relative;
-		border-radius: 0.75rem;
+		border-radius: var(--v-theme-ap-btnRadius);
 		border: 1px solid rgb(var(--v-theme-primary));
 		background-color: #fff;
 		color: rgb(var(--v-theme-primary));
@@ -211,6 +211,6 @@ input {
 }
 
 .amelipro-filters__label {
-	font-weight: 700;
+	font-weight: var(--v-theme-ap-fontWeightBold);
 }
 </style>

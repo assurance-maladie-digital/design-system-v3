@@ -148,8 +148,8 @@
 
 .download-file-link-text {
 	color: rgb(var(--v-theme-primary));
-	font-size: 1rem;
-	font-weight: 700;
+	font-size: var(--v-theme-ap-fontSizeSm);
+	font-weight: var(--v-theme-ap-fontWeightBold);
 
 	a:hover & {
 		color: rgb(var(--v-theme-secondary));

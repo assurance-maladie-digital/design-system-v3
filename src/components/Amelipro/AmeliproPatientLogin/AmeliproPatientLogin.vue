@@ -217,9 +217,9 @@
 
 <style lang="scss" scoped>
 .ident-title {
-	font-size: 0.875rem !important;
+	font-size: var(--v-theme-ap-fontSizeXs) !important;
 	text-align: center;
-	font-weight: 700;
+	font-weight: var(--v-theme-ap-fontWeightBold);
 	text-transform: uppercase;
 
 	@media (width >= 960px) {

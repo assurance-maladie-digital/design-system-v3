@@ -256,7 +256,7 @@
 	border: 1px solid rgb(var(--v-theme-primary)) !important;
 	border-radius: var(--radius-md) !important;
 	white-space: normal;
-	font-size: 1rem;
+	font-size: var(--v-theme-ap-fontSizeSm);
 	font-weight: 600;
 	text-align: left;
 	align-items: center;

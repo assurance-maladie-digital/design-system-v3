@@ -303,11 +303,11 @@
 }
 
 .fs-14 {
-	font-size: 0.875rem;
+	font-size: var(--v-theme-ap-fontSizeXs);
 }
 
 .fs-18 {
-	font-size: 1.125rem;
+	font-size: var(--v-theme-ap-fontSizeMd);
 }
 
 .custom-marker {
