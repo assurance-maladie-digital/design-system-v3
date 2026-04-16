@@ -10,7 +10,7 @@ exports[`AmeliproClickableTile > Snapshots > renders the component with all prop
   "
   density="default"
   disabled="false"
-  elevation="0"
+  elevation="2"
   exact="false"
   flat="false"
   height="auto"
