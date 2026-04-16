@@ -416,7 +416,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-table__wrapper--desktop > div,
 .amelipro-table__wrapper--mobile > div {
 	border: 1px solid rgb(var(--v-theme-ap-grey));

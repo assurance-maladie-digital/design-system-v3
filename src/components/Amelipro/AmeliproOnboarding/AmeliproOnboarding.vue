@@ -214,7 +214,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-ondoarding-content {
 	min-height: 350px;
 }

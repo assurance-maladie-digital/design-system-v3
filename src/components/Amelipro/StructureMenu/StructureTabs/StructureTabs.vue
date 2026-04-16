@@ -177,9 +177,8 @@
 </template>
 
 <style lang="scss" scoped>
-
 .tabs-btn-wrapper {
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		width: 100% !important;
 	}
 }

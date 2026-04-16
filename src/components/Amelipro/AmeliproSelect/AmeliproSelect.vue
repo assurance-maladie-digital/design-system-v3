@@ -329,7 +329,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-select {
 	& :deep(.v-select__selection--comma) {
 		line-height: 1.5rem;
@@ -372,7 +371,6 @@
 </style>
 
 <style lang="scss">
-
 .amelipro-select-menu {
 	.v-list-item--active .v-list-item__overlay,
 	.v-list-item--selected .v-list-item__overlay,

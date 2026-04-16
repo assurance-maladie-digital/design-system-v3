@@ -75,7 +75,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .upload-list {
 	display: flex;
 	flex-direction: column;

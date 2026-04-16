@@ -290,7 +290,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 $white: #fff;
 
 a {

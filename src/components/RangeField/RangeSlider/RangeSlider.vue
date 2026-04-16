@@ -254,7 +254,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 $virtual-thumb-size: 40px;
 
 .wrapper {

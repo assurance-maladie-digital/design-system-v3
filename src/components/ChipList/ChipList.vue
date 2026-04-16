@@ -302,7 +302,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 // Styles pour la liste HTML native
 .sy-chip-list ul {
 	list-style: none;

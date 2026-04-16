@@ -178,7 +178,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-search-list fieldset {
 	border: 0;
 }

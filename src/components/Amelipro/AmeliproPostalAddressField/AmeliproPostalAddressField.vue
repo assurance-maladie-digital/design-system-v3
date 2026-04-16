@@ -312,7 +312,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .address-field {
 	min-width: 200px;
 	width: 100%;

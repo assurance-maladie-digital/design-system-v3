@@ -35,7 +35,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .my-color {
 	color: rgb(var(--v-theme-yellow-lighten40)) !important;
 }

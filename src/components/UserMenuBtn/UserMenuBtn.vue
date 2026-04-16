@@ -94,7 +94,6 @@
 </template>
 
 <style scoped lang="scss">
-
 .vd-user-icon {
 	width: 40px;
 	height: 40px;

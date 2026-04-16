@@ -142,7 +142,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .illustrated-data-tile__wrapper {
 	border-radius: 0.5rem;
 	transform: translateY(0);

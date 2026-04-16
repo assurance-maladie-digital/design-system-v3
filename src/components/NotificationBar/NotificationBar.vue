@@ -136,7 +136,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-notification-content {
 	min-width: 0;
 	word-wrap: break-word;

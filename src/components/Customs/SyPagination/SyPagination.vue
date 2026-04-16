@@ -352,7 +352,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-pagination {
 	display: flex;
 	align-items: center;

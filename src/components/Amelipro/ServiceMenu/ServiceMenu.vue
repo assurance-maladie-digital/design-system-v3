@@ -174,7 +174,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 :deep(.v-overlay__content) {
 	top: 40px;
 	left: -515px;
@@ -182,7 +181,7 @@
 	z-index: 8;
 	border-radius: 4px;
 
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		left: -800px;
 	}
 }

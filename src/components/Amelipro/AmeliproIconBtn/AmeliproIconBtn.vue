@@ -275,7 +275,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn {
 	background-color: transparent;
 	letter-spacing: unset;

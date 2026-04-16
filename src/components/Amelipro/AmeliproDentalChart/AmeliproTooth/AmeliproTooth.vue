@@ -147,7 +147,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .tooth-btn {
 	border-radius: 8px;
 	max-width: 100%;

@@ -290,7 +290,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-state-tile__pdf-download {
 	color: rgb(var(--v-theme-primary));
 }

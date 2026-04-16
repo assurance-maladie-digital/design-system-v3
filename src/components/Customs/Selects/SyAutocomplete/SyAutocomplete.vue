@@ -627,7 +627,6 @@
 </template>
 
 <style scoped lang="scss">
-
 .sy-autocomplete {
 	width: 100%;
 	position: relative;

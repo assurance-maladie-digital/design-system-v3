@@ -401,7 +401,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 :deep(.v-btn):focus {
 	outline-color: #fff;
 }

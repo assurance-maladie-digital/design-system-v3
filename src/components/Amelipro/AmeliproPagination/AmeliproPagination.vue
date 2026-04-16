@@ -145,7 +145,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 ol {
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 }

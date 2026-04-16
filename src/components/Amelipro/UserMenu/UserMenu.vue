@@ -130,7 +130,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn :deep(.v-btn__content) {
 	opacity: 1 !important;
 }

@@ -179,7 +179,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .icon-radio__wrapper {
 	border-radius: 10px;
 }

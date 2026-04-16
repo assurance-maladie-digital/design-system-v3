@@ -125,7 +125,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn:deep() {
 	.v-btn__underlay,
 	.v-btn__overlay {

@@ -235,7 +235,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .loader {
 	width: 30px;
 	height: 30px;

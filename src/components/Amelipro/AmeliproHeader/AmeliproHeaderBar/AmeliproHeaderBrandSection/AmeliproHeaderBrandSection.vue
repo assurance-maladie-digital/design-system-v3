@@ -183,7 +183,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .header-brand-section {
 	overflow: hidden;
 
@@ -195,12 +194,12 @@
 		font-size: 1.5rem !important;
 		letter-spacing: -0.48px !important;
 
-		@media (max-width: 959.99px) {
+		@media (width <= 959.99px) {
 			font-size: 1.25rem !important;
 			letter-spacing: -0.4px !important;
 		}
 
-		@media (max-width: 599.99px) {
+		@media (width <= 599.99px) {
 			font-size: 1.125rem !important;
 			letter-spacing: -0.32px !important;
 		}
@@ -210,11 +209,11 @@
 		font-size: 1.125rem !important;
 		color: rgb(var(--v-theme-ap-grey-darken-1));
 
-		@media (max-width: 959.99px) {
+		@media (width <= 959.99px) {
 			font-size: 1rem !important;
 		}
 
-		@media (max-width: 599.99px) {
+		@media (width <= 599.99px) {
 			font-size: 0.875rem !important;
 		}
 	}
@@ -228,11 +227,11 @@
 	.logo-amelipro {
 		width: 98px;
 
-		@media (max-width: 959.99px) {
+		@media (width <= 959.99px) {
 			width: 77px;
 		}
 
-		@media (max-width: 599.99px) {
+		@media (width <= 599.99px) {
 			width: 52px;
 		}
 	}

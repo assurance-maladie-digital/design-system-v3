@@ -499,7 +499,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .postal-code-field {
 	min-width: 140px;
 	width: 140px;

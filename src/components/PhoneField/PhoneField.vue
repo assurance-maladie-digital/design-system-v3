@@ -540,7 +540,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .phone-field-fieldset {
 	border: 1px solid #b9b9b9;
 	border-radius: 4px;

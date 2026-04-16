@@ -179,7 +179,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-emotion-picker {
 	display: flex;
 	border: 0;

@@ -235,7 +235,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .body-content {
 	position: relative;
 	height: auto;

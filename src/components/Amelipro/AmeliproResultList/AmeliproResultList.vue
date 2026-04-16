@@ -226,7 +226,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .total-counter {
 	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 	border: 1px solid rgb(var(--v-theme-ap-grey-darken-1));

@@ -260,7 +260,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-user-menu-btn-ctn {
 	position: relative;
 	z-index: 1;

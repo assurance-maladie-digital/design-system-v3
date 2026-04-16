@@ -116,7 +116,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-table-toolbar {
 	min-height: 56px;
 

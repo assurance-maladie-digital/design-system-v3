@@ -107,7 +107,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 input {
 	position: absolute;
 	width: 0;

@@ -283,7 +283,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-card--multi-folding {
 	display: block;
 	position: relative;
@@ -301,13 +300,13 @@
 	padding-bottom: 0 !important;
 	word-break: break-all;
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		padding-top: 1rem;
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding-top: 0.75rem;
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
@@ -320,13 +319,13 @@
 	font-size: 0.875rem;
 	font-weight: 400;
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		padding-left: 1rem;
 		padding-right: 1rem;
 		padding-bottom: 1rem;
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
 		padding-bottom: 0.75rem;

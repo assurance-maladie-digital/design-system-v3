@@ -446,7 +446,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-text-field {
 	& :deep(.v-field__outline) {
 		border-color: v-bind(inputBorderStyle);

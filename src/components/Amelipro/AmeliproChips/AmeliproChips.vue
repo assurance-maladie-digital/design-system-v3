@@ -41,7 +41,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-chips {
 	padding: 0.75rem;
 	border-radius: 8px;

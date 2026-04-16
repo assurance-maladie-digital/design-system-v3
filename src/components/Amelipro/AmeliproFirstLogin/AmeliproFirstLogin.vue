@@ -283,7 +283,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .rounded {
 	border-radius: 2.5rem !important;
 }

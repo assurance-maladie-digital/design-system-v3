@@ -113,7 +113,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .header-bar {
 	z-index: 1;
 	height: auto;

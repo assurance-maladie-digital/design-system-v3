@@ -167,7 +167,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .accordion-btn {
 	padding: 0;
 	background-color: transparent;
@@ -192,11 +191,11 @@
 	padding: 1rem;
 	word-break: break-all;
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		padding: 1rem;
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding: 0.75rem;
 	}
 
@@ -215,11 +214,11 @@
 	font-size: 0.875rem;
 	font-weight: 400;
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		padding: 0 1rem;
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding: 0 0.75rem;
 	}
 }
@@ -228,7 +227,7 @@
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding-bottom: 0.75rem;
 	}
 }

@@ -52,7 +52,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-badge {
 	display: inline-block;
 	margin-left: 0.5rem;

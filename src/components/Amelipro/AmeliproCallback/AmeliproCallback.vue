@@ -158,11 +158,10 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-callback__retry-btn {
 	margin-left: 0;
 
-	@media (min-width: 600px) {
+	@media (width >= 600px) {
 		margin-left: 1rem;
 	}
 }

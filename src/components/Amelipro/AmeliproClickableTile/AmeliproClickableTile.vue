@@ -249,7 +249,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-clickable-tile {
 	position: relative;
 	display: flex;

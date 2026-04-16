@@ -352,7 +352,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .frieze {
 	position: relative;
 	width: 100%;

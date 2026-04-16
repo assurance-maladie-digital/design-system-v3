@@ -143,7 +143,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .check-icon {
 	position: absolute;
 	top: calc(50% - 18px);

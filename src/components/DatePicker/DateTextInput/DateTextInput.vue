@@ -1110,7 +1110,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 :deep(.v-icon__svg) { cursor: default; }
 
 .warning-field {

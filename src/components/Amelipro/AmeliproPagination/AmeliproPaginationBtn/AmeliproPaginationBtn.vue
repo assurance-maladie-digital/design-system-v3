@@ -61,7 +61,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn {
 	padding: 0 !important;
 	border-radius: 0 !important;

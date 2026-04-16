@@ -227,7 +227,7 @@
 		font-weight: 700 !important;
 		text-transform: uppercase !important;
 
-		@media (max-width: 959.99px) {
+		@media (width <= 959.99px) {
 			font-size: 1.125rem !important;
 		}
 	}

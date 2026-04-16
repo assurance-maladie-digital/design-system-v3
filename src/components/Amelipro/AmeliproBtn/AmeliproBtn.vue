@@ -306,7 +306,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn {
 	letter-spacing: 0.64px;
 	font-weight: 700;

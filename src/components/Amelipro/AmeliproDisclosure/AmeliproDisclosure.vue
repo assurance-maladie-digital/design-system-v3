@@ -64,7 +64,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .accordion-btn {
 	padding: 0;
 	background-color: transparent;

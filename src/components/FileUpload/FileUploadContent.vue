@@ -88,7 +88,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-file-upload-placeholder {
 	display: flex;
 	align-items: center;

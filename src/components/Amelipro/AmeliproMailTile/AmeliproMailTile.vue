@@ -264,7 +264,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .mail-status-btn {
 	position: relative;
 	min-width: 3rem;
@@ -384,17 +383,17 @@
 }
 
 .mail-info__text {
-	@media (min-width: 600px) {
+	@media (width >= 600px) {
 		width: 100%;
 	}
 }
 
 .mail-info__date {
-	@media (min-width: 600px) {
+	@media (width >= 600px) {
 		padding: 0 1.25rem;
 	}
 
-	@media (min-width: 1264px) {
+	@media (width >= 1264px) {
 		padding: 0 3rem 0 1.25rem;
 	}
 }

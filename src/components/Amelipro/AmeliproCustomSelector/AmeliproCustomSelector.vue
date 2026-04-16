@@ -263,7 +263,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-custom-selector__label {
 	font-size: 1rem;
 	font-weight: 700;
@@ -273,7 +272,7 @@
 	width: 100%;
 
 	&.item-per-line-2 {
-		@media (min-width: 600px) {
+		@media (width >= 600px) {
 			width: calc(50% - 8px);
 			margin-left: 8px;
 
@@ -284,7 +283,7 @@
 	}
 
 	&.item-per-line-3 {
-		@media (min-width: 600px) {
+		@media (width >= 600px) {
 			width: calc((100% / 3) - (16px / 3));
 			margin-left: 8px;
 

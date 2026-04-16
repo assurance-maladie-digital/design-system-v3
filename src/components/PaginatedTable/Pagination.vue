@@ -58,7 +58,6 @@
 	</div>
 </template>
 <style scoped lang="scss">
-
 /* stylelint-disable-next-line selector-class-pattern */
 :deep(.v-field__outline__notch, .v-field-label) {
 	width: 0;

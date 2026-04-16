@@ -325,7 +325,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .first-tab-btn {
 	border-top-left-radius: 8px;
 }
@@ -346,7 +345,7 @@
 }
 
 .border-top-left {
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		border-top-left-radius: 0;
 	}
 }

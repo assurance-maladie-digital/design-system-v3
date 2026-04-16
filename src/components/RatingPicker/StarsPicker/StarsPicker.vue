@@ -125,7 +125,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-stars-picker {
 	border: 0;
 }

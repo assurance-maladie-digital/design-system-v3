@@ -140,7 +140,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .download-file-link {
 	&:hover {
 		text-decoration: none;

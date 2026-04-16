@@ -318,7 +318,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-stepper__list li {
 	&:first-child {
 		& .amelipro-step-btn {
@@ -395,20 +394,20 @@
 }
 
 .next-step-btn__wrapper {
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		width: 100%;
 	}
 }
 
 .amelipro-stepper__content--default {
-	padding: 3rem 1rem 1rem 1rem;
+	padding: 3rem 1rem 1rem;
 	background-color: #fff;
 	border: 1px solid rgb(var(--v-theme-ap-green-lighten-2));
 	border-radius: 8px;
 	border-top-left-radius: 0;
 
-	@media (max-width: 959.99px) {
-		padding: 3rem 0.75rem 0.75rem 0.75rem;
+	@media (width <= 959.99px) {
+		padding: 3rem 0.75rem 0.75rem;
 		border-top-left-radius: 8px;
 	}
 }

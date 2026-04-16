@@ -461,7 +461,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .header-separator {
 	width: 1px;
 	height: 38px;

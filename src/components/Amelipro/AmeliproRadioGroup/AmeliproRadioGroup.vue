@@ -254,9 +254,8 @@
 </template>
 
 <style lang="scss" scoped>
-
 .margin-label {
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		margin-top: 3px;
 	}
 }
@@ -331,7 +330,7 @@ input {
 .amelipro-radio-group.pills {
 	& label {
 		&:not(:last-child) {
-			@media (min-width: 600px) {
+			@media (width >= 600px) {
 				margin-right: 16px;
 			}
 		}

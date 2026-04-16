@@ -291,7 +291,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-textarea-input {
 	& :deep(.v-field__outline) {
 		border-color: v-bind(inputBorderStyle);

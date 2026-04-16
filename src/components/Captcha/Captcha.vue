@@ -300,7 +300,6 @@
 </template>
 
 <style scoped lang="scss">
-
 .label-options {
 	font-size: 0.875rem;
 	font-weight: 400;

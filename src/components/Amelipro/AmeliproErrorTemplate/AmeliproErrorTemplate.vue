@@ -170,7 +170,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .w-70 {
 	width: 70% !important;
 }

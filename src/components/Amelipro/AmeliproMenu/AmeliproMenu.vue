@@ -310,7 +310,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 ul {
 	list-style: none;
 }

@@ -227,7 +227,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-card {
 	display: block;
 	position: relative;
@@ -256,13 +255,13 @@
 	font-size: 0.875rem;
 	font-weight: 400;
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		padding-left: 1rem;
 		padding-right: 1rem;
 		padding-bottom: 1rem;
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding-left: 0.75rem;
 		padding-right: 0.75rem;
 		padding-bottom: 1rem;
@@ -271,7 +270,7 @@
 
 .amelipro-card__header--left,
 .amelipro-card__content--left {
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		padding-right: 1rem;
 	}
 }
@@ -283,28 +282,28 @@
 .amelipro-card__right-part {
 	padding: 1rem 1rem 1rem 0;
 
-	@media (max-width: 959.99px) {
-		padding: 0 1rem 1rem 1rem;
+	@media (width <= 959.99px) {
+		padding: 0 1rem 1rem;
 	}
 
-	@media (max-width: 599.99px) {
-		padding: 0 0.75rem 0.75rem 0.75rem;
+	@media (width <= 599.99px) {
+		padding: 0 0.75rem 0.75rem;
 	}
 }
 
 .amelipro-card__right-part-content {
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		padding-left: 1rem;
 		min-height: 100%;
 		border-left: 1px solid v-bind(borderColorValue);
 	}
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		padding-top: 1rem;
 		border-top: 1px solid v-bind(borderColorValue);
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding-top: 0.75rem;
 	}
 }

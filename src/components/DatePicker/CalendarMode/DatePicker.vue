@@ -1171,7 +1171,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;

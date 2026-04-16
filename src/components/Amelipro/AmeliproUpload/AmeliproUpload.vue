@@ -643,12 +643,11 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-upload {
 	padding: 1rem;
 	border-radius: 0.75rem;
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding: 0.75rem;
 	}
 }

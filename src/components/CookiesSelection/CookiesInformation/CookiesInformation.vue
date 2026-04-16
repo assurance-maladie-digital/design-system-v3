@@ -180,7 +180,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 details > summary {
 	cursor: pointer;
 	list-style: none;

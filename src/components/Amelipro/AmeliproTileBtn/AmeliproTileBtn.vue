@@ -370,7 +370,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-tile-btn {
 	position: relative;
 	display: flex;

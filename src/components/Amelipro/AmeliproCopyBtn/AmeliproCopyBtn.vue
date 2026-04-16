@@ -52,7 +52,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-copy-btn-wrapper {
 	position: relative;
 	display: inline-block;

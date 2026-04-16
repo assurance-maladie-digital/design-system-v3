@@ -206,7 +206,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .file-item {
 	display: flex;
 	flex-direction: column;
@@ -264,7 +263,7 @@
 	height: 100%;
 	gap: var(--v-theme-gap-1);
 
-	@media screen and (min-width: 960px) {
+	@media screen and (width >= 960px) {
 		flex-direction: row;
 	}
 }

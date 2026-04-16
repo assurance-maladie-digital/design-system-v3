@@ -267,7 +267,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-checkbox-group__item-input {
 	& .checkbox-label {
 		position: relative;
@@ -388,7 +387,7 @@
 }
 
 .margin-label {
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		margin-top: 3px;
 	}
 }

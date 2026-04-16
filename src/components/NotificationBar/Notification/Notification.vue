@@ -107,7 +107,6 @@
 	</div>
 </template>
 <style scoped lang="scss">
-	
 	.notification {
 		display: flex;
 		align-items: center;

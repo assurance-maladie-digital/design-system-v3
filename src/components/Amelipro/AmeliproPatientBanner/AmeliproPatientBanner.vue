@@ -207,7 +207,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .patient-banner__separator {
 	height: 3px;
 	width: 100%;

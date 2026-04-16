@@ -143,7 +143,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-checkbox-input {
 	& .checkbox-label {
 		position: relative;

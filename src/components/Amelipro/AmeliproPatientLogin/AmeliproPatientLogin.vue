@@ -216,14 +216,13 @@
 </template>
 
 <style lang="scss" scoped>
-
 .ident-title {
 	font-size: 0.875rem !important;
 	text-align: center;
 	font-weight: 700;
 	text-transform: uppercase;
 
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		text-align: left;
 	}
 }

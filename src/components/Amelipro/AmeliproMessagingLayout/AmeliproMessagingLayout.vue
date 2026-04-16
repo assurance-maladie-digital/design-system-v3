@@ -143,37 +143,36 @@
 </template>
 
 <style lang="scss" scoped>
-
 .messaging-menu {
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding: 0 10px 24px;
 	}
 
-	@media (min-width: 600px) and (max-width: 959.99px) {
+	@media (width >= 600px) and (width <= 959.99px) {
 		padding: 10px 16px;
 	}
 }
 
 .messaging-menu__new-message {
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		display: flex;
 		justify-content: center;
 		width: 100%;
 		margin: 38px auto;
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		width: 100%;
 		margin: 24px 0 16px;
 	}
 
-	@media (min-width: 600px) and (max-width: 959.99px) {
+	@media (width >= 600px) and (width <= 959.99px) {
 		margin-right: 20px;
 	}
 }
 
 .messaging-menu__new-message-btn {
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		width: 100%;
 	}
 
@@ -183,7 +182,7 @@
 }
 
 .messaging-menu--desktop {
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		margin-bottom: 30px;
 	}
 }

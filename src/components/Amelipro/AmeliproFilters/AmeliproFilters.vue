@@ -153,10 +153,9 @@
 </template>
 
 <style lang="scss" scoped>
-
 .item-spacing {
 	&:not(:last-child) {
-		@media (min-width: 600px) {
+		@media (width >= 600px) {
 			margin-right: 16px;
 		}
 	}

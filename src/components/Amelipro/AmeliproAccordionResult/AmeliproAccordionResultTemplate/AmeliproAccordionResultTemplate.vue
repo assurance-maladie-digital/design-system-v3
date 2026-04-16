@@ -104,7 +104,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-accordion-result {
 	display: block;
 	position: relative;
@@ -126,7 +125,7 @@
 	width: 100%;
 	padding: 1rem 0 0 1rem;
 
-	@media (min-width: 960px) {
+	@media (width >= 960px) {
 		width: calc(100% - 30px);
 		padding: 1rem 0 1rem 1rem;
 	}
@@ -135,7 +134,7 @@
 .heading-content-btn {
 	padding: 1rem;
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		width: 100% !important;
 		margin-top: 0.5rem;
 		padding: 0.5rem 1rem 1rem;

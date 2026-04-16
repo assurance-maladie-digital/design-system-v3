@@ -211,7 +211,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn {
 	&.btn-previous,
 	&.btn-next {

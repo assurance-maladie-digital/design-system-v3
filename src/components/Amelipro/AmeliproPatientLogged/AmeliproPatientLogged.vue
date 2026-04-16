@@ -559,7 +559,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .dialog-btn {
 	white-space: normal;
 	text-align: left;

@@ -308,7 +308,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .select-btn-field__options {
 	display: flex;
 	list-style-type: none;

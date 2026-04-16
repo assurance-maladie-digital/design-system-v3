@@ -303,7 +303,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-dialog {
 	& :deep(.v-overlay__content) {
 		overflow-y: auto !important;

@@ -517,7 +517,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .nir-field {
 	display: flex;
 	flex-wrap: wrap;

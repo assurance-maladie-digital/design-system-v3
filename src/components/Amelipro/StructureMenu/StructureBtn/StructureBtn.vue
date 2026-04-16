@@ -52,7 +52,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn {
 	letter-spacing: unset;
 
@@ -76,7 +75,7 @@
 		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		margin-bottom: 8px;
 		width: 100% !important;
 	}

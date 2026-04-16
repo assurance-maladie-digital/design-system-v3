@@ -80,7 +80,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .breadcrumb__separator {
 	display: block;
 	width: 0;

@@ -303,7 +303,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-input-select {
 	text-transform: none !important;
 	font-size: 16px;

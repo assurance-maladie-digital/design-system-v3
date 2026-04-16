@@ -224,7 +224,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-table-pagination {
 	display: flex;
 	align-items: center;

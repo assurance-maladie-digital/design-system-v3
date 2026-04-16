@@ -301,7 +301,7 @@ h2 {
 	user-select: none;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (width >= 600px) {
 	.sy-dialog-box-actions-ctn {
 		flex-direction: row;
 	}

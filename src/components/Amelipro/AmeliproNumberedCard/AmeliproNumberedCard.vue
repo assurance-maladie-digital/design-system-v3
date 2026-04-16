@@ -101,7 +101,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .amelipro-card--numbered-wrapper {
 	padding-top: 1rem;
 }
@@ -116,11 +115,11 @@
 	overflow-wrap: break-word;
 	white-space: normal;
 
-	@media (max-width: 959.99px) {
+	@media (width <= 959.99px) {
 		padding: 1rem;
 	}
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		padding: 0.75rem;
 	}
 }
@@ -144,7 +143,7 @@
 	width: 100%;
 	font-size: 1rem;
 
-	@media (max-width: 599.99px) {
+	@media (width <= 599.99px) {
 		font-size: 0.875rem;
 	}
 
@@ -160,7 +159,7 @@
 		content: '';
 		z-index: 1;
 
-		@media (max-width: 599.99px) {
+		@media (width <= 599.99px) {
 			left: calc(50% - 0.75rem);
 			width: 1.5rem;
 			height: 1.5rem;
@@ -176,7 +175,7 @@
 		text-align: center;
 		z-index: 2;
 
-		@media (max-width: 599.99px) {
+		@media (width <= 599.99px) {
 			top: 0.375rem;
 		}
 	}
@@ -189,7 +188,7 @@
 		max-width: calc(50% - 5px);
 
 		&:nth-child(2n+2) {
-			@media (min-width: 960px) {
+			@media (width >= 960px) {
 				margin-left: 10px;
 			}
 		}
@@ -198,27 +197,27 @@
 
 .items-per-line-3 {
 	& > li {
-		@media (min-width: 1264px) {
+		@media (width >= 1264px) {
 			width: calc((100% - 20px) / 3);
 			min-width: calc((100% - 20px) / 3);
 			max-width: calc((100% - 20px) / 3);
 		}
 
-		@media (min-width: 960px) and (max-width: 1263.99px) {
+		@media (width >= 960px) and (width <= 1263.99px) {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media (min-width: 960px) and (max-width: 1263.99px) {
+			@media (width >= 960px) and (width <= 1263.99px) {
 				margin-left: 10px;
 			}
 		}
 
 		&:nth-child(3n+2),
 		&:nth-child(3n+3) {
-			@media (min-width: 1264px) {
+			@media (width >= 1264px) {
 				margin-left: 10px;
 			}
 		}
@@ -227,20 +226,20 @@
 
 .items-per-line-4 {
 	& > li {
-		@media (min-width: 1264px) {
+		@media (width >= 1264px) {
 			width: calc(25% - 9px);
 			min-width: calc(25% - 9px);
 			max-width: calc(25% - 9px);
 		}
 
-		@media (min-width: 960px) and (max-width: 1263.99px) {
+		@media (width >= 960px) and (width <= 1263.99px) {
 			width: calc(50% - 5px);
 			min-width: calc(50% - 5px);
 			max-width: calc(50% - 5px);
 		}
 
 		&:nth-child(2n+2) {
-			@media (min-width: 960px) and (max-width: 1263.99px) {
+			@media (width >= 960px) and (width <= 1263.99px) {
 				margin-left: 10px;
 			}
 		}
@@ -248,7 +247,7 @@
 		&:nth-child(4n+2),
 		&:nth-child(4n+3),
 		&:nth-child(4n+4) {
-			@media (min-width: 1264px) {
+			@media (width >= 1264px) {
 				margin-left: 12px;
 			}
 		}
@@ -259,7 +258,7 @@
 .items-per-line-3,
 .items-per-line-4 {
 	& > li {
-		@media (max-width: 959.99px) {
+		@media (width <= 959.99px) {
 			width: 100%;
 			min-width: 100%;
 			max-width: 100%;

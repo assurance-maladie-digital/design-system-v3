@@ -320,7 +320,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .vd-password {
 	:deep(.v-field) {
 		.v-field__input {

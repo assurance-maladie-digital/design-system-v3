@@ -114,7 +114,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-btn {
 	&.tooltip-btn {
 		width: 1.85em !important;

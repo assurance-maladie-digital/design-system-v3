@@ -100,7 +100,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .v-badge :deep(.v-badge__badge) {
 	color: rgb(var(--v-theme-cyan-darken40)) !important;
 	background-color: white;

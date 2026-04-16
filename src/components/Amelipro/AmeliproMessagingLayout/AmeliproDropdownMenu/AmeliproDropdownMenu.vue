@@ -194,7 +194,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .dropdown-menu {
 	position: relative;
 }

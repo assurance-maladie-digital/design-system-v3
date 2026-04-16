@@ -167,7 +167,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-file-upload-wrapper {
 	display: contents;
 }
@@ -176,7 +175,7 @@
 	cursor: pointer;
 	position: relative;
 	border: 1px dashed rgb(var(--v-theme-borderAccentPrimary));
-	border-radius: var(--v-theme-radius-rounded)-lg;
+	border-radius: var(--v-theme-radius-rounded) -lg;
 	transition: background 0.25s;
 
 	&:hover,

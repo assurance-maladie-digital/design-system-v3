@@ -62,7 +62,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .vd-social-media-links {
 	display: flex;
 	flex-direction: column;

@@ -572,7 +572,6 @@
 </template>
 
 <style lang="scss" scoped>
-
 .sy-tabs {
 	display: flex;
 	align-items: center;
