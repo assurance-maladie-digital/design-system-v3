@@ -3,8 +3,8 @@
 }
 
 .v-theme--ap2026.v-tooltip .v-overlay__content {
-	color: #000;
-	background-color: #fff;
+	color: rgb(var(--v-theme-apBlack-base));
+	background-color: rgb(var(--v-theme-apWhite-base));
 	border: 1px solid rgb(var(--v-theme-ap-parme-darken-1));
 }
 

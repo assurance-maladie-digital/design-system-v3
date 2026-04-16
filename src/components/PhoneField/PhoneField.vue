@@ -560,7 +560,7 @@
 }
 
 .required-asterisk {
-	color: #d32f2f;
+	color: rgb(var(--v-theme-error));
 	margin-left: 4px;
 }
 

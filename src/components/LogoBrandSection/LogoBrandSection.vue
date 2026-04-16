@@ -170,7 +170,7 @@
 		case 'ameli-pro':
 			return cnamLightTheme.secondary
 		case 'compte-entreprise':
-			return '#cd545b'
+			return cnamLightTheme.risquePro
 		default:
 			return cnamLightTheme.primary
 		}
@@ -303,7 +303,7 @@
 		font-weight: 700 !important;
 
 		span {
-			color: #cd545b;
+			color: rgb(var(--v-theme-risquePro));
 		}
 	}
 
