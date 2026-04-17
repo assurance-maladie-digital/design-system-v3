@@ -445,6 +445,7 @@ export const ComponentsList: StoryObj = {
 					'FooterBar',
 					'HeaderBar',
 					'HeaderLoading',
+					'Breadcrumbs',
 					'PageContainer',
 					'CopyBtn',
 					'DownloadBtn',
@@ -459,6 +460,11 @@ export const ComponentsList: StoryObj = {
 					'NirField',
 					'Card',
 					'FilterSideBar',
+					'SyTextField',
+					'Switch',
+					'Tooltip',
+					'SkeletonLoader',
+					'OTPInput',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
