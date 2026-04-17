@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
-	import type { VDataTableServer } from 'vuetify/components'
+	import type { VDataTableServer } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'

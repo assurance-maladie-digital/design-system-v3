@@ -6,7 +6,8 @@
 	import ISO6391 from 'iso-639-1'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import defaultOptions from './config'
-	import type { VBtn, VListItem } from 'vuetify/components'
+	import type { VBtn } from 'vuetify/components/VBtn'
+	import type { VListItem } from 'vuetify/components/VList'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
