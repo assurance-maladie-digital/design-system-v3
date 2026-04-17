@@ -3,7 +3,7 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
 	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -983,7 +983,8 @@
 		listElement.setAttribute('role', 'listbox')
 		if (props.multiple) {
 			listElement.setAttribute('aria-multiselectable', 'true')
-		} else {
+		}
+		else {
 			listElement.removeAttribute('aria-multiselectable')
 		}
 		listElement.setAttribute('aria-labelledby', overlayLabelId.value)

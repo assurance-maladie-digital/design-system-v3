@@ -24,6 +24,18 @@ import {
 	</div>
 
 	<CriteriaSection>
+		<CriteriaCard icon="☑️" title="Accessibilité et Multi-sélection">
+			<p>
+				Afin de respecter les directives du <abbr title="Référentiel Général d’Amélioration de l’Accessibilité">RGAA</abbr>, le composant <code>SySelect</code> implémente rigoureusement le pattern WAI-ARIA <code>combobox</code> associé à une <code>listbox</code>.
+			</p>
+			<p>
+				En mode <strong>sélection multiple</strong>, des cases à cocher sont affichées à côté de chaque option pour faciliter la compréhension visuelle. Cependant, les règles d'accessibilité interdisent l'imbrication d'éléments interactifs (comme placer un véritable <code>&lt;input type="checkbox"&gt;</code> à l'intérieur d'un élément <code>&lt;div role="option"&gt;</code>).
+			</p>
+			<p>
+				Pour résoudre ce problème, <code>SySelect</code> utilise la propriété <code>decorative</code> du composant <code>SyCheckbox</code>. La case à cocher devient alors purement visuelle et est ignorée par les lecteurs d'écran (<code>aria-hidden="true"</code>). C'est le conteneur de l'option (<code>role="option"</code>) qui se charge de communiquer l'état de sélection de manière standardisée via l'attribut <code>aria-selected="true|false"</code>. Cela garantit une navigation au clavier fluide et une restitution vocale sans erreur.
+			</p>
+		</CriteriaCard>
+
 		<CriteriaCard icon="🔍" title="Nom accessible, rôle et associations programmatiques">
 			<ul>
 				<li>

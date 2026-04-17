@@ -327,7 +327,11 @@
 				class="mr-2"
 			/>
 			<slot name="label">
-				<span v-if="generatedLabel" :class="{'text-disabled': props.disabled}" :style="{ color: labelColor }">{{ generatedLabel }}</span>
+				<span
+					v-if="generatedLabel"
+					:class="{'text-disabled': props.disabled}"
+					:style="{ color: labelColor }"
+				>{{ generatedLabel }}</span>
 			</slot>
 		</div>
 
