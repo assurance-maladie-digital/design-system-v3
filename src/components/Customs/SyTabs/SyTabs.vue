@@ -146,7 +146,8 @@
 					event.preventDefault()
 					document.getElementById(`tab-${index}`)?.click()
 				}
-			} else {
+			}
+			else {
 				event.preventDefault()
 				void setActiveItem(index)
 			}
