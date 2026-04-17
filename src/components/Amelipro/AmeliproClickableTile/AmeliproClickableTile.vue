@@ -62,6 +62,13 @@
 	const hover = ref(false)
 	const focus = ref(false)
 
+	const elevationValue = computed<number>(() => {
+		if (hover.value || focus.value || props.disabled) {
+			return 0
+		}
+		return 2
+	})
+
 	const tileClasses = computed(() => ({
 		'amelipro-clickable-tile--hover': (hover.value || focus.value) && !props.disabled && !props.onlyIconIsClickable,
 		'amelipro-clickable-tile--disabled': props.disabled,
@@ -131,7 +138,7 @@
 		:id="uniqueId"
 		:class="containerClasses"
 		:disabled="disabled"
-		:elevation="0"
+		:elevation="elevationValue"
 		height="auto"
 		:href="href"
 		:ripple="false"
@@ -248,7 +255,7 @@
 	position: relative;
 	display: flex;
 	background-color: apTokens.$ap-white;
-	border: 1px solid apTokens.$ap-blue-darken1 !important;
+	border: 1px solid apTokens.$ap-grey-lighten2 !important;
 	border-radius: var(--radius-md) !important;
 	white-space: normal;
 	font-size: 1rem;
