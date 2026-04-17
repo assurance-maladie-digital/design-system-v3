@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
-	import { getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue'
+	import { computed, getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue'
 	import type { Router } from 'vue-router'
 	import { config } from './config'
 	import type { TabItem } from './types'
@@ -61,6 +61,9 @@
 
 	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
 
+	// Détecte automatiquement si le composant est utilisé pour la navigation
+	const isNavigationMode = computed(() => props.items.some(item => !!item.to || !!item.href))
+
 	// Safely get router through getCurrentInstance - it might not be available in all contexts
 	const instance = getCurrentInstance()
 	const router = instance?.appContext.config.globalProperties.$router as Router | null || null
@@ -107,10 +110,8 @@
 		// Ne rien faire si l'élément est désactivé
 		if (item?.disabled) return
 
-		const hasHref = item && (item.href || item.to)
-
 		// Si la confirmation est activée, demander confirmation
-		if (props.confirmTabChange && hasHref) {
+		if (props.confirmTabChange) {
 			const confirmMessage = props.confirmationMessage
 			const confirmed = await handleTabChangeConfirmation(confirmMessage.toString())
 
@@ -119,7 +120,6 @@
 				emit('cancel-navigation')
 				return
 			}
-			// Si confirmé, laisser la navigation se faire naturellement (RouterLink ou href)
 		}
 
 		// Mettre à jour l'onglet actif
@@ -134,16 +134,22 @@
 	function handleKeyPress(event: KeyboardEvent, index: number) {
 		if (event.key === 'Enter' || event.key === ' ') {
 			const item = props.items[index] as TabItem | undefined
-			// Ne rien faire si l'élément est désactivé
 			if (item?.disabled) {
 				event.preventDefault()
 				return
 			}
-			// Don't prevent default for external links - let them navigate naturally
-			if (!item?.href) {
+
+			if (isNavigationMode.value) {
+				// En mode navigation, Enter active le lien nativement.
+				// Espace doit forcer le clic pour éviter le scroll
+				if (event.key === ' ') {
+					event.preventDefault()
+					document.getElementById(`tab-${index}`)?.click()
+				}
+			} else {
 				event.preventDefault()
+				void setActiveItem(index)
 			}
-			void setActiveItem(index) // void pour ignorer la promesse
 		}
 	}
 
@@ -194,12 +200,14 @@
 		// Mettre à jour l'index de l'élément focusé et actif
 		focusedItemIndex.value = newIndex
 
-		// Focus sur le nouvel élément et l'activer
-		// Vérifier si l'élément existe et se focaliser sur le bouton
+		// Focus sur le nouvel élément
 		const tabButton = document.getElementById(`tab-${newIndex}`)
 		if (tabButton) {
 			tabButton.focus()
-			setActiveItem(newIndex)
+			// Activer automatiquement seulement en mode onglets locaux
+			if (!isNavigationMode.value) {
+				setActiveItem(newIndex)
+			}
 		}
 	}
 
@@ -336,10 +344,11 @@
 			<slot name="tabs-prepend" />
 			<slot>
 				<div class="sy-tabs__nav">
-					<div
+					<component
+						:is="isNavigationMode ? 'nav' : 'div'"
 						ref="tablist"
-						role="tablist"
-						aria-label="Onglets de navigation"
+						:role="isNavigationMode ? 'navigation' : 'tablist'"
+						:aria-label="isNavigationMode ? 'Menu de navigation' : 'Onglets de navigation'"
 						class="sy-tabs__list"
 					>
 						<template
@@ -356,9 +365,10 @@
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': item.disabled
 								}"
-								role="tab"
-								:aria-selected="activeItemIndex === index"
-								:aria-controls="`panel-${index}`"
+								:role="isNavigationMode ? undefined : 'tab'"
+								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
+								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
+								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
 								:aria-disabled="item.disabled || undefined"
 								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								@click="item.disabled ? undefined : setActiveItem(index)"
@@ -393,9 +403,10 @@
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': item.disabled
 								}"
-								role="tab"
-								:aria-selected="activeItemIndex === index"
-								:aria-controls="`panel-${index}`"
+								:role="isNavigationMode ? undefined : 'tab'"
+								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
+								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
+								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
 								:aria-disabled="item.disabled || undefined"
 								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								@click="(event) => {
@@ -437,9 +448,10 @@
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': true
 								}"
-								role="tab"
-								:aria-selected="activeItemIndex === index"
-								:aria-controls="`panel-${index}`"
+								:role="isNavigationMode ? undefined : 'tab'"
+								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
+								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
+								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
 								aria-disabled="true"
 								tabindex="-1"
 								disabled
@@ -467,9 +479,10 @@
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': true
 								}"
-								role="tab"
-								:aria-selected="activeItemIndex === index"
-								:aria-controls="`panel-${index}`"
+								:role="isNavigationMode ? undefined : 'tab'"
+								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
+								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
+								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
 								aria-disabled="true"
 								tabindex="-1"
 								disabled
@@ -497,9 +510,10 @@
 									'sy-tabs__button--active': activeItemIndex === index,
 									'sy-tabs__button--disabled': item.disabled
 								}"
-								role="tab"
-								:aria-selected="activeItemIndex === index"
-								:aria-controls="`panel-${index}`"
+								:role="isNavigationMode ? undefined : 'tab'"
+								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
+								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
+								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
 								:aria-disabled="item.disabled || undefined"
 								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								:disabled="item.disabled"
@@ -526,7 +540,7 @@
 								/>
 							</button>
 						</template>
-					</div>
+					</component>
 				</div>
 			</slot>
 			<slot name="tabs-append" />
@@ -540,8 +554,8 @@
 			:id="`panel-${index}`"
 			:key="`panel-${index}`"
 			class="sy-tabs-panel"
-			role="tabpanel"
-			:aria-labelledby="`tab-${index}`"
+			:role="!isNavigationMode ? 'tabpanel' : undefined"
+			:aria-labelledby="!isNavigationMode ? `tab-${index}` : undefined"
 			:hidden="activeItemIndex !== index"
 		>
 			<template v-if="!lazy || renderedPanels.has(index)">

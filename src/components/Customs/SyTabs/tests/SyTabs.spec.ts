@@ -162,6 +162,51 @@ describe('SyTabs', () => {
 		})
 	})
 
+	// Tests du mode Navigation
+	describe('Mode Navigation', () => {
+		const navItems = [
+			{ label: 'Nav 1', value: 'nav1', to: '/path-1' },
+			{ label: 'Nav 2', value: 'nav2', href: 'https://example.com' },
+			{ label: 'Nav 3', value: 'nav3', to: '/path-3', disabled: true },
+		]
+
+		it('doit utiliser la sémantique de navigation', () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					items: navItems,
+				},
+			})
+
+			// Vérifier les attributs du conteneur
+			const nav = wrapper.find('nav[role="navigation"]')
+			expect(nav.exists()).toBe(true)
+			expect(nav.attributes('aria-label')).toBeDefined()
+
+			// Vérifier les attributs des liens
+			const buttons = wrapper.findAll('.sy-tabs__button')
+			expect(buttons[0]!.attributes('role')).toBeUndefined()
+			expect(buttons[0]!.attributes('aria-current')).toBe('page')
+			expect(buttons[0]!.attributes('aria-selected')).toBeUndefined()
+			expect(buttons[0]!.attributes('aria-controls')).toBeUndefined()
+
+			expect(buttons[1]!.attributes('aria-current')).toBeUndefined()
+		})
+
+		it('ne doit pas générer les rôles tabpanel pour les panneaux', () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					items: navItems,
+				},
+			})
+
+			const panel = wrapper.find('.sy-tabs-panel')
+			expect(panel.attributes('role')).toBeUndefined()
+			expect(panel.attributes('aria-labelledby')).toBeUndefined()
+		})
+	})
+
 	// Tests d'accessibilité et navigation clavier
 	describe('Accessibilité et navigation clavier', () => {
 		it('doit contenir les attributs ARIA appropriés', () => {

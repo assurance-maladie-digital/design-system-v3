@@ -23,13 +23,6 @@ import '@/stories/styles/shared.css';
     </div>
   </div>
 
-  <div className="warning-section">
-    <h2>Note d'audit (Faux positif Tanaguru)</h2>
-    <p>
-      Un faux positif (elements interactifs non atteignables en navigation clavier) est remonté par Tanaguru alors que : le composant implémente correctement le pattern WAI-ARIA "Tabs" avec <em>roving tabindex</em> : seul l'onglet actif est dans l'ordre de tabulation, les autres onglets étant atteignables via les touches fléchées. Une vérification manuelle clavier confirme alors que tous les onglets sont bien accessibles et activables, conformément au comportement attendu pour une <em>tablist</em>.
-    </p>
-  </div>
-
   <div className="criteria-section">
     <h2>Critères d'accessibilité respectés</h2>
     
@@ -39,10 +32,11 @@ import '@/stories/styles/shared.css';
         <h3>Structure sémantique</h3>
       </div>
       <ul>
-        <li><strong>Rôles ARIA appropriés</strong> : <code>role="tablist"</code> pour la liste d'onglets, <code>role="tab"</code> pour chaque onglet et <code>role="tabpanel"</code> pour chaque panneau de contenu</li>
-        <li><strong>État des onglets</strong> : <code>aria-selected</code> avec les valeurs <code>true</code> ou <code>false</code> pour indiquer l'onglet actif</li>
-        <li><strong>Relations entre éléments</strong> : <code>aria-controls</code> pour associer chaque onglet à son panneau, et <code>aria-labelledby</code> pour associer chaque panneau à son onglet</li>
-        <li><strong>Navigation structurée</strong> : Utilisation d'éléments <code>&lt;nav&gt;</code> et <code>&lt;ul&gt;</code> pour créer une structure de navigation sémantique et accessible</li>
+        <li><strong>Rôles et sémantique adaptatifs</strong> : Utilisation dynamique de <code>role="tablist"</code> / <code>role="tab"</code> / <code>role="tabpanel"</code> (mode Onglets) ou de la balise native <code>&lt;nav role="navigation"&gt;</code> (mode Navigation)</li>
+        <li><strong>État de l'élément actif</strong> : Utilisation de <code>aria-selected="true"</code> (mode Onglets) ou <code>aria-current="page"</code> (mode Navigation)</li>
+        <li><strong>Relations programmatiques</strong> : <code>aria-controls</code> et <code>aria-labelledby</code> lient les onglets à leurs panneaux respectifs (uniquement en mode Onglets)</li>
+        <li><strong>Nommage accessible</strong> : Le conteneur principal possède un <code>aria-label</code> dynamique (<em>"Onglets de navigation"</em> ou <em>"Menu de navigation"</em> selon le mode)</li>
+        <li><strong>Structure HTML aplatie</strong> : Les éléments interactifs (boutons ou liens) sont contenus directement dans leur parent sémantique (<code>&lt;div&gt;</code> ou <code>&lt;nav&gt;</code>) sans balises de liste (<code>&lt;ul&gt;</code>) superflues, optimisant l'arbre d'accessibilité</li>
       </ul>
     </div>
     
@@ -67,10 +61,11 @@ import '@/stories/styles/shared.css';
         <h3>États et retours d'information</h3>
       </div>
       <ul>
-        <li><strong>État de sélection</strong> : <code>aria-selected="true"</code> indique l'onglet actif aux technologies d'assistance</li>
-        <li><strong>Visibilité des panneaux</strong> : L'attribut <code>hidden</code> sur les panneaux inactifs les rend invisibles aux lecteurs d'écran</li>
-        <li><strong>Indication visuelle</strong> : Styles distinctifs pour l'onglet actif (couleur, bordure inférieure)</li>
-        <li><strong>Association explicite</strong> : Chaque panneau de contenu est clairement associé à son onglet via <code>aria-labelledby</code></li>
+        <li><strong>État de sélection</strong> : <code>aria-selected="true"</code> ou <code>aria-current="page"</code> indique l'élément actif aux technologies d'assistance</li>
+        <li><strong>Éléments désactivés</strong> : Utilisation de l'attribut natif <code>disabled</code> (pour les boutons) ou <code>aria-disabled="true"</code> (pour les liens), qui sont par ailleurs exclus de la navigation au clavier (flèches)</li>
+        <li><strong>Visibilité des panneaux</strong> : L'attribut HTML <code>hidden</code> sur les panneaux inactifs les retire correctement de l'arbre d'accessibilité</li>
+        <li><strong>Indication visuelle</strong> : Styles distinctifs pour l'onglet actif (couleur de texte, barre de soulignement animée)</li>
+        <li><strong>Focus visible</strong> : Un <code>outline</code> de 3px est appliqué lors de la navigation au clavier (<code>:focus-visible</code>)</li>
       </ul>
     </div>
     
@@ -88,25 +83,52 @@ import '@/stories/styles/shared.css';
     </div>
   </div>
 
+  <div className="adaptive-mode-section">
+    <h2>Mode adaptatif (Onglets vs Navigation)</h2>
+    <div className="section-description">
+      Le composant SyTabs détecte automatiquement son contexte d'utilisation et adapte sa structure sémantique en conséquence :
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">📑</span>
+        <h3>Mode Onglets (par défaut)</h3>
+      </div>
+      <p>Utilisé pour permuter du contenu local sans changer d'URL.</p>
+      <ul>
+        <li>Utilise le modèle WAI-ARIA complet pour les onglets (<code>role="tablist"</code>, <code>role="tab"</code>, <code>role="tabpanel"</code>).</li>
+        <li>L'activation de l'onglet par les flèches du clavier est <strong>automatique</strong>.</li>
+      </ul>
+    </div>
+    
+    <div className="criteria-card">
+      <div className="criteria-header">
+        <span className="criteria-icon">🧭</span>
+        <h3>Mode Navigation (Routing)</h3>
+      </div>
+      <p>Activé automatiquement si au moins un onglet utilise les attributs <code>to</code> ou <code>href</code>.</p>
+      <ul>
+        <li>Utilise une sémantique de navigation standard (<code>&lt;nav role="navigation"&gt;</code>) au lieu des rôles ARIA d'onglets pour éviter la confusion des utilisateurs de lecteurs d'écran.</li>
+        <li>Indique l'élément actif via <code>aria-current="page"</code> au lieu de <code>aria-selected</code>.</li>
+        <li>L'activation au clavier est <strong>manuelle</strong> : les flèches déplacent le focus sans déclencher le lien, la touche Entrée valide le choix.</li>
+        <li>Les rôles <code>tabpanel</code> ne sont pas générés car ce concept n'est pas applicable à la navigation entre différentes pages.</li>
+      </ul>
+    </div>
+  </div>
+
   <div className="automatic-section">
-    <h2>Activation automatique des onglets</h2>
+    <h2>Activation automatique (Mode Onglets)</h2>
     <div className="section-description">
-      Le composant SyTabs implémente un modèle d'activation automatique, ce qui signifie que :
+      En <strong>Mode Onglets</strong>, le composant implémente un modèle d'activation automatique :
     </div>
     <ul>
-      <li>La sélection d'un nouvel onglet via la navigation par flèches active immédiatement cet onglet</li>
-      <li>Le contenu du panneau associé est affiché sans nécessiter une action supplémentaire</li>
-      <li>Le focus reste sur l'onglet activé pour permettre de continuer la navigation par clavier</li>
+      <li>La sélection d'un nouvel onglet via la navigation par flèches (Gauche/Droite) active immédiatement cet onglet</li>
+      <li>Le contenu du panneau associé est affiché sans nécessiter une action supplémentaire (Entrée/Espace)</li>
+      <li>Le focus reste sur l'onglet activé pour permettre de continuer la navigation au clavier</li>
     </ul>
     <div className="section-description">
-      Cette implémentation suit les meilleures pratiques WAI-ARIA pour les interfaces à onglets :
+      <em>Note : En Mode Navigation (Routing), l'activation est manuelle (déplacement du focus avec les flèches, puis validation avec Entrée) pour éviter les redirections inattendues.</em>
     </div>
-    <ul>
-      <li>Réduction du nombre d'actions nécessaires pour naviguer entre les contenus</li>
-      <li>Mise à jour dynamique de l'attribut <code>aria-selected</code> pour informer des changements</li>
-      <li>Gestion efficace du focus pour éviter les sauts d'interface désorientants</li>
-      <li>Mise à jour de l'affichage des panneaux avec l'attribut <code>hidden</code> pour les panneaux inactifs</li>
-    </ul>
   </div>
 
   <div className="demo-section">
@@ -119,9 +141,9 @@ import '@/stories/styles/shared.css';
   </div>
 
   <div className="tab-panel-section">
-    <h2>Relation onglet-panneau</h2>
+    <h2>Relation onglet-panneau (Mode Onglets)</h2>
     <div className="section-description">
-      Le composant SyTabs établit une relation claire entre chaque onglet et son panneau de contenu associé :
+      Lorsqu'il n'est pas utilisé pour la navigation de pages, le composant établit une relation programmatique stricte :
     </div>
     <ul>
       <li>Chaque onglet (<code>role="tab"</code>) est associé à un panneau de contenu via <code>aria-controls</code></li>
@@ -137,6 +159,13 @@ import '@/stories/styles/shared.css';
     <div className="section-description">
       Cette structure garantit que les utilisateurs de technologies d'assistance comprennent clairement la relation entre les onglets et leur contenu associé, améliorant ainsi la navigation et la compréhension de l'interface.
     </div>
+  </div>
+
+    <div className="warning-section">
+    <h2>Note d'audit (Faux positif Tanaguru)</h2>
+    <p>
+      Un faux positif (éléments interactifs non atteignables en navigation clavier) est remonté par Tanaguru. En réalité, le composant gère intentionnellement le focus via un <em>roving tabindex</em> dans ses deux modes (Onglets et Navigation) pour une meilleure ergonomie : seul l'élément actif est dans l'ordre de tabulation classique (Tab), les autres éléments étant atteignables via les touches fléchées. Une vérification manuelle au clavier confirme que tous les éléments sont parfaitement accessibles et activables, conformément aux comportements attendus.
+    </p>
   </div>
 
   <div className="best-practices">
@@ -202,6 +231,7 @@ import '@/stories/styles/shared.css';
   }
 
   .criteria-section h2,
+  .adaptive-mode-section h2,
   .demo-section h2,
   .tri-state-section h2,
   .parent-child-section h2,

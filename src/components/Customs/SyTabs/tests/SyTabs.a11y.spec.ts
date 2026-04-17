@@ -62,4 +62,27 @@ describe('SyTabs – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations in navigation mode', async () => {
+		const wrapper = mount(SyTabs, {
+			props: {
+				items: [
+					{ label: 'Nav 1', value: 'nav1', to: '/path-1' },
+					{ label: 'Nav 2', value: 'nav2', href: 'https://example.com' },
+					{ label: 'Nav 3', value: 'nav3', to: '/path-3', disabled: true },
+				],
+			},
+			global: {
+				components: { RouterLink },
+				mocks: {
+					$router: {},
+				},
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyTabs – navigation mode', {
+			ignoreRules: ['region'],
+		})
+	})
 })
