@@ -3,7 +3,7 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
 	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -770,7 +770,7 @@
 
 			inputElement.setAttribute('role', 'combobox')
 			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
-			inputElement.setAttribute('aria-haspopup', 'grid')
+			inputElement.setAttribute('aria-haspopup', 'listbox')
 			// On ajoute aria-autocomplete="list" pour le role combobox
 			inputElement.setAttribute('aria-autocomplete', 'list')
 
@@ -980,7 +980,12 @@
 		const listElement = list.value?.$el as HTMLElement | null
 		if (!listElement) return
 
-		listElement.setAttribute('role', 'grid')
+		listElement.setAttribute('role', 'listbox')
+		if (props.multiple) {
+			listElement.setAttribute('aria-multiselectable', 'true')
+		} else {
+			listElement.removeAttribute('aria-multiselectable')
+		}
 		listElement.setAttribute('aria-labelledby', overlayLabelId.value)
 	}
 
@@ -1211,7 +1216,8 @@
 				:id="uniqueMenuId"
 				ref="list"
 				class="v-list sy-select-grid"
-				role="grid"
+				role="listbox"
+				:aria-multiselectable="props.multiple ? 'true' : undefined"
 				:aria-labelledby="overlayLabelId"
 				:title="accessibleLabel"
 				:style="{
@@ -1235,7 +1241,8 @@
 					:id="`option-${index}`"
 					:key="index"
 					:ref="'options-' + index"
-					role="row"
+					role="option"
+					:aria-selected="isItemSelected(item)"
 					class="v-list-item sy-select-grid__row"
 					tabindex="-1"
 					:class="{
@@ -1248,23 +1255,18 @@
 				>
 					<div
 						v-if="props.multiple && !isDefaultOption(item)"
-						role="gridcell"
 						class="sy-select-grid__cell sy-select-grid__cell--checkbox"
+						aria-hidden="true"
 					>
 						<SyCheckbox
 							:model-value="isItemSelected(item)"
-							density="compact"
-							hide-details
+							decorative
 							color="primary"
-							class="mt-0 pt-0 mr-1"
-							:title="getItemText(item)"
-							:aria-label="getItemText(item)"
-							@click.stop="(event) => selectItem(item, event)"
+							class="mt-0 pt-0 mr-1 pointer-events-none"
 						/>
 					</div>
 
 					<div
-						role="gridcell"
 						class="sy-select-grid__cell sy-select-grid__cell--label"
 					>
 						<VListItemTitle>
@@ -1513,5 +1515,9 @@
 .sy-select-grid__cell--label {
 	padding-right: 16px;
 	min-width: 0;
+}
+
+.pointer-events-none {
+	pointer-events: none;
 }
 </style>

@@ -36,6 +36,7 @@
 			falseValue?: unknown
 			controlsIds?: string[]
 			displayAsterisk?: boolean
+			decorative?: boolean
 		}>(),
 		{
 			modelValue: false,
@@ -66,10 +67,14 @@
 			falseValue: () => false,
 			controlsIds: () => [],
 			displayAsterisk: false,
+			decorative: false,
 		},
 	)
 
 	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
+
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
 
 	const checkboxRef = ref<VCheckbox | null>(null)
 
@@ -308,7 +313,27 @@
 
 <template>
 	<div>
+		<!-- Rendu purement visuel/décoratif, ignoré par les lecteurs d'écran -->
+		<div
+			v-if="props.decorative"
+			class="d-flex align-center pointer-events-none sy-checkbox-decorative"
+			aria-hidden="true"
+		>
+			<SyIcon
+				:icon="internalIndeterminate ? mdiMinusBox : (model ? mdiCheckboxMarked : mdiCheckboxBlankOutline)"
+				:color="undefined"
+				:class="{'text-disabled': props.disabled}"
+				:decorative="true"
+				class="mr-2"
+			/>
+			<slot name="label">
+				<span v-if="generatedLabel" :class="{'text-disabled': props.disabled}" :style="{ color: labelColor }">{{ generatedLabel }}</span>
+			</slot>
+		</div>
+
+		<!-- Rendu interactif standard -->
 		<VCheckbox
+			v-else
 			:id="props.id"
 			ref="checkboxRef"
 			v-model="model"
