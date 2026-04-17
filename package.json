@@ -48,7 +48,7 @@
     "test:visual:open": "cypress open --component --browser electron",
     "test:visual:update": "cypress run --component --browser electron --env updateSnapshots=true",
     "prepare": "husky",
-    "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10h"
+    "generate:changelog": "auto-changelog -o CHANGELOG-TEMP.md -p --starting-date 2024-10-10"
   },
   "keywords": [
     "cnam",
