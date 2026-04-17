@@ -57,7 +57,7 @@ export const ComponentsList: StoryObj = {
 						category: 'Structure',
 					},
 					{
-						title: 'VSkeletonLoader',
+						title: 'SkeletonLoader',
 						description: 'Utilisé pour améliorer l’expérience utilisateur pendant le chargement des données, affiche une structure visuelle temporaire qui ressemble au contenu final.',
 						link: '/?path=/docs/composants-composants-vuetify-vskeletonloader--docs',
 						img: '/components/v-skeleton-loader.svg',
@@ -208,6 +208,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour proposer une sélection d\'options avec un bouton personnalisé, conforme au style du Design System et qui respecte les règles d\'accessibilité RGAA. Il est basé sur un v-btn.',
 						link: '/?path=/docs/composants-formulaires-sybtnMenu--docs',
 						img: '/components/sy-btn-select.svg',
+						category: 'Formulaires',
+					},
+					{
+						title: 'OTPInput',
+						description: 'Utilisé pour une procédure MFA d’authentification des utilisateurs via un mot de passe à usage unique.',
+						link: '/?path=/docs/composants-composants-vuetify-votpinput--docs',
+						img: `/components/otp${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -441,7 +448,9 @@ export const ComponentsList: StoryObj = {
 
 				const groupedComponents = categoryOrder.map(category => ({
 					category,
-					components: components.filter(component => shouldDisplayComponent(component, category)),
+					components: components
+						.filter(component => shouldDisplayComponent(component, category))
+						.sort((a, b) => a.title.localeCompare(b.title)),
 				})).filter(group => group.components.length > 0)
 
 				return {
