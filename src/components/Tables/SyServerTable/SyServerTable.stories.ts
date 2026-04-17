@@ -217,6 +217,15 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
+		'pageInput': {
+			description: 'Affiche un champ de saisie numérique dans la pagination permettant de naviguer directement vers une page en la saisissant au clavier. La navigation est déclenchée à la validation (`Entrée`) ou à la perte de focus. La valeur est automatiquement clampée entre 1 et le nombre total de pages.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'header.<columnKey>': {
@@ -7337,6 +7346,163 @@ export const ComplexItemsDisplay: Story = {
 						</span>
 					</template>
 				</SyServerTable>
+			</div>
+			`,
+		}
+	},
+}
+
+export const PageInput: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-page-input"
+						page-input
+						@update:options="fetchData"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref, watch } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+
+					const totalUsers = ref(0)
+					const users = ref([])
+					const state = ref(StateEnum.IDLE)
+					const options = ref({ itemsPerPage: 5, page: 1 })
+
+					const fetchData = async () => {
+						const { items, total } = await getDataFromApi(options.value)
+						users.value = items
+						totalUsers.value = total
+					}
+
+					const getDataFromApi = async ({ page, itemsPerPage }: DataOptions) => {
+						state.value = StateEnum.PENDING
+						await new Promise(resolve => setTimeout(resolve, 500))
+						const allItems = getUsers()
+						const total = allItems.length
+						const items = itemsPerPage > 0
+							? allItems.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							: allItems
+						state.value = StateEnum.RESOLVED
+						return { items, total }
+					}
+
+					const getUsers = () => [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+						{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+						{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+						{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+						{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+						{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+						{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+					]
+
+					fetchData()
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': { itemsPerPage: 5, page: 1 },
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'serverItemsLength': 11,
+		'suffix': 'server-page-input',
+		'density': 'default',
+		'striped': false,
+		'pageInput': true,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const state = ref(StateEnum.IDLE)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
+				const fetchData = async (): Promise<void> => {
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const getDataFromApi = async ({ page, itemsPerPage }: DataOptions): Promise<{ items: User[], total: number }> => {
+					state.value = StateEnum.PENDING
+					await new Promise(resolve => setTimeout(resolve, 500))
+					return new Promise((resolve) => {
+						const allItems = getUsers()
+						const total = allItems.length
+						const items = itemsPerPage > 0
+							? allItems.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							: allItems
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => [
+					{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+					{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+					{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+					{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+					{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+					{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+					{ firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com' },
+					{ firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com' },
+					{ firstname: 'Eustache', lastname: 'Dubois', email: 'eustache.dubois@example.com' },
+					{ firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com' },
+					{ firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com' },
+				]
+
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
+			},
+			template: `
+			<div>
+				<SyServerTable
+					v-model:options="options"
+					:items="users"
+					:server-items-length="totalUsers"
+					:loading="state === StateEnum.PENDING"
+					v-bind="args"
+					@update:options="fetchData"
+				/>
 			</div>
 			`,
 		}
