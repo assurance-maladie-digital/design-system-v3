@@ -103,15 +103,15 @@
 	})
 
 	function commitPageInput() {
-		const val = pageInputValue.value
-		if (val === null || !Number.isInteger(val)) {
+		const enteredPage = pageInputValue.value
+		if (enteredPage === null || !Number.isInteger(enteredPage)) {
 			pageInputValue.value = props.page
 			return
 		}
-		const clamped = Math.min(Math.max(1, val), props.pageCount)
-		pageInputValue.value = clamped
-		if (clamped !== props.page) {
-			emit('update:page', clamped)
+		const targetPage = Math.min(Math.max(1, enteredPage), props.pageCount)
+		pageInputValue.value = targetPage
+		if (targetPage !== props.page) {
+			emit('update:page', targetPage)
 		}
 	}
 
