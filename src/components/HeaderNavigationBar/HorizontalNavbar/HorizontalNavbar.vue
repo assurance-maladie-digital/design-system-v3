@@ -19,15 +19,23 @@
 		items?: NavigationItem[]
 		/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 		confirmTabChange?: boolean
-		/** Message affiché dans la boîte de dialogue de confirmation */
-		confirmationMessage?: boolean
+		/** Message affiché dans la boîte de dialogue de confirmation (accepte un booléen pour rétrocompatibilité) */
+		confirmationMessage?: string | boolean
 		/** Largeur interne */
 		width?: string
 	}>(), {
 		items: () => [],
 		confirmTabChange: false,
-		confirmationMessage: false,
+		confirmationMessage: undefined,
 		width: '1712px',
+	})
+
+	// Format confirmation message to ensure backward compatibility
+	// If a boolean was provided (old API), we return undefined to let SyTabs use its default string
+	const formattedConfirmationMessage = computed<string | undefined>(() => {
+		return typeof props.confirmationMessage === 'string'
+			? props.confirmationMessage
+			: undefined
 	})
 
 	// Définition des événements émis
@@ -235,7 +243,7 @@
 					:items="tabItems"
 					:model-value="Number(activeTab)"
 					:confirm-tab-change="props.confirmTabChange"
-					:confirmation-message="props.confirmationMessage"
+					:confirmation-message="formattedConfirmationMessage"
 					:vuetify-options="{
 						sheet: { theme: 'dark', color: '#07275C' },
 						tab: { 'base-color': '#B5BECE', 'active-color': '#ffffff', 'slider-color': '#fff' },
