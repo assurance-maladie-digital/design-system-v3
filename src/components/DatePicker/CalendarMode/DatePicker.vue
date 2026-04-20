@@ -1043,13 +1043,12 @@
 				transition="fade-transition"
 				attach="body"
 				:offset="[-20, 5]"
-<<<<<<< HEAD
-=======
+
 				content-class="date-picker-overlay-content"
->>>>>>> origin/HEAD
+			>
 				role="presentation"
 				:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
-			>
+				>
 				<template #activator="{ props: menuProps }">
 					<div
 						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
