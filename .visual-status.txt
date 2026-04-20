@@ -1,5 +1,0 @@
-src/components/DialogBox/tests/DialogBox.visual.cy.ts:3
-src/components/HeaderBar/tests/HeaderBar.visual.cy.ts:0
-src/components/Logo/tests/Logo.visual.cy.ts:0
-src/components/RangeField/tests/RangeField.visual.cy.ts:0
-src/components/SyAlert/tests/SyAlert.visual.cy.ts:0
