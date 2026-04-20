@@ -33,8 +33,8 @@
 	// Format confirmation message to ensure backward compatibility
 	// If a boolean was provided (old API), we return undefined to let SyTabs use its default string
 	const formattedConfirmationMessage = computed<string | undefined>(() => {
-		return typeof props.confirmationMessage === 'string' 
-			? props.confirmationMessage 
+		return typeof props.confirmationMessage === 'string'
+			? props.confirmationMessage
 			: undefined
 	})
 
