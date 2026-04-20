@@ -230,42 +230,42 @@
 	})
 
 	// Synchronisation lorsque l'une des dates change
-	function validateBothDates() {
+	async function validateBothDates() {
 		if (fromDateRef.value) {
 			fromDateRef.value.validateOnSubmit()
 		}
 		if (toDateRef.value) {
-			toDateRef.value.validateOnSubmit()
+			await toDateRef.value.validateOnSubmit()
 		}
 	}
 
 	// Validation complète du PeriodField
-	function validateFields() {
-		fromDateValidation.validateField(parsedFromDate.value, fromDateRules.value, props.customWarningRules)
-		toDateValidation.validateField(parsedToDate.value, toDateRules.value, props.customWarningRules)
+	async function validateFields() {
+		await fromDateValidation.validateField(parsedFromDate.value, fromDateRules.value, props.customWarningRules)
+		await toDateValidation.validateField(parsedToDate.value, toDateRules.value, props.customWarningRules)
 	}
 
 	// Gestionnaires d'événements closed
-	function handleFromDateClosed() {
-		validateBothDates()
+	async function handleFromDateClosed() {
+		await validateBothDates()
 	}
 
-	function handleToDateClosed() {
-		validateBothDates()
+	async function handleToDateClosed() {
+		await validateBothDates()
 	}
 
 	// Watch pour les changements des dates - validation croisée
-	watch(formattedFromDate, () => {
-		validateFields()
+	watch(formattedFromDate, async () => {
+		await validateFields()
 		if (formattedToDate.value && toDateRef.value) {
-			toDateRef.value.validateOnSubmit()
+			await toDateRef.value.validateOnSubmit()
 		}
 	})
 
-	watch(formattedToDate, () => {
-		validateFields()
+	watch(formattedToDate, async () => {
+		await validateFields()
 		if (formattedFromDate.value && fromDateRef.value) {
-			fromDateRef.value.validateOnSubmit()
+			await fromDateRef.value.validateOnSubmit()
 		}
 	})
 
@@ -278,7 +278,7 @@
 	})
 
 	// Watch pour les changements externes - Synchronisation
-	watch(() => props.modelValue, (newValue) => {
+	watch(() => props.modelValue, async (newValue) => {
 		if (!newValue) return
 
 		const newFromDate = formatDateValue(newValue.from)
@@ -291,28 +291,28 @@
 			internalToDate.value = newToDate
 		}
 		// Valider les champs après la mise à jour des valeurs
-		validateFields()
+		await validateFields()
 	}, { deep: true, immediate: true })
 
 	// Fonction publique de validation
-	const validateOnSubmit = (): boolean => {
+	const validateOnSubmit = async (): Promise<boolean> => {
 		// Valider les deux CalendarMode
-		const fromDateValid = fromDateRef.value?.validateOnSubmit() ?? true
-		const toDateValid = toDateRef.value?.validateOnSubmit() ?? true
+		const fromDateValid = await fromDateRef.value?.validateOnSubmit() ?? true
+		const toDateValid = await toDateRef.value?.validateOnSubmit() ?? true
 
 		// Valider avec les règles personnalisées
-		validateFields()
+		await validateFields()
 
 		// Retourner true seulement si tout est valide
 		return fromDateValid && toDateValid && isValid.value
 	}
 
 	// Initialisation
-	onMounted(() => {
+	onMounted(async () => {
 		internalFromDate.value = formatDateValue(props.modelValue?.from)
 		internalToDate.value = formatDateValue(props.modelValue?.to)
 		// Validation initiale
-		validateFields()
+		await validateFields()
 	})
 
 	defineExpose({

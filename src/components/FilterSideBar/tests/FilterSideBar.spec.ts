@@ -328,4 +328,46 @@ describe('FilterSideBar', () => {
 
 		expect(wrapper.emitted('update:modelValue')).toBeUndefined()
 	})
+
+	it('applies zIndex as inline style on the navigation drawer when provided', () => {
+		const wrapper = mount(
+			defineComponent({
+				components: { VApp, FiltersSideBar: FilterSideBar },
+				template: `
+					<VApp>
+						<FiltersSideBar :model-value="[]" :z-index="2401" />
+					</VApp>
+				`,
+			}),
+			{
+				global: {
+					stubs: { Teleport: true },
+				},
+			},
+		)
+
+		const drawer = wrapper.find('.v-navigation-drawer')
+		expect(drawer.attributes('style')).toContain('z-index: 2401')
+	})
+
+	it('does not apply zIndex style on the navigation drawer when not provided', () => {
+		const wrapper = mount(
+			defineComponent({
+				components: { VApp, FiltersSideBar: FilterSideBar },
+				template: `
+					<VApp>
+						<FiltersSideBar :model-value="[]" />
+					</VApp>
+				`,
+			}),
+			{
+				global: {
+					stubs: { Teleport: true },
+				},
+			},
+		)
+
+		const drawer = wrapper.find('.v-navigation-drawer')
+		expect(drawer.attributes('style') ?? '').not.toContain('z-index: 2401')
+	})
 })

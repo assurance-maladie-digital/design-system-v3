@@ -135,6 +135,24 @@ describe('SyTablePagination.vue', () => {
 		expect(wrapper.emitted('update:page')![0]).toEqual([2])
 	})
 
+	it('groups page input with pagination controls', () => {
+		const wrapper = mount(SyTablePagination, {
+			props: {
+				headingLevel: 2,
+				page: 3,
+				itemsPerPage: 10,
+				itemsLength: 100,
+				pageCount: 10,
+				pageInput: true,
+			},
+		})
+
+		const controls = wrapper.find('.pagination-controls')
+		expect(controls.exists()).toBe(true)
+		expect(controls.find('.pagination').exists()).toBe(true)
+		expect(controls.find('.page-input').exists()).toBe(true)
+	})
+
 	it('has the correct structure for items per page selection', () => {
 		const wrapper = mount(SyTablePagination, {
 			props: {

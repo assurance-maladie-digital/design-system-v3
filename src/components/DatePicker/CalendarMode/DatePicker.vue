@@ -4,7 +4,7 @@
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useValidation, type ValidationResult } from '@/composables/validation/useValidation'
+	import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
@@ -252,8 +252,6 @@
 	const validation = useValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: 'Date',
-		customRules: props.customRules,
-		warningRules: props.customWarningRules,
 		disableErrorHandling: props.disableErrorHandling,
 	})
 	const { errors, warnings, successes, validateField: baseValidateField, clearValidation: baseClearValidation } = validation
@@ -268,15 +266,11 @@
 	})
 
 	const validateField = (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		value: any,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		rules: any[] = [],
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		warningRules: any[] = [],
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		successRules: any[] = [],
-	): ValidationResult => {
+		value: unknown,
+		rules: ValidationRule[] = [],
+		warningRules: ValidationRule[] = [],
+		successRules: ValidationRule[] = [],
+	): Promise<ValidationResult> | ValidationResult => {
 		if (props.readonly) {
 			return {
 				hasError: false,
@@ -286,7 +280,7 @@
 			}
 		}
 
-		return baseValidateField(value, rules, warningRules, successRules) as ValidationResult
+		return baseValidateField(value, rules, warningRules, successRules)
 	}
 
 	const validateFieldForDateValidation = (
@@ -344,7 +338,7 @@
 	})
 
 	// Fonction pour valider les dates
-	const validateDates = (forceValidation = false) => {
+	const validateDates = async (forceValidation = false) => {
 		if (props.noCalendar) {
 			// En mode no-calendar, on délègue la validation au DateTextInput
 			return
@@ -378,7 +372,7 @@
 
 			if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
 				// Comportement historique : exécuter directement les règles personnalisées même si la valeur est vide
-				validateField(
+				await validateField(
 					selectedDates.value,
 					props.customRules,
 					props.customWarningRules,
@@ -393,12 +387,12 @@
 
 		// Ne pas afficher d'erreurs de custom rules si on est dans le contexte du mounted initial
 		if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
-			coreValidateDates(forceValidation)
+			await coreValidateDates(forceValidation)
 		}
 	}
 
 	// Fonction centralisée pour mettre à jour le modèle
-	const updateModel = (value: DateValue) => {
+	const updateModel = async (value: DateValue) => {
 		// Éviter les mises à jour inutiles
 		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
 
@@ -409,7 +403,7 @@
 				isDatePickerVisible.value = false
 				emit('closed')
 			}
-			validateDates()
+			await validateDates()
 		}
 		finally {
 			// S'assurer que le flag est toujours réinitialisé
@@ -420,9 +414,9 @@
 	}
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
-	watch(selectedDates, (newValue) => {
+	watch(selectedDates, async (newValue) => {
 		// Valider les dates
-		validateDates()
+		await validateDates()
 		// Marquer les jours fériés après la mise à jour des dates
 		markHolidayDays()
 
@@ -431,7 +425,7 @@
 			// En mode range, ne mettez à jour le modèle et ne fermez que si la plage est complète.
 			const isRangeComplete = props.displayRange && Array.isArray(newValue) && newValue.length >= 2
 			if (!props.displayRange || isRangeComplete) {
-				updateModel(formattedDate.value)
+				await updateModel(formattedDate.value)
 			}
 
 			// Mettre à jour textInputValue pour le DateTextInput
@@ -499,14 +493,14 @@
 	})
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
-	const handleDateTextInputUpdate = (value: DateValue) => {
+	const handleDateTextInputUpdate = async (value: DateValue) => {
 		if (isUpdatingFromInternal.value) return
 
 		try {
 			isUpdatingFromInternal.value = true
 
 			// Mettre à jour le modèle avec la valeur reçue du DateTextInput
-			updateModel(value)
+			await updateModel(value)
 
 			// Mettre à jour selectedDates en fonction de la valeur reçue
 			if (!value) {
@@ -541,14 +535,14 @@
 	}
 
 	// Gestionnaire pour les événements date-selected du DateTextInput
-	const handleDateTextInputSelection = (value: DateValue) => {
+	const handleDateTextInputSelection = async (value: DateValue) => {
 		if (isUpdatingFromInternal.value) return
 
 		// Mettre à jour le modèle avec la valeur sélectionnée
-		updateModel(value)
+		await updateModel(value)
 	}
 
-	watch(textInputValue, (newValue) => {
+	watch(textInputValue, async (newValue) => {
 		// Éviter les mises à jour récursives
 		if (isUpdatingFromInternal.value || props.noCalendar) return
 
@@ -715,17 +709,17 @@
 		document.removeEventListener('click', handleClickOutside)
 	})
 
-	const validateOnSubmit = () => {
+	const validateOnSubmit = async () => {
 		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
 		if (props.noCalendar) {
-			return dateTextInputRef.value?.validateOnSubmit()
+			return await dateTextInputRef.value?.validateOnSubmit()
 		}
 		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
 		else if (props.useCombinedMode) {
-			return complexDatePickerRef.value?.validateOnSubmit()
+			return await complexDatePickerRef.value?.validateOnSubmit()
 		}
 		// Forcer la validation pour ignorer les conditions de validation interactive
-		validateDates(true)
+		await validateDates(true)
 		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
 		return errors.value.length === 0
 	}
@@ -733,10 +727,10 @@
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit, clearValidation)
 
-	const openDatePicker = () => {
+	const openDatePicker = async () => {
 		if (props.disabled || props.readonly) return
 		if (!isDatePickerVisible.value) {
-			toggleDatePicker()
+			await toggleDatePicker()
 		}
 	}
 
@@ -786,11 +780,11 @@
 		() => selectedDates.value,
 	)
 
-	const handleInputBlur = () => {
+	const handleInputBlur = async () => {
 		emit('blur')
 		onblur.value = true
 		if (props.isValidateOnBlur) {
-			validateDates(true)
+			await validateDates(true)
 		}
 	}
 
@@ -886,7 +880,7 @@
 		}
 	})
 
-	const toggleDatePicker = () => {
+	const toggleDatePicker = async () => {
 		if (props.disabled || props.readonly) return
 
 		isDatePickerVisible.value = !isDatePickerVisible.value
@@ -898,7 +892,7 @@
 		}
 		else {
 			emit('closed')
-			validateDates()
+			await validateDates()
 		}
 	}
 
@@ -914,26 +908,26 @@
 		emit('focus')
 	}
 
-	const openDatePickerOnIconClick = () => {
+	const openDatePickerOnIconClick = async () => {
 		if (props.disabled || props.readonly) return
-		toggleDatePicker()
+		await toggleDatePicker()
 	}
 
 	// Gestionnaire d'événement clavier pour l'input
-	const handleInputKeydown = (event: KeyboardEvent) => {
+	const handleInputKeydown = async (event: KeyboardEvent) => {
 		// Ne rien faire si le composant est en readonly
 		if (props.readonly) return
 
 		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
 		if (event.key === 'Enter') {
-			openDatePicker()
+			await openDatePicker()
 			event.preventDefault() // Empêcher la soumission du formulaire
 		}
 		// Fermer le calendrier lorsque la touche Escape est pressée
 		else if ((event.key === 'Escape' || event.key === 'Esc') && isDatePickerVisible.value) {
 			isDatePickerVisible.value = false
 			emit('closed')
-			validateDates() // Valider les dates à la fermeture
+			await validateDates() // Valider les dates à la fermeture
 			event.preventDefault()
 		}
 	}
@@ -1049,6 +1043,10 @@
 				transition="fade-transition"
 				attach="body"
 				:offset="[-20, 5]"
+<<<<<<< HEAD
+=======
+				content-class="date-picker-overlay-content"
+>>>>>>> origin/HEAD
 				role="presentation"
 				:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
 			>
@@ -1418,4 +1416,13 @@
 	opacity: 0;
 }
 
+</style>
+
+<style lang="scss">
+.date-picker-overlay-content .v-date-picker {
+	box-shadow:
+		0 5px 5px -3px rgb(0 0 0 / 20%),
+		0 8px 10px 1px rgb(0 0 0 / 14%),
+		0 3px 14px 2px rgb(0 0 0 / 12%) !important;
+}
 </style>

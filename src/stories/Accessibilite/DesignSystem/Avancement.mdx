@@ -1,0 +1,455 @@
+import { Meta } from '@storybook/addon-docs';
+import statusData from './a11y-status.json';
+import '../../styles/shared.css';
+import { useState } from 'react';
+
+<Meta title="Accessibilité/Design System/Avancement" />
+
+<style>
+{`
+.carbon-a11y-container {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #161616;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.header-section {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: #0C419A;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+}
+
+.meta-info {
+  font-size: 0.875rem;
+  color: #525252;
+}
+
+.table-wrapper {
+  background-color: #ffffff;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.carbon-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.carbon-table th {
+  background-color: #ffffff;
+  color: #161616;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.th-content {
+  display: flex;
+  align-items: center;
+}
+
+.carbon-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.875rem;
+  background-color: #ffffff;
+}
+
+.component-name {
+  font-weight: 400;
+  color: #0C419A !important;
+}
+
+.css-ajfpqr {
+  color: #0C419A !important;
+}
+
+.carbon-link {
+  color: #0C419A;
+  text-decoration: none;
+}
+
+.carbon-link:hover {
+  text-decoration: underline;
+}
+
+.carbon-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: underline dotted rgba(22, 22, 22, 0.3);
+  text-underline-offset: 2px;
+}
+
+.tag-green {
+  background-color: #a8f0c6;
+  color: #161616;
+}
+
+.tag-red {
+  background-color: #ffd7d9;
+  color: #161616;
+}
+
+.tag-blue {
+  background-color: #d0e2ff;
+  color: #161616;
+}
+
+.tag-cyan {
+  background-color: #9ef0f0;
+  color: #161616;
+}
+
+.tag-gray {
+  background-color: #f4f4f4;
+  color: #525252;
+}
+
+/* Tooltip Styles */
+.carbon-tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  cursor: help;
+  vertical-align: middle;
+  top: -2px;
+}
+
+.carbon-tooltip-icon {
+  fill: #525252;
+  transition: fill 0.2s;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.carbon-tooltip-container:hover .carbon-tooltip-icon {
+  fill: #161616;
+}
+
+.carbon-tooltip-content {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  max-width: 350px;
+  background-color: #393939;
+  color: #ffffff;
+  text-align: left;
+  border-radius: 2px;
+  padding: 0.5rem 0.75rem;
+  position: absolute;
+  z-index: 9999;
+  top: calc(100% + 8px);
+  right: 0;
+  transform: translateX(0);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  transition: opacity 0.2s;
+  white-space: normal;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.carbon-tooltip-content::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 10px;
+  margin-right: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #393939 transparent;
+}
+
+.carbon-tooltip-container:hover .carbon-tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Search Styles */
+.search-container {
+  margin-bottom: 1.5rem;
+  position: relative;
+  width: 400px;
+  max-width: 400px;
+  min-width: 400px;
+}
+
+.search-input {
+  width: 400px;
+  max-width: 400px;
+  min-width: 400px;
+  height: 40px;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  resize: none;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #0f62fe;
+  box-shadow: 0 0 0 2px rgba(15, 98, 254, 0.2);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  fill: #525252;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.search-results-count {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #525252;
+}
+`}
+</style>
+
+<div className="header">
+  <h1>Avancement de l'accessibilité</h1>
+</div>
+
+{(() => {
+  const [searchTerm, setSearchTerm] = useState('');
+  
+  // Exclure les composants non pertinents des statistiques
+  const validComponents = statusData.results.filter(item => 
+    item.componentName !== 'AccessibilityProgressPage' && 
+    item.componentName !== 'stories' && 
+    item.componentName !== 'Tables'
+  );
+  
+  const compliantCount = validComponents.filter(item => item.isFullyCompliant).length;
+  const totalCount = validComponents.length;
+  const percentage = totalCount > 0 ? ((compliantCount / totalCount) * 100).toFixed(2) : '0.00';
+  
+  const filteredComponents = validComponents
+    .filter(item => 
+      searchTerm === '' || 
+      item.componentName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  
+  return (
+    <div className="carbon-a11y-container">
+  <div className="header-section">
+    <h2 className="title">
+      Statut de l'accessibilité par composant
+      <span className="carbon-tooltip-container">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+          <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+          <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+        </svg>
+        <span className="carbon-tooltip-content">Cet indicateur reflète l'état global d'avancement de la mise en accessibilité des composants du Design System. Le pourcentage de conformité se base sur les tests automatisés, la configuration des stories et la documentation complète. Les audits manuels sont affichés à titre informatif mais ne sont pas comptabilisés dans ce pourcentage.</span>
+      </span>
+    </h2>
+    <div className="meta-info">
+      <strong>Statut :</strong> {compliantCount} / {totalCount} composants conformes ({percentage}%) | <strong>Dernière mise à jour :</strong> {new Date(statusData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </div>
+  </div>
+
+  <div className="search-container">
+    <svg className="search-icon" focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29 29 27.586zM4 13a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"></path>
+    </svg>
+    <input 
+      type="text" 
+      className="search-input" 
+      placeholder="Rechercher un composant..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+    {searchTerm && (
+      <div className="search-results-count">
+        {filteredComponents.length} résultat{filteredComponents.length > 1 ? 's' : ''} trouvé{filteredComponents.length > 1 ? 's' : ''}
+      </div>
+    )}
+  </div>
+
+  <div className="table-wrapper">
+    <table className="carbon-table">
+      <thead>
+        <tr>
+          <th>Composant</th>
+          <th>
+            <div className="th-content">
+              Tests A11y
+              <span className="carbon-tooltip-container">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+                </svg>
+                <span className="carbon-tooltip-content">Indique si des tests d'accessibilité (vitest-axe) sont implémentés et fonctionnels pour la CI.</span>
+              </span>
+            </div>
+          </th>
+          <th>
+            <div className="th-content">
+              Onglet A11y
+              <span className="carbon-tooltip-container">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+                </svg>
+                <span className="carbon-tooltip-content">Tests d'accessibilité en temps réel avec Storybook.</span>
+              </span>
+            </div>
+          </th>
+          <th>
+            <div className="th-content">
+              Documentation
+              <span className="carbon-tooltip-container">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+                </svg>
+                <span className="carbon-tooltip-content">Vérifie la présence et la complétude de la page guidant sur l'accessibilité de ce composant.</span>
+              </span>
+            </div>
+          </th>
+          <th>
+            <div className="th-content">
+              Audit Manuel
+              <span className="carbon-tooltip-container">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+                </svg>
+                <span className="carbon-tooltip-content">Indique si un rapport d'audit manuel a été réalisé pour ce composant.</span>
+              </span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredComponents
+          .map((item) => {
+            const getCategory = (componentName) => {
+              const structureComponents = [
+                'HeaderBar', 'HeaderToolbar', 'HeaderLoading', 'SubHeader', 'FooterBar', 
+                'PageContainer', 'ToolbarContainer', 'SkipLink', 'HeaderNavigationBar'
+              ];
+              
+              const dataComponents = [
+                'Accordion', 'DataList', 'DataListGroup', 'DataListItem', 'Tables', 
+                'PaginatedTable', 'FilterInline', 'FilterSideBar', 'TableToolbar',
+                'SearchListField', 'ChipList', 'CollapsibleList', 'ContextualMenu'
+              ];
+              
+              const formComponents = [
+                'PasswordField', 'PhoneField', 'RangeField', 'NirField', 'PeriodField',
+                'MonthPicker', 'DatePicker', 'RatingPicker', 'DiacriticPicker', 'LunarCalendar',
+                'FileUpload', 'FileList', 'FilePreview', 'UploadWorkflow'
+              ];
+              
+              const actionComponents = [
+                'BackBtn', 'BackToTopBtn', 'CopyBtn', 'DownloadBtn', 'LangBtn',
+                'FranceConnectBtn', 'UserMenuBtn', 'SocialMediaLinks', 'ExternalLinks',
+                'SyBtnMenu', 'SyTextArea'
+              ];
+              
+              const feedbackComponents = [
+                'SyAlert', 'NotificationBar', 'ErrorPage', 'StatusPage', 'MaintenancePage',
+                'NotFoundPage', 'DialogBox', 'Captcha', 'CookieBanner', 'CookiesSelection'
+              ];
+              
+              const layoutComponents = [
+                'Logo', 'LogoBrandSection', 'DeclarationAccessibilityPage', 'AccessibilityProgressPage'
+              ];
+              
+              const customsComponents = [
+                'SyIcon', 'SyHeading'
+              ];
+              
+              if (structureComponents.includes(componentName)) return 'structure';
+              if (dataComponents.includes(componentName)) return 'donnees';
+              if (formComponents.includes(componentName)) return 'formulaires';
+              if (actionComponents.includes(componentName)) return 'actions';
+              if (feedbackComponents.includes(componentName)) return 'feedback';
+              if (layoutComponents.includes(componentName)) return 'layout';
+              if (customsComponents.includes(componentName)) return 'customs';
+              
+              return 'donnees';
+            };
+
+            const getStorybookUrl = (componentName, storybookTitle) => {
+              // Use the actual Storybook title if available, otherwise fall back to generated path
+              if (storybookTitle) {
+                // Convert Storybook title to URL format - keep slashes, only replace spaces and special chars
+                return `/?path=/docs/${storybookTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\/-]/g, '')}--docs`;
+              }
+              
+              // Fallback to the old method for components without storybookTitle
+              const category = getCategory(componentName);
+              const formattedName = componentName.toLowerCase().replace(/[^a-z0-9]/g, '');
+              return `/?path=/docs/composants-${category}-${formattedName}--docs`;
+            };
+
+            return (
+              <tr key={item.componentName}>
+                <td className="component-name">
+                  <a href="#" className="carbon-link">{item.componentName.split('/').pop()}</a>
+                </td>
+                <td>
+                  <span className={`carbon-tag ${item.hasA11yTests ? 'tag-green' : 'tag-red'}`}>
+                    {item.hasA11yTests ? 'Testé' : 'Non testé'}
+                  </span>
+                </td>
+                <td>
+                  <span className={`carbon-tag ${item.hasA11yDisabledInStories ? 'tag-red' : 'tag-green'}`}>
+                    {item.hasA11yDisabledInStories ? 'Absent' : 'Présent'}
+                  </span>
+                </td>
+                <td>
+                  <span className={`carbon-tag ${
+                    item.mdxStatus === 'Complète' ? 'tag-green' : 
+                    item.mdxStatus === 'Manquante' ? 'tag-red' : 'tag-blue'
+                  }`}>
+                    {item.mdxStatus}
+                  </span>
+                </td>
+                <td>
+                  <span className={`carbon-tag ${item.hasManualAudit ? 'tag-green' : 'tag-gray'}`}>
+                    {item.hasManualAudit ? 'Oui' : 'Non'}
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
+      </tbody>
+    </table>
+  </div>
+</div>
+  );
+})()}

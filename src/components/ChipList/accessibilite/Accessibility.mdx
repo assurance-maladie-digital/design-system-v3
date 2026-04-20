@@ -1,15 +1,88 @@
 import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../ChipList.stories.ts';
-import '@/stories/styles/shared.css';
+import * as ChipListStories from '../ChipList.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+  AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={ChipListStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+  componentName="ChipList"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+>
+  <AuditSection>
+    <div class="mt-2">
+      <p>Rapport d'audit manuel : <a href="/audits/ChipList.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+      <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/814" target="_blank" style={{color:'#0C41BD'}}>issue #814</a>)</p>
+    </div>
+  </AuditSection>
+  <CriteriaSection>
+    <CriteriaCard icon="🏷️" title="Structure sémantique de liste">
+      <ul>
+        <li><strong>Liste native</strong> : Utilisation de <code>&lt;ul&gt;</code> et <code>&lt;li&gt;</code> pour la structure principale</li>
+        <li><strong>Étiquetage</strong> : <code>aria-label</code> ou <code>aria-labelledby</code> pour la liste via les props <strong>listAriaLabel</strong> et <strong>listAriaLabelledby</strong></li>
+        <li><strong>Contenu des chips</strong> : <code>&lt;span&gt;</code> avec <code>role="status"</code> et <code>aria-live="polite"</code> pour le texte des chips</li>
+        <li><strong>Accessibilité</strong> : Permet une navigation sémantique correcte (critères 9.1.1, 9.2.1 RGAA)</li>
+      </ul>
+    </CriteriaCard>
 
+    <CriteriaCard icon="🎯" title="Chips interactifs et débordement">
+      <ul>
+        <li><strong>Chips supprimables</strong> : Boutons avec <code>aria-label</code> descriptif pour chaque action de suppression</li>
+        <li><strong>Chip de débordement</strong> : <code>role="button"</code>, <code>tabindex="0"</code>, et <code>aria-label</code> décrivant les éléments masqués</li>
+        <li><strong>Navigation clavier</strong> : Support des touches Entrée et Espace pour le chip de débordement</li>
+        <li><strong>Focus visible</strong> : Indicateurs de focus sur tous les éléments interactifs</li>
+      </ul>
+    </CriteriaCard>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/ChipList.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/814" target="_blank" style={{color:'#0C41BD'}}>issue #814</a>)</p>
-</div>
+    <CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+      <ul>
+        <li><strong>Navigation Tab</strong> : Parcours logique des éléments interactifs (chips → bouton débordement → boutons reset)</li>
+        <li><strong>Suppression de chips</strong> : Touches Entrée/Espace sur les boutons de suppression</li>
+        <li><strong>Débordement</strong> : Touches Entrée/Espace pour afficher/masquer les éléments supplémentaires</li>
+        <li><strong>Réinitialisation</strong> : Bouton reset accessible avec navigation standard</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🎨" title="États et feedback visuel">
+      <ul>
+        <li><strong>États des chips</strong> : Couleurs et icônes différentes pour success, info, warning, error</li>
+        <li><strong>Icônes d'état</strong> : Option <strong>displayPrependStateIcon</strong> et <strong>displayAppendStateIcon</strong> avec icônes décoratives</li>
+        <li><strong>Contraste</strong> : Styles CSS spécifiques pour garantir le contraste des bordures de focus selon l'état</li>
+        <li><strong>Feedback</strong> : <code>aria-live="polite"</code> pour les changements de contenu</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="ChipList">
+    <Story of={ChipListStories.WithOverflow} />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li>Utilisez des libellés descriptifs pour la liste via <code>listAriaLabel</code></li>
+      <li>Limitez le nombre de chips visibles avec <code>overflowLimit</code> pour éviter la surcharge visuelle</li>
+      <li>Assurez-vous que les textes des chips sont concis mais explicites</li>
+      <li>Utilisez les états visuels (success, info, warning, error) de manière cohérente</li>
+      <li>Fournissez une alternative de réinitialisation lorsque les chips sont nombreux</li>
+      <li>Testez la navigation au clavier sans la souris</li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les listes</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://inclusive-components.design/tag-buttons/" target="_blank" rel="noopener noreferrer">Inclusive Components: Tag Buttons</a></li>
+      <li><a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/814" target="_blank" rel="noopener noreferrer">Issue #814 - Corrections d'accessibilité ChipList</a></li>
+    </ul>
+  </ResourcesSection>
+</AccessibilityGuideLayout>

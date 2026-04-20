@@ -38,6 +38,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		initializeSelectedDates,
 		validateDates,
 		// updateModel,
+		generateDateRange,
 	} = options
 
 	const textInputValue = ref('')
@@ -120,9 +121,9 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length === 2) {
 			const startDate = selectedDates.value[0]
 			const endDate = selectedDates.value[1]
-			if (startDate && endDate && options.generateDateRange) {
+			if (startDate && endDate && generateDateRange) {
 				// Regenerate intermediate dates for Vuetify range selection
-				selectedDates.value = options.generateDateRange(startDate, endDate)
+				selectedDates.value = generateDateRange(startDate, endDate)
 			}
 		}
 

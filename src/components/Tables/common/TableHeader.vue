@@ -14,10 +14,12 @@
 		headerParams: Parameters<VDataTable['$slots']['headers']>['0']
 		table: VDataTable | VDataTableServer | null | undefined
 		resizableColumns?: boolean
+		wrapTitle?: boolean
 		storageKey?: string
 		headerPropsRaw?: HeaderPropsRaw
 	}>(), {
 		resizableColumns: false,
+		wrapTitle: false,
 		storageKey: undefined,
 		headerPropsRaw: undefined,
 	})
@@ -198,13 +200,27 @@
 		const index = props.headerParams.sortBy.findIndex(sort => sort.key === props.column.key)
 		return index !== -1 ? index + 1 : null
 	})
+
+	const titleClasses = computed(() => [
+		textAlignClass.value,
+		headerClassRaw.value,
+		{ 'col-title--wrap': props.wrapTitle },
+	])
+
+	const wrapperClasses = computed(() => [
+		alignClass.value,
+		{
+			'h-100': !props.wrapTitle,
+			'v-data-table-header__content--wrap': props.wrapTitle,
+		},
+	])
 </script>
 
 <template>
 	<div
 		ref="wrapper"
-		class="v-data-table-header__content d-flex align-center h-100 w-100"
-		:class="alignClass"
+		class="v-data-table-header__content d-flex align-center w-100"
+		:class="wrapperClasses"
 	>
 		<slot
 			:name="`header.${column.key}`"
@@ -216,8 +232,8 @@
 		>
 			<div
 				class="col-title"
-				:class="[textAlignClass, headerClassRaw]"
-				:style="[{ width: '100%' }, headerStyle]"
+				:class="titleClasses"
+				:style="headerStyle"
 			>
 				{{ column.title }}
 			</div>
@@ -266,6 +282,31 @@
 </template>
 
 <style lang="scss" scoped>
+.v-data-table-header__content {
+	column-gap: 4px;
+	min-width: 0;
+}
+
+.v-data-table-header__content--wrap {
+	height: auto;
+}
+
+.col-title {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.col-title--wrap {
+	white-space: normal;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	line-height: 1.25;
+}
+
+.sort-container {
+	flex: 0 0 auto;
+}
+
 .sort-order-indicator {
 	font-size: 0.75rem;
 	font-weight: bold;

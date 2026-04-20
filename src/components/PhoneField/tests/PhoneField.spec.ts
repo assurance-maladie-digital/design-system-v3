@@ -310,6 +310,7 @@ describe('PhoneField', () => {
 		})
 
 		const result = await wrapper.vm.validateOnSubmit()
+		console.log('Validation result:', result)
 
 		expect(result).toBe(false)
 		expect(wrapper.vm.hasError).toBe(true)

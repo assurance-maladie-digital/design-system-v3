@@ -156,6 +156,128 @@ describe('SyServerTable', () => {
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
+	it('applies sticky styles for pinnedColumns (left/right) including data-table-select', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5, page: 1 } as DataOptions,
+				serverItemsLength: 10,
+				suffix: 'pinned-columns-test',
+				showSelect: true,
+				pinnedColumns: [
+					'data-table-select',
+					{ key: 'name', side: 'left' },
+					{ key: 'age', side: 'right' },
+				],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const pinnedTh = wrapper.findAll('th[style*="position: sticky"]')
+		expect(pinnedTh.length).toBeGreaterThan(0)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('right:'))).toBe(true)
+		expect(pinnedTh.every(th => (th.attributes('style') || '').includes('background: var(--sy-table-header-bg-pinned)'))).toBe(true)
+
+		const pinnedTd = wrapper.findAll('tbody td[style*="position: sticky"]')
+		expect(pinnedTd.length).toBeGreaterThan(0)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
+		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
+		expect(pinnedTd.every(td => (td.attributes('style') || '').includes('background: rgb(var(--v-theme-surface))'))).toBe(true)
+
+		activeWrappers.push(wrapper)
+	})
+
+	it('makes selection column sticky when stickySelect is true', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5, page: 1 } as DataOptions,
+				serverItemsLength: 10,
+				suffix: 'sticky-select-test',
+				showSelect: true,
+				stickySelect: true,
+				pinnedColumns: [{ key: 'age', side: 'right' }],
+			},
+			attrs: {
+				items: fakeItems,
+				headers: headers,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.classes()).toContain('sy-server-table--pinned-select-left')
+
+		activeWrappers.push(wrapper)
+	})
+
+	it('makes rows clickable and emits row-click events', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: fakeItems.length,
+				suffix: 'clickable-row-test',
+				clickableRow: true,
+				headers,
+				items: fakeItems,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const firstRow = wrapper.find('tbody tr')
+
+		expect(firstRow.classes()).toContain('v-data-table__tr--clickable')
+		expect(firstRow.classes()).toContain('sy-table__clickable-row')
+		expect(firstRow.attributes('data-clickable-row')).toBe('true')
+		expect(firstRow.attributes('tabindex')).toBe('0')
+		expect(firstRow.attributes('role')).toBeUndefined()
+
+		await firstRow.trigger('click')
+
+		expect(wrapper.emitted('row-click')).toEqual([[fakeItems[0]]])
+
+		activeWrappers.push(wrapper)
+	})
+
+	it('does not emit row-click when an interactive element inside the row is clicked', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: fakeItems.length,
+				suffix: 'clickable-row-nested-interactive-test',
+				clickableRow: true,
+				showSelect: true,
+				headers,
+				items: fakeItems,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const nestedCheckbox = wrapper.find('tbody .v-selection-control input')
+
+		expect(nestedCheckbox.exists()).toBe(true)
+
+		await nestedCheckbox.trigger('click')
+
+		expect(wrapper.emitted('row-click')).toBeUndefined()
+
+		activeWrappers.push(wrapper)
+	})
+
 	it('stores the options in local storage', async () => {
 		const setItemMock = vi.spyOn(LocalStorageUtility.prototype, 'setItem')
 
@@ -911,5 +1033,273 @@ describe('SyServerTable', () => {
 			expect(sortedHeaders[1]?.title).toBe('ID')
 			expect(sortedHeaders[2]?.title).toBe('Name')
 		})
+	})
+
+	describe('maxWidth truncation', () => {
+		const truncateHeaders = [
+			{
+				title: 'Nom de la colonne super longue',
+				key: 'nom',
+				maxWidth: '100px',
+			},
+			{
+				title: 'Prénom',
+				key: 'prenom',
+			},
+		]
+
+		const truncateItems = [
+			{ nom: 'Valeur très longue qui dépasse la largeur maximale', prenom: 'Court' },
+		]
+
+		it('applies maxWidth and wraps the header title on <th> when maxWidth is set', async () => {
+			const wrapper = mount(SyServerTable, {
+				props: {
+					suffix: 'truncate-test',
+					headers: truncateHeaders,
+					items: truncateItems,
+					serverItemsLength: truncateItems.length,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const ths = wrapper.findAll('tr.headers th')
+			const truncatedTh = ths.find(th => (th.attributes('style') || '').includes('max-width'))
+
+			expect(truncatedTh).toBeDefined()
+			expect(truncatedTh!.attributes('style')).toContain('max-width: 100px')
+			expect(truncatedTh!.attributes('style')).not.toContain('overflow: hidden')
+			expect(truncatedTh!.attributes('title')).toBeUndefined()
+			expect(truncatedTh!.find('.col-title').classes()).toContain('col-title--wrap')
+		})
+
+		it('does not apply multiline header styles on <th> without maxWidth', async () => {
+			const wrapper = mount(SyServerTable, {
+				props: {
+					suffix: 'no-truncate-test',
+					headers: truncateHeaders,
+					items: truncateItems,
+					serverItemsLength: truncateItems.length,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const ths = wrapper.findAll('tr.headers th')
+			const normalTh = ths.find(th => !(th.attributes('style') || '').includes('max-width'))
+
+			expect(normalTh).toBeDefined()
+			expect(normalTh!.attributes('title')).toBeUndefined()
+			expect(normalTh!.find('.col-title').classes()).not.toContain('col-title--wrap')
+		})
+
+		it('applies multiline styles on <td> when maxWidth is set', async () => {
+			const wrapper = mount(SyServerTable, {
+				props: {
+					suffix: 'truncate-td-test',
+					headers: truncateHeaders,
+					items: truncateItems,
+					serverItemsLength: truncateItems.length,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const tds = wrapper.findAll('tbody tr td')
+			const truncatedTd = tds.find(td => (td.attributes('style') || '').includes('max-width'))
+
+			expect(truncatedTd).toBeDefined()
+			expect(truncatedTd!.attributes('style')).toContain('max-width: 100px')
+			expect(truncatedTd!.attributes('style')).toContain('white-space: normal')
+			expect(truncatedTd!.attributes('style')).toContain('overflow-wrap: anywhere')
+			expect(truncatedTd!.attributes('style')).toContain('word-break: break-word')
+			expect(truncatedTd!.attributes('style')).not.toContain('overflow: hidden')
+			expect(truncatedTd!.attributes('title')).toBeUndefined()
+		})
+
+		it('applies maxWidth without truncation on filter row <th> when maxWidth is set with showFilters', async () => {
+			const wrapper = mount(SyServerTable, {
+				props: {
+					suffix: 'truncate-filter-test',
+					showFilters: true,
+					headers: truncateHeaders,
+					items: truncateItems,
+					serverItemsLength: truncateItems.length,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const filterThs = wrapper.findAll('tr.filters th')
+			const truncatedFilterTh = filterThs.find(th => (th.attributes('style') || '').includes('max-width'))
+
+			expect(truncatedFilterTh).toBeDefined()
+			expect(truncatedFilterTh!.attributes('style')).toContain('max-width: 100px')
+			expect(truncatedFilterTh!.attributes('style')).not.toContain('overflow: hidden')
+		})
+
+		it('keeps multiline td styles after reordering a maxWidth column with column controls', async () => {
+			const mockOrganizeColumns = {
+				name: 'OrganizeColumns',
+				props: ['headers'],
+				template: '<div></div>',
+				emits: ['update:headers'],
+			}
+
+			const wrapper = mount(SyServerTable, {
+				props: {
+					suffix: 'truncate-reorder-test',
+					headers: truncateHeaders.map((header, index) => ({
+						...header,
+						order: index + 1,
+					})),
+					items: truncateItems,
+					serverItemsLength: truncateItems.length,
+					enableColumnControls: true,
+				},
+				global: {
+					stubs: {
+						OrganizeColumns: mockOrganizeColumns,
+					},
+				},
+				attachTo: document.body,
+			})
+
+			const organizeColumnsComponent = wrapper.findComponent({ name: 'OrganizeColumns' })
+			const reorderedHeaders = JSON.parse(JSON.stringify([
+				{ ...truncateHeaders[0], order: 2 },
+				{ ...truncateHeaders[1], order: 1 },
+			]))
+
+			organizeColumnsComponent.vm.$emit('update:headers', reorderedHeaders)
+			await wrapper.vm.$nextTick()
+			await vi.dynamicImportSettled()
+
+			const tds = wrapper.findAll('tbody tr td')
+			expect(tds[0]!.text()).toBe('Court')
+			expect(tds[1]!.text()).toBe('Valeur très longue qui dépasse la largeur maximale')
+			expect(tds[1]!.attributes('style')).toContain('max-width: 100px')
+			expect(tds[1]!.attributes('style')).toContain('white-space: normal')
+			expect(tds[1]!.attributes('style')).toContain('overflow-wrap: anywhere')
+		})
+	})
+})
+
+describe('SyServerTable pageInput', () => {
+	const manyItems = Array.from({ length: 11 }, (_, i) => ({
+		id: i + 1,
+		name: `User ${i + 1}`,
+		age: 20 + i,
+	}))
+
+	it('does not render page-input when pageInput is false', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-server-test',
+				serverItemsLength: 11,
+				pageInput: false,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		expect(wrapper.find('.page-input').exists()).toBe(false)
+	})
+
+	it('renders page-input field when pageInput is true and pageCount > 1', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-server-test',
+				serverItemsLength: 11,
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		expect(wrapper.find('.page-input').exists()).toBe(true)
+		expect(wrapper.find('.page-input__field').exists()).toBe(true)
+	})
+
+	it('page-input field has correct min/max attributes', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-server-test',
+				serverItemsLength: 11,
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const input = wrapper.find('.page-input__field')
+		expect(input.attributes('min')).toBe('1')
+		expect(input.attributes('max')).toBe('3')
+	})
+
+	it('navigates to page on Enter key', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-server-test',
+				serverItemsLength: 11,
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const input = wrapper.find('.page-input__field')
+		await input.setValue(2)
+		await input.trigger('keydown', { key: 'Enter' })
+
+		const emitted = wrapper.emitted('update:options')
+		expect(emitted).toBeTruthy()
+		const lastEmit = emitted![emitted!.length - 1]![0] as DataOptions
+		expect(lastEmit.page).toBe(2)
+	})
+
+	it('clamps out-of-range values on blur', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'page-input-server-test',
+				serverItemsLength: 11,
+				pageInput: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const input = wrapper.find('.page-input__field')
+		await input.setValue(99)
+		await input.trigger('blur')
+
+		const emitted = wrapper.emitted('update:options')
+		expect(emitted).toBeTruthy()
+		const lastEmit = emitted![emitted!.length - 1]![0] as DataOptions
+		expect(lastEmit.page).toBe(3)
 	})
 })

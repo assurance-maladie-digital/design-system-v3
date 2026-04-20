@@ -18,8 +18,38 @@ export function useTableHeaders({
 	storedHeaders?: DataTableHeaders[]
 	filterInputConfig?: Record<string, unknown>
 }) {
-	// Process headers to ensure they have title property
-	const normalizedHeaders = computed(() => {
+	function normalizeHeader(header: DataTableHeaders): DataTableHeaders {
+		const mapped = {
+			...header,
+			title: header.title ?? header.text,
+		} as TableColumnHeader
+
+		// Si maxWidth est défini sans width → applique-le à width
+		if (mapped.maxWidth != null && mapped.width == null) {
+			mapped.width = mapped.maxWidth
+		}
+
+		// Si maxWidth est défini → l'appliquer aussi aux <td> via cellProps
+		if (mapped.maxWidth != null) {
+			const existingCellProps = (mapped.cellProps ?? {}) as Record<string, unknown>
+			const existingStyle = (existingCellProps.style ?? {}) as Record<string, unknown>
+			const multilineStyle = {
+				...existingStyle,
+				maxWidth: mapped.maxWidth,
+				whiteSpace: 'normal',
+				overflowWrap: 'anywhere',
+				wordBreak: 'break-word',
+			}
+			const baseProps = { ...existingCellProps, style: multilineStyle }
+			mapped.cellProps = () => ({
+				...baseProps,
+			})
+		}
+
+		return mapped as unknown as DataTableHeaders
+	}
+
+	const mergedHeaders = computed(() => {
 		const incoming = headersProp?.value
 		const stored = Array.isArray(storedHeaders) ? storedHeaders : undefined
 
@@ -61,27 +91,11 @@ export function useTableHeaders({
 			headers = (stored ?? incoming) as DataTableHeaders[]
 		}
 
-		// Normalisation finale
-		return headers.map((header) => {
-			const mapped = {
-				...header,
-				title: header.title ?? header.text,
-			} as TableColumnHeader
-
-			// Si maxWidth est défini sans width → applique-le à width
-			if (mapped.maxWidth != null && mapped.width == null) {
-				mapped.width = mapped.maxWidth
-			}
-
-			return mapped as unknown as DataTableHeaders
-		})
+		return headers
 	})
 
-	// Get filterable headers
-	const filterableHeaders = computed(() => {
-		if (!normalizedHeaders.value) return []
-		return normalizedHeaders.value.filter(header => header.filterable)
-	})
+	// Process headers to ensure they have title property and regenerate cellProps after reordering
+	const normalizedHeaders = computed(() => mergedHeaders.value?.map(normalizeHeader))
 
 	/**
 	 * Enhance header with filter type and configuration
@@ -112,27 +126,35 @@ export function useTableHeaders({
 		internalHeaders.value = newHeaders
 	}, { immediate: true, deep: true })
 
+	const normalizedInternalHeaders = computed(() => internalHeaders.value?.map(normalizeHeader))
+
+	// Get filterable headers
+	const filterableHeaders = computed(() => {
+		if (!normalizedInternalHeaders.value) return []
+		return normalizedInternalHeaders.value.filter(header => header.filterable)
+	})
+
 	/**
 	 * Get header by key
 	 */
 	function getHeaderByKey(key: string): TableColumnHeader | undefined {
-		return normalizedHeaders.value?.find(header => header.key === key)
+		return normalizedInternalHeaders.value?.find(header => header.key === key)
 	}
 
 	/**
 	 * Get original header from a rendered column (match by key or value)
 	 */
 	function getHeaderForColumn(column: TableColumnHeader): TableColumnHeader | undefined {
-		if (!normalizedHeaders.value) return undefined
-		const key = column.key as string | undefined
+		if (!normalizedInternalHeaders.value) return undefined
+		const key = column.key ?? undefined
 		if (key) {
-			const byKey = normalizedHeaders.value.find(h => h.key === key)
+			const byKey = normalizedInternalHeaders.value.find(h => h.key === key)
 			if (byKey) return byKey
 		}
-		// Fallback: try matching by value when key is not present or didn’t match
-		const val = column.value as string | undefined
+		// Fallback: try matching by value when key is not present or didn't match
+		const val = typeof column.value === 'string' ? column.value : undefined
 		if (val) {
-			const byValue = normalizedHeaders.value.find(h => h.value === val)
+			const byValue = normalizedInternalHeaders.value.find(h => h.value === val)
 			if (byValue) return byValue
 		}
 		return undefined
@@ -142,8 +164,8 @@ export function useTableHeaders({
 	 * The headers filtered by visibility and sorted by order
 	 */
 	const displayHeaders = computed(() => {
-		if (!internalHeaders.value) return undefined
-		const filteredHeaders = internalHeaders.value.filter(header => header.hidden !== true)
+		if (!normalizedInternalHeaders.value) return undefined
+		const filteredHeaders = normalizedInternalHeaders.value.filter(header => header.hidden !== true)
 		return sortHeaders(filteredHeaders)
 	})
 

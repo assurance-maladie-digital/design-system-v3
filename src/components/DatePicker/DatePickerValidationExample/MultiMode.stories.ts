@@ -63,9 +63,9 @@ export const Required: StoryObj = {
                     const datePicker2 = ref()
                     const date2 = ref('')
 
-                    const handleSubmit = () => {
-                        const isValid1 = datePicker1.value?.validateOnSubmit()
-                        const isValid2 = datePicker2.value?.validateOnSubmit()
+                    const handleSubmit = async () => {
+                        const isValid1 = await datePicker1.value?.validateOnSubmit()
+                        const isValid2 = await datePicker2.value?.validateOnSubmit()
                         
                         if (!isValid1 || !isValid2) {
                             alert('Corrigez les erreurs avant de soumettre !')
@@ -87,9 +87,9 @@ export const Required: StoryObj = {
 			const datePicker2 = ref()
 			const date2 = ref('')
 
-			const handleSubmit = () => {
-				const isValid1 = datePicker1.value?.validateOnSubmit()
-				const isValid2 = datePicker2.value?.validateOnSubmit()
+			const handleSubmit = async () => {
+				const isValid1 = await datePicker1.value?.validateOnSubmit()
+				const isValid2 = await datePicker2.value?.validateOnSubmit()
 
 				if (!isValid1 || !isValid2) {
 					alert('Corrigez les erreurs avant de soumettre !')
@@ -197,9 +197,9 @@ export const WithCustomRulesAndRequired: StoryObj = {
                     const datePicker2 = ref()
                     const date2 = ref('01/01/2100')
 
-                    const handleSubmit = () => {
-                        const isValid1 = datePicker1.value?.validateOnSubmit()
-                        const isValid2 = datePicker2.value?.validateOnSubmit()
+                    const handleSubmit = async (): Promise<void> => {
+                        const isValid1 = await datePicker1.value?.validateOnSubmit()
+                        const isValid2 = await datePicker2.value?.validateOnSubmit()
                         
                         if (!isValid1 || !isValid2) {
                             alert('Corrigez les erreurs avant de soumettre !')
@@ -221,9 +221,9 @@ export const WithCustomRulesAndRequired: StoryObj = {
 			const datePicker2 = ref()
 			const date2 = ref('01/01/2100')
 
-			const handleSubmit = () => {
-				const isValid1 = datePicker1.value?.validateOnSubmit()
-				const isValid2 = datePicker2.value?.validateOnSubmit()
+			const handleSubmit = async (): Promise<void> => {
+				const isValid1 = await datePicker1.value?.validateOnSubmit()
+				const isValid2 = await datePicker2.value?.validateOnSubmit()
 
 				if (!isValid1 || !isValid2) {
 					alert('Corrigez les erreurs avant de soumettre !')

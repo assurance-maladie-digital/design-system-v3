@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+/* eslint-disable vue/one-component-per-file */
 
 import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
@@ -42,7 +43,6 @@ describe('FilterSideBar – accessibility (axe)', () => {
 			attachTo: document.body,
 		})
 
-		// Ouvrir le tiroir de filtres
 		const toggleButton = wrapper.find('.sy-filters-side-bar .v-btn__content')
 		if (toggleButton.exists()) {
 			await toggleButton.trigger('click')
@@ -51,6 +51,59 @@ describe('FilterSideBar – accessibility (axe)', () => {
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'FilterSideBar – drawer open', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
+
+	it('has no obvious axe violations in modal mode with drawer open', async () => {
+		const wrapper = mount(
+			defineComponent({
+				components: { VApp, FiltersSideBar: FilterSideBar },
+				data() {
+					return {
+						localModelValue: [{ name: 'name', title: 'Nom' }],
+					}
+				},
+				template: `
+					<VApp>
+						<FiltersSideBar v-model="localModelValue" :modale="true" />
+					</VApp>
+				`,
+			}),
+			{
+				global: {
+					stubs: { Teleport: true },
+				},
+				attachTo: document.body,
+			},
+		)
+
+		const toggleButton = wrapper.find('.sy-filters-side-bar .v-btn__content')
+		if (toggleButton.exists()) {
+			await toggleButton.trigger('click')
+			await wrapper.vm.$nextTick()
+		}
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'FilterSideBar – modal mode, drawer open', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
+
+	it('has no obvious axe violations with drawer closed', async () => {
+		const wrapper = mount(TestA11yComponent, {
+			global: {
+				stubs: { Teleport: true },
+			},
+			attachTo: document.body,
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'FilterSideBar – drawer closed', {
 			ignoreRules: ['region'],
 		})
 

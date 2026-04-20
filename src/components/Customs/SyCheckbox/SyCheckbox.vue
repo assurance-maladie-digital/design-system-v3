@@ -102,9 +102,6 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		customRules: props.customRules,
-		warningRules: props.customWarningRules,
-		successRules: props.customSuccessRules,
 		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
@@ -135,7 +132,7 @@
 		: [],
 	)
 
-	const validateField = (value: boolean | null) => {
+	const validateField = async (value: boolean | null) => {
 		// Si en lecture seule ou si la valeur est null et non requise, pas de validation
 		if (props.readonly) {
 			validation.clearValidation()
@@ -157,7 +154,7 @@
 		}
 
 		// Validation standard
-		const result = validation.validateField(
+		const result = await validation.validateField(
 			value,
 			[...defaultRules.value, ...props.customRules],
 			props.customWarningRules,
@@ -175,11 +172,11 @@
 		validateField(model.value)
 	}
 
-	watch(model, (newValue) => {
+	watch(model, async (newValue) => {
 		if (!props.isValidateOnBlur) {
 			// Si le formulaire a été soumis et que la valeur change, on valide à nouveau
 			if (isSubmitted.value) {
-				const isValid = validateField(newValue)
+				const isValid = await validateField(newValue)
 				if (isValid) {
 					// La validation a réussi, effacer les erreurs
 					validation.clearValidation()
@@ -187,7 +184,7 @@
 			}
 			else {
 				// Comportement normal (hors soumission)
-				const isValid = validateField(newValue)
+				const isValid = await validateField(newValue)
 				// Si la validation réussit, s'assurer que les erreurs sont effacées
 				if (isValid && validation.hasError.value) {
 					validation.clearValidation()
@@ -206,7 +203,7 @@
 
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
-		return model.value ? 'true' : undefined
+		return model.value ? 'true' : 'false'
 	})
 
 	const labelColor = computed(() => {
@@ -243,9 +240,17 @@
 	const removeAriaAttributes = () => {
 		nextTick(() => {
 			if (checkboxRef.value) {
-				const checkboxInput = checkboxRef.value.$el.querySelector('input[type="checkbox"][aria-disabled="false"]')
+				const checkboxInput = checkboxRef.value.$el?.querySelector('input[type="checkbox"]')
 				if (checkboxInput) {
-					checkboxInput.removeAttribute('aria-disabled')
+					// Supprimer aria-disabled="false" car il est redondant
+					if (checkboxInput.getAttribute('aria-disabled') === 'false') {
+						checkboxInput.removeAttribute('aria-disabled')
+					}
+					// Supprimer aria-checked natif de Vuetify pour éviter les conflits
+					// Notre composant gère aria-checked au niveau du wrapper VCheckbox
+					if (checkboxInput.hasAttribute('aria-checked')) {
+						checkboxInput.removeAttribute('aria-checked')
+					}
 				}
 			}
 		})

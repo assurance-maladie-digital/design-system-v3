@@ -192,8 +192,8 @@
 	const disableClickButton = computed(() => props.disableClickButton)
 
 	const iconColor = computed(() => {
-		if (hasError.value || Boolean(isRequired.value) || props.errorMessages.length > 0) return 'error'
-		return 'rgb(0 0 0 / 70%)'
+		if (hasError.value || props.errorMessages.length > 0) return 'error'
+		return 'rgb(var(--v-theme-iconBase));'
 	})
 
 	const variant = computed(() => {
@@ -286,7 +286,10 @@
 			emit('update:modelValue', props.multiple ? [] : null)
 
 			// Garder la liste ouverte après une suppression et réinitialiser la navigation au clavier
-			if (event?.type === 'keydown' || event?.type === 'click') {
+			const target = event?.target as HTMLElement | undefined
+			const listElement = list.value?.$el as HTMLElement | undefined
+			const isClickFromList = Boolean(listElement && target && listElement.contains(target))
+			if (event?.type === 'keydown' || isClickFromList) {
 				if (!isOpen.value) {
 					isOpen.value = true
 				}
@@ -524,6 +527,10 @@
 		return undefined
 	})
 
+	const validationRules = computed(() => {
+		return hasError.value && !props.disableErrorHandling ? ['Le champ est requis.'] : []
+	})
+
 	const menuTarget = computed<HTMLElement | undefined>(() => {
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
 		if (!rootEl) return undefined
@@ -650,18 +657,27 @@
 		}
 	}
 
-	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
+	watch(isOpen, (newIsOpen) => {
 		if (!newIsOpen) {
+			// Valider uniquement à la fermeture du menu
 			if (props.disableErrorHandling || props.readonly) {
 				hasError.value = false
 			}
 			else {
-				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+				const shouldHaveError = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+				hasError.value = shouldHaveError
+
+				// Forcer la validation du VTextField avec nextTick pour que le DOM soit à jour
+				nextTick(() => {
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					if (textInput.value && (textInput.value as any).validate) {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						;(textInput.value as any).validate()
+					}
+				})
 			}
 		}
-		else {
-			hasError.value = newHasError
-		}
+		// Ne rien faire à l'ouverture pour préserver l'état actuel
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
@@ -929,7 +945,7 @@
 						:aria-label="$attrs['aria-label'] || labelWithAsterisk"
 						:error-messages="props.disableErrorHandling ? [] : errorMessages"
 						:variant="variant"
-						:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+						:rules="validationRules"
 						:bg-color="props.bgColor"
 						:density="props.density"
 						:active="hasChips || hasMultipleSelections || isOpen"
@@ -968,7 +984,9 @@
 								class="ma-1"
 								closable
 								:close-label="locales.removeChip(getChipText(item))"
-								@click:close="removeChip(item)"
+								@click:close.stop.prevent="removeChip(item)"
+								@keydown.enter.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && removeChip(item)"
+								@keydown.space.capture.stop.prevent="(event) => (event.target as HTMLElement | null)?.closest('.v-chip__close') && removeChip(item)"
 							>
 								{{ getChipText(item) }}
 							</VChip>
@@ -1144,8 +1162,6 @@
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/tokens';
-
 .sy-select-container {
 	display: flex;
 	flex-direction: column;
@@ -1157,12 +1173,12 @@
 
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
-		fill: rgb(0 0 0 / 70%);
+		fill: rgb(var(--v-theme-iconBase));
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid tokens.$primary-base;
+		outline: 2px solid rgb(var(--v-theme-accentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
@@ -1213,7 +1229,7 @@
 /* Ensure focus styles match selection styles for keyboard navigation */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
-	outline: 2px solid tokens.$primary-base;
+	outline: 2px solid rgb(var(--v-theme-accentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }
@@ -1240,11 +1256,11 @@
 .v-icon.arrow {
 	position: absolute;
 	right: 10px;
-	color: tokens.$grey-darken-20;
+	color: rgb(var(--v-theme-iconBase));
 }
 
 .sy-select__clear-icon {
-	color: tokens.$grey-darken-20 !important;
+	color: rgb(var(--v-theme-iconBase)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
@@ -1289,7 +1305,7 @@
 
 .sy-select :deep(.v-field__input) {
 	opacity: 1;
-	color: tokens.$grey-darken-20 !important;
+	color: rgb(var(--v-theme-iconBase)) !important;
 	cursor: pointer;
 	caret-color: transparent;
 	padding-right: 25px;

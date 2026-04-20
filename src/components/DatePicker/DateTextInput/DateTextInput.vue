@@ -144,11 +144,11 @@
 
 	const clearValidation = () => validationApi.value.clearValidation()
 
-	const validateField = (
+	const validateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): ValidationResult => validationApi.value.validateField(value, rules, warningRules)
+	): Promise<ValidationResult> => await validationApi.value.validateField(value, rules, warningRules)
 
 	// Agrégation des erreurs internes et externes
 	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
@@ -158,15 +158,15 @@
 	/**
 	 * Safe validate utility
 	 */
-	const safeValidateField = (
+	const safeValidateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): ValidationResult => {
+	): Promise<ValidationResult> => {
 		if (readonly.value) {
 			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
 		}
-		return validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
+		return await validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
 	}
 
 	/**
@@ -580,7 +580,7 @@
 		emit('update:model-value', val)
 	}
 
-	function runRules(value: string): boolean {
+	async function runRules(value: string): Promise<boolean> {
 		clearValidation()
 
 		// Vérifier si la valeur est vide ou est un squelette (ex: "__//____" pour DD/MM/YYYY)
@@ -608,7 +608,7 @@
 
 		if (isRange.value && value.includes(' - ')) {
 			const [startDateText, endDateText] = value.split(' - ')
-			if (startDateText && !endDateText) return !!validateManualInput(startDateText)
+			if (startDateText && !endDateText) return !!(await validateManualInput(startDateText))
 
 			if (startDateText && endDateText) {
 				const formatValidationResult = validateDateFormatForSingleOrRange(value)
@@ -624,14 +624,14 @@
 						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 						return false
 					}
-					safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-					if (errors.value.length === 0) safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					await safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					if (errors.value.length === 0) await safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				}
 			}
 			return !hasError.value
 		}
 
-		return !!validateManualInput(value)
+		return !!(await validateManualInput(value))
 	}
 
 	/**
@@ -666,7 +666,7 @@
 		emit('focus')
 	}
 
-	function onBlur() {
+	async function onBlur() {
 		isFocused.value = false
 		hasInteracted.value = true
 
@@ -684,7 +684,7 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+			const customRulesValidationResult = await safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()

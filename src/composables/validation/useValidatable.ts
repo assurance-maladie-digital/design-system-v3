@@ -34,7 +34,14 @@ export function useValidatable(
 	const instance = getCurrentInstance()
 
 	// Keep a stable object reference for register/unregister symmetry
-	const componentRef = { validateOnSubmit: validateMethod, clearValidation, reset }
+	const componentRef = {
+		validateOnSubmit: validateMethod,
+		clearValidation,
+		reset,
+		$props: {
+			label: typeof instance?.props?.label === 'string' ? instance.props.label : undefined,
+		},
+	}
 
 	onMounted(() => {
 		if (instance) {

@@ -9,4 +9,4 @@ export const locales = {
 	numberHint: '13 caractères',
 	keyLabel: 'Clé',
 	keyHint: '2 chiffres',
-} as const
+}

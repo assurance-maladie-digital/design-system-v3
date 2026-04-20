@@ -94,13 +94,21 @@ export default defineConfig({
 	},
 	build: {
 		lib: {
-			entry: resolve(__dirname, 'src/main.ts'),
+			entry: {
+				'design-system-v3': resolve(__dirname, 'src/main.ts'),
+				'vuetifyConfig': resolve(__dirname, 'src/vuetifyConfig.ts'),
+			},
 			name: 'DesignSystemV3',
-			fileName: 'design-system-v3',
+			cssFileName: 'synapse',
+			formats: ['es', 'cjs'],
+			fileName: (format, entryAlias) => {
+				if (format === 'cjs') return `${entryAlias}.umd.cjs`
+				return `${entryAlias}.js`
+			},
 		},
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
-			external: ['vue', /vuetify/],
+			external: ['vue', /^vuetify/],
 			output: {
 				globals: {
 					'vue': 'Vue',

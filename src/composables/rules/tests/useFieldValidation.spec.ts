@@ -33,48 +33,48 @@ describe('useFieldValidation', () => {
 		global.Date = originalDate
 	})
 
-	it('should validate required rule', () => {
+	it('should validate required rule', async () => {
 		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.' } }])
 		const rule = rules[0]!
 
-		expect(rule('')).toEqual({ error: 'This field is required.' })
-		expect(rule('value')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule(new Date())).toEqual({ success: 'Le champ est valide.' })
-		expect(rule({ key: 'value' })).toEqual({ success: 'Le champ est valide.' })
-		expect(rule(null)).toEqual({ error: 'This field is required.' })
+		expect(await rule('')).toEqual({ error: 'This field is required.' })
+		expect(await rule('value')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date())).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule({ key: 'value' })).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(null)).toEqual({ error: 'This field is required.' })
 	})
 
-	it('should validate min rule', () => {
+	it('should validate min rule', async () => {
 		const rules = generateRules([{ type: 'min', options: { value: 5, message: 'Value must be at least 5.' } }])
 		const rule = rules[0]!
 
-		expect(rule(3)).toEqual({ error: 'Value must be at least 5.' })
-		expect(rule(5)).toEqual({ success: 'Le champ est valide.' })
-		expect(rule(10)).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(3)).toEqual({ error: 'Value must be at least 5.' })
+		expect(await rule(5)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(10)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate max rule', () => {
+	it('should validate max rule', async () => {
 		const rules = generateRules([{ type: 'max', options: { value: 10, message: 'Value must be at most 10.' } }])
 		const rule = rules[0]!
 
-		expect(rule(15)).toEqual({ error: 'Value must be at most 10.' })
-		expect(rule(10)).toEqual({ success: 'Le champ est valide.' })
-		expect(rule(5)).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(15)).toEqual({ error: 'Value must be at most 10.' })
+		expect(await rule(10)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(5)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate minLength rule', () => {
+	it('should validate minLength rule', async () => {
 		const rules = generateRules([{ type: 'minLength', options: { length: 5, message: 'Minimum length is 5.' } }])
 		const rule = rules[0]!
 
-		expect(rule('1234')).toEqual({ error: 'Minimum length is 5.' })
-		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('123456')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule('1234')).toEqual({ error: 'Minimum length is 5.' })
+		expect(await rule('12345')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('123456')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate minLength rule with ignoreSpace option', () => {
+	it('should validate minLength rule with ignoreSpace option', async () => {
 		const rules = generateRules([{
 			type: 'minLength',
 			options: {
@@ -85,21 +85,21 @@ describe('useFieldValidation', () => {
 		}])
 		const rule = rules[0]!
 
-		expect(rule('1 2 3 4')).toEqual({ error: 'Minimum length is 5.' }) // Length without spaces is 4
-		expect(rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
+		expect(await rule('1 2 3 4')).toEqual({ error: 'Minimum length is 5.' }) // Length without spaces is 4
+		expect(await rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
 	})
 
-	it('should validate maxLength rule', () => {
+	it('should validate maxLength rule', async () => {
 		const rules = generateRules([{ type: 'maxLength', options: { length: 5, message: 'Maximum length is 5.' } }])
 		const rule = rules[0]!
 
-		expect(rule('123456')).toEqual({ error: 'Maximum length is 5.' })
-		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('1234')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule('123456')).toEqual({ error: 'Maximum length is 5.' })
+		expect(await rule('12345')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('1234')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate maxLength rule with ignoreSpace option', () => {
+	it('should validate maxLength rule with ignoreSpace option', async () => {
 		const rules = generateRules([{
 			type: 'maxLength',
 			options: {
@@ -110,21 +110,21 @@ describe('useFieldValidation', () => {
 		}])
 		const rule = rules[0]!
 
-		expect(rule('1 2 3 4 5 6')).toEqual({ error: 'Maximum length is 5.' }) // Length without spaces is 6
-		expect(rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
+		expect(await rule('1 2 3 4 5 6')).toEqual({ error: 'Maximum length is 5.' }) // Length without spaces is 6
+		expect(await rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
 	})
 
-	it('should validate exactLength rule', () => {
+	it('should validate exactLength rule', async () => {
 		const rules = generateRules([{ type: 'exactLength', options: { length: 5, message: 'Length must be exactly 5.' } }])
 		const rule = rules[0]!
 
-		expect(rule('1234')).toEqual({ error: 'Length must be exactly 5.' })
-		expect(rule('123456')).toEqual({ error: 'Length must be exactly 5.' })
-		expect(rule('12345')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule('1234')).toEqual({ error: 'Length must be exactly 5.' })
+		expect(await rule('123456')).toEqual({ error: 'Length must be exactly 5.' })
+		expect(await rule('12345')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate exactLength rule with ignoreSpace option', () => {
+	it('should validate exactLength rule with ignoreSpace option', async () => {
 		const rules = generateRules([{
 			type: 'exactLength',
 			options: {
@@ -135,12 +135,12 @@ describe('useFieldValidation', () => {
 		}])
 		const rule = rules[0]!
 
-		expect(rule('1 2 3 4')).toEqual({ error: 'Length must be exactly 5.' }) // Length without spaces is 4
-		expect(rule('1 2 3 4 5 6')).toEqual({ error: 'Length must be exactly 5.' }) // Length without spaces is 6
-		expect(rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
+		expect(await rule('1 2 3 4')).toEqual({ error: 'Length must be exactly 5.' }) // Length without spaces is 4
+		expect(await rule('1 2 3 4 5 6')).toEqual({ error: 'Length must be exactly 5.' }) // Length without spaces is 6
+		expect(await rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
 	})
 
-	it('should validate email rule', () => {
+	it('should validate email rule', async () => {
 		// Vérifions d'abord que la regex EMAIL_REGEXP fonctionne comme prévu
 		expect(EMAIL_REGEXP.test('invalid-email')).toBe(false)
 		// Note: La regex actuelle considère test@example comme valide
@@ -150,26 +150,26 @@ describe('useFieldValidation', () => {
 		const rules = generateRules([{ type: 'email', options: { message: 'Invalid email address.' } }])
 		const rule = rules[0]!
 
-		expect(rule('invalid-email')).toEqual({ error: 'Invalid email address.' })
-		expect(rule('test@example.com')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('test.name@example.co.uk')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule('invalid-email')).toEqual({ error: 'Invalid email address.' })
+		expect(await rule('test@example.com')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('test.name@example.co.uk')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate matchPattern rule', () => {
+	it('should validate matchPattern rule', async () => {
 		const rules = generateRules([{
 			type: 'matchPattern',
 			options: { pattern: /^[a-z]+$/, message: 'Invalid format.' },
 		}])
 		const rule = rules[0]!
 
-		expect(rule('123')).toEqual({ error: 'Invalid format.' })
-		expect(rule('aBc')).toEqual({ error: 'Invalid format.' })
-		expect(rule('abc')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule('123')).toEqual({ error: 'Invalid format.' })
+		expect(await rule('aBc')).toEqual({ error: 'Invalid format.' })
+		expect(await rule('abc')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate notWeekend rule', () => {
+	it('should validate notWeekend rule', async () => {
 		const rules = generateRules([{
 			type: 'notWeekend',
 			options: { message: 'Date cannot be on a weekend.' },
@@ -177,15 +177,15 @@ describe('useFieldValidation', () => {
 		const rule = rules[0]!
 
 		// 15 janvier 2023 est un dimanche (jour 0)
-		expect(rule(new Date(2023, 0, 15))).toEqual({ error: 'Date cannot be on a weekend.' })
+		expect(await rule(new Date(2023, 0, 15))).toEqual({ error: 'Date cannot be on a weekend.' })
 		// 14 janvier 2023 est un samedi (jour 6)
-		expect(rule(new Date(2023, 0, 14))).toEqual({ error: 'Date cannot be on a weekend.' })
+		expect(await rule(new Date(2023, 0, 14))).toEqual({ error: 'Date cannot be on a weekend.' })
 		// 13 janvier 2023 est un vendredi (jour 5)
-		expect(rule(new Date(2023, 0, 13))).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(new Date(2023, 0, 13))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate notBeforeToday rule', () => {
+	it('should validate notBeforeToday rule', async () => {
 		const rules = generateRules([{
 			type: 'notBeforeToday',
 			options: { message: 'Date cannot be before today.' },
@@ -193,15 +193,15 @@ describe('useFieldValidation', () => {
 		const rule = rules[0]!
 
 		// 14 janvier 2023 est avant aujourd'hui (15 janvier 2023)
-		expect(rule(new Date(2023, 0, 14))).toEqual({ error: 'Date cannot be before today.' })
+		expect(await rule(new Date(2023, 0, 14))).toEqual({ error: 'Date cannot be before today.' })
 		// 15 janvier 2023 est aujourd'hui
-		expect(rule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
 		// 16 janvier 2023 est après aujourd'hui
-		expect(rule(new Date(2023, 0, 16))).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(new Date(2023, 0, 16))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
-	it('should validate notAfterToday rule', () => {
+	it('should validate notAfterToday rule', async () => {
 		const rules = generateRules([{
 			type: 'notAfterToday',
 			options: { message: 'Date cannot be after today.' },
@@ -209,12 +209,12 @@ describe('useFieldValidation', () => {
 		const rule = rules[0]!
 
 		// 16 janvier 2023 est après aujourd'hui (15 janvier 2023)
-		expect(rule(new Date(2023, 0, 16))).toEqual({ error: 'Date cannot be after today.' })
+		expect(await rule(new Date(2023, 0, 16))).toEqual({ error: 'Date cannot be after today.' })
 		// 15 janvier 2023 est aujourd'hui
-		expect(rule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
 		// 14 janvier 2023 est avant aujourd'hui
-		expect(rule(new Date(2023, 0, 14))).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(new Date(2023, 0, 14))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
 	it('should test parseDate function directly', () => {
@@ -259,7 +259,7 @@ describe('useFieldValidation', () => {
 		expect(parseDate('31/02/2023', 'DD/MM/YYYY')).toBeNull()
 	})
 
-	it('should validate notBeforeDate rule', () => {
+	it('should validate notBeforeDate rule', async () => {
 		const rules = generateRules([{
 			type: 'notBeforeDate',
 			options: {
@@ -270,36 +270,36 @@ describe('useFieldValidation', () => {
 		const rule = rules[0]!
 
 		// 9 janvier 2023 est avant la date de référence
-		expect(rule(new Date(2023, 0, 9))).toEqual({ error: 'Date cannot be before reference date.' })
+		expect(await rule(new Date(2023, 0, 9))).toEqual({ error: 'Date cannot be before reference date.' })
 		// 10 janvier 2023 est la date de référence
-		expect(rule(new Date(2023, 0, 10))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date(2023, 0, 10))).toEqual({ success: 'Le champ est valide.' })
 		// 11 janvier 2023 est après la date de référence
-		expect(rule(new Date(2023, 0, 11))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date(2023, 0, 11))).toEqual({ success: 'Le champ est valide.' })
 		// Test avec une date invalide
-		expect(rule('invalid-date')).toEqual({ error: 'Date invalide' })
+		expect(await rule('invalid-date')).toEqual({ error: 'Date invalide' })
 		// Test sans option date
 		const ruleWithoutDate = generateRules([{
 			type: 'notBeforeDate',
 			options: { message: 'Date cannot be before reference date.' },
 		}])[0]!
-		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 
 		const ruleWithEmptyDate = generateRules([{
 			type: 'notBeforeDate',
 			options: { date: '', message: 'Date cannot be before reference date.' },
 		}])[0]!
-		expect(ruleWithEmptyDate(new Date())).toEqual({})
+		expect(await ruleWithEmptyDate(new Date())).toEqual({})
 
 		const ruleWithUndefinedDate = generateRules([{
 			type: 'notBeforeDate',
 			options: { date: undefined as unknown as string, message: 'Date cannot be before reference date.' },
 		}])[0]!
-		expect(ruleWithUndefinedDate(new Date())).toEqual({})
+		expect(await ruleWithUndefinedDate(new Date())).toEqual({})
 	})
 
-	it('should throw when date reference is not a string in notBeforeDate rule', () => {
-		expect(() => {
+	it('should throw when date reference is not a string in notBeforeDate rule', async () => {
+		await expect(async () => {
 			const invalidRule = generateRules([{
 				type: 'notBeforeDate',
 				options: {
@@ -307,11 +307,11 @@ describe('useFieldValidation', () => {
 					message: 'Date cannot be before reference date.',
 				},
 			}])[0]!
-			invalidRule(new Date())
-		}).toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
+			await invalidRule(new Date())
+		}).rejects.toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
-	it('should validate notAfterDate rule', () => {
+	it('should validate notAfterDate rule', async () => {
 		const rules = generateRules([{
 			type: 'notAfterDate',
 			options: {
@@ -322,36 +322,36 @@ describe('useFieldValidation', () => {
 		const rule = rules[0]!
 
 		// 21 janvier 2023 est après la date de référence
-		expect(rule(new Date(2023, 0, 21))).toEqual({ error: 'Date cannot be after reference date.' })
+		expect(await rule(new Date(2023, 0, 21))).toEqual({ error: 'Date cannot be after reference date.' })
 		// 20 janvier 2023 est la date de référence
-		expect(rule(new Date(2023, 0, 20))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date(2023, 0, 20))).toEqual({ success: 'Le champ est valide.' })
 		// 19 janvier 2023 est avant la date de référence
-		expect(rule(new Date(2023, 0, 19))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date(2023, 0, 19))).toEqual({ success: 'Le champ est valide.' })
 		// Test avec une date invalide
-		expect(rule('invalid-date')).toEqual({ error: 'Date invalide' })
+		expect(await rule('invalid-date')).toEqual({ error: 'Date invalide' })
 		// Test sans option date
 		const ruleWithoutDate = generateRules([{
 			type: 'notAfterDate',
 			options: { message: 'Date cannot be after reference date.' },
 		}])[0]!
-		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 
 		const ruleWithEmptyDate = generateRules([{
 			type: 'notAfterDate',
 			options: { date: '', message: 'Date cannot be after reference date.' },
 		}])[0]!
-		expect(ruleWithEmptyDate(new Date())).toEqual({})
+		expect(await ruleWithEmptyDate(new Date())).toEqual({})
 
 		const ruleWithUndefinedDate = generateRules([{
 			type: 'notAfterDate',
 			options: { date: undefined as unknown as string, message: 'Date cannot be after reference date.' },
 		}])[0]!
-		expect(ruleWithUndefinedDate(new Date())).toEqual({})
+		expect(await ruleWithUndefinedDate(new Date())).toEqual({})
 	})
 
-	it('should throw when date reference is not a string in notAfterDate rule', () => {
-		expect(() => {
+	it('should throw when date reference is not a string in notAfterDate rule', async () => {
+		await expect(async () => {
 			const invalidRule = generateRules([{
 				type: 'notAfterDate',
 				options: {
@@ -359,11 +359,11 @@ describe('useFieldValidation', () => {
 					message: 'Date cannot be after reference date.',
 				},
 			}])[0]!
-			invalidRule(new Date())
-		}).toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
+			await invalidRule(new Date())
+		}).rejects.toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
-	it('should validate dateExact rule', () => {
+	it('should validate dateExact rule', async () => {
 		const rules = generateRules([{
 			type: 'dateExact',
 			options: {
@@ -374,36 +374,36 @@ describe('useFieldValidation', () => {
 		const rule = rules[0]!
 
 		// 14 janvier 2023 n'est pas la date exacte
-		expect(rule(new Date(2023, 0, 14))).toEqual({ error: 'Date must be exactly the reference date.' })
+		expect(await rule(new Date(2023, 0, 14))).toEqual({ error: 'Date must be exactly the reference date.' })
 		// 15 janvier 2023 est la date exacte
-		expect(rule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
 		// 16 janvier 2023 n'est pas la date exacte
-		expect(rule(new Date(2023, 0, 16))).toEqual({ error: 'Date must be exactly the reference date.' })
+		expect(await rule(new Date(2023, 0, 16))).toEqual({ error: 'Date must be exactly the reference date.' })
 		// Test avec une date invalide
-		expect(rule('invalid-date')).toEqual({ error: 'Date invalide' })
+		expect(await rule('invalid-date')).toEqual({ error: 'Date invalide' })
 		// Test sans option date
 		const ruleWithoutDate = generateRules([{
 			type: 'dateExact',
 			options: { message: 'Date must be exactly the reference date.' },
 		}])[0]!
-		expect(ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await ruleWithoutDate(new Date())).toEqual({ error: 'Configuration de la règle invalide' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 
 		const ruleWithEmptyDate = generateRules([{
 			type: 'dateExact',
 			options: { date: '', message: 'Date must be exactly the reference date.' },
 		}])[0]!
-		expect(ruleWithEmptyDate(new Date())).toEqual({})
+		expect(await ruleWithEmptyDate(new Date())).toEqual({})
 
 		const ruleWithUndefinedDate = generateRules([{
 			type: 'dateExact',
 			options: { date: undefined as unknown as string, message: 'Date must be exactly the reference date.' },
 		}])[0]!
-		expect(ruleWithUndefinedDate(new Date())).toEqual({})
+		expect(await ruleWithUndefinedDate(new Date())).toEqual({})
 	})
 
-	it('should throw when date reference is not a string in dateExact rule', () => {
-		expect(() => {
+	it('should throw when date reference is not a string in dateExact rule', async () => {
+		await expect(async () => {
 			const invalidRule = generateRules([{
 				type: 'dateExact',
 				options: {
@@ -411,30 +411,30 @@ describe('useFieldValidation', () => {
 					message: 'Date must be exactly the reference date.',
 				},
 			}])[0]!
-			invalidRule(new Date())
-		}).toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
+			await invalidRule(new Date())
+		}).rejects.toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
-	it('should validate custom rule', () => {
+	it('should validate custom rule', async () => {
 		const rules = generateRules([{
 			type: 'custom',
 			options: { validate: (value: unknown) => value === 'valid', message: 'Custom validation failed.' },
 		}])
 		const rule = rules[0]!
 
-		expect(rule('invalid')).toEqual({ error: 'Custom validation failed.' })
-		expect(rule('valid')).toEqual({ success: 'Le champ est valide.' })
-		expect(rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule('invalid')).toEqual({ error: 'Custom validation failed.' })
+		expect(await rule('valid')).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
 
 		// Test avec un message personnalisé
 		const customMessageRule = generateRules([{
 			type: 'custom',
 			options: { validate: (value: unknown) => value === 'valid' ? true : 'Custom error message' },
 		}])[0]!
-		expect(customMessageRule('invalid')).toEqual({ error: 'Custom error message' })
+		expect(await customMessageRule('invalid')).toEqual({ error: 'Custom error message' })
 	})
 
-	it('should handle warning mode instead of error', () => {
+	it('should handle warning mode instead of error', async () => {
 		const rules = generateRules([{
 			type: 'required',
 			options: {
@@ -444,7 +444,7 @@ describe('useFieldValidation', () => {
 		}])
 		const rule = rules[0]!
 
-		expect(rule('')).toEqual({ warning: 'This field is required.' })
+		expect(await rule('')).toEqual({ warning: 'This field is required.' })
 
 		// Test avec un message d'avertissement personnalisé
 		const warningMessageRule = generateRules([{
@@ -454,10 +454,10 @@ describe('useFieldValidation', () => {
 				isWarning: true,
 			},
 		}])[0]!
-		expect(warningMessageRule('')).toEqual({ warning: 'Warning: this field should be filled.' })
+		expect(await warningMessageRule('')).toEqual({ warning: 'Warning: this field should be filled.' })
 	})
 
-	it('should handle custom field identifiers', () => {
+	it('should handle custom field identifiers', async () => {
 		const rules = generateRules([{
 			type: 'required',
 			options: {
@@ -466,7 +466,7 @@ describe('useFieldValidation', () => {
 		}])
 		const rule = rules[0]!
 
-		expect(rule('')).toEqual({ error: 'Vous devez renseigner Email.' })
+		expect(await rule('')).toEqual({ error: 'Vous devez renseigner Email.' })
 
 		const fieldIdentifierRule = generateRules([{
 			type: 'required',
@@ -474,10 +474,10 @@ describe('useFieldValidation', () => {
 				fieldIdentifier: 'l\'adresse email',
 			},
 		}])[0]!
-		expect(fieldIdentifierRule('')).toEqual({ error: 'Vous devez renseigner l\'adresse email.' })
+		expect(await fieldIdentifierRule('')).toEqual({ error: 'Vous devez renseigner l\'adresse email.' })
 	})
 
-	it('should handle success messages', () => {
+	it('should handle success messages', async () => {
 		const rules = generateRules([{
 			type: 'required',
 			options: {
@@ -486,16 +486,16 @@ describe('useFieldValidation', () => {
 		}])
 		const rule = rules[0]!
 
-		expect(rule('value')).toEqual({ success: 'Field is valid!' })
+		expect(await rule('value')).toEqual({ success: 'Field is valid!' })
 	})
 
-	it('should handle invalid rule types', () => {
+	it('should handle invalid rule types', async () => {
 		const rules = generateRules([{
 			type: 'invalidRuleType',
 			options: { message: 'This should show an error.' },
 		}])
 		const rule = rules[0]!
 
-		expect(rule('any value')).toEqual({ error: 'La règle spécifiée pour ce champ n\'existe pas.' })
+		expect(await rule('any value')).toEqual({ error: 'La règle spécifiée pour ce champ n\'existe pas.' })
 	})
 })
