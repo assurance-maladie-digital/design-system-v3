@@ -8,20 +8,20 @@
     "dist",
     "src"
   ],
-  "main": "./dist/design-system-v3.umd.cjs",
+  
   "module": "./dist/design-system-v3.js",
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/design-system-v3.js",
-      "require": "./dist/design-system-v3.umd.cjs"
+      "import": "./dist/design-system-v3.js"
+      
     },
     "./synapse.css": "./dist/synapse.css",
     "./vuetifyConfig": {
       "types": "./dist/vuetifyConfig.d.ts",
-      "import": "./dist/vuetifyConfig.js",
-      "require": "./dist/vuetifyConfig.umd.cjs"
+      "import": "./dist/vuetifyConfig.js"
+    
     },
     "./modules/notification": {
       "types": "./src/modules/notification/index.ts",
