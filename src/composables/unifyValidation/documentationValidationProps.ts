@@ -214,6 +214,15 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 				category: 'props',
 			},
 		},
+		hideDetails: {
+			description: 'Masque la section des détails (messages d\'erreur, compteur)',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
+			},
+		},
 		maxErrors: {
 			description: 'Le nombre maximum d\'erreurs à afficher, applicable uniquement si useVuetifyValidation est true.',
 			control: 'number',
