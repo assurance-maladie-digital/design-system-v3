@@ -1043,7 +1043,6 @@
 				transition="fade-transition"
 				attach="body"
 				:offset="[-20, 5]"
-
 				content-class="date-picker-overlay-content"
 			>
 				role="presentation"
