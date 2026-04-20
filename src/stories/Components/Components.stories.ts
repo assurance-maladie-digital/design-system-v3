@@ -155,6 +155,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Boutons',
 					},
 					{
+						title: 'Tooltip',
+						description: 'Utilisé pour transmettre des informations lorsqu’un utilisateur survole un élément.',
+						link: '/?path=/docs/composants-composants-vuetify-vtooltip--docs',
+						img: `/components/tooltip${isAp ? '-ap' : ''}.svg`,
+						category: 'Boutons',
+					},
+					{
 						title: 'LangBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de choisir la langue de l’application.',
 						link: '/?path=/docs/composants-boutons-langbtn--docs',
