@@ -34,7 +34,7 @@ dev/Playground.vue
 
 # Cypress (garder uniquement les snapshots de base)
 cypress/screenshots
-cypress/snapshots/diff
+cypress/snapshots
 
 *storybook.log
 
