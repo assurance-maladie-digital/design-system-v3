@@ -135,6 +135,53 @@ describe('FileList', () => {
 		expect(wrapper.emitted('preview')?.[0]?.[0]).toEqual(fileItem2)
 	})
 
+	it('forwards seeLabel, importLabel, deleteLabel to all items', () => {
+		const wrapper = mount(FileList, {
+			props: {
+				uploadList: [
+					{ id: 'file1', title: 'file1', state: 'initial' },
+					{ id: 'file2', title: 'file2', state: 'success', showDeleteBtn: true, showPreviewBtn: true },
+				],
+				importLabel: 'Ajouter',
+				seeLabel: 'Consulter',
+				deleteLabel: 'Retirer',
+			},
+		})
+
+		const item1 = wrapper.findAll('.file-item').at(0)
+		expect(item1!.find('.file-item__action-upload').text()).toContain('Ajouter')
+
+		const item2 = wrapper.findAll('.file-item').at(1)
+		expect(item2!.find('.file-item__action-preview').text()).toContain('Consulter')
+		expect(item2!.find('.file-item__action-delete').text()).toContain('Retirer')
+	})
+
+	it('uses locales for button labels when individual label props are not passed', () => {
+		const customLocales = {
+			...locales,
+			import: 'Déposer',
+			see: 'Afficher',
+			delete: 'Effacer',
+		}
+
+		const wrapper = mount(FileList, {
+			props: {
+				uploadList: [
+					{ id: 'file1', title: 'file1', state: 'initial' },
+					{ id: 'file2', title: 'file2', state: 'success', showDeleteBtn: true, showPreviewBtn: true },
+				],
+				locales: customLocales,
+			},
+		})
+
+		const item1 = wrapper.findAll('.file-item').at(0)
+		expect(item1!.find('.file-item__action-upload').text()).toContain('Déposer')
+
+		const item2 = wrapper.findAll('.file-item').at(1)
+		expect(item2!.find('.file-item__action-preview').text()).toContain('Afficher')
+		expect(item2!.find('.file-item__action-delete').text()).toContain('Effacer')
+	})
+
 	it('shows when a file is optional', () => {
 		const wrapper = mount(FileList, {
 			props: {

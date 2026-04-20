@@ -7,6 +7,7 @@
 		mdiAlertCircle,
 		mdiCheckCircle,
 	} from '@mdi/js'
+	import { computed } from 'vue'
 	import { cnamContextualTokens } from '@/designTokens/tokens/cnam/cnamContextual'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -19,7 +20,7 @@
 		(e: 'delete', item: string): void
 	}>()
 
-	withDefaults(defineProps<{
+	const props = withDefaults(defineProps<{
 		itemId: string
 		title: string
 		fileName?: string
@@ -46,10 +47,14 @@
 		showPreviewBtn: false,
 		tag: 'div',
 		locales: () => defaultLocales,
-		seeLabel: defaultLocales.see,
-		deleteLabel: defaultLocales.delete,
-		importLabel: defaultLocales.import,
+		seeLabel: undefined,
+		deleteLabel: undefined,
+		importLabel: undefined,
 	})
+
+	const effectiveSeeLabel = computed(() => props.seeLabel ?? props.locales.see)
+	const effectiveDeleteLabel = computed(() => props.deleteLabel ?? props.locales.delete)
+	const effectiveImportLabel = computed(() => props.importLabel ?? props.locales.import)
 
 	defineSlots<{
 		'file-icon'(props: { state: FileState }): void
@@ -138,10 +143,10 @@
 					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
 					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
-					:aria-label="`${locales.import} ${title}`"
+					:aria-label="`${effectiveImportLabel} ${title}`"
 					@click="$emit('upload', itemId)"
 				>
-					<span>{{ importLabel }}</span>
+					<span>{{ effectiveImportLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -154,10 +159,10 @@
 					v-if="state === 'success' && showPreviewBtn"
 					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
-					:aria-label="`${locales.see} ${fileName}`"
+					:aria-label="`${effectiveSeeLabel} ${fileName}`"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ seeLabel }}</span>
+					<span>{{ effectiveSeeLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -170,10 +175,10 @@
 					v-if="state === 'success' && showDeleteBtn"
 					class="file-item__action file-item__action-delete text-error"
 					variant="text"
-					:aria-label="`${locales.delete} ${fileName}`"
+					:aria-label="`${effectiveDeleteLabel} ${fileName}`"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ deleteLabel }}</span>
+					<span>{{ effectiveDeleteLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"
