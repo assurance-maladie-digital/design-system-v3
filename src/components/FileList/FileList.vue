@@ -19,8 +19,14 @@
 	const props = withDefaults(defineProps<{
 		uploadList: Item[]
 		locales?: typeof defaultLocales
+		seeLabel?: string
+		importLabel?: string
+		deleteLabel?: string
 	} & Widthable>(), {
 		locales: () => defaultLocales,
+		seeLabel: undefined,
+		importLabel: undefined,
+		deleteLabel: undefined,
 	})
 
 	const { widthStyles } = useWidthable(props)
@@ -51,6 +57,9 @@
 			:show-delete-btn="item.showDeleteBtn"
 			tag="li"
 			:locales="locales"
+			:see-label="seeLabel"
+			:import-label="importLabel"
+			:delete-label="deleteLabel"
 			@upload="() => $emit('upload', uploadList.find((i) => i.id === item.id) as Item)"
 			@preview="() => $emit('preview', uploadList.find((i) => i.id === item.id) as Item)"
 			@delete="() => $emit('delete', uploadList.find((i) => i.id === item.id) as Item)"
