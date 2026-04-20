@@ -44,7 +44,6 @@
 			direction?: 'horizontal' | 'vertical'
 			isDirty?: boolean
 			disabled?: boolean
-			isOnError?: boolean
 			isFlat?: boolean
 			isFocused?: boolean
 			areDetailsHidden?: boolean | 'auto'
@@ -101,7 +100,6 @@
 			density: 'default',
 			direction: 'horizontal',
 			isDirty: false,
-			isOnError: false,
 			isFlat: false,
 			isFocused: false,
 			areDetailsHidden: false,
@@ -636,7 +634,7 @@
 			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : messages))"
 			:min-width="props.minWidth"
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"
