@@ -45,6 +45,12 @@ function ensureVisualStability() {
 	transition: none !important;
 	caret-color: transparent !important;
 	scroll-behavior: auto !important;
+}
+	
+svg {
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+  image-rendering: pixelated;
 }`
 			doc.head.appendChild(style)
 		}
