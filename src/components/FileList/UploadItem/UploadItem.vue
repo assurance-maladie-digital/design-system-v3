@@ -19,7 +19,7 @@
 		(e: 'delete', item: string): void
 	}>()
 
-	const props = withDefaults(defineProps<{
+	withDefaults(defineProps<{
 		itemId: string
 		title: string
 		fileName?: string
@@ -141,7 +141,7 @@
 					:aria-label="`${locales.import} ${title}`"
 					@click="$emit('upload', itemId)"
 				>
-					<span>{{ importLabel  }}</span>
+					<span>{{ importLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -157,7 +157,7 @@
 					:aria-label="`${locales.see} ${fileName}`"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ seeLabel  }}</span>
+					<span>{{ seeLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -173,7 +173,7 @@
 					:aria-label="`${locales.delete} ${fileName}`"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ deleteLabel  }}</span>
+					<span>{{ deleteLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"
