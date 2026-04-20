@@ -8,7 +8,6 @@
     "dist",
     "src"
   ],
-  
   "module": "./dist/design-system-v3.js",
   "types": "./dist/main.d.ts",
   "exports": {
