@@ -4,7 +4,7 @@ import { VIcon } from 'vuetify/components'
 import { ref, watch } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 import { VBtn } from 'vuetify/components'
-import { documentationValidationProps } from '@/composables/unifyValidation/documentationValidationProps'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
 	title: 'Composants/Formulaires/SyTextField',
@@ -23,7 +23,7 @@ const meta = {
 		},
 	},
 	argTypes: {
-		...documentationValidationProps,
+		...getValidationDocumentation('string'),
 		'modelValue': { control: 'text' },
 		'label': {
 			description: 'Texte affiché comme label du champ',
