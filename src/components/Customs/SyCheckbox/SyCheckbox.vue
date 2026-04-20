@@ -321,7 +321,7 @@
 		>
 			<SyIcon
 				:icon="internalIndeterminate ? mdiMinusBox : (model ? mdiCheckboxMarked : mdiCheckboxBlankOutline)"
-				:color="undefined"
+				:color="(model || internalIndeterminate) ? props.color : '#727273'"
 				:class="{'text-disabled': props.disabled}"
 				:decorative="true"
 				class="mr-2"

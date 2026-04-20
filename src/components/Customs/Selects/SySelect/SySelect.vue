@@ -1509,7 +1509,6 @@
 }
 
 .sy-select-grid__cell--checkbox {
-	padding-left: 16px;
 	padding-right: 4px;
 }
 
