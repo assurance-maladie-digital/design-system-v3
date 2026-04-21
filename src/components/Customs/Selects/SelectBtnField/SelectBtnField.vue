@@ -162,12 +162,13 @@
 		return item.value
 	}
 
-	function toggleItem(item: SelectBtnItem): void {
+	async function toggleItem(item: SelectBtnItem): Promise<void> {
 		if (props.readonly) {
 			return
 		}
 
 		validationModel.value = getNewValue(item)
+		await validate()
 	}
 
 	const focusedIndex = ref<number>(-1)

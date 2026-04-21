@@ -850,3 +850,53 @@ export const Info: Story = {
 	},
 	tags: ['!dev'],
 }
+
+export const ValidationWithWarnings: Story = {
+	render: () => ({
+		components: { SelectBtnField },
+		setup() {
+			const value = ref(null)
+
+			const items = [
+				{ text: 'Email', value: 'email' },
+				{ text: 'Courrier', value: 'courrier' },
+				{ text: 'SMS', value: 'sms' },
+			]
+
+			const warningRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string | number | null) => value === 'email',
+						message: 'Pour une prise de contact rapide, privilégiez Email.',
+					},
+				},
+			]
+
+			return {
+				value,
+				items,
+				warningRules,
+			}
+		},
+		template: `
+			<div style="max-width: 400px">
+				<h2 id="contact-method-warning" class="text-h6">
+					Choisissez votre moyen de contact :
+				</h2>
+
+				<p class="mb-3 text-body-2">
+					Un avertissement apparaît si vous choisissez autre chose que "Email".
+				</p>
+
+				<SelectBtnField
+					v-model="value"
+					:items="items"
+					aria-labelledby="contact-method-warning"
+					:custom-warning-rules="warningRules"
+					:is-validate-on-blur="true"
+				/>
+			</div>
+		`,
+	}),
+}
