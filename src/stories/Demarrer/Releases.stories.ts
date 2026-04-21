@@ -1,15 +1,33 @@
 import axios from 'axios'
-import { onMounted, ref } from 'vue'
+import { onMounted, shallowRef } from 'vue'
 import * as marked from 'marked'
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
 
 type GitHubRelease = {
 	id: number
-	name?: string
-	tag_name?: string
+	name?: string | null
+	tag_name?: string | null
 	published_at: string
-	body: string
+	body?: string | null
 }
+
+type ReleaseAlert = {
+	id: string
+	releaseVersion: string
+	message: string
+	type: 'success' | 'info' | 'warning' | 'error'
+	variant: 'tonal' | 'outlined'
+}
+
+const releaseAlerts: ReleaseAlert[] = [
+	{
+		id: 'starter-kit-2-0-32',
+		releaseVersion: 'v1.0.24',
+		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.32',
+		type: 'warning',
+		variant: 'tonal',
+	},
+]
 
 export default {
 	title: 'Démarrer/Releases',
@@ -20,8 +38,8 @@ export const List = {
 		return {
 			components: { SyAlert },
 			setup() {
-				const releases = ref<GitHubRelease[]>([])
-				const errorMessage = ref('')
+				const releases = shallowRef<GitHubRelease[]>([])
+				const errorMessage = shallowRef('')
 
 				const fetchReleases = async () => {
 					try {
@@ -38,12 +56,14 @@ export const List = {
 					return new Date(date).toLocaleDateString()
 				}
 
-				const formatMarkdown = (markdown: string) => {
-					return marked.parse(markdown)
+				const formatMarkdown = (markdown?: string | null) => {
+					return marked.parse(markdown ?? '')
 				}
 
-				const isStarterKitNoticeRelease = (release: GitHubRelease) => {
-					return [release.name, release.tag_name].some(value => value?.includes('v1.0.24'))
+				const getReleaseAlerts = (release: GitHubRelease) => {
+					return releaseAlerts.filter(alert =>
+						[release.name, release.tag_name].some(value => value?.includes(alert.releaseVersion)),
+					)
 				}
 
 				onMounted(() => {
@@ -55,7 +75,7 @@ export const List = {
 					errorMessage,
 					formatDate,
 					formatMarkdown,
-					isStarterKitNoticeRelease,
+					getReleaseAlerts,
 				}
 			},
 			template: `
@@ -73,8 +93,15 @@ export const List = {
 					<div v-else>
 						<div v-for="release in releases" :key="release.id">
 							<h2>{{ release.name }} ({{ formatDate(release.published_at) }})</h2>
-							<SyAlert v-if="isStarterKitNoticeRelease(release)" type="warning" variant="tonal" :closable="false" class="mt-2 mb-4">
-								<template #default>Il est conseillé de faire une montée de version du Starter Kit en 2.0.32</template>
+							<SyAlert
+								v-for="alert in getReleaseAlerts(release)"
+								:key="alert.id"
+								:type="alert.type"
+								:variant="alert.variant"
+								:closable="false"
+								class="mt-2 mb-4"
+							>
+								<template #default>{{ alert.message }}</template>
 							</SyAlert>
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>
