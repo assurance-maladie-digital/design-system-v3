@@ -28,10 +28,10 @@ describe('useVuetifyValidation', () => {
 		errorMessages: ref<string[]>([]),
 		focused: ref(false),
 		maxErrors: ref(1),
-		name: ref('fieldName'),
-		label: ref('Mon label'),
 		readonly: ref(false),
 		validateOn: ref<'input' | 'blur' | 'submit'>('blur'),
+		name: ref('fieldName'),
+		label: ref('Mon label'),
 	})
 
 	it('returns a vuetify validator with a validate function', () => {
@@ -46,10 +46,10 @@ describe('useVuetifyValidation', () => {
 				args.errorMessages,
 				args.focused,
 				args.maxErrors,
-				args.name,
-				args.label,
 				args.readonly,
 				args.validateOn,
+				args.label,
+				args.name,
 			),
 		)
 		expect(result).toBeDefined()
@@ -69,10 +69,10 @@ describe('useVuetifyValidation', () => {
 				args.errorMessages,
 				args.focused,
 				args.maxErrors,
-				args.name,
-				args.label,
 				args.readonly,
 				args.validateOn,
+				args.label,
+				args.name,
 			),
 		)
 		expect(result.isPristine.value).toBe(true)
@@ -91,10 +91,10 @@ describe('useVuetifyValidation', () => {
 				args.errorMessages,
 				args.focused,
 				args.maxErrors,
-				args.name,
-				args.label,
 				args.readonly,
 				args.validateOn,
+				args.label,
+				args.name,
 			),
 		)
 		await nextTick()
@@ -115,10 +115,10 @@ describe('useVuetifyValidation', () => {
 				args.errorMessages,
 				args.focused,
 				args.maxErrors,
-				args.name,
-				args.label,
 				args.readonly,
 				args.validateOn,
+				args.label,
+				args.name,
 			),
 		)
 		await result.validate()
@@ -140,10 +140,10 @@ describe('useVuetifyValidation', () => {
 				args.errorMessages,
 				args.focused,
 				args.maxErrors,
-				args.name,
-				args.label,
 				args.readonly,
 				args.validateOn,
+				args.label,
+				args.name,
 			),
 		)
 		await result.validate()
@@ -165,10 +165,10 @@ describe('useVuetifyValidation', () => {
 				args.errorMessages,
 				args.focused,
 				args.maxErrors,
-				args.name,
-				args.label,
 				args.readonly,
 				args.validateOn,
+				args.label,
+				args.name,
 			),
 		)
 

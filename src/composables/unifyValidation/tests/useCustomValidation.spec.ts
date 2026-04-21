@@ -28,10 +28,13 @@ describe('useCustomValidation', () => {
 		warnings: ref<string[]>([]),
 		successes: ref<string[]>([]),
 		showSuccessMessages: ref(true),
-		label: ref('Mon champ'),
 		focused: ref(false),
 		isValidateOnBlur: ref(true),
 		disableErrorHandling: ref(false),
+		readonly: ref(false),
+		disabled: ref(false),
+		label: ref('Mon champ'),
+
 	})
 
 	it('returns a validate function', () => {
@@ -46,10 +49,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		expect(typeof result.validate).toBe('function')
@@ -68,10 +73,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		await result.validate()
@@ -91,10 +98,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		await result.validate()
@@ -123,7 +132,6 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
@@ -147,10 +155,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		expect(result).toBeDefined()
@@ -176,10 +186,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		args.focused.value = false
@@ -201,10 +213,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		// Change to empty value — should trigger error
@@ -227,10 +241,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		args.modelValue.value = ''
@@ -254,10 +270,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		args.modelValue.value = ''
@@ -278,10 +296,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		// Make the field dirty by validating first
@@ -313,10 +333,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		await result.validate()
@@ -344,10 +366,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		// Validation should report errors
@@ -376,10 +400,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 
@@ -407,10 +433,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		const validationResult = await result.validate()
@@ -437,10 +465,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		await result.validate()
@@ -462,10 +492,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		const validationResult = await result.validate()
@@ -486,10 +518,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		await result.validate()
@@ -510,10 +544,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		args.focused.value = true
@@ -535,10 +571,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		// Don't validate first — field is pristine
@@ -567,10 +605,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		const validationResult = await result.validate()
@@ -590,10 +630,12 @@ describe('useCustomValidation', () => {
 				args.warnings,
 				args.successes,
 				args.showSuccessMessages,
-				args.label,
 				args.focused,
 				args.isValidateOnBlur,
 				args.disableErrorHandling,
+				args.readonly,
+				args.disabled,
+				args.label,
 			),
 		)
 		const validationResult = await result.validate()
