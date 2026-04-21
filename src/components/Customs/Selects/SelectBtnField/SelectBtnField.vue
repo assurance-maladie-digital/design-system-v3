@@ -449,23 +449,22 @@
 
 .select-btn-field__options--warning .select-btn-field__item {
 	border-color: rgb(var(--v-theme-borderWarning));
-
 }
 
 .select-btn-field__item--disabled {
 	color: rgb(var(--v-theme-textDisabled));
 	border-color: rgb(var(--v-theme-borderDisabled));
-
 }
 
-.v-messages__options--error{
+.v-messages__options--error {
 	color: rgb(var(--v-theme-textError));
 }
 
-.v-messages__options--warning{
+.v-messages__options--warning {
 	color: rgb(var(--v-theme-textWarning));
 }
-.v-messages__options--success{
+
+.v-messages__options--success {
 	color: rgb(var(--v-theme-textSuccess));
 }
 </style>
