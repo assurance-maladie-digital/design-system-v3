@@ -26,7 +26,6 @@ import '../../styles/shared.css';
     margin: 2rem 0;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
   .info-section h2 {
@@ -107,7 +106,6 @@ import '../../styles/shared.css';
       left: 0;
       width: 80px;
       height: 4px;
-      
       border-radius: 3px;
     }
 
@@ -121,32 +119,80 @@ import '../../styles/shared.css';
       
       border-radius: 3px;
     }
+
+      .info-section h2 {
+    position: relative;
+    padding-bottom: 0.75rem;
+    margin-top: 0;
+    color: #0c419a;
+    font-weight: 700;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .info-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    border-radius: 3px;
+  }
 `
 }
 </style>
 
 <div className="header">
-  <h1>Pré-audit à l'accessibilité</h1>
-  <p>Vérifiez la conformité de votre service web avant l'audit officiel</p>
+  <h1>Pré-audit à l'accessibilité.</h1>
+  <p>Vérifiez la conformité de votre service web avant l'audit officiel ou pendant les phases de développement.</p>
 </div>
 
 <div className="info-section">
   <h2>🌟 Objectif</h2>
-  <p>L'objectif du pré-audit est d'<b>obtenir un premier avis sur le taux de conformité de votre service web, avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr></b>, sans viser l'exhaustivité ni un score parfait. La procédure se fait <b>en autonomie par l'équipe de développement du produit</b>. Le relevé des non-conformités relève de la responsabilité de l’équipe de développement, ce kit étant conçu pour guider l’auto-évaluation.</p>
 
-  <p>La restitution consiste à s'assurer que toutes les exigences du pré-audit sont remplies et que vous ayez un minimum d'erreur en lançant les tests automatisés avec Tanaguru.</p>
+<p>Le kit de pré-audit peut être utilisé de deux façons :</p>
 
-  <p>Les résultats observés par le pré-audit sont souvent partiels et doivent être considérés comme un point de départ et non comme une évaluation finale. Lors d'un audit suivi du pré-audit, nous observons un taux minimum compris entre 30% et 50%. Un contre-audit pourra être proposé après application des correctifs relevés par l'audit.</p>
+<ul>
+  <li>
+    <strong>Préparer un audit :</strong> en identifiant en amont un maximum de non-conformités. Il permet d’obtenir un premier niveau d’évaluation de l’accessibilité de votre service web avant la réalisation d’un audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>, sans viser l’exhaustivité ni un score final de conformité.
+  </li>
+  <li>
+    <strong>Vérifier en continu :</strong> pour s'assurer, tout au long du développement, qu’un niveau intermédiaire d’accessibilité est bien respecté.
+  </li>
+</ul>
 
-  <p>L'enjeu est d'identifier un maximum de non conformités en phase pré-audit afin de réduire le nombre de correctifs en phase audit. Ce kit met aussi à disposition <b>des outils et des tutoriels pour vous accompagner dans cette démarche</b>.</p>
+  <p>
+    La démarche est réalisée <b>en autonomie par l’équipe de développement</b>. Le kit guide l’auto-évaluation, mais le relevé des non-conformités et la mise en œuvre des corrections relèvent de la responsabilité de l’équipe projet.
+  </p>
+
+  <p>
+    La restitution consiste à vérifier que l’ensemble des exigences du pré-audit est bien couvert et à limiter au maximum les erreurs détectées par les tests automatisés, notamment avec Tanaguru.
+  </p>
+
+  <p>
+   Dans le cadre de la preparation d'un audit, les résultats obtenus à l'aide de ce kit doivent être considérés comme un point de départ, et non comme une évaluation finale. Avant correction, le taux de conformité observé se situe généralement entre <b>30 % et 50 %</b>. La correction de l’ensemble des anomalies détectées par le kit permet ensuite d’atteindre le seuil de conformité partielle au sens du RGAA.
+  </p>
+
+  <p>
+    Un audit, complété si nécessaire par un contre-audit après correction, pourra ensuite confirmer le niveau de conformité atteint.
+  </p>
+
+  <p>
+    L’enjeu est d’identifier le plus tôt possible un maximum de non-conformités afin de réduire le volume de correctifs à traiter lors de l’audit. Le kit met également à disposition <b>des outils et des tutoriels pour vous accompagner dans cette démarche</b>.
+  </p>
 
   <div className="alert">
-    <p><strong>Note :</strong> Vous pouvez nous solliciter pour un accompagnement si vous rencontrez des difficultés techniques à résoudre les non-conformités, relevées par Tanaguru en phase automatique ou par l'équipe en phase manuelle.</p>
+    <p>
+      <strong>Note :</strong> Vous pouvez nous solliciter pour un accompagnement si vous rencontrez des difficultés techniques dans la résolution des non-conformités relevées, que ce soit par Tanaguru lors des tests automatiques ou par l’équipe lors des vérifications manuelles.
+    </p>
   </div>
 </div>
 
 <div className="section-container">
-  <h2>Environnement de test</h2>
+  <h2>Environnement de test (pré-audit, audit, contre-audit)</h2>
   <p>Il est important de tester votre service dans un environnement similaire à celui utilisé par les utilisateurs finaux. <b>L'environnement de test sera le même pour chacune des phases (pré-audit, audit, contre-audit) et devra être stable. Aucune nouvelle fonctionnalité ne doit être développée entre chaque phase.</b> Seules les corrections liées aux écarts d’accessibilité identifiés doivent être réalisées, afin de garantir la cohérence et la comparabilité des résultats.</p>
 
   <p>Le produit devra mettre à disposition un environnement adéquat pour l'audit qui, selon le public ciblé par le produit, pourra être un environnement de bureau ou mobile.</p>
