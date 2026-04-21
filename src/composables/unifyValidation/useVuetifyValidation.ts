@@ -12,10 +12,16 @@ export function useVuetifyValidation(
 	errorMessages: Ref<string[]>,
 	focused: Ref<boolean>,
 	maxErrors: Ref<number> | undefined,
+<<<<<<< HEAD
 	name: Ref<string | undefined>,
 	label: Ref<string | undefined>,
+=======
+>>>>>>> 8a715d82 (ajout warning sucess msg)
 	readonly: Ref<boolean>,
 	validateOn: Ref<'input' | 'blur' | 'submit'>,
+	label?: Ref<string | undefined>,
+	name?: Ref<string | undefined>,
+
 ) {
 	// The vuetify validation composable expects props to be passed as a single object, so we create a reactive proxified object to pass the relevant props and keep them reactive.
 	const proxifiedProps = reactive({
@@ -24,8 +30,8 @@ export function useVuetifyValidation(
 		'errorMessages': computed(() => errorMessages.value),
 		'focused': computed(() => !!focused.value),
 		'maxErrors': computed(() => maxErrors?.value || 1),
-		'name': computed(() => name.value),
-		'label': computed(() => label.value),
+		'name': computed(() => name?.value),
+		'label': computed(() => label?.value),
 		'readonly': computed(() => !!readonly.value),
 		'rules': computed(() => rules.value || []),
 		'modelValue': computed({

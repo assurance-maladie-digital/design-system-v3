@@ -1,33 +1,31 @@
 <script lang="ts" setup>
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheck } from '@mdi/js'
-	import { computed, onMounted, ref, watch } from 'vue'
+	import { computed, onMounted, ref, toRef, watch } from 'vue'
 	import { useTheme } from 'vuetify'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
+	import type { ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 
-	const props = withDefaults(defineProps<{
-		modelValue?: SelectBtnValue
-		items?: SelectBtnItem[]
-		label?: string
-		ariaLabelledby?: string | undefined
-		multiple?: boolean
-		inline?: boolean
-		hint?: string
-		error?: boolean
-		errorMessages?: string[]
-		readonly?: boolean
-	}>(), {
-		modelValue: null,
-		items: () => [],
-		label: undefined,
-		ariaLabelledby: undefined,
-		multiple: false,
-		inline: false,
-		hint: undefined,
-		error: false,
-		errorMessages: undefined,
-		readonly: false,
-	})
+	const props = withDefaults(defineProps<Omit<FieldValidationProps, 'label'> & {
+			modelValue?: SelectBtnValue
+			items?: SelectBtnItem[]
+			label?: string
+			ariaLabelledby?: string | undefined
+			multiple?: boolean
+			inline?: boolean
+			hint?: string
+		} > (),
+		{
+			modelValue: null,
+			items: () => [],
+			label: undefined,
+			ariaLabelledby: undefined,
+			multiple: false,
+			inline: false,
+			hint: undefined,
+			...validationPropsDefaults,
+		})
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: SelectBtnValue): void
@@ -39,7 +37,54 @@
 	const darktheme = ref<boolean>(false)
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
+	const focused = ref(false)
 
+	// Construction des règles de validation
+	const defaultRules = computed<ValidationRule[]>(() => props.required
+		? [{
+			type: 'required',
+			options: {
+				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				fieldIdentifier: props.label,
+			},
+		}]
+		: [],
+	)
+	const validationModel = computed<SelectBtnValue>({
+		get() {
+			return internalValue.value
+		},
+		set(value) {
+			internalValue.value = value
+			emits('update:modelValue', value)
+		},
+	})
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+		modelValue: validationModel,
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		label: toRef(props, 'label'),
+		rules: toRef(props, 'rules'),
+		customRules: computed(() => {
+			const customRules = props.customRules ? props.customRules : []
+			return [...defaultRules.value, ...customRules]
+		}),
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
+		focused: focused,
+	})
 	onMounted(() => {
 		const theme = useTheme().current
 		if (theme && theme.value) {
@@ -122,10 +167,7 @@
 			return
 		}
 
-		internalValue.value = getNewValue(item)
-		emits('update:error', false)
-		emits('update:error-messages', undefined)
-		emits('update:modelValue', internalValue.value)
+		validationModel.value = getNewValue(item)
 	}
 
 	const focusedIndex = ref<number>(-1)
@@ -195,10 +237,12 @@
 	function handleBlur(): void {
 		if ((!listRef.value?.contains(document.activeElement) || !(listRef.value === document.activeElement))) {
 			focusedIndex.value = -1
+			focused.value = false
 		}
 	}
 
 	function handleInitFocus(e: FocusEvent): void {
+		focused.value = true
 		// Don't auto-select if focus was caused by mouse interaction
 		if (isMouseInteraction.value) {
 			const element = e.target as HTMLElement
@@ -218,6 +262,16 @@
 
 	const isMouseInteraction = ref(false)
 
+	const displayedMessages = computed(() => {
+		if (props.disableErrorHandling) return []
+
+		if (hasError.value) return errors.value
+		if (hasWarning.value) return warnings.value
+		if (hasSuccess.value && props.showSuccessMessages) return successes.value
+
+		return []
+	})
+
 	function handleMouseDown(): void {
 		isMouseInteraction.value = true
 	}
@@ -225,6 +279,10 @@
 	function handleMouseUp(): void {
 		isMouseInteraction.value = false
 	}
+
+	defineExpose({
+		validateOnSubmit: validate,
+	})
 </script>
 
 <template>
@@ -237,15 +295,18 @@
 			:class="{
 				'select-btn-field__options--inline': props.inline,
 				'select-btn-field__options--column': !props.inline,
-				'select-btn-field__options--error': error,
+				'select-btn-field__options--error': hasError,
 				'select-btn-field__options--readonly': readonly,
+				'select-btn-field__options--warning': hasWarning,
+				'select-btn-field__options--disabled': disabled,
+				'select-btn-field__options--success': hasSuccess,
 			}"
 			:aria-label="props.label"
 			:aria-labelledby="props.ariaLabelledby ?? undefined"
 			role="listbox"
 			:aria-orientation="props.inline ? 'horizontal' : 'vertical'"
 			:aria-multiselectable="props.multiple ? 'true' : 'false'"
-			:aria-invalid="error ? 'true' : 'false'"
+			:aria-invalid="hasError ? 'true' : 'false'"
 			:aria-readonly="readonly ? 'true' : 'false'"
 			:tabindex="focusedIndex === -1 ? '0' : '-1'"
 			@focusout="handleBlur"
@@ -288,14 +349,19 @@
 				</div>
 			</li>
 		</ul>
-		<template v-if="errorMessages">
+		<template v-if="displayedMessages.length">
 			<p
-				v-for="(errorMessage, index) in errorMessages"
+				v-for="(message, index) in displayedMessages"
 				:key="index"
-				:class="darktheme ? 'theme--dark' : 'theme--light'"
-				class="v-messages text-error px-3 mt-2 mb-0 opacity-100"
+				:class="{
+					'theme--dark' : darktheme,
+					'theme--light': !darktheme,
+					'v-messages__options--error px-3 mt-2 mb-0 opacity-100': hasError,
+					'v-messages__options--warning px-3 mt-2 mb-0 opacity-100': hasWarning,
+					'v-messages__options--success px-3 mt-2 mb-0 opacity-100': hasSuccess,
+				}"
 			>
-				{{ errorMessage }}
+				{{ message }}
 			</p>
 		</template>
 
@@ -379,5 +445,27 @@
 .select-btn-field__options--error .select-btn-field__item {
 	color: rgb(var(--v-theme-textError));
 	border-color: rgb(var(--v-theme-borderError));
+}
+
+.select-btn-field__options--warning .select-btn-field__item {
+	border-color: rgb(var(--v-theme-borderWarning));
+
+}
+
+.select-btn-field__item--disabled {
+	color: rgb(var(--v-theme-textDisabled));
+	border-color: rgb(var(--v-theme-borderDisabled));
+
+}
+
+.v-messages__options--error{
+	color: rgb(var(--v-theme-textError));
+}
+
+.v-messages__options--warning{
+	color: rgb(var(--v-theme-textWarning));
+}
+.v-messages__options--success{
+	color: rgb(var(--v-theme-textSuccess));
 }
 </style>

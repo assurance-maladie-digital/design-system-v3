@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SelectBtnField from './SelectBtnField.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { VBtn } from 'vuetify/components'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const meta = {
 	title: 'Composants/Formulaires/Selects/SelectBtnField',
@@ -51,7 +51,7 @@ const meta = {
 			control: { type: 'text' },
 			default: undefined,
 		},
-		error: {
+		hasError: {
 			control: { type: 'boolean' },
 			default: false,
 		},
@@ -133,9 +133,10 @@ export const Default: Story = {
 		multiple: false,
 		inline: false,
 		hint: undefined,
-		error: false,
+		hasError: false,
 		errorMessages: undefined,
 		readonly: false,
+		showSuccessMessages: false,
 	},
 	render: (args) => {
 		return {
@@ -153,9 +154,10 @@ export const Default: Story = {
 						:multiple="args.multiple"
 						:inline="args.inline"
 						:hint="args.hint"
-						:error="args.error"
+						:hasError="args.hasError"
 						:error-messages="args.errorMessages"
 						:readonly="args.readonly"
+						:showSuccessMessages="args.showSuccessMessages"
 						aria-labelledby="contact-method"
 					/>
 				</div>
@@ -239,6 +241,8 @@ export const Multiple: Story = {
 					v-model="args.modelValue"
 					:items="args.items"
 					:multiple="args.multiple"
+					:showSuccessMessages="false"
+
 					aria-labelledby="contact-method"
 				/>
 			</div>
@@ -321,6 +325,7 @@ export const inline: Story = {
 					<SelectBtnField
 						v-model="args.modelValue"
 						:items="args.items"
+						:showSuccessMessages="false"
 						:inline="args.inline"
 						aria-labelledby="contact-method"
 					/>
@@ -518,7 +523,7 @@ export const erreur: Story = {
 			v-model="value"
 			:items="items"
 			aria-labelledby="contact-method"
-			v-model:error="error"
+			:hasError="hasError"
 		/>
 		<VBtn
 			color="primary"
@@ -537,7 +542,7 @@ export const erreur: Story = {
     import { SelectBtnField } from '@cnamts/synapse'
     import { ref } from 'vue'
 	const value = ref([])
-	const error = ref(true)
+	const hasError = ref(true)
 	const items = [
 		{
 			text: 'Email',
@@ -554,7 +559,7 @@ export const erreur: Story = {
 	]
 	function resetExample() {
 		value.value = null
-		error.value = true
+		hasError.value = true
 	}
 </script>
                 `,
@@ -577,20 +582,25 @@ export const erreur: Story = {
 				value: 'sms',
 			},
 		],
-		error: true,
+		hasError: true,
 	},
 	render: (args) => {
 		return {
 			components: { SelectBtnField, VBtn },
 			setup() {
-				const error = ref(args.error)
+				const hasError = ref(args.hasError)
 				const value = ref(args.modelValue)
 
 				function resetExample() {
-					error.value = true
+					hasError.value = true
 					value.value = null
 				}
-				return { args, resetExample, error, value }
+				watch(() => value.value, (newValue) => {
+					if (newValue) {
+						hasError.value = false
+					}
+				})
+				return { args, resetExample, hasError, value }
 			},
 			template: `
 				<div style="max-width: 400px">
@@ -599,7 +609,7 @@ export const erreur: Story = {
 						v-model="value"
 						:items="args.items"
 						aria-labelledby="contact-method"
-						v-model:error="error"
+						:hasError="hasError"
 					/>
 					<VBtn
 						color="primary"
@@ -626,8 +636,8 @@ export const messageErreur: Story = {
 			v-model="value"
 			:items="items"
 			aria-labelledby="contact-method"
-			v-model:error="error"
-			v-model:error-messages="errorMessages"
+			:hasError="hasError"
+			:error-messages="errorMessages"
 		/>
 		<VBtn
 			color="primary"
@@ -646,7 +656,7 @@ export const messageErreur: Story = {
 import { SelectBtnField } from '@cnamts/synapse'
 import { ref } from 'vue'
 const value = ref([])
-const error = ref(true)
+const hasError = ref(true)
 const errorMessages = ref(['Le champ est requis.'])
 const items = [
     {
@@ -664,7 +674,7 @@ const items = [
 ]
 	function resetExample() {
 		value.value = null
-		error.value = true
+		hasError.value = true
 		errorMessages.value = [
 			'Le champ est requis.',
 		]
@@ -690,7 +700,7 @@ const items = [
 				value: 'sms',
 			},
 		],
-		error: true,
+		hasError: true,
 		errorMessages: [
 			'Le champ est requis.',
 		],
@@ -699,16 +709,23 @@ const items = [
 		return {
 			components: { SelectBtnField, VBtn },
 			setup() {
-				const error = ref(args.error)
+				const hasError = ref(args.hasError)
 				const value = ref(args.modelValue)
 				const errorMessages = ref(args.errorMessages)
 
 				function resetExample() {
-					error.value = true
+					hasError.value = true
 					value.value = null
 					errorMessages.value = ['Le champ est requis.']
 				}
-				return { args, resetExample, error, value, errorMessages }
+
+				watch(() => value.value, (newValue) => {
+					if (newValue) {
+						hasError.value = false
+						errorMessages.value = []
+					}
+				})
+				return { args, resetExample, hasError, value, errorMessages }
 			},
 			template: `
 				<div style="max-width: 400px">
@@ -717,8 +734,8 @@ const items = [
 						v-model="value"
 						:items="args.items"
 						aria-labelledby="contact-method"
-						v-model:error="error"
-						v-model:error-messages="errorMessages"
+						:hasError="hasError"
+						:error-messages="errorMessages"
 					/>
 					<VBtn
 						color="primary"
@@ -825,7 +842,7 @@ export const Info: Story = {
 			},
 			template: `
                 <SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
-                    <template #default>Vous pouvez utiliser le modificateur v-model:error pour réinitialiser l’erreur lorsque l’utilisateur modifie la valeur du champ.
+                    <template #default>Vous pouvez utiliser le modificateur :hasError pour réinitialiser l’erreur lorsque l’utilisateur modifie la valeur du champ.
                     </template>
                 </SyAlert>
             `,

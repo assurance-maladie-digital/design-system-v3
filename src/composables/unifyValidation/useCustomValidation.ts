@@ -21,21 +21,23 @@ export function useCustomValidation(
 	disableErrorHandling: Ref<boolean>,
 	readonly?: Ref<boolean>,
 	disabled?: Ref<boolean>,
+	label?: Ref<string | undefined>,
+
 ) {
 	const hasSuccess = ref(false)
 
 	let validator = useValidation({
 		showSuccessMessages: showSuccessMessages.value,
-		fieldIdentifier: label.value,
+		fieldIdentifier: label?.value,
 		disableErrorHandling: disableErrorHandling.value,
 	})
 
 	watch(
-		() => [showSuccessMessages.value, label.value, customRules?.value, customWarningRules?.value, customSuccessRules?.value, disableErrorHandling.value],
+		() => [showSuccessMessages.value, label?.value, customRules?.value, customWarningRules?.value, customSuccessRules?.value, disableErrorHandling.value],
 		() => {
 			validator = useValidation({
 				showSuccessMessages: showSuccessMessages.value,
-				fieldIdentifier: label.value,
+				fieldIdentifier: label?.value,
 				disableErrorHandling: disableErrorHandling.value,
 			})
 
