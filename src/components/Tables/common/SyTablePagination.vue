@@ -225,6 +225,7 @@
 
 <style lang="scss" scoped>
 @use '@/assets/overrides/breakpoints' as bp;
+
 .sy-table-pagination {
 	display: flex;
 	align-items: center;
