@@ -283,8 +283,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .rounded {
 	border-radius: 2.5rem !important;
 }
@@ -305,11 +303,11 @@
 }
 
 .fs-14 {
-	font-size: apTokens.$font-size-xs;
+	font-size: var(--v-ap-fontSizeXs);
 }
 
 .fs-18 {
-	font-size: apTokens.$font-size-md;
+	font-size: var(--v-ap-fontSizeMd);
 }
 
 .custom-marker {
@@ -320,7 +318,7 @@
 		height: 7px;
 		margin-top: 7px;
 		border-radius: 50%;
-		background-color: apTokens.$ap-blue-darken2;
+		background-color: rgb(var(--v-theme-secondary));
 	}
 }
 

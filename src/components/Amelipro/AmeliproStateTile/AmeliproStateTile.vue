@@ -290,21 +290,19 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .amelipro-state-tile__pdf-download {
-	color: apTokens.$ap-blue-darken1;
+	color: rgb(var(--v-theme-primary));
 }
 
 .amelipro-state-tile__pdf-download--white {
-	color: apTokens.$ap-white;
+	color: rgb(var(--v-theme-apWhite-base));
 }
 
 .amelipro-state-tile {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: apTokens.$ap-white;
+	background-color: rgb(var(--v-theme-surface));
 
 	& span {
 		white-space: normal;
@@ -312,12 +310,12 @@
 
 	&:hover {
 		& .amelipro-state-tile__pdf-download {
-			color: apTokens.$ap-blue-darken2;
+			color: rgb(var(--v-theme-secondary));
 			text-decoration: underline;
 		}
 
 		& .amelipro-state-tile__pdf-download--white {
-			color: apTokens.$ap-white;
+			color: rgb(var(--v-theme-apWhite-base));
 		}
 	}
 }
@@ -328,10 +326,10 @@
 }
 
 .btn-styled-text {
-	min-height: apTokens.$btn-min-height;
-	padding: 12px 24px;
-	border-radius: apTokens.$btn-radius;
-	font-size: apTokens.$font-size-sm;
+	min-height: var(--v-ap-btnMinHeight);
+	padding: var(--v-padding-3) 24px;
+	border-radius: var(--v-ap-btnRadius);
+	font-size: var(--v-ap-fontSizeSm);
 }
 
 .state-tile-icon {
@@ -352,7 +350,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
 	& :deep(.v-btn__content) {

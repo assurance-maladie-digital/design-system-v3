@@ -131,7 +131,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss' as *;
 @use '../consts' as *;
 
 .overlay {
@@ -144,7 +143,7 @@
 
 .menu-wrapper {
 	height: 100dvh;
-	background-color: $neutral-white;
+	background-color: rgb(var(--v-theme-surface));
 	display: flex;
 	flex-direction: column;
 }
@@ -172,7 +171,7 @@
 	}
 
 	.header-menu {
-		background-color: $neutral-white;
+		background-color: rgb(var(--v-theme-surface));
 		overflow: hidden auto;
 		height: 100%;
 	}

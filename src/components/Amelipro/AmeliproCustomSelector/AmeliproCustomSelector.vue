@@ -263,18 +263,18 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-custom-selector__label {
-	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$ap-font-weight-bold;
+	font-size: var(--v-ap-fontSizeSm);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 .amelipro-custom-selector__item {
 	width: 100%;
 
 	&.item-per-line-2 {
-		@media #{apTokens.$media-up-sm} {
+		@media #{bp.$up-sm} {
 			width: calc(50% - 8px);
 			margin-left: 8px;
 
@@ -285,7 +285,7 @@
 	}
 
 	&.item-per-line-3 {
-		@media #{apTokens.$media-up-sm} {
+		@media #{bp.$up-sm} {
 			width: calc((100% / 3) - (16px / 3));
 			margin-left: 8px;
 
@@ -315,14 +315,14 @@ input {
 		position: relative;
 		padding: 0.75rem 3rem 0.75rem 1rem;
 		border-radius: 5px;
-		border: 1px solid apTokens.$ap-grey;
-		background-color: apTokens.$ap-white;
+		border: 1px solid rgb(var(--v-theme-ap-grey));
+		background-color: rgb(var(--v-theme-surface));
 		cursor: pointer;
 	}
 
 	input:checked + &,
 	.checkbox-input[aria-checked='true'] & {
-		background-color: apTokens.$ap-blue-lighten3;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3));
 
 		&::after {
 			position: absolute;
@@ -330,8 +330,8 @@ input {
 			right: 1rem;
 			width: 1rem;
 			height: 0.5rem;
-			border-bottom: 2px solid apTokens.$ap-blue-darken1;
-			border-left: 2px solid apTokens.$ap-blue-darken1;
+			border-bottom: 2px solid rgb(var(--v-theme-primary));
+			border-left: 2px solid rgb(var(--v-theme-primary));
 			transform: rotate(-50deg);
 			content: '';
 		}
@@ -339,12 +339,12 @@ input {
 
 	input:disabled + &,
 	.checkbox-input[aria-disabled='true'] & {
-		background-color: apTokens.$ap-grey-lighten2;
+		background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 		cursor: default;
 
 		&::after {
-			border-bottom-color: apTokens.$ap-grey-darken1;
-			border-left-color: apTokens.$ap-grey-darken1;
+			border-bottom-color: rgb(var(--v-theme-ap-grey-darken-1));
+			border-left-color: rgb(var(--v-theme-ap-grey-darken-1));
 		}
 	}
 }

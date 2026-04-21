@@ -158,12 +158,12 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-callback__retry-btn {
 	margin-left: 0;
 
-	@media #{apTokens.$media-up-sm} {
+	@media #{bp.$up-sm} {
 		margin-left: 1rem;
 	}
 }

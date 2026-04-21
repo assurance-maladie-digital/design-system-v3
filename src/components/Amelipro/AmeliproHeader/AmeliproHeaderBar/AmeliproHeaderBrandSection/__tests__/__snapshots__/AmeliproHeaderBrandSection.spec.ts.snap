@@ -80,7 +80,7 @@ exports[`AmeliproHeaderBrandSection > Snapshots > renders the component with onl
     <svg
       aria-hidden="true"
       class="header-home-link__divider"
-      fill="#006386"
+      fill="#00516D"
       focusable="false"
       height="64"
       role="img"

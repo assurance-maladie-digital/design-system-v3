@@ -117,6 +117,8 @@ const preview: Preview = {
 		docs: { controls: { sort: 'alpha' } },
 		options: {
 			storySort: {
+				method: 'alpha',
+				locales: 'fr-FR',
 				order: [
 					'Démarrer',
 					['Accueil', 'Introduction', 'Politique de confidentialité', 'Releases', 'Signaler une anomalie', 'Enrichir le Design System'],
@@ -147,7 +149,7 @@ const preview: Preview = {
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
-						'Composants Vuetify', ['Introduction', 'VBtn', 'VTooltip', 'VSwitch', 'VSkeletonLoader'],
+						'Composants Vuetify', ['Introduction', 'VBreadcrumbs', 'VBtn', 'VOtpInput', 'VSkeletonLoader', 'VSwitch', 'VTooltip'],
 					],
 					'Templates', ['Vue d\'ensemble', 'StatusPage', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Guide Du Dev', [

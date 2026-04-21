@@ -1,0 +1,39 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VOtpInputStories from './v-otp-input.stories'
+
+<Meta title="Composants/Composants Vuetify/VOtpInput" />
+
+<div className="header">
+    <h1>VOtpInput</h1>
+Ce composant utilise directement le composant natif `v-otp-input` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-otp-input/#props).
+</div>
+
+## Variants
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
+  <Canvas of={VOtpInputStories.Default} />
+  <Canvas of={VOtpInputStories.Underlined} />
+  <Canvas of={VOtpInputStories.Filled} />
+</div>
+
+## États
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
+  <Canvas of={VOtpInputStories.Disabled} />
+  <Canvas of={VOtpInputStories.Error} />
+</div>
+
+## Longueur personnalisée
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: '24px' }}>
+  <Canvas of={VOtpInputStories.FourDigits} />
+</div>
+
+## Variants disponibles
+
+- `outlined` – Avec bordure (défaut)
+- `underlined` – Souligné uniquement
+- `filled` – Avec fond
+- `solo` – Sans bordure avec élévation
+- `plain` – Minimal sans style

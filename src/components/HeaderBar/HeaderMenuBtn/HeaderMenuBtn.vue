@@ -37,7 +37,6 @@
 
 <style lang="scss" scoped>
 @use '../consts' as *;
-@use '@/assets/tokens';
 
 .header-menu-btn {
 	text-transform: capitalize;
@@ -50,20 +49,20 @@
 	justify-content: center;
 	font-weight: 700;
 	background-color: rgb(var(--v-theme-primary));
-	color: tokens.$neutral-white;
+	color: rgb(var(--v-theme-textOnDark));
 	border: 2px solid transparent;
 	border-bottom:
 		solid 2px linear-gradient(
 			180deg,
 			transparent 0%,
 			transparent 50%,
-			tokens.$blue-lighten-80 50%,
-			tokens.$blue-lighten-80 100%
+			rgb(var(--v-theme-blue-lighten80)) 50%,
+			rgb(var(--v-theme-blue-lighten80)) 100%
 		);
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border 0.15s 0.1s;
 
 	&:focus-visible {
-		background-color: tokens.$neutral-white;
+		background-color: rgb(var(--v-theme-surface));
 		color: rgb(var(--v-theme-primary));
 		outline: none;
 		border: 2px solid rgb(var(--v-theme-primary));
@@ -71,9 +70,9 @@
 }
 
 .header-menu-btn__open {
-	background-color: tokens.$neutral-white;
+	background-color: rgb(var(--v-theme-surface));
 	color: rgb(var(--v-theme-primary));
-	border-color: tokens.$neutral-white;
+	border-color: rgb(var(--v-theme-textOnDark));
 }
 
 @media screen and (max-width: ($header-breakpoint + 1)) {

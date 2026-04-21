@@ -135,6 +135,45 @@ describe('TableHeader', () => {
 		expect(wrapper.find('.sort-order-indicator').exists()).toBe(false)
 	})
 
+	it('wraps the column title when resizable columns are enabled', () => {
+		const column = {
+			title: 'A very long column title',
+			key: 'test',
+			value: 'test',
+			sortable: true,
+		}
+
+		const wrapper = mount(TableHeader, {
+			props: {
+				column,
+				headerParams: {
+					sortBy: [],
+					getSortIcon: () => 'mdi-arrow-up',
+					toggleSort: () => {},
+					columns: [
+						{
+							key: 'test',
+							value: 'test',
+							title: 'A very long column title',
+							sortable: true,
+						},
+					],
+					headers: [],
+					someSelected: false,
+					allSelected: false,
+					selectAll: () => {},
+					isSorted: () => false,
+				},
+				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
+				wrapTitle: true,
+			},
+		})
+
+		expect(wrapper.find('.col-title').classes()).toContain('col-title--wrap')
+		expect(wrapper.find('.v-data-table-header__content').classes()).toContain('v-data-table-header__content--wrap')
+		expect(wrapper.find('.v-data-table-header__content').classes()).not.toContain('h-100')
+	})
+
 	// Test for correct sort order when multiple columns are sorted
 	it('displays correct sort order numbers for multiple sorted columns', async () => {
 		const columns = [

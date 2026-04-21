@@ -170,18 +170,16 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .w-70 {
 	width: 70% !important;
 }
 
 .amelipro-error-template__title,
 .amelipro-error-template-content-title {
-	font-size: apTokens.$font-size-md;
+	font-size: var(--v-ap-fontSizeMd);
 }
 
 .amelipro-error-template-content-btn {
-	font-size: apTokens.$font-size-sm;
+	font-size: var(--v-ap-fontSizeSm);
 }
 </style>

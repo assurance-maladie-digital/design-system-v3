@@ -401,10 +401,8 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 :deep(.v-btn):focus {
-	outline-color: apTokens.$ap-white;
+	outline-color: rgb(var(--v-theme-apWhite-base));
 }
 
 :deep(.v-btn).v-btn--size-default {

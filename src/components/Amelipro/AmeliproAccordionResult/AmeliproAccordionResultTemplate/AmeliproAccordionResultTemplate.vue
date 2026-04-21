@@ -104,7 +104,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-accordion-result {
 	display: block;
@@ -119,15 +119,15 @@
 .amelipro-accordion-result__content {
 	width: 100%;
 	padding: 1rem;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 }
 
 .heading-content {
 	width: 100%;
 	padding: 1rem 0 0 1rem;
 
-	@media #{apTokens.$media-up-md} {
+	@media #{bp.$up-md} {
 		width: calc(100% - 30px);
 		padding: 1rem 0 1rem 1rem;
 	}
@@ -136,7 +136,7 @@
 .heading-content-btn {
 	padding: 1rem;
 
-	@media #{apTokens.$media-down-md} {
+	@media #{bp.$down-sm} {
 		width: 100% !important;
 		margin-top: 0.5rem;
 		padding: 0.5rem 1rem 1rem;

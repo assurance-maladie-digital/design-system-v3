@@ -1,4 +1,7 @@
+import { baseContextualTokens } from '../baseContextualTokens'
+
 export const apContextualTokens = {
+	...baseContextualTokens,
 	colors: {
 		background: '#ffffff',
 		border: '#dddddd',
@@ -7,52 +10,57 @@ export const apContextualTokens = {
 		overlay: 'rgba(0, 0, 0, 0.5)',
 		interactive: '#007bff',
 	},
-	gap: {
-		0: '0',
-		1: '4px',
-		2: '8px',
-		3: '122px',
-		4: '16px',
-		5: '20px',
-		6: '24px',
-		7: '28px',
-		8: '32px',
-		9: '36px',
-		10: '40px',
-		11: '44px',
-		12: '48px',
-		13: '52px',
-		14: '56px',
-		15: '60px',
-		16: '64px',
-	},
-	iconSize: {
-		xsmall: '8px',
-		small: '16px',
-		default: '24px',
-		large: '32px',
-	},
-	radius: {
-		rounded0: '0',
-		rounded: '4px',
-		roundedLg: '8px',
-		roundedPill: '64px',
-	},
-	padding: {
-		0: '0',
-		2: '8px',
-		3: '12px',
-		4: '16px',
-		6: '24px',
-		8: '32px',
-		10: '40px',
-		14: '56px',
-		16: '64px',
-	},
-	fontSize: {
-		titres: '24px',
-		titresAlternatifs: '20px',
-		corpsDeTexte: '16px',
-		liensEtLibelles: '14px',
+	ap: {
+		// Typography
+		fontWeightRegular: '400',
+		fontWeightBold: '700',
+		fontSizeXxs: '0.75rem',
+		fontSizeXs: '0.875rem',
+		fontSizeSm: '1rem',
+		fontSizeMd: '1.125rem',
+		fontSizeLg: '1.25rem',
+		fontSizeXl: '1.375rem',
+		fontSizeXxl: '1.5rem',
+		// Button
+		btnRadius: '0.75rem',
+		btnPaddingX: '1rem',
+		btnPaddingY: '0.5rem',
+		btnMinHeight: '2.5rem',
+		// Card
+		cardRadius: '0.75rem',
+		cardPaddingDesktop: '1rem',
+		cardPaddingTablet: '1rem',
+		cardPaddingMobile: '0.75rem',
+		// Dialog
+		dialogPadding: '1.5rem',
+		// Input / Form
+		inputRadius: '0.5rem',
+		inputMinHeight: '2.625rem',
+		labelFontWeight: '700',
+		// Filter pills
+		filterRadius: '0.75rem',
+		filterPaddingX: '2rem',
+		filterPaddingY: '0.75rem',
+		filterFontWeight: '700',
+		// Tabs pills
+		tabsPillRadius: '0.75rem',
+		tabsPillPaddingX: '2rem',
+		tabsPillPaddingY: '0.5rem',
+		tabsPillFontWeight: '700',
+		// Multiple folding card button
+		multiFoldingBtnRadius: '0.75rem',
+		multiFoldingBtnPaddingX: '2rem',
+		multiFoldingBtnPaddingY: '0.5rem',
+		multiFoldingBtnFontWeight: '700',
+		// Switch
+		switchTrackHeight: '2rem',
+		switchTrackWidth: '3.5rem',
+		switchTrackTop: '0',
+		switchThumbHeight: '1.5rem',
+		switchThumbWidth: '1.5rem',
+		switchThumbTop: '0.25rem',
+		switchThumbElevation: '0',
+		switchWidth: '3.5rem',
+		switchTrackOpacity: '1',
 	},
 }

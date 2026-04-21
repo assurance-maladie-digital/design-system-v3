@@ -312,15 +312,13 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .address-field {
 	min-width: 200px;
 	width: 100%;
 
 	label {
 		margin-bottom: 4px;
-		font-weight: apTokens.$label-font-weight;
+		font-weight: var(--v-ap-fontWeightBold);
 	}
 }
 
@@ -349,8 +347,8 @@
 
 .v-input {
 	& :deep(.v-field__input) {
-		padding-left: 12px;
-		padding-right: 12px;
+		padding-left: var(--v-padding-3);
+		padding-right: var(--v-padding-3);
 	}
 
 	& :deep(.v-field--disabled) {

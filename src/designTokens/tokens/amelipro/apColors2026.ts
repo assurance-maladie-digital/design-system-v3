@@ -1,4 +1,5 @@
-import type { IndexedObject } from '../../../components/Amelipro/types'
+import type { IndexedObject } from '@/components/Amelipro/types.ts'
+import { buildColorClassMap } from '../../utils/buildColorClassMap'
 
 export const apColorsTokens2026 = {
 	apBlack: { base: '#000000' },
@@ -65,17 +66,4 @@ export const apColorsTokens2026 = {
 	},
 }
 
-export const apColorClasses: IndexedObject = {}
-
-export function toKebabCase(value: string): string {
-	return value.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase()
-}
-
-Object.entries(apColorsTokens2026).forEach(([colorName, colorValues]) => {
-	Object.entries(colorValues).forEach(([variationName, colorValue]) => {
-		const colorClass = toKebabCase(`${colorName}-${variationName}`
-			.replace(/\d+/, '-$&')
-			.replace('-base', ''))
-		apColorClasses[colorClass] = colorValue as string
-	})
-})
+export const apColorClasses: IndexedObject = buildColorClassMap(apColorsTokens2026)

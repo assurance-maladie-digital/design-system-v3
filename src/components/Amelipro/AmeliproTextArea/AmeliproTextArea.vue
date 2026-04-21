@@ -291,8 +291,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .amelipro-textarea-input {
 	& :deep(.v-field__outline) {
 		border-color: v-bind(inputBorderStyle);
@@ -306,14 +304,14 @@
 }
 
 .amelipro-textarea__label {
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$label-font-weight;
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 .v-input {
 	& :deep(.v-field__input) {
-		padding-left: 12px;
-		padding-right: 12px;
+		padding-left: var(--v-padding-3);
+		padding-right: var(--v-padding-3);
 	}
 
 	& :deep(.v-field--disabled) {

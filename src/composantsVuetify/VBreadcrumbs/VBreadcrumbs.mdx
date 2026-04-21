@@ -1,0 +1,28 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VBreadcrumbsStories from './v-breadcrumbs.stories'
+
+<Meta title="Composants/Composants Vuetify/VBreadcrumbs" />
+
+<div className="header">
+    <h1>VBreadcrumbs</h1>
+Ce composant utilise directement le composant natif `v-breadcrumbs` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-breadcrumbs/#props).
+</div>
+
+## Default
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VBreadcrumbsStories.Default} />
+</div>
+
+## Avec divider personnalisé
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VBreadcrumbsStories.CustomDivider} />
+</div>
+
+## Désactivé
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VBreadcrumbsStories.Disabled} />
+</div>

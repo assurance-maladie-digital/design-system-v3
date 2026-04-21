@@ -93,7 +93,6 @@
 </template>
 
 <style lang="scss" scoped>
-	@use '@/assets/tokens.scss' as *;
 	@use '../../consts' as *;
 	@use '../menu';
 
@@ -112,11 +111,11 @@
 
 		&:hover {
 			background-color: rgb(var(--v-theme-primary));
-			color: $neutral-white;
+			color: rgb(var(--v-theme-textOnDark));
 			text-decoration: underline;
 
 			> :deep(*) {
-				color: $neutral-white !important;
+				color: rgb(var(--v-theme-textOnDark)) !important;
 			}
 		}
 
@@ -140,7 +139,7 @@
 			width: 100%;
 			height: 100%;
 			overflow-y: auto;
-			background-color: $neutral-white;
+			background-color: rgb(var(--v-theme-surface));
 			padding-top: 40px;
 			z-index: 10;
 		}
@@ -153,14 +152,14 @@
 		.sub-menu--open > .sub-menu-btn {
 			padding: 0 16px 8px 40px;
 			border-bottom: 1px solid $menu-border-color;
-			color: #000;
+			color: rgb(var(--v-theme-textBase));
 			background-color: transparent;
 
 			&:hover {
-				color: #000;
+				color: rgb(var(--v-theme-textBase));
 
 				> :deep(*) {
-					color: #000 !important;
+					color: rgb(var(--v-theme-textBase)) !important;
 				}
 			}
 		}
@@ -178,11 +177,11 @@
 
 		.sub-menu--open > .sub-menu-btn {
 			background-color: rgb(var(--v-theme-primary));
-			color: $neutral-white;
+			color: rgb(var(--v-theme-textOnDark));
 			transition: color 0.15s linear, background-color 0.15s linear;
 
 			> :deep(*) {
-				color: $neutral-white !important;
+				color: rgb(var(--v-theme-textOnDark)) !important;
 			}
 		}
 

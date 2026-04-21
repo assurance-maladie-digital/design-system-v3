@@ -62,7 +62,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
+@use '@/assets/overrides/breakpoints' as bp;
 
 .vd-social-media-links {
 	display: flex;
@@ -74,7 +74,7 @@ li {
 }
 
 .vd-social-media-links-label.text--primary {
-	color: tokens.$blue-base;
+	color: rgb(var(--v-theme-blue-base));
 	font-weight: 600;
 	margin: 0;
 	padding: 0;
@@ -91,7 +91,7 @@ li {
 }
 
 .vd-social-media-links-icon {
-	color: tokens.$grey-base !important;
+	color: rgb(var(--v-theme-grey-base)) !important;
 }
 
 .vd-social-media-links-icon--x {
@@ -105,7 +105,7 @@ li {
 	border: 0;
 
 	&:focus-visible {
-		outline: 3px solid tokens.$blue-base;
+		outline: 3px solid rgb(var(--v-theme-blue-base));
 		outline-offset: -1px;
 	}
 }
@@ -121,7 +121,7 @@ li {
 	}
 }
 
-@media (width >= 768px) {
+@media #{bp.$up-tablet} {
 	.vd-social-media-links-label {
 		text-align: right;
 	}
@@ -131,7 +131,7 @@ li {
 	}
 }
 
-@media (width <= 767px) {
+@media #{bp.$down-mobile} {
 	.vd-social-media-links-label {
 		text-align: left;
 	}

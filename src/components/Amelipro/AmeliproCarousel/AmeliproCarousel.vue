@@ -211,19 +211,17 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .v-btn {
 	&.btn-previous,
 	&.btn-next {
 		&:disabled {
-			color: apTokens.$ap-blue-darken1 !important;
+			color: rgb(var(--v-theme-primary)) !important;
 			background-color: transparent !important;
 			opacity: 0.7;
 			cursor: default;
 
 			& .v-icon {
-				color: apTokens.$ap-blue-darken1 !important;
+				color: rgb(var(--v-theme-primary)) !important;
 			}
 		}
 	}
@@ -263,11 +261,11 @@
 	width: 1rem;
 	height: 1rem;
 	border-radius: 50%;
-	border: 1px solid apTokens.$ap-blue-darken1;
-	background-color: apTokens.$ap-white;
+	border: 1px solid rgb(var(--v-theme-primary));
+	background-color: rgb(var(--v-theme-surface));
 
 	&.active-dot {
-		background-color: apTokens.$ap-blue-darken1;
+		background-color: rgb(var(--v-theme-primary));
 	}
 }
 </style>

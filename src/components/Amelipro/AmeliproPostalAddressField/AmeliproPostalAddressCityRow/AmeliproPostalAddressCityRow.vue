@@ -499,8 +499,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .postal-code-field {
 	min-width: 140px;
 	width: 140px;
@@ -531,14 +529,14 @@
 
 	label {
 		margin-bottom: 4px;
-		font-weight: apTokens.$label-font-weight;
+		font-weight: var(--v-ap-fontWeightBold);
 	}
 }
 
 .v-input {
 	& :deep(.v-field__input) {
-		padding-left: 12px;
-		padding-right: 12px;
+		padding-left: var(--v-padding-3);
+		padding-right: var(--v-padding-3);
 	}
 
 	& :deep(.v-field--disabled) {

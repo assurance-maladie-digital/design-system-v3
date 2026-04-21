@@ -26,7 +26,7 @@
 				<pre style="margin: 0; font-size: 12px; color: #333;"><code>@use '@cnamts/synapse/assets/tokens' as tokens;
 
 .my-color {
-    color: tokens.$yellow-lighten-40 !important;
+    color: rgb(var(--v-theme-yellow-lighten40)) !important;
  }</code></pre>
 			</div>
 		</div>
@@ -35,9 +35,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens' as tokens;
-
 .my-color {
-	color: tokens.$yellow-lighten-40 !important;
+	color: rgb(var(--v-theme-yellow-lighten40)) !important;
 }
 </style>

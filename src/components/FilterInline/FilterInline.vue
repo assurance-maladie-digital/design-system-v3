@@ -100,10 +100,8 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .v-badge :deep(.v-badge__badge) {
-	color: tokens.$cyan-darken-40 !important;
+	color: rgb(var(--v-theme-cyan-darken40)) !important;
 	background-color: white;
 }
 

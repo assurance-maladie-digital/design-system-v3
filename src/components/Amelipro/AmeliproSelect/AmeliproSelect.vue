@@ -5,7 +5,7 @@
 	import { computed, onMounted, onUnmounted, type PropType, ref } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { ValidationRule } from '@/utils/rules/types'
-	import { convertToHex } from '@/utils/functions/convertToHex'
+	import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 	import { isRequired } from '@/utils/rules/isRequired'
 
 	const props = defineProps({
@@ -185,17 +185,11 @@
 	})
 
 	const inputBorderStyle = computed<string>(() => {
-		let borderColor = convertToHex('ap-grey-darken-1')
-		if (focused.value) {
-			borderColor = convertToHex('ap-blue-darken-1')
-		}
-		if (displayError.value) {
-			borderColor = convertToHex('ap-red')
-		}
-		if (props.disabled) {
-			borderColor = convertToHex('ap-grey-lighten-2')
-		}
-		return borderColor
+		const { apBlue, apGrey, apRed } = apColorsTokens2026
+		if (props.disabled) return apGrey.lighten2
+		if (displayError.value) return apRed.base
+		if (focused.value) return apBlue.darken1
+		return apGrey.darken1
 	})
 
 	const fixAccessibility = () => {
@@ -335,8 +329,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .v-select {
 	& :deep(.v-select__selection--comma) {
 		line-height: 1.5rem;
@@ -358,8 +350,8 @@
 }
 
 :deep(.v-input__slot) {
-	min-height: apTokens.$input-min-height !important;
-	border-radius: apTokens.$input-radius;
+	min-height: var(--v-ap-inputMinHeight) !important;
+	border-radius: var(--v-ap-inputRadius);
 
 	fieldset {
 		border: 0;
@@ -367,8 +359,8 @@
 }
 
 .amelipro-select__label {
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$label-font-weight;
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 .v-list {
@@ -379,13 +371,11 @@
 </style>
 
 <style lang="scss">
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .amelipro-select-menu {
 	.v-list-item--active .v-list-item__overlay,
 	.v-list-item--selected .v-list-item__overlay,
 	.v-list-item[aria-selected='true'] .v-list-item__overlay {
-		background-color: apTokens.$ap-blue-lighten3 !important;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3)) !important;
 		opacity: 1;
 	}
 
@@ -407,7 +397,7 @@
 	.v-list-item[aria-selected='true'] .v-list-item-subtitle,
 	.v-list-item[aria-selected='true'] .v-list-item__title,
 	.v-list-item[aria-selected='true'] .v-list-item__subtitle {
-		color: apTokens.$ap-blue-darken1 !important;
+		color: rgb(var(--v-theme-primary)) !important;
 		position: relative;
 		z-index: 1;
 	}

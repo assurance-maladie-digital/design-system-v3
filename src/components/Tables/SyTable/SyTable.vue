@@ -40,6 +40,7 @@
 		itemsPerPageOptions: undefined,
 		headingLevel: 2,
 		clickableRow: false,
+		pageInput: false,
 	})
 
 	const emit = defineEmits<{
@@ -318,6 +319,7 @@
 										:column="column"
 										:header-props-raw="(getHeaderForColumn(column)?.headerProps as any)"
 										:resizable-columns="props.resizableColumns"
+										:wrap-title="props.resizableColumns || !!getHeaderForColumn(column)?.maxWidth"
 									>
 										<template
 											v-for="slotName in Object.keys($slots)"
@@ -344,9 +346,9 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
+									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) as any || undefined,
 								}"
 							>
 								<SyTableFilter
@@ -462,6 +464,7 @@
 						:page-count="pageCount"
 						:items-length="filteredItems.length"
 						:items-per-page-options="props.itemsPerPageOptions"
+						:page-input="props.pageInput"
 						@update:page="updateOptions({ page: $event })"
 						@update:items-per-page="updateItemsPerPage"
 					/>
@@ -473,7 +476,6 @@
 
 <style lang="scss" scoped>
 @use '@/components/Tables/common/tableStyles' as *;
-@use '@/assets/tokens';
 
 .sy-table :deep() {
 	@include tablestyles;
@@ -482,7 +484,7 @@
 
 @mixin striped-rows {
 	.v-table tbody tr:nth-child(even) {
-		background-color: rgba(tokens.$primary-base, 0.05);
+		background-color: rgba(var(--v-theme-primary), 0.05);
 	}
 }
 
@@ -500,11 +502,11 @@
 }
 
 .sy-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
 }
 
 .sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: -2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
 }
 
 .sy-table--pinned-select-left :deep(.v-data-table__th--select),
@@ -545,7 +547,7 @@
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
 }
 /* stylelint-enable @stylistic/max-line-length */
 

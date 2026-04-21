@@ -179,15 +179,13 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .icon-radio__wrapper {
 	border-radius: 10px;
 }
 
 .amelipro-illustrated-radio-group__label {
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$label-font-weight;
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 input {
@@ -198,7 +196,7 @@ input {
 
 	&:focus {
 		& + span {
-			outline: 1px dotted apTokens.$ap-grey-darken1;
+			outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 		}
 	}
 
@@ -214,7 +212,7 @@ input {
 			width: 1.625rem;
 			height: 1.625rem;
 			border-radius: 50%;
-			border: 3px solid apTokens.$ap-blue-darken1;
+			border: 3px solid rgb(var(--v-theme-primary));
 			background-color: transparent;
 			content: '';
 		}
@@ -229,7 +227,7 @@ input {
 				width: 0.825rem;
 				height: 0.825rem;
 				border-radius: 50%;
-				background-color: apTokens.$ap-blue-darken1;
+				background-color: rgb(var(--v-theme-primary));
 				content: '';
 			}
 		}
@@ -247,6 +245,6 @@ input {
 }
 
 .amelipro-illustrated-radio-group__item-label-text {
-	font-weight: apTokens.$label-font-weight;
+	font-weight: var(--v-ap-fontWeightBold);
 }
 </style>

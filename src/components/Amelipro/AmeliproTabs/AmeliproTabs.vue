@@ -325,7 +325,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .first-tab-btn {
 	border-top-left-radius: 8px;
@@ -337,17 +337,17 @@
 
 .tabpanel {
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 }
 
 .tab-panel-default {
 	border-radius: 8px;
-	border: 1px solid apTokens.$ap-grey-lighten2;
+	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-2));
 }
 
 .border-top-left {
-	@media #{apTokens.$media-up-md} {
+	@media #{bp.$up-md} {
 		border-top-left-radius: 0;
 	}
 }

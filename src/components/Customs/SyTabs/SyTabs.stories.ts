@@ -51,9 +51,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
 	args: {},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -85,9 +82,6 @@ export const Disabled: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -134,9 +128,6 @@ export const WithVModel: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -194,9 +185,6 @@ export const WithTabsPrependSlot: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -234,9 +222,6 @@ export const WithTabsAppendSlot: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -277,9 +262,6 @@ export const WithTabPrependSlot: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -328,9 +310,6 @@ export const WithTabAppendSlot: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -383,9 +362,6 @@ export const WithCustomContent: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -422,9 +398,6 @@ export const ManyTabs: Story = {
 		})),
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -466,9 +439,6 @@ export const CustomTheme: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -493,6 +463,38 @@ const items = [
   { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
 </script>
+`,
+			},
+		],
+	},
+}
+
+/**
+ * Exemple de SyTabs utilisé comme menu de navigation (Routing).
+ * La sémantique d'accessibilité s'adapte automatiquement (utilisation d'une balise <nav> et retrait des rôles ARIA d'onglets).
+ */
+export const NavigationMode: Story = {
+	args: {
+		items: [
+			{ label: 'Accueil', value: 'home', href: '#' },
+			{ label: 'Profil', value: 'profile', href: '#profile' },
+			{ label: 'Paramètres', value: 'settings', href: '#settings' },
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyTabs :items="items" />`,
+			},
+			{
+				name: 'Script',
+				code: `
+const items = [
+	{ label: 'Accueil', value: 'home', href: '#' },
+	{ label: 'Profil', value: 'profile', href: '#profile' },
+	{ label: 'Paramètres', value: 'settings', href: '#settings' },
+]
 `,
 			},
 		],
@@ -533,9 +535,6 @@ export const WithTabConfirmation: Story = {
     `,
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

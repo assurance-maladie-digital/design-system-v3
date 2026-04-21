@@ -142,10 +142,8 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .illustrated-data-tile__wrapper {
-	border-radius: 0.5rem;
+	border-radius: var(--v-ap-inputRadius);
 	transform: translateY(0);
 	transition: transform 0.1s ease-in-out;
 
@@ -157,14 +155,14 @@
 .illustrated-data-tile__label-line-1 {
 	margin-top: 2rem;
 	margin-bottom: 1rem;
-	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$ap-font-weight-bold;
+	font-size: var(--v-ap-fontSizeSm);
+	font-weight: var(--v-ap-fontWeightBold);
 }
 
 .illustrated-data-tile__label-line-2 {
 	margin-bottom: 2rem;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 }
 
 .illustrated-data-tile__img {

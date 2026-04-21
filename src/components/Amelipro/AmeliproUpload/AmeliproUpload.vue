@@ -643,14 +643,14 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-upload {
-	padding: apTokens.$card-padding-tablet;
-	border-radius: apTokens.$card-radius;
+	padding: var(--v-ap-cardPaddingDesktop);
+	border-radius: var(--v-ap-btnRadius);
 
-	@media #{apTokens.$media-only-xs} {
-		padding: apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding: var(--v-ap-cardPaddingMobile);
 	}
 }
 
@@ -687,7 +687,7 @@
 	}
 
 	& :deep(.label-outline) {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
 	& :deep(.v-input__control) {

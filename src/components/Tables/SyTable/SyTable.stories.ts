@@ -203,6 +203,15 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
+		'pageInput': {
+			description: 'Affiche un champ de saisie numérique dans la pagination permettant de naviguer directement vers une page en la saisissant au clavier. La navigation est déclenchée à la validation (`Entrée`) ou à la perte de focus. La valeur est automatiquement clampée entre 1 et le nombre total de pages.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'header.<columnKey>': {
@@ -4908,6 +4917,101 @@ export const ComplexItemsDisplay: Story = {
 						Depuis le {{ item.period.start }} jusqu'au {{ item.period.end }}
 					</template>
 				</SyTable>
+			`,
+		}
+	},
+}
+
+export const PageInput: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						suffix="page-input-table"
+						page-input
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+
+					const options = ref({ itemsPerPage: 5 })
+
+					const headers = ref([
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					])
+
+					const items = ref([
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+						{ firstname: 'Théo', lastname: 'Garnier', email: 'theo.garnier@example.com' },
+						{ firstname: 'Clara', lastname: 'Moreau', email: 'clara.moreau@example.com' },
+						{ firstname: 'Lucas', lastname: 'Lefebvre', email: 'lucas.lefebvre@example.com' },
+						{ firstname: 'Emma', lastname: 'Dubois', email: 'emma.dubois@example.com' },
+						{ firstname: 'Julien', lastname: 'Martin', email: 'julien.martin@example.com' },
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'items': [
+			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+			{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+			{ firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com' },
+			{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+			{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+			{ firstname: 'Théo', lastname: 'Garnier', email: 'theo.garnier@example.com' },
+			{ firstname: 'Clara', lastname: 'Moreau', email: 'clara.moreau@example.com' },
+			{ firstname: 'Lucas', lastname: 'Lefebvre', email: 'lucas.lefebvre@example.com' },
+			{ firstname: 'Emma', lastname: 'Dubois', email: 'emma.dubois@example.com' },
+			{ firstname: 'Julien', lastname: 'Martin', email: 'julien.martin@example.com' },
+		],
+		'options': { itemsPerPage: 5 },
+		'suffix': 'page-input-table',
+		'pageInput': true,
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					v-bind="args"
+				/>
 			`,
 		}
 	},

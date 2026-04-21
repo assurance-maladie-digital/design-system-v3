@@ -11,9 +11,11 @@
 		itemsLength: number
 		itemsPerPageOptions?: number[]
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		pageInput?: boolean
 	}>(), {
 		itemsPerPageOptions: undefined,
 		headingLevel: 2,
+		pageInput: false,
 	})
 
 	// Reference to the SySelect component
@@ -91,6 +93,34 @@
 		localItemsPerPage.value = newValue
 	})
 
+	/**
+	 * Page input field logic
+	 */
+	const pageInputValue = ref<number | null>(props.page)
+
+	watch(() => props.page, (newPage) => {
+		pageInputValue.value = newPage
+	})
+
+	function commitPageInput() {
+		const enteredPage = pageInputValue.value
+		if (enteredPage === null || !Number.isInteger(enteredPage)) {
+			pageInputValue.value = props.page
+			return
+		}
+		const targetPage = Math.min(Math.max(1, enteredPage), props.pageCount)
+		pageInputValue.value = targetPage
+		if (targetPage !== props.page) {
+			emit('update:page', targetPage)
+		}
+	}
+
+	function handlePageInputKeydown(e: KeyboardEvent) {
+		if (e.key === 'Enter') {
+			commitPageInput()
+		}
+	}
+
 	// Remove aria-describedby attribute after component is mounted
 	onMounted(() => {
 		// Use nextTick to ensure the DOM is fully rendered
@@ -120,26 +150,57 @@
 			}}
 		</div>
 
-		<SyPagination
+		<div
 			v-if="pageCount > 1"
-			:model-value="page"
-			:pages="pageCount"
-			:heading-level="headingLevel"
-			:visible="5"
-			:label="locales.pagination.paginationNavAriaLabel"
-			class="pagination"
-			@update:model-value="goToPage"
+			class="pagination-controls"
 		>
-			<template #previous>
-				<span>{{ locales.pagination.previous }}</span>
-			</template>
-			<template #page-number="{ page: pageNum }">
-				{{ locales.pagination.pageText(pageNum) }}
-			</template>
-			<template #next>
-				<span>{{ locales.pagination.next }}</span>
-			</template>
-		</SyPagination>
+			<SyPagination
+				:model-value="page"
+				:pages="pageCount"
+				:heading-level="headingLevel"
+				:visible="5"
+				:label="locales.pagination.paginationNavAriaLabel"
+				class="pagination"
+				@update:model-value="goToPage"
+			>
+				<template #previous>
+					<span>{{ locales.pagination.previous }}</span>
+				</template>
+				<template #page-number="{ page: pageNum }">
+					{{ locales.pagination.pageText(pageNum) }}
+				</template>
+				<template #next>
+					<span>{{ locales.pagination.next }}</span>
+				</template>
+			</SyPagination>
+
+			<div
+				v-if="pageInput"
+				class="page-input"
+			>
+				<div class="page-input__control">
+					<span class="page-input__label">
+						{{ locales.pagination.pageInputLabel }}
+					</span>
+					<input
+						v-model.number="pageInputValue"
+						type="number"
+						:min="1"
+						:max="pageCount"
+						class="page-input__field"
+						:aria-label="locales.pagination.pageInputAriaLabel(pageCount)"
+						@blur="commitPageInput"
+						@keydown="handlePageInputKeydown"
+					>
+				</div>
+				<span
+					class="page-input__total"
+					aria-hidden="true"
+				>
+					{{ locales.pagination.pageOf(pageCount) }}
+				</span>
+			</div>
+		</div>
 
 		<div class="rows-per-page">
 			<span class="rows-per-page-label">{{ locales.pagination.itemsPerPageText }}</span>
@@ -163,7 +224,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
+@use '@/assets/overrides/breakpoints' as bp;
 
 .sy-table-pagination {
 	display: flex;
@@ -211,6 +272,68 @@
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		align-items: center;
+	}
+
+	.pagination-controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+	}
+
+	.page-input {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding-inline-start: 1.75rem;
+		border-inline-start: 1px solid rgb(0 0 0 / 12%);
+
+		@media #{bp.$down-xs} {
+			padding-inline-start: 0;
+			border-inline-start: 0;
+		}
+
+		&__control {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+		}
+
+		&__label {
+			font-size: 0.875rem;
+			color: rgb(0 0 0 / 60%);
+			white-space: nowrap;
+		}
+
+		&__field {
+			width: 56px;
+			height: 32px;
+			padding: 0 8px;
+			border: 1px solid rgb(var(--v-theme-primary));
+			border-radius: 4px;
+			font-size: 0.875rem;
+			text-align: center;
+			color: inherit;
+			background: rgb(var(--v-theme-surface));
+			appearance: textfield;
+
+			&::-webkit-inner-spin-button,
+			&::-webkit-outer-spin-button {
+				appearance: none;
+			}
+
+			&:focus-visible {
+				outline: 2px solid rgb(var(--v-theme-primary));
+				outline-offset: 2px;
+			}
+		}
+
+		&__total {
+			font-size: 0.875rem;
+			color: rgb(0 0 0 / 60%);
+			white-space: nowrap;
+		}
 	}
 }
 </style>

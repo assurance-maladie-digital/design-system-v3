@@ -308,14 +308,12 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .select-btn-field__options {
 	display: flex;
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
-	gap: tokens.$gap-2;
+	gap: var(--v-gap-2);
 }
 
 .select-btn-field__options--inline {
@@ -335,10 +333,10 @@
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
-	background-color: #fff;
+	background-color: rgb(var(--v-theme-surface));
 
 	&--selected {
-		color: #fff;
+		color: rgb(var(--v-theme-textOnDark));
 		background-color: rgb(var(--v-theme-primary));
 	}
 
@@ -377,7 +375,7 @@
 }
 
 .select-btn-field__options--error .select-btn-field__item {
-	color: tokens.$colors-text-error;
-	border-color: tokens.$colors-border-error;
+	color: rgb(var(--v-theme-textError));
+	border-color: rgb(var(--v-theme-borderError));
 }
 </style>
