@@ -1,5 +1,7 @@
 ## v1.0.24 (13-04-2026)
 
+> Il est conseillé de faire une montée de version du Starter Kit en 2.0.32
+
 <table>
   <thead>
     <tr style="vertical-align: top;">
