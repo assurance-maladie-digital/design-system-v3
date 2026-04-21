@@ -146,6 +146,24 @@ describe('SyAutocomplete – accessibility (axe)', () => {
 		})
 	})
 
+	it('has no obvious axe violations for disabled field', async () => {
+		const wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: 'Option 1',
+				items,
+				label: 'Champ désactivé',
+				textKey: 'text',
+				valueKey: 'value',
+				disabled: true,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyAutocomplete – disabled field', {
+			ignoreRules: ['region'],
+		})
+	})
+
 	it('has no obvious axe violations when hideDetails is true', async () => {
 		const wrapper = mount(SyAutocomplete, {
 			props: {
