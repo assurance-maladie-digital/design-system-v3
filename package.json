@@ -14,13 +14,11 @@
     ".": {
       "types": "./dist/main.d.ts",
       "import": "./dist/design-system-v3.js"
-      
     },
     "./synapse.css": "./dist/synapse.css",
     "./vuetifyConfig": {
       "types": "./dist/vuetifyConfig.d.ts",
       "import": "./dist/vuetifyConfig.js"
-    
     },
     "./modules/notification": {
       "types": "./src/modules/notification/index.ts",
