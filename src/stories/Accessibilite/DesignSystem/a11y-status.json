@@ -1,8 +1,8 @@
 {
-  "date": "2026-04-13T13:52:27.289Z",
-  "compliantCount": 53,
+  "date": "2026-04-21T10:09:59.317Z",
+  "compliantCount": 55,
   "totalCount": 78,
-  "percentage": "67.95",
+  "percentage": "70.51",
   "results": [
     {
       "componentName": "AccessibilityProgressPage",
@@ -204,10 +204,10 @@
     },
     {
       "componentName": "Customs/SyTabs",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": true,
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/SyTabs",
       "hasManualAudit": false
     },
@@ -485,8 +485,8 @@
       "componentName": "NirField",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
-      "mdxStatus": "Incomplète",
-      "isFullyCompliant": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/NirField",
       "hasManualAudit": true
     },

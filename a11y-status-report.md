@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 13/04/2026
+Généré le: 21/04/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -26,7 +26,7 @@ Généré le: 13/04/2026
 | **Customs/SyIconButton** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyPagination** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyRadioGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Customs/SyTabs** | ❌ Non | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **Customs/SyTabs** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyTextField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -57,7 +57,7 @@ Généré le: 13/04/2026
 | **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **MonthPicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **NirField** | ✅ Oui | ✅ Non | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **NirField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **NotFoundPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **NotificationBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PageContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -83,4 +83,4 @@ Généré le: 13/04/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 53 / 78 (67.95%)**
+**Total des composants conformes : 55 / 78 (70.51%)**
