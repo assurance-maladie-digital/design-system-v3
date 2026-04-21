@@ -224,7 +224,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
+@use '@/assets/overrides/breakpoints' as bp;
 
 .sy-table-pagination {
 	display: flex;
@@ -289,7 +289,7 @@
 		padding-inline-start: 1.75rem;
 		border-inline-start: 1px solid rgb(0 0 0 / 12%);
 
-		@media screen and (max-width: tokens.$container-mobile-max-width) {
+		@media #{bp.$down-xs} {
 			padding-inline-start: 0;
 			border-inline-start: 0;
 		}

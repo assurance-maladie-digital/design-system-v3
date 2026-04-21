@@ -476,7 +476,6 @@
 
 <style lang="scss" scoped>
 @use '@/components/Tables/common/tableStyles' as *;
-@use '@/assets/tokens';
 
 .sy-table :deep() {
 	@include tablestyles;
@@ -485,7 +484,7 @@
 
 @mixin striped-rows {
 	.v-table tbody tr:nth-child(even) {
-		background-color: rgba(tokens.$primary-base, 0.05);
+		background-color: rgba(var(--v-theme-primary), 0.05);
 	}
 }
 
@@ -503,11 +502,11 @@
 }
 
 .sy-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
 }
 
 .sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: -2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
 }
 
 .sy-table--pinned-select-left :deep(.v-data-table__th--select),
@@ -548,7 +547,7 @@
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	box-shadow: 2px 0 6px -4px rgba(tokens.$grey-base, 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
 }
 /* stylelint-enable @stylistic/max-line-length */
 

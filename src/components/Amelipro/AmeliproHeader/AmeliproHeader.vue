@@ -461,12 +461,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .header-separator {
 	width: 1px;
 	height: 38px;
-	background-color: apTokens.$ap-blue-darken1;
+	background-color: rgb(var(--v-theme-primary));
 }
 
 .header-bar-container {
@@ -475,7 +473,7 @@
 		padding: 0 38px;
 
 		& .v-btn:focus {
-			outline-color: apTokens.$ap-white;
+			outline-color: rgb(var(--v-theme-apWhite-base));
 		}
 	}
 

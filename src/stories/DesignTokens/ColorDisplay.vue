@@ -2,6 +2,7 @@
 	/* eslint-disabled vuejs-accessibility/anchor-has-content */
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { computed } from 'vue'
+	import { useTheme } from 'vuetify'
 	import { VContainer, VRow, VCol, VCard, VCardTitle, VCardSubtitle } from 'vuetify/components'
 
 	interface Props {
@@ -17,16 +18,16 @@
 	}
 
 	const props = defineProps<Props>()
+	const theme = useTheme()
 
-	const theme = computed(() => typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam')
 	const displayColors = computed(() => {
-		if (theme.value === 'pa') {
+		if (theme.global.name.value === 'pa') {
 			return props.paColors
 		}
-		if (theme.value === 'ap') {
+		if (theme.global.name.value === 'ap') {
 			return props.apColors
 		}
-		if (theme.value === 'ap2026') {
+		if (theme.global.name.value === 'ap2026') {
 			return props.apColors2026
 		}
 		return props.cnamColors
@@ -42,7 +43,7 @@
 	<div
 		v-if="!isEmptyObject(displayColors) ||
 			(isEmptyObject(displayColors) && displayEmptyColors &&
-				!['ap2026', 'ap', 'cnam', 'pa'].includes(theme ?? ''))"
+				!['ap2026', 'ap', 'cnam', 'pa'].includes(theme.global.name.value))"
 		class="mb-5"
 	>
 		<SyHeading

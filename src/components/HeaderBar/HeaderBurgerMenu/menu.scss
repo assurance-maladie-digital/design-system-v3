@@ -1,11 +1,3 @@
-@use 'sass:color';
-@use '@/assets/tokens';
-
-$red: color.channel(tokens.$primary-base, 'red');
-$green: color.channel(tokens.$primary-base, 'green');
-$blue: color.channel(tokens.$primary-base, 'blue');
-$primary: $red, $green, $blue;
-
 @mixin item-focused() {
 	position: relative;
 

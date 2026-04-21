@@ -1178,7 +1178,7 @@
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-accentPrimary));
+		outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
@@ -1208,7 +1208,7 @@
 
 .help-text {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: 14px;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
@@ -1218,7 +1218,7 @@
 
 .help-text-below {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: 14px;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
@@ -1229,7 +1229,7 @@
 /* Ensure focus styles match selection styles for keyboard navigation */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-accentPrimary));
+	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }

@@ -303,29 +303,27 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .v-dialog {
 	& :deep(.v-overlay__content) {
 		overflow-y: auto !important;
 	}
 
 	&.dialog-radius :deep(.v-overlay__content) {
-		border-radius: apTokens.$card-radius;
+		border-radius: var(--v-ap-btnRadius);
 	}
 }
 
 .dialog {
-	padding: apTokens.$dialog-padding;
+	padding: var(--v-ap-dialogPadding);
 }
 
 .dialog__header {
-	padding-bottom: 0.5rem;
-	border-bottom: 1px solid apTokens.$ap-grey-lighten3;
+	padding-bottom: var(--v-ap-btnPaddingY);
+	border-bottom: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 }
 
 .dialog__title {
 	width: calc(100% - 60px);
-	font-size: apTokens.$font-size-lg;
+	font-size: var(--v-ap-fontSizeLg);
 }
 </style>

@@ -283,86 +283,86 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-card--multi-folding {
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: apTokens.$card-radius;
+	border-radius: var(--v-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 }
 
 .amelipro-card--multi-folding-header {
-	padding-top: apTokens.$card-padding-desktop;
-	padding-left: apTokens.$card-padding-desktop;
-	padding-right: apTokens.$card-padding-desktop;
+	padding-top: var(--v-ap-cardPaddingDesktop);
+	padding-left: var(--v-ap-cardPaddingDesktop);
+	padding-right: var(--v-ap-cardPaddingDesktop);
 	padding-bottom: 0 !important;
 	word-break: break-all;
 
-	@media #{apTokens.$media-down-md} {
-		padding-top: apTokens.$card-padding-tablet;
-		padding-left: apTokens.$card-padding-tablet;
-		padding-right: apTokens.$card-padding-tablet;
+	@media #{bp.$down-sm} {
+		padding-top: var(--v-ap-cardPaddingDesktop);
+		padding-left: var(--v-ap-cardPaddingDesktop);
+		padding-right: var(--v-ap-cardPaddingDesktop);
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-top: apTokens.$card-padding-mobile;
-		padding-left: apTokens.$card-padding-mobile;
-		padding-right: apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding-top: var(--v-ap-cardPaddingMobile);
+		padding-left: var(--v-ap-cardPaddingMobile);
+		padding-right: var(--v-ap-cardPaddingMobile);
 	}
 }
 
 .amelipro-card--multi-folding-content {
 	width: 100%;
-	padding: apTokens.$card-padding-desktop;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	padding: var(--v-ap-cardPaddingDesktop);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 
-	@media #{apTokens.$media-down-md} {
-		padding-left: apTokens.$card-padding-tablet;
-		padding-right: apTokens.$card-padding-tablet;
-		padding-bottom: apTokens.$card-padding-tablet;
+	@media #{bp.$down-sm} {
+		padding-left: var(--v-ap-cardPaddingDesktop);
+		padding-right: var(--v-ap-cardPaddingDesktop);
+		padding-bottom: var(--v-ap-cardPaddingDesktop);
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-left: apTokens.$card-padding-mobile;
-		padding-right: apTokens.$card-padding-mobile;
-		padding-bottom: apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding-left: var(--v-ap-cardPaddingMobile);
+		padding-right: var(--v-ap-cardPaddingMobile);
+		padding-bottom: var(--v-ap-cardPaddingMobile);
 	}
 }
 
 .classic-btn {
 	position: relative;
-	padding: apTokens.$multi-folding-btn-padding-y apTokens.$multi-folding-btn-padding-x;
-	border: 1px solid apTokens.$ap-blue-darken1;
-	border-radius: apTokens.$multi-folding-btn-radius;
-	background-color: apTokens.$ap-white;
-	color: apTokens.$ap-blue-darken1;
-	font-size: apTokens.$font-size-sm;
-	font-weight: apTokens.$multi-folding-btn-font-weight;
+	padding: var(--v-ap-multiFoldingBtnPaddingY) var(--v-ap-multiFoldingBtnPaddingX);
+	border: 1px solid rgb(var(--v-theme-primary));
+	border-radius: var(--v-ap-btnRadius);
+	background-color: rgb(var(--v-theme-surface));
+	color: rgb(var(--v-theme-primary));
+	font-size: var(--v-ap-fontSizeSm);
+	font-weight: var(--v-ap-fontWeightBold);
 	cursor: pointer;
 
 	&.active-btn {
-		background-color: apTokens.$ap-blue-lighten3;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3));
 	}
 
 	&.checked-btn {
-		border: 1px solid apTokens.$ap-turquoise-darken1;
-		background-color: apTokens.$ap-turquoise-lighten1;
-		color: apTokens.$ap-turquoise-darken1;
+		border: 1px solid rgb(var(--v-theme-success));
+		background-color: rgb(var(--v-theme-ap-turquoise-lighten-1));
+		color: rgb(var(--v-theme-success));
 	}
 
 	&.error-btn {
-		border: 1px solid apTokens.$ap-red-darken1;
-		background-color: apTokens.$ap-red-lighten3;
-		color: apTokens.$ap-red-darken1;
+		border: 1px solid rgb(var(--v-theme-ap-red-darken-1));
+		background-color: rgb(var(--v-theme-ap-red-lighten-3));
+		color: rgb(var(--v-theme-ap-red-darken-1));
 	}
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
 	&:disabled {

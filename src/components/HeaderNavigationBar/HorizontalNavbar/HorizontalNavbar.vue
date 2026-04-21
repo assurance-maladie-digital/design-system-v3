@@ -282,7 +282,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss' as *;
 @use '@/components/HeaderBar/consts' as *;
 
 .horizontal-menu {
@@ -324,7 +323,7 @@
 	transition: color 0.2s ease;
 
 	&:hover {
-		color: #fff;
+		color: rgb(var(--v-theme-textOnDark));
 	}
 
 	&:focus-visible {
@@ -335,7 +334,7 @@
 
 	&--active,
 	&[aria-current='page'] {
-		color: #fff;
+		color: rgb(var(--v-theme-textOnDark));
 		border-bottom: 3px solid #fff; /* Bordure solide et plus visible pour les éléments actifs */
 		box-shadow: 0 3px 0 0 #fff; /* Double effet pour être sûr que la bordure est bien visible */
 
@@ -351,7 +350,7 @@
 	padding: 8px 16px;
 	margin-top: 8px;
 	background-color: v-bind('options.sheet.color');
-	color: #fff;
+	color: rgb(var(--v-theme-textOnDark));
 	text-decoration: none;
 	border-radius: 4px;
 	transition: background-color 0.2s ease;

@@ -240,11 +240,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss' as *;
 @use './consts' as *;
 
 .global-container {
-	background-color: $neutral-white;
+	background-color: rgb(var(--v-theme-surface));
 }
 
 .header {
@@ -263,7 +262,7 @@
 	height: $header-height;
 	max-width: v-bind(width);
 	margin: 0 auto;
-	border-bottom: solid 1px $blue-lighten-80;
+	border-bottom: solid 1px rgb(var(--v-theme-blue-lighten80));
 }
 
 .header-side {

@@ -116,8 +116,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .sy-table-toolbar {
 	min-height: 56px;
 
@@ -162,27 +160,27 @@
 }
 
 .sy-table-toolbar.v-theme--dark :deep() {
-	background-color: tokens.$grey-darken-20 !important;
+	background-color: rgb(var(--v-theme-grey-darken20)) !important;
 
 	p,
 	.text-primary {
-		color: rgba(tokens.$colors-text-ondark, 0.6) !important;
+		color: rgba(var(--v-theme-textOnDark), 0.6) !important;
 	}
 
 	svg {
-		fill: tokens.$colors-text-ondark !important;
+		fill: rgb(var(--v-theme-textOnDark)) !important;
 	}
 
 	.v-label {
-		color: rgba(tokens.$colors-text-ondark, 0.6) !important;
+		color: rgba(var(--v-theme-textOnDark), 0.6) !important;
 	}
 
 	.v-field__input {
-		color: tokens.$colors-text-ondark !important;
+		color: rgb(var(--v-theme-textOnDark)) !important;
 	}
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgba(tokens.$colors-text-ondark, 0.1);
+	background: rgba(var(--v-theme-textOnDark), 0.1);
 }
 </style>

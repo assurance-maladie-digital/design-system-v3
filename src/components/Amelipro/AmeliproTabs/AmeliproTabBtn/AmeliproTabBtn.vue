@@ -143,8 +143,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .check-icon {
 	position: absolute;
 	top: calc(50% - 18px);
@@ -153,10 +151,10 @@
 
 .amelipro-tab__btn--pills {
 	position: relative;
-	border-radius: apTokens.$tabs-pill-radius;
+	border-radius: var(--v-ap-btnRadius);
 	cursor: pointer;
-	padding: apTokens.$tabs-pill-padding-y apTokens.$tabs-pill-padding-x;
-	font-weight: apTokens.$tabs-pill-font-weight;
+	padding: 0.5rem 2rem;
+	font-weight: var(--v-ap-fontWeightBold);
 
 	&.selected {
 		&::after {
@@ -165,8 +163,8 @@
 			left: 0.75rem;
 			width: 1rem;
 			height: 0.5rem;
-			border-bottom: 2px solid apTokens.$ap-blue-darken1;
-			border-left: 2px solid apTokens.$ap-blue-darken1;
+			border-bottom: 2px solid rgb(var(--v-theme-primary));
+			border-left: 2px solid rgb(var(--v-theme-primary));
 			transform: rotate(-50deg);
 			content: '';
 		}
@@ -189,7 +187,7 @@
 		width: 1.6rem;
 		height: 1.6rem;
 		border-radius: 50%;
-		background-color: apTokens.$ap-pink;
+		background-color: rgb(var(--v-theme-ap-pink));
 		z-index: -1;
 	}
 }

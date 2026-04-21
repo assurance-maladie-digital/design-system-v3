@@ -20,7 +20,6 @@
 </template>
 
 <style lang="scss" scoped>
-	@use '@/assets/tokens.scss' as *;
 	@use '../menu';
 
 	.header-menu-item {
@@ -56,10 +55,10 @@
 
 	.header-menu-item:hover {
 		background-color: rgb(var(--v-theme-primary));
-		color: $neutral-white;
+		color: rgb(var(--v-theme-textOnDark));
 
 		> :deep(a > *) {
-			color: $neutral-white !important;
+			color: rgb(var(--v-theme-textOnDark)) !important;
 		}
 	}
 </style>

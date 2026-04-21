@@ -572,8 +572,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens.scss' as *;
-
 .sy-tabs {
 	display: flex;
 	align-items: center;

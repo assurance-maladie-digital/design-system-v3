@@ -1110,8 +1110,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 :deep(.v-icon__svg) { cursor: default; }
 
 .warning-field {
@@ -1122,10 +1120,10 @@
 	}
 
 	:deep(.v-field) {
-		color: tokens.$colors-border-warning !important;
+		color: rgb(var(--v-theme-borderWarning)) !important;
 
 		.v-field__outline {
-			color: tokens.$colors-border-warning !important;
+			color: rgb(var(--v-theme-borderWarning)) !important;
 		}
 	}
 
@@ -1133,7 +1131,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: tokens.$colors-border-warning !important;
+			color: rgb(var(--v-theme-borderWarning)) !important;
 		}
 	}
 }
@@ -1141,11 +1139,11 @@
 .error-field {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: tokens.$colors-text-error !important;
+		color: rgb(var(--v-theme-textError)) !important;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-border-error !important;
+		color: rgb(var(--v-theme-borderError)) !important;
 	}
 }
 
@@ -1157,10 +1155,10 @@
 	}
 
 	:deep(.v-field) {
-		color: tokens.$colors-border-success !important;
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 
 		.v-field__outline {
-			color: tokens.$colors-border-success !important;
+			color: rgb(var(--v-theme-borderSuccess)) !important;
 		}
 	}
 
@@ -1168,7 +1166,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: tokens.$colors-border-success !important;
+			color: rgb(var(--v-theme-borderSuccess)) !important;
 		}
 	}
 }

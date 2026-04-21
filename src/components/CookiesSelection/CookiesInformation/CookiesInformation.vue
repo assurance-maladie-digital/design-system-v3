@@ -180,8 +180,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 details > summary {
 	cursor: pointer;
 	list-style: none;

@@ -75,8 +75,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .upload-list {
 	display: flex;
 	flex-direction: column;

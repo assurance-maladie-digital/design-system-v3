@@ -123,7 +123,7 @@
 
 .sy-france-connect-btn--dark {
 	.sy-france-connect-link {
-		color: #fff;
+		color: rgb(var(--v-theme-textOnDark));
 		background-color: #8585f6;
 
 		&:hover {
