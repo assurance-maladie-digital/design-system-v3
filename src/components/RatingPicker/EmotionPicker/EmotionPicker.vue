@@ -143,13 +143,13 @@
 				ref="ratingElement"
 				v-ripple="!(props.readonly || hasAnswered)"
 				role="radio"
-				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
 				:aria-checked="isActive(index) ? 'true' : 'false'"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
 				:style="{
 					'min-height': btnSize,
 					'min-width': btnSize
 				}"
+				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
 				class="sy-emotion-picker__item rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
 				@click="emitInputEvent(index); setFocus(index - 1)"
 				@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
