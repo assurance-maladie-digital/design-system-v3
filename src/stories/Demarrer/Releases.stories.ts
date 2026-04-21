@@ -3,6 +3,14 @@ import { onMounted, ref } from 'vue'
 import * as marked from 'marked'
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
 
+type GitHubRelease = {
+	id: number
+	name?: string
+	tag_name?: string
+	published_at: string
+	body: string
+}
+
 export default {
 	title: 'Démarrer/Releases',
 	component: SyAlert,
@@ -12,7 +20,7 @@ export const List = {
 		return {
 			components: { SyAlert },
 			setup() {
-				const releases = ref([])
+				const releases = ref<GitHubRelease[]>([])
 				const errorMessage = ref('')
 
 				const fetchReleases = async () => {
@@ -34,6 +42,10 @@ export const List = {
 					return marked.parse(markdown)
 				}
 
+				const isStarterKitNoticeRelease = (release: GitHubRelease) => {
+					return [release.name, release.tag_name].some(value => value?.includes('v1.0.24'))
+				}
+
 				onMounted(() => {
 					fetchReleases().then(r => r)
 				})
@@ -43,6 +55,7 @@ export const List = {
 					errorMessage,
 					formatDate,
 					formatMarkdown,
+					isStarterKitNoticeRelease,
 				}
 			},
 			template: `
@@ -60,6 +73,9 @@ export const List = {
 					<div v-else>
 						<div v-for="release in releases" :key="release.id">
 							<h2>{{ release.name }} ({{ formatDate(release.published_at) }})</h2>
+							<SyAlert v-if="isStarterKitNoticeRelease(release)" type="warning" variant="tonal" :closable="false" class="mt-2 mb-4">
+								<template #default>Il est conseillé de faire une montée de version du Starter Kit en 2.0.32</template>
+							</SyAlert>
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>
 						</div>
