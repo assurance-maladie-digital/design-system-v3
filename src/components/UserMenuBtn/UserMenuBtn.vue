@@ -94,12 +94,10 @@
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/tokens';
-
 .vd-user-icon {
 	width: 40px;
 	height: 40px;
-	background: tokens.$grey-lighten-90;
+	background: rgb(var(--v-theme-grey-lighten90));
 	border-radius: 50%;
 
 	svg,

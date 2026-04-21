@@ -1,5 +1,5 @@
 import { createFlattenTheme } from './createFlattenTheme'
-import { convertGaps } from './convertGaps'
 import { createFontVariables } from './createFontVariables'
+import { buildColorClassMap } from './buildColorClassMap'
 
-export { createFlattenTheme, convertGaps, createFontVariables }
+export { createFlattenTheme, createFontVariables, buildColorClassMap }

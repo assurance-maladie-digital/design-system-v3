@@ -125,8 +125,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .sy-stars-picker {
 	border: 0;
 }
@@ -140,15 +138,15 @@
 	height: 36px !important;
 
 	&--disabled.text-primary {
-		color: tokens.$primary-base !important;
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	&.text-blue-lighten {
-		color: tokens.$blue-lighten-60 !important;
+		color: rgb(var(--v-theme-blue-lighten60)) !important;
 	}
 
 	&--disabled.text-blue-lighten {
-		color: tokens.$blue-lighten-60 !important;
+		color: rgb(var(--v-theme-blue-lighten60)) !important;
 	}
 }
 </style>

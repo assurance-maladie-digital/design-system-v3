@@ -52,15 +52,13 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .amelipro-badge {
 	display: inline-block;
 	margin-left: 0.5rem;
-	padding: 0.5rem 1rem !important;
+	padding: var(--v-ap-btnPaddingY) var(--v-ap-btnPaddingX) !important;
 
 	&.round-custom {
-		border-radius: 0.5rem 1rem 1rem 0.5rem;
+		border-radius: var(--v-ap-inputRadius) 1rem 1rem 0.5rem;
 	}
 
 	&.round-classic {
@@ -70,7 +68,7 @@
 
 .amelipro-badge__content {
 	display: inline-block;
-	font-size: apTokens.$font-size-sm !important;
-	font-weight: apTokens.$ap-font-weight-bold !important;
+	font-size: var(--v-ap-fontSizeSm) !important;
+	font-weight: var(--v-ap-fontWeightBold) !important;
 }
 </style>

@@ -297,7 +297,6 @@
 	flex-wrap: wrap;
 	gap: 16px;
 	padding: 16px 0;
-	background-color: var(--v-theme-surface);
 	border-bottom: 1px solid var(--v-border-color);
 
 	&-item {

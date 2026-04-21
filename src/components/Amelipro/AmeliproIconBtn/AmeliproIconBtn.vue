@@ -275,8 +275,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .v-btn {
 	background-color: transparent;
 	letter-spacing: unset;
@@ -292,7 +290,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-black;
+		outline: 1px dotted #000;
 	}
 }
 
@@ -308,7 +306,7 @@
 	min-height: 1.25rem;
 	padding: 0 0.125rem;
 	border-radius: 50%;
-	font-size: apTokens.$font-size-xxs;
+	font-size: var(--v-ap-fontSizeXxs);
 
 	& span {
 		display: block;

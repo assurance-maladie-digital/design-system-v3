@@ -189,10 +189,8 @@
 	</div>
 </template>
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .v-list-item:hover {
-	background-color: rgba(tokens.$colors-overlay, 0.005);
+	background-color: rgba(var(--v-theme-colors-overlay), 0.005);
 }
 
 .v-list-item:focus-visible {
@@ -207,7 +205,7 @@
 }
 
 .vd-lang-btn {
-	font-size: 16px;
+	font-size: var(--v-fontSize-corpsDeTexte);
 	text-transform: none;
 	letter-spacing: inherit;
 

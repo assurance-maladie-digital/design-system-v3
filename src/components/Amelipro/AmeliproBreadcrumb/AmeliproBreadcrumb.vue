@@ -80,13 +80,11 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .breadcrumb__separator {
 	display: block;
 	width: 0;
 	height: 1.25rem;
 	margin: 0 0.5rem;
-	border-left: 1px solid apTokens.$ap-grey-darken1;
+	border-left: 1px solid rgb(var(--v-theme-ap-grey-darken-1));
 }
 </style>

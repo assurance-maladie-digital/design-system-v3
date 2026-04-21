@@ -30,7 +30,7 @@ export const paLightTheme = {
 	interactiveSelectionPressed: paSemanticTokens.colors.interactive.selectionPressed,
 	interactiveSelectionSelected: paSemanticTokens.colors.interactive.selectionSelected,
 	interactiveSelectionHoverOnSelected: paSemanticTokens.colors.interactive.selectionHoverOnSelected,
-	interactiveSelectionSelectedAccent: paSemanticTokens.colors.interactive.selectionselectedAccent,
+	interactiveSelectionSelectedAccent: paSemanticTokens.colors.interactive.selectionSelectedAccent,
 	interactiveSelectionHoverOnSelectedAccent: paSemanticTokens.colors.interactive.selectionHoverOnSelectedAccent,
 	interactiveSelectionDisabled: paSemanticTokens.colors.interactive.selectionDisabled,
 	backgroundMain: paSemanticTokens.colors.background.main,

@@ -540,7 +540,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
+@use '@/assets/overrides/breakpoints' as bp;
 
 .phone-field-fieldset {
 	border: 1px solid #b9b9b9;
@@ -560,7 +560,7 @@
 }
 
 .required-asterisk {
-	color: #d32f2f;
+	color: rgb(var(--v-theme-error));
 	margin-left: 4px;
 }
 
@@ -581,7 +581,7 @@
 	width: 100%;
 }
 
-@media (width >= 600px) {
+@media #{bp.$up-sm} {
 	.phone-field-container {
 		flex-direction: row;
 		align-items: stretch;

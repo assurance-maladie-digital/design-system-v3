@@ -738,7 +738,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
 @use '../HeaderBar/consts' as *;
 
 $header-max-width: 1200px;
@@ -748,12 +747,12 @@ $font-sm: 12px;
 $menu-padding: 10px 16px;
 $menu-padding-mobile: 10px 12px;
 $std-radius: 0;
-$blue-lighten-90: tokens.$blue-lighten-90;
-$blue-darken-40: tokens.$blue-darken-40;
-$blue-darken-60: tokens.$blue-darken-60;
-$user-assure: tokens.$user-assure;
-$user-professionnel: tokens.$user-professionnel;
-$user-entreprise: tokens.$user-entreprise;
+$blue-lighten-90: rgb(var(--v-theme-blue-lighten90));
+$blue-darken-40: rgb(var(--v-theme-blue-darken40));
+$blue-darken-60: rgb(var(--v-theme-blue-darken60));
+$user-assure: rgb(var(--v-theme-pink-lighten40));
+$user-professionnel: rgb(var(--v-theme-cyan-lighten40));
+$user-entreprise: rgb(var(--v-theme-yellow-base));
 $first-item-width: 95px;
 $first-item-max-width: 320px;
 $first-item-width-mobile: 32px;

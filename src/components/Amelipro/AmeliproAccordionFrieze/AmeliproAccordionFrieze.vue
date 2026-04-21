@@ -352,8 +352,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .frieze {
 	position: relative;
 	width: 100%;
@@ -370,37 +368,37 @@
 
 .item-btn {
 	box-sizing: border-box !important;
-	padding: 12px;
-	border: 1px solid apTokens.$ap-grey-lighten3;
+	padding: var(--v-padding-3);
+	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 	border-radius: 8px;
 	text-align: center;
-	background-color: apTokens.$ap-white;
+	background-color: rgb(var(--v-theme-surface));
 
 	&:hover,
 	&:focus {
 		padding: 11px 12px;
-		background-color: apTokens.$ap-blue-lighten3;
-		border: 2px solid apTokens.$ap-blue-darken1;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3));
+		border: 2px solid rgb(var(--v-theme-primary));
 	}
 }
 
 .item-btn__link-style-text {
-	color: apTokens.$ap-blue-darken1;
-	font-size: apTokens.$font-size-xs;
+	color: rgb(var(--v-theme-primary));
+	font-size: var(--v-ap-fontSizeXs);
 	text-decoration: underline;
 }
 
 .item-empty {
 	box-sizing: border-box !important;
-	padding: 12px;
-	border: 1px solid apTokens.$ap-grey-lighten2;
+	padding: var(--v-padding-3);
+	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-2));
 	border-radius: 8px;
-	color: apTokens.$ap-grey;
+	color: rgb(var(--v-theme-ap-grey));
 	text-align: center;
-	background-color: apTokens.$ap-grey-lighten2;
+	background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 
 	& .item-btn__link-style-text {
-		color: apTokens.$ap-grey;
+		color: rgb(var(--v-theme-ap-grey));
 	}
 }
 

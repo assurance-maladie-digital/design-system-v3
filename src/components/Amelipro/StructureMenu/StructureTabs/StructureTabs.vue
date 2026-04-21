@@ -177,10 +177,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .tabs-btn-wrapper {
-	@media #{apTokens.$media-only-xs} {
+	@media #{bp.$down-xs} {
 		width: 100% !important;
 	}
 }

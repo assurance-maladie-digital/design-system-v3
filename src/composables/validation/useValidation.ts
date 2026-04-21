@@ -1,7 +1,23 @@
 import { ref, computed } from 'vue'
 import { useFieldValidation, type RuleOptions, type ValidationResult as FieldValidationResult } from '../rules/useFieldValidation'
 
-export type BuiltInRuleType = 'required' | 'email' | 'minLength' | 'maxLength'
+type builtInDateRuleType =
+	'noWeekend'
+	| 'noBeforeToday'
+	| 'notAfterToday'
+	| 'notBeforeDate'
+	| 'notAfterDate'
+	| 'dateExact'
+	| 'isHolidayDay'
+
+type BuiltInNumberRuleType = 'min' | 'max'
+type BuiltInStringRuleType = 'minLength' | 'maxLength' | 'exactLength' | 'email' | 'matchPattern'
+type BuiltInRuleGeneralType = 'required' | 'custom'
+export type BuiltInRuleType =
+	| BuiltInRuleGeneralType
+	| BuiltInNumberRuleType
+	| BuiltInStringRuleType
+	| builtInDateRuleType
 
 interface CustomValidationRule {
 	type: 'custom'

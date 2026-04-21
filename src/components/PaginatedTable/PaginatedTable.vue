@@ -237,7 +237,6 @@
 
 <style lang="scss" scoped>
 /* stylelint-disable selector-class-pattern */
-@use '@/assets/tokens';
 
 .sy-paginated-table :deep() {
 	table thead tr {
@@ -278,12 +277,12 @@
 			.v-field__append-inner > .v-icon,
 			.v-field__clearable > .v-icon {
 				opacity: 1;
-				color: tokens.$primary-base;
+				color: rgb(var(--v-theme-primary));
 			}
 		}
 
 		&--focused {
-			border-color: tokens.$primary-base;
+			border-color: rgb(var(--v-theme-primary));
 		}
 	}
 }

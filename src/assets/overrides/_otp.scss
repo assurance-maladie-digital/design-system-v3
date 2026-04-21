@@ -8,7 +8,7 @@
 		.v-field__outline__start,
 		.v-field__outline__end,
 		.v-field__outline__notch {
-			border-color: tokens.$colors-border-accent-primary !important;
+			border-color: rgb(var(--v-theme-borderAccentPrimary)) !important;
 		}
 
 		.v-field--focused,
@@ -16,7 +16,7 @@
 			.v-field__outline__start,
 			.v-field__outline__end,
 			.v-field__outline__notch {
-				border-color: tokens.$colors-border-accent-primary-contrasted !important;
+				border-color: rgb(var(--v-theme-borderAccentPrimaryContrasted)) !important;
 			}
 		}
 	}
@@ -28,7 +28,7 @@
 		.v-field__outline__start,
 		.v-field__outline__end,
 		.v-field__outline__notch {
-			border-color: apTokens.$colors-border-accent-primary !important;
+			border-color: rgb(var(--v-theme-borderAccentPrimary)) !important;
 		}
 
 		.v-field--focused,
@@ -36,8 +36,9 @@
 			.v-field__outline__start,
 			.v-field__outline__end,
 			.v-field__outline__notch {
-				border-color: apTokens.$colors-border-accent-primary-contrasted !important;
+				border-color: rgb(var(--v-theme-borderAccentPrimaryContrasted)) !important;
 			}
 		}
 	}
 }
+/* stylelint-enable selector-class-pattern */

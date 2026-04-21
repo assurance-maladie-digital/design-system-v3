@@ -370,14 +370,12 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .amelipro-tile-btn {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: apTokens.$ap-white;
-	border-radius: 0.5rem;
+	background-color: rgb(var(--v-theme-surface));
+	border-radius: var(--v-ap-inputRadius);
 	white-space: normal;
 }
 
@@ -398,7 +396,7 @@
 	}
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
 	& :deep(.v-btn__content) {

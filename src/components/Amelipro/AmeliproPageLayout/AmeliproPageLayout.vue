@@ -235,8 +235,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .body-content {
 	position: relative;
 	height: auto;
@@ -247,8 +245,8 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	color: apTokens.$ap-blue-darken1;
-	background-color: apTokens.$ap-white;
+	color: rgb(var(--v-theme-primary));
+	background-color: rgb(var(--v-theme-surface));
 	text-decoration: underline;
 	z-index: 10;
 }

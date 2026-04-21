@@ -167,7 +167,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .accordion-btn {
 	padding: 0;
@@ -175,7 +175,7 @@
 	border: 0;
 
 	&:focus {
-		outline: 1px dotted apTokens.$ap-grey-darken1;
+		outline: 1px dotted rgb(var(--v-theme-ap-grey-darken-1));
 	}
 }
 
@@ -183,22 +183,22 @@
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: apTokens.$card-radius;
+	border-radius: var(--v-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 }
 
 .amelipro-accordion__header {
-	padding: apTokens.$card-padding-desktop;
+	padding: 1rem;
 	word-break: break-all;
 
-	@media #{apTokens.$media-down-md} {
-		padding: apTokens.$card-padding-tablet;
+	@media #{bp.$down-sm} {
+		padding: 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding: apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding: 0.75rem;
 	}
 
 	.btn-wrapper {
@@ -206,31 +206,31 @@
 	}
 
 	.amelipro-accordion--opened & {
-		padding-bottom: apTokens.$card-padding-mobile;
+		padding-bottom: 0.75rem;
 	}
 }
 
 .amelipro-accordion__wrapper {
 	width: 100%;
-	padding: 0 apTokens.$card-padding-desktop;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	padding: 0 1rem;
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 
-	@media #{apTokens.$media-down-md} {
-		padding: 0 apTokens.$card-padding-tablet;
+	@media #{bp.$down-sm} {
+		padding: 0 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding: 0 apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding: 0 0.75rem;
 	}
 }
 
 .amelipro-accordion__content {
-	padding-top: apTokens.$card-padding-desktop;
-	padding-bottom: apTokens.$card-padding-tablet;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 
-	@media #{apTokens.$media-down-sm} {
-		padding-bottom: apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding-bottom: 0.75rem;
 	}
 }
 

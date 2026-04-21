@@ -61,11 +61,7 @@ export const Theme: StoryObj = {
 	render: () => {
 		return {
 			setup() {
-				const theme = computed<ThemeKey>(() => {
-					const value
-                        = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
-					return (value as ThemeKey) ?? 'cnam'
-				})
+				const theme = useTheme()
 
 				const themeLabels: Record<ThemeKey, string> = {
 					cnam: 'Assurance Maladie',
@@ -74,7 +70,10 @@ export const Theme: StoryObj = {
 					ap2026: 'AmeliPro',
 				}
 
-				const themeLabel = computed(() => themeLabels[theme.value])
+				const themeLabel = computed(() => {
+					const currentTheme = theme.global.name.value as ThemeKey
+					return themeLabels[currentTheme] ?? themeLabels.cnam
+				})
 
 				return {
 					themeLabel,

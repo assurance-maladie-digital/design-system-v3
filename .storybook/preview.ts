@@ -117,6 +117,8 @@ const preview: Preview = {
 		docs: { controls: { sort: 'alpha' } },
 		options: {
 			storySort: {
+				method: 'alpha',
+				locales: 'fr-FR',
 				order: [
 					'Démarrer',
 					['Accueil', 'Introduction', 'Politique de confidentialité', 'Releases', 'Signaler une anomalie', 'Enrichir le Design System'],

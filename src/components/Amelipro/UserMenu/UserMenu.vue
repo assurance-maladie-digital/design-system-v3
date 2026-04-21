@@ -130,8 +130,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .v-btn :deep(.v-btn__content) {
 	opacity: 1 !important;
 }
@@ -154,7 +152,7 @@
 }
 
 .user-menu-last-connexion {
-	font-size: apTokens.$font-size-xs;
+	font-size: var(--v-ap-fontSizeXs);
 }
 
 .user-menu__btn--account,

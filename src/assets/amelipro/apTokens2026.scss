@@ -20,8 +20,8 @@ $media-only-lg: '(min-width: #{$md + 0.01}px) and (max-width: #{$lg}px)'; // 126
 $media-only-xl: '(min-width: #{$lg + 0.01}px)'; // >= 1904px
 
 // AMELIPRO COLORS
-$ap-primary: #00749c; // bleu-4
-$ap-secondary: #00516d; // bleu-1
+$ap-primary: #0084b2; // bleu-4
+$ap-secondary: #004259; // bleu-1
 $ap-error: #b33f2e; // rouge-3
 $ap-informations: #4d547d; // parme-1
 $ap-succes: #007863; // turquoise-3
@@ -32,7 +32,7 @@ $ap-grey: #545859; // gris-2
 $ap-blue: #0c419a; // bleu-9
 $ap-yellow: #f0b323; // jaune-2
 $ap-green: #56c271; // vert-3
-$ap-red: #b33f2e; // rouge-3
+$ap-red: $ap-error; // rouge-3
 $ap-turquoise: #33bca5; // turquoise-4
 $ap-parme: #dde6fb; // parme-2
 $ap-pink: #d00063; // rose-1
@@ -50,8 +50,8 @@ $ap-grey-lighten6: #f4f8f9; // gris-8 app background
 
 // AMELIPRO BLUE VARIANT
 // DARKEN
-$ap-blue-darken1: #00749c; // bleu-4
-$ap-blue-darken2: #00516d; // bleu-1
+$ap-blue-darken1: $ap-primary; // bleu-4
+$ap-blue-darken2: $ap-secondary; // bleu-1
 // LIGHTEN
 $ap-blue-lighten1: #99dbf2; // bleu-6
 $ap-blue-lighten2: #ccedf9; // bleu-7

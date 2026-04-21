@@ -4,7 +4,7 @@
 	import type { LogoInfo } from './types'
 	import { LogoSizeEnum } from '../AmeliproLogoAm/LogoSizeEnum'
 	import { type RouteLocationRaw } from 'vue-router'
-	import { convertToHex } from '@/utils/functions/convertToHex'
+	import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
 	import { locales } from './locales'
 	import { useDisplay } from 'vuetify'
@@ -79,7 +79,11 @@
 
 	const showDivider = computed<boolean>(() => Boolean(ameliproLogo.value || props.serviceTitle))
 	const showServiceSubTitle = computed<boolean>(() => Boolean(props.serviceTitle && props.serviceSubTitle))
-	const dividerColor = computed<string>(() => (props.themeAmelipro ? '#006386' : convertToHex('ap-blue')))
+	// SVG fill requires a hex literal — use token references directly instead of going through convertToHex
+	const dividerColor = computed<string>(() => props.themeAmelipro
+		? apColorsTokens2026.apBlue.darken2 // = theme secondary
+		: apColorsTokens2026.apBlue.base, // = ap-blue
+	)
 	const dividerDimensions = computed(() => {
 		const { xSmall, small, normal } = dividerDimensionsMapping
 
@@ -179,7 +183,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .header-brand-section {
 	overflow: hidden;
@@ -189,30 +193,30 @@
 	}
 
 	h1.header-title {
-		font-size: apTokens.$font-size-xxl !important;
+		font-size: var(--v-ap-fontSizeXxl) !important;
 		letter-spacing: -0.48px !important;
 
-		@media #{apTokens.$media-down-md} {
-			font-size: apTokens.$font-size-lg !important;
+		@media #{bp.$down-sm} {
+			font-size: var(--v-ap-fontSizeLg) !important;
 			letter-spacing: -0.4px !important;
 		}
 
-		@media #{apTokens.$media-only-xs} {
-			font-size: apTokens.$font-size-md !important;
+		@media #{bp.$down-xs} {
+			font-size: var(--v-ap-fontSizeMd) !important;
 			letter-spacing: -0.32px !important;
 		}
 	}
 
 	h2.header-title {
-		font-size: apTokens.$font-size-md !important;
-		color: apTokens.$ap-grey-darken1;
+		font-size: var(--v-ap-fontSizeMd) !important;
+		color: rgb(var(--v-theme-ap-grey-darken-1));
 
-		@media #{apTokens.$media-down-md} {
-			font-size: apTokens.$font-size-sm !important;
+		@media #{bp.$down-sm} {
+			font-size: var(--v-ap-fontSizeSm) !important;
 		}
 
-		@media #{apTokens.$media-only-xs} {
-			font-size: apTokens.$font-size-xs !important;
+		@media #{bp.$down-xs} {
+			font-size: var(--v-ap-fontSizeXs) !important;
 		}
 	}
 
@@ -225,11 +229,11 @@
 	.logo-amelipro {
 		width: 98px;
 
-		@media #{apTokens.$media-down-md} {
+		@media #{bp.$down-sm} {
 			width: 77px;
 		}
 
-		@media #{apTokens.$media-only-xs} {
+		@media #{bp.$down-xs} {
 			width: 52px;
 		}
 	}

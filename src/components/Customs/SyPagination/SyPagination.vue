@@ -352,8 +352,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .sy-pagination {
 	display: flex;
 	align-items: center;
