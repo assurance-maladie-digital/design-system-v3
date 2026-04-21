@@ -4,7 +4,6 @@ Généré le: 21/04/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
-| **AccessibilityProgressPage** | ❌ Non | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
 | **Accordion** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -18,7 +17,7 @@ Généré le: 21/04/2026
 | **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ Non | ❌ |
-| **Customs/Selects/SySelect** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyCheckBoxGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyForm** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ Non | ❌ |
@@ -71,7 +70,6 @@ Généré le: 21/04/2026
 | **SkipLink** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SocialMediaLinks** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **StatusPage** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **stories** | ❌ Non | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
 | **SubHeader** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyBtnMenu** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
@@ -83,4 +81,4 @@ Généré le: 21/04/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 55 / 78 (70.51%)**
+**Total des composants conformes : 56 / 76 (73.68%)**

@@ -244,12 +244,7 @@ import { useState } from 'react';
 {(() => {
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Exclure les composants non pertinents des statistiques
-  const validComponents = statusData.results.filter(item => 
-    item.componentName !== 'AccessibilityProgressPage' && 
-    item.componentName !== 'stories' && 
-    item.componentName !== 'Tables'
-  );
+  const validComponents = statusData.results;
   
   const compliantCount = validComponents.filter(item => item.isFullyCompliant).length;
   const totalCount = validComponents.length;
@@ -335,18 +330,6 @@ import { useState } from 'react';
                   <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
                 </svg>
                 <span className="carbon-tooltip-content">Vérifie la présence et la complétude de la page guidant sur l'accessibilité de ce composant.</span>
-              </span>
-            </div>
-          </th>
-          <th>
-            <div className="th-content">
-              Audit Manuel
-              <span className="carbon-tooltip-container">
-                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
-                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
-                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
-                </svg>
-                <span className="carbon-tooltip-content">Indique si un rapport d'audit manuel a été réalisé pour ce composant.</span>
               </span>
             </div>
           </th>
@@ -437,11 +420,6 @@ import { useState } from 'react';
                     item.mdxStatus === 'Manquante' ? 'tag-red' : 'tag-blue'
                   }`}>
                     {item.mdxStatus}
-                  </span>
-                </td>
-                <td>
-                  <span className={`carbon-tag ${item.hasManualAudit ? 'tag-green' : 'tag-gray'}`}>
-                    {item.hasManualAudit ? 'Oui' : 'Non'}
                   </span>
                 </td>
               </tr>

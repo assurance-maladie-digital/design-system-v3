@@ -1,18 +1,9 @@
 {
-  "date": "2026-04-21T10:09:59.317Z",
-  "compliantCount": 55,
-  "totalCount": 78,
-  "percentage": "70.51",
+  "date": "2026-04-21T10:20:34.097Z",
+  "compliantCount": 56,
+  "totalCount": 76,
+  "percentage": "73.68",
   "results": [
-    {
-      "componentName": "AccessibilityProgressPage",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": false,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
-      "storybookTitle": null,
-      "hasManualAudit": false
-    },
     {
       "componentName": "Accordion",
       "hasA11yTests": true,
@@ -133,9 +124,9 @@
     {
       "componentName": "Customs/Selects/SySelect",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "hasManualAudit": true
     },
@@ -605,15 +596,6 @@
       "mdxStatus": "Complète",
       "isFullyCompliant": true,
       "storybookTitle": "Templates/StatusPage",
-      "hasManualAudit": false
-    },
-    {
-      "componentName": "stories",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": false,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
-      "storybookTitle": null,
       "hasManualAudit": false
     },
     {

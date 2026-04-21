@@ -9,7 +9,7 @@ const componentsDir = path.join(__dirname, 'src', 'components');
 const reportPath = path.join(__dirname, 'a11y-status-report.md');
 
 // Components or folders to ignore
-const ignoreFolders = ['Amelipro', 'Common', 'Usages', 'System'];
+const ignoreFolders = ['Amelipro', 'Common', 'Usages', 'System', 'AccessibilityProgressPage', 'stories'];
 
 function findFilesRecursively(dir, pattern, fileList = []) {
   if (!fs.existsSync(dir)) return fileList;
