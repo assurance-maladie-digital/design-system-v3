@@ -45,12 +45,34 @@ npm i @cnamts/synapse
 ## Commandes disponibles
 
 ```bash
-		"pnpm build": Build du projet,
-		"pnpm dev": Lancement du serveur de développement,
-		"pnpm preview": Lancement du serveur de prévisualisation,
-		"pnpm test:unit": Lancement des tests unitaires,
-		"pnpm lint": Lancement de l\'analyseur de code,
+pnpm dev                      # Lancement du serveur de développement
+pnpm build                    # Build du projet
+pnpm preview                  # Lancement du serveur de prévisualisation
+pnpm test:unit                # Lancement des tests unitaires
+pnpm test:a11y                # Tests d'accessibilité
+pnpm test:visual              # Tests visuels avec Cypress (Electron headless)
+pnpm test:visual:open         # Tests visuels en mode interactif (Cypress Studio)
+pnpm test:visual:update       # Mise à jour des snapshots visuels
+pnpm lint                     # Lancement de l'analyseur de code
+pnpm lint:style               # Analyse des styles (CSS/SCSS/Vue)
 ```
+
+### Tests visuels
+
+Les tests visuels utilisent **Electron headless** pour assurer une reproductibilité entre environnements.
+
+- **Développement** : `pnpm test:visual:open` pour inspecter et créer des snapshots
+- **Validation locale** : `pnpm test:visual` pour vérifier contre les baselines
+- **Mise à jour des baselines** : `pnpm test:visual:update` si les changements sont intentionnels
+
+**Tests visuels en CI** (sur demande pour économiser les GitHub Actions minutes) :
+- Allez à **Actions** → **Run Visual Tests (Manual)** → **Run workflow** pour tester manuellement
+- Ou déclenchez depuis **Actions** → **Update Visual Test Snapshots** pour mettre à jour les baselines
+
+⚠️ **Important** : Les snapshots varient entre WSL et Linux natif. Si vous êtes sur WSL :
+- Testez localement avec `test:visual:open` (inspection uniquement)
+- Générez les baselines officielles en CI (Ubuntu) ou sur Linux natif
+- Les diffs visuels sont téléchargeables dans les résultats CI
 
 ## Contribution
 
