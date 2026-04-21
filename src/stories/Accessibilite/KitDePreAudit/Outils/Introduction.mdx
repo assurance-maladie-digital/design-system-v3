@@ -112,6 +112,11 @@ import '../../../styles/shared.css';
       
       border-radius: 3px;
     }
+
+    .tool-card-title-tanaguru p {
+      font-size: 1.2rem !important;
+      font-weight: bold !important;
+    }
     
     .tool-card-icon {
       width: 36px;
@@ -122,6 +127,7 @@ import '../../../styles/shared.css';
       background-color: rgba(0, 120, 212, 0.1);
       border-radius: 50%;
       font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
     
     .tool-card-description {
@@ -277,23 +283,16 @@ import '../../../styles/shared.css';
 <div className="header">
   <h1>Outils d'accessibilité</h1>
   <p>
-    Découvrez les outils essentiels pour vérifier la conformité de vos interfaces aux normes d'accessibilité dans le cadre du pré-audit, de l'audit ou de la vérification continue.
+    Découvrez les outils essentiels pour vérifier la conformité de vos interfaces aux normes d'accessibilité dans le cadre du pré-audit, de l'audit ou de la vérification continue. <br/> Ces outils vous aideront à identifier et corriger les problèmes d'accessibilité avant même de soumettre votre produit à un audit complet.
   </p>
 </div>
 
-<section className="section">
-  <h2 className="section-title">Présentation</h2>
-  <p className="section-description">
-    Dans le cadre du pré-audit, de l'audit ou de la vérification continue, il existe des outils automatisés pour vérifier certains critères de conformité en matière d'accessibilité. Ces outils vous aideront à identifier et corriger les problèmes d'accessibilité avant même de soumettre votre produit à un audit complet.
-  </p>
-</section>
 <section className="section">
   <h2 className="section-title">Outil principal</h2>
   
   <div className="tool-card">
     <div className="tool-card-content">
-      <h3 className="tool-card-title">
-        <span className="tool-card-icon" role="img" aria-hidden="true">🔍</span>
+      <h3 className="tool-card-title-tanaguru">
         Tanaguru webext RGAA
       </h3>
       
