@@ -483,7 +483,7 @@ export const messageAide: Story = {
 				value: 'sms',
 			},
 		],
-		hint: "Par défaut, le moyen de contact est l'email.",
+		hint: 'Par défaut, le moyen de contact est l\'email.',
 	},
 	render: (args) => {
 		return {
@@ -871,7 +871,7 @@ const items = [
 		],
 		errorMessages: ['Veuillez sélectionner une option'],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField },
 		setup() {
 			const value = ref(null)

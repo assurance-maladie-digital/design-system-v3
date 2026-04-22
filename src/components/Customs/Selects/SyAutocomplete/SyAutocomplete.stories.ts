@@ -1362,7 +1362,7 @@ const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
 		label: 'Rechercher un prénom',
 		errorMessages: ['Veuillez sélectionner un prénom'],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyAutocomplete },
 		setup() {
 			const value = ref('')
@@ -1404,7 +1404,7 @@ const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
 		label: 'Rechercher un prénom',
 		warningMessages: ['Ce prénom n\'est pas dans la liste recommandée'],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyAutocomplete },
 		setup() {
 			const value = ref('David')
@@ -1446,7 +1446,7 @@ const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
 		label: 'Rechercher un prénom',
 		successMessages: ['Prénom valide'],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyAutocomplete },
 		setup() {
 			const value = ref('Adrien')

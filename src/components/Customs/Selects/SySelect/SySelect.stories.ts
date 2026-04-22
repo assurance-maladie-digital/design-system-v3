@@ -1053,7 +1053,7 @@ const items = [
 		'errorMessages': ['Veuillez sélectionner une option'],
 		'onUpdate:modelValue': fn(),
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SySelect },
 		setup() {
 			const value = ref(null)

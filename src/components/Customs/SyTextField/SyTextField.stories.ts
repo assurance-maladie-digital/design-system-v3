@@ -545,7 +545,7 @@ const value = ref('email-invalide')
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue ?? '')
@@ -585,7 +585,7 @@ const value = ref('email@example.com')
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue ?? '')
@@ -625,7 +625,7 @@ const value = ref('email@example.com')
 			},
 		],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue ?? '')
