@@ -1,7 +1,7 @@
 import { type ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { checkNIR, isNIRKeyValid } from './nirValidation'
-import type { locales } from './locales'
+import { locales } from './locales'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { SyTextField } from '@/main'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
@@ -66,7 +66,7 @@ export function useNirValidation(
 			rules.push({
 				type: 'required',
 				options: {
-					message: customLocale.value.errorRequiredNumber,
+					message: customLocale.value.errorRequiredNumber || locales.errorRequiredNumber,
 					fieldIdentifier: numberLabel.value,
 				},
 			})
@@ -88,13 +88,13 @@ export function useNirValidation(
 					if (!value) return true
 					// Ne valider que si tous les caractères sont saisis
 					if (value.length < 13) {
-						return customLocale.value.errorInvalidNumber || customLocale.value.errorInvalidNumber
+						return customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
 					}
 					const result = checkNIR(value, nirType.value)
-					return result ? true : customLocale.value.errorInvalidNumber || customLocale.value.errorInvalidNumber
+					return result ? true : customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
 				},
-				message: customLocale.value.errorInvalidNumber,
-				successMessage: customLocale.value.successNumberValid,
+				message: customLocale.value.errorInvalidNumber || locales.errorInvalidNumber,
+				successMessage: customLocale.value.successNumberValid || locales.successNumberValid,
 				fieldIdentifier: numberLabel.value,
 			},
 		})
@@ -119,7 +119,7 @@ export function useNirValidation(
 			rules.push({
 				type: 'required',
 				options: {
-					message: customLocale.value.errorRequiredKey,
+					message: customLocale.value.errorRequiredKey || locales.errorRequiredKey,
 					fieldIdentifier: keyLabel.value,
 				},
 			})
@@ -143,8 +143,8 @@ export function useNirValidation(
 				type: 'custom',
 				options: {
 					validate: validateKey,
-					message: customLocale.value.errorInvalidKey,
-					successMessage: customLocale.value.successKeyValid,
+					message: customLocale.value.errorInvalidKey || locales.errorInvalidKey,
+					successMessage: customLocale.value.successKeyValid || locales.successKeyValid,
 					fieldIdentifier: keyLabel.value,
 				},
 			})
@@ -156,6 +156,7 @@ export function useNirValidation(
 	// État pour suivre si une validation est en cours
 	const isValidating = ref(false)
 	const shouldValidateOnBlur = ref(false)
+	let validationPromise: Promise<boolean> | null = null
 	const numberFieldFocused = ref(false)
 	const keyFieldFocused = ref(false)
 
@@ -230,34 +231,39 @@ export function useNirValidation(
 	})
 
 	// Validation des champs
-	const validateFields = async (onBlur = false) => {
-		// Éviter les validations redondantes
-		if (isValidating.value) {
-			shouldValidateOnBlur.value = shouldValidateOnBlur.value || onBlur
-			return true
+	const validateFields = (onBlur = false): Promise<boolean> => {
+		shouldValidateOnBlur.value = shouldValidateOnBlur.value || onBlur
+
+		if (validationPromise) {
+			return validationPromise
 		}
 
-		isValidating.value = true
+		validationPromise = (async () => {
+			isValidating.value = true
 
-		await numberValidation.validate()
+			await numberValidation.validate()
 
-		if (displayKey.value) {
-			await keyValidation.validate()
-		}
-
-		if (onBlur || shouldValidateOnBlur.value) {
-			await nextTick()
-			if (numberValidation.hasError.value) {
-				numberField.value?.$el?.querySelector?.('input')?.focus()
+			if (displayKey.value) {
+				await keyValidation.validate()
 			}
-			else if (keyValidation.hasError.value) {
-				keyField.value?.$el?.querySelector?.('input')?.focus()
-			}
-			shouldValidateOnBlur.value = false
-		}
 
-		isValidating.value = false
-		return !numberValidation.hasError.value && !keyValidation.hasError.value
+			if (shouldValidateOnBlur.value) {
+				await nextTick()
+				if (numberValidation.hasError.value) {
+					numberField.value?.$el?.querySelector?.('input')?.focus()
+				}
+				else if (keyValidation.hasError.value) {
+					keyField.value?.$el?.querySelector?.('input')?.focus()
+				}
+				shouldValidateOnBlur.value = false
+			}
+
+			isValidating.value = false
+			validationPromise = null
+			return !numberValidation.hasError.value && !keyValidation.hasError.value
+		})()
+
+		return validationPromise
 	}
 
 	const hasFieldErrors = computed(() => numberValidation.hasError.value || keyValidation.hasError.value)
