@@ -346,7 +346,7 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return ICONS['error']
 		if (hasWarning.value) return ICONS['warning']
-		if (hasSuccess.value && props.showSuccessMessages) return ICONS['success']
+		if (hasSuccess.value) return ICONS['success']
 		return null
 	})
 

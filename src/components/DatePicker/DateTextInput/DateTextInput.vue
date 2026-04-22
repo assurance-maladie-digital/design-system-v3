@@ -102,7 +102,7 @@
 	 * =====================
 	 */
 	const baseValidation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		fieldIdentifier: props.label || props.placeholder,
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -1092,7 +1092,8 @@
 		:readonly="props.readonly"
 		:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 		:warning-messages="warningMessages"
-		:success-messages="props.showSuccessMessages ? successMessages : []"
+		:success-messages="successMessages"
+		:show-success-messages="props.showSuccessMessages"
 		:bg-color="props.bgColor"
 		color="primary"
 		:is-clearable="!props.readonly"

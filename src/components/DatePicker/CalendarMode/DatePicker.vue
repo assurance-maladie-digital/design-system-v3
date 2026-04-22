@@ -250,7 +250,7 @@
 	}>()
 
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		fieldIdentifier: 'Date',
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -1061,7 +1061,7 @@
 							:class="[getMessageClasses(), 'label-hidden-on-focus']"
 							:error-messages="errorMessages"
 							:warning-messages="warningMessages"
-							:success-messages="props.showSuccessMessages ? successMessages : []"
+							:success-messages="successMessages"
 							:disabled="props.disabled"
 							:disable-click-button="false"
 							:readonly="true"

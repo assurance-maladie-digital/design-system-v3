@@ -232,7 +232,7 @@
 	 */
 	const isDatePickerVisible = ref(false)
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		fieldIdentifier: 'Date',
 		disableErrorHandling: props.disableErrorHandling,
 	})
