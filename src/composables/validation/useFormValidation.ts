@@ -1,7 +1,8 @@
-import { provide, inject, ref, type InjectionKey, type Ref } from 'vue'
+import { computed, provide, inject, ref, type InjectionKey, type Ref } from 'vue'
 
 // Type pour les composants pouvant être validés
 export type ValidatableComponent = {
+	error: boolean | undefined
 	validateOnSubmit: () => Promise<boolean> | boolean
 	clearValidation?: () => void
 	reset?: () => void
@@ -36,12 +37,7 @@ export function useFormValidation() {
 
 	// Fonction pour supprimer un composant validable du registre
 	const unregister = (component: ValidatableComponent) => {
-		// Prefer direct reference removal
-		let index = validatableComponents.value.indexOf(component)
-		// Fallback: locate by matching validateOnSubmit reference
-		if (index === -1) {
-			index = validatableComponents.value.findIndex(c => c.validateOnSubmit === component.validateOnSubmit)
-		}
+		const index = validatableComponents.value.findIndex(c => c === component)
 		if (index !== -1) {
 			validatableComponents.value.splice(index, 1)
 		}
@@ -50,7 +46,7 @@ export function useFormValidation() {
 	// Fonction pour nettoyer les validations de tous les composants enregistrés
 	const clearAll = () => {
 		if (validatableComponents.value.length === 0) return
-		validatableComponents.value.forEach((component: ValidatableComponent) => {
+		validatableComponents.value.forEach((component) => {
 			if (component.clearValidation) {
 				try {
 					component.clearValidation()
@@ -64,7 +60,7 @@ export function useFormValidation() {
 
 	const resetAll = () => {
 		if (validatableComponents.value.length === 0) return
-		validatableComponents.value.forEach((component: ValidatableComponent) => {
+		validatableComponents.value.forEach((component) => {
 			if (component.reset) {
 				try {
 					component.reset()
@@ -105,11 +101,24 @@ export function useFormValidation() {
 		return results.every(result => result === true)
 	}
 
+	const error = computed<boolean | undefined>(() => {
+		const hasError = validatableComponents.value.some(component => component.error === true)
+		if (hasError) {
+			return true
+		}
+		const hasNull = validatableComponents.value.some(component => component.error === null || component.error === undefined)
+		if (hasNull) {
+			return undefined
+		}
+		return false
+	})
+
 	return {
 		validateAll,
 		validatableComponents,
 		clearAll,
 		resetAll,
+		error,
 	}
 }
 

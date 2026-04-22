@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { ref, watch } from 'vue'
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
+	import type { VForm } from 'vuetify/components/VForm'
 
 	const props = withDefaults(defineProps<{
 		validateOnSubmit?: boolean
@@ -9,14 +10,20 @@
 	})
 
 	const emit = defineEmits<{
+		(e: 'update:modelValue', value: boolean): void
 		(e: 'submit', value: { isValid: boolean }): void
 		(e: 'reset'): void
 	}>()
 
-	// Reference vers le formulaire Vuetify
-	const form = ref<InstanceType<typeof import('vuetify/components').VForm> | null>(null)
+	const model = defineModel<boolean | undefined>()
 
-	const { validateAll, clearAll, resetAll } = useFormValidation()
+	// Reference vers le formulaire Vuetify
+	const form = ref<InstanceType<typeof VForm> | null>(null)
+
+	const { validateAll, clearAll, resetAll, error } = useFormValidation()
+	watch(error, (newVal) => {
+		model.value = newVal
+	})
 	const isValid = ref<boolean>(true)
 
 	// Methode de validation globale qui combine Vuetify et nos composants personnalises

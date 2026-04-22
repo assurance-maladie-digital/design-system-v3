@@ -1,4 +1,4 @@
-import { onMounted, onBeforeUnmount, getCurrentInstance } from 'vue'
+import { onMounted, onBeforeUnmount, getCurrentInstance, reactive, type Ref } from 'vue'
 import { useValidatableComponent } from './useFormValidation'
 
 /**
@@ -23,25 +23,27 @@ import { useValidatableComponent } from './useFormValidation'
  * }
  *
  * // Enregistrer le composant auprès du formulaire parent
- * useValidatable(validateOnSubmit, clearValidation, reset)
+ * useValidatable(validateOnSubmit, clearValidation, reset, hasError)
  */
 export function useValidatable(
 	validateMethod: () => Promise<boolean> | boolean,
 	clearValidation?: () => void,
 	reset?: () => void,
+	error?: Ref<boolean | undefined>,
 ) {
 	const { register, unregister } = useValidatableComponent()
 	const instance = getCurrentInstance()
 
 	// Keep a stable object reference for register/unregister symmetry
-	const componentRef = {
+	const componentRef = reactive({
 		validateOnSubmit: validateMethod,
 		clearValidation,
 		reset,
+		error,
 		$props: {
 			label: typeof instance?.props?.label === 'string' ? instance.props.label : undefined,
 		},
-	}
+	})
 
 	onMounted(() => {
 		if (instance) {

@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { watch } from 'vue'
+import { watch, computed, ref } from 'vue'
 import type { Ref } from 'vue'
 
 /**
@@ -45,6 +45,8 @@ export function useCustomValidation(
 		{ deep: true },
 	)
 
+	const isPristine = ref(true)
+
 	async function validate() {
 		if (readonly?.value || disabled?.value) {
 			errors.value = []
@@ -59,6 +61,8 @@ export function useCustomValidation(
 			customWarningRules?.value,
 			customSuccessRules?.value,
 		)
+
+		isPristine.value = false
 
 		errors.value = result.state.errors
 		warnings.value = result.state.warnings
@@ -75,8 +79,10 @@ export function useCustomValidation(
 			errors.value = []
 			warnings.value = []
 			successes.value = []
+			isPristine.value = true
 		},
 		() => modelValue.value = undefined,
+		computed(() => isPristine.value ? undefined : errors.value.length > 0),
 	)
 
 	watch(focused, (newVal) => {

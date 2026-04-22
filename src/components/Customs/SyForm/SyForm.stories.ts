@@ -11,12 +11,12 @@ export default {
 	title: 'Composants/Formulaires/SyForm',
 	component: SyForm,
 	argTypes: {
-		validateOnSubmit: {
+		'validateOnSubmit': {
 			control: 'boolean',
 			description: 'Active ou désactive la validation automatique lors de la soumission',
 			defaultValue: true,
 		},
-		default: {
+		'default': {
 			description: 'Contenu du formulaire, généralement des champs de formulaire comme SyTextField, SySelect, etc.',
 			table: {
 				type: {
@@ -30,6 +30,18 @@ export default {
 				},
 			},
 		},
+		'update:modelValue': {
+			description: 'Événement émis lorsque la validation du formulaire est mise à jour. L\'argument est un booléen indiquant si le formulaire est actuellement valide ou non.',
+			action: 'update:modelValue',
+		},
+		'reset': {
+			description: 'Événement émis lors de la réinitialisation du formulaire.',
+			action: 'reset',
+		},
+		'submit': {
+			description: 'Événement émis lors de la soumission du formulaire. L\'argument contient un objet avec une propriété "isValid" indiquant si le formulaire est valide.',
+			action: 'onSubmit',
+		},
 	},
 	parameters: {
 		docs: {
@@ -37,8 +49,16 @@ export default {
 				component: 'SyForm est un composant de formulaire qui prend en charge à la fois les composants personnalisés et les composants natifs Vuetify.',
 			},
 		},
+		controls: {
+			exclude: /^on.*/,
+		},
 	},
-} satisfies Meta<typeof SyForm>
+	args: {
+		'onUpdate:modelValue': fn(),
+		'onSubmit': fn(),
+		'onReset': fn(),
+	},
+} as Meta<typeof SyForm>
 
 type Story = StoryObj<typeof SyForm>
 
