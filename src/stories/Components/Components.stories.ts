@@ -127,6 +127,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Boutons',
 					},
 					{
+						title: 'SyIconBtn',
+						description: 'Utilisé lorsque on a besoin d’un bouton qui sert principalement à afficher une icône.',
+						link: '/?path=/docs/composants-boutons-syiconbutton--docs',
+						img: `/components/sy-icon-button${isAp ? '-ap' : ''}.svg`,
+						category: 'Boutons',
+					},
+					{
 						title: 'BackToTopBtn',
 						description: 'Utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page.',
 						link: '/?path=/docs/composants-boutons-backtotopbtn--docs',
@@ -433,6 +440,7 @@ export const ComponentsList: StoryObj = {
 					'SyAutocomplete',
 					'SySelect',
 					'SyRadioGroup',
+					'SyIconBtn',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
