@@ -1011,3 +1011,54 @@ const onSubmit = (event) => {
 		}
 	},
 }
+
+export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SySelect
+    v-model="value"
+    :items="items"
+    label="Option"
+    :error-messages="['Veuillez sélectionner une option']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SySelect } from '@cnamts/synapse'
+const value = ref(null)
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'label': 'Option',
+		'errorMessages': ['Veuillez sélectionner une option'],
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => ({
+		components: { SySelect },
+		setup() {
+			const value = ref(null)
+			return { args, value }
+		},
+		template: `<div class="pa-4"><SySelect v-model="value" v-bind="args" /></div>`,
+	}),
+}

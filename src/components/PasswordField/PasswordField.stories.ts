@@ -99,6 +99,10 @@ const meta = {
 			description: 'Type d\'auto-complétion',
 			default: 'current-password',
 		},
+		isClearable: {
+			control: 'boolean',
+			description: 'Affiche un bouton pour vider le champ',
+		},
 	},
 	args: {
 		modelValue: '',
@@ -119,6 +123,7 @@ const meta = {
 		displayAsterisk: false,
 		isValidateOnBlur: true,
 		bgColor: 'white',
+		isClearable: true,
 	},
 } satisfies Meta<typeof PasswordField>
 
@@ -143,6 +148,7 @@ export const Default: Story = {
 						v-model="password"
 						label="Mot de passe"
 						placeholder="Entrez votre mot de passe"
+						:is-clearable="true"
 					/>
 				</template>
 				`,
@@ -185,6 +191,7 @@ export const Default: Story = {
 				:show-success-messages="args.showSuccessMessages"
 				:display-asterisk="args.displayAsterisk"
 				:is-validate-on-blur="args.isValidateOnBlur"
+				:is-clearable="args.isClearable"
 			/>
 		`,
 	}),
@@ -352,7 +359,7 @@ export const ReadOnly: Story = {
 }
 
 /**
- * Champ de mot de passe avec règles de validation qui génèrent une erreur.
+ * Champ de mot de passe avec message d'erreur.
  */
 export const WithError: Story = {
 	parameters: {
@@ -367,7 +374,7 @@ export const WithError: Story = {
 					<PasswordField
 						v-model="password"
 						label="Mot de passe"
-						:custom-rules="customRules"
+						:error-messages="['Le mot de passe doit contenir au moins 8 caractères']"
 					/>
 				</template>
 				`,
@@ -380,21 +387,6 @@ export const WithError: Story = {
 					import { PasswordField } from '@cnamts/synapse'
 					
 					const password = ref('Mdp123')
-					
-					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (!value || value.length < 8) {
-										return 'Le mot de passe doit contenir au moins 8 caractères'
-									}
-									return true
-								},
-								fieldIdentifier: 'password',
-							},
-						},
-					]
 				</script>
 				`,
 			},
@@ -402,25 +394,12 @@ export const WithError: Story = {
 	},
 	args: {
 		modelValue: 'Mdp123',
-		customRules: [
-			{
-				type: 'custom',
-				options: {
-					validate: (value: string) => {
-						if (!value || value.length < 8) {
-							return 'Le mot de passe doit contenir au moins 8 caractères'
-						}
-						return true
-					},
-					fieldIdentifier: 'password',
-				},
-			},
-		],
+		errorMessages: ['Le mot de passe doit contenir au moins 8 caractères'],
 	},
 }
 
 /**
- * Champ de mot de passe avec règles de validation qui génèrent un avertissement.
+ * Champ de mot de passe avec message d'avertissement.
  */
 export const WithWarning: Story = {
 	parameters: {
@@ -435,7 +414,7 @@ export const WithWarning: Story = {
 					<PasswordField
 						v-model="password"
 						label="Mot de passe"
-						:custom-warning-rules="customWarningRules"
+						:warning-messages="['Le mot de passe pourrait être plus fort avec des caractères spéciaux']"
 					/>
 				</template>
 				`,
@@ -448,22 +427,6 @@ export const WithWarning: Story = {
 					import { PasswordField } from '@cnamts/synapse'
 					
 					const password = ref('MotDePasse123')
-					
-					const customWarningRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
-									if (!hasSpecialChar) {
-										return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
-									}
-									return true
-								},
-								fieldIdentifier: 'password',
-							},
-						},
-					]
 				</script>
 				`,
 			},
@@ -471,26 +434,12 @@ export const WithWarning: Story = {
 	},
 	args: {
 		modelValue: 'MotDePasse123',
-		customWarningRules: [
-			{
-				type: 'custom',
-				options: {
-					validate: (value: string) => {
-						const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
-						if (!hasSpecialChar) {
-							return 'Le mot de passe pourrait être plus fort avec des caractères spéciaux'
-						}
-						return true
-					},
-					fieldIdentifier: 'password',
-				},
-			},
-		],
+		warningMessages: ['Le mot de passe pourrait être plus fort avec des caractères spéciaux'],
 	},
 }
 
 /**
- * Champ de mot de passe avec règles de validation qui génèrent un succès.
+ * Champ de mot de passe avec message de succès.
  */
 export const WithSuccess: Story = {
 	parameters: {
@@ -505,7 +454,7 @@ export const WithSuccess: Story = {
 					<PasswordField
 						v-model="password"
 						label="Mot de passe"
-						:custom-success-rules="customSuccessRules"
+						:success-messages="['Mot de passe fort']"
 					/>
 				</template>
 				`,
@@ -518,27 +467,6 @@ export const WithSuccess: Story = {
 					import { PasswordField } from '@cnamts/synapse'
 					
 					const password = ref('MotDePasse123!@#')
-					
-					const customSuccessRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									const hasUpperCase = /[A-Z]/.test(value)
-									const hasLowerCase = /[a-z]/.test(value)
-									const hasNumber = /[0-9]/.test(value)
-									const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
-									const hasMinLength = value.length >= 8
-									
-									if (hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && hasMinLength) {
-										return 'Mot de passe fort'
-									}
-									return true
-								},
-								fieldIdentifier: 'password',
-							},
-						},
-					]
 				</script>
 				`,
 			},
@@ -546,26 +474,7 @@ export const WithSuccess: Story = {
 	},
 	args: {
 		modelValue: 'MotDePasse123!@#',
-		customSuccessRules: [
-			{
-				type: 'custom',
-				options: {
-					validate: (value: string) => {
-						const hasUpperCase = /[A-Z]/.test(value)
-						const hasLowerCase = /[a-z]/.test(value)
-						const hasNumber = /[0-9]/.test(value)
-						const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
-						const isLongEnough = value.length >= 8
-
-						if (hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && isLongEnough) {
-							return true
-						}
-						return false
-					},
-					successMessage: 'Mot de passe fort',
-				},
-			},
-		],
+		successMessages: ['Mot de passe fort'],
 	},
 }
 

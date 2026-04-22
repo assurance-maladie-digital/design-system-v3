@@ -290,6 +290,19 @@ describe('SyTextArea', () => {
 		expect(wrapper.text()).toContain('Avertissement personnalisé')
 	})
 
+	it('applies warning field state when warning messages are provided', () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: 'Texte avec avertissement',
+				label: 'Description des symptomes',
+				warningMessages: ['Avertissement personnalisé'],
+			},
+		})
+
+		expect(wrapper.find('.warning-field').exists()).toBe(true)
+		expect(wrapper.text()).toContain('Avertissement personnalisé')
+	})
+
 	it('shows custom success from customSuccessRules in custom validation mode', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
@@ -322,6 +335,19 @@ describe('SyTextArea', () => {
 		await textarea.trigger('blur')
 		await flushPromises()
 
+		expect(wrapper.text()).toContain('Succès personnalisé')
+	})
+
+	it('applies success field state when success messages are provided', () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: 'Texte valide',
+				label: 'Description des symptomes',
+				successMessages: ['Succès personnalisé'],
+			},
+		})
+
+		expect(wrapper.find('.success-field').exists()).toBe(true)
 		expect(wrapper.text()).toContain('Succès personnalisé')
 	})
 })

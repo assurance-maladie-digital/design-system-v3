@@ -854,3 +854,156 @@ const successRules = [
 		`,
 	}),
 }
+
+export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyCheckBoxGroup
+    v-model="selected"
+    label="Choisissez une option"
+    :options="options"
+    :error-messages="['Veuillez sélectionner une option']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup } from '@cnamts/synapse'
+const selected = ref(null)
+const options = [
+  { label: 'Option A', value: 'A' },
+  { label: 'Option B', value: 'B' },
+]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckBoxGroup },
+		setup() {
+			const selected = ref(null)
+			const options = [
+				{ label: 'Option A', value: 'A' },
+				{ label: 'Option B', value: 'B' },
+			]
+			return { args, selected, options }
+		},
+		template: `
+			<SyCheckBoxGroup
+				v-model="selected"
+				label="Choisissez une option"
+				:options="options"
+				:error-messages="['Veuillez sélectionner une option']"
+			/>
+		`,
+	}),
+}
+
+export const WithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyCheckBoxGroup
+    v-model="selected"
+    label="Choisissez une option"
+    :options="options"
+    :warning-messages="['Cette option est déconseillée']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup } from '@cnamts/synapse'
+const selected = ref('B')
+const options = [
+  { label: 'Option A', value: 'A' },
+  { label: 'Option B', value: 'B' },
+]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckBoxGroup },
+		setup() {
+			const selected = ref('B')
+			const options = [
+				{ label: 'Option A', value: 'A' },
+				{ label: 'Option B', value: 'B' },
+			]
+			return { args, selected, options }
+		},
+		template: `
+			<SyCheckBoxGroup
+				v-model="selected"
+				label="Choisissez une option"
+				:options="options"
+				:warning-messages="['Cette option est déconseillée']"
+			/>
+		`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyCheckBoxGroup
+    v-model="selected"
+    label="Choisissez une option"
+    :options="options"
+    :success-messages="['Option valide']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup } from '@cnamts/synapse'
+const selected = ref('A')
+const options = [
+  { label: 'Option A', value: 'A' },
+  { label: 'Option B', value: 'B' },
+]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckBoxGroup },
+		setup() {
+			const selected = ref('A')
+			const options = [
+				{ label: 'Option A', value: 'A' },
+				{ label: 'Option B', value: 'B' },
+			]
+			return { args, selected, options }
+		},
+		template: `
+			<SyCheckBoxGroup
+				v-model="selected"
+				label="Choisissez une option"
+				:options="options"
+				:success-messages="['Option valide']"
+			/>
+		`,
+	}),
+}

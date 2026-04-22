@@ -53,6 +53,18 @@ const meta = {
 		'isValidatedOnBlur': { control: 'boolean' },
 		'displayAsterisk': { control: 'boolean' },
 		'disableErrorHandling': { control: 'boolean' },
+		'errorMessages': {
+			control: 'object',
+			description: 'Messages d\'erreur affichés sous le champ numéro.',
+		},
+		'warningMessages': {
+			control: 'object',
+			description: 'Messages d\'avertissement affichés sous le champ numéro.',
+		},
+		'successMessages': {
+			control: 'object',
+			description: 'Messages de succès affichés sous le champ numéro.',
+		},
 		'disabled': { control: 'boolean' },
 		'readonly': { control: 'boolean' },
 	} as Record<string, unknown>,
@@ -208,6 +220,141 @@ export const Required: Story = {
 				</div>
    `,
 		}
+	},
+}
+
+/**
+ * Champ téléphone avec message d'erreur.
+ */
+export const WithError: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="phoneNumber"
+						:error-messages="['Le numéro de téléphone doit contenir 10 chiffres.']"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+
+					const phoneNumber = ref('01 23')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		modelValue: '01 23',
+		withCountryCode: true,
+		countryCodeRequired: false,
+		dialCodeModel: indicatifs.find(ind => ind.country === 'France'),
+		errorMessages: ['Le numéro de téléphone doit contenir 10 chiffres.'],
+		warningMessages: null,
+		successMessages: null,
+	},
+}
+
+/**
+ * Champ téléphone avec message d'avertissement.
+ */
+export const WithWarning: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="phoneNumber"
+						:warning-messages="['Vérifiez que ce numéro est toujours joignable.']"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+
+					const phoneNumber = ref('06 12 34 56 78')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		modelValue: '06 12 34 56 78',
+		withCountryCode: true,
+		countryCodeRequired: false,
+		dialCodeModel: indicatifs.find(ind => ind.country === 'France'),
+		errorMessages: null,
+		warningMessages: ['Vérifiez que ce numéro est toujours joignable.'],
+		successMessages: null,
+	},
+}
+
+/**
+ * Champ téléphone avec message de succès.
+ */
+export const WithSuccess: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="phoneNumber"
+						:success-messages="['Numéro de téléphone valide.']"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+
+					const phoneNumber = ref('06 12 34 56 78')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		modelValue: '06 12 34 56 78',
+		withCountryCode: true,
+		countryCodeRequired: false,
+		dialCodeModel: indicatifs.find(ind => ind.country === 'France'),
+		errorMessages: null,
+		warningMessages: null,
+		successMessages: ['Numéro de téléphone valide.'],
 	},
 }
 

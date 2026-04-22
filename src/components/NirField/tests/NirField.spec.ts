@@ -74,6 +74,7 @@ describe('NirField.vue', () => {
 		await wrapper.vm.$nextTick()
 		await flushPromises()
 		expect(wrapper.vm.numberValidation.errors.value[0]).toBe('Le numéro de sécurité sociale est invalide.')
+		expect(wrapper.find('.number-field .v-field__append-inner .v-icon').exists()).toBe(true)
 	})
 
 	it('validates the NIR field successfully', async () => {
@@ -84,6 +85,7 @@ describe('NirField.vue', () => {
 		await wrapper.vm.$nextTick()
 		await flushPromises()
 		expect(wrapper.vm.numberValidation.successes.value).toContain('Le numéro de sécurité sociale est valide.')
+		expect(wrapper.find('.number-field .v-field__append-inner .v-icon').exists()).toBe(true)
 	})
 
 	it('displays error message for invalid key length', async () => {
@@ -96,6 +98,7 @@ describe('NirField.vue', () => {
 		await wrapper.vm.$nextTick()
 		await flushPromises()
 		expect(wrapper.vm.keyValidation.errors.value[0]).toBe('La clé de contrôle est invalide.')
+		expect(wrapper.find('.key-field .v-field__append-inner .v-icon').exists()).toBe(true)
 	})
 
 	it('validates the key field successfully', async () => {
@@ -108,6 +111,7 @@ describe('NirField.vue', () => {
 		await wrapper.vm.$nextTick()
 		await flushPromises()
 		expect(wrapper.vm.keyValidation.successes.value).toContain('La clé de contrôle est valide.')
+		expect(wrapper.find('.key-field .v-field__append-inner .v-icon').exists()).toBe(true)
 	})
 
 	it('hides the key field when displayKey is false', async () => {

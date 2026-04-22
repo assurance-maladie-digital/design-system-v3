@@ -36,6 +36,9 @@
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
+		errorMessages: { type: Array as PropType<string[] | null>, default: null },
+		warningMessages: { type: Array as PropType<string[] | null>, default: null },
+		successMessages: { type: Array as PropType<string[] | null>, default: null },
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
@@ -304,13 +307,23 @@
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
-	const hasError = computed(() => !shouldDisableErrorHandling.value && validation.hasError.value)
-	const hasWarning = computed(() => !shouldDisableErrorHandling.value && validation.hasWarning.value)
+	const dialCodeErrors = ref<string[]>([])
+
+	const externalErrors = computed(() => props.errorMessages ?? [])
+	const externalWarnings = computed(() => props.warningMessages ?? [])
+	const externalSuccesses = computed(() => props.successMessages ?? [])
+
+	const hasError = computed(() => !shouldDisableErrorHandling.value && (validation.hasError.value || externalErrors.value.length > 0))
+	const hasWarning = computed(() =>
+		!shouldDisableErrorHandling.value
+		&& !hasError.value
+		&& (validation.hasWarning.value || externalWarnings.value.length > 0),
+	)
 	const hasSuccess = computed(() =>
 		!shouldDisableErrorHandling.value
 		&& !hasError.value
 		&& !hasWarning.value
-		&& validation.hasSuccess.value,
+		&& (validation.hasSuccess.value || externalSuccesses.value.length > 0),
 	)
 
 	const iconColor = computed(() => {
@@ -321,13 +334,21 @@
 		return '#222324'
 	})
 
-	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
-	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
-	const successes = computed(() =>
-		shouldDisableErrorHandling.value || hasError.value || hasWarning.value
-			? []
-			: validation.successes.value,
-	)
+	const errors = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		if (externalErrors.value.length > 0) return externalErrors.value
+		return validation.errors.value
+	})
+	const warnings = computed(() => {
+		if (shouldDisableErrorHandling.value) return []
+		if (externalWarnings.value.length > 0) return externalWarnings.value
+		return validation.warnings.value
+	})
+	const successes = computed(() => {
+		if (shouldDisableErrorHandling.value || hasError.value || hasWarning.value) return []
+		if (externalSuccesses.value.length > 0) return externalSuccesses.value
+		return validation.successes.value
+	})
 
 	const showHelpTextBelow = computed(() => !!props.helpText?.trim())
 
@@ -379,10 +400,13 @@
 		await runValidation()
 
 		if (props.withCountryCode && props.countryCodeRequired && !dialCode.value) {
-			validation.errors.value.push(`Le champ ${locales.indicatifLabel} est requis.`)
+			dialCodeErrors.value = [`Le champ ${locales.indicatifLabel} est requis.`]
+		}
+		else {
+			dialCodeErrors.value = []
 		}
 
-		return !validation.hasError.value
+		return !hasError.value
 	}
 
 	// Reset hook used by SyForm.reset() via useValidatable
@@ -401,6 +425,7 @@
 		emit('update:selectedDialCode', defaultDialCode)
 		counter.value = 10
 		phoneMask.value = '## ## ## ## ##'
+		dialCodeErrors.value = []
 
 		// Force SySelect to be recreated to ensure internal classes are reset
 		dialSelectKey.value++
@@ -446,8 +471,8 @@
 					:outlined="outlinedIndicatif"
 					:required="countryCodeRequired"
 					:aria-required="countryCodeRequired"
-					:error="!!errors[1]"
-					:error-messages="errors[1] ? [errors[1]] : []"
+					:error="dialCodeErrors.length > 0"
+					:error-messages="dialCodeErrors"
 					:display-asterisk="displayAsterisk"
 					:disable-error-handling="shouldDisableErrorHandling"
 					:return-object="true"

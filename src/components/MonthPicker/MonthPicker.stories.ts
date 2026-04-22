@@ -525,3 +525,193 @@ export const Form: Story = {
 		`,
 	}),
 }
+
+export const WithError: Story = {
+	args: {
+		modelValue: '13/2025',
+		label: 'Mois de début',
+		width: '400px',
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return 'Ce champ est requis'
+						const [month] = value.split('/')
+						const m = parseInt(month)
+						return m >= 1 && m <= 12 ? true : 'Le mois doit être entre 01 et 12'
+					},
+					fieldIdentifier: 'month',
+				},
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <MonthPicker
+    v-model="value"
+    label="Mois de début"
+    width="400px"
+    :custom-rules="customRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+const value = ref('13/2025')
+const customRules = [{
+  type: 'custom',
+  options: {
+    validate: (value) => {
+      if (!value) return 'Ce champ est requis'
+      const [month] = value.split('/')
+      const m = parseInt(month)
+      return m >= 1 && m <= 12 ? true : 'Le mois doit être entre 01 et 12'
+    },
+  },
+}]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker },
+		setup() {
+			const value = ref('13/2025')
+			return { args, value }
+		},
+		template: `<MonthPicker v-model="value" v-bind="args" />`,
+	}),
+}
+
+export const WithWarning: Story = {
+	args: {
+		modelValue: '01/2020',
+		label: 'Mois de début',
+		width: '400px',
+		customWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						const year = parseInt(value.split('/')[1])
+						return year >= new Date().getFullYear() ? true : false
+					},
+					warningMessage: 'Ce mois est dans le passé',
+					isWarning: true,
+				},
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <MonthPicker
+    v-model="value"
+    label="Mois de début"
+    width="400px"
+    :custom-warning-rules="customWarningRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+const value = ref('01/2020')
+const customWarningRules = [{
+  type: 'custom',
+  options: {
+    validate: (value) => {
+      if (!value) return true
+      const year = parseInt(value.split('/')[1])
+      return year >= new Date().getFullYear() ? true : false
+    },
+    warningMessage: 'Ce mois est dans le passé',
+    isWarning: true,
+  },
+}]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker },
+		setup() {
+			const value = ref('01/2020')
+			return { args, value }
+		},
+		template: `<MonthPicker v-model="value" v-bind="args" />`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	args: {
+		modelValue: '06/2025',
+		label: 'Mois de début',
+		width: '400px',
+		customSuccessRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: () => true,
+					successMessage: 'Mois valide',
+				},
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <MonthPicker
+    v-model="value"
+    label="Mois de début"
+    width="400px"
+    :custom-success-rules="customSuccessRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+const value = ref('06/2025')
+const customSuccessRules = [{
+  type: 'custom',
+  options: {
+    validate: () => true,
+    successMessage: 'Mois valide',
+  },
+}]
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker },
+		setup() {
+			const value = ref('06/2025')
+			return { args, value }
+		},
+		template: `<MonthPicker v-model="value" v-bind="args" />`,
+	}),
+}

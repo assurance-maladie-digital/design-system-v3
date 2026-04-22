@@ -3,6 +3,15 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 
+const datePickerActionArgs = {
+	'onUpdate:modelValue': fn(),
+	'onFocus': fn(),
+	'onBlur': fn(),
+	'onClosed': fn(),
+	'onInput': fn(),
+	'onDate-selected': fn(),
+}
+
 // Define the props interface for DatePicker component
 interface DatePickerProps {
 	'modelValue'?: string | string[] | null
@@ -54,6 +63,9 @@ interface DatePickerProps {
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/DateInput/DateRange',
 	component: DatePicker,
+	args: {
+		...datePickerActionArgs,
+	},
 	decorators: [
 		() => ({
 			template: '<div style="padding: 20px;"><story/></div>',
@@ -62,7 +74,6 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
-		actions: { argTypesRegex: '^on.*' },
 	},
 	argTypes: {
 		placeholder: {
@@ -411,6 +422,208 @@ export const WithValidation: Story = {
 						v-model="dateRange"
 						v-bind="args"
 					/>
+					<div style="margin-top: 10px; font-family: monospace; color: #666;">
+						Valeur : {{ dateRange }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithError: Story = {
+	args: {
+		noCalendar: true,
+		format: 'DD/MM/YYYY',
+		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
+		label: 'Période',
+		displayRange: true,
+		...datePickerActionArgs,
+		customRules: [
+			{
+				type: 'notAfterToday',
+				options: {
+					message: 'La date ne peut pas être dans le futur',
+					fieldIdentifier: 'date',
+				},
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="dateRange"
+    label="Période"
+    placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    display-range
+    no-calendar
+    :custom-rules="[{ type: 'notAfterToday', options: { message: 'La date ne peut pas être dans le futur' } }]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+const dateRange = ref('01/01/2100 - 31/12/2100')
+</script>`,
+			},
+		],
+	},
+	render(args) {
+		const dateRange = ref<string | null>('01/01/2100 - 31/12/2100')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, dateRange }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<DatePicker v-model="dateRange" v-bind="args" />
+					<div style="margin-top: 10px; font-family: monospace; color: #666;">
+						Valeur : {{ dateRange }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithWarning: Story = {
+	args: {
+		noCalendar: true,
+		format: 'DD/MM/YYYY',
+		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
+		label: 'Période',
+		displayRange: true,
+		...datePickerActionArgs,
+		customWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						const parts = value.split(' - ')
+						if (parts.length !== 2) return true
+						const startYear = parseInt(parts[0].split('/')[2])
+						return startYear >= 2000 ? true : false
+					},
+					warningMessage: 'La période sélectionnée est antérieure à l\'an 2000',
+					isWarning: true,
+				},
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="dateRange"
+    label="Période"
+    placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    display-range
+    no-calendar
+    :custom-warning-rules="customWarningRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+const dateRange = ref('15/06/1998 - 20/06/1998')
+</script>`,
+			},
+		],
+	},
+	render(args) {
+		const dateRange = ref<string | null>('15/06/1998 - 20/06/1998')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, dateRange }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<DatePicker v-model="dateRange" v-bind="args" />
+					<div style="margin-top: 10px; font-family: monospace; color: #666;">
+						Valeur : {{ dateRange }}
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithSuccess: Story = {
+	args: {
+		noCalendar: true,
+		format: 'DD/MM/YYYY',
+		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
+		label: 'Période',
+		displayRange: true,
+		...datePickerActionArgs,
+		customSuccessRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: () => true,
+					successMessage: 'Période valide',
+				},
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="dateRange"
+    label="Période"
+    placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    display-range
+    no-calendar
+    :custom-success-rules="[{ type: 'custom', options: { validate: () => true, successMessage: 'Période valide' } }]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+const dateRange = ref('01/06/2025 - 15/06/2025')
+</script>`,
+			},
+		],
+	},
+	render(args) {
+		const dateRange = ref<string | null>('01/06/2025 - 15/06/2025')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, dateRange }
+			},
+			template: `
+				<div style="padding: 20px;">
+					<DatePicker v-model="dateRange" v-bind="args" />
 					<div style="margin-top: 10px; font-family: monospace; color: #666;">
 						Valeur : {{ dateRange }}
 					</div>

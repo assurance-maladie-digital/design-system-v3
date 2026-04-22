@@ -4,9 +4,21 @@ import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
 
+const datePickerActionArgs = {
+	'onUpdate:modelValue': fn(),
+	'onFocus': fn(),
+	'onBlur': fn(),
+	'onClosed': fn(),
+	'onInput': fn(),
+	'onDate-selected': fn(),
+}
+
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CombinedMode',
 	component: DatePicker,
+	args: {
+		...datePickerActionArgs,
+	},
 	decorators: [
 		() => ({
 			template: '<div style="padding: 20px;"><story/></div>',
@@ -15,7 +27,6 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
-		actions: { argTypesRegex: '^on.*' },
 		events: {
 			remapEvents: {
 				'update:modelValue': 'onUpdate:modelValue',
@@ -483,6 +494,203 @@ export const Required: Story = {
 				<DatePicker v-bind="args" displayAsterisk v-model="value"/>
               </div>
             `,
+		}
+	},
+}
+
+export const WithError: Story = {
+	args: {
+		label: 'Date de rendez-vous',
+		placeholder: 'JJ/MM/AAAA',
+		useCombinedMode: true,
+		customRules: [
+			{
+				type: 'notAfterToday',
+				options: {
+					message: 'La date ne peut pas être dans le futur',
+					fieldIdentifier: 'date',
+				},
+			},
+		],
+		...datePickerActionArgs,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de rendez-vous"
+    placeholder="JJ/MM/AAAA"
+    use-combined-mode
+    :custom-rules="[{ type: 'notAfterToday', options: { message: 'La date ne peut pas être dans le futur' } }]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+const date = ref('01/01/2100')
+</script>`,
+			},
+		],
+	},
+	render(args) {
+		const date = ref('01/01/2100')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<DatePicker v-model="date" v-bind="args" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithWarning: Story = {
+	args: {
+		label: 'Date de rendez-vous',
+		placeholder: 'JJ/MM/AAAA',
+		useCombinedMode: true,
+		showSuccessMessages: false,
+		customWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string | Date) => {
+						if (!value) return true
+						const year = typeof value === 'string'
+							? parseInt(value.split('/')[2] ?? '', 10)
+							: value.getFullYear()
+						return Number.isNaN(year) || year >= 2025
+					},
+					warningMessage: 'Cette date est antérieure à 2025',
+					isWarning: true,
+				},
+			},
+		],
+		...datePickerActionArgs,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de rendez-vous"
+    placeholder="JJ/MM/AAAA"
+    use-combined-mode
+    :show-success-messages="false"
+    :custom-warning-rules="customWarningRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+const date = ref('15/06/2023')
+const customWarningRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: string | Date) => {
+      if (!value) return true
+      const year = typeof value === 'string'
+        ? parseInt(value.split('/')[2] ?? '', 10)
+        : value.getFullYear()
+      return Number.isNaN(year) || year >= 2025
+    },
+    warningMessage: 'Cette date est antérieure à 2025',
+    isWarning: true,
+  },
+}]
+</script>`,
+			},
+		],
+	},
+	render(args) {
+		const date = ref('15/06/2023')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<DatePicker v-model="date" v-bind="args" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithSuccess: Story = {
+	args: {
+		label: 'Date de rendez-vous',
+		placeholder: 'JJ/MM/AAAA',
+		useCombinedMode: true,
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: () => true,
+					successMessage: 'Date valide',
+				},
+			},
+		],
+		...datePickerActionArgs,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="date"
+    label="Date de rendez-vous"
+    placeholder="JJ/MM/AAAA"
+    use-combined-mode
+    :custom-rules="[{ type: 'custom', options: { validate: () => true, successMessage: 'Date valide' } }]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+const date = ref('15/06/2025')
+</script>`,
+			},
+		],
+	},
+	render(args) {
+		const date = ref('15/06/2025')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center pa-4">
+					<DatePicker v-model="date" v-bind="args" />
+				</div>
+			`,
 		}
 	},
 }

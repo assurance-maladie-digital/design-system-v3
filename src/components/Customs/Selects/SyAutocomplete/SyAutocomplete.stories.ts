@@ -1329,3 +1329,129 @@ const items = [
 		}
 	},
 }
+
+export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="value"
+    :items="items"
+    label="Rechercher un prénom"
+    :error-messages="['Veuillez sélectionner un prénom']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+const value = ref('')
+const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
+</script>`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		errorMessages: ['Veuillez sélectionner un prénom'],
+	},
+	render: (args) => ({
+		components: { SyAutocomplete },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
+	}),
+}
+
+export const WithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="value"
+    :items="items"
+    label="Rechercher un prénom"
+    :warning-messages="['Ce prénom n\\'est pas dans la liste recommandée']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+const value = ref('David')
+const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
+</script>`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		warningMessages: ['Ce prénom n\'est pas dans la liste recommandée'],
+	},
+	render: (args) => ({
+		components: { SyAutocomplete },
+		setup() {
+			const value = ref('David')
+			return { args, value }
+		},
+		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="value"
+    :items="items"
+    label="Rechercher un prénom"
+    :success-messages="['Prénom valide']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+const value = ref('Adrien')
+const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
+</script>`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		successMessages: ['Prénom valide'],
+	},
+	render: (args) => ({
+		components: { SyAutocomplete },
+		setup() {
+			const value = ref('Adrien')
+			return { args, value }
+		},
+		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
+	}),
+}

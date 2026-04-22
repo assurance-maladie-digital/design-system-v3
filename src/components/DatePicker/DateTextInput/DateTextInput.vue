@@ -102,7 +102,7 @@
 	 * =====================
 	 */
 	const baseValidation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label || props.placeholder,
 		disableErrorHandling: props.disableErrorHandling,
 	})

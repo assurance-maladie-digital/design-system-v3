@@ -5,6 +5,7 @@
 		mdiAlertCircle,
 		mdiAlert,
 		mdiCheck,
+		mdiClose,
 	} from '@mdi/js'
 	import { ref, computed, watch, nextTick } from 'vue'
 	import { config } from './config'
@@ -37,6 +38,7 @@
 		disableErrorHandling?: boolean
 		bgColor?: string
 		autocompleteType?: 'current-password' | 'new-password'
+		isClearable?: boolean
 	} & CustomizableOptions>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
@@ -57,10 +59,11 @@
 		disableErrorHandling: false,
 		bgColor: 'white',
 		autocompleteType: 'current-password',
+		isClearable: false,
 	})
 
 	const options = useCustomizableOptions(config, props)
-	const emit = defineEmits(['update:modelValue', 'submit'])
+	const emit = defineEmits(['update:modelValue', 'submit', 'clear'])
 
 	const eyeIcon = mdiEyeOutline
 	const eyeOffIcon = mdiEyeOffOutline
@@ -115,6 +118,12 @@
 	const hasError = computed(() => errors.value.length > 0)
 	const hasWarning = computed(() => warnings.value.length > 0)
 	const hasSuccess = computed(() => successes.value.length > 0)
+	const showClear = computed(() => {
+		if (!props.isClearable) return false
+		if (props.disabled) return false
+		if (props.readonly) return false
+		return password.value !== undefined && password.value !== null && String(password.value) !== ''
+	})
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
@@ -183,6 +192,11 @@
 				alertMessage.value = ''
 			}, 2000)
 		})
+	}
+
+	function clearPassword() {
+		password.value = ''
+		emit('clear')
 	}
 
 	async function handleKeydown(event: KeyboardEvent): Promise<void> {
@@ -260,6 +274,7 @@
 		:disabled="props.disabled"
 		:placeholder="props.placeholder"
 		:bg-color="props.bgColor"
+		:is-clearable="props.isClearable"
 		:type="showEyeIcon ? 'text' : 'password'"
 		:aria-invalid="hasError"
 		:aria-describedby="`${passwordFieldId}-status${props.customRules && props.customRules.length > 0 ? ' ' + passwordFieldId + '-guidelines' : ''}`"
@@ -283,15 +298,9 @@
 			<div
 				class="d-flex align-center"
 			>
-				<SyIcon
-					:icon="validationIcon"
-					:color="validationColor"
-					decorative
-					class="mr-2"
-				/>
 				<VBtn
 					type="button"
-					class="password-toggle-button"
+					class="password-toggle-button v-btn v-btn--density-compact mr-1 text-iconBase"
 					:aria-label="btnLabel"
 					:aria-pressed="showEyeIcon"
 					:aria-controls="passwordFieldId"
@@ -307,6 +316,23 @@
 						decorative
 					/>
 				</VBtn>
+				<VBtn
+					v-if="showClear"
+					class="v-btn v-btn--density-compact mr-1 text-iconBase"
+					:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
+					:title="props.label ? `Vider ${props.label}` : 'Vider'"
+					:icon="mdiClose"
+					variant="text"
+					@click.stop="clearPassword"
+					@keydown.enter.stop
+					@keydown.space.stop
+				/>
+				<SyIcon
+					v-if="validationIcon"
+					:icon="validationIcon"
+					:color="validationColor"
+					decorative
+				/>
 			</div>
 			<div
 				:id="`${passwordFieldId}-status`"
@@ -326,28 +352,6 @@
 		.v-field__input {
 			padding-right: 48px;
 		}
-	}
-}
-
-.password-toggle-button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border: none;
-	background: transparent;
-	cursor: pointer;
-	padding: 4px;
-	border-radius: 4px;
-	outline: none;
-	transition: background-color 0.2s ease;
-
-	&:focus-visible {
-		background-color: rgb(0 0 0 / 8%);
-		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
-	}
-
-	&:hover {
-		background-color: rgb(0 0 0 / 4%);
 	}
 }
 

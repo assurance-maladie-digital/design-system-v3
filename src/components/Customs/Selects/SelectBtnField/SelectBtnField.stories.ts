@@ -30,7 +30,7 @@ const meta = {
 			},
 		},
 		label: {
-			description: 'Valeur utilisée pour l’attribut aria-label, préfèrer l’utilisation de aria-labelledby pour respecter les impératifs d’accessibilité',
+			description: 'Valeur utilisée pour l’attribut aria-label, préférer l’utilisation de aria-labelledby pour respecter les impératifs d’accessibilité',
 			control: { type: 'text' },
 			default: undefined,
 		},
@@ -435,7 +435,7 @@ export const messageAide: Story = {
 			v-model="value"
 			:items="items"
 			aria-labelledby="contact-method"
-			hint="Par défaut, le moyen de contact est l’email."
+			hint="Par défaut, le moyen de contact est l'email."
 		/>
 	</div>
 </template>
@@ -483,7 +483,7 @@ export const messageAide: Story = {
 				value: 'sms',
 			},
 		],
-		hint: 'Par défaut, le moyen de contact est l’email.',
+		hint: "Par défaut, le moyen de contact est l'email.",
 	},
 	render: (args) => {
 		return {
@@ -832,4 +832,51 @@ export const Info: Story = {
 		}
 	},
 	tags: ['!dev'],
+}
+
+export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SelectBtnField
+    v-model="value"
+    :items="items"
+    :error-messages="['Veuillez sélectionner une option']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SelectBtnField } from '@cnamts/synapse'
+const value = ref(null)
+const items = [
+  { text: 'Email', value: 'email' },
+  { text: 'Courrier', value: 'courrier' },
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: null,
+		items: [
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+		],
+		errorMessages: ['Veuillez sélectionner une option'],
+	},
+	render: (args) => ({
+		components: { SelectBtnField },
+		setup() {
+			const value = ref(null)
+			return { args, value }
+		},
+		template: `<SelectBtnField v-model="value" v-bind="args" />`,
+	}),
 }

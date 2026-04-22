@@ -9,9 +9,21 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 
+const datePickerActionArgs = {
+	'onUpdate:modelValue': fn(),
+	'onFocus': fn(),
+	'onBlur': fn(),
+	'onClosed': fn(),
+	'onInput': fn(),
+	'onDate-selected': fn(),
+}
+
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CalendarMode',
 	component: DatePicker,
+	args: {
+		...datePickerActionArgs,
+	},
 	decorators: [
 		() => ({
 			template: '<div style="padding: 20px;"><story/></div>',
@@ -20,7 +32,6 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['modelValue'] },
-		actions: { argTypesRegex: '^on.*' },
 		events: {
 			remapEvents: {
 				'update:modelValue': 'onUpdate:modelValue',
@@ -465,6 +476,230 @@ export const Required: Story = {
 	},
 }
 
+export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="notAfterToday"
+						label="notAfterToday"
+						:custom-rules="[
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
+		]"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref('01/01/2100')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headingLevel': 3,
+		'placeholder': 'Sélectionner une date',
+		'label': 'Sélectionner une date',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '01/01/2100',
+		'customRules': [
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd hui' } },
+		],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('01/01/2100')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Date avec avertissement"
+						label="Date avec avertissement"
+						:custom-warning-rules="[
+							{ type: 'notBeforeDate', options: { 
+								warningMessage: 'Attention : la date est antérieure à la date de référence',
+								date: '01/01/2031',
+								isWarning: true,
+							} }
+						]"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref('20/12/2023')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headingLevel': 3,
+		'placeholder': 'Date avec avertissement',
+		'label': 'Date avec avertissement',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': false,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '20/12/2023',
+		'customWarningRules': [
+			{
+				type: 'notBeforeDate', options: {
+					warningMessage: 'Attention : la date est antérieure à la date de référence',
+					date: '01/01/2024',
+					isWarning: true,
+				},
+			},
+		],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('20/12/2023')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithSuccess: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						placeholder="Date valide"
+						label="Date valide"
+						required
+						:custom-rules="[
+							{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } }
+						]"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+					
+					const date = ref('22/01/2024')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headingLevel': 3,
+		'placeholder': 'Date valide',
+		'label': 'Date valide',
+		'format': 'DD/MM/YYYY',
+		'dateFormatReturn': '',
+		'isBirthDate': false,
+		'showWeekNumber': false,
+		'required': true,
+		'displayRange': false,
+		'displayIcon': true,
+		'displayAppendIcon': false,
+		'disabled': false,
+		'noIcon': false,
+		'noCalendar': false,
+		'modelValue': '22/01/2024',
+		'customRules': [
+			{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } },
+		],
+		'onUpdate:modelValue': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClosed': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker: DatePicker },
+			setup() {
+				const value = ref('22/01/2024')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
 export const DateRange: Story = {
 	parameters: {
 		sourceCode: [
@@ -836,230 +1071,6 @@ export const BirthDate: Story = {
 			components: { DatePicker: DatePicker },
 			setup() {
 				const value = ref('')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithError: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						placeholder="notAfterToday"
-						label="notAfterToday"
-						:custom-rules="[
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
-		]"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('01/01/2100')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': false,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '01/01/2100',
-		'customRules': [
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd hui' } },
-		],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value = ref('01/01/2100')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithWarning: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						placeholder="Date avec avertissement"
-						label="Date avec avertissement"
-						:custom-warning-rules="[
-							{ type: 'notBeforeDate', options: { 
-								warningMessage: 'Attention : la date est antérieure à la date de référence',
-								date: '01/01/2031',
-								isWarning: true,
-							} }
-						]"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('20/12/2023')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'Date avec avertissement',
-		'label': 'Date avec avertissement',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': false,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '20/12/2023',
-		'customWarningRules': [
-			{
-				type: 'notBeforeDate', options: {
-					warningMessage: 'Attention : la date est antérieure à la date de référence',
-					date: '01/01/2024',
-					isWarning: true,
-				},
-			},
-		],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value = ref('20/12/2023')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithSuccess: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						placeholder="Date valide"
-						label="Date valide"
-						required
-						:custom-rules="[
-							{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } }
-						]"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('22/01/2024')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'Date valide',
-		'label': 'Date valide',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': true,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '22/01/2024',
-		'customRules': [
-			{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } },
-		],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value = ref('22/01/2024')
 				return { args, value }
 			},
 			template: `

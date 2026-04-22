@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyTextArea from './SyTextArea.vue'
 import type { VTextarea } from 'vuetify/components'
 import { fn } from '@storybook/test'
+import { ref } from 'vue'
 
 const meta = {
 	title: 'Composants/Formulaires/SyTextArea',
@@ -294,6 +295,129 @@ const text = ref('')
 			},
 		],
 	},
+}
+
+export const WithError: Story = {
+	args: {
+		'label': 'Description',
+		'modelValue': 'Texte invalide',
+		'errorMessages': ['Ce champ contient une erreur'],
+		'onUpdate:modelValue': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyTextArea
+    v-model="value"
+    label="Description"
+    :error-messages="['Ce champ contient une erreur']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+const value = ref('Texte invalide')
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref('Texte invalide')
+			return { args, value }
+		},
+		template: `<SyTextArea v-model="value" v-bind="args" />`,
+	}),
+}
+
+export const WithWarning: Story = {
+	args: {
+		'label': 'Description',
+		'modelValue': 'Texte avec avertissement',
+		'warningMessages': ['Ce contenu nécessite une vérification'],
+		'onUpdate:modelValue': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyTextArea
+    v-model="value"
+    label="Description"
+    :warning-messages="['Ce contenu nécessite une vérification']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+const value = ref('Texte avec avertissement')
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref('Texte avec avertissement')
+			return { args, value }
+		},
+		template: `<SyTextArea v-model="value" v-bind="args" />`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	args: {
+		'label': 'Description',
+		'modelValue': 'Texte valide',
+		'successMessages': ['Contenu valide'],
+		'onUpdate:modelValue': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyTextArea
+    v-model="value"
+    label="Description"
+    :success-messages="['Contenu valide']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+const value = ref('Texte valide')
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref('Texte valide')
+			return { args, value }
+		},
+		template: `<SyTextArea v-model="value" v-bind="args" />`,
+	}),
 }
 
 export const Trim: Story = {

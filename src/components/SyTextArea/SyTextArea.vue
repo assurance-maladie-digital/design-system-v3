@@ -153,7 +153,51 @@
 		:aria-label="label"
 		:required="required"
 		:aria-required="required ? 'true' : undefined"
+		:class="{
+			'warning-field': hasWarning && !hasError,
+			'success-field': hasSuccess && !hasError && !hasWarning,
+		}"
 		@update:model-value="execValueChange"
 		@update:focused="(e: boolean) => { focused = e; if (!e) execBlurChange() }"
 	/>
 </template>
+
+<style lang="scss" scoped>
+.warning-field {
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-borderWarning)) !important;
+
+		.v-field__outline {
+			color: rgb(var(--v-theme-borderWarning)) !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgb(var(--v-theme-borderWarning)) !important;
+		}
+	}
+}
+
+.success-field {
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-borderSuccess)) !important;
+
+		--v-medium-emphasis-opacity: 1;
+
+		.v-field__outline {
+			color: rgb(var(--v-theme-borderSuccess)) !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgb(var(--v-theme-borderSuccess)) !important;
+		}
+	}
+}
+</style>

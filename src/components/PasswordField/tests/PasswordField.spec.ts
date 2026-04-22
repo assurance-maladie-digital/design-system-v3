@@ -40,6 +40,24 @@ describe('PasswordField.vue', () => {
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['new-password'])
 	})
 
+	it('clears the password when the clear button is clicked', async () => {
+		const wrapper = mount(PasswordField, {
+			props: {
+				label: 'Password',
+				modelValue: 'secret-password',
+				isClearable: true,
+			},
+		})
+
+		const clearButton = wrapper.find('button[aria-label="Vider Password"]')
+		expect(clearButton.exists()).toBe(true)
+
+		await clearButton.trigger('click')
+
+		expect(wrapper.emitted()['update:modelValue']?.at(-1)).toEqual([''])
+		expect(wrapper.emitted().clear).toBeTruthy()
+	})
+
 	it('validates the password field on blur', async () => {
 		const wrapper = mount(PasswordField, {
 			props: {

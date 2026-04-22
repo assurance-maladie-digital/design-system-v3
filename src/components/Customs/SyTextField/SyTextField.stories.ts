@@ -515,6 +515,126 @@ L'astérisque ne peut être affiché que sur un champ requis, en activant la pro
 	},
 }
 
+export const WithError: Story = {
+	args: {
+		label: 'Adresse email',
+		modelValue: 'email-invalide',
+		errorMessages: ['Cette adresse email est invalide'],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyTextField
+    v-model="value"
+    label="Adresse email"
+    :error-messages="['Cette adresse email est invalide']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+const value = ref('email-invalide')
+</script>`,
+			},
+		],
+	},
+	render: (args) => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue ?? '')
+			return { args, value }
+		},
+		template: `<SyTextField v-model="value" v-bind="args" />`,
+	}),
+}
+
+export const WithWarning: Story = {
+	args: {
+		label: 'Adresse email',
+		modelValue: 'email@example.com',
+		warningMessages: ['Cette adresse email n\'est pas vérifiée'],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyTextField
+    v-model="value"
+    label="Adresse email"
+    :warning-messages="['Cette adresse email n\\'est pas vérifiée']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+const value = ref('email@example.com')
+</script>`,
+			},
+		],
+	},
+	render: (args) => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue ?? '')
+			return { args, value }
+		},
+		template: `<SyTextField v-model="value" v-bind="args" />`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	args: {
+		label: 'Adresse email',
+		modelValue: 'email@example.com',
+		successMessages: ['Adresse email valide'],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyTextField
+    v-model="value"
+    label="Adresse email"
+    :success-messages="['Adresse email valide']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+const value = ref('email@example.com')
+</script>`,
+			},
+		],
+	},
+	render: (args) => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue ?? '')
+			return { args, value }
+		},
+		template: `<SyTextField v-model="value" v-bind="args" />`,
+	}),
+}
+
 export const SlotPrepend: Story = {
 	parameters: {
 		sourceCode: [

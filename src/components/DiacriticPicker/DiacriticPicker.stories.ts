@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import DiacriticPicker from './DiacriticPicker.vue'
-import { VTextField, VTextarea } from 'vuetify/components'
+import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 import { ref } from 'vue'
 
 const meta = {
@@ -46,12 +47,9 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
   <DiacriticPicker v-model="nom">
-    <v-text-field
+    <SyTextField
       v-model="nom"
       label="Nom avec accents"
-      color="primary"
-      variant="outlined"
-      bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -60,7 +58,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
   import { ref } from 'vue'
-  import { DiacriticPicker } from '@cnamts/synapse'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
   
   const nom = ref('')
 </script>`,
@@ -93,7 +91,7 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DiacriticPicker, VTextField },
+			components: { DiacriticPicker, SyTextField },
 			setup() {
 				const value = ref('')
 				return { args, value }
@@ -106,12 +104,321 @@ export const Default: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<SyTextField
 							v-model="value"
 							label="Nom avec accents"
-							color="primary"
-							variant="outlined"
-							bg-color="white"
+						/>
+					</DiacriticPicker>
+					<div class="mt-2">Valeur actuelle: {{ value }}</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <DiacriticPicker v-model="nom">
+    <SyTextField
+      v-model="nom"
+      label="Nom requis"
+      required
+    />
+  </DiacriticPicker>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
+  
+  const nom = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		btnTitle: 'éÉ',
+		diacritics: [
+			'é', 'è', 'ê', 'ë',
+			'à', 'â', 'ä', 'æ',
+			'î', 'ï',
+			'ô', 'ö', 'œ',
+			'ù', 'û', 'ü',
+			'ÿ',
+			'ç',
+		],
+		vuetifyOptions: {
+			btn: {
+				color: 'primary',
+				size: 'small',
+				variant: 'tonal',
+			},
+			dialog: {
+				maxWidth: 400,
+				persistent: false,
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { DiacriticPicker, SyTextField },
+			setup() {
+				const value = ref('')
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<DiacriticPicker 
+						v-model="value"
+						:btn-title="args.btnTitle"
+						:diacritics="args.diacritics"
+						:vuetify-options="args.vuetifyOptions"
+					>
+						<SyTextField
+							v-model="value"
+							label="Nom requis"
+							required
+						/>
+					</DiacriticPicker>
+					<div class="mt-2">Valeur actuelle: {{ value }}</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <DiacriticPicker v-model="nom">
+    <SyTextField
+      v-model="nom"
+      label="Nom avec accents"
+      :error-messages="['Ce champ contient une erreur']"
+    />
+  </DiacriticPicker>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
+  
+  const nom = ref('Texte invalide')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: 'Texte invalide',
+		btnTitle: 'éÉ',
+		diacritics: [
+			'é', 'è', 'ê', 'ë',
+			'à', 'â', 'ä', 'æ',
+			'î', 'ï',
+			'ô', 'ö', 'œ',
+			'ù', 'û', 'ü',
+			'ÿ',
+			'ç',
+		],
+		vuetifyOptions: {
+			btn: {
+				color: 'primary',
+				size: 'small',
+				variant: 'tonal',
+			},
+			dialog: {
+				maxWidth: 400,
+				persistent: false,
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { DiacriticPicker, SyTextField },
+			setup() {
+				const value = ref('Texte invalide')
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<DiacriticPicker 
+						v-model="value"
+						:btn-title="args.btnTitle"
+						:diacritics="args.diacritics"
+						:vuetify-options="args.vuetifyOptions"
+					>
+						<SyTextField
+							v-model="value"
+							label="Nom avec accents"
+							:error-messages="['Ce champ contient une erreur']"
+						/>
+					</DiacriticPicker>
+					<div class="mt-2">Valeur actuelle: {{ value }}</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <DiacriticPicker v-model="nom">
+    <SyTextField
+      v-model="nom"
+      label="Nom avec accents"
+      :warning-messages="['Ce contenu nécessite une vérification']"
+    />
+  </DiacriticPicker>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
+  
+  const nom = ref('Texte avec avertissement')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: 'Texte avec avertissement',
+		btnTitle: 'éÉ',
+		diacritics: [
+			'é', 'è', 'ê', 'ë',
+			'à', 'â', 'ä', 'æ',
+			'î', 'ï',
+			'ô', 'ö', 'œ',
+			'ù', 'û', 'ü',
+			'ÿ',
+			'ç',
+		],
+		vuetifyOptions: {
+			btn: {
+				color: 'primary',
+				size: 'small',
+				variant: 'tonal',
+			},
+			dialog: {
+				maxWidth: 400,
+				persistent: false,
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { DiacriticPicker, SyTextField },
+			setup() {
+				const value = ref('Texte avec avertissement')
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<DiacriticPicker 
+						v-model="value"
+						:btn-title="args.btnTitle"
+						:diacritics="args.diacritics"
+						:vuetify-options="args.vuetifyOptions"
+					>
+						<SyTextField
+							v-model="value"
+							label="Nom avec accents"
+							:warning-messages="['Ce contenu nécessite une vérification']"
+						/>
+					</DiacriticPicker>
+					<div class="mt-2">Valeur actuelle: {{ value }}</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithSuccess: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+  <DiacriticPicker v-model="nom">
+    <SyTextField
+      v-model="nom"
+      label="Nom avec accents"
+      :success-messages="['Contenu valide']"
+    />
+  </DiacriticPicker>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
+  
+  const nom = ref('Texte valide')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: 'Texte valide',
+		btnTitle: 'éÉ',
+		diacritics: [
+			'é', 'è', 'ê', 'ë',
+			'à', 'â', 'ä', 'æ',
+			'î', 'ï',
+			'ô', 'ö', 'œ',
+			'ù', 'û', 'ü',
+			'ÿ',
+			'ç',
+		],
+		vuetifyOptions: {
+			btn: {
+				color: 'primary',
+				size: 'small',
+				variant: 'tonal',
+			},
+			dialog: {
+				maxWidth: 400,
+				persistent: false,
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { DiacriticPicker, SyTextField },
+			setup() {
+				const value = ref('Texte valide')
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<DiacriticPicker 
+						v-model="value"
+						:btn-title="args.btnTitle"
+						:diacritics="args.diacritics"
+						:vuetify-options="args.vuetifyOptions"
+					>
+						<SyTextField
+							v-model="value"
+							label="Nom avec accents"
+							:success-messages="['Contenu valide']"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
@@ -128,13 +435,9 @@ export const WithTextarea: Story = {
 				name: 'Template',
 				code: `<template>
   <DiacriticPicker v-model="adresse">
-    <v-textarea
+    <SyTextArea
       v-model="adresse"
       label="Adresse"
-      color="primary"
-      bg-color="white"
-      variant="outlined"
-      auto-grow
     />
   </DiacriticPicker>
 </template>`,
@@ -143,7 +446,7 @@ export const WithTextarea: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
   import { ref } from 'vue'
-  import { DiacriticPicker } from '@cnamts/synapse'
+  import { DiacriticPicker, SyTextArea } from '@cnamts/synapse'
   
   const adresse = ref('')
 </script>`,
@@ -176,7 +479,7 @@ export const WithTextarea: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DiacriticPicker, VTextarea },
+			components: { DiacriticPicker, SyTextArea },
 			setup() {
 				const value = ref('')
 				return { args, value }
@@ -189,13 +492,9 @@ export const WithTextarea: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-textarea
+						<SyTextArea
 							v-model="value"
 							label="Adresse"
-							color="primary"
-							bg-color="white"
-							variant="outlined"
-							auto-grow
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
@@ -212,12 +511,9 @@ export const CustomDiacritics: Story = {
 				name: 'Template',
 				code: `<template>
   <DiacriticPicker v-model="text" :diacritics="caracteres">
-    <v-text-field
+    <SyTextField
       v-model="text"
       label="Texte avec accents personnalisés"
-      color="primary"
-      variant="outlined"
-				bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -226,7 +522,7 @@ export const CustomDiacritics: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
   import { ref } from 'vue'
-  import { DiacriticPicker } from '@cnamts/synapse'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
   
   const text = ref('')
   const caracteres = ['é', 'è', 'ê', 'à', 'ç', 'ù']
@@ -252,7 +548,7 @@ export const CustomDiacritics: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DiacriticPicker, VTextField },
+			components: { DiacriticPicker, SyTextField },
 			setup() {
 				const value = ref('')
 				return { args, value }
@@ -265,12 +561,9 @@ export const CustomDiacritics: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<SyTextField
 							v-model="value"
 							label="Texte avec accents personnalisés"
-							color="primary"
-							variant="outlined"
-							bg-color="white"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
@@ -287,12 +580,9 @@ export const CustomButtonTitle: Story = {
 				name: 'Template',
 				code: `<template>
   <DiacriticPicker v-model="text" btn-title="àéç">
-    <v-text-field
+    <SyTextField
       v-model="text"
       label="Texte avec bouton personnalisé"
-      color="primary"
-      variant="outlined"
-      bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -301,7 +591,7 @@ export const CustomButtonTitle: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
   import { ref } from 'vue'
-  import { DiacriticPicker } from '@cnamts/synapse'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
   
   const text = ref('')
 </script>`,
@@ -334,7 +624,7 @@ export const CustomButtonTitle: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DiacriticPicker, VTextField },
+			components: { DiacriticPicker, SyTextField },
 			setup() {
 				const value = ref('')
 				return { args, value }
@@ -347,12 +637,9 @@ export const CustomButtonTitle: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<SyTextField
 							v-model="value"
 							label="Texte avec bouton personnalisé"
-							color="primary"
-							variant="outlined"
-							bg-color="white"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>
@@ -382,12 +669,10 @@ export const Customization: Story = {
       }
     }"
   >
-    <v-text-field
+    <SyTextField
       v-model="text"
       label="Options Vuetify personnalisées"
       color="secondary"
-      variant="outlined"
-      bg-color="white"
     />
   </DiacriticPicker>
 </template>`,
@@ -396,7 +681,7 @@ export const Customization: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
   import { ref } from 'vue'
-  import { DiacriticPicker } from '@cnamts/synapse'
+  import { DiacriticPicker, SyTextField } from '@cnamts/synapse'
   
   const text = ref('')
 </script>`,
@@ -428,7 +713,7 @@ export const Customization: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DiacriticPicker, VTextField },
+			components: { DiacriticPicker, SyTextField },
 			setup() {
 				const value = ref('')
 				return { args, value }
@@ -441,12 +726,10 @@ export const Customization: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<SyTextField
 							v-model="value"
 							label="Options Vuetify personnalisées"
 							color="secondary"
-							variant="outlined"
-							bg-color="white"
 						/>
 					</DiacriticPicker>
 					<div class="mt-2">Valeur actuelle: {{ value }}</div>

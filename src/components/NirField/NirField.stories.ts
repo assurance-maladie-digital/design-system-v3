@@ -1,5 +1,5 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
-import { ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import NirField from './NirField.vue'
 
@@ -520,9 +520,294 @@ export const WithoutKey: Story = {
 	},
 }
 
-export const WithSuccessMessages: Story = {
+export const WithError: Story = {
 	args: {
 		...Default.args,
+		modelValue: '123456',
+		customNumberRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						return value.length === 13 ? true : 'Le numéro de sécurité sociale doit contenir 13 chiffres'
+					},
+					fieldIdentifier: 'nir',
+				},
+			},
+		],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <NirField
+    ref="nirField"
+    v-model="value"
+    numberLabel="Numéro de sécurité sociale"
+    keyLabel="Clé"
+    :custom-number-rules="customNumberRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { nextTick, onMounted, ref } from 'vue'
+import { NirField } from '@cnamts/synapse'
+const value = ref('123456')
+const nirField = ref<InstanceType<typeof NirField> | null>(null)
+const customNumberRules = [{
+  type: 'custom',
+  options: {
+    validate: (value) => value.length === 13 ? true : 'Le numéro doit contenir 13 chiffres',
+  },
+}]
+
+onMounted(async () => {
+  await nextTick()
+  await nirField.value?.validateOnSubmit()
+})
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { NirField },
+		setup() {
+			const value = ref('123456')
+			const nirField = ref<InstanceType<typeof NirField> | null>(null)
+
+			onMounted(async () => {
+				await nextTick()
+				await nirField.value?.validateOnSubmit()
+			})
+
+			return { args, value, nirField }
+		},
+		template: `
+			<NirField
+				ref="nirField"
+				v-model="value"
+				v-bind="args"
+			/>
+		`,
+	}),
+}
+
+export const WithWarning: Story = {
+	args: {
+		...Default.args,
+		modelValue: '180010100001182',
+		showSuccessMessages: false,
+		customNumberWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'Attention : ce NIR commence par 1 (homme)',
+					warningMessage: 'Attention : ce NIR commence par 1 (homme)',
+					validate: (value: string) => {
+						if (!value) return false
+						// On retourne true si la règle n'est PAS respectée (= warning)
+						return !value.startsWith('1')
+					},
+					isWarning: true,
+				},
+			},
+			{
+				type: 'custom',
+				options: {
+					message: 'Attention : ce NIR commence par 2 (femme)',
+					warningMessage: 'Attention : ce NIR commence par 2 (femme)',
+					validate: (value: string) => {
+						if (!value) return false
+						// On retourne true si la règle n'est PAS respectée (= warning)
+						return !value.startsWith('2')
+					},
+					isWarning: true,
+				},
+			},
+		],
+		customKeyRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'La clé doit être comprise entre 01 et 97',
+					validate: (value: string) => {
+						if (!value) return true
+						const numValue = parseInt(value)
+						return numValue >= 1 && numValue <= 97
+					},
+				},
+			},
+		],
+		customKeyWarningRules: [
+			{
+				type: 'custom',
+				options: {
+					message: 'Attention : la clé est supérieure à 50',
+					warningMessage: 'Attention : la clé est supérieure à 50',
+					validate: (value: string) => {
+						if (!value) return false
+						const numValue = parseInt(value)
+						// On retourne true si la règle n'est PAS respectée (= warning)
+						return !(numValue > 50)
+					},
+					isWarning: true,
+				},
+			},
+		],
+	},
+	parameters: {
+		...Default.parameters,
+		docs: {
+			description: {
+				story: `
+## Exemple d'utilisation des warnings
+
+Le NirField peut afficher des warnings pour guider l'utilisateur sans bloquer la validation.
+
+### Warnings sur le NIR
+- Un warning s'affiche si le NIR commence par 1 (homme)
+- Un warning s'affiche si le NIR commence par 2 (femme)
+
+### Warnings sur la clé
+- Un warning s'affiche si la clé est supérieure à 50
+- Une erreur s'affiche si la clé n'est pas entre 01 et 97
+
+### Exemples de NIR valides avec warnings :
+- \`1234567891011\` (warning : homme)
+- \`2234567891011\` (warning : femme)
+- Clé \`51\` (warning : clé > 50)
+
+Les warnings sont affichés en jaune avec une icône d'avertissement mais ne bloquent pas la validation.
+Les erreurs sont affichées en rouge et bloquent la validation.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      ref="nirField"
+      v-model="value"
+      :required="false"
+      :show-success-messages="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :display-key="true"
+      :customNumberWarningRules="[
+        {
+          type: 'custom',
+          options: {
+            message: 'Attention : ce NIR commence par 1 (homme)',
+            warningMessage: 'Attention : ce NIR commence par 1 (homme)',
+            validate: (value) => {
+              if (!value) return false
+              // On retourne true si la règle n'est PAS respectée (= warning)
+              return !value.startsWith('1')
+            },
+            isWarning: true,
+          },
+        },
+        {
+          type: 'custom',
+          options: {
+            message: 'Attention : ce NIR commence par 2 (femme)',
+            warningMessage: 'Attention : ce NIR commence par 2 (femme)',
+            validate: (value) => {
+              if (!value) return false
+              // On retourne true si la règle n'est PAS respectée (= warning)
+              return !value.startsWith('2')
+            },
+            isWarning: true,
+          },
+        },
+      ]"
+      :customKeyRules="[
+        {
+          type: 'custom',
+          options: {
+            message: 'La clé doit être comprise entre 01 et 97',
+            validate: (value) => {
+              if (!value) return true
+              const numValue = parseInt(value)
+              return numValue >= 1 && numValue <= 97
+            },
+          },
+        },
+      ]"
+      :customKeyWarningRules="[
+        {
+          type: 'custom',
+          options: {
+            message: 'Attention : la clé est supérieure à 50',
+            warningMessage: 'Attention : la clé est supérieure à 50',
+            validate: (value) => {
+              if (!value) return false
+              const numValue = parseInt(value)
+              // On retourne true si la règle n'est PAS respectée (= warning)
+              return !(numValue > 50)
+            },
+            isWarning: true,
+          },
+        },
+      ]"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import { NirField } from '@cnamts/synapse'
+     import { nextTick, onMounted, ref } from 'vue'
+     
+     const value = ref('180010100001182')
+     const nirField = ref<InstanceType<typeof NirField> | null>(null)
+
+     onMounted(async () => {
+       await nextTick()
+       await nirField.value?.validateOnSubmit()
+     })
+    </script>
+    `,
+			},
+		],
+	},
+	render: args => ({
+		components: { NirField },
+		setup() {
+			const value = ref('180010100001182')
+			const nirField = ref<InstanceType<typeof NirField> | null>(null)
+
+			onMounted(async () => {
+				await nextTick()
+				await nirField.value?.validateOnSubmit()
+			})
+
+			return { args, value, nirField }
+		},
+		template: `
+			<NirField
+				ref="nirField"
+				v-model="value"
+				v-bind="args"
+			/>
+		`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	args: {
+		...Default.args,
+		modelValue: '184027512345674',
 		showSuccessMessages: true,
 	},
 	parameters: {
@@ -533,6 +818,7 @@ export const WithSuccessMessages: Story = {
 				code: `
     <template>
      <NirField
+      ref="nirField"
       v-model="value"
       :required="false"
       numberLabel="Numéro de sécurité sociale"
@@ -547,14 +833,41 @@ export const WithSuccessMessages: Story = {
 				code: `
     <script setup lang="ts">
      import { NirField } from '@cnamts/synapse'
-     import { ref } from 'vue'
+     import { nextTick, onMounted, ref } from 'vue'
      
-     const value = ref('')
+     const value = ref('184027512345674')
+     const nirField = ref<InstanceType<typeof NirField> | null>(null)
+
+     onMounted(async () => {
+       await nextTick()
+       await nirField.value?.validateOnSubmit()
+     })
     </script>
     `,
 			},
 		],
 	},
+	render: args => ({
+		components: { NirField },
+		setup() {
+			const value = ref('184027512345674')
+			const nirField = ref<InstanceType<typeof NirField> | null>(null)
+
+			onMounted(async () => {
+				await nextTick()
+				await nirField.value?.validateOnSubmit()
+			})
+
+			return { args, value, nirField }
+		},
+		template: `
+			<NirField
+				ref="nirField"
+				v-model="value"
+				v-bind="args"
+			/>
+		`,
+	}),
 }
 
 export const WithoutSuccessMessages: Story = {
@@ -948,183 +1261,6 @@ L'infobulle est positionnée après le champ et s'affiche au survol de l'icône 
       :displayKey="true"
       :keyTooltip="'Ceci est un tooltip pour la clef du numéro de sécurité sociale'"
       keyTooltipPosition="append"
-     />
-    </template>
-    `,
-			},
-			{
-				name: 'Script',
-				code: `
-    <script setup lang="ts">
-     import { NirField } from '@cnamts/synapse'
-     import { ref } from 'vue'
-     
-     const value = ref('')
-    </script>
-    `,
-			},
-		],
-	},
-}
-
-export const WithWarnings: Story = {
-	args: {
-		...Default.args,
-		showSuccessMessages: false,
-		customNumberWarningRules: [
-			{
-				type: 'custom',
-				options: {
-					message: 'Attention : ce NIR commence par 1 (homme)',
-					warningMessage: 'Attention : ce NIR commence par 1 (homme)',
-					validate: (value: string) => {
-						if (!value) return false
-						// On retourne true si la règle n'est PAS respectée (= warning)
-						return !value.startsWith('1')
-					},
-					isWarning: true,
-				},
-			},
-			{
-				type: 'custom',
-				options: {
-					message: 'Attention : ce NIR commence par 2 (femme)',
-					warningMessage: 'Attention : ce NIR commence par 2 (femme)',
-					validate: (value: string) => {
-						if (!value) return false
-						// On retourne true si la règle n'est PAS respectée (= warning)
-						return !value.startsWith('2')
-					},
-					isWarning: true,
-				},
-			},
-		],
-		customKeyRules: [
-			{
-				type: 'custom',
-				options: {
-					message: 'La clé doit être comprise entre 01 et 97',
-					validate: (value: string) => {
-						if (!value) return true
-						const numValue = parseInt(value)
-						return numValue >= 1 && numValue <= 97
-					},
-				},
-			},
-		],
-		customKeyWarningRules: [
-			{
-				type: 'custom',
-				options: {
-					message: 'Attention : la clé est supérieure à 50',
-					warningMessage: 'Attention : la clé est supérieure à 50',
-					validate: (value: string) => {
-						if (!value) return false
-						const numValue = parseInt(value)
-						// On retourne true si la règle n'est PAS respectée (= warning)
-						return !(numValue > 50)
-					},
-					isWarning: true,
-				},
-			},
-		],
-	},
-	parameters: {
-		...Default.parameters,
-		docs: {
-			description: {
-				story: `
-## Exemple d'utilisation des warnings
-
-Le NirField peut afficher des warnings pour guider l'utilisateur sans bloquer la validation.
-
-### Warnings sur le NIR
-- Un warning s'affiche si le NIR commence par 1 (homme)
-- Un warning s'affiche si le NIR commence par 2 (femme)
-
-### Warnings sur la clé
-- Un warning s'affiche si la clé est supérieure à 50
-- Une erreur s'affiche si la clé n'est pas entre 01 et 97
-
-### Exemples de NIR valides avec warnings :
-- \`1234567891011\` (warning : homme)
-- \`2234567891011\` (warning : femme)
-- Clé \`51\` (warning : clé > 50)
-
-Les warnings sont affichés en jaune avec une icône d'avertissement mais ne bloquent pas la validation.
-Les erreurs sont affichées en rouge et bloquent la validation.
-`,
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-    <template>
-     <NirField
-      v-model="value"
-      :required="false"
-      :show-success-messages="true"
-      numberLabel="Numéro de sécurité sociale"
-      keyLabel="Clé"
-      :display-key="true"
-      :customNumberWarningRules="[
-        {
-          type: 'custom',
-          options: {
-            message: 'Attention : ce NIR commence par 1 (homme)',
-            warningMessage: 'Attention : ce NIR commence par 1 (homme)',
-            validate: (value) => {
-              if (!value) return false
-              // On retourne true si la règle n'est PAS respectée (= warning)
-              return !value.startsWith('1')
-            },
-            isWarning: true,
-          },
-        },
-        {
-          type: 'custom',
-          options: {
-            message: 'Attention : ce NIR commence par 2 (femme)',
-            warningMessage: 'Attention : ce NIR commence par 2 (femme)',
-            validate: (value) => {
-              if (!value) return false
-              // On retourne true si la règle n'est PAS respectée (= warning)
-              return !value.startsWith('2')
-            },
-            isWarning: true,
-          },
-        },
-      ]"
-      :customKeyRules="[
-        {
-          type: 'custom',
-          options: {
-            message: 'La clé doit être comprise entre 01 et 97',
-            validate: (value) => {
-              if (!value) return true
-              const numValue = parseInt(value)
-              return numValue >= 1 && numValue <= 97
-            },
-          },
-        },
-      ]"
-      :customKeyWarningRules="[
-        {
-          type: 'custom',
-          options: {
-            message: 'Attention : la clé est supérieure à 50',
-            warningMessage: 'Attention : la clé est supérieure à 50',
-            validate: (value) => {
-              if (!value) return false
-              const numValue = parseInt(value)
-              // On retourne true si la règle n'est PAS respectée (= warning)
-              return !(numValue > 50)
-            },
-            isWarning: true,
-          },
-        },
-      ]"
      />
     </template>
     `,

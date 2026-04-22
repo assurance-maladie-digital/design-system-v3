@@ -806,6 +806,28 @@ describe('PhoneField', () => {
 			expect(textField.props('errorMessages')).toBeTruthy()
 		})
 
+		it('passes external validation messages to SyTextField', () => {
+			const errorWrapper = mount(PhoneField, {
+				props: {
+					errorMessages: ['Le numéro de téléphone doit contenir 10 chiffres.'],
+				},
+			})
+			const warningWrapper = mount(PhoneField, {
+				props: {
+					warningMessages: ['Vérifiez que ce numéro est toujours joignable.'],
+				},
+			})
+			const successWrapper = mount(PhoneField, {
+				props: {
+					successMessages: ['Numéro de téléphone valide.'],
+				},
+			})
+
+			expect(errorWrapper.findComponent({ name: 'SyTextField' }).props('errorMessages')).toEqual(['Le numéro de téléphone doit contenir 10 chiffres.'])
+			expect(warningWrapper.findComponent({ name: 'SyTextField' }).props('warningMessages')).toEqual(['Vérifiez que ce numéro est toujours joignable.'])
+			expect(successWrapper.findComponent({ name: 'SyTextField' }).props('successMessages')).toEqual(['Numéro de téléphone valide.'])
+		})
+
 		it('initializes with disableErrorHandling prop', async () => {
 			const wrapper = mount(PhoneField, {
 				props: {
