@@ -441,6 +441,7 @@ export const ComponentsList: StoryObj = {
 					'SySelect',
 					'SyRadioGroup',
 					'SyIconBtn',
+					'NirField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
