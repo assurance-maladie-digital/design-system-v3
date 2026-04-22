@@ -51,32 +51,24 @@
 	})
 
 	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
-
-	const ratingElement = ref<HTMLDivElement[]>([])
-	function focusNextElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const nextIndex = currentIndex < (props.length - 1) ? currentIndex + 1 : 0
-		const nextElem = ratingElement.value?.[nextIndex]
-		nextElem?.focus()
-	}
-
-	function focusPrevElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const prevIndex = currentIndex > 0 ? currentIndex - 1 : (props.length - 1)
-		const prevElem = ratingElement.value?.[prevIndex]
-		prevElem?.focus()
-	}
+	const ratingElement = ref<HTMLElement[]>([])
 
 	function setFocus(index: number) {
 		ratingElement.value.forEach((el, i) => {
-			if (i === index) {
-				el.setAttribute('tabindex', '0')
-				el.focus()
-			}
-			else {
-				el.setAttribute('tabindex', '-1')
-			}
+			if (!el) return
+			el.setAttribute('tabindex', i === index ? '0' : '-1')
 		})
+		ratingElement.value[index]?.focus()
+	}
+
+	function focusNextElement(index: number) {
+		const nextIndex = index < props.length - 1 ? index + 1 : 0
+		setFocus(nextIndex)
+	}
+
+	function focusPrevElement(index: number) {
+		const prevIndex = index > 0 ? index - 1 : props.length - 1
+		setFocus(prevIndex)
 	}
 
 	onMounted(() => {
@@ -126,12 +118,12 @@
 						class="sy-number-picker__item text-body-2 pa-0"
 						:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
 						@click="emitInputEvent(index); setFocus(index - 1)"
-						@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
-						@keyup.space="emitInputEvent(index); setFocus(index - 1)"
-						@keyup.right="focusNextElement(index - 1)"
-						@keyup.left="focusPrevElement(index - 1)"
-						@keyup.up="focusPrevElement(index - 1)"
-						@keyup.down="focusNextElement(index - 1)"
+						@keydown.enter.prevent="emitInputEvent(index); setFocus(index - 1)"
+						@keydown.space.prevent="emitInputEvent(index); setFocus(index - 1)"
+						@keydown.right.prevent="focusNextElement(index - 1)"
+						@keydown.left.prevent="focusPrevElement(index - 1)"
+						@keydown.up.prevent="focusPrevElement(index - 1)"
+						@keydown.down.prevent="focusNextElement(index - 1)"
 					>
 						{{ index }}
 						<span class="d-sr-only">
