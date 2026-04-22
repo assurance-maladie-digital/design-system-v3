@@ -418,7 +418,7 @@ describe('NirField.vue', () => {
 			// On vérifie également que l'attribut est passé aux sous-composants s'ils l'utilisent
 			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
 			// SyTextField a showSuccessMessages false en dur dans NirField
-			expect(textFields[0].props('showSuccessMessages')).toBe(false)
+			expect(textFields[0]?.props('showSuccessMessages')).toBe(false)
 		})
 
 		it('respects disableErrorHandling prop', async () => {
@@ -448,8 +448,8 @@ describe('NirField.vue', () => {
 			// Les tooltips sont passés aux SyTextField en tant que props 'appendTooltip' (par défaut)
 			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
 
-			expect(textFields[0].props('appendTooltip')).toBe(nirTooltip)
-			expect(textFields[1].props('appendTooltip')).toBe(keyTooltip)
+			expect(textFields[0]?.props('appendTooltip')).toBe(nirTooltip)
+			expect(textFields[1]?.props('appendTooltip')).toBe(keyTooltip)
 		})
 
 		it('renders asterisks correctly when displayAsterisk is true AND required is true', async () => {
@@ -461,16 +461,16 @@ describe('NirField.vue', () => {
 			// Dans NirField.vue, l'astérisque est ajouté directement à la string 'label'
 			// transmise aux composants enfants
 			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
-			expect(textFields[0].props('label')).toBe('Numéro *')
-			expect(textFields[1].props('label')).toBe('Clé *')
+			expect(textFields[0]?.props('label')).toBe('Numéro *')
+			expect(textFields[1]?.props('label')).toBe('Clé *')
 
 			// Si on désactive l'astérisque
 			await wrapper.setProps({ displayAsterisk: false })
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
-			expect(textFields[0].props('label')).toBe('Numéro')
-			expect(textFields[1].props('label')).toBe('Clé')
+			expect(textFields[0]?.props('label')).toBe('Numéro')
+			expect(textFields[1]?.props('label')).toBe('Clé')
 		})
 
 		it('removes fieldset when withoutFieldset is true', async () => {
