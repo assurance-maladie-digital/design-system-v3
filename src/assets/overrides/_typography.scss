@@ -1,8 +1,7 @@
 /* Typography styles for CNAM and PA themes */
 @use 'breakpoints' as bp;
 
-.theme-cnam,
-.theme-pa {
+.theme-cnam, .theme-pa, .theme-ap {
 	/* Headings with Vuetify classes */
 	.text-h1 {
 		font-size: var(--v-typography-h1-font-size);
@@ -218,7 +217,7 @@
 	[class*='text-'] {
 		font-family: Arial, Helvetica, sans-serif !important;
 		font-weight: 400;
-		line-height: 1.3 !important;
+      line-height: 1.3 !important;
 	}
 
 	// sets the service title text style
@@ -271,7 +270,7 @@
 	[class*='text-'][class*='-body-2'],
 	[class*='text-'][class*='-button'],
 	[class*='text-'][class*='-overline'] {
-		font-size: var(--v-ap-fontSizeXs) !important;
+      font-size: var(--v-ap-fontSizeXs) !important;
 	}
 
 	[class*='text-'][class*='-caption'] {
