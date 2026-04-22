@@ -284,7 +284,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SelectBtnField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.',
 						link: '/?path=/docs/composants-formulaires-selectbtnfield--docs',
-                        img: `/components/select-btn-field${isAp ? '-ap' : ''}.svg`,
+						img: `/components/select-btn-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -442,7 +442,7 @@ export const ComponentsList: StoryObj = {
 					'SyRadioGroup',
 					'SyIconBtn',
 					'NirField',
-                    'SelectBtnField'
+					'SelectBtnField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
