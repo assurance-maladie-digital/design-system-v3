@@ -123,6 +123,10 @@
 			type: String,
 			default: '',
 		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 		readonly: {
 			type: Boolean,
 			default: false,
@@ -420,6 +424,7 @@
 	}
 
 	const openAndFocus = () => {
+		if (props.disabled || props.readonly) return
 		markInteracted()
 		isOpen.value = true
 		focusInput(textFieldRef)
@@ -488,6 +493,7 @@
 					:placeholder="hasInlineSelections || hasSelectionTextDisplay ? '' : placeholder"
 					:is-active="hasInlineSelections || hasSelectionTextDisplay"
 					:readonly="readonly"
+					:disabled="disabled"
 					:bg-color="bgColor"
 					:density="density"
 					:autocomplete="'off'"
