@@ -399,4 +399,51 @@ describe('useNirValidation via NirField component', () => {
 		expect(numberFocusSpy).not.toHaveBeenCalled()
 		expect(keyFocusSpy).toHaveBeenCalled()
 	})
+
+	it('ne devrait pas valider la clé lorsque displayKey est à false', async () => {
+		wrapper = await createWrapper({ displayKey: false, required: true })
+
+		const numberInput = wrapper.find('.number-field input')
+
+		// Saisir un NIR valide
+		await numberInput.trigger('focus')
+		await numberInput.setValue('2940375120005')
+		await numberInput.trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// Le champ numéro ne doit pas avoir d'erreur
+		expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+
+		// La validation de la clé ne doit pas s'appliquer (pas de règles)
+		expect(wrapper.vm.keyValidation.errors.value).toEqual([])
+
+		// La validation globale doit réussir même sans clé
+		const isValid = await wrapper.vm.validateOnSubmit()
+		expect(isValid).toBe(true)
+
+		// hasFieldErrors doit être false car seule la validation du numéro compte
+		// On accède à hasFieldErrors via le composant car il est exposé par useNirValidation
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- deso
+		const componentInstance = wrapper.vm as any
+		expect(componentInstance.hasFieldErrors).toBe(false)
+	})
+
+	it('devrait ignorer les erreurs de clé lors de la validation globale lorsque displayKey est à false', async () => {
+		wrapper = await createWrapper({ displayKey: false })
+
+		const numberInput = wrapper.find('.number-field input')
+
+		// Saisir un NIR valide
+		await numberInput.trigger('focus')
+		await numberInput.setValue('2940375120005')
+		await numberInput.trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// Même si la clé n'est pas affichée, on vérifie que la validation globale ignore bien les erreurs de clé
+		// (simuler une erreur de clé qui ne devrait pas impacter la validation)
+		const isValid = await wrapper.vm.validateOnSubmit()
+		expect(isValid).toBe(true)
+	})
 })

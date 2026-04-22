@@ -111,7 +111,7 @@ export function useNirValidation(
 	})
 
 	const keyRules = computed(() => {
-		if (useVuetifyValidation.value) {
+		if (useVuetifyValidation.value || !displayKey.value) {
 			return []
 		}
 		const rules: SyValidationRule[] = []
@@ -260,13 +260,13 @@ export function useNirValidation(
 
 			isValidating.value = false
 			validationPromise = null
-			return !numberValidation.hasError.value && !keyValidation.hasError.value
+			return !numberValidation.hasError.value && (!displayKey.value || !keyValidation.hasError.value)
 		})()
 
 		return validationPromise
 	}
 
-	const hasFieldErrors = computed(() => numberValidation.hasError.value || keyValidation.hasError.value)
+	const hasFieldErrors = computed(() => numberValidation.hasError.value || (displayKey.value && keyValidation.hasError.value))
 
 	return {
 		numberValidation,
