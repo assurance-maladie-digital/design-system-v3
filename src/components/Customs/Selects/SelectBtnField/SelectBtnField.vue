@@ -35,7 +35,7 @@
 		(e: 'update:error-messages', value: string[] | undefined): void
 	}>()
 
-	const internalValue = ref<SelectBtnValue>(null)
+	const internalValue = ref<SelectBtnValue>(props.multiple ? [] : null)
 	const darktheme = ref<boolean>(false)
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
@@ -48,11 +48,12 @@
 	})
 
 	watch(() => props.modelValue, (value) => {
-		if (value === null && props.multiple) {
-			internalValue.value = []
-			return
+		if (props.multiple) {
+			internalValue.value = Array.isArray(value) ? value : []
 		}
-		internalValue.value = value
+		else {
+			internalValue.value = value ?? null
+		}
 	}, {
 		immediate: true,
 		deep: true,
@@ -79,10 +80,12 @@
 
 	function getNewValue(item: SelectBtnItem): SelectBtnValue {
 		if (props.multiple) {
-			const typedValue = internalValue.value as Array<string | number>
+			const typedValue = Array.isArray(internalValue.value)
+				? internalValue.value
+				: []
 
 			// if the item is unique, select only it
-			if (item.unique && typedValue.includes(item.value) === false) {
+			if (item.unique && !typedValue.includes(item.value)) {
 				return [item.value]
 			}
 
@@ -199,8 +202,7 @@
 		// Don't auto-select if focus was caused by mouse interaction
 		if (isMouseInteraction.value) {
 			const element = e.target as HTMLElement
-			const index = optionsRef.value.findIndex(item => item === element)
-			focusedIndex.value = index
+			focusedIndex.value = optionsRef.value.findIndex(item => item === element)
 			return
 		}
 
@@ -265,7 +267,7 @@
 				}"
 				role="option"
 				:tabindex="index === focusedIndex ? '0' : '-1'"
-				:aria-selected="!props.multiple ? (isSelected(item.value) ? 'true' : 'false') : undefined"
+				:aria-selected="props.multiple?undefined:(isSelected(item.value) ? 'true' : 'false')"
 				:aria-checked="props.multiple ? (isSelected(item.value) ? 'true' : 'false') : undefined"
 				@keydown.space.prevent="toggleItem(item)"
 				@mousedown="handleMouseDown"
