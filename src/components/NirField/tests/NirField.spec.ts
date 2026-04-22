@@ -399,12 +399,12 @@ describe('NirField.vue', () => {
 		it('respects showSuccessMessages prop', async () => {
 			// Par défaut, showSuccessMessages = true
 			await wrapper.setProps({ showSuccessMessages: true })
-			
+
 			// On ne peut pas tester facilement le DOM de VMessages dans ce contexte jsdom avec Vuetify
-			// On vérifie donc que la prop showSuccessMessages est bien transmise aux éléments enfants 
+			// On vérifie donc que la prop showSuccessMessages est bien transmise aux éléments enfants
 			// internes si applicable, ou que le comportement conditionnel est correctement câblé.
 			// La prop showSuccessMessages est utilisée dans v-show="numberValidation.hasSuccess.value && showSuccessMessages"
-			
+
 			// Pour tester que Vue applique bien la condition, on vérifie l'état de notre wrapper
 			expect(wrapper.props('showSuccessMessages')).toBe(true)
 
@@ -414,7 +414,7 @@ describe('NirField.vue', () => {
 			await flushPromises()
 
 			expect(wrapper.props('showSuccessMessages')).toBe(false)
-			
+
 			// On vérifie également que l'attribut est passé aux sous-composants s'ils l'utilisent
 			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
 			// SyTextField a showSuccessMessages false en dur dans NirField
@@ -423,7 +423,7 @@ describe('NirField.vue', () => {
 
 		it('respects disableErrorHandling prop', async () => {
 			await wrapper.setProps({ disableErrorHandling: true })
-			
+
 			const numberField = wrapper.find('.number-field input')
 			await numberField.setValue('123') // Invalid NIR
 			await numberField.trigger('blur')
@@ -440,14 +440,14 @@ describe('NirField.vue', () => {
 			const keyTooltip = 'Tooltip Clé'
 			await wrapper.setProps({
 				nirTooltip,
-				keyTooltip
+				keyTooltip,
 			})
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
 			// Les tooltips sont passés aux SyTextField en tant que props 'appendTooltip' (par défaut)
 			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
-			
+
 			expect(textFields[0].props('appendTooltip')).toBe(nirTooltip)
 			expect(textFields[1].props('appendTooltip')).toBe(keyTooltip)
 		})
@@ -463,12 +463,12 @@ describe('NirField.vue', () => {
 			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
 			expect(textFields[0].props('label')).toBe('Numéro *')
 			expect(textFields[1].props('label')).toBe('Clé *')
-			
+
 			// Si on désactive l'astérisque
 			await wrapper.setProps({ displayAsterisk: false })
 			await wrapper.vm.$nextTick()
 			await flushPromises()
-			
+
 			expect(textFields[0].props('label')).toBe('Numéro')
 			expect(textFields[1].props('label')).toBe('Clé')
 		})
