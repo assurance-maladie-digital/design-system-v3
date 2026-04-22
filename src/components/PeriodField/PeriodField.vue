@@ -70,13 +70,13 @@
 
 	// Utiliser le composable de validation
 	const fromDateValidation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		fieldIdentifier: 'fromDate',
 		disableErrorHandling: props.disableErrorHandling,
 	})
 
 	const toDateValidation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		fieldIdentifier: 'toDate',
 		disableErrorHandling: props.disableErrorHandling,
 	})

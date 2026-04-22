@@ -170,7 +170,7 @@ export function useValidation(params: {
 		...(params.warningMessages?.value || []),
 	])])
 	const successes = computed(() => [...new Set([
-		...(params.showSuccessMessages.value ? innerSuccesses.value : []),
+		...innerSuccesses.value,
 		...(params.successMessages?.value || []),
 	])])
 

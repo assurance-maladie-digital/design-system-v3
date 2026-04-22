@@ -101,7 +101,7 @@
 	// Initialisation du composable de validation
 	const { errors, warnings, successes, validateField } = !props.readonly
 		? useValidation({
-			showSuccessMessages: props.showSuccessMessages,
+			showSuccessMessages: true,
 			fieldIdentifier: props.label || 'password',
 			disableErrorHandling: props.disableErrorHandling,
 		})
@@ -114,7 +114,7 @@
 
 	const hasError = computed(() => errors.value.length > 0)
 	const hasWarning = computed(() => warnings.value.length > 0)
-	const hasSuccess = computed(() => successes.value.length > 0 && props.showSuccessMessages)
+	const hasSuccess = computed(() => successes.value.length > 0)
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
@@ -255,6 +255,7 @@
 		:error-messages="errors"
 		:warning-messages="warnings"
 		:success-messages="successes"
+		:show-success-messages="props.showSuccessMessages"
 		:readonly="props.readonly"
 		:disabled="props.disabled"
 		:placeholder="props.placeholder"

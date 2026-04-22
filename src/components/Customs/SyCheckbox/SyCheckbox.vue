@@ -107,7 +107,7 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})

@@ -501,6 +501,7 @@
 					:error-messages="displayErrors"
 					:warning-messages="displayWarnings"
 					:success-messages="displaySuccesses"
+					:show-success-messages="showSuccessMessages"
 					:has-error="displayHasError"
 					:has-warning="displayHasWarning"
 					:has-success="displayHasSuccess"
