@@ -100,6 +100,16 @@ const meta = {
 				},
 			},
 		},
+		freeTextLabel: {
+			description: 'Le libellé du champ de texte libre. Ajouter aria-label ou aria-labelledby au <textarea> : <textarea :aria-label="props.freeTextLabel" …> . Ce champ doit être utilisé en slot pour être pris en compte. Voir l’exemple de la story "DefaultSlot".',
+			control: 'text',
+			default: null,
+			table: {
+				type: {
+					summary: 'string | null',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof RatingPicker>
 

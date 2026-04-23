@@ -44,12 +44,13 @@
 	const { hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const selectItems = computed<SelectItem[]>(() => {
-		return [...Array(props.length)].map((_, index) => ({
+		const length = props.length ?? 10
+
+		return [...Array(length)].map((_, index) => ({
 			text: `${index + 1}`,
 			value: index + 1,
 		}))
 	})
-
 	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
 	const ratingElement = ref<HTMLElement[]>([])
 

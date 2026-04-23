@@ -54,7 +54,6 @@
 		(e: 'update:modelValue', value: number): void
 	}>()
 
-	const alertTypeEnumRef = ref(AlertTypeEnum)
 	const internalValue = ref(-1)
 	const displayAdditionalContent = ref(false)
 
@@ -77,10 +76,15 @@
 		return undefined
 	})
 
-	const hasAnswered = computed(() => props.modelValue !== -1)
-
+	const hasAnswered = computed(() => internalValue.value !== -1)
 	function showAdditionalContent(value: number): void {
-		if (value === -1) {
+		const max = props.type === RatingEnum.EMOTION
+			? (props.twoEmotions ? 2 : 3)
+			: props.type === RatingEnum.STARS
+				? 5
+				: 10
+
+		if (value < 1 || value > max) {
 			displayAdditionalContent.value = false
 			return
 		}
@@ -93,7 +97,8 @@
 				|| (!props.twoEmotions && value < 3)
 			)
 
-		displayAdditionalContent.value = starsUnsatisfied || numberUnsatisfied || emotionUnsatisfied
+		displayAdditionalContent.value
+			= starsUnsatisfied || numberUnsatisfied || emotionUnsatisfied
 	}
 
 	function setValue(value: number): void {
@@ -119,7 +124,7 @@
 			:is="ratingComponent"
 			:model-value="internalValue"
 			:label="props.label"
-			:length="length"
+			:length="length || undefined"
 			:readonly="props.readonly || hasAnswered"
 			:item-labels="props.itemLabels || undefined"
 			@update:model-value="setValue"
@@ -136,7 +141,7 @@
 				v-if="!props.hideAlert"
 				:class="{ 'mb-4': displayAdditionalContent }"
 				outlined
-				:type="alertTypeEnumRef.SUCCESS"
+				:type="AlertTypeEnum.SUCCESS"
 				role="status"
 				aria-live="polite"
 				class="mt-4"
