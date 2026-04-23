@@ -434,9 +434,13 @@ describe('NirField.vue', () => {
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
-			// La validation a lieu, mais disableErrorHandling est appliqué
-			const numberTextField = wrapper.findComponent({ name: 'SyTextField' })
-			expect(numberTextField.props('disableErrorHandling')).toBe(true)
+			const isValid = await wrapper.vm.validateOnSubmit()
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(isValid).toBe(true)
+			expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+			expect(wrapper.find('.number-field .v-field__append-inner .v-icon').exists()).toBe(false)
 		})
 
 		it('renders tooltips correctly when provided', async () => {
