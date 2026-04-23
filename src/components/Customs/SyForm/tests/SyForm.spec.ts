@@ -61,7 +61,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<SyTextField v-model="text" required label="Nom" />
 					</SyForm>
 				`,
@@ -72,10 +72,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
@@ -91,7 +88,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<SyTextField v-model="text" required label="Nom" />
 					</SyForm>
 				`,
@@ -102,10 +99,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
@@ -129,48 +123,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
-						<SyTextField v-model="text" required label="Nom" :customRules="customRules" />
-					</SyForm>
-				`,
-			data() {
-				return {
-					text: '',
-					customRules: [
-						{
-							type: 'custom',
-							options: {
-								validateq: (value: string) => value === 'valid',
-								message: 'Le champ doit être "valid"',
-							},
-						},
-					],
-					formValide: null as boolean | null,
-				}
-			},
-			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
-			},
-		}
-
-		const wrapper = mount(TestWrapper)
-		const textFieldInput = wrapper.findComponent(SyTextField).find('input')
-		await textFieldInput.setValue('invalid')
-
-		await wrapper.find('form').trigger('submit.prevent')
-		await flushPromises()
-		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: false }))
-	})
-
-	it('handle form with custom validation rules - valid case', async () => {
-		const submitHandler = vi.fn()
-		const TestWrapper = {
-			components: { SyForm, SyTextField },
-			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<SyTextField v-model="text" required label="Nom" :customRules="customRules" />
 					</SyForm>
 				`,
@@ -190,10 +143,45 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
+			},
+		}
+
+		const wrapper = mount(TestWrapper)
+		const textFieldInput = wrapper.findComponent(SyTextField).find('input')
+		await textFieldInput.setValue('invalid')
+
+		await wrapper.find('form').trigger('submit.prevent')
+		await flushPromises()
+		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: false }))
+	})
+
+	it('handle form with custom validation rules - valid case', async () => {
+		const submitHandler = vi.fn()
+		const TestWrapper = {
+			components: { SyForm, SyTextField },
+			template: `
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
+						<SyTextField v-model="text" required label="Nom" :customRules="customRules" />
+					</SyForm>
+				`,
+			data() {
+				return {
+					text: '',
+					customRules: [
+						{
+							type: 'custom',
+							options: {
+								validate: (value: string) => value === 'valid',
+								message: 'Le champ doit être "valid"',
+							},
+						},
+					],
+					formValide: null as boolean | null,
+				}
+			},
+			methods: {
+				submitHandler,
 			},
 		}
 
@@ -211,7 +199,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<SyTextField v-model="text" required label="Nom" :customRules="customRules" />
 						<SyTextField v-model="text2" required label="Prénom" />
 					</SyForm>
@@ -233,10 +221,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
@@ -258,7 +243,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, VTextField, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<VTextField v-model="text" required label="Nom" />
 						<SyTextField v-model="text2" required label="Prénom" />
 					</SyForm>
@@ -271,10 +256,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
@@ -296,7 +278,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, VTextField, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<VTextField v-model="text" required label="Nom" :rules="vuetifyRules" />
 						<SyTextField v-model="text2" required label="Prénom" :customRules="customRules" />
 					</SyForm>
@@ -321,10 +303,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
@@ -348,7 +327,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, VTextField, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<VTextField v-model="text" required label="Nom" :rules="vuetifyRules" />
 						<SyTextField v-model="text2" required label="Prénom" :customRules="customRules" />
 					</SyForm>
@@ -373,10 +352,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
@@ -401,7 +377,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<SyTextField v-model="text" required label="Nom" :customRules="customRules" />
 					</SyForm>
 				`,
@@ -424,10 +400,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
@@ -449,7 +422,7 @@ describe('SyForm', () => {
 		const TestWrapper = {
 			components: { SyForm, SyTextField },
 			template: `
-					<SyForm v-model="formValide" ref="form" @submit="handleSubmit">
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
 						<SyTextField v-model="text" required label="Nom" :customRules="customRules" />
 					</SyForm>
 				`,
@@ -472,10 +445,7 @@ describe('SyForm', () => {
 				}
 			},
 			methods: {
-				handleSubmit(e) {
-					console.log(e)
-					submitHandler(e)
-				},
+				submitHandler,
 			},
 		}
 
