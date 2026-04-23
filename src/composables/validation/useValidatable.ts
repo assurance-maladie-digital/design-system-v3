@@ -29,7 +29,7 @@ export function useValidatable(
 	validateMethod: () => Promise<boolean> | boolean,
 	clearValidation?: () => void,
 	reset?: () => void,
-	error?: Ref<boolean | undefined>,
+	valide?: Ref<boolean | null>,
 ) {
 	const { register, unregister } = useValidatableComponent()
 	const instance = getCurrentInstance()
@@ -39,7 +39,7 @@ export function useValidatable(
 		validateOnSubmit: validateMethod,
 		clearValidation,
 		reset,
-		error,
+		valide,
 		$props: {
 			label: typeof instance?.props?.label === 'string' ? instance.props.label : undefined,
 		},

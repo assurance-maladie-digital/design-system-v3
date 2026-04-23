@@ -82,7 +82,7 @@ export function useCustomValidation(
 			isPristine.value = true
 		},
 		() => modelValue.value = undefined,
-		computed(() => isPristine.value ? undefined : errors.value.length > 0),
+		computed(() => isPristine.value ? null : errors.value.length < 1),
 	)
 
 	watch(focused, (newVal) => {

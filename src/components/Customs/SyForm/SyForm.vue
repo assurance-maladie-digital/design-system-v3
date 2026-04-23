@@ -15,14 +15,21 @@
 		(e: 'reset'): void
 	}>()
 
-	const model = defineModel<boolean | undefined>()
+	const model = defineModel<boolean | null>()
 
 	// Reference vers le formulaire Vuetify
 	const form = ref<InstanceType<typeof VForm> | null>(null)
+	const vFormStatus = ref<boolean | null>(null)
 
-	const { validateAll, clearAll, resetAll, error } = useFormValidation()
-	watch(error, (newVal) => {
-		model.value = newVal
+	const { validateAll, clearAll, resetAll, valide } = useFormValidation()
+
+	watch([valide, vFormStatus], ([newValide, newVFormStatus]) => {
+		if (newVFormStatus === false || newValide === false) {
+			model.value = false
+		}
+		else {
+			model.value = newValide === true
+		}
 	})
 	const isValid = ref<boolean>(true)
 
@@ -109,8 +116,9 @@
 </script>
 
 <template>
-	<v-form
+	<VForm
 		ref="form"
+		v-model="vFormStatus"
 		@submit.prevent="handleSubmit"
 		@reset="handleReset"
 	>
@@ -120,5 +128,5 @@
 			:reset="reset"
 			:clear="clearValidation"
 		/>
-	</v-form>
+	</VForm>
 </template>
