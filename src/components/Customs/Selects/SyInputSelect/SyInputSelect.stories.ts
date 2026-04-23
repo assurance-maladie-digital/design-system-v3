@@ -219,44 +219,34 @@ const items = [
 	},
 }
 
-export const withCustomError: Story = {
+export const WithError: Story = {
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyInputSelect
-						v-model="value"
-						:items="items"
-						:error-messages="errorMessages"
-					/>
-					<VBtn @click="triggerError">
-						Trigger Error
-					</VBtn>
-				</template>
+<template>
+  <SyInputSelect
+    v-model="value"
+    :items="items"
+    :error-messages="['Veuillez sélectionner une option valide.']"
+  />
+</template>
 				`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/synapse'
-					import { ref } from 'vue'
-					
-					const items =  [
-						{ text: 'Option 1', value: '1' },
-						{ text: 'Option 2', value: '2' },
-					]
-					
-					const errorMessages = ref([])
-					
-					const triggerError = () => {
-						errorMessages.value = ['This is a test error message']
-					}
-                    
-                    const value = ref(undefined)
-				</script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyInputSelect } from '@cnamts/synapse'
+
+const value = ref(null)
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
 				`,
 			},
 		],
@@ -266,27 +256,128 @@ export const withCustomError: Story = {
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
+		errorMessages: ['Veuillez sélectionner une option valide.'],
 	},
 	render: (args) => {
 		return {
-			components: { SyInputSelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
+			components: { SyInputSelect },
 			setup() {
-				const errorMessages = ref([])
-				const triggerError = () => {
-					// @ts-expect-error test error message
-					errorMessages.value = ['This is a test error message']
-				}
-				return { args, errorMessages, triggerError }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<SyInputSelect
-						v-bind="args"
-						:error-messages="errorMessages"
-					/>
-					<VBtn @click="triggerError">
-						Trigger Error
-					</VBtn>
+				<div class="pa-4">
+					<SyInputSelect v-model="value" v-bind="args" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyInputSelect
+    v-model="value"
+    :items="items"
+    :warning-messages="['Vérifiez que cette option est toujours disponible.']"
+  />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyInputSelect } from '@cnamts/synapse'
+
+const value = ref({ text: 'Option 1', value: '1' })
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		warningMessages: ['Vérifiez que cette option est toujours disponible.'],
+	},
+	render: (args) => {
+		return {
+			components: { SyInputSelect },
+			setup() {
+				const value = ref({ text: 'Option 1', value: '1' })
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<SyInputSelect v-model="value" v-bind="args" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithSuccess: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyInputSelect
+    v-model="value"
+    :items="items"
+    :success-messages="['Option sélectionnée avec succès.']"
+  />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyInputSelect } from '@cnamts/synapse'
+
+const value = ref({ text: 'Option 1', value: '1' })
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		successMessages: ['Option sélectionnée avec succès.'],
+	},
+	render: (args) => {
+		return {
+			components: { SyInputSelect },
+			setup() {
+				const value = ref({ text: 'Option 1', value: '1' })
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<SyInputSelect v-model="value" v-bind="args" />
 				</div>
 			`,
 		}

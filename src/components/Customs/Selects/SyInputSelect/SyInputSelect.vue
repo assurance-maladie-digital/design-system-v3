@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { mdiChevronDown, mdiInformation, mdiCloseCircle } from '@mdi/js'
+	import { mdiChevronDown, mdiInformation, mdiCloseCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 	import { computed, onMounted, ref, watch } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
@@ -15,6 +15,8 @@
 		outlined?: boolean
 		required?: boolean
 		errorMessages?: string | string[]
+		warningMessages?: string[] | null
+		successMessages?: string[] | null
 		isHeaderToolbar?: boolean
 		displayAsterisk?: boolean
 		readonly?: boolean
@@ -32,6 +34,8 @@
 		outlined: true,
 		required: false,
 		errorMessages: () => [],
+		warningMessages: null,
+		successMessages: null,
 		isHeaderToolbar: false,
 		displayAsterisk: false,
 		readonly: false,
@@ -153,11 +157,16 @@
 		)
 	})
 
+	const hasWarning = computed(() => !hasError.value && !!props.warningMessages?.length)
+	const hasSuccess = computed(() => !hasError.value && !hasWarning.value && !!props.successMessages?.length)
+
 	const buttonClass = computed(() => {
-		if (props.outlined && hasError.value) {
-			return 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined error text-error'
-		}
-		return props.outlined ? 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined' : 'text-color'
+		const base = 'v-btn v-btn--density-default v-btn--size-default v-btn--variant-outlined'
+		if (!props.outlined) return 'text-color'
+		if (hasError.value) return `${base} error text-error`
+		if (hasWarning.value) return `${base} warning text-warning`
+		if (hasSuccess.value) return `${base} success text-success`
+		return base
 	})
 
 	const formattedItems = computed(() => {
@@ -230,12 +239,19 @@
 		:id="inputId"
 		v-model="selectedItem"
 		:error-messages="localErrorMessages"
+		:messages="hasWarning ? (warningMessages ?? []) : (hasSuccess ? (successMessages ?? []) : [])"
 		:label="labelWithAsterisk"
 		:title="labelWithAsterisk"
 		role="menu"
 		:readonly="props.readonly"
 		@click="checkForErrors"
 	>
+		<template
+			v-if="hasWarning || hasSuccess"
+			#message="{ message }"
+		>
+			<span :class="{ 'text-warning': hasWarning, 'text-success': hasSuccess }">{{ message }}</span>
+		</template>
 		<div
 			ref="menu"
 			v-click-outside="closeList"
@@ -258,6 +274,20 @@
 				class="ml-2"
 				color="error"
 				:icon="mdiInformation"
+				decorative
+			/>
+			<SyIcon
+				v-else-if="hasWarning"
+				class="ml-2"
+				color="warning"
+				:icon="mdiAlertOutline"
+				decorative
+			/>
+			<SyIcon
+				v-else-if="hasSuccess"
+				class="ml-2"
+				color="success"
+				:icon="mdiCheck"
 				decorative
 			/>
 			<SyIcon
@@ -345,6 +375,14 @@
 
 .error {
 	border-color: rgb(var(--v-theme-error));
+}
+
+.warning {
+	border-color: rgb(var(--v-theme-warning));
+}
+
+.success {
+	border-color: rgb(var(--v-theme-success));
 }
 
 .v-btn {
