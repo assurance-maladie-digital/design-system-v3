@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-	import { type PropType, computed, onMounted, ref } from 'vue'
+	import { type PropType, computed, onMounted, toRef } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
+	import { useRatingFocus } from '../useRatingFocus'
 	import {
 		mdiEmoticonHappyOutline,
 		mdiEmoticonSadOutline,
@@ -81,33 +82,27 @@
 		return props.itemLabels[value]
 	}
 
-	const ratingElement = ref<HTMLElement[]>([])
-
-	function setFocus(index: number) {
-		ratingElement.value.forEach((el, i) => {
-			if (!el) return
-			el.setAttribute('tabindex', i === index ? '0' : '-1')
-		})
-		ratingElement.value[index]?.focus()
-	}
-
-	function focusNextElement(index: number) {
-		const nextIndex = index < props.length - 1 ? index + 1 : 0
-		setFocus(nextIndex)
-	}
-
-	function focusPrevElement(index: number) {
-		const prevIndex = index > 0 ? index - 1 : props.length - 1
-		setFocus(prevIndex)
-	}
-
-	onMounted(() => {
-		ratingElement.value[0]?.setAttribute('tabindex', '0')
-		for (let i = 1; i < ratingElement.value.length; i++) {
-			ratingElement.value[i]?.setAttribute('tabindex', '-1')
-		}
+	const {
+		ratingElement,
+		initFocus,
+		selectAndFocus,
+		focusNextElement,
+		focusPrevElement,
+		focus,
+	} = useRatingFocus({
+		length: toRef(props, 'length'),
+		modelValue: internalValue,
+		selectValue: emitInputEvent,
+		wrap: true,
 	})
 
+	defineExpose({
+		focus,
+	})
+
+	onMounted(() => {
+		initFocus()
+	})
 </script>
 
 <template>
@@ -130,6 +125,7 @@
 				:key="index"
 				ref="ratingElement"
 				v-ripple="!(props.readonly || hasAnswered)"
+				:tabindex="-1"
 				role="radio"
 				:aria-checked="isActive(index) ? 'true' : 'false'"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
@@ -139,9 +135,9 @@
 				}"
 				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
 				class="sy-emotion-picker__item rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
-				@click="emitInputEvent(index); setFocus(index - 1)"
-				@keydown.enter.prevent="emitInputEvent(index); setFocus(index - 1)"
-				@keydown.space.prevent="emitInputEvent(index); setFocus(index - 1)"
+				@click="selectAndFocus(index - 1)"
+				@keydown.enter.prevent="selectAndFocus(index - 1)"
+				@keydown.space.prevent="selectAndFocus(index - 1)"
 				@keydown.right.prevent="focusNextElement(index - 1)"
 				@keydown.left.prevent="focusPrevElement(index - 1)"
 				@keydown.up.prevent="focusPrevElement(index - 1)"
@@ -172,7 +168,7 @@
 	border: 0;
 }
 
-.sy-emotion-picker__item:not([disabled]) {
+.sy-emotion-picker__item:not([aria-disabled='true']) {
 	cursor: pointer;
 }
 
@@ -226,10 +222,10 @@
 		}
 	}
 
-	&:hover[disabled='true']:not([aria-checked='true']),
-	&:focus[disabled='true']:not([aria-checked='true']) {
+	&:hover[aria-disabled='true']:not([aria-checked='true']),
+	&:focus[aria-disabled='true']:not([aria-checked='true']) {
 		background-color: transparent;
-	}
+}
 }
 
 .sy-emotion-picker__item-title {

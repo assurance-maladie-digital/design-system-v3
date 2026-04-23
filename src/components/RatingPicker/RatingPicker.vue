@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref, watch } from 'vue'
+	import { type PropType, computed, ref, watch, nextTick } from 'vue'
 
 	import EmotionPicker from './EmotionPicker/EmotionPicker.vue'
 	import NumberPicker from './NumberPicker/NumberPicker.vue'
@@ -56,6 +56,7 @@
 
 	const internalValue = ref(-1)
 	const displayAdditionalContent = ref(false)
+	const ratingPickerRef = ref<{ focus?: () => void } | null>(null)
 
 	const ratingComponent = computed(() => {
 		if (props.type === RatingEnum.EMOTION) {
@@ -111,6 +112,16 @@
 		internalValue.value = newVal
 		showAdditionalContent(newVal)
 	}, { immediate: true })
+
+	// focus auto
+	watch(
+		() => props.type,
+		async () => {
+			await nextTick()
+			ratingPickerRef.value?.focus?.()
+		},
+		{ immediate: true },
+	)
 </script>
 
 <template>
@@ -122,6 +133,7 @@
 	>
 		<component
 			:is="ratingComponent"
+			ref="ratingPickerRef"
 			:model-value="internalValue"
 			:label="props.label"
 			:length="length || undefined"

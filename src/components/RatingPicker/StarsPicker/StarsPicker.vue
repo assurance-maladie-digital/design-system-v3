@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-	import { ref, type PropType, onMounted } from 'vue'
+	import { ref, type PropType, onMounted, toRef } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from '../locales'
+	import { useRatingFocus } from '../useRatingFocus'
 
 	const props = defineProps({
 		label: {
@@ -41,31 +42,26 @@
 		return (isHovered && !hasAnswered.value) || isActive
 	}
 
-	const ratingElement = ref<HTMLDivElement[]>([])
+	const {
+		ratingElement,
+		initFocus,
+		selectAndFocus,
+		focusNextElement,
+		focusPrevElement,
+		focus,
+	} = useRatingFocus({
+		length: toRef(props, 'length'),
+		modelValue: toRef(props, 'modelValue'),
+		selectValue: emitInputEvent,
+		wrap: true,
+	})
 
-	function setFocus(index: number) {
-		ratingElement.value.forEach((el, i) => {
-			if (!el) return
-			el.setAttribute('tabindex', i === index ? '0' : '-1')
-		})
-
-		ratingElement.value[index]?.focus()
-	}
-	function focusNextElement(index: number) {
-		const nextIndex = index < props.length - 1 ? index + 1 : 0
-		setFocus(nextIndex)
-	}
-
-	function focusPrevElement(index: number) {
-		const prevIndex = index > 0 ? index - 1 : props.length - 1
-		setFocus(prevIndex)
-	}
+	defineExpose({
+		focus,
+	})
 
 	onMounted(() => {
-		ratingElement.value[0]?.setAttribute('tabindex', '0')
-		for (let i = 1; i < ratingElement.value.length; i++) {
-			ratingElement.value[i]?.setAttribute('tabindex', '-1')
-		}
+		initFocus()
 	})
 </script>
 
@@ -87,15 +83,16 @@
 				ref="ratingElement"
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
+				:tabindex="-1"
 				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
-				:aria-checked="isActive(index) ? 'true' : false"
+				:aria-checked="isActive(index) ? 'true' : 'false'"
 				@mouseover="hoverIndex = index"
 				@focus="hoverIndex = index"
 				@mouseleave="hoverIndex = -1"
 				@blur="hoverIndex = -1"
-				@click="emitInputEvent(index); setFocus(index - 1)"
-				@keydown.enter.prevent="emitInputEvent(index); setFocus(index - 1)"
-				@keydown.space.prevent="emitInputEvent(index); setFocus(index - 1)"
+				@click="selectAndFocus(index - 1)"
+				@keydown.enter.prevent="selectAndFocus(index - 1)"
+				@keydown.space.prevent="selectAndFocus(index - 1)"
 				@keydown.right.prevent="focusNextElement(index - 1)"
 				@keydown.left.prevent="focusPrevElement(index - 1)"
 				@keydown.up.prevent="focusPrevElement(index - 1)"

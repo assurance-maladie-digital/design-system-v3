@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-	import { computed, onMounted, ref } from 'vue'
-	import { RatingEnum, useRating } from '../Rating'
+	import { computed, onMounted, toRef } from 'vue'
 	import { locales } from './locales'
 	import type { PropType } from 'vue'
 	import type { ItemType } from '@/components/Customs/Selects/SySelect/SySelect.vue'
-
+	import { useRatingFocus } from '../useRatingFocus'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-
 	import { useDisplay } from 'vuetify'
+	import { RatingEnum, useRating } from '../Rating'
 
 	interface SelectItem extends ItemType {
 		text: string
@@ -51,38 +50,41 @@
 			value: index + 1,
 		}))
 	})
-	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
-	const ratingElement = ref<HTMLElement[]>([])
-
-	function setFocus(index: number) {
-		ratingElement.value.forEach((el, i) => {
-			if (!el) return
-			el.setAttribute('tabindex', i === index ? '0' : '-1')
-		})
-		ratingElement.value[index]?.focus()
-	}
-
-	function focusNextElement(index: number) {
-		const nextIndex = index < props.length - 1 ? index + 1 : 0
-		setFocus(nextIndex)
-	}
-
-	function focusPrevElement(index: number) {
-		const prevIndex = index > 0 ? index - 1 : props.length - 1
-		setFocus(prevIndex)
-	}
 
 	onMounted(() => {
-		ratingElement.value[0]?.setAttribute('tabindex', '0')
-		for (let i = 1; i < ratingElement.value.length; i++) {
-			ratingElement.value[i]?.setAttribute('tabindex', '-1')
+		if (!isMobile.value) {
+			initFocus()
 		}
 	})
+
+	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
+
+	const {
+		ratingElement,
+		initFocus,
+		selectAndFocus,
+		focusNextElement,
+		focusPrevElement,
+		focus,
+	} = useRatingFocus({
+		length: toRef(props, 'length'),
+		modelValue: toRef(props, 'modelValue'),
+		selectValue: emitInputEvent,
+		wrap: true,
+	})
+
+	defineExpose({
+		focus,
+	})
+
+	if (!isMobile.value) {
+		initFocus()
+	}
 </script>
 
 <template>
 	<fieldset class="sy-number-picker">
-		<legend class="d-sr-only">
+		<legend :class="isMobile ? 'd-sr-only' : 'text-h6 mb-6'">
 			<slot name="label">
 				{{ props.label }}
 			</slot>
@@ -96,11 +98,6 @@
 			@update:model-value="(value) => emit('update:modelValue', value)"
 		/>
 		<template v-else>
-			<legend class="text-h6 mb-6">
-				<slot name="label">
-					{{ props.label }}
-				</slot>
-			</legend>
 			<div
 				v-if="!hasAnswered"
 				class="d-inline-block"
@@ -115,12 +112,13 @@
 						ref="ratingElement"
 						v-ripple="!(props.readonly || hasAnswered)"
 						role="radio"
+						:tabindex="-1"
 						:aria-checked="props.modelValue === index ? 'true' : 'false'"
 						class="sy-number-picker__item text-body-2 pa-0"
 						:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
-						@click="emitInputEvent(index); setFocus(index - 1)"
-						@keydown.enter.prevent="emitInputEvent(index); setFocus(index - 1)"
-						@keydown.space.prevent="emitInputEvent(index); setFocus(index - 1)"
+						@click="selectAndFocus(index - 1)"
+						@keydown.enter.prevent="selectAndFocus(index - 1)"
+						@keydown.space.prevent="selectAndFocus(index - 1)"
 						@keydown.right.prevent="focusNextElement(index - 1)"
 						@keydown.left.prevent="focusPrevElement(index - 1)"
 						@keydown.up.prevent="focusPrevElement(index - 1)"
@@ -203,7 +201,7 @@
 	user-select: none;
 }
 
-.sy-number-picker__item[disabled] {
+.sy-number-picker__item[aria-disabled='true'] {
 	pointer-events: none;
 	opacity: 0.26;
 
