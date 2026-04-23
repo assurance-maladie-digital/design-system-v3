@@ -267,7 +267,7 @@
 				}"
 				role="option"
 				:tabindex="index === focusedIndex ? '0' : '-1'"
-				:aria-selected="props.multiple?undefined:(isSelected(item.value) ? 'true' : 'false')"
+				:aria-selected="props.multiple ? undefined : (isSelected(item.value) ? 'true' : 'false')"
 				:aria-checked="props.multiple ? (isSelected(item.value) ? 'true' : 'false') : undefined"
 				@keydown.space.prevent="toggleItem(item)"
 				@mousedown="handleMouseDown"
