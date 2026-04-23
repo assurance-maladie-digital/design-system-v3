@@ -3,7 +3,6 @@
 exports[`RatingPicker > renders correctly 1`] = `
 <div class="sy-rating-picker">
   <fieldset class="sy-number-picker">
-    <legend class="d-sr-only"></legend>
     <legend class="
       mb-6
       text-h6

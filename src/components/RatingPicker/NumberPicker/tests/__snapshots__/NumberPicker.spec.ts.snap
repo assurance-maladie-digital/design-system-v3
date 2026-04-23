@@ -2,9 +2,6 @@
 
 exports[`NumberPicker > renders correctly 1`] = `
 <fieldset class="sy-number-picker">
-  <legend class="d-sr-only">
-    Pourriez-vous donner une note ?
-  </legend>
   <legend class="
     mb-6
     text-h6
