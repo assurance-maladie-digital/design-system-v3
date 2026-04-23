@@ -512,7 +512,7 @@ export const WithWarning: Story = {
 						if (!value) return true
 						const parts = value.split(' - ')
 						if (parts.length !== 2) return true
-						const startYear = parseInt(parts[0].split('/')[2])
+						const startYear = parseInt((parts[0] ?? '').split('/')[2] ?? '0')
 						return startYear >= 2000 ? true : false
 					},
 					warningMessage: 'La période sélectionnée est antérieure à l\'an 2000',
@@ -576,7 +576,7 @@ export const WithSuccess: Story = {
 		label: 'Période',
 		displayRange: true,
 		...datePickerActionArgs,
-		customSuccessRules: [
+		customRules: [
 			{
 				type: 'custom',
 				options: {

@@ -584,7 +584,7 @@ export const WithSuccess: Story = {
 		label: 'Date de naissance',
 		placeholder: 'JJ/MM/AAAA',
 		...datePickerActionArgs,
-		customSuccessRules: [
+		customRules: [
 			{
 				type: 'custom',
 				options: {

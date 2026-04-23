@@ -537,7 +537,7 @@ export const WithError: Story = {
 				options: {
 					validate: (value: string) => {
 						if (!value) return 'Ce champ est requis'
-						const [month] = value.split('/')
+						const month = value.split('/')[0] ?? '0'
 						const m = parseInt(month)
 						return m >= 1 && m <= 12 ? true : 'Le mois doit être entre 01 et 12'
 					},
@@ -603,7 +603,7 @@ export const WithWarning: Story = {
 				options: {
 					validate: (value: string) => {
 						if (!value) return true
-						const year = parseInt(value.split('/')[1])
+						const year = parseInt(value.split('/')[1] ?? '0')
 						return year >= new Date().getFullYear() ? true : false
 					},
 					warningMessage: 'Ce mois est dans le passé',
