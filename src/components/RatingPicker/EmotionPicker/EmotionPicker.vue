@@ -225,7 +225,7 @@
 	&:hover[aria-disabled='true']:not([aria-checked='true']),
 	&:focus[aria-disabled='true']:not([aria-checked='true']) {
 		background-color: transparent;
-}
+	}
 }
 
 .sy-emotion-picker__item-title {
