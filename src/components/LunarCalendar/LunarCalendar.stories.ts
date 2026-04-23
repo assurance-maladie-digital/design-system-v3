@@ -200,6 +200,93 @@ export const required: Story = {
 	},
 }
 
+export const WithError: Story = {
+	args: {
+		modelValue: '99/99/9999',
+		errorMessages: ['La date saisie est invalide.'],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LunarCalendar
+						label="Date de naissance"
+						v-model="dateValue"
+						:error-messages="['La date saisie est invalide.']"
+					/>
+				</template>
+
+				<script setup lang="ts">
+				import { ref } from 'vue'
+
+				const dateValue = ref('99/99/9999')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const WithWarning: Story = {
+	args: {
+		modelValue: '12/13/1564',
+		warningMessages: ['Vérifiez que la date est correcte.'],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LunarCalendar
+						label="Date de naissance"
+						v-model="dateValue"
+						:warning-messages="['Vérifiez que la date est correcte.']"
+					/>
+				</template>
+
+				<script setup lang="ts">
+				import { ref } from 'vue'
+
+				const dateValue = ref('12/13/1564')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const WithSuccess: Story = {
+	args: {
+		modelValue: '12/13/1564',
+		successMessages: 'Date valide.',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LunarCalendar
+						label="Date de naissance"
+						v-model="dateValue"
+						success-messages="Date valide."
+					/>
+				</template>
+
+				<script setup lang="ts">
+				import { ref } from 'vue'
+
+				const dateValue = ref('12/13/1564')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
 export const WithClearable: Story = {
 	args: {
 		modelValue: '12/13/1564',

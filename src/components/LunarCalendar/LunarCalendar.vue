@@ -10,6 +10,8 @@
 	const props = withDefaults(defineProps<{
 		label: string
 		successMessages?: string
+		errorMessages?: string | string[]
+		warningMessages?: string | string[]
 		required?: boolean
 		maxYear?: number
 		minYear?: number
@@ -19,6 +21,8 @@
 		displayAppendIcon?: boolean
 	}>(), {
 		successMessages: undefined,
+		errorMessages: undefined,
+		warningMessages: undefined,
 		required: false,
 		maxYear: undefined,
 		minYear: undefined,
@@ -44,10 +48,11 @@
 		v-model="model"
 		v-maska="mask"
 		:label="props.label"
-		:error-messages="validation.errors.value"
+		:error-messages="props.errorMessages?.length ? props.errorMessages : validation.errors.value"
+		:warning-messages="props.warningMessages?.length ? (Array.isArray(props.warningMessages) ? props.warningMessages : [props.warningMessages]) : undefined"
 		:show-success-messages="props.successMessages !== undefined"
-		:success-messages="validation.successes.value"
-		:has-success="validation.successes.value.length > 0"
+		:success-messages="props.successMessages && !validation.hasError.value ? [props.successMessages] : validation.successes.value"
+		:has-success="props.successMessages ? !validation.hasError.value : validation.successes.value.length > 0"
 		:placeholder
 		:is-clearable
 		:append-icon="props.displayAppendIcon ? 'calendar' : undefined"

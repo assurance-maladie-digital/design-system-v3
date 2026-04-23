@@ -82,7 +82,7 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -111,6 +111,11 @@
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
+		}
+
+		const hasExternalMessages = props.errorMessages?.length || props.warningMessages?.length || props.successMessages?.length
+		if (hasExternalMessages) {
+			return !validation.hasError.value
 		}
 
 		if (value === null && !props.required) {
@@ -181,7 +186,8 @@
 	// Appliquer la correction lors du montage et de la mise à jour du composant
 	onMounted(() => {
 		removeAriaAttributesForRadio()
-		if (!props.isValidateOnBlur && !props.required) {
+		const hasExternalMessages = props.errorMessages?.length || props.warningMessages?.length || props.successMessages?.length
+		if (!props.isValidateOnBlur && !props.required && !hasExternalMessages) {
 			validateField(model.value)
 		}
 	})
@@ -219,7 +225,7 @@
 		:color="props.color"
 		:disabled="props.disabled"
 		:readonly="props.readonly"
-		:hide-details="props.hideDetails"
+		:hide-details="(hasError || hasWarning || (hasSuccess && props.showSuccessMessages)) ? false : props.hideDetails"
 		:density="props.density"
 		:error="hasError"
 		:error-messages="hasError ? errors : undefined"
@@ -229,6 +235,15 @@
 			(hasSuccess && props.showSuccessMessages ? successes : [])
 		"
 	>
+		<template
+			v-if="hasWarning || hasSuccess"
+			#message="{ message }"
+		>
+			<span :style="hasSuccess && !hasError && !hasWarning
+				? { color: 'rgb(var(--v-theme-borderSuccess))' }
+				: { color: 'rgb(var(--v-theme-borderWarning))' }
+			">{{ message }}</span>
+		</template>
 		<v-radio
 			v-for="opt in props.options"
 			:key="opt.value"
@@ -270,26 +285,21 @@
 	margin: none !important;
 }
 
+
 .warning-field {
-	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-warning)) !important;
-	}
-
 	:deep(.v-selection-control__input) {
-		color: rgb(var(--v-theme-warning));
-	}
-}
-
-.error-field {
-	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-error)) !important;
+		color: rgb(var(--v-theme-borderWarning)) !important;
 	}
 }
 
 .success-field {
-	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-success)) !important;
+	:deep(.v-selection-control__input) {
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 	}
+}
+
+:deep(.v-messages) {
+	opacity: 1;
 }
 
 :deep(.v-messages__message) {

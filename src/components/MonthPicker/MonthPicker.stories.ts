@@ -461,71 +461,6 @@ export const CustomDisplayedYears: Story = {
 	},
 }
 
-export const Form: Story = {
-	args: {
-		modelValue: '',
-		label: 'Début du projet',
-		width: '400px',
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SyForm @submit="handleSubmit">
-						<MonthPicker
-							v-model="selectedMonth"
-							label="Début du projet"
-							width="400px"
-							:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
-						/>
-						<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
-					</SyForm>
-				</template>
-				`,
-			}, {
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { MonthPicker, SyForm } from '@cnamts/synapse'
-					import { ref } from 'vue'
-
-					const selectedMonth = ref('')
-
-					const handleSubmit = (e: { isValid: boolean }) => {
-						alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	render: args => ({
-		components: { MonthPicker, SyForm },
-		setup() {
-			const selectedMonth = ref('')
-
-			const handleSubmit = (e: { isValid: boolean }) => {
-				alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
-			}
-
-			return { args, selectedMonth, handleSubmit }
-		},
-		template: `
-			<SyForm @submit="handleSubmit">
-				<MonthPicker
-					v-bind="args"
-					v-model="selectedMonth"
-					width="400px"
-					:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
-				/>
-				<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
-			</SyForm>
-		`,
-	}),
-}
-
 export const WithError: Story = {
 	args: {
 		modelValue: '13/2025',
@@ -664,6 +599,7 @@ export const WithSuccess: Story = {
 		modelValue: '06/2025',
 		label: 'Mois de début',
 		width: '400px',
+		showSuccessMessages: true,
 		customSuccessRules: [
 			{
 				type: 'custom',
@@ -715,3 +651,69 @@ const customSuccessRules = [{
 		template: `<MonthPicker v-model="value" v-bind="args" />`,
 	}),
 }
+
+export const Form: Story = {
+	args: {
+		modelValue: '',
+		label: 'Début du projet',
+		width: '400px',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyForm @submit="handleSubmit">
+						<MonthPicker
+							v-model="selectedMonth"
+							label="Début du projet"
+							width="400px"
+							:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
+						/>
+						<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+					</SyForm>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { MonthPicker, SyForm } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedMonth = ref('')
+
+					const handleSubmit = (e: { isValid: boolean }) => {
+						alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
+					}
+				</script>
+				`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker, SyForm },
+		setup() {
+			const selectedMonth = ref('')
+
+			const handleSubmit = (e: { isValid: boolean }) => {
+				alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
+			}
+
+			return { args, selectedMonth, handleSubmit }
+		},
+		template: `
+			<SyForm @submit="handleSubmit">
+				<MonthPicker
+					v-bind="args"
+					v-model="selectedMonth"
+					width="400px"
+					:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
+				/>
+				<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+			</SyForm>
+		`,
+	}),
+}
+

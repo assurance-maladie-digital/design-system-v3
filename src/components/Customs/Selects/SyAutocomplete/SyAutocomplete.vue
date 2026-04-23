@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed, nextTick, onMounted, ref, watch, type PropType } from 'vue'
 	import { VMenu, VList, VListItem, VListItemTitle, VChip } from 'vuetify/components'
-	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
+	import { mdiChevronDown, mdiCloseCircle, mdiInformation, mdiAlertOutline, mdiCheck } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
@@ -347,6 +347,8 @@
 	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling)
 
 	const externalErrors = computed(() => props.errorMessages || [])
+	const externalWarnings = computed(() => props.warningMessages || [])
+	const externalSuccesses = computed(() => props.successMessages || [])
 	const displayErrors = computed(() => {
 		if (shouldDisableErrorHandling.value) return []
 		return externalErrors.value.length > 0
@@ -355,11 +357,15 @@
 	})
 	const displayWarnings = computed(() => {
 		if (shouldDisableErrorHandling.value) return []
-		return hasInteracted.value ? errorHandling.warnings.value : []
+		return externalWarnings.value.length > 0
+			? externalWarnings.value
+			: (hasInteracted.value ? errorHandling.warnings.value : [])
 	})
 	const displaySuccesses = computed(() => {
 		if (shouldDisableErrorHandling.value) return []
-		return hasInteracted.value ? errorHandling.successes.value : []
+		return externalSuccesses.value.length > 0
+			? externalSuccesses.value
+			: (hasInteracted.value ? errorHandling.successes.value : [])
 	})
 	const displayHasError = computed(() => {
 		if (shouldDisableErrorHandling.value) return false
@@ -367,11 +373,11 @@
 	})
 	const displayHasWarning = computed(() => {
 		if (shouldDisableErrorHandling.value) return false
-		return hasInteracted.value && errorHandling.hasWarning.value
+		return externalWarnings.value.length > 0 || (hasInteracted.value && errorHandling.hasWarning.value)
 	})
 	const displayHasSuccess = computed(() => {
 		if (shouldDisableErrorHandling.value) return false
-		return hasInteracted.value && errorHandling.hasSuccess.value
+		return externalSuccesses.value.length > 0 || (hasInteracted.value && errorHandling.hasSuccess.value)
 	})
 
 	const validateOnSubmit = () => {
@@ -530,6 +536,24 @@
 								class="sy-autocomplete__clear-icon"
 							/>
 						</button>
+						<SyIcon
+							v-if="displayHasError"
+							color="error"
+							:icon="mdiInformation"
+							decorative
+						/>
+						<SyIcon
+							v-else-if="displayHasWarning"
+							color="warning"
+							:icon="mdiAlertOutline"
+							decorative
+						/>
+						<SyIcon
+							v-else-if="displayHasSuccess"
+							color="success"
+							:icon="mdiCheck"
+							decorative
+						/>
 						<SyIcon
 							class="arrow"
 							:icon="mdiChevronDown"

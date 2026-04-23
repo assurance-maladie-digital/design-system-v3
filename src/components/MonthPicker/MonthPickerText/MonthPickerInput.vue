@@ -3,7 +3,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { mdiCalendar } from '@mdi/js'
 	import { vMaska } from 'maska/vue'
-	import { nextTick, inject, ref, watch } from 'vue'
+	import { nextTick, inject, onMounted, ref, watch } from 'vue'
 	import { locales as defaultLocales, localesKey } from '../locales'
 	import type { TextFieldProps } from './useTextField'
 	import { useTextField } from './useTextField'
@@ -42,6 +42,13 @@
 		}
 
 		emits('update:modelValue', newValue)
+	})
+
+	onMounted(async () => {
+		if (innerValue.value?.length === mask.length) {
+			await nextTick()
+			input.value?.validateOnSubmit()
+		}
 	})
 
 	const toggleBtn = ref<HTMLButtonElement | null>(null)

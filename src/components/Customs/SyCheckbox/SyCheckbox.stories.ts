@@ -202,6 +202,129 @@ Cette case à cocher est dans un état indéterminé, généralement utilisé lo
 	},
 }
 
+export const WithError: Story = {
+	args: {
+		...Default.args,
+		label: 'J\'accepte les conditions générales',
+		errorMessages: ['Cette case doit être cochée pour continuer'],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyCheckbox
+    v-model="checked"
+    label="J'accepte les conditions générales"
+    :error-messages="['Cette case doit être cochée pour continuer']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckbox } from '@cnamts/synapse'
+const checked = ref(false)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckbox },
+		setup() {
+			const checked = ref(false)
+			return { args, checked }
+		},
+		template: `<SyCheckbox v-model="checked" v-bind="args" />`,
+	}),
+}
+
+export const WithWarning: Story = {
+	args: {
+		...Default.args,
+		label: 'J\'accepte les conditions générales',
+		modelValue: true,
+		warningMessages: ['Veuillez relire les conditions avant de valider'],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyCheckbox
+    v-model="checked"
+    label="J'accepte les conditions générales"
+    :warning-messages="['Veuillez relire les conditions avant de valider']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckbox } from '@cnamts/synapse'
+const checked = ref(true)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckbox },
+		setup() {
+			const checked = ref(true)
+			return { args, checked }
+		},
+		template: `<SyCheckbox v-model="checked" v-bind="args" />`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	args: {
+		...Default.args,
+		label: 'J\'accepte les conditions générales',
+		modelValue: true,
+		successMessages: ['Conditions acceptées'],
+		showSuccessMessages: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyCheckbox
+    v-model="checked"
+    label="J'accepte les conditions générales"
+    :success-messages="['Conditions acceptées']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckbox } from '@cnamts/synapse'
+const checked = ref(true)
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckbox },
+		setup() {
+			const checked = ref(true)
+			return { args, checked }
+		},
+		template: `<SyCheckbox v-model="checked" v-bind="args" />`,
+	}),
+}
+
 export const WithControlsIds: Story = {
 	parameters: {
 		sourceCode: [
@@ -797,124 +920,3 @@ Cette case à cocher utilise des règles de validation personnalisées et valide
 	}),
 }
 
-export const WithError: Story = {
-	args: {
-		...Default.args,
-		label: 'J\'accepte les conditions générales',
-		errorMessages: ['Cette case doit être cochée pour continuer'],
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyCheckbox
-    v-model="checked"
-    label="J'accepte les conditions générales"
-    :error-messages="['Cette case doit être cochée pour continuer']"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyCheckbox } from '@cnamts/synapse'
-const checked = ref(false)
-</script>`,
-			},
-		],
-	},
-	render: args => ({
-		components: { SyCheckbox },
-		setup() {
-			const checked = ref(false)
-			return { args, checked }
-		},
-		template: `<SyCheckbox v-model="checked" v-bind="args" />`,
-	}),
-}
-
-export const WithWarning: Story = {
-	args: {
-		...Default.args,
-		label: 'J\'accepte les conditions générales',
-		modelValue: true,
-		warningMessages: ['Veuillez relire les conditions avant de valider'],
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyCheckbox
-    v-model="checked"
-    label="J'accepte les conditions générales"
-    :warning-messages="['Veuillez relire les conditions avant de valider']"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyCheckbox } from '@cnamts/synapse'
-const checked = ref(true)
-</script>`,
-			},
-		],
-	},
-	render: args => ({
-		components: { SyCheckbox },
-		setup() {
-			const checked = ref(true)
-			return { args, checked }
-		},
-		template: `<SyCheckbox v-model="checked" v-bind="args" />`,
-	}),
-}
-
-export const WithSuccess: Story = {
-	args: {
-		...Default.args,
-		label: 'J\'accepte les conditions générales',
-		modelValue: true,
-		successMessages: ['Conditions acceptées'],
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyCheckbox
-    v-model="checked"
-    label="J'accepte les conditions générales"
-    :success-messages="['Conditions acceptées']"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyCheckbox } from '@cnamts/synapse'
-const checked = ref(true)
-</script>`,
-			},
-		],
-	},
-	render: args => ({
-		components: { SyCheckbox },
-		setup() {
-			const checked = ref(true)
-			return { args, checked }
-		},
-		template: `<SyCheckbox v-model="checked" v-bind="args" />`,
-	}),
-}

@@ -57,7 +57,7 @@
 			options: () => [],
 			readonly: false,
 			required: false,
-			showSuccessMessages: true,
+			showSuccessMessages: false,
 			successMessages: null,
 			title: undefined,
 			warningMessages: null,
@@ -83,7 +83,7 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -136,6 +136,11 @@
 		if (props.readonly) {
 			validation.clearValidation()
 			return true
+		}
+
+		const hasExternalMessages = props.errorMessages?.length || props.warningMessages?.length || props.successMessages?.length
+		if (hasExternalMessages) {
+			return !validation.hasError.value
 		}
 
 		if (!props.required && (value === null || (Array.isArray(value) && value.length === 0))) {
@@ -205,7 +210,8 @@
 	})
 
 	onMounted(() => {
-		if (!props.isValidateOnBlur && !props.required) {
+		const hasExternalMessages = props.errorMessages?.length || props.warningMessages?.length || props.successMessages?.length
+		if (!props.isValidateOnBlur && !props.required && !hasExternalMessages) {
 			validateField(getValidationValue())
 		}
 	})
@@ -225,7 +231,7 @@
 		class="sy-checkbox-group"
 		:class="{
 			'warning-field': hasWarning && !hasError,
-			'success-field': hasSuccess && !hasError && !hasWarning,
+			'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
 			'error-field': hasError,
 		}"
 		:aria-describedby="computedAriaDescribedby"
@@ -298,7 +304,11 @@
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-warning)) !important;
+	color: rgb(var(--v-theme-borderWarning)) !important;
+}
+
+.warning-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-borderWarning)) !important;
 }
 
 .error-field :deep(.v-messages__message) {
@@ -310,7 +320,11 @@
 }
 
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-success)) !important;
+	color: rgb(var(--v-theme-borderSuccess)) !important;
+}
+
+.success-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-borderSuccess)) !important;
 }
 
 :deep(.v-messages__message) {

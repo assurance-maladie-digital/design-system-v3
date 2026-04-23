@@ -57,7 +57,7 @@
 			customRules: () => [],
 			customWarningRules: () => [],
 			customSuccessRules: () => [],
-			showSuccessMessages: true,
+			showSuccessMessages: false,
 			isValidateOnBlur: false,
 			disableErrorHandling: false,
 			id: undefined,
@@ -107,7 +107,7 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -312,7 +312,12 @@
 </script>
 
 <template>
-	<div>
+	<div
+		:class="{
+			'sy-checkbox--warning': hasWarning && !hasError,
+			'sy-checkbox--success': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
+		}"
+	>
 		<!-- Rendu purement visuel/décoratif, ignoré par les lecteurs d'écran -->
 		<div
 			v-if="props.decorative"
@@ -375,6 +380,15 @@
 			>
 				<slot />
 			</template>
+			<template
+				v-if="hasWarning || (hasSuccess && props.showSuccessMessages)"
+				#message="{ message }"
+			>
+				<span :style="hasWarning
+					? { color: 'rgb(var(--v-theme-borderWarning))' }
+					: { color: 'rgb(var(--v-theme-borderSuccess))' }
+				">{{ message }}</span>
+			</template>
 			<span
 				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
 				:id="messageId"
@@ -415,6 +429,14 @@
 
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
+}
+
+.sy-checkbox--warning :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-borderWarning)) !important;
+}
+
+.sy-checkbox--success :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-borderSuccess)) !important;
 }
 
 :deep(.v-messages__message) {

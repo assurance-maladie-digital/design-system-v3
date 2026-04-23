@@ -42,6 +42,14 @@
 			type: [String, Array] as PropType<string | readonly string[]>,
 			default: () => [],
 		},
+		warningMessages: {
+			type: Array as PropType<string[] | null>,
+			default: null,
+		},
+		successMessages: {
+			type: Array as PropType<string[] | null>,
+			default: null,
+		},
 		required: {
 			type: Boolean,
 			default: false,
@@ -194,8 +202,13 @@
 
 	const disableClickButton = computed(() => props.disableClickButton)
 
+	const hasWarning = computed(() => !hasError.value && !!props.warningMessages?.length)
+	const hasSuccess = computed(() => !hasError.value && !hasWarning.value && !!props.successMessages?.length)
+
 	const iconColor = computed(() => {
 		if (hasError.value || props.errorMessages.length > 0) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
 		return 'rgb(var(--v-theme-iconBase));'
 	})
 
@@ -1059,6 +1072,7 @@
 						:label="labelWithAsterisk"
 						:aria-label="accessibleLabel"
 						:error-messages="props.disableErrorHandling ? [] : errorMessages"
+						:messages="hasWarning ? (warningMessages ?? []) : (hasSuccess ? (successMessages ?? []) : [])"
 						:variant="variant"
 						:rules="validationRules"
 						:bg-color="props.bgColor"
@@ -1088,6 +1102,12 @@
 						@keydown.tab="handleTabKey"
 						@keydown="handleCharacterKey"
 					>
+						<template
+							v-if="hasWarning || hasSuccess"
+							#message="{ message }"
+						>
+							<span :class="{ 'text-warning': hasWarning, 'text-success': hasSuccess }">{{ message }}</span>
+						</template>
 						<div
 							v-if="hasChips"
 							class="d-flex flex-wrap gap-1"
@@ -1173,11 +1193,25 @@
 								label="Information"
 								role="img"
 							/>
+							<SyIcon
+								v-else-if="hasWarning"
+								class="mr-6"
+								color="warning"
+								:icon="mdiAlertOutline"
+								decorative
+							/>
+							<SyIcon
+								v-else-if="hasSuccess"
+								class="mr-6"
+								color="success"
+								:icon="mdiCheck"
+								decorative
+							/>
 							<button
 								v-if="props.clearable && hasSelectionToClear"
 								type="button"
 								class="sy-select__clear-button"
-								:style="{ right: hasError ? '62px' : '42px' }"
+								:style="{ right: hasError || hasWarning || hasSuccess ? '62px' : '42px' }"
 								:aria-label="locales.clear"
 								@keydown.enter.prevent="$event => selectItem(null, $event)"
 								@keydown.space.prevent="$event => selectItem(null, $event)"

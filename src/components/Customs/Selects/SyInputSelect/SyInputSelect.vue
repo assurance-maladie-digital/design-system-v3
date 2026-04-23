@@ -70,11 +70,12 @@
 			validation.errors.value = []
 		}
 		localErrorMessages.value = validation.errors.value
+		hasError.value = localErrorMessages.value.length > 0
 	}, { immediate: true })
 
 	const isOpen = ref(false)
 	const selectedItem = ref<Record<string, unknown> | string | null>(props.modelValue)
-	const hasError = ref(false)
+	const hasError = ref(Array.isArray(props.errorMessages) ? props.errorMessages.length > 0 : !!props.errorMessages)
 
 	const toggleMenu = () => {
 		if (props.readonly) return

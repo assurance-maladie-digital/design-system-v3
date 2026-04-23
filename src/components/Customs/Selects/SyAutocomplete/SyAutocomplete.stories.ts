@@ -249,236 +249,6 @@ export const Default: Story = {
 	},
 }
 
-export const FormValidation: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Le champ requis ne montre l\'erreur qu\'après interaction (blur/submit), pas au mount.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyForm @submit="onSubmit">
-    <SyAutocomplete
-      v-model="value"
-      :items="items"
-      label="Recherche obligatoire"
-      required
-      display-asterisk
-      class="mb-4"
-    />
-    <VBtn type="submit" color="primary">Soumettre</VBtn>
-  </SyForm>
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete, SyForm } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
-
-const value = ref('')
-const items = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' },
-  { text: 'Option 3', value: '3' }
-]
-
-const onSubmit = (event) => {
-  if (event.isValid) {
-    alert('Formulaire valide : ' + JSON.stringify(value.value))
-  } else {
-    alert('Formulaire invalide : veuillez choisir une option.')
-  }
-}
-</script>
-        `,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-			{ text: 'Option 3', value: '3' },
-		],
-		label: 'Recherche obligatoire',
-		required: true,
-		displayAsterisk: true,
-	},
-	render: (args) => {
-		return {
-			components: { SyAutocomplete, SyForm, VBtn },
-			setup() {
-				const value = ref('')
-
-				const onSubmit = (event: { isValid: boolean }) => {
-					if (event.isValid) {
-						alert(`Formulaire valide : ${JSON.stringify(value.value)}`)
-					}
-					else {
-						alert('Formulaire invalide : veuillez choisir une option.')
-					}
-				}
-
-				return { args, value, onSubmit }
-			},
-			template: `
-				<div class="pa-4">
-					<SyForm @submit="onSubmit">
-						<SyAutocomplete
-							v-model="value"
-							v-bind="args"
-							class="mb-4"
-						/>
-						<VBtn type="submit" color="primary">Soumettre</VBtn>
-					</SyForm>
-				</div>
-			`,
-		}
-	},
-}
-
-export const ExternalErrorToggle: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Démontre l\'affichage d\'un message d\'erreur externe injecté via `error-messages`.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyAutocomplete
-    v-model="value"
-    :items="items"
-    label="Erreur serveur"
-    :error-messages="errorMessages"
-  />
-  <VBtn class="mt-2" @click="triggerError">Déclencher l'erreur</VBtn>
-  <VBtn class="mt-2 ml-2" variant="text" @click="clearError">Effacer</VBtn>
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
-
-const value = ref('')
-const items = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' }
-]
-const errorMessages = ref<string[]>([])
-
-const triggerError = () => {
-  errorMessages.value = ['Erreur serveur : sélection invalide']
-}
-
-const clearError = () => {
-  errorMessages.value = []
-}
-</script>
-        `,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
-		label: 'Erreur serveur',
-	},
-	render: (args) => {
-		return {
-			components: { SyAutocomplete, VBtn },
-			setup() {
-				const value = ref('')
-				const errorMessages = ref<string[]>([])
-				const triggerError = () => {
-					errorMessages.value = ['Erreur serveur : sélection invalide']
-				}
-				const clearError = () => {
-					errorMessages.value = []
-				}
-				return { args, value, errorMessages, triggerError, clearError }
-			},
-			template: `
-				<div class="pa-4 d-flex flex-column gap-2">
-					<SyAutocomplete
-						v-model="value"
-						v-bind="args"
-						:error-messages="errorMessages"
-					/>
-					<div class="d-flex align-center gap-2">
-						<VBtn color="error" @click="triggerError">Déclencher l'erreur</VBtn>
-						<VBtn variant="text" @click="clearError">Effacer</VBtn>
-					</div>
-				</div>
-			`,
-		}
-	},
-}
-
-export const WarningSuccessMessages: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Déclenche un warning si "Option 1" est choisi et un succès si "Option 2" est choisi.',
-			},
-		},
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
-		label: 'Avec warning & succès',
-	},
-	render: (args) => {
-		return {
-			components: { SyAutocomplete },
-			setup() {
-				const value = ref('')
-				const warningMessages = ref<string[]>([])
-				const successMessages = ref<string[]>([])
-
-				const handleChange = (newVal: unknown) => {
-					value.value = newVal as string
-					warningMessages.value = newVal === '1' ? ['Attention: Option 1 choisie'] : []
-					successMessages.value = newVal === '2' ? ['Succès: Option 2 valide'] : []
-				}
-
-				return { args, value, warningMessages, successMessages, handleChange }
-			},
-			template: `
-				<div class="pa-4">
-					<SyAutocomplete
-						v-model="value"
-						v-bind="args"
-						:warning-messages="warningMessages"
-						:success-messages="successMessages"
-						@update:modelValue="handleChange"
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
 export const ReturnObjectWithCustomKeys: Story = {
 	parameters: {
 		docs: {
@@ -971,6 +741,362 @@ const items = [
 	},
 }
 
+export const WithError: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="value"
+    :items="items"
+    label="Rechercher un prénom"
+    :error-messages="['Veuillez sélectionner un prénom']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+const value = ref('')
+const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
+</script>`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		errorMessages: ['Veuillez sélectionner un prénom'],
+	},
+	render: args => ({
+		components: { SyAutocomplete },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
+	}),
+}
+
+export const WithWarning: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="value"
+    :items="items"
+    label="Rechercher un prénom"
+    :warning-messages="['Ce prénom n\\'est pas dans la liste recommandée']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+const value = ref('David')
+const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
+</script>`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		warningMessages: ['Ce prénom n\'est pas dans la liste recommandée'],
+	},
+	render: args => ({
+		components: { SyAutocomplete },
+		setup() {
+			const value = ref('David')
+			return { args, value }
+		},
+		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="value"
+    :items="items"
+    label="Rechercher un prénom"
+    :success-messages="['Prénom valide']"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+const value = ref('Adrien')
+const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
+</script>`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		successMessages: ['Prénom valide'],
+	},
+	render: args => ({
+		components: { SyAutocomplete },
+		setup() {
+			const value = ref('Adrien')
+			return { args, value }
+		},
+		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
+	}),
+}
+
+export const FormValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Le champ requis ne montre l\'erreur qu\'après interaction (blur/submit), pas au mount.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm @submit="onSubmit">
+    <SyAutocomplete
+      v-model="value"
+      :items="items"
+      label="Recherche obligatoire"
+      required
+      display-asterisk
+      class="mb-4"
+    />
+    <VBtn type="submit" color="primary">Soumettre</VBtn>
+  </SyForm>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('')
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' }
+]
+
+const onSubmit = (event) => {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + JSON.stringify(value.value))
+  } else {
+    alert('Formulaire invalide : veuillez choisir une option.')
+  }
+}
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		label: 'Recherche obligatoire',
+		required: true,
+		displayAsterisk: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete, SyForm, VBtn },
+			setup() {
+				const value = ref('')
+
+				const onSubmit = (event: { isValid: boolean }) => {
+					if (event.isValid) {
+						alert(`Formulaire valide : ${JSON.stringify(value.value)}`)
+					}
+					else {
+						alert('Formulaire invalide : veuillez choisir une option.')
+					}
+				}
+
+				return { args, value, onSubmit }
+			},
+			template: `
+				<div class="pa-4">
+					<SyForm @submit="onSubmit">
+						<SyAutocomplete
+							v-model="value"
+							v-bind="args"
+							class="mb-4"
+						/>
+						<VBtn type="submit" color="primary">Soumettre</VBtn>
+					</SyForm>
+				</div>
+			`,
+		}
+	},
+}
+
+export const ExternalErrorToggle: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Démontre l\'affichage d\'un message d\'erreur externe injecté via `error-messages`.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="value"
+    :items="items"
+    label="Erreur serveur"
+    :error-messages="errorMessages"
+  />
+  <VBtn class="mt-2" @click="triggerError">Déclencher l'erreur</VBtn>
+  <VBtn class="mt-2 ml-2" variant="text" @click="clearError">Effacer</VBtn>
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('')
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' }
+]
+const errorMessages = ref<string[]>([])
+
+const triggerError = () => {
+  errorMessages.value = ['Erreur serveur : sélection invalide']
+}
+
+const clearError = () => {
+  errorMessages.value = []
+}
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		label: 'Erreur serveur',
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete, VBtn },
+			setup() {
+				const value = ref('')
+				const errorMessages = ref<string[]>([])
+				const triggerError = () => {
+					errorMessages.value = ['Erreur serveur : sélection invalide']
+				}
+				const clearError = () => {
+					errorMessages.value = []
+				}
+				return { args, value, errorMessages, triggerError, clearError }
+			},
+			template: `
+				<div class="pa-4 d-flex flex-column gap-2">
+					<SyAutocomplete
+						v-model="value"
+						v-bind="args"
+						:error-messages="errorMessages"
+					/>
+					<div class="d-flex align-center gap-2">
+						<VBtn color="error" @click="triggerError">Déclencher l'erreur</VBtn>
+						<VBtn variant="text" @click="clearError">Effacer</VBtn>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WarningSuccessMessages: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Déclenche un warning si "Option 1" est choisi et un succès si "Option 2" est choisi.',
+			},
+		},
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		label: 'Avec warning & succès',
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const value = ref('')
+				const warningMessages = ref<string[]>([])
+				const successMessages = ref<string[]>([])
+
+				const handleChange = (newVal: unknown) => {
+					value.value = newVal as string
+					warningMessages.value = newVal === '1' ? ['Attention: Option 1 choisie'] : []
+					successMessages.value = newVal === '2' ? ['Succès: Option 2 valide'] : []
+				}
+
+				return { args, value, warningMessages, successMessages, handleChange }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="value"
+						v-bind="args"
+						:warning-messages="warningMessages"
+						:success-messages="successMessages"
+						@update:modelValue="handleChange"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const HideDetails: Story = {
 	parameters: {
 		sourceCode: [
@@ -1328,130 +1454,4 @@ const items = [
 			`,
 		}
 	},
-}
-
-export const WithError: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyAutocomplete
-    v-model="value"
-    :items="items"
-    label="Rechercher un prénom"
-    :error-messages="['Veuillez sélectionner un prénom']"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete } from '@cnamts/synapse'
-const value = ref('')
-const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
-</script>`,
-			},
-		],
-	},
-	args: {
-		items: sampleItems,
-		label: 'Rechercher un prénom',
-		errorMessages: ['Veuillez sélectionner un prénom'],
-	},
-	render: args => ({
-		components: { SyAutocomplete },
-		setup() {
-			const value = ref('')
-			return { args, value }
-		},
-		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
-	}),
-}
-
-export const WithWarning: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyAutocomplete
-    v-model="value"
-    :items="items"
-    label="Rechercher un prénom"
-    :warning-messages="['Ce prénom n\\'est pas dans la liste recommandée']"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete } from '@cnamts/synapse'
-const value = ref('David')
-const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
-</script>`,
-			},
-		],
-	},
-	args: {
-		items: sampleItems,
-		label: 'Rechercher un prénom',
-		warningMessages: ['Ce prénom n\'est pas dans la liste recommandée'],
-	},
-	render: args => ({
-		components: { SyAutocomplete },
-		setup() {
-			const value = ref('David')
-			return { args, value }
-		},
-		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
-	}),
-}
-
-export const WithSuccess: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyAutocomplete
-    v-model="value"
-    :items="items"
-    label="Rechercher un prénom"
-    :success-messages="['Prénom valide']"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete } from '@cnamts/synapse'
-const value = ref('Adrien')
-const items = ['Adrien', 'Axel', 'Baptiste', 'Clement']
-</script>`,
-			},
-		],
-	},
-	args: {
-		items: sampleItems,
-		label: 'Rechercher un prénom',
-		successMessages: ['Prénom valide'],
-	},
-	render: args => ({
-		components: { SyAutocomplete },
-		setup() {
-			const value = ref('Adrien')
-			return { args, value }
-		},
-		template: `<div class="pa-4"><SyAutocomplete v-model="value" v-bind="args" /></div>`,
-	}),
 }
