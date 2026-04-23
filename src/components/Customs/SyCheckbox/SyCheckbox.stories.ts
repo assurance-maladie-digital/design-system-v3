@@ -919,4 +919,3 @@ Cette case à cocher utilise des règles de validation personnalisées et valide
 		`,
 	}),
 }
-

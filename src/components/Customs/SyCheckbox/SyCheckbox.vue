@@ -384,10 +384,12 @@
 				v-if="hasWarning || (hasSuccess && props.showSuccessMessages)"
 				#message="{ message }"
 			>
-				<span :style="hasWarning
-					? { color: 'rgb(var(--v-theme-borderWarning))' }
-					: { color: 'rgb(var(--v-theme-borderSuccess))' }
-				">{{ message }}</span>
+				<span
+					:style="hasWarning
+						? { color: 'rgb(var(--v-theme-borderWarning))' }
+						: { color: 'rgb(var(--v-theme-borderSuccess))' }
+					"
+				>{{ message }}</span>
 			</template>
 			<span
 				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"

@@ -239,10 +239,12 @@
 			v-if="hasWarning || hasSuccess"
 			#message="{ message }"
 		>
-			<span :style="hasSuccess && !hasError && !hasWarning
-				? { color: 'rgb(var(--v-theme-borderSuccess))' }
-				: { color: 'rgb(var(--v-theme-borderWarning))' }
-			">{{ message }}</span>
+			<span
+				:style="hasSuccess && !hasError && !hasWarning
+					? { color: 'rgb(var(--v-theme-borderSuccess))' }
+					: { color: 'rgb(var(--v-theme-borderWarning))' }
+				"
+			>{{ message }}</span>
 		</template>
 		<v-radio
 			v-for="opt in props.options"
@@ -284,7 +286,6 @@
 .sb-show-main.sb-main-centered #storybook-root {
 	margin: none !important;
 }
-
 
 .warning-field {
 	:deep(.v-selection-control__input) {
