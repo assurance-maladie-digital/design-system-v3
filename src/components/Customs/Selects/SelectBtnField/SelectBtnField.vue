@@ -13,8 +13,11 @@
 		multiple?: boolean
 		inline?: boolean
 		hint?: string
+		required?: boolean
 		error?: boolean
 		errorMessages?: string[]
+		warningMessages?: string[]
+		successMessages?: string[]
 		readonly?: boolean
 	}>(), {
 		modelValue: null,
@@ -24,8 +27,11 @@
 		multiple: false,
 		inline: false,
 		hint: undefined,
+		required: false,
 		error: false,
 		errorMessages: undefined,
+		warningMessages: undefined,
+		successMessages: undefined,
 		readonly: false,
 	})
 
@@ -245,6 +251,7 @@
 			role="listbox"
 			:aria-orientation="props.inline ? 'horizontal' : 'vertical'"
 			:aria-multiselectable="props.multiple ? 'true' : 'false'"
+			:aria-required="props.required ? 'true' : undefined"
 			:aria-invalid="error ? 'true' : 'false'"
 			:aria-readonly="readonly ? 'true' : 'false'"
 			:tabindex="focusedIndex === -1 ? '0' : '-1'"
@@ -296,6 +303,28 @@
 				class="v-messages text-error px-3 mt-2 mb-0 opacity-100"
 			>
 				{{ errorMessage }}
+			</p>
+		</template>
+
+		<template v-else-if="warningMessages">
+			<p
+				v-for="(warningMessage, index) in warningMessages"
+				:key="index"
+				:class="darktheme ? 'theme--dark' : 'theme--light'"
+				class="v-messages px-3 mt-2 mb-0 opacity-100 select-btn-field__warning-message"
+			>
+				{{ warningMessage }}
+			</p>
+		</template>
+
+		<template v-else-if="successMessages">
+			<p
+				v-for="(successMessage, index) in successMessages"
+				:key="index"
+				:class="darktheme ? 'theme--dark' : 'theme--light'"
+				class="v-messages px-3 mt-2 mb-0 opacity-100 select-btn-field__success-message"
+			>
+				{{ successMessage }}
 			</p>
 		</template>
 
@@ -379,5 +408,13 @@
 .select-btn-field__options--error .select-btn-field__item {
 	color: rgb(var(--v-theme-textError));
 	border-color: rgb(var(--v-theme-borderError));
+}
+
+.select-btn-field__warning-message {
+	color: rgb(var(--v-theme-borderWarning));
+}
+
+.select-btn-field__success-message {
+	color: rgb(var(--v-theme-borderSuccess));
 }
 </style>

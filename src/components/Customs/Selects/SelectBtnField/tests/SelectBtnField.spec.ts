@@ -61,6 +61,16 @@ describe('SelectBtnField', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
+	it('sets aria-required when required', () => {
+		const wrapper = mount(SelectBtnField, {
+			props: {
+				required: true,
+			},
+		})
+
+		expect(wrapper.find('[role="listbox"]').attributes('aria-required')).toBe('true')
+	})
+
 	it('emits an update event when the value change in single mode', async () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
