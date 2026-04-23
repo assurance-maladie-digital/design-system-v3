@@ -78,6 +78,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'Card',
+						description: 'Conteneur transparent utilisé pour afficher une page.',
+						link: '/?path=/docs/composants-composants-vuetify-vcard--docs',
+						img: `/components/card${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
@@ -442,6 +449,7 @@ export const ComponentsList: StoryObj = {
 					'SyRadioGroup',
 					'SyIconBtn',
 					'NirField',
+					'Card',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
