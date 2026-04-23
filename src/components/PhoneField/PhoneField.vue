@@ -313,7 +313,7 @@
 	const externalWarnings = computed(() => props.warningMessages ?? [])
 	const externalSuccesses = computed(() => props.successMessages ?? [])
 
-	const hasError = computed(() => !shouldDisableErrorHandling.value && (validation.hasError.value || externalErrors.value.length > 0))
+	const hasError = computed(() => !shouldDisableErrorHandling.value && (validation.hasError.value || externalErrors.value.length > 0 || dialCodeErrors.value.length > 0))
 	const hasWarning = computed(() =>
 		!shouldDisableErrorHandling.value
 		&& !hasError.value
@@ -444,6 +444,7 @@
 		mergedDialCodes,
 		validation,
 		validateOnSubmit,
+		dialCodeErrors,
 	})
 </script>
 

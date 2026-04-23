@@ -148,10 +148,10 @@ describe('PhoneField', () => {
 		const result = await wrapper.vm.validateOnSubmit()
 
 		expect(result).toBe(false)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
-		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
-		expect((wrapper.vm as any).errors[0]).toContain('est requis')
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à dialCodeErrors
+		expect((wrapper.vm as any).dialCodeErrors.length).toBeGreaterThan(0)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à dialCodeErrors
+		expect((wrapper.vm as any).dialCodeErrors[0]).toContain('est requis')
 	})
 
 	it('updates phone mask and counter when dialCode changes', async () => {
