@@ -48,7 +48,7 @@
 		v-model="model"
 		v-maska="mask"
 		:label="props.label"
-		:error-messages="props.errorMessages?.length ? props.errorMessages : validation.errors.value"
+		:error-messages="props.errorMessages?.length ? (Array.isArray(props.errorMessages) ? props.errorMessages : [props.errorMessages]) : validation.errors.value"
 		:warning-messages="props.warningMessages?.length ? (Array.isArray(props.warningMessages) ? props.warningMessages : [props.warningMessages]) : undefined"
 		:show-success-messages="props.successMessages !== undefined"
 		:success-messages="props.successMessages && !validation.hasError.value ? [props.successMessages] : validation.successes.value"
