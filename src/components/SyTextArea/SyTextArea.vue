@@ -166,6 +166,7 @@
 .warning-field {
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-borderWarning)) !important;
+
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
