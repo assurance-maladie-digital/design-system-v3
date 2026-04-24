@@ -250,7 +250,7 @@
 	}>()
 
 	const validation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		fieldIdentifier: 'Date',
 		disableErrorHandling: props.disableErrorHandling,
 	})

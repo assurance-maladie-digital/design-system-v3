@@ -104,7 +104,7 @@
 	// Initialisation du composable de validation
 	const { errors, warnings, successes, validateField } = !props.readonly
 		? useValidation({
-			showSuccessMessages: true,
+			showSuccessMessages: props.showSuccessMessages,
 			fieldIdentifier: props.label || 'password',
 			disableErrorHandling: props.disableErrorHandling,
 		})

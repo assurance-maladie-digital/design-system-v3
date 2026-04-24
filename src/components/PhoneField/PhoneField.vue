@@ -39,6 +39,7 @@
 		errorMessages: { type: Array as PropType<string[] | null>, default: null },
 		warningMessages: { type: Array as PropType<string[] | null>, default: null },
 		successMessages: { type: Array as PropType<string[] | null>, default: null },
+		showSuccessMessages: { type: Boolean, default: true },
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
@@ -303,7 +304,7 @@
 	})
 
 	const validation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
