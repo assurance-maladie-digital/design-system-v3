@@ -176,7 +176,7 @@ export const PrimaryOutlined: Story = {
                 <VCardText>
                     Cette carte utilise la couleur "primary" et la variant "outlined". Elle contient également des boutons d'action.
                 </VCardText>
-                <VCardActions>
+                <VCardActions class="justify-end">
                     <VBtn variant="text" color="primary">Annuler</VBtn>
                     <VBtn variant="tonal" color="primary">Confirmer</VBtn>
                 </VCardActions>
@@ -195,7 +195,7 @@ export const PrimaryOutlined: Story = {
     <v-card-text>
         Cette carte utilise la couleur "primary" et la variant "outlined". Elle contient également des boutons d'action.
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions class="justify-end">
         <v-btn variant="text" color="primary">Annuler</v-btn>
         <v-btn variant="tonal" color="primary">Confirmer</v-btn>
     </v-card-actions>
