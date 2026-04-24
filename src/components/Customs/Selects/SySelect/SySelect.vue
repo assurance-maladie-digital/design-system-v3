@@ -196,7 +196,7 @@
 
 	const iconColor = computed(() => {
 		if (hasError.value || props.errorMessages.length > 0) return 'error'
-		return 'rgb(var(--v-theme-iconBase));'
+		return 'rgb(var(--v-theme-iconBase))'
 	})
 
 	const variant = computed(() => {
