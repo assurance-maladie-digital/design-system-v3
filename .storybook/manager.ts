@@ -57,6 +57,7 @@ const apComponents = [
 	'composants-formulaires-sytextfield',
     'composants-filtres-filterssidebar',
     'composants-feedback-dialogbox'
+	'composants-feedback-notificationbar',
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
