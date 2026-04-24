@@ -5,6 +5,7 @@ import { ref, watch } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 import { VBtn } from 'vuetify/components'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Formulaires/SyTextField',
@@ -294,6 +295,15 @@ const meta = {
 			},
 		},
 	},
+	args: {
+		'onUpdate:modelValue': fn(),
+		'onKeydown': fn(),
+		'onClear': fn(),
+		'onPrependIconClick': fn(),
+		'onAppendIconClick': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+	},
 } as Meta<typeof SyTextField>
 
 export default meta
@@ -336,6 +346,7 @@ export const Default: Story = {
 				watch(() => args.modelValue, (newValue) => {
 					value.value = newValue
 				})
+				console.log(args)
 				return { args, value }
 			},
 			template: `
