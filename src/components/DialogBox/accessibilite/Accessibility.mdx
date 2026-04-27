@@ -1,14 +1,12 @@
-import { Meta, Story, Primary } from '@storybook/addon-docs';
+import { Meta } from '@storybook/addon-docs';
 import * as DialogBoxStories from '../DialogBox.stories.ts';
 import '@/stories/styles/shared.css';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+
 import {
-	AccessibilityGuideLayout,
-	CriteriaSection,
-	CriteriaCard,
-	DemoSection,
-	BestPracticesSection,
-	ResourcesSection,
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={DialogBoxStories} />
@@ -16,20 +14,83 @@ import {
 	componentName="DialogBox"
 	iconSrc={AccessibilityIcon}
 >
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/DialogBox.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/798" target="_blank" style={{color:'#0C41BD'}}>issue #798</a>)</p>
-	</div>
-<CriteriaSection>
-<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
-  <ul>
-    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h2, défini dans l’implémentation du composant.</li>
-      <code>&lt;DialogBox
-          :heading-level="2" /&gt; </code>
-    
-    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
-  </ul>
-</CriteriaCard>
-</CriteriaSection>
+    <div class="mt-2">
+        <p>Rapport d’audit manuel : <a href="/audits/DialogBox.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></p>
+        <p style={{color: 'grey', fontSize: '14px', marginTop: '0px'}}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/798" target="_blank" style={{color: '#0C41BD'}}>issue #798</a>)</p>
+    </div>
+    <CriteriaSection>
+        <CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+            <ul>
+                <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h2, défini dans l’implémentation du composant.</li>
+                <code>&lt;DialogBox
+                    :heading-level="2" /&gt; </code>
 
+                <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
+
+                <li>Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau<strong> h2</strong>.</li>
+
+                <li>Ce titre est rendu via le composant<strong> SyHeading</strong>, ce qui garantit une structure sémantique correcte dans le DOM.</li>
+
+                <li><strong>Accessibilité :</strong> permet de respecter une hiérarchie de titres cohérente et pertinente pour les technologies d’assistance (critère 9.1.1 RGAA).</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🎯" title="Gestion automatique du focus à l’ouverture et à la fermeture">
+            <ul>
+                <li>À l’ouverture de la modale, le focus est déplacé soit sur le bouton de validation (<strong>autofocusValidateBtn</strong>), soit sur la zone de titre si la modale est draggable.</li>
+
+                <li>À la fermeture, le focus est automatiquement restauré sur l’élément qui avait le focus avant l’ouverture.</li>
+
+                <li><strong>Accessibilité :</strong> évite la perte de contexte pour les utilisateurs clavier et lecteurs d’écran (critère 7.3 RGAA).</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="⌨️" title="Piégeage du focus dans la boîte de dialogue">
+            <ul>
+                <li>La navigation clavier avec la touche<strong> Tab </strong>est maintenue à l’intérieur de la modale.</li>
+
+                <li>Le focus boucle automatiquement entre le premier et le dernier élément interactif.</li>
+
+                <li>La combinaison<strong> Shift + Tab </strong>est également gérée.</li>
+
+                <li><strong>Accessibilité :</strong> empêche la sortie involontaire du focus hors de la fenêtre modale (critère 7.1 RGAA).</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🏷️" title="Association correcte du titre avec aria-labelledby">
+            <ul>
+                <li>Le composant utilise un identifiant unique généré avec <strong>useId() </strong>.</li>
+
+                <li>Cet identifiant est appliqué au titre et référencé via <strong> aria-labelledby </strong>sur le composant dialog.</li>
+
+                <li>Le composant déclare également<strong> aria-modal="true" </strong>.</li>
+
+                <li><strong>Accessibilité :</strong> permet aux lecteurs d’écran d’annoncer correctement le contexte de la fenêtre modale (critère 7.1 RGAA).</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="✋" title="Support clavier du mode draggable">
+            <ul>
+                <li>Lorsque la prop<strong> draggable </strong>est activée, le titre devient focusable avec <strong>tabindex="0"</strong>.</li>
+
+                <li>Le déplacement peut être réalisé avec les flèches clavier (gauche, droite, haut, bas).</li>
+
+                <li>Des attributs<strong> title </strong>et <strong> aria-label </strong>expliquent l’usage aux utilisateurs.</li>
+
+                <li><strong>Accessibilité :</strong> rend le déplacement utilisable sans souris et améliore l’accessibilité fonctionnelle.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="❌" title="Bouton de fermeture explicite et accessible">
+            <ul>
+                <li>Le bouton de fermeture possède un<strong> aria-label </strong>explicite.</li>
+
+                <li>L’icône est décorative (<strong>decorative=true</strong>) pour éviter une lecture redondante.</li>
+
+                <li>Le style de focus visible est renforcé pour garantir une navigation clavier claire.</li>
+
+                <li><strong>Accessibilité :</strong> assure une identification immédiate de l’action de fermeture (critère 11.10 RGAA).</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
 </AccessibilityGuideLayout>

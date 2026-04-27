@@ -389,7 +389,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DialogBox',
 						description: 'Utilisé pour afficher une boîte de dialogue avec des boutons d\'action.',
 						link: '/?path=/docs/composants-feedback-dialogbox--docs',
-						img: '/components/dialog-box.svg',
+						img: `/components/dialog-box${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -442,6 +442,7 @@ export const ComponentsList: StoryObj = {
 					'SyRadioGroup',
 					'SyIconBtn',
 					'NirField',
+					'DialogBox',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
