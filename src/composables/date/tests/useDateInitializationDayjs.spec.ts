@@ -107,7 +107,7 @@ describe('useDateInitializationDayjs', () => {
 
 		it('creates dates at midnight for arrays too', () => {
 			const result = initializeSelectedDates(['01/03/2023', '15/03/2023'], 'DD/MM/YYYY') as Date[]
-			result.forEach(date => {
+			result.forEach((date) => {
 				expect(date.getHours()).toBe(0)
 				expect(date.getMinutes()).toBe(0)
 				expect(date.getSeconds()).toBe(0)

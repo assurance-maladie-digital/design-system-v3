@@ -701,11 +701,10 @@
 			else {
 				runRules(inputValue.value)
 				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
-				// Only emit null for format errors, not for custom rule errors
-				if (!formatValidationResult.isValid) {
-					emitModel(null)
-				}
-				// For custom rule errors with valid format, keep the current value
+				// Keep the invalid input visible so the user can correct it.
+				// Do NOT emit null — that would trigger the modelValue watcher
+				// which clears inputValue and hides the error message.
+				return
 			}
 		}
 
