@@ -80,7 +80,6 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 		isValidating.value = true
 		hasInteracted.value = true
 		const ok = await runRules(inputValue.value)
-		console.log('ok from validateOnSubmit:', ok)
 		isValidating.value = false
 		return ok
 	}
