@@ -303,11 +303,9 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .sy-input-select {
 	text-transform: none !important;
-	font-size: 16px;
+	font-size: var(--v-fontSize-corpsDeTexte);
 }
 
 .v-input {
@@ -346,14 +344,14 @@
 }
 
 .error {
-	border-color: tokens.$danger-default;
+	border-color: rgb(var(--v-theme-error));
 }
 
 .v-btn {
-	color: tokens.$blue-base;
+	color: rgb(var(--v-theme-blue-base));
 }
 
 .text-color {
-	color: tokens.$blue-base;
+	color: rgb(var(--v-theme-blue-base));
 }
 </style>

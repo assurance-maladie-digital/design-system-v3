@@ -125,6 +125,10 @@ const meta: Meta<typeof SyAutocomplete> = {
 			action: 'update:modelValue',
 			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
 		},
+		'disabled': {
+			control: 'boolean',
+			description: 'Désactive le champ',
+		},
 		'readonly': {
 			control: 'boolean',
 			description: 'Rend le champ en lecture seule',
@@ -1179,6 +1183,68 @@ const items = [
 		],
 		label: 'Champ en lecture seule',
 		readonly: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref('Axel')
+				return { args, selectedValue }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const DisabledField: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedValue"
+    :items="items"
+    label="Champ désactivé"
+    disabled
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const selectedValue = ref('Axel')
+const items = [
+  { text: 'Adrien', value: 'Adrien' },
+  { text: 'Axel', value: 'Axel' },
+  { text: 'Baptiste', value: 'Baptiste' },
+]
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Adrien', value: 'Adrien' },
+			{ text: 'Axel', value: 'Axel' },
+			{ text: 'Baptiste', value: 'Baptiste' },
+		],
+		label: 'Champ désactivé',
+		disabled: true,
 	},
 	render: (args) => {
 		return {

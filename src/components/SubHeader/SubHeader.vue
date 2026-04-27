@@ -220,7 +220,7 @@
 	}
 
 	.vd-data-list-item-action-btn {
-		color: #fff !important;
+		color: rgb(var(--v-theme-textOnDark)) !important;
 	}
 }
 

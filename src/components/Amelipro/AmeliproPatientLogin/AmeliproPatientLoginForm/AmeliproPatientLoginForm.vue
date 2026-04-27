@@ -235,12 +235,10 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .loader {
 	width: 30px;
 	height: 30px;
-	border: 4px solid apTokens.$ap-blue-darken1;
+	border: 4px solid rgb(var(--v-theme-primary));
 	border-bottom-color: transparent;
 	border-radius: 50%;
 	display: inline-block;

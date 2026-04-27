@@ -143,38 +143,38 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .messaging-menu {
-	@media #{apTokens.$media-only-xs} {
+	@media #{bp.$down-xs} {
 		padding: 0 10px 24px;
 	}
 
-	@media #{apTokens.$media-only-sm} {
+	@media #{bp.$sm-only} {
 		padding: 10px 16px;
 	}
 }
 
 .messaging-menu__new-message {
-	@media #{apTokens.$media-up-md} {
+	@media #{bp.$up-md} {
 		display: flex;
 		justify-content: center;
 		width: 100%;
 		margin: 38px auto;
 	}
 
-	@media #{apTokens.$media-only-xs} {
+	@media #{bp.$down-xs} {
 		width: 100%;
 		margin: 24px 0 16px;
 	}
 
-	@media #{apTokens.$media-only-sm} {
+	@media #{bp.$sm-only} {
 		margin-right: 20px;
 	}
 }
 
 .messaging-menu__new-message-btn {
-	@media #{apTokens.$media-only-xs} {
+	@media #{bp.$down-xs} {
 		width: 100%;
 	}
 
@@ -184,7 +184,7 @@
 }
 
 .messaging-menu--desktop {
-	@media #{apTokens.$media-up-md} {
+	@media #{bp.$up-md} {
 		margin-bottom: 30px;
 	}
 }

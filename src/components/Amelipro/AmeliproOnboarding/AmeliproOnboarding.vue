@@ -214,8 +214,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .amelipro-ondoarding-content {
 	min-height: 350px;
 }
@@ -228,11 +226,11 @@
 	width: 14px;
 	height: 14px;
 	border-radius: 50%;
-	border: 2px solid apTokens.$ap-blue-darken1;
-	background-color: apTokens.$ap-white;
+	border: 2px solid rgb(var(--v-theme-primary));
+	background-color: rgb(var(--v-theme-surface));
 
 	&.amelipro-onboarding__active-dot {
-		background-color: apTokens.$ap-blue-darken1;
+		background-color: rgb(var(--v-theme-primary));
 	}
 }
 

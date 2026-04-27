@@ -290,10 +290,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
-$white: #fff;
-
 a {
 	cursor: pointer;
 }
@@ -334,7 +330,7 @@ a {
 		}
 
 		a.v-btn {
-			border-radius: var(tokens.$radius-rounded) !important;
+			border-radius: var(--v-radius-rounded) !important;
 		}
 
 		a.v-btn:hover {
@@ -343,7 +339,7 @@ a {
 	}
 
 	.back-to-top {
-		border-radius: var(tokens.$radius-rounded) !important;
+		border-radius: var(--v-radius-rounded) !important;
 	}
 
 	button.v-btn:hover {
@@ -367,32 +363,32 @@ a {
 .vd-footer-bar.v-theme--dark :deep() {
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
-		color: $white;
+		color: rgb(var(--v-theme-textOnDark));
 
 		&.version {
-			color: tokens.$neutral-white-alpha;
+			color: rgb(var(--v-theme-textSubduedOnDark));
 		}
 	}
 
 	p,
 	.text--primary {
-		color: rgba($white, 0.87);
+		color: rgba(var(--v-theme-textOnDark), 0.87);
 	}
 
 	.text--secondary {
-		color: rgba($white, 0.6);
+		color: rgba(var(--v-theme-textOnDark), 0.6);
 	}
 
 	a.text--primary {
-		color: $white;
+		color: rgb(var(--v-theme-textOnDark));
 	}
 
 	.v-divider {
-		border-color: rgba(tokens.$colors-border-subdued, 1);
+		border-color: rgba(var(--v-theme-borderSubdued), 1);
 	}
 
 	svg {
-		fill: $white;
+		fill: rgb(var(--v-theme-textOnDark));
 	}
 }
 

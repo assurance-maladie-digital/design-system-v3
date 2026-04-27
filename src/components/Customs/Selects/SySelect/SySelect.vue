@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, type PropType } from 'vue'
+	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, type PropType } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
@@ -164,6 +164,9 @@
 		},
 	})
 
+	// pr récupérer proprement aria-label
+	const attrs = useAttrs()
+
 	const ICONS: Record<NonNullable<IconType>, string> = {
 		info: mdiInformationOutline,
 		success: mdiCheck,
@@ -192,8 +195,8 @@
 	const disableClickButton = computed(() => props.disableClickButton)
 
 	const iconColor = computed(() => {
-		if (hasError.value || Boolean(isRequired.value) || props.errorMessages.length > 0) return 'error'
-		return 'rgb(var(--v-theme-iconBase));'
+		if (hasError.value || props.errorMessages.length > 0) return 'error'
+		return 'rgb(var(--v-theme-iconBase))'
 	})
 
 	const variant = computed(() => {
@@ -256,8 +259,36 @@
 		menuMinWidth.value = (controlEl ?? el).offsetWidth
 	}
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
+	// text d'aide
+	const helpTextId = computed(() => `${inputId.value}-help`)
+	// messages d'erreur, success avertissement
+	const messagesId = computed(() => `${inputId.value}-messages`)
+	// live region pour le lecteur ecran
+	const liveRegionId = computed(() => `${inputId.value}-live`)
+	// un libellé caché pour la popup/grid
+	const overlayLabelId = computed(() => `${inputId.value}-overlay-label`)
+
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
+
+	const rawAriaLabel = computed(() => {
+		const ariaLabel = attrs['aria-label']
+		return typeof ariaLabel === 'string' && ariaLabel.trim().length > 0 ? ariaLabel.trim() : ''
+	})
+
+	// met en place un fallback robuste du nom accessible :
+	const accessibleLabel = computed(() => {
+		// si aria-label existant
+		if (rawAriaLabel.value) return rawAriaLabel.value
+
+		// return label
+		if (props.label?.trim()) return labelWithAsterisk.value
+
+		// message d'aide si aucun label fourni
+		if (typeof props.helpText === 'string' && props.helpText.trim()) return props.helpText.trim()
+
+		return 'Selectionnez une option'
+	})
 
 	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
 		// Prevent default action if event is provided
@@ -511,6 +542,26 @@
 		return props.helpText && hasMessages.value && !props.hideMessages
 	})
 
+	// Ici on calcule dynamiquement la liste des ids à rattacher à l'input :
+	const describedByIds = computed(() => {
+		const ids: string[] = []
+
+		// help text / hint
+		if ((showHelpTextAsMessage.value || showHelpTextBelow.value) && props.helpText) {
+			ids.push(helpTextId.value)
+		}
+		// messages affichés
+		if (!props.hideMessages && hasMessages.value) {
+			ids.push(messagesId.value)
+		}
+		// live region si erreur
+		if (hasError.value || (Array.isArray(props.errorMessages) && props.errorMessages.length > 0)) {
+			ids.push(liveRegionId.value)
+		}
+
+		return ids.join(' ')
+	})
+
 	const calculatedWidth = computed(() => {
 		// If width prop is provided and not 'undefined', return it directly as a CSS value
 		if (props.width && props.width !== 'undefined') {
@@ -527,10 +578,26 @@
 		return undefined
 	})
 
+	const validationRules = computed(() => {
+		return hasError.value && !props.disableErrorHandling ? ['Le champ est requis.'] : []
+	})
+
 	const menuTarget = computed<HTMLElement | undefined>(() => {
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
 		if (!rootEl) return undefined
 		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
+	})
+
+	const formattedErrorMessages = computed(() => {
+		return Array.isArray(props.errorMessages)
+			? props.errorMessages.join(' ')
+			: props.errorMessages
+	})
+
+	const liveRegionMessage = computed(() => {
+		if (!hasError.value) return ''
+
+		return formattedErrorMessages.value || 'Le champ contient une erreur.'
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -653,18 +720,27 @@
 		}
 	}
 
-	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
+	watch(isOpen, (newIsOpen) => {
 		if (!newIsOpen) {
+			// Valider uniquement à la fermeture du menu
 			if (props.disableErrorHandling || props.readonly) {
 				hasError.value = false
 			}
 			else {
-				hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+				const shouldHaveError = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
+				hasError.value = shouldHaveError
+
+				// Forcer la validation du VTextField avec nextTick pour que le DOM soit à jour
+				nextTick(() => {
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					if (textInput.value && (textInput.value as any).validate) {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						;(textInput.value as any).validate()
+					}
+				})
 			}
 		}
-		else {
-			hasError.value = newHasError
-		}
+		// Ne rien faire à l'ouverture pour préserver l'état actuel
 	})
 
 	watch(() => props.errorMessages, (newValue) => {
@@ -676,19 +752,35 @@
 	const ariaManager = {
 		cleanInputAttributes(inputElement: HTMLElement): void {
 			if (!inputElement) return
-
-			inputElement.removeAttribute('aria-describedby')
 			inputElement.removeAttribute('size')
 			inputElement.removeAttribute('tabindex')
 			inputElement.removeAttribute('aria-hidden')
+			inputElement.removeAttribute('aria-owns')
 		},
 
-		updateInputState(inputElement: HTMLElement, isOpenValue: boolean, menuId: string, activeDescendant?: string): void {
+		updateInputState(
+			inputElement: HTMLElement,
+			isOpenValue: boolean,
+			menuId: string,
+			activeDescendant?: string,
+			describedBy?: string,
+		): void {
 			if (!inputElement) return
+			inputElement.removeAttribute('aria-owns')
 
 			inputElement.setAttribute('role', 'combobox')
 			inputElement.setAttribute('aria-expanded', isOpenValue ? 'true' : 'false')
 			inputElement.setAttribute('aria-haspopup', 'listbox')
+			// On ajoute aria-autocomplete="list" pour le role combobox
+			inputElement.setAttribute('aria-autocomplete', 'list')
+
+			// On rattache aria-describedby à l'input
+			if (describedBy && describedBy.trim().length > 0) {
+				inputElement.setAttribute('aria-describedby', describedBy)
+			}
+			else {
+				inputElement.removeAttribute('aria-describedby')
+			}
 
 			if (isOpenValue) {
 				inputElement.setAttribute('aria-controls', menuId)
@@ -697,6 +789,7 @@
 				inputElement.removeAttribute('aria-controls')
 			}
 
+			// aria-activedescendant sur l'input
 			if (isOpenValue && activeDescendant) {
 				inputElement.setAttribute('aria-activedescendant', activeDescendant)
 			}
@@ -715,12 +808,7 @@
 				inputElement.removeAttribute('aria-required')
 			}
 
-			if (hasErrorValue) {
-				inputElement.setAttribute('aria-invalid', 'true')
-			}
-			else {
-				inputElement.removeAttribute('aria-invalid')
-			}
+			inputElement.setAttribute('aria-invalid', hasErrorValue ? 'true' : 'false')
 		},
 
 		cleanParentAttributes(parentElement: HTMLElement): void {
@@ -755,7 +843,14 @@
 
 		if (inputElement) {
 			ariaManager.cleanInputAttributes(inputElement)
-			ariaManager.updateInputState(inputElement, isOpen.value, uniqueMenuId.value, activeDescendantId.value)
+			ariaManager.updateInputState(
+				inputElement,
+				isOpen.value,
+				uniqueMenuId.value,
+				activeDescendantId.value,
+				// On injecte ici les ids calculés pour aria-describedby,
+				describedByIds.value,
+			)
 			ariaManager.updateValidationAttributes(inputElement, Boolean(isRequired.value), Boolean(hasError.value))
 		}
 
@@ -788,11 +883,19 @@
 		})
 	})
 
-	watch(isOpen, () => {
-		nextTick(() => {
-			if (!textInput.value || !textInput.value.$el) return
-			setupAriaAttributes()
-		})
+	watch(isOpen, async (newValue) => {
+		await nextTick()
+
+		if (!textInput.value || !textInput.value.$el) return
+
+		setupAriaAttributes()
+
+		if (newValue) {
+			updateMenuAccessibility()
+		}
+		else {
+			focusInput()
+		}
 	})
 
 	watch(activeDescendantId, (newValue) => {
@@ -870,6 +973,31 @@
 		validateOnSubmit,
 	})
 
+	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)
+	const updateMenuAccessibility = async (): Promise<void> => {
+		await nextTick()
+
+		const listElement = list.value?.$el as HTMLElement | null
+		if (!listElement) return
+
+		listElement.setAttribute('role', 'listbox')
+		if (props.multiple) {
+			listElement.setAttribute('aria-multiselectable', 'true')
+		}
+		else {
+			listElement.removeAttribute('aria-multiselectable')
+		}
+		listElement.setAttribute('aria-labelledby', overlayLabelId.value)
+	}
+
+	const focusInput = () => {
+		// eviter un focus inutile si le composant est disebled ou readonly
+		if (props.disabled || props.readonly) return
+
+		const inputElement = textInput.value?.$el?.querySelector('input') as HTMLInputElement | null
+		inputElement?.focus()
+	}
+
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function initializeActivatorProps(activatorProps: Record<string, any>) {
 		const onFocus = (event: FocusEvent) => {
@@ -925,14 +1053,14 @@
 						:id="inputId"
 						v-model="selectedItemText"
 						v-click-outside="closeList"
-						:title="$attrs['aria-label'] || labelWithAsterisk"
+						:title="accessibleLabel"
 						:color="props.color"
 						:disabled="disabled"
 						:label="labelWithAsterisk"
-						:aria-label="$attrs['aria-label'] || labelWithAsterisk"
+						:aria-label="accessibleLabel"
 						:error-messages="props.disableErrorHandling ? [] : errorMessages"
 						:variant="variant"
-						:rules="isRequired && !props.disableErrorHandling ? ['Le champ est requis.'] : []"
+						:rules="validationRules"
 						:bg-color="props.bgColor"
 						:density="props.density"
 						:active="hasChips || hasMultipleSelections || isOpen"
@@ -942,7 +1070,7 @@
 						:persistent-hint="!!showHelpTextAsMessage"
 						:autocomplete="props.autocomplete"
 						:width="calculatedWidth"
-						:style="hasError ? { minWidth: `${labelWidth + 18}px`} : {minWidth: `${labelWidth}px`}"
+						:style="hasError ? { minWidth: `${labelWidth + 18}px`} : { minWidth: `${labelWidth}px` }"
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
 							...initializeActivatorProps(activatorProps),
@@ -978,6 +1106,7 @@
 								{{ getChipText(item) }}
 							</VChip>
 						</div>
+
 						<template v-else-if="hasMultipleSelections">
 							<span
 								v-for="item in (selectedItem as unknown[])"
@@ -987,6 +1116,7 @@
 								{{ getChipText(item) }}
 							</span>
 						</template>
+
 						<!-- Prepend -->
 						<template
 							v-if="$slots.prepend || props.prependIcon || props.prependTooltip"
@@ -1032,6 +1162,7 @@
 								/>
 							</IconSlot>
 						</template>
+
 						<template #append-inner>
 							<SyIcon
 								v-if="hasError"
@@ -1071,18 +1202,30 @@
 					class="hidden-label"
 				>{{ label }}</span>
 			</template>
+
+			<!--
+				Libellé caché utilisé pour nommer la popup/grid.
+			-->
+			<span
+				:id="overlayLabelId"
+				class="d-sr-only"
+			>
+				{{ accessibleLabel }}
+			</span>
+
 			<VList
 				:id="uniqueMenuId"
 				ref="list"
-				class="v-list"
+				class="v-list sy-select-grid"
 				role="listbox"
-				:aria-label="$attrs['aria-label'] || labelWithAsterisk"
-				:title="$attrs['aria-label'] || labelWithAsterisk"
+				:aria-multiselectable="props.multiple ? 'true' : undefined"
+				:aria-labelledby="overlayLabelId"
+				:title="accessibleLabel"
 				:style="{
 					minWidth: `${textInput?.$el.offsetWidth}px`
 				}"
 				bg-color="white"
-				tabindex="0"
+				tabindex="-1"
 				@keydown.esc.prevent="closeList"
 				@keydown.tab="handleTabKey"
 				@keydown.enter.prevent="handleEnterKey"
@@ -1094,49 +1237,81 @@
 				@keydown.page-down.prevent="handlePageDownKey"
 				@click.stop
 			>
-				<VListItem
+				<div
 					v-for="(item, index) in formattedItems"
 					:id="`option-${index}`"
 					:key="index"
 					:ref="'options-' + index"
 					role="option"
-					class="v-list-item"
-					:aria-selected="isItemSelected(item) ? 'true' : 'false'"
+					:aria-selected="isItemSelected(item)"
+					class="v-list-item sy-select-grid__row"
 					tabindex="-1"
-					:class="{ active: isItemSelected(item) || `option-${index}` === activeDescendantId }"
+					:class="{
+						active: isItemSelected(item) || `option-${index}` === activeDescendantId,
+						'v-list-item--selected': isItemSelected(item),
+					}"
 					@click.stop="(event) => selectItem(item, event)"
+					@keydown.enter.prevent="(event) => selectItem(item, event)"
+					@keydown.space.prevent="(event) => selectItem(item, event)"
 				>
-					<template
+					<div
 						v-if="props.multiple && !isDefaultOption(item)"
-						#prepend
+						class="sy-select-grid__cell sy-select-grid__cell--checkbox"
+						aria-hidden="true"
 					>
 						<SyCheckbox
 							:model-value="isItemSelected(item)"
-							density="compact"
-							hide-details
+							decorative
 							color="primary"
-							class="mt-0 pt-0 mr-1"
-							:title="getItemText(item)"
-							:aria-label="getItemText(item)"
-							@click.stop="(event) => selectItem(item, event)"
+							class="mt-0 pt-0 mr-1 pointer-events-none"
 						/>
-					</template>
-					<VListItemTitle>
-						<span
-							v-if="allowHtml"
-							ref="htmlItemRefs"
-							class="item-text"
-						/>
-						<span
-							v-else
-							class="item-text"
-						>
-							{{ getItemText(item) }}
-						</span>
-					</VListItemTitle>
-				</VListItem>
+					</div>
+
+					<div
+						class="sy-select-grid__cell sy-select-grid__cell--label"
+					>
+						<VListItemTitle>
+							<span
+								v-if="allowHtml"
+								ref="htmlItemRefs"
+								class="item-text"
+							/>
+							<span
+								v-else
+								class="item-text"
+							>
+								{{ getItemText(item) }}
+							</span>
+						</VListItemTitle>
+					</div>
+				</div>
 			</VList>
 		</VMenu>
+
+		<div
+			v-if="(showHelpTextAsMessage || showHelpTextBelow) && props.helpText"
+			:id="helpTextId"
+			class="d-sr-only"
+		>
+			{{ props.helpText }}
+		</div>
+
+		<div
+			v-if="!props.hideMessages && hasMessages"
+			:id="messagesId"
+			class="d-sr-only"
+		>
+			{{ formattedErrorMessages }}
+		</div>
+
+		<div
+			:id="liveRegionId"
+			class="d-sr-only"
+			aria-live="polite"
+			aria-atomic="true"
+		>
+			{{ liveRegionMessage }}
+		</div>
 
 		<div
 			v-if="showHelpTextBelow"
@@ -1165,7 +1340,7 @@
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-accentPrimary));
+		outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
@@ -1185,7 +1360,7 @@
 	background-color: rgb(0 0 0 / 4%);
 }
 
-.v-list-item[aria-selected='true'] {
+.v-list-item--selected {
 	background-color: rgb(0 0 0 / 8%);
 }
 
@@ -1195,7 +1370,7 @@
 
 .help-text {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: 14px;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
@@ -1205,7 +1380,7 @@
 
 .help-text-below {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: 14px;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
@@ -1216,7 +1391,7 @@
 /* Ensure focus styles match selection styles for keyboard navigation */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-accentPrimary));
+	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }
@@ -1319,5 +1494,30 @@
 .sy-select--with-chips :deep(.v-field__input input) {
 	position: absolute;
 	z-index: -1;
+}
+
+.sy-select-grid__row {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
+}
+
+.sy-select-grid__cell {
+	display: flex;
+	align-items: center;
+	min-width: 0;
+}
+
+.sy-select-grid__cell--checkbox {
+	padding-right: 4px;
+}
+
+.sy-select-grid__cell--label {
+	padding-right: 16px;
+	min-width: 0;
+}
+
+.pointer-events-none {
+	pointer-events: none;
 }
 </style>

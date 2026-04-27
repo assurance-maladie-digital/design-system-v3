@@ -143,7 +143,19 @@ import '@/stories/styles/shared.css';
     <p>
       Cette relation est établie via la propriété <code>controlsIds</code> qui liste les identifiants des cases à cocher enfants.
     </p>
-</div>
+  </div>
+
+  <div className="decorative-mode-section">
+    <h2>Mode Décoratif (Imbrication)</h2>
+    <p>
+      Le composant SyCheckbox dispose d'une propriété <code>decorative</code> permettant de l'utiliser de manière purement visuelle. 
+      Dans ce mode, la case à cocher n'inclut pas d'élément <code>&lt;input type="checkbox"&gt;</code> natif et est masquée aux lecteurs d'écran via <code>aria-hidden="true"</code>.
+    </p>
+    <p>
+      Ce mode est <strong>indispensable pour respecter l'accessibilité</strong> lorsque la case à cocher doit être imbriquée dans un autre composant interactif (par exemple, une option de <code>listbox</code> ou une ligne cliquable de tableau). 
+      Les règles WAI-ARIA interdisent l'imbrication d'éléments interactifs. Le composant parent assume alors la responsabilité d'annoncer l'état de sélection (ex: via <code>aria-selected</code> ou <code>aria-checked</code> au niveau de la ligne).
+    </p>
+  </div>
 
   <div className="best-practices">
     <h2>Bonnes pratiques d'utilisation</h2>
@@ -210,6 +222,7 @@ import '@/stories/styles/shared.css';
   .aria-management-section h2,
   .tri-state-section h2,
   .parent-child-section h2,
+  .decorative-mode-section h2,
   .best-practices h2,
   .resources-section h2 {
     border-bottom: 2px solid #eaecef;
@@ -279,7 +292,8 @@ import '@/stories/styles/shared.css';
   }
 
   .tri-state-section,
-  .parent-child-section {
+  .parent-child-section,
+  .decorative-mode-section {
     background-color: #f0f7ff;
     padding: 20px;
     border-radius: 8px;
@@ -287,7 +301,8 @@ import '@/stories/styles/shared.css';
   }
 
   .tri-state-section p,
-  .parent-child-section p {
+  .parent-child-section p,
+  .decorative-mode-section p {
     line-height: 1.6;
   }
 

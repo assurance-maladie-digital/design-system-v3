@@ -9,7 +9,7 @@ const componentsDir = path.join(__dirname, 'src', 'components');
 const reportPath = path.join(__dirname, 'a11y-status-report.md');
 
 // Components or folders to ignore
-const ignoreFolders = ['Amelipro', 'Common', 'Usages'];
+const ignoreFolders = ['Amelipro', 'Common', 'Usages', 'System', 'AccessibilityProgressPage', 'stories'];
 
 function findFilesRecursively(dir, pattern, fileList = []) {
   if (!fs.existsSync(dir)) return fileList;
@@ -30,24 +30,36 @@ function analyzeComponent(componentName, componentPath) {
   const testFiles = findFilesRecursively(componentPath, /\.a11y\.(spec|test)\.ts$/);
   const hasA11yTests = testFiles.length > 0;
 
-  // 2. Check for a11y: { disable: true } in stories
+  // 2. Check for a11y: { disable: true } in stories and extract Storybook title
   const storyFiles = findFilesRecursively(componentPath, /\.stories\.ts$/);
   let hasA11yDisabledInStories = false;
+  let storybookTitle = null;
+  
   for (const storyFile of storyFiles) {
     const content = fs.readFileSync(storyFile, 'utf-8');
+    
+    // Extract Storybook title
+    const titleMatch = content.match(/title\s*:\s*['"`]([^'"`]+)['"`]/);
+    if (titleMatch && !storybookTitle) {
+      storybookTitle = titleMatch[1];
+    }
+    
     // Regex to match a11y: { disable: true } with possible whitespace/newlines
     if (/a11y\s*:\s*\{\s*[\s\S]*?disable\s*:\s*true[\s\S]*?\}/.test(content)) {
       hasA11yDisabledInStories = true;
-      break;
     }
   }
 
-  // 3. Check accessibilite.mdx completeness
-  const mdxFiles = findFilesRecursively(componentPath, /(accessibilit[eé]|accessibility)\.mdx$/i);
+  // 3. Check accessibilite.mdx completeness and manual audit
+  const mdxFiles = findFilesRecursively(componentPath, /(accessibilit[eé]|accessibility|Accessibility)\.mdx$/i);
   let mdxStatus = 'Manquante';
+  let hasManualAudit = false;
   
   if (mdxFiles.length > 0) {
     const mdxContent = fs.readFileSync(mdxFiles[0], 'utf-8');
+    
+    // Check for manual audit
+    hasManualAudit = /Rapport d.*audit.*manuel.*Voir le rapport/i.test(mdxContent);
     
     // Un fichier complet utilise généralement AccessibilityGuideLayout ou a un contenu substantiel (> 1000 chars)
     const hasGuideLayout = /AccessibilityGuideLayout/.test(mdxContent);
@@ -76,7 +88,9 @@ function analyzeComponent(componentName, componentPath) {
       hasA11yTests: true,
       hasA11yDisabledInStories: false,
       mdxStatus: 'Complète',
-      isFullyCompliant: true
+      isFullyCompliant: true,
+      storybookTitle: 'Composants/Customs/SyHeading',
+      hasManualAudit: false
     };
   }
 
@@ -87,7 +101,9 @@ function analyzeComponent(componentName, componentPath) {
       hasA11yTests: true,
       hasA11yDisabledInStories: false,
       mdxStatus: 'Complète',
-      isFullyCompliant: true
+      isFullyCompliant: true,
+      storybookTitle: 'Composants/Feedback/CookiesSelection',
+      hasManualAudit: false
     };
   }
 
@@ -96,7 +112,9 @@ function analyzeComponent(componentName, componentPath) {
     hasA11yTests,
     hasA11yDisabledInStories,
     mdxStatus,
-    isFullyCompliant
+    isFullyCompliant,
+    storybookTitle,
+    hasManualAudit
   };
 }
 
@@ -140,11 +158,11 @@ function generateReport() {
   // Sort alphabetically
   results.sort((a, b) => a.componentName.localeCompare(b.componentName));
 
-  let mdReport = '# État des lieux de l\'accessibilité des composants (hors AmeliPro)\n\n';
+  let mdReport = '# État des lieux de l\'accessibilité des composants\n\n';
   mdReport += `Généré le: ${new Date().toLocaleDateString('fr-FR')}\n\n`;
 
-  mdReport += '| Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Conforme ✅ |\n';
-  mdReport += '|-----------|------------|---------------------------|--------------------|-------------|\n';
+  mdReport += '| Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |\n';
+  mdReport += '|-----------|------------|---------------------------|--------------------|--------------|-------------|\n';
 
   let compliantCount = 0;
 
@@ -160,7 +178,9 @@ function generateReport() {
     const compliantIcon = res.isFullyCompliant ? '✅' : '❌';
     if (res.isFullyCompliant) compliantCount++;
 
-    mdReport += `| **${res.componentName}** | ${testIcon} | ${disabledIcon} | ${mdxIcon} | ${compliantIcon} |\n`;
+    const auditIcon = res.hasManualAudit ? '✅ Oui' : '❌ Non';
+
+    mdReport += `| **${res.componentName}** | ${testIcon} | ${disabledIcon} | ${mdxIcon} | ${auditIcon} | ${compliantIcon} |\n`;
   }
 
   const percentage = ((compliantCount / results.length) * 100).toFixed(2);
@@ -169,6 +189,18 @@ function generateReport() {
 
   fs.writeFileSync(reportPath, mdReport);
   console.log(`Report generated at ${reportPath}`);
+
+  // Also write JSON for dynamic Vue component hydration
+  const jsonReportPath = path.join(__dirname, 'src', 'stories', 'Accessibilite', 'DesignSystem', 'a11y-status.json');
+  fs.mkdirSync(path.dirname(jsonReportPath), { recursive: true });
+  fs.writeFileSync(jsonReportPath, JSON.stringify({
+    date: new Date().toISOString(),
+    compliantCount,
+    totalCount: results.length,
+    percentage,
+    results
+  }, null, 2));
+  console.log(`JSON Data generated at ${jsonReportPath}`);
 }
 
 generateReport();

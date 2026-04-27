@@ -318,7 +318,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-stepper__list li {
 	&:first-child {
@@ -335,7 +335,7 @@
 }
 
 .step-number {
-	font-size: apTokens.$font-size-sm;
+	font-size: var(--v-ap-fontSizeSm);
 
 	&::before {
 		position: absolute;
@@ -344,8 +344,8 @@
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
-		background-color: apTokens.$ap-blue-lighten3;
-		border: 1px solid apTokens.$ap-green-lighten2;
+		background-color: rgb(var(--v-theme-ap-blue-lighten-3));
+		border: 1px solid rgb(var(--v-theme-ap-green-lighten-2));
 		content: '';
 		z-index: -1;
 	}
@@ -354,28 +354,28 @@
 		position: absolute;
 		left: calc(50% - 0.3rem);
 		bottom: -0.7rem;
-		color: apTokens.$ap-grey-darken1;
+		color: rgb(var(--v-theme-ap-grey-darken-1));
 	}
 
 	&.step-number--active {
 		&::before {
-			background-color: apTokens.$ap-blue-darken1;
+			background-color: rgb(var(--v-theme-primary));
 			border: 0;
 		}
 
 		& span {
-			color: apTokens.$ap-white;
+			color: rgb(var(--v-theme-apWhite-base));
 		}
 	}
 
 	&.step-number--disabled {
 		&::before {
-			background-color: apTokens.$ap-grey-lighten2;
+			background-color: rgb(var(--v-theme-ap-grey-lighten-2));
 			border: 0;
 		}
 
 		& span {
-			color: apTokens.$ap-grey-darken1;
+			color: rgb(var(--v-theme-ap-grey-darken-1));
 		}
 	}
 }
@@ -387,29 +387,29 @@
 .active-step-title {
 	position: relative;
 	width: calc(100% - 96px);
-	background-color: apTokens.$ap-blue-darken1;
+	background-color: rgb(var(--v-theme-primary));
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
-	color: apTokens.$ap-white;
+	color: rgb(var(--v-theme-apWhite-base));
 	text-align: center;
 	z-index: 1;
 }
 
 .next-step-btn__wrapper {
-	@media #{apTokens.$media-only-xs} {
+	@media #{bp.$down-xs} {
 		width: 100%;
 	}
 }
 
 .amelipro-stepper__content--default {
-	padding: 3rem apTokens.$card-padding-tablet apTokens.$card-padding-tablet apTokens.$card-padding-tablet;
-	background-color: apTokens.$ap-white;
-	border: 1px solid apTokens.$ap-green-lighten2;
+	padding: 3rem 1rem 1rem;
+	background-color: rgb(var(--v-theme-surface));
+	border: 1px solid rgb(var(--v-theme-ap-green-lighten-2));
 	border-radius: 8px;
 	border-top-left-radius: 0;
 
-	@media #{apTokens.$media-down-md} {
-		padding: 3rem apTokens.$card-padding-mobile apTokens.$card-padding-mobile apTokens.$card-padding-mobile;
+	@media #{bp.$down-sm} {
+		padding: 3rem 0.75rem 0.75rem;
 		border-top-left-radius: 8px;
 	}
 }

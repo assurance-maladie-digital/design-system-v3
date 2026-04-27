@@ -34,12 +34,9 @@ import '../../styles/shared.css';
   
   .info-section {
     margin: 2.5rem 0;
-    padding: 2rem;
     background-color: var(--neutral-100);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
     transition: var(--transition);
-    border: 1px solid var(--neutral-300);
   }
   
   .info-section h2 {
@@ -48,6 +45,7 @@ import '../../styles/shared.css';
     margin-top: 0;
     color: var(--primary);
     font-weight: 700;
+    font-size: 1.6rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -60,7 +58,6 @@ import '../../styles/shared.css';
     left: 0;
     width: 60px;
     height: 3px;
-      
     border-radius: 3px;
   }
   
@@ -78,28 +75,15 @@ import '../../styles/shared.css';
   }
   
   .verification-card {
-    background-color: var(--neutral-200);
-    border: 1px solid var(--neutral-300);
     padding: 1.75rem;
     margin-bottom: 2rem;
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
     transition: var(--transition);
     position: relative;
   }
   
-  .verification-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 4px;
-    background: linear-gradient(to bottom, var(--primary), var(--primary-light));
-    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-  }
   
-  .verification-card h3 {
+  .verification-card h2 {
     color: var(--primary);
     margin-top: 0;
     display: flex;
@@ -146,12 +130,12 @@ import '../../styles/shared.css';
     background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
     border-radius: var(--radius-md);
     padding: 1.75rem;
-    margin: 1.75rem 0;
+    margin: 1rem 0;
     border: 1px solid #d9e8ff;
     position: relative;
   }
   
-  .contact-info h3 {
+  .contact-info h2 {
     color: var(--primary-dark);
     margin-top: 0;
     display: flex;
@@ -167,6 +151,10 @@ import '../../styles/shared.css';
     font-size: 0.9em;
     color: var(--primary-dark);
     border: 1px solid var(--neutral-300);
+  }
+
+  h4 {
+     font-weight: bold !important;
   }
   
   a {
@@ -187,18 +175,20 @@ import '../../styles/shared.css';
 
 <div className="header">
   <h1>Pré-audit d'accessibilité</h1>
-  <p>Vérifiez la conformité de votre service web avant l'audit officiel</p>
+  <p>Vérifiez la conformité de votre service web avant l'audit officiel ou pendant les phases de développement.</p>
 </div>
 
 <div className="info-section">
-  <h2>🌟 Objectif</h2>
-  <p>L'objectif du pré-audit est d'atteindre en semi-autonomie un premier palier de conformité de votre service web avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. La procédure se fait en autonomie par l'équipe de développement du produit. Le relevé des non-conformités relève de la responsabilité de l’équipe de développement, ce kit étant conçu pour guider l’auto-évaluation.</p>
+  <h2>🌟 Objectif:</h2>
+  <p>L'Objectif du pré-audit est d'atteindre en semi-autonomie un premier palier de conformité de votre service web avant de convenir d'un réel audit <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. La procédure se fait en autonomie par l'équipe de développement du produit. Le relevé des non-conformités relève de la responsabilité de l’équipe de développement, ce kit étant conçu pour guider l’auto-évaluation.</p>
   
   <p>Pour prouver ce palier et être éligible à la demande d'audit complet vous devez compléter <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">ce fichier</a> qui mentionne les exigences requises par la vérification assistée des outils automatisés et la vérification manuelle.</p>
+
+  <p>Les tests ci dessous permettent aussi de vérifier tout au long des phases de développement, qu’un niveau intermédiaire d’accessibilité est bien respecté.</p>
 </div>
 
 <div className="contact-info">
-  <h3>📬 Contact et assistance</h3>
+  <h2>📬 Contact et assistance</h2>
   <p>Dans le cas où vous rencontrez une difficulté avec un test, un critère ou un outil n'hésitez pas à nous contacter via l'adresse <a href="mailto:valentin.becquet@assurance-maladie.fr">valentin.becquet@assurance-maladie.fr</a> (cette adresse évoluera prochainement).</p>
   
   <p>Pour demander un audit, contactez également cette adresse. L'acceptance de la demande est soumise à la démonstration de l'effort engagé par l'équipe-produit. Cette appréciation fera l'objet d'une discussion.</p>
@@ -212,7 +202,7 @@ import '../../styles/shared.css';
   <h2>🔍 Vérification assistée des outils automatisés</h2>
   
   <div className="verification-card">
-    <h3>📦 Utilisation de Tanaguru</h3>
+    <h2>📦 Utilisation de Tanaguru</h2>
     <p>Lancez Tanaguru sur chaque page de l'échantillon de test. Vous pouvez retrouver une documentation d'utilisation de Tanaguru <a href="/?path=/docs/accessibilité-kit-de-pré-audit-outils-tanaguru-utilisation--docs">ici</a>.</p>
     
     <div className="alert">
@@ -228,7 +218,7 @@ import '../../styles/shared.css';
 <div className="info-section">
   <h2>👤 Vérification manuelle</h2>
 
-  <p>L'objectif est de vérifier chacun des 8 points suivants pour chaque page de l'échantillon de test. Nous recommandons vivement, au préalable, de naviguer sur la totalité de la page via le lecteur d'écran car il s'agit d'un moyen concret de vérifier si le code sémantique et la navigation au clavier sont réellement conformes. Vous pouvez consulter notre <a href="/?path=/docs/accessibilité-kit-de-pré-audit-outils-lecteurs-d-écran--docs">mode d'emploi sur les lecteurs d'écran</a>.</p>
+  <p>L'Objectif est de vérifier chacun des 8 points suivants pour chaque page de l'échantillon de test. Nous recommandons vivement, au préalable, de naviguer sur la totalité de la page via le lecteur d'écran car il s'agit d'un moyen concret de vérifier si le code sémantique et la navigation au clavier sont réellement conformes. Vous pouvez consulter notre <a href="/?path=/docs/accessibilité-kit-de-pré-audit-outils-lecteurs-d-écran--docs">mode d'emploi sur les lecteurs d'écran</a>.</p>
 
   <div className="alert">
     <p><strong>Notation :</strong> Au sein de la check-list, il faudra choisir entre <span className="highlight">"Conforme"</span>, <span className="highlight">"Non conforme"</span>, <span className="highlight">"Non applicable"</span>, <span className="highlight">"Dérogé"</span> ou <span className="highlight">"Non testé"</span> pour chacun des critères.</p>
@@ -237,11 +227,11 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>⌨️ 1. Navigation au clavier</h3>
+  <h2>⌨️ 1. Navigation au clavier</h2>
 
-  <h4>Objectif</h4>
+  <h4>Objectif:</h4>
   <p>S'assurer que toutes les parties sont entièrement navigables au clavier</p>
-  <h4>Méthode de test</h4>
+  <h4>Méthode de test:</h4>
   <ol>
     <li>Naviguer via la touche Tab pour se déplacer, Shift+Tab pour revenir en arrière, Entrée/Espace/Flèches/etc. en fonction des composants.</li>
     <li>Tester tous les éléments interactifs : menus, menus déroulants, formulaires, liens, boutons, carrousels, fenêtres modales, etc. Concernant le comportement clavier pour les composants d'interface, se renseigner via les <a href="https://www.w3.org/WAI/ARIA/apg/patterns/">patterns du W3C</a>.</li>
@@ -249,7 +239,7 @@ import '../../styles/shared.css';
     <li>S'assurer que le focus du clavier reste visible et possède un contraste minimum de 3:1.</li>
     <li>Vérifier qu'aucun piège au clavier n'existe (boucle, etc.).</li>
   </ol>
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Aucun</p>
 
   <div className="alert">
@@ -262,17 +252,17 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>📺 2. Éléments visuels et déclenchements automatiques</h3>
+  <h2>📺 2. Éléments visuels et déclenchements automatiques</h2>
 
-  <h4>Objectif</h4>
+  <h4>Objectif:</h4>
   <p>Vérifier que les animations, transitions et autres éléments visuels peuvent être arrêtés, mis en pause ou désactivés par l'utilisateur.</p>
-  <h4>Méthode de test</h4>
+  <h4>Méthode de test:</h4>
   <ol>
     <li>Identifier tous les éléments animés, qui clignotent ou se mettent à jour automatiquement sur votre site.</li>
     <li>Vérifier que ces éléments peuvent être arrêtés ou mis en pause par l'utilisateur.</li>
     <li>S'assurer que la durée du mouvement est inférieure ou égale à 5 secondes s'il n'existe aucun moyen d'arrêter ou de masquer le contenu.</li>
   </ol>
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Aucun</p>
 
   <div className="alert">
@@ -281,17 +271,17 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>🔗 3. Pertinence des libellés et textes alternatifs</h3>
+  <h2>🔗 3. Pertinence des libellés et textes alternatifs</h2>
 
-  <h4>Objectif</h4>
+  <h4>Objectif:</h4>
   <p>Les libellés et textes alternatifs des images, liens, boutons doivent être explicite, clair et contextuel, en évitant les termes génériques comme "Logo", "Cliquez ici" ou "En savoir plus".</p>
-  <h4>Méthode de test</h4>
+  <h4>Méthode de test:</h4>
   <ol>
     <li>Inspecter les images porteuses d'information et s'assurer qu'elles contiennent un alt pertinent (ou legend pour les balises picture)</li>
     <li>À l'inverse, s'assurer que seules les images de décoration sont ignorées par les technologies d'assistance (ex: aria-hidden="true")</li>
     <li>Vérifier que chaque lien ou bouton a un intitulé qui décrit clairement sa fonction ou sa destination.</li>
   </ol>
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Pour les images, le plugin Assistant RGAA permet de mettre en évidence les images considérées avec ou sans alternative textuelle (catégorie 1). La catégorie 6 du même plugin permet de mettre en évidence les liens et liens images.</p>
 
   <div className="alert">
@@ -305,12 +295,12 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>📝 4. Formulaires</h3>
+  <h2>📝 4. Formulaires</h2>
 
-  <h4>Objectif</h4>
+  <h4>Objectif:</h4>
   <p>Assurez-vous que tous les éléments d'un formulaire sont accessibles et compréhensibles pour les utilisateurs, y compris ceux qui utilisent des technologies d'assistance (lecteurs d'écran, commandes vocales, etc.).</p>
 
-  <h4>Méthode de test :</h4>
+  <h4>Méthode de test: :</h4>
 
   <div className="verification-steps">
     <h5>1. Labels associés aux champs</h5>
@@ -349,7 +339,7 @@ import '../../styles/shared.css';
     </ol>
   </div>
 
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Utilisation du lecteur d'écran pour vérifier la navigation et l'accessibilité des formulaires, tel que l'indication du caractère obligatoire du champ, la liaison du champ aux aides à la saisie ainsi qu'aux messages d'erreurs, le comportement à la soumission du formulaire, etc.</p>
 
    <h4>Ressources</h4>
@@ -357,18 +347,18 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>📃 5. Tableaux</h3>
+  <h2>📃 5. Tableaux</h2>
 
-  <h4>Objectif</h4>
+  <h4>Objectif:</h4>
   <p>Vérifier que les tableaux de données sont bien structurés</p>
-  <h4>Méthode de test</h4>
+  <h4>Méthode de test:</h4>
   <ol>
     <li>S'assurer que les titres des tableaux de données sont sémantiquement rattachés au tableau et sont pertinents.</li>
     <li>S'assurer que tableaux de données complexes (en-têtes n'étant pas qu'en une seule ligne ou une seule colonne) possèdent un résumé pertinent.</li>
     <li>Vérifiez que les cellules d'en-tête sont correctement déclarées avec des balises <code>&lt;th&gt;</code> et non des balises <code>&lt;td&gt;</code> stylisées.</li>
     <li>Assurez-vous que les tableaux complexes ont des attributs <code>scope</code> ou des associations entre cellules d'en-tête et cellules de données.</li>
   </ol>
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Inspecteur de code</p>
 
   <div className="alert">
@@ -383,15 +373,15 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>📬 6. Langue</h3>
-  <h4>Objectif</h4>
+  <h2>📬 6. Langue</h2>
+  <h4>Objectif:</h4>
   <p>Permettre aux lecteurs d’écran d’utiliser la bonne prononciation.</p>
-  <h4>Méthode de test</h4>
+  <h4>Méthode de test:</h4>
   <ol>
     <li>Inspectez le code source de la page (clic droit > "Inspecter" dans le navigateur) et vérifiez que l’attribut `lang="fr"` (ou la langue correspondante) est bien présent dans l’élément `<html>`. S’il s’agit d’une autre langue, elle doit être pertinente ([voir documentation MDN sur l’attribut lang](https://developer.mozilla.org/fr/docs/Web/HTML/Global_attributes/lang))</li>
     <li>Repérer les mots/phrases dans une autre langue au sein de la page et vérifier l'existence et la valeur de l’attribut <code>lang</code>.</li>
   </ol>
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Inspecteur de code</p>
 
   <div className="alert">
@@ -400,18 +390,18 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>📄 7. Titre de la page et hiérarchie des titres</h3>
+  <h2>📄 7. Titre de la page et hiérarchie des titres</h2>
 
-  <h4>Objectif</h4>
+  <h4>Objectif:</h4>
   <p>Vérifier que la page possède un titre descriptif, unique et pertinent. De plus, s'assurer que la structure des titres au sein de la page est cohérente.</p>
-  <h4>Méthode de test</h4>
+  <h4>Méthode de test:</h4>
   <ol>
     <li>Identifier si le titre affiché dans l'onglet du navigateur est pertinent.</li>
     <li>Le contenu de la page devra avoir au moins un titre.</li>
     <li>Analyser les balises de <code>h1</code> à <code>h6</code> en vérifiant la pertinence et la structure (aucun saut de niveau).</li>
     <li>S'assurer que les titres sont sémantiquement correctes (présence d'une balise <code>hx</code> ou balises <code>role="heading" aria-level="x"</code></li>
   </ol>
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Extension HeadingsMap (<a href="/?path=/docs/accessibilité-kit-de-pré-audit-outils-introduction--docs">voir la page des outils</a>)</p>
 
   <div className="alert">
@@ -424,18 +414,18 @@ import '../../styles/shared.css';
 </div>
 
 <div className="verification-card">
-  <h3>📹 8. Contenus multimédia</h3>
+  <h2>📹 8. Contenus multimédia</h2>
 
-  <h4>Objectif</h4>
+  <h4>Objectif:</h4>
   <p>Vérifier que les vidéos et autres contenus multimédia temporels possèdent, si nécessaire, une transcription textuelle, une audiodescription synchronisée et/ou des sous-titres synchronisés. Concernant les médias non temporels, s'assurer qu'ils possèdent une alternative ou sont accessibles par le clavier et tout dispositif de pointage.</p>
-  <h4>Méthode de test</h4>
+  <h4>Méthode de test:</h4>
   <ol>
     <li>Écouter les vidéos sans regarder l’écran et statuer sur la pertinence de l'audiodescription.</li>
     <li>Lire une vidéo avec sous-titres activés et statuer sur leur pertinence.</li>
     <li>Vérifier que toute transcription textuelle exprime tout ce qui est retranscrit oralement et suivent la chronologie du média.</li>
     <li>S'assurer que tout son déclenché automatiquement peut, soit être stoppé, soit contrôlé indépendemment du volume, soit possède une durée inféreure ou égale à 3 secondes.</li>
   </ol>
-  <h4>Outil éventuel</h4>
+  <h4>Outil éventuel:</h4>
   <p>Aucun</p>
   <h4>Ressources</h4>
   <p><a href="https://bati-itao.github.io/learning/esdc-self-paced-web-accessibility-course/module9/introduction-fr.html">Concepts des contenus multimédia</a></p>

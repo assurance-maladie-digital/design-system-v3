@@ -1,0 +1,47 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VSwitchStories from './v-switch.stories'
+
+<Meta title="Composants/Composants Vuetify/VSwitch" />
+
+<div className="header">
+    <h1>VSwitch</h1>
+Ce composant utilise directement le composant natif `v-switch` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-switch/#props).
+</div>
+
+## Primary
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+  <Canvas of={VSwitchStories.PrimaryOn} />
+  <Canvas of={VSwitchStories.PrimaryOff} />
+  <Canvas of={VSwitchStories.PrimaryInsetOn} />
+  <Canvas of={VSwitchStories.PrimaryInsetOff} />
+</div>
+
+## Primary – Désactivé
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+  <Canvas of={VSwitchStories.PrimaryOnDisabled} />
+  <Canvas of={VSwitchStories.PrimaryOffDisabled} />
+</div>
+
+## Secondary
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+  <Canvas of={VSwitchStories.SecondaryOn} />
+  <Canvas of={VSwitchStories.SecondaryOff} />
+  <Canvas of={VSwitchStories.SecondaryInsetOn} />
+  <Canvas of={VSwitchStories.SecondaryInsetOff} />
+</div>
+
+## Secondary – Désactivé
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+  <Canvas of={VSwitchStories.SecondaryOnDisabled} />
+  <Canvas of={VSwitchStories.SecondaryOffDisabled} />
+</div>
+
+## Variants disponibles
+
+- `default` – Switch standard
+- `inset` – Switch avec style inset (plus large)

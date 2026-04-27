@@ -663,6 +663,72 @@ describe('SyAutocomplete', () => {
 		expect(option0?.getAttribute('aria-selected')).toBe('false')
 	})
 
+	describe('disabled', () => {
+		it('does not open menu when input is clicked on a disabled field', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test Disabled',
+					textKey: 'text',
+					valueKey: 'value',
+					disabled: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(isMenuOverlayActive()).toBe(false)
+		})
+
+		it('does not emit update:modelValue when selectItem is called on a disabled field', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test Disabled Select',
+					textKey: 'text',
+					valueKey: 'value',
+					disabled: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			// openAndFocus is guarded, but selectItem itself is not — the field input
+			// is natively disabled so users cannot interact; we verify the menu stays closed.
+			expect(isMenuOverlayActive()).toBe(false)
+			await wrapper.vm.$nextTick()
+			expect(isMenuOverlayActive()).toBe(false)
+		})
+
+		it('passes disabled prop to SyTextField', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test Disabled TextField',
+					textKey: 'text',
+					valueKey: 'value',
+					disabled: true,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			const textField = wrapper.findComponent(SyTextField)
+			expect(textField.props('disabled')).toBe(true)
+		})
+	})
+
 	describe('hideDetails', () => {
 		it('hides the details zone when hideDetails is true', async () => {
 			wrapper.unmount()

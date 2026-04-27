@@ -57,6 +57,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Structure',
 					},
 					{
+						title: 'SkeletonLoader',
+						description: 'Utilisé pour améliorer l’expérience utilisateur pendant le chargement des données, affiche une structure visuelle temporaire qui ressemble au contenu final.',
+						link: '/?path=/docs/composants-composants-vuetify-vskeletonloader--docs',
+						img: '/components/v-skeleton-loader.svg',
+						category: 'Structure',
+					},
+					{
 						title: 'FooterBar',
 						description: 'Utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.',
 						link: '/?path=/docs/composants-structure-footerbar--docs',
@@ -75,6 +82,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
 						img: '/components/contextual-menu.svg',
+						category: 'Navigation',
+					},
+					{
+						title: 'Breadcrumbs',
+						description: 'Utilisé comme un outil d’aide à la navigation et comme une structure hiérarchique pour les pages.',
+						link: '/?path=/docs/composants-composants-vuetify-vbreadcrumbs--docs',
+						img: '/components/breadcrumbs.svg',
 						category: 'Navigation',
 					},
 					{
@@ -110,6 +124,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour permettre à l’utilisateur de revenir à la page précédente.',
 						link: '/?path=/docs/composants-boutons-backbtn--docs',
 						img: '/components/back-btn.svg',
+						category: 'Boutons',
+					},
+					{
+						title: 'SyIconBtn',
+						description: 'Utilisé lorsque on a besoin d’un bouton qui sert principalement à afficher une icône.',
+						link: '/?path=/docs/composants-boutons-syiconbutton--docs',
+						img: `/components/sy-icon-button${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -169,6 +190,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'Switch',
+						description: 'Utilisé pour permettre à l’utilisateur de choisir entre deux valeurs distinctes. Il est très similaire à un bouton bascule (toggle) ou à un interrupteur marche/arrêt.',
+						link: '/?path=/docs/composants-composants-vuetify-vswitch--docs',
+						img: `/components/switch${isAp ? '-ap' : ''}.svg`,
+						category: 'Boutons',
+					},
+					{
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
 						link: '/?path=/docs/composants-formulaires-syselect--docs',
@@ -187,6 +215,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour proposer une sélection d\'options avec un bouton personnalisé, conforme au style du Design System et qui respecte les règles d\'accessibilité RGAA. Il est basé sur un v-btn.',
 						link: '/?path=/docs/composants-formulaires-sybtnMenu--docs',
 						img: '/components/sy-btn-select.svg',
+						category: 'Formulaires',
+					},
+					{
+						title: 'OTPInput',
+						description: 'Utilisé pour une procédure MFA d’authentification des utilisateurs via un mot de passe à usage unique.',
+						link: '/?path=/docs/composants-composants-vuetify-votpinput--docs',
+						img: `/components/otp${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -405,6 +440,8 @@ export const ComponentsList: StoryObj = {
 					'SyAutocomplete',
 					'SySelect',
 					'SyRadioGroup',
+					'SyIconBtn',
+					'NirField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
@@ -420,7 +457,9 @@ export const ComponentsList: StoryObj = {
 
 				const groupedComponents = categoryOrder.map(category => ({
 					category,
-					components: components.filter(component => shouldDisplayComponent(component, category)),
+					components: components
+						.filter(component => shouldDisplayComponent(component, category))
+						.sort((a, b) => a.title.localeCompare(b.title)),
 				})).filter(group => group.components.length > 0)
 
 				return {

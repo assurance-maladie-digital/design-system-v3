@@ -123,6 +123,10 @@
 			type: String,
 			default: '',
 		},
+		disabled: {
+			type: Boolean,
+			default: false,
+		},
 		readonly: {
 			type: Boolean,
 			default: false,
@@ -420,6 +424,7 @@
 	}
 
 	const openAndFocus = () => {
+		if (props.disabled || props.readonly) return
 		markInteracted()
 		isOpen.value = true
 		focusInput(textFieldRef)
@@ -488,6 +493,7 @@
 					:placeholder="hasInlineSelections || hasSelectionTextDisplay ? '' : placeholder"
 					:is-active="hasInlineSelections || hasSelectionTextDisplay"
 					:readonly="readonly"
+					:disabled="disabled"
 					:bg-color="bgColor"
 					:density="density"
 					:autocomplete="'off'"
@@ -627,8 +633,6 @@
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/tokens';
-
 .sy-autocomplete {
 	width: 100%;
 	position: relative;
@@ -724,7 +728,7 @@ li:hover {
 .v-list-item.keyboard-focused,
 li:focus-visible,
 li.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-accentPrimary));
+	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }

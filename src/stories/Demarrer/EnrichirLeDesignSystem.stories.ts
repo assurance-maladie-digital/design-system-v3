@@ -26,6 +26,34 @@ export const InfoIntro = {
 	tags: ['!dev'],
 }
 
+export const WarningIntro = {
+	render: () => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return {}
+			},
+			template: `
+              <SyAlert type="error" variant="tonal" :closable="false">
+                <template #default>
+					<b>Pour limiter les risques de régression et d'anomalie nous mettons temporairement en pause les demandes de nouvelles fonctionnalités. Nous invitons les projets à mettre en place des solutions de contournement.</b>
+					<br/><br/>
+					Une fois les chantiers ci-après complétés au 1er juillet 2026 nous pourrons reprendre l'analyse et l'intégration de vos features au fil de l'eau selon la disponibilité de l'équipe.
+					<br/><br/>
+					Chantiers en cours :
+					<ul><li>- Disponibilité des composants Amelipro</li>
+						<li>- Optimisation de la validation des composants de formulaire</li>
+						<li>- Optimisation des tokens pour la convergence des 3 thèmes (Amelipro, Cnam, Portail Agent)</li>
+						<li>- Optimisation de l'accessibilité numérique</li>
+					</ul>
+				</template>
+              </SyAlert>
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+
 export const Optimisation = {
 	render: () => {
 		return {

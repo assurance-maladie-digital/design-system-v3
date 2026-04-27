@@ -1,0 +1,41 @@
+/* stylelint-disable selector-class-pattern */
+.theme-cnam,
+.theme-pa {
+	.v-otp-input {
+		.v-field__outline__start,
+		.v-field__outline__end,
+		.v-field__outline__notch {
+			border-color: rgb(var(--v-theme-borderAccentPrimary)) !important;
+		}
+
+		.v-field--focused,
+		.v-field--dirty {
+			.v-field__outline__start,
+			.v-field__outline__end,
+			.v-field__outline__notch {
+				border-color: rgb(var(--v-theme-borderAccentPrimaryContrasted)) !important;
+			}
+		}
+	}
+}
+
+.theme-ap,
+.theme-ap2026 {
+	.v-otp-input {
+		.v-field__outline__start,
+		.v-field__outline__end,
+		.v-field__outline__notch {
+			border-color: rgb(var(--v-theme-borderAccentPrimary)) !important;
+		}
+
+		.v-field--focused,
+		.v-field--dirty {
+			.v-field__outline__start,
+			.v-field__outline__end,
+			.v-field__outline__notch {
+				border-color: rgb(var(--v-theme-borderAccentPrimaryContrasted)) !important;
+			}
+		}
+	}
+}
+/* stylelint-enable selector-class-pattern */

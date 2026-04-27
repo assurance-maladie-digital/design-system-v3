@@ -41,11 +41,9 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
-
 .amelipro-chips {
 	padding: 0.75rem;
 	border-radius: 8px;
-	background-color: apTokens.$ap-blue-lighten3;
+	background-color: rgb(var(--v-theme-ap-blue-lighten-3));
 }
 </style>

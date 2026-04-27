@@ -87,7 +87,7 @@ export const apSemanticTokens = {
 			selectionPressed: apColorsTokens.blue.lighten60,
 			selectionSelected: apColorsTokens.blue.lighten80,
 			selectionHoverOnSelected: apColorsTokens.blue.lighten60,
-			selectionselectedAccent: apColorsTokens.cyan.darken20,
+			selectionSelectedAccent: apColorsTokens.cyan.darken20,
 			selectionHoverOnSelectedAccent: apColorsTokens.cyan.lighten20,
 			selectionDisabled: apColorsTokens.white.base,
 		},

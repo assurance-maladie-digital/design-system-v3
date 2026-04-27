@@ -51,4 +51,9 @@ La propriété `controlsIds` permet d'établir une relation entre une case à co
 
 <Canvas of={SyCheckboxStories.WithControlsIds} />
 
+## Mode Décoratif
+
+La propriété `decorative` permet d'afficher la case à cocher uniquement de manière visuelle, sans rendre l'élément interactif natif (`<input type="checkbox">`) dans le DOM. 
+Ce mode est essentiel lorsque la case à cocher est imbriquée à l'intérieur d'un autre élément interactif (comme une ligne d'un tableau cliquable ou une option de liste déroulante). Il permet de respecter les règles d'accessibilité (qui interdisent l'imbrication de contrôles interactifs) tout en offrant le rendu visuel attendu. Le composant parent devient alors responsable de l'annonce de l'état (ex: via `aria-selected`).
+
 <a href="/?path=/docs/guide-du-dev-guide-de-validation-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>

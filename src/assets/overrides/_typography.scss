@@ -1,7 +1,5 @@
 /* Typography styles for CNAM and PA themes */
-@use '@/assets/tokens.scss' as *;
-@use '@/assets/apTokens';
-@use '@/assets/amelipro/apTokens2026' as *;
+@use 'breakpoints' as bp;
 
 .theme-cnam,
 .theme-pa {
@@ -181,28 +179,28 @@
 	}
 
 	.title {
-		font-size: $font-size-title;
+		font-size: var(--v-fontSize-titres);
 	}
 
 	.alt-title {
-		font-size: $font-size-alt-title;
+		font-size: var(--v-fontSize-titresAlternatifs);
 	}
 
 	.body-text {
-		font-size: $font-size-body-text;
+		font-size: var(--v-fontSize-corpsDeTexte);
 	}
 
 	.link-label {
-		font-size: $font-size-link-label;
+		font-size: var(--v-fontSize-liensEtLibelles);
 	}
 }
 
 .theme-ap2026 {
 	a {
-		color: $ap-blue-darken1;
+		color: rgb(var(--v-theme-primary));
 
 		&:hover {
-			color: $ap-blue-darken2;
+			color: rgb(var(--v-theme-secondary));
 		}
 	}
 }
@@ -210,61 +208,61 @@
 .theme-ap,
 .theme-ap2026 {
 	p {
-		font-size: $font-size-xs;
+		font-size: var(--v-ap-fontSizeXs);
 	}
 
 	a {
-		font-size: $font-size-xs;
+		font-size: var(--v-ap-fontSizeXs);
 	}
 
 	[class*='text-'] {
 		font-family: Arial, Helvetica, sans-serif !important;
-		font-weight: $ap-font-weight-regular;
+		font-weight: 400;
 		line-height: 1.3 !important;
 	}
 
 	// sets the service title text style
 	[class*='text-service-title'] {
 		font-family: Arial, Helvetica, sans-serif !important;
-		font-size: $font-size-xxl !important;
-		font-weight: $ap-font-weight-bold !important;
+		font-size: var(--v-ap-fontSizeXxl) !important;
+		font-weight: 700 !important;
 		text-transform: uppercase !important;
 
-		@media #{$media-down-md} {
-			font-size: $font-size-md !important;
+		@media #{bp.$down-sm} {
+			font-size: var(--v-ap-fontSizeMd) !important;
 		}
 	}
 
 	// sets classes font sizes
 	[class*='text-'][class*='-h1'],
 	h1 {
-		font-size: $font-size-xxl !important;
-		font-weight: $ap-font-weight-bold !important;
+		font-size: var(--v-ap-fontSizeXxl) !important;
+		font-weight: 700 !important;
 	}
 
 	[class*='text-'][class*='-h2'],
 	h2 {
-		font-size: $font-size-lg !important;
-		font-weight: $ap-font-weight-bold;
+		font-size: var(--v-ap-fontSizeLg) !important;
+		font-weight: 700;
 	}
 
 	[class*='text-'][class*='-h3'],
 	h3 {
-		font-size: $font-size-md !important;
+		font-size: var(--v-ap-fontSizeMd) !important;
 	}
 
 	[class*='text-'][class*='-h4'],
 	h4 {
-		font-size: $font-size-sm !important;
-		font-weight: $ap-font-weight-bold;
+		font-size: var(--v-ap-fontSizeSm) !important;
+		font-weight: 700;
 	}
 
 	[class*='text-'][class*='-h5'],
 	[class*='text-'][class*='-h6'],
 	h5,
 	h6 {
-		font-size: $font-size-sm !important;
-		font-weight: $ap-font-weight-bold;
+		font-size: var(--v-ap-fontSizeSm) !important;
+		font-weight: 700;
 	}
 
 	[class*='text-'][class*='-subtitle-1'],
@@ -273,49 +271,49 @@
 	[class*='text-'][class*='-body-2'],
 	[class*='text-'][class*='-button'],
 	[class*='text-'][class*='-overline'] {
-		font-size: $font-size-xs !important;
+		font-size: var(--v-ap-fontSizeXs) !important;
 	}
 
 	[class*='text-'][class*='-caption'] {
-		font-size: $font-size-xxs !important;
+		font-size: var(--v-ap-fontSizeXxs) !important;
 	}
 
 	// sets font weight
 	[class*='text-'][class*='-subtitle-1'],
 	[class*='text-'][class*='-subtitle-2'] {
-		font-weight: $ap-font-weight-bold;
+		font-weight: 700;
 	}
 
 	[class*='font-weight-bold'] {
-		font-weight: $ap-font-weight-bold !important;
+		font-weight: 700 !important;
 	}
 
 	.font-size-xxs {
-		font-size: $font-size-xxs;
+		font-size: var(--v-ap-fontSizeXxs);
 	}
 
 	.font-size-xs {
-		font-size: $font-size-xs;
+		font-size: var(--v-ap-fontSizeXs);
 	}
 
 	.font-size-sm {
-		font-size: $font-size-sm;
+		font-size: var(--v-ap-fontSizeSm);
 	}
 
 	.font-size-md {
-		font-size: $font-size-md;
+		font-size: var(--v-ap-fontSizeMd);
 	}
 
 	.font-size-lg {
-		font-size: $font-size-lg;
+		font-size: var(--v-ap-fontSizeLg);
 	}
 
 	.font-size-xl {
-		font-size: $font-size-xl;
+		font-size: var(--v-ap-fontSizeXl);
 	}
 
 	.font-size-xxl {
-		font-size: $font-size-xxl;
+		font-size: var(--v-ap-fontSizeXxl);
 	}
 
 	.relative {
@@ -347,5 +345,5 @@
 
 // Font Styles
 .theme--ap.v-sheet {
-	color: $ap-grey-darken1;
+	color: rgb(var(--v-theme-ap-grey-darken-1));
 }

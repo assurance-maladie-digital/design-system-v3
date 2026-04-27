@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
+import { mergeConfig } from 'vite'
 
 const config: StorybookConfig = {
 	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -14,6 +15,21 @@ const config: StorybookConfig = {
 	framework: {
 		name: '@storybook/vue3-vite',
 		options: {},
+	},
+	async viteFinal(baseConfig) {
+		return mergeConfig(baseConfig, {
+			optimizeDeps: {
+				exclude: [
+					'@storybook/addon-docs',
+					'@storybook/addon-docs/preview',
+					'@storybook/addon-docs/blocks',
+					'@storybook/addon-essentials/docs/preview',
+					'@storybook/addon-essentials/docs/mdx-react-shim',
+					'@storybook/blocks',
+					'@storybook/vue3/dist/entry-preview-docs.mjs',
+				],
+			},
+		})
 	},
 }
 export default config

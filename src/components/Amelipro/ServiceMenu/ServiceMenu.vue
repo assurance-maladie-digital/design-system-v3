@@ -174,7 +174,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 :deep(.v-overlay__content) {
 	top: 40px;
@@ -183,7 +183,7 @@
 	z-index: 8;
 	border-radius: 4px;
 
-	@media #{apTokens.$media-up-md} {
+	@media #{bp.$up-md} {
 		left: -800px;
 	}
 }

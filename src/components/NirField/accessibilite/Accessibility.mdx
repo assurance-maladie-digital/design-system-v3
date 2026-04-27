@@ -1,15 +1,110 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/addon-docs';
 import * as Stories from '../NirField.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    BestPracticesSection,
+    ResourcesSection,
+    DemoSection
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
+<AccessibilityGuideLayout
+    componentName="NirField"
+    iconSrc={AccessibilityIcon}
+>
 
 <div class="mt-2">
 <p>Rapport d’audit manuel : <a href="/audits/NirField.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 	<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/897" target="_blank" style={{color:'#0C41BD'}}>issue #897</a>)</p>
 </div>
+
+<CriteriaSection>
+<CriteriaCard icon="🧩" title="Regroupement du NIR et de sa clé">
+    <ul>
+        <li><strong>Donnée logique unique</strong> : le numéro de sécurité sociale et sa clé forment un même ensemble de saisie</li>
+        <li><strong>Comportement par défaut</strong> : lorsque la clé est affichée, le composant regroupe automatiquement les deux champs dans un <code>fieldset</code> avec un <code>legend</code></li>
+        <li><strong>Pour les lecteurs d’écran</strong> : le contexte (ex : <code>Numéro de sécurité sociale</code>) est annoncé avant chaque champ, comme la <code>Clé</code></li>        <li><strong>Point de vigilance</strong> : la légende doit être explicite et décrire la donnée complète, et non un intitulé technique ou ambigu</li>
+        <li><strong>Cas particulier</strong> : si <code>withoutFieldset</code> est utilisé, le composant remplace le <code>fieldset</code> par un <code>role="group"</code> avec un <code>aria-label</code></li>
+    </ul>
+</CriteriaCard>
+
+    <CriteriaCard icon="🏷️" title="Étiquettes des champs">
+        <ul>
+            <li><strong>Libellés distincts</strong> : chaque sous-champ dispose de son propre libellé visible, par exemple <code>Numéro de sécurité sociale</code> et <code>Clé de validation</code></li>
+            <li><strong>Compréhension renforcée</strong> : le <code>legend</code> apporte le contexte global, tandis que chaque <code>label</code> permet d’identifier précisément la zone en cours de saisie</li>
+            <li><strong>Pertinence attendue</strong> : les libellés doivent éviter toute confusion entre les 13 chiffres du NIR et les 2 chiffres de la clé</li>
+        </ul>
+    </CriteriaCard>
+
+<CriteriaCard icon="🔗" title="Messages liés automatiquement">
+        <ul>
+            <li><strong>Messages liés aux bons champs</strong> : chaque champ génère ses propres identifiants pour les messages d’erreur, d’avertissement et de succès</li>
+            <li><strong>Liaison</strong> : ces messages sont automatiquement reliés au champ concerné via <code>aria-describedby</code></li>
+            <li><strong>Comportement natif du composant</strong> : le développeur n’a pas besoin de relier manuellement les messages aux champs</li>
+            <li><strong>Pour les lecteurs d’écran</strong> : les messages sont lus au bon moment </li>
+            <li><strong>Sans configuration supplémentaire</strong> : la liaison entre les champs et leurs messages est gérée automatiquement</li>
+        </ul>
+    </CriteriaCard>
+
+<CriteriaCard icon="⚠️" title="Champs obligatoires et erreurs">
+        <ul>
+            <li><strong>Champ requis</strong> : lorsque la saisie est obligatoire, le composant ajoute automatiquement <code>aria-required</code></li>
+            <li><strong>Champ en erreur</strong> : lorsqu’une validation échoue, le composant ajoute dynamiquement <code>aria-invalid</code> sur le ou les champs concernés</li>
+            <li><strong>Lecture vocale</strong> : ces infos sont annoncées automatiquement par les technologies d’assistance</li> 
+              <li><strong>Attention</strong> : il faut aussi un indicateur visuel (pas seulement technique)</li>
+
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="✍️" title="Aide à la saisie">
+        <ul>
+            <li><strong>Format spécifique</strong> : le NIR a une structure précise</li>
+            <li><strong>Aide explicite recommandée</strong> : documenter ce qui est attendu pour le numéro et pour la clé, par exemple les 13 premiers chiffres puis les 2 derniers</li>
+            <li><strong>Messages clairs</strong> : en cas d’erreur, le message doit indiquer la valeur attendue de façon compréhensible, avec un exemple</li>
+            <li><strong>Personnalisation</strong> : le composant permet de fournir des règles et messages personnalisés afin de s'adapter au contexte métier</li>
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="⌨️" title="Navigation et focus">
+    <ul>
+        <li><strong>Passage automatique</strong> : quand le NIR est complet, le focus passe automatiquement au champ de la clé</li>
+        <li><strong>Retour au NIR</strong> : si la clé est supprimée, le focus revient sur le champ du numéro</li>
+        <li><strong>Saisie facilitée</strong> : si l’utilisateur continue à taper, les chiffres sont directement envoyés dans la clé</li>
+ <li>
+            <strong>En cas d’erreur</strong> : le focus revient sur le premier champ à corriger uniquement lors de la validation 
+            (<code>onBlur = true</code> ou soumission du formulaire).  
+            Pendant la saisie (<code>onBlur = false</code> et <code>shouldValidateOnBlur = false</code>), le focus ne bouge pas pour ne pas interrompre l’utilisateur, mais on l’aide à corriger les erreurs lorsqu’il termine un champ ou soumet le formulaire.
+        </li>
+        </ul>
+</CriteriaCard>
+</CriteriaSection>
+    <DemoSection componentName="NirField">
+      <Primary />
+    </DemoSection>
+
+<BestPracticesSection>
+    <ul>
+        <li>Utiliser le regroupement par <code>fieldset</code> et <code>legend</code> dès lors que le numéro et la clé sont saisis ensemble</li>
+        <li>Mettre une légende claire (ex : "Numéro de sécurité sociale")</li>
+        <li>Garder deux labels distincts pour le numéro et la clé</li>
+        <li>Laisser le composant gérer les attributs ARIA automatiquement</li>
+        <li>Prévoir une aide à la saisie claire, visible et compréhensible</li>
+        <li>Afficher des messages d’erreur explicites, contextualisés et, si possible, accompagnés d’un exemple</li>
+        <li>Ne pas signaler le caractère obligatoire, l’erreur ou la réussite uniquement par la couleur</li>
+    </ul>
+</BestPracticesSection>
+
+<ResourcesSection>
+    <ul>
+        <li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/" target="_blank" style={{ color: '#0C41BD' }}>Accede Web – Utiliser label, for et id</a></li>
+        <li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-required-ou-aria-requiredtrue-dans-les-champs-obligatoires/" target="_blank" style={{ color: '#0C41BD' }}>Accede Web – Intégrer required ou aria-required="true"</a></li>
+        <li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/" target="_blank" style={{ color: '#0C41BD' }}>Accede Web – Messages d’erreur et suggestions de correction</a></li>
+    </ul>
+</ResourcesSection>
+
+</AccessibilityGuideLayout>

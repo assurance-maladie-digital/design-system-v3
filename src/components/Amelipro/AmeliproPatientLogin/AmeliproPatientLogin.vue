@@ -216,15 +216,15 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .ident-title {
-	font-size: apTokens.$font-size-xs !important;
+	font-size: var(--v-ap-fontSizeXs) !important;
 	text-align: center;
-	font-weight: apTokens.$ap-font-weight-bold;
+	font-weight: var(--v-ap-fontWeightBold);
 	text-transform: uppercase;
 
-	@media #{apTokens.$media-up-md} {
+	@media #{bp.$up-md} {
 		text-align: left;
 	}
 }

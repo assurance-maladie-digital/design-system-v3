@@ -44,7 +44,6 @@
 			direction?: 'horizontal' | 'vertical'
 			isDirty?: boolean
 			disabled?: boolean
-			isOnError?: boolean
 			isFlat?: boolean
 			isFocused?: boolean
 			areDetailsHidden?: boolean | 'auto'
@@ -101,7 +100,6 @@
 			density: 'default',
 			direction: 'horizontal',
 			isDirty: false,
-			isOnError: false,
 			isFlat: false,
 			isFocused: false,
 			areDetailsHidden: false,
@@ -636,7 +634,7 @@
 			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : messages))"
 			:min-width="props.minWidth"
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"
@@ -925,13 +923,13 @@
 	}
 
 	:deep(.v-field--focused .v-field__outline) {
-		color: rgb(var(--v-theme-accentPrimary)) !important;
+		color: rgb(var(--v-theme-borderAccentPrimary)) !important;
 		opacity: 1 !important;
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-accentPrimary));
+		outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
@@ -939,7 +937,7 @@
 
 .help-text-below {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-	font-size: 14px;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 

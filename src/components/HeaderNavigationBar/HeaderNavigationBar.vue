@@ -37,8 +37,8 @@
 			items?: NavigationItem[]
 			/** Si activé, une confirmation sera demandée avant de changer d'onglet */
 			confirmTabChange?: boolean
-			/** Message affiché dans la boîte de dialogue de confirmation */
-			confirmationMessage?: boolean
+			/** Message affiché dans la boîte de dialogue de confirmation (accepte un booléen pour rétrocompatibilité) */
+			confirmationMessage?: string | boolean
 			/** Largeur interne */
 			width?: string
 			headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
@@ -46,7 +46,7 @@
 		{
 			// Confirmation related defaults
 			confirmTabChange: false,
-			confirmationMessage: false,
+			confirmationMessage: undefined,
 			// Navigation related defaults
 			homeAriaLabel: undefined,
 			serviceTitle: undefined,
@@ -112,6 +112,14 @@
 				&& props.items.length > 0
 				&& props.items.length > props.maxHorizontalMenuItems)
 		)
+	})
+
+	// Filtrer le message de confirmation pour éviter les erreurs TypeScript dans le template
+	// Même si HorizontalNavbar accepte un booléen, cette propriété calculée garantit la propreté du typage
+	const formattedConfirmationMessage = computed<string | undefined>(() => {
+		return typeof props.confirmationMessage === 'string'
+			? props.confirmationMessage
+			: undefined
 	})
 
 	// Fonction qui gère la confirmation de changement d'onglet
@@ -221,6 +229,7 @@
 				:items="items"
 				:vuetify-options
 				:confirm-tab-change="confirmTabChange"
+				:confirmation-message="formattedConfirmationMessage"
 				@confirm-tab-change="handleConfirmTabChange"
 			>
 				<template #navigation-bar-prepend>

@@ -227,53 +227,53 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/amelipro/apTokens2026' as apTokens;
+@use '@/assets/overrides/breakpoints' as bp;
 
 .amelipro-card {
 	display: block;
 	position: relative;
 	max-width: 100%;
-	border-radius: apTokens.$card-radius;
+	border-radius: var(--v-ap-btnRadius);
 	text-decoration: none;
 	overflow-wrap: break-word;
 	white-space: normal;
 }
 
 .amelipro-card__header {
-	padding-top: apTokens.$card-padding-desktop;
-	padding-left: apTokens.$card-padding-desktop;
-	padding-right: apTokens.$card-padding-desktop;
+	padding-top: var(--v-ap-cardPaddingDesktop);
+	padding-left: var(--v-ap-cardPaddingDesktop);
+	padding-right: var(--v-ap-cardPaddingDesktop);
 	padding-bottom: 0 !important;
 	word-break: break-all;
 }
 
 .amelipro-card__header-content {
-	padding-bottom: 1rem;
+	padding-bottom: var(--v-ap-cardPaddingDesktop);
 }
 
 .amelipro-card__content {
 	width: 100%;
-	padding: apTokens.$card-padding-desktop;
-	font-size: apTokens.$font-size-xs;
-	font-weight: apTokens.$ap-font-weight-regular;
+	padding: var(--v-ap-cardPaddingDesktop);
+	font-size: var(--v-ap-fontSizeXs);
+	font-weight: var(--v-ap-fontWeightRegular);
 
-	@media #{apTokens.$media-down-md} {
-		padding-left: apTokens.$card-padding-tablet;
-		padding-right: apTokens.$card-padding-tablet;
-		padding-bottom: apTokens.$card-padding-tablet;
+	@media #{bp.$down-sm} {
+		padding-left: var(--v-ap-cardPaddingDesktop);
+		padding-right: var(--v-ap-cardPaddingDesktop);
+		padding-bottom: var(--v-ap-cardPaddingDesktop);
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-left: apTokens.$card-padding-mobile;
-		padding-right: apTokens.$card-padding-mobile;
-		padding-bottom: apTokens.$card-padding-tablet;
+	@media #{bp.$down-xs} {
+		padding-left: var(--v-ap-cardPaddingMobile);
+		padding-right: var(--v-ap-cardPaddingMobile);
+		padding-bottom: var(--v-ap-cardPaddingDesktop);
 	}
 }
 
 .amelipro-card__header--left,
 .amelipro-card__content--left {
-	@media #{apTokens.$media-up-md} {
-		padding-right: 1rem;
+	@media #{bp.$up-md} {
+		padding-right: var(--v-ap-cardPaddingDesktop);
 	}
 }
 
@@ -282,31 +282,31 @@
 }
 
 .amelipro-card__right-part {
-	padding: apTokens.$card-padding-desktop apTokens.$card-padding-desktop apTokens.$card-padding-desktop 0;
+	padding: var(--v-ap-cardPaddingDesktop) 1rem 1rem 0;
 
-	@media #{apTokens.$media-down-md} {
-		padding: 0 apTokens.$card-padding-tablet apTokens.$card-padding-tablet apTokens.$card-padding-tablet;
+	@media #{bp.$down-sm} {
+		padding: 0 1rem 1rem;
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding: 0 apTokens.$card-padding-mobile apTokens.$card-padding-mobile apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding: 0 0.75rem 0.75rem;
 	}
 }
 
 .amelipro-card__right-part-content {
-	@media #{apTokens.$media-up-md} {
-		padding-left: 1rem;
+	@media #{bp.$up-md} {
+		padding-left: var(--v-ap-cardPaddingDesktop);
 		min-height: 100%;
 		border-left: 1px solid v-bind(borderColorValue);
 	}
 
-	@media #{apTokens.$media-down-md} {
-		padding-top: apTokens.$card-padding-tablet;
+	@media #{bp.$down-sm} {
+		padding-top: var(--v-ap-cardPaddingDesktop);
 		border-top: 1px solid v-bind(borderColorValue);
 	}
 
-	@media #{apTokens.$media-down-sm} {
-		padding-top: apTokens.$card-padding-mobile;
+	@media #{bp.$down-xs} {
+		padding-top: var(--v-ap-cardPaddingMobile);
 	}
 }
 </style>

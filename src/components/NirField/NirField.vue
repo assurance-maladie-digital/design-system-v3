@@ -517,8 +517,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .nir-field {
 	display: flex;
 	flex-wrap: wrap;
@@ -596,16 +594,16 @@
 
 .sy-number-errors,
 .sy-key-errors {
-	color: tokens.$colors-text-error;
+	color: rgb(var(--v-theme-textError));
 }
 
 .sy-number-warnings,
 .sy-key-warnings {
-	color: tokens.$colors-text-warning;
+	color: rgb(var(--v-theme-textWarning));
 }
 
 .sy-number-success,
 .sy-key-success {
-	color: tokens.$colors-text-success;
+	color: rgb(var(--v-theme-textSuccess));
 }
 </style>

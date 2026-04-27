@@ -1,0 +1,25 @@
+// Shared responsive breakpoints
+// Usage: @use '@/assets/overrides/breakpoints' as bp;
+//        @media #{bp.$up-md} { ... }
+
+// Up variants (mobile-first)
+$up-sm: '(width >= 600px)';
+$up-md: '(width >= 960px)';
+$up-lg: '(width >= 1264px)';
+
+// Down variants
+$down-xs: '(width <= 599.99px)';
+$down-sm: '(width <= 959.99px)';
+$down-md: '(width <= 1263.99px)';
+
+// Range variants
+$sm-only: '(width >= 600px) and (width <= 959.99px)';
+$md-only: '(width >= 960px) and (width <= 1263.99px)';
+
+// Component-specific (AmeliproDentalChart)
+$up-dental: '(width >= 1240px)';
+$down-dental: '(width <= 1239.999px)';
+
+// Component-specific (SocialMediaLinks)
+$up-tablet: '(width >= 768px)';
+$down-mobile: '(width <= 767px)';

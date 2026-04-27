@@ -334,7 +334,12 @@
 			const dateObjects = value
 				.map(dateStr => parseDate(dateStr, returnFormat.value))
 				.filter(Boolean) as Date[]
-			selectedDates.value = dateObjects
+			if (props.displayRange && dateObjects.length >= 2) {
+				selectedDates.value = dateSelectionResult.generateDateRange(dateObjects[0]!, dateObjects[dateObjects.length - 1]!)
+			}
+			else {
+				selectedDates.value = dateObjects
+			}
 		}
 		else {
 			const dateObject = parseDate(value, returnFormat.value)
@@ -390,6 +395,7 @@
 		initializeSelectedDates,
 		validateDates,
 		updateModel,
+		generateDateRange: dateSelectionResult.generateDateRange,
 	})
 
 	// Display helpers (centralised in useDatePickerState)
@@ -772,7 +778,7 @@
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
 					if (startDate && endDate) {
-						selectedDates.value = [startDate, endDate]
+						selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
 						validateDates()
 					}
 				}
@@ -866,7 +872,7 @@
 				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
 
 				if (startDate && endDate) {
-					selectedDates.value = [startDate, endDate]
+					selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
 					displayFormattedDate.value
 						= `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
 				}
@@ -1222,8 +1228,6 @@
 </template>
 
 <style lang="scss" scoped>
-@use '@/assets/tokens';
-
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;
@@ -1249,7 +1253,7 @@
 /* Style pour les jours fériés */
 :deep(.holiday-day) {
 	background-color: rgb(255 193 7 / 10%);
-	border: 2px dotted tokens.$neutral-black;
+	border: 2px dotted rgb(var(--v-theme-grey-darken60));
 	border-radius: 50%;
 }
 
@@ -1268,45 +1272,45 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: tokens.$colors-text-success !important;
+		color: rgb(var(--v-theme-textSuccess)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-border-success !important;
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 	}
 }
 
 .v-messages__message--error {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: tokens.$colors-text-error !important;
+		color: rgb(var(--v-theme-textError)) !important;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-border-error !important;
+		color: rgb(var(--v-theme-borderError)) !important;
 	}
 }
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: tokens.$colors-text-warning !important;
+		color: rgb(var(--v-theme-textWarning)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: tokens.$colors-text-warning !important;
+		color: rgb(var(--v-theme-textWarning)) !important;
 	}
 
 	.v-field--active & {
-		color: tokens.$colors-text-warning !important;
+		color: rgb(var(--v-theme-textWarning)) !important;
 	}
 }
 
 :deep(.v-btn__content) {
-	font-size: tokens.$font-size-body-text + 3;
+	font-size: var(--v-fontSize-corpsDeTexte) + 3;
 	font-weight: bold;
 }
 
@@ -1337,7 +1341,7 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: tokens.$colors-background-main;
+	background-color: rgb(var(--v-theme-backgroundMain));
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
@@ -1345,7 +1349,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: tokens.$colors-background-accent-primary-contrasted !important;
+	background-color: rgb(var(--v-theme-backgroundAccentContrasted)) !important;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {

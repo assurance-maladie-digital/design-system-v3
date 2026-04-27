@@ -300,8 +300,6 @@
 </template>
 
 <style scoped lang="scss">
-@use '@/assets/tokens';
-
 .label-options {
 	font-size: 0.875rem;
 	font-weight: 400;
@@ -310,7 +308,7 @@
 .captcha-audio :deep(.v-btn__content) span {
 	display: flex;
 	align-items: center;
-	gap: tokens.$gap-2;
+	gap: var(--v-gap-2);
 	letter-spacing: 0%;
 }
 
