@@ -466,7 +466,7 @@
 	})
 
 	// Utilisation du composable pour gérer la sélection de dates
-	const { updateSelectedDates, rangeBoundaryDates, resetRange } = useDateSelection(
+	const { updateSelectedDates, rangeBoundaryDates, generateDateRange, resetRange } = useDateSelection(
 		parseDate,
 		selectedDates,
 		props.format,
@@ -491,6 +491,7 @@
 		initializeSelectedDates,
 		validateDates,
 		updateModel,
+		generateDateRange,
 	})
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
@@ -515,7 +516,7 @@
 				const endDate = parseDate(endDateStr, props.dateFormatReturn || props.format)
 
 				if (startDate && endDate) {
-					selectedDates.value = [startDate, endDate]
+					selectedDates.value = generateDateRange(startDate, endDate)
 					displayFormattedDate.value = `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
 				}
 			}
