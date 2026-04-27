@@ -36,15 +36,13 @@ flowchart TB
     style A fill:#f3e5f5
     style B fill:#f3e5f5
     style C fill:#f3e5f5
-
-    click S "src/components/Customs/SyForm/SyForm.vue" "Voir SyForm.vue"
-    click A "src/components/Customs/SyTextField/SyTextField.vue" "Voir SyTextField.vue"
-    click B "src/components/Customs/SyTextField/SyTextField.vue" "Voir SyTextField.vue"
-    click C "src/components/DatePicker/DateTextInput/DateTextInput.vue" "Voir DateTextInput.vue"
-    click RA "src/composables/rules/useFieldValidation.ts" "Voir les règles"
-    click RB "src/composables/rules/useFieldValidation.ts" "Voir les règles"
-    click RC "src/composables/rules/useFieldValidation.ts" "Voir les règles"
 ```
+
+**Fichiers source :**
+- [`SyForm.vue`](src/components/Customs/SyForm/SyForm.vue) - Composant formulaire
+- [`SyTextField.vue`](src/components/Customs/SyTextField/SyTextField.vue) - Champ de saisie
+- [`DateTextInput.vue`](src/components/DatePicker/DateTextInput/DateTextInput.vue) - Saisie de date
+- [`useFieldValidation.ts`](src/composables/rules/useFieldValidation.ts) - Définition des règles
 
 ---
 
@@ -116,11 +114,12 @@ flowchart TB
     style UV fill:#fff3e0
     style UVT fill:#fff3e0
     style UFV fill:#fff3e0
-
-    click UV "src/composables/validation/useValidation.ts" "Voir useValidation.ts (Legacy)"
-    click UVT "src/composables/validation/useValidatable.ts" "Voir useValidatable.ts"
-    click UFV "src/composables/validation/useFormValidation.ts" "Voir useFormValidation.ts"
 ```
+
+**Fichiers source :**
+- [`useValidation.ts`](src/composables/validation/useValidation.ts) - Moteur de validation legacy
+- [`useValidatable.ts`](src/composables/validation/useValidatable.ts) - Interface d'enregistrement
+- [`useFormValidation.ts`](src/composables/validation/useFormValidation.ts) - Registre central
 
 ### Couche 2 : Système Unifié (Interface modernisée)
 
@@ -148,12 +147,13 @@ flowchart TB
     style Vuetify fill:#e3f2fd
     style Custom fill:#fce4ec
     style UV_Legacy fill:#fff3e0
-
-    click Entry "src/composables/unifyValidation/useValidation.ts" "Voir useValidation.ts (Unifié)"
-    click Vuetify "src/composables/unifyValidation/useVuetifyValidation.ts" "Voir useVuetifyValidation.ts"
-    click Custom "src/composables/unifyValidation/useCustomValidation.ts" "Voir useCustomValidation.ts"
-    click UV_Legacy "src/composables/validation/useValidation.ts" "Voir useValidation.ts (Legacy)"
 ```
+
+**Fichiers source :**
+- [`useValidation.ts (unifié)`](src/composables/unifyValidation/useValidation.ts) - Point d'entrée unifié
+- [`useVuetifyValidation.ts`](src/composables/unifyValidation/useVuetifyValidation.ts) - Adapteur Vuetify
+- [`useCustomValidation.ts`](src/composables/unifyValidation/useCustomValidation.ts) - Pont vers validation legacy
+- [`useValidation.ts (legacy)`](src/composables/validation/useValidation.ts) - Validation legacy
 
 ---
 
