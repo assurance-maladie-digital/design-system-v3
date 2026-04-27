@@ -32,10 +32,10 @@ flowchart TB
     S -->|valide| RB
     S -->|valide| RC
 
-    style S fill:#e1f5fe
-    style A fill:#f3e5f5
-    style B fill:#f3e5f5
-    style C fill:#f3e5f5
+    style S fill:#0288d1,color:#fff,stroke:#01579b,stroke-width:2px
+    style A fill:#7b1fa2,color:#fff,stroke:#4a148c,stroke-width:2px
+    style B fill:#7b1fa2,color:#fff,stroke:#4a148c,stroke-width:2px
+    style C fill:#7b1fa2,color:#fff,stroke:#4a148c,stroke-width:2px
 ```
 
 **Fichiers source :**
@@ -61,10 +61,10 @@ flowchart TB
     N -->|Règle respectée avec alerte| VW
     N -->|Règle respectée| V
 
-    style R fill:#ffcdd2,stroke:#f44336
-    style VW fill:#ffe0b2,stroke:#ff9800
-    style V fill:#c8e6c9,stroke:#4caf50
-    style N fill:#f5f5f5,stroke:#9e9e9e
+    style R fill:#d32f2f,color:#fff,stroke:#b71c1c,stroke-width:2px
+    style VW fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:2px
+    style V fill:#388e3c,color:#fff,stroke:#1b5e20,stroke-width:2px
+    style N fill:#616161,color:#fff,stroke:#212121,stroke-width:2px
 ```
 
 **Légende :**
@@ -98,9 +98,9 @@ flowchart TB
     UFV -.->|context| UVT
     UVT -.->|appelle| UV
 
-    style UV fill:#fff3e0
-    style UVT fill:#fff3e0
-    style UFV fill:#fff3e0
+    style UV fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:2px
+    style UVT fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:2px
+    style UFV fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:2px
 ```
 
 **Fichiers source :**
@@ -124,10 +124,10 @@ flowchart TB
     Entry -->|mode: false| Custom
     Custom -.->|wrap| UV_Legacy
 
-    style Entry fill:#e8f5e9
-    style Vuetify fill:#e3f2fd
-    style Custom fill:#fce4ec
-    style UV_Legacy fill:#fff3e0
+    style Entry fill:#388e3c,color:#fff,stroke:#1b5e20,stroke-width:2px
+    style Vuetify fill:#0288d1,color:#fff,stroke:#01579b,stroke-width:2px
+    style Custom fill:#c2185b,color:#fff,stroke:#880e4f,stroke-width:2px
+    style UV_Legacy fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:2px
 ```
 
 **Fichiers source :**
@@ -348,9 +348,9 @@ flowchart LR
     RuleCheck -->|oui| Valid
     RuleCheck -->|non| Invalid
 
-    style Rule fill:#e3f2fd
-    style Valid fill:#c8e6c9
-    style Invalid fill:#ffcdd2
+    style Rule fill:#0288d1,color:#fff,stroke:#01579b,stroke-width:2px
+    style Valid fill:#388e3c,color:#fff,stroke:#1b5e20,stroke-width:2px
+    style Invalid fill:#d32f2f,color:#fff,stroke:#b71c1c,stroke-width:2px
 ```
 
 **Implémentation :**
