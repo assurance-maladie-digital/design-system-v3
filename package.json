@@ -152,7 +152,8 @@
     "npm": "^11.8.1",
     "undici": "^6.24.0",
     "rollup": "^4.59.0",
-    "immutable": ">=5.1.5"
+    "immutable": ">=5.1.5",
+    "uuid": ">=14.0.0"
   },
   "pnpm": {
     "overrides": {
