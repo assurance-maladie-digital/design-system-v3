@@ -9,19 +9,19 @@
 ```mermaid
 flowchart TB
     subgraph Champs["Composants de formulaire"]
-        A[SyTextField<br/>email]
-        B[SyTextField<br/>password]
-        C[DatePicker<br/>date]
+        A["SyTextField: email"]
+        B["SyTextField: password"]
+        C["DatePicker: date"]
     end
 
     subgraph Form["Coordination"]
-        S[SyForm<br/>Registre central]
+        S["SyForm: Registre central"]
     end
 
-    subgraph Rules["Règles de validation"]
-        RA["• required<br/>• email format"]
-        RB["• minLength(8)<br/>• pattern regex"]
-        RC["• noWeekend<br/>• async API check"]
+    subgraph Rules["Regles"]
+        RA["required, email"]
+        RB["minLength(8), pattern"]
+        RC["noWeekend, async API"]
     end
 
     A -->|enregistrement| S
@@ -49,39 +49,28 @@ flowchart TB
 ## Les 3 niveaux de validation
 
 ```mermaid
-stateDiagram-v2
-    [*] --> NEUTRAL: Initialisation
+flowchart TB
+    subgraph Statuts["Statuts de validation"]
+        N[NEUTRAL\nInitialisation]
+        R[REJECTED\nERREUR]
+        VW[VALIDATED_WITH_WARNINGS\nAVERTISSEMENT]
+        V[VALIDATED\nSUCCES]
+    end
 
-    NEUTRAL --> REJECTED: Règle non respectée
-    REJECTED --> [*]: Bloque soumission
+    N -->|Règle non respectée| R
+    N -->|Règle respectée avec alerte| VW
+    N -->|Règle respectée| V
 
-    NEUTRAL --> VALIDATED_WITH_WARNINGS: Règle respectée avec alerte
-    VALIDATED_WITH_WARNINGS --> [*]: Autorise soumission
-
-    NEUTRAL --> VALIDATED: Règle respectée
-    VALIDATED --> [*]: Autorise soumission
-
-    note right of REJECTED
-        🔴 ERREUR
-        - Soumission bloquée
-        - Message d'erreur
-        - border-error + icônes
-    end note
-
-    note right of VALIDATED_WITH_WARNINGS
-        🟡 AVERTISSEMENT
-        - Soumission autorisée
-        - Message d'alerte
-        - border-warning + icônes
-    end note
-
-    note right of VALIDATED
-        🟢 SUCCÈS
-        - Validation confirmée
-        - Message de confirmation
-        - border-success + icônes
-    end note
+    style R fill:#ffcdd2,stroke:#f44336
+    style VW fill:#ffe0b2,stroke:#ff9800
+    style V fill:#c8e6c9,stroke:#4caf50
+    style N fill:#f5f5f5,stroke:#9e9e9e
 ```
+
+**Légende :**
+- 🔴 **REJECTED (Erreur)** : Soumission bloquée, border-error
+- 🟡 **VALIDATED_WITH_WARNINGS (Avertissement)** : Soumission autorisée, border-warning  
+- 🟢 **VALIDATED (Succès)** : Validation confirmée, border-success
 
 ---
 
@@ -91,24 +80,22 @@ stateDiagram-v2
 
 ```mermaid
 flowchart TB
-    subgraph Legacy["VALIDATION LEGACY (Couche 1)"]
-        direction TB
+    subgraph Legacy["VALIDATION LEGACY"]
+        UV["useValidation.ts"]
+        UV_Desc["Gestion des tokens, sync/async"]
 
-        UV[useValidation.ts<br/>Moteur principal]
-        UV_Desc["• Gestion des tokens<br/>anti-race-condition<br/>• Exécution sync/async<br/>• Retour: errors/warnings/successes"]
+        UVT["useValidatable.ts"]
+        UVT_Desc["Auto-enregistrement"]
 
-        UVT[useValidatable.ts<br/>Interface d'enregistrement]
-        UVT_Desc["• Auto-enregistrement<br/>• API: validate / clear / reset"]
-
-        UFV[useFormValidation.ts<br/>Registre central]
-        UFV_Desc["• Lifecycle des composants<br/>• Validation collective"]
+        UFV["useFormValidation.ts"]
+        UFV_Desc["Registre central"]
     end
 
     UV --> UV_Desc
     UVT --> UVT_Desc
     UFV --> UFV_Desc
 
-    UFV -.->|fournit context| UVT
+    UFV -.->|context| UVT
     UVT -.->|appelle| UV
 
     style UV fill:#fff3e0
@@ -125,23 +112,17 @@ flowchart TB
 
 ```mermaid
 flowchart TB
-    subgraph Unified["VALIDATION UNIFIÉE (Couche 2)"]
-        direction TB
+    subgraph Unified["VALIDATION UNIFIEE"]
+        Entry["useValidation.ts"]
 
-        Entry[useValidation.ts<br/>Point d'entrée unique]
-
-        subgraph Modes["Modes de validation"]
-            Vuetify[useVuetifyValidation.ts<br/>Adapteur natif Vuetify]
-            Custom[useCustomValidation.ts<br/>Pont vers useValidation.ts]
-            Props[Props Handler]
-        end
+        Vuetify["useVuetifyValidation.ts"]
+        Custom["useCustomValidation.ts"]
+        UV_Legacy["useValidation.ts Legacy"]
     end
 
-    Entry -->|useVuetifyValidation: true| Vuetify
-    Entry -->|useVuetifyValidation: false| Custom
-    Entry --> Props
-
-    Custom -.->|wrap| UV_Legacy[useValidation.ts<br/>Legacy]
+    Entry -->|mode: true| Vuetify
+    Entry -->|mode: false| Custom
+    Custom -.->|wrap| UV_Legacy
 
     style Entry fill:#e8f5e9
     style Vuetify fill:#e3f2fd
@@ -221,29 +202,31 @@ sequenceDiagram
 ## Types de règles disponibles
 
 ```mermaid
-mindmap
-  root((Règles de<br/>Validation))
-    StringRules
-      required
-      minLength(n)
-      maxLength(n)
-      exactLength(n)
-      email
-      matchPattern
-    NumberRules
-      min(n)
-      max(n)
-    DateRules
-      noWeekend
-      notBeforeToday
-      notAfterToday
-      notBeforeDate
-      notAfterDate
-      dateExact
-      isHolidayDay
-    CustomRule
-      sync
-      async
+flowchart TD
+    Root["REGLES DE VALIDATION"]
+    
+    Root --> StringRules["StringRules"]
+    Root --> NumberRules["NumberRules"]
+    Root --> DateRules["DateRules"]
+    Root --> CustomRule["CustomRule"]
+    
+    StringRules --> R1["required"]
+    StringRules --> R2["minLength(n)"]
+    StringRules --> R3["maxLength(n)"]
+    StringRules --> R4["email"]
+    StringRules --> R5["matchPattern"]
+    
+    NumberRules --> N1["min(n)"]
+    NumberRules --> N2["max(n)"]
+    
+    DateRules --> D1["noWeekend"]
+    DateRules --> D2["notBeforeToday"]
+    DateRules --> D3["notAfterToday"]
+    DateRules --> D4["dateExact"]
+    DateRules --> D5["isHolidayDay"]
+    
+    CustomRule --> C1["sync"]
+    CustomRule --> C2["async"]
 ```
 
 **Règle personnalisée (CustomRule)**
@@ -350,28 +333,24 @@ const { validate, errors, warnings, successes } = useValidation({
 
 ```mermaid
 flowchart LR
-    subgraph CrossValidation["Validation croisée"]
-        direction TB
-
-        Start[Date de début<br/>01/06/2024]
-        End[Date de fin<br/>15/06/2024]
-
-        Rule["Règle réactive<br/>(computed)"]
-        RuleCheck{"endDate ≥<br/>startDate ?"}
-
-        Valid["✓ VALID"]
-        Invalid["✗ INVALID<br/>'Doit être après<br/>la date de début'"]
+    subgraph CrossValidation["Validation croisee"]
+        Start["Date debut"]
+        End["Date fin"]
+        Rule["Regle reactive (computed)"]
+        RuleCheck{"fin >= debut ?"}
+        Valid["VALID"]
+        Invalid["INVALID"]
     end
 
-    Start -->|dépendance| Rule
+    Start -->|dependance| Rule
     End -->|validation| Rule
     Rule --> RuleCheck
     RuleCheck -->|oui| Valid
     RuleCheck -->|non| Invalid
 
     style Rule fill:#e3f2fd
-    style Valid fill:#e8f5e9
-    style Invalid fill:#ffebee
+    style Valid fill:#c8e6c9
+    style Invalid fill:#ffcdd2
 ```
 
 **Implémentation :**
@@ -397,14 +376,15 @@ const customRules = computed(() => [{
 ## Points clés à retenir
 
 ```mermaid
-mindmap
-  root((Points clés))
-    SyForm["Registre et coordinateur de validation de formulaire"]
-    useValidation["Composable principal retournant l'état de validation"]
-    ValidationRule["Définition d'une contrainte de validation"]
-    Token["Identifiant de validation pour gestion des race conditions"]
-    Async["Support des validations retournant Promise"]
-    Niveaux["3 niveaux : Error, Warning, Success"]
+flowchart TD
+    Root["POINTS CLES"]
+    
+    Root --> SyForm["SyForm - Registre formulaire"]
+    Root --> useValidation["useValidation - Etat validation"]
+    Root --> ValidationRule["ValidationRule - Contraintes"]
+    Root --> Token["Token - Race conditions"]
+    Root --> Async["Async - Promise support"]
+    Root --> Niveaux["3 niveaux: Error, Warning, Success"]
 ```
 | Concept | Explication technique | Où ça vit |
 |---------|-------------------|-----------|
