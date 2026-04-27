@@ -1,3 +1,152 @@
+## v1.0.25 (27-04-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2136">#2136</a>
+      </td>
+      <td>- NirField: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2132">#2132</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve Kit de pré-audit page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2121">#2121</a>
+      </td>
+      <td>- SyIconButton: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2128">#2128</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SelectBtnField: fix multiple prop bug
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2130">#2130</a>
+      </td>
+      <td>- AmeliproClickableTile: fix border color 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2103">#2103</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: fix validation without key
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2133">#2133</a>
+      </td>
+      <td>- OTP Input: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2101">#2101</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: add disabled prop
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2126">#2126</a>
+      </td>
+      <td>- Breadcrumbs: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2099">#2099</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Add visual tests on components (Cypress) and add it to CI
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2067">#2067</a>
+      </td>
+      <td>- SkeletonLoader: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2093">#2093</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect / SyTabs: improve accessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1959">#1959</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2111">#2111</a>
+      </td>
+      <td>- Switch: add AP tokens
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2088">#2088</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Tokens: refacto to simplify usage in DS
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2102">#2102</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FileList: fix labels
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2115">#2115</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2087">#2087</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable / SyServerTable: add page input option
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2104">#2104</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable / SyServerTable: fix display on resize column
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2100">#2100</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilterSideBar: add custom z-index otion
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2097">#2097</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Notifications module: improve export for StarterKit
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2096">#2096</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: add createVuetifyInstance page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2095">#2095</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix complexDatePicker range selection
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2090">#2090</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: fix plugins folow-redirect and vite
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2089">#2089</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2086">#2086</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve NirField accessibility page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2019">#2019</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: fix error display timing on required field
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2083">#2083</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: fix custom-local and validation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2131">#2131</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.24 (13-04-2026)
 
 > Il est conseillé de faire une montée de version du Starter Kit en 2.0.32
