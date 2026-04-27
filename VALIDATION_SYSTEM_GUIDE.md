@@ -68,9 +68,9 @@ flowchart TB
 ```
 
 **Légende :**
-- 🔴 **REJECTED (Erreur)** : Soumission bloquée, border-error
-- 🟡 **VALIDATED_WITH_WARNINGS (Avertissement)** : Soumission autorisée, border-warning  
-- 🟢 **VALIDATED (Succès)** : Validation confirmée, border-success
+- 🔴 **REJECTED (Erreur)** : Soumission bloquée, border-error + icone
+- 🟡 **VALIDATED_WITH_WARNINGS (Avertissement)** : Soumission autorisée, border-warning  + icone
+- 🟢 **VALIDATED (Succès)** : Validation confirmée, border-success + icone
 
 ---
 
