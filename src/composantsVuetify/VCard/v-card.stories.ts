@@ -252,7 +252,7 @@ export const Disabled: Story = {
                 <VCardText>
                     Cette carte est désactivée.
                 </VCardText>
-                <VCardActions>
+                <VCardActions class="justify-end">
                     <VBtn>Action</VBtn>
                 </VCardActions>
             </VCard>
@@ -269,7 +269,7 @@ export const Disabled: Story = {
     <v-card-text>
         Cette carte est désactivée.
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions class="justify-end">
         <v-btn>Action</v-btn>
     </v-card-actions>
 </v-card>`,
