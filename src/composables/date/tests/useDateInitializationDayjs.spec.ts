@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { initializeSelectedDates, type DateInput } from '../useDateInitialization'
+import { initializeSelectedDates, type DateInput } from '../useDateInitializationDayjs'
 
-describe('useDateInitialization', () => {
+describe('useDateInitializationDayjs', () => {
 	describe('initializeSelectedDates', () => {
 		it('returns null when modelValue is null or undefined', () => {
 			expect(initializeSelectedDates(null, 'DD/MM/YYYY')).toBeNull()
@@ -70,7 +70,7 @@ describe('useDateInitialization', () => {
 			expect(result1).toBeInstanceOf(Date)
 			expect((result1 as Date).getDate()).toBe(15)
 
-			// Date au format d'affichage quand le format de retour est différen
+			// Date au format d'affichage quand le format de retour est différent
 			const result2 = initializeSelectedDates('15/01/2023', 'DD/MM/YYYY', 'YYYY-MM-DD')
 			expect(result2).toBeInstanceOf(Date)
 			expect((result2 as Date).getDate()).toBe(15)
@@ -95,6 +95,42 @@ describe('useDateInitialization', () => {
 				expect((result as Date).getMonth()).toBe(9)
 				expect((result as Date).getDate()).toBe(18)
 			})
+		})
+
+		it('creates dates at midnight (00:00:00.000)', () => {
+			const result = initializeSelectedDates('15/06/2023', 'DD/MM/YYYY') as Date
+			expect(result.getHours()).toBe(0)
+			expect(result.getMinutes()).toBe(0)
+			expect(result.getSeconds()).toBe(0)
+			expect(result.getMilliseconds()).toBe(0)
+		})
+
+		it('creates dates at midnight for arrays too', () => {
+			const result = initializeSelectedDates(['01/03/2023', '15/03/2023'], 'DD/MM/YYYY') as Date[]
+			result.forEach(date => {
+				expect(date.getHours()).toBe(0)
+				expect(date.getMinutes()).toBe(0)
+				expect(date.getSeconds()).toBe(0)
+			})
+		})
+
+		it('handles range array with different return format', () => {
+			const result = initializeSelectedDates(['2023-01-10', '2023-01-20'], 'DD/MM/YYYY', 'YYYY-MM-DD')
+			expect(Array.isArray(result)).toBe(true)
+			const dates = result as Date[]
+			expect(dates).toHaveLength(2)
+			expect(dates[0]?.getDate()).toBe(10)
+			expect(dates[1]?.getDate()).toBe(20)
+		})
+
+		it('accepts a range where both dates are equal', () => {
+			const result = initializeSelectedDates(['15/01/2023', '15/01/2023'], 'DD/MM/YYYY')
+			expect(Array.isArray(result)).toBe(true)
+			expect(result).toHaveLength(2)
+		})
+
+		it('returns null for empty string input', () => {
+			expect(initializeSelectedDates('', 'DD/MM/YYYY')).toBeNull()
 		})
 
 		it('returns null for object input', () => {

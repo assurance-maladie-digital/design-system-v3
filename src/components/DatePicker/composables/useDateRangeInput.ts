@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { extractRangeParts as extractRangePartsUtil, hasRangeSeparator as hasRangeSeparatorUtil, isValidDateRange } from '../utils/dateFormattingUtils'
+import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 // Initialiser les plugins dayjs
 dayjs.extend(customParseFormat)
@@ -23,7 +24,7 @@ export function useDateRangeInput(
 	// Stockage temporaire pour la deuxième date saisie
 	const secondDate = ref<Date | null>(null)
 	// Séparateur de plage
-	const rangeSeparator = ' - '
+	const rangeSeparator = DATE_PICKER_MESSAGES.RANGE_SEPARATOR
 
 	/**
 	 * Vérifie si une chaîne de caractères contient un séparateur de plage

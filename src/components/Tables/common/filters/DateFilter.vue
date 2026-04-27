@@ -2,7 +2,7 @@
 	import { computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
+	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	const { parseDate } = useDateFormat()
 
@@ -16,7 +16,7 @@
 			default: () => [],
 		},
 		filterValue: {
-			type: [String, Date, Object, null] as unknown as () => DateValue,
+			type: [String, Date, Object, null] as unknown as () => DateModelValue,
 			default: null,
 		},
 		inputConfig: {

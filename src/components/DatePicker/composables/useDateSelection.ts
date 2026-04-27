@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 /**
  * Composable pour gérer la sélection de dates dans les composants CalendarMode
@@ -101,7 +102,7 @@ export function useDateSelection(
 		}
 		else if (typeof input === 'string') {
 			// Mode plage de dates
-			const dates = input.split(' - ')
+			const dates = input.split(DATE_PICKER_MESSAGES.RANGE_SEPARATOR)
 			if (dates.length === 2) {
 				const startDate = parseDate(dates[0]!, format)
 				const endDate = parseDate(dates[1]!, format)

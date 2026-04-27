@@ -16,7 +16,7 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
-	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
+	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue } from '../types'
 
 	dayjs.extend(customParseFormat)
@@ -40,7 +40,7 @@
 		isOutlined?: boolean
 		isValidateOnBlur?: boolean
 		label: string
-		modelValue?: DateValue
+		modelValue?: DateModelValue
 		noIcon?: boolean
 		persistentHint?: boolean
 		placeholder?: string
@@ -77,11 +77,11 @@
 	})
 
 	const emit = defineEmits<{
-		(e: 'update:model-value', value: DateValue): void
+		(e: 'update:model-value', value: DateModelValue): void
 		(e: 'focus'): void
 		(e: 'blur'): void
 		(e: 'input', value: string): void
-		(e: 'date-selected', value: DateValue): void
+		(e: 'date-selected', value: DateModelValue): void
 	}>()
 
 	/**
@@ -576,7 +576,7 @@
 		return formatDate(date, returnFormat.value)
 	}
 
-	function emitModel(val: DateValue) {
+	function emitModel(val: DateModelValue) {
 		emit('update:model-value', val)
 	}
 
