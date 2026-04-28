@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import { VPagination } from 'vuetify/components'
 	import { usePagination } from 'vuetify/lib/components/VDataTable/composables/paginate.mjs'
 	import SySelect from '../Customs/Selects/SySelect/SySelect.vue'
 	import { useLocale } from 'vuetify'
