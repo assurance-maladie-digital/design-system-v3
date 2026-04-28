@@ -338,8 +338,8 @@
 	background-color: rgb(var(--v-theme-surface));
 
 	&--selected {
-		color: rgb(var(--v-theme-textOnDark));
 		background-color: rgb(var(--v-theme-primary));
+		color: rgb(var(--v-theme-textOnDark));
 	}
 
 	&:focus-visible {
@@ -357,14 +357,21 @@
 		transition: background-color 0.2s;
 	}
 
+	&:hover {
+		/* stylelint-disable-next-line custom-property-pattern */
+		color: rgb(var(--v-theme-colorOnPrimary))!important;
+	}
+
 	&:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-overlayOnLight), 0.2);
+		background-color: rgba(var(--v-theme-interactionDarkHover));
+		color: rgb(var(--v-theme-colorOnPrimary));
 	}
 
 	&--selected:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-overlayOnDark), 0.2);
+		background-color: rgba(var(--v-theme-interactionDarkPressed));
+		color: rgb(var(--v-theme-colorOnPrimary));
 	}
 }
 

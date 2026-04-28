@@ -315,74 +315,74 @@ export const ColorAlternatives: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const Interactive: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = ''
-				const colorDescription = 'Ces couleurs sont à utiliser pour les fonds des éléments interactifs de sélection (item de liste sélectionnable, carte sélectionnable,...)'
-				const displayEmptyColors = false
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'interactive-selection-enabled': cnamLightTheme.interactiveSelectionEnabled,
-					'interactive-selection-hover': cnamLightTheme.interactiveSelectionHover,
-					'interactive-selection-pressed': cnamLightTheme.interactiveSelectionPressed,
-					'interactive-selection-selected': cnamLightTheme.interactiveSelectionSelected,
-					'interactive-selection-hover-on-selected': cnamLightTheme.interactiveSelectionHoverOnSelected,
-					'interactive-selection-selected-accent': cnamLightTheme.interactiveSelectionSelectedAccent,
-					'interactive-selection-hover-on-selected-accent': cnamLightTheme.interactiveSelectionHoverOnSelectedAccent,
-					'interactive-selection-disabled': cnamLightTheme.interactiveSelectionDisabled,
-				}
-				const paColors = {
-					'interactive-selection-enabled': paLightTheme.interactiveSelectionEnabled,
-					'interactive-selection-hover': paLightTheme.interactiveSelectionHover,
-					'interactive-selection-pressed': paLightTheme.interactiveSelectionPressed,
-					'interactive-selection-selected': paLightTheme.interactiveSelectionSelected,
-					'interactive-selection-hover-on-selected': paLightTheme.interactiveSelectionHoverOnSelected,
-					'interactive-selection-selected-accent': paLightTheme.interactiveSelectionSelectedAccent,
-					'interactive-selection-hover-on-selected-accent': paLightTheme.interactiveSelectionHoverOnSelectedAccent,
-					'interactive-selection-disabled': paLightTheme.interactiveSelectionDisabled,
-				}
-				const apColors = {
-					'interactive-selection-enabled': apLightTheme.interactiveSelectionEnabled,
-					'interactive-selection-hover': apLightTheme.interactiveSelectionHover,
-					'interactive-selection-pressed': apLightTheme.interactiveSelectionPressed,
-					'interactive-selection-selected': apLightTheme.interactiveSelectionSelected,
-					'interactive-selection-hover-on-selected': apLightTheme.interactiveSelectionHoverOnSelected,
-					'interactive-selection-selected-accent': apLightTheme.interactiveSelectionSelectedAccent,
-					'interactive-selection-hover-on-selected-accent': apLightTheme.interactiveSelectionHoverOnSelectedAccent,
-					'interactive-selection-disabled': apLightTheme.interactiveSelectionDisabled,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-					displayEmptyColors,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  :displayEmptyColors="displayEmptyColors"
-                  colorCategory="interactive"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
+// export const Interactive: StoryObj = {
+// 	render: () => {
+// 		return {
+// 			components: { ColorDisplay },
+// 			setup() {
+// 				const colorTitle = ''
+// 				const colorDescription = 'Ces couleurs sont à utiliser pour les fonds des éléments interactifs de sélection (item de liste sélectionnable, carte sélectionnable,...)'
+// 				const displayEmptyColors = false
+// 				const colorTitleLevel = 3
+// 				const cnamColors = {
+// 					'interactive-selection-enabled': cnamLightTheme.interactiveSelectionEnabled,
+// 					'interactive-selection-hover': cnamLightTheme.interactiveSelectionHover,
+// 					'interactive-selection-pressed': cnamLightTheme.interactiveSelectionPressed,
+// 					'interactive-selection-selected': cnamLightTheme.interactiveSelectionSelected,
+// 					'interactive-selection-hover-on-selected': cnamLightTheme.interactiveSelectionHoverOnSelected,
+// 					'interactive-selection-selected-accent': cnamLightTheme.interactiveSelectionSelectedAccent,
+// 					'interactive-selection-hover-on-selected-accent': cnamLightTheme.interactiveSelectionHoverOnSelectedAccent,
+// 					'interactive-selection-disabled': cnamLightTheme.interactiveSelectionDisabled,
+// 				}
+// 				const paColors = {
+// 					'interactive-selection-enabled': paLightTheme.interactiveSelectionEnabled,
+// 					'interactive-selection-hover': paLightTheme.interactiveSelectionHover,
+// 					'interactive-selection-pressed': paLightTheme.interactiveSelectionPressed,
+// 					'interactive-selection-selected': paLightTheme.interactiveSelectionSelected,
+// 					'interactive-selection-hover-on-selected': paLightTheme.interactiveSelectionHoverOnSelected,
+// 					'interactive-selection-selected-accent': paLightTheme.interactiveSelectionSelectedAccent,
+// 					'interactive-selection-hover-on-selected-accent': paLightTheme.interactiveSelectionHoverOnSelectedAccent,
+// 					'interactive-selection-disabled': paLightTheme.interactiveSelectionDisabled,
+// 				}
+// 				const apColors = {
+// 					'interactive-selection-enabled': apLightTheme.interactiveSelectionEnabled,
+// 					'interactive-selection-hover': apLightTheme.interactiveSelectionHover,
+// 					'interactive-selection-pressed': apLightTheme.interactiveSelectionPressed,
+// 					'interactive-selection-selected': apLightTheme.interactiveSelectionSelected,
+// 					'interactive-selection-hover-on-selected': apLightTheme.interactiveSelectionHoverOnSelected,
+// 					'interactive-selection-selected-accent': apLightTheme.interactiveSelectionSelectedAccent,
+// 					'interactive-selection-hover-on-selected-accent': apLightTheme.interactiveSelectionHoverOnSelectedAccent,
+// 					'interactive-selection-disabled': apLightTheme.interactiveSelectionDisabled,
+// 				}
+// 				const apColors2026 = {}
+// 				return {
+// 					cnamColors,
+// 					paColors,
+// 					apColors,
+// 					apColors2026,
+// 					colorTitle,
+// 					colorDescription,
+// 					colorTitleLevel,
+// 					displayEmptyColors,
+// 				}
+// 			},
+// 			template: `
+//               <ColorDisplay
+//                   :displayEmptyColors="displayEmptyColors"
+//                   colorCategory="interactive"
+//                   :cnamColors="cnamColors"
+//                   :paColors="paColors"
+//                   :apColors="apColors"
+//                   :apColors2026="apColors2026"
+//                   :colorTitle="colorTitle"
+//                   :colorDescription="colorDescription"
+//                   :colorTitleLevel="colorTitleLevel"
+//               />
+//             `,
+// 		}
+// 	},
+// 	tags: ['!dev'],
+// }
 
 export const ColorBaseSection = {
 	render() {
@@ -401,13 +401,13 @@ export const AccentSection = {
 		], 'ap2026'))
 	},
 }
-export const InteractiveSection = {
-	render() {
-		return h(createSection('Interactive', [
-			Interactive,
-		], 'ap2026'))
-	},
-}
+// export const InteractiveSection = {
+// 	render() {
+// 		return h(createSection('Interactive', [
+// 			Interactive,
+// 		], 'ap2026'))
+// 	},
+// }
 
 export const BorderBase: StoryObj = {
 	render: () => {

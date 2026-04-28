@@ -12,7 +12,6 @@ export const semanticTokens = {
 			onPrimaryVariant: baseTokens.color.white.base,
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
-			onSurface: baseTokens.color.grey.darken60,
 			onSurfaceVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.blue.base,
@@ -26,7 +25,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.blue.lighten90,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackground: baseTokens.color.grey.darken60,
 			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
@@ -40,7 +38,6 @@ export const semanticTokens = {
 			onInfoVariant: baseTokens.color.blue.darken20,
 			onSuccess: baseTokens.color.grey.darken60,
 			onSuccessVariant: baseTokens.color.grey.darken60,
-			onWarning: baseTokens.color.grey.darken60,
 			onWarningVariant: baseTokens.color.yellow.darken60,
 			success: baseTokens.color.green.base,
 			successVariant: baseTokens.color.green.lighten80,
@@ -70,7 +67,6 @@ export const semanticTokens = {
 			onPrimaryVariant: baseTokens.color.white.base,
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
-			onSurface: baseTokens.color.grey.darken60,
 			onSurfaceVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.cyan.darken20,
@@ -84,7 +80,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.cyan.lighten97,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackground: baseTokens.color.grey.darken60,
 			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
@@ -98,7 +93,6 @@ export const semanticTokens = {
 			onInfoVariant: baseTokens.color.parma.darken60,
 			onSuccess: baseTokens.color.white.base,
 			onSuccessVariant: baseTokens.color.forestGreen.darken60,
-			onWarning: baseTokens.color.grey.darken60,
 			onWarningVariant: baseTokens.color.yellow.darken60,
 			success: baseTokens.color.forestGreen.base,
 			successVariant: baseTokens.color.forestGreen.lighten90,

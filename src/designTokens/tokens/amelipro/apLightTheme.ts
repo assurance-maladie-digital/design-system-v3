@@ -20,20 +20,8 @@ export const apLightTheme = {
 	risquePro: baseTokens.color.red.base,
 	light: baseTokens.color.grey.lighten60,
 	dark: baseTokens.color.grey.darken80,
-	onBackground: apSemanticTokens.colors.background.surface,
-	onSurfaceAlt: apSemanticTokens.colors.background.surfaceAlt,
-	onSurface: apSemanticTokens.colors.background.surface,
-	onWarning: apSemanticTokens.colors.background.warning,
-	overlayFullpage: apSemanticTokens.colors.overlay.fullpage,
 	overlayOnDark: apSemanticTokens.colors.overlay.onDark,
 	overlayOnLight: apSemanticTokens.colors.overlay.onLight,
-	interactiveSelectionEnabled: apSemanticTokens.colors.interactive.selectionEnabled,
-	interactiveSelectionHover: apSemanticTokens.colors.interactive.selectionHover,
-	interactiveSelectionPressed: apSemanticTokens.colors.interactive.selectionPressed,
-	interactiveSelectionSelected: apSemanticTokens.colors.interactive.selectionSelected,
-	interactiveSelectionHoverOnSelected: apSemanticTokens.colors.interactive.selectionHoverOnSelected,
-	interactiveSelectionSelectedAccent: apSemanticTokens.colors.interactive.selectionSelectedAccent,
-	interactiveSelectionHoverOnSelectedAccent: apSemanticTokens.colors.interactive.selectionHoverOnSelectedAccent,
 	interactiveSelectionDisabled: apSemanticTokens.colors.interactive.selectionDisabled,
 	backgroundMain: apSemanticTokens.colors.background.main,
 	backgroundSurface: apSemanticTokens.colors.background.surface,
@@ -103,6 +91,8 @@ export const apLightTheme = {
 	iconDisabled: apSemanticTokens.colors.icon.disabled,
 	iconDisabledOnDark: apSemanticTokens.colors.icon.disabledOnDark,
 
+	/// NEW ///
+
 	colorBorder: baseTokens.color.cyan.darken20,
 	colorBorderVariant: baseTokens.color.grey.lighten40,
 	colorDisabled: baseTokens.color.grey.lighten80,
@@ -156,22 +146,9 @@ export const apLightTheme = {
 	interactionLightenPressed: baseTokens.color.white.alpha38,
 }
 
-//     onBackground: backgroundBackground,
-//     onSurfaceAlt: colorSurfaceDim,
-//     onSurface: colorSurface,
-//     onWarning: feedbackWarning,
-//
-//     overlayFullpage: colorOverlay,
-//     overlayOnDark: interactionDarkenHover,
-//     overlayOnLight: interactionLightenHover,
-//
-//     interactiveSelectionEnabled: interactionLightenEnabled,
-//     interactiveSelectionHover: interactionDarkHover,
-//     interactiveSelectionPressed: interactionDarkPressed,
-//     interactiveSelectionSelected: interactionDarkHover,
-//     interactiveSelectionHoverOnSelected: interactionDarkPressed,
-//     interactiveSelectionSelectedAccent: colorPrimary,
-//     interactiveSelectionHoverOnSelectedAccent: colorPrimaryVariant,
+//     overlayOnDark: interactionDarkHover,
+//     overlayOnLight: interactionLightHover,
+
 //     interactiveSelectionDisabled: colorDisabled,
 //
 //     backgroundMain: backgroundBackground,
