@@ -7,6 +7,7 @@ import {
     AccessibilityGuideLayout,
     CriteriaSection,
     CriteriaCard,
+    AuditSection
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={DialogBoxStories} />
@@ -14,10 +15,12 @@ import {
 	componentName="DialogBox"
 	iconSrc={AccessibilityIcon}
 >
-    <div class="mt-2">
-        <p>Rapport d’audit manuel : <a href="/audits/DialogBox.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></p>
-        <p style={{color: 'grey', fontSize: '14px', marginTop: '0px'}}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/798" target="_blank" style={{color: '#0C41BD'}}>issue #798</a>)</p>
-    </div>
+    <AuditSection>
+        <div>Rapport d’audit manuel : <a href="/audits/DialogBox.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></div>
+        <div style={{color: 'grey', fontSize: '14px', marginTop: '0px'}}>
+            Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/798" target="_blank" style={{color: '#0C41BD'}}>issue #798</a>)
+        </div>
+    </AuditSection>
     <CriteriaSection>
         <CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
             <ul>
