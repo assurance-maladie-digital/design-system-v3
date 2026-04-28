@@ -92,7 +92,17 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 				textInputValue.value = ''
 				return
 			}
-			if (typeof newValue === 'string') {
+			if (Array.isArray(newValue) && newValue.length === 2) {
+				// Mode plage : afficher "startDate - endDate" dans l'input
+				const startStr = dateFormatReturn
+					? formatDate(parseDate(newValue[0]!, dateFormatReturn), format)
+					: newValue[0]!
+				const endStr = dateFormatReturn
+					? formatDate(parseDate(newValue[1]!, dateFormatReturn), format)
+					: newValue[1]!
+				textInputValue.value = `${startStr}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${endStr}`
+			}
+			else if (typeof newValue === 'string') {
 				if (dateFormatReturn) {
 					const date = parseDate(newValue, dateFormatReturn)
 					if (date) {
@@ -129,12 +139,20 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		}
 
 		if (selectedDates.value) {
-			const firstDate = Array.isArray(selectedDates.value)
-				? selectedDates.value[0]
-				: selectedDates.value
-			if (firstDate) {
-				const formattedForInput = formatDate(firstDate, format)
-				textInputValue.value = formattedForInput
+			if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
+				const startDate = selectedDates.value[0]
+				const endDate = selectedDates.value[selectedDates.value.length - 1]
+				if (startDate && endDate) {
+					textInputValue.value = `${formatDate(startDate, format)}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(endDate, format)}`
+				}
+			}
+			else {
+				const firstDate = Array.isArray(selectedDates.value)
+					? selectedDates.value[0]
+					: selectedDates.value
+				if (firstDate) {
+					textInputValue.value = formatDate(firstDate, format)
+				}
 			}
 			if (Array.isArray(formattedDate.value)) {
 				// Pour les plages, formater avec le séparateur standard " - "

@@ -435,7 +435,7 @@
 				if (Array.isArray(newValue) && props.displayRange && newValue.length >= 2 && props.noCalendar) {
 					// Cas spécifique noCalendar + displayRange : conserver la chaîne de plage complète
 					const start = newValue[0]
-					const end = newValue[1]
+					const end = newValue[newValue.length - 1]
 					if (start && end) {
 						textInputValue.value = `${formatDate(start, props.format)} - ${formatDate(end, props.format)}`
 					}

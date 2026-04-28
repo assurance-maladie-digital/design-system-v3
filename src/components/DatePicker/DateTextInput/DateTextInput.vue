@@ -688,12 +688,31 @@
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
+				// Guard isFormatting to prevent the modelValue watcher from
+				// rewriting inputValue in reaction to our own emit.
+				isFormatting.value = true
 				emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
 			}
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
 					const dateRangeParts = inputValue.value.split(' - ')
-					if (dateRangeParts.length === 2) emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+					if (dateRangeParts.length === 2) {
+						const sd = dayjs(dateRangeParts[0]!, displayFormat.value, true)
+						const ed = dayjs(dateRangeParts[1]!, displayFormat.value, true)
+						// Guard isFormatting to prevent the modelValue watcher from
+						// rewriting inputValue in reaction to our own emit.
+						isFormatting.value = true
+						if (sd.isValid() && ed.isValid()) {
+							const emittedRange: [string, string] = [
+								returnFormat.value !== displayFormat.value ? sd.format(returnFormat.value) : dateRangeParts[0]!,
+								returnFormat.value !== displayFormat.value ? ed.format(returnFormat.value) : dateRangeParts[1]!,
+							]
+							emitModel(emittedRange)
+						}
+						else {
+							emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+						}
+					}
 					else emitModel(inputValue.value)
 				}
 				else emitModel(inputValue.value)
@@ -709,20 +728,32 @@
 		}
 
 		// autoClamp au blur
-		if (props.autoClamp) inputValue.value = clampIfNeeded(inputValue.value)
+		if (props.autoClamp) {
+			const clamped = clampIfNeeded(inputValue.value)
+			if (clamped !== inputValue.value) {
+				inputValue.value = clamped
 
-		// Sync model après clamp
-		if (isRange.value) {
-			const [startDate, endDate] = parseRangeInput(inputValue.value)
-			if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
-			else if (startDate) emit('date-selected', toReturnFormat(startDate))
-		}
-		else {
-			const parsedDate = parseDate(inputValue.value, displayFormat.value)
-			if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
+				// Sync model après clamp uniquement si la valeur a changé
+				isFormatting.value = true
+				if (isRange.value) {
+					const [startDate, endDate] = parseRangeInput(inputValue.value)
+					if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
+					else if (startDate) emit('date-selected', toReturnFormat(startDate))
+				}
+				else {
+					const parsedDate = parseDate(inputValue.value, displayFormat.value)
+					if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
+				}
+			}
 		}
 
 		runRules(inputValue.value)
+
+		// Release isFormatting after the current microtask so that
+		// the modelValue watcher (triggered synchronously by emitModel)
+		// stays blocked, but future external changes are allowed.
+		await nextTick()
+		isFormatting.value = false
 	}
 
 	/**
