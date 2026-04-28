@@ -157,7 +157,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.selectedDates).not.toBeNull()
 
 		const input = wrapper.find('input')
-		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - ')
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - 10/01/2025')
 	})
 
 	it('generates all intermediate dates when selecting a range in range mode', async () => {
