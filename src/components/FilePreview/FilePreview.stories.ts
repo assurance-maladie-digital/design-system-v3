@@ -33,6 +33,21 @@ const meta: Meta = {
 			},
 			description: 'Configuration des attributs pour les balises `object` et `img`. Par défaut, l\'image a une description vide.',
 		},
+		readOnly: {
+			description: 'Active le mode lecture seule pour les PDFs. Remplace la balise `<object>` native (avec sa barre d\'outils navigateur) par un visualiseur canvas personnalisé sans contrôle de téléchargement ni d\'édition.',
+			control: {
+				type: 'boolean',
+			},
+			table: {
+				category: 'props',
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
 		locales: {
 			description: 'Traductions',
 			control: {
@@ -196,6 +211,50 @@ onMounted(() => {
 	fetch('https://picsum.photos/seed/picsum/750/350')
 		.then(res => res.blob())
 		.then(blob => file.value = blob)
+})`,
+			},
+		],
+	},
+}
+
+export const ReadOnly: Story = {
+	render: args => ({
+		components: { FilePreview },
+		template: `
+			<div>
+				<input type="file" accept="application/pdf" @change="file = $event.target.files[0]" style="margin-bottom: 12px; display: block;" />
+				<FilePreview v-bind="args" :file="file" :read-only="true" />
+			</div>
+		`,
+		setup: () => {
+			const file = ref<File | undefined>()
+			return { args, file }
+		},
+	}),
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<FilePreview :file="pdfFile" :read-only="true" />
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+import { ref } from 'vue'
+import { FilePreview } from '@cnamts/synapse'
+
+const pdfFile = ref<File | undefined>()
+
+// Exemple : PDF reçu depuis une API
+onMounted(() => {
+	fetch('/api/courrier/generate')
+		.then(res => res.blob())
+		.then(blob => pdfFile.value = new File([blob], 'courrier.pdf', { type: 'application/pdf' }))
 })`,
 			},
 		],

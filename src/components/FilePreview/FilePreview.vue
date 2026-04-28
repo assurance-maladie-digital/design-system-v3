@@ -3,9 +3,11 @@
 	import { computed, onUnmounted, ref, watch } from 'vue'
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
+	import SyPdfViewer from './SyPdfViewer.vue'
 
 	const props = withDefaults(defineProps<{
 		file?: File | Blob
+		readOnly?: boolean
 		options?: {
 			pdf?: Record<string, string>
 			image?: Record<string, string>
@@ -13,6 +15,7 @@
 		locales?: typeof defaultLocales
 	}>(), {
 		file: undefined,
+		readOnly: false,
 		options: undefined,
 		locales: () => defaultLocales,
 	})
@@ -41,15 +44,25 @@
 		v-if="file"
 		class="sy-file-preview"
 	>
-		<object
-			v-if="isPdf"
-			:data="fileURL"
-			v-bind="filePreviewOptions.pdf"
-			type="application/pdf"
-			@load="revokeFileURL"
-		>
-			<p class="mb-0">{{ locales.previewNotAvailable }}</p>
-		</object>
+		<template v-if="isPdf">
+			<SyPdfViewer
+				v-if="readOnly"
+				:file-u-r-l="fileURL"
+				:height="filePreviewOptions.pdf.height"
+				:toolbar-color="filePreviewOptions.pdf.toolbarColor"
+				:canvas-background="filePreviewOptions.pdf.canvasBackground"
+				:locales="locales"
+			/>
+			<object
+				v-else
+				:data="fileURL"
+				v-bind="filePreviewOptions.pdf"
+				type="application/pdf"
+				@load="revokeFileURL"
+			>
+				<p class="mb-0">{{ locales.previewNotAvailable }}</p>
+			</object>
+		</template>
 
 		<img
 			v-else-if="isImage"

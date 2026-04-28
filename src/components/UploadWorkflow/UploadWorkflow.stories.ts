@@ -65,6 +65,19 @@ const meta: Meta<typeof UploadWorkflow> = {
 				},
 			},
 		},
+		'readOnly': {
+			description: 'Active le mode lecture seule sur la prévisualisation PDF. Remplace le visualiseur natif du navigateur (avec sa barre d\'outils) par un rendu canvas sans possibilité de téléchargement ni d\'édition.',
+			control: 'boolean',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
 		'sectionTitle': {
 			description: 'Le titre de la section.',
 			control: 'text',
@@ -457,6 +470,65 @@ export const WithPreviewStep: Story = {
 
 	function onPreview(fileItem: unknown) {
 		console.log('preview', fileItem)
+	}
+</script>`,
+			},
+		],
+	},
+}
+
+export const WithPreviewStepReadOnly: Story = {
+	args: {
+		'modelValue': [],
+		'uploadList': [
+			{
+				id: 'ID',
+				title: 'Courrier à destination de l\'assuré',
+			},
+		],
+		'vuetifyOptions': {
+			fileUpload: {
+				allowedExtensions: ['pdf'],
+			},
+		},
+		'onUpdate:modelValue': fn(),
+		'onError': fn(),
+		'onPreview': fn(),
+		'showFilePreview': true,
+		'readOnly': true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<UploadWorkflow
+		v-model="files"
+		:upload-list="uploadList"
+		:vuetify-options="options"
+		:show-file-preview="true"
+		:read-only="true"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { ref } from 'vue'
+	import { UploadWorkflow } from '@cnamts/synapse'
+
+	const files = ref([])
+	const uploadList = [
+		{
+			id: 'ID',
+			title: 'Courrier à destination de l\\'assuré',
+		},
+	]
+
+	const options = {
+		fileUpload: {
+			allowedExtensions: ['pdf'],
+		},
 	}
 </script>`,
 			},

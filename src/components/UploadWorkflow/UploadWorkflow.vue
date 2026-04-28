@@ -24,6 +24,7 @@
 				uploadList: UploadItem[]
 				sectionTitle?: string
 				showFilePreview?: boolean
+				readOnly?: boolean
 				infoText?: string
 				headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 				locales?: typeof defaultLocales
@@ -33,6 +34,7 @@
 			uploadList: () => [],
 			sectionTitle: undefined,
 			showFilePreview: false,
+			readOnly: false,
 			infoText: '',
 			headingLevel: 4,
 			locales: () => defaultLocales,
@@ -224,6 +226,7 @@
 				v-if="showFilePreview"
 				:options="options.filePreview"
 				:file="uploadedFile"
+				:read-only="readOnly"
 			/>
 		</DialogBox>
 
@@ -238,6 +241,7 @@
 			<FilePreview
 				:options="options.filePreview"
 				:file="fileToPreview"
+				:read-only="readOnly"
 			/>
 		</DialogBox>
 	</div>
