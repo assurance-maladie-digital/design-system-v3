@@ -243,7 +243,7 @@
 
 .sy-pdf-viewer__canvas {
 	display: block;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	box-shadow: 0 2px 8px rgb(0 0 0 / 40%);
 }
 
 .sy-pdf-viewer__loading {
