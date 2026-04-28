@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { VList } from 'vuetify/components'
+import { nextTick } from 'vue'
 import SySelect from '../SySelect.vue'
 
 type ItemType = {
@@ -135,6 +136,26 @@ describe('SySelect.vue', () => {
 		const message = wrapper.find('.v-messages__message')
 		expect(message.exists()).toBe(true)
 		expect(message.text()).toContain('Error 1')
+
+		wrapper.unmount()
+	})
+
+	it('keeps the label active when a validation error is displayed', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+				label: 'Option',
+				required: true,
+			},
+			attachTo: document.body,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- exposed method is not part of the inferred public instance type
+		const isValid = await (wrapper.vm as any).validateOnSubmit()
+		await nextTick()
+
+		expect(isValid).toBe(false)
+		expect(wrapper.find('.v-field').classes()).toContain('v-field--active')
 
 		wrapper.unmount()
 	})

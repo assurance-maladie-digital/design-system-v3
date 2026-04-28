@@ -14,7 +14,7 @@ export interface FieldValidationProps {
 	disableErrorHandling?: boolean
 	// When true (Vuetify native mode), the controller should not handle errors/successes
 	useVuetifyValidation?: boolean
-	label: string
+	label?: string
 	rules?: VuetifyValidationRule[]
 	customRules?: SyValidationRule[]
 	customWarningRules?: SyValidationRule[]
@@ -61,7 +61,7 @@ export function useValidation(params: {
 	isValidateOnBlur: Ref<boolean>
 	showSuccessMessages: Ref<boolean>
 	disableErrorHandling: Ref<boolean>
-	label: Ref<string>
+	label: Ref<string | undefined>
 	focused: Ref<boolean>
 	errorMessages?: Ref<string[] | null | undefined>
 	warningMessages?: Ref<string[] | null | undefined>
@@ -176,10 +176,13 @@ export function useValidation(params: {
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
-	const hasSuccess = computed(() => (
-		(innerSuccesses.value.length > 0 || (params.successMessages?.value || []).length > 0)
-		&& !hasError.value && !hasWarning.value
-	) || params.hasSuccessProp?.value)
+	const hasSuccess = computed(() =>
+		(
+			(innerSuccesses.value.length > 0 || (params.successMessages?.value?.length ?? 0) > 0)
+			&& !hasError.value
+			&& !hasWarning.value
+		) || params.hasSuccessProp?.value,
+	)
 
 	return {
 		errors,

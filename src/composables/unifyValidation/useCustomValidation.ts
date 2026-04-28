@@ -15,7 +15,7 @@ export function useCustomValidation(
 	warnings: Ref<string[]>,
 	successes: Ref<string[]>,
 	showSuccessMessages: Ref<boolean>,
-	label: Ref<string>,
+	label: Ref<string | undefined>,
 	focused: Ref<boolean>,
 	isValidateOnBlur: Ref<boolean>,
 	disableErrorHandling: Ref<boolean>,
