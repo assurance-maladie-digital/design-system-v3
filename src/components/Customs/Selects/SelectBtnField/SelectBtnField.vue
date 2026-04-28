@@ -359,7 +359,7 @@
 
 	&:hover {
 		/* stylelint-disable-next-line custom-property-pattern */
-		color: rgb(var(--v-theme-colorOnPrimary))!important;
+		color: rgb(var(--v-theme-colorOnPrimary)) !important;
 	}
 
 	&:hover::before {
