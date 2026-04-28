@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { VList } from 'vuetify/components'
 import { nextTick } from 'vue'
 import SySelect from '../SySelect.vue'
@@ -562,6 +562,80 @@ describe('SySelect.vue', () => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
 			expect(instance.hasError).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('valide immédiatement quand isValidateOnBlur est false', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							message: 'Test error message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+
+			await wrapper.setProps({ modelValue: '1' })
+
+			await vi.waitUntil(() => instance.hasError === true)
+			expect(wrapper.find('.v-messages').text()).toContain('Test error message')
+
+			await wrapper.setProps({ modelValue: '2' })
+
+			await vi.waitUntil(() => instance.hasError === false)
+			expect(wrapper.find('.v-messages').text()).not.toContain('Test error message')
+
+			wrapper.unmount()
+		})
+
+		it('masque le message de succes mais conserve l\'etat de succes quand showSuccessMessages est false', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					showSuccessMessages: false,
+					customSuccessRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							successMessage: 'Test success message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasSuccess).toBe(false)
+
+			await wrapper.setProps({ modelValue: '2' })
+
+			await vi.waitUntil(() => instance.hasSuccess === true)
+			expect(wrapper.find('.success-field').exists()).toBe(true)
+			expect(wrapper.findAll('.v-messages__message')).toHaveLength(0)
+			expect(wrapper.text()).not.toContain('Test success message')
 
 			wrapper.unmount()
 		})
