@@ -91,7 +91,7 @@ const props = withDefaults(
         }
     )
 ```
-### □ Appeler le composable `useValidation` en fesant passer en tant que ref les props nécessaires.
+### □ Appeler le composable `useValidation` en faisant passer en tant que ref les props nécessaires.
 ```typescript
 	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
         ... // params sous forme de ref

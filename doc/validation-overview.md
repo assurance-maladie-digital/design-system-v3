@@ -166,6 +166,6 @@ flowchart TD
 | SyForm | Registre et coordinateur de validation de formulaire | `components/Customs/SyForm/` |
 | **useValidation** | Composable principal retournant l'état de validation | `composables/unifyValidation/useValidation.ts` |
 | **ValidationRule** | Définition d'une contrainte de validation | `composable/rules/useFieldValidation.ts` |
-| **Token** | Identifiant de validation pour gestion des race conditions | `composable/validation/useValidation.ts` |
+| **Token** | Identifiant pour éviter les validations concurrentes (race conditions) | `composable/validation/useValidation.ts` |
 | **Async** | Support des validations retournant Promise | Règles custom avec validate async |
 | **3 niveaux** | Erreur bloquante, avertissement informatif, confirmation de succès | `composable/validation/useValidation.ts`|

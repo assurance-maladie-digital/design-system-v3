@@ -86,7 +86,7 @@ sequenceDiagram
 
 
 **Fichiers source associés :**
-- [`useValidation.ts`](src/composables/validation/useValidation.ts) - Gestion des tokens et race conditions
+- [`useValidation.ts`](src/composables/validation/useValidation.ts) - Gestion des tokens et validations concurrentes (race conditions)
 - [`useFieldValidation.ts`](src/composables/rules/useFieldValidation.ts) - Définition des règles custom
 
 ---
