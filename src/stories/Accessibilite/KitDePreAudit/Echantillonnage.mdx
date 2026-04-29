@@ -14,7 +14,6 @@ import '../../styles/shared.css';
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
   .section-container {
@@ -22,7 +21,6 @@ import '../../styles/shared.css';
     padding: 1.5rem;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
   .section-container h2 {
@@ -45,7 +43,6 @@ import '../../styles/shared.css';
   }
   
   .pages-list {
-    background-color: #f0f7ff;
     border-radius: 8px;
     padding: 1.5rem;
     margin: 1.5rem 0;
@@ -79,14 +76,6 @@ import '../../styles/shared.css';
     position: relative;
   }
   
-  .exemption-card {
-    background-color: #f8f9fa;
-    border-left: 4px solid #0c419a;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-    border-radius: 4px;
-  }
-  
   .exemption-item {
     margin-bottom: 0.75rem;
     padding-left: 1.5rem;
@@ -108,18 +97,62 @@ import '../../styles/shared.css';
     font-weight: 500;
   }
   
+  .exemption-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .exemption-card {
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .exemption-card strong {
+    display: block;
+    color: #0c419a;
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  .exemption-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #3d3d3d;
+  }
+
   .derogation-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
     margin-top: 1.5rem;
   }
-  
+
+  .derogation-card--full {
+    grid-column: 1 / -1;
+  }
+
   .derogation-card {
-    background-color: white;
+    background-color: #fff;
     border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eaeaea;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .derogation-card h4 {
+    color: #0c419a;
+    margin-top: 0;
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  .derogation-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #3d3d3d;
   }
 
   h2 {
@@ -127,6 +160,14 @@ import '../../styles/shared.css';
     color: #0c419a !important;
     font-size: 1.6rem !important;
   }
+
+      .alert {
+      background-color: #e3e8f2;
+      border-left: 4px solid #0c419a;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
 `
 }
 </style>
@@ -137,7 +178,7 @@ import '../../styles/shared.css';
 Si vous êtes au démarrage de votre projet, il est difficile d'établir l'échantillonnage. Utilisez donc le kit de pré-audit de manière systématique sur chaque nouveau développement afin d'éviter une dette d'accessibilité lors de l'échantillonnage. </p>
 </div>
 
-<div className="info-card">
+<div className="alert">
   <p><span className="highlight">Le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr></span> exige que l'audit d'accessibilité soit effectué sur un ensemble représentatif de pages et des fonctionnalités de votre service. Il serait difficile et très chronophage de tester l'intégralité des contenus. La définition d'un périmètre est un compromis pertinent pour auditer efficacement un service et respecter les exigences légales.</p>
   
   <p><strong>L'objectif est donc que vous déterminiez quelles pages seront concernées par l'audit (et ce pré-audit).</strong></p>
@@ -147,7 +188,7 @@ Si vous êtes au démarrage de votre projet, il est difficile d'établir l'écha
   <h2>📝 Pages à auditer</h2>
   
   <div className="pages-list">
-    <h3>Pages obligatoires</h3>
+    <h3><strong>Pages obligatoires</strong></h3>
     <ul>
       <li><strong>Accueil</strong> - Point d'entrée principal du service</li>
       <li><strong>Contact</strong> - Informations permettant de contacter l'organisme</li>
@@ -164,29 +205,49 @@ Si vous êtes au démarrage de votre projet, il est difficile d'établir l'écha
   </div>
 </div>
 
-<div className="section-container">
-  <h2>🚫 Exemptions</h2>
+<div>
+  <h2>🚫 Contenus exemptés de l'obligation d'accessibilité :</h2>
   
-  <div className="exemption-card">
-    <p><strong>Contenus exemptés de l'obligation d'accessibilité :</strong></p>
-    
-    <div className="exemption-item"><strong>Fichiers bureautiques anciens</strong> - Formats publiés avant le 23 septembre 2018, sauf s'ils sont nécessaires à l'accomplissement d'une démarche administrative.</div>
-    
-    <div className="exemption-item"><strong>Contenus audio/vidéo préenregistrés</strong> - Y compris ceux comprenant des composants interactifs, publiés avant le 23 septembre 2020.</div>
-    
-    <div className="exemption-item"><strong>Contenus audio/vidéo en direct</strong> - Y compris ceux comprenant des composants interactifs.</div>
-    
-    <div className="exemption-item"><strong>Cartes et services de cartographie</strong> - Sous réserve que les informations essentielles soient fournies sous une forme numérique accessible pour les cartes de localisation ou d'itinéraire.</div>
-    
-    <div className="exemption-item"><strong>Contenus de tiers</strong> - Qui ne sont ni financés ni développés par l'organisme concerné et qui ne sont pas sous son contrôle.</div>
-    
-    <div className="exemption-item"><strong>Collections patrimoniales</strong> - Qui ne peuvent être rendues totalement accessibles en raison :</div>
-    <div className="exemption-item" style={{paddingLeft: '2.5rem'}}>• De l'incompatibilité des exigences avec la préservation ou l'authenticité de la reproduction.</div>
-    <div className="exemption-item" style={{paddingLeft: '2.5rem'}}>• De l'indisponibilité de solutions automatisées et économiques pour la transcription.</div>
-    
-    <div className="exemption-item"><strong>Intranets et extranets anciens</strong> - Publiés avant le 23 septembre 2019, jusqu'à révision en profondeur.</div>
-    
-    <div className="exemption-item"><strong>Contenus non essentiels ou archivés</strong> - Sites et applications qui ne sont ni nécessaires à l'accomplissement d'une démarche administrative active ni mis à jour après le 23 septembre 2019.</div>
+  <div className="exemption-grid">
+    <div className="exemption-card">
+      <strong>📄 Fichiers bureautiques anciens</strong>
+      <p>Formats publiés avant le 23 septembre 2018, sauf s'ils sont nécessaires à l'accomplissement d'une démarche administrative.</p>
+    </div>
+
+    <div className="exemption-card">
+      <strong>🎬 Contenus audio/vidéo préenregistrés</strong>
+      <p>Y compris ceux comprenant des composants interactifs, publiés avant le 23 septembre 2020.</p>
+    </div>
+
+    <div className="exemption-card">
+      <strong>📡 Contenus audio/vidéo en direct</strong>
+      <p>Y compris ceux comprenant des composants interactifs.</p>
+    </div>
+
+    <div className="exemption-card">
+      <strong>🗺️ Cartes et services de cartographie</strong>
+      <p>Sous réserve que les informations essentielles soient fournies sous une forme numérique accessible pour les cartes de localisation ou d'itinéraire.</p>
+    </div>
+
+    <div className="exemption-card">
+      <strong>🤝 Contenus de tiers</strong>
+      <p>Qui ne sont ni financés ni développés par l'organisme concerné et qui ne sont pas sous son contrôle.</p>
+    </div>
+
+    <div className="exemption-card">
+      <strong>🏛️ Collections patrimoniales</strong>
+      <p>Qui ne peuvent être rendues totalement accessibles en raison de l'incompatibilité des exigences avec la préservation ou l'authenticité de la reproduction, ou de l'indisponibilité de solutions automatisées et économiques pour la transcription.</p>
+    </div>
+
+    <div className="exemption-card">
+      <strong>🏢 Intranets et extranets anciens</strong>
+      <p>Publiés avant le 23 septembre 2019, jusqu'à révision en profondeur.</p>
+    </div>
+
+    <div className="exemption-card">
+      <strong>📦 Contenus non essentiels ou archivés</strong>
+      <p>Sites et applications qui ne sont ni nécessaires à l'accomplissement d'une démarche administrative active ni mis à jour après le 23 septembre 2019.</p>
+    </div>
   </div>
 </div>
 
@@ -211,7 +272,7 @@ Si vous êtes au démarrage de votre projet, il est difficile d'établir l'écha
       <p>L'absence de priorité, le manque de temps ou de connaissance <strong>ne sont pas</strong> des circonstances légitimes de dérogations.</p>
     </div>
     
-    <div className="derogation-card">
+    <div className="derogation-card derogation-card--full">
       <h4>✅ Procédure</h4>
       <p>Cette dérogation doit être justifiée, documentée et nécessite un accord auprès du comité de gouvernance de l'accessibilité numérique (en attendant sa création, c'est le Studio Design qui en a le mandat).</p>
       <p>Des solutions alternatives doivent être proposées pour garantir un accès maximal aux utilisateurs en situation de handicap.</p>
