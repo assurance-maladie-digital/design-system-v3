@@ -413,13 +413,13 @@ export const ComponentsList: StoryObj = {
 						img: '/components/rating-picker.svg',
 						category: 'Feedback',
 					},
-                    {
-                        title: 'FilterSideBar',
-                        description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
-                        link: '/?path=/docs/composants-filtres-filterssidebar--docs',
-                        img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
-                        category: 'Filtres',
-                    },
+					{
+						title: 'FilterSideBar',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
 				]
 
 				const categoryOrder = [
@@ -431,7 +431,7 @@ export const ComponentsList: StoryObj = {
 					'Tableaux',
 					'Données',
 					'Feedback',
-                    'Filtres'
+					'Filtres',
 				]
 
 				const apComponents = [
@@ -450,7 +450,7 @@ export const ComponentsList: StoryObj = {
 					'SyRadioGroup',
 					'SyIconBtn',
 					'NirField',
-                    'FilterSideBar'
+					'FilterSideBar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
