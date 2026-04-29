@@ -1,4 +1,4 @@
-import type { IndexedObject } from '@/components/Amelipro/types.ts'
+import type { IndexedObject } from '../../../components/Amelipro/types.ts'
 import { buildColorClassMap } from '../../utils/buildColorClassMap'
 
 export const apColorsTokens2026 = {
