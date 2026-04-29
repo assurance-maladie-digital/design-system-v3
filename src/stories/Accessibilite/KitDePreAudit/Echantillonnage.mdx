@@ -43,37 +43,26 @@ import '../../styles/shared.css';
   }
   
   .pages-list {
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
+    margin: 1rem 0;
   }
-  
-  .pages-list h3 {
-    margin-top: 0;
-    color: #0c419a;
-    position: relative;
-    padding-bottom: 0.75rem;
-  }
-  
-  .pages-list h3::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 80px;
-    height: 4px;
-    
-    border-radius: 3px;
-  }
-  
+
   .pages-list ul {
-    padding-left: 1.5rem;
-    margin-bottom: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-  
+
   .pages-list li {
-    margin-bottom: 0.5rem;
-    position: relative;
+    padding: 0.4rem 0;
+    font-size: 0.9rem;
+    color: #3d3d3d;
+    line-height: 1.5;
+    list-style: none;
+  }
+
+  .pages-list li strong {
+    font-size: 0.95rem;
+    margin-right: 0.25rem;
   }
   
   .exemption-item {
@@ -185,28 +174,27 @@ Si vous êtes au démarrage de votre projet, il est difficile d'établir l'écha
 </div>
 
 <div className="section-container">
-  <h2>📝 Pages à auditer</h2>
+  <h2>Pages obligatoires à auditer</h2>
   
   <div className="pages-list">
-    <h3><strong>Pages obligatoires</strong></h3>
     <ul>
-      <li><strong>Accueil</strong> - Point d'entrée principal du service</li>
-      <li><strong>Contact</strong> - Informations permettant de contacter l'organisme</li>
-      <li><strong>Mentions légales</strong> - Informations juridiques obligatoires</li>
-      <li><strong>Page "accessibilité"</strong> - Comprenant la déclaration d'accessibilité</li>
-      <li><strong>Plan du site</strong> - Si présent</li>
-      <li><strong>Aide</strong> - Assistance aux utilisateurs</li>
-      <li><strong>Authentification</strong> - Processus de connexion</li>
-      <li><strong>Pages de service</strong> - Au moins 1 page pertinente pour chaque type de service fourni (ex: rubriques de 1er niveau), y compris la fonctionnalité de recherche et ses pages de résultat</li>
-      <li><strong>Documents téléchargeables</strong> - Au moins 1 document pertinent</li>
-      <li><strong>Processus complets</strong> - L'ensemble des pages constituant un processus (ex: un formulaire sur plusieurs pages)</li>
-      <li><strong>Pages distinctes</strong> - Des exemples de pages ayant un aspect sensiblement distinct ou présentant un type de contenu différent (ex : page contenant des tableaux de données, des éléments multimédias, des illustrations, des formulaires, etc.)</li>
+      <li><strong>Accueil:</strong> Point d'entrée principal du service</li>
+      <li><strong>Contact:</strong> Informations permettant de contacter l'organisme</li>
+      <li><strong>Mentions légales:</strong> Informations juridiques obligatoires</li>
+      <li><strong>Page "accessibilité":</strong> Comprenant la déclaration d'accessibilité</li>
+      <li><strong>Plan du site:</strong> Si présent</li>
+      <li><strong>Aide:</strong> Assistance aux utilisateurs</li>
+      <li><strong>Authentification:</strong> Processus de connexion</li>
+      <li><strong>Pages de service:</strong> Au moins 1 page pertinente pour chaque type de service fourni (ex: rubriques de 1er niveau), y compris la fonctionnalité de recherche et ses pages de résultat</li>
+      <li><strong>Documents téléchargeables:</strong> Au moins 1 document pertinent</li>
+      <li><strong>Processus complets:</strong> L'ensemble des pages constituant un processus (ex: un formulaire sur plusieurs pages)</li>
+      <li><strong>Pages distinctes:</strong> Des exemples de pages ayant un aspect sensiblement distinct ou présentant un type de contenu différent (ex : page contenant des tableaux de données, des éléments multimédias, des illustrations, des formulaires, etc.)</li>
     </ul>
   </div>
 </div>
 
 <div>
-  <h2>🚫 Contenus exemptés de l'obligation d'accessibilité :</h2>
+  <h2>Contenus exemptés de l'obligation d'accessibilité :</h2>
   
   <div className="exemption-grid">
     <div className="exemption-card">
@@ -252,12 +240,12 @@ Si vous êtes au démarrage de votre projet, il est difficile d'établir l'écha
 </div>
 
 <div className="note-box">
-  <p>💡 <strong>Conseil d'échantillonnage :</strong> Le nombre de visiteurs par page peut être pris en compte lors de la constitution de l'échantillon.</p>
+  <p><strong>Conseil d'échantillonnage :</strong> Le nombre de visiteurs par page peut être pris en compte lors de la constitution de l'échantillon.</p>
   <p>Ajoutez à votre sélection des pages choisies au hasard représentant <span className="highlight">au moins 10% de l'échantillon total</span>.</p>
 </div>
 
 <div className="section-container">
-  <h2>⚖️ Dérogations</h2>
+  <h2>Dérogations</h2>
   
   <p>Il existe un système de dérogation dans la mise en conformité d'un service numérique : <span className="highlight">la charge disproportionnée</span>.</p>
   
