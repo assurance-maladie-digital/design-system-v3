@@ -26,12 +26,12 @@ import '../../styles/shared.css';
     margin: 2rem 0;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
   .info-section h2 {
     padding-bottom: 0.5rem;
     margin-top: 0;
+    color: #0c419a !important;
   }
   
   .contact-card {
@@ -118,8 +118,11 @@ import '../../styles/shared.css';
       left: 0;
       width: 80px;
       height: 4px;
-      
       border-radius: 3px;
+    }
+
+    h2 {
+      color: #0c419a !important;
     }
 `
 }
@@ -131,7 +134,7 @@ import '../../styles/shared.css';
 </div>
 
 <div className="info-section">
-  <h2>🌟 Objectif</h2>
+  <h2>Objectif</h2>
   <p>Une fois la phase pré-audit réalisée et que le niveau de conformité est jugé suffisant, <b>l'équipe produit peut solliciter le Studio Design pour un audit de conformité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> sur le même échantillon de pages</b>.</p>
 
   <p>L'objectif de l'audit est d'évaluer la conformité d'un produit aux critères d'accessibilités définis par le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>. L'expert identifie les non-conformités et fournit des recommandations pour améliorer l'accessibilité du produit.</p>
@@ -147,7 +150,7 @@ import '../../styles/shared.css';
 
   <div className="environment-grid">
     <div className="resource-card">
-      <h3>💻 Environnement principal</h3>
+      <h3>Environnement principal</h3>
       <p>Si l'outil cible un public utilisant des terminaux de bureau :</p>
       <ul>
         <li>Système d'exploitation : Windows</li>
@@ -157,7 +160,7 @@ import '../../styles/shared.css';
     </div>
 
     <div className="resource-card">
-      <h3>📱 Environnement mobile</h3>
+      <h3>Environnement mobile</h3>
       <p>Si l'outil cible un public utilisant des terminaux mobile :</p>
       <ul>
         <li>Système d'exploitation : Android</li>

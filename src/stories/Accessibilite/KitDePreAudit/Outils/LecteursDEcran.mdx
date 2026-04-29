@@ -38,16 +38,11 @@ import '../../../styles/shared.css';
     
     /* Sections */
     .screen-reader-section {
-      margin-bottom: 3rem;
       background: white;
       border-radius: var(--border-radius-lg);
       padding: 2rem;
-      box-shadow: var(--shadow-md);
     }
     
-    .screen-reader-section:hover {
-      box-shadow: var(--shadow-lg);
-    }
     
     .screen-reader-section h2 {
       color: var(--primary-color);
@@ -69,7 +64,7 @@ import '../../../styles/shared.css';
     }
     
     .screen-reader-section h3 {
-      color: var(--secondary-color);
+      color: var(--primary-color);
       font-size: 1.5rem;
       margin-top: 1.5rem;
       margin-bottom: 1rem;
@@ -96,22 +91,7 @@ import '../../../styles/shared.css';
       border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
       position: relative;
     }
-    
-    .screen-reader-info::before {
-      content: "ℹ️";
-      position: absolute;
-      left: -12px;
-      top: -12px;
-      background: var(--info-color);
-      color: white;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-    }
+  
     
     /* Liens */
     .screen-reader-link {
@@ -128,7 +108,6 @@ import '../../../styles/shared.css';
       left: 0;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, var(--primary-color), transparent);
       transform: scaleX(0);
       transform-origin: left;
     }
@@ -156,15 +135,13 @@ import '../../../styles/shared.css';
       box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
+      margin-bottom: 2rem;
     }
-    
-    .screen-reader-card:hover {
-      box-shadow: var(--shadow-md);
-    }
+  
     
     .screen-reader-card-header {
       padding: 1.5rem;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      background: var(--primary-color);
       color: white;
     }
     
@@ -187,21 +164,22 @@ import '../../../styles/shared.css';
     
     /* Shortcuts */
     .shortcut-list {
-      list-style: none;
-      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
       margin: 1rem 0;
+      padding: 0;
     }
     
     .shortcut-item {
       display: flex;
-      align-items: center;
-      margin-bottom: 0.75rem;
-      padding: 0.5rem;
-      border-radius: var(--border-radius-sm);
-    }
-    
-    .shortcut-item:hover {
-      background-color: #f8f9fa;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 0.4rem;
+      padding: 0.85rem 1rem;
+      background-color: #fff;
+      border: 1px solid #eaeaea;
+      border-radius: 8px;
     }
     
     .shortcut-key {
@@ -426,6 +404,9 @@ import '../../../styles/shared.css';
     </div>
     
     <h3>Principaux raccourcis</h3>
+          <p>
+        Pour plus de détails, consultez <a href="https://www.nvda.fr/doc.php" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le manuel officiel NVDA</a> ainsi que <a href="https://www.tanaguru.com/guide-et-raccourcis-nvda-pour-les-tests-daccessibilite/" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le guide de Tanaguru</a>.
+      </p>
     
     <div className="shortcut-list">
       <div className="shortcut-item">
@@ -478,11 +459,6 @@ import '../../../styles/shared.css';
       </div>
     </div>
     
-    <div className="screen-reader-info">
-      <p>
-        Pour plus de détails, consultez <a href="https://www.nvda.fr/doc.php" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le manuel officiel NVDA</a> ainsi que <a href="https://www.tanaguru.com/guide-et-raccourcis-nvda-pour-les-tests-daccessibilite/" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le guide de Tanaguru</a>.
-      </p>
-    </div>
   </div>
 
   <div className="screen-reader-section">
@@ -504,7 +480,9 @@ import '../../../styles/shared.css';
     
     <h3>Principaux gestes</h3>
     <p>Ce lecteur d'écran utilise des gestes spécifiques pour naviguer dans l'interface. Voici les principaux gestes :</p>
-    
+          <p>
+        Pour plus de détails, consultez <a href="https://support.google.com/accessibility/android/answer/6283677?hl=fr" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le manuel officiel TalkBack</a>.
+      </p>
     <div className="shortcut-list">
       <div className="shortcut-item">
         <span className="shortcut-key">Glisser 1 doigt</span>
@@ -532,10 +510,6 @@ import '../../../styles/shared.css';
       </div>
     </div>
     
-    <div className="screen-reader-info">
-      <p>
-        Pour plus de détails, consultez <a href="https://support.google.com/accessibility/android/answer/6283677?hl=fr" className="screen-reader-link" target="_blank" rel="noopener noreferrer">le manuel officiel TalkBack</a>.
-      </p>
-    </div>
+
   </div>
 </div>
