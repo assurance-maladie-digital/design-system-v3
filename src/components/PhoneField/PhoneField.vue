@@ -476,6 +476,7 @@
 					:error-messages="errors"
 					:warning-messages="warnings"
 					:success-messages="successes"
+					:show-success-messages="props.showSuccessMessages"
 					:disable-error-handling="shouldDisableErrorHandling"
 					:variant="outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="displayAsterisk"
