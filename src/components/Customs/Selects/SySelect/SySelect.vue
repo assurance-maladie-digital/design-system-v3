@@ -224,7 +224,7 @@
 	// text d'aide
 	const helpTextId = computed(() => `${inputId.value}-help`)
 	// messages d'erreur, success avertissement
-	const messagesId = computed(() => `${inputId.value}-messages`)
+	const messagesId = computed(() => `${inputId.value}-sr-messages`)
 	// live region pour le lecteur ecran
 	const liveRegionId = computed(() => `${inputId.value}-live`)
 	// un libellé caché pour la popup/grid
