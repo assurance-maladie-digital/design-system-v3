@@ -40,7 +40,7 @@
 			density?: 'default' | 'comfortable' | 'compact'
 			bgColor?: string
 			clearable?: boolean
-			hideMessages?: boolean
+			hideDetails?: boolean
 			width?: string
 			multiple?: boolean
 			chips?: boolean
@@ -71,7 +71,7 @@
 			density: 'default',
 			bgColor: 'white',
 			clearable: false,
-			hideMessages: false,
+			hideDetails: false,
 			width: 'undefined',
 			multiple: false,
 			chips: false,
@@ -512,8 +512,8 @@
 	})
 
 	const showHelpTextBelow = computed(() => {
-		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
-		return props.helpText && hasMessages.value && !props.hideMessages
+		// Afficher en dessous si il y a des messages d'erreur ET hideDetails n'est pas activé
+		return props.helpText && hasMessages.value && !props.hideDetails
 	})
 
 	// Ici on calcule dynamiquement la liste des ids à rattacher à l'input :
@@ -525,7 +525,7 @@
 			ids.push(helpTextId.value)
 		}
 		// messages affichés
-		if (!props.hideMessages && hasMessages.value) {
+		if (!props.hideDetails && hasMessages.value) {
 			ids.push(messagesId.value)
 		}
 		// live region si erreur
@@ -993,7 +993,7 @@
 						:density="props.density"
 						:active="isFieldActive"
 						readonly
-						:hide-details="props.hideMessages && !showHelpTextAsMessage"
+						:hide-details="props.hideDetails && !showHelpTextAsMessage"
 						:hint="showHelpTextAsMessage ? props.helpText : ''"
 						:persistent-hint="!!showHelpTextAsMessage"
 						:autocomplete="props.autocomplete"
@@ -1230,7 +1230,7 @@
 		</div>
 
 		<div
-			v-if="!props.hideMessages && hasMessages"
+			v-if="!props.hideDetails && hasMessages"
 			:id="messagesId"
 			class="d-sr-only"
 		>

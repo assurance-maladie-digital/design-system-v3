@@ -130,7 +130,7 @@ describe('SySelect.vue', () => {
 	it('renders error messages when provided', () => {
 		const errorMessages = ['Error 1']
 		const wrapper = mount(SySelect, {
-			props: { errorMessages, hideMessages: false },
+			props: { errorMessages, hideDetails: false },
 			attachTo: document.body,
 		})
 		const message = wrapper.find('.v-messages__message')
@@ -138,6 +138,79 @@ describe('SySelect.vue', () => {
 		expect(message.text()).toContain('Error 1')
 
 		wrapper.unmount()
+	})
+
+	describe('hideDetails', () => {
+		it('masque les messages de validation quand hideDetails est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					errorMessages: ['Erreur de test'],
+					hideDetails: true,
+				},
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('affiche les messages de validation quand hideDetails est false', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					errorMessages: ['Erreur de test'],
+					hideDetails: false,
+				},
+				attachTo: document.body,
+			})
+
+			const message = wrapper.find('.v-messages__message')
+			expect(message.exists()).toBe(true)
+			expect(message.text()).toContain('Erreur de test')
+
+			wrapper.unmount()
+		})
+
+		it('masque les messages de validation par défaut (hideDetails: false)', () => {
+			const wrapper = mount(SySelect, {
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('n\'affiche pas le helpText en dessous du champ quand hideDetails est true et qu\'il y a des erreurs', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					helpText: 'Texte d\'aide',
+					errorMessages: ['Erreur de test'],
+					hideDetails: true,
+				},
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.help-text-below').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('affiche le helpText en dessous du champ quand hideDetails est false et qu\'il y a des erreurs', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					helpText: 'Texte d\'aide',
+					errorMessages: ['Erreur de test'],
+					hideDetails: false,
+				},
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.help-text-below').exists()).toBe(true)
+			expect(wrapper.find('.help-text-below').text()).toContain('Texte d\'aide')
+
+			wrapper.unmount()
+		})
 	})
 
 	it('keeps the label active when a validation error is displayed', async () => {

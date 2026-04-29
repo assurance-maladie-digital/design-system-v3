@@ -62,7 +62,7 @@ const meta: Meta<typeof SySelect> = {
 			control: 'object',
 			description: 'Messages de succès à afficher',
 		},
-		hideMessages: {
+		hideDetails: {
 			control: 'boolean',
 			description: 'Masque les messages d\'erreur',
 		},
@@ -245,7 +245,7 @@ export const HelpText: Story = {
 			{ text: 'Valentin', value: 'Valentin' },
 		],
 		'helpText': 'Texte d\'aide à la saisie',
-		'hideMessages': false,
+		'hideDetails': false,
 		'required': true,
 		'onUpdate:modelValue': fn(),
 	},
