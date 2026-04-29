@@ -8,12 +8,6 @@ on:
       - 'cypress/**'
       - 'src/assets/**'
       - '.github/workflows/**'
-  push:
-    paths:
-      - 'src/components/**'
-      - 'cypress/**'
-      - 'src/assets/**'
-      - '.github/workflows/**'
 
 jobs:
   visual-tests:

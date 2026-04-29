@@ -21,9 +21,6 @@ import '../../styles/shared.css';
     --neutral-600: #6e6e6e;
     --neutral-700: #3d3d3d;
     --neutral-800: #1f1f1f;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
     --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 12px;
@@ -33,13 +30,9 @@ import '../../styles/shared.css';
       
   
   .section {
-    margin: 2.5rem 0;
-    padding: 2rem;
+    padding: 1rem;
     background-color: var(--neutral-100);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
     transition: var(--transition);
-    border: 1px solid var(--neutral-300);
   }
   
   .section h2 {
@@ -48,6 +41,7 @@ import '../../styles/shared.css';
     margin-top: 0;
     color: var(--primary);
     font-weight: 700;
+    font-size: 1.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -60,8 +54,15 @@ import '../../styles/shared.css';
     left: 0;
     width: 60px;
     height: 3px;
-    
     border-radius: 3px;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
   }
   
   .alert {
@@ -87,7 +88,7 @@ import '../../styles/shared.css';
   
   .highlight {
     background-color: var(--primary-light);
-    padding: 0.2rem 0.5rem;
+    padding: 2rem 0.7rem;
     border-radius: 4px;
     font-weight: 500;
     color: var(--primary-dark);
@@ -141,6 +142,7 @@ import '../../styles/shared.css';
     color: var(--primary);
     margin-top: 0;
     font-size: 1.2rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -210,38 +212,66 @@ import '../../styles/shared.css';
   }
   
   .cta-box {
-    background: linear-gradient(135deg, var(--primary-light) 0%, rgba(0, 99, 134, 0.1) 100%);
     border-radius: var(--radius-md);
-    padding: 1.75rem;
+    padding: 2rem 2.5rem;
     margin: 2rem 0;
-    border: 1px solid var(--primary-light);
-    text-align: center;
+    text-align: left;
   }
   
   .cta-box h3 {
     margin-top: 0;
+    margin-bottom: 1rem;
     color: var(--primary);
+    font-size: 1.2rem;
+  }
+
+  .cta-box > p {
+    margin-bottom: 1.5rem;
+    color: #3d3d3d;
   }
   
   .cta-box .button {
     display: inline-block;
     background-color: var(--primary);
-    color: white;
-    padding: 0.75rem 1.5rem;
+    color: white !important;
+    padding: 0.75rem 2rem;
     border-radius: var(--radius-sm);
-    font-weight: 500;
-    margin-top: 1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    text-decoration: none;
     transition: var(--transition);
   }
 
+  .cta-box .button:hover {
+    background-color: #093080;
+    text-decoration: none;
+  }
+
   .cta-list {
-    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: step-counter;
   }
   
   .cta-list li {
-    text-align: center;
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
     margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: #3d3d3d;
+    padding: 0.6rem 1rem;
+    background-color: #fff;
+    border-radius: 6px;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: bold !important;
+    color: var(--primary) !important;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
   }
 `
 }
@@ -253,7 +283,7 @@ import '../../styles/shared.css';
 </div>
 
 <div className="section">
-  <h2>👥 L'accessibilité concerne tout le monde</h2>
+  <h2>L'accessibilité concerne tout le monde</h2>
   
   <div className="info-box">
     <p><strong>La CNAM doit respecter le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr></strong></p>
@@ -266,22 +296,22 @@ import '../../styles/shared.css';
   
   <div className="disability-types">
     <div className="feature-card">
-      <strong>👁️ Handicaps visuels</strong>
+      <strong>Handicaps visuels</strong>
       <p>Personnes aveugles ou malvoyantes qui utilisent des lecteurs d'écran ou des paramètres d'affichage spécifiques.</p>
     </div>
     
     <div className="feature-card">
-      <strong>👂 Handicaps auditifs</strong>
+      <strong>Handicaps auditifs</strong>
       <p>Personnes sourdes ou malentendantes qui ont besoin de sous-titres ou d'alternatives textuelles pour les contenus audio.</p>
     </div>
     
     <div className="feature-card">
-      <strong>🦶 Handicaps moteurs</strong>
+      <strong>Handicaps moteurs</strong>
       <p>Personnes ayant des difficultés à se mouvoir qui utilisent des dispositifs d'assistance ou la navigation au clavier.</p>
     </div>
     
     <div className="feature-card">
-      <strong>🧠 Handicaps cognitifs</strong>
+      <strong>Handicaps cognitifs</strong>
       <p>Personnes avec des troubles de l'apprentissage ou des troubles psychiques qui bénéficient d'interfaces simplifiées.</p>
     </div>
   </div>
@@ -290,7 +320,7 @@ import '../../styles/shared.css';
 </div>
 
 <div className="section">
-  <h2>👨‍👩‍👧‍👦 Nos utilisateurs sont concernés</h2>
+  <h2>Nos utilisateurs sont concernés</h2>
   
   <p>Nos outils s'adressent à tous (assurés, agents, professionnels de santé), une partie significative de nos utilisateurs sont donc concernés par les enjeux d'accessibilité.</p>
   
@@ -302,86 +332,26 @@ import '../../styles/shared.css';
   
   <div className="feature-list">
     <div className="feature-card">
-      <h3>♿ Situation contextuelle</h3>
+      <h3>Situation contextuelle</h3>
       <p>Une personne en fauteuil roulant n'est pas en situation de handicap dans un environnement pleinement accessible.</p>
     </div>
     
     <div className="feature-card">
-      <h3>👨‍👩‍👧 Handicap invisible</h3>
+      <h3>Handicap invisible</h3>
       <p>Certaines personnes peuvent ne pas se considérer comme handicapées même si elles rencontrent des difficultés.</p>
     </div>
     
     <div className="feature-card">
-      <h3>🕐 Handicap temporaire</h3>
+      <h3>Handicap temporaire</h3>
       <p>Tous nos utilisateurs peuvent être concernés par des situations de handicap temporaires (bras cassé, fatigue visuelle...).</p>
     </div>
   </div>
 
   <div className="resource-links">
-    <h3>👀 Tester la navigation du point de vue des utilisateurs en situation de handicap</h3>
+    <h3>Tester la navigation du point de vue des utilisateurs en situation de handicap</h3>
     <ul>
       <li><a href="https://www.atalan.fr/agissons/fr/daltonisme.html" target="_blank">Atalan Simulateur</a> - Simulateur de daltonisme</li>
       <li><a href="https://simulation-accessibilite.inria.fr/public/fr/daltonisme.html" target="_blank">Inria Simulateur de vision sur une interface</a> - Outil de simulation visuelle</li>
     </ul>
-  </div>
-</div>
-
-<div className="section">
-  <h2>💪 Comment mettre en place l'accessibilité ?</h2>
-  
-  <p>On dit souvent que l'accessibilité n'est pas adaptée pour tel ou tel service car cela serait trop long, coûteux ou encore qu'on n'a pas l'expertise. Pourtant de nombreuses actions sont faciles et à portée de main pour initier une démarche d'accessibilité.</p>
-  
-  <div className="image-container">
-    <img className="process-image" alt="Processus d'accessibilité" src={"/processusAccessibilite.jpg"} />
-    <div className="image-caption">
-      Processus d'intégration de l'accessibilité dans le cycle de développement
-    </div>
-  </div>
-  
-  <h3>💼 L'accessibilité s'intègre tout au long de votre processus de conception</h3>
-  
-  <p>Etre accessible est un travail en continu qui s'intègre à plusieurs niveaux de votre processus de conception. C'est un travail de collaboration qui mêle plusieurs expertises :</p>
-  
-  <div className="feature-list">
-    <div className="feature-card">
-      <h3>💼 Chef de projet</h3>
-      <p>Intègre l'accessibilité dans la planification et les exigences du projet dès le départ.</p>
-    </div>
-    
-    <div className="feature-card">
-      <h3>🎨 Designer</h3>
-      <p>Conçoit des interfaces accessibles en tenant compte des contrastes, de la typographie et de l'expérience utilisateur.</p>
-    </div>
-    
-    <div className="feature-card">
-      <h3>💻 Développeur</h3>
-      <p>Implémente le code en respectant les standards d'accessibilité et en testant avec des outils spécialisés.</p>
-    </div>
-  </div>
-  
-  <div className="info-box">
-    <h3>🔍 Vous pouvez pré-auditer un service</h3>
-    
-    <p>Un pré-audit est une évaluation préparatoire réalisée par les équipes-produits pour vérifier la conformité d'un produit aux critères du <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
-    
-    <p>À l'aide d'outils et de méthodologies, ces équipes peuvent identifier la moitié des critères requis avant un audit complet. L'objectif premier du pré-audit est de réduire la quantité de correctifs relevés par l'audit complet en donnant un meilleur contrôle aux produits sur leur gestion de projet.</p>
-    
-    <p><a href="/docs/accessibilité-kit-de-pré-audit-pré-audit--docs" className="button">Consulter le guide du pré-audit</a></p>
-  </div>
-  
-  <div className="cta-box">
-    <h3>📝 Prêt pour soumettre une demande d'audit ?</h3>
-    
-    <p>Une fois le pré-audit effectué, un audit complet est réalisé par une équipe dédiée à la Filière Digital sur la totalité des critères évalués sur les pages retenues.</p>
-    
-    <ol className="cta-list">
-      <li>1. Complétez <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank">ce fichier</a> de pré-audit</li>
-      <li>2. Soumettez-le à <a href="mailto:valentin.becquet@assurance-maladie.fr">valentin.becquet@assurance-maladie.fr</a></li>
-      <li>3. Attendez la validation de votre demande basée sur l'effort engagé</li>
-      <li>4. Recevez les résultats de l'audit avec les correctifs à apporter</li>
-      <li>5. Implémentez les correctifs et publiez votre déclaration d'accessibilité</li>
-    </ol>
-    
-    <a href="/documents/Checklist_pre-audit_CNAM_NOM_DU_PRODUIT.xlsx" target="_blank" className="button">Télécharger le fichier de pré-audit</a>
   </div>
 </div>

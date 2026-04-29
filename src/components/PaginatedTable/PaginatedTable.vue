@@ -3,7 +3,7 @@
 	import type { DataOptions, SortOption, GroupOption } from './types'
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
 	import Pagination from './Pagination.vue'
-	import type { VDataTable } from 'vuetify/components'
+	import type { VDataTable } from 'vuetify/components/VDataTable'
 
 	const props = defineProps({
 		serverItemsLength: {

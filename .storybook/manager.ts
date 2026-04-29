@@ -52,6 +52,7 @@ const apComponents = [
 	'composants-composants-vuetify-votpinput--docs',
 	'composants-boutons-syiconbutton',
 	'composants-formulaires-nirfield',
+	'composants-composants-vuetify-vcard--docs',
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
