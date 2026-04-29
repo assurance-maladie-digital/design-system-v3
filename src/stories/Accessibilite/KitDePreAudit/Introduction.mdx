@@ -42,7 +42,7 @@ import '../../styles/shared.css';
   
   .resources-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
     margin: 2rem 0;
   }
@@ -141,6 +141,13 @@ import '../../styles/shared.css';
     height: 3px;
     border-radius: 3px;
   }
+
+  h2 {
+    margin-top: 2rem;
+    color: #0c419a !important;
+    font-weight: bold !important;
+    font-size: 1.5rem !important;
+  }
 `
 }
 </style>
@@ -235,10 +242,10 @@ import '../../styles/shared.css';
       <h3>Résultat du pré-audit manuel</h3>
       <p>Complété avec un onglet par page.</p>
     </div>
-  </div>
 
-  <div className="info-section">
-    <h3>Annexes</h3>
-      <p>Pour chaque page testée, il sera demandé de restituer un rapport Tanaguru complet.</p>
+    <div className="resource-card">
+      <h3>Annexes</h3>
+      <p>Pour chaque page testée, il sera demandé de constituer un rapport des non conformitees.</p>
+    </div>
   </div>
 </div>
