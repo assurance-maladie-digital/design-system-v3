@@ -7,11 +7,6 @@ on:
         description: "Branch to update snapshots on (leave empty for current branch)"
         required: false
         type: string
-  pull_request:
-    paths:
-      - 'src/components/**'
-      - 'cypress/**'
-      - '.github/workflows/**'
   push:
     tags:
       - 'update-snapshots'
