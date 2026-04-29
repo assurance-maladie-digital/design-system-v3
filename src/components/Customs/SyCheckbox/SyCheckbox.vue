@@ -347,6 +347,11 @@
 			:aria-labelledby="props.ariaLabelledby"
 			:title="props.title"
 			:color="props.color"
+			:class="{
+				'success-field': hasSuccess && !hasError && !hasWarning,
+				'warning-field': hasWarning && !hasError,
+				'error-field': hasError,
+			}"
 			:style="{ color: labelColor }"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
@@ -387,6 +392,22 @@
 </template>
 
 <style scoped>
+.success-field :deep(.v-messages__message) {
+	color: rgb(var(--v-theme-success)) !important;
+}
+
+.success-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-success));
+}
+
+.warning-field :deep(.v-messages__message) {
+	color: rgb(var(--v-theme-borderWarning)) !important;
+}
+
+.warning-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-borderWarning));
+}
+
 :deep(.v-input--dirty .v-selection-control__input) {
 	color: v-bind('props.color');
 }

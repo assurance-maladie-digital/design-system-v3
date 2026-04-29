@@ -36,6 +36,7 @@
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
+		showSuccessMessages: { type: Boolean, default: true },
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
@@ -300,7 +301,7 @@
 	})
 
 	const validation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
@@ -324,7 +325,7 @@
 	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
 	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
 	const successes = computed(() =>
-		shouldDisableErrorHandling.value || hasError.value || hasWarning.value
+		shouldDisableErrorHandling.value || hasError.value || hasWarning.value || !props.showSuccessMessages
 			? []
 			: validation.successes.value,
 	)

@@ -503,6 +503,7 @@
 					:has-error="displayHasError"
 					:has-warning="displayHasWarning"
 					:has-success="displayHasSuccess"
+					:show-success-messages="showSuccessMessages"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
 					:disable-error-handling="disableErrorHandling"

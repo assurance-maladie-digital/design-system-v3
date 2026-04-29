@@ -176,7 +176,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				}
 			}
 
-			if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0) {
+			if (!hasValidationError && value && successRules.length === 0) {
 				addDefaultSuccessMessage(rules)
 			}
 
@@ -207,7 +207,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 
 		return thenOrSync(successResolved, token, (successResults) => {
 			for (const r of successResults) {
-				if (r.success && options.showSuccessMessages !== false) {
+				if (r.success) {
 					successes.value.push(r.success)
 				}
 			}

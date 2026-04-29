@@ -114,7 +114,7 @@
 
 	const hasError = computed(() => errors.value.length > 0)
 	const hasWarning = computed(() => warnings.value.length > 0)
-	const hasSuccess = computed(() => successes.value.length > 0 && props.showSuccessMessages)
+	const hasSuccess = computed(() => successes.value.length > 0 && !hasError.value && !hasWarning.value)
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
@@ -254,7 +254,9 @@
 		:required="props.required"
 		:error-messages="errors"
 		:warning-messages="warnings"
-		:success-messages="successes"
+		:success-messages="props.showSuccessMessages ? successes : []"
+		:has-success="hasSuccess"
+		:show-success-messages="props.showSuccessMessages"
 		:readonly="props.readonly"
 		:disabled="props.disabled"
 		:placeholder="props.placeholder"
@@ -283,6 +285,7 @@
 				class="d-flex align-center"
 			>
 				<SyIcon
+					v-if="validationIcon"
 					:icon="validationIcon"
 					:color="validationColor"
 					decorative

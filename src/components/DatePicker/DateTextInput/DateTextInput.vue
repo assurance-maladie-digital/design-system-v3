@@ -1093,6 +1093,8 @@
 		:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 		:warning-messages="warningMessages"
 		:success-messages="props.showSuccessMessages ? successMessages : []"
+		:has-success="isOnSuccess"
+		:show-success-messages="props.showSuccessMessages"
 		:bg-color="props.bgColor"
 		color="primary"
 		:is-clearable="!props.readonly"
