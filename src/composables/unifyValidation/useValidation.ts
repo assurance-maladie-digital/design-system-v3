@@ -12,15 +12,21 @@ export interface FieldValidationProps {
 	isValidateOnBlur?: boolean
 	showSuccessMessages?: boolean
 	disableErrorHandling?: boolean
-	// When true (Vuetify native mode), the controller should not handle errors/successes
+	// Quand cette prop vaut true (mode natif Vuetify), le contrôleur ne gère plus les erreurs/succès
 	useVuetifyValidation?: boolean
 	label?: string
 	rules?: VuetifyValidationRule[]
+	// Règles de validation personnalisées d'erreur (bloquantes), évaluées à partir de la valeur du champ
 	customRules?: SyValidationRule[]
+	// Règles de validation personnalisées d'avertissement (non bloquantes), évaluées à partir de la valeur du champ
 	customWarningRules?: SyValidationRule[]
+	// Règles de validation personnalisées de succès, évaluées à partir de la valeur du champ
 	customSuccessRules?: SyValidationRule[]
+	// Messages d'erreur injectés par le parent ; ils n'exécutent aucune logique de validation
 	errorMessages?: string[] | null
+	// Messages d'avertissement injectés par le parent ; ils n'exécutent aucune logique de validation
 	warningMessages?: string[] | null
+	// Messages de succès injectés par le parent ; ils n'exécutent aucune logique de validation
 	successMessages?: string[] | null
 	hasError?: boolean
 	hasWarning?: boolean
@@ -29,9 +35,13 @@ export interface FieldValidationProps {
 }
 
 /**
- * Entrypoint to handle validation in fields components.
- * It handles both Vuetify native validation (if useVuetifyValidation is true) and Synapse custom validation (if customRules are provided).
- * It also provides a unified interface to handle errors, warnings and successes, and to trigger validation on demand.
+ * Point d'entrée de la validation pour les composants de champ.
+ * Gère à la fois la validation native Vuetify (si useVuetifyValidation vaut true)
+ * et la validation custom Synapse (si customRules/customWarningRules/customSuccessRules sont fournis).
+ * customRules correspond aux règles d'erreur bloquantes.
+ * errorMessages/warningMessages/successMessages sont des messages externes injectés par le parent
+ * et ne déclenchent aucun calcul de validation.
+ * Expose aussi une interface unifiée pour les erreurs, avertissements, succès et la validation à la demande.
  */
 export const validationPropsDefaults = {
 	readonly: false,
