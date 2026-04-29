@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, nextTick, onMounted, ref, inject, watch, type Ref, onUnmounted } from 'vue'
-	import type { VDataTable, VDataTableServer } from 'vuetify/components'
+	import type { VDataTable, VDataTableServer } from 'vuetify/components/VDataTable'
 	import { locales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 

@@ -1,0 +1,59 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VCardStories from './v-card.stories'
+
+<Meta title="Composants/Composants Vuetify/VCard" />
+
+<div className="header">
+    <h1>VCard</h1>
+Ce composant utilise directement le composant natif `v-card` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-card/#props).
+</div>
+
+### Composants associés
+
+- `v-card-title` : Titre de la carte
+- `v-card-subtitle` : Sous-titre de la carte
+- `v-card-text` : Contenu textuel de la carte
+- `v-card-actions` : Zone pour les boutons d'action
+
+## Variantes
+
+Le composant `v-card` propose plusieurs variantes de style :
+
+- **elevated** : Carte avec une ombre (par défaut)
+- **flat** : Carte sans ombre
+- **outlined** : Carte avec une bordure
+- **tonal** : Carte avec un fond coloré léger
+- **text** : Carte sans fond ni bordure
+- **plain** : Carte sans style
+
+### Primary
+
+<Canvas of={VCardStories.Primary} />
+
+### Primary - Elevated
+
+<Canvas of={VCardStories.PrimaryElevated} />
+
+### Primary - Outlined
+
+<Canvas of={VCardStories.PrimaryOutlined} />
+
+### Primary - Tonal
+
+<Canvas of={VCardStories.PrimaryTonal} />
+
+### En chargement
+
+<Canvas of={VCardStories.Loading} />
+
+### Désactivée
+
+<Canvas of={VCardStories.Disabled} />
+
+## Accessibilité
+
+- Utilisez des titres descriptifs pour les cartes
+- Assurez-vous que les images ont un attribut `alt` approprié
+- Les actions dans la carte doivent être accessibles au clavier
+- Utilisez des couleurs avec un contraste suffisant

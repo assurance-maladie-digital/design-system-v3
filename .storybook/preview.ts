@@ -149,7 +149,7 @@ const preview: Preview = {
 						'Filtres', ['FiltersInline', 'FiltersSideBar', 'FilterModule'],
 						'Données', ['Logo', 'LogoBrandSection', 'CollapsibleList', 'ChipList', 'DataList', 'DataListGroup', 'FilePreview', 'FileList'],
 						'Feedback', ['SyAlert', 'DialogBox', 'NotificationBar', 'CookieBanner', 'RatingPicker'],
-						'Composants Vuetify', ['Introduction', 'VBreadcrumbs', 'VBtn', 'VOtpInput', 'VSkeletonLoader', 'VSwitch', 'VTooltip'],
+						'Composants Vuetify', ['Introduction', 'VBreadcrumbs', 'VBtn', 'VCard', 'VOtpInput', 'VSkeletonLoader', 'VSwitch', 'VTooltip'],
 					],
 					'Templates', ['Vue d\'ensemble', 'StatusPage', 'ErrorPage', 'MaintenancePage', 'NotFoundPage'],
 					'Guide Du Dev', [
