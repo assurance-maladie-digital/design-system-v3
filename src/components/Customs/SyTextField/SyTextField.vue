@@ -849,7 +849,11 @@
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-borderWarning)) !important;
 
+		--v-medium-emphasis-opacity: 1;
+
 		.v-field__outline {
+			--v-field-border-opacity: 1;
+
 			color: rgb(var(--v-theme-borderWarning)) !important;
 		}
 	}
@@ -874,6 +878,8 @@
 		color: rgb(var(--v-theme-borderError)) !important;
 
 		.v-field__outline {
+			--v-field-border-opacity: 1;
+
 			color: rgb(var(--v-theme-borderError)) !important;
 		}
 	}
@@ -904,6 +910,8 @@
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
+			--v-field-border-opacity: 1;
+
 			color: rgb(var(--v-theme-borderSuccess)) !important;
 		}
 	}
