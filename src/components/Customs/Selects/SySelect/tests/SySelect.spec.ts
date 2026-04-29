@@ -616,27 +616,90 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 
-		it('n\'affiche pas d\'erreur quand disableErrorHandling est true', async () => {
-			const wrapper = mount(SySelect, {
-				props: {
-					required: true,
-					label: 'Test Label',
-					modelValue: undefined,
-					disableErrorHandling: true,
-				},
-				attachTo: document.body,
+		describe('disableErrorHandling', () => {
+			it('n\'affiche pas d\'erreur pour un champ requis sans valeur quand disableErrorHandling est true', async () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						required: true,
+						label: 'Test Label',
+						modelValue: undefined,
+						disableErrorHandling: true,
+					},
+					attachTo: document.body,
+				})
+
+				await wrapper.find('.v-field').trigger('click')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('.v-field').trigger('click')
+				await wrapper.vm.$nextTick()
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(false)
+
+				wrapper.unmount()
 			})
 
-			await wrapper.find('.v-field').trigger('click')
-			await wrapper.vm.$nextTick()
-			await wrapper.find('.v-field').trigger('click')
-			await wrapper.vm.$nextTick()
+			it('ignore les errorMessages quand disableErrorHandling est true', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						errorMessages: ['Erreur forcée'],
+						disableErrorHandling: true,
+					},
+					attachTo: document.body,
+				})
 
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			const instance = wrapper.vm as any
-			expect(instance.hasError).toBe(false)
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(false)
+				expect(wrapper.find('.v-messages__message').exists()).toBe(false)
 
-			wrapper.unmount()
+				wrapper.unmount()
+			})
+
+			it('n\'évalue pas les customRules quand disableErrorHandling est true', async () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						modelValue: '1',
+						disableErrorHandling: true,
+						isValidateOnBlur: false,
+						customRules: [{
+							type: 'custom',
+							options: {
+								validate: () => false,
+								message: 'Toujours invalide',
+							},
+						}],
+					},
+					attachTo: document.body,
+				})
+
+				await wrapper.vm.$nextTick()
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(false)
+				expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+				wrapper.unmount()
+			})
+
+			it('affiche les erreurs normalement quand disableErrorHandling est false', async () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						errorMessages: ['Erreur visible'],
+						disableErrorHandling: false,
+					},
+					attachTo: document.body,
+				})
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(true)
+				expect(wrapper.find('.v-messages__message').text()).toContain('Erreur visible')
+
+				wrapper.unmount()
+			})
 		})
 
 		it('valide immédiatement quand isValidateOnBlur est false', async () => {

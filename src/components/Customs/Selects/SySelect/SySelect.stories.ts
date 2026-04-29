@@ -5,6 +5,7 @@ import SyForm from '../../SyForm/SyForm.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/Selects/SySelect',
@@ -14,9 +15,9 @@ const meta: Meta<typeof SySelect> = {
 		controls: { exclude: ['onUpdate:modelValue', 'selectedValue', 'isOpen', 'closeList'] },
 	},
 	argTypes: {
+		...getValidationDocumentation('string'),
 		selectedValue: { control: 'text' },
 		items: { control: 'object' },
-		required: { control: 'boolean' },
 		displayAsterisk: { control: 'boolean' },
 		textKey: {
 			control: 'text',
@@ -49,22 +50,6 @@ const meta: Meta<typeof SySelect> = {
 		chips: {
 			control: 'boolean',
 			description: 'Affiche les options sélectionnées sous forme de chips',
-		},
-		errorMessages: {
-			control: 'object',
-			description: 'Messages d\'erreur à afficher',
-		},
-		warningMessages: {
-			control: 'object',
-			description: 'Messages d\'avertissement à afficher',
-		},
-		successMessages: {
-			control: 'object',
-			description: 'Messages de succès à afficher',
-		},
-		hideDetails: {
-			control: 'boolean',
-			description: 'Masque les messages d\'erreur',
 		},
 		variantStyle: {
 			control: 'select',
