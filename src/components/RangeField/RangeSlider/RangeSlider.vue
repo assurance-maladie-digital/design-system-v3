@@ -32,10 +32,6 @@
 			step: 1,
 			minLabel: 'Minimum',
 			maxLabel: 'Maximum',
-			// 'thumb-color': cnamColorsTokens.blue.base,
-			// 'thumb-color': 'red',
-			// 'track-color': cnamColorsTokens.blue.lighten90,
-			// 'track-fill-color': cnamColorsTokens.blue.lighten20,
 		},
 	)
 
@@ -260,10 +256,6 @@ $virtual-thumb-size: 40px;
 	--sy-track-height: 4px;
 	--sy-thumb-size: 20px;
 
-	// --sy-thumb-color: v-bind(props.thumbColor); rgb(var(--v-theme-primary))
-	// --sy-track-color: v-bind(props.trackColor); rgb(var(--v-theme-backgroundMain))
-	// --sy-track-fill-color: v-bind(props.trackFillColor); rgb(var(--v-theme-accentPrimaryLight))
-
 	position: relative;
 	margin-inline: var(--sy-thumb-size);
 	width: calc(100% - var(--sy-thumb-size) * 2);
@@ -281,7 +273,7 @@ $virtual-thumb-size: 40px;
 		transform: translate(0, -50%);
 		width: 100%;
 		height: var(--sy-track-height);
-		background-color: rgb(var(--v-theme-backgroundMain));
+    background-color: rgb(var(--v-theme-backgroundInfoSubdued));
 	}
 }
 
