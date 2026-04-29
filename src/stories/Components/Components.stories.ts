@@ -475,7 +475,6 @@ export const ComponentsList: StoryObj = {
 					'DialogBox',
 					'NotificationBar',
 					'Card',
-					'NotificationBar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

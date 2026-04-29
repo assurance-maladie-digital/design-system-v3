@@ -59,7 +59,6 @@ const apComponents = [
     'composants-feedback-dialogbox'
 	'composants-feedback-notificationbar',
 	'composants-composants-vuetify-vcard--docs',
-	'composants-feedback-notificationbar',
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
