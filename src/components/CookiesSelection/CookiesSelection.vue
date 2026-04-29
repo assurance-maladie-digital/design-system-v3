@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, ref, onMounted, nextTick } from 'vue'
-	import type { VForm, VBtn } from 'vuetify/components'
+	import type { VForm } from 'vuetify/components/VForm'
+	import type { VBtn } from 'vuetify/components/VBtn'
 	import CookiesInformation from './CookiesInformation/CookiesInformation.vue'
 	import { locales } from './locales'
 	import type { CookieTypes, CookiesItems, Preferences } from './types'

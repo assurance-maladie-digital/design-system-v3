@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -8,20 +8,17 @@
     "dist",
     "src"
   ],
-  "main": "./dist/design-system-v3.umd.cjs",
   "module": "./dist/design-system-v3.js",
   "types": "./dist/main.d.ts",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/design-system-v3.js",
-      "require": "./dist/design-system-v3.umd.cjs"
+      "import": "./dist/design-system-v3.js"
     },
     "./synapse.css": "./dist/synapse.css",
     "./vuetifyConfig": {
       "types": "./dist/vuetifyConfig.d.ts",
-      "import": "./dist/vuetifyConfig.js",
-      "require": "./dist/vuetifyConfig.umd.cjs"
+      "import": "./dist/vuetifyConfig.js"
     },
     "./modules/notification": {
       "types": "./src/modules/notification/index.ts",
@@ -152,7 +149,8 @@
     "npm": "^11.8.1",
     "undici": "^6.24.0",
     "rollup": "^4.59.0",
-    "immutable": ">=5.1.5"
+    "immutable": ">=5.1.5",
+    "uuid": ">=14.0.0"
   },
   "pnpm": {
     "overrides": {
@@ -167,7 +165,10 @@
       "flatted": ">=3.4.2",
       "handlebars": ">=4.7.9",
       "lodash": ">=4.18.0",
-      "follow-redirects": ">=1.16.0"
+      "follow-redirects": ">=1.16.0",
+      "uuid": ">=14.0.0",
+      "@cypress/request>uuid": "9.0.1",
+      "postcss": ">=8.5.10"
     },
     "patchedDependencies": {
       "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"

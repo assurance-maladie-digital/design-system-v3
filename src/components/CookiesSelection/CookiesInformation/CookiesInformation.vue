@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { isRequired } from '@/utils/rules/isRequired'
-	import type { VRadio, VRadioGroup } from 'vuetify/components'
+	import type { VRadio } from 'vuetify/components/VRadio'
+	import type { VRadioGroup } from 'vuetify/components/VRadioGroup'
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 	import { computed, ref, nextTick, onMounted } from 'vue'
 	import CookiesTable from '../CookiesTable/CookiesTable.vue'
