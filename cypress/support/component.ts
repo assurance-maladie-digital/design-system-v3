@@ -1,11 +1,33 @@
-/* eslint-disable vue/one-component-per-file */
-import 'vuetify/styles'
 import '@/assets/themes.scss'
-import { mount } from 'cypress/vue'
-import { createVuetifyInstance } from '@/vuetifyConfig'
-import { VApp } from 'vuetify/components'
-import { defineComponent, h, type Component } from 'vue'
+import {
+	apColorsTokens,
+	apColorsTokens2026,
+	apContextualTokens,
+	apDarkTheme,
+	apLightTheme,
+	apLightTheme2026,
+	cnamColorsTokens,
+	cnamContextualTokens,
+	cnamDarkTheme,
+	cnamFontsTokens,
+	cnamLightTheme,
+	paColorsTokens,
+	paContextualTokens,
+	paDarkTheme,
+	paFontsTokens,
+	paLightTheme,
+} from '@/designTokens'
+import { createFlattenTheme, createFontVariables } from '@/designTokens/utils'
 import type { CyMountOptions } from 'cypress/vue'
+import { mount } from 'cypress/vue'
+import { defineComponent, h, type Component } from 'vue'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import { VApp } from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
+import { fr } from 'vuetify/locale'
+import 'vuetify/styles'
 
 // Noms des tasks enregistrés par le plugin @simonsmith/cypress-image-snapshot
 const TASK_MATCH = 'Matching image snapshot'
@@ -162,7 +184,78 @@ type MountWithVuetifyCommand = (component: Component, options?: MountWithVuetify
 const mountComponent = mount as MountWithVuetifyCommand
 
 function mountWithVuetify(component: Component, options: MountWithVuetifyOptions = {}) {
-	const vuetify = createVuetifyInstance()
+	const vuetify = createVuetify({
+		components,
+		directives,
+		locale: {
+			locale: 'fr',
+			messages: { fr },
+		},
+		theme: {
+			defaultTheme: 'cnam',
+			themes: {
+				cnam: {
+					dark: false,
+					colors: {
+						...cnamLightTheme,
+						...cnamDarkTheme,
+						...createFlattenTheme(cnamColorsTokens),
+					},
+					variables: {
+						'border-color': cnamColorsTokens.grey.base,
+						'font-family': cnamFontsTokens.family.primary,
+						...createFontVariables(cnamFontsTokens),
+						...createFlattenTheme(cnamContextualTokens),
+					},
+				},
+				pa: {
+					dark: false,
+					colors: {
+						...paLightTheme,
+						...paDarkTheme,
+						...createFlattenTheme(paColorsTokens),
+					},
+					variables: {
+						'border-color': paColorsTokens.grey.base,
+						'font-family': paFontsTokens.family.primary,
+						...createFontVariables(paFontsTokens),
+						...createFlattenTheme(paContextualTokens),
+					},
+				},
+				ap2026: {
+					dark: false,
+					colors: {
+						...apLightTheme2026,
+						...apDarkTheme,
+						...createFlattenTheme(apColorsTokens2026),
+					},
+					variables: {
+						'font-family': '"Arial", sans-serif',
+						...createFlattenTheme(apContextualTokens),
+					},
+				},
+				ap: {
+					dark: false,
+					colors: {
+						...apLightTheme,
+						...apDarkTheme,
+						...createFlattenTheme(apColorsTokens),
+					},
+					variables: {
+						'font-family': '"Arial", sans-serif',
+						...createFlattenTheme(apContextualTokens),
+					},
+				},
+			},
+		},
+		icons: {
+			defaultSet: 'mdi',
+			aliases,
+			sets: {
+				mdi,
+			},
+		},
+	})
 
 	// Extract slots from options: we handle them manually so mount()
 	// does not try to attach them to the wrapper component.
