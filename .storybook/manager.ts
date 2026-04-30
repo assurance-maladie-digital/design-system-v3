@@ -53,6 +53,8 @@ const apComponents = [
 	'composants-boutons-syiconbutton',
 	'composants-formulaires-nirfield',
 	'composants-composants-vuetify-vcard--docs',
+	'composants-filtres-filterssidebar',
+	'composants-formulaires-sytextfield',
     'composants-filtres-filterssidebar',
     'composants-feedback-dialogbox'
 ]
