@@ -390,7 +390,7 @@ describe('useCustomValidation', () => {
 		args.showSuccessMessages.value = false
 		await nextTick()
 
-		expect(args.successes.value).toEqual([ 'Le champ Mon champ est valide.' ])
+		expect(args.successes.value).toEqual(['Le champ Mon champ est valide.'])
 	})
 
 	it('validate() returns a result with the correct structure', async () => {

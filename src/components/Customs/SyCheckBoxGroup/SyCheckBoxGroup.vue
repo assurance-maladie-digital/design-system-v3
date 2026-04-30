@@ -175,7 +175,6 @@
 
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
-	const successes = computed(() => validation.successes.value)
 	const displaySuccesses = computed(() => validation.displaySuccesses.value)
 
 	const labelId = computed(() => (props.id ? `${props.id}-label` : undefined))

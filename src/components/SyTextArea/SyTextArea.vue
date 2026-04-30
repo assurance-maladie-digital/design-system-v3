@@ -167,6 +167,7 @@
 .success-field {
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
+
 		color: rgb(var(--v-theme-success));
 	}
 
@@ -178,6 +179,7 @@
 .warning-field {
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
+
 		color: rgb(var(--v-theme-borderWarning));
 	}
 

@@ -178,7 +178,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 					hasValidationError = true
 				}
 			}
-// if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0)
+			// if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0)
 			if (!hasValidationError && value && successRules.length === 0) {
 				addDefaultSuccessMessage(rules)
 			}
