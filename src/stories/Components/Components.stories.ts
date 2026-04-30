@@ -84,6 +84,13 @@ export const ComponentsList: StoryObj = {
 						img: `/components/card${isAp ? '-ap' : ''}.svg`,
 						category: 'Layout',
 					},
+                    {
+                        title: 'Chip',
+                        description: 'Utilisé pour affciher une information, un tag ou une catégorie.',
+                        link: '/?path=/docs/composants-composants-vuetify-vchip--docs',
+                        img: `/components/chip${isAp ? '-ap' : ''}.svg`,
+                        category: 'Données',
+                    },
 					{
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
