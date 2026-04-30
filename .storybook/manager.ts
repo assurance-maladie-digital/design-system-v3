@@ -55,6 +55,8 @@ const apComponents = [
 	'composants-composants-vuetify-vcard--docs',
 	'composants-filtres-filterssidebar',
 	'composants-formulaires-sytextfield',
+    'composants-filtres-filterssidebar',
+    'composants-feedback-dialogbox'
     'composants-données-chiplist'
 ]
 // Get stored theme or default to CNAM
