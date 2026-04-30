@@ -99,7 +99,7 @@
 	})
 
 	// Initialisation du composable de validation
-	const { errors, warnings, successes, validateField } = !props.readonly
+	const { errors, warnings, successes, displaySuccesses, validateField } = !props.readonly
 		? useValidation({
 			showSuccessMessages: props.showSuccessMessages,
 			fieldIdentifier: props.label || 'password',
@@ -109,6 +109,7 @@
 			errors: ref<string[]>([]),
 			warnings: ref<string[]>([]),
 			successes: ref<string[]>([]),
+			displaySuccesses: ref<string[]>([]),
 			validateField: () => ({ hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }),
 		}
 
@@ -254,7 +255,7 @@
 		:required="props.required"
 		:error-messages="errors"
 		:warning-messages="warnings"
-		:success-messages="props.showSuccessMessages ? successes : []"
+		:success-messages="displaySuccesses"
 		:has-success="hasSuccess"
 		:show-success-messages="props.showSuccessMessages"
 		:readonly="props.readonly"

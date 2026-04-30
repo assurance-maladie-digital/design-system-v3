@@ -8,6 +8,7 @@ describe('useValidation', () => {
 		expect(validation.errors.value).toEqual([])
 		expect(validation.warnings.value).toEqual([])
 		expect(validation.successes.value).toEqual([])
+		expect(validation.displaySuccesses.value).toEqual([])
 		expect(validation.hasError.value).toBe(false)
 		expect(validation.hasWarning.value).toBe(false)
 		expect(validation.hasSuccess.value).toBe(false)
@@ -90,7 +91,23 @@ describe('useValidation', () => {
 		expect(validResult.hasSuccess).toBe(true)
 	})
 
-	it('should respect showSuccessMessages option', async () => {
+	it('should expose displaySuccesses populated when showSuccessMessages is true', async () => {
+		const validation = useValidation({ showSuccessMessages: true })
+		const rules = [{
+			type: 'required',
+			options: {
+				message: 'Ce champ est requis',
+				successMessage: 'Champ valide',
+			},
+		}]
+
+		const result = await validation.validateField('test', rules)
+		expect(result.hasSuccess).toBe(true)
+		expect(validation.successes.value).toEqual(['Champ valide'])
+		expect(validation.displaySuccesses.value).toEqual(['Champ valide'])
+	})
+
+	it('should populate successes even when showSuccessMessages is false', async () => {
 		const validation = useValidation({ showSuccessMessages: false })
 		const rules = [{
 			type: 'required',
@@ -101,8 +118,9 @@ describe('useValidation', () => {
 		}]
 
 		const result = await validation.validateField('test', rules)
-		expect(result.hasSuccess).toBe(false)
-		expect(result.state.successes).toEqual([])
+		expect(result.hasSuccess).toBe(true)
+		expect(result.state.successes).toEqual(['Champ valide'])
+		expect(validation.displaySuccesses.value).toEqual([])
 	})
 
 	it('should use fieldIdentifier in messages', async () => {

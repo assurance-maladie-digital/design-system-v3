@@ -143,7 +143,12 @@
 		:bg-color="props.bgColor"
 		:error="hasError"
 		:error-messages="errors"
-		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+		:class="{
+			'success-field': hasSuccess && !hasError && !hasWarning,
+			'warning-field': hasWarning && !hasError,
+			'error-field': hasError,
+		}"
+		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? successes : []))"
 		:max-errors="props.maxErrors"
 		:disabled="props.disabled"
 		:readonly="props.readonly"
@@ -157,3 +162,27 @@
 		@update:focused="(e: boolean) => { focused = e; if (!e) execBlurChange() }"
 	/>
 </template>
+
+<style lang="scss" scoped>
+.success-field {
+	:deep(.v-field__outline) {
+		--v-field-border-opacity: 1;
+		color: rgb(var(--v-theme-success));
+	}
+
+	:deep(.v-messages__message) {
+		color: rgb(var(--v-theme-success));
+	}
+}
+
+.warning-field {
+	:deep(.v-field__outline) {
+		--v-field-border-opacity: 1;
+		color: rgb(var(--v-theme-borderWarning));
+	}
+
+	:deep(.v-messages__message) {
+		color: rgb(var(--v-theme-borderWarning));
+	}
+}
+</style>

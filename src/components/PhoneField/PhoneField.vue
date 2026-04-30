@@ -325,9 +325,9 @@
 	const errors = computed(() => shouldDisableErrorHandling.value ? [] : validation.errors.value)
 	const warnings = computed(() => shouldDisableErrorHandling.value ? [] : validation.warnings.value)
 	const successes = computed(() =>
-		shouldDisableErrorHandling.value || hasError.value || hasWarning.value || !props.showSuccessMessages
+		shouldDisableErrorHandling.value || hasError.value || hasWarning.value
 			? []
-			: validation.successes.value,
+			: validation.displaySuccesses.value,
 	)
 
 	const showHelpTextBelow = computed(() => !!props.helpText?.trim())

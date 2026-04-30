@@ -205,6 +205,7 @@
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
 	const successes = computed(() => validation.successes.value)
+	const displaySuccesses = computed(() => validation.displaySuccesses.value)
 
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
@@ -359,7 +360,7 @@
 			:density="props.density"
 			:error="hasError"
 			:error-messages="errors"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? displaySuccesses : []))"
 			:indeterminate="internalIndeterminate"
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
