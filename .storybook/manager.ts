@@ -53,6 +53,8 @@ const apComponents = [
 	'composants-boutons-syiconbutton',
 	'composants-formulaires-nirfield',
 	'composants-composants-vuetify-vcard--docs',
+	'composants-filtres-filterssidebar',
+	'composants-formulaires-sytextfield',
     'composants-composants-vuetify-vchip--docs'
 ]
 // Get stored theme or default to CNAM

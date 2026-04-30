@@ -36,6 +36,7 @@
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
+		showSuccessMessages: { type: Boolean, default: true },
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
@@ -300,7 +301,7 @@
 	})
 
 	const validation = useValidation({
-		showSuccessMessages: true,
+		showSuccessMessages: props.showSuccessMessages,
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
@@ -326,7 +327,7 @@
 	const successes = computed(() =>
 		shouldDisableErrorHandling.value || hasError.value || hasWarning.value
 			? []
-			: validation.successes.value,
+			: validation.displaySuccesses.value,
 	)
 
 	const showHelpTextBelow = computed(() => !!props.helpText?.trim())
@@ -475,6 +476,7 @@
 					:error-messages="errors"
 					:warning-messages="warnings"
 					:success-messages="successes"
+					:show-success-messages="props.showSuccessMessages"
 					:disable-error-handling="shouldDisableErrorHandling"
 					:variant="outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="displayAsterisk"

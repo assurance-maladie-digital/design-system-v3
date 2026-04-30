@@ -111,6 +111,7 @@
 		errors: ref<string[]>([]),
 		warnings: ref<string[]>([]),
 		successes: ref<string[]>([]),
+		displaySuccesses: computed(() => []),
 		hasError: ref(false),
 		clearValidation: () => {},
 		validateField: () => ({
@@ -153,7 +154,8 @@
 	// Agrégation des erreurs internes et externes
 	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
 	const warningMessages = warnings
-	const successMessages = successes
+	const displaySuccesses = computed(() => (validationApi.value as typeof baseValidation).displaySuccesses?.value ?? [])
+	const successMessages = displaySuccesses
 
 	/**
 	 * Safe validate utility
@@ -1092,7 +1094,9 @@
 		:readonly="props.readonly"
 		:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
 		:warning-messages="warningMessages"
-		:success-messages="props.showSuccessMessages ? successMessages : []"
+		:success-messages="successMessages"
+		:has-success="isOnSuccess"
+		:show-success-messages="props.showSuccessMessages"
 		:bg-color="props.bgColor"
 		color="primary"
 		:is-clearable="!props.readonly"
