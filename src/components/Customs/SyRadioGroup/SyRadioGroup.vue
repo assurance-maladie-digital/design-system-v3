@@ -275,6 +275,7 @@
 	padding-inline: 0 !important;
 	margin-top: -10px !important;
 }
+
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
 }
