@@ -353,7 +353,7 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return ICONS['error']
 		if (hasWarning.value) return ICONS['warning']
-		if (hasSuccess.value && props.showSuccessMessages) return ICONS['success']
+		if (hasSuccess.value) return ICONS['success']
 		return null
 	})
 
@@ -368,7 +368,7 @@
 	// Détermine s'il y a des messages d'erreur ou d'état
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || hasSuccess.value
+		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages)
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -641,7 +641,7 @@
 			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : messages))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? (props.showSuccessMessages ? successes : []) : messages))"
 			:min-width="props.minWidth"
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"

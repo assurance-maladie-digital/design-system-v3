@@ -310,7 +310,8 @@
 
 	const errorMessages = errors
 	const warningMessages = warnings
-	const successMessages = successes
+	const successMessages = validation.displaySuccesses
+	const isOnSuccess = computed(() => successes.value.length > 0 && errors.value.length === 0 && warnings.value.length === 0)
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
@@ -1062,7 +1063,8 @@
 							:class="[getMessageClasses(), 'label-hidden-on-focus']"
 							:error-messages="errorMessages"
 							:warning-messages="warningMessages"
-							:success-messages="props.showSuccessMessages ? successMessages : []"
+							:success-messages="successMessages"
+							:has-success="isOnSuccess"
 							:disabled="props.disabled"
 							:disable-click-button="false"
 							:readonly="true"
