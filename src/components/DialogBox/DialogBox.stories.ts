@@ -730,7 +730,7 @@ export const VuetifyOptions: Story = {
 				rounded: 'xl',
 			},
 			cardTitle: {
-                class: 'pa-5 mb-4 secondary--text',
+				class: 'pa-5 mb-4 secondary--text',
 			},
 			closeBtn: {
 				class: {
@@ -738,14 +738,14 @@ export const VuetifyOptions: Story = {
 				},
 			},
 			icon: {
-                color: 'secondary',
+				color: 'secondary',
 			},
 			cancelBtn: {
-                color: 'secondary',
+				color: 'secondary',
 				text: false,
 			},
 			confirmBtn: {
-                color: 'secondary',
+				color: 'secondary',
 				text: true,
 			},
 		},
