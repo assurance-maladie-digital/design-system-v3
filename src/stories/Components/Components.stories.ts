@@ -85,13 +85,6 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
-						title: 'Chip',
-						description: 'Utilisé pour affciher une information, un tag ou une catégorie.',
-						link: '/?path=/docs/composants-composants-vuetify-vchip--docs',
-						img: `/components/chip${isAp ? '-ap' : ''}.svg`,
-						category: 'Données',
-					},
-					{
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
@@ -368,7 +361,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ChipList',
 						description: 'Utilisé pour afficher une liste de puces.',
 						link: '/?path=/docs/composants-donn%C3%A9es-chiplist--docs',
-						img: '/components/chip-list.svg',
+                        img: `/components/chip-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -479,6 +472,7 @@ export const ComponentsList: StoryObj = {
 					'Tooltip',
 					'SkeletonLoader',
 					'OTPInput',
+                    'ChipList'
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

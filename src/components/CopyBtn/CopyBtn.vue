@@ -143,4 +143,13 @@
 .v-btn--icon .v-icon {
 	color: rgb(var(--v-theme-grey-lighten20));
 }
+
+.v-theme--ap.v-btn--icon .v-icon {
+  color: rgb(var(--v-theme-iconAccentPrimary)) !important;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: rgb(var(--v-theme-iconAccentSecondary)) !important;
+  }
+}
 </style>

@@ -55,7 +55,7 @@ const apComponents = [
 	'composants-composants-vuetify-vcard--docs',
 	'composants-filtres-filterssidebar',
 	'composants-formulaires-sytextfield',
-    'composants-composants-vuetify-vchip--docs'
+    'composants-données-chiplist'
 ]
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
