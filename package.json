@@ -15,20 +15,29 @@
       "types": "./dist/main.d.ts",
       "import": "./dist/design-system-v3.js"
     },
-    "./synapse.css": "./dist/synapse.css",
+    "./style.css": "./dist/synapse.css",
     "./vuetifyConfig": {
       "types": "./dist/vuetifyConfig.d.ts",
       "import": "./dist/vuetifyConfig.js"
     },
     "./modules/notification": {
-      "types": "./src/modules/notification/index.ts",
-      "default": "./src/modules/notification/index.ts"
+      "types": "./dist/modules/notification/index.d.ts",
+      "import": "./dist/modules/notification/index.js"
     },
-    "./*": {
-      "types": "./src/*",
-      "default": "./src/*"
-    }
+    "./components/*": {
+      "types": "./dist/components/*/*.d.ts",
+      "import": "./dist/components/*/*.js"
+    },
+    "./composables/*": {
+      "types": "./dist/composables/*/*.d.ts",
+      "import": "./dist/composables/*/*.js"
+    },
+    "./*": "./src/*"
   },
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -p tsconfig.app.json && vite build",
@@ -60,6 +69,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
+
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.0",
     "@jls-digital/storybook-addon-code": "^1.0.4",

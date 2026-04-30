@@ -18,6 +18,7 @@ export default defineConfig({
 			insertTypesEntry: true,
 			copyDtsFiles: true,
 			cleanVueFileName: true,
+			staticImport: true,
 			aliasesExclude: [/vuetify/],
 		}),
 		vue({
@@ -45,15 +46,16 @@ export default defineConfig({
 			name: 'DesignSystemV3',
 			cssFileName: 'synapse',
 			formats: ['es'],
-			fileName: (format, entryAlias) => `${entryAlias}.js`,
 		},
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
 			external: ['vue', /^vuetify/],
 			output: {
-				globals: {
-					vue: 'Vue',
-					vuetify: 'Vuetify',
+				preserveModules: true,
+				preserveModulesRoot: 'src',
+				entryFileNames: (chunkInfo) => {
+					const name = chunkInfo.name.replace(/\.vue$/, '')
+					return `${name}.js`
 				},
 			},
 		},

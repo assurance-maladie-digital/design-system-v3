@@ -46,7 +46,7 @@ export { default as UserMenuBtn } from './UserMenuBtn/UserMenuBtn.vue'
 // ===========================
 // Formulaires
 // ===========================
-export { default as DatePicker } from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+export { default as DatePicker } from './DatePicker/CalendarMode/DatePicker.vue'
 export { default as Captcha } from './Captcha/Captcha.vue'
 export { default as SelectBtnField } from './Customs/Selects/SelectBtnField/SelectBtnField.vue'
 export { default as SyInputSelect } from './Customs/Selects/SyInputSelect/SyInputSelect.vue'

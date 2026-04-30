@@ -1,7 +1,4 @@
 import './assets/themes.scss'
-
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import {
 	cnamColorsTokens,
@@ -27,8 +24,6 @@ import { fr } from 'vuetify/locale'
 import { createVuetify } from 'vuetify'
 
 export const createVuetifyInstance = () => createVuetify({
-	components,
-	directives,
 	locale: {
 		locale: 'fr',
 		messages: { fr },
