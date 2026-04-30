@@ -7,7 +7,7 @@
 	import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import { useDateInitialization, type DateValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
+	import { useDateInitialization, type DateModelValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDateValidation, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap } from '../composables'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
@@ -40,7 +40,8 @@
 	const props = withDefaults(defineProps<{
 		autoClamp?: boolean
 		bgColor?: string
-		birthDate?: boolean // Alias pour isBirthDate pour compatibilité avec l'attribut kebab-case birth-date
+		/** @deprecated Utilisez isBirthDate à la place */
+		birthDate?: boolean
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		customRules?: { type: string, options: any }[]
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -241,12 +242,12 @@
 	}
 
 	const emit = defineEmits<{
-		(e: 'update:modelValue', value: DateValue): void
+		(e: 'update:modelValue', value: DateModelValue): void
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
-		(e: 'input', value: DateValue): void
-		(e: 'date-selected', value: DateValue): void
+		(e: 'input', value: DateModelValue): void
+		(e: 'date-selected', value: DateModelValue): void
 	}>()
 
 	const validation = useValidation({
@@ -393,7 +394,7 @@
 	}
 
 	// Fonction centralisée pour mettre à jour le modèle
-	const updateModel = async (value: DateValue) => {
+	const updateModel = async (value: DateModelValue) => {
 		// Éviter les mises à jour inutiles
 		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
 
@@ -435,7 +436,7 @@
 				if (Array.isArray(newValue) && props.displayRange && newValue.length >= 2 && props.noCalendar) {
 					// Cas spécifique noCalendar + displayRange : conserver la chaîne de plage complète
 					const start = newValue[0]
-					const end = newValue[1]
+					const end = newValue[newValue.length - 1]
 					if (start && end) {
 						textInputValue.value = `${formatDate(start, props.format)} - ${formatDate(end, props.format)}`
 					}
@@ -466,7 +467,7 @@
 	})
 
 	// Utilisation du composable pour gérer la sélection de dates
-	const { updateSelectedDates, rangeBoundaryDates, resetRange } = useDateSelection(
+	const { updateSelectedDates, rangeBoundaryDates, generateDateRange, resetRange } = useDateSelection(
 		parseDate,
 		selectedDates,
 		props.format,
@@ -491,10 +492,11 @@
 		initializeSelectedDates,
 		validateDates,
 		updateModel,
+		generateDateRange,
 	})
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
-	const handleDateTextInputUpdate = async (value: DateValue) => {
+	const handleDateTextInputUpdate = async (value: DateModelValue) => {
 		if (isUpdatingFromInternal.value) return
 
 		try {
@@ -515,7 +517,7 @@
 				const endDate = parseDate(endDateStr, props.dateFormatReturn || props.format)
 
 				if (startDate && endDate) {
-					selectedDates.value = [startDate, endDate]
+					selectedDates.value = generateDateRange(startDate, endDate)
 					displayFormattedDate.value = `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
 				}
 			}
@@ -536,7 +538,7 @@
 	}
 
 	// Gestionnaire pour les événements date-selected du DateTextInput
-	const handleDateTextInputSelection = async (value: DateValue) => {
+	const handleDateTextInputSelection = async (value: DateModelValue) => {
 		if (isUpdatingFromInternal.value) return
 
 		// Mettre à jour le modèle avec la valeur sélectionnée
@@ -775,7 +777,6 @@
 
 	// Utilisation du composable pour gérer le mode d'affichage du CalendarMode
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
-		// Fonction qui retourne la valeur actuelle de isBirthDate (combinaison de isBirthDate et birthDate)
 		() => props.isBirthDate || props.birthDate,
 		// Fonction qui retourne l'état de la date sélectionnée
 		() => selectedDates.value,
