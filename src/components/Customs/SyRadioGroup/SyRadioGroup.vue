@@ -270,6 +270,11 @@
 </template>
 
 <style scoped>
+:deep(.v-input__details) {
+	display: block !important;
+	padding-inline: 0 !important;
+	margin-top: -10px !important;
+}
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
 }
@@ -301,10 +306,6 @@
 .success-field {
 	:deep(.v-messages__message) {
 		color: rgb(var(--v-theme-success)) !important;
-	}
-
-	:deep(.v-selection-control__input) {
-		color: rgb(var(--v-theme-success));
 	}
 }
 
