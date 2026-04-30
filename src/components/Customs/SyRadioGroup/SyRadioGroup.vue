@@ -2,6 +2,7 @@
 
 	import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue'
 	import type { VRadioGroup } from 'vuetify/components'
+	import { VMessages } from 'vuetify/components'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
@@ -224,10 +225,6 @@
 		:error="hasError"
 		:error-messages="hasError ? errors : undefined"
 		:aria-describedby="messageId"
-		:messages="hasError ? errors :
-			hasWarning ? warnings :
-			(hasSuccess ? displaySuccesses : [])
-		"
 	>
 		<v-radio
 			v-for="opt in props.options"
@@ -258,12 +255,27 @@
 			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
 			}}</span>.
 		</span>
+		<template
+			v-if="!hasError && (hasWarning || hasSuccess)"
+			#details
+		>
+			<div class="v-input__details sy-radio-group__messages">
+				<VMessages
+					:active="hasWarning || (hasSuccess && displaySuccesses.length > 0)"
+					:messages="hasWarning ? warnings : displaySuccesses"
+				/>
+			</div>
+		</template>
 	</v-radio-group>
 </template>
 
 <style scoped>
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
+}
+
+.sy-radio-group__messages {
+	align-items: flex-start;
 }
 
 .sb-show-main.sb-main-centered #storybook-root {
@@ -289,6 +301,10 @@
 .success-field {
 	:deep(.v-messages__message) {
 		color: rgb(var(--v-theme-success)) !important;
+	}
+
+	:deep(.v-selection-control__input) {
+		color: rgb(var(--v-theme-success));
 	}
 }
 
