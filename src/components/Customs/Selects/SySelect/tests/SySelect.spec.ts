@@ -727,11 +727,19 @@ describe('SySelect.vue', () => {
 			const instance = wrapper.vm as any
 			expect(instance.hasError).toBe(false)
 
+			// Sélection de Option 1 via interaction utilisateur
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.findComponent(VList).findAll('.v-list-item').at(0)!.trigger('click')
 			await wrapper.setProps({ modelValue: '1' })
 
 			await vi.waitUntil(() => instance.hasError === true)
 			expect(wrapper.find('.v-messages').text()).toContain('Test error message')
 
+			// Sélection de Option 2 via interaction utilisateur
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.findComponent(VList).findAll('.v-list-item').at(1)!.trigger('click')
 			await wrapper.setProps({ modelValue: '2' })
 
 			await vi.waitUntil(() => instance.hasError === false)
