@@ -16,7 +16,7 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
-	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
+	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue } from '../types'
 
 	dayjs.extend(customParseFormat)
@@ -40,7 +40,7 @@
 		isOutlined?: boolean
 		isValidateOnBlur?: boolean
 		label: string
-		modelValue?: DateValue
+		modelValue?: DateModelValue
 		noIcon?: boolean
 		persistentHint?: boolean
 		placeholder?: string
@@ -77,11 +77,11 @@
 	})
 
 	const emit = defineEmits<{
-		(e: 'update:model-value', value: DateValue): void
+		(e: 'update:model-value', value: DateModelValue): void
 		(e: 'focus'): void
 		(e: 'blur'): void
 		(e: 'input', value: string): void
-		(e: 'date-selected', value: DateValue): void
+		(e: 'date-selected', value: DateModelValue): void
 	}>()
 
 	/**
@@ -578,7 +578,7 @@
 		return formatDate(date, returnFormat.value)
 	}
 
-	function emitModel(val: DateValue) {
+	function emitModel(val: DateModelValue) {
 		emit('update:model-value', val)
 	}
 
@@ -690,12 +690,31 @@
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
+				// Guard isFormatting to prevent the modelValue watcher from
+				// rewriting inputValue in reaction to our own emit.
+				isFormatting.value = true
 				emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
 			}
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
 					const dateRangeParts = inputValue.value.split(' - ')
-					if (dateRangeParts.length === 2) emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+					if (dateRangeParts.length === 2) {
+						const sd = dayjs(dateRangeParts[0]!, displayFormat.value, true)
+						const ed = dayjs(dateRangeParts[1]!, displayFormat.value, true)
+						// Guard isFormatting to prevent the modelValue watcher from
+						// rewriting inputValue in reaction to our own emit.
+						isFormatting.value = true
+						if (sd.isValid() && ed.isValid()) {
+							const emittedRange: [string, string] = [
+								returnFormat.value !== displayFormat.value ? sd.format(returnFormat.value) : dateRangeParts[0]!,
+								returnFormat.value !== displayFormat.value ? ed.format(returnFormat.value) : dateRangeParts[1]!,
+							]
+							emitModel(emittedRange)
+						}
+						else {
+							emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+						}
+					}
 					else emitModel(inputValue.value)
 				}
 				else emitModel(inputValue.value)
@@ -703,29 +722,40 @@
 			else {
 				runRules(inputValue.value)
 				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
-				// Only emit null for format errors, not for custom rule errors
-				if (!formatValidationResult.isValid) {
-					emitModel(null)
-				}
-				// For custom rule errors with valid format, keep the current value
+				// Keep the invalid input visible so the user can correct it.
+				// Do NOT emit null — that would trigger the modelValue watcher
+				// which clears inputValue and hides the error message.
+				return
 			}
 		}
 
 		// autoClamp au blur
-		if (props.autoClamp) inputValue.value = clampIfNeeded(inputValue.value)
+		if (props.autoClamp) {
+			const clamped = clampIfNeeded(inputValue.value)
+			if (clamped !== inputValue.value) {
+				inputValue.value = clamped
 
-		// Sync model après clamp
-		if (isRange.value) {
-			const [startDate, endDate] = parseRangeInput(inputValue.value)
-			if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
-			else if (startDate) emit('date-selected', toReturnFormat(startDate))
-		}
-		else {
-			const parsedDate = parseDate(inputValue.value, displayFormat.value)
-			if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
+				// Sync model après clamp uniquement si la valeur a changé
+				isFormatting.value = true
+				if (isRange.value) {
+					const [startDate, endDate] = parseRangeInput(inputValue.value)
+					if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
+					else if (startDate) emit('date-selected', toReturnFormat(startDate))
+				}
+				else {
+					const parsedDate = parseDate(inputValue.value, displayFormat.value)
+					if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
+				}
+			}
 		}
 
 		runRules(inputValue.value)
+
+		// Release isFormatting after the current microtask so that
+		// the modelValue watcher (triggered synchronously by emitModel)
+		// stays blocked, but future external changes are allowed.
+		await nextTick()
+		isFormatting.value = false
 	}
 
 	/**

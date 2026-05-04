@@ -275,6 +275,13 @@
 		return 'rgba(0, 0, 0, 1)'
 	})
 
+	const clearButtonColorClass = computed(() => {
+		if (hasError.value) return 'error-field'
+		if (hasWarning.value) return 'warning-field'
+		if (hasSuccess.value) return 'success-field'
+		return 'text-iconBase'
+	})
+
 	const handlePrependIconClick = () => {
 		emit('prepend-icon-click')
 	}
@@ -778,7 +785,8 @@
 					<!-- Keyboard-focusable clear button -->
 					<VBtn
 						v-if="showClear"
-						class="v-btn v-btn--density-compact mr-1 text-iconBase"
+						class="v-btn v-btn--density-compact mr-1"
+						:class="clearButtonColorClass"
 						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiClose"
@@ -863,11 +871,21 @@
 	}
 }
 
+.text-iconBase {
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-borderAccentPrimary)) !important;
+	}
+}
+
 .error-field {
 	:deep(.v-input__details > .v-icon),
 	:deep(.v-input__prepend > .v-icon),
 	:deep(.v-input__append > .v-icon) {
 		opacity: 1 !important;
+	}
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-textError)) !important;
 	}
 
 	:deep(.v-field) {
