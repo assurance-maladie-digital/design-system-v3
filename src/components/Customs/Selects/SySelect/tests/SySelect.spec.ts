@@ -171,12 +171,12 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 
-		it('masque les messages de validation par défaut (hideDetails: false)', () => {
+		it('affiche la zone de messages par défaut (hideDetails vaut false par défaut)', () => {
 			const wrapper = mount(SySelect, {
 				attachTo: document.body,
 			})
 
-			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+			expect(wrapper.find('.v-messages').exists()).toBe(true)
 
 			wrapper.unmount()
 		})
