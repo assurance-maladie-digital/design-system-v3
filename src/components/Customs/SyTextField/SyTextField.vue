@@ -275,6 +275,13 @@
 		return 'rgba(0, 0, 0, 1)'
 	})
 
+	const clearButtonColorClass = computed(() => {
+		if (hasError.value) return 'error-field'
+		if (hasWarning.value) return 'warning-field'
+		if (hasSuccess.value) return 'success-field'
+		return 'text-iconBase'
+	})
+
 	const handlePrependIconClick = () => {
 		emit('prepend-icon-click')
 	}
@@ -346,7 +353,7 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return ICONS['error']
 		if (hasWarning.value) return ICONS['warning']
-		if (hasSuccess.value && props.showSuccessMessages) return ICONS['success']
+		if (hasSuccess.value) return ICONS['success']
 		return null
 	})
 
@@ -361,7 +368,7 @@
 	// Détermine s'il y a des messages d'erreur ou d'état
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || hasSuccess.value
+		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages)
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -634,7 +641,7 @@
 			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : messages))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? (props.showSuccessMessages ? successes : []) : messages))"
 			:min-width="props.minWidth"
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"
@@ -778,7 +785,8 @@
 					<!-- Keyboard-focusable clear button -->
 					<VBtn
 						v-if="showClear"
-						class="v-btn v-btn--density-compact mr-1 text-iconBase"
+						class="v-btn v-btn--density-compact mr-1"
+						:class="clearButtonColorClass"
 						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiClose"
@@ -863,11 +871,21 @@
 	}
 }
 
+.text-iconBase {
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-borderAccentPrimary)) !important;
+	}
+}
+
 .error-field {
 	:deep(.v-input__details > .v-icon),
 	:deep(.v-input__prepend > .v-icon),
 	:deep(.v-input__append > .v-icon) {
 		opacity: 1 !important;
+	}
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-textError)) !important;
 	}
 
 	:deep(.v-field) {

@@ -155,6 +155,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Boutons',
 					},
 					{
+						title: 'Tooltip',
+						description: 'Utilisé pour transmettre des informations lorsqu’un utilisateur survole un élément.',
+						link: '/?path=/docs/composants-composants-vuetify-vtooltip--docs',
+						img: `/components/tooltip${isAp ? '-ap' : ''}.svg`,
+						category: 'Feedback',
+					},
+					{
 						title: 'LangBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de choisir la langue de l’application.',
 						link: '/?path=/docs/composants-boutons-langbtn--docs',
@@ -396,7 +403,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DialogBox',
 						description: 'Utilisé pour afficher une boîte de dialogue avec des boutons d\'action.',
 						link: '/?path=/docs/composants-feedback-dialogbox--docs',
-						img: '/components/dialog-box.svg',
+						img: `/components/dialog-box${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -420,6 +427,13 @@ export const ComponentsList: StoryObj = {
 						img: '/components/rating-picker.svg',
 						category: 'Feedback',
 					},
+					{
+						title: 'FilterSideBar',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
 				]
 
 				const categoryOrder = [
@@ -431,12 +445,14 @@ export const ComponentsList: StoryObj = {
 					'Tableaux',
 					'Données',
 					'Feedback',
+					'Filtres',
 				]
 
 				const apComponents = [
 					'FooterBar',
 					'HeaderBar',
 					'HeaderLoading',
+					'Breadcrumbs',
 					'PageContainer',
 					'CopyBtn',
 					'DownloadBtn',
@@ -450,6 +466,13 @@ export const ComponentsList: StoryObj = {
 					'SyIconBtn',
 					'NirField',
 					'Card',
+					'FilterSideBar',
+					'SyTextField',
+					'Switch',
+					'Tooltip',
+					'SkeletonLoader',
+					'OTPInput',
+					'DialogBox',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

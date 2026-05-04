@@ -3,7 +3,6 @@
 // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/slider_role
 
 <script setup lang="ts">
-	import { cnamColorsTokens } from '@/designTokens'
 	import { computed, ref, toRef, watch, type Ref } from 'vue'
 	import Tooltip from './Tooltip/Tooltip.vue'
 	import type { PropsStyle } from './types'
@@ -27,15 +26,12 @@
 				maxLabel?: string
 			}>(),
 		{
-			'modelValue': () => [],
-			'min': 0,
-			'max': 100,
-			'step': 1,
-			'minLabel': 'Minimum',
-			'maxLabel': 'Maximum',
-			'thumb-color': cnamColorsTokens.blue.base,
-			'track-color': cnamColorsTokens.blue.lighten60,
-			'track-fill-color': cnamColorsTokens.blue.lighten20,
+			modelValue: () => [],
+			min: 0,
+			max: 100,
+			step: 1,
+			minLabel: 'Minimum',
+			maxLabel: 'Maximum',
 		},
 	)
 
@@ -259,9 +255,6 @@ $virtual-thumb-size: 40px;
 .wrapper {
 	--sy-track-height: 4px;
 	--sy-thumb-size: 20px;
-	--sy-thumb-color: v-bind(props.thumbColor);
-	--sy-track-color: v-bind(props.trackColor);
-	--sy-track-fill-color: v-bind(props.trackFillColor);
 
 	position: relative;
 	margin-inline: var(--sy-thumb-size);
@@ -280,7 +273,7 @@ $virtual-thumb-size: 40px;
 		transform: translate(0, -50%);
 		width: 100%;
 		height: var(--sy-track-height);
-		background-color: var(--sy-track-color);
+		background-color: rgb(var(--v-theme-backgroundInfoSubdued));
 	}
 }
 
@@ -305,7 +298,7 @@ $virtual-thumb-size: 40px;
 		transform: translate(-50%, -50%);
 		width: var(--sy-thumb-size);
 		height: var(--sy-thumb-size);
-		background-color: var(--sy-thumb-color);
+		background-color: rgb(var(--v-theme-primary));
 		border-radius: 50%;
 		transform-origin: bottom right;
 		transition: transform 0.1s;
@@ -320,7 +313,7 @@ $virtual-thumb-size: 40px;
 		transform: translate(-50%, -50%);
 		width: var(--sy-thumb-size);
 		height: var(--sy-thumb-size);
-		background-color: var(--sy-thumb-color);
+		background-color: rgb(var(--v-theme-primary));
 		opacity: 0.4;
 		border-radius: 50%;
 		transform-origin: bottom right;
@@ -358,7 +351,7 @@ $virtual-thumb-size: 40px;
 	transform: translate(-50%, -50%);
 	width: var(--sy-thumb-size);
 	height: var(--sy-thumb-size);
-	background-color: var(--sy-thumb-color);
+	background-color: rgb(var(--v-theme-primary));
 	border-radius: 50%;
 	box-shadow: 0 1px 5px 0 #0000001f, 0 2px 2px 0 #00000024, 0 3px 1px -2px #0003;
 }
@@ -388,7 +381,7 @@ $virtual-thumb-size: 40px;
 	transform: translate(0, -50%);
 	width: 100%;
 	height: var(--sy-track-height);
-	background-color: var(--sy-track-fill-color);
+	background-color: rgb(var(--v-theme-accentPrimaryLight));
 	transition: all 0.1s;
 }
 

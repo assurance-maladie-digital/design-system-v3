@@ -1,15 +1,10 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'cypress'
 import { addMatchImageSnapshotPlugin } from '@simonsmith/cypress-image-snapshot/plugin'
+import vue from '@vitejs/plugin-vue'
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 async function createCypressViteConfig() {
-	const [vueModule, vuetifyModule] = await Promise.all([
-		import('@vitejs/plugin-vue'),
-		import('vite-plugin-vuetify'),
-	])
-	const { default: vue } = vueModule
-	const { default: vuetify, transformAssetUrls } = vuetifyModule
-
 	return {
 		plugins: [
 			vue({
@@ -22,9 +17,19 @@ async function createCypressViteConfig() {
 		],
 		resolve: {
 			alias: {
-				'vue': 'vue/dist/vue.esm-bundler.js',
 				'@': fileURLToPath(new URL('./src', import.meta.url)),
 				'@tests': fileURLToPath(new URL('./tests', import.meta.url)),
+			},
+		},
+		build: {
+			rollupOptions: {
+				external: ['vue', /^vuetify/],
+				output: {
+					globals: {
+						vue: 'Vue',
+						vuetify: 'Vuetify',
+					},
+				},
 			},
 		},
 		css: {

@@ -95,9 +95,9 @@ export function useValidation(params: {
 			errors: ref<string[]>([]),
 			warnings: ref<string[]>([]),
 			successes: ref<string[]>([]),
-			hasError: computed(() => false),
-			hasWarning: computed(() => false),
-			hasSuccess: computed(() => false),
+			hasError: computed(() => params.hasErrorProp?.value ?? false),
+			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
+			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
 			validate: async () => true,
 		}
 	}
@@ -176,7 +176,10 @@ export function useValidation(params: {
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
-	const hasSuccess = computed(() => (successes.value.length > 0 && !hasError.value && !hasWarning.value) || params.hasSuccessProp?.value)
+	const hasSuccess = computed(() => (
+		(innerSuccesses.value.length > 0 || (params.successMessages?.value || []).length > 0)
+		&& !hasError.value && !hasWarning.value
+	) || params.hasSuccessProp?.value)
 
 	return {
 		errors,

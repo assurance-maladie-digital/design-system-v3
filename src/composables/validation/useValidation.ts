@@ -69,6 +69,9 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	const hasSuccess = computed(() =>
 		successes.value.length > 0 && !hasError.value && !hasWarning.value,
 	)
+	const displaySuccesses = computed(() =>
+		options.showSuccessMessages !== false ? successes.value : [],
+	)
 
 	const clearValidation = () => {
 		errors.value = []
@@ -175,8 +178,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 					hasValidationError = true
 				}
 			}
-
-			if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0) {
+			// if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0)
+			if (!hasValidationError && value && successRules.length === 0) {
 				addDefaultSuccessMessage(rules)
 			}
 
@@ -207,7 +210,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 
 		return thenOrSync(successResolved, token, (successResults) => {
 			for (const r of successResults) {
-				if (r.success && options.showSuccessMessages !== false) {
+				// if (r.success && options.showSuccessMessages !== false)
+				if (r.success) {
 					successes.value.push(r.success)
 				}
 			}
@@ -223,6 +227,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		errors,
 		warnings,
 		successes,
+		displaySuccesses,
 		hasError,
 		hasWarning,
 		hasSuccess,

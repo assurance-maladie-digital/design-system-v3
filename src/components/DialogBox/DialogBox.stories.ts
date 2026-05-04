@@ -730,7 +730,7 @@ export const VuetifyOptions: Story = {
 				rounded: 'xl',
 			},
 			cardTitle: {
-				class: 'pa-5 mb-4 accent--text',
+				class: 'pa-5 mb-4 secondary--text',
 			},
 			closeBtn: {
 				class: {
@@ -738,14 +738,14 @@ export const VuetifyOptions: Story = {
 				},
 			},
 			icon: {
-				color: 'accent',
+				color: 'secondary',
 			},
 			cancelBtn: {
-				color: 'accent',
+				color: 'secondary',
 				text: false,
 			},
 			confirmBtn: {
-				color: 'accent',
+				color: 'secondary',
 				text: true,
 			},
 		},
@@ -813,7 +813,7 @@ export const VuetifyOptions: Story = {
 							rounded: 'xl',
 						},
 						cardTitle: {
-							class: 'pa-5 mb-4 accent--text',
+							class: 'pa-5 mb-4 secondary--text',
 						},
 						closeBtn: {
 							class: {
@@ -821,14 +821,14 @@ export const VuetifyOptions: Story = {
 							},
 						},
 						icon: {
-							color: 'accent',
+							color: 'secondary',
 						},
 						cancelBtn: {
-							color: 'accent',
+							color: 'secondary',
 							text: false,
 						},
 						confirmBtn: {
-							color: 'accent',
+							color: 'secondary',
 							text: true,
 						},
 					}
