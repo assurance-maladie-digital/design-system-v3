@@ -102,4 +102,5 @@ export const apLightTheme = {
 	iconDisabled: apSemanticTokens.colors.icon.disabled,
 	iconDisabledOnDark: apSemanticTokens.colors.icon.disabledOnDark,
 	feedbackOnSuccess: baseColors.white.base,
+	colorPrimary: baseColors.cyan.base,
 }
