@@ -224,7 +224,7 @@
 .sy-accordion-title {
 	display: flex;
 	align-items: center;
-    gap: 8px;
+	gap: 8px;
 }
 
 .sy-accordion-right-content {
