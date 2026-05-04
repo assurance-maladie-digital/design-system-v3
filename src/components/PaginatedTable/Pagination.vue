@@ -77,7 +77,7 @@
 }
 
 :deep(.v-pagination) .v-pagination__list [aria-disabled='false'] svg {
-	color: rgb(var(--v-theme-iconBase));
+  color: rgb(var(--v-theme-colorPrimary));
 }
 
 :deep(.v-pagination) .v-btn--variant-plain[aria-disabled='false'] {
@@ -85,6 +85,6 @@
 }
 
 :deep(.v-pagination) .v-btn--variant-plain:hover[aria-disabled='false'] svg {
-	color: rgb(var(--v-theme-textBase));
+  color: rgb(var(--v-theme-colorOnSurface));
 }
 </style>

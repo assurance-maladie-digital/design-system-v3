@@ -1273,40 +1273,40 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textSuccess)) !important;
+    color: rgb(var(--v-theme-feedbackSuccess)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+    color: rgb(var(--v-theme-feedbackSuccess)) !important;
 	}
 }
 
 .v-messages__message--error {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textError)) !important;
+    color: rgb(var(--v-theme-feedbackError)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderError)) !important;
+    color: rgb(var(--v-theme-feedbackError)) !important;
 	}
 }
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: rgb(var(--v-theme-textWarning)) !important;
+    color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textWarning)) !important;
+    color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-textWarning)) !important;
+    color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
 	}
 }
 

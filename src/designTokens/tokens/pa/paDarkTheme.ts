@@ -1,5 +1,5 @@
-import { paColorsTokens } from '../pa/paColors'
+import { baseTokens } from '@/designTokens/tokens/baseTokens'
 
 export const paDarkTheme = {
-	backgroundSurface: paColorsTokens.parma.darken60,
+	backgroundSurface: baseTokens.color.parma.darken60,
 }

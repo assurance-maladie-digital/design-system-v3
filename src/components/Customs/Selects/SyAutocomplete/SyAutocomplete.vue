@@ -660,7 +660,7 @@
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-iconBase));
+  color: rgb(var(--v-theme-colorPrimary));
 }
 
 .sy-autocomplete__chip {
@@ -728,7 +728,7 @@ li:hover {
 .v-list-item.keyboard-focused,
 li:focus-visible,
 li.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+  outline: 2px solid rgb(var(--v-theme-colorPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }

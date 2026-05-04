@@ -49,7 +49,7 @@
 	justify-content: center;
 	font-weight: 700;
 	background-color: rgb(var(--v-theme-primary));
-	color: rgb(var(--v-theme-textOnDark));
+  color: rgb(var(--v-theme-colorOnPrimary));
 	border: 2px solid transparent;
 	border-bottom:
 		solid 2px linear-gradient(
@@ -72,7 +72,7 @@
 .header-menu-btn__open {
 	background-color: rgb(var(--v-theme-surface));
 	color: rgb(var(--v-theme-primary));
-	border-color: rgb(var(--v-theme-textOnDark));
+  border-color: rgb(var(--v-theme-colorOnPrimary));
 }
 
 @media screen and (max-width: ($header-breakpoint + 1)) {

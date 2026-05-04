@@ -164,23 +164,23 @@
 
 	p,
 	.text-primary {
-		color: rgba(var(--v-theme-textOnDark), 0.6) !important;
+    color: rgba(var(--v-theme-colorOnPrimary), 0.6) !important;
 	}
 
 	svg {
-		fill: rgb(var(--v-theme-textOnDark)) !important;
+    fill: rgb(var(--v-theme-colorOnPrimary)) !important;
 	}
 
 	.v-label {
-		color: rgba(var(--v-theme-textOnDark), 0.6) !important;
+    color: rgba(var(--v-theme-colorOnPrimary), 0.6) !important;
 	}
 
 	.v-field__input {
-		color: rgb(var(--v-theme-textOnDark)) !important;
+    color: rgb(var(--v-theme-colorOnPrimary)) !important;
 	}
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgba(var(--v-theme-textOnDark), 0.1);
+  background: rgba(var(--v-theme-colorOnPrimary), 0.1);
 }
 </style>

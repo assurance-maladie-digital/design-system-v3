@@ -174,7 +174,7 @@
 .sy-file-upload {
 	cursor: pointer;
 	position: relative;
-	border: 1px dashed rgb(var(--v-theme-borderAccentPrimary));
+  border: 1px dashed rgb(var(--v-theme-colorPrimary));
 	border-radius: var(--v-radius-roundedLg);
 	transition: background 0.25s;
 

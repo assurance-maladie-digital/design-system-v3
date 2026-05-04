@@ -180,11 +180,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-borderWarning));
+    color: rgb(var(--v-theme-feedbackWarning));
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-borderWarning));
+    color: rgb(var(--v-theme-feedbackWarning));
 	}
 }
 </style>

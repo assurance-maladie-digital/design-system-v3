@@ -217,7 +217,7 @@
 @mixin redesign($type, $map) {
 	&.alert--#{$type}.v-alert--variant-tonal {
 		background: map.get($map, 'background') !important;
-		color: rgb(var(--v-theme-textBase)) !important;
+    color: rgb(var(--v-theme-colorOnSurface)) !important;
 
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;

@@ -1,6 +1,4 @@
-import { apSemanticTokens } from './apSemantic'
 import { baseTokens } from '../baseTokens'
-import { semanticTokens } from '../semanticTokens'
 
 export const apLightTheme = {
 	primary: baseTokens.color.cyan.darken20,
@@ -20,70 +18,15 @@ export const apLightTheme = {
 	risquePro: baseTokens.color.red.base,
 	light: baseTokens.color.grey.lighten60,
 	dark: baseTokens.color.grey.darken80,
-	overlayOnDark: apSemanticTokens.colors.overlay.onDark,
-	overlayOnLight: apSemanticTokens.colors.overlay.onLight,
-	interactiveSelectionDisabled: apSemanticTokens.colors.interactive.selectionDisabled,
-	backgroundMain: apSemanticTokens.colors.background.main,
-	backgroundSurface: apSemanticTokens.colors.background.surface,
-	backgroundSurfaceAlt: apSemanticTokens.colors.background.surfaceAlt,
-	backgroundMainAlt: apSemanticTokens.colors.background.mainAlt,
-	backgroundRaised: apSemanticTokens.colors.background.raised,
-	backgroundAccent: apSemanticTokens.colors.background.accent,
-	backgroundDisabled: apSemanticTokens.colors.background.disabled,
-	backgroundDisabledOnDark: apSemanticTokens.colors.background.disabledOnDark,
-	backgroundAssure: apSemanticTokens.colors.background.assure,
-	backgroundProfessionnel: apSemanticTokens.colors.background.professionnel,
-	backgroundEntreprise: apSemanticTokens.colors.background.entreprise,
-	borderDarker: apSemanticTokens.colors.border.darker,
-	borderBase: apSemanticTokens.colors.border.base,
-	borderSubdued: apSemanticTokens.colors.border.subdued,
-	borderAccentPrimary: apSemanticTokens.colors.border.accentPrimary,
-	borderAccentPrimaryContrasted: apSemanticTokens.colors.border.accentPrimaryContrasted,
-	borderAccentPrimaryOnDark: apSemanticTokens.colors.border.accentPrimaryOnDark,
-	borderAccentSecondary: apSemanticTokens.colors.border.accentSecondary,
-	borderAccentSecondaryContrasted: apSemanticTokens.colors.border.accentSecondaryContrasted,
-	borderInfo: apSemanticTokens.colors.border.info,
-	borderSuccess: apSemanticTokens.colors.border.success,
-	borderWarning: apSemanticTokens.colors.border.warning,
-	borderError: apSemanticTokens.colors.border.error,
-	borderOnDark: apSemanticTokens.colors.border.onDark,
-	borderDisabled: apSemanticTokens.colors.border.disabled,
-	borderDisabledOnDark: apSemanticTokens.colors.border.disabledOnDark,
-	textBase: apSemanticTokens.colors.text.base,
-	textAccentPrimary: apSemanticTokens.colors.text.accentPrimary,
-	textAccentPrimaryContrasted: apSemanticTokens.colors.text.accentPrimaryContrasted,
-	textAccentSecondary: apSemanticTokens.colors.text.accentSecondary,
-	textSubdued: apSemanticTokens.colors.text.subdued,
-	textInfo: apSemanticTokens.colors.text.info,
-	textSuccess: apSemanticTokens.colors.text.success,
-	textOnSuccess: semanticTokens.ap.feedback.onSuccess,
-	textWarning: apSemanticTokens.colors.text.warning,
-	textError: apSemanticTokens.colors.text.error,
-	textDisabled: apSemanticTokens.colors.text.disabled,
-	textOnDark: apSemanticTokens.colors.text.onDark,
-	textSubduedOnDark: apSemanticTokens.colors.text.subduedOnDark,
-	textDisabledOnDark: apSemanticTokens.colors.text.disabledOnDark,
-	iconBase: apSemanticTokens.colors.icon.base,
-	iconSubdued: apSemanticTokens.colors.icon.subdued,
-	iconSubduedOnDark: apSemanticTokens.colors.icon.subduedOnDark,
-	iconAccentPrimary: apSemanticTokens.colors.icon.accentPrimary,
-	iconAccentPrimaryContrasted: apSemanticTokens.colors.icon.accentPrimaryContrasted,
-	iconAccentSecondary: apSemanticTokens.colors.icon.accentSecondary,
-	iconInfo: apSemanticTokens.colors.icon.info,
-	iconSuccess: apSemanticTokens.colors.icon.success,
-	iconWarning: apSemanticTokens.colors.icon.warning,
-	iconError: apSemanticTokens.colors.icon.error,
-	iconOnDark: apSemanticTokens.colors.icon.onDark,
-	iconDisabled: apSemanticTokens.colors.icon.disabled,
-	iconDisabledOnDark: apSemanticTokens.colors.icon.disabledOnDark,
-
-	/// NEW ///
 
 	colorBorder: baseTokens.color.cyan.darken20,
 	colorBorderVariant: baseTokens.color.grey.lighten40,
+	colorBorderBright: baseTokens.color.white.base,
+	colorBorderDim: baseTokens.color.white.alpha40,
 	colorDisabled: baseTokens.color.grey.lighten80,
 	colorInverseSurface: baseTokens.color.grey.base,
 	colorOnDisabled: baseTokens.color.grey.lighten40,
+	colorOnDisabledVariant: baseTokens.color.white.alpha40,
 	colorOnPrimary: baseTokens.color.white.base,
 	colorOnPrimaryVariant: baseTokens.color.white.base,
 	colorOnSecondary: baseTokens.color.white.base,
@@ -131,71 +74,3 @@ export const apLightTheme = {
 	interactionLightenHover: baseTokens.color.white.alpha20,
 	interactionLightenPressed: baseTokens.color.white.alpha38,
 }
-
-//     overlayOnDark: interactionDarkHover,
-//     overlayOnLight: interactionLightHover,
-
-//
-//
-//
-//
-//
-//     backgroundDisabled: colorDisabled,
-//     backgroundDisabledOnDark: colorOnDisabled,
-//
-//     backgroundAssure: feedbackInfoVariant,
-//     backgroundProfessionnel: colorSecondary,
-//     backgroundEntreprise: feedbackWarning,
-//
-//     borderDarker: colorBorder,
-//     borderBase: colorBorderVariant,
-//     borderSubdued: colorDisabled,
-//
-//     borderAccentPrimary: colorPrimary,
-//     borderAccentPrimaryContrasted: colorPrimaryVariant,
-//     borderAccentPrimaryOnDark: colorOnPrimary,
-//
-//     borderAccentSecondary: colorSecondary,
-//     borderAccentSecondaryContrasted: colorSecondaryVariant,
-//
-//     borderInfo: feedbackInfo,
-//     borderSuccess: feedbackSuccess,
-//     borderWarning: feedbackWarning,
-//     borderError: feedbackError,
-//
-//     borderOnDark: colorOnPrimary,
-//     borderDisabled: colorDisabled,
-//     borderDisabledOnDark: colorOnDisabled,
-//
-//     textBase: colorOnSurface,
-//     textAccentPrimary: colorPrimary,
-//     textAccentPrimaryContrasted: colorPrimaryVariant,
-//     textAccentSecondary: colorSecondary,
-//     textSubdued: colorOnSurfaceVariant,
-//
-//     textInfo: feedbackOnInfo,
-//     textSuccess: feedbackOnSuccess,
-//     textWarning: feedbackOnWarning,
-//     textError: feedOnbackError,
-//
-//     textDisabled: colorOnDisabled,
-//     textOnDark: colorOnPrimary,
-//     textSubduedOnDark: colorOnPrimaryVariant,
-//     textDisabledOnDark: colorOnDisabled,
-//
-//     iconBase: colorPrimary,
-//     iconSubdued: colorOnSurfaceVariant,
-//     iconSubduedOnDark: colorOnPrimaryVariant,
-//
-//     iconAccentPrimary: colorPrimary,
-//     iconAccentPrimaryContrasted: colorPrimaryVariant,
-//     iconAccentSecondary: colorSecondary,
-//
-//     iconInfo: feedbackOnInfo,
-//     iconSuccess: feedbackOnSuccess,
-//     iconWarning: feedbackOnWarning,
-//     iconError: feedbackOnError,
-//
-//     iconOnDark: colorOnPrimary,
-//     iconDisabled: colorOnDisabled,
-//     iconDisabledOnDark: colorOnDisabled,

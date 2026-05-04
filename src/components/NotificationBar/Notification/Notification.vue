@@ -137,11 +137,11 @@
 
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {
-		background-color: rgb(var(--v-theme-feedbackOnInfo, '12, 65, 154'));
-		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+    background-color: rgb(var(--v-theme-feedbackOnInfo));
+    color: rgb(var(--v-theme-colorOnPrimary));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+      outline: 2px solid rgb(var(--v-theme-colorOnPrimary));
 		}
 	}
 
@@ -150,25 +150,25 @@
 		color: rgb(var(--v-theme-feedbackOnSuccess));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textOnSuccess));
+      outline: 2px solid rgb(var(--v-theme-feedbackOnSuccess));
 		}
 	}
 
 	.notification--warning {
 		background-color: rgb(var(--v-theme-feedbackWarning));
-		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
+    color: rgb(var(--v-theme-colorOnSurface));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textBase, '0, 0, 0'));
+      outline: 2px solid rgb(var(--v-theme-colorOnSurface));
 		}
 	}
 
 	.notification--error {
 		background-color: rgb(var(--v-theme-feedbackError));
-		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+    color: rgb(var(--v-theme-colorOnPrimary));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+      outline: 2px solid rgb(var(--v-theme-colorOnPrimary));
 		}
 	}
 
