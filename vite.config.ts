@@ -47,7 +47,6 @@ export default defineConfig({
 			cssFileName: 'synapse',
 			formats: ['es'],
 		},
-		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
 			external: ['vue', /^vuetify/],
 			output: {
@@ -59,6 +58,13 @@ export default defineConfig({
 				},
 			},
 		},
+	},
+	optimizeDeps: {
+		include: [
+			'dayjs',
+			'dayjs/plugin/customParseFormat',
+			'deepmerge',
+		],
 	},
 	css: {
 		preprocessorOptions: {

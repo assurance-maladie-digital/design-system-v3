@@ -1,8 +1,13 @@
 # Exclude tests and documentation from src/
 src/**/*.spec.ts
+src/**/*.cy.ts
 src/**/__snapshots__
 src/**/*.stories.ts
 src/**/*.mdx
+
+a11y-report.md
+a11y-status-report.md
+memory-leak-report.txt
 
 # Exclude entire folders not needed in production
 src/stories/
