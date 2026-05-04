@@ -137,7 +137,7 @@
 
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {
-    background-color: rgb(var(--v-theme-feedbackOnInfo, '12, 65, 154'));
+		background-color: rgb(var(--v-theme-feedbackOnInfo, '12, 65, 154'));
 		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
 
 		.notification__close:focus-visible {
@@ -146,7 +146,7 @@
 	}
 
 	.notification--success {
-    background-color: rgb(var(--v-theme-feedbackSuccess, '86, 194, 113'));
+		background-color: rgb(var(--v-theme-feedbackSuccess, '86, 194, 113'));
 		color: rgb(var(--v-theme-feedbackOnSuccess));
 
 		.notification__close:focus-visible {
@@ -155,7 +155,7 @@
 	}
 
 	.notification--warning {
-    background-color: rgb(var(--v-theme-feedbackWarning));
+		background-color: rgb(var(--v-theme-feedbackWarning));
 		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
 
 		.notification__close:focus-visible {
@@ -164,7 +164,7 @@
 	}
 
 	.notification--error {
-    background-color: rgb(var(--v-theme-feedbackError));
+		background-color: rgb(var(--v-theme-feedbackError));
 		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
 
 		.notification__close:focus-visible {

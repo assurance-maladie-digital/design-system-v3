@@ -273,7 +273,7 @@ $virtual-thumb-size: 40px;
 		transform: translate(0, -50%);
 		width: 100%;
 		height: var(--sy-track-height);
-    background-color: rgb(var(--v-theme-feedbackInfoVariant));
+		background-color: rgb(var(--v-theme-feedbackInfoVariant));
 	}
 }
 
