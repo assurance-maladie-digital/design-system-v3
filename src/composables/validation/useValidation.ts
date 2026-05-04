@@ -181,7 +181,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				}
 			}
 
-			if (!hasValidationError && value && successRules.length === 0) {
+			const isValueFilled = Array.isArray(value) ? value.length > 0 : !!value
+			if (!hasValidationError && isValueFilled && successRules.length === 0) {
 				successState.value = true
 				if (options.showSuccessMessages !== false) {
 					addDefaultSuccessMessage(rules)

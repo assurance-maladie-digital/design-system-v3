@@ -916,7 +916,7 @@ const options = [
 		return {
 			components: { SySelect },
 			setup() {
-				const selectedOptions = ref([])
+				const selectedOptions = ref(null)
 
 				return { args, selectedOptions }
 			},
@@ -993,7 +993,7 @@ const options = [
 		return {
 			components: { SySelect },
 			setup() {
-				const selectedOptions = ref([])
+				const selectedOptions = ref(null)
 
 				return { args, selectedOptions }
 			},
