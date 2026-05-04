@@ -12,7 +12,7 @@ export interface FieldValidationProps {
 	isValidateOnBlur?: boolean
 	showSuccessMessages?: boolean
 	disableErrorHandling?: boolean
-	// Quand cette prop vaut true (mode natif Vuetify), le contrôleur ne gère plus les erreurs/succès
+	// Quand cette prop vaut true (mode natif Vuetify), c'est Vuetify qui gère les erreurs, avertissements et succès
 	useVuetifyValidation?: boolean
 	label?: string
 	rules?: VuetifyValidationRule[]
