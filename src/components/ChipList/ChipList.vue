@@ -30,10 +30,10 @@
 	}
 
 	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'backgroundSuccessSubdued',
-		warning: 'backgroundWarningSubdued',
-		error: 'backgroundErrorSubdued',
-		info: 'backgroundInfoSubdued',
+		success: 'feedbackSuccessVariant',
+		warning: 'feedbackWarningVariant',
+		error: 'feedbackErrorVariant',
+		info: 'feedbackInfoVariant',
 	} as const
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {

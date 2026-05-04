@@ -181,7 +181,7 @@
 	&:hover,
 	&:focus-within,
 	&.dragover {
-		background: rgb(var(--v-theme-backgroundSurfaceAlt));
+    background: rgb(var(--v-theme-colorSurfaceDim));
 	}
 
 	&.dark-mode {

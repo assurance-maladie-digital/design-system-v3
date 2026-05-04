@@ -1223,13 +1223,13 @@ export const RaisedBackgrounds: StoryObj = {
 				const colorDescription = 'Elle s’utilise sur les éléments ayant besoin d’une légère mise en exergue.'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'background-raised': cnamLightTheme.backgroundRaised,
+					'background-raised': cnamLightTheme.colorSurfaceBright,
 				}
 				const paColors = {
-					'background-raised': paLightTheme.backgroundRaised,
+					'background-raised': paLightTheme.colorSurfaceBright,
 				}
 				const apColors = {
-					'background-raised': apLightTheme.backgroundRaised,
+					'background-raised': apLightTheme.colorSurfaceBright,
 				}
 				const apColors2026 = {}
 				return {
@@ -1317,19 +1317,16 @@ export const InformationalBackgrounds: StoryObj = {
 				const colorTitle = 'Informational'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'background-info': cnamLightTheme.backgroundInfo,
-					'background-info-subdued': cnamLightTheme.backgroundInfoSubdued,
-					'background-info-contrasted': cnamLightTheme.backgroundInfoContrasted,
+					'feedback-info': cnamLightTheme.feedbackInfo,
+					'feedback-info-variant': cnamLightTheme.feedbackInfoVariant,
 				}
 				const paColors = {
-					'background-info': paLightTheme.backgroundInfo,
-					'background-info-subdued': paLightTheme.backgroundInfoSubdued,
-					'background-info-contrasted': paLightTheme.backgroundInfoContrasted,
+					'feedback-info': paLightTheme.feedbackInfo,
+					'feedback-info-variant': paLightTheme.feedbackInfoVariant,
 				}
 				const apColors = {
-					'background-info': apLightTheme.backgroundInfo,
-					'background-info-subdued': apLightTheme.backgroundInfoSubdued,
-					'background-info-contrasted': apLightTheme.backgroundInfoContrasted,
+					'feedback-info': apLightTheme.feedbackInfo,
+					'feedback-info-variant': apLightTheme.feedbackInfoVariant,
 				}
 				const apColors2026 = {}
 				return {
@@ -1366,19 +1363,16 @@ export const SuccessBackgrounds: StoryObj = {
 				const colorTitle = 'Success'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'background-success': cnamLightTheme.backgroundSuccess,
-					'background-success-subdued': cnamLightTheme.backgroundSuccessSubdued,
-					'background-success-contrasted': cnamLightTheme.backgroundSuccessContrasted,
+					'feedback-success': cnamLightTheme.feedbackSuccess,
+					'feedback-success-variant': cnamLightTheme.feedbackSuccessVariant,
 				}
 				const paColors = {
-					'background-success': paLightTheme.backgroundSuccess,
-					'background-success-subdued': paLightTheme.backgroundSuccessSubdued,
-					'background-success-contrasted': paLightTheme.backgroundSuccessContrasted,
+					'feedback-success': paLightTheme.feedbackSuccess,
+					'feedback-success-variant': paLightTheme.feedbackSuccessVariant,
 				}
 				const apColors = {
-					'background-success': apLightTheme.backgroundSuccess,
-					'background-success-subdued': apLightTheme.backgroundSuccessSubdued,
-					'background-success-contrasted': apLightTheme.backgroundSuccessContrasted,
+					'feedback-success': apLightTheme.feedbackSuccess,
+					'feedback-success-variant': apLightTheme.feedbackSuccessVariant,
 				}
 				const apColors2026 = {}
 				return {
@@ -1415,19 +1409,16 @@ export const WarningBackgrounds: StoryObj = {
 				const colorTitle = 'Warning'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'background-warning': cnamLightTheme.backgroundWarning,
-					'background-warning-subdued': cnamLightTheme.backgroundWarningSubdued,
-					'background-warning-contrasted': cnamLightTheme.backgroundWarningContrasted,
+					'feedback-warning': cnamLightTheme.feedbackWarning,
+					'feedback-warning-variant': cnamLightTheme.feedbackWarningVariant,
 				}
 				const paColors = {
-					'background-warning': paLightTheme.backgroundWarning,
-					'background-warning-subdued': paLightTheme.backgroundWarningSubdued,
-					'background-warning-contrasted': paLightTheme.backgroundWarningContrasted,
+					'feedback-warning': paLightTheme.feedbackWarning,
+					'feedback-warning-variant': paLightTheme.feedbackWarningVariant,
 				}
 				const apColors = {
-					'background-warning': apLightTheme.backgroundWarning,
-					'background-warning-subdued': apLightTheme.backgroundWarningSubdued,
-					'background-warning-contrasted': apLightTheme.backgroundWarningContrasted,
+					'feedback-warning': apLightTheme.feedbackWarning,
+					'feedback-warning-variant': apLightTheme.feedbackWarningVariant,
 				}
 				const apColors2026 = {}
 				return {
@@ -1464,19 +1455,16 @@ export const ErrorBackgrounds: StoryObj = {
 				const colorTitle = 'Error'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'background-error': cnamLightTheme.backgroundError,
-					'background-error-subdued': cnamLightTheme.backgroundErrorSubdued,
-					'background-error-contrasted': cnamLightTheme.backgroundErrorContrasted,
+					'feedback-error': cnamLightTheme.feedbackError,
+					'feedback-error-variant': cnamLightTheme.feedbackErrorVariant,
 				}
 				const paColors = {
-					'background-error': paLightTheme.backgroundError,
-					'background-error-subdued': paLightTheme.backgroundErrorSubdued,
-					'background-error-contrasted': paLightTheme.backgroundErrorContrasted,
+					'feedback-error': paLightTheme.feedbackError,
+					'feedback-error-variant': paLightTheme.feedbackErrorVariant,
 				}
 				const apColors = {
-					'background-error': apLightTheme.backgroundError,
-					'background-error-subdued': apLightTheme.backgroundErrorSubdued,
-					'background-error-contrasted': apLightTheme.backgroundErrorContrasted,
+					'feedback-error': apLightTheme.feedbackError,
+					'feedback-error-variant': apLightTheme.feedbackErrorVariant,
 				}
 				const apColors2026 = {}
 				return {
