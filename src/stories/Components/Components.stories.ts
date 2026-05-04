@@ -410,7 +410,7 @@ export const ComponentsList: StoryObj = {
 						title: 'NotificationBar',
 						description: 'Utilisé pour afficher des notifications à l’utilisateur.',
 						link: '/?path=/docs/composants-feedback-notificationbar--docs',
-						img: '/components/notification-bar.svg',
+						img: `/components/notification-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -473,6 +473,7 @@ export const ComponentsList: StoryObj = {
 					'SkeletonLoader',
 					'OTPInput',
 					'DialogBox',
+					'NotificationBar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

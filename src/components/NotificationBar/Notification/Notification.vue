@@ -147,10 +147,10 @@
 
 	.notification--success {
 		background-color: rgb(var(--v-theme-backgroundSuccessContrasted, '86, 194, 113'));
-		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
+		color: rgb(var(--v-theme-feedbackOnSuccess));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textBase, '0, 0, 0'));
+			outline: 2px solid rgb(var(--v-theme-feedbackOnSuccess));
 		}
 	}
 
