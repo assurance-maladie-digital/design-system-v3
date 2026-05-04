@@ -998,7 +998,7 @@
 						:persistent-hint="!!showHelpTextAsMessage"
 						:autocomplete="props.autocomplete"
 						:width="calculatedWidth"
-						:style="validationIcon ? { minWidth: `${labelWidth + 18}px`} : { minWidth: `${labelWidth}px` }"
+						:style="hasError ? { minWidth: `${labelWidth + 18}px`} : { minWidth: `${labelWidth}px` }"
 						:class="{
 							'error-field': hasError,
 							'warning-field': hasWarning,
@@ -1110,7 +1110,7 @@
 								v-if="props.clearable && hasSelectionToClear"
 								type="button"
 								class="sy-select__clear-button"
-								:style="{ right: validationIcon ? '62px' : '42px' }"
+								:style="{ right: hasError ? '62px' : '42px' }"
 								:aria-label="locales.clear"
 								@keydown.enter.prevent="$event => selectItem(null, $event)"
 								@keydown.space.prevent="$event => selectItem(null, $event)"
