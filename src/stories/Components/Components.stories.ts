@@ -372,6 +372,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Données',
 					},
 					{
+						title: 'Accordion',
+						description: 'Utilisé pour optimiser l’espace vertical lors de l’affichage d’une grande quantité d’informations.',
+						link: '/?path=/docs/composants-donn%C3%A9es-accordion--docs',
+						img: `/components/accordion${isAp ? '-ap' : ''}.svg`,
+						category: 'Données',
+					},
+					{
 						title: 'DataListGroup',
 						description: 'Utilisé pour afficher une liste de DataList.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalistgroup--docs',
@@ -474,6 +481,7 @@ export const ComponentsList: StoryObj = {
 					'OTPInput',
 					'DialogBox',
 					'NotificationBar',
+					'Accordion',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
