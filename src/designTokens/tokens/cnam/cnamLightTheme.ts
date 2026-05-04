@@ -53,8 +53,6 @@ export const cnamLightTheme = {
 	feedbackInfoVariant: baseTokens.color.blue.lighten80,
 	feedbackOnError: baseTokens.color.white.base,
 	feedbackOnErrorVariant: baseTokens.color.orange.darken60,
-	feedbackOnInfo: baseTokens.color.white.base,
-	feedbackOnInfoVariant: baseTokens.color.blue.darken20,
 	feedbackOnSuccess: baseTokens.color.grey.darken60,
 	feedbackOnSuccessVariant: baseTokens.color.grey.darken60,
 	feedbackOnWarning: baseTokens.color.grey.darken60,

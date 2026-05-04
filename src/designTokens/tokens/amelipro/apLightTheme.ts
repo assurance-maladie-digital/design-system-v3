@@ -53,8 +53,7 @@ export const apLightTheme = {
 	feedbackInfoVariant: baseTokens.color.parma.lighten80,
 	feedbackOnError: baseTokens.color.white.base,
 	feedbackOnErrorVariant: baseTokens.color.red.darken60,
-	feedbackOnInfo: baseTokens.color.white.base,
-	feedbackOnInfoVariant: baseTokens.color.parma.darken60,
+
 	feedbackOnSuccess: baseTokens.color.white.base,
 	feedbackOnSuccessVariant: baseTokens.color.forestGreen.darken60,
 	feedbackOnWarning: baseTokens.color.grey.darken60,

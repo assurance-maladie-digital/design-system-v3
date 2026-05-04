@@ -137,7 +137,7 @@
 
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {
-		background-color: rgb(var(--v-theme-feedbackOnInfo));
+    background-color: rgb(var(--v-theme-feedbackInfo));
 		color: rgb(var(--v-theme-colorOnPrimary));
 
 		.notification__close:focus-visible {
