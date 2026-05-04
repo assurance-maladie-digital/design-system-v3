@@ -231,7 +231,6 @@ export const HelpText: Story = {
 		],
 		'helpText': 'Texte d\'aide à la saisie',
 		'hideDetails': false,
-		'required': true,
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
