@@ -1110,7 +1110,7 @@
 								v-if="props.clearable && hasSelectionToClear"
 								type="button"
 								class="sy-select__clear-button"
-								:style="{ right: hasError ? '62px' : '42px' }"
+								:style="{ right: (hasError || hasWarning || hasSuccess) ? '62px' : '42px' }"
 								:aria-label="locales.clear"
 								@keydown.enter.prevent="$event => selectItem(null, $event)"
 								@keydown.space.prevent="$event => selectItem(null, $event)"
@@ -1292,6 +1292,10 @@
 		fill: rgb(var(--v-theme-iconBase)) !important;
 	}
 
+	:deep(.sy-select__clear-icon .v-icon__svg) {
+		fill: rgb(var(--v-theme-iconBase)) !important;
+	}
+
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-borderWarning)) !important;
 
@@ -1351,6 +1355,10 @@
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
+		fill: rgb(var(--v-theme-iconBase)) !important;
+	}
+
+	:deep(.sy-select__clear-icon .v-icon__svg) {
 		fill: rgb(var(--v-theme-iconBase)) !important;
 	}
 
