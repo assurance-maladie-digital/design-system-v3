@@ -211,7 +211,7 @@
 	flex-direction: column;
 	gap: var(--v-gap-3);
 	padding-block: var(--v-padding-4);
-  border-bottom: 1px solid rgb(var(--v-theme-colorDisabled));
+	border-bottom: 1px solid rgb(var(--v-theme-colorDisabled));
 
 	&:first-child:last-child {
 		border-bottom: none;
@@ -224,7 +224,7 @@
 
 .file-item__name {
 	font-size: 0.875rem;
-  color: rgb(var(--v-theme-colorOnSurface));
+	color: rgb(var(--v-theme-colorOnSurface));
 }
 
 .file-item__description {
@@ -278,7 +278,7 @@
 
 .file-item__message {
 	font-size: 0.875rem;
-  color: rgb(var(--v-theme-colorOnSurfaceVariant));
+	color: rgb(var(--v-theme-colorOnSurfaceVariant));
 }
 
 .file-item__message-success,

@@ -363,32 +363,32 @@ a {
 .vd-footer-bar.v-theme--dark :deep() {
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
-    color: rgb(var(--v-theme-colorOnPrimary));
+		color: rgb(var(--v-theme-colorOnPrimary));
 
 		&.version {
-      color: rgb(var(--v-theme-colorOnSurfaceVariant));
+			color: rgb(var(--v-theme-colorOnSurfaceVariant));
 		}
 	}
 
 	p,
 	.text--primary {
-    color: rgba(var(--v-theme-colorOnPrimary));
+		color: rgba(var(--v-theme-colorOnPrimary));
 	}
 
 	.text--secondary {
-    color: rgba(var(--v-theme-colorOnPrimary));
+		color: rgba(var(--v-theme-colorOnPrimary));
 	}
 
 	a.text--primary {
-    color: rgb(var(--v-theme-colorOnPrimary));
+		color: rgb(var(--v-theme-colorOnPrimary));
 	}
 
 	.v-divider {
-    border-color: rgba(var(--v-theme-colorDisabled), 1);
+		border-color: rgba(var(--v-theme-colorDisabled), 1);
 	}
 
 	svg {
-    fill: rgb(var(--v-theme-colorOnPrimary));
+		fill: rgb(var(--v-theme-colorOnPrimary));
 	}
 }
 

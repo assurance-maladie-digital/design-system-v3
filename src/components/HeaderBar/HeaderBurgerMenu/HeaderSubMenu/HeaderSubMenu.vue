@@ -111,11 +111,11 @@
 
 		&:hover {
 			background-color: rgb(var(--v-theme-primary));
-      color: rgb(var(--v-theme-colorOnPrimary));
+			color: rgb(var(--v-theme-colorOnPrimary));
 			text-decoration: underline;
 
 			> :deep(*) {
-        color: rgb(var(--v-theme-colorOnPrimary)) !important;
+				color: rgb(var(--v-theme-colorOnPrimary)) !important;
 			}
 		}
 
@@ -152,14 +152,14 @@
 		.sub-menu--open > .sub-menu-btn {
 			padding: 0 16px 8px 40px;
 			border-bottom: 1px solid $menu-border-color;
-      color: rgb(var(--v-theme-colorOnSurface));
+			color: rgb(var(--v-theme-colorOnSurface));
 			background-color: transparent;
 
 			&:hover {
-        color: rgb(var(--v-theme-colorOnSurface));
+				color: rgb(var(--v-theme-colorOnSurface));
 
 				> :deep(*) {
-          color: rgb(var(--v-theme-colorOnSurface)) !important;
+					color: rgb(var(--v-theme-colorOnSurface)) !important;
 				}
 			}
 		}
@@ -177,11 +177,11 @@
 
 		.sub-menu--open > .sub-menu-btn {
 			background-color: rgb(var(--v-theme-primary));
-      color: rgb(var(--v-theme-colorOnPrimary));
+			color: rgb(var(--v-theme-colorOnPrimary));
 			transition: color 0.15s linear, background-color 0.15s linear;
 
 			> :deep(*) {
-        color: rgb(var(--v-theme-colorOnPrimary)) !important;
+				color: rgb(var(--v-theme-colorOnPrimary)) !important;
 			}
 		}
 

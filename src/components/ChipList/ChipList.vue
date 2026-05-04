@@ -340,23 +340,23 @@
 }
 
 .sy-chip-success {
-  color: rgb(var(--v-theme-feedbackSuccess)) !important;
-  border: 1px solid rgb(var(--v-theme-feedbackSuccess)) !important;
+	color: rgb(var(--v-theme-feedbackSuccess)) !important;
+	border: 1px solid rgb(var(--v-theme-feedbackSuccess)) !important;
 }
 
 .sy-chip-error {
-  color: rgb(var(--v-theme-feedbackError)) !important;
-  border: 1px solid rgb(var(--v-theme-feedbackError)) !important;
+	color: rgb(var(--v-theme-feedbackError)) !important;
+	border: 1px solid rgb(var(--v-theme-feedbackError)) !important;
 }
 
 .sy-chip-info {
-  color: rgb(var(--v-theme-feedbackInfo)) !important;
-  border: 1px solid rgb(var(--v-theme-feedbackInfo)) !important;
+	color: rgb(var(--v-theme-feedbackInfo)) !important;
+	border: 1px solid rgb(var(--v-theme-feedbackInfo)) !important;
 }
 
 .sy-chip-warning {
-  color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
-  border: 1px solid rgb(var(--v-theme-feedbackWarning)) !important;
+	color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-feedbackWarning)) !important;
 }
 
 .overflow-chip {
@@ -380,22 +380,22 @@
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
-  outline: 2px solid rgb(var(--v-theme-feedbackSuccess)) !important;
+	outline: 2px solid rgb(var(--v-theme-feedbackSuccess)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
-  outline: 2px solid rgb(var(--v-theme-feedbackInfo)) !important;
+	outline: 2px solid rgb(var(--v-theme-feedbackInfo)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
-  outline: 2px solid rgb(var(--v-theme-feedbackWarning)) !important;
+	outline: 2px solid rgb(var(--v-theme-feedbackWarning)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
-  outline: 2px solid rgb(var(--v-theme-feedbackError)) !important;
+	outline: 2px solid rgb(var(--v-theme-feedbackError)) !important;
 	outline-offset: -2px !important;
 }
 </style>

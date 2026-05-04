@@ -339,7 +339,7 @@
 
 	&--selected {
 		background-color: rgb(var(--v-theme-primary));
-    color: rgb(var(--v-theme-colorOnPrimary));
+		color: rgb(var(--v-theme-colorOnPrimary));
 	}
 
 	&:focus-visible {
@@ -384,7 +384,7 @@
 }
 
 .select-btn-field__options--error .select-btn-field__item {
-  color: rgb(var(--v-theme-feedbackError));
-  border-color: rgb(var(--v-theme-feedbackError));
+	color: rgb(var(--v-theme-feedbackError));
+	border-color: rgb(var(--v-theme-feedbackError));
 }
 </style>
