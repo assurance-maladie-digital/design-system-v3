@@ -1,168 +1,72 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, watch, type PropType } from 'vue'
-	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
+	import { computed, nextTick, onMounted, ref, toRef, watch, type Ref } from 'vue'
+	import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
+	import { mdiChevronDown, mdiCloseCircle, mdiCheck, mdiAlertOutline, mdiAlertCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import { ariaManager } from './utils/ariaManager'
-	import { useFormFieldErrorHandling } from '@/composables/useFormFieldErrorHandling'
 	import { type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import type { ItemType, SelectValue, SelectArray } from './types'
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSelectionLogic } from './utils/useSelectionLogic'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
 	import { locales } from './locales'
 
-	const props = defineProps({
-		bgColor: {
-			type: String,
-			default: 'white',
+	interface SyAutocompleteProps {
+		bgColor?: string
+		chips?: boolean
+		clearable?: boolean
+		debounce?: number
+		density?: 'default' | 'comfortable' | 'compact' | undefined
+		displayAsterisk?: boolean
+		filter?: boolean
+		hideDetails?: boolean
+		hideNoData?: boolean
+		items?: ItemType[]
+		label?: string
+		loading?: boolean
+		menuId?: string
+		modelValue?: SelectValue | SelectArray
+		multiple?: boolean
+		noDataText?: string
+		placeholder?: string
+		plainTextKey?: string
+		returnObject?: boolean
+		selectionText?: (selected: SelectArray) => string
+		textKey?: string
+		valueKey?: string
+	}
+
+	const props = withDefaults(
+		defineProps<SyAutocompleteProps & FieldValidationProps>(),
+		{
+			bgColor: 'white',
+			chips: false,
+			clearable: false,
+			debounce: 200,
+			density: 'default',
+			displayAsterisk: false,
+			filter: true,
+			hideDetails: false,
+			hideNoData: false,
+			items: () => [],
+			label: 'Rechercher',
+			loading: false,
+			menuId: 'sy-autocomplete-menu',
+			modelValue: null,
+			multiple: false,
+			noDataText: locales.noData,
+			placeholder: '',
+			plainTextKey: '',
+			returnObject: false,
+			textKey: 'text',
+			valueKey: 'value',
+			...validationPropsDefaults,
+			isValidateOnBlur: false,
 		},
-		chips: {
-			type: Boolean,
-			default: false,
-		},
-		clearable: {
-			type: Boolean,
-			default: false,
-		},
-		customRules: {
-			type: Array as PropType<ValidationRule[]>,
-			default: () => [],
-		},
-		customSuccessRules: {
-			type: Array as PropType<ValidationRule[]>,
-			default: () => [],
-		},
-		customWarningRules: {
-			type: Array as PropType<ValidationRule[]>,
-			default: () => [],
-		},
-		debounce: {
-			type: Number,
-			default: 200,
-		},
-		density: {
-			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
-			default: 'default',
-		},
-		disableErrorHandling: {
-			type: Boolean,
-			default: false,
-		},
-		displayAsterisk: {
-			type: Boolean,
-			default: false,
-		},
-		errorMessages: {
-			type: Array as PropType<string[] | null>,
-			default: null,
-		},
-		filter: {
-			type: Boolean,
-			default: true,
-		},
-		hasError: {
-			type: Boolean,
-			default: false,
-		},
-		hasSuccess: {
-			type: Boolean,
-			default: false,
-		},
-		hasWarning: {
-			type: Boolean,
-			default: false,
-		},
-		hideDetails: {
-			type: Boolean,
-			default: false,
-		},
-		hideNoData: {
-			type: Boolean,
-			default: false,
-		},
-		isValidateOnBlur: {
-			type: Boolean,
-			default: false,
-		},
-		items: {
-			type: Array as PropType<ItemType[]>,
-			default: () => [],
-		},
-		label: {
-			type: String,
-			default: 'Rechercher',
-		},
-		loading: {
-			type: Boolean,
-			default: false,
-		},
-		menuId: {
-			type: String,
-			default: 'sy-autocomplete-menu',
-		},
-		modelValue: {
-			type: [Object, String, Number, Array, null] as PropType<SelectValue | SelectArray>,
-			default: null,
-		},
-		multiple: {
-			type: Boolean,
-			default: false,
-		},
-		noDataText: {
-			type: String,
-			default: locales.noData,
-		},
-		placeholder: {
-			type: String,
-			default: '',
-		},
-		plainTextKey: {
-			type: String,
-			default: '',
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		readonly: {
-			type: Boolean,
-			default: false,
-		},
-		required: {
-			type: Boolean,
-			default: false,
-		},
-		returnObject: {
-			type: Boolean,
-			default: false,
-		},
-		showSuccessMessages: {
-			type: Boolean,
-			default: true,
-		},
-		successMessages: {
-			type: Array as PropType<string[] | null>,
-			default: null,
-		},
-		selectionText: {
-			type: Function as PropType<(selected: SelectArray) => string>,
-			default: undefined,
-		},
-		textKey: {
-			type: String,
-			default: 'text',
-		},
-		valueKey: {
-			type: String,
-			default: 'value',
-		},
-		warningMessages: {
-			type: Array as PropType<string[] | null>,
-			default: null,
-		},
-	})
+	)
 
 	const emit = defineEmits(['update:modelValue', 'search'])
 
@@ -172,6 +76,7 @@
 	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
 	const suppressMenuOpen = ref(false)
+	const focused = ref(false)
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
 	const randomId = Math.random().toString(36).slice(2)
@@ -179,7 +84,44 @@
 	const optionIdPrefixed = computed(() => `${uniqueMenuId.value}-option`)
 	const activeDescendantId = ref('')
 
-	const errorHandling = useFormFieldErrorHandling(props, selected)
+	const defaultRules = computed<ValidationRule[]>(() => props.required
+		? [{
+			type: 'required',
+			options: {
+				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				fieldIdentifier: props.label,
+			},
+		}]
+		: [],
+	)
+
+	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+		modelValue: toRef(props, 'modelValue') as Ref<unknown>,
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		label: toRef(props, 'label'),
+		rules: toRef(props, 'rules') as Ref<VuetifyValidationRule[] | undefined>,
+		customRules: computed(() => [...defaultRules.value, ...(props.customRules ?? [])]),
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
+		focused,
+	})
+
+	watch([errors, warnings, successes], ([e, w, s]) => {
+		if (e.length > 0 || w.length > 0 || s.length > 0) hasInteracted.value = true
+	})
 
 	const formattedItems = computed(() => props.items.map((item) => {
 		if (typeof item === 'string') {
@@ -228,6 +170,9 @@
 
 	const selectItem = (item: ItemType | string | number | null | undefined) => {
 		markInteracted()
+		if (item === null || item === undefined) {
+			clearValidation()
+		}
 		updateValue(item ?? null)
 		if (props.multiple) {
 			suppressNextInput.value = true
@@ -343,39 +288,23 @@
 		return (textFieldRef.value?.$el as HTMLElement | undefined)?.querySelector('.v-field') ?? undefined
 	})
 
-	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling)
+	const displayErrors = computed(() => hasInteracted.value ? errors.value : [])
+	const displayWarnings = computed(() => hasInteracted.value ? warnings.value : [])
+	const displaySuccesses = computed(() => hasInteracted.value ? successes.value : [])
+	const displayHasError = computed(() => hasInteracted.value && hasError.value)
+	const displayHasWarning = computed(() => hasInteracted.value && hasWarning.value)
+	const displayHasSuccess = computed(() => hasInteracted.value && hasSuccess.value)
 
-	const externalErrors = computed(() => props.errorMessages || [])
-	const displayErrors = computed(() => {
-		if (shouldDisableErrorHandling.value) return []
-		return externalErrors.value.length > 0
-			? externalErrors.value
-			: (hasInteracted.value ? errorHandling.errors.value : [])
-	})
-	const displayWarnings = computed(() => {
-		if (shouldDisableErrorHandling.value) return []
-		return hasInteracted.value ? errorHandling.warnings.value : []
-	})
-	const displaySuccesses = computed(() => {
-		if (shouldDisableErrorHandling.value) return []
-		return hasInteracted.value ? errorHandling.successes.value : []
-	})
-	const displayHasError = computed(() => {
-		if (shouldDisableErrorHandling.value) return false
-		return externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value)
-	})
-	const displayHasWarning = computed(() => {
-		if (shouldDisableErrorHandling.value) return false
-		return hasInteracted.value && errorHandling.hasWarning.value
-	})
-	const displayHasSuccess = computed(() => {
-		if (shouldDisableErrorHandling.value) return false
-		return hasInteracted.value && errorHandling.hasSuccess.value
+	const validationIcon = computed(() => {
+		if (displayHasError.value) return mdiAlertCircle
+		if (displayHasWarning.value) return mdiAlertOutline
+		if (displayHasSuccess.value) return mdiCheck
+		return null
 	})
 
-	const validateOnSubmit = () => {
+	const validateOnSubmit = async () => {
 		markInteracted()
-		return errorHandling.validateOnSubmit()
+		return await validate()
 	}
 
 	const checkErrorOnBlur = (event?: FocusEvent) => {
@@ -388,7 +317,8 @@
 			return
 		}
 		markInteracted()
-		return errorHandling.checkErrorOnBlur()
+		focused.value = false
+		validate()
 	}
 
 	const getInputValue = (value: string | Event): string | null => {
@@ -425,6 +355,7 @@
 	const openAndFocus = () => {
 		if (props.disabled || props.readonly) return
 		markInteracted()
+		focused.value = true
 		isOpen.value = true
 		focusInput(textFieldRef)
 	}
@@ -457,8 +388,8 @@
 	})
 
 	defineExpose({
-		validation: errorHandling.validation,
 		validateOnSubmit,
+		clearValidation,
 		checkErrorOnBlur,
 		isOpen,
 		selectItem,
@@ -516,10 +447,19 @@
 					@keydown.tab="handleTabKey"
 				>
 					<template #append-inner>
+						<SyIcon
+							v-if="validationIcon"
+							class="mr-6"
+							:color="displayHasError ? 'error' : (displayHasWarning ? 'warning' : 'success')"
+							:icon="validationIcon"
+							role="presentation"
+							:decorative="true"
+						/>
 						<button
 							v-if="clearable && hasSelectionToClear"
 							type="button"
 							class="sy-autocomplete__clear-button"
+							:style="{ right: validationIcon ? '62px' : '42px' }"
 							:aria-label="locales.clearSelection"
 							@click.stop.prevent="selectItem(null)"
 						>
@@ -649,7 +589,13 @@
 	border: 0;
 }
 
+.v-icon.arrow {
+	position: absolute;
+	right: 10px;
+}
+
 .sy-autocomplete__clear-button {
+	position: absolute;
 	background: transparent;
 	border: none;
 	padding: 0;
@@ -657,10 +603,18 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 20px;
+
+	.v-icon {
+		position: static;
+	}
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-iconBase));
+	color: rgb(var(--v-theme-iconBase)) !important;
+	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
 .sy-autocomplete__chip {
@@ -731,5 +685,35 @@ li.keyboard-focused {
 	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
+}
+
+:deep(.error-field .v-icon.arrow),
+:deep(.error-field .v-icon.arrow .v-icon__svg) {
+	color: rgb(var(--v-theme-iconSubdued)) !important;
+	fill: rgb(var(--v-theme-iconSubdued)) !important;
+}
+
+:deep(.error-field .sy-autocomplete__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.warning-field .v-icon.arrow),
+:deep(.warning-field .v-icon.arrow .v-icon__svg) {
+	color: rgb(var(--v-theme-iconBase)) !important;
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.warning-field .sy-autocomplete__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.success-field .v-icon.arrow),
+:deep(.success-field .v-icon.arrow .v-icon__svg) {
+	color: rgb(var(--v-theme-iconBase)) !important;
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.success-field .sy-autocomplete__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-iconBase)) !important;
 }
 </style>
