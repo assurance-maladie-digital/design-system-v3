@@ -59,7 +59,7 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 			},
 		},
 		showSuccessMessages: {
-			description: 'Affiche les messages de succès lorsque la validation est réussie.',
+			description: 'Affiche les messages de succès lorsque la validation est réussie. Si la prop est à `false` cela cache uniquement les messages texte, l\'état visuel reste actif.',
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
