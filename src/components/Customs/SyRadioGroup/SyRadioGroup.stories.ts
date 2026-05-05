@@ -40,6 +40,13 @@ Il permet de choisir **une seule valeur** parmi une liste d’options.
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 		},
+		'displayAsterisk': { control: 'boolean', description: 'Affiche un astérisque pour les champs requis' },
+		'showSuccessMessages': { control: 'boolean', description: 'Affiche les messages de succès' },
+		'isValidateOnBlur': { control: 'boolean', description: 'Valide au blur (désactivé par défaut pour les radios)' },
+		'useVuetifyValidation': { control: 'boolean', description: 'Utilise la validation native Vuetify' },
+		'errorMessages': { control: 'object', description: 'Messages d\'erreur externes' },
+		'warningMessages': { control: 'object', description: 'Messages d\'avertissement externes' },
+		'successMessages': { control: 'object', description: 'Messages de succès externes' },
 	},
 }
 
@@ -122,77 +129,6 @@ export const Required: Story = {
           <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
           </SyForm>
         `,
-	}),
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-                <SyForm ref="form" @submit="onSubmit">
-      			  <SyRadioGroup
-      			    v-model="selected"
-      			    label="Choisissez une option (obligatoire)"
-      			    :options="options"
-      			    required
-      			  />
-      			  <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
-      			</SyForm>`,
-			},
-			{
-				name: 'Script',
-				code: `
-              <script setup lang="ts">
-                import { ref } from 'vue'
-                import { VBtn } from 'vuetify/components'
-                import { SyForm, SyRadioGroup } from '@cnamts/synapse'
-
-                const selected = ref<string | null>(null)
-
-                const options = [
-                    { label: 'Option A', value: 'a' },
-                    { label: 'Option B', value: 'b' },
-                ]
-
-                const onSubmit = (event: { isValid: boolean }) => {
-                    if (event.isValid) {
-                        alert('Formulaire valide !')
-                    }
-                }
-             </script>
-            `,
-			},
-		],
-	},
-}
-
-export const formValidation: Story = {
-	args: {
-		label: 'Choisissez une option (obligatoire)',
-		required: true,
-		options: [
-			{ label: 'Option A', value: 'a' },
-			{ label: 'Option B', value: 'b' },
-		],
-		showSuccessMessages: true,
-	},
-
-	render: args => ({
-		components: { SyRadioGroup, SyForm, VBtn },
-		setup() {
-			const selected = ref(null)
-			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert('Inscription réussie !')
-				}
-			}
-			return { args, selected, onSubmit }
-		},
-		template: `
-		<SyForm ref="form" @submit="onSubmit">
-          <SyRadioGroup v-model="selected" required v-bind="args" />
-          <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
-        </SyForm>
-    `,
 	}),
 	parameters: {
 		sourceCode: [
@@ -550,22 +486,37 @@ Ce button radio est en lecture seule et ne peut pas être modifiée par l'utilis
 
 }
 
-export const CustomRules: Story = {
+export const EventShowcase: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: `
+### Événements
+Ce story démontre les événements émis par le composant :
+- **update:modelValue** : Émis lorsque la valeur change
+- **change** : Émis lorsque la sélection change
+				`,
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
-				<template>
-				<SyRadioGroup
-					v-model="selected"
-					:options="options"
-					label="Options"
-					:custom-warning-rules="rules"
-					:custom-success-rules="successRules"
-					:is-validate-on-blur="false"
-				/>
-				</template>`,
+<template>
+	<div>
+		<SyRadioGroup
+			v-model="selected"
+			label="Sélectionnez une option"
+			:options="options"
+			@update:model-value="onUpdate"
+			@change="onChange"
+		/>
+		<div class="mt-4">
+			<p>Valeur sélectionnée : {{ selected }}</p>
+			<p>Dernier événement : {{ lastEvent }}</p>
+		</div>
+	</div>
+</template>`,
 			},
 			{
 				name: 'Script',
@@ -573,37 +524,112 @@ export const CustomRules: Story = {
 import { ref } from 'vue'
 import { SyRadioGroup } from '@cnamts/synapse'
 
-const selected = ref('A')
+const selected = ref<string | null>(null)
+const lastEvent = ref('')
 
 const options = [
-	{ label: 'Option A', value: 'A' },
-	{ label: 'Option B', value: 'B' },
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+	{ label: 'Option C', value: 'c' },
 ]
 
-const warningRules = [
-	{
-		type: 'custom',
-		options: {
-			validate: (value: string | null) => {
-				if (value !== 'A') {
-					return 'Vous devez sélectionner l’option A'
-				}
-				return true
+const onUpdate = (value: string | null) => {
+	lastEvent.value = \`update:modelValue: \${value}\`
+	console.log('update:modelValue', value)
+}
+
+const onChange = (value: string | null) => {
+	lastEvent.value = \`change: \${value}\`
+	console.log('change', value)
+}
+</script>`,
 			},
-			fieldIdentifier: 'option',
-		},
+		],
 	},
-]
 
-const successRules = [
-	{
-		type: 'custom',
-		options: {
-			validate: (value: string | null) => value === 'A',
-			successMessage: 'Option A sélectionnée',
-			fieldIdentifier: 'option',
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref<string | null>(null)
+			const lastEvent = ref('Aucun événement')
+
+			const options = [
+				{ label: 'Option A', value: 'a' },
+				{ label: 'Option B', value: 'b' },
+				{ label: 'Option C', value: 'c' },
+			]
+
+			const onUpdate = (value: string | null) => {
+				lastEvent.value = `update:modelValue: ${value}`
+			}
+
+			const onChange = (value: string | null) => {
+				lastEvent.value = `change: ${value}`
+			}
+
+			return { args, selected, options, lastEvent, onUpdate, onChange }
 		},
+		template: `
+			<div>
+				<SyRadioGroup
+					v-model="selected"
+					label="Sélectionnez une option"
+					:options="options"
+					@update:model-value="onUpdate"
+					@change="onChange"
+				/>
+				<div class="mt-4 pa-4 bg-grey-lighten-4 rounded">
+					<p><strong>Valeur sélectionnée :</strong> {{ selected || 'Aucune' }}</p>
+					<p><strong>Dernier événement :</strong> {{ lastEvent }}</p>
+				</div>
+			</div>
+		`,
+	}),
+}
+
+export const DisplayAsterisk: Story = {
+	args: {
+		label: 'Champ obligatoire',
+		required: true,
+		displayAsterisk: true,
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+		],
 	},
+
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Affichage de l'astérisque
+Ce story démontre l'affichage d'un astérisque (*) sur le label pour indiquer qu'un champ est obligatoire.
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<SyRadioGroup
+	v-model="selected"
+	label="Champ obligatoire"
+	:options="options"
+	required
+	display-asterisk
+/>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const selected = ref<string | null>(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
 ]
 </script>`,
 			},
@@ -613,53 +639,14 @@ const successRules = [
 	render: args => ({
 		components: { SyRadioGroup },
 		setup() {
-			const selected = ref('A')
-
-			const options = [
-				{ label: 'Option A', value: 'A' },
-				{ label: 'Option B', value: 'B' },
-			]
-
-			const warningRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | null) => {
-							if (value !== 'A') {
-								return 'Vous devez sélectionner l’option A'
-							}
-							return true
-						},
-					},
-				},
-			]
-
-			const successRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | null) => value === 'A',
-						successMessage: 'Option A sélectionnée',
-					},
-				},
-			]
-			return {
-				args,
-				selected,
-				options,
-				warningRules,
-				successRules,
-			}
+			const selected = ref<string | null>(null)
+			return { args, selected }
 		},
 		template: `
 			<SyRadioGroup
 				v-model="selected"
-				label="Options"
-				:options="options"
-			    :custom-warning-rules="warningRules"
-				:custom-success-rules="successRules"
-				:is-validate-on-blur="false"
+				v-bind="args"
 			/>
-    `,
+		`,
 	}),
 }
