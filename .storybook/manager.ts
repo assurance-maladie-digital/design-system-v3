@@ -60,7 +60,7 @@ const apComponents = [
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
 	'composants-vue-d-ensemble--docs',
-],
+]
 
 // Get stored theme or default to CNAM
 const storedTheme = typeof window !== 'undefined' ? localStorage.getItem('storybook-theme') : 'cnam'
