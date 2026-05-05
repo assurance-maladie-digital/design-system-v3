@@ -87,7 +87,7 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SyTabs',
 						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
-						img: '/components/contextual-menu.svg',
+						img: `/components/sy-tabs${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
