@@ -875,6 +875,7 @@
 	}
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .text-iconBase {
 	:deep(.v-icon__svg) {
 		fill: rgb(var(--v-theme-borderAccentPrimary)) !important;
