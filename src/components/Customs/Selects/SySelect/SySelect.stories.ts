@@ -159,17 +159,26 @@ export const Default: Story = {
 			{ text: 'Emensis itaque difficultatibus multis et nive obrutis callibus', value: 'Louis' },
 			{ text: 'Plurimis ubi prope Rauracum ventum est ad supercilia', value: 'Valentin' },
 		],
+		'customSuccessRules': [{
+			type: 'custom',
+			options: {
+				validate: (v: unknown) => v !== null && v !== undefined,
+				successMessage: 'Option sélectionnée avec succès.',
+			},
+		}],
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<SySelect
+						v-model="value"
 						v-bind="args"
 					/>
 				</div>
@@ -231,17 +240,26 @@ export const HelpText: Story = {
 		],
 		'helpText': 'Texte d\'aide à la saisie',
 		'hideDetails': false,
+		'customSuccessRules': [{
+			type: 'custom',
+			options: {
+				validate: (v: unknown) => v !== null && v !== undefined,
+				successMessage: 'Option sélectionnée avec succès.',
+			},
+		}],
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<SySelect
+						v-model="value"
 						v-bind="args"
 					/>
 				</div>
@@ -1044,17 +1062,26 @@ export const withCustomKey: Story = {
 			{ customKey: 'Choix 1', value: '1' },
 			{ customKey: 'Choix 2', value: '2' },
 		],
+		'customSuccessRules': [{
+			type: 'custom',
+			options: {
+				validate: (v: unknown) => v !== null && v !== undefined,
+				successMessage: 'Option sélectionnée avec succès.',
+			},
+		}],
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<SySelect
+						v-model="value"
 						v-bind="args"
 						text-key="customKey"
 					/>
