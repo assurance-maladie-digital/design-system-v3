@@ -13,9 +13,9 @@ export const apLightTheme = {
 	error: baseTokens.color.red.darken20,
 	info: baseTokens.color.parma.darken40,
 	avatar: baseTokens.color.cyan.darken20,
-	success: baseTokens.color.turquoise.darken20,
-	warning: baseTokens.color.yellow.darken60,
-	risquePro: baseTokens.color.red.base,
+    success: baseTokens.color.turquoise.darken20,//feedbackSuccessVariant
+    warning: baseTokens.color.yellow.darken60,//feedbackWarningVariant
+    // risquePro: baseTokens.color.red.base,
 	light: baseTokens.color.grey.lighten60,
 	dark: baseTokens.color.grey.darken80,
 

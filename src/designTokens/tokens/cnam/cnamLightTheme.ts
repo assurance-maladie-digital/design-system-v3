@@ -1,67 +1,81 @@
 import { baseTokens } from '@/designTokens/tokens/baseTokens'
 
 export const cnamLightTheme = {
-	primary: baseTokens.color.blue.base,
-	secondary: baseTokens.color.cyan.darken40,
-	accentPrimaryLight: baseTokens.color.blue.lighten20,
-	accentPrimary: baseTokens.color.blue.base,
-	accentPrimaryContrasted: baseTokens.color.blue.darken40,
-	accentSecondaryLight: baseTokens.color.cyan.lighten60,
-	accentSecondary: baseTokens.color.cyan.base,
-	accentSecondaryContrasted: baseTokens.color.cyan.darken40,
-	accentAlt: baseTokens.color.grey.base,
-	error: baseTokens.color.orange.darken20,
-	info: baseTokens.color.blue.base,
-	avatar: baseTokens.color.cyan.darken20,
-	success: baseTokens.color.turquoise.darken60,
-	warning: baseTokens.color.yellow.darken60,
-	risquePro: baseTokens.color.brick.base,
-	light: baseTokens.color.grey.lighten60,
-	dark: baseTokens.color.grey.darken80,
+    primary: baseTokens.color.blue.base, //colorPrimary
+    secondary: baseTokens.color.cyan.darken40, //colorSecondary
+    // accentPrimaryLight: baseTokens.color.blue.lighten20,
+    // accentPrimary: baseTokens.color.blue.base,
+    // accentPrimaryContrasted: baseTokens.color.blue.darken40,
+    // accentSecondaryLight: baseTokens.color.cyan.lighten60,
+    // accentSecondary: baseTokens.color.cyan.base,
+    // accentSecondaryContrasted: baseTokens.color.cyan.darken40,//colorSecondary
+    accentAlt: baseTokens.color.grey.base,//colorInverseSurface
+    error: baseTokens.color.orange.darken20,//feedbackError
+    info: baseTokens.color.blue.base,//feedbackInfo
+    success: baseTokens.color.turquoise.darken60, //feedbackSuccessVariant
+    warning: baseTokens.color.yellow.darken60, // feedbackOnWarningVariant
+    // avatar: baseTokens.color.cyan.darken20,
+    // risquePro: baseTokens.color.brick.base,
+    // light: baseTokens.color.grey.lighten60,
+    // dark: baseTokens.color.grey.darken80,
 
+    // Border
 	colorBorder: baseTokens.color.blue.base,
 	colorBorderVariant: baseTokens.color.grey.lighten40,
 	colorBorderBright: baseTokens.color.white.base,
 	colorBorderDim: baseTokens.color.white.alpha40,
+
+    // Disabled
 	colorDisabled: baseTokens.color.grey.lighten80,
-	colorInverseSurface: baseTokens.color.grey.base,
-	colorOnDisabled: baseTokens.color.grey.lighten40,
+    colorOnDisabled: baseTokens.color.grey.lighten40,
+    colorInverseSurface: baseTokens.color.grey.base,
 	colorOnDisabledVariant: baseTokens.color.white.alpha40,
-	colorOnPrimary: baseTokens.color.white.base,
-	colorOnPrimaryVariant: baseTokens.color.white.base,
-	colorOnSecondary: baseTokens.color.white.base,
-	colorOnSecondaryVariant: baseTokens.color.white.base,
-	colorOnSurface: baseTokens.color.grey.darken60,
-	colorOnSurfaceVariant: baseTokens.color.grey.base,
-	colorOverlay: baseTokens.color.grey.alpha40,
-	colorPrimary: baseTokens.color.blue.base,
-	colorPrimaryVariant: baseTokens.color.blue.darken40,
-	colorSecondary: baseTokens.color.cyan.darken40,
-	colorSecondaryVariant: baseTokens.color.cyan.darken60,
+
+    //Primary
+    colorPrimary: baseTokens.color.blue.base,
+    colorOnPrimary: baseTokens.color.white.base,
+    colorPrimaryVariant: baseTokens.color.blue.darken40,
+    colorOnPrimaryVariant: baseTokens.color.white.base,
+
+    //Secondary
+    colorSecondary: baseTokens.color.cyan.darken40,
+    colorOnSecondary: baseTokens.color.white.base,
+    colorSecondaryVariant: baseTokens.color.cyan.darken60,
+    colorOnSecondaryVariant: baseTokens.color.white.base,
+
+    //Overlay
+    colorOverlay: baseTokens.color.grey.alpha40,
+
+    //Surface
 	colorSurface: baseTokens.color.white.base,
 	colorSurfaceBright: baseTokens.color.blue.lighten97,
 	colorSurfaceDim: baseTokens.color.blue.lighten90,
+    colorOnSurface: baseTokens.color.grey.darken60,
+    colorOnSurfaceVariant: baseTokens.color.grey.base,
 
+    //Background
 	backgroundBackground: baseTokens.color.blue.lighten90,
-	backgroundBackgroundVariant: baseTokens.color.white.base,
-	backgroundOnBackground: baseTokens.color.grey.darken60,
-	backgroundOnBackgroundVariant: baseTokens.color.grey.lighten40,
+    backgroundOnBackground: baseTokens.color.grey.darken60,
+    backgroundBackgroundVariant: baseTokens.color.white.base,
+    backgroundOnBackgroundVariant: baseTokens.color.grey.lighten40,
 
-	feedbackError: baseTokens.color.orange.darken20,
-	feedbackErrorVariant: baseTokens.color.orange.lighten80,
-	feedbackInfo: baseTokens.color.blue.base,
-	feedbackInfoVariant: baseTokens.color.blue.lighten80,
-	feedbackOnError: baseTokens.color.white.base,
-	feedbackOnErrorVariant: baseTokens.color.orange.darken60,
-	feedbackOnSuccess: baseTokens.color.grey.darken60,
-	feedbackOnSuccessVariant: baseTokens.color.grey.darken60,
-	feedbackOnWarning: baseTokens.color.grey.darken60,
-	feedbackOnWarningVariant: baseTokens.color.yellow.darken60,
-	feedbackSuccess: baseTokens.color.green.base,
-	feedbackSuccessVariant: baseTokens.color.green.lighten80,
-	feedbackWarning: baseTokens.color.yellow.base,
-	feedbackWarningVariant: baseTokens.color.yellow.lighten80,
+    //Feedback
+    feedbackInfo: baseTokens.color.blue.base,
+    feedbackInfoVariant: baseTokens.color.blue.lighten80,
+    feedbackError: baseTokens.color.orange.darken20,
+    feedbackOnError: baseTokens.color.white.base,
+    feedbackErrorVariant: baseTokens.color.orange.lighten80,
+    feedbackOnErrorVariant: baseTokens.color.orange.darken60,
+    feedbackSuccess: baseTokens.color.green.base,
+    feedbackSuccessVariant: baseTokens.color.green.lighten80,
+    feedbackOnSuccess: baseTokens.color.grey.darken60,
+    feedbackOnSuccessVariant: baseTokens.color.grey.darken60,
+    feedbackWarning: baseTokens.color.yellow.base,
+    feedbackOnWarning: baseTokens.color.grey.darken60,
+    feedbackWarningVariant: baseTokens.color.yellow.lighten80,
+    feedbackOnWarningVariant: baseTokens.color.yellow.darken60,
 
+    //Interaction
 	interactionDarkEnabled: baseTokens.color.transparentBlue.alpha00,
 	interactionDarkHover: baseTokens.color.transparentBlue.alpha08,
 	interactionDarkPressed: baseTokens.color.transparentBlue.alpha20,
@@ -71,4 +85,5 @@ export const cnamLightTheme = {
 	interactionLightenEnabled: baseTokens.color.none,
 	interactionLightenHover: baseTokens.color.white.alpha20,
 	interactionLightenPressed: baseTokens.color.white.alpha40,
+    // SelectedLight
 }
