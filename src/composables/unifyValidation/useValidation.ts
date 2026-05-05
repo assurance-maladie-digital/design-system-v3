@@ -186,9 +186,7 @@ export function useValidation(params: {
 		...(params.showSuccessMessages.value ? innerSuccesses.value : []),
 		...(params.successMessages?.value || []),
 	])])
-	const internalHasSuccess = computed(() => toValue(params.useVuetifyValidation)
-		? innerSuccesses.value.length > 0
-		: customValidator.hasSuccess.value)
+	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
