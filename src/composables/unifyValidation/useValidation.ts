@@ -71,11 +71,7 @@ export function useValidation(params: {
 	isValidateOnBlur: Ref<boolean>
 	showSuccessMessages: Ref<boolean>
 	disableErrorHandling: Ref<boolean>
-<<<<<<< HEAD
-	label: Ref<string | undefined>
-=======
 	label?: Ref<string | undefined>
->>>>>>> 8a715d82 (ajout warning sucess msg)
 	focused: Ref<boolean>
 	errorMessages?: Ref<string[] | null | undefined>
 	warningMessages?: Ref<string[] | null | undefined>
