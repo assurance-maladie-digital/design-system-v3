@@ -372,6 +372,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Données',
 					},
 					{
+						title: 'Accordion',
+						description: 'Utilisé pour optimiser l’espace vertical lors de l’affichage d’une grande quantité d’informations.',
+						link: '/?path=/docs/composants-donn%C3%A9es-accordion--docs',
+						img: `/components/accordion${isAp ? '-ap' : ''}.svg`,
+						category: 'Données',
+					},
+					{
 						title: 'DataListGroup',
 						description: 'Utilisé pour afficher une liste de DataList.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalistgroup--docs',
@@ -410,7 +417,7 @@ export const ComponentsList: StoryObj = {
 						title: 'NotificationBar',
 						description: 'Utilisé pour afficher des notifications à l’utilisateur.',
 						link: '/?path=/docs/composants-feedback-notificationbar--docs',
-						img: '/components/notification-bar.svg',
+						img: `/components/notification-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -473,6 +480,8 @@ export const ComponentsList: StoryObj = {
 					'SkeletonLoader',
 					'OTPInput',
 					'DialogBox',
+					'NotificationBar',
+					'Accordion',
 					'ChipList',
 				]
 
