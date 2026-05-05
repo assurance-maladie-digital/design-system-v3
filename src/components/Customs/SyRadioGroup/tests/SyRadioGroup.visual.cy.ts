@@ -42,7 +42,8 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		// Trigger validation to show error
-		cy.get('.v-radio-group').blur()
+		cy.get('input[type="radio"]').first().focus()
+		cy.get('input[type="radio"]').first().blur()
 		cy.get('.v-radio-group').should('be.visible')
 		cy.get('.v-radio-group').should('have.class', 'error-field')
 		cy.matchImageSnapshot('sy-radio-group-error', cy.get('.v-radio-group'))
@@ -53,12 +54,13 @@ describe('SyRadioGroup - Visual regression tests', () => {
 			props: {
 				label: 'Radio Group with Warning',
 				options: defaultOptions,
-				hasWarning: true,
 				warningMessages: ['This is a warning message'],
 				showSuccessMessages: true,
 			},
 		})
 
+		cy.get('input[type="radio"]').first().focus()
+		cy.get('input[type="radio"]').first().blur()
 		cy.get('.v-radio-group').should('be.visible')
 		cy.get('.v-radio-group').should('have.class', 'warning-field')
 		cy.matchImageSnapshot('sy-radio-group-warning', cy.get('.v-radio-group'))
@@ -76,7 +78,8 @@ describe('SyRadioGroup - Visual regression tests', () => {
 		})
 
 		// Trigger validation to show success
-		cy.get('.v-radio-group').blur()
+		cy.get('input[type="radio"]').first().focus()
+		cy.get('input[type="radio"]').first().blur()
 		cy.get('.v-radio-group').should('be.visible')
 		cy.get('.v-radio-group').should('have.class', 'success-field')
 		cy.matchImageSnapshot('sy-radio-group-success', cy.get('.v-radio-group'))

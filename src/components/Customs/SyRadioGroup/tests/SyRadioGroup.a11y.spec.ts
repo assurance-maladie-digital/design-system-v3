@@ -87,7 +87,16 @@ describe('SyRadioGroup – accessibility (axe)', () => {
 	})
 
 	it('has no obvious axe violations with aria-labelledby', async () => {
+		const container = document.createElement('div')
+		document.body.appendChild(container)
+
+		const heading = document.createElement('h2')
+		heading.id = 'custom-heading'
+		heading.textContent = 'Titre du groupe'
+		container.appendChild(heading)
+
 		const wrapper = mount(SyRadioGroup, {
+			attachTo: container,
 			props: {
 				ariaLabelledby: 'custom-heading',
 				label: 'Radio avec aria-labelledby',
@@ -99,17 +108,15 @@ describe('SyRadioGroup – accessibility (axe)', () => {
 			},
 		})
 
-		// Ajouter un élément avec l'id référencé
-		const heading = document.createElement('h2')
-		heading.id = 'custom-heading'
-		heading.textContent = 'Titre du groupe'
-		document.body.appendChild(heading)
-
-		const results = await axe(wrapper.element as HTMLElement)
-		assertNoA11yViolations(results, 'SyRadioGroup – avec aria-labelledby', {
-			ignoreRules: ['region'],
-		})
-
-		document.body.removeChild(heading)
+		try {
+			const results = await axe(container)
+			assertNoA11yViolations(results, 'SyRadioGroup – avec aria-labelledby', {
+				ignoreRules: ['region'],
+			})
+		}
+		finally {
+			wrapper.unmount()
+			document.body.removeChild(container)
+		}
 	})
 })
