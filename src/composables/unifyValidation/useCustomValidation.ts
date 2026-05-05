@@ -96,5 +96,12 @@ export function useCustomValidation(
 		}
 	})
 
-	return { validate, hasSuccess }
+	function clearValidation() {
+		errors.value = []
+		warnings.value = []
+		successes.value = []
+		hasSuccess.value = false
+	}
+
+	return { validate, hasSuccess, clearValidation }
 }

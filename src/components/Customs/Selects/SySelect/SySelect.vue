@@ -148,7 +148,7 @@
 		: [],
 	)
 
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
 		modelValue: toRef(props, 'modelValue') as Ref<unknown>,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -277,6 +277,7 @@
 		if (item === null || item === undefined) {
 			selectedItem.value = props.multiple ? [] : null
 			emit('update:modelValue', props.multiple ? [] : null)
+			clearValidation()
 
 			// Garder la liste ouverte après une suppression et réinitialiser la navigation au clavier
 			const target = event?.target as HTMLElement | undefined

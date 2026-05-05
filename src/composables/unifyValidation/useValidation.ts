@@ -200,6 +200,11 @@ export function useValidation(params: {
 		) || params.hasSuccessProp?.value,
 	)
 
+	function clearValidation() {
+		vuetifyErrors.value = []
+		customValidator.clearValidation()
+	}
+
 	return {
 		errors,
 		warnings,
@@ -208,5 +213,6 @@ export function useValidation(params: {
 		hasWarning,
 		hasSuccess,
 		validate,
+		clearValidation,
 	}
 }
