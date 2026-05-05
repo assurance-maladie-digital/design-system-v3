@@ -361,7 +361,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ChipList',
 						description: 'Utilisé pour afficher une liste de puces.',
 						link: '/?path=/docs/composants-donn%C3%A9es-chiplist--docs',
-						img: '/components/chip-list.svg',
+						img: `/components/chip-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -482,6 +482,7 @@ export const ComponentsList: StoryObj = {
 					'DialogBox',
 					'NotificationBar',
 					'Accordion',
+					'ChipList',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
