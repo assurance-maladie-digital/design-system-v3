@@ -58,6 +58,7 @@
 			modelValue: null,
 			multiple: false,
 			noDataText: locales.noData,
+			selectionText: undefined,
 			placeholder: '',
 			plainTextKey: '',
 			returnObject: false,
