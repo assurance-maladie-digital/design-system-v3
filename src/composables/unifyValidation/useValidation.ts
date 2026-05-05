@@ -111,7 +111,8 @@ export function useValidation(params: {
 			validate: async () => true,
 		}
 	}
-	const innerErrors = ref<string[]>([])
+	const vuetifyErrors = ref<string[]>([])
+	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
 	const innerSuccesses = ref<string[]>([])
 
@@ -122,7 +123,7 @@ export function useValidation(params: {
 			params.modelValue,
 			params.rules,
 			params.disabled,
-			innerErrors,
+			vuetifyErrors,
 			params.hasErrorProp || ref(false),
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
@@ -139,7 +140,7 @@ export function useValidation(params: {
 		params.customRules,
 		params.customWarningRules,
 		params.customSuccessRules,
-		innerErrors,
+		customErrors,
 		innerWarnings,
 		innerSuccesses,
 		params.showSuccessMessages,
@@ -153,7 +154,8 @@ export function useValidation(params: {
 
 	async function validate(): Promise<boolean> {
 		if (params.readonly.value || params.disabled.value || params.disableErrorHandling.value) {
-			innerErrors.value = []
+			vuetifyErrors.value = []
+			customErrors.value = []
 			innerWarnings.value = []
 			innerSuccesses.value = []
 
@@ -172,7 +174,8 @@ export function useValidation(params: {
 	}
 
 	const errors = computed(() => [...new Set([
-		...innerErrors.value,
+		...vuetifyErrors.value,
+		...customErrors.value,
 		...(params.errorMessages?.value || []),
 	])])
 	const warnings = computed(() => [...new Set([

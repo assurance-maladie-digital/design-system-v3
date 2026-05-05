@@ -1227,3 +1227,104 @@ const onSubmit = (event) => {
 		}
 	},
 }
+
+export const VuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple d\'utilisation de la validation native Vuetify via la prop `useVuetifyValidation`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur. Soumettez le formulaire pour déclencher la validation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm @submit="onSubmit">
+    <SySelect
+      v-model="value"
+      :items="items"
+      label="Option"
+      use-vuetify-validation
+      :show-success-messages="false"
+      :rules="[v => !!v || 'Ce champ est requis']"
+    />
+    <VBtn type="submit" color="primary" class="mt-4">
+      Soumettre
+    </VBtn>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SySelect, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref(null)
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+
+function onSubmit(event: { isValid: boolean }) {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide : veuillez choisir une option.')
+  }
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'label': 'Option',
+		'useVuetifyValidation': true,
+		'showSuccessMessages': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SySelect, SyForm, VBtn },
+		setup() {
+			const value = ref(null)
+
+			function onSubmit(event: { isValid: boolean }) {
+				if (event.isValid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide : veuillez choisir une option.')
+				}
+			}
+
+			return { args, value, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<SyForm @submit="onSubmit">
+					<SySelect
+						v-model="value"
+						v-bind="args"
+						:rules="[v => !!v || 'Ce champ est requis']"
+					/>
+					<VBtn
+						type="submit"
+						color="primary"
+						class="mt-4"
+					>
+						Soumettre
+					</VBtn>
+				</SyForm>
+			</div>
+		`,
+	}),
+}
