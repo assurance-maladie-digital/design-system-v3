@@ -53,7 +53,6 @@ Il permet de choisir **une seule valeur** parmi une liste d’options.
 export default meta
 type Story = StoryObj<typeof SyRadioGroup>
 
-
 export const Default: Story = {
 	parameters: {
 		sourceCode: [
@@ -651,6 +650,3 @@ export const Required: Story = {
 		],
 	},
 }
-
-
-
