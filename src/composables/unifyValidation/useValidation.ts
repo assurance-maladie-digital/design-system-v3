@@ -109,6 +109,7 @@ export function useValidation(params: {
 			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
 			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
 			validate: async () => true,
+			clearValidation: () => {},
 		}
 	}
 	const vuetifyErrors = ref<string[]>([])
