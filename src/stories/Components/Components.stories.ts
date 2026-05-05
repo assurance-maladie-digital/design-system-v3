@@ -85,6 +85,12 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'SyTabs',
+						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
+						img: '/components/contextual-menu.svg',
+						category: 'Navigation',
+					},
+					{
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
@@ -483,6 +489,7 @@ export const ComponentsList: StoryObj = {
 					'NotificationBar',
 					'Accordion',
 					'ChipList',
+					'SyTabs',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
