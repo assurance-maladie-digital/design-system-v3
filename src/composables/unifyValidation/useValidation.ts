@@ -4,6 +4,8 @@ import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
 
+export type { VuetifyValidationRule }
+
 export interface FieldValidationProps {
 	modelValue?: unknown
 	readonly?: boolean

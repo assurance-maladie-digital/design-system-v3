@@ -15,13 +15,13 @@ const meta: Meta<typeof SyRadioGroup> = {
 		},
 	},
 	argTypes: {
-		'label': { control: 'text', description: 'Label du groupe' },
-		'options': { control: 'object', description: 'Liste des options' },
-		'required': { control: 'boolean', description: 'Champ requis' },
-		'disabled': { control: 'boolean', description: 'Désactivé' },
-		'readonly': { control: 'boolean', description: 'Lecture seule' },
-		'useVuetifyValidation': { control: 'boolean', description: 'Validation Vuetify native' },
-		'showSuccessMessages': { control: 'boolean', description: 'Afficher les messages de succès' },
+		label: { control: 'text', description: 'Label du groupe' },
+		options: { control: 'object', description: 'Liste des options' },
+		required: { control: 'boolean', description: 'Champ requis' },
+		disabled: { control: 'boolean', description: 'Désactivé' },
+		readonly: { control: 'boolean', description: 'Lecture seule' },
+		useVuetifyValidation: { control: 'boolean', description: 'Validation Vuetify native' },
+		showSuccessMessages: { control: 'boolean', description: 'Afficher les messages de succès' },
 	},
 	args: {
 		label: 'Choisissez une option',
@@ -177,7 +177,7 @@ const options = [
 
 const rules: VuetifyValidationRule[] = [
 	(v: string | null) => !!v || 'Une sélection est requise',
-	(v: string | null) => v === 'a' || 'Vous devez sélectionner l\'option A',
+	(v: string | null) => v === 'a' || 'Vous devez sélectionner l'option A',
 ]
 
 const submit = async () => {
@@ -378,7 +378,7 @@ const customRules: ValidationRule[] = [
 		type: 'custom',
 		options: {
 			validate: (value: unknown) => value === 'A',
-			message: 'Vous devez sélectionner l\'option A',
+			message: 'Vous devez sélectionner l'option A',
 			fieldIdentifier: 'Option',
 		},
 	},

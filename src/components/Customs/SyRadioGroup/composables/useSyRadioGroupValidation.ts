@@ -1,11 +1,10 @@
-import { computed, ref, toRef, watch, type Ref } from 'vue'
+import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
 import type { ValidationRule } from '@/composables/validation/useValidation'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	modelValue?: PropertyKey | null
-	label?: string
 	required?: boolean
 	readonly?: boolean
 	disabled?: boolean
@@ -32,23 +31,23 @@ export interface UseSyRadioGroupValidationReturn {
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
 	successes: Ref<string[]>
-	hasError: Ref<boolean>
-	hasWarning: Ref<boolean>
-	hasSuccess: Ref<boolean>
-	defaultRules: Ref<ValidationRule[]>
+	hasError: ComputedRef<boolean | undefined>
+	hasWarning: ComputedRef<boolean | undefined>
+	hasSuccess: ComputedRef<boolean | undefined>
+	defaultRules: ComputedRef<ValidationRule[]>
 	focused: Ref<boolean>
 }
 
 /**
  * Composable pour gérer la validation du composant SyRadioGroup
- * 
+ *
  * Ce composable encapsule toute la logique de validation spécifique aux groupes de radios :
  * - Validation required avec message personnalisé
  * - Validation immédiate à la sélection (isValidateOnBlur = false par défaut)
  * - Support des customRules, customWarningRules, customSuccessRules
  * - Désactivation automatique des messages de succès en mode Vuetify
  * - Intégration avec useValidation du design system
- * 
+ *
  * @example
  * const { validate, errors, hasError, defaultRules } = useSyRadioGroupValidation(props, model)
  */
@@ -62,12 +61,12 @@ export function useSyRadioGroupValidation(
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{
-				type: 'required',
-				options: {
-					message: `Le champ ${props.label || 'ce champ'} est requis.`,
-					fieldIdentifier: props.label,
-				},
-			}]
+					type: 'required',
+					options: {
+						message: `Le champ ${props.label || 'ce champ'} est requis.`,
+						fieldIdentifier: props.label,
+					},
+				}]
 			: [],
 	)
 
