@@ -340,30 +340,30 @@
 }
 
 .sy-chip-success {
-	color: rgb(var(--v-theme-feedbackSuccess)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackSuccess)) !important;
+  color: rgb(var(--v-theme-feedbackOnSuccessVariant)) !important;
+  border: 1px solid rgb(var(--v-theme-feedbackOnSuccessVariant)) !important;
 }
 
 .sy-chip-error {
-	color: rgb(var(--v-theme-feedbackError)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackError)) !important;
+  color: rgb(var(--v-theme-feedbackOnErrorVariant)) !important;
+  border: 1px solid rgb(var(--v-theme-feedbackOnErrorVariant)) !important;
 }
 
 .sy-chip-info {
-	color: rgb(var(--v-theme-feedbackInfo)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackInfo)) !important;
+  color: rgb(var(--v-theme-feedbackOnInfoVariant)) !important;
+  border: 1px solid rgb(var(--v-theme-feedbackOnInfoVariant)) !important;
 }
 
 .sy-chip-warning {
 	color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackWarning)) !important;
+  border: 1px solid rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
 }
 
 .overflow-chip {
 	cursor: pointer;
 
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary)) !important;
+    outline: 2px solid rgb(var(--v-theme-colorPrimary)) !important;
 		outline-offset: 2px !important;
 	}
 }
@@ -375,27 +375,27 @@
 
 // Bouton "Réinitialiser le filtre" - améliorer le contraste de la bordure de focus
 .overflow-btn:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-primary)) !important;
+  outline: 2px solid rgb(var(--v-theme-colorPrimary)) !important;
 }
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackSuccess)) !important;
+  outline: 2px solid rgb(var(--v-theme-feedbackOnSuccessVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackInfo)) !important;
+  outline: 2px solid rgb(var(--v-theme-feedbackOnInfoVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackWarning)) !important;
+  outline: 2px solid rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackError)) !important;
+  outline: 2px solid rgb(var(--v-theme-feedbackOnErrorVariant)) !important;
 	outline-offset: -2px !important;
 }
 </style>

@@ -291,7 +291,7 @@
 
 <style lang="scss" scoped>
 .amelipro-state-tile__pdf-download {
-	color: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-colorPrimary));
 }
 
 .amelipro-state-tile__pdf-download--white {
@@ -302,7 +302,7 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: rgb(var(--v-theme-surface));
+  background-color: rgb(var(--v-theme-colorSurface));
 
 	& span {
 		white-space: normal;
@@ -310,7 +310,7 @@
 
 	&:hover {
 		& .amelipro-state-tile__pdf-download {
-			color: rgb(var(--v-theme-secondary));
+      color: rgb(var(--v-theme-colorSecondary));
 			text-decoration: underline;
 		}
 

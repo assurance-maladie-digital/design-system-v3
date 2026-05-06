@@ -484,7 +484,7 @@
 
 @mixin striped-rows {
 	.v-table tbody tr:nth-child(even) {
-		background-color: rgba(var(--v-theme-primary), 0.05);
+    background-color: rgba(var(--v-theme-colorPrimary), 0.05);
 	}
 }
 
@@ -539,7 +539,7 @@
 	position: sticky !important;
 	left: 0 !important;
 	z-index: 3;
-	background: rgb(var(--v-theme-surface)) !important;
+  background: rgb(var(--v-theme-colorSurface)) !important;
 }
 
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),

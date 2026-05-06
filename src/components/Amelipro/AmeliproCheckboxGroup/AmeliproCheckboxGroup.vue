@@ -297,7 +297,7 @@
 			width: 1.5rem;
 			height: 1.5rem;
 			border-radius: 0.4rem;
-			border: 3px solid rgb(var(--v-theme-primary));
+      border: 3px solid rgb(var(--v-theme-colorPrimary));
 			background-color: transparent;
 			content: '';
 		}
@@ -306,7 +306,7 @@
 	&[aria-checked='true'] {
 		& .checkbox-label {
 			&::before {
-				background-color: rgb(var(--v-theme-primary));
+        background-color: rgb(var(--v-theme-colorPrimary));
 			}
 
 			&::after {
@@ -342,13 +342,13 @@
 			font-weight: var(--v-ap-fontWeightBold);
 			padding: 0.75rem 2rem;
 			border-radius: var(--v-ap-btnRadius);
-			border: 1px solid rgb(var(--v-theme-primary));
-			background-color: rgb(var(--v-theme-surface));
-			color: rgb(var(--v-theme-primary));
+      border: 1px solid rgb(var(--v-theme-colorPrimary));
+      background-color: rgb(var(--v-theme-colorSurface));
+      color: rgb(var(--v-theme-colorPrimary));
 
 			&.amelipro-checkbox-group__item-label-span-error {
 				background-color: rgb(var(--v-theme-ap-red-lighten-4));
-				border-color: rgb(var(--v-theme-error));
+        border-color: rgb(var(--v-theme-feedbackError));
 			}
 		}
 
@@ -362,8 +362,8 @@
 					left: 0.75rem;
 					width: 1rem;
 					height: 0.5rem;
-					border-bottom: 2px solid rgb(var(--v-theme-primary));
-					border-left: 2px solid rgb(var(--v-theme-primary));
+          border-bottom: 2px solid rgb(var(--v-theme-colorPrimary));
+          border-left: 2px solid rgb(var(--v-theme-colorPrimary));
 					transform: rotate(-50deg);
 					content: '';
 				}

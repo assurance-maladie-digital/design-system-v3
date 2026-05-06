@@ -76,7 +76,7 @@
 .criteria-header h3 {
 	margin: 0;
 	font-size: 1.4rem;
-	color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-colorPrimary));
 	margin-top: 0.5rem !important;
 	margin-bottom: 0.5rem !important;
 }
@@ -131,14 +131,14 @@
 }
 
 .resources-section a {
-	color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-colorPrimary));
 	text-decoration: none;
 	border-bottom: 1px dotted;
 	transition: color 0.2s ease;
 }
 
 .resources-section a:hover {
-	color: rgb(var(--v-theme-secondary));
+    color: rgb(var(--v-theme-colorSecondary));
 }
 
 @media (width <= 768px) {

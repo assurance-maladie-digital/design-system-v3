@@ -107,10 +107,10 @@
 		width: 100%;
 		padding: 16px 50px 16px 20px;
 		text-align: left;
-		color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-colorPrimary));
 
 		&:hover {
-			background-color: rgb(var(--v-theme-primary));
+      background-color: rgb(var(--v-theme-colorPrimary));
 			color: rgb(var(--v-theme-colorOnPrimary));
 			text-decoration: underline;
 
@@ -139,7 +139,7 @@
 			width: 100%;
 			height: 100%;
 			overflow-y: auto;
-			background-color: rgb(var(--v-theme-surface));
+      background-color: rgb(var(--v-theme-colorSurface));
 			padding-top: 40px;
 			z-index: 10;
 		}
@@ -176,7 +176,7 @@
 		}
 
 		.sub-menu--open > .sub-menu-btn {
-			background-color: rgb(var(--v-theme-primary));
+      background-color: rgb(var(--v-theme-colorPrimary));
 			color: rgb(var(--v-theme-colorOnPrimary));
 			transition: color 0.15s linear, background-color 0.15s linear;
 

@@ -604,6 +604,6 @@
 
 .sy-number-success,
 .sy-key-success {
-	color: rgb(var(--v-theme-feedbackSuccess));
+  color: rgb(var(--v-theme-feedbackSuccessVariant));
 }
 </style>

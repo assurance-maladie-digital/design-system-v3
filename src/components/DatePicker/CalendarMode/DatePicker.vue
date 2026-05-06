@@ -1217,13 +1217,13 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackSuccess)) !important;
+    color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-feedbackSuccess)) !important;
+    color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 	}
 }
 
@@ -1370,7 +1370,7 @@
 }
 
 :deep(.v-picker__body .v-btn:focus-visible) {
-	outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
+  outline: 2px solid rgb(var(--v-theme-colorPrimary, '12, 65, 154'));
 
 	.v-btn__overlay {
 		display: none;
@@ -1398,7 +1398,7 @@
 	}
 
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
+    outline: 2px solid rgb(var(--v-theme-colorPrimary, '12, 65, 154'));
 
 		:deep(.v-btn__overlay) {
 			display: none;

@@ -343,14 +343,14 @@ ul {
 .menu-btn,
 .home-menu-btn {
 	&:focus {
-		color: rgb(var(--v-theme-secondary)) !important;
+    color: rgb(var(--v-theme-colorSecondary)) !important;
 		background-color: rgb(var(--v-theme-ap-blue-lighten-3)) !important;
 	}
 }
 
 .menu-btn {
 	&:focus :deep(.v-icon) {
-		color: rgb(var(--v-theme-secondary)) !important;
+    color: rgb(var(--v-theme-colorSecondary)) !important;
 	}
 }
 

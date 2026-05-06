@@ -114,7 +114,7 @@
 	display: flex;
 	height: 52px;
 	align-items: center;
-	color: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-colorPrimary));
 	line-height: 1.45;
 	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;

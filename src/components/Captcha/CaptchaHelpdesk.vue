@@ -36,7 +36,7 @@
 }
 
 .captcha-helpdesk a {
-	color: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-colorPrimary));
 	font-weight: 700;
 }
 </style>

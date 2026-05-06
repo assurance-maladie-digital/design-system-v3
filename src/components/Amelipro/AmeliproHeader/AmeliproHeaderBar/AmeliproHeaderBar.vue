@@ -127,6 +127,6 @@
 }
 
 .navigation-bar {
-	background-color: rgb(var(--v-theme-primary));
+  background-color: rgb(var(--v-theme-colorPrimary));
 }
 </style>

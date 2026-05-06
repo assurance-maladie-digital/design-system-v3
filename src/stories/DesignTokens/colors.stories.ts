@@ -276,7 +276,7 @@ export const Interaction: StoryObj = {
 			template: `
               <ColorDisplay
                   :displayEmptyColors="displayEmptyColors"
-                  colorCategory="interactive"
+                  colorCategory="interaction"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"

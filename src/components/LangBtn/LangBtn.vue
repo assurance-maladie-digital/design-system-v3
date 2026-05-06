@@ -195,7 +195,7 @@
 
 .v-list-item:focus-visible {
 	&::after {
-		color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-colorPrimary));
 		opacity: 1;
 	}
 

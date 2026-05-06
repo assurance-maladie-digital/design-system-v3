@@ -326,7 +326,7 @@ a {
 
 	.social {
 		.text--primary {
-			color: rgb(var(--v-theme-primary));
+      color: rgb(var(--v-theme-colorPrimary));
 		}
 
 		a.v-btn {
@@ -347,7 +347,7 @@ a {
 	}
 
 	a.text--primary {
-		color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-colorPrimary));
 	}
 
 	.v-divider {
@@ -355,7 +355,7 @@ a {
 	}
 
 	.scroll {
-		color: rgb(var(--v-theme-primary)) !important;
+    color: rgb(var(--v-theme-colorPrimary)) !important;
 	}
 }
 

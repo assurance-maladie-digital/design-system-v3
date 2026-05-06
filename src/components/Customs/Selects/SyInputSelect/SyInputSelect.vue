@@ -344,7 +344,7 @@
 }
 
 .error {
-	border-color: rgb(var(--v-theme-error));
+  border-color: rgb(var(--v-theme-feedbackError));
 }
 
 .v-btn {

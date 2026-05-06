@@ -168,7 +168,7 @@ export function usePinnedColumns({
 			const stickyCellStyle: Record<string, string | number> = {
 				position: 'sticky',
 				zIndex: 'var(--sy-table-z-pinned-cell)',
-				background: 'rgb(var(--v-theme-surface))',
+				background: 'rgb(var(--v-theme-colorSurface))',
 			}
 
 			const sideClass = left !== undefined ? 'sy-table__pinned--left' : 'sy-table__pinned--right'

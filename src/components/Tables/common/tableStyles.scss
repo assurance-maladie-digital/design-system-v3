@@ -44,13 +44,13 @@
 			.v-field__append-inner > .v-icon,
 			.v-field__clearable > .v-icon {
 				opacity: 1;
-				color: rgb(var(--v-theme-primary));
+              color: rgb(var(--v-theme-colorPrimary));
 			}
 		}
 
 		&--focused {
-			border-color: rgb(var(--v-theme-primary));
-			color: rgb(var(--v-theme-primary));
+          border-color: rgb(var(--v-theme-colorPrimary));
+          color: rgb(var(--v-theme-colorPrimary));
 		}
 	}
 
@@ -101,7 +101,7 @@
 
 	.v-table tbody > tr.sy-table__clickable-row:focus-visible,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+      outline: 2px solid rgb(var(--v-theme-colorPrimary));
 	}
 
 	.v-table tbody > tr.sy-table__clickable-row > td,
@@ -120,6 +120,6 @@
 	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td {
-		background-color: rgba(var(--v-theme-primary), 0.08) !important;
+      background-color: rgba(var(--v-theme-colorPrimary), 0.08) !important;
 	}
 }

@@ -215,13 +215,13 @@
 	&.btn-previous,
 	&.btn-next {
 		&:disabled {
-			color: rgb(var(--v-theme-primary)) !important;
+      color: rgb(var(--v-theme-colorPrimary)) !important;
 			background-color: transparent !important;
 			opacity: 0.7;
 			cursor: default;
 
 			& .v-icon {
-				color: rgb(var(--v-theme-primary)) !important;
+        color: rgb(var(--v-theme-colorPrimary)) !important;
 			}
 		}
 	}
@@ -261,11 +261,11 @@
 	width: 1rem;
 	height: 1rem;
 	border-radius: 50%;
-	border: 1px solid rgb(var(--v-theme-primary));
-	background-color: rgb(var(--v-theme-surface));
+  border: 1px solid rgb(var(--v-theme-colorPrimary));
+  background-color: rgb(var(--v-theme-colorSurface));
 
 	&.active-dot {
-		background-color: rgb(var(--v-theme-primary));
+    background-color: rgb(var(--v-theme-colorPrimary));
 	}
 }
 </style>

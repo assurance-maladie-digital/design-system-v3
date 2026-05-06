@@ -102,7 +102,7 @@
 <style scoped lang="scss">
 .visual-picker-header {
 	padding-block: 16px;
-	background-color: rgb(var(--v-theme-primary, '12, 65, 154'));
+  background-color: rgb(var(--v-theme-colorPrimary, '12, 65, 154'));
 	color: rgb(var(--v-theme-colorOnPrimary));
 }
 
@@ -143,7 +143,7 @@
 
 	&:focus-visible {
 		/* stylelint-disable-next-line custom-property-pattern */
-		outline: 2px solid rgb(var(--v-theme-accentPrimary, 12, 65, 154));
+    outline: 2px solid rgb(var(--v-theme-colorPrimary, 12, 65, 154));
 	}
 }
 </style>

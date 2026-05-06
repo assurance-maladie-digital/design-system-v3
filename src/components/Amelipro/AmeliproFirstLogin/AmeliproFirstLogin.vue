@@ -318,7 +318,7 @@
 		height: 7px;
 		margin-top: 7px;
 		border-radius: 50%;
-		background-color: rgb(var(--v-theme-secondary));
+    background-color: rgb(var(--v-theme-colorSecondary));
 	}
 }
 

@@ -258,7 +258,7 @@
 .sy-filters-side-bar__apply-btn,
 .sy-filters-side-bar__open-btn {
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+    outline: 2px solid rgb(var(--v-theme-colorPrimary));
 		outline-offset: 2px;
 
 		:deep(.v-btn__overlay) {
@@ -273,7 +273,7 @@
 
 .v-expansion-panel-title {
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+    outline: 2px solid rgb(var(--v-theme-colorPrimary));
 		outline-offset: -2px;
 
 		:deep(.v-expansion-panel-title__overlay) {

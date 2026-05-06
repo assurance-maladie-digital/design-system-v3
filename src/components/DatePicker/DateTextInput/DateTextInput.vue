@@ -1154,10 +1154,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-feedbackWarning)) !important;
+    color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-feedbackWarning)) !important;
+      color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
 		}
 	}
 
@@ -1165,7 +1165,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-feedbackWarning)) !important;
+      color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
 		}
 	}
 }
@@ -1189,10 +1189,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-feedbackSuccess)) !important;
+    color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-feedbackSuccess)) !important;
+      color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 		}
 	}
 
@@ -1200,7 +1200,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-feedbackSuccess)) !important;
+      color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 		}
 	}
 }

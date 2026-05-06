@@ -374,7 +374,7 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	background-color: rgb(var(--v-theme-surface));
+  background-color: rgb(var(--v-theme-colorSurface));
 	border-radius: var(--v-ap-inputRadius);
 	white-space: normal;
 }

@@ -397,7 +397,7 @@
 	.v-list-item[aria-selected='true'] .v-list-item-subtitle,
 	.v-list-item[aria-selected='true'] .v-list-item__title,
 	.v-list-item[aria-selected='true'] .v-list-item__subtitle {
-		color: rgb(var(--v-theme-primary)) !important;
+    color: rgb(var(--v-theme-colorPrimary)) !important;
 		position: relative;
 		z-index: 1;
 	}

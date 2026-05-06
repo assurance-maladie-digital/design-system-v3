@@ -61,7 +61,7 @@
 <template>
 	<VToolbar
 		v-bind="options.toolbar"
-		:class="{ 'v-theme-dark': theme.current.value.dark}"
+		:class="{ 'v-theme-grey-darken80': theme.current.value.dark}"
 		class="sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between"
 	>
 		<p

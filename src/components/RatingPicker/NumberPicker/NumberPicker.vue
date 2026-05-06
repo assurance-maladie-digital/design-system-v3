@@ -181,8 +181,8 @@
 }
 
 .sy-btn-answer {
-	color: rgb(var(--v-theme-primary));
-	border: 1px solid rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-colorPrimary));
+  border: 1px solid rgb(var(--v-theme-colorPrimary));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -193,8 +193,8 @@
 }
 
 .sy-number-picker__item {
-	color: rgb(var(--v-theme-primary));
-	border: 1px solid rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-colorPrimary));
+  border: 1px solid rgb(var(--v-theme-colorPrimary));
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -217,7 +217,7 @@
 
 .sy-number-picker__item:hover,
 .sy-number-picker__item:focus-visible {
-	background-color: rgba(var(--v-theme-primary), 0.1);
+  background-color: rgba(var(--v-theme-colorPrimary), 0.1);
 }
 
 .sy-number-picker__item:focus-visible {

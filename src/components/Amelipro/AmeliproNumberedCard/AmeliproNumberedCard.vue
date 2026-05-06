@@ -156,8 +156,8 @@
 		width: 2rem;
 		height: 2rem;
 		border-radius: 50%;
-		border: 1px solid rgb(var(--v-theme-primary));
-		background-color: rgb(var(--v-theme-surface));
+    border: 1px solid rgb(var(--v-theme-colorPrimary));
+    background-color: rgb(var(--v-theme-colorSurface));
 		content: '';
 		z-index: 1;
 

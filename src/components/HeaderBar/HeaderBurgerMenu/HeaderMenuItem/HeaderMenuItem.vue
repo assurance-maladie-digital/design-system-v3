@@ -23,7 +23,7 @@
 	@use '../menu';
 
 	.header-menu-item {
-		color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-colorPrimary));
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
@@ -54,7 +54,7 @@
 	}
 
 	.header-menu-item:hover {
-		background-color: rgb(var(--v-theme-primary));
+    background-color: rgb(var(--v-theme-colorPrimary));
 		color: rgb(var(--v-theme-colorOnPrimary));
 
 		> :deep(a > *) {

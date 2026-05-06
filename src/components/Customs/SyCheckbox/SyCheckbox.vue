@@ -215,11 +215,11 @@
 		if (props.disabled) return cnamSemanticTokens.colors.text.disabled
 		switch (props.color) {
 		case 'error':
-			return 'rgb(var(--v-theme-error))'
+			return 'rgb(var(--v-theme-feedbackError))'
 		case 'success':
-			return 'rgb(var(--v-theme-success))'
+			return 'rgb(var(--v-theme-feedbackSuccessVariant))'
 		case 'warning':
-			return 'rgb(var(--v-theme-warning))'
+			return 'rgb(var(--v-theme-feedbackWarningVariant))'
 		case 'primary':
 			return cnamSemanticTokens.colors.text.base
 		default:
@@ -393,19 +393,19 @@
 
 <style scoped>
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-success)) !important;
+  color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 }
 
 .success-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-success));
+  color: rgb(var(--v-theme-feedbackSuccessVariant));
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-feedbackWarning)) !important;
+  color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
 }
 
 .warning-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-feedbackWarning));
+  color: rgb(var(--v-theme-feedbackWarningVariant));
 }
 
 :deep(.v-input--dirty .v-selection-control__input) {
@@ -435,7 +435,7 @@
 }
 
 :deep(.v-selection-control--error .v-selection-control__input) {
-	color: rgb(var(--v-theme-error));
+  color: rgb(var(--v-theme-feedbackError));
 }
 
 :deep(.v-messages__message) {

@@ -8,7 +8,7 @@
 }
 
 .v-theme--ap2026.v-btn--icon .v-icon {
-	color: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-colorPrimary));
 	transition: color 0.2s ease;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .v-theme--ap2026.v-btn--icon .v-ripple__animation {
-	background-color: rgb(var(--v-theme-primary)) !important;
+  background-color: rgb(var(--v-theme-colorPrimary)) !important;
 	opacity: 0.18;
 }
 

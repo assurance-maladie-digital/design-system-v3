@@ -197,10 +197,10 @@
 
 .theme-ap2026 {
 	a {
-		color: rgb(var(--v-theme-primary));
+      color: rgb(var(--v-theme-colorPrimary));
 
 		&:hover {
-			color: rgb(var(--v-theme-secondary));
+          color: rgb(var(--v-theme-colorSecondary));
 		}
 	}
 }

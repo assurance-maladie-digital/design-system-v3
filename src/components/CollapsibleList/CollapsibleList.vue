@@ -146,7 +146,7 @@ a {
 		font-weight: 700 !important;
 
 		&:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-primary));
+      outline: 2px solid rgb(var(--v-theme-colorPrimary));
 			outline-offset: 2px;
 			border-radius: 4px;
 		}
@@ -168,7 +168,7 @@ a {
 		background-color: transparent;
 
 		&:focus-visible {
-			background-color: rgba(var(--v-theme-primary), 0.08);
+      background-color: rgba(var(--v-theme-colorPrimary), 0.08);
 		}
 	}
 }

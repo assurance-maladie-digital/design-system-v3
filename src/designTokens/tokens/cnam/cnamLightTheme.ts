@@ -1,23 +1,7 @@
 import { baseTokens } from '@/designTokens/tokens/baseTokens'
 
 export const cnamLightTheme = {
-	primary: baseTokens.color.blue.base, // colorPrimary
-	secondary: baseTokens.color.cyan.darken40, // colorSecondary
-	// accentPrimaryLight: baseTokens.color.blue.lighten20,
-	// accentPrimary: baseTokens.color.blue.base,
-	// accentPrimaryContrasted: baseTokens.color.blue.darken40,
-	// accentSecondaryLight: baseTokens.color.cyan.lighten60,
-	// accentSecondary: baseTokens.color.cyan.base,
-	// accentSecondaryContrasted: baseTokens.color.cyan.darken40,//colorSecondary
-	accentAlt: baseTokens.color.grey.base, // colorInverseSurface
-	error: baseTokens.color.orange.darken20, // feedbackError
-	info: baseTokens.color.blue.base, // feedbackInfo
-	success: baseTokens.color.turquoise.darken60, // feedbackSuccessVariant
-	warning: baseTokens.color.yellow.darken60, // feedbackOnWarningVariant
-	// avatar: baseTokens.color.cyan.darken20,
-	// risquePro: baseTokens.color.brick.base,
-	// light: baseTokens.color.grey.lighten60,
-	// dark: baseTokens.color.grey.darken80,
+	risquePro: baseTokens.color.brick.base,
 
 	// Border
 	colorBorder: baseTokens.color.blue.base,
@@ -88,5 +72,4 @@ export const cnamLightTheme = {
 	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
 	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
 	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
-
 }
