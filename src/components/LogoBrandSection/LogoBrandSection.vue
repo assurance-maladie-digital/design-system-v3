@@ -168,11 +168,11 @@
 		switch (props.theme) {
 		case 'cnam':
 		case 'ameli-pro':
-      return cnamLightTheme.colorSecondary
+			return cnamLightTheme.colorSecondary
 		case 'compte-entreprise':
 			return cnamLightTheme.risquePro
 		default:
-      return cnamLightTheme.colorPrimary
+			return cnamLightTheme.colorPrimary
 		}
 	})
 
