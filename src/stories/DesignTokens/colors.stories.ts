@@ -216,105 +216,111 @@ export const ColorOn: StoryObj = {
 	tags: ['!dev'],
 }
 
-// export const Interactive: StoryObj = {
-//     render: () => {
-//         return {
-//             components: {ColorDisplay},
-//             setup() {
-//                 const colorTitle = ''
-//                 const colorDescription = 'Ces couleurs sont à utiliser pour les fonds des éléments interactifs de sélection (item de liste sélectionnable, carte sélectionnable,...)'
-//                 const displayEmptyColors = false
-//                 const colorTitleLevel = 3
-//                 const cnamColors = {
-//                     'interactive-selection-enabled': cnamLightTheme.interactiveSelectionEnabled,
-//                     'interactive-selection-hover': cnamLightTheme.interactiveSelectionHover,
-//                     'interactive-selection-pressed': cnamLightTheme.interactiveSelectionPressed,
-//                     'interactive-selection-selected': cnamLightTheme.interactiveSelectionSelected,
-//                     'interactive-selection-hover-on-selected': cnamLightTheme.interactiveSelectionHoverOnSelected,
-//                     'interactive-selection-selected-accent': cnamLightTheme.interactiveSelectionSelectedAccent,
-//                     'interactive-selection-hover-on-selected-accent': cnamLightTheme.interactiveSelectionHoverOnSelectedAccent,
-//                     'interactive-selection-disabled': cnamLightTheme.interactiveSelectionDisabled,
-//                 }
-//                 const paColors = {
-//                     'interactive-selection-enabled': paLightTheme.interactiveSelectionEnabled,
-//                     'interactive-selection-hover': paLightTheme.interactiveSelectionHover,
-//                     'interactive-selection-pressed': paLightTheme.interactiveSelectionPressed,
-//                     'interactive-selection-selected': paLightTheme.interactiveSelectionSelected,
-//                     'interactive-selection-hover-on-selected': paLightTheme.interactiveSelectionHoverOnSelected,
-//                     'interactive-selection-selected-accent': paLightTheme.interactiveSelectionSelectedAccent,
-//                     'interactive-selection-hover-on-selected-accent': paLightTheme.interactiveSelectionHoverOnSelectedAccent,
-//                     'interactive-selection-disabled': paLightTheme.interactiveSelectionDisabled,
-//                 }
-//                 const apColors = {
-//                     'interactive-selection-enabled': apLightTheme.interactiveSelectionEnabled,
-//                     'interactive-selection-hover': apLightTheme.interactiveSelectionHover,
-//                     'interactive-selection-pressed': apLightTheme.interactiveSelectionPressed,
-//                     'interactive-selection-selected': apLightTheme.interactiveSelectionSelected,
-//                     'interactive-selection-hover-on-selected': apLightTheme.interactiveSelectionHoverOnSelected,
-//                     'interactive-selection-selected-accent': apLightTheme.interactiveSelectionSelectedAccent,
-//                     'interactive-selection-hover-on-selected-accent': apLightTheme.interactiveSelectionHoverOnSelectedAccent,
-//                     'interactive-selection-disabled': apLightTheme.interactiveSelectionDisabled,
-//                 }
-//                 const apColors2026 = {}
-//                 return {
-//                     cnamColors,
-//                     paColors,
-//                     apColors,
-//                     apColors2026,
-//                     colorTitle,
-//                     colorDescription,
-//                     colorTitleLevel,
-//                     displayEmptyColors,
-//                 }
-//             },
-//             template: `
-//               <ColorDisplay
-//                   :displayEmptyColors="displayEmptyColors"
-//                   colorCategory="interactive"
-//                   :cnamColors="cnamColors"
-//                   :paColors="paColors"
-//                   :apColors="apColors"
-//                   :apColors2026="apColors2026"
-//                   :colorTitle="colorTitle"
-//                   :colorDescription="colorDescription"
-//                   :colorTitleLevel="colorTitleLevel"
-//               />
-//             `,
-//         }
-//     },
-//     tags: ['!dev'],
-// }
+export const Interaction: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = ''
+				const colorDescription = 'Ces couleurs sont à utiliser pour les fonds des éléments interactifs de sélection (item de liste sélectionnable, carte sélectionnable,...)'
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
+				const cnamColors = {
+					'interaction-lighten-enabled': cnamLightTheme.interactionLightenEnabled,
+					'interactiion-lighten-hover': cnamLightTheme.interactionLightenHover,
+					'interaction-lighten-selected': cnamLightTheme.interactionLightenSelected,
+					'interaction-lighten-pressed': cnamLightTheme.interactionLightenPressed,
+					'interaction-darke-hover': cnamLightTheme.interactionDarkEnabled,
+					'interaction-dark-hover': cnamLightTheme.interactionDarkHover,
+					'interaction-dark-pressed': cnamLightTheme.interactionDarkPressed,
+					'interaction-darken-enabled': cnamLightTheme.interactionDarkenEnabled,
+					'interaction-darken-hover': cnamLightTheme.interactionDarkenHover,
+					'interaction-darken-pressed': cnamLightTheme.interactionDarkenPressed,
+				}
+				const paColors = {
+					'interaction-lighten-enabled': paLightTheme.interactionLightenEnabled,
+					'interactiion-lighten-hover': paLightTheme.interactionLightenHover,
+					'interaction-lighten-selected': paLightTheme.interactionLightenSelected,
+					'interaction-lighten-pressed': paLightTheme.interactionLightenPressed,
+					'interaction-darke-hover': paLightTheme.interactionDarkEnabled,
+					'interaction-dark-hover': paLightTheme.interactionDarkHover,
+					'interaction-dark-pressed': paLightTheme.interactionDarkPressed,
+					'interaction-darken-enabled': paLightTheme.interactionDarkenEnabled,
+					'interaction-darken-hover': paLightTheme.interactionDarkenHover,
+					'interaction-darken-pressed': paLightTheme.interactionDarkenPressed,
+				}
+				const apColors = {
+					'interaction-lighten-enabled': apLightTheme.interactionLightenEnabled,
+					'interactiion-lighten-hover': apLightTheme.interactionLightenHover,
+					'interaction-lighten-selected': apLightTheme.interactionLightenSelected,
+					'interaction-lighten-pressed': apLightTheme.interactionLightenPressed,
+					'interaction-darke-hover': apLightTheme.interactionDarkEnabled,
+					'interaction-dark-hover': apLightTheme.interactionDarkHover,
+					'interaction-dark-pressed': apLightTheme.interactionDarkPressed,
+					'interaction-darken-enabled': apLightTheme.interactionDarkenEnabled,
+					'interaction-darken-hover': apLightTheme.interactionDarkenHover,
+					'interaction-darken-pressed': apLightTheme.interactionDarkenPressed,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+					displayEmptyColors,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  :displayEmptyColors="displayEmptyColors"
+                  colorCategory="interactive"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
 export const Disabled: StoryObj = {
-    render: () => {
-        return {
-            components: {ColorDisplay},
-            setup() {
-                const colorTitle = 'Disabled'
-                const colorDescription = 'Fond et container des éléments désactivés'
-                const displayEmptyColors = false
-                const colorTitleLevel = 3
-                const cnamColors = {
-                    'color-disabled': cnamLightTheme.colorDisabled,
-                }
-                const paColors = {
-                    'color-disabled': paLightTheme.colorDisabled,
-                }
-                const apColors = {
-                    'color-disabled': apLightTheme.colorDisabled,
-                }
-                const apColors2026 = {}
-                return {
-                    cnamColors,
-                    paColors,
-                    apColors,
-                    apColors2026,
-                    colorTitle,
-                    colorDescription,
-                    colorTitleLevel,
-                    displayEmptyColors,
-                }
-            },
-            template: `
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Disabled'
+				const colorDescription = 'Fond et container des éléments désactivés'
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
+				const cnamColors = {
+					'color-disabled': cnamLightTheme.colorDisabled,
+				}
+				const paColors = {
+					'color-disabled': paLightTheme.colorDisabled,
+				}
+				const apColors = {
+					'color-disabled': apLightTheme.colorDisabled,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+					displayEmptyColors,
+				}
+			},
+			template: `
               <ColorDisplay
                   :displayEmptyColors="displayEmptyColors"
                   colorCategory="disabled"
@@ -327,9 +333,9 @@ export const Disabled: StoryObj = {
                   :colorTitleLevel="colorTitleLevel"
               />
             `,
-        }
-    },
-    tags: ['!dev'],
+		}
+	},
+	tags: ['!dev'],
 }
 
 export const ColorPrimarySection = {
@@ -661,20 +667,163 @@ export const OverlaySection = {
 	},
 }
 
-export const InteractiveSection = {
+export const InteractionSection = {
 	render() {
-		return h(createSection('Interactive', [
-            // Interactive,
+		return h(createSection('Interaction', [
+			Interaction,
 		], 'ap2026'))
 	},
 }
 
 export const DisabledSection = {
-    render() {
-        return h(createSection('Disabled', [
-            Disabled,
-        ], 'ap2026'))
-    },
+	render() {
+		return h(createSection('Disabled', [
+			Disabled,
+		], 'ap2026'))
+	},
+}
+
+export const Feedback: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Feedback'
+				const colorTitleLevel = 3
+				const colorDescription = 'Fonds de composants (ou de containers) indiquant un message de statut'
+				const cnamColors = {
+					'feedback-error': cnamLightTheme.feedbackError,
+					'feedback-error-variant': cnamLightTheme.feedbackErrorVariant,
+					'feedback-success': cnamLightTheme.feedbackSuccess,
+					'feedback-success-variant': cnamLightTheme.feedbackSuccessVariant,
+					'feedback-warning': cnamLightTheme.feedbackWarning,
+					'feedback-warning-variant': cnamLightTheme.feedbackWarningVariant,
+					'feedback-info': cnamLightTheme.feedbackInfo,
+					'feedback-info-variant': cnamLightTheme.feedbackInfoVariant,
+				}
+				const paColors = {
+					'feedback-error': paLightTheme.feedbackError,
+					'feedback-error-variant': paLightTheme.feedbackErrorVariant,
+					'feedback-success': paLightTheme.feedbackSuccess,
+					'feedback-success-variant': paLightTheme.feedbackSuccessVariant,
+					'feedback-warning': paLightTheme.feedbackWarning,
+					'feedback-warning-variant': paLightTheme.feedbackWarningVariant,
+					'feedback-info': paLightTheme.feedbackInfo,
+					'feedback-info-variant': paLightTheme.feedbackInfoVariant,
+				}
+				const apColors = {
+					'feedback-error': apLightTheme.feedbackError,
+					'feedback-error-variant': apLightTheme.feedbackErrorVariant,
+					'feedback-success': apLightTheme.feedbackSuccess,
+					'feedback-success-variant': apLightTheme.feedbackSuccessVariant,
+					'feedback-warning': apLightTheme.feedbackWarning,
+					'feedback-warning-variant': apLightTheme.feedbackWarningVariant,
+					'feedback-info': apLightTheme.feedbackInfo,
+					'feedback-info-variant': apLightTheme.feedbackInfoVariant,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  displayEmptyColors
+                  colorCategory="feedback"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const OnFeedback: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'On-Feedback'
+				const colorTitleLevel = 3
+				const colorDescription = 'Textes/ Icônes sur fond de statut.'
+				const cnamColors = {
+					'feedback-on-error': cnamLightTheme.feedbackOnError,
+					'feedback-on-error-variant': cnamLightTheme.feedbackOnErrorVariant,
+					'feedback-on-success': cnamLightTheme.feedbackOnSuccess,
+					'feedback-on-success-variant': cnamLightTheme.feedbackOnSuccessVariant,
+					'feedback-on-warning': cnamLightTheme.feedbackOnWarning,
+					'feedback-on-warning-variant': cnamLightTheme.feedbackOnWarningVariant,
+					'feedback-on-info': cnamLightTheme.feedbackOnInfo,
+					'feedback-on-info-variant': cnamLightTheme.feedbackOnInfoVariant,
+				}
+				const paColors = {
+					'feedback-on-error': paLightTheme.feedbackOnError,
+					'feedback-on-error-variant': paLightTheme.feedbackOnErrorVariant,
+					'feedback-on-success': paLightTheme.feedbackOnSuccess,
+					'feedback-on-success-variant': paLightTheme.feedbackOnSuccessVariant,
+					'feedback-on-warning': paLightTheme.feedbackOnWarning,
+					'feedback-on-warning-variant': paLightTheme.feedbackOnWarningVariant,
+					'feedback-on-info': paLightTheme.feedbackOnInfo,
+					'feedback-on-info-variant': paLightTheme.feedbackOnInfoVariant,
+				}
+				const apColors = {
+					'feedback-on-error': apLightTheme.feedbackOnError,
+					'feedback-on-error-variant': apLightTheme.feedbackOnErrorVariant,
+					'feedback-on-success': apLightTheme.feedbackOnSuccess,
+					'feedback-on-success-variant': apLightTheme.feedbackOnSuccessVariant,
+					'feedback-on-warning': apLightTheme.feedbackOnWarning,
+					'feedback-on-warning-variant': apLightTheme.feedbackOnWarningVariant,
+					'feedback-on-info': apLightTheme.feedbackOnInfo,
+					'feedback-on-info-variant': apLightTheme.feedbackOnInfoVariant,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  displayEmptyColors
+                  colorCategory="feedback"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const FeedbackSection = {
+	render() {
+		return h(createSection('Feedback', [
+			Feedback,
+			OnFeedback,
+		], 'ap2026'))
+	},
 }
 
 export const PaletteOrange: StoryObj = {
