@@ -319,10 +319,10 @@
 		}
 		markInteracted()
 		if (!focused.value) {
-			// focused was already false — the watcher won't fire on assignment, so call validate() directly
+			// focused deja a false : le watcher ne se declenchera pas a l'assignation, donc on appelle validate() directement
 			validate()
 		}
-		focused.value = false // if it was true, the watcher in useCustomValidation fires → validate()
+		focused.value = false // si la valeur etait a true, le watcher dans useCustomValidation se declenche et appelle validate()
 	}
 
 	const getInputValue = (value: string | Event): string | null => {
