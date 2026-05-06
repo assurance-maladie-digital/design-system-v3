@@ -1,8 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+﻿import type { Meta, StoryObj } from '@storybook/vue3'
 import SelectBtnField from './SelectBtnField.vue'
-import SyAlert from '@/components/SyAlert/SyAlert.vue'
-import { VBtn } from 'vuetify/components'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 const meta = {
 	title: 'Composants/Formulaires/Selects/SelectBtnField',
@@ -24,18 +22,18 @@ const meta = {
 		items: {
 			control: { Array },
 			default: [],
-			description: 'Liste des éléments sélectionnables',
+			description: 'Liste des Ã©lÃ©ments sÃ©lectionnables',
 			table: {
 				type: { summary: 'SelectBtnItem[]' },
 			},
 		},
 		label: {
-			description: 'Valeur utilisée pour l’attribut aria-label, préfèrer l’utilisation de aria-labelledby pour respecter les impératifs d’accessibilité',
+			description: 'Valeur utilisÃ©e pour lâ€™attribut aria-label, prÃ©fÃ¨rer lâ€™utilisation de aria-labelledby pour respecter les impÃ©ratifs dâ€™accessibilitÃ©',
 			control: { type: 'text' },
 			default: undefined,
 		},
 		ariaLabelledby: {
-			description: 'Identifiant (id) de l’élément qui étiquette ce champ',
+			description: 'Identifiant (id) de lâ€™Ã©lÃ©ment qui Ã©tiquette ce champ',
 			control: { type: 'text' },
 			default: undefined,
 		},
@@ -251,7 +249,7 @@ export const Multiple: Story = {
 	},
 }
 
-export const inline: Story = {
+export const Inline: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -335,7 +333,7 @@ export const inline: Story = {
 	},
 }
 
-export const itemUnique: Story = {
+export const ItemUnique: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -428,7 +426,7 @@ export const itemUnique: Story = {
 	},
 }
 
-export const messageAide: Story = {
+export const MessageAide: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -440,7 +438,7 @@ export const messageAide: Story = {
 			v-model="value"
 			:items="items"
 			aria-labelledby="contact-method"
-			hint="Par défaut, le moyen de contact est l’email."
+			hint="Par defaut, le moyen de contact est l’email."
 		/>
 	</div>
 </template>
@@ -488,7 +486,7 @@ export const messageAide: Story = {
 				value: 'sms',
 			},
 		],
-		hint: 'Par défaut, le moyen de contact est l’email.',
+		hint: 'Par dÃ©faut, le moyen de contact est lâ€™email.',
 	},
 	render: (args) => {
 		return {
@@ -511,392 +509,4 @@ export const messageAide: Story = {
 	},
 }
 
-export const erreur: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<div style="max-width: 400px">
-		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-		<SelectBtnField
-			v-model="value"
-			:items="items"
-			aria-labelledby="contact-method"
-			:hasError="hasError"
-		/>
-		<VBtn
-			color="primary"
-			class="mt-3"
-			@click="resetExample"
-		>
-			Réinitialiser
-		</VBtn>      
-	</div> 
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-    import { SelectBtnField } from '@cnamts/synapse'
-    import { ref } from 'vue'
-	const value = ref([])
-	const hasError = ref(true)
-	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
-	]
-	function resetExample() {
-		value.value = null
-		hasError.value = true
-	}
-</script>
-                `,
-			},
-		],
-	},
-	args: {
-		modelValue: null,
-		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
-		],
-		hasError: true,
-	},
-	render: (args) => {
-		return {
-			components: { SelectBtnField, VBtn },
-			setup() {
-				const hasError = ref(args.hasError)
-				const value = ref(args.modelValue)
 
-				function resetExample() {
-					hasError.value = true
-					value.value = null
-				}
-				watch(() => value.value, (newValue) => {
-					if (newValue) {
-						hasError.value = false
-					}
-				})
-				return { args, resetExample, hasError, value }
-			},
-			template: `
-				<div style="max-width: 400px">
-					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-					<SelectBtnField
-						v-model="value"
-						:items="args.items"
-						aria-labelledby="contact-method"
-						:hasError="hasError"
-					/>
-					<VBtn
-						color="primary"
-						class="mt-3"
-						@click="resetExample"
-					>
-						Réinitialiser
-					</VBtn>       
-				</div>
-            `,
-		}
-	},
-}
-
-export const messageErreur: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<div style="max-width: 400px">
-		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-		<SelectBtnField
-			v-model="value"
-			:items="items"
-			aria-labelledby="contact-method"
-			:hasError="hasError"
-			:error-messages="errorMessages"
-		/>
-		<VBtn
-			color="primary"
-			class="mt-3"
-			@click="resetExample"
-		>
-			Réinitialiser
-		</VBtn>       
-	</div>
-</template>
-			`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { SelectBtnField } from '@cnamts/synapse'
-import { ref } from 'vue'
-const value = ref([])
-const hasError = ref(true)
-const errorMessages = ref(['Le champ est requis.'])
-const items = [
-    {
-        text: 'Email',
-        value: 'email',
-    },
-    {
-        text: 'Courrier',
-        value: 'courrier',
-    },
-    {
-        text: 'SMS',
-        value: 'sms',
-    },
-]
-	function resetExample() {
-		value.value = null
-		hasError.value = true
-		errorMessages.value = [
-			'Le champ est requis.',
-		]
-	}
-</script>
-            `,
-			},
-		],
-	},
-	args: {
-		modelValue: null,
-		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
-		],
-		hasError: true,
-		errorMessages: [
-			'Le champ est requis.',
-		],
-	},
-	render: (args) => {
-		return {
-			components: { SelectBtnField, VBtn },
-			setup() {
-				const hasError = ref(args.hasError)
-				const value = ref(args.modelValue)
-				const errorMessages = ref(args.errorMessages)
-
-				function resetExample() {
-					hasError.value = true
-					value.value = null
-					errorMessages.value = ['Le champ est requis.']
-				}
-
-				watch(() => value.value, (newValue) => {
-					if (newValue) {
-						hasError.value = false
-						errorMessages.value = []
-					}
-				})
-				return { args, resetExample, hasError, value, errorMessages }
-			},
-			template: `
-				<div style="max-width: 400px">
-					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-					<SelectBtnField
-						v-model="value"
-						:items="args.items"
-						aria-labelledby="contact-method"
-						:hasError="hasError"
-						:error-messages="errorMessages"
-					/>
-					<VBtn
-						color="primary"
-						class="mt-3"
-						@click="resetExample"
-					>
-						Réinitialiser
-					</VBtn>
-			</div>
-        `,
-		}
-	},
-}
-
-export const readonly: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<div style="max-width: 400px">
-		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-		<SelectBtnField
-			v-model="value"
-			:items="items"
-			aria-labelledby="contact-method"
-			readonly
-		/>
-	</div>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-	 import { SelectBtnField } from '@cnamts/synapse'
-	import { ref } from 'vue'
-	const value = ref(['email'])
-	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
-	]
-</script>
-				`,
-			},
-		],
-	},
-	args: {
-		modelValue: ['email'],
-		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
-		],
-		label: 'Moyen de contact',
-		readonly: true,
-	},
-	render: (args) => {
-		return {
-			components: { SelectBtnField },
-			setup() {
-				return { args }
-			},
-			template: `
-				<div style="max-width: 400px">
-					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-					<SelectBtnField
-						v-model="args.modelValue"
-						:items="args.items"
-						aria-labelledby="contact-method"
-						:readonly="args.readonly"
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
-export const Info: Story = {
-	render: (args) => {
-		return {
-			components: { SyAlert },
-			setup() {
-				return { args }
-			},
-			template: `
-                <SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
-                    <template #default>Vous pouvez utiliser le modificateur :hasError pour réinitialiser l’erreur lorsque l’utilisateur modifie la valeur du champ.
-                    </template>
-                </SyAlert>
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const ValidationWithWarnings: Story = {
-	render: () => ({
-		components: { SelectBtnField },
-		setup() {
-			const value = ref(null)
-
-			const items = [
-				{ text: 'Email', value: 'email' },
-				{ text: 'Courrier', value: 'courrier' },
-				{ text: 'SMS', value: 'sms' },
-			]
-
-			const warningRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | number | null) => value === 'email',
-						message: 'Pour une prise de contact rapide, privilégiez Email.',
-					},
-				},
-			]
-
-			return {
-				value,
-				items,
-				warningRules,
-			}
-		},
-		template: `
-			<div style="max-width: 400px">
-				<h2 id="contact-method-warning" class="text-h6">
-					Choisissez votre moyen de contact :
-				</h2>
-
-				<p class="mb-3 text-body-2">
-					Un avertissement apparaît si vous choisissez autre chose que "Email".
-				</p>
-
-				<SelectBtnField
-					v-model="value"
-					:items="items"
-					aria-labelledby="contact-method-warning"
-					:custom-warning-rules="warningRules"
-					:is-validate-on-blur="true"
-				/>
-			</div>
-		`,
-	}),
-}

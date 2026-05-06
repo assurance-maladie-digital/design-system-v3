@@ -21,7 +21,7 @@ export function useCustomValidation(
 	readonly?: Ref<boolean>,
 	disabled?: Ref<boolean>,
 	label?: Ref<string | undefined>,
-
+	resetValue?: () => unknown,
 ) {
 	const hasSuccess = ref(false)
 
@@ -82,7 +82,13 @@ export function useCustomValidation(
 			successes.value = []
 			hasSuccess.value = false
 		},
-		() => modelValue.value = undefined,
+		() => {
+			modelValue.value = resetValue ? resetValue() : undefined
+			errors.value = []
+			warnings.value = []
+			successes.value = []
+			hasSuccess.value = false
+		},
 	)
 
 	watch(focused, (newVal) => {
@@ -98,6 +104,7 @@ export function useCustomValidation(
 	})
 
 	function clearValidation() {
+		modelValue.value = resetValue ? resetValue() : undefined
 		errors.value = []
 		warnings.value = []
 		successes.value = []

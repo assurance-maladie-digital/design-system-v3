@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheck } from '@mdi/js'
-	import { computed, onMounted, ref, toRef, watch } from 'vue'
+	import { computed, ref, toRef, watch } from 'vue'
 	import { useTheme } from 'vuetify'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
@@ -34,7 +34,7 @@
 	}>()
 
 	const internalValue = ref<SelectBtnValue>(props.multiple ? [] : null)
-	const darktheme = ref<boolean>(false)
+	const darktheme = computed<boolean>(() => useTheme().current.value.dark)
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
 	const focused = ref(false)
@@ -59,7 +59,7 @@
 			emits('update:modelValue', value)
 		},
 	})
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, clearValidation } = useValidation({
 		modelValue: validationModel,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -84,12 +84,7 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused: focused,
-	})
-	onMounted(() => {
-		const theme = useTheme().current
-		if (theme && theme.value) {
-			darktheme.value = theme.value.dark
-		}
+		resetValue: () => props.multiple ? [] : null,
 	})
 
 	watch(() => props.modelValue, (value) => {
@@ -123,15 +118,26 @@
 		}
 	}
 
+	function getItemClasses(item: SelectBtnItem): Record<string, boolean> {
+		const selected = isSelected(item.value)
+		const withState = selected && !props.disableErrorHandling
+		return {
+			'select-btn-field__item--selected': selected,
+			'select-btn-field__item--selected-error': withState && !!hasError.value,
+			'select-btn-field__item--selected-warning': withState && !!hasWarning.value && !hasError.value,
+			'select-btn-field__item--selected-success': withState && !!hasSuccess.value && !hasError.value && !hasWarning.value,
+		}
+	}
+
 	function getNewValue(item: SelectBtnItem): SelectBtnValue {
 		if (props.multiple) {
 			const typedValue = Array.isArray(internalValue.value)
 				? internalValue.value
 				: []
 
-			// if the item is unique, select only it
-			if (item.unique && !typedValue.includes(item.value)) {
-				return [item.value]
+			// if the item is unique, select only it (ou le désélectionner si déjà seul)
+			if (item.unique) {
+				return typedValue.includes(item.value) ? [] : [item.value]
 			}
 
 			// If the item is not already selected, add it to the array
@@ -163,7 +169,7 @@
 	}
 
 	async function toggleItem(item: SelectBtnItem): Promise<void> {
-		if (props.readonly) {
+		if (props.readonly || props.disabled) {
 			return
 		}
 
@@ -236,7 +242,7 @@
 	}
 
 	function handleBlur(): void {
-		if ((!listRef.value?.contains(document.activeElement) || !(listRef.value === document.activeElement))) {
+		if (!listRef.value?.contains(document.activeElement) && !(listRef.value === document.activeElement)) {
 			focusedIndex.value = -1
 			focused.value = false
 		}
@@ -256,12 +262,14 @@
 		focusedIndex.value = index
 		const item = filteredItems.value[index]
 		// Only auto-select on keyboard focus (Tab or arrow keys)
-		if (!props.multiple && !internalValue.value && item) {
+		if (!props.multiple && internalValue.value == null && item) {
 			toggleItem(item)
 		}
 	}
 
 	const isMouseInteraction = ref(false)
+
+	const messagesId = computed(() => props.label ? `select-btn-field-messages-${props.label.replace(/\s+/g, '-').toLowerCase()}` : undefined)
 
 	const displayedMessages = computed(() => {
 		if (props.disableErrorHandling) return []
@@ -283,6 +291,7 @@
 
 	defineExpose({
 		validateOnSubmit: validate,
+		clearValidation,
 	})
 </script>
 
@@ -302,8 +311,9 @@
 				'select-btn-field__options--disabled': disabled,
 				'select-btn-field__options--success': hasSuccess,
 			}"
-			:aria-label="props.label"
+			:aria-label="!props.ariaLabelledby ? props.label : undefined"
 			:aria-labelledby="props.ariaLabelledby ?? undefined"
+			:aria-describedby="displayedMessages.length && messagesId ? messagesId : undefined"
 			role="listbox"
 			:aria-orientation="props.inline ? 'horizontal' : 'vertical'"
 			:aria-multiselectable="props.multiple ? 'true' : 'false'"
@@ -324,9 +334,7 @@
 				ref="optionsRef"
 				v-ripple="!props.readonly"
 				class="select-btn-field__item"
-				:class="{
-					'select-btn-field__item--selected': isSelected(item.value),
-				}"
+				:class="getItemClasses(item)"
 				role="option"
 				:tabindex="index === focusedIndex ? '0' : '-1'"
 				:aria-selected="props.multiple ? undefined : (isSelected(item.value) ? 'true' : 'false')"
@@ -353,6 +361,7 @@
 		<template v-if="displayedMessages.length">
 			<p
 				v-for="(message, index) in displayedMessages"
+				:id="index === 0 ? messagesId : undefined"
 				:key="index"
 				:class="{
 					'theme--dark' : darktheme,
@@ -450,6 +459,24 @@
 
 .select-btn-field__options--warning .select-btn-field__item {
 	border-color: rgb(var(--v-theme-borderWarning));
+}
+
+.select-btn-field__item--selected-error {
+	color: rgb(var(--v-theme-textOnDark)) !important;
+	background-color: rgb(var(--v-theme-error)) !important;
+	border-color: rgb(var(--v-theme-error)) !important;
+}
+
+.select-btn-field__item--selected-warning {
+	color: rgb(var(--v-theme-textOnDark)) !important;
+	background-color: rgb(var(--v-theme-warning)) !important;
+	border-color: rgb(var(--v-theme-warning)) !important;
+}
+
+.select-btn-field__item--selected-success {
+	color: rgb(var(--v-theme-textOnDark)) !important;
+	background-color: rgb(var(--v-theme-success)) !important;
+	border-color: rgb(var(--v-theme-success)) !important;
 }
 
 .select-btn-field__item--disabled {

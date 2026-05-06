@@ -79,6 +79,7 @@ export function useValidation(params: {
 	hasErrorProp?: Ref<boolean>
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
+	resetValue?: () => unknown
 } & ({
 	useVuetifyValidation: true
 	rules: Ref<VuetifyValidationRule[] | undefined>
@@ -151,7 +152,7 @@ export function useValidation(params: {
 		params.readonly,
 		params.disabled,
 		params.label,
-
+		params.resetValue,
 	)
 
 	async function validate(): Promise<boolean> {
