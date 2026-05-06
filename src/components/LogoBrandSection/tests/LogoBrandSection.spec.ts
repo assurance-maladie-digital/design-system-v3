@@ -122,7 +122,7 @@ describe('LogoBrandSection', () => {
 		})
 
 		const divider = wrapper.find('.vd-divider')
-		expect(divider.attributes('fill')).toBe('#0c419a')
+        expect(divider.attributes('fill')).toBe('#0C419A')
 	})
 
 	it('renders correctly with cnam theme', () => {
@@ -156,7 +156,7 @@ describe('LogoBrandSection', () => {
 		})
 
 		const divider = wrapper.find('.vd-divider')
-		expect(divider.attributes('fill')).toBe('#cd545b')
+        expect(divider.attributes('fill')).toBe('#CD545B')
 	})
 
 	it('renders correctly with risquePro if no reduceLogo', () => {
