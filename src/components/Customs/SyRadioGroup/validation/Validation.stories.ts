@@ -229,7 +229,7 @@ const submit = async () => {
  * Validation avec SyForm et useVuetifyValidation
  * Combine le SyForm avec la validation Vuetify native
  */
-export const WithSyFormAndVuetifyValidation: Story = {
+export const SyFormAndVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
@@ -326,7 +326,7 @@ const onSubmit = (event: { isValid: boolean }) => {
  * Validation avec customRules (règles personnalisées Synapse)
  * Utilise le système de validation personnalisé du design system
  */
-export const WithCustomRules: Story = {
+export const Error: Story = {
 	parameters: {
 		docs: {
 			description: {
@@ -364,20 +364,20 @@ Utilise les **customRules** pour définir des règles de validation personnalis�
 import { ref } from 'vue'
 import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
-import type { ValidationRule } from '@/composables/validation/useValidation'
+import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>(null)
 
 const options = [
-	{ label: 'Option A', value: 'A' },
-	{ label: 'Option B', value: 'B' },
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
 ]
 
 const customRules: ValidationRule[] = [
 	{
 		type: 'custom',
 		options: {
-			validate: (value: unknown) => value === 'A',
+			validate: (value: unknown) => value === 'a',
 			message: 'Vous devez sélectionner l'option A',
 			fieldIdentifier: 'Option',
 		},
@@ -397,13 +397,13 @@ const onSubmit = (event: { isValid: boolean }) => {
 	render: args => ({
 		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
-			const selected = ref<string | null>('A')
+			const selected = ref<string | null>('a')
 
 			const customRules = [
 				{
 					type: 'custom',
 					options: {
-						validate: (value: unknown) => value === 'A',
+						validate: (value: unknown) => value === 'a',
 						message: 'Vous devez sélectionner l\'option A',
 						fieldIdentifier: 'Option',
 					},
@@ -426,6 +426,334 @@ const onSubmit = (event: { isValid: boolean }) => {
 					:custom-rules="customRules"
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</SyForm>
+		`,
+	}),
+}
+
+/**
+ * Validation avec customWarningRules (règles d'avertissement Synapse)
+ * La soumission est autorisée malgré le warning
+ */
+export const Warning: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation avec customWarningRules
+Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
+
+**Caractéristiques :**
+- Le warning n'empêche pas la soumission du formulaire
+- Affiché avec la couleur warning (orange)
+- Utile pour des conseils ou recommandations
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm ref="form" @submit="onSubmit">
+		<SyRadioGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			:custom-warning-rules="customWarningRules"
+		/>
+		<VBtn type="submit" color="primary">Valider</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
+
+const selected = ref<string | null>('b')
+
+const options = [
+	{ label: 'Option A (recommandée)', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+
+const customWarningRules: ValidationRule[] = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: unknown) => value === 'a',
+			message: 'L'option A est recommandée',
+			fieldIdentifier: 'Option',
+		},
+	},
+]
+
+const onSubmit = (event: { isValid: boolean }) => {
+	alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
+}
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref<string | null>('b')
+
+			const customWarningRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => value === 'a',
+						message: 'L\'option A est recommandée',
+						fieldIdentifier: 'Option',
+					},
+				},
+			]
+
+			const onSubmit = () => {
+				alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
+			}
+
+			return { args, selected, customWarningRules, onSubmit }
+		},
+		template: `
+			<SyForm ref="form" @submit="onSubmit">
+				<SyRadioGroup
+					v-model="selected"
+					v-bind="args"
+					:custom-warning-rules="customWarningRules"
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</SyForm>
+		`,
+	}),
+}
+
+/**
+ * showSuccessMessages: false — les messages de succès sont masqués
+ * Le champ est validé mais aucun message positif n'est affiché
+ */
+export const NoSuccessMessage: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### showSuccessMessages à false
+Avec **showSuccessMessages: false**, la validation se produit normalement mais les messages de succès ne s'affichent pas.
+
+**Caractéristiques :**
+- Sélectionner une option valide le champ silencieusement
+- Aucun message vert n'est affiché
+- Utile quand le feedback positif est jugé superflu
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyRadioGroup
+		v-model="selected"
+		label="Choisissez une option"
+		:options="options"
+		:show-success-messages="false"
+		required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const selected = ref<string | null>('a')
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref<string | null>('a')
+			return { args, selected }
+		},
+		template: `
+			<SyRadioGroup
+				v-model="selected"
+				v-bind="args"
+				:show-success-messages="false"
+			/>
+		`,
+	}),
+}
+
+/**
+ * isValidateOnBlur: true — la validation ne se déclenche qu'au blur
+ * Par défaut les radios valident au changement (isValidateOnBlur: false)
+ */
+export const ValidateOnBlur: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### isValidateOnBlur à true
+Avec **isValidateOnBlur: true**, la validation ne se déclenche que lorsque le focus quitte le composant.
+
+**Caractéristiques :**
+- Contrairement au comportement par défaut des radios (validation immédiate à la sélection)
+- La sélection d'une option ne déclenche pas encore la validation
+- La validation se déclenche quand le focus quitte le groupe
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm @submit="onSubmit">
+		<SyRadioGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			:is-validate-on-blur="true"
+			required
+		/>
+		<VBtn type="submit" color="primary">Valider</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+
+const onSubmit = (event: { isValid: boolean }) => {
+	if (event.isValid) {
+		alert('Formulaire valide !')
+	}
+}
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert('Formulaire valide !')
+				}
+			}
+
+			return { args, selected, onSubmit }
+		},
+		template: `
+			<SyForm @submit="onSubmit">
+				<SyRadioGroup
+					v-model="selected"
+					v-bind="args"
+					:is-validate-on-blur="true"
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</SyForm>
+		`,
+	}),
+}
+
+/**
+ * disableErrorHandling: true — la validation est complètement désactivée
+ */
+export const DisableErrorHandling: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### disableErrorHandling à true
+Avec **disableErrorHandling: true**, toute la validation est désactivée : aucun message d'erreur, warning ou succès ne s'affiche, quelle que soit la valeur.
+
+**Caractéristiques :**
+- Aucune règle n'est évaluée
+- Le champ ne passe jamais dans un état d'erreur visuel
+- Utile pour des champs en lecture contrôlée par le parent
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm>
+		<SyRadioGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			disable-error-handling
+			required
+		/>
+		<VBtn type="submit" color="primary">Valider (aucune erreur)</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+			return { args, selected }
+		},
+		template: `
+			<SyForm>
+				<SyRadioGroup
+					v-model="selected"
+					v-bind="args"
+					disable-error-handling
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider (aucune erreur)</VBtn>
 			</SyForm>
 		`,
 	}),

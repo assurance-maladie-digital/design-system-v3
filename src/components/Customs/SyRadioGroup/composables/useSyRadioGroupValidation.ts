@@ -1,7 +1,5 @@
 import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
-import type { ValidationRule } from '@/composables/validation/useValidation'
-import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-import type { VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type FieldValidationProps, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	modelValue?: PropertyKey | null

@@ -5,35 +5,30 @@ import { useCustomValidation } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
 
 export type { VuetifyValidationRule }
+export type { SyValidationRule as ValidationRule }
 
 export interface FieldValidationProps {
+	customRules?: SyValidationRule[]
+	customSuccessRules?: SyValidationRule[]
+	customWarningRules?: SyValidationRule[]
+	disableErrorHandling?: boolean
+	disabled?: boolean
+	errorMessages?: string[] | null
+	hasError?: boolean
+	hasSuccess?: boolean
+	hasWarning?: boolean
+	isValidateOnBlur?: boolean
+	label: string
+	maxErrors?: number
 	modelValue?: unknown
 	readonly?: boolean
-	disabled?: boolean
 	required?: boolean
-	isValidateOnBlur?: boolean
-	showSuccessMessages?: boolean
-	disableErrorHandling?: boolean
-	// Quand cette prop vaut true (mode natif Vuetify), c'est Vuetify qui gère les erreurs, avertissements et succès
-	useVuetifyValidation?: boolean
-	label?: string
 	rules?: VuetifyValidationRule[]
-	// Règles de validation personnalisées d'erreur (bloquantes), évaluées à partir de la valeur du champ
-	customRules?: SyValidationRule[]
-	// Règles de validation personnalisées d'avertissement (non bloquantes), évaluées à partir de la valeur du champ
-	customWarningRules?: SyValidationRule[]
-	// Règles de validation personnalisées de succès, évaluées à partir de la valeur du champ
-	customSuccessRules?: SyValidationRule[]
-	// Messages d'erreur injectés par le parent ; ils n'exécutent aucune logique de validation
-	errorMessages?: string[] | null
-	// Messages d'avertissement injectés par le parent ; ils n'exécutent aucune logique de validation
-	warningMessages?: string[] | null
-	// Messages de succès injectés par le parent ; ils n'exécutent aucune logique de validation
+	showSuccessMessages?: boolean
 	successMessages?: string[] | null
-	hasError?: boolean
-	hasWarning?: boolean
-	hasSuccess?: boolean
-	maxErrors?: number
+	// When true (Vuetify native mode), the controller should not handle errors/successes
+	useVuetifyValidation?: boolean
+	warningMessages?: string[] | null
 }
 
 /**

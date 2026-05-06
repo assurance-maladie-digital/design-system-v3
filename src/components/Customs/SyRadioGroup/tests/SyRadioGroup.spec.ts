@@ -2,7 +2,7 @@ import SyRadioGroup from '../SyRadioGroup.vue'
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { nextTick } from 'vue'
-import type { ValidationRule } from '@/composables/validation/useValidation'
+import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 describe('SyRadioGroup', () => {
 	it('should render correctly', () => {

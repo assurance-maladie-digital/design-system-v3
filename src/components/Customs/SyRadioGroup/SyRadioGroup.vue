@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-	import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, ref } from 'vue'
 	import type { VRadioGroup } from 'vuetify/components'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
@@ -15,6 +15,7 @@
 			color?: string
 			density?: 'default' | 'comfortable' | 'compact'
 			displayAsterisk?: boolean
+			helpText?: string
 			hideDetails?: boolean | 'auto'
 			id?: string
 			label?: string
@@ -29,6 +30,7 @@
 			color: 'primary',
 			density: 'default',
 			displayAsterisk: false,
+			helpText: '',
 			hideDetails: 'auto',
 			id: undefined,
 			label: undefined,
@@ -59,7 +61,6 @@
 
 	// Utilisation du composable de validation dédié
 	const {
-		validate,
 		validateOnSubmit,
 		errors,
 		warnings,
@@ -67,20 +68,18 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
+		focused,
 	} = useSyRadioGroupValidation(props, model)
-
-	const checkErrorOnBlur = () => {
-		validate()
-	}
-
-	watch(model, () => {
-		if (!props.isValidateOnBlur) {
-			validate()
-		}
-	})
 
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)
+
+	const hasMessages = computed(() =>
+		errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0,
+	)
+
+	const showHelpTextAsMessage = computed(() => !!props.helpText && !hasMessages.value)
+	const showHelpTextBelow = computed(() => !!props.helpText && hasMessages.value && props.hideDetails !== true)
 
 	const getAriaChecked = (value: PropertyKey) => {
 		return model.value === value ? 'true' : 'false'
@@ -143,7 +142,7 @@
 		:color="props.color"
 		:disabled="props.disabled"
 		:readonly="props.readonly"
-		:hide-details="props.hideDetails"
+		:hide-details="showHelpTextAsMessage ? false : props.hideDetails"
 		:density="props.density"
 		:error="hasError"
 		:error-messages="hasError ? errors : undefined"
@@ -156,7 +155,8 @@
 			role="radio"
 			:label="opt.label"
 			:aria-checked="getAriaChecked(opt.value)"
-			@blur="checkErrorOnBlur"
+			@focus="focused = true"
+			@blur="focused = false"
 		/>
 		<template
 			v-if="$slots.label"
@@ -179,17 +179,32 @@
 			}}</span>.
 		</span>
 		<template
-			v-if="!hasError && (hasWarning || hasSuccess) && props.showSuccessMessages"
+			v-if="(!hasError && (hasWarning || hasSuccess) && props.showSuccessMessages) || showHelpTextAsMessage"
 			#details
 		>
 			<div class="v-input__details sy-radio-group__messages">
 				<VMessages
+					v-if="!hasError && (hasWarning || hasSuccess) && props.showSuccessMessages"
 					:active="hasWarning || (hasSuccess && successes.length > 0)"
 					:messages="hasWarning ? warnings : successes"
 				/>
+				<div
+					v-if="showHelpTextAsMessage"
+					class="sy-radio-group__help-text"
+					:class="{ 'text-disabled': props.disabled }"
+				>
+					{{ props.helpText }}
+				</div>
 			</div>
 		</template>
 	</v-radio-group>
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-1 mt-1"
+		:class="{ 'text-disabled': props.disabled }"
+	>
+		{{ props.helpText }}
+	</div>
 </template>
 
 <style scoped>
@@ -205,6 +220,11 @@
 
 .sy-radio-group__messages {
 	align-items: flex-start;
+}
+
+.sy-radio-group__help-text {
+	font-size: 0.75rem;
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
 .sb-show-main.sb-main-centered #storybook-root {

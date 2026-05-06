@@ -650,3 +650,189 @@ export const Required: Story = {
 		],
 	},
 }
+
+export const HideDetails: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### hideDetails
+Contrôle l'affichage de la zone de messages sous le champ.
+
+| Valeur | Comportement |
+|--------|-------------|
+| \`'auto'\` (défaut) | Zone affichée uniquement si un message est présent |
+| \`false\` | Zone toujours affichée (espace réservé même sans message) |
+| \`true\` | Zone toujours masquée |
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm @submit="onSubmit">
+		<p>hide-details="auto" (défaut)</p>
+		<SyRadioGroup v-model="selected" label="Option" :options="options" required hide-details="auto" />
+
+		<p>:hide-details="false" (espace toujours réservé)</p>
+		<SyRadioGroup v-model="selected" label="Option" :options="options" required :hide-details="false" />
+
+		<p>:hide-details="true" (messages jamais affichés)</p>
+		<SyRadioGroup v-model="selected" label="Option" :options="options" required :hide-details="true" />
+
+		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+const onSubmit = (event: { isValid: boolean }) => {
+	if (event.isValid) alert('Formulaire valide !')
+}
+</script>`,
+			},
+		],
+	},
+
+	render: () => ({
+		components: { SyRadioGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+			const options = [
+				{ label: 'Option A', value: 'a' },
+				{ label: 'Option B', value: 'b' },
+			]
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) alert('Formulaire valide !')
+			}
+			return { selected, options, onSubmit }
+		},
+		template: `
+			<SyForm @submit="onSubmit">
+				<p class="mb-1 text-body-2">hide-details="auto" (défaut)</p>
+				<SyRadioGroup v-model="selected" label="Choisissez une option" :options="options" required hide-details="auto" />
+
+				<p class="mt-4 mb-1 text-body-2">:hide-details="false" (espace toujours réservé)</p>
+				<SyRadioGroup v-model="selected" label="Choisissez une option" :options="options" required :hide-details="false" />
+
+				<p class="mt-4 mb-1 text-body-2">:hide-details="true" (messages jamais affichés)</p>
+				<SyRadioGroup v-model="selected" label="Choisissez une option" :options="options" required :hide-details="true" />
+
+				<VBtn type="submit" class="mt-6" color="primary">Valider</VBtn>
+			</SyForm>
+		`,
+	}),
+}
+
+export const HelpText: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### helpText
+Texte d'aide contextuel affiché sous le champ.
+
+**Comportement :**
+- Sans message de validation → affiché **à la place du message**
+- Avec message (erreur/warning/succès) → affiché **en dessous** du message
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm @submit="onSubmit">
+		<p>Sans erreur : helpText affiché à la place du message</p>
+		<SyRadioGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			help-text="Sélectionnez l'option qui correspond à votre situation."
+		/>
+
+		<p>Avec erreur (required + soumis vide) : helpText affiché en dessous</p>
+		<SyRadioGroup
+			v-model="selectedWithError"
+			label="Choisissez une option"
+			:options="options"
+			help-text="Sélectionnez l'option qui correspond à votre situation."
+			required
+		/>
+
+		<VBtn type="submit" color="primary" class="mt-6">Valider</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+const selectedWithError = ref<string | null>(null)
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+const onSubmit = (event: { isValid: boolean }) => {
+	if (event.isValid) alert('Formulaire valide !')
+}
+</script>`,
+			},
+		],
+	},
+
+	render: () => ({
+		components: { SyRadioGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+			const selectedWithError = ref<string | null>(null)
+			const options = [
+				{ label: 'Option A', value: 'a' },
+				{ label: 'Option B', value: 'b' },
+			]
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) alert('Formulaire valide !')
+			}
+			return { selected, selectedWithError, options, onSubmit }
+		},
+		template: `
+			<SyForm @submit="onSubmit">
+				<p class="mb-1 text-body-2">Sans erreur : helpText affiché à la place du message</p>
+				<SyRadioGroup
+					v-model="selected"
+					label="Choisissez une option"
+					:options="options"
+					help-text="Sélectionnez l'option qui correspond à votre situation."
+				/>
+
+				<p class="mt-6 mb-1 text-body-2">Avec erreur (required + soumis vide) : helpText affiché en dessous</p>
+				<SyRadioGroup
+					v-model="selectedWithError"
+					label="Choisissez une option"
+					:options="options"
+					help-text="Sélectionnez l'option qui correspond à votre situation."
+					required
+				/>
+
+				<VBtn type="submit" class="mt-6" color="primary">Valider</VBtn>
+			</SyForm>
+		`,
+	}),
+}
