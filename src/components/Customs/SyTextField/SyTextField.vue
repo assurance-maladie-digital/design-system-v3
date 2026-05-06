@@ -897,7 +897,7 @@
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
-			color: rgb(var(--v-theme-feedbackError)) !important;
+      color: rgb(var(--v-theme-feedbackError)) !important;
 		}
 	}
 
@@ -928,7 +928,7 @@
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
-			color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
+      color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 		}
 	}
 
