@@ -381,7 +381,7 @@ $virtual-thumb-size: 40px;
 	transform: translate(0, -50%);
 	width: 100%;
 	height: var(--sy-track-height);
-	background-color: rgb(var(--v-theme-color-blue-lighten-20));
+	background-color: rgb(var(--v-theme-colorPrimary));
 	transition: all 0.1s;
 }
 
