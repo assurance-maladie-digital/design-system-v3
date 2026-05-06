@@ -262,9 +262,8 @@
 }
 
 :deep(.v-label) {
-    margin-inline-start: 0px !important;
-  }
-
+	margin-inline-start: 0 !important;
+}
 
 @keyframes sy-messages-in {
 	from {

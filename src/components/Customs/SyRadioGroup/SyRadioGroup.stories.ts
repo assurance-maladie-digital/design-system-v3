@@ -496,7 +496,6 @@ export const Disabled: Story = {
 	}),
 }
 
-
 export const EventShowcase: Story = {
 	parameters: {
 		docs: {
@@ -651,7 +650,6 @@ Ce button radio est en lecture seule et ne peut pas être modifiée par l'utilis
 	},
 
 }
-
 
 export const HideDetails: Story = {
 	parameters: {
