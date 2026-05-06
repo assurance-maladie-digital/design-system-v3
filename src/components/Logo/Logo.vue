@@ -49,7 +49,7 @@
 	const risqueProColor = ref(cnamLightTheme.risquePro)
 
 	const fillColor = computed(() => {
-    return props.dark ? '#fff' : cnamLightTheme.colorPrimary
+		return props.dark ? '#fff' : cnamLightTheme.colorPrimary
 	})
 
 	const dimensions = computed(() => {

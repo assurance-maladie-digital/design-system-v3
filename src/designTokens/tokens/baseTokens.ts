@@ -228,5 +228,5 @@ export const baseTokens = {
 			lighten90: '#FACCCC',
 			lighten97: '#FFF4F4',
 		},
-    }
+	},
 } as const

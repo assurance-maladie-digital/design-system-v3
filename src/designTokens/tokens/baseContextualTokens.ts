@@ -75,5 +75,5 @@ export const baseContextualTokens = {
 		30: 30,
 		32: 32,
 		40: 40,
-    }
+	},
 }
