@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-	import { computed, onMounted, ref } from 'vue'
-	import { RatingEnum, useRating } from '../Rating'
+	import { computed, onMounted, toRef } from 'vue'
 	import { locales } from './locales'
 	import type { PropType } from 'vue'
 	import type { ItemType } from '@/components/Customs/Selects/SySelect/SySelect.vue'
-
+	import { useRatingFocus } from '../useRatingFocus'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-
 	import { useDisplay } from 'vuetify'
+	import { RatingEnum, useRating } from '../Rating'
 
 	interface SelectItem extends ItemType {
 		text: string
@@ -44,52 +43,48 @@
 	const { hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const selectItems = computed<SelectItem[]>(() => {
-		return [...Array(props.length)].map((_, index) => ({
+		const length = props.length ?? 10
+
+		return [...Array(length)].map((_, index) => ({
 			text: `${index + 1}`,
 			value: index + 1,
 		}))
 	})
 
-	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
-
-	const ratingElement = ref<HTMLDivElement[]>([])
-	function focusNextElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const nextIndex = currentIndex < (props.length - 1) ? currentIndex + 1 : 0
-		const nextElem = ratingElement.value?.[nextIndex]
-		nextElem?.focus()
-	}
-
-	function focusPrevElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const prevIndex = currentIndex > 0 ? currentIndex - 1 : (props.length - 1)
-		const prevElem = ratingElement.value?.[prevIndex]
-		prevElem?.focus()
-	}
-
-	function setFocus(index: number) {
-		ratingElement.value.forEach((el, i) => {
-			if (i === index) {
-				el.setAttribute('tabindex', '0')
-				el.focus()
-			}
-			else {
-				el.setAttribute('tabindex', '-1')
-			}
-		})
-	}
-
 	onMounted(() => {
-		ratingElement.value[0]?.setAttribute('tabindex', '0')
-		for (let i = 1; i < ratingElement.value.length; i++) {
-			ratingElement.value[i]?.setAttribute('tabindex', '-1')
+		if (!isMobile.value) {
+			initFocus()
 		}
 	})
+
+	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
+
+	const {
+		ratingElement,
+		initFocus,
+		selectAndFocus,
+		focusNextElement,
+		focusPrevElement,
+		focus,
+	} = useRatingFocus({
+		length: toRef(props, 'length'),
+		modelValue: toRef(props, 'modelValue'),
+		selectValue: emitInputEvent,
+		wrap: true,
+	})
+
+	defineExpose({
+		focus,
+	})
+
+	if (!isMobile.value) {
+		initFocus()
+	}
 </script>
 
 <template>
 	<fieldset class="sy-number-picker">
-		<legend class="d-sr-only">
+		<legend :class="isMobile ? 'd-sr-only' : 'text-h6 mb-6'">
 			<slot name="label">
 				{{ props.label }}
 			</slot>
@@ -103,11 +98,6 @@
 			@update:model-value="(value) => emit('update:modelValue', value)"
 		/>
 		<template v-else>
-			<legend class="text-h6 mb-6">
-				<slot name="label">
-					{{ props.label }}
-				</slot>
-			</legend>
 			<div
 				v-if="!hasAnswered"
 				class="d-inline-block"
@@ -122,19 +112,22 @@
 						ref="ratingElement"
 						v-ripple="!(props.readonly || hasAnswered)"
 						role="radio"
-						:aria-checked="props.modelValue === index ? 'true' : undefined"
-						:aria-label="locales.ariaLabel(index, props.length)"
+						:tabindex="-1"
+						:aria-checked="props.modelValue === index ? 'true' : 'false'"
 						class="sy-number-picker__item text-body-2 pa-0"
 						:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
-						@click="emitInputEvent(index); setFocus(index - 1)"
-						@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
-						@keyup.space="emitInputEvent(index); setFocus(index - 1)"
-						@keyup.right="focusNextElement(index - 1)"
-						@keyup.left="focusPrevElement(index - 1)"
-						@keyup.up="focusPrevElement(index - 1)"
-						@keyup.down="focusNextElement(index - 1)"
+						@click="selectAndFocus(index - 1)"
+						@keydown.enter.prevent="selectAndFocus(index - 1)"
+						@keydown.space.prevent="selectAndFocus(index - 1)"
+						@keydown.right.prevent="focusNextElement(index - 1)"
+						@keydown.left.prevent="focusPrevElement(index - 1)"
+						@keydown.up.prevent="focusPrevElement(index - 1)"
+						@keydown.down.prevent="focusNextElement(index - 1)"
 					>
 						{{ index }}
+						<span class="d-sr-only">
+							{{ locales.ariaLabel(index, props.length) }}
+						</span>
 					</div>
 				</div>
 				<div
@@ -159,15 +152,17 @@
 			</div>
 			<div
 				v-else
-				:aria-label="locales.ariaLabel(props.modelValue, props.length)"
 				class="mb-0 d-flex align-center"
 			>
+				<span class="d-sr-only">
+					{{ locales.ariaLabel(props.modelValue, props.length) }}
+				</span>
 				<div
 					class="sy-btn-answer text-body-2 mr-1 pa-0"
 				>
 					{{ props.modelValue }}
 				</div>
-				<span>
+				<span aria-hidden="true">
 					/ {{ props.length }}
 				</span>
 			</div>
@@ -206,7 +201,7 @@
 	user-select: none;
 }
 
-.sy-number-picker__item[disabled] {
+.sy-number-picker__item[aria-disabled='true'] {
 	pointer-events: none;
 	opacity: 0.26;
 
