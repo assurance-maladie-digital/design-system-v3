@@ -98,6 +98,9 @@
 		return undefined
 	})
 
+	// Workaround Vuetify: Vuetify ajoute aria-disabled="false" sur tous les radios non désactivés
+	// Ce n'est pas nécessaire car la spécification ARIA ne requiert pas aria-disabled="false"
+	// On supprime cet attribut pour éviter le bruit dans les lecteurs d'écran
 	const removeAriaAttributesForRadio = () => {
 		nextTick(() => {
 			if (radioGroupRef.value) {

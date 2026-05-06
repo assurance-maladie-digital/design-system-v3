@@ -186,7 +186,7 @@ describe('SyRadioGroup', () => {
 		const warningRule: ValidationRule = {
 			type: 'custom',
 			options: {
-				validate: (value: unknown) => value === 'A' || 'Veuillez sélectionner A',
+				validate: (value: unknown) => value === 'A' || value === 'a',
 				fieldIdentifier: 'Warning Field',
 			},
 		}

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 import SyForm from '../SyForm/SyForm.vue'
 import { VBtn } from 'vuetify/components'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SyRadioGroup> = {
 	title: 'Composants/Formulaires/SyRadioGroup',
@@ -24,29 +25,50 @@ Il permet de choisir **une seule valeur** parmi une liste d’options.
 		},
 	},
 	argTypes: {
+		...getValidationDocumentation(),
 		'modelValue': { control: false },
-		'onUpdate:modelValue': { action: 'update:modelValue' },
-		'onChange': { action: 'change' },
-		'label': { control: 'text', description: 'Label du groupe' },
-		'options': { control: 'object', description: 'Liste des options du radio-group' },
-		'disabled': { control: 'boolean', description: 'Désactive le groupe' },
-		'readonly': { control: 'boolean', description: 'Lecture seule' },
-		'required': { control: 'boolean', description: 'Indique que la sélection est obligatoire' },
+		'label': {
+			description: 'Label du groupe',
+			control: 'text',
+		},
+		'options': {
+			description: 'Liste des options du radio-group',
+			control: 'object',
+		},
 		'color': {
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			description: 'Couleur du groupe',
 		},
 		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du groupe',
 		},
-		'displayAsterisk': { control: 'boolean', description: 'Affiche un astérisque pour les champs requis' },
-		'showSuccessMessages': { control: 'boolean', description: 'Affiche les messages de succès' },
-		'isValidateOnBlur': { control: 'boolean', description: 'Valide au blur (désactivé par défaut pour les radios)' },
-		'useVuetifyValidation': { control: 'boolean', description: 'Utilise la validation native Vuetify' },
-		'errorMessages': { control: 'object', description: 'Messages d\'erreur externes' },
-		'warningMessages': { control: 'object', description: 'Messages d\'avertissement externes' },
-		'successMessages': { control: 'object', description: 'Messages de succès externes' },
+		'displayAsterisk': {
+			description: 'Affiche un astérisque pour les champs requis',
+			control: 'boolean',
+		},
+		'helpText': {
+			description: 'Texte d\'aide affiché sous le champ',
+			control: 'text',
+		},
+		'ariaLabel': {
+			description: 'Label ARIA pour les lecteurs d\'écran',
+			control: 'text',
+		},
+		'ariaLabelledby': {
+			description: 'ID d\'un élément qui labelise le groupe',
+			control: 'text',
+		},
+		'title': {
+			description: 'Attribut title du groupe',
+			control: 'text',
+		},
+		'name': {
+			description: 'Nom du groupe (attribut name)',
+			control: 'text',
+		},
 	},
 }
 

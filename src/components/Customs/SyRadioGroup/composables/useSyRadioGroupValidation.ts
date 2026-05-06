@@ -21,6 +21,7 @@ export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	hasSuccess?: boolean
 	maxErrors?: number
 	disableErrorHandling?: boolean
+	fieldIdentifier?: string
 }
 
 export interface UseSyRadioGroupValidationReturn {
@@ -63,7 +64,7 @@ export function useSyRadioGroupValidation(
 			? [{
 					type: 'required',
 					options: {
-						message: `Le champ ${props.label || 'ce champ'} est requis.`,
+						message: `Le champ ${props.fieldIdentifier || props.label || 'ce champ'} est requis.`,
 						fieldIdentifier: props.label,
 					},
 				}]
