@@ -52,8 +52,10 @@ export interface UseSyRadioGroupValidationReturn {
 export function useSyRadioGroupValidation(
 	props: SyRadioGroupValidationProps,
 	model: Ref<PropertyKey | null>,
+	focused?: Ref<boolean>,
 ): UseSyRadioGroupValidationReturn {
-	const focused = ref(false)
+	// Utiliser la variable focused passée en paramètre, sinon en créer une locale
+	const focusedRef = focused || ref(false)
 
 	// Construction des règles de validation par défaut (required)
 	const defaultRules = computed<ValidationRule[]>(() =>
@@ -102,7 +104,7 @@ export function useSyRadioGroupValidation(
 		hasWarningProp: toRef(() => props.hasWarning ?? false),
 		hasSuccessProp: toRef(() => props.hasSuccess ?? false),
 		maxErrors: toRef(() => props.maxErrors ?? 1),
-		focused: focused,
+		focused: focusedRef,
 	})
 
 	const validateOnSubmit = async (): Promise<boolean> => {
@@ -119,6 +121,6 @@ export function useSyRadioGroupValidation(
 		hasWarning,
 		hasSuccess,
 		defaultRules,
-		focused,
+		focused: focusedRef,
 	}
 }

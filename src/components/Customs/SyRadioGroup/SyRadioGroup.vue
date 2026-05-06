@@ -45,6 +45,7 @@
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 	const radioGroupRef = ref<VRadioGroup | null>(null)
+	const focused = ref(false)
 	const model = computed({
 		get() {
 			return props.modelValue
@@ -68,8 +69,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-		focused,
-	} = useSyRadioGroupValidation(props, model)
+	} = useSyRadioGroupValidation(props, model, focused)
 
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)
@@ -231,6 +231,10 @@
 	margin: none !important;
 }
 
+:deep(.v-messages) {
+	opacity: 1 !important;
+}
+
 .warning-field {
 	:deep(.v-messages__message) {
 		color: rgb(var(--v-theme-warning)) !important;
@@ -256,6 +260,11 @@
 :deep(.v-messages__message) {
 	animation: sy-messages-in 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
+
+:deep(.v-label) {
+    margin-inline-start: 0px !important;
+  }
+
 
 @keyframes sy-messages-in {
 	from {

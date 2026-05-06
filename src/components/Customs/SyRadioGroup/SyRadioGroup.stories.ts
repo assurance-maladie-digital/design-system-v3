@@ -107,6 +107,135 @@ export const Default: Story = {
 	}),
 }
 
+export const Required: Story = {
+	args: {
+		label: 'Choisissez une option (obligatoire)',
+		required: true,
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref(null)
+			return { args, selected }
+		},
+		template: `
+		<SyForm ref="form" @submit="onSubmit">
+          <SyRadioGroup v-model="selected" required v-bind="args" />
+          <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
+          </SyForm>
+        `,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+                <SyForm ref="form" @submit="onSubmit">
+      			  <SyRadioGroup
+      			    v-model="selected"
+      			    label="Choisissez une option (obligatoire)"
+      			    :options="options"
+      			    required
+      			  />
+      			  <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
+      			</SyForm>`,
+			},
+			{
+				name: 'Script',
+				code: `
+              <script setup lang="ts">
+                import { ref } from 'vue'
+                import { VBtn } from 'vuetify/components'
+                import { SyForm, SyRadioGroup } from '@cnamts/synapse'
+
+                const selected = ref<string | null>(null)
+
+                const options = [
+                    { label: 'Option A', value: 'a' },
+                    { label: 'Option B', value: 'b' },
+                ]
+
+                const onSubmit = (event: { isValid: boolean }) => {
+                    if (event.isValid) {
+                        alert('Formulaire valide !')
+                    }
+                }
+             </script>
+            `,
+			},
+		],
+	},
+}
+
+export const RequiredWithAsterisk: Story = {
+	args: {
+		label: 'Champ obligatoire',
+		required: true,
+		displayAsterisk: true,
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+		],
+	},
+
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Affichage de l'astérisque
+Ce story démontre l'affichage d'un astérisque (*) sur le label pour indiquer qu'un champ est obligatoire.
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<SyRadioGroup
+	v-model="selected"
+	label="Champ obligatoire"
+	:options="options"
+	required
+	display-asterisk
+/>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const selected = ref<string | null>(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref<string | null>(null)
+			return { args, selected }
+		},
+		template: `
+			<SyRadioGroup
+				v-model="selected"
+				v-bind="args"
+			/>
+		`,
+	}),
+}
+
 export const CustomColors: Story = {
 	parameters: {
 		sourceCode: [
@@ -367,69 +496,6 @@ export const Disabled: Story = {
 	}),
 }
 
-export const DisplayAsterisk: Story = {
-	args: {
-		label: 'Champ obligatoire',
-		required: true,
-		displayAsterisk: true,
-		options: [
-			{ label: 'Option A', value: 'a' },
-			{ label: 'Option B', value: 'b' },
-		],
-	},
-
-	parameters: {
-		docs: {
-			description: {
-				story: `
-### Affichage de l'astérisque
-Ce story démontre l'affichage d'un astérisque (*) sur le label pour indiquer qu'un champ est obligatoire.
-				`,
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<SyRadioGroup
-	v-model="selected"
-	label="Champ obligatoire"
-	:options="options"
-	required
-	display-asterisk
-/>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { ref } from 'vue'
-import { SyRadioGroup } from '@cnamts/synapse'
-
-const selected = ref<string | null>(null)
-
-const options = [
-	{ label: 'Option A', value: 'a' },
-	{ label: 'Option B', value: 'b' },
-]
-</script>`,
-			},
-		],
-	},
-
-	render: args => ({
-		components: { SyRadioGroup },
-		setup() {
-			const selected = ref<string | null>(null)
-			return { args, selected }
-		},
-		template: `
-			<SyRadioGroup
-				v-model="selected"
-				v-bind="args"
-			/>
-		`,
-	}),
-}
 
 export const EventShowcase: Story = {
 	parameters: {
@@ -586,70 +652,6 @@ Ce button radio est en lecture seule et ne peut pas être modifiée par l'utilis
 
 }
 
-export const Required: Story = {
-	args: {
-		label: 'Choisissez une option (obligatoire)',
-		required: true,
-		options: [
-			{ label: 'Option A', value: 'a' },
-			{ label: 'Option B', value: 'b' },
-		],
-	},
-
-	render: args => ({
-		components: { SyRadioGroup, SyForm, VBtn },
-		setup() {
-			const selected = ref(null)
-			return { args, selected }
-		},
-		template: `
-		<SyForm ref="form" @submit="onSubmit">
-          <SyRadioGroup v-model="selected" required v-bind="args" />
-          <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
-          </SyForm>
-        `,
-	}),
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-                <SyForm ref="form" @submit="onSubmit">
-      			  <SyRadioGroup
-      			    v-model="selected"
-      			    label="Choisissez une option (obligatoire)"
-      			    :options="options"
-      			    required
-      			  />
-      			  <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
-      			</SyForm>`,
-			},
-			{
-				name: 'Script',
-				code: `
-              <script setup lang="ts">
-                import { ref } from 'vue'
-                import { VBtn } from 'vuetify/components'
-                import { SyForm, SyRadioGroup } from '@cnamts/synapse'
-
-                const selected = ref<string | null>(null)
-
-                const options = [
-                    { label: 'Option A', value: 'a' },
-                    { label: 'Option B', value: 'b' },
-                ]
-
-                const onSubmit = (event: { isValid: boolean }) => {
-                    if (event.isValid) {
-                        alert('Formulaire valide !')
-                    }
-                }
-             </script>
-            `,
-			},
-		],
-	},
-}
 
 export const HideDetails: Story = {
 	parameters: {
