@@ -71,7 +71,7 @@ const items = [
 		required: true,
 		disableErrorHandling: true,
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField },
 		setup() {
 			const value = ref(args.modelValue)
@@ -145,7 +145,7 @@ function resetExample() {
 		hasError: true,
 		errorMessages: ['Veuillez sélectionner un moyen de contact.'],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField, VBtn },
 		setup() {
 			const hasError = ref(args.hasError)
@@ -236,7 +236,7 @@ function resetExample() {
 		hasError: true,
 		errorMessages: ['Veuillez sélectionner un moyen de contact.'],
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField, VBtn },
 		setup() {
 			const hasError = ref(args.hasError)
@@ -321,7 +321,7 @@ function onSubmit({ isValid }: { isValid: boolean }) {
 		items: baseItems,
 		required: true,
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField, SyForm, VBtn },
 		setup() {
 			const value = ref(args.modelValue)
@@ -388,7 +388,7 @@ const customRules = [
 		type: 'custom',
 		options: {
 			validate: (val) => val !== 'sms',
-			message: 'Le SMS n\'est pas disponible dans votre région.',
+			message: 'Le SMS n'est pas disponible dans votre région.',
 		},
 	},
 ]
@@ -404,7 +404,7 @@ function onSubmit({ isValid }: { isValid: boolean }) {
 		modelValue: null,
 		items: baseItems,
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField, SyForm, VBtn },
 		setup() {
 			const value = ref(args.modelValue)
@@ -583,7 +583,7 @@ function onSubmit({ isValid }: { isValid: boolean }) {
 		items: baseItems,
 		showSuccessMessages: true,
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField, SyForm, VBtn },
 		setup() {
 			const value = ref(args.modelValue)
@@ -669,7 +669,7 @@ function onSubmit({ isValid }: { isValid: boolean }) {
 		items: baseItems,
 		required: true,
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { SelectBtnField, SyForm, VBtn },
 		setup() {
 			const value = ref(args.modelValue)

@@ -1,6 +1,5 @@
 ﻿import type { Meta, StoryObj } from '@storybook/vue3'
 import SelectBtnField from './SelectBtnField.vue'
-import { ref } from 'vue'
 
 const meta = {
 	title: 'Composants/Formulaires/Selects/SelectBtnField',
@@ -508,5 +507,3 @@ export const MessageAide: Story = {
 		}
 	},
 }
-
-
