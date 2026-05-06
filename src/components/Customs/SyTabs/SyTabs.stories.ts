@@ -476,9 +476,9 @@ const items = [
 export const NavigationMode: Story = {
 	args: {
 		items: [
-			{ label: 'Accueil', value: 'home', href: '#' },
-			{ label: 'Profil', value: 'profile', href: '#profile' },
-			{ label: 'Paramètres', value: 'settings', href: '#settings' },
+			{ label: 'Accueil', value: 'home', href: 'javascript:void(0)' },
+			{ label: 'Profil', value: 'profile', href: 'javascript:void(0)' },
+			{ label: 'Paramètres', value: 'settings', href: 'javascript:void(0)' },
 		],
 	},
 	parameters: {
