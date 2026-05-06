@@ -33,6 +33,7 @@
 		noDataText?: string
 		placeholder?: string
 		plainTextKey?: string
+		helpText?: string
 		returnObject?: boolean
 		selectionText?: (selected: SelectArray) => string
 		textKey?: string
@@ -58,6 +59,7 @@
 			modelValue: null,
 			multiple: false,
 			noDataText: locales.noData,
+			helpText: '',
 			selectionText: undefined,
 			placeholder: '',
 			plainTextKey: '',
@@ -443,6 +445,7 @@
 					:display-asterisk="required && displayAsterisk"
 					:disable-error-handling="disableErrorHandling"
 					:loading="loading"
+					:help-text="helpText"
 					:are-details-hidden="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"

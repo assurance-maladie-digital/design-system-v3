@@ -67,6 +67,10 @@ const meta: Meta<typeof SyAutocomplete> = {
 			control: 'boolean',
 			description: 'Active le filtrage des options basé sur la saisie',
 		},
+		'helpText': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ',
+		},
 		'hasError': {
 			control: 'boolean',
 			description: 'Indique si le champ a une erreur',
@@ -235,6 +239,193 @@ export const Default: Story = {
 			components: { SyAutocomplete },
 			setup() {
 				const selectedValue = ref('')
+				return { args, selectedValue }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const HelpText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedValue"
+    :items="items"
+    label="Rechercher un prénom"
+    help-text="Texte d'aide à la saisie"
+  />
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const selectedValue = ref('')
+const items = [
+  { text: 'Adrien', value: 'Adrien' },
+  { text: 'Axel', value: 'Axel' },
+  { text: 'Baptiste', value: 'Baptiste' },
+  { text: 'Clement', value: 'Clement' },
+  { text: 'Corentin', value: 'Corentin' },
+  { text: 'Damien', value: 'Damien' },
+  { text: 'David', value: 'David' },
+  { text: 'Eloi', value: 'Eloi' },
+  { text: 'Louis', value: 'Louis' },
+  { text: 'Valentin', value: 'Valentin' },
+]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		helpText: 'Texte d\'aide à la saisie',
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref('')
+				return { args, selectedValue }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedValue"
+    :items="items"
+    label="Champ obligatoire"
+    required
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const selectedValue = ref()
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		label: 'Champ obligatoire',
+		required: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref()
+				return { args, selectedValue }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const RequiredWithAsterisk: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedValue"
+    :items="items"
+    label="Champ obligatoire"
+    required
+    display-asterisk
+  />
+</template>
+        `,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const selectedValue = ref()
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
+        `,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+		],
+		label: 'Champ obligatoire',
+		required: true,
+		displayAsterisk: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref()
 				return { args, selectedValue }
 			},
 			template: `
@@ -958,69 +1149,6 @@ const loadOnClick = () => {
 						:items="items"
 						:loading="isLoading"
 						@click="loadOnClick"
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
-export const RequiredField: Story = {
-	parameters: {
-
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyAutocomplete
-    v-model="selectedValue"
-    :items="items"
-    label="Champ obligatoire"
-    required
-    display-asterisk
-  />
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete } from '@cnamts/synapse'
-
-const selectedValue = ref()
-const items = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' },
-]
-</script>
-        `,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
-		label: 'Champ obligatoire',
-		required: true,
-		displayAsterisk: true,
-	},
-	render: (args) => {
-		return {
-			components: { SyAutocomplete },
-			setup() {
-				const selectedValue = ref()
-				return { args, selectedValue }
-			},
-			template: `
-				<div class="pa-4">
-					<SyAutocomplete
-						v-model="selectedValue"
-						v-bind="args"
 					/>
 				</div>
 			`,
