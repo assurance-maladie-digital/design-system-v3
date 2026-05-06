@@ -49,12 +49,12 @@
 	font-weight: bold;
 	font-size: var(--v-typography-body2-font-size, 1rem);
 	border-radius: 99px;
-  color: rgb(var(--v-theme-colorPrimary, 12, 65, 154));
+	color: rgb(var(--v-theme-colorPrimary, 12, 65, 154));
 	margin-bottom: 2px;
 
 	&:focus-visible {
 		/* stylelint-disable-next-line custom-property-pattern */
-    outline: 2px solid rgb(var(--v-theme-colorPrimary, 12, 65, 154));
+		outline: 2px solid rgb(var(--v-theme-colorPrimary, 12, 65, 154));
 	}
 }
 </style>

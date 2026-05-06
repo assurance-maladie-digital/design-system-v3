@@ -245,8 +245,8 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-  color: rgb(var(--v-theme-colorPrimary));
-  background-color: rgb(var(--v-theme-colorSurface));
+	color: rgb(var(--v-theme-colorPrimary));
+	background-color: rgb(var(--v-theme-colorSurface));
 	text-decoration: underline;
 	z-index: 10;
 }

@@ -277,7 +277,7 @@
 }
 
 :deep(.v-selection-control--error .v-selection-control__input) {
-  color: rgb(var(--v-theme-feedbackError));
+	color: rgb(var(--v-theme-feedbackError));
 }
 
 .sy-radio-group__messages {
@@ -290,23 +290,23 @@
 
 .warning-field {
 	:deep(.v-messages__message) {
-    color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
+		color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
 	}
 
 	:deep(.v-selection-control__input) {
-    color: rgb(var(--v-theme-feedbackWarningVariant));
+		color: rgb(var(--v-theme-feedbackWarningVariant));
 	}
 }
 
 .error-field {
 	:deep(.v-messages__message) {
-    color: rgb(var(--v-theme-feedbackError)) !important;
+		color: rgb(var(--v-theme-feedbackError)) !important;
 	}
 }
 
 .success-field {
 	:deep(.v-messages__message) {
-    color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
+		color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 	}
 }
 

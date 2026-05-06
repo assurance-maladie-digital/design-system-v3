@@ -252,8 +252,8 @@
 .amelipro-clickable-tile {
 	position: relative;
 	display: flex;
-  background-color: rgb(var(--v-theme-colorSurface));
-  border: 1px solid rgb(var(--v-theme-colorPrimary)) !important;
+	background-color: rgb(var(--v-theme-colorSurface));
+	border: 1px solid rgb(var(--v-theme-colorPrimary)) !important;
 	border-radius: var(--radius-md) !important;
 	white-space: normal;
 	font-size: var(--v-ap-fontSizeSm);
@@ -265,7 +265,7 @@
 	padding: 1rem;
 
 	&--hover {
-    border-color: rgb(var(--v-theme-colorSecondary)) !important;
+		border-color: rgb(var(--v-theme-colorSecondary)) !important;
 	}
 
 	&--disabled {

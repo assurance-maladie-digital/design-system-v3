@@ -277,12 +277,12 @@
 			.v-field__append-inner > .v-icon,
 			.v-field__clearable > .v-icon {
 				opacity: 1;
-        color: rgb(var(--v-theme-colorPrimary));
+				color: rgb(var(--v-theme-colorPrimary));
 			}
 		}
 
 		&--focused {
-      border-color: rgb(var(--v-theme-colorPrimary));
+			border-color: rgb(var(--v-theme-colorPrimary));
 		}
 	}
 }

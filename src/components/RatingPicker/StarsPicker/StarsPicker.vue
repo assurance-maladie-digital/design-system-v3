@@ -138,7 +138,7 @@
 	height: 36px !important;
 
 	&--disabled.text-primary {
-    color: rgb(var(--v-theme-colorPrimary)) !important;
+		color: rgb(var(--v-theme-colorPrimary)) !important;
 	}
 
 	&.text-blue-lighten {

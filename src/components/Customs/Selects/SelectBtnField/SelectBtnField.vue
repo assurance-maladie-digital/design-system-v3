@@ -328,22 +328,22 @@
 
 .select-btn-field__item {
 	padding: 8px 16px;
-  color: rgb(var(--v-theme-colorPrimary));
-  border: 1px solid rgb(var(--v-theme-colorPrimary));
+	color: rgb(var(--v-theme-colorPrimary));
+	border: 1px solid rgb(var(--v-theme-colorPrimary));
 	min-height: 56px;
 	border-radius: 4px;
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
-  background-color: rgb(var(--v-theme-colorSurface));
+	background-color: rgb(var(--v-theme-colorSurface));
 
 	&--selected {
-    background-color: rgb(var(--v-theme-colorPrimary));
+		background-color: rgb(var(--v-theme-colorPrimary));
 		color: rgb(var(--v-theme-colorOnPrimary));
 	}
 
 	&:focus-visible {
-    outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-colorPrimary));
 		outline-offset: 2px;
 	}
 

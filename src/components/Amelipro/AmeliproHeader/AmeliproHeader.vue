@@ -464,7 +464,7 @@
 .header-separator {
 	width: 1px;
 	height: 38px;
-  background-color: rgb(var(--v-theme-colorPrimary));
+	background-color: rgb(var(--v-theme-colorPrimary));
 }
 
 .header-bar-container {

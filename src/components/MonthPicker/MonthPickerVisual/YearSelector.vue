@@ -132,7 +132,7 @@
 
 	&:hover {
 		/* stylelint-disable-next-line custom-property-pattern */
-    background-color: rgb(var(--v-theme-colorPrimaryVariant, 7, 39, 92));
+		background-color: rgb(var(--v-theme-colorPrimaryVariant, 7, 39, 92));
 	}
 }
 

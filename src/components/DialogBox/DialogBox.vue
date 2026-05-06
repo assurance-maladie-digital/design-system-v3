@@ -274,7 +274,7 @@ h2 {
 	&::after {
 		opacity: 1;
 		border: transparent;
-    outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-colorPrimary));
 		outline-offset: 2px;
 	}
 }
@@ -290,7 +290,7 @@ h2 {
 	cursor: grab;
 
 	&:focus-visible {
-    outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-colorPrimary));
 		outline-offset: -2px;
 		border-radius: 3px;
 	}

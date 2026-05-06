@@ -302,7 +302,7 @@
 }
 
 .v-btn:focus-visible {
-  outline: 2px solid rgb(var(--v-theme-colorPrimary));
+	outline: 2px solid rgb(var(--v-theme-colorPrimary));
 	outline-offset: 2px;
 
 	:deep(.v-btn__overlay) {
@@ -315,7 +315,7 @@
 }
 
 :global(.sy-user-menu .v-list-item:focus) {
-  outline: 2px solid rgb(var(--v-theme-colorPrimary));
+	outline: 2px solid rgb(var(--v-theme-colorPrimary));
 	outline-offset: -2px;
 }
 

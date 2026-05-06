@@ -201,11 +201,11 @@
 	transition: background-color 0.2s ease-in-out;
 
 	&:hover {
-    background-color: rgba(var(--v-theme-colorPrimary), 0.08);
+		background-color: rgba(var(--v-theme-colorPrimary), 0.08);
 	}
 
 	&:has(:focus-visible) {
-    outline: 2px solid rgba(var(--v-theme-colorPrimary));
+		outline: 2px solid rgba(var(--v-theme-colorPrimary));
 	}
 
 	span {
@@ -215,7 +215,7 @@
 }
 
 .suggestion-item--selected .label {
-  background-color: rgba(var(--v-theme-colorPrimary), 0.12);
+	background-color: rgba(var(--v-theme-colorPrimary), 0.12);
 }
 
 </style>

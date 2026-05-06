@@ -310,12 +310,12 @@
 			width: 56px;
 			height: 32px;
 			padding: 0 8px;
-      border: 1px solid rgb(var(--v-theme-colorPrimary));
+			border: 1px solid rgb(var(--v-theme-colorPrimary));
 			border-radius: 4px;
 			font-size: 0.875rem;
 			text-align: center;
 			color: inherit;
-      background: rgb(var(--v-theme-colorSurface));
+			background: rgb(var(--v-theme-colorSurface));
 			appearance: textfield;
 
 			&::-webkit-inner-spin-button,
@@ -324,7 +324,7 @@
 			}
 
 			&:focus-visible {
-        outline: 2px solid rgb(var(--v-theme-colorPrimary));
+				outline: 2px solid rgb(var(--v-theme-colorPrimary));
 				outline-offset: 2px;
 			}
 		}

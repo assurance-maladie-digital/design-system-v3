@@ -290,8 +290,8 @@
 	&.mail-status-btn--not-read,
 	&:hover {
 		&::before {
-      border: 1px solid rgb(var(--v-theme-colorPrimary));
-      background-color: rgb(var(--v-theme-colorPrimary));
+			border: 1px solid rgb(var(--v-theme-colorPrimary));
+			background-color: rgb(var(--v-theme-colorPrimary));
 		}
 	}
 }
@@ -376,8 +376,8 @@
 			top: calc(50% - 5px);
 			left: 1rem;
 			border-radius: 50%;
-      border: 1px solid rgb(var(--v-theme-colorPrimary));
-      background-color: rgb(var(--v-theme-colorPrimary));
+			border: 1px solid rgb(var(--v-theme-colorPrimary));
+			background-color: rgb(var(--v-theme-colorPrimary));
 			z-index: 2;
 			content: '';
 		}

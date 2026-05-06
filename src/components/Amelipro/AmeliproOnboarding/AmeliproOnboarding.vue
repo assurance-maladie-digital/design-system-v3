@@ -226,11 +226,11 @@
 	width: 14px;
 	height: 14px;
 	border-radius: 50%;
-  border: 2px solid rgb(var(--v-theme-colorPrimary));
-  background-color: rgb(var(--v-theme-colorSurface));
+	border: 2px solid rgb(var(--v-theme-colorPrimary));
+	background-color: rgb(var(--v-theme-colorSurface));
 
 	&.amelipro-onboarding__active-dot {
-    background-color: rgb(var(--v-theme-colorPrimary));
+		background-color: rgb(var(--v-theme-colorPrimary));
 	}
 }
 

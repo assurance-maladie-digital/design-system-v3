@@ -11,7 +11,7 @@
 
 	.v-progress-linear__background,
 	.v-progress-linear__indeterminate {
-      background: rgb(var(--v-theme-colorPrimary)) !important;
+		background: rgb(var(--v-theme-colorPrimary)) !important;
 	}
 }
 
@@ -20,9 +20,9 @@
 .theme-pa,
 .theme-ap,
 .theme-ap2026 {
-  --pagination-color: rgb(var(--v-theme-colorPrimary));
-  --pagination-border: rgb(var(--v-theme-colorPrimary));
-  --pagination-ellipsis: rgb(var(--v-theme-colorPrimary));
-  --pagination-focused-background-color: rgba(var(--v-theme-colorPrimary), 0.1);
-  --pagination-background-color: rgb(var(--v-theme-colorPrimary));
+	--pagination-color: rgb(var(--v-theme-colorPrimary));
+	--pagination-border: rgb(var(--v-theme-colorPrimary));
+	--pagination-ellipsis: rgb(var(--v-theme-colorPrimary));
+	--pagination-focused-background-color: rgba(var(--v-theme-colorPrimary), 0.1);
+	--pagination-background-color: rgb(var(--v-theme-colorPrimary));
 }

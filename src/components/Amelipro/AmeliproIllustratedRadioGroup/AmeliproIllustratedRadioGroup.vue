@@ -212,7 +212,7 @@ input {
 			width: 1.625rem;
 			height: 1.625rem;
 			border-radius: 50%;
-      border: 3px solid rgb(var(--v-theme-colorPrimary));
+			border: 3px solid rgb(var(--v-theme-colorPrimary));
 			background-color: transparent;
 			content: '';
 		}
@@ -227,7 +227,7 @@ input {
 				width: 0.825rem;
 				height: 0.825rem;
 				border-radius: 50%;
-        background-color: rgb(var(--v-theme-colorPrimary));
+				background-color: rgb(var(--v-theme-colorPrimary));
 				content: '';
 			}
 		}

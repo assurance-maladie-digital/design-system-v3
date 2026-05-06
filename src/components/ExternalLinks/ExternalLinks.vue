@@ -234,7 +234,7 @@ $list-max-height: 248px;
 
 		&::after {
 			opacity: 1;
-      border: 2px solid rgb(var(--v-theme-colorPrimary));
+			border: 2px solid rgb(var(--v-theme-colorPrimary));
 		}
 	}
 }

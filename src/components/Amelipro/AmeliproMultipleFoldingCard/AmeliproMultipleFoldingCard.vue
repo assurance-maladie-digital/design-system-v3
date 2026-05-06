@@ -337,10 +337,10 @@
 .classic-btn {
 	position: relative;
 	padding: var(--v-ap-multiFoldingBtnPaddingY) var(--v-ap-multiFoldingBtnPaddingX);
-  border: 1px solid rgb(var(--v-theme-colorPrimary));
+	border: 1px solid rgb(var(--v-theme-colorPrimary));
 	border-radius: var(--v-ap-btnRadius);
-  background-color: rgb(var(--v-theme-colorSurface));
-  color: rgb(var(--v-theme-colorPrimary));
+	background-color: rgb(var(--v-theme-colorSurface));
+	color: rgb(var(--v-theme-colorPrimary));
 	font-size: var(--v-ap-fontSizeSm);
 	font-weight: var(--v-ap-fontWeightBold);
 	cursor: pointer;
@@ -350,9 +350,9 @@
 	}
 
 	&.checked-btn {
-    border: 1px solid rgb(var(--v-theme-feedbackSuccessVariant));
+		border: 1px solid rgb(var(--v-theme-feedbackSuccessVariant));
 		background-color: rgb(var(--v-theme-ap-turquoise-lighten-1));
-    color: rgb(var(--v-theme-feedbackSuccessVariant));
+		color: rgb(var(--v-theme-feedbackSuccessVariant));
 	}
 
 	&.error-btn {

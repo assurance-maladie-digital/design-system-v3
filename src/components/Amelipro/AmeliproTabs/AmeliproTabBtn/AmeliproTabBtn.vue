@@ -163,8 +163,8 @@
 			left: 0.75rem;
 			width: 1rem;
 			height: 0.5rem;
-      border-bottom: 2px solid rgb(var(--v-theme-colorPrimary));
-      border-left: 2px solid rgb(var(--v-theme-colorPrimary));
+			border-bottom: 2px solid rgb(var(--v-theme-colorPrimary));
+			border-left: 2px solid rgb(var(--v-theme-colorPrimary));
 			transform: rotate(-50deg);
 			content: '';
 		}
