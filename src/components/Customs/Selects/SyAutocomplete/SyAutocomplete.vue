@@ -318,8 +318,11 @@
 			return
 		}
 		markInteracted()
-		focused.value = false
-		validate()
+		if (!focused.value) {
+			// focused was already false — the watcher won't fire on assignment, so call validate() directly
+			validate()
+		}
+		focused.value = false // if it was true, the watcher in useCustomValidation fires → validate()
 	}
 
 	const getInputValue = (value: string | Event): string | null => {
