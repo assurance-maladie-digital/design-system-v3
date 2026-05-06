@@ -103,4 +103,5 @@ export const cnamLightTheme = {
 	iconDisabled: cnamSemanticTokens.colors.icon.disabled,
 	iconDisabledOnDark: cnamSemanticTokens.colors.icon.disabledOnDark,
 	feedbackOnSuccess: baseColors.grey.darken60,
+	colorPrimary: baseColors.blue.base,
 }
