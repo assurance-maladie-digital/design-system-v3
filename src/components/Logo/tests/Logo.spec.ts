@@ -11,7 +11,7 @@ describe('Logo.vue', () => {
 	it('renders correctly with default props', () => {
 		const wrapper = mount(Logo)
 		expect(wrapper.find('svg').exists()).toBe(true)
-		expect(wrapper.find('svg').attributes('fill')).toBe(cnamLightTheme.primary)
+        expect(wrapper.find('svg').attributes('fill')).toBe(cnamLightTheme.colorPrimary)
 		expect(wrapper.find('svg').attributes('aria-label')).toBe('Sécurité sociale, l’Assurance Maladie : Agir ensemble, protéger chacun')
 	})
 

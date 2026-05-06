@@ -75,11 +75,5 @@ export const baseContextualTokens = {
 		30: 30,
 		32: 32,
 		40: 40,
-	},
-	// fontSize: {
-	// 	titres: '24px',
-	// 	titresAlternatifs: '20px',
-	// 	corpsDeTexte: '16px',
-	// 	liensEtLibelles: '14px',
-	// },
+    }
 }
