@@ -1,5 +1,6 @@
 ﻿import type { Meta, StoryObj } from '@storybook/vue3'
 import SelectBtnField from './SelectBtnField.vue'
+import { ref } from 'vue'
 
 const meta = {
 	title: 'Composants/Formulaires/Selects/SelectBtnField',
@@ -506,4 +507,75 @@ export const MessageAide: Story = {
             `,
 		}
 	},
+}
+
+export const DarkMode: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
+		<SelectBtnField
+			v-model="value"
+			:items="items"
+			aria-labelledby="contact-method"
+			:hint="hint"
+		/>
+	</div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { SelectBtnField } from '@cnamts/synapse'
+import { ref } from 'vue'
+
+const value = ref('email')
+const hint = 'Le composant s'adapte automatiquement au thème actif.'
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
+</script>`,
+			},
+		],
+		backgrounds: {
+			default: 'dark',
+			values: [
+				{ name: 'light', value: '#ffffff' },
+				{ name: 'dark', value: '#121212' },
+			],
+		},
+	},
+	args: {
+		modelValue: 'email',
+		items: [
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
+		],
+		hint: 'Le composant s\'adapte automatiquement au thème actif.',
+	},
+	render: args => ({
+		components: { SelectBtnField },
+		setup() {
+			const value = ref(args.modelValue)
+			return { args, value }
+		},
+		template: `
+			<div style="max-width: 400px">
+				<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
+				<p class="mb-3 text-body-2">Le composant utilise les tokens Vuetify et s'adapte automatiquement au dark mode.</p>
+				<SelectBtnField
+					v-model="value"
+					:items="args.items"
+					aria-labelledby="contact-method"
+					:hint="args.hint"
+				/>
+			</div>
+		`,
+	}),
 }

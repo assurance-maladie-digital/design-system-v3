@@ -2,7 +2,6 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheck } from '@mdi/js'
 	import { computed, ref, toRef, watch } from 'vue'
-	import { useTheme } from 'vuetify'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
@@ -34,7 +33,6 @@
 	}>()
 
 	const internalValue = ref<SelectBtnValue>(props.multiple ? [] : null)
-	const darktheme = computed<boolean>(() => useTheme().current.value.dark)
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
 	const focused = ref(false)
@@ -364,8 +362,6 @@
 				:id="index === 0 ? messagesId : undefined"
 				:key="index"
 				:class="{
-					'theme--dark' : darktheme,
-					'theme--light': !darktheme,
 					'v-messages__options--error px-3 mt-2 mb-0 opacity-100': hasError,
 					'v-messages__options--warning px-3 mt-2 mb-0 opacity-100': hasWarning,
 					'v-messages__options--success px-3 mt-2 mb-0 opacity-100': hasSuccess,
@@ -377,7 +373,6 @@
 
 		<p
 			v-else-if="hint"
-			:class="darktheme ? 'theme--dark' : 'theme--light'"
 			class="v-messages px-3 mt-2 mb-0 opacity-100"
 		>
 			{{ hint }}
