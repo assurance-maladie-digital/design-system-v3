@@ -390,7 +390,8 @@ describe('useCustomValidation', () => {
 		args.showSuccessMessages.value = false
 		await nextTick()
 
-		expect(args.successes.value).toEqual(['Le champ Mon champ est valide.'])
+		// Should auto-clear successes since showSuccessMessages is now false
+		expect(args.successes.value).toEqual([])
 	})
 
 	it('validate() returns a result with the correct structure', async () => {
@@ -447,7 +448,7 @@ describe('useCustomValidation', () => {
 		expect(args.errors.value).toEqual([])
 	})
 
-	it('validate() populate successes when showSuccessMessages is false', async () => {
+	it('validate() does not populate successes when showSuccessMessages is false', async () => {
 		const args = defaultArgs()
 		args.modelValue.value = 'valid value'
 		args.showSuccessMessages.value = false
@@ -467,8 +468,9 @@ describe('useCustomValidation', () => {
 				args.disableErrorHandling,
 			),
 		)
-		await result.validate()
-		expect(args.successes.value).toEqual(['Le champ Mon champ est valide.'])
+		const validationResult = await result.validate()
+		expect(validationResult.hasSuccess).toBe(true)
+		expect(args.successes.value).toEqual([])
 	})
 
 	it('works with undefined customRules', async () => {

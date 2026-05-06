@@ -15,7 +15,8 @@ describe('NumberPicker', () => {
 
 		expect(btns).toHaveLength(10)
 		btns.forEach((btn, i) => {
-			expect(btn.text()).toBe((i + 1).toString())
+			expect(btn.text()).toContain((i + 1).toString())
+			expect(btn.attributes('aria-checked')).toBe('false')
 		})
 		expect(wrapper.html()).toMatchSnapshot()
 	})

@@ -123,7 +123,10 @@ export const useFormFieldErrorHandling = (
 
 	const hasError = computed(() => validation.hasError.value || (props.hasError ?? false))
 	const hasWarning = computed(() => validation.hasWarning.value || (props.hasWarning ?? false))
-	const hasSuccess = computed(() => ((validation.hasSuccess.value && !hasError.value && !hasWarning.value) || (props.hasSuccess ?? false)) && (props.showSuccessMessages ?? true))
+	const hasSuccess = computed(() =>
+		(validation.hasSuccess.value && !hasError.value && !hasWarning.value)
+		|| (props.hasSuccess ?? false),
+	)
 
 	const errors = computed(() => [...validation.errors.value, ...(props.errorMessages || [])])
 	const warnings = computed(() => validation.warnings.value)

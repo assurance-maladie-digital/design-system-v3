@@ -211,6 +211,7 @@
 				:items="formatedItemsPerPageOptions"
 				hide-details
 				hide-messages
+				disable-error-handling
 				density="compact"
 				class="rows-per-page-select"
 				:aria-label="locales.pagination.itemsPerPageText"

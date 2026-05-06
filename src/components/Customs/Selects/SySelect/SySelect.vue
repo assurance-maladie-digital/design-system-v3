@@ -4,9 +4,8 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, type PropType } from 'vue'
+	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, toRef, type Ref } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
@@ -14,6 +13,8 @@
 	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
+	import type { ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -22,147 +23,71 @@
 	export type SelectItemValueType = Record<string, unknown> | string | number | null | undefined
 	export type SelectItemArrayType = Array<Record<string, unknown> | string | number>
 
-	// Définition des props avec typage correct pour modelValue
-	const props = defineProps({
-		modelValue: {
-			// En Vue, on ne peut pas mettre null directement comme type
-			// On utilise PropType pour définir le type complet incluant null
-			type: [Object, String, Number, Array] as PropType<Record<string, unknown> | string | number | null | SelectItemArrayType>,
-			default: null,
+	const props = withDefaults(
+		defineProps<{
+			modelValue?: Record<string, unknown> | string | number | null | SelectItemArrayType
+			items?: ItemType[]
+			label?: string
+			menuId?: string
+			outlined?: boolean
+			variantStyle?: VariantStyle
+			color?: ColorType
+			textKey?: string
+			plainTextKey?: string
+			valueKey?: string
+			displayAsterisk?: boolean
+			returnObject?: boolean
+			density?: 'default' | 'comfortable' | 'compact'
+			bgColor?: string
+			clearable?: boolean
+			hideDetails?: boolean
+			width?: string
+			multiple?: boolean
+			chips?: boolean
+			helpText?: string
+			allowHtml?: boolean
+			autocomplete?: 'on' | 'off' | string
+			prependIcon?: IconType
+			appendIcon?: IconType
+			prependTooltip?: string
+			appendTooltip?: string
+			tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
+			noIcon?: boolean
+			disableClickButton?: boolean
+		} & FieldValidationProps>(),
+		{
+			modelValue: null,
+			items: () => [],
+			label: 'Sélectionnez une option',
+			menuId: 'sy-select-menu',
+			outlined: true,
+			variantStyle: undefined,
+			color: 'primary',
+			textKey: 'text',
+			plainTextKey: '',
+			valueKey: 'value',
+			displayAsterisk: false,
+			returnObject: false,
+			density: 'default',
+			bgColor: 'white',
+			clearable: false,
+			hideDetails: false,
+			width: 'undefined',
+			multiple: false,
+			chips: false,
+			helpText: '',
+			allowHtml: false,
+			autocomplete: 'on',
+			prependIcon: undefined,
+			appendIcon: undefined,
+			prependTooltip: undefined,
+			appendTooltip: undefined,
+			tooltipLocation: 'top',
+			noIcon: false,
+			disableClickButton: true,
+			...validationPropsDefaults,
 		},
-		items: {
-			type: Array as PropType<ItemType[]>,
-			default: () => [],
-		},
-		label: {
-			type: String,
-			default: 'Sélectionnez une option',
-		},
-		errorMessages: {
-			type: [String, Array] as PropType<string | readonly string[]>,
-			default: () => [],
-		},
-		required: {
-			type: Boolean,
-			default: false,
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		menuId: {
-			type: String,
-			default: 'sy-select-menu',
-		},
-		outlined: {
-			type: Boolean,
-			default: true,
-		},
-		variantStyle: {
-			type: String as PropType<VariantStyle | undefined>,
-			default: undefined,
-		},
-		color: {
-			type: String as PropType<ColorType>,
-			default: 'primary',
-		},
-		textKey: {
-			type: String,
-			default: 'text',
-		},
-		plainTextKey: {
-			type: String,
-			default: '',
-		},
-		valueKey: {
-			type: String,
-			default: 'value',
-		},
-		displayAsterisk: {
-			type: Boolean,
-			default: false,
-		},
-		returnObject: {
-			type: Boolean,
-			default: false,
-		},
-		disableErrorHandling: {
-			type: Boolean,
-			default: false,
-		},
-		density: {
-			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
-			default: 'default',
-		},
-		bgColor: {
-			type: String,
-			default: 'white',
-		},
-		readonly: {
-			type: Boolean,
-			default: false,
-		},
-		clearable: {
-			type: Boolean,
-			default: false,
-		},
-		hideMessages: {
-			type: Boolean,
-			default: false,
-		},
-		width: {
-			type: String,
-			default: 'undefined',
-		},
-		multiple: {
-			type: Boolean,
-			default: false,
-		},
-		chips: {
-			type: Boolean,
-			default: false,
-		},
-		helpText: {
-			type: String,
-			default: '',
-		},
-		allowHtml: {
-			type: Boolean,
-			default: false,
-		},
-		autocomplete: {
-			type: String as PropType<'on' | 'off' | undefined | string>,
-			default: 'on',
-		},
-		prependIcon: {
-			type: String as PropType<IconType>,
-			default: undefined,
-		},
-		appendIcon: {
-			type: String as PropType<IconType>,
-			default: undefined,
-		},
-		prependTooltip: {
-			type: String,
-			default: undefined,
-		},
-		appendTooltip: {
-			type: String,
-			default: undefined,
-		},
-		tooltipLocation: {
-			type: String as PropType<'top' | 'bottom' | 'start' | 'end'>,
-			default: 'top',
-		},
-		noIcon: {
-			type: Boolean,
-			default: false,
-		},
-		disableClickButton: {
-			type: Boolean,
-			default: true,
-		},
-	})
+	)
 
 	// pr récupérer proprement aria-label
 	const attrs = useAttrs()
@@ -195,7 +120,9 @@
 	const disableClickButton = computed(() => props.disableClickButton)
 
 	const iconColor = computed(() => {
-		if (hasError.value || props.errorMessages.length > 0) return 'error'
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
 		return 'rgb(var(--v-theme-colorPrimary))'
 	})
 
@@ -207,8 +134,43 @@
 	const isOpen = ref(false)
 	// Initialize selectedItem with props.modelValue or empty array for multiple mode
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
-	const hasError = ref(false)
+	const focused = ref(false)
 	const menuMinWidth = ref<number | null>(null)
+
+	const defaultRules = computed<ValidationRule[]>(() => props.required
+		? [{
+			type: 'required',
+			options: {
+				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				fieldIdentifier: props.label,
+			},
+		}]
+		: [],
+	)
+
+	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+		modelValue: toRef(props, 'modelValue') as Ref<unknown>,
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		label: toRef(props, 'label'),
+		rules: toRef(props, 'rules'),
+		customRules: computed(() => [...defaultRules.value, ...(props.customRules ?? [])]),
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
+		focused: focused,
+	})
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
@@ -262,7 +224,7 @@
 	// text d'aide
 	const helpTextId = computed(() => `${inputId.value}-help`)
 	// messages d'erreur, success avertissement
-	const messagesId = computed(() => `${inputId.value}-messages`)
+	const messagesId = computed(() => `${inputId.value}-sr-messages`)
 	// live region pour le lecteur ecran
 	const liveRegionId = computed(() => `${inputId.value}-live`)
 	// un libellé caché pour la popup/grid
@@ -315,6 +277,7 @@
 		if (item === null || item === undefined) {
 			selectedItem.value = props.multiple ? [] : null
 			emit('update:modelValue', props.multiple ? [] : null)
+			clearValidation()
 
 			// Garder la liste ouverte après une suppression et réinitialiser la navigation au clavier
 			const target = event?.target as HTMLElement | undefined
@@ -500,10 +463,23 @@
 		return !props.chips && props.multiple && Array.isArray(selectedItem.value) && (selectedItem.value as unknown[]).length > 0
 	})
 
+	const hasSingleSelection = computed(() => {
+		return !props.multiple && selectedItem.value !== null && selectedItem.value !== undefined && selectedItemText.value !== ''
+	})
+
 	const hasSelectionToClear = computed(() => {
 		return props.multiple
 			? (((selectedItem.value as unknown[] | null | undefined)?.length) ?? 0) > 0
 			: selectedItem.value != null
+	})
+
+	const isFieldActive = computed(() => {
+		return hasChips.value
+			|| hasMultipleSelections.value
+			|| hasSingleSelection.value
+			|| isOpen.value
+			|| focused.value
+			|| hasMessages.value
 	})
 
 	const labelWithAsterisk = computed(() => {
@@ -520,15 +496,14 @@
 	})
 
 	const isRequired = computed(() => {
-		if (props.disableErrorHandling) return false
-		if (props.readonly) return
-		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
+		if (props.readonly) return false
+		return props.required === true
 	})
 
 	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return props.errorMessages.length > 0 || hasError.value
+		return hasError.value || hasWarning.value || hasSuccess.value
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -538,8 +513,8 @@
 	})
 
 	const showHelpTextBelow = computed(() => {
-		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
-		return props.helpText && hasMessages.value && !props.hideMessages
+		// Afficher en dessous si il y a des messages d'erreur ET hideDetails n'est pas activé
+		return props.helpText && hasMessages.value && !props.hideDetails
 	})
 
 	// Ici on calcule dynamiquement la liste des ids à rattacher à l'input :
@@ -551,11 +526,11 @@
 			ids.push(helpTextId.value)
 		}
 		// messages affichés
-		if (!props.hideMessages && hasMessages.value) {
+		if (!props.hideDetails && hasMessages.value) {
 			ids.push(messagesId.value)
 		}
 		// live region si erreur
-		if (hasError.value || (Array.isArray(props.errorMessages) && props.errorMessages.length > 0)) {
+		if (hasError.value || errors.value.length > 0) {
 			ids.push(liveRegionId.value)
 		}
 
@@ -578,26 +553,25 @@
 		return undefined
 	})
 
-	const validationRules = computed(() => {
-		return hasError.value && !props.disableErrorHandling ? ['Le champ est requis.'] : []
-	})
-
 	const menuTarget = computed<HTMLElement | undefined>(() => {
 		const rootEl = textInput.value?.$el as HTMLElement | undefined
 		if (!rootEl) return undefined
 		return (rootEl.querySelector('.v-field') as HTMLElement | null) ?? rootEl
 	})
 
-	const formattedErrorMessages = computed(() => {
-		return Array.isArray(props.errorMessages)
-			? props.errorMessages.join(' ')
-			: props.errorMessages
-	})
+	const formattedErrorMessages = computed(() => errors.value.join(' '))
 
 	const liveRegionMessage = computed(() => {
 		if (!hasError.value) return ''
 
 		return formattedErrorMessages.value || 'Le champ contient une erreur.'
+	})
+
+	const validationIcon = computed(() => {
+		if (hasError.value) return mdiAlertCircle
+		if (hasWarning.value) return mdiAlertOutline
+		if (hasSuccess.value) return mdiCheck
+		return null
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -719,35 +693,6 @@
 			emit('update:modelValue', updatedArray)
 		}
 	}
-
-	watch(isOpen, (newIsOpen) => {
-		if (!newIsOpen) {
-			// Valider uniquement à la fermeture du menu
-			if (props.disableErrorHandling || props.readonly) {
-				hasError.value = false
-			}
-			else {
-				const shouldHaveError = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
-				hasError.value = shouldHaveError
-
-				// Forcer la validation du VTextField avec nextTick pour que le DOM soit à jour
-				nextTick(() => {
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					if (textInput.value && (textInput.value as any).validate) {
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						;(textInput.value as any).validate()
-					}
-				})
-			}
-		}
-		// Ne rien faire à l'ouverture pour préserver l'état actuel
-	})
-
-	watch(() => props.errorMessages, (newValue) => {
-		if (!props.disableErrorHandling) {
-			hasError.value = newValue.length > 0
-		}
-	})
 
 	const ariaManager = {
 		cleanInputAttributes(inputElement: HTMLElement): void {
@@ -886,6 +831,8 @@
 	watch(isOpen, async (newValue) => {
 		await nextTick()
 
+		focused.value = newValue
+
 		if (!textInput.value || !textInput.value.$el) return
 
 		setupAriaAttributes()
@@ -937,25 +884,6 @@
 		})
 	}, { deep: true })
 
-	// Méthode de validation pour l'enregistrement avec le système de validation du formulaire
-	const validateOnSubmit = (): boolean => {
-		// Si en mode readonly ou si la gestion d'erreur est désactivée, toujours valide
-		if (props.readonly || props.disableErrorHandling) {
-			return true
-		}
-
-		// Vérifier si une valeur est sélectionnée quand le champ est requis
-		const isValid = !isRequired.value
-
-		// Mettre à jour l'état d'erreur
-		hasError.value = !isValid || props.errorMessages.length > 0
-
-		return isValid
-	}
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
-
 	watch(isOpen, () => {
 		nextTick(() => {
 			updateMenuMinWidth()
@@ -970,7 +898,7 @@
 	defineExpose({
 		isOpen,
 		closeList,
-		validateOnSubmit,
+		validateOnSubmit: validate,
 	})
 
 	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)
@@ -1058,19 +986,26 @@
 						:disabled="disabled"
 						:label="labelWithAsterisk"
 						:aria-label="accessibleLabel"
-						:error-messages="props.disableErrorHandling ? [] : errorMessages"
+						:error="hasError"
+						:error-messages="errors"
+						:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : undefined))"
 						:variant="variant"
-						:rules="validationRules"
 						:bg-color="props.bgColor"
 						:density="props.density"
-						:active="hasChips || hasMultipleSelections || isOpen"
+						:active="isFieldActive"
 						readonly
-						:hide-details="props.hideMessages && !showHelpTextAsMessage"
+						:hide-details="props.hideDetails && !showHelpTextAsMessage"
 						:hint="showHelpTextAsMessage ? props.helpText : ''"
 						:persistent-hint="!!showHelpTextAsMessage"
 						:autocomplete="props.autocomplete"
 						:width="calculatedWidth"
 						:style="hasError ? { minWidth: `${labelWidth + 18}px`} : { minWidth: `${labelWidth}px` }"
+						:class="{
+							'error-field': hasError,
+							'warning-field': hasWarning,
+							'success-field': hasSuccess,
+							'basic-field': !hasError && !hasWarning && !hasSuccess,
+						}"
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
 							...initializeActivatorProps(activatorProps),
@@ -1165,19 +1100,18 @@
 
 						<template #append-inner>
 							<SyIcon
-								v-if="hasError"
+								v-if="validationIcon"
 								class="mr-6"
-								color="error"
-								:icon="mdiAlertCircle"
-								:decorative="false"
-								label="Information"
-								role="img"
+								:color="hasError ? 'error' : (hasWarning ? 'warning' : 'success')"
+								:icon="validationIcon"
+								:decorative="true"
+								role="presentation"
 							/>
 							<button
 								v-if="props.clearable && hasSelectionToClear"
 								type="button"
 								class="sy-select__clear-button"
-								:style="{ right: hasError ? '62px' : '42px' }"
+								:style="{ right: (hasError || hasWarning || hasSuccess) ? '62px' : '42px' }"
 								:aria-label="locales.clear"
 								@keydown.enter.prevent="$event => selectItem(null, $event)"
 								@keydown.space.prevent="$event => selectItem(null, $event)"
@@ -1297,11 +1231,11 @@
 		</div>
 
 		<div
-			v-if="!props.hideMessages && hasMessages"
+			v-if="!props.hideDetails && hasMessages"
 			:id="messagesId"
 			class="d-sr-only"
 		>
-			{{ formattedErrorMessages }}
+			{{ hasError ? errors.join(' ') : (hasWarning ? warnings.join(' ') : successes.join(' ')) }}
 		</div>
 
 		<div
@@ -1335,14 +1269,125 @@
 
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
-		fill: rgb(var(--v-theme-colorPrimary));
+		fill: rgb(var(--v-theme-iconBase));
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 		outline-offset: 2px;
 		opacity: 1;
+	}
+}
+
+.warning-field {
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-textWarning)) !important;
+	}
+
+	:deep(.v-icon.arrow) {
+		color: rgb(var(--v-theme-iconBase)) !important;
+	}
+
+	:deep(.v-icon.arrow .v-icon__svg) {
+		fill: rgb(var(--v-theme-iconBase)) !important;
+	}
+
+	:deep(.sy-select__clear-icon .v-icon__svg) {
+		fill: rgb(var(--v-theme-iconBase)) !important;
+	}
+
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-borderWarning)) !important;
+
+		--v-medium-emphasis-opacity: 1;
+
+		.v-field__outline {
+			--v-field-border-opacity: 1;
+
+			color: rgb(var(--v-theme-borderWarning)) !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgb(var(--v-theme-borderWarning)) !important;
+		}
+	}
+}
+
+.error-field {
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-borderError)) !important;
+
+		.v-field__outline {
+			--v-field-border-opacity: 1;
+
+			color: rgb(var(--v-theme-borderError)) !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgb(var(--v-theme-borderError)) !important;
+		}
+	}
+
+	:deep(.v-icon.arrow) {
+		color: rgb(var(--v-theme-iconSubdued)) !important;
+	}
+
+	:deep(.v-icon.arrow .v-icon__svg) {
+		fill: rgb(var(--v-theme-iconSubdued)) !important;
+	}
+}
+
+.success-field {
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-textSuccess)) !important;
+	}
+
+	:deep(.v-icon.arrow) {
+		color: rgb(var(--v-theme-iconBase)) !important;
+	}
+
+	:deep(.v-icon.arrow .v-icon__svg) {
+		fill: rgb(var(--v-theme-iconBase)) !important;
+	}
+
+	:deep(.sy-select__clear-icon .v-icon__svg) {
+		fill: rgb(var(--v-theme-iconBase)) !important;
+	}
+
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-borderSuccess)) !important;
+
+		--v-medium-emphasis-opacity: 1;
+
+		.v-field__outline {
+			--v-field-border-opacity: 1;
+
+			color: rgb(var(--v-theme-borderSuccess)) !important;
+		}
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgb(var(--v-theme-borderSuccess)) !important;
+		}
+	}
+}
+
+.basic-field {
+	:deep(.v-field--focused .v-field__outline) {
+		color: rgb(var(--v-theme-borderAccentPrimary)) !important;
+		opacity: 1 !important;
 	}
 }
 
@@ -1391,7 +1436,7 @@
 /* Ensure focus styles match selection styles for keyboard navigation */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-colorPrimary));
+	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }
@@ -1418,11 +1463,10 @@
 .v-icon.arrow {
 	position: absolute;
 	right: 10px;
-	color: rgb(var(--v-theme-colorPrimary));
 }
 
 .sy-select__clear-icon {
-	color: rgb(var(--v-theme-colorPrimary)) !important;
+	color: rgb(var(--v-theme-iconBase)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
@@ -1467,7 +1511,7 @@
 
 .sy-select :deep(.v-field__input) {
 	opacity: 1;
-	color: rgb(var(--v-theme-colorPrimary)) !important;
+	color: rgb(var(--v-theme-iconBase)) !important;
 	cursor: pointer;
 	caret-color: transparent;
 	padding-right: 25px;

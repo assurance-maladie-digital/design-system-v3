@@ -85,6 +85,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'SyTabs',
+						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
+						link: '/?path=/docs/composants-navigation-sytabs--docs',
+						img: `/components/sy-tabs${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
@@ -361,7 +368,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ChipList',
 						description: 'Utilisé pour afficher une liste de puces.',
 						link: '/?path=/docs/composants-donn%C3%A9es-chiplist--docs',
-						img: '/components/chip-list.svg',
+						img: `/components/chip-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -482,6 +489,8 @@ export const ComponentsList: StoryObj = {
 					'DialogBox',
 					'NotificationBar',
 					'Accordion',
+					'ChipList',
+					'SyTabs',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

@@ -30,6 +30,7 @@
 				density="compact"
 				variant="outlined"
 				hide-details
+				disable-error-handling
 				@update:model-value="v => setItemsPerPage(Number(v))"
 			/>
 		</div>

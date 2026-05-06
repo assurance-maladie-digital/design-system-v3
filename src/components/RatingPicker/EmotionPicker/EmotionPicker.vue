@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-	import { type PropType, computed, onMounted, ref } from 'vue'
+	import { type PropType, computed, onMounted, toRef } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
+	import { useRatingFocus } from '../useRatingFocus'
 	import {
 		mdiEmoticonHappyOutline,
 		mdiEmoticonSadOutline,
@@ -81,45 +82,27 @@
 		return props.itemLabels[value]
 	}
 
-	const ratingElement = ref<HTMLDivElement[]>([])
-	function focusNextElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const nextIndex = currentIndex < (props.length - 1) ? currentIndex + 1 : 0
-		const nextElem = ratingElement.value?.[nextIndex]
-
-		ratingElement.value[index]?.setAttribute('tabindex', '-1')
-		nextElem?.setAttribute('tabindex', '0')
-		nextElem?.focus()
-	}
-
-	function focusPrevElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const prevIndex = currentIndex > 0 ? currentIndex - 1 : (props.length - 1)
-		const prevElem = ratingElement.value?.[prevIndex]
-
-		ratingElement.value[index]?.setAttribute('tabindex', '-1')
-		prevElem?.setAttribute('tabindex', '0')
-		prevElem?.focus()
-	}
-
-	function setFocus(index: number) {
-		ratingElement.value.forEach((el, i) => {
-			if (i === index) {
-				el?.setAttribute('tabindex', '0')
-			}
-			else {
-				el?.setAttribute('tabindex', '-1')
-			}
-		})
-	}
-
-	onMounted(() => {
-		ratingElement.value[0]?.setAttribute('tabindex', '0')
-		for (let i = 1; i < ratingElement.value.length; i++) {
-			ratingElement.value[i]?.setAttribute('tabindex', '-1')
-		}
+	const {
+		ratingElement,
+		initFocus,
+		selectAndFocus,
+		focusNextElement,
+		focusPrevElement,
+		focus,
+	} = useRatingFocus({
+		length: toRef(props, 'length'),
+		modelValue: internalValue,
+		selectValue: emitInputEvent,
+		wrap: true,
 	})
 
+	defineExpose({
+		focus,
+	})
+
+	onMounted(() => {
+		initFocus()
+	})
 </script>
 
 <template>
@@ -142,22 +125,23 @@
 				:key="index"
 				ref="ratingElement"
 				v-ripple="!(props.readonly || hasAnswered)"
+				:tabindex="-1"
 				role="radio"
-				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
-				:aria-checked="isActive(index) ? 'true' : undefined"
+				:aria-checked="isActive(index) ? 'true' : 'false'"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
 				:style="{
 					'min-height': btnSize,
 					'min-width': btnSize
 				}"
+				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
 				class="sy-emotion-picker__item rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
-				@click="emitInputEvent(index); setFocus(index - 1)"
-				@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
-				@keyup.space="emitInputEvent(index); setFocus(index - 1)"
-				@keyup.right="focusNextElement(index - 1)"
-				@keyup.left="focusPrevElement(index - 1)"
-				@keyup.up="focusPrevElement(index - 1)"
-				@keyup.down="focusNextElement(index - 1)"
+				@click="selectAndFocus(index - 1)"
+				@keydown.enter.prevent="selectAndFocus(index - 1)"
+				@keydown.space.prevent="selectAndFocus(index - 1)"
+				@keydown.right.prevent="focusNextElement(index - 1)"
+				@keydown.left.prevent="focusPrevElement(index - 1)"
+				@keydown.up.prevent="focusPrevElement(index - 1)"
+				@keydown.down.prevent="focusNextElement(index - 1)"
 			>
 				<SyIcon
 					:icon="getIcon(index - 1)"
@@ -184,7 +168,7 @@
 	border: 0;
 }
 
-.sy-emotion-picker__item:not([disabled]) {
+.sy-emotion-picker__item:not([aria-disabled='true']) {
 	cursor: pointer;
 }
 
@@ -238,8 +222,8 @@
 		}
 	}
 
-	&:hover[disabled='true']:not([aria-checked='true']),
-	&:focus[disabled='true']:not([aria-checked='true']) {
+	&:hover[aria-disabled='true']:not([aria-checked='true']),
+	&:focus[aria-disabled='true']:not([aria-checked='true']) {
 		background-color: transparent;
 	}
 }

@@ -1490,6 +1490,7 @@ describe('useValidation (unifyValidation)', () => {
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			await result.validate()
+			expect(result.hasSuccess.value).toBe(true)
 			expect(result.successes.value).toContain('Succès externe')
 		})
 
@@ -1510,8 +1511,29 @@ describe('useValidation (unifyValidation)', () => {
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			await result.validate()
+			expect(result.hasSuccess.value).toBe(true)
 			expect(result.successes.value).not.toContain('Succès interne')
 			expect(result.successes.value).toContain('Succès externe')
+		})
+
+		it('keeps hasSuccess true when inner success messages are hidden', async () => {
+			const params = makeParams({
+				modelValue: ref('ok'),
+				showSuccessMessages: ref(false),
+				customRules: ref([]),
+				customSuccessRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => value === 'ok',
+						successMessage: 'Succès interne',
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.hasSuccess.value).toBe(true)
+			expect(result.successes.value).toEqual([])
 		})
 	})
 

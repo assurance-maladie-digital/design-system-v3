@@ -1,15 +1,143 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as RatingPickerStories from '../RatingPicker.stories.ts';
+import { Meta, Primary } from '@storybook/addon-docs';
+import * as Stories from '../RatingPicker.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    BestPracticesSection,
+    ResourcesSection,
+    DemoSection
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={RatingPickerStories} />
+<Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
+<AccessibilityGuideLayout
+    componentName="RatingPicker"
+    iconSrc={AccessibilityIcon}
+>
 
 <div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/RatingPicker.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/910" target="_blank" style={{color:'#0C41BD'}}>issue #910</a>)</p>
-	</div>
+    <p>
+        Rapport d’audit manuel : <a href="/audits/RatingPicker.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a>
+    </p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>
+        Correctifs associés (
+        <a
+            href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1159"
+            target="_blank"
+            style={{ color:'#0C41BD' }}
+        >#1159</a>
+        )
+    </p>
+</div>
+
+<CriteriaSection>
+    <CriteriaCard icon="🎯" title="Choisir une seule note">
+        <ul>
+            <li>Le composant permet de sélectionner <strong>une seule valeur</strong> (comme une note).</li>
+            <li>On recommande d’utiliser un <code>fieldset</code> avec un <code>legend</code> pour donner le contexte.</li>
+            <li>Le comportement attendu est celui d’un <strong>groupe de boutons radio</strong>.</li>
+            <li>Le libellé doit être clair, par exemple : <code>Êtes-vous satisfait ?</code>.</li>
+            <li>Éviter les structures trop complexes qui rendent le composant difficile à comprendre (surtout pour les lecteurs d’écran).</li>
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="⌨️" title="Navigation au clavier">
+        <ul>
+            <li>Le composant doit être utilisable <strong>entièrement au clavier</strong>.</li>
+            <li>On doit pouvoir se déplacer entre les notes facilement.</li>
+            <li>Les flèches du clavier sont attendues pour naviguer entre les options.</li>
+            <li>Quand une note est sélectionnée, cela doit être clairement annoncé.</li>
+            <li>Si la note ne peut être choisie qu’une seule fois, il faut le préciser à l’utilisateur.</li>
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🗣️" title="Message après la sélection">
+        <ul>
+            <li>Après avoir choisi une note, un message s’affiche (ex : <code>Merci pour votre réponse</code>).</li>
+            <li>Ce message doit être annoncé automatiquement, sans déplacer le focus.</li>
+            <li>On utilise pour ça <code>role="status"</code>.</li>
+            <li>Ne pas utiliser <code>role="alert"</code> pour ce type de message.</li>
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="📝" title="Champ de commentaire">
+        <ul>
+            <li>Un champ texte peut apparaître selon la note choisie.</li>
+            <li>Ce champ doit avoir un <strong>label clair</strong> (ex : <code>Pouvez-vous nous en dire plus ?</code>).</li>
+            <li>Le label doit être visible et bien associé au champ.</li>
+            <li>Le champ ne doit exister que quand il est utile (pas caché mais toujours présent pour les lecteurs d’écran).</li>
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🎨" title="Focus et visibilité">
+        <ul>
+            <li>Quand on navigue au clavier, le focus doit être <strong>bien visible</strong>.</li>
+            <li>Attention au contraste : le focus doit ressortir clairement.</li>
+            <li>Ne pas confondre visuellement un élément sélectionné et un élément en focus.</li>
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🖼️" title="Icônes décoratives">
+        <ul>
+            <li>Les icônes (étoiles, emojis, etc.) sont souvent décoratives.</li>
+            <li>Elles ne doivent pas être lues par les lecteurs d’écran si elles n’apportent pas d’info.</li>
+            <li>Attention à ne pas mélanger <code>aria-hidden</code> avec un <code>role="img"</code>.</li>
+        </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="🧱" title="Code propre et valide">
+        <ul>
+            <li>Le HTML doit rester simple et valide.</li>
+            <li>Éviter les attributs non autorisés (ex : <code>readonly</code> sur un radio).</li>
+            <li>Une structure claire améliore la compatibilité avec les outils d’accessibilité.</li>
+        </ul>
+    </CriteriaCard>
+</CriteriaSection>
+
+<DemoSection componentName="RatingPicker">
+    <Primary />
+</DemoSection>
+
+<BestPracticesSection>
+    <ul>
+        <li>Utiliser <code>fieldset</code> + <code>legend</code> pour structurer le composant.</li>
+        <li>Garder un comportement de <strong>groupe radio</strong>.</li>
+        <li>Assurer une navigation clavier complète et fluide.</li>
+        <li>Afficher un focus bien visible.</li>
+        <li>Masquer correctement les éléments décoratifs.</li>
+        <li>Utiliser <code>role="status"</code> pour le message de confirmation.</li>
+        <li>Ajouter un label clair pour le champ de commentaire.</li>
+        <li>Rester simple : moins de complexité = meilleure accessibilité.</li>
+    </ul>
+</BestPracticesSection>
+
+<ResourcesSection>
+    <ul>
+        <li>
+            <a
+                href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/"
+                target="_blank"
+                style={{ color: '#0C41BD' }}
+            >RGAA 4.1.2 – Critères et tests</a>
+        </li>
+        <li>
+            <a
+                href="https://www.accede-web.com/notices/html-et-css/formulaires/regrouper-et-titrer-les-champs-de-meme-nature-avec-fieldset-et-legend/"
+                target="_blank"
+                style={{ color: '#0C41BD' }}
+            >AcceDe Web – fieldset et legend</a>
+        </li>
+        <li>
+            <a
+                href="https://www.accede-web.com/notices/interface-riche/message-de-notification/"
+                target="_blank"
+                style={{ color: '#0C41BD' }}
+            >AcceDe Web – Messages de notification</a>
+        </li>
+    </ul>
+</ResourcesSection>
+
+</AccessibilityGuideLayout>

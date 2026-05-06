@@ -857,8 +857,11 @@
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
 
+		--v-medium-emphasis-opacity: 1;
+
 		.v-field__outline {
-			color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
+			--v-field-border-opacity: 1;
+      color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
 		}
 	}
 
@@ -871,6 +874,7 @@
 	}
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .text-iconBase {
 	:deep(.v-icon__svg) {
 		fill: rgb(var(--v-theme-colorPrimary)) !important;
@@ -892,6 +896,7 @@
 		color: rgb(var(--v-theme-feedbackError)) !important;
 
 		.v-field__outline {
+			--v-field-border-opacity: 1;
 			color: rgb(var(--v-theme-feedbackError)) !important;
 		}
 	}
@@ -922,6 +927,7 @@
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
+			--v-field-border-opacity: 1;
 			color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
 		}
 	}

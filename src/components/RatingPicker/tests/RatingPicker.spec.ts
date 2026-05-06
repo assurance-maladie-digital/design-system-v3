@@ -51,6 +51,7 @@ describe('RatingPicker', () => {
 		const wrapper = mount(RatingPicker, {
 			stubs: {
 				StarsPicker: {
+					name: 'StarsPicker',
 					template: '<div />',
 				},
 			},
@@ -62,8 +63,8 @@ describe('RatingPicker', () => {
 			},
 		})
 
-		wrapper.findComponent(StarsPicker).vm.$emit('update:modelValue', 3)
-		await wrapper.setProps({ modelValue: 3 })
+		wrapper.findComponent(StarsPicker).vm.$emit('update:modelValue', 2)
+		await wrapper.setProps({ modelValue: 2 })
 
 		expect(wrapper.text()).toContain(locales.thanks)
 		expect(wrapper.text()).toContain('Additional content')
