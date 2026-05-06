@@ -18,7 +18,7 @@ export interface FieldValidationProps {
 	hasSuccess?: boolean
 	hasWarning?: boolean
 	isValidateOnBlur?: boolean
-	label: string
+	label?: string
 	maxErrors?: number
 	modelValue?: unknown
 	readonly?: boolean
