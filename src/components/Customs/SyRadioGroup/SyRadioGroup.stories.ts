@@ -26,46 +26,46 @@ Il permet de choisir **une seule valeur** parmi une liste d’options.
 	},
 	argTypes: {
 		...getValidationDocumentation(),
-		'modelValue': { control: false },
-		'label': {
+		modelValue: { control: false },
+		label: {
 			description: 'Label du groupe',
 			control: 'text',
 		},
-		'options': {
+		options: {
 			description: 'Liste des options du radio-group',
 			control: 'object',
 		},
-		'color': {
+		color: {
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 			description: 'Couleur du groupe',
 		},
-		'density': {
+		density: {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Densité du groupe',
 		},
-		'displayAsterisk': {
+		displayAsterisk: {
 			description: 'Affiche un astérisque pour les champs requis',
 			control: 'boolean',
 		},
-		'helpText': {
+		helpText: {
 			description: 'Texte d\'aide affiché sous le champ',
 			control: 'text',
 		},
-		'ariaLabel': {
+		ariaLabel: {
 			description: 'Label ARIA pour les lecteurs d\'écran',
 			control: 'text',
 		},
-		'ariaLabelledby': {
+		ariaLabelledby: {
 			description: 'ID d\'un élément qui labelise le groupe',
 			control: 'text',
 		},
-		'title': {
+		title: {
 			description: 'Attribut title du groupe',
 			control: 'text',
 		},
-		'name': {
+		name: {
 			description: 'Nom du groupe (attribut name)',
 			control: 'text',
 		},
