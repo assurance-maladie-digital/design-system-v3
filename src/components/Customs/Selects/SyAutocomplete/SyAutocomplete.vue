@@ -8,6 +8,7 @@
 	import { ariaManager } from './utils/ariaManager'
 	import { type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import type { ItemType, SelectValue, SelectArray } from './types'
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSelectionLogic } from './utils/useSelectionLogic'
@@ -309,6 +310,8 @@
 		markInteracted()
 		return await validate()
 	}
+
+	useValidatable(validateOnSubmit, clearValidation)
 
 	const checkErrorOnBlur = (event?: FocusEvent) => {
 		const relatedTarget = event?.relatedTarget as HTMLElement | null | undefined
