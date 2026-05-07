@@ -168,7 +168,7 @@
 
 	&:focus-visible {
 		outline: solid 2px black !important;
-		outline-color: var(--v-primary-base) !important;
+		outline-color: var(--v-theme-colorPrimary) !important;
 		outline-offset: 2px !important;
 
 		&::after {
@@ -256,41 +256,41 @@
 	@include redesign(
 		'warning',
 		(
-			'background': var(--alert-warning-background),
-			'accent': var(--alert-warning-accent),
-			'border': var(--alert-warning-border),
-			'icon':var(--alert-warning-icon),
-			'icon-bg': var(--alert-warning-icon-bg),
+			'background': rgb(var(--v-theme-feedbackWarningVariant)),
+        'accent': rgb(var(--v-theme-feedbackWarning)),
+        'border': rgb(var(--v-theme-feedbackWarning)),
+        'icon': rgb(var(--v-theme-feedbackWarning)),
+        'icon-bg': rgb(var(--v-theme-feedbackWarningVariant)),
 		)
 	);
 	@include redesign(
 		'success',
 		(
-			'background': var(--alert-success-background),
-			'accent': var(--alert-success-accent),
-			'border': var(--alert-success-border),
-			'icon':var(--alert-success-icon),
-			'icon-bg': var(--alert-success-icon-bg),
+			'background': rgb(var(--v-theme-feedbackSuccessVariant)),
+        'accent': rgb(var(--v-theme-feedbackSuccess)),
+        'border': rgb(var(--v-theme-feedbackSuccess)),
+        'icon':rgb(var(--v-theme-feedbackSuccess)),
+        'icon-bg': rgb(var(--v-theme-feedbackSuccessVariant)),
 		)
 	);
 	@include redesign(
 		'error',
 		(
-			'background': var(--alert-error-background),
-			'accent': var(--alert-error-accent),
-			'border': var(--alert-error-border),
-			'icon':var(--alert-error-icon),
-			'icon-bg': var(--alert-error-icon-bg),
+			'background': rgb(var(--v-theme-feedbackErrorVariant)),
+        'accent': rgb(var(--v-theme-feedbackError)),
+        'border': rgb(var(--v-theme-feedbackError)),
+        'icon':rgb(var(--v-theme-feedbackError)),
+        'icon-bg': rgb(var(--v-theme-feedbackErrorVariant)),
 		)
 	);
 	@include redesign(
 		'info',
 		(
-			'background': var(--alert-info-background),
-			'accent': var(--alert-info-accent),
-			'border': var(--alert-info-border),
-			'icon':var(--alert-info-icon),
-			'icon-bg': var(--alert-info-icon-bg),
+			'background': rgb(var(--v-theme-feedbackInfoVariant)),
+        'accent': rgb(var(--v-theme-feedbackInfo)),
+        'border': rgb(var(--v-theme-feedbackInfo)),
+        'icon':rgb(var(--v-theme-feedbackInfo)),
+        'icon-bg': rgb(var(--v-theme-feedbackInfoVariant)),
 		)
 	);
 }
