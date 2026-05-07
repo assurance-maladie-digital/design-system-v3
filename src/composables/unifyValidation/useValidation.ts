@@ -191,13 +191,17 @@ export function useValidation(params: {
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
-	const hasSuccess = computed(() =>
-		(
+	// TODO: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
+	const hasSuccess = computed(() => {
+		if (toValue(params.useVuetifyValidation)) {
+			return params.hasSuccessProp?.value ?? false
+		}
+		return (
 			(internalHasSuccess.value || (params.successMessages?.value?.length ?? 0) > 0)
 			&& !hasError.value
 			&& !hasWarning.value
-		) || params.hasSuccessProp?.value,
-	)
+		) || (params.hasSuccessProp?.value ?? false)
+	})
 
 	function clearValidation() {
 		vuetifyErrors.value = []
