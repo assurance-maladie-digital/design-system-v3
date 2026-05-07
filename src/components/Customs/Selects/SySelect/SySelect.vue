@@ -62,7 +62,7 @@
 			menuId: 'sy-select-menu',
 			outlined: true,
 			variantStyle: undefined,
-			color: 'colorPrimary',
+      color: 'primary',
 			textKey: 'text',
 			plainTextKey: '',
 			valueKey: 'value',
