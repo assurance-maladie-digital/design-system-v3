@@ -88,7 +88,7 @@
 			appendTooltip: undefined,
 			tooltipLocation: 'top',
 			variantStyle: 'outlined',
-      color: 'primary',
+			color: 'primary',
 			label: '',
 			isClearable: false,
 			isActive: false,
