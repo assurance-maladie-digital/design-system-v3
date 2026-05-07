@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 
 /**
@@ -24,21 +24,26 @@ export function useCustomValidation(
 ) {
 	const hasSuccess = ref(false)
 
-	let validator = useValidation({
+	const validatorOptions = reactive({
 		showSuccessMessages: showSuccessMessages.value,
 		fieldIdentifier: label.value,
 		disableErrorHandling: disableErrorHandling.value,
 	})
 
-	watch(
-		() => [showSuccessMessages.value, label.value, customRules?.value, customWarningRules?.value, customSuccessRules?.value, disableErrorHandling.value],
-		() => {
-			validator = useValidation({
-				showSuccessMessages: showSuccessMessages.value,
-				fieldIdentifier: label.value,
-				disableErrorHandling: disableErrorHandling.value,
-			})
+	const validator = useValidation(validatorOptions)
 
+	watch(
+		() => [showSuccessMessages.value, label.value, disableErrorHandling.value],
+		() => {
+			validatorOptions.showSuccessMessages = showSuccessMessages.value
+			validatorOptions.fieldIdentifier = label.value
+			validatorOptions.disableErrorHandling = disableErrorHandling.value
+		},
+	)
+
+	watch(
+		() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value],
+		() => {
 			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
 			if (isDirty) {
 				validate()
