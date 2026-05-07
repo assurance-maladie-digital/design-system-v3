@@ -33,7 +33,7 @@
 	}>()
 
 	const theme = useTheme()
-  const primary = theme.current.value.colors.colorPrimary
+	const primary = theme.current.value.colors.colorPrimary
 	const { isDesktop } = useHeaderResponsiveMode()
 
 	const routeType = computed(() => {
