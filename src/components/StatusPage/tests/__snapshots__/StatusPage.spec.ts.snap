@@ -247,7 +247,7 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
           </p>
           <a
             class="
-              bg-primary
+              bg-colorPrimary
               mt-6
               v-btn
               v-btn--density-default

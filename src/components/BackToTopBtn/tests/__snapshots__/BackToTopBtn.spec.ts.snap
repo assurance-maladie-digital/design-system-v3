@@ -11,7 +11,7 @@ exports[`BackToTopBtn > renders correctly 1`] = `
     class="
       px-0
       px-md-4
-      text-primary
+      text-colorPrimary
       text-wrap
       v-btn
       v-btn--density-default
@@ -45,7 +45,7 @@ exports[`BackToTopBtn > renders correctly 1`] = `
           ml-0
           ml-md-2
           notranslate
-          text-primary
+          text-colorPrimary
           v-icon
           v-theme--light
         "

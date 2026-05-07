@@ -84,7 +84,7 @@ describe('ChipList', () => {
 		expect(chips[1]?.classes()).toContain('bg-feedbackInfoVariant')
 		expect(chips[2]?.classes()).toContain('bg-feedbackWarningVariant')
 		expect(chips[3]?.classes()).toContain('bg-feedbackErrorVariant')
-		expect(chips[4]?.classes()).toContain('bg-primary') // État par défaut
+		expect(chips[4]?.classes()).toContain('bg-colorPrimary') // État par défaut
 	})
 
 	it('applique les bonnes classes selon l\'état', () => {

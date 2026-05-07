@@ -30,7 +30,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
   <div class="captcha">
     <button
       class="
-        bg-primary
+        bg-colorPrimary
         captcha-audio
         mt-4
         text-none

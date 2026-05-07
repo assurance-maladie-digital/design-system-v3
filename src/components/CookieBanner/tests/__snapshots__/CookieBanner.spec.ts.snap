@@ -83,7 +83,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       <button
         class="
           ma-2
-          text-primary
+          text-colorPrimary
           v-btn
           v-btn--density-default
           v-btn--size-default
@@ -107,7 +107,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       <button
         class="
           ma-2
-          text-primary
+          text-colorPrimary
           v-btn
           v-btn--density-default
           v-btn--size-default
@@ -649,7 +649,7 @@ exports[`CookieBanner > does not close the dialog when the customize button is c
       <div class="v-spacer"></div>
       <button
         class="
-          bg-primary
+          bg-colorPrimary
           v-btn
           v-btn--density-default
           v-btn--elevated

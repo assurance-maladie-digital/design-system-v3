@@ -104,7 +104,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                 M13,9V3.5L18.5,9M6,2C4.89,2
                 mdi
                 notranslate
-                text-primary
+                text-colorPrimary
                 v-icon
                 v-theme--light
               "
@@ -177,7 +177,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                   M2
                   mdi
                   notranslate
-                  text-primary
+                  text-colorPrimary
                   v-icon
                   v-icon--size-default
                   v-theme--light
@@ -220,7 +220,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                 M13,9V3.5L18.5,9M6,2C4.89,2
                 mdi
                 notranslate
-                text-primary
+                text-colorPrimary
                 v-icon
                 v-theme--light
               "
@@ -293,7 +293,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                   M2
                   mdi
                   notranslate
-                  text-primary
+                  text-colorPrimary
                   v-icon
                   v-icon--size-default
                   v-theme--light
@@ -408,7 +408,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
               M11
               mdi
               notranslate
-              text-primary
+              text-colorPrimary
               v-icon
               v-theme--light
             "
