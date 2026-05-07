@@ -470,7 +470,7 @@
 							v-if="clearable && hasSelectionToClear"
 							type="button"
 							class="sy-autocomplete__clear-button"
-							:style="{ right: validationIcon ? '62px' : '42px' }"
+							:class="{ 'sy-autocomplete__clear-button--with-icon': validationIcon }"
 							:aria-label="locales.clearSelection"
 							@click.stop.prevent="selectItem(null)"
 						>
@@ -616,7 +616,11 @@
 	justify-content: center;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 20px;
+	right: 42px;
+
+	&--with-icon {
+		right: 62px;
+	}
 
 	.v-icon {
 		position: static;

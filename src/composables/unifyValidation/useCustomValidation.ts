@@ -38,6 +38,11 @@ export function useCustomValidation(
 			validatorOptions.showSuccessMessages = showSuccessMessages.value
 			validatorOptions.fieldIdentifier = label.value
 			validatorOptions.disableErrorHandling = disableErrorHandling.value
+
+			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
+			if (isDirty) {
+				validate()
+			}
 		},
 	)
 
