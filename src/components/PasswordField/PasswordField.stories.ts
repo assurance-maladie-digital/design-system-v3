@@ -30,7 +30,7 @@ const meta = {
 		},
 		color: {
 			control: 'select',
-			options: ['colorPrimary', 'secondary', 'error', 'warning', 'success', 'info'],
+            options: ['primary', 'secondary', 'error', 'warning', 'success', 'info'],
 			description: 'Couleur principale du champ',
 		},
 		label: {
@@ -103,7 +103,7 @@ const meta = {
 	args: {
 		modelValue: '',
 		variantStyle: 'outlined',
-		color: 'colorPrimary',
+        color: 'primary',
 		label: 'Mot de passe',
 		required: false,
 		errorMessages: null,
