@@ -259,8 +259,8 @@
 			'background': rgb(var(--v-theme-feedbackWarningVariant)),
 			'accent': rgb(var(--v-theme-feedbackWarning)),
 			'border': rgb(var(--v-theme-feedbackWarning)),
-        'icon': rgb(var(--v-theme-feedbackWarning)),
-        'icon-bg': rgb(var(--v-theme-feedbackWarningVariant)),
+			'icon': rgb(var(--v-theme-feedbackWarning)),
+			'icon-bg': rgb(var(--v-theme-feedbackWarningVariant)),
 		)
 	);
 	@include redesign(
@@ -269,8 +269,8 @@
 			'background': rgb(var(--v-theme-feedbackSuccessVariant)),
 			'accent': rgb(var(--v-theme-feedbackSuccess)),
 			'border': rgb(var(--v-theme-feedbackSuccess)),
-        'icon':rgb(var(--v-theme-feedbackSuccess)),
-        'icon-bg': rgb(var(--v-theme-feedbackSuccessVariant)),
+			'icon':rgb(var(--v-theme-feedbackSuccess)),
+			'icon-bg': rgb(var(--v-theme-feedbackSuccessVariant)),
 		)
 	);
 	@include redesign(
@@ -279,8 +279,8 @@
 			'background': rgb(var(--v-theme-feedbackErrorVariant)),
 			'accent': rgb(var(--v-theme-feedbackError)),
 			'border': rgb(var(--v-theme-feedbackError)),
-        'icon':rgb(var(--v-theme-feedbackError)),
-        'icon-bg': rgb(var(--v-theme-feedbackErrorVariant)),
+			'icon':rgb(var(--v-theme-feedbackError)),
+			'icon-bg': rgb(var(--v-theme-feedbackErrorVariant)),
 		)
 	);
 	@include redesign(
@@ -289,8 +289,8 @@
 			'background': rgb(var(--v-theme-feedbackInfoVariant)),
 			'accent': rgb(var(--v-theme-feedbackInfo)),
 			'border': rgb(var(--v-theme-feedbackInfo)),
-        'icon':rgb(var(--v-theme-feedbackInfo)),
-        'icon-bg': rgb(var(--v-theme-feedbackInfoVariant)),
+			'icon':rgb(var(--v-theme-feedbackInfo)),
+			'icon-bg': rgb(var(--v-theme-feedbackInfoVariant)),
 		)
 	);
 }
