@@ -3163,7 +3163,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
-									color="primary"
+									color="colorPrimary"
 									bg-color="white"
 									@update:model-value="(val) => {
 										// Utiliser la fonction updateFilter fournie par le slot
@@ -3501,7 +3501,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
-								color="primary"
+								color="colorPrimary"
 								bg-color="white"
 								@update:model-value="(val) => {
 									// Use updateFilter provided by the slot props

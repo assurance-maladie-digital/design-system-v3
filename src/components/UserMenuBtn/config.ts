@@ -18,7 +18,7 @@ export const defaultOptions = {
 		minWidth: '198px',
 	},
 	logoutIcon: {
-		color: 'primary',
+		color: 'colorPrimary',
 		class: 'mr-4',
 	},
 } as const

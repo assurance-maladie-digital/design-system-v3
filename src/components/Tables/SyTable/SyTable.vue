@@ -242,7 +242,7 @@
 		<VDataTable
 			ref="table"
 			v-model="model"
-			color="primary"
+			color="colorPrimary"
 			:headers="displayHeadersWithPinned"
 			v-bind="propsFacade"
 			:row-props="clickableRowProps"
@@ -299,7 +299,7 @@
 									<SyCheckbox
 										:model-value="slotProps.allSelected"
 										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
-										color="primary"
+										color="colorPrimary"
 										density="compact"
 										hide-details
 										:is-header="true"
@@ -381,7 +381,7 @@
 						>
 							<VBtn
 								size="small"
-								color="primary"
+								color="colorPrimary"
 								variant="outlined"
 								@click="filters = []"
 							>

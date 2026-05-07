@@ -104,7 +104,7 @@
 						<SyIcon
 							v-else
 							:size="cnamContextualTokens.iconSize.default"
-							color="primary"
+							color="colorPrimary"
 							:icon="mdiFile"
 							decorative
 						/>
@@ -144,7 +144,7 @@
 					<span>{{ importLabel }}</span>
 					<template #prepend>
 						<SyIcon
-							color="primary"
+							color="colorPrimary"
 							:icon="mdiTrayArrowUp"
 							decorative
 						/>
@@ -160,7 +160,7 @@
 					<span>{{ seeLabel }}</span>
 					<template #prepend>
 						<SyIcon
-							color="primary"
+							color="colorPrimary"
 							:icon="mdiEyeOutline"
 							decorative
 						/>
@@ -197,7 +197,7 @@
 				:model-value="progress"
 				:progress="progress"
 				height="7"
-				color="primary"
+				color="colorPrimary"
 				rounded="true"
 				:aria-label="title ? `Chargement de ${title}` : 'Chargement en cours'"
 			/>

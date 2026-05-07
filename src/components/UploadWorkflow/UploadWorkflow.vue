@@ -216,7 +216,7 @@
 					item-title="text"
 					item-value="value"
 					:rules="[isRequired]"
-					color="primary"
+					color="colorPrimary"
 				/>
 			</div>
 

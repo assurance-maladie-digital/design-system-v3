@@ -335,7 +335,7 @@ export const Default: Story = {
 				elevation: 0,
 			},
 			goTopBtnIcon: {
-				color: 'primary',
+				color: 'colorPrimary',
 			},
 		},
 		onEvent: fn(),
@@ -1335,7 +1335,7 @@ export const BackOffice: Story = {
 				elevation: 0,
 			},
 			goTopBtnIcon: {
-				color: 'primary',
+				color: 'colorPrimary',
 			},
 		},
 	},

@@ -461,7 +461,7 @@ describe('SyTabs', () => {
 					vuetifyOptions: {
 						sheet: {
 							dense: true,
-							color: 'primary',
+							color: 'colorPrimary',
 						},
 						tabs: {
 							height: '60',

@@ -18,8 +18,8 @@ describe('classToHex', () => {
 		expect(classToHex('ap-blue-unknown')).toBe('#0C419A')
 	})
 
-	it('resolves theme keys like "primary"', () => {
-		expect(classToHex('primary')).toBe('#00749C')
+	it('resolves theme keys like "colorPrimary"', () => {
+		expect(classToHex('colorPrimary')).toBe('#00749C')
 	})
 
 	it('resolves legacy color names via AmeliproColors', () => {

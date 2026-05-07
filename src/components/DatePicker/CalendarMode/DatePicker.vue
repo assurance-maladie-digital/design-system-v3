@@ -1073,7 +1073,7 @@
 							:no-icon="props.noIcon"
 							:prepend-icon="displayIcon && !displayAppendIcon ? 'calendar' : undefined"
 							:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
-							color="primary"
+							color="colorPrimary"
 							:show-success-messages="props.showSuccessMessages"
 							:bg-color="props.bgColor"
 							:density="props.density"
@@ -1111,7 +1111,7 @@
 						:id="datePickerContentId"
 						ref="datePickerRef"
 						v-model="selectedDates"
-						color="primary"
+						color="colorPrimary"
 						control-variant="modal"
 						:first-day-of-week="1"
 						:multiple="props.displayRange ? 'range' : false"
@@ -1150,7 +1150,7 @@
 							<div class="d-flex justify-center align-center w-100">
 								<v-btn
 									size="x-small"
-									color="primary"
+									color="colorPrimary"
 									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"

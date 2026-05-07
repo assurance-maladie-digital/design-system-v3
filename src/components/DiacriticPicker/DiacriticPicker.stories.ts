@@ -49,7 +49,7 @@ export const Default: Story = {
     <v-text-field
       v-model="nom"
       label="Nom avec accents"
-      color="primary"
+      color="colorPrimary"
       variant="outlined"
       bg-color="white"
     />
@@ -81,7 +81,7 @@ export const Default: Story = {
 		],
 		vuetifyOptions: {
 			btn: {
-				color: 'primary',
+				color: 'colorPrimary',
 				size: 'small',
 				variant: 'tonal',
 			},
@@ -109,7 +109,7 @@ export const Default: Story = {
 						<v-text-field
 							v-model="value"
 							label="Nom avec accents"
-							color="primary"
+							color="colorPrimary"
 							variant="outlined"
 							bg-color="white"
 						/>
@@ -131,7 +131,7 @@ export const WithTextarea: Story = {
     <v-textarea
       v-model="adresse"
       label="Adresse"
-      color="primary"
+      color="colorPrimary"
       bg-color="white"
       variant="outlined"
       auto-grow
@@ -164,7 +164,7 @@ export const WithTextarea: Story = {
 		],
 		vuetifyOptions: {
 			btn: {
-				color: 'primary',
+				color: 'colorPrimary',
 				size: 'small',
 				variant: 'tonal',
 			},
@@ -192,7 +192,7 @@ export const WithTextarea: Story = {
 						<v-textarea
 							v-model="value"
 							label="Adresse"
-							color="primary"
+							color="colorPrimary"
 							bg-color="white"
 							variant="outlined"
 							auto-grow
@@ -215,7 +215,7 @@ export const CustomDiacritics: Story = {
     <v-text-field
       v-model="text"
       label="Texte avec accents personnalisés"
-      color="primary"
+      color="colorPrimary"
       variant="outlined"
 				bg-color="white"
     />
@@ -240,7 +240,7 @@ export const CustomDiacritics: Story = {
 		diacritics: ['é', 'è', 'ê', 'à', 'ç', 'ù'],
 		vuetifyOptions: {
 			btn: {
-				color: 'primary',
+				color: 'colorPrimary',
 				size: 'small',
 				variant: 'tonal',
 			},
@@ -268,7 +268,7 @@ export const CustomDiacritics: Story = {
 						<v-text-field
 							v-model="value"
 							label="Texte avec accents personnalisés"
-							color="primary"
+							color="colorPrimary"
 							variant="outlined"
 							bg-color="white"
 						/>
@@ -290,7 +290,7 @@ export const CustomButtonTitle: Story = {
     <v-text-field
       v-model="text"
       label="Texte avec bouton personnalisé"
-      color="primary"
+      color="colorPrimary"
       variant="outlined"
       bg-color="white"
     />
@@ -322,7 +322,7 @@ export const CustomButtonTitle: Story = {
 		],
 		vuetifyOptions: {
 			btn: {
-				color: 'primary',
+				color: 'colorPrimary',
 				size: 'small',
 				variant: 'tonal',
 			},
@@ -350,7 +350,7 @@ export const CustomButtonTitle: Story = {
 						<v-text-field
 							v-model="value"
 							label="Texte avec bouton personnalisé"
-							color="primary"
+							color="colorPrimary"
 							variant="outlined"
 							bg-color="white"
 						/>

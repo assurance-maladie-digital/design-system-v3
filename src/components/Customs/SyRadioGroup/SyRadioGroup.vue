@@ -41,7 +41,7 @@
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			title: undefined,
-			color: 'primary',
+			color: 'colorPrimary',
 			disabled: false,
 			readonly: false,
 			hideDetails: 'auto',

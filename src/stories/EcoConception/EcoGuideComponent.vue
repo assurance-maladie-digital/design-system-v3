@@ -221,7 +221,7 @@
 									hide-details
 									item-title="title"
 									item-value="value"
-									color="primary"
+									color="colorPrimary"
 								/>
 							</v-col>
 							<v-col
@@ -237,7 +237,7 @@
 									density="comfortable"
 									hide-details
 									clearable
-									color="primary"
+									color="colorPrimary"
 									:disabled="!hasDataForCategory"
 									placeholder="Sélectionnez un thème"
 								/>
@@ -256,7 +256,7 @@
 									hide-details
 									:prepend-inner-icon="mdiMagnifyIcon"
 									clearable
-									color="primary"
+									color="colorPrimary"
 									placeholder="Rechercher par critères, actions ou numéro de règle ou de thème"
 									:disabled="!hasDataForCategory"
 								/>
@@ -271,7 +271,7 @@
 								<v-btn
 									:prepend-icon="mdiRefreshIcon"
 									variant="text"
-									color="primary"
+									color="colorPrimary"
 									@click="resetFilters"
 								>
 									Réinitialiser
@@ -354,7 +354,7 @@
 								<v-spacer />
 								<v-btn
 									variant="text"
-									color="primary"
+									color="colorPrimary"
 									@click="showRuleDetails(rule)"
 								>
 									Détails
@@ -374,7 +374,7 @@
 						:length="totalPages"
 						total-visible="7"
 						rounded
-						color="primary"
+						color="colorPrimary"
 					/>
 				</v-col>
 			</v-row>
@@ -500,7 +500,7 @@
 					<v-spacer />
 					<v-btn
 						variant="outlined"
-						color="primary"
+						color="colorPrimary"
 						@click="detailDialog = false"
 					>
 						Fermer

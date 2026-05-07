@@ -4,7 +4,7 @@ const defaultOptions = {
 	menu: {
 	},
 	btn: {
-		color: 'primary',
+		color: 'colorPrimary',
 		variant: 'outlined' as VariantType,
 		ripple: true,
 	},

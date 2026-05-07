@@ -64,16 +64,9 @@ export const baseContextualTokens = {
 	},
 
 	fontSize: {
-		8: 8,
-		12: 12,
-		14: 14,
-		corpsDeTexte: 16,
-		18: 18,
-		titresAlternatifs: 20,
-		titres: 24,
-		28: 28,
-		30: 30,
-		32: 32,
-		40: 40,
+		titres: '24px',
+		titresAlternatifs: '20px',
+		corpsDeTexte: '16px',
+		liensEtLibelles: '14px',
 	},
 }

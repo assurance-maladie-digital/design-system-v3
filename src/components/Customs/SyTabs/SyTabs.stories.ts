@@ -254,7 +254,7 @@ export const WithTabPrependSlot: Story = {
           <VIcon
               v-if="index === 0"
               class="mr-2"
-              :color="isActive ? 'primary' : 'grey'"
+              :color="isActive ? 'colorPrimary' : 'grey'"
               :icon="mdiHome"
           />
         </template>
@@ -271,7 +271,7 @@ export const WithTabPrependSlot: Story = {
           <VIcon
               v-if="index === 0"
               class="mr-2"
-              :color="isActive ? 'primary' : 'grey'"
+              :color="isActive ? 'colorPrimary' : 'grey'"
               :icon="mdiHome"
           />
         </template>
@@ -302,7 +302,7 @@ export const WithTabAppendSlot: Story = {
           <VIcon
               v-if="index === 0"
               class="ml-2"
-              :color="isActive ? 'primary' : 'grey'"
+              :color="isActive ? 'colorPrimary' : 'grey'"
               :icon="mdiHome"
           />
         </template>
@@ -319,7 +319,7 @@ export const WithTabAppendSlot: Story = {
         <VIcon
               v-if="index === 0"
               class="ml-2"
-              :color="isActive ? 'primary' : 'grey'"
+              :color="isActive ? 'colorPrimary' : 'grey'"
               :icon="mdiHome"
           />
       </template>

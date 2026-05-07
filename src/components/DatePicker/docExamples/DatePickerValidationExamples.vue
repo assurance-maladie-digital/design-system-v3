@@ -76,7 +76,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date1 = ''"
 			>
 				Vider le champ
@@ -121,7 +121,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date2 = '13/04/2025'"
 			>
 				Samedi (13/04/2025)
@@ -166,7 +166,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date3 = today"
 			>
 				Aujourd'hui
@@ -218,7 +218,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date4 = today"
 			>
 				Aujourd'hui
@@ -271,7 +271,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date5 = '15/04/2025'"
 			>
 				15/04/2025
@@ -317,7 +317,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date6 = '15/04/2025'"
 			>
 				15/04/2025
@@ -363,7 +363,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date7 = '25/12/2025'"
 			>
 				25/12/2025
@@ -421,7 +421,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date8 = '15/04/2025'"
 			>
 				15/04/2025
@@ -483,7 +483,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date9 = '15/04/2025'"
 			>
 				15/04/2025
@@ -532,7 +532,7 @@
 			</div>
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				@click="date10 = today"
 			>
 				Aujourd'hui

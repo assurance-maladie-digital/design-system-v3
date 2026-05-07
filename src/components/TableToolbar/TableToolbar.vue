@@ -78,7 +78,7 @@
 			<slot name="search-left" />
 			<VTextField
 				v-bind="options.textField"
-				color="primary"
+				color="colorPrimary"
 				:model-value="search"
 				class="sy-form-input"
 				:class="textFieldClasses"

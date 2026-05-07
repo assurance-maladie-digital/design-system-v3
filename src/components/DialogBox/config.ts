@@ -16,11 +16,11 @@ export const config = {
 		class: 'd-flex flex-wrap mt-6 px-6',
 	},
 	cancelBtn: {
-		color: 'primary',
+		color: 'colorPrimary',
 		variant: 'text',
 	},
 	confirmBtn: {
-		color: 'primary',
+		color: 'colorPrimary',
 		elevation: 0,
 
 	},

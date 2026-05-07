@@ -155,11 +155,11 @@ const meta: Meta<typeof DialogBox> = {
 							class: 'd-flex flex-wrap mt-6',
 						},
 						cancelBtn: {
-							color: 'primary',
+							color: 'colorPrimary',
 							variant: 'text',
 						},
 						confirmBtn: {
-							color: 'primary',
+							color: 'colorPrimary',
 						},
 					}`,
 				},
@@ -231,7 +231,7 @@ export const Default: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="rest"
@@ -252,7 +252,7 @@ export const Default: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -303,7 +303,7 @@ export const ButtonTexts: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -324,7 +324,7 @@ export const ButtonTexts: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -375,7 +375,7 @@ export const HideActions: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -394,7 +394,7 @@ export const HideActions: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -443,7 +443,7 @@ export const Persistent: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -464,7 +464,7 @@ export const Persistent: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -514,7 +514,7 @@ export const ActionsSlot: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -522,7 +522,7 @@ export const ActionsSlot: Story = {
 					>
 						<template #actions>
 							<VBtn
-								color="primary"
+                                color="colorPrimary"
 								@click="args.modelValue = false"
 							>Action</VBtn>
 						</template>
@@ -539,7 +539,7 @@ export const ActionsSlot: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -548,7 +548,7 @@ export const ActionsSlot: Story = {
 					>
 						<template #actions>
 							<VBtn
-								color="primary"
+								color="colorPrimary"
 								@click="dialogOpen = false"
 							>Action</VBtn>
 						</template>
@@ -591,7 +591,7 @@ export const TitleSlot: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+						color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -618,7 +618,7 @@ export const TitleSlot: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -668,7 +668,7 @@ export const Width: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -689,7 +689,7 @@ export const Width: Story = {
 				code: `
 					<template>
 						<VBtn
-							color="primary"
+							color="colorPrimary"
 							@click="dialogOpen = !dialogOpen"
 						>Toggle DialogBox</VBtn>
 						<DialogBox
@@ -763,7 +763,7 @@ export const VuetifyOptions: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -784,7 +784,7 @@ export const VuetifyOptions: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
@@ -860,7 +860,7 @@ export const Draggable: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-						color="primary"
+                        color="colorPrimary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -881,7 +881,7 @@ export const Draggable: Story = {
 				code: `
 				<template>
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="dialogOpen = !dialogOpen"
 					>Toggle DialogBox</VBtn>
 					<DialogBox

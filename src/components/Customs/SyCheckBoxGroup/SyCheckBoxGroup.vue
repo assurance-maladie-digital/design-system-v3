@@ -38,7 +38,7 @@
 		{
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
-			color: 'primary',
+			color: 'colorPrimary',
 			customRules: () => [],
 			customSuccessRules: () => [],
 			customWarningRules: () => [],

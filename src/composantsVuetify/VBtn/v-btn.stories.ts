@@ -20,70 +20,70 @@ type Story = StoryObj<typeof meta>
 
 // --- Primary ---
 export const PrimaryElevated: Story = {
-	args: { label: 'Button primary elevated', color: 'primary', variant: 'elevated', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated">Button</v-btn>` } } },
+	args: { label: 'Button primary elevated', color: 'colorPrimary', variant: 'elevated', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="elevated">Button</v-btn>` } } },
 }
 export const PrimaryOutlined: Story = {
-	args: { label: 'Button primary outlined', color: 'primary', variant: 'outlined', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined">Button</v-btn>` } } },
+	args: { label: 'Button primary outlined', color: 'colorPrimary', variant: 'outlined', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="outlined">Button</v-btn>` } } },
 }
 export const PrimaryTonal: Story = {
-	args: { label: 'Button primary tonal', color: 'primary', variant: 'tonal', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="tonal">Button</v-btn>` } } },
+	args: { label: 'Button primary tonal', color: 'colorPrimary', variant: 'tonal', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="tonal">Button</v-btn>` } } },
 }
 export const PrimaryText: Story = {
-	args: { label: 'Button primary text', color: 'primary', variant: 'text', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text">Button</v-btn>` } } },
+	args: { label: 'Button primary text', color: 'colorPrimary', variant: 'text', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="text">Button</v-btn>` } } },
 }
 export const PrimaryElevatedDisabled: Story = {
-	args: { label: 'Button primary elevated disabled', color: 'primary', variant: 'elevated', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" disabled>Button</v-btn>` } } },
+	args: { label: 'Button primary elevated disabled', color: 'colorPrimary', variant: 'elevated', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="elevated" disabled>Button</v-btn>` } } },
 }
 export const PrimaryOutlinedDisabled: Story = {
-	args: { label: 'Button primary outlined disabled', color: 'primary', variant: 'outlined', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" disabled>Button</v-btn>` } } },
+	args: { label: 'Button primary outlined disabled', color: 'colorPrimary', variant: 'outlined', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="outlined" disabled>Button</v-btn>` } } },
 }
 export const PrimaryTonalDisabled: Story = {
-	args: { label: 'Button primary tonal disabled', color: 'primary', variant: 'tonal', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="tonal" disabled>Button</v-btn>` } } },
+	args: { label: 'Button primary tonal disabled', color: 'colorPrimary', variant: 'tonal', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="tonal" disabled>Button</v-btn>` } } },
 }
 export const PrimaryTextDisabled: Story = {
-	args: { label: 'Button primary text disabled', color: 'primary', variant: 'text', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" disabled>Button</v-btn>` } } },
+	args: { label: 'Button primary text disabled', color: 'colorPrimary', variant: 'text', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorPrimary" variant="text" disabled>Button</v-btn>` } } },
 }
 
 // --- Secondary ---
 export const SecondaryElevated: Story = {
-	args: { label: 'Button secondary elevated', color: 'secondary', variant: 'elevated', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="elevated">Button</v-btn>` } } },
+	args: { label: 'Button secondary elevated', color: 'colorSecondary', variant: 'elevated', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="elevated">Button</v-btn>` } } },
 }
 export const SecondaryOutlined: Story = {
-	args: { label: 'Button secondary outlined', color: 'secondary', variant: 'outlined', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="outlined">Button</v-btn>` } } },
+	args: { label: 'Button secondary outlined', color: 'colorSecondary', variant: 'outlined', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="outlined">Button</v-btn>` } } },
 }
 export const SecondaryTonal: Story = {
-	args: { label: 'Button secondary tonal', color: 'secondary', variant: 'tonal', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="tonal">Button</v-btn>` } } },
+	args: { label: 'Button secondary tonal', color: 'colorSecondary', variant: 'tonal', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="tonal">Button</v-btn>` } } },
 }
 export const SecondaryText: Story = {
-	args: { label: 'Button secondary text', color: 'secondary', variant: 'text', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="text">Button</v-btn>` } } },
+	args: { label: 'Button secondary text', color: 'colorSecondary', variant: 'text', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="text">Button</v-btn>` } } },
 }
 export const SecondaryElevatedDisabled: Story = {
-	args: { label: 'Button secondary elevated disabled', color: 'secondary', variant: 'elevated', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="elevated" disabled>Button</v-btn>` } } },
+	args: { label: 'Button secondary elevated disabled', color: 'colorSecondary', variant: 'elevated', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="elevated" disabled>Button</v-btn>` } } },
 }
 export const SecondaryOutlinedDisabled: Story = {
-	args: { label: 'Button secondary outlined disabled', color: 'secondary', variant: 'outlined', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="outlined" disabled>Button</v-btn>` } } },
+	args: { label: 'Button secondary outlined disabled', color: 'colorSecondary', variant: 'outlined', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="outlined" disabled>Button</v-btn>` } } },
 }
 export const SecondaryTonalDisabled: Story = {
-	args: { label: 'Button secondary tonal disabled', color: 'secondary', variant: 'tonal', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="tonal" disabled>Button</v-btn>` } } },
+	args: { label: 'Button secondary tonal disabled', color: 'colorSecondary', variant: 'tonal', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="tonal" disabled>Button</v-btn>` } } },
 }
 export const SecondaryTextDisabled: Story = {
-	args: { label: 'Button secondary text disabled', color: 'secondary', variant: 'text', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="secondary" variant="text" disabled>Button</v-btn>` } } },
+	args: { label: 'Button secondary text disabled', color: 'colorSecondary', variant: 'text', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="colorSecondary" variant="text" disabled>Button</v-btn>` } } },
 }
 
 // --- Tertiary ---

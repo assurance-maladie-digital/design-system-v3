@@ -520,7 +520,7 @@ export const WithSlots: Story = {
 					<template #navigation-menu-append>
 						<VBtn
 							variant="tonal"
-							color="primary"
+							color="colorPrimary"
 							class="my-12 mx-8"
 						>
 							Besoin d’aide ?
@@ -576,7 +576,7 @@ export const WithSlots: Story = {
 		<template #navigation-menu-append>
 			<VBtn
 				variant="tonal"
-				color="primary"
+				color="colorPrimary"
 				class="my-12 mx-8"
 			>
 				Besoin d’aide ?
@@ -813,7 +813,7 @@ export const WithNavigationMenuAppendSlot: Story = {
 					<template #navigation-menu-append>
 						<VBtn
 							variant="tonal"
-							color="primary"
+							color="colorPrimary"
 							class="my-12 mx-8"
 						>
 							Besoin d’aide ?
@@ -843,7 +843,7 @@ export const WithNavigationMenuAppendSlot: Story = {
 		<template #navigation-menu-append>
 			<VBtn
 				variant="tonal"
-				color="primary"
+				color="colorPrimary"
 				class="my-12 mx-8"
 			>
 				Besoin d’aide ?

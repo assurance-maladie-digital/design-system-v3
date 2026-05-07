@@ -263,7 +263,7 @@
 			v-model="model"
 			:headers="displayHeadersWithPinned"
 			:row-props="clickableRowProps"
-			color="primary"
+			color="colorPrimary"
 			:items="displayedItems"
 			:items-length="displayedItemsLength || 0"
 			:density="props.density"
@@ -318,7 +318,7 @@
 									<SyCheckbox
 										:model-value="slotProps.allSelected"
 										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
-										color="primary"
+										color="colorPrimary"
 										density="compact"
 										hide-details
 										:is-header="true"
@@ -401,7 +401,7 @@
 						>
 							<VBtn
 								size="small"
-								color="primary"
+								color="colorPrimary"
 								variant="outlined"
 								@click="filters = []"
 							>

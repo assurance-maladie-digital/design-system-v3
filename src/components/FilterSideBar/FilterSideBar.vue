@@ -84,7 +84,7 @@
 			ref="drawerBtnRef"
 			class="sy-filters-side-bar__open-btn px-4 py-3"
 			:class="{ 'v-btn--active': drawer }"
-			color="primary"
+			color="colorPrimary"
 			variant="text"
 			size="large"
 			@click="toggleDrawer"
@@ -188,7 +188,7 @@
 
 					<div class="px-4 pb-4 pt-10">
 						<VBtn
-							color="primary"
+							color="colorPrimary"
 							block
 							size="large"
 							variant="outlined"
@@ -200,7 +200,7 @@
 						</VBtn>
 
 						<VBtn
-							color="primary"
+							color="colorPrimary"
 							block
 							size="large"
 							variant="outlined"
@@ -213,7 +213,7 @@
 						</VBtn>
 
 						<VBtn
-							color="primary"
+							color="colorPrimary"
 							block
 							size="large"
 							class="sy-filters-side-bar__apply-btn"

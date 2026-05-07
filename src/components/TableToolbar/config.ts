@@ -7,7 +7,7 @@ export const config = {
 	},
 	addBtn: {
 		variant: 'outlined',
-		color: 'primary',
+		color: 'colorPrimary',
 		class: 'px-2 px-md-4',
 		minWidth: '44px',
 		height: '40px',

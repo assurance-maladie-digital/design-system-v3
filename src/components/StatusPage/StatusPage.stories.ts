@@ -223,8 +223,8 @@ export const SlotAction: Story = {
 						>
 							<template #action>
 								<div style="display: flex; gap: 8px; margin-top: 16px;">
-									<VBtn href="/" color="primary">Retour à l'accueil</VBtn>
-									<VBtn variant="outlined" color="primary">Déconnexion</VBtn>
+									<VBtn href="/" color="colorPrimary">Retour à l'accueil</VBtn>
+									<VBtn variant="outlined" color="colorPrimary">Déconnexion</VBtn>
 								</div>
 							</template>
 						</StatusPage>
@@ -251,8 +251,8 @@ export const SlotAction: Story = {
 			<StatusPage v-bind="args">
 				<template #action>
 					<div style="display: flex; gap: 8px; margin-top: 16px;">
-						<VBtn href="/" color="primary">Retour à l'accueil</VBtn>
-						<VBtn variant="outlined" color="primary">Déconnexion</VBtn>
+						<VBtn href="/" color="colorPrimary">Retour à l'accueil</VBtn>
+						<VBtn variant="outlined" color="colorPrimary">Déconnexion</VBtn>
 					</div>
 				</template>
 			</StatusPage>

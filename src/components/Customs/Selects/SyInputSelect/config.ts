@@ -1,9 +1,9 @@
 const defaultOptions = {
 	menu: {
-		color: 'primary',
+		color: 'colorPrimary',
 	},
 	option: {
-		color: 'primary',
+		color: 'colorPrimary',
 	},
 }
 

@@ -480,7 +480,7 @@ export const Form: Story = {
 							width="400px"
 							:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
 						/>
-						<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+						<VBtn type="submit" color="colorPrimary" class="mt-4">Soumettre</VBtn>
 					</SyForm>
 				</template>
 				`,
@@ -520,7 +520,7 @@ export const Form: Story = {
 					width="400px"
 					:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
 				/>
-				<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+				<VBtn type="submit" color="colorPrimary" class="mt-4">Soumettre</VBtn>
 			</SyForm>
 		`,
 	}),

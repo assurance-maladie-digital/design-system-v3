@@ -224,7 +224,7 @@ export const Default: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+                        color="colorPrimary"
 					/>
 				</template>
 
@@ -241,7 +241,7 @@ export const Default: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+                        color="colorPrimary"
 					/>
 				</template>
 
@@ -276,7 +276,7 @@ export const Default: Story = {
 			label="Nom"
 			variant="outlined"
 			hide-details
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 
@@ -293,7 +293,7 @@ export const Default: Story = {
 			variant="outlined"
 			return-object
 			hide-details
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 
@@ -572,7 +572,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+                        color="colorPrimary"
 					/>
 				</template>
 
@@ -589,7 +589,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+                        color="colorPrimary"
 					/>
 				</template>
 
@@ -618,7 +618,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+                        color="colorPrimary"
 					/>
 				</template>
 
@@ -635,7 +635,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+                        color="colorPrimary"
 					/>
 				</template>
 
@@ -651,7 +651,7 @@ export const FilterCombination: Story = {
 						v-bind="props"
 						label="Profession"
 						:items="professionList"
-						color="primary"
+                        color="colorPrimary"
 					/>
 				</template>
 			</FilterInline>
@@ -673,7 +673,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -690,7 +690,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -718,7 +718,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -735,7 +735,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -751,7 +751,7 @@ export const FilterCombination: Story = {
 						v-bind="props"
 						:items="professionList"
 						label="Profession"
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 			</FilterInline>
@@ -871,10 +871,12 @@ export const ZIndex: Story = {
 				<div class="d-flex align-center ga-4 mb-6">
 					<FilterSideBar v-bind="args" v-model="filters1">
 						<template #folder="{ props }">
-							<VSelect v-bind="props" :items="folderTypes" label="Type de dossier" multiple variant="outlined" return-object hide-details color="primary" />
+                          <VSelect v-bind="props" :items="folderTypes" label="Type de dossier" multiple
+                                   variant="outlined" return-object hide-details color="colorPrimary"
+                          />
 						</template>
 					</FilterSideBar>
-					<VBtn color="primary" variant="outlined" @click="dialog1 = true">
+                  <VBtn color="colorPrimary" variant="outlined" @click="dialog1 = true">
 						Ouvrir une modale de confirmation
 					</VBtn>
 				</div>
@@ -883,7 +885,7 @@ export const ZIndex: Story = {
 						<VCardText>Confirmez-vous la réinitialisation des filtres ?</VCardText>
 						<VCardActions class="justify-end">
 							<VBtn variant="text" @click="dialog1 = false">Annuler</VBtn>
-							<VBtn color="primary" variant="elevated" @click="dialog1 = false">Confirmer</VBtn>
+                          <VBtn color="colorPrimary" variant="elevated" @click="dialog1 = false">Confirmer</VBtn>
 						</VCardActions>
 					</VCard>
 				</VDialog>
@@ -894,10 +896,12 @@ export const ZIndex: Story = {
 				<div class="d-flex align-center ga-4">
 					<FilterSideBar v-bind="args" v-model="filters2" :z-index="2401">
 						<template #folder="{ props }">
-							<VSelect v-bind="props" :items="folderTypes" label="Type de dossier" multiple variant="outlined" return-object hide-details color="primary" />
+                          <VSelect v-bind="props" :items="folderTypes" label="Type de dossier" multiple
+                                   variant="outlined" return-object hide-details color="colorPrimary"
+                          />
 						</template>
 					</FilterSideBar>
-					<VBtn color="primary" variant="outlined" @click="dialog2 = true">
+                  <VBtn color="colorPrimary" variant="outlined" @click="dialog2 = true">
 						Ouvrir une modale de confirmation
 					</VBtn>
 				</div>
@@ -906,7 +910,7 @@ export const ZIndex: Story = {
 						<VCardText>Confirmez-vous la réinitialisation des filtres ?</VCardText>
 						<VCardActions class="justify-end">
 							<VBtn variant="text" @click="dialog2 = false">Annuler</VBtn>
-							<VBtn color="primary" variant="elevated" @click="dialog2 = false">Confirmer</VBtn>
+                          <VBtn color="colorPrimary" variant="elevated" @click="dialog2 = false">Confirmer</VBtn>
 						</VCardActions>
 					</VCard>
 				</VDialog>

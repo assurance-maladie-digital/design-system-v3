@@ -13,10 +13,10 @@
 	})
 
 	const isDark = computed(() => props.dark ?? false)
-	const iconColor = computed(() => isDark.value ? 'white' : 'primary')
+	const iconColor = computed(() => isDark.value ? 'white' : 'colorPrimary')
 	const buttonVariant = computed(() => isDark.value ? 'outlined' : 'text')
 	const buttonTheme = computed(() => isDark.value ? 'dark' : undefined)
-	const buttonColor = computed(() => isDark.value ? 'white' : 'primary')
+	const buttonColor = computed(() => isDark.value ? 'white' : 'colorPrimary')
 	const buttonBgColor = computed(() => isDark.value ? 'transparent' : props.backgroundColor)
 
 	const buttonClasses = computed(() => ({

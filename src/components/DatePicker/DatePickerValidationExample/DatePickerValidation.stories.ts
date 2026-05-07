@@ -48,7 +48,7 @@ ValidationExamples.parameters = {
 						</div>
 						<v-btn
 							size="small"
-							color="primary"
+							color="colorPrimary"
 							@click="date1 = ''"
 						>
 							Vider le champ
@@ -189,7 +189,7 @@ BidirectionalValidation.parameters = {
 		<div class="actions mb-4">
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				class="mr-2"
 				@click="resetDates"
 			>
@@ -485,7 +485,7 @@ BidirectionalComplexDatePickerValidation.parameters = {
 		<div class="actions mb-4">
 			<v-btn
 				size="small"
-				color="primary"
+				color="colorPrimary"
 				class="mr-2"
 				@click="resetDates"
 			>

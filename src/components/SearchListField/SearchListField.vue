@@ -107,7 +107,7 @@
 			v-model="search"
 			:label="props.label"
 			hide-details
-			color="primary"
+			color="colorPrimary"
 			:variant="outlined ? 'outlined' : 'underlined'"
 			clearable
 			tabindex="0"

@@ -1157,7 +1157,7 @@
 						ref="datePickerRef"
 						v-model="selectedDates"
 						control-variant="modal"
-						color="primary"
+						color="colorPrimary"
 						:class="props.displayWeekendDays ? 'weekend' : ''"
 						:first-day-of-week="1"
 						:multiple="props.displayRange ? 'range' : false"
@@ -1206,7 +1206,7 @@
 								<v-btn
 									v-if="props.displayTodayButton"
 									size="x-small"
-									color="primary"
+									color="colorPrimary"
 									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"

@@ -178,7 +178,7 @@
 	>
 		<VDataTable
 			v-if="!serverItemsLength"
-			color="primary"
+			color="colorPrimary"
 			v-bind="propsFacade"
 			@update:options="updateOptions"
 		>
@@ -207,7 +207,7 @@
 		<VDataTableServer
 			v-else
 			v-bind="propsFacade"
-			color="primary"
+			color="colorPrimary"
 			@update:options="updateOptions"
 		>
 			<template

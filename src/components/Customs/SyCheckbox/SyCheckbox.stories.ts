@@ -33,7 +33,7 @@ const meta = {
 		},
 		color: {
 			control: 'select',
-			options: ['primary', 'success', 'error', 'warning'],
+			options: ['colorPrimary', 'success', 'error', 'warning'],
 			description: 'Couleur de la case à cocher',
 		},
 		indeterminate: {
@@ -667,7 +667,7 @@ export const FormValidation: Story = {
     />
     <VBtn 
       type="submit" 
-      color="primary"
+      color="colorPrimary"
       class="mt-4"
     >
       Soumettre
@@ -784,9 +784,9 @@ Cette case à cocher utilise des règles de validation personnalisées et valide
 					required
 					display-asterisk
 				/>
-				<VBtn 
-					type="submit" 
-					color="primary"
+				<VBtn
+                    type="submit"
+                    color="colorPrimary"
 					class="mt-4"
 				>
 					Soumettre

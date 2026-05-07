@@ -607,7 +607,7 @@
 								:model-value="isItemSelected(item)"
 								density="compact"
 								hide-details
-								color="primary"
+								color="colorPrimary"
 								class="mt-0 pt-0 mr-1"
 								:title="getItemText(item) as string"
 								:aria-label="getItemText(item) as string"

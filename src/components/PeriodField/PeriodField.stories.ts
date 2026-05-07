@@ -937,7 +937,7 @@ export const FormValidation: Story = {
 									/>
 								</v-col>
 								<v-col cols="12">
-									<v-btn type="submit" color="primary" :disabled="isSubmitting">Valider</v-btn>
+									<v-btn type="submit" color="colorPrimary" :disabled="isSubmitting">Valider</v-btn>
 								</v-col>
 							</v-row>
 							
@@ -1080,7 +1080,7 @@ export const FormValidation: Story = {
 								/>
 							</v-col>
 							<v-col cols="12">
-								<v-btn type="submit" color="primary" :disabled="isSubmitting">Valider</v-btn>
+								<v-btn type="submit" color="colorPrimary" :disabled="isSubmitting">Valider</v-btn>
 							</v-col>
 						</v-row>
 						

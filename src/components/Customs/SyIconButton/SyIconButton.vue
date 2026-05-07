@@ -4,7 +4,7 @@
 
 	type Size = 'x-small' | 'small' | 'default' | 'large' | 'x-large'
 	type Variant = 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-	type Color = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | (string & {})
+	type Color = 'colorPrimary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' | (string & {})
 
 	const props = defineProps<{
 		icon: IconValue

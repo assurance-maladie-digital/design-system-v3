@@ -34,7 +34,7 @@ Il permet de choisir **une seule valeur** parmi une liste d’options.
 		'required': { control: 'boolean', description: 'Indique que la sélection est obligatoire' },
 		'color': {
 			control: 'select',
-			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			options: ['colorPrimary', 'secondary', 'success', 'error', 'warning'],
 		},
 		'density': {
 			control: 'select',
@@ -119,7 +119,7 @@ export const Required: Story = {
 		template: `
 		<SyForm ref="form" @submit="onSubmit">
           <SyRadioGroup v-model="selected" required v-bind="args" />
-          <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
+          <v-btn type="submit" class="mt-2 mr-2" color="colorPrimary">Valider</v-btn>
           </SyForm>
         `,
 	}),
@@ -135,7 +135,7 @@ export const Required: Story = {
       			    :options="options"
       			    required
       			  />
-      			  <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
+      			  <VBtn type="submit" class="mt-2 mr-2" color="colorPrimary">Valider</VBtn>
       			</SyForm>`,
 			},
 			{
@@ -190,7 +190,7 @@ export const formValidation: Story = {
 		template: `
 		<SyForm ref="form" @submit="onSubmit">
           <SyRadioGroup v-model="selected" required v-bind="args" />
-          <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
+          <v-btn type="submit" class="mt-2 mr-2" color="colorPrimary">Valider</v-btn>
         </SyForm>
     `,
 	}),
@@ -206,7 +206,7 @@ export const formValidation: Story = {
       			    :options="options"
       			    required
       			  />
-      			  <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
+      			  <VBtn type="submit" class="mt-2 mr-2" color="colorPrimary">Valider</VBtn>
       			</SyForm>`,
 			},
 			{
@@ -298,7 +298,7 @@ export const CustomColors: Story = {
                 <div>
                     <SyRadioGroup 
                       v-model="value1" 
-                      color="primary" 
+                      color="colorPrimary" 
                       label="Couleur primaire (par défaut)" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false"
@@ -370,8 +370,8 @@ Le composant SyRadioGroup peut être personnalisé avec différentes couleurs po
 		template: `
 			<div>
                 <SyRadioGroup 
-                    v-model="value1" 
-                    color="primary" 
+                    v-model="value1"
+                    color="colorPrimary"
                     label="Couleur primaire (par défaut)" 
                     :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                     :show-success-messages="false" 

@@ -45,7 +45,7 @@
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			title: undefined,
-			color: 'primary',
+			color: 'colorPrimary',
 			disabled: false,
 			readonly: false,
 			required: false,
@@ -220,7 +220,7 @@
 			return 'rgb(var(--v-theme-feedbackSuccessVariant))'
 		case 'warning':
 			return 'rgb(var(--v-theme-feedbackWarningVariant))'
-		case 'primary':
+		case 'colorPrimary':
 			return cnamSemanticTokens.colors.text.base
 		default:
 			return ''

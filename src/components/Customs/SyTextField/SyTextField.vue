@@ -88,7 +88,7 @@
 			appendTooltip: undefined,
 			tooltipLocation: 'top',
 			variantStyle: 'outlined',
-			color: 'primary',
+			color: 'colorPrimary',
 			label: '',
 			isClearable: false,
 			isActive: false,
@@ -408,7 +408,7 @@
 	const dividerProps = {
 		thickness: 2,
 		length: '25px',
-		color: 'primary',
+		color: 'colorPrimary',
 		opacity: '1',
 	}
 

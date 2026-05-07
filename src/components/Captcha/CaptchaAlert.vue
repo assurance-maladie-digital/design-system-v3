@@ -37,7 +37,7 @@
 
 			<template #append>
 				<VBtn
-					color="primary"
+					color="colorPrimary"
 					min-width="48px"
 					min-height="36px"
 					variant="outlined"

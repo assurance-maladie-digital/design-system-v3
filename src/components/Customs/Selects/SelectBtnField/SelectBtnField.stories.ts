@@ -521,7 +521,7 @@ export const erreur: Story = {
 			v-model:error="error"
 		/>
 		<VBtn
-			color="primary"
+			color="colorPrimary"
 			class="mt-3"
 			@click="resetExample"
 		>
@@ -602,7 +602,7 @@ export const erreur: Story = {
 						v-model:error="error"
 					/>
 					<VBtn
-						color="primary"
+                        color="colorPrimary"
 						class="mt-3"
 						@click="resetExample"
 					>
@@ -630,7 +630,7 @@ export const messageErreur: Story = {
 			v-model:error-messages="errorMessages"
 		/>
 		<VBtn
-			color="primary"
+			color="colorPrimary"
 			class="mt-3"
 			@click="resetExample"
 		>
@@ -721,7 +721,7 @@ const items = [
 						v-model:error-messages="errorMessages"
 					/>
 					<VBtn
-						color="primary"
+                        color="colorPrimary"
 						class="mt-3"
 						@click="resetExample"
 					>

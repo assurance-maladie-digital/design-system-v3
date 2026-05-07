@@ -547,12 +547,12 @@ export const Customization: Story = {
 			>
 				<template #file-icon-residenceCertificate>
 					<VIcon
-						color="primary"
+						color="colorPrimary"
 					>{{ mdiCertificateOutline }}</VIcon>
 				</template>
 				<template #file-icon-identityCard>
 					<VIcon
-						color="primary"
+						color="colorPrimary"
 					>{{ mdiCardAccountDetailsOutline }}</VIcon>
 				</template>
 			</FileList>
@@ -578,12 +578,12 @@ export const Customization: Story = {
 	>
 		<template #file-icon-residenceCertificate>
 			<VIcon
-				color="primary"
+				color="colorPrimary"
 			>{{ mdiCertificateOutline }}</VIcon>
 		</template>
 		<template #file-icon-identityCard>
 			<VIcon
-				color="primary"
+				color="colorPrimary"
 			>{{ mdiCardAccountDetailsOutline }}</VIcon>
 		</template>
 	</FileList>

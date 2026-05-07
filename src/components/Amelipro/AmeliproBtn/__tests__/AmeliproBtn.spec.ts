@@ -425,7 +425,7 @@ describe('AmeliproBtn', () => {
 				await vueWrapper.setProps({ bordered: false, disabled: true })
 				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #000 !important; background-color: #00749C !important; opacity: 30%;')
 
-				await vueWrapper.setProps({ text: true, color: 'primary' })
+				await vueWrapper.setProps({ text: true, color: 'colorPrimary' })
 				expect(vueWrapper.findComponent(VBtn).attributes('style')).toContain('color: #00749C !important; opacity: 30%; padding: 0px;')
 			})
 		})

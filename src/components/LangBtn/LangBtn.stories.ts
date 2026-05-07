@@ -20,7 +20,7 @@ const meta: Meta<typeof LangBtn> = {
 				menu: {
 				},
 				btn: {
-					color: 'primary',
+					color: 'colorPrimary',
 					variant: 'outlined',
 					ripple: true,
 				},
@@ -76,7 +76,7 @@ export const Default: Story = {
 			menu: {
 			},
 			btn: {
-				color: 'primary',
+				color: 'colorPrimary',
 				variant: 'outlined',
 				ripple: true,
 			},
@@ -234,7 +234,7 @@ export const FlatBtn: Story = {
 	
 	const vuetifyOptions = {
 		btn: {
-			color: 'primary',
+			color: 'colorPrimary',
 			variant: 'flat',
 			ripple: true,
 		},
@@ -251,7 +251,7 @@ export const FlatBtn: Story = {
 		availableLanguages: ['fr', 'en', 'de'],
 		vuetifyOptions: {
 			btn: {
-				color: 'primary',
+				color: 'colorPrimary',
 				variant: 'flat',
 				ripple: true,
 			},

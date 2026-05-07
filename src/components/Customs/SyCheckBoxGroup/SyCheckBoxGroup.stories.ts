@@ -174,7 +174,7 @@ export const Required: Story = {
 							id="sy-checkbox-group-required"
 						/>
 						<div class="mt-2">Sélection : {{ value }}</div>
-						<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
+						<VBtn type="submit" class="mt-4" color="colorPrimary">Valider</VBtn>
 					</SyForm>
 				`,
 			},
@@ -228,7 +228,7 @@ export const Required: Story = {
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup v-model="value" required v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
-				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
+              <VBtn type="submit" class="mt-4" color="colorPrimary">Valider</VBtn>
 			</SyForm>
 		`,
 	}),
@@ -306,7 +306,7 @@ export const MultipleRequired: Story = {
 							id="sy-checkbox-group-multiple-required"
 						/>
 						<div class="mt-2">Sélection : {{ values }}</div>
-						<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+						<VBtn type="submit" class="mt-2" color="colorPrimary">Valider</VBtn>
 					</SyForm>
 				`,
 			},
@@ -377,7 +377,7 @@ export const MultipleRequired: Story = {
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup v-model="value" required v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
-				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+              <VBtn type="submit" class="mt-2" color="colorPrimary">Valider</VBtn>
 			</SyForm>
 		`,
 	}),
@@ -466,7 +466,7 @@ export const FormValidation: Story = {
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup v-model="value" required v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
-				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
+              <VBtn type="submit" class="mt-4" color="colorPrimary">Valider</VBtn>
 			</SyForm>
 		`,
 	}),
@@ -485,7 +485,7 @@ export const FormValidation: Story = {
 							id="sy-checkbox-group-form-validation"
 						/>
 						<div class="mt-2">Sélection : {{ value }}</div>
-						<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
+						<VBtn type="submit" class="mt-4" color="colorPrimary">Valider</VBtn>
 					</SyForm>
 				`,
 			},
@@ -524,7 +524,7 @@ export const CustomColors: Story = {
 					<div>
 						<SyCheckBoxGroup
 							v-model="value1"
-							color="primary"
+							color="colorPrimary"
 							label="Couleur primaire (par défaut)"
 							:options="options"
 							:show-success-messages="false"
@@ -604,7 +604,9 @@ Le composant SyCheckBoxGroup peut être personnalisé avec différentes couleurs
 		},
 		template: `
 			<div>
-				<SyCheckBoxGroup v-model="value1" color="primary" label="Couleur primaire (par défaut)" :options="options" :show-success-messages="false" />
+              <SyCheckBoxGroup v-model="value1" color="colorPrimary" label="Couleur primaire (par défaut)"
+                               :options="options" :show-success-messages="false"
+              />
 				<SyCheckBoxGroup v-model="value2" color="secondary" label="Couleur secondaire" :options="options" :show-success-messages="false" />
 				<SyCheckBoxGroup v-model="value3" color="success" label="Couleur succès" :options="options" :show-success-messages="false" />
 				<SyCheckBoxGroup v-model="value4" color="error" label="Couleur erreur" :options="options" :show-success-messages="false" />

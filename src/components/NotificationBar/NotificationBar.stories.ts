@@ -102,7 +102,7 @@ export const Default: Story = (args) => {
                 v-bind="args"
             />
             <VBtn
-                color="primary"
+                color="colorPrimary"
                 @click="envoyerNotification('Ceci est une notification de type : ' + argsType)"
                 class="ma-6"
             >
@@ -128,7 +128,7 @@ Default.parameters = {
 					close-btn-text="Fermer"
 				/>
 				<VBtn
-					color="primary"
+					color="colorPrimary"
 					@click="envoyerNotification('Ceci est une notification')"
 					class="ma-6"
 				>
@@ -325,7 +325,7 @@ Bottom.parameters = {
 					bottom
 				/>
 				<VBtn
-					color="primary"
+					color="colorPrimary"
 					@click="envoyerNotification('Ceci est une notification affichée en bas de l\'écran')"
 					class="ma-6"
 				>
@@ -374,7 +374,7 @@ CustomCloseBtnText.parameters = {
 					close-btn-text="Masquer"
 				/>
 				<VBtn
-					color="primary"
+					color="colorPrimary"
 					@click="envoyerNotification('Ceci est une notification avec un texte de bouton personnalisé')"
 					class="ma-6"
 				>
@@ -434,7 +434,7 @@ export const DefaultSlot: Story = (args) => {
               </template>
             </NotificationBar>
             <VBtn
-                color="primary"
+                color="colorPrimary"
                 @click="envoyerNotification()"
                 class="ma-6"
             >
@@ -511,7 +511,7 @@ export const ActionSlot: Story = (args) => {
               </template>
             </NotificationBar>
             <VBtn
-                color="primary"
+                color="colorPrimary"
                 @click="envoyerNotification()"
                 class="ma-6"
             >
@@ -643,7 +643,7 @@ export const WithClearQueue: Story = (args) => {
             />
             <div class="d-flex flex-wrap justify-center ga-4">
               <VBtn
-                  color="primary"
+                  color="colorPrimary"
                   @click="envoyerNotification('Notification info', 'info')"
               >
                 Ajouter info
@@ -713,7 +713,7 @@ export const showAll: Story = (args) => {
 			/>
 			<div class="d-flex flex-wrap justify-center ga-4">
 			  <VBtn
-				  color="primary"
+				  color="colorPrimary"
 				  @click="envoyerNotification('Notification info', 'info')"
 			  >
 				Ajouter info
@@ -763,7 +763,7 @@ showAll.parameters = {
 			<div class="d-flex flex-column align-center justify-center ga-4">
 				<div class="d-flex flex-wrap justify-center ga-4">
 					<VBtn
-						color="primary"
+						color="colorPrimary"
 						@click="envoyerNotification('Notification info', 'info')"
 					>
 						Ajouter une notification info

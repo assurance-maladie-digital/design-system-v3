@@ -138,7 +138,7 @@
 							v-if="!hideBtn && btnText && (btnLink || btnHref)"
 							:to="btnHref ? undefined : btnLink"
 							:href="btnHref"
-							color="primary"
+							color="colorPrimary"
 							class="mt-6"
 							@click="emitClickEvent"
 						>

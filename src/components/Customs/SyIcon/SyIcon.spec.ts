@@ -84,7 +84,7 @@ describe('SyIcon', () => {
 			props: {
 				icon: 'mdi-home',
 				decorative: true, // Marquer l'icône comme décorative pour éviter les avertissements d'accessibilité
-				color: 'primary',
+				color: 'colorPrimary',
 			},
 			global: {
 				stubs: {
@@ -100,7 +100,7 @@ describe('SyIcon', () => {
 		})
 
 		// Vérifions la prop color passée au composant SyIcon
-		expect(wrapper.props().color).toBe('primary')
+		expect(wrapper.props().color).toBe('colorPrimary')
 	})
 
 	// Test pour une icône avec taille

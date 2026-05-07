@@ -175,7 +175,7 @@
 					:active="selectedLanguage === code"
 					role="menuitem"
 					:lang="code"
-					color="primary"
+					color="colorPrimary"
 					tabindex="0"
 					:aria-label="`${props.ariaLabel} ${langData.nativeName}`"
 					@click="updateLang(code)"

@@ -105,7 +105,7 @@ const meta = {
 		minWidth: '198px',
 	},
 	logoutIcon: {
-		color: 'primary',
+		color: 'colorPrimary',
 		class: 'mr-4',
 	},
 }`,

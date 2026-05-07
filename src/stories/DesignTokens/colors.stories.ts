@@ -108,16 +108,16 @@ export const ColorPrimary: StoryObj = {
 				const colorTitleLevel = 3
 				const colorDescription = 'Fond et texte (sous condition de contraste) un texte pourrait être en : On-surface ou On-surface variant ...'
 				const cnamColors = {
-					'primary': cnamLightTheme.colorPrimary,
-					'primary-variant': cnamLightTheme.colorPrimaryVariant,
-					'secondary': cnamLightTheme.colorSecondary,
-					'secondary-variant': cnamLightTheme.colorSecondaryVariant,
+					'color-primary': cnamLightTheme.colorPrimary,
+					'color-primary-variant': cnamLightTheme.colorPrimaryVariant,
+					'color-secondary': cnamLightTheme.colorSecondary,
+					'color-secondary-variant': cnamLightTheme.colorSecondaryVariant,
 				}
 				const paColors = {
-					'primary': paLightTheme.colorPrimary,
-					'primary-variant': paLightTheme.colorPrimaryVariant,
-					'secondary': paLightTheme.colorSecondary,
-					'secondary-variant': paLightTheme.colorSecondaryVariant,
+					'color-primary': paLightTheme.colorPrimary,
+					'color-primary-variant': paLightTheme.colorPrimaryVariant,
+					'color-secondary': paLightTheme.colorSecondary,
+					'color-secondary-variant': paLightTheme.colorSecondaryVariant,
 				}
 				const apColors2026 = {
 					primary: apLightTheme2026.primary,
@@ -128,10 +128,10 @@ export const ColorPrimary: StoryObj = {
 					warning: apLightTheme2026.warning,
 				}
 				const apColors = {
-					'primary': apLightTheme.colorPrimary,
-					'primary-variant': apLightTheme.colorPrimaryVariant,
-					'secondary': apLightTheme.colorSecondary,
-					'secondary-variant': apLightTheme.colorSecondaryVariant,
+					'color-primary': apLightTheme.colorPrimary,
+					'color-primary-variant': apLightTheme.colorPrimaryVariant,
+					'color-secondary': apLightTheme.colorSecondary,
+					'color-secondary-variant': apLightTheme.colorSecondaryVariant,
 				}
 				return {
 					cnamColors,

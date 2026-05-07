@@ -290,7 +290,7 @@ export const Populated: Story = {
 								</template>
 								<div class="pl-6 pb-6 pt-4">
 									<p class="font-weight-bold">Veillez vous connecter</p>
-									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
+									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="colorPrimary">Je me connecte</VBtn>
 								</div>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
@@ -402,7 +402,7 @@ export const Populated: Story = {
 								</template>
 								<div class="pl-6 pb-6 pt-4">
 									<p class="font-weight-bold">Veillez vous connecter</p>
-									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="primary">Je me connecte</VBtn>
+									<VBtn variant="tonal" class="mt-4 font-weight-medium" color="colorPrimary">Je me connecte</VBtn>
 								</div>
 							</HeaderMenuSection>
 						</HeaderBurgerMenu>
@@ -831,10 +831,10 @@ export const Generated: Story = {
 								</template>
 								<div style="padding: 16px 50px 16px 20px;">
 									<div class="d-flex align-center ga-2 font-weight-bold">
-										<VIcon aria-label="Localisation" role="img" aria-hidden="false" color="primary">{{marker}}</VIcon>
+										<VIcon aria-label="Localisation" role="img" aria-hidden="false" color="colorPrimary">{{marker}}</VIcon>
 										<p>Vous n'avez pas sélectionné votre caisse</p>
 									</div>
-									<VBtn class="mt-3 mb-4 font-weight-bold text-capitalize" base-color="primary" density="comfortable" flat height="37">Sélectionner</VBtn>
+									<VBtn class="mt-3 mb-4 font-weight-bold text-capitalize" base-color="colorPrimary" density="comfortable" flat height="37">Sélectionner</VBtn>
 									<p class="mb-8">Les pages d'ameli seront alors enrichies des informations locales de votre caisse (contacts, événements régionaux, etc.) </p>
 								</div>
 							</HeaderMenuSection>
@@ -915,7 +915,7 @@ export const Generated: Story = {
 												aria-label="Localisation"
 												role="img"
 												aria-hidden="false"
-												color="primary"
+												color="colorPrimary"
 											>
 												{{ marker }}
 											</VIcon>
@@ -923,7 +923,7 @@ export const Generated: Story = {
 										</div>
 										<VBtn
 											class="mt-3 mb-4 font-weight-bold text-capitalize"
-											base-color="primary"
+											base-color="colorPrimary"
 											density="comfortable"
 											flat
 											height="37"

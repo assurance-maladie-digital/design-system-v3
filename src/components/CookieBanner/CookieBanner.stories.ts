@@ -128,20 +128,20 @@ const meta = {
 		class: 'ml-4',
 	},
 	customizeBtn: {
-		color: 'primary',
+		color: 'colorPrimary',
 		height: 'auto',
 		minHeight: '44px',
 		class: 'text-wrap ma-2',
 		variant: 'outlined',
 	},
 	rejectBtn: {
-		color: 'primary',
+		color: 'colorPrimary',
 		height: 'auto',
 		minHeight: '44px',
 		class: 'text-wrap ma-2',
 	},
 	acceptBtn: {
-		color: 'primary',
+		color: 'colorPrimary',
 		height: 'auto',
 		minHeight: '44px',
 		class: 'text-wrap ma-2',

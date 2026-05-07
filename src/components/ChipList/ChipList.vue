@@ -125,7 +125,7 @@
 			return vuetifyColor
 		}
 		// Sinon on utilise la couleur basée sur l'état
-		return state ? BACKGROUND_COLORS[state] : 'primary'
+		return state ? BACKGROUND_COLORS[state] : 'colorPrimary'
 	}
 
 	/**
@@ -278,7 +278,7 @@
 			<VBtn
 				v-if="showAllItems"
 				variant="text"
-				color="primary"
+				color="colorPrimary"
 				size="small"
 				class="hide-extra-btn px-1 mr-2"
 				@click="toggleShowAllItems"
@@ -289,7 +289,7 @@
 			<VBtn
 				v-if="!readonly"
 				variant="text"
-				color="primary"
+				color="colorPrimary"
 				size="small"
 				data-test-id="reset-btn"
 				class="overflow-btn px-1"

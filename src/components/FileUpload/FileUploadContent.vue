@@ -35,7 +35,7 @@
 		>
 			<SyIcon
 				size="40"
-				color="primary"
+				color="colorPrimary"
 				:icon="mdiCloudUpload"
 				decorative
 			/>

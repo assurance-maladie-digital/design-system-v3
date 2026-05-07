@@ -921,7 +921,7 @@ export const Customisation: Story = {
                     
                     const itemOptions = {
 						icon: {
-							color: 'primary',
+							color: 'colorPrimary',
 							class: 'mt-0 mr-4',
 						},
 					}
@@ -938,7 +938,7 @@ export const Customisation: Story = {
 				icon: 'accountIcon',
 				options: {
 					icon: {
-						color: 'primary',
+						color: 'colorPrimary',
 						class: 'mt-0 mr-4',
 					},
 				},
@@ -949,7 +949,7 @@ export const Customisation: Story = {
 				icon: 'accountIcon',
 				options: {
 					icon: {
-						color: 'primary',
+						color: 'colorPrimary',
 						class: 'mt-0 mr-4',
 					},
 				},
@@ -960,7 +960,7 @@ export const Customisation: Story = {
 				icon: 'calendarIcon',
 				options: {
 					icon: {
-						color: 'primary',
+						color: 'colorPrimary',
 						class: 'mt-0 mr-4',
 					},
 				},

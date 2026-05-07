@@ -96,7 +96,7 @@
 				#close
 			>
 				<VBtn
-					:color="props.variant === 'outlined' ? undefined : 'primary'"
+					:color="props.variant === 'outlined' ? undefined : 'colorPrimary'"
 					:ripple="false"
 					variant="text"
 					width="auto"

@@ -87,7 +87,7 @@ export const Default: Story = {
 			template: `
 				<VSheet
 					v-if="args.dark"
-					color="primary"
+                    color="ColorPrimary"
 					class="pa-4"
 				>
 					<BackBtn v-bind="args" />
@@ -109,7 +109,7 @@ export const Dark: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<VSheet color="primary" class="pa-4">
+	<VSheet color="colorPrimary" class="pa-4">
 		<BackBtn dark />
 	</VSheet>
 </template>
@@ -135,7 +135,7 @@ export const Dark: Story = {
 			},
 			template: `
 				<VSheet
-					color="primary"
+                    color="colorPrimary"
 					class="pa-4"
 				>
 				<BackBtn v-bind="args" />
@@ -191,7 +191,7 @@ export const DarkAndHideBackIcon: Story = {
 				name: 'Template',
 				code: `<template>
 	<VSheet 
-		color="primary"
+		color="colorPrimary"
 		class="pa-4"
 	>
 		<BackBtn
@@ -223,7 +223,7 @@ export const DarkAndHideBackIcon: Story = {
 			},
 			template: `
 				<VSheet
-					color="primary"
+                    color="colorPrimary"
 					class="pa-4"
 				>
 				<BackBtn v-bind="args" />

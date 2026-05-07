@@ -11,7 +11,7 @@ interface ComponentConfig {
 
 export const config: ComponentConfig = {
 	chip: {
-		color: 'primary',
+		color: 'colorPrimary',
 		size: 'small',
 		variant: 'flat' as VuetifyVariant,
 		class: 'ma-1',

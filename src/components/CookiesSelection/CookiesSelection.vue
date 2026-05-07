@@ -85,7 +85,7 @@
 			<div class="d-flex flex-wrap justify-end mx-n2 mt-n2 mb-6">
 				<VBtn
 					data-test-id="reject-all"
-					color="primary"
+					color="colorPrimary"
 					variant="outlined"
 					class="ma-2"
 					@click="setGlobalPreferences(false)"
@@ -95,7 +95,7 @@
 
 				<VBtn
 					data-test-id="accept-all"
-					color="primary"
+					color="colorPrimary"
 					variant="outlined"
 					class="ma-2"
 					@click="setGlobalPreferences(true)"
@@ -135,7 +135,7 @@
 				<VBtn
 					ref="submitBtnRef"
 					data-test-id="submit"
-					color="primary"
+					color="colorPrimary"
 					@click="submitForm"
 				>
 					{{ locales.saveBtn }}

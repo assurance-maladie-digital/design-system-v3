@@ -21,7 +21,7 @@ const meta = {
 			default: undefined,
 		},
 		color: {
-			options: ['transparent', 'primary', 'secondary', 'accent', 'error', 'info', 'success', 'warning'],
+			options: ['transparent', 'colorPrimary', 'secondary', 'accent', 'error', 'info', 'success', 'warning'],
 			control: { type: 'select' },
 			default: 'transparent',
 		},
@@ -126,7 +126,7 @@ export const Color: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<PageContainer color="primary">
+	<PageContainer color="colorPrimary">
 		<div class="pa-8">
 			Contenu de la page
 		</div>
@@ -145,7 +145,7 @@ export const Color: Story = {
 	},
 	args: {
 		default: 'Contenu de la page',
-		color: 'primary',
+		color: 'colorPrimary',
 	},
 	render: (args) => {
 		return {

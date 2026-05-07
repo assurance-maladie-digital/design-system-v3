@@ -30,7 +30,7 @@
 		normalize: false,
 		validateOn: 'eager input',
 		variant: 'outlined',
-		color: 'primary',
+		color: 'ColorPrimary',
 		bgColor: 'white',
 		...validationPropsDefaults,
 	})

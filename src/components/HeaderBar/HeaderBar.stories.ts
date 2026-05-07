@@ -238,13 +238,13 @@ export const WithRightMenu: Story = {
                       <VBtn
                           variant="text"
                           :prepend-icon="searchIcon"
-                          color="primary"
+                          color="colorPrimary"
                           role="search"
                       >
                         Rechercher
                       </VBtn>
                       <VBtn
-                          color="primary"
+                          color="colorPrimary"
                           :prepend-icon="accountIcon"
                       >
                         Login
@@ -255,7 +255,7 @@ export const WithRightMenu: Story = {
                         variant="text"
                     >
                       <VBtn
-                          color="primary"
+                          color="colorPrimary"
                           density="comfortable"
                           :icon="accountIcon"
                       />
@@ -283,13 +283,13 @@ export const WithRightMenu: Story = {
 								<VBtn
 									variant="text"
 									:prepend-icon="mdiMagnify"
-									color="primary"
+									color="colorPrimary"
 									role="search"
 								>
 									Rechercher
 								</VBtn>
 								<VBtn
-									color="primary"
+									color="colorPrimary"
 									:prepend-icon="mdiAccountCircleOutline"
 								>
 									Login
@@ -300,7 +300,7 @@ export const WithRightMenu: Story = {
 								variant="text"
 							>
 								<VBtn
-                                    color="primary"
+                                    color="colorPrimary"
                                     density="comfortable"
                                     :icon="mdiAccountCircleOutline"
                                 />

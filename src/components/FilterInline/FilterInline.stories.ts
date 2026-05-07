@@ -168,7 +168,7 @@ export const Default: Story = {
 			label="Nom"
 			variant="outlined"
 			hide-details
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 
@@ -185,7 +185,7 @@ export const Default: Story = {
 			variant="outlined"
 			return-object
 			hide-details
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 
@@ -200,7 +200,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 </FilterInline>
@@ -221,7 +221,7 @@ export const Default: Story = {
 			label="Nom"
 			variant="outlined"
 			hide-details
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 
@@ -238,7 +238,7 @@ export const Default: Story = {
 			variant="outlined"
 			return-object
 			hide-details
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 
@@ -253,7 +253,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
-			color="primary"
+			color="colorPrimary"
 		/>
 	</template>
 </FilterInline>
@@ -507,7 +507,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -524,7 +524,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -553,7 +553,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -570,7 +570,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -585,7 +585,7 @@ export const FilterCombination: Story = {
 					<SearchListField
 						v-bind="props"
 						:items="professionList"
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 			</FilterInline>
@@ -608,7 +608,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -625,7 +625,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -653,7 +653,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -670,7 +670,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 
@@ -685,7 +685,7 @@ export const FilterCombination: Story = {
 					<SearchListField
 						v-bind="props"
 						:items="professionList"
-						color="primary"
+						color="colorPrimary"
 					/>
 				</template>
 			</FilterInline>
@@ -789,7 +789,7 @@ const BooleanFilter = defineComponent({
 	<VCheckbox
 		:model-value="modelValue === title"
 		:label="label"
-		color="primary"
+		color="colorPrimary"
 		@update:model-value="(value) => $emit('update:modelValue', value ? title : null)"
 	/>
 	`,
@@ -877,7 +877,7 @@ export const Boolean: Story = {
 	<VCheckbox
 		:model-value="modelValue === title"
 		:label
-		color="primary"
+		color="colorPrimary"
 		@update:model-value="value => modelValue = value ? props.title : undefined"
 	/>
 </template>
@@ -925,7 +925,7 @@ const ManyFilters = defineComponent({
 			<VCheckbox
 				v-model="rqth"
 				label="Eligible RQTH"
-				color="primary"
+				color="colorPrimary"
 			/>
 			<hr>
 			<p class="mt-6">
@@ -934,7 +934,7 @@ const ManyFilters = defineComponent({
 			<VCheckbox
 				v-model="pch"
 				label="Eligible PCH"
-				color="primary"
+				color="colorPrimary"
 			/>
 			<hr>
 			<p class="mt-6">
@@ -943,7 +943,7 @@ const ManyFilters = defineComponent({
 			<VCheckbox
 				v-model="aeeh"
 				label="Eligible AEEH"
-				color="primary"
+				color="colorPrimary"
 			/>
 		</div>
 	`,
@@ -1040,7 +1040,7 @@ export const ManyFields: Story = {
 		<VCheckbox
 			v-model="rqth"
 			label="Eligible RQTH"
-			color="primary"
+			color="colorPrimary"
 		/>
 		<hr>
 		<p class="mt-6">
@@ -1049,7 +1049,7 @@ export const ManyFields: Story = {
 		<VCheckbox
 			v-model="pch"
 			label="Eligible PCH"
-			color="primary"
+			color="colorPrimary"
 		/>
 		<hr>
 		<p class="mt-6">
@@ -1058,7 +1058,7 @@ export const ManyFields: Story = {
 		<VCheckbox
 			v-model="aeeh"
 			label="Eligible AEEH"
-			color="primary"
+			color="colorPrimary"
 		/>
 	</div>
 </template>

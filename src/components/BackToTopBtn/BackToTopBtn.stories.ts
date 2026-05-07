@@ -54,11 +54,11 @@ const meta = {
 			default: () => ({
 				btn: {
 					variant: 'outlined',
-					color: 'primary',
+					color: 'colorPrimary',
 					class: 'text-wrap px-0 px-md-4',
 				},
 				icon: {
-					color: 'primary',
+					color: 'colorPrimary',
 					size: 'medium',
 					class: 'ml-0 ml-md-2',
 				},
@@ -136,11 +136,11 @@ export const Default: Story = {
 		vuetifyOptions: {
 			btn: {
 				variant: 'outlined',
-				color: 'primary',
+				color: 'colorPrimary',
 				class: 'text-wrap px-0 px-md-4',
 			},
 			icon: {
-				color: 'primary',
+				color: 'colorPrimary',
 				size: 'medium',
 				class: 'ml-0 ml-md-2',
 			},
@@ -235,7 +235,7 @@ export const Customization: Story = {
 	const vuetifyOptions = {
 		btn: {
 			variant: 'elevated',
-			color: 'primary',
+			color: 'colorPrimary',
 			rounded: true,
 		},
 		icon: {
@@ -252,7 +252,7 @@ export const Customization: Story = {
 		vuetifyOptions: {
 			btn: {
 				variant: 'elevated',
-				color: 'primary',
+				color: 'colorPrimary',
 				rounded: true,
 			},
 			icon: {
@@ -349,7 +349,7 @@ export const CustomPosition: Story = {
 	const vuetifyOptions = {
 		btn: {
 			variant: 'outlined',
-			color: 'primary',
+			color: 'colorPrimary',
 			minWidth: 92,
 			rounded: true,
 		}
@@ -366,7 +366,7 @@ export const CustomPosition: Story = {
 		vuetifyOptions: {
 			btn: {
 				variant: 'outlined',
-				color: 'primary',
+				color: 'colorPrimary',
 				minWidth: 92,
 				rounded: true,
 			},
