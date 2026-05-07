@@ -300,6 +300,7 @@
 	const displayHasSuccess = computed(() => hasInteracted.value && hasSuccess.value)
 
 	const validationIcon = computed(() => {
+		if (props.useVuetifyValidation) return null
 		if (displayHasError.value) return mdiAlertCircle
 		if (displayHasWarning.value) return mdiAlertOutline
 		if (displayHasSuccess.value) return mdiCheck
