@@ -1128,7 +1128,7 @@
 		:has-success="isOnSuccess"
 		:show-success-messages="props.showSuccessMessages"
 		:bg-color="props.bgColor"
-		color="colorPrimary"
+		color="primary"
 		:is-clearable="!props.readonly"
 		:aria-label="ariaLabel"
 		:is-validate-on-blur="props.isValidateOnBlur"

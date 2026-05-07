@@ -490,7 +490,7 @@
 						'warning-field': hasWarning,
 						'success-field': hasSuccess
 					}"
-					color="colorPrimary"
+					color="primary"
 					type="tel"
 					@blur="validateInputOnBlur"
 					@update:model-value="handlePhoneModelUpdate"

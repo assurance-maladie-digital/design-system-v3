@@ -40,7 +40,7 @@
 	} & CustomizableOptions>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
-		color: 'colorPrimary',
+		color: 'primary',
 		required: false,
 		errorMessages: null,
 		warningMessages: null,
