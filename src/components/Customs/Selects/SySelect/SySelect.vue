@@ -568,6 +568,7 @@
 	})
 
 	const validationIcon = computed(() => {
+		if (props.useVuetifyValidation) return null
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlertOutline
 		if (hasSuccess.value) return mdiCheck
