@@ -191,7 +191,7 @@
 		>
 			<v-card-text class="d-flex justify-space-between align-center px-4 py-2">
 				<SyHeading
-            class="text-h6 text-colorPrimary"
+					class="text-h6 text-colorPrimary"
 					:level="3"
 				>
 					Filtres
@@ -333,7 +333,7 @@
 							class="d-flex flex-column"
 							elevation="2"
 						>
-              <v-card-title class="text-subtitle-1 text-colorPrimary font-weight-bold title-multiline">
+							<v-card-title class="text-subtitle-1 text-colorPrimary font-weight-bold title-multiline">
 								<v-chip
 									:color="getBadgeColor(rule.theme)"
 									size="small"

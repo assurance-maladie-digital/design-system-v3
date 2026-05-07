@@ -598,7 +598,7 @@
 												@click="handleSubMenuItemClick(subItem)"
 											>
 												<v-list-item-title
-                            class="text-colorPrimary"
+													class="text-colorPrimary"
 													role="presentation"
 												>
 													<SyIcon
@@ -688,7 +688,7 @@
 								tabindex="0"
 								@click="mobileMenuOpen = false"
 							>
-                <v-list-item-title class="text-colorPrimary">
+								<v-list-item-title class="text-colorPrimary">
 									<SyIcon
 										:icon="mdiChevronRight"
 										size="small"

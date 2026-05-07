@@ -128,7 +128,7 @@
 	width: 52px !important;
 	height: 36px !important;
 
-  &--disabled.text-colorPrimary {
+	&--disabled.text-colorPrimary {
 		color: rgb(var(--v-theme-colorPrimary)) !important;
 	}
 

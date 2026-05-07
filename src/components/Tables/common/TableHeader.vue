@@ -244,7 +244,7 @@
 		>
 			<SyIcon
 				class="v-data-table-header__sort-icon"
-        :class="{ 'text-colorPrimary opacity-100' : isColumnSorted }"
+				:class="{ 'text-colorPrimary opacity-100' : isColumnSorted }"
 				:icon="headerParams.getSortIcon(column)"
 				:title="locales.columnOrder(column.title!)"
 				:aria-label="locales.columnOrder(column.title!)"
@@ -253,7 +253,7 @@
 			/>
 			<div
 				v-if="sortOrderIndex"
-        class="sort-order-indicator text-colorPrimary ml-0 mr-2"
+				class="sort-order-indicator text-colorPrimary ml-0 mr-2"
 				:title="locales.sortOrder(sortOrderIndex)"
 			>
 				{{ sortOrderIndex }}

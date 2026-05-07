@@ -14,7 +14,7 @@ export const defaultOptions = {
 		color: 'secondary',
 	},
 	logoutListItem: {
-        class: 'text-colorPrimary',
+		class: 'text-colorPrimary',
 		minWidth: '198px',
 	},
 	logoutIcon: {

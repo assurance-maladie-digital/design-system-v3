@@ -248,7 +248,7 @@
 
 			<div
 				v-else-if="showBrandContent"
-        class="vd-title-container d-flex justify-center flex-column text-colorPrimary"
+				class="vd-title-container d-flex justify-center flex-column text-colorPrimary"
 			>
 				<slot name="brand-content">
 					<SyHeading
