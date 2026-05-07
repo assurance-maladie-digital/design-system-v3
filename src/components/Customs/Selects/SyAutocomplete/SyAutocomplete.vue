@@ -206,13 +206,12 @@
 
 		focusInput(textFieldRef)
 
-		if (!props.filter) return
-
 		if (debounceHandle) {
 			clearTimeout(debounceHandle)
 		}
 
 		debounceHandle = setTimeout(() => {
+			emit('search', search.value)
 		}, props.debounce)
 	})
 
@@ -358,7 +357,6 @@
 			updateValue(null)
 		}
 
-		emit('search', inputValue)
 		openAndFocus()
 	}
 
