@@ -191,6 +191,7 @@ export function useValidation(params: {
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
+	// TODO: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
 	const hasSuccess = computed(() => {
 		if (toValue(params.useVuetifyValidation)) {
 			return params.hasSuccessProp?.value ?? false
