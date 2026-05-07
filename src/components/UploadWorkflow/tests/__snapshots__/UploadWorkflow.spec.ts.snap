@@ -141,7 +141,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
             class="
               file-item__action
               file-item__action-upload
-              text-primary
+              text-colorPrimary
               v-btn
               v-btn--density-default
               v-btn--size-default
@@ -257,7 +257,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
             class="
               file-item__action
               file-item__action-upload
-              text-primary
+              text-colorPrimary
               v-btn
               v-btn--density-default
               v-btn--size-default
