@@ -28,7 +28,7 @@ const meta: Meta<typeof SySelect> = {
 		},
 		allowHtml: {
 			control: 'boolean',
-			description: 'Permet d\'afficher du texte en HTML',
+			description: 'Permet d\'afficher le texte des options en HTML. À utiliser avec plainTextKey pour le filtrage en texte brut.',
 		},
 		valueKey: {
 			control: 'text',
@@ -36,7 +36,7 @@ const meta: Meta<typeof SySelect> = {
 		},
 		returnObject: {
 			control: 'boolean',
-			description: 'Retourne l\'objet complet sélectionné',
+			description: 'Retourne l\'objet complet sélectionné au lieu de la seule valeur de valueKey.',
 		},
 		clearable: {
 			control: 'boolean',
@@ -53,11 +53,12 @@ const meta: Meta<typeof SySelect> = {
 		variantStyle: {
 			control: 'select',
 			options: ['outlined', 'plain', 'underlined', 'filled', 'solo', 'solo-inverted', 'solo-filled'],
+			description: 'Style visuel du champ. Par défaut le composant utilise le style outlined.',
 		},
 		color: {
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
-			description: 'Couleur du champ',
+			description: 'Couleur principale du champ (bordure et label au focus).',
 		},
 		density: {
 			control: 'select',
@@ -70,18 +71,18 @@ const meta: Meta<typeof SySelect> = {
 		},
 		helpText: {
 			control: 'text',
-			description: 'Texte d\'aide à la saisie',
+			description: 'Texte d\'aide affiché sous le champ. Remplace les messages de validation si aucun n\'est présent, sinon s\'affiche en dessous.',
 		},
 		prependTooltip: {
-			description: 'Si le texte du prepend tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
+			description: 'Texte du tooltip affiché au survol de l\'icône prepend. Si renseigné, l\'icône tooltip est automatiquement affichée.',
 			control: 'text',
 		},
 		appendTooltip: {
-			description: 'Si le texte du append tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
+			description: 'Texte du tooltip affiché au survol de l\'icône append. Si renseigné, l\'icône tooltip est automatiquement affichée.',
 			control: 'text',
 		},
 		tooltipLocation: {
-			description: 'Position des tooltips',
+			description: 'Position des tooltips des icônes prepend et append.',
 			control: 'select',
 			options: ['top', 'bottom', 'start', 'end'],
 			default: 'top',

@@ -11,8 +11,11 @@ const meta: Meta<typeof SyAutocomplete> = {
 	component: SyAutocomplete,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['selectedValue', 'isOpen', 'closeList'] },
-		docs: { page: AccessibilityDocs },
+		controls: { exclude: ['selectedValue', 'closeList', 'clearValidation', 'checkErrorOnBlur', 'isOpen', 'selectItem'] },
+		docs: {
+			page: AccessibilityDocs,
+			controls: { sort: 'none' },
+		},
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
@@ -21,153 +24,202 @@ const meta: Meta<typeof SyAutocomplete> = {
 		'bgColor': {
 			control: 'text',
 			description: 'Couleur de fond du champ',
+			table: { category: 'props' },
 		},
 		'chips': {
 			control: 'boolean',
 			description: 'Affiche les options sélectionnées sous forme de chips',
+			table: { category: 'props' },
 		},
 		'clearable': {
 			control: 'boolean',
 			description: 'Permet de vider la sélection',
+			table: { category: 'props' },
 		},
 		'customRules': {
 			control: 'object',
-			description: 'Règles de validation personnalisées',
+			description: 'Règles de validation personnalisées d\'erreur (bloquantes) à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
+			table: { category: 'props' },
 		},
 		'customSuccessRules': {
 			control: 'object',
-			description: 'Règles de succès personnalisées',
+			description: 'Règles de validation personnalisées de succès à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
+			table: { category: 'props' },
 		},
 		'customWarningRules': {
 			control: 'object',
-			description: 'Règles d\'avertissement personnalisées',
+			description: 'Règles de validation personnalisées d\'avertissement (non bloquantes) à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
+			table: { category: 'props' },
 		},
 		'debounce': {
 			control: 'number',
-			description: 'Délai en millisecondes avant le filtrage (défaut: 200)',
+			description: 'Délai en millisecondes entre la dernière frappe et l\'émission de l\'événement search. Permet de limiter les appels lors d\'une recherche asynchrone.',
+			table: { category: 'props' },
 		},
 		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Définit la densité du champ',
+			table: { category: 'props' },
 		},
 		'disableErrorHandling': {
 			control: 'boolean',
-			description: 'Désactive la gestion des erreurs',
-		},
-		'displayAsterisk': {
-			control: 'boolean',
-			description: 'Affiche un astérisque pour les champs obligatoires',
-		},
-		'errorMessages': {
-			control: 'object',
-			description: 'Messages d\'erreur personnalisés',
-		},
-		'filter': {
-			control: 'boolean',
-			description: 'Active le filtrage des options basé sur la saisie',
-		},
-		'helpText': {
-			control: 'text',
-			description: 'Texte d\'aide affiché sous le champ',
-		},
-		'hasError': {
-			control: 'boolean',
-			description: 'Indique si le champ a une erreur',
-		},
-		'hasSuccess': {
-			control: 'boolean',
-			description: 'Indique si le champ est en succès',
-		},
-		'hasWarning': {
-			control: 'boolean',
-			description: 'Indique si le champ a un avertissement',
-		},
-		'hideNoData': {
-			control: 'boolean',
-			description: 'Cache le message "aucune option" quand la liste est vide',
-		},
-		'isValidateOnBlur': {
-			control: 'boolean',
-			description: 'Valide le champ à la perte de focus',
-		},
-		'items': { control: 'object' },
-		'label': {
-			control: 'text',
-			description: 'Libellé du champ',
-		},
-		'loading': {
-			control: 'boolean',
-			description: 'Affiche un indicateur de chargement',
-		},
-		'menuId': {
-			control: 'text',
-			description: 'ID personnalisé pour le menu',
-		},
-		'modelValue': { control: 'text' },
-		'multiple': {
-			control: 'boolean',
-			description: 'Permet la sélection multiple d\'options',
-		},
-		'noDataText': {
-			control: 'text',
-			description: 'Texte affiché quand aucune option n\'est disponible',
-		},
-		'placeholder': {
-			control: 'text',
-			description: 'Texte d\'indice affiché quand le champ est vide',
-		},
-		'plainTextKey': {
-			control: 'text',
-			description: 'Nom de la propriété pour le texte brut de filtrage',
-		},
-		'onSearch': {
-			action: 'search',
-			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. Utile pour déclencher des recherches asynchrones.',
-		},
-		'onUpdate:modelValue': {
-			action: 'update:modelValue',
-			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
+			description: 'Désactive la gestion des erreurs, utile lorsque vous souhaitez gérer les erreurs manuellement.',
+			table: { category: 'props' },
 		},
 		'disabled': {
 			control: 'boolean',
 			description: 'Désactive le champ',
+			table: { category: 'props' },
+		},
+		'displayAsterisk': {
+			control: 'boolean',
+			description: 'Affiche un astérisque pour les champs obligatoires',
+			table: { category: 'props' },
+		},
+		'errorMessages': {
+			control: 'object',
+			description: 'Permet d\'injecter des messages d\'erreur depuis le parent. Aucun calcul de validation n\'est exécuté.',
+			table: { category: 'props' },
+		},
+		'filter': {
+			control: 'boolean',
+			description: 'Active le filtrage des options basé sur la saisie',
+			table: { category: 'props' },
+		},
+		'hasError': {
+			control: 'boolean',
+			description: 'Indique si le champ a une erreur, peut être utilisé pour forcer l\'état d\'erreur.',
+			table: { category: 'props' },
+		},
+		'hasSuccess': {
+			control: 'boolean',
+			description: 'Indique si le champ a un succès, peut être utilisé pour forcer l\'état de succès.',
+			table: { category: 'props' },
+		},
+		'hasWarning': {
+			control: 'boolean',
+			description: 'Indique si le champ a un avertissement, peut être utilisé pour forcer l\'état d\'avertissement.',
+			table: { category: 'props' },
+		},
+		'helpText': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ',
+			table: { category: 'props' },
+		},
+		'hideNoData': {
+			control: 'boolean',
+			description: 'Cache le message "aucune option" quand la liste est vide',
+			table: { category: 'props' },
+		},
+		'isValidateOnBlur': {
+			control: 'boolean',
+			description: 'Détermine si la validation doit être déclenchée lors de la saisie ou du blur de l\'input. Par défaut false sur ce composant : la validation se déclenche dès qu\'une option est sélectionnée.',
+			table: { category: 'props' },
+		},
+		'items': {
+			control: 'object',
+			table: { category: 'props' },
+		},
+		'label': {
+			control: 'text',
+			description: 'Libellé du champ',
+			table: { category: 'props' },
+		},
+		'loading': {
+			control: 'boolean',
+			description: 'Affiche un indicateur de chargement',
+			table: { category: 'props' },
+		},
+		'menuId': {
+			control: 'text',
+			description: 'Identifiant HTML du menu déroulant. Utile pour éviter les conflits d\'ID en cas de multiples instances sur la même page.',
+			table: { category: 'props' },
+		},
+		'modelValue': {
+			control: 'text',
+			table: { category: 'props' },
+		},
+		'multiple': {
+			control: 'boolean',
+			description: 'Permet la sélection multiple d\'options',
+			table: { category: 'props' },
+		},
+		'noDataText': {
+			control: 'text',
+			description: 'Texte affiché quand aucune option n\'est disponible',
+			table: { category: 'props' },
+		},
+		'placeholder': {
+			control: 'text',
+			description: 'Texte d\'indice affiché quand le champ est vide',
+			table: { category: 'props' },
+		},
+		'plainTextKey': {
+			control: 'text',
+			description: 'Propriété de l\'objet utilisée pour le filtrage côté client (filter: true). Si absente, c\'est textKey qui est utilisée.',
+			table: { category: 'props' },
 		},
 		'readonly': {
 			control: 'boolean',
 			description: 'Rend le champ en lecture seule',
+			table: { category: 'props' },
 		},
 		'required': {
 			control: 'boolean',
 			description: 'Marque le champ comme obligatoire',
+			table: { category: 'props' },
 		},
 		'returnObject': {
 			control: 'boolean',
-			description: 'Retourne l\'objet complet sélectionné',
-		},
-		'showSuccessMessages': {
-			control: 'boolean',
-			description: 'Affiche les messages de succès',
-		},
-		'successMessages': {
-			control: 'object',
-			description: 'Messages de succès personnalisés',
-		},
-		'textKey': {
-			control: 'text',
-			description: 'Nom de la propriété qui contient le texte à afficher',
-		},
-		'valueKey': {
-			control: 'text',
-			description: 'Nom de la propriété qui contient la valeur à retourner',
+			description: 'Retourne l\'objet complet sélectionné au lieu de la seule valeur de valueKey.',
+			table: { category: 'props' },
 		},
 		'selectionText': {
 			control: false,
 			description: 'Fonction de personnalisation du texte affiché dans l\'input en mode multiple. Reçoit le tableau des valeurs sélectionnées et retourne une chaîne.',
+
+			table: { category: 'props' },
+		},
+		'showSuccessMessages': {
+			control: 'boolean',
+			description: 'Affiche les messages de succès lorsque la validation est réussie. Si false, cache uniquement les messages texte, l\'état visuel reste actif.',
+			table: { category: 'props' },
+		},
+		'successMessages': {
+			control: 'object',
+			description: 'Permet d\'injecter des messages de succès depuis le parent. Aucun calcul de validation n\'est exécuté.',
+			table: { category: 'props' },
+		},
+		'textKey': {
+			control: 'text',
+			description: 'Nom de la propriété qui contient le texte à afficher',
+			table: { category: 'props' },
+		},
+		'valueKey': {
+			control: 'text',
+			description: 'Nom de la propriété qui contient la valeur à retourner',
+			table: { category: 'props' },
 		},
 		'warningMessages': {
 			control: 'object',
-			description: 'Messages d\'avertissement personnalisés',
+			description: 'Permet d\'injecter des messages d\'avertissement depuis le parent. Aucun calcul de validation n\'est exécuté.',
+			table: { category: 'props' },
+		},
+		'onSearch': {
+			action: 'search',
+			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. Utile pour déclencher des recherches asynchrones.',
+			table: { category: 'events' },
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
+			table: { category: 'events' },
+		},
+		'validateOnSubmit': {
+			control: false,
+			description: 'Déclenche la validation du champ (équivalent à un submit de formulaire). Retourne une promesse résolue en `true` si le champ est valide.',
+			table: { category: 'expose' },
 		},
 	},
 } as Meta<typeof SyAutocomplete>
@@ -191,7 +243,7 @@ const sampleItems = [
 
 export const Default: Story = {
 	parameters: {
-
+		docs: { controls: { sort: 'none' } },
 		sourceCode: [
 			{
 				name: 'Template',
