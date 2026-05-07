@@ -224,7 +224,7 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
           <div class="
             mb-4
             sy-code
-            text-primary
+            text-colorPrimary
           ">
             <span class="d-sr-only">
               Code d'erreur&nbsp;:

@@ -65,7 +65,7 @@ export const Optimisation = {
               <v-expansion-panels class="mt-6">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Ajout d'une optimisation</p>
+                    <p class="text-h5 text-colorPrimary">Ajout d'une optimisation</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>
@@ -108,7 +108,7 @@ export const AjoutFonctionnalite = {
               <v-expansion-panels class="mt-2">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Ajout d'une fonctionnalité</p>
+                    <p class="text-h5 text-colorPrimary">Ajout d'une fonctionnalité</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>
@@ -151,7 +151,7 @@ export const DeclinaisonFonctionnalite = {
               <v-expansion-panels class="mt-2">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Déclinaison d'une fonctionnalité</p>
+                    <p class="text-h5 text-colorPrimary">Déclinaison d'une fonctionnalité</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>
@@ -193,7 +193,7 @@ export const CreationComposant = {
               <v-expansion-panels class="mt-2">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Création d'un composant</p>
+                    <p class="text-h5 text-colorPrimary">Création d'un composant</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>
@@ -235,7 +235,7 @@ export const IntegrationComposant = {
               <v-expansion-panels class="mt-2">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Intégration d'un composant</p>
+                    <p class="text-h5 text-colorPrimary">Intégration d'un composant</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>

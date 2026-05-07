@@ -6132,7 +6132,7 @@ export const SlotItem: Story = {
 								<td>
 									<a
 										href="#"
-										class="text-primary"
+										class="text-colorPrimary"
 									>
 										{{ item.firstname }}
 									</a>
@@ -6356,7 +6356,7 @@ export const SlotItem: Story = {
 							<td>
 								<a
 									href="#"
-									class="text-primary"
+									class="text-colorPrimary"
 								>
 									{{ item.firstname }}
 								</a>
@@ -6396,7 +6396,7 @@ export const SlotHeaders: Story = {
 							  v-for="column in columns" 
 							  :key="column.key"
 							>
-							  <span class="font-weight-bold text-primary">
+							  <span class="font-weight-bold text-colorPrimary">
 								{{ column.title }}
 							  </span>
 							</th>
@@ -6618,7 +6618,7 @@ export const SlotHeaders: Story = {
 								v-for="column in columns"
 								:key="column.key"
 							>
-								<span class="font-weight-bold text-primary">
+								<span class="font-weight-bold text-colorPrimary">
 								{{ column.title }}
 							  </span>
 							</th>
@@ -6651,7 +6651,7 @@ export const SlotHeader: Story = {
 						@update:options="fetchData"
 					>
 						<template #header.lastname>
-							<span class="text-primary font-weight-bold">
+							<span class="text-colorPrimary font-weight-bold">
 								Nom de famille
 							</span>
 						</template>
@@ -6866,7 +6866,7 @@ export const SlotHeader: Story = {
 					@update:options="fetchData"
 				>
                   <template #header.lastname>
-							<span class="text-primary font-weight-bold">
+							<span class="text-colorPrimary font-weight-bold">
 								Nom de famille
 							</span>
                   </template>

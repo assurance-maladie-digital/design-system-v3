@@ -136,7 +136,7 @@
 			<div class="file-item__actions">
 				<VBtn
 					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
-					class="file-item__action file-item__action-upload text-primary"
+          class="file-item__action file-item__action-upload text-colorPrimary"
 					variant="text"
 					:aria-label="`${locales.import} ${title}`"
 					@click="$emit('upload', itemId)"
@@ -152,7 +152,7 @@
 				</VBtn>
 				<VBtn
 					v-if="state === 'success' && showPreviewBtn"
-					class="file-item__action file-item__action-preview text-primary"
+          class="file-item__action file-item__action-preview text-colorPrimary"
 					variant="text"
 					:aria-label="`${locales.see} ${fileName}`"
 					@click="$emit('preview', itemId)"

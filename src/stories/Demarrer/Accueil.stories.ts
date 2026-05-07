@@ -129,7 +129,7 @@ export const DesignSystem: StoryObj = {
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
               <div class="mb-12" v-if="theme !== 'ap2026'">
-                  <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
+                  <h3 class="text-h5 font-weight-bold mb-6 text-colorPrimary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
                           <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
@@ -179,7 +179,7 @@ export const Guidelines: StoryObj = {
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
               <div v-if="theme !== 'ap2026'">
-					<h3 class="text-h5 font-weight-bold mb-6 text-primary">Guidelines</h3>
+					<h3 class="text-h5 font-weight-bold mb-6 text-colorPrimary">Guidelines</h3>
 					<VRow>
 						<VCol cols="12" md="4">
 							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/accessibilit%C3%A9-introduction--docs">

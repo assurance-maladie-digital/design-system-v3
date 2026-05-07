@@ -9,7 +9,7 @@
 
 <template>
 	<button
-		class="captcha-btn text-primary"
+      class="captcha-btn colorPrimary"
 		type="button"
 	>
 		<SyIcon

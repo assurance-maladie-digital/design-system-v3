@@ -57,7 +57,7 @@ export const AnomalieGraphique = {
               <v-expansion-panels class="mt-6">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Anomalie graphique</p>
+                    <p class="text-h5 text-colorPrimary">Anomalie graphique</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>
@@ -116,7 +116,7 @@ export const AnomalieFonctionnelle = {
               <v-expansion-panels class="mt-2">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Anomalie fonctionnelle</p>
+                    <p class="text-h5 text-colorPrimary">Anomalie fonctionnelle</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>
@@ -185,7 +185,7 @@ export const AnomalieAccessibilite = {
               <v-expansion-panels class="mt-2">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Anomalie d'accessibilité</p>
+                    <p class="text-h5 text-colorPrimary">Anomalie d'accessibilité</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>
@@ -228,7 +228,7 @@ export const AnomalieDocumentaire = {
               <v-expansion-panels class="mt-2">
                 <v-expansion-panel>
                   <v-expansion-panel-title>
-                    <p class="text-h5 text-primary">Anomalie documentaire</p>
+                    <p class="text-h5 text-colorPrimary">Anomalie documentaire</p>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <table>

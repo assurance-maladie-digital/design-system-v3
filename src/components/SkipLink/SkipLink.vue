@@ -29,7 +29,7 @@
 		<a
 			ref="skipLink"
 			:href="target"
-			class="sy-skip-link text-primary d-block d-sr-only-focusable px-2"
+      class="sy-skip-link text-colorPrimary d-block d-sr-only-focusable px-2"
 		>
 			<slot>{{ label }}</slot>
 		</a>

@@ -99,7 +99,7 @@
 				>
 					<div
 						v-if="code"
-						class="sy-code text-primary mb-4"
+            class="sy-code text-colorPrimary mb-4"
 					>
 						<span class="d-sr-only">{{ codeErrorText }}</span>
 						{{ code }}

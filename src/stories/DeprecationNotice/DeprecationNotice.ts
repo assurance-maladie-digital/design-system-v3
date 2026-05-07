@@ -29,7 +29,7 @@ export const createDeprecationNotice = (replacements: Replacement[]) => ({
 
             Nous vous recommandons d'utiliser à la place :
             <span v-for="(item, index) in replacements" :key="item.label">
-          <a class="text-primary" :href="item.url">
+          <a class="text-colorPrimary" :href="item.url">
             <code>{{ item.label }}</code>
           </a>
           <span v-if="index < replacements.length - 1">, </span>

@@ -12,7 +12,7 @@ exports[`SkipLink > renders correctly 1`] = `
       d-sr-only-focusable
       px-2
       sy-skip-link
-      text-primary
+      text-colorPrimary
     "
     href="#main"
   >Aller au contenu principal</a>

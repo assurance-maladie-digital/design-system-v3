@@ -87,7 +87,7 @@ export const Default: Story = {
 		listTitle: undefined,
 		titleClass: 'text-subtitle-1 font-weight-bold mb-3',
 		title: `<template #title>
-	<h3 class="text-subtitle-1 text-primary font-weight-bold">
+	<h3 class="text-subtitle-1 text-colorPrimary font-weight-bold">
 		Liste de données
 	</h3>
 	<p class="text-subtitle-2 mb-3">
@@ -786,7 +786,7 @@ export const SlotTitle: Story = {
 					<DataList :items="items">
 						<template #title>
 							<template #title>
-							<h3 class="text-subtitle-1 text-primary font-weight-bold">
+							<h3 class="text-subtitle-1 text-colorPrimary font-weight-bold">
 								Liste de données
 							</h3>
 							<p class="text-subtitle-2 mb-3">
@@ -838,7 +838,7 @@ export const SlotTitle: Story = {
 			},
 		],
 		title: `<template #title>
-	<h3 class="text-subtitle-1 text-primary font-weight-bold">
+	<h3 class="text-subtitle-1 text-colorPrimary font-weight-bold">
 		Liste de données
 	</h3>
 	<p class="text-subtitle-2 mb-3">
@@ -856,7 +856,7 @@ export const SlotTitle: Story = {
 				<div class="pa-4">
 					<DataList :items="args.items">
 						<template #title>
-							<h3 class="text-subtitle-1 text-primary font-weight-bold">
+							<h3 class="text-subtitle-1 text-colorPrimary font-weight-bold">
 								Liste de données
 							</h3>
 							<p class="text-subtitle-2 mb-3">

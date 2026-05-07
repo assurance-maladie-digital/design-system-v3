@@ -542,7 +542,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
       <button
         class="
           captcha-btn
-          text-primary
+          colorPrimary
         "
         type="button"
       >
@@ -582,7 +582,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
       <button
         class="
           captcha-btn
-          text-primary
+          colorPrimary
         "
         type="button"
       >

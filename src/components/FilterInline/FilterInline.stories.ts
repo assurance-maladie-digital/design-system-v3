@@ -814,7 +814,7 @@ export const Boolean: Story = {
 		template: `
 <FilterInline v-model="filters" v-bind="args">
 	<template #eligibility="{ props }">
-		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 		<BooleanFilter
 			v-bind="props"
 			label="Eligible RQTH"
@@ -832,7 +832,7 @@ export const Boolean: Story = {
 				code: `
 <FilterInline v-model="filters">
 	<template #eligibility="{ props }">
-		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 		<BooleanFilter
 			v-bind="props"
 			label="Eligible RQTH"
@@ -921,7 +921,7 @@ const ManyFilters = defineComponent({
 	},
 	template: `
 		<div>
-			<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+			<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 			<VCheckbox
 				v-model="rqth"
 				label="Eligible RQTH"
@@ -929,7 +929,7 @@ const ManyFilters = defineComponent({
 			/>
 			<hr>
 			<p class="mt-6">
-				Est ce que le patient est éligible à <em class="text-primary">Prestation de Compensation du Handicap</em>&nbsp;?
+				Est ce que le patient est éligible à <em class="text-colorPrimary">Prestation de Compensation du Handicap</em>&nbsp;?
 			</p>
 			<VCheckbox
 				v-model="pch"
@@ -938,7 +938,7 @@ const ManyFilters = defineComponent({
 			/>
 			<hr>
 			<p class="mt-6">
-				Est ce que le patient est éligible à <em class="text-primary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
+				Est ce que le patient est éligible à <em class="text-colorPrimary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
 			</p>
 			<VCheckbox
 				v-model="aeeh"
@@ -1036,7 +1036,7 @@ export const ManyFields: Story = {
 
 <template>
 	<div>
-		<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 		<VCheckbox
 			v-model="rqth"
 			label="Eligible RQTH"
@@ -1044,7 +1044,7 @@ export const ManyFields: Story = {
 		/>
 		<hr>
 		<p class="mt-6">
-			Est ce que le patient est éligible à <em class="text-primary">Prestation de Compensation du Handicap</em>&nbsp;?
+			Est ce que le patient est éligible à <em class="text-colorPrimary">Prestation de Compensation du Handicap</em>&nbsp;?
 		</p>
 		<VCheckbox
 			v-model="pch"
@@ -1053,7 +1053,7 @@ export const ManyFields: Story = {
 		/>
 		<hr>
 		<p class="mt-6">
-			Est ce que le patient est éligible à <em class="text-primary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
+			Est ce que le patient est éligible à <em class="text-colorPrimary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
 		</p>
 		<VCheckbox
 			v-model="aeeh"

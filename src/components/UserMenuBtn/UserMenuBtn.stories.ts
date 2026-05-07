@@ -101,7 +101,7 @@ const meta = {
 		color: 'avatar',
 	},
 	logoutListItem: {
-		class: 'text-primary',
+		class: 'text-colorPrimary',
 		minWidth: '198px',
 	},
 	logoutIcon: {
