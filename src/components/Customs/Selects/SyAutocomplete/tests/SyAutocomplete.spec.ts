@@ -776,4 +776,495 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.find('.v-messages').exists()).toBe(false)
 		})
 	})
+
+	describe('validation', () => {
+		it('validateOnSubmit returns false and shows error when required field is empty', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Champ requis',
+					textKey: 'text',
+					valueKey: 'value',
+					required: true,
+				},
+			})
+			const result = await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(result).toBe(false)
+			expect(wrapper.find('.v-messages').text()).toContain('requis')
+		})
+
+		it('validateOnSubmit returns true when required field has a value', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Champ valide',
+					textKey: 'text',
+					valueKey: 'value',
+					required: true,
+				},
+			})
+			const result = await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(result).toBe(true)
+		})
+
+		it('clearValidation removes displayed errors', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test clearValidation',
+					textKey: 'text',
+					valueKey: 'value',
+					required: true,
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('requis')
+
+			wrapper.vm.clearValidation()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).not.toContain('requis')
+		})
+
+		it('disableErrorHandling suppresses validation — validateOnSubmit always returns true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test disableErrorHandling',
+					textKey: 'text',
+					valueKey: 'value',
+					required: true,
+					disableErrorHandling: true,
+				},
+			})
+			const result = await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(result).toBe(true)
+			expect(wrapper.find('.v-messages').text()).not.toContain('requis')
+		})
+
+		it('validates only on blur when isValidateOnBlur is true', async () => {
+			wrapper.unmount()
+			const failingRule = {
+				type: 'custom',
+				options: { validate: () => false, message: 'Erreur isValidateOnBlur' },
+			}
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test isValidateOnBlur',
+					textKey: 'text',
+					valueKey: 'value',
+					isValidateOnBlur: true,
+					customRules: [failingRule],
+				},
+			})
+
+			// Force interaction, puis réinitialisation pour repartir d'un état propre
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			wrapper.vm.clearValidation()
+			await wrapper.vm.$nextTick()
+
+			// Changer modelValue ne doit PAS déclencher la validation (isValidateOnBlur: true)
+			await wrapper.setProps({ modelValue: '2' })
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).not.toContain('Erreur isValidateOnBlur')
+
+			// Le blur déclenche la validation
+			wrapper.vm.checkErrorOnBlur()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('Erreur isValidateOnBlur')
+		})
+
+		it('displays warning from customWarningRules', async () => {
+			wrapper.unmount()
+			const warningRule = {
+				type: 'custom',
+				options: { validate: () => false, warningMessage: 'Avertissement test' },
+			}
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test warning',
+					textKey: 'text',
+					valueKey: 'value',
+					customWarningRules: [warningRule],
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('Avertissement test')
+		})
+
+		it('displays success message from customSuccessRules', async () => {
+			wrapper.unmount()
+			const successRule = {
+				type: 'custom',
+				options: { validate: () => true, successMessage: 'Succès test' },
+			}
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test success',
+					textKey: 'text',
+					valueKey: 'value',
+					customSuccessRules: [successRule],
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('Succès test')
+		})
+
+		it('hides success message text when showSuccessMessages is false', async () => {
+			wrapper.unmount()
+			const successRule = {
+				type: 'custom',
+				options: { validate: () => true, successMessage: 'Succès test' },
+			}
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test showSuccessMessages false',
+					textKey: 'text',
+					valueKey: 'value',
+					customSuccessRules: [successRule],
+					showSuccessMessages: false,
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).not.toContain('Succès test')
+		})
+
+		it('forces error state on SyTextField when hasError prop is true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test hasError prop',
+					textKey: 'text',
+					valueKey: 'value',
+					hasError: true,
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.findComponent(SyTextField).props('hasError')).toBe(true)
+		})
+
+		it('forces warning state on SyTextField when hasWarning prop is true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test hasWarning prop',
+					textKey: 'text',
+					valueKey: 'value',
+					hasWarning: true,
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.findComponent(SyTextField).props('hasWarning')).toBe(true)
+		})
+
+		it('forces success state on SyTextField when hasSuccess prop is true', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '1',
+					items,
+					label: 'Test hasSuccess prop',
+					textKey: 'text',
+					valueKey: 'value',
+					hasSuccess: true,
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.findComponent(SyTextField).props('hasSuccess')).toBe(true)
+		})
+
+		it('displays errorMessages injected by the parent', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test errorMessages',
+					textKey: 'text',
+					valueKey: 'value',
+					errorMessages: ['Erreur externe'],
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('Erreur externe')
+		})
+
+		it('displays warningMessages injected by the parent', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test warningMessages',
+					textKey: 'text',
+					valueKey: 'value',
+					warningMessages: ['Avertissement externe'],
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('Avertissement externe')
+		})
+
+		it('displays successMessages injected by the parent', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test successMessages',
+					textKey: 'text',
+					valueKey: 'value',
+					successMessages: ['Succès externe'],
+				},
+			})
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('.v-messages').text()).toContain('Succès externe')
+		})
+	})
+
+	it('does not open menu when readonly', async () => {
+		wrapper.unmount()
+		wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: null,
+				items,
+				label: 'Test readonly',
+				textKey: 'text',
+				valueKey: 'value',
+				readonly: true,
+				menuId,
+			},
+			attachTo: document.body,
+		})
+		const input = wrapper.find('input')
+		await input.trigger('click')
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+		expect(isMenuOverlayActive()).toBe(false)
+	})
+
+	it('emits full object when returnObject is true', async () => {
+		wrapper.unmount()
+		wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: null,
+				items,
+				label: 'Test returnObject true',
+				textKey: 'text',
+				valueKey: 'value',
+				returnObject: true,
+			},
+		})
+		wrapper.vm.selectItem(items[0])
+		await wrapper.vm.$nextTick()
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([items[0]])
+	})
+
+	it('emits value key when returnObject is false', async () => {
+		wrapper.vm.selectItem(items[0])
+		await wrapper.vm.$nextTick()
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['1'])
+	})
+
+	it('shows custom noDataText when list is empty', async () => {
+		wrapper.unmount()
+		wrapper = mount(SyAutocomplete, {
+			props: {
+				modelValue: null,
+				items: [],
+				label: 'Test noDataText',
+				textKey: 'text',
+				valueKey: 'value',
+				noDataText: 'Pas de résultats disponibles',
+				menuId,
+			},
+			attachTo: document.body,
+		})
+		const input = wrapper.find('input')
+		await input.trigger('click')
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+		const listItems = document.body.querySelectorAll(`#${menuId} .v-list-item`)
+		const texts = Array.from(listItems).map(el => el.textContent?.trim())
+		expect(texts.some(t => t?.includes('Pas de résultats disponibles'))).toBe(true)
+	})
+
+	describe('filter and search', () => {
+		it('filters items client-side based on input', async () => {
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 1')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			const listItems = document.body.querySelectorAll(`#${menuId} .v-list-item`)
+			expect(listItems).toHaveLength(1)
+			expect(listItems[0]!.textContent?.trim()).toContain('Option 1')
+		})
+
+		it('shows all items when filter is disabled', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test filter false',
+					textKey: 'text',
+					valueKey: 'value',
+					filter: false,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 1')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			const listItems = document.body.querySelectorAll(`#${menuId} .v-list-item`)
+			expect(listItems).toHaveLength(3)
+		})
+
+		it('filters using plainTextKey instead of textKey when provided', async () => {
+			wrapper.unmount()
+			const specialItems = [
+				{ text: '★ Alpha', plain: 'Alpha', value: 'alpha' },
+				{ text: '★ Beta', plain: 'Beta', value: 'beta' },
+			]
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items: specialItems,
+					label: 'Test plainTextKey',
+					textKey: 'text',
+					valueKey: 'value',
+					plainTextKey: 'plain',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+
+			// '★' est dans textKey mais pas dans plainTextKey → aucun résultat
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', '★')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			const noResults = document.body.querySelectorAll(`#${menuId} [role="option"]`)
+			expect(noResults).toHaveLength(0)
+
+			// 'Alpha' est dans plainTextKey → 1 résultat
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Alpha')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			const oneResult = document.body.querySelectorAll(`#${menuId} [role="option"]`)
+			expect(oneResult).toHaveLength(1)
+		})
+
+		it('emits search event after debounce delay', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test search event',
+					textKey: 'text',
+					valueKey: 'value',
+					debounce: 0,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			// syncSearchFromValue() sets suppressMenuOpen=true on mount; first input clears the flag
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'clear-suppress')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+			// Second input actually triggers the search event
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'test')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+			const emitted = wrapper.emitted('search')
+			expect(emitted).toBeTruthy()
+			expect(emitted?.[emitted.length - 1]).toEqual(['test'])
+		})
+
+		it('respects custom debounce delay', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test debounce',
+					textKey: 'text',
+					valueKey: 'value',
+					debounce: 50,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			// First input clears the suppressMenuOpen flag set during initialization
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'clear-suppress')
+			await wrapper.vm.$nextTick()
+			// Second input triggers debounced search
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'query')
+			await wrapper.vm.$nextTick()
+			// Before debounce expires: pas encore émis
+			expect(wrapper.emitted('search')).toBeFalsy()
+			// After debounce: émis
+			await new Promise(resolve => setTimeout(resolve, 60))
+			expect(wrapper.emitted('search')).toBeTruthy()
+		})
+	})
 })
