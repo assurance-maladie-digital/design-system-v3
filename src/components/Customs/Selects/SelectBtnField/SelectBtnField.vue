@@ -355,6 +355,7 @@
 		width: 100%;
 		height: 100%;
 		transition: background-color 0.2s;
+		border-radius: var(--v-radius-rounded);
 	}
 
 	&:hover::before {

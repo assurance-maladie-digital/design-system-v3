@@ -63,4 +63,10 @@ export const apContextualTokens = {
 		switchWidth: '3.5rem',
 		switchTrackOpacity: '1',
 	},
+	radius: {
+		rounded0: '0',
+		rounded: '12px',
+		roundedLg: '24px',
+		roundedPill: '64px',
+	},
 }
