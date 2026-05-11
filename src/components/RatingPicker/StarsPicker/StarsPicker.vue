@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-	import { ref, type PropType, onMounted } from 'vue'
+	import { ref, type PropType, onMounted, toRef } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from '../locales'
+	import { useRatingFocus } from '../useRatingFocus'
 
 	const props = defineProps({
 		label: {
@@ -41,37 +42,26 @@
 		return (isHovered && !hasAnswered.value) || isActive
 	}
 
-	const ratingElement = ref<HTMLDivElement[]>([])
-	function focusNextElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const nextIndex = currentIndex < (props.length - 1) ? currentIndex + 1 : props.length - 1
-		const nextElem = ratingElement.value?.[nextIndex]
-		nextElem?.focus()
-	}
+	const {
+		ratingElement,
+		initFocus,
+		selectAndFocus,
+		focusNextElement,
+		focusPrevElement,
+		focus,
+	} = useRatingFocus({
+		length: toRef(props, 'length'),
+		modelValue: toRef(props, 'modelValue'),
+		selectValue: emitInputEvent,
+		wrap: true,
+	})
 
-	function focusPrevElement(index: number) {
-		const currentIndex = ratingElement.value?.findIndex(el => el === ratingElement.value[index]) ?? -1
-		const prevIndex = currentIndex > 0 ? currentIndex - 1 : 0
-		const prevElem = ratingElement.value?.[prevIndex]
-		prevElem?.focus()
-	}
-
-	function setFocus(index: number) {
-		ratingElement.value.forEach((el, i) => {
-			if (i === index) {
-				el?.setAttribute('tabindex', '0')
-			}
-			else {
-				el?.setAttribute('tabindex', '-1')
-			}
-		})
-	}
+	defineExpose({
+		focus,
+	})
 
 	onMounted(() => {
-		ratingElement.value[0]?.setAttribute('tabindex', '0')
-		for (let i = 1; i < ratingElement.value.length; i++) {
-			ratingElement.value[i]?.setAttribute('tabindex', '-1')
-		}
+		initFocus()
 	})
 </script>
 
@@ -93,19 +83,20 @@
 				ref="ratingElement"
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
+				:tabindex="-1"
 				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
-				:aria-checked="isActive(index) ? 'true' : undefined"
+				:aria-checked="isActive(index) ? 'true' : 'false'"
 				@mouseover="hoverIndex = index"
 				@focus="hoverIndex = index"
 				@mouseleave="hoverIndex = -1"
 				@blur="hoverIndex = -1"
-				@click="emitInputEvent(index); setFocus(index - 1)"
-				@keyup.enter="emitInputEvent(index); setFocus(index - 1)"
-				@keyup.space="emitInputEvent(index); setFocus(index - 1)"
-				@keyup.right="focusNextElement(index - 1)"
-				@keyup.left="focusPrevElement(index - 1)"
-				@keyup.up="focusPrevElement(index - 1)"
-				@keyup.down="focusNextElement(index - 1)"
+				@click="selectAndFocus(index - 1)"
+				@keydown.enter.prevent="selectAndFocus(index - 1)"
+				@keydown.space.prevent="selectAndFocus(index - 1)"
+				@keydown.right.prevent="focusNextElement(index - 1)"
+				@keydown.left.prevent="focusPrevElement(index - 1)"
+				@keydown.up.prevent="focusPrevElement(index - 1)"
+				@keydown.down.prevent="focusNextElement(index - 1)"
 			>
 				<span class="d-sr-only">{{ locales.etoiles(index) }}</span>
 				<SyIcon

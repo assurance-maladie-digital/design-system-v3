@@ -3,8 +3,9 @@ import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import SyAlert from '../../../SyAlert/SyAlert.vue'
 import SyForm from '../../SyForm/SyForm.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/Selects/SySelect',
@@ -14,10 +15,9 @@ const meta: Meta<typeof SySelect> = {
 		controls: { exclude: ['onUpdate:modelValue', 'selectedValue', 'isOpen', 'closeList'] },
 	},
 	argTypes: {
+		...getValidationDocumentation('string'),
 		selectedValue: { control: 'text' },
 		items: { control: 'object' },
-		errorMessages: { control: 'object' },
-		required: { control: 'boolean' },
 		displayAsterisk: { control: 'boolean' },
 		textKey: {
 			control: 'text',
@@ -50,10 +50,6 @@ const meta: Meta<typeof SySelect> = {
 		chips: {
 			control: 'boolean',
 			description: 'Affiche les options sélectionnées sous forme de chips',
-		},
-		hideMessages: {
-			control: 'boolean',
-			description: 'Masque les messages d\'erreur',
 		},
 		variantStyle: {
 			control: 'select',
@@ -163,17 +159,26 @@ export const Default: Story = {
 			{ text: 'Emensis itaque difficultatibus multis et nive obrutis callibus', value: 'Louis' },
 			{ text: 'Plurimis ubi prope Rauracum ventum est ad supercilia', value: 'Valentin' },
 		],
+		'customSuccessRules': [{
+			type: 'custom',
+			options: {
+				validate: (v: unknown) => v !== null && v !== undefined,
+				successMessage: 'Option sélectionnée avec succès.',
+			},
+		}],
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<SySelect
+						v-model="value"
 						v-bind="args"
 					/>
 				</div>
@@ -234,19 +239,27 @@ export const HelpText: Story = {
 			{ text: 'Valentin', value: 'Valentin' },
 		],
 		'helpText': 'Texte d\'aide à la saisie',
-		'hideMessages': false,
-		'required': true,
+		'hideDetails': false,
+		'customSuccessRules': [{
+			type: 'custom',
+			options: {
+				validate: (v: unknown) => v !== null && v !== undefined,
+				successMessage: 'Option sélectionnée avec succès.',
+			},
+		}],
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<SySelect
+						v-model="value"
 						v-bind="args"
 					/>
 				</div>
@@ -275,12 +288,13 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
-					
+					const value = ref(null)
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
-					],
+					]
 				</script>
 				`,
 			},
@@ -298,14 +312,15 @@ export const Required: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 					<SySelect
+						v-model="value"
 						v-bind="args"
-						:required="args.required"
 					/>
 				</div>
 			`,
@@ -363,19 +378,286 @@ const items = [
 		return {
 			components: { SySelect },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<SySelect
+						v-model="value"
 						v-bind="args"
-						:required="args.required"
-						:display-asterisk="args.displayAsterisk"
 					/>
 				</div>
 			`,
 		}
 	},
+}
+
+export const WithError: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: '« Option 1 » est présélectionnée et déclenche une erreur bloquante au chargement.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SySelect
+    ref="selectRef"
+    v-model="value"
+    :items="items"
+    label="Option"
+    :customRules="[
+      {
+        type: 'custom',
+        options: {
+          validate: (v) => v !== '1',
+          message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
+        }
+      }
+    ]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SySelect } from '@cnamts/synapse'
+const value = ref('1')
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+
+const selectRef = ref(null)
+
+onMounted(() => {
+  selectRef.value?.validateOnSubmit()
+})
+</script>`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'label': 'Option',
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SySelect },
+		setup() {
+			const value = ref('1')
+			const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			onMounted(() => {
+				selectRef.value?.validateOnSubmit()
+			})
+
+			return { args, value, selectRef }
+		},
+		template: `
+			<div class="pa-4">
+				<SySelect
+					ref="selectRef"
+					v-model="value"
+					v-bind="args"
+					:customRules="[
+						{
+							type: 'custom',
+							options: {
+								validate: (v) => v !== '1',
+								message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
+							}
+						}
+					]"
+				/>
+			</div>
+		`,
+	}),
+}
+
+export const WithWarning: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: '« Option 1 » est présélectionnée et déclenche un avertissement (non bloquant) au chargement.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SySelect
+    v-model="value"
+    :items="items"
+    label="Option"
+    :customWarningRules="[
+      {
+        type: 'custom',
+        options: {
+          validate: (v) => v !== '1',
+          message: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
+        }
+      }
+    ]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SySelect } from '@cnamts/synapse'
+const value = ref(null)
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'label': 'Option',
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SySelect },
+		setup() {
+			const value = ref('1')
+			const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			onMounted(() => {
+				selectRef.value?.validateOnSubmit()
+			})
+
+			return { args, value, selectRef }
+		},
+		template: `
+			<div class="pa-4">
+				<SySelect
+					ref="selectRef"
+					v-model="value"
+					v-bind="args"
+					:customWarningRules="[
+						{
+							type: 'custom',
+							options: {
+								validate: (v) => v !== '1',
+								message: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
+							}
+						}
+					]"
+				/>
+			</div>
+		`,
+	}),
+}
+
+export const WithSuccess: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Une option est présélectionnée et déclenche la confirmation de succès au chargement.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SySelect
+    v-model="value"
+    :items="items"
+    label="Option"
+    show-success-messages
+    :customSuccessRules="[
+      {
+        type: 'custom',
+        options: {
+          validate: (v) => v !== null && v !== undefined,
+          message: 'Option sélectionnée avec succès.'
+        }
+      }
+    ]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SySelect } from '@cnamts/synapse'
+const value = ref(null)
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'label': 'Option',
+		'showSuccessMessages': true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SySelect },
+		setup() {
+			const value = ref('1')
+			const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			onMounted(() => {
+				selectRef.value?.validateOnSubmit()
+			})
+
+			return { args, value, selectRef }
+		},
+		template: `
+			<div class="pa-4">
+				<SySelect
+					ref="selectRef"
+					v-model="value"
+					v-bind="args"
+					:customSuccessRules="[
+						{
+							type: 'custom',
+							options: {
+								validate: (v) => v !== null && v !== undefined,
+								message: 'Option sélectionnée avec succès.'
+							}
+						}
+					]"
+				/>
+			</div>
+		`,
+	}),
 }
 
 export const SlotPrepend: Story = {
@@ -652,7 +934,7 @@ const options = [
 		return {
 			components: { SySelect },
 			setup() {
-				const selectedOptions = ref([])
+				const selectedOptions = ref(null)
 
 				return { args, selectedOptions }
 			},
@@ -729,7 +1011,7 @@ const options = [
 		return {
 			components: { SySelect },
 			setup() {
-				const selectedOptions = ref([])
+				const selectedOptions = ref(null)
 
 				return { args, selectedOptions }
 			},
@@ -739,81 +1021,6 @@ const options = [
 						v-model="selectedOptions"
 						v-bind="args"
 					/>
-				</div>
-			`,
-		}
-	},
-}
-
-export const withCustomError: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SySelect
-						v-model="value"
-						:items="items"
-						:error-messages="errorMessages"
-					/>
-					<VBtn @click="triggerError">
-						Trigger Error
-					</VBtn>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { SySelect } from '@cnamts/synapse'
-					import { ref } from 'vue'
-					
-					const items =  [
-						{ text: 'Option 1', value: '1' },
-						{ text: 'Option 2', value: '2' },
-					],
-					
-					const errorMessages = ref([])
-					
-					const triggerError = () => {
-						errorMessages.value = ['This is a test error message']
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'items': [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
-		'onUpdate:modelValue': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
-			setup() {
-				const errorMessages = ref([])
-				const triggerError = () => {
-					// @ts-expect-error test error message
-					errorMessages.value = ['This is a test error message']
-				}
-				return { args, errorMessages, triggerError }
-			},
-			template: `
-				<div class="pa-4">
-					<SySelect
-						v-bind="args"
-						:error-messages="errorMessages"
-					/>
-				</div>
-				<div class="px-4">
-					<VBtn @click="triggerError">
-						Trigger Error
-					</VBtn>
 				</div>
 			`,
 		}
@@ -855,17 +1062,26 @@ export const withCustomKey: Story = {
 			{ customKey: 'Choix 1', value: '1' },
 			{ customKey: 'Choix 2', value: '2' },
 		],
+		'customSuccessRules': [{
+			type: 'custom',
+			options: {
+				validate: (v: unknown) => v !== null && v !== undefined,
+				successMessage: 'Option sélectionnée avec succès.',
+			},
+		}],
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const value = ref(null)
+				return { args, value }
 			},
 			template: `
 				<div class="pa-4">
 					<SySelect
+						v-model="value"
 						v-bind="args"
 						text-key="customKey"
 					/>
@@ -1010,4 +1226,105 @@ const onSubmit = (event) => {
 			`,
 		}
 	},
+}
+
+export const VuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple d\'utilisation de la validation native Vuetify via la prop `useVuetifyValidation`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur. Soumettez le formulaire pour déclencher la validation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm @submit="onSubmit">
+    <SySelect
+      v-model="value"
+      :items="items"
+      label="Option"
+      use-vuetify-validation
+      :show-success-messages="false"
+      :rules="[v => !!v || 'Ce champ est requis']"
+    />
+    <VBtn type="submit" color="primary" class="mt-4">
+      Soumettre
+    </VBtn>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SySelect, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref(null)
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+  { text: 'Option 3', value: '3' },
+]
+
+function onSubmit(event: { isValid: boolean }) {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide : veuillez choisir une option.')
+  }
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		'items': [
+			{ text: 'Option 1', value: '1' },
+			{ text: 'Option 2', value: '2' },
+			{ text: 'Option 3', value: '3' },
+		],
+		'label': 'Option',
+		'useVuetifyValidation': true,
+		'showSuccessMessages': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SySelect, SyForm, VBtn },
+		setup() {
+			const value = ref(null)
+
+			function onSubmit(event: { isValid: boolean }) {
+				if (event.isValid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide : veuillez choisir une option.')
+				}
+			}
+
+			return { args, value, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<SyForm @submit="onSubmit">
+					<SySelect
+						v-model="value"
+						v-bind="args"
+						:rules="[v => !!v || 'Ce champ est requis']"
+					/>
+					<VBtn
+						type="submit"
+						color="primary"
+						class="mt-4"
+					>
+						Soumettre
+					</VBtn>
+				</SyForm>
+			</div>
+		`,
+	}),
 }

@@ -12,7 +12,7 @@
 	import {
 		useDateInitialization,
 		type DateInput,
-		type DateValue,
+		type DateModelValue,
 	} from '@/composables/date/useDateInitializationDayjs'
 	import {
 		useAsteriskDisplay,
@@ -130,6 +130,7 @@
 		defineProps<{
 			autoClamp?: boolean
 			bgColor?: string
+			/** @deprecated Utilisez isBirthDate à la place */
 			birthDate?: boolean
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 			customRules?: { type: string, options: any }[]
@@ -212,12 +213,12 @@
 	)
 
 	const emit = defineEmits<{
-		(e: 'update:modelValue', value: DateValue): void
+		(e: 'update:modelValue', value: DateModelValue): void
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
 		(e: 'input', value: string): void
-		(e: 'date-selected', value: DateValue): void
+		(e: 'date-selected', value: DateModelValue): void
 	}>()
 
 	/**
@@ -313,14 +314,14 @@
 		emitFocus: () => emit('focus'),
 	})
 
-	const updateModel = (value: DateValue) => {
+	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
 		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
 	// Keep and expose this so consumers can listen to `date-selected`
-	const handleDateSelected = (value: DateValue) => {
+	const handleDateSelected = (value: DateModelValue) => {
 		if (props.readonly) return
 
 		// 1) Update v-model
@@ -709,7 +710,7 @@
 		validateField: (value, rules, warningRules) =>
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 			validateField(value, rules as any[], warningRules as any[]),
-		updateModel: value => updateModel(value as DateValue),
+		updateModel: value => updateModel(value as DateModelValue),
 		emitInput: value => emit('input', value),
 		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
 	})
@@ -848,7 +849,7 @@
 	/**
 	 * Gère les mises à jour de DateTextInput avec contrôle
 	 */
-	const handleDateTextInputUpdate = (value: DateValue) => {
+	const handleDateTextInputUpdate = (value: DateModelValue) => {
 		// Ne pas traiter les mises à jour internes pour éviter les boucles
 		if (isUpdatingFromInternal.value) return
 

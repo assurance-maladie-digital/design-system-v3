@@ -1,5 +1,5 @@
 import { type Ref, ref } from 'vue'
-import { type DateValue } from '@/composables/date/useDateInitializationDayjs'
+import { type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { type DateObjectValue } from '../types'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
@@ -27,7 +27,7 @@ export const useInputBlurHandler = (options: {
 	validateDateFormat: (dateStr: string) => { isValid: boolean, message: string }
 	parseDate: (dateStr: string, format: string) => Date | null
 	formatDate: (date: Date, format: string) => string
-	updateModel: (value: DateValue) => void
+	updateModel: (value: DateModelValue) => void
 	validateManualInput: (value: string) => boolean | Promise<boolean>
 
 	// Émetteurs d'événements

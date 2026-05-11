@@ -18,6 +18,7 @@ exports[`StarsPicker > renders correctly 1`] = `
     role="radiogroup"
   >
     <div
+      aria-checked="false"
       class="
         align-center
         d-flex
@@ -50,6 +51,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
+      aria-checked="false"
       class="
         align-center
         d-flex
@@ -82,6 +84,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
+      aria-checked="false"
       class="
         align-center
         d-flex
@@ -114,6 +117,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
+      aria-checked="false"
       class="
         align-center
         d-flex
@@ -146,6 +150,7 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
     <div
+      aria-checked="false"
       class="
         align-center
         d-flex

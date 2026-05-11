@@ -196,7 +196,7 @@ const meta = {
 		},
 		'birthDate': {
 			control: 'boolean',
-			description: 'Alias pour isBirthDate (pour compatibilité avec l\'attribut kebab-case birth-date dans les templates). ⚠️ Utiliser soit birthDate soit isBirthDate, mais pas les deux.',
+			description: '⚠️ **DEPRECATED** — Utilisez `isBirthDate` à la place.',
 			defaultValue: false,
 		},
 		'isBirthDate': {

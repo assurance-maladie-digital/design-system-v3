@@ -1,3 +1,4 @@
+import { baseColors } from '../baseColors'
 import { cnamColorsTokens } from './cnamColors'
 import { cnamSemanticTokens } from './cnamSemantic'
 
@@ -101,4 +102,6 @@ export const cnamLightTheme = {
 	iconOnDark: cnamSemanticTokens.colors.icon.onDark,
 	iconDisabled: cnamSemanticTokens.colors.icon.disabled,
 	iconDisabledOnDark: cnamSemanticTokens.colors.icon.disabledOnDark,
+	feedbackOnSuccess: baseColors.grey.darken60,
+	colorPrimary: baseColors.blue.base,
 }

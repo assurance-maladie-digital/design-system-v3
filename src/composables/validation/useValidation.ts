@@ -59,6 +59,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
+	const successState = ref(false)
 
 	let currentValidationToken = 0
 
@@ -67,13 +68,17 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	const hasError = computed(() => errors.value.length > 0)
 	const hasWarning = computed(() => warnings.value.length > 0)
 	const hasSuccess = computed(() =>
-		successes.value.length > 0 && !hasError.value && !hasWarning.value,
+		successState.value && !hasError.value && !hasWarning.value,
+	)
+	const displaySuccesses = computed(() =>
+		options.showSuccessMessages !== false ? successes.value : [],
 	)
 
 	const clearValidation = () => {
 		errors.value = []
 		warnings.value = []
 		successes.value = []
+		successState.value = false
 	}
 
 	/**
@@ -176,8 +181,12 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				}
 			}
 
-			if (!hasValidationError && value && options.showSuccessMessages !== false && successRules.length === 0) {
-				addDefaultSuccessMessage(rules)
+			const isValueFilled = Array.isArray(value) ? value.length > 0 : !!value
+			if (!hasValidationError && isValueFilled && successRules.length === 0) {
+				successState.value = true
+				if (options.showSuccessMessages !== false) {
+					addDefaultSuccessMessage(rules)
+				}
 			}
 
 			if (!hasValidationError && warningRules.length > 0) {
@@ -206,6 +215,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		const successResolved = executeRules(successRules, value, { isSuccess: true })
 
 		return thenOrSync(successResolved, token, (successResults) => {
+			successState.value = successResults.some(result => Boolean(result.success))
+
 			for (const r of successResults) {
 				if (r.success && options.showSuccessMessages !== false) {
 					successes.value.push(r.success)
@@ -223,6 +234,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		errors,
 		warnings,
 		successes,
+		displaySuccesses,
 		hasError,
 		hasWarning,
 		hasSuccess,

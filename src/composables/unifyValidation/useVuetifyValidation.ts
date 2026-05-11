@@ -12,8 +12,8 @@ export function useVuetifyValidation(
 	errorMessages: Ref<string[]>,
 	focused: Ref<boolean>,
 	maxErrors: Ref<number> | undefined,
-	name: Ref<string>,
-	label: Ref<string>,
+	name: Ref<string | undefined>,
+	label: Ref<string | undefined>,
 	readonly: Ref<boolean>,
 	validateOn: Ref<'input' | 'blur' | 'submit'>,
 ) {

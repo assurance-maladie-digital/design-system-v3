@@ -85,6 +85,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'SyTabs',
+						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
+						link: '/?path=/docs/composants-navigation-sytabs--docs',
+						img: `/components/sy-tabs${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
@@ -153,6 +160,13 @@ export const ComponentsList: StoryObj = {
 						link: '/?path=/docs/composants-boutons-copybtn--docs',
 						img: `/components/copy-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
+					},
+					{
+						title: 'Tooltip',
+						description: 'Utilisé pour transmettre des informations lorsqu’un utilisateur survole un élément.',
+						link: '/?path=/docs/composants-composants-vuetify-vtooltip--docs',
+						img: `/components/tooltip${isAp ? '-ap' : ''}.svg`,
+						category: 'Feedback',
 					},
 					{
 						title: 'LangBtn',
@@ -354,7 +368,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ChipList',
 						description: 'Utilisé pour afficher une liste de puces.',
 						link: '/?path=/docs/composants-donn%C3%A9es-chiplist--docs',
-						img: '/components/chip-list.svg',
+						img: `/components/chip-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -362,6 +376,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour afficher une liste d’informations.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalist--docs',
 						img: '/components/data-list.svg',
+						category: 'Données',
+					},
+					{
+						title: 'Accordion',
+						description: 'Utilisé pour optimiser l’espace vertical lors de l’affichage d’une grande quantité d’informations.',
+						link: '/?path=/docs/composants-donn%C3%A9es-accordion--docs',
+						img: `/components/accordion${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -396,14 +417,14 @@ export const ComponentsList: StoryObj = {
 						title: 'DialogBox',
 						description: 'Utilisé pour afficher une boîte de dialogue avec des boutons d\'action.',
 						link: '/?path=/docs/composants-feedback-dialogbox--docs',
-						img: '/components/dialog-box.svg',
+						img: `/components/dialog-box${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
 						title: 'NotificationBar',
 						description: 'Utilisé pour afficher des notifications à l’utilisateur.',
 						link: '/?path=/docs/composants-feedback-notificationbar--docs',
-						img: '/components/notification-bar.svg',
+						img: `/components/notification-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -420,6 +441,13 @@ export const ComponentsList: StoryObj = {
 						img: '/components/rating-picker.svg',
 						category: 'Feedback',
 					},
+					{
+						title: 'FilterSideBar',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
 				]
 
 				const categoryOrder = [
@@ -431,12 +459,14 @@ export const ComponentsList: StoryObj = {
 					'Tableaux',
 					'Données',
 					'Feedback',
+					'Filtres',
 				]
 
 				const apComponents = [
 					'FooterBar',
 					'HeaderBar',
 					'HeaderLoading',
+					'Breadcrumbs',
 					'PageContainer',
 					'CopyBtn',
 					'DownloadBtn',
@@ -450,6 +480,17 @@ export const ComponentsList: StoryObj = {
 					'SyIconBtn',
 					'NirField',
 					'Card',
+					'FilterSideBar',
+					'SyTextField',
+					'Switch',
+					'Tooltip',
+					'SkeletonLoader',
+					'OTPInput',
+					'DialogBox',
+					'NotificationBar',
+					'Accordion',
+					'ChipList',
+					'SyTabs',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

@@ -1,5 +1,6 @@
 import { apSemanticTokens } from './apSemantic'
 import { apColorsTokens } from './apColors'
+import { baseColors } from '../baseColors'
 
 export const apLightTheme = {
 	primary: apColorsTokens.cyan.darken20,
@@ -100,4 +101,6 @@ export const apLightTheme = {
 	iconOnDark: apSemanticTokens.colors.icon.onDark,
 	iconDisabled: apSemanticTokens.colors.icon.disabled,
 	iconDisabledOnDark: apSemanticTokens.colors.icon.disabledOnDark,
+	feedbackOnSuccess: baseColors.white.base,
+	colorPrimary: baseColors.cyan.base,
 }
