@@ -325,12 +325,12 @@
 
 	onMounted(() => {
 		syncSearchFromValue()
-		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label)
+		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label, props.required, displayHasError.value)
 		focusInput(textFieldRef, true)
 	})
 
-	watch([isOpen, activeDescendantId, () => props.loading], () => {
-		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label)
+	watch([isOpen, activeDescendantId, () => props.loading, displayHasError, () => props.required], () => {
+		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label, props.required, displayHasError.value)
 	}, { flush: 'post' })
 
 	watch(isOpen, (open) => {

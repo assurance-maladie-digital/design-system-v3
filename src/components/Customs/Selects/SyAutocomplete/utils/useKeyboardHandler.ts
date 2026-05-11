@@ -1,4 +1,4 @@
-import { nextTick, type Ref, type ComputedRef } from 'vue'
+import { nextTick, onUnmounted, type Ref, type ComputedRef } from 'vue'
 import { useSySelectKeyboard } from '@/components/Customs/Selects/SySelect/composables/useSySelectKeyboard'
 import type { ItemType, SelectValue, SelectArray } from '../types'
 
@@ -44,6 +44,7 @@ export function useSyAutocompleteKeyboard(
 	})
 
 	const keydownAdded = new WeakMap<HTMLInputElement, boolean>()
+	const registeredInputs: HTMLInputElement[] = []
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		const key = e.key
@@ -93,10 +94,16 @@ export function useSyAutocompleteKeyboard(
 				if (!keydownAdded.get(inputEl)) {
 					inputEl.addEventListener('keydown', handleKeydown)
 					keydownAdded.set(inputEl, true)
+					registeredInputs.push(inputEl)
 				}
 			}
 		})
 	}
+
+	onUnmounted(() => {
+		registeredInputs.forEach(el => el.removeEventListener('keydown', handleKeydown))
+		registeredInputs.length = 0
+	})
 
 	return {
 		handleKeydown,
