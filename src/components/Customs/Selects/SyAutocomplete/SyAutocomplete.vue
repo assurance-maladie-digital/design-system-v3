@@ -1,18 +1,16 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, toRef, watch, type Ref } from 'vue'
-	import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
-	import { mdiChevronDown, mdiCloseCircle, mdiCheck, mdiAlertOutline, mdiAlertCircle } from '@mdi/js'
+	import { computed, nextTick, onMounted, ref, watch } from 'vue'
+	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import { ariaManager } from './utils/ariaManager'
-	import { type ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import type { ItemType, SelectValue, SelectArray } from './types'
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSelectionLogic } from './utils/useSelectionLogic'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales } from './locales'
 
 	interface SyAutocompleteProps {
@@ -79,10 +77,8 @@
 	const isOpen = ref(false)
 	const search = ref('')
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
-	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
 	const suppressMenuOpen = ref(false)
-	const focused = ref(false)
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
 	const randomId = Math.random().toString(36).slice(2)
@@ -90,44 +86,21 @@
 	const optionIdPrefixed = computed(() => `${uniqueMenuId.value}-option`)
 	const activeDescendantId = ref('')
 
-	const defaultRules = computed<ValidationRule[]>(() => props.required
-		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
-		: [],
-	)
-
-	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: toRef(props, 'modelValue') as Ref<unknown>,
-		readonly: toRef(props, 'readonly'),
-		disabled: toRef(props, 'disabled'),
-		required: toRef(props, 'required'),
-		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
-		showSuccessMessages: toRef(props, 'showSuccessMessages'),
-		disableErrorHandling: toRef(props, 'disableErrorHandling'),
-		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
-		label: toRef(props, 'label'),
-		rules: toRef(props, 'rules') as Ref<VuetifyValidationRule[] | undefined>,
-		customRules: computed(() => [...defaultRules.value, ...(props.customRules ?? [])]),
-		customWarningRules: toRef(props, 'customWarningRules'),
-		customSuccessRules: toRef(props, 'customSuccessRules'),
-		errorMessages: toRef(props, 'errorMessages'),
-		warningMessages: toRef(props, 'warningMessages'),
-		successMessages: toRef(props, 'successMessages'),
-		hasErrorProp: toRef(props, 'hasError'),
-		hasWarningProp: toRef(props, 'hasWarning'),
-		hasSuccessProp: toRef(props, 'hasSuccess'),
-		maxErrors: toRef(props, 'maxErrors'),
+	const {
 		focused,
-	})
-
-	watch([errors, warnings, successes], ([e, w, s]) => {
-		if (e.length > 0 || w.length > 0 || s.length > 0) hasInteracted.value = true
-	})
+		hasInteracted,
+		markInteracted,
+		clearValidation,
+		validateOnSubmit,
+		validateOnBlur,
+		displayErrors,
+		displayWarnings,
+		displaySuccesses,
+		displayHasError,
+		displayHasWarning,
+		displayHasSuccess,
+		validationIcon,
+	} = useSyAutocompleteValidation(props)
 
 	const formattedItems = computed(() => props.items.map((item) => {
 		if (typeof item === 'string') {
@@ -169,10 +142,6 @@
 			return text.includes(normalizedSearch.value)
 		})
 	})
-
-	const markInteracted = () => {
-		hasInteracted.value = true
-	}
 
 	const selectItem = (item: ItemType | string | number | null | undefined) => {
 		markInteracted()
@@ -293,28 +262,6 @@
 		return (textFieldRef.value?.$el as HTMLElement | undefined)?.querySelector('.v-field') ?? undefined
 	})
 
-	const displayErrors = computed(() => hasInteracted.value ? errors.value : [])
-	const displayWarnings = computed(() => hasInteracted.value ? warnings.value : [])
-	const displaySuccesses = computed(() => hasInteracted.value ? successes.value : [])
-	const displayHasError = computed(() => hasInteracted.value && hasError.value)
-	const displayHasWarning = computed(() => hasInteracted.value && hasWarning.value)
-	const displayHasSuccess = computed(() => hasInteracted.value && hasSuccess.value)
-
-	const validationIcon = computed(() => {
-		if (props.useVuetifyValidation) return null
-		if (displayHasError.value) return mdiAlertCircle
-		if (displayHasWarning.value) return mdiAlertOutline
-		if (displayHasSuccess.value) return mdiCheck
-		return null
-	})
-
-	const validateOnSubmit = async () => {
-		markInteracted()
-		return await validate()
-	}
-
-	useValidatable(validateOnSubmit, clearValidation)
-
 	const checkErrorOnBlur = (event?: FocusEvent) => {
 		const relatedTarget = event?.relatedTarget as HTMLElement | null | undefined
 		if (relatedTarget?.closest('.sy-autocomplete__chip') || relatedTarget?.closest('.sy-autocomplete__clear-button')) {
@@ -324,9 +271,7 @@
 			})
 			return
 		}
-		markInteracted()
-		focused.value = false
-		validate()
+		validateOnBlur()
 	}
 
 	const getInputValue = (value: string | Event): string | null => {
