@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "private": false,
   "description": "CNAM DS v3",
   "type": "module",
@@ -167,7 +167,8 @@
       "follow-redirects": ">=1.16.0",
       "uuid": ">=14.0.0",
       "@cypress/request>uuid": "8.3.2",
-      "postcss": ">=8.5.10"
+      "postcss": ">=8.5.10",
+      "fast-uri": ">=3.1.2"
     },
     "patchedDependencies": {
       "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"
