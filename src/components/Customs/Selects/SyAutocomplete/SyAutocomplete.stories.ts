@@ -5,6 +5,7 @@ import AccessibilityDocs from './accessibilite/Accessibility.mdx'
 import { ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
 import { VBtn } from 'vuetify/components'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SyAutocomplete> = {
 	title: 'Composants/Formulaires/Selects/SyAutocomplete',
@@ -21,6 +22,19 @@ const meta: Meta<typeof SyAutocomplete> = {
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
+		...getValidationDocumentation(),
+
+		// Override : défaut false sur SyAutocomplete (la validation se déclenche à la sélection, pas à chaque frappe)
+		'isValidateOnBlur': {
+			control: 'boolean',
+			description: 'Détermine si la validation doit être déclenchée lors de la saisie ou du blur de l\'input. Par défaut `false` sur ce composant : la validation se déclenche dès qu\'une option est sélectionnée.',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
+			},
+		},
+
 		'bgColor': {
 			control: 'text',
 			description: 'Couleur de fond du champ',
@@ -36,21 +50,6 @@ const meta: Meta<typeof SyAutocomplete> = {
 			description: 'Permet de vider la sélection',
 			table: { category: 'props' },
 		},
-		'customRules': {
-			control: 'object',
-			description: 'Règles de validation personnalisées d\'erreur (bloquantes) à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
-			table: { category: 'props' },
-		},
-		'customSuccessRules': {
-			control: 'object',
-			description: 'Règles de validation personnalisées de succès à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
-			table: { category: 'props' },
-		},
-		'customWarningRules': {
-			control: 'object',
-			description: 'Règles de validation personnalisées d\'avertissement (non bloquantes) à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
-			table: { category: 'props' },
-		},
 		'debounce': {
 			control: 'number',
 			description: 'Délai en millisecondes entre la dernière frappe et l\'émission de l\'événement search. Permet de limiter les appels lors d\'une recherche asynchrone.',
@@ -62,44 +61,14 @@ const meta: Meta<typeof SyAutocomplete> = {
 			description: 'Définit la densité du champ',
 			table: { category: 'props' },
 		},
-		'disableErrorHandling': {
-			control: 'boolean',
-			description: 'Désactive la gestion des erreurs, utile lorsque vous souhaitez gérer les erreurs manuellement.',
-			table: { category: 'props' },
-		},
-		'disabled': {
-			control: 'boolean',
-			description: 'Désactive le champ',
-			table: { category: 'props' },
-		},
 		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque pour les champs obligatoires',
 			table: { category: 'props' },
 		},
-		'errorMessages': {
-			control: 'object',
-			description: 'Permet d\'injecter des messages d\'erreur depuis le parent. Aucun calcul de validation n\'est exécuté.',
-			table: { category: 'props' },
-		},
 		'filter': {
 			control: 'boolean',
 			description: 'Active le filtrage des options basé sur la saisie',
-			table: { category: 'props' },
-		},
-		'hasError': {
-			control: 'boolean',
-			description: 'Indique si le champ a une erreur, peut être utilisé pour forcer l\'état d\'erreur.',
-			table: { category: 'props' },
-		},
-		'hasSuccess': {
-			control: 'boolean',
-			description: 'Indique si le champ a un succès, peut être utilisé pour forcer l\'état de succès.',
-			table: { category: 'props' },
-		},
-		'hasWarning': {
-			control: 'boolean',
-			description: 'Indique si le champ a un avertissement, peut être utilisé pour forcer l\'état d\'avertissement.',
 			table: { category: 'props' },
 		},
 		'helpText': {
@@ -112,18 +81,8 @@ const meta: Meta<typeof SyAutocomplete> = {
 			description: 'Cache le message "aucune option" quand la liste est vide',
 			table: { category: 'props' },
 		},
-		'isValidateOnBlur': {
-			control: 'boolean',
-			description: 'Détermine si la validation doit être déclenchée lors de la saisie ou du blur de l\'input. Par défaut false sur ce composant : la validation se déclenche dès qu\'une option est sélectionnée.',
-			table: { category: 'props' },
-		},
 		'items': {
 			control: 'object',
-			table: { category: 'props' },
-		},
-		'label': {
-			control: 'text',
-			description: 'Libellé du champ',
 			table: { category: 'props' },
 		},
 		'loading': {
@@ -160,16 +119,6 @@ const meta: Meta<typeof SyAutocomplete> = {
 			description: 'Propriété de l\'objet utilisée pour le filtrage côté client (filter: true). Si absente, c\'est textKey qui est utilisée.',
 			table: { category: 'props' },
 		},
-		'readonly': {
-			control: 'boolean',
-			description: 'Rend le champ en lecture seule',
-			table: { category: 'props' },
-		},
-		'required': {
-			control: 'boolean',
-			description: 'Marque le champ comme obligatoire',
-			table: { category: 'props' },
-		},
 		'returnObject': {
 			control: 'boolean',
 			description: 'Retourne l\'objet complet sélectionné au lieu de la seule valeur de valueKey.',
@@ -178,17 +127,6 @@ const meta: Meta<typeof SyAutocomplete> = {
 		'selectionText': {
 			control: false,
 			description: 'Fonction de personnalisation du texte affiché dans l\'input en mode multiple. Reçoit le tableau des valeurs sélectionnées et retourne une chaîne.',
-
-			table: { category: 'props' },
-		},
-		'showSuccessMessages': {
-			control: 'boolean',
-			description: 'Affiche les messages de succès lorsque la validation est réussie. Si false, cache uniquement les messages texte, l\'état visuel reste actif.',
-			table: { category: 'props' },
-		},
-		'successMessages': {
-			control: 'object',
-			description: 'Permet d\'injecter des messages de succès depuis le parent. Aucun calcul de validation n\'est exécuté.',
 			table: { category: 'props' },
 		},
 		'textKey': {
@@ -199,11 +137,6 @@ const meta: Meta<typeof SyAutocomplete> = {
 		'valueKey': {
 			control: 'text',
 			description: 'Nom de la propriété qui contient la valeur à retourner',
-			table: { category: 'props' },
-		},
-		'warningMessages': {
-			control: 'object',
-			description: 'Permet d\'injecter des messages d\'avertissement depuis le parent. Aucun calcul de validation n\'est exécuté.',
 			table: { category: 'props' },
 		},
 		'onSearch': {
