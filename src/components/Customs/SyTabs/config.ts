@@ -9,9 +9,9 @@ export const config = {
 		'show-arrows': true,
 	},
 	tab: {
-		'base-color': '#0C419A',
-		'active-color': '#0C419A',
-		'slider-color': '#0C419A',
+		'base-color': 'rgb(var(--v-theme-colorPrimary))',
+		'active-color': 'rgb(var(--v-theme-colorPrimary))',
+		'slider-color': 'rgb(var(--v-theme-colorPrimary))',
 		'ripple': false,
 	},
 }

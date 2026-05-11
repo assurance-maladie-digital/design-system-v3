@@ -45,6 +45,12 @@ import '../../../styles/shared.css';
       background: url('data:image/svg+xml;utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cpath d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/%3E%3C/svg%3E') repeat;
       opacity: 0.3;
     }
+
+      h2 {
+    font-weight: bold !important;
+    color: #0c419a !important;
+    font-size: 1.6rem !important;
+  }
     
        
     
@@ -62,6 +68,8 @@ import '../../../styles/shared.css';
       padding: 1.5rem;
       position: relative;
       overflow: hidden;
+      border: 1px solid #ccc;
+      border-radius: var(--border-radius-md);
     }
     
     .tool-card::before {
@@ -93,6 +101,7 @@ import '../../../styles/shared.css';
       gap: 0.75rem;
       position: relative;
       padding-bottom: 0.75rem;
+       font-weight: bold !important;
     }
     
     .tool-card-title::after {
@@ -105,6 +114,52 @@ import '../../../styles/shared.css';
       
       border-radius: 3px;
     }
+
+    .tool-card-title-tanaguru {
+      color: #0c419a;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    .tanaguru-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .tanaguru-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .tanaguru-chip {
+      background-color: #eef3fb;
+      color: #0c419a;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      border: 1px solid #c7d8f5;
+    }
+
+    .tanaguru-note {
+      background-color: #fff8ee;
+      border-left: 3px solid #b45309;
+      padding: 0.85rem 1rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      color: #3d3d3d;
+      line-height: 1.5;
+    }
+
+    .tanaguru-note strong {
+      color: #b45309;
+    }
     
     .tool-card-icon {
       width: 36px;
@@ -115,6 +170,7 @@ import '../../../styles/shared.css';
       background-color: rgba(0, 120, 212, 0.1);
       border-radius: 50%;
       font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
     
     .tool-card-description {
@@ -131,6 +187,7 @@ import '../../../styles/shared.css';
       text-decoration: none;
       font-weight: 500;
       position: relative;
+       font-weight: bold;
     }
     
     .tool-card-link::after {
@@ -269,63 +326,34 @@ import '../../../styles/shared.css';
 <div className="header">
   <h1>Outils d'accessibilité</h1>
   <p>
-    Découvrez les outils essentiels pour vérifier la conformité de vos interfaces aux normes d'accessibilité dans le cadre du pré-audit et de l'audit.
+    Découvrez les outils essentiels pour vérifier la conformité de vos interfaces aux normes d'accessibilité dans le cadre du pré-audit, de l'audit ou de la vérification continue. <br/> Ces outils vous aideront à identifier et corriger les problèmes d'accessibilité avant même de soumettre votre produit à un audit complet.
   </p>
 </div>
 
 <section className="section">
-  <h2 className="section-title">Présentation</h2>
-  <p className="section-description">
-    Dans le cadre du pré-audit et de l'audit, il existe des outils automatisés pour vérifier certains critères de conformité en matière d'accessibilité. Ces outils vous aideront à identifier et corriger les problèmes d'accessibilité avant même de soumettre votre produit à un audit complet.
-  </p>
-</section>
-<section className="section">
   <h2 className="section-title">Outil principal</h2>
   
-  <div className="tool-card">
+  <div className="">
     <div className="tool-card-content">
-      <h3 className="tool-card-title">
-        <span className="tool-card-icon" role="img" aria-hidden="true">🔍</span>
-        Tanaguru webext RGAA
-      </h3>
-      
-      <p className="tool-card-description">
-        Extension Firefox conçue pour faciliter l'audit d'accessibilité des sites web selon le <strong>Référentiel Général d'Amélioration de l'Accessibilité (RGAA)</strong>. Elle permet de vérifier, directement depuis votre navigateur, la conformité de pages web aux critères d'accessibilité.
-      </p>
-      
-      <div className="info-box">
-        <p>
-          <strong>Fonctionnalités principales :</strong>
-        </p>
-        <ul className="modern-list">
-          <li className="modern-list-item">
-            <span className="modern-list-icon" role="img" aria-hidden="true">✓</span>
-            <span>Évaluation rapide des problèmes d'accessibilité (contrastes, alternatives textuelles, structure HTML)</span>
-          </li>
-          <li className="modern-list-item">
-            <span className="modern-list-icon" role="img" aria-hidden="true">✓</span>
-            <span>Affichage direct des erreurs avec suggestions d'amélioration</span>
-          </li>
-          <li className="modern-list-item">
-            <span className="modern-list-icon" role="img" aria-hidden="true">✓</span>
-            <span>Audit instantané pour développeurs et testeurs d'accessibilité</span>
-          </li>
-        </ul>
+      <h3 className="tool-card-title-tanaguru">Tanaguru webext RGAA</h3>
+
+      <div className="tanaguru-layout">
+        <div>
+          <p className="tool-card-description">Extension Firefox pour vérifier la conformité de vos pages aux critères du <strong>RGAA</strong>, directement depuis le navigateur.</p>
+          <div className="tanaguru-chips">
+            <span className="tanaguru-chip">Contrastes</span>
+            <span className="tanaguru-chip">Alternatives textuelles</span>
+            <span className="tanaguru-chip">Structure HTML</span>
+            <span className="tanaguru-chip">158 tests sur 258</span>
+          </div>
+          <a href="/docs/accessibilité-kit-de-pré-audit-outils-tanaguru--docs" className="tool-card-link" style={{marginTop: '1.25rem'}}>
+            Guide d'utilisation →
+          </a>
+        </div>
+        <div className="tanaguru-note">
+          <strong>Limite :</strong> Tanaguru couvre uniquement les critères automatisables. Les critères restants nécessitent une vérification manuelle — un audit ne peut pas reposer uniquement sur des outils automatisés.
+        </div>
       </div>
-      
-      <div className="warning-box">
-        <p>
-          <strong>Attention :</strong> Ce service ne permet pas d'évaluer l'ensemble des 106 critères du RGAA, uniquement ceux qui sont automatisables. Un audit d'accessibilité ne peut pas se reposer uniquement sur des outils automatisés car ces derniers ne détectent qu'un nombre limité de problèmes techniques.
-        </p>
-        <p>
-          De nombreux critères d'accessibilité nécessitent une évaluation manuelle, tenant compte de la perception humaine et du contexte d'utilisation. Sur les 258 tests du RGAA, Tanaguru estime qu'environ 100 tests ne sont pas automatisés.
-        </p>
-      </div>
-      
-      <a href="/docs/accessibilité-kit-de-pré-audit-outils-tanaguru--docs" className="tool-card-link">
-        Guide d'utilisation de Tanaguru
-        <span className="tool-card-link-icon" role="img" aria-hidden="true">→</span>
-      </a>
     </div>
   </div>
 </section>
@@ -487,7 +515,7 @@ import '../../../styles/shared.css';
     <div className="tool-card-content">
       <h3 className="tool-card-title">
         <span className="tool-card-icon" role="img" aria-hidden="true">✅</span>
-        Check-list du designer
+        rapport de pre-audit du designer
       </h3>
       <p className="tool-card-description">
         Checklist d'accessibilité disponible sur le site Design Accessible. Propose une liste de critères à vérifier pour garantir l'accessibilité des sites web.

@@ -76,7 +76,7 @@ ValidationExamples.parameters = {
 			<script setup>
 import { computed, ref, watch } from 'vue';vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-import { useDateFormat } from '@/composables/date/useDateFormat';vue'
+import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 
 				// Exemple 1: Validation de base (required)
 				const date1 = ref('')

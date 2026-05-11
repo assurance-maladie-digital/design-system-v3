@@ -1,66 +1,10 @@
 import { fileURLToPath, URL } from 'node:url'
 import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
-import { coverageConfigDefaults } from 'vitest/config'
+import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
-import dts from 'vite-plugin-dts'
-
-function generateVuetifyGlobals() {
-	const components = [
-		'VForm',
-		'VBtn',
-		'VIcon',
-		'VChip',
-		'VMenu',
-		'VRadioGroup',
-		'VRadio',
-		'VTable',
-		'VDataTable',
-		'VDataTableServer',
-		'VBtnToggle',
-		'VCheckbox',
-		'VFileInput',
-		'VSelect',
-		'VRating',
-		'VRangeSlider',
-		'VSnackbar',
-		'VTooltip',
-		'VTextField',
-		'VInput',
-		'VToolbar',
-		'VNavigationDrawer',
-		'VTabs',
-		'VLayout',
-		'VFooter',
-		'VAlert',
-		'VDivider',
-		'VSheet',
-		'VList',
-		'VGrid',
-		'VDialog',
-		'VCard',
-		'VSkeletonLoader',
-		'VBadge',
-		'VExpansionPanel',
-		'VAutocomplete',
-		'VSlider',
-		'VTextarea',
-		'transitions',
-		'VProgressLinear',
-		'VLocaleProvider',
-	]
-
-	const globals: Record<string, string> = {}
-
-	for (const component of components) {
-		globals[`vuetify/lib/components/${component}/index.mjs`] = component
-	}
-	globals['vuetify/components/VSkeletonLoader'] = 'VSkeletonLoader'
-	globals['vuetify/lib/directives/index.mjs'] = 'vuetifyDirectives'
-
-	return globals
-}
+import { coverageConfigDefaults } from 'vitest/config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -100,22 +44,16 @@ export default defineConfig({
 			},
 			name: 'DesignSystemV3',
 			cssFileName: 'synapse',
-			formats: ['es', 'cjs'],
-			fileName: (format, entryAlias) => {
-				if (format === 'cjs') return `${entryAlias}.umd.cjs`
-				return `${entryAlias}.js`
-			},
+			formats: ['es'],
+			fileName: (format, entryAlias) => `${entryAlias}.js`,
 		},
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
 			external: ['vue', /^vuetify/],
 			output: {
 				globals: {
-					'vue': 'Vue',
-					'vuetify': 'Vuetify',
-					'vuetify/directives': 'vuetifyDirectives',
-					'vuetify/lib/directives': 'vuetifyDirectives',
-					...generateVuetifyGlobals(),
+					vue: 'Vue',
+					vuetify: 'Vuetify',
 				},
 			},
 		},

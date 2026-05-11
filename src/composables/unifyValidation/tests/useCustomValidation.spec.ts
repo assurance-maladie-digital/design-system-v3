@@ -468,7 +468,8 @@ describe('useCustomValidation', () => {
 				args.disableErrorHandling,
 			),
 		)
-		await result.validate()
+		const validationResult = await result.validate()
+		expect(validationResult.hasSuccess).toBe(true)
 		expect(args.successes.value).toEqual([])
 	})
 

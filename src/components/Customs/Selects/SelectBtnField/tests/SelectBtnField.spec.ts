@@ -118,6 +118,37 @@ describe('SelectBtnField', () => {
 		])
 	})
 
+	it('handles multiple mode safely when modelValue is null', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: {
+				label: 'Test',
+				hint: 'Test',
+				items: [
+					{
+						text: 'Test',
+						value: 'test',
+					},
+					{
+						text: 'Test 2',
+						value: 'test2',
+					},
+					{
+						text: 'Test 3',
+						value: 'test3',
+					},
+				],
+				multiple: true,
+				modelValue: null,
+			},
+		})
+
+		await wrapper.find('[role="option"]').trigger('click')
+
+		expect(wrapper.emitted('update:modelValue')).toEqual([
+			[['test']],
+		])
+	})
+
 	it(`display correctly with an error`, () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {

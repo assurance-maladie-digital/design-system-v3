@@ -9,7 +9,6 @@
 export type DateObjectValue = Date | (Date | null)[] | null
 
 /**
- * Alias pour maintenir la compatibilité avec le code existant
- * @deprecated Utilisez DateObjectValue pour les objets Date ou importez DateValue depuis useDateInitializationDayjs pour les chaînes
+ * @deprecated Utilisez DateObjectValue pour les objets Date ou importez DateModelValue depuis useDateInitializationDayjs pour les chaînes
  */
 export type DateValue = DateObjectValue

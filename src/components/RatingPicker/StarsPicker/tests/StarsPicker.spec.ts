@@ -37,7 +37,7 @@ describe('StarsPicker', () => {
 		)
 		await wrapper.setProps({ modelValue: 1 })
 		expect(wrapper.findAll('[role="radio"]')[3]?.attributes('aria-checked')).toBe(
-			undefined,
+			'false',
 		)
 		expect(wrapper.findAll('[role="radio"]')[0]?.attributes('aria-checked')).toBe(
 			'true',

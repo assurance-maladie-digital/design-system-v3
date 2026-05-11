@@ -45,7 +45,6 @@ import '../../styles/shared.css';
       border-radius: var(--border-radius);
       padding: 1.5rem;
       margin: 1.5rem 0;
-      box-shadow: var(--card-shadow);
     }
     
     .info-box h3 {
@@ -127,6 +126,10 @@ import '../../styles/shared.css';
     .link-buttons {
         margin-bottom: 1rem;
     }
+
+  h2 {
+    margin-top: 2rem !important;
+  }
   `
 }
 </style>
@@ -138,32 +141,28 @@ import '../../styles/shared.css';
   </div>
   
   <div className="info-box">
-    <h3>📋 Présentation</h3>
+    <h3>Présentation</h3>
     <p>Le <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr> est un outil méthodologique de certification permettant d'assurer par le respect de ses critères une manipulation des produits numériques dans le domaine du Web de manière égale entre chaque citoyen, qu'il soit ou non en situation de handicap (visuel, auditif, moteur, trouble dys...).</p>
     <p>Basé sur les travaux du W3C Web Accessibility Initiative (WAI), il vise à garantir quatre indices de performance :</p>
   </div>
   
   <div className="principles-container">
     <div className="principle-card">
-      <div className="principle-icon">👁️</div>
       <h4>Perceptibilité</h4>
       <p>La bonne perceptibilité de l'information et des composants de l'interface utilisateur</p>
     </div>
     
     <div className="principle-card">
-      <div className="principle-icon">🖱️</div>
       <h4>Utilisabilité</h4>
       <p>Une manipulation efficiente dans la navigation et les interactions</p>
     </div>
     
     <div className="principle-card">
-      <div className="principle-icon">🧠</div>
       <h4>Compréhension</h4>
       <p>Une bonne compréhension des informations et du fonctionnement de l'interface</p>
     </div>
     
     <div className="principle-card">
-      <div className="principle-icon">🛡️</div>
       <h4>Robustesse</h4>
       <p>Une robustesse efficace dans l'usage des produits numériques</p>
     </div>
@@ -200,7 +199,7 @@ import '../../styles/shared.css';
   <h2 className="section-title">Avantages du Design System CNAM</h2>
   
   <div className="info-box">
-    <h3>💡 Conformité intégrée</h3>
+    <h3>Conformité intégrée</h3>
     <p>L'usage sans modification de notre Design System vous assure :</p>
     <ul>
       <li>Un gain de temps significatif dans le développement</li>

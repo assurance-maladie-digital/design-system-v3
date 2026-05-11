@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type PropType, computed, ref, watch } from 'vue'
+	import { type PropType, computed, ref, watch, nextTick } from 'vue'
 
 	import EmotionPicker from './EmotionPicker/EmotionPicker.vue'
 	import NumberPicker from './NumberPicker/NumberPicker.vue'
@@ -44,13 +44,19 @@
 			type: Boolean,
 			default: false,
 		},
+		freeTextLabel: {
+			type: String,
+			default: 'Pouvez-vous nous en dire plus ?',
+		},
 	})
 
-	const emit = defineEmits(['update:modelValue'])
+	const emit = defineEmits<{
+		(e: 'update:modelValue', value: number): void
+	}>()
 
-	const alertTypeEnumRef = ref(AlertTypeEnum)
 	const internalValue = ref(-1)
 	const displayAdditionalContent = ref(false)
+	const ratingPickerRef = ref<{ focus?: () => void } | null>(null)
 
 	const ratingComponent = computed(() => {
 		if (props.type === RatingEnum.EMOTION) {
@@ -71,17 +77,29 @@
 		return undefined
 	})
 
-	const hasAnswered = computed(() => props.modelValue !== -1)
-
+	const hasAnswered = computed(() => internalValue.value !== -1)
 	function showAdditionalContent(value: number): void {
-		const starsUnsatisfied = props.type === RatingEnum.STARS && value <= 3
-		const numberUnsatisfied = props.type === RatingEnum.NUMBER && value <= 7
-		const isEmotion = props.type === RatingEnum.EMOTION
-		const isEmotionLow = props.twoEmotions ? value < 2 : value < 3
-		const emotionUnsatisfied = isEmotion && isEmotionLow
-		if (starsUnsatisfied || numberUnsatisfied || emotionUnsatisfied) {
-			displayAdditionalContent.value = true
+		const max = props.type === RatingEnum.EMOTION
+			? (props.twoEmotions ? 2 : 3)
+			: props.type === RatingEnum.STARS
+				? 5
+				: 10
+
+		if (value < 1 || value > max) {
+			displayAdditionalContent.value = false
+			return
 		}
+
+		const starsUnsatisfied = props.type === RatingEnum.STARS && value <= 2
+		const numberUnsatisfied = props.type === RatingEnum.NUMBER && value <= 7
+		const emotionUnsatisfied = props.type === RatingEnum.EMOTION
+			&& (
+				(props.twoEmotions && value < 2)
+				|| (!props.twoEmotions && value < 3)
+			)
+
+		displayAdditionalContent.value
+			= starsUnsatisfied || numberUnsatisfied || emotionUnsatisfied
 	}
 
 	function setValue(value: number): void {
@@ -92,7 +110,18 @@
 
 	watch(() => props.modelValue, (newVal) => {
 		internalValue.value = newVal
+		showAdditionalContent(newVal)
 	}, { immediate: true })
+
+	// focus auto
+	watch(
+		() => props.type,
+		async () => {
+			await nextTick()
+			ratingPickerRef.value?.focus?.()
+		},
+		{ immediate: true },
+	)
 </script>
 
 <template>
@@ -104,9 +133,10 @@
 	>
 		<component
 			:is="ratingComponent"
+			ref="ratingPickerRef"
 			:model-value="internalValue"
 			:label="props.label"
-			:length="length"
+			:length="length || undefined"
 			:readonly="props.readonly || hasAnswered"
 			:item-labels="props.itemLabels || undefined"
 			@update:model-value="setValue"
@@ -123,14 +153,22 @@
 				v-if="!props.hideAlert"
 				:class="{ 'mb-4': displayAdditionalContent }"
 				outlined
-				:type="alertTypeEnumRef.SUCCESS"
+				:type="AlertTypeEnum.SUCCESS"
 				role="status"
+				aria-live="polite"
 				class="mt-4"
 			>
 				{{ locales.thanks }}
 			</SyAlert>
 
-			<slot v-if="displayAdditionalContent" />
+			<div
+				v-if="displayAdditionalContent"
+				role="region"
+				aria-live="polite"
+				class="mt-4"
+			>
+				<slot />
+			</div>
 		</template>
 	</div>
 </template>
@@ -146,4 +184,22 @@
 	text-align: center;
 }
 
+.sy-rating-picker__free-text {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.sy-rating-picker__free-text-label {
+	font-weight: 600;
+}
+
+.sy-rating-picker__free-text-textarea {
+	min-height: 120px;
+	padding: 0.75rem;
+	border: 1px solid #ccc;
+	border-radius: 0.375rem;
+	resize: vertical;
+	font: inherit;
+}
 </style>

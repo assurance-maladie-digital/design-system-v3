@@ -118,7 +118,7 @@ export const WithVModel: Story = {
           Onglet actif: {{ activeTab }}
           <button 
             class="ml-4 px-2 py-1 bg-primary text-white rounded" 
-            @click="activeTab = activeTab === 'tab1' ? 'tab2' : 'tab1'"
+            @click="activeTab = activeTab === 'tab1' ? 'tab2' : activeTab === 'tab2' ? 'tab3' : 'tab1'"
           >
             Changer d'onglet
           </button>
@@ -138,7 +138,7 @@ export const WithVModel: Story = {
       Onglet actif: {{ activeTab }}
       <button 
         class="ml-4 px-2 py-1 bg-primary text-white rounded" 
-        @click="activeTab = activeTab === 'tab1' ? 'tab2' : 'tab1'"
+        @click="activeTab = activeTab === 'tab1' ? 'tab2' : activeTab === 'tab2' ? 'tab3' : 'tab1'"
       >
         Changer d'onglet
       </button>
@@ -476,9 +476,9 @@ const items = [
 export const NavigationMode: Story = {
 	args: {
 		items: [
-			{ label: 'Accueil', value: 'home', href: '#' },
-			{ label: 'Profil', value: 'profile', href: '#profile' },
-			{ label: 'Paramètres', value: 'settings', href: '#settings' },
+			{ label: 'Accueil', value: 'home', href: 'javascript:void(0)' },
+			{ label: 'Profil', value: 'profile', href: 'javascript:void(0)' },
+			{ label: 'Paramètres', value: 'settings', href: 'javascript:void(0)' },
 		],
 	},
 	parameters: {

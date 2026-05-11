@@ -1,8 +1,8 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import RatingPicker from './RatingPicker.vue'
-import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { VBtn, VSpacer } from 'vuetify/components'
 import { fn } from '@storybook/test'
+import SyTextArea from '../SyTextArea/SyTextArea.vue'
 
 const meta = {
 	title: 'Composants/Feedback/RatingPicker',
@@ -100,6 +100,16 @@ const meta = {
 				},
 			},
 		},
+		freeTextLabel: {
+			description: 'Le libellé du champ de texte libre. Ajouter aria-label ou aria-labelledby au <textarea> : <textarea :aria-label="props.freeTextLabel" …> . Ce champ doit être utilisé en slot pour être pris en compte. Voir l’exemple de la story "DefaultSlot".',
+			control: 'text',
+			default: null,
+			table: {
+				type: {
+					summary: 'string | null',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof RatingPicker>
 
@@ -132,9 +142,6 @@ export const Default: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -185,9 +192,6 @@ export const TwoEmotions: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -238,9 +242,6 @@ export const Numbers: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -290,9 +291,6 @@ export const Stars: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -343,9 +341,6 @@ export const ReadOnly: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -397,9 +392,6 @@ export const HideAlert: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -436,54 +428,42 @@ export const DefaultSlot: Story = {
 		'readonly': false,
 		'twoEmotions': false,
 		'hideAlert': false,
-		'modelValue': -1,
-		'onUpdate:modelValue': fn(),
-	},
+		'modelValue': 2,
+		'freeTextLabel': 'Pouvez-vous nous en dire plus ?',
+		'onUpdate:modelValue': fn() },
 	render: (args) => {
 		return {
-			components: { RatingPicker, SySelect, VBtn, VSpacer },
+			components: { RatingPicker, VBtn, VSpacer, SyTextArea },
 			setup() {
-				const items = [
-					{
-						text: 'Via une recherche internet',
-						value: 'internet',
-					},
-					{
-						text: 'Via un professionnel de santé',
-						value: 'professional',
-					},
-					{
-						text: 'Via un ami',
-						value: 'friend',
-					},
-				]
-				return { args, items }
+				return { args }
 			},
 			template: `
-                <RatingPicker v-bind="args" v-model="args.modelValue">
-					<SySelect
-						:items="items"
-						label="Comment avez-vous connu ce service ?"
-						class="mt-8"
-					/>
-					<div class="d-flex">
-						<VSpacer/>
+				<RatingPicker v-bind="args" v-model="args.modelValue">
+					<div class="mt-8">
 
-						<VBtn
-							right
-							color="primary"
-						>
-							Terminé
-						</VBtn>
+						<SyTextArea
+							id="rating-picker-comment"
+							class="w-100 pa-3"
+							:label="args.freeTextLabel"
+							rows="4"
+						/>
+
+						<div class="d-flex mt-4">
+							<VSpacer />
+
+							<VBtn
+								right
+								color="primary"
+							>
+								Terminé
+							</VBtn>
+						</div>
 					</div>
 				</RatingPicker>
-            `,
+			`,
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -493,52 +473,49 @@ export const DefaultSlot: Story = {
 		v-model="ratingEmotion"
 		label="Êtes-vous satisfait de ce service ?"
 		type="emotion"
+		:free-text-label="'Pouvez-vous nous en dire plus ?'"
 	>
-		<SySelect
-			:items="items"
-			label="Comment avez-vous connu ce service ?"
-			class="mt-8"
-		/>
-		<div class="d-flex">
-			<VSpacer/>
-
-			<VBtn
-				right
-				color="primary"
+		<div class="mt-8">
+			<label
+				for="rating-picker-comment"
+				class="d-block mb-2"
 			>
-				Terminé
-			</VBtn>
+				{{ freeTextLabel }}
+			</label>
+
+			<textarea
+				id="rating-picker-comment"
+				class="w-100 pa-3"
+				rows="4"
+			/>
+
+			<div class="d-flex mt-4">
+				<VSpacer />
+
+				<VBtn
+					right
+					color="primary"
+				>
+					Terminé
+				</VBtn>
+			</div>
 		</div>
 	</RatingPicker>
 </template>
-        `,
+				`,
 			},
 			{
 				name: 'Script',
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RatingPicker, SySelect } from '@cnamts/synapse'
+import { RatingPicker } from '@cnamts/synapse'
 import { VBtn, VSpacer } from 'vuetify/components'
 
-const ratingEmotion = ref(-1)
-
-const items = [
-	{
-		text: 'Via une recherche internet',
-		value: 'internet'
-	},
-	{
-		text: 'Via un professionnel de santé',
-		value: 'professional'
-	},
-	{
-		text: 'Via un ami',
-		value: 'friend'
-	}
-]
+const ratingEmotion = ref(2)
+const freeTextLabel = 'Pouvez-vous nous en dire plus ?'
 </script>
-        `,
+				`,
 			},
 		],
 	},

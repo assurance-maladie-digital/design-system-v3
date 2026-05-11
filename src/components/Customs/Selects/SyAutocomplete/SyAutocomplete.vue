@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import { computed, nextTick, onMounted, ref, watch, type PropType } from 'vue'
-	import { VMenu, VList, VListItem, VListItemTitle, VChip } from 'vuetify/components'
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -504,6 +503,7 @@
 					:has-error="displayHasError"
 					:has-warning="displayHasWarning"
 					:has-success="displayHasSuccess"
+					:show-success-messages="showSuccessMessages"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
 					:disable-error-handling="disableErrorHandling"
