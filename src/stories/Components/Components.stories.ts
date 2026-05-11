@@ -340,7 +340,7 @@ export const ComponentsList: StoryObj = {
 						title: 'TableToolbar',
 						description: 'Utilisé pour afficher une barre d\'outils pour les tableaux.',
 						link: '/?path=/docs/composants-tableaux-tabletoolbar--docs',
-                        img: `/components/table-toolbar${isAp ? '-ap' : ''}.svg`,
+						img: `/components/table-toolbar${isAp ? '-ap' : ''}.svg`,
 						category: 'Tableaux',
 					},
 					{
