@@ -648,6 +648,7 @@ li:hover {
 }
 
 /* Ensure focus styles match selection styles for keyboard navigation (align with SySelect) */
+
 /* :deep() is required for keyboard-focused so the style applies to slot content (prepend-item),
    which carries the parent's scoped attribute, not SyAutocomplete's. */
 .v-list-item:focus-visible,
