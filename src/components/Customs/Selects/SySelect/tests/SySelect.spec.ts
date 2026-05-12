@@ -886,6 +886,70 @@ describe('SySelect.vue', () => {
 
 			wrapper.unmount()
 		})
+
+		it('affiche le message de succès avec customSuccessRules quand showSuccessMessages est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					showSuccessMessages: true,
+					customSuccessRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							successMessage: 'Test success message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasSuccess).toBe(false)
+
+			await wrapper.setProps({ modelValue: '2' })
+
+			await vi.waitUntil(() => instance.hasSuccess === true)
+			expect(wrapper.find('.success-field').exists()).toBe(true)
+			expect(wrapper.find('.v-messages').text()).toContain('Test success message')
+
+			wrapper.unmount()
+		})
+
+		it('clearValidation remet l\'état d\'erreur à zéro', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+
+			await instance.validateOnSubmit()
+			await nextTick()
+			expect(instance.hasError).toBe(true)
+
+			instance.clearValidation()
+			await nextTick()
+			expect(instance.hasError).toBe(false)
+			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('Comportement du menu', () => {
