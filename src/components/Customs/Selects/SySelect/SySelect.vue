@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, toRef, type Ref } from 'vue'
+	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
 	import type { VList, VTextField } from 'vuetify/components'
@@ -13,8 +13,8 @@
 	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
-	import type { ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useSySelectValidation } from './composables/useSySelectValidation'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -134,43 +134,9 @@
 	const isOpen = ref(false)
 	// Initialize selectedItem with props.modelValue or empty array for multiple mode
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
-	const focused = ref(false)
 	const menuMinWidth = ref<number | null>(null)
 
-	const defaultRules = computed<ValidationRule[]>(() => props.required
-		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
-		: [],
-	)
-
-	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: toRef(props, 'modelValue') as Ref<unknown>,
-		readonly: toRef(props, 'readonly'),
-		disabled: toRef(props, 'disabled'),
-		required: toRef(props, 'required'),
-		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
-		showSuccessMessages: toRef(props, 'showSuccessMessages'),
-		disableErrorHandling: toRef(props, 'disableErrorHandling'),
-		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
-		label: toRef(props, 'label'),
-		rules: toRef(props, 'rules'),
-		customRules: computed(() => [...defaultRules.value, ...(props.customRules ?? [])]),
-		customWarningRules: toRef(props, 'customWarningRules'),
-		customSuccessRules: toRef(props, 'customSuccessRules'),
-		errorMessages: toRef(props, 'errorMessages'),
-		warningMessages: toRef(props, 'warningMessages'),
-		successMessages: toRef(props, 'successMessages'),
-		hasErrorProp: toRef(props, 'hasError'),
-		hasWarningProp: toRef(props, 'hasWarning'),
-		hasSuccessProp: toRef(props, 'hasSuccess'),
-		maxErrors: toRef(props, 'maxErrors'),
-		focused: focused,
-	})
+	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props)
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
@@ -565,14 +531,6 @@
 		if (!hasError.value) return ''
 
 		return formattedErrorMessages.value || 'Le champ contient une erreur.'
-	})
-
-	const validationIcon = computed(() => {
-		if (props.useVuetifyValidation) return null
-		if (hasError.value) return mdiAlertCircle
-		if (hasWarning.value) return mdiAlertOutline
-		if (hasSuccess.value) return mdiCheck
-		return null
 	})
 
 	watch(() => props.modelValue, (newValue) => {
