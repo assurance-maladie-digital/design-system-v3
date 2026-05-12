@@ -8,12 +8,12 @@ export function useSySelectValidation(props: FieldValidationProps & { modelValue
 
 	const defaultRules = computed<ValidationRule[]>(() => props.required
 		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
+				type: 'required',
+				options: {
+					message: `Le champ ${props.label || 'ce champ'} est requis.`,
+					fieldIdentifier: props.label,
+				},
+			}]
 		: [],
 	)
 
