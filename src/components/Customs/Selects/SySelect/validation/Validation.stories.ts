@@ -401,7 +401,7 @@ export const NoValidateOnBlur: Story = {
         }
       }]"
     />
-    <div class="d-flex gap-4">
+    <div class="d-flex gap-4 mt-2">
       <VBtn color="primary" class="mr-1" @click="value = '1'">Définir une valeur invalide</VBtn>
       <VBtn color="primary" class="mr-1" @click="value = '2'">Définir une valeur valide</VBtn>
       <VBtn @click="value = null">Réinitialiser</VBtn>
@@ -452,7 +452,7 @@ const items = [
 							}
 						}]"
 					/>
-					<div class="d-flex gap-4">
+					<div class="d-flex gap-4 mt-2">
 						<VBtn color="primary" class="mr-1" @click="value = '1'">Définir une valeur invalide</VBtn>
 						<VBtn color="primary" class="mr-1" @click="value = '2'">Définir une valeur valide</VBtn>
 						<VBtn @click="value = null">Réinitialiser</VBtn>
