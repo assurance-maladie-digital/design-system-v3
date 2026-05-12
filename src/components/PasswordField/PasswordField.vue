@@ -20,20 +20,8 @@
 		modelValue: null,
 		variantStyle: 'outlined',
 		color: 'primary',
-		required: false,
-		errorMessages: null,
-		warningMessages: null,
-		successMessages: null,
-		readonly: false,
-		disabled: false,
 		placeholder: undefined,
-		customRules: () => [],
-		customWarningRules: () => [],
-		customSuccessRules: () => [],
-		showSuccessMessages: true,
 		displayAsterisk: false,
-		isValidateOnBlur: true,
-		disableErrorHandling: false,
 		bgColor: 'white',
 		autocompleteType: 'current-password',
 		...validationPropsDefaults,
@@ -211,7 +199,6 @@
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
 		@focus="focused = true"
 		@blur="focused = false"
-		@keydown="handleKeydown"
 	>
 		<template #append-inner>
 			<div
