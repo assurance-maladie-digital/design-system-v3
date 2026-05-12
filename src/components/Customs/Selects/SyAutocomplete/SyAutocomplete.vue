@@ -509,7 +509,10 @@
 							v-if="multiple"
 							#prepend
 						>
-							<div aria-hidden="true" inert>
+							<div
+								aria-hidden="true"
+								inert
+							>
 								<SyCheckbox
 									:model-value="isItemSelected(item)"
 									density="compact"
@@ -542,7 +545,6 @@
 	width: 100%;
 	position: relative;
 }
-
 
 .sy-autocomplete__sr-only {
 	position: absolute;
