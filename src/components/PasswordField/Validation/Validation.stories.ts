@@ -467,18 +467,9 @@ export const WithCustomRules: Story = {
 		},
 		template: `
 			<PasswordField
+                v-bind="args"
 				v-model="password"
-				:variant-style="args.variantStyle"
-				:color="args.color"
-				:label="args.label"
-				:required="args.required"
-				:readonly="args.readonly"
-				:disabled="args.disabled"
-				:placeholder="args.placeholder"
 				:custom-rules="customRules"
-				:show-success-messages="args.showSuccessMessages"
-				:display-asterisk="args.displayAsterisk"
-				:is-validate-on-blur="args.isValidateOnBlur"
 			/>
 		`,
 	}),
