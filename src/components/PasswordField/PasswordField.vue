@@ -40,7 +40,7 @@
 	})
 
 	const options = useCustomizableOptions(config, props)
-	const emit = defineEmits(['update:modelValue', 'submit'])
+	const emit = defineEmits(['update:modelValue'])
 
 	const eyeIcon = mdiEyeOutline
 	const eyeOffIcon = mdiEyeOffOutline
@@ -192,6 +192,7 @@
 		:color="props.color"
 		:label="props.label"
 		:required="props.required"
+		:disable-error-handling="props.disableErrorHandling"
 		:error-messages="errors"
 		:warning-messages="warnings"
 		:success-messages="successes"
