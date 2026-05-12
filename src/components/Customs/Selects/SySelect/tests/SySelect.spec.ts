@@ -826,6 +826,35 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 
+		it('déclenche la validation au blur natif sans ouvrir le menu', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+
+			// Simuler un blur natif sur l'input sans jamais ouvrir le menu
+			const input = wrapper.find('input')
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+
+			await vi.waitUntil(() => instance.hasError === true)
+			expect(wrapper.find('.v-messages').text()).toContain('requis')
+
+			wrapper.unmount()
+		})
+
 		it('affiche un avertissement avec customWarningRules', async () => {
 			const wrapper = mount(SySelect, {
 				props: {

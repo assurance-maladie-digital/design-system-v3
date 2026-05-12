@@ -375,11 +375,11 @@ onMounted(() => {
 	}),
 }
 
-export const ValidateOnBlur: Story = {
+export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `isValidateOnBlur: true`, la validation ne se déclenche qu\'au blur du champ. À la différence du comportement par défaut (`false`) où l\'erreur apparaît dès qu\'une option est sélectionnée, ici l\'erreur n\'est visible qu\'après que le champ perd le focus.',
+				story: 'Avec `isValidateOnBlur: false`, la validation se déclenche **immédiatement** dès que la valeur change, sans attendre que le champ perde le focus.\n\nCliquez sur « Définir une valeur invalide » : l\'erreur apparaît aussitôt, sans qu\'il soit nécessaire d\'ouvrir ou de fermer le menu. Avec le comportement par défaut (`isValidateOnBlur: true`), la même action ne déclencherait aucune erreur tant que l\'utilisateur n\'a pas interagi avec le champ.',
 			},
 		},
 		sourceCode: [
@@ -387,13 +387,26 @@ export const ValidateOnBlur: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SySelect
-    v-model="value"
-    :items="items"
-    label="Option obligatoire"
-    required
-    is-validate-on-blur
-  />
+  <div class="d-flex flex-column gap-4 pa-4">
+    <SySelect
+      v-model="value"
+      :items="items"
+      label="Option"
+      :is-validate-on-blur="false"
+      :custom-rules="[{
+        type: 'custom',
+        options: {
+          validate: (v) => v !== '1',
+          message: 'Option 1 n\\'est pas autorisée.'
+        }
+      }]"
+    />
+    <div class="d-flex gap-4">
+      <VBtn color="primary" class="mr-1" @click="value = '1'">Définir une valeur invalide</VBtn>
+      <VBtn color="primary" class="mr-1" @click="value = '2'">Définir une valeur valide</VBtn>
+      <VBtn @click="value = null">Réinitialiser</VBtn>
+    </div>
+  </div>
 </template>`,
 			},
 			{
@@ -402,6 +415,7 @@ export const ValidateOnBlur: Story = {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const value = ref(null)
 const items = [
@@ -415,23 +429,34 @@ const items = [
 	},
 	args: {
 		items,
-		label: 'Option obligatoire',
-		required: true,
-		isValidateOnBlur: true,
+		label: 'Option',
+		isValidateOnBlur: false,
 	},
 	render: (args) => {
 		return {
-			components: { SySelect },
+			components: { SySelect, VBtn },
 			setup() {
 				const value = ref(null)
 				return { args, value }
 			},
 			template: `
-				<div class="pa-4">
+				<div class="d-flex flex-column gap-4 pa-4">
 					<SySelect
 						v-model="value"
 						v-bind="args"
+						:custom-rules="[{
+							type: 'custom',
+							options: {
+								validate: (v) => v !== '1',
+								message: 'Option 1 n\\'est pas autorisée.'
+							}
+						}]"
 					/>
+					<div class="d-flex gap-4">
+						<VBtn color="primary" class="mr-1" @click="value = '1'">Définir une valeur invalide</VBtn>
+						<VBtn color="primary" class="mr-1" @click="value = '2'">Définir une valeur valide</VBtn>
+						<VBtn @click="value = null">Réinitialiser</VBtn>
+					</div>
 				</div>
 			`,
 		}

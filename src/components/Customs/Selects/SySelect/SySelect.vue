@@ -902,6 +902,14 @@
 			}
 		}
 
+		const onBlur = () => {
+			// Trigger blur validation only when focus truly leaves the component.
+			// Skip if the menu is open — focus is moving to the dropdown list, not exiting.
+			if (!isOpen.value) {
+				validate()
+			}
+		}
+
 		return {
 			...activatorProps,
 			onKeydown: undefined,
@@ -911,7 +919,8 @@
 				textInput.value = el
 				activatorProps.ref?.(el)
 			},
-			onFocus: onFocus,
+			onFocus,
+			onBlur,
 		}
 	}
 </script>
