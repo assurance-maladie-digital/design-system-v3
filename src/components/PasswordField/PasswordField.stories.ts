@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import PasswordField from './PasswordField.vue'
+import type { PasswordFieldProps } from './types'
+import { fn } from '@storybook/test'
+
+type PasswordFieldStoryArgs = PasswordFieldProps & {
+	'onUpdate:modelValue': (...args: unknown[]) => unknown
+	'onSubmit': (...args: unknown[]) => unknown
+}
 
 const meta = {
 	title: 'Composants/Formulaires/PasswordField',
@@ -101,30 +109,32 @@ const meta = {
 		},
 	},
 	args: {
-		modelValue: '',
-		variantStyle: 'outlined',
-		color: 'primary',
-		label: 'Mot de passe',
-		required: false,
-		errorMessages: null,
-		warningMessages: null,
-		successMessages: null,
-		readonly: false,
-		disabled: false,
-		placeholder: 'Entrez votre mot de passe',
-		customRules: [],
-		customWarningRules: [],
-		customSuccessRules: [],
-		showSuccessMessages: true,
-		displayAsterisk: false,
-		isValidateOnBlur: true,
-		bgColor: 'white',
+		'modelValue': '',
+		'variantStyle': 'outlined',
+		'color': 'primary',
+		'label': 'Mot de passe',
+		'required': false,
+		'errorMessages': null,
+		'warningMessages': null,
+		'successMessages': null,
+		'readonly': false,
+		'disabled': false,
+		'placeholder': 'Entrez votre mot de passe',
+		'customRules': [],
+		'customWarningRules': [],
+		'customSuccessRules': [],
+		'showSuccessMessages': true,
+		'displayAsterisk': false,
+		'isValidateOnBlur': true,
+		'bgColor': 'white',
+		'onUpdate:modelValue': fn(),
+		'onSubmit': fn(),
 	},
-} satisfies Meta<typeof PasswordField>
+} as Meta<PasswordFieldStoryArgs>
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<PasswordFieldStoryArgs>
 
 /**
  * Story par défaut montrant un champ de mot de passe basique.
@@ -163,7 +173,7 @@ export const Default: Story = {
 	render: args => ({
 		components: { PasswordField },
 		setup() {
-			const password = ref(args.modelValue)
+			const password = ref(args.modelValue ?? '')
 			return { args, password }
 		},
 		template: `
@@ -822,7 +832,7 @@ export const WithCustomRules: Story = {
 	render: args => ({
 		components: { PasswordField },
 		setup() {
-			const password = ref(args.modelValue)
+			const password = ref(args.modelValue ?? '')
 
 			// Règles personnalisées pour la validation du mot de passe
 			const customRules = [
@@ -981,7 +991,7 @@ export const WithFormValidation: Story = {
 		components: { PasswordField },
 		setup() {
 			const password = ref('')
-			const passwordFieldRef = ref<InstanceType<typeof PasswordField> | null>(null)
+			const passwordFieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			const formStatus = ref('')
 
 			// Règles personnalisées pour la validation du mot de passe
@@ -1015,7 +1025,7 @@ export const WithFormValidation: Story = {
 			// Fonction de soumission du formulaire
 			const handleSubmit = async () => {
 				if (passwordFieldRef.value) {
-					const isValid = await passwordFieldRef.value.validateOnSubmit()
+					const isValid = await passwordFieldRef.value.validateOnSubmit?.()
 					if (isValid) {
 						formStatus.value = 'Formulaire soumis avec succès !'
 					}
@@ -1249,6 +1259,317 @@ mais gérer leur affichage différemment, ou utiliser la validation uniquement a
 						<li class="ml-4">Vous pouvez également essayer de soumettre les deux champs pour voir la différence de comportement</li>
 					</ol>
 				</div>
+			</div>
+		`,
+	}),
+}
+
+/**
+ * Validation déclenchée à chaque frappe (isValidateOnBlur: false).
+ */
+export const ValidateOnInput: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation à la saisie
+
+Lorsque \`isValidateOnBlur\` vaut \`false\`, la validation se déclenche à chaque modification
+de la valeur plutôt qu'à la perte de focus. Utile pour un retour immédiat à l'utilisateur.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<PasswordField
+		v-model="password"
+		label="Mot de passe"
+		required
+		:is-validate-on-blur="false"
+		:custom-rules="[
+			{
+				type: 'custom',
+				options: {
+					message: 'Au moins 8 caractères requis',
+					validate: (value) => value.length >= 8,
+				},
+			},
+		]"
+		show-success-messages
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { PasswordField } from '@cnamts/synapse'
+
+const password = ref('')
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { PasswordField },
+		setup() {
+			const password = ref('')
+			return { args, password }
+		},
+		template: `
+			<div>
+				<p class="mb-4">La validation se déclenche à chaque frappe (<code>isValidateOnBlur="false"</code>).</p>
+				<PasswordField
+					v-model="password"
+					label="Mot de passe"
+					required
+					:is-validate-on-blur="false"
+					:custom-rules="[
+						{
+							type: 'custom',
+							options: {
+								message: 'Au moins 8 caractères requis',
+								validate: (value) => value.length >= 8,
+							},
+						},
+					]"
+					show-success-messages
+				/>
+			</div>
+		`,
+	}),
+}
+
+/**
+ * Messages de validation injectés directement par le parent (errorMessages, warningMessages, successMessages).
+ */
+export const ExternalMessages: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Messages externes
+
+Les props \`errorMessages\`, \`warningMessages\` et \`successMessages\` permettent d'injecter
+des messages directement depuis le composant parent, sans exécuter de règle de validation.
+Utile pour afficher des erreurs provenant d'une API ou d'une validation côté serveur.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<PasswordField
+		v-model="password"
+		label="Mot de passe"
+		:error-messages="errorMessages"
+		:warning-messages="warningMessages"
+		:success-messages="successMessages"
+	/>
+	<div class="mt-4">
+		<VBtn @click="setError">Simuler une erreur serveur</VBtn>
+		<VBtn @click="setWarning" class="ml-2">Simuler un avertissement</VBtn>
+		<VBtn @click="setSuccess" class="ml-2">Simuler un succès</VBtn>
+		<VBtn @click="reset" class="ml-2">Réinitialiser</VBtn>
+	</div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { PasswordField } from '@cnamts/synapse'
+
+const password = ref('')
+const errorMessages = ref<string[] | null>(null)
+const warningMessages = ref<string[] | null>(null)
+const successMessages = ref<string[] | null>(null)
+
+function setError() {
+	errorMessages.value = ['Ce mot de passe a déjà été utilisé']
+	warningMessages.value = null
+	successMessages.value = null
+}
+function setWarning() {
+	errorMessages.value = null
+	warningMessages.value = ['Ce mot de passe figure dans une liste de mots de passe courants']
+	successMessages.value = null
+}
+function setSuccess() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = ['Mot de passe accepté par le serveur']
+}
+function reset() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = null
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { PasswordField },
+		setup() {
+			const password = ref('')
+			const errorMessages = ref<string[] | null>(null)
+			const warningMessages = ref<string[] | null>(null)
+			const successMessages = ref<string[] | null>(null)
+
+			function setError() {
+				errorMessages.value = ['Ce mot de passe a déjà été utilisé']
+				warningMessages.value = null
+				successMessages.value = null
+			}
+			function setWarning() {
+				errorMessages.value = null
+				warningMessages.value = ['Ce mot de passe figure dans une liste de mots de passe courants']
+				successMessages.value = null
+			}
+			function setSuccess() {
+				errorMessages.value = null
+				warningMessages.value = null
+				successMessages.value = ['Mot de passe accepté par le serveur']
+			}
+			function reset() {
+				errorMessages.value = null
+				warningMessages.value = null
+				successMessages.value = null
+			}
+
+			return { args, password, errorMessages, warningMessages, successMessages, setError, setWarning, setSuccess, reset }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					Les messages ci-dessous sont injectés par le parent sans déclencher de règle de validation
+					(simulation d'une réponse serveur).
+				</p>
+				<PasswordField
+					v-model="password"
+					label="Mot de passe"
+					:error-messages="errorMessages"
+					:warning-messages="warningMessages"
+					:success-messages="successMessages"
+				/>
+				<div class="mt-4 d-flex flex-wrap ga-2">
+					<VBtn color="error" variant="outlined" @click="setError">Simuler une erreur serveur</VBtn>
+					<VBtn color="warning" variant="outlined" @click="setWarning">Simuler un avertissement</VBtn>
+					<VBtn color="success" variant="outlined" @click="setSuccess">Simuler un succès</VBtn>
+					<VBtn variant="outlined" @click="reset">Réinitialiser</VBtn>
+				</div>
+			</div>
+		`,
+	}),
+}
+
+/**
+ * Validation avec les règles de style Vuetify (fonctions retournant true | string).
+ */
+export const VuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation de style Vuetify
+
+En passant \`useVuetifyValidation="true"\`, le composant délègue la validation à Vuetify.
+Les règles sont de simples fonctions qui retournent \`true\` si la valeur est valide,
+ou un message d'erreur (chaîne de caractères) sinon — exactement comme avec la prop \`rules\`
+native de Vuetify (\`VTextField\`, etc.).
+
+Cela permet de réutiliser des règles existantes écrites pour Vuetify sans adaptation.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<form @submit.prevent="handleSubmit">
+		<PasswordField
+			ref="fieldRef"
+			v-model="password"
+			label="Mot de passe"
+			:use-vuetify-validation="true"
+			:rules="rules"
+			:is-validate-on-blur="true"
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Valider</VBtn>
+		</div>
+	</form>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { PasswordField } from '@cnamts/synapse'
+
+const password = ref('')
+const fieldRef = ref()
+
+const rules = [
+	(value: string) => !!value || 'Le mot de passe est requis',
+	(value: string) => value.length >= 8 || 'Au moins 8 caractères requis',
+	(value: string) => /[A-Z]/.test(value) || 'Au moins une lettre majuscule requise',
+	(value: string) => /[0-9]/.test(value) || 'Au moins un chiffre requis',
+	(value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
+]
+
+async function handleSubmit() {
+	const isValid = await fieldRef.value?.validateOnSubmit()
+	alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { PasswordField, VBtn },
+		setup() {
+			const password = ref('')
+			const fieldRef = ref()
+
+			const rules = [
+				(value: string) => !!value || 'Le mot de passe est requis',
+				(value: string) => value.length >= 8 || 'Au moins 8 caractères requis',
+				(value: string) => /[A-Z]/.test(value) || 'Au moins une lettre majuscule requise',
+				(value: string) => /[0-9]/.test(value) || 'Au moins un chiffre requis',
+				(value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
+			]
+
+			async function handleSubmit() {
+				const isValid = await fieldRef.value?.validateOnSubmit()
+				alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
+			}
+
+			return { args, password, fieldRef, rules, handleSubmit }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					Les règles sont des fonctions Vuetify natives <code>(value) => true | 'message'</code>.
+					Cliquez sur <strong>Valider</strong> ou quittez le champ pour déclencher la validation.
+				</p>
+				<form @submit.prevent="handleSubmit">
+					<PasswordField
+						ref="fieldRef"
+						v-model="password"
+						label="Mot de passe"
+						:use-vuetify-validation="true"
+						:rules="rules"
+						:is-validate-on-blur="true"
+					/>
+					<div class="mt-4">
+						<VBtn type="submit" color="primary">Valider</VBtn>
+					</div>
+				</form>
 			</div>
 		`,
 	}),

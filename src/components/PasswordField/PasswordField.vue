@@ -6,38 +6,17 @@
 		mdiAlert,
 		mdiCheck,
 	} from '@mdi/js'
-	import { ref, computed, watch, nextTick } from 'vue'
+	import { ref, computed, watch, nextTick, toRef } from 'vue'
 	import { config } from './config'
 	import { locales } from './locales'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import type { ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidation, validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import type { ColorType } from '@/components/Customs/SyTextField/types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { useValidatable } from '@/composables/validation/useValidatable'
+	import type { PasswordFieldProps } from './types'
 
-	const props = withDefaults(defineProps<{
-		modelValue?: string | null
-		variantStyle?: 'outlined' | 'underlined'
-		color?: ColorType
-		label: string
-		required?: boolean
-		errorMessages?: string[] | null
-		warningMessages?: string[] | null
-		successMessages?: string[] | null
-		readonly?: boolean
-		disabled?: boolean
-		placeholder?: string
-		customRules?: ValidationRule[]
-		customWarningRules?: ValidationRule[]
-		customSuccessRules?: ValidationRule[]
-		showSuccessMessages?: boolean
-		displayAsterisk?: boolean
-		isValidateOnBlur?: boolean
-		disableErrorHandling?: boolean
-		bgColor?: string
-		autocompleteType?: 'current-password' | 'new-password'
-	} & CustomizableOptions>(), {
+	const props = withDefaults(defineProps<PasswordFieldProps>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
 		color: 'primary',
@@ -57,6 +36,7 @@
 		disableErrorHandling: false,
 		bgColor: 'white',
 		autocompleteType: 'current-password',
+		...validationPropsDefaults,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -69,11 +49,11 @@
 	const alertMessage = ref('')
 	// Force re-render of SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
+	const focused = ref(false)
 
 	const btnLabel = locales.showPassword
 
 	const password = ref<string | null>(props.modelValue)
-	const isProgrammaticChange = ref(false)
 	watch(
 		() => props.modelValue,
 		(newVal) => {
@@ -82,7 +62,7 @@
 	)
 
 	// Construction des règles de validation
-	const defaultRules = computed<ValidationRule[]>(() => {
+	const allCustomRules = computed<ValidationRule[]>(() => {
 		const rules: ValidationRule[] = []
 
 		if (props.required) {
@@ -95,27 +75,33 @@
 			})
 		}
 
-		return rules
+		return [...rules, ...(props.customRules || [])]
 	})
 
 	// Initialisation du composable de validation
-	const { errors, warnings, successes, displaySuccesses, validateField } = !props.readonly
-		? useValidation({
-			showSuccessMessages: props.showSuccessMessages,
-			fieldIdentifier: props.label || 'password',
-			disableErrorHandling: props.disableErrorHandling,
-		})
-		: {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			displaySuccesses: ref<string[]>([]),
-			validateField: () => ({ hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }),
-		}
-
-	const hasError = computed(() => errors.value.length > 0)
-	const hasWarning = computed(() => warnings.value.length > 0)
-	const hasSuccess = computed(() => successes.value.length > 0 && !hasError.value && !hasWarning.value)
+	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = useValidation({
+		modelValue: password,
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		label: toRef(props, 'label'),
+		rules: toRef(props, 'rules'),
+		customRules: allCustomRules,
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
+		focused,
+	})
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
@@ -130,25 +116,6 @@
 		if (hasSuccess.value) return 'success'
 		return 'rgb(0 0 0 / 100%)'
 	})
-
-	// Synchronisation des messages externes
-	watch(() => props.errorMessages, (newVal) => {
-		if (newVal) {
-			errors.value = newVal
-		}
-	}, { immediate: true })
-
-	watch(() => props.warningMessages, (newVal) => {
-		if (newVal) {
-			warnings.value = newVal
-		}
-	}, { immediate: true })
-
-	watch(() => props.successMessages, (newVal) => {
-		if (newVal) {
-			successes.value = newVal
-		}
-	}, { immediate: true })
 
 	// Ne pas revalider automatiquement à chaque changement de valeur.
 	// La validation est gérée explicitement au blur et à la soumission.
@@ -186,30 +153,7 @@
 		})
 	}
 
-	async function handleKeydown(event: KeyboardEvent): Promise<void> {
-		if (event.key === 'Enter') {
-			await validateOnSubmit()
-		}
-	}
-
-	const validateOnSubmit = async (): Promise<boolean> => {
-		if (props.readonly) return true // Retourner true au lieu de undefined
-		await validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
-		const isValid = errors.value.length === 0
-		if (isValid) {
-			emit('submit')
-		}
-		return isValid
-	}
-
-	// Nettoie uniquement l'état de validation (messages) sans modifier la valeur
-	const clearValidation = () => {
-		errors.value = []
-		warnings.value = []
-		successes.value = []
-	}
-
-	// Reset hook utilisé par SyForm.reset() via useValidatable
+	// Reset hook utilisé par SyForm.reset() via useValidatable interne au composable
 	const reset = () => {
 		// Réinitialiser d'abord l'état de validation et d'interaction
 		clearValidation()
@@ -217,17 +161,12 @@
 		showEyeIcon.value = false
 
 		// Réinitialiser le contenu du champ
-		isProgrammaticChange.value = true
 		password.value = null
 		emit('update:modelValue', null)
-		isProgrammaticChange.value = false
 
 		// Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
 		fieldKey.value++
 	}
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		showEyeIcon,
@@ -237,7 +176,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-		validateOnSubmit,
+		validateOnSubmit: validate,
 		clearValidation,
 		reset,
 	})
@@ -255,7 +194,7 @@
 		:required="props.required"
 		:error-messages="errors"
 		:warning-messages="warnings"
-		:success-messages="displaySuccesses"
+		:success-messages="successes"
 		:has-success="hasSuccess"
 		:show-success-messages="props.showSuccessMessages"
 		:readonly="props.readonly"
@@ -269,16 +208,8 @@
 		:autocomplete="props.autocompleteType"
 		class="vd-password"
 		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
-		@blur="async () => {
-			if (props.isValidateOnBlur && !props.readonly) {
-				await validateField(
-					password,
-					[...defaultRules, ...(props.customRules || [])],
-					props.customWarningRules || [],
-					props.customSuccessRules || []
-				)
-			}
-		}"
+		@focus="focused = true"
+		@blur="focused = false"
 		@keydown="handleKeydown"
 	>
 		<template #append-inner>
