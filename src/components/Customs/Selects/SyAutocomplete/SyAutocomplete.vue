@@ -509,16 +509,15 @@
 							v-if="multiple"
 							#prepend
 						>
-							<SyCheckbox
-								:model-value="isItemSelected(item)"
-								density="compact"
-								hide-details
-								color="primary"
-								class="mt-0 pt-0 mr-1"
-								:title="getItemText(item) as string"
-								:aria-label="getItemText(item) as string"
-								@mousedown.stop.prevent="() => selectItem(item)"
-							/>
+							<div aria-hidden="true" inert>
+								<SyCheckbox
+									:model-value="isItemSelected(item)"
+									density="compact"
+									hide-details
+									color="primary"
+									class="mt-0 pt-0 mr-1"
+								/>
+							</div>
 						</template>
 						<VListItemTitle>
 							{{ getItemText(item) }}
@@ -543,6 +542,7 @@
 	width: 100%;
 	position: relative;
 }
+
 
 .sy-autocomplete__sr-only {
 	position: absolute;

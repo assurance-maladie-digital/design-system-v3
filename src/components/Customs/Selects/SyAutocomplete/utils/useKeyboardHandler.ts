@@ -55,22 +55,19 @@ export function useSyAutocompleteKeyboard(
 	// Retries via requestAnimationFrame because VMenu uses rAF internally (requestNewFrame) for overlay rendering —
 	// nextTick/setTimeout fire before Vuetify's rAF, so the listbox may not be in the DOM yet.
 	const applyPrependFocusDom = (retries = 3) => {
-		const listbox = document.getElementById(deps.uniqueMenuId.value)
-		if (!listbox || listbox.querySelectorAll('.v-list-item').length === 0) {
+		const container = document.getElementById(deps.uniqueMenuId.value)
+		const prependEl = container?.querySelector<HTMLElement>('.v-list-item') ?? null
+		if (!prependEl) {
 			if (retries > 0) requestAnimationFrame(() => applyPrependFocusDom(retries - 1))
 			return
 		}
-		const allItems = listbox.querySelectorAll<HTMLElement>('.v-list-item')
-		allItems.forEach((item) => {
+		document.querySelectorAll<HTMLElement>(`#${deps.uniqueMenuId.value} .v-list-item`).forEach((item) => {
 			item.classList.remove('keyboard-focused')
 			item.setAttribute('tabindex', '-1')
 		})
-		const prependEl = allItems[0]
-		if (prependEl) {
-			prependEl.classList.add('keyboard-focused')
-			prependEl.setAttribute('tabindex', '0')
-			prependEl.scrollIntoView({ block: 'nearest' })
-		}
+		prependEl.classList.add('keyboard-focused')
+		prependEl.setAttribute('tabindex', '0')
+		prependEl.scrollIntoView({ block: 'nearest' })
 	}
 
 	// Focus the prepend slot item (always the first .v-list-item in the listbox)
@@ -105,9 +102,8 @@ export function useSyAutocompleteKeyboard(
 
 	const wrappedHandleEnterKey = () => {
 		if (deps.isOpen.value && deps.hasPrependItem?.value && lastFocusedIndex.value < 0) {
-			const listbox = document.getElementById(deps.uniqueMenuId.value)
-			const allItems = listbox?.querySelectorAll<HTMLElement>('.v-list-item')
-			allItems?.[0]?.click()
+			const container = document.getElementById(deps.uniqueMenuId.value)
+			container?.querySelector<HTMLElement>('.v-list-item')?.click()
 		}
 		else {
 			handleEnterKey()

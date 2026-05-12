@@ -1284,7 +1284,7 @@ describe('SyAutocomplete', () => {
 			hostWrapper.unmount()
 		})
 
-		it('rend le contenu du slot dans le dropdown mais en dehors du listbox', async () => {
+		it('rend le contenu du slot dans le listbox', async () => {
 			wrapper.unmount()
 			wrapper = mount(SyAutocomplete, {
 				props: {
@@ -1307,15 +1307,12 @@ describe('SyAutocomplete', () => {
 			await wrapper.vm.$nextTick()
 			expect(isMenuOverlayActive()).toBe(true)
 
+			// Le slot est dans le listbox
 			const listbox = document.body.querySelector(`#${menuId}`)
-			expect(listbox).not.toBeNull()
+			expect(listbox!.querySelector('.prepend-item-btn')).not.toBeNull()
 
-			const prependBtn = listbox!.querySelector('.prepend-item-btn')
-			expect(prependBtn).not.toBeNull()
-
-			// Le slot est le premier enfant du listbox, avant les options
-			const firstChild = listbox!.firstElementChild
-			expect(firstChild!.contains(prependBtn)).toBe(true)
+			// Il n'y a pas de container prepend séparé
+			expect(document.body.querySelector(`#${menuId}-prepend`)).toBeNull()
 		})
 
 		it('n\'affiche pas le contenu du slot quand le menu est fermé', async () => {

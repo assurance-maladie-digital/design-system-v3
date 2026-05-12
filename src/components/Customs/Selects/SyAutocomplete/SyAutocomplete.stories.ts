@@ -1086,21 +1086,27 @@ export const PrependItem: Story = {
     clearable
   >
     <template #prepend-item>
-      <VListItem @mousedown.prevent @click="toggleAll">
+      <VListItem
+        role="option"
+        :aria-selected="allSelected ? 'true' : 'false'"
+        @mousedown.prevent
+        @click="toggleAll"
+      >
         <template #prepend>
-          <VCheckbox
-            :model-value="allSelected"
-            :indeterminate="someSelected"
-            density="compact"
-            hide-details
-            color="primary"
-            class="mt-0 pt-0 mr-1"
-            style="pointer-events: none"
-          />
+          <div aria-hidden="true" inert>
+            <VCheckbox
+              :model-value="allSelected"
+              :indeterminate="someSelected"
+              density="compact"
+              hide-details
+              color="primary"
+              class="mt-0 pt-0 mr-1"
+            />
+          </div>
         </template>
         <VListItemTitle>Tous</VListItemTitle>
       </VListItem>
-      <VDivider />
+      <VDivider role="none" />
     </template>
   </SyAutocomplete>
   <div class="mt-4">Valeurs sélectionnées : {{ selectedValues }}</div>
@@ -1163,23 +1169,26 @@ const toggleAll = () => {
 				>
 					<template #prepend-item>
 						<VListItem
+							role="option"
+							:aria-selected="allSelected ? 'true' : 'false'"
 							@mousedown.prevent
 							@click="toggleAll"
 						>
 							<template #prepend>
-								<VCheckbox
-									:model-value="allSelected"
-									:indeterminate="someSelected"
-									density="compact"
-									hide-details
-									color="primary"
-									class="mt-0 pt-0 mr-1"
-									style="pointer-events: none"
-								/>
+								<div aria-hidden="true" inert>
+									<VCheckbox
+										:model-value="allSelected"
+										:indeterminate="someSelected"
+										density="compact"
+										hide-details
+										color="primary"
+										class="mt-0 pt-0 mr-1"
+									/>
+								</div>
 							</template>
 							<VListItemTitle>Tous</VListItemTitle>
 						</VListItem>
-						<VDivider />
+						<VDivider role="none" />
 					</template>
 				</SyAutocomplete>
 				<div class="mt-4">Valeurs sélectionnées : {{ selectedValues }}</div>
