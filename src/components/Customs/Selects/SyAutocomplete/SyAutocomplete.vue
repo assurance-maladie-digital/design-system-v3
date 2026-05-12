@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, watch } from 'vue'
+	import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue'
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -73,6 +73,9 @@
 	)
 
 	const emit = defineEmits(['update:modelValue', 'search'])
+
+	const slots = useSlots()
+	const hasPrependItem = computed(() => !!slots['prepend-item'])
 
 	const isOpen = ref(false)
 	const search = ref('')
@@ -234,7 +237,7 @@
 			: index
 	}
 
-	const { focusInput, keyboardActiveId, handleTabKey } = useSyAutocompleteKeyboard({
+	const { focusInput, focusPrepend, keyboardActiveId, handleTabKey } = useSyAutocompleteKeyboard({
 		multiple: props.multiple,
 		chips: props.chips,
 	}, {
@@ -246,6 +249,7 @@
 		filteredItems,
 		uniqueMenuId,
 		focusListItem: false,
+		hasPrependItem,
 	})
 
 	watch(keyboardActiveId, (val) => {
@@ -338,6 +342,14 @@
 			search.value = ''
 		}
 	})
+
+	// flush: 'post' + rAF: Vuetify uses requestAnimationFrame (requestNewFrame) for overlay rendering,
+	// so nextTick/setTimeout(0) fire before the listbox is in the DOM.
+	watch(isOpen, (open) => {
+		if (open && hasPrependItem.value) {
+			requestAnimationFrame(() => focusPrepend())
+		}
+	}, { flush: 'post' })
 
 	defineExpose({
 		validateOnSubmit,
@@ -474,6 +486,7 @@
 				tabindex="-1"
 				@click.stop
 			>
+				<slot name="prepend-item" />
 				<template v-if="filteredItems.length === 0 && !hideNoData && !loading">
 					<VListItem
 						:title="noDataText"
@@ -635,10 +648,17 @@ li:hover {
 }
 
 /* Ensure focus styles match selection styles for keyboard navigation (align with SySelect) */
+/* :deep() is required for keyboard-focused so the style applies to slot content (prepend-item),
+   which carries the parent's scoped attribute, not SyAutocomplete's. */
 .v-list-item:focus-visible,
-.v-list-item.keyboard-focused,
-li:focus-visible,
-li.keyboard-focused {
+li:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+	outline-offset: -2px;
+	background-color: rgb(0 0 0 / 8%);
+}
+
+:deep(.v-list-item.keyboard-focused),
+:deep(li.keyboard-focused) {
 	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
