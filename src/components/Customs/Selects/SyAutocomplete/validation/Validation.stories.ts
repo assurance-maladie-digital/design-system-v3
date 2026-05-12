@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import SySelect from '../SySelect.vue'
+import SyAutocomplete from '../SyAutocomplete.vue'
 import SyForm from '../../../SyForm/SyForm.vue'
 import { ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
 
-const meta: Meta<typeof SySelect> = {
-	title: 'Composants/Formulaires/Selects/SySelect/Validation',
-	component: SySelect,
+const meta: Meta<typeof SyAutocomplete> = {
+	title: 'Composants/Formulaires/Selects/SyAutocomplete/Validation',
+	component: SyAutocomplete,
 	parameters: {
 		layout: 'fullscreen',
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
-} as Meta<typeof SySelect>
+} as Meta<typeof SyAutocomplete>
 
 export default meta
 
@@ -38,8 +38,8 @@ export const WithError: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SySelect
-    ref="selectRef"
+  <SyAutocomplete
+    ref="autocompleteRef"
     v-model="value"
     :items="items"
     label="Option"
@@ -60,7 +60,8 @@ export const WithError: Story = {
 				code: `
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
+import { SyAutocomplete } from '@cnamts/synapse'
+
 const value = ref('1')
 const items = [
   { text: 'Option 1', value: '1' },
@@ -68,10 +69,10 @@ const items = [
   { text: 'Option 3', value: '3' },
 ]
 
-const selectRef = ref(null)
+const autocompleteRef = ref(null)
 
 onMounted(() => {
-  selectRef.value?.validateOnSubmit()
+  autocompleteRef.value?.validateOnSubmit()
 })
 </script>`,
 			},
@@ -80,24 +81,25 @@ onMounted(() => {
 	args: {
 		'items': items,
 		'label': 'Option',
+		'filter': false,
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { SySelect },
+		components: { SyAutocomplete },
 		setup() {
 			const value = ref('1')
-			const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			onMounted(() => {
-				selectRef.value?.validateOnSubmit()
+				autocompleteRef.value?.validateOnSubmit()
 			})
 
-			return { args, value, selectRef }
+			return { args, value, autocompleteRef }
 		},
 		template: `
 			<div class="pa-4">
-				<SySelect
-					ref="selectRef"
+				<SyAutocomplete
+					ref="autocompleteRef"
 					v-model="value"
 					v-bind="args"
 					:customRules="[
@@ -127,8 +129,8 @@ export const WithWarning: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SySelect
-    ref="selectRef"
+  <SyAutocomplete
+    ref="autocompleteRef"
     v-model="value"
     :items="items"
     label="Option"
@@ -137,7 +139,7 @@ export const WithWarning: Story = {
         type: 'custom',
         options: {
           validate: (v) => v !== '1',
-          message: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
+          warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
         }
       }
     ]"
@@ -148,14 +150,21 @@ export const WithWarning: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
-const value = ref(null)
+import { onMounted, ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const value = ref('1')
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+
+const autocompleteRef = ref(null)
+
+onMounted(() => {
+  autocompleteRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -163,24 +172,25 @@ const items = [
 	args: {
 		'items': items,
 		'label': 'Option',
+		'filter': false,
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { SySelect },
+		components: { SyAutocomplete },
 		setup() {
 			const value = ref('1')
-			const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			onMounted(() => {
-				selectRef.value?.validateOnSubmit()
+				autocompleteRef.value?.validateOnSubmit()
 			})
 
-			return { args, value, selectRef }
+			return { args, value, autocompleteRef }
 		},
 		template: `
 			<div class="pa-4">
-				<SySelect
-					ref="selectRef"
+				<SyAutocomplete
+					ref="autocompleteRef"
 					v-model="value"
 					v-bind="args"
 					:customWarningRules="[
@@ -188,7 +198,7 @@ const items = [
 							type: 'custom',
 							options: {
 								validate: (v) => v !== '1',
-								message: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
+								warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
 							}
 						}
 					]"
@@ -210,8 +220,8 @@ export const WithSuccess: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SySelect
-    ref="selectRef"
+  <SyAutocomplete
+    ref="autocompleteRef"
     v-model="value"
     :items="items"
     label="Option"
@@ -221,7 +231,7 @@ export const WithSuccess: Story = {
         type: 'custom',
         options: {
           validate: (v) => v !== null && v !== undefined,
-          message: 'Option sélectionnée avec succès.'
+          successMessage: 'Option sélectionnée avec succès.'
         }
       }
     ]"
@@ -232,14 +242,21 @@ export const WithSuccess: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
-const value = ref(null)
+import { onMounted, ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const value = ref('1')
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+
+const autocompleteRef = ref(null)
+
+onMounted(() => {
+  autocompleteRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -247,25 +264,26 @@ const items = [
 	args: {
 		'items': items,
 		'label': 'Option',
+		'filter': false,
 		'showSuccessMessages': true,
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { SySelect },
+		components: { SyAutocomplete },
 		setup() {
 			const value = ref('1')
-			const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			onMounted(() => {
-				selectRef.value?.validateOnSubmit()
+				autocompleteRef.value?.validateOnSubmit()
 			})
 
-			return { args, value, selectRef }
+			return { args, value, autocompleteRef }
 		},
 		template: `
 			<div class="pa-4">
-				<SySelect
-					ref="selectRef"
+				<SyAutocomplete
+					ref="autocompleteRef"
 					v-model="value"
 					v-bind="args"
 					:customSuccessRules="[
@@ -273,7 +291,7 @@ const items = [
 							type: 'custom',
 							options: {
 								validate: (v) => v !== null && v !== undefined,
-								message: 'Option sélectionnée avec succès.'
+								successMessage: 'Option sélectionnée avec succès.'
 							}
 						}
 					]"
@@ -295,8 +313,8 @@ export const NoSuccessMessage: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SySelect
-    ref="selectRef"
+  <SyAutocomplete
+    ref="autocompleteRef"
     v-model="value"
     :items="items"
     label="Option"
@@ -318,7 +336,7 @@ export const NoSuccessMessage: Story = {
 				code: `
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
+import { SyAutocomplete } from '@cnamts/synapse'
 
 const value = ref('1')
 const items = [
@@ -327,10 +345,10 @@ const items = [
   { text: 'Option 3', value: '3' },
 ]
 
-const selectRef = ref(null)
+const autocompleteRef = ref(null)
 
 onMounted(() => {
-  selectRef.value?.validateOnSubmit()
+  autocompleteRef.value?.validateOnSubmit()
 })
 </script>`,
 			},
@@ -339,25 +357,26 @@ onMounted(() => {
 	args: {
 		'items': items,
 		'label': 'Option',
+		'filter': false,
 		'showSuccessMessages': false,
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { SySelect },
+		components: { SyAutocomplete },
 		setup() {
 			const value = ref('1')
-			const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			onMounted(() => {
-				selectRef.value?.validateOnSubmit()
+				autocompleteRef.value?.validateOnSubmit()
 			})
 
-			return { args, value, selectRef }
+			return { args, value, autocompleteRef }
 		},
 		template: `
 			<div class="pa-4">
-				<SySelect
-					ref="selectRef"
+				<SyAutocomplete
+					ref="autocompleteRef"
 					v-model="value"
 					v-bind="args"
 					:customSuccessRules="[
@@ -379,7 +398,7 @@ export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `isValidateOnBlur: false`, la validation se déclenche **immédiatement** dès que la valeur change, sans attendre que le champ perde le focus.\n\nCliquez sur « Définir une valeur invalide » : l\'erreur apparaît aussitôt, sans qu\'il soit nécessaire d\'ouvrir ou de fermer le menu. Avec le comportement par défaut (`isValidateOnBlur: true`), la même action ne déclencherait aucune erreur tant que l\'utilisateur n\'a pas interagi avec le champ.',
+				story: 'Avec `isValidateOnBlur: false`, la validation se déclenche **immédiatement** dès que la valeur change, sans attendre que le champ perde le focus. Utilisez les boutons ci-dessous pour modifier la valeur par programmation et observer le comportement.',
 			},
 		},
 		sourceCode: [
@@ -388,7 +407,7 @@ export const NoValidateOnBlur: Story = {
 				code: `
 <template>
   <div class="d-flex flex-column gap-4 pa-4">
-    <SySelect
+    <SyAutocomplete
       v-model="value"
       :items="items"
       label="Option"
@@ -414,8 +433,7 @@ export const NoValidateOnBlur: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
+import { SyAutocomplete } from '@cnamts/synapse'
 
 const value = ref(null)
 const items = [
@@ -434,14 +452,14 @@ const items = [
 	},
 	render: (args) => {
 		return {
-			components: { SySelect, VBtn },
+			components: { SyAutocomplete, VBtn },
 			setup() {
 				const value = ref(null)
 				return { args, value }
 			},
 			template: `
 				<div class="d-flex flex-column gap-4 pa-4">
-					<SySelect
+					<SyAutocomplete
 						v-model="value"
 						v-bind="args"
 						:custom-rules="[{
@@ -471,14 +489,14 @@ export const DisableErrorHandling: Story = {
 				code: `
 <template>
 	<div class="d-flex flex-column gap-4">
-		<SySelect
+		<SyAutocomplete
 			v-model="value1"
 			:items="items"
 			label="Avec validation interne (défaut)"
 			required
 		/>
 
-		<SySelect
+		<SyAutocomplete
 			v-model="value2"
 			:items="items"
 			label="Validation interne désactivée"
@@ -493,7 +511,7 @@ export const DisableErrorHandling: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
+import { SyAutocomplete } from '@cnamts/synapse'
 
 const items = [
 	{ text: 'Option 1', value: '1' },
@@ -512,7 +530,7 @@ const value2 = ref(null)
 	},
 	render: (args) => {
 		return {
-			components: { SySelect },
+			components: { SyAutocomplete },
 			setup() {
 				const value1 = ref(null)
 				const value2 = ref(null)
@@ -520,13 +538,13 @@ const value2 = ref(null)
 			},
 			template: `
 				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
-					<SySelect
+					<SyAutocomplete
 						v-model="value1"
 						v-bind="args"
 						label="Avec validation interne (défaut)"
 						required
 					/>
-					<SySelect
+					<SyAutocomplete
 						v-model="value2"
 						v-bind="args"
 						label="Validation interne désactivée"
@@ -543,7 +561,7 @@ export const SyFormValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Exemple d\'utilisation du SySelect dans un formulaire.',
+				story: 'Le champ requis ne montre l\'erreur qu\'après interaction (blur/submit), pas au mount.',
 			},
 		},
 		sourceCode: [
@@ -552,96 +570,76 @@ export const SyFormValidation: Story = {
 				code: `
 <template>
   <SyForm @submit="onSubmit">
-    <SySelect
-      v-model="formData.option"
-      :items="options"
-      label="Option"
+    <SyAutocomplete
+      v-model="value"
+      :items="items"
+      label="Recherche obligatoire"
       required
       display-asterisk
       class="mb-4"
     />
-    <VBtn
-      type="submit"
-      color="primary"
-      class="mt-4"
-    >
-      Soumettre
-    </VBtn>
+    <VBtn type="submit" color="primary">Soumettre</VBtn>
   </SyForm>
-</template>
-        `,
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect, SyForm } from '@cnamts/synapse'
+import { SyAutocomplete, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const formData = ref({
-  option: ''
-})
-
-const options = [
+const value = ref('')
+const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
-  { text: 'Option 3', value: '3' },
+  { text: 'Option 3', value: '3' }
 ]
 
 const onSubmit = (event) => {
   if (event.isValid) {
-    alert('Formulaire valide : ' + JSON.stringify(formData.value))
+    alert('Formulaire valide : ' + JSON.stringify(value.value))
   } else {
     alert('Formulaire invalide : veuillez choisir une option.')
   }
 }
-</script>
-        `,
+</script>`,
 			},
 		],
 	},
 	args: {
-		'items': items,
-		'label': 'Option',
-		'required': true,
-		'displayAsterisk': true,
-		'onUpdate:modelValue': fn(),
+		items,
+		label: 'Recherche obligatoire',
+		required: true,
+		displayAsterisk: true,
 	},
 	render: (args) => {
 		return {
-			components: { SySelect, SyForm, VBtn },
+			components: { SyAutocomplete, SyForm, VBtn },
 			setup() {
-				const formData = ref({
-					option: '',
-				})
+				const value = ref('')
 
 				const onSubmit = (event: { isValid: boolean }) => {
 					if (event.isValid) {
-						alert(`Formulaire valide : ${JSON.stringify(formData.value)}`)
+						alert(`Formulaire valide : ${JSON.stringify(value.value)}`)
 					}
 					else {
 						alert('Formulaire invalide : veuillez choisir une option.')
 					}
 				}
 
-				return { args, formData, onSubmit }
+				return { args, value, onSubmit }
 			},
 			template: `
 				<div class="pa-4">
 					<SyForm @submit="onSubmit">
-						<SySelect
-							v-model="formData.option"
+						<SyAutocomplete
+							v-model="value"
 							v-bind="args"
 							class="mb-4"
 						/>
-						<VBtn
-							type="submit"
-							color="primary"
-							class="mt-4"
-						>
-							Soumettre
-						</VBtn>
+						<VBtn type="submit" color="primary">Soumettre</VBtn>
 					</SyForm>
 				</div>
 			`,
@@ -662,11 +660,11 @@ export const VFormValidation: Story = {
 				code: `
 <template>
   <VForm @submit.prevent="onSubmit">
-    <SySelect
-      ref="selectRef"
+    <SyAutocomplete
+      ref="autocompleteRef"
       v-model="value"
       :items="items"
-      label="Option obligatoire"
+      label="Recherche obligatoire"
       required
       display-asterisk
       class="mb-4"
@@ -680,11 +678,11 @@ export const VFormValidation: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
+import { SyAutocomplete } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const selectRef = ref(null)
+const autocompleteRef = ref(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -692,7 +690,7 @@ const items = [
 ]
 
 async function onSubmit() {
-  const isValid = await selectRef.value?.validateOnSubmit()
+  const isValid = await autocompleteRef.value?.validateOnSubmit()
   if (isValid) {
     alert('Formulaire valide : ' + JSON.stringify(value.value))
   } else {
@@ -705,19 +703,19 @@ async function onSubmit() {
 	},
 	args: {
 		items,
-		label: 'Option obligatoire',
+		label: 'Recherche obligatoire',
 		required: true,
 		displayAsterisk: true,
 	},
 	render: (args) => {
 		return {
-			components: { SySelect, VBtn, VForm },
+			components: { SyAutocomplete, VBtn, VForm },
 			setup() {
 				const value = ref('')
-				const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+				const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 				async function onSubmit() {
-					const isValid = await selectRef.value?.validateOnSubmit()
+					const isValid = await autocompleteRef.value?.validateOnSubmit()
 					if (isValid) {
 						alert(`Formulaire valide : ${JSON.stringify(value.value)}`)
 					}
@@ -726,13 +724,13 @@ async function onSubmit() {
 					}
 				}
 
-				return { args, value, selectRef, onSubmit }
+				return { args, value, autocompleteRef, onSubmit }
 			},
 			template: `
 				<div class="pa-4">
 					<VForm @submit.prevent="onSubmit">
-						<SySelect
-							ref="selectRef"
+						<SyAutocomplete
+							ref="autocompleteRef"
 							v-model="value"
 							v-bind="args"
 							class="mb-4"
@@ -749,7 +747,7 @@ export const SyFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Exemple d\'utilisation de la validation native Vuetify via la prop `useVuetifyValidation`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur. Soumettez le formulaire pour déclencher la validation.',
+				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans `SyForm`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur. Soumettez le formulaire pour déclencher la validation.',
 			},
 		},
 		sourceCode: [
@@ -758,7 +756,7 @@ export const SyFormVuetifyValidation: Story = {
 				code: `
 <template>
   <SyForm @submit="onSubmit">
-    <SySelect
+    <SyAutocomplete
       v-model="value"
       :items="items"
       label="Option"
@@ -777,7 +775,7 @@ export const SyFormVuetifyValidation: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect, SyForm } from '@cnamts/synapse'
+import { SyAutocomplete, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
 const value = ref(null)
@@ -806,7 +804,7 @@ function onSubmit(event: { isValid: boolean }) {
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { SySelect, SyForm, VBtn },
+		components: { SyAutocomplete, SyForm, VBtn },
 		setup() {
 			const value = ref(null)
 
@@ -824,7 +822,7 @@ function onSubmit(event: { isValid: boolean }) {
 		template: `
 			<div class="pa-4">
 				<SyForm @submit="onSubmit">
-					<SySelect
+					<SyAutocomplete
 						v-model="value"
 						v-bind="args"
 						:rules="[v => !!v || 'Ce champ est requis']"
@@ -855,7 +853,7 @@ export const VFormAndVuetifyValidation: Story = {
 				code: `
 <template>
   <VForm ref="formRef" @submit.prevent="onSubmit">
-    <SySelect
+    <SyAutocomplete
       v-model="value"
       :items="items"
       label="Option"
@@ -873,7 +871,7 @@ export const VFormAndVuetifyValidation: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SySelect } from '@cnamts/synapse'
+import { SyAutocomplete } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref(null)
@@ -901,7 +899,7 @@ async function onSubmit() {
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
-		components: { SySelect, VBtn, VForm },
+		components: { SyAutocomplete, VBtn, VForm },
 		setup() {
 			const value = ref(null)
 			const formRef = ref<InstanceType<typeof VForm> | null>(null)
@@ -918,7 +916,7 @@ async function onSubmit() {
 		template: `
 			<div class="pa-4">
 				<VForm ref="formRef" @submit.prevent="onSubmit">
-					<SySelect
+					<SyAutocomplete
 						v-model="value"
 						v-bind="args"
 						:rules="[v => !!v || 'Ce champ est requis']"
