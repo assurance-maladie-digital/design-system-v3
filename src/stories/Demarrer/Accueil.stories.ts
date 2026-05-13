@@ -50,7 +50,7 @@ export const Header: StoryObj = {
 								<br/>Si vous ne connaissez pas le thème auquel votre produit est soumis veuillez consulter le dossier d’architecture du produit.
 								<br/><br/>
 								<b>Par défaut la documentation est affichée avec le thème CNAM.</b></p>
-                          <VBtn color="colorPrimary" href="/?path=/docs/guide-du-dev-configuration-du-th%C3%A8me--docs">
+                          <VBtn color="primary" href="/?path=/docs/guide-du-dev-configuration-du-th%C3%A8me--docs">
 								Configurer le thème
 								<VIcon size="small" class="ml-2" right>{{arrowRight}}</VIcon>
 							</VBtn>
@@ -129,7 +129,7 @@ export const DesignSystem: StoryObj = {
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
               <div class="mb-12" v-if="theme !== 'ap2026'">
-                  <h3 class="text-h5 font-weight-bold mb-6 text-colorPrimary">Design System</h3>
+                  <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
                           <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
@@ -179,7 +179,7 @@ export const Guidelines: StoryObj = {
 			components: { VRow, VCol, VCard, VCardTitle, VCardText },
 			template: `
               <div v-if="theme !== 'ap2026'">
-					<h3 class="text-h5 font-weight-bold mb-6 text-colorPrimary">Guidelines</h3>
+					<h3 class="text-h5 font-weight-bold mb-6 text-primary">Guidelines</h3>
 					<VRow>
 						<VCol cols="12" md="4">
 							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/accessibilit%C3%A9-introduction--docs">

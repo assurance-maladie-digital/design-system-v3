@@ -23,7 +23,7 @@
 			class="d-flex align-center text-decoration-none text-body-1 ps-4 pe-4 py-2"
 			:aria-current="currentActiveHash === item.hash"
 			:class="{
-				'text-colorPrimary active': currentActiveHash === item.hash,
+				'text-primary active': currentActiveHash === item.hash,
 				'text-medium-emphasis': currentActiveHash !== item.hash,
 				'ps-6': currentDeepth === 2,
 				'ps-8': currentDeepth === 3,

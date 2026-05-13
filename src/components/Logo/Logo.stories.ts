@@ -62,7 +62,7 @@ export const Default: Story = {
 		},
 		template: `
 			<div class="d-flex flex-wrap align-center pa-4">
-				<VSheet v-if="args.dark" color="colorPrimary" class="pa-0">
+				<VSheet v-if="args.dark" color="primary" class="pa-0">
 					<Logo v-bind="args" />
 				</VSheet>
 				<Logo v-else v-bind="args" />
@@ -323,7 +323,7 @@ export const dark: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<VSheet color="colorPrimary" class="pa-4">
+	<VSheet color="primary" class="pa-4">
 		<Logo dark />
 	</VSheet>
 </template>
@@ -354,7 +354,7 @@ export const dark: Story = {
 		},
 		template: `
 			<div class="d-flex flex-wrap align-center pa-4">
-				<VSheet v-if="args.dark" color="colorPrimary" class="pa-4">
+				<VSheet v-if="args.dark" color="primary" class="pa-4">
 					<Logo v-bind="args" />
 				</VSheet>
 			</div>

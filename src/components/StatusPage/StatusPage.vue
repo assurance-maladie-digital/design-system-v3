@@ -99,7 +99,7 @@
 				>
 					<div
 						v-if="code"
-						class="sy-code text-colorPrimary mb-4"
+						class="sy-code text-primary mb-4"
 					>
 						<span class="d-sr-only">{{ codeErrorText }}</span>
 						{{ code }}
@@ -138,7 +138,7 @@
 							v-if="!hideBtn && btnText && (btnLink || btnHref)"
 							:to="btnHref ? undefined : btnLink"
 							:href="btnHref"
-							color="colorPrimary"
+							color="primary"
 							class="mt-6"
 							@click="emitClickEvent"
 						>

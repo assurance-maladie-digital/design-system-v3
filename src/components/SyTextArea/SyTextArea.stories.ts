@@ -71,7 +71,7 @@ const meta = {
 			description: 'Couleur du champ',
 			table: {
 				type: { summary: 'string' },
-				defaultValue: { summary: 'colorPrimary' },
+				defaultValue: { summary: 'primary' },
 			},
 		},
 		variant: {

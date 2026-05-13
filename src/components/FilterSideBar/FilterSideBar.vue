@@ -84,7 +84,7 @@
 			ref="drawerBtnRef"
 			class="sy-filters-side-bar__open-btn px-4 py-3"
 			:class="{ 'v-btn--active': drawer }"
-			color="colorPrimary"
+			color="primary"
 			variant="text"
 			size="large"
 			@click="toggleDrawer"
@@ -188,7 +188,7 @@
 
 					<div class="px-4 pb-4 pt-10">
 						<VBtn
-							color="colorPrimary"
+							color="primary"
 							block
 							size="large"
 							variant="outlined"
@@ -200,7 +200,7 @@
 						</VBtn>
 
 						<VBtn
-							color="colorPrimary"
+							color="primary"
 							block
 							size="large"
 							variant="outlined"
@@ -213,7 +213,7 @@
 						</VBtn>
 
 						<VBtn
-							color="colorPrimary"
+							color="primary"
 							block
 							size="large"
 							class="sy-filters-side-bar__apply-btn"
@@ -258,7 +258,7 @@
 .sy-filters-side-bar__apply-btn,
 .sy-filters-side-bar__open-btn {
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 
 		:deep(.v-btn__overlay) {
@@ -273,7 +273,7 @@
 
 .v-expansion-panel-title {
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: -2px;
 
 		:deep(.v-expansion-panel-title__overlay) {

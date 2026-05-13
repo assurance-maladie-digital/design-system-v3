@@ -168,11 +168,11 @@
 		switch (props.theme) {
 		case 'cnam':
 		case 'ameli-pro':
-			return cnamLightTheme.colorSecondary
+			return cnamLightTheme.secondary
 		case 'compte-entreprise':
 			return cnamLightTheme.risquePro
 		default:
-			return cnamLightTheme.colorPrimary
+			return cnamLightTheme.primary
 		}
 	})
 
@@ -248,7 +248,7 @@
 
 			<div
 				v-else-if="showBrandContent"
-				class="vd-title-container d-flex justify-center flex-column text-colorPrimary"
+				class="vd-title-container d-flex justify-center flex-column text-primary"
 			>
 				<slot name="brand-content">
 					<SyHeading

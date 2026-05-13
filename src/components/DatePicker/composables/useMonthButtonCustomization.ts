@@ -14,7 +14,7 @@ export function useMonthButtonCustomization(
 	const monthButtonText = ref('')
 	const yearText = ref('')
 	const monthButtonObservers: MutationObserver[] = []
-	const primaryThemeColor = 'rgb(var(--v-theme-colorPrimary, 12, 65, 154))'
+	const primaryThemeColor = 'rgb(var(--v-theme-primary, 12, 65, 154))'
 
 	onBeforeUnmount(() => {
 		monthButtonObservers.forEach(observer => observer.disconnect())

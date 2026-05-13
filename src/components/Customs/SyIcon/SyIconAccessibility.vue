@@ -217,7 +217,7 @@
 										:decorative="decorative"
 										:label="decorative === false ? label : undefined"
 										size="x-large"
-										color="colorPrimary"
+										color="primary"
 									/>
 								</v-card>
 								<div>

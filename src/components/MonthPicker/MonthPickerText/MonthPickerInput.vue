@@ -79,11 +79,11 @@
 
 <style scoped lang="scss">
 .error-field .month-picker-input__toggle-btn :deep(svg) {
-	color: rgb(var(--v-theme-feedbackError, 179, 63, 46));
+	color: rgb(var(--v-theme-error, 179, 63, 46));
 }
 
 .warning-field .month-picker-input__toggle-btn :deep(svg) {
-	color: rgb(var(--v-theme-feedbackSuccessVariant, 96, 72, 14));
+	color: rgb(var(--v-theme-successVariant, 96, 72, 14));
 }
 
 </style>

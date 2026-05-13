@@ -38,7 +38,7 @@
 		{
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
-			color: 'colorPrimary',
+			color: 'primary',
 			customRules: () => [],
 			customSuccessRules: () => [],
 			customWarningRules: () => [],
@@ -298,11 +298,11 @@
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
+	color: rgb(var(--v-theme-warningVariant)) !important;
 }
 
 .error-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-feedbackError)) !important;
+	color: rgb(var(--v-theme-error)) !important;
 }
 
 .error-field :deep(.v-selection-control__input > .v-icon) {
@@ -310,7 +310,7 @@
 }
 
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
+	color: rgb(var(--v-theme-successVariant)) !important;
 }
 
 :deep(.v-messages__message) {

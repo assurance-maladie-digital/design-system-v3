@@ -57,7 +57,7 @@ describe('SyIconButton – accessibility (axe)', () => {
 			props: {
 				icon: 'mdi-alert',
 				label: 'Alerte importante',
-				color: 'colorPrimary',
+				color: 'primary',
 				size: 'large',
 			},
 			...globalStubs,

@@ -1456,7 +1456,7 @@ export const WithFormSubmission: Story = {
 							class="mb-4"
 							useCombinedMode
 						/>
-						<v-btn type="submit" color="colorPrimary">Soumettre</v-btn>
+						<v-btn type="submit" color="primary">Soumettre</v-btn>
 					</form>
 					<div v-if="submitted" class="mt-4">
 						Formulaire soumis avec la date: {{ date }}
@@ -1521,7 +1521,7 @@ export const WithFormSubmission: Story = {
 					class="mb-4"
 					useCombinedMode
                   />
-                  <v-btn type="submit" color="colorPrimary">Soumettre</v-btn>
+                  <v-btn type="submit" color="primary">Soumettre</v-btn>
                 </form>
                 <div v-if="submitted" class="mt-4 success--text">
                   Formulaire soumis avec la date: {{ date }}

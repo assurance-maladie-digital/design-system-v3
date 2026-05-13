@@ -198,7 +198,7 @@
 		<div class="actions mb-4">
 			<v-btn
 				size="small"
-				color="colorPrimary"
+				color="primary"
 				class="mr-2"
 				@click="resetDates"
 			>

@@ -4,7 +4,7 @@ export const config = {
 	btn: {
 		size: 'small',
 		variant: 'tonal' as VariantType,
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'ml-3',
 		ariaLabel: 'Caractères accentués',
 	},

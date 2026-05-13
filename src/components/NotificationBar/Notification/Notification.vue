@@ -137,38 +137,38 @@
 
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {
-		background-color: rgb(var(--v-theme-feedbackInfo));
-		color: rgb(var(--v-theme-colorOnPrimary));
+		background-color: rgb(var(--v-theme-info));
+		color: rgb(var(--v-theme-onPrimary));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-colorOnPrimary));
+			outline: 2px solid rgb(var(--v-theme-onPrimary));
 		}
 	}
 
 	.notification--success {
-		background-color: rgb(var(--v-theme-feedbackSuccessVariant, '86, 194, 113'));
-		color: rgb(var(--v-theme-feedbackOnSuccess));
+		background-color: rgb(var(--v-theme-successVariant, '86, 194, 113'));
+		color: rgb(var(--v-theme-onSuccess));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-feedbackOnSuccess));
+			outline: 2px solid rgb(var(--v-theme-onSuccess));
 		}
 	}
 
 	.notification--warning {
-		background-color: rgb(var(--v-theme-feedbackWarningVariant));
-		color: rgb(var(--v-theme-colorOnSurface));
+		background-color: rgb(var(--v-theme-warningVariant));
+		color: rgb(var(--v-theme-onSurface));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-colorOnSurface));
+			outline: 2px solid rgb(var(--v-theme-onSurface));
 		}
 	}
 
 	.notification--error {
-		background-color: rgb(var(--v-theme-feedbackError));
-		color: rgb(var(--v-theme-colorOnPrimary));
+		background-color: rgb(var(--v-theme-error));
+		color: rgb(var(--v-theme-onPrimary));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-colorOnPrimary));
+			outline: 2px solid rgb(var(--v-theme-onPrimary));
 		}
 	}
 

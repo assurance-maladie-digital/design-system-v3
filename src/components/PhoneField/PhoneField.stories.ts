@@ -1479,7 +1479,7 @@ export const FormValidation: Story = {
 							:readonly="readonly"
 							:disabled="disabled"
 						/>
-						<v-btn type="submit" color="colorPrimary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
+						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
 						<div v-if="formSubmitted" class="mt-4 pa-2" :class="{ 'bg-success': formIsValid, 'bg-error': !formIsValid }" style="width: fit-content;">
 							<p v-if="formIsValid" class="text-white">Formulaire valide !</p>
 							<p v-else class="text-white">Formulaire invalide !</p>
@@ -1567,7 +1567,7 @@ export const FormValidation: Story = {
 							ref="phoneFieldRef"
 							v-bind="args"
 						/>
-						<v-btn type="submit" color="colorPrimary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
+						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
 						<div v-if="formSubmitted" class="mt-4 pa-2" :class="{ 'bg-success': formIsValid, 'bg-error': !formIsValid }" style="width: fit-content;">
 							<p v-if="formIsValid" class="text-white">Formulaire valide !</p>
 							<p v-else class="text-white">Formulaire invalide !</p>

@@ -45,7 +45,7 @@
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			title: undefined,
-			color: 'colorPrimary',
+			color: 'primary',
 			disabled: false,
 			readonly: false,
 			required: false,
@@ -215,12 +215,12 @@
 		if (props.disabled) return cnamSemanticTokens.colors.text.disabled
 		switch (props.color) {
 		case 'error':
-			return 'rgb(var(--v-theme-feedbackError))'
+			return 'rgb(var(--v-theme-error))'
 		case 'success':
-			return 'rgb(var(--v-theme-feedbackSuccessVariant))'
+			return 'rgb(var(--v-theme-successVariant))'
 		case 'warning':
-			return 'rgb(var(--v-theme-feedbackWarningVariant))'
-		case 'colorPrimary':
+			return 'rgb(var(--v-theme-warningVariant))'
+		case 'primary':
 			return cnamSemanticTokens.colors.text.base
 		default:
 			return ''
@@ -393,19 +393,19 @@
 
 <style scoped>
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
+	color: rgb(var(--v-theme-successVariant)) !important;
 }
 
 .success-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-feedbackSuccessVariant));
+	color: rgb(var(--v-theme-successVariant));
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
+	color: rgb(var(--v-theme-warningVariant)) !important;
 }
 
 .warning-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-feedbackWarningVariant));
+	color: rgb(var(--v-theme-warningVariant));
 }
 
 :deep(.v-input--dirty .v-selection-control__input) {
@@ -435,7 +435,7 @@
 }
 
 :deep(.v-selection-control--error .v-selection-control__input) {
-	color: rgb(var(--v-theme-feedbackError));
+	color: rgb(var(--v-theme-error));
 }
 
 :deep(.v-messages__message) {

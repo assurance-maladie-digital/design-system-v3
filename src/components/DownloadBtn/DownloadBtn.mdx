@@ -32,7 +32,7 @@ import * as DownloadBtnStories from './DownloadBtn.stories';
 	<div>
 		<DownloadBtn
 			:file-promise="download"
-			:btn="{ color: 'colorPrimary'}"
+			:btn="{ color: 'primary'}"
 			@error="console.error"
 			@success="console.info"
 		>
@@ -83,7 +83,7 @@ Exemple :
 		<div class="d-flex">
 			<DownloadBtn
 				:file-promise="download"
-				:btn="{ color: 'colorPrimary'}"
+				:btn="{ color: 'primary'}"
 				@error="console.error"
 				@success="notify('Votre attestation a été téléchargée', 'success')"
 			>

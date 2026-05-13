@@ -80,11 +80,11 @@ describe('ChipList', () => {
 		expect(chips[3]?.classes()).toContain('sy-chip-error')
 
 		// Vérifie les couleurs de fond via les classes
-		expect(chips[0]?.classes()).toContain('bg-feedbackSuccessVariant')
-		expect(chips[1]?.classes()).toContain('bg-feedbackInfoVariant')
-		expect(chips[2]?.classes()).toContain('bg-feedbackWarningVariant')
-		expect(chips[3]?.classes()).toContain('bg-feedbackErrorVariant')
-		expect(chips[4]?.classes()).toContain('bg-colorPrimary') // État par défaut
+		expect(chips[0]?.classes()).toContain('bg-successVariant')
+		expect(chips[1]?.classes()).toContain('bg-infoVariant')
+		expect(chips[2]?.classes()).toContain('bg-warningVariant')
+		expect(chips[3]?.classes()).toContain('bg-errorVariant')
+		expect(chips[4]?.classes()).toContain('bg-primary') // État par défaut
 	})
 
 	it('applique les bonnes classes selon l\'état', () => {

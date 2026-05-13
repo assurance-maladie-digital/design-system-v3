@@ -33,7 +33,7 @@ const meta = {
 		},
 		color: {
 			control: 'select',
-			options: ['colorPrimary', 'success', 'error', 'warning'],
+			options: ['primary', 'success', 'error', 'warning'],
 			description: 'Couleur de la case à cocher',
 		},
 		indeterminate: {
@@ -605,9 +605,9 @@ export const CustomColors: Story = {
 				code: `
 <div>
   <SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-  <SyCheckbox v-model="checked3" label="Couleur succès" color="feedbackSuccess" />
-  <SyCheckbox v-model="checked4" label="Couleur erreur" color="feedbackError" />
-  <SyCheckbox v-model="checked5" label="Couleur avertissement" color="feedbackWarning" />
+  <SyCheckbox v-model="checked3" label="Couleur succès" color="success" />
+  <SyCheckbox v-model="checked4" label="Couleur erreur" color="error" />
+  <SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning" />
 </div>`,
 			},
 		],
@@ -633,9 +633,9 @@ Le composant SyCheckbox peut être personnalisé avec différentes couleurs pour
 		template: `
 			<div>
 				<SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-              <SyCheckbox v-model="checked3" label="Couleur succès" color="feedbackSuccess"/>
-              <SyCheckbox v-model="checked4" label="Couleur erreur" color="feedbackError"/>
-              <SyCheckbox v-model="checked5" label="Couleur avertissement" color="feedbackWarning"/>
+              <SyCheckbox v-model="checked3" label="Couleur succès" color="success"/>
+              <SyCheckbox v-model="checked4" label="Couleur erreur" color="error"/>
+              <SyCheckbox v-model="checked5" label="Couleur avertissement" color="warning"/>
 			</div>
 		`,
 	}),
@@ -667,7 +667,7 @@ export const FormValidation: Story = {
     />
     <VBtn 
       type="submit" 
-      color="colorPrimary"
+      color="primary"
       class="mt-4"
     >
       Soumettre
@@ -786,7 +786,7 @@ Cette case à cocher utilise des règles de validation personnalisées et valide
 				/>
 				<VBtn
                     type="submit"
-                    color="colorPrimary"
+                    color="primary"
 					class="mt-4"
 				>
 					Soumettre

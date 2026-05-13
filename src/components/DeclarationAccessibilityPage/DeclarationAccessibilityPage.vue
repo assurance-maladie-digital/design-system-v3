@@ -408,7 +408,7 @@
 }
 
 .accessibility-statement a {
-	color: rgb(var(--v-theme-colorPrimary));
+	color: rgb(var(--v-theme-primary));
 	text-decoration: underline;
 }
 

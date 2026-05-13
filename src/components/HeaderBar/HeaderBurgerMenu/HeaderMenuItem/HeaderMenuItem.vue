@@ -23,7 +23,7 @@
 	@use '../menu';
 
 	.header-menu-item {
-		color: rgb(var(--v-theme-colorPrimary));
+		color: rgb(var(--v-theme-primary));
 		list-style-type: none;
 		margin: 0;
 		padding: 0;
@@ -54,11 +54,11 @@
 	}
 
 	.header-menu-item:hover {
-		background-color: rgb(var(--v-theme-colorPrimary));
-		color: rgb(var(--v-theme-colorOnPrimary));
+		background-color: rgb(var(--v-theme-primary));
+		color: rgb(var(--v-theme-onPrimary));
 
 		> :deep(a > *) {
-			color: rgb(var(--v-theme-colorOnPrimary)) !important;
+			color: rgb(var(--v-theme-onPrimary)) !important;
 		}
 	}
 </style>

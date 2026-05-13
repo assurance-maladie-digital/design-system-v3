@@ -2032,7 +2032,7 @@ export const CustomFilterSlot: Story = {
 									label="Statut"
 									variant="outlined"
 									density="compact"
-									color="colorPrimary"
+									color="primary"
 									bg-color="white"
 									@update:model-value="(val) => {
 										// Use updateFilter provided by the slot props
@@ -2294,7 +2294,7 @@ export const CustomFilterSlot: Story = {
 								label="Statut"
 								variant="outlined"
 								density="compact"
-								color="colorPrimary"
+								color="primary"
 								bg-color="white"
 								@update:model-value="(val) => {
 									// Use updateFilter provided by the slot props
@@ -3984,7 +3984,7 @@ export const SlotItem: Story = {
 								<td>
 									<a
 										href="#"
-										class="text-colorPrimary"
+										class="text-primary"
 									>
 										{{ item.firstname }}
 									</a>
@@ -4133,7 +4133,7 @@ export const SlotItem: Story = {
 							<td>
 								<a
 									href="#"
-									class="text-colorPrimary"
+									class="text-primary"
 								>
 									{{ item.firstname }}
 								</a>
@@ -4169,7 +4169,7 @@ export const SlotHeaders: Story = {
 							  v-for="column in columns" 
 							  :key="column.key"
 							>
-							  <span class="font-weight-bold text-colorPrimary">
+							  <span class="font-weight-bold text-primary">
 								{{ column.title }}
 							  </span>
 							</th>
@@ -4316,7 +4316,7 @@ export const SlotHeaders: Story = {
 								v-for="column in columns"
 								:key="column.key"
 							>
-								<span class="font-weight-bold text-colorPrimary">
+								<span class="font-weight-bold text-primary">
 								{{ column.title }}
 							  </span>
 							</th>
@@ -4343,7 +4343,7 @@ export const SlotHeader: Story = {
 						:items="items"
 					>
 						<template #header.lastname>
-							<span class="text-colorPrimary font-weight-bold">
+							<span class="text-primary font-weight-bold">
 								Nom de famille
 							</span>
 						</template>
@@ -4552,7 +4552,7 @@ export const SlotHeader: Story = {
 					v-bind="args"
 				>
 					<template #header.lastname>
-						<span class="text-colorPrimary font-weight-bold">
+						<span class="text-primary font-weight-bold">
 							Nom de famille
 						</span>
 					</template>

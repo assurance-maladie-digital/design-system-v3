@@ -123,6 +123,6 @@
 	position: absolute;
 	inset: -6px;
 	border-radius: 5px;
-	border: 2px solid rgb(var(--v-theme-colorPrimary));
+	border: 2px solid rgb(var(--v-theme-primary));
 }
 </style>

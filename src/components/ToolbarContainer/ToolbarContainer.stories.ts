@@ -39,7 +39,7 @@ export const Default: Story = {
 							role="radiogroup"
 							aria-label="Alignement du texte"
 							v-model="justification"
-							color="colorPrimary"
+							color="primary"
 							style="overflow: visible;"
 						>
 							<VBtn
@@ -96,7 +96,7 @@ export const Default: Story = {
 								role="radiogroup"
 								aria-label="Alignement du texte"
 								v-model="justification"
-								color="colorPrimary"
+								color="primary"
 								style="overflow: visible;"
 							>
 								<VBtn
@@ -170,12 +170,12 @@ export const WithCheckboxes: Story = {
 					>
 						<VCheckbox
 							label="Envoyer une copie"
-							color="colorPrimary"
+							color="primary"
 							hide-details
 						/>
 						<VCheckbox
 							label="Envoyer en copie cachée"
-							color="colorPrimary"
+							color="primary"
 							hide-details
 						/>
 					</div>
@@ -186,7 +186,7 @@ export const WithCheckboxes: Story = {
 					>
 						<VCheckbox
 							label="Confirmer la lecture"
-							color="colorPrimary"
+							color="primary"
 							hide-details
 						/>
 					</div>
@@ -210,12 +210,12 @@ export const WithCheckboxes: Story = {
 						>
 							<VCheckbox
 								label="Envoyer une copie"
-								color="colorPrimary"
+								color="primary"
 								hide-details
 							/>
 							<VCheckbox
 								label="Envoyer en copie cachée"
-								color="colorPrimary"
+								color="primary"
 								hide-details
 							/>
 						</div>
@@ -226,7 +226,7 @@ export const WithCheckboxes: Story = {
 						>
 							<VCheckbox
 								label="Confirmer la lecture"
-								color="colorPrimary"
+								color="primary"
 								hide-details
 							/>
 						</div>
@@ -256,7 +256,7 @@ export const ManySections: Story = {
 						role="radiogroup"
 						aria-label="Outils d'alignement"
 						v-model="justification"
-						color="colorPrimary"
+						color="primary"
 						style="overflow: visible;"
 					>
 						<VBtn
@@ -312,7 +312,7 @@ export const ManySections: Story = {
 						role="group"
 						aria-label="Style du texte"
 						v-model="textDecoration"
-						color="colorPrimary"
+						color="primary"
 						style="overflow: visible;"
 						multiple
 					>
@@ -388,7 +388,7 @@ export const ManySections: Story = {
 							role="radiogroup"
 							aria-label="Outils d'alignement"
 							v-model="justification"
-							color="colorPrimary"
+							color="primary"
 							style="overflow: visible;"
 						>
 							<VBtn
@@ -442,7 +442,7 @@ export const ManySections: Story = {
 							role="group"
 							aria-label="Style du texte"
 							v-model="textDecoration"
-							color="colorPrimary"
+							color="primary"
 							style="overflow: visible;"
 							multiple
 						>
@@ -539,7 +539,7 @@ export const Vertical: Story = {
 						role="radiogroup"
 						direction="vertical"
 						style="overflow: visible;"
-						color="colorPrimary"
+						color="primary"
 						aria-label="Outils d'alignement"
 						v-model="justification"
 					>
@@ -599,7 +599,7 @@ export const Vertical: Story = {
 						direction="vertical"
 						aria-label="Style du texte"
 						v-model="textDecoration"
-						color="colorPrimary"
+						color="primary"
 						style="overflow: visible;"
 						multiple
 					>
@@ -680,7 +680,7 @@ export const Vertical: Story = {
 							role="radiogroup"
 							direction="vertical"
 							style="overflow: visible;"
-							color="colorPrimary"
+							color="primary"
 							aria-label="Outils d'alignement"
 							v-model="justification"
 						>
@@ -738,7 +738,7 @@ export const Vertical: Story = {
 							direction="vertical"
 							aria-label="Style du texte"
 							v-model="textDecoration"
-							color="colorPrimary"
+							color="primary"
 							style="overflow: visible;"
 							multiple
 						>

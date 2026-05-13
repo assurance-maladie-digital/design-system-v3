@@ -57,7 +57,7 @@
 	position: absolute;
 	bottom: 0;
 	background-color: rgb(0 0 0 / 70%);
-	color: rgb(var(--v-theme-colorOnPrimary));
+	color: rgb(var(--v-theme-onPrimary));
 	padding: 4px 8px;
 	border-radius: 4px;
 	will-change: transform;

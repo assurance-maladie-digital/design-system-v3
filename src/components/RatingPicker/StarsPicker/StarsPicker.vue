@@ -103,7 +103,7 @@
 					:icon="isFilled(index) ? starIcon : starOutlineIcon"
 					:class="
 						isFilled(index)
-							? 'text-colorPrimary'
+							? 'text-primary'
 							: 'text-blue-lighten'
 					"
 					size="36px"
@@ -128,8 +128,8 @@
 	width: 52px !important;
 	height: 36px !important;
 
-	&--disabled.text-colorPrimary {
-		color: rgb(var(--v-theme-colorPrimary)) !important;
+	&--disabled.text-primary {
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	&.text-blue-lighten {

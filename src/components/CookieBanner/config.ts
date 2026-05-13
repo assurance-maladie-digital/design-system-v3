@@ -1,7 +1,7 @@
 import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
 
 const commonBtnConfig = {
-	color: 'colorPrimary',
+	color: 'primary',
 	height: 'auto',
 	minHeight: '44px',
 	class: 'text-wrap',

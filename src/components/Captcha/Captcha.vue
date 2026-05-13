@@ -197,7 +197,7 @@
 					:loading="createCaptchaState === 'pending'"
 					class="captcha-audio mt-4 text-none"
 					:aria-label="createCaptchaState === 'pending' ? locales.audio.loading : undefined"
-					color="colorPrimary"
+					color="primary"
 					height="44"
 					block
 					@click="toggleAudio"

@@ -607,7 +607,7 @@
 								:model-value="isItemSelected(item)"
 								density="compact"
 								hide-details
-								color="colorPrimary"
+								color="primary"
 								class="mt-0 pt-0 mr-1"
 								:title="getItemText(item) as string"
 								:aria-label="getItemText(item) as string"
@@ -660,7 +660,7 @@
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-colorPrimary));
+	color: rgb(var(--v-theme-primary));
 }
 
 .sy-autocomplete__chip {
@@ -728,7 +728,7 @@ li:hover {
 .v-list-item.keyboard-focused,
 li:focus-visible,
 li.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-colorPrimary));
+	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }

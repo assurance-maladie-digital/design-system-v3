@@ -158,7 +158,7 @@
 			width: 1.5rem;
 			height: 1.5rem;
 			border-radius: 0.4rem;
-			border: 3px solid rgb(var(--v-theme-colorPrimary));
+			border: 3px solid rgb(var(--v-theme-primary));
 			background-color: transparent;
 			content: '';
 		}
@@ -167,7 +167,7 @@
 	&[aria-checked='true'] {
 		& .checkbox-label {
 			&::before {
-				background-color: rgb(var(--v-theme-colorPrimary));
+				background-color: rgb(var(--v-theme-primary));
 			}
 
 			&::after {
@@ -224,7 +224,7 @@
 				top: 0.25rem;
 				left: 4px;
 				border-radius: 24px;
-				background-color: rgb(var(--v-theme-colorSurface));
+				background-color: rgb(var(--v-theme-surface));
 				border: 0;
 				transition: transform 0.3s ease-in-out;
 				content: '';
@@ -234,7 +234,7 @@
 		&[aria-checked='true'] {
 			& .checkbox-label {
 				&::before {
-					background-color: rgb(var(--v-theme-colorPrimary));
+					background-color: rgb(var(--v-theme-primary));
 				}
 
 				&::after {

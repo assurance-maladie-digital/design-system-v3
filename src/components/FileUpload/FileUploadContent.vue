@@ -35,7 +35,7 @@
 		>
 			<SyIcon
 				size="40"
-				color="colorPrimary"
+				color="primary"
 				:icon="mdiCloudUpload"
 				decorative
 			/>
@@ -96,7 +96,7 @@
 
 .sy-file-upload-caption {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-colorOnSurfaceVariant));
+	color: rgb(var(--v-theme-onSurfaceVariant));
 }
 
 .sy-file-upload-btn {

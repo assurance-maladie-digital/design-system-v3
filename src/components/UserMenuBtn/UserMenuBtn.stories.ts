@@ -101,11 +101,11 @@ const meta = {
 		color: 'avatar',
 	},
 	logoutListItem: {
-		class: 'text-colorPrimary',
+		class: 'text-primary',
 		minWidth: '198px',
 	},
 	logoutIcon: {
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'mr-4',
 	},
 }`,

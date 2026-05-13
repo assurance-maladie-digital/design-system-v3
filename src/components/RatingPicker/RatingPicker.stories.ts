@@ -453,7 +453,7 @@ export const DefaultSlot: Story = {
 
 							<VBtn
 								right
-								color="colorPrimary"
+								color="primary"
 							>
 								Terminé
 							</VBtn>
@@ -494,7 +494,7 @@ export const DefaultSlot: Story = {
 
 				<VBtn
 					right
-					color="colorPrimary"
+					color="primary"
 				>
 					Terminé
 				</VBtn>

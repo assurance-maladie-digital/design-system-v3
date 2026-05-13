@@ -58,7 +58,7 @@ export const TemplatesList: StoryObj = {
 						<VCol v-for="template in templates" :key="template.title" cols="12" sm="6" md="4" lg="3">
 							<VCard
 								:href="template.link"
-                                color="colorPrimary"
+                                color="primary"
 								class="h-100 card-hover"
 								variant="outlined"
 								:ripple="true"

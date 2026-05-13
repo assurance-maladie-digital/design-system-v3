@@ -1157,7 +1157,7 @@
 						ref="datePickerRef"
 						v-model="selectedDates"
 						control-variant="modal"
-						color="colorPrimary"
+						color="primary"
 						:class="props.displayWeekendDays ? 'weekend' : ''"
 						:first-day-of-week="1"
 						:multiple="props.displayRange ? 'range' : false"
@@ -1206,7 +1206,7 @@
 								<v-btn
 									v-if="props.displayTodayButton"
 									size="x-small"
-									color="colorPrimary"
+									color="primary"
 									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"
@@ -1273,40 +1273,40 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
+		color: rgb(var(--v-theme-successVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
+		color: rgb(var(--v-theme-successVariant)) !important;
 	}
 }
 
 .v-messages__message--error {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-feedbackError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 }
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 }
 
@@ -1342,7 +1342,7 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: rgb(var(--v-theme-backgroundBackground));
+	background-color: rgb(var(--v-theme-background));
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
@@ -1350,7 +1350,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: rgb(var(--v-theme-colorSecondary)) !important;
+	background-color: rgb(var(--v-theme-secondary)) !important;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
@@ -1395,7 +1395,7 @@
 }
 
 :deep(.v-picker__body .v-btn:focus-visible) {
-	outline: 2px solid rgb(var(--v-theme-colorPrimary, '12, 65, 154'));
+	outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
 
 	.v-btn__overlay {
 		display: none;
@@ -1423,7 +1423,7 @@
 	}
 
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-colorPrimary, '12, 65, 154'));
+		outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
 
 		:deep(.v-btn__overlay) {
 			display: none;

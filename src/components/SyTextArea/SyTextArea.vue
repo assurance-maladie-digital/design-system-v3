@@ -168,11 +168,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-feedbackSuccessVariant));
+		color: rgb(var(--v-theme-successVariant));
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackSuccessVariant));
+		color: rgb(var(--v-theme-successVariant));
 	}
 }
 
@@ -180,11 +180,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-feedbackWarningVariant));
+		color: rgb(var(--v-theme-warningVariant));
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackWarningVariant));
+		color: rgb(var(--v-theme-warningVariant));
 	}
 }
 </style>

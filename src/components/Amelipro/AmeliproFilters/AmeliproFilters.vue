@@ -183,9 +183,9 @@ input {
 	.amelipro-filters__filter-input & {
 		position: relative;
 		border-radius: var(--v-ap-btnRadius);
-		border: 1px solid rgb(var(--v-theme-colorPrimary));
-		background-color: rgb(var(--v-theme-colorSurface));
-		color: rgb(var(--v-theme-colorPrimary));
+		border: 1px solid rgb(var(--v-theme-primary));
+		background-color: rgb(var(--v-theme-surface));
+		color: rgb(var(--v-theme-primary));
 		cursor: pointer;
 	}
 
@@ -199,8 +199,8 @@ input {
 			left: 1.1rem;
 			width: 1rem;
 			height: 0.5rem;
-			border-bottom: 2px solid rgb(var(--v-theme-colorPrimary));
-			border-left: 2px solid rgb(var(--v-theme-colorPrimary));
+			border-bottom: 2px solid rgb(var(--v-theme-primary));
+			border-left: 2px solid rgb(var(--v-theme-primary));
 			transform: rotate(-50deg);
 			content: '';
 		}

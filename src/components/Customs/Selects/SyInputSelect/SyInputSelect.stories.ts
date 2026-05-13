@@ -69,10 +69,10 @@ export const Default: Story = {
 		],
 		vuetifyOptions: {
 			menu: {
-				color: 'colorPrimary',
+				color: 'primary',
 			},
 			option: {
-				color: 'colorPrimary',
+				color: 'primary',
 			},
 		},
 		readonly: false,
@@ -473,7 +473,7 @@ export const FormValidation: Story = {
     />
     <VBtn
       type="submit"
-      color="colorPrimary"
+      color="primary"
       class="mt-1"
     >
       Valider
@@ -587,7 +587,7 @@ const validateForm = async (): Promise<void> => {
 						/>
 						<VBtn
 							type="submit"
-                            color="colorPrimary"
+                            color="primary"
 							class="mt-1"
 						>
 							Valider

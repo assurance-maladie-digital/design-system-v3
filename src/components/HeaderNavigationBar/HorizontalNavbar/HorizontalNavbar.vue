@@ -323,7 +323,7 @@
 	transition: color 0.2s ease;
 
 	&:hover {
-		color: rgb(var(--v-theme-colorOnPrimary));
+		color: rgb(var(--v-theme-onPrimary));
 	}
 
 	&:focus-visible {
@@ -334,7 +334,7 @@
 
 	&--active,
 	&[aria-current='page'] {
-		color: rgb(var(--v-theme-colorOnPrimary));
+		color: rgb(var(--v-theme-onPrimary));
 		border-bottom: 3px solid #fff; /* Bordure solide et plus visible pour les éléments actifs */
 		box-shadow: 0 3px 0 0 #fff; /* Double effet pour être sûr que la bordure est bien visible */
 
@@ -350,7 +350,7 @@
 	padding: 8px 16px;
 	margin-top: 8px;
 	background-color: v-bind('options.sheet.color');
-	color: rgb(var(--v-theme-colorOnPrimary));
+	color: rgb(var(--v-theme-onPrimary));
 	text-decoration: none;
 	border-radius: 4px;
 	transition: background-color 0.2s ease;

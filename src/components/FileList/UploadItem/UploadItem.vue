@@ -104,7 +104,7 @@
 						<SyIcon
 							v-else
 							:size="cnamContextualTokens.iconSize.default"
-							color="colorPrimary"
+							color="primary"
 							:icon="mdiFile"
 							decorative
 						/>
@@ -136,7 +136,7 @@
 			<div class="file-item__actions">
 				<VBtn
 					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
-					class="file-item__action file-item__action-upload text-colorPrimary"
+					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
 					:aria-label="`${locales.import} ${title}`"
 					@click="$emit('upload', itemId)"
@@ -144,7 +144,7 @@
 					<span>{{ importLabel }}</span>
 					<template #prepend>
 						<SyIcon
-							color="colorPrimary"
+							color="primary"
 							:icon="mdiTrayArrowUp"
 							decorative
 						/>
@@ -152,7 +152,7 @@
 				</VBtn>
 				<VBtn
 					v-if="state === 'success' && showPreviewBtn"
-					class="file-item__action file-item__action-preview text-colorPrimary"
+					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
 					:aria-label="`${locales.see} ${fileName}`"
 					@click="$emit('preview', itemId)"
@@ -160,7 +160,7 @@
 					<span>{{ seeLabel }}</span>
 					<template #prepend>
 						<SyIcon
-							color="colorPrimary"
+							color="primary"
 							:icon="mdiEyeOutline"
 							decorative
 						/>
@@ -197,7 +197,7 @@
 				:model-value="progress"
 				:progress="progress"
 				height="7"
-				color="colorPrimary"
+				color="primary"
 				rounded="true"
 				:aria-label="title ? `Chargement de ${title}` : 'Chargement en cours'"
 			/>
@@ -211,7 +211,7 @@
 	flex-direction: column;
 	gap: var(--v-gap-3);
 	padding-block: var(--v-padding-4);
-	border-bottom: 1px solid rgb(var(--v-theme-colorDisabled));
+	border-bottom: 1px solid rgb(var(--v-theme-disabled));
 
 	&:first-child:last-child {
 		border-bottom: none;
@@ -224,7 +224,7 @@
 
 .file-item__name {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-colorOnSurface));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 .file-item__description {
@@ -278,7 +278,7 @@
 
 .file-item__message {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-colorOnSurfaceVariant));
+	color: rgb(var(--v-theme-onSurfaceVariant));
 }
 
 .file-item__message-success,

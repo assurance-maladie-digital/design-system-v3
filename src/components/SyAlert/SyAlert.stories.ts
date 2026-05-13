@@ -48,7 +48,7 @@ export const Default: Story = {
 			<template #default>Contenu de l'alerte</template>
 		</SyAlert>
 
-		<VBtn v-if="!showAlert" color="colorPrimary" @click="showAlert = true">
+		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
 			Réinitialiser
 		</VBtn>
 	</div>
@@ -85,7 +85,7 @@ export const Default: Story = {
 					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 					</SyAlert>
-					<VBtn v-if="!args.modelValue" color="colorPrimary" @click="args.modelValue = true" class="ma-6">
+					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
 						Réinitialiser
 					</VBtn>
 				</div>
@@ -105,7 +105,7 @@ export const Outlined: Story = {
 			<template #default>Contenu de l'alerte</template>
 		</SyAlert>
 
-		<VBtn v-if="!showAlert" color="colorPrimary" @click="showAlert = true">
+		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
 			Réinitialiser
 		</VBtn>
 	</div>
@@ -141,7 +141,7 @@ export const Outlined: Story = {
 					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 					</SyAlert>
-					<VBtn v-if="!args.modelValue" color="colorPrimary" @click="args.modelValue = true" class="ma-6">
+					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
 						Réinitialiser
 					</VBtn>
 				</div>
@@ -162,7 +162,7 @@ export const SlotIcon: Story = {
 			<template #icon>{{ icon }}</template>
 		</SyAlert>
 
-		<VBtn v-if="!showAlert" color="colorPrimary" @click="showAlert = true">
+		<VBtn v-if="!showAlert" color="primary" @click="showAlert = true">
 			Réinitialiser
 		</VBtn>
 	</div>
@@ -202,7 +202,7 @@ export const SlotIcon: Story = {
 						<template #default>{{ args.default }}</template>
 						<template #icon>{{ args.icon }}</template>
 					</SyAlert>
-					<VBtn v-if="!args.modelValue" color="colorPrimary" @click="args.modelValue = true" class="ma-6">
+					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
 						Réinitialiser
 					</VBtn>
 				</div>

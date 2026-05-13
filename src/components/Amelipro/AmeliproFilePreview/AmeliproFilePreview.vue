@@ -147,12 +147,12 @@
 }
 
 .download-file-link-text {
-	color: rgb(var(--v-theme-colorPrimary));
+	color: rgb(var(--v-theme-primary));
 	font-size: var(--v-ap-fontSizeSm);
 	font-weight: var(--v-ap-fontWeightBold);
 
 	a:hover & {
-		color: rgb(var(--v-theme-colorSecondary));
+		color: rgb(var(--v-theme-secondary));
 		text-decoration: underline;
 	}
 }

@@ -44,40 +44,40 @@
 			.v-field__append-inner > .v-icon,
 			.v-field__clearable > .v-icon {
 				opacity: 1;
-				color: rgb(var(--v-theme-colorPrimary));
+				color: rgb(var(--v-theme-primary));
 			}
 		}
 
 		&--focused {
-			border-color: rgb(var(--v-theme-colorPrimary));
-			color: rgb(var(--v-theme-colorPrimary));
+			border-color: rgb(var(--v-theme-primary));
+			color: rgb(var(--v-theme-primary));
 		}
 	}
 
 	// Override Vuetify's checkbox styles to use primary color
 	.v-table .v-selection-control {
-		color: rgb(var(--v-theme-colorPrimary)) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	.v-table .v-selection-control--dirty .v-selection-control__input::before {
-		background-color: rgb(var(--v-theme-colorPrimary)) !important;
-		border-color: rgb(var(--v-theme-colorPrimary)) !important;
+		background-color: rgb(var(--v-theme-primary)) !important;
+		border-color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	// Target the header checkbox specifically
 	.v-data-table-header__checkbox .v-selection-control {
-		color: rgb(var(--v-theme-colorPrimary)) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	// Target the row checkboxes specifically
 	.v-data-table-row__checkbox .v-selection-control {
-		color: rgb(var(--v-theme-colorPrimary)) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	// Add a global style for all checkboxes in the table
 	.v-checkbox .v-selection-control__input::before,
 	.v-checkbox-btn .v-selection-control__input::before {
-		border-color: rgb(var(--v-theme-colorPrimary)) !important;
+		border-color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	.v-data-table-rows-no-data {
@@ -101,7 +101,7 @@
 
 	.v-table tbody > tr.sy-table__clickable-row:focus-visible,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 	}
 
 	.v-table tbody > tr.sy-table__clickable-row > td,
@@ -120,6 +120,6 @@
 	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td {
-		background-color: rgba(var(--v-theme-colorPrimary), 0.08) !important;
+		background-color: rgba(var(--v-theme-primary), 0.08) !important;
 	}
 }

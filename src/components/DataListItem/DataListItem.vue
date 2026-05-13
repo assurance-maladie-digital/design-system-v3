@@ -54,7 +54,7 @@
 	})
 
 	const actionButtonColor = computed(() => {
-		return theme.current.value.dark ? 'white' : 'colorPrimary'
+		return theme.current.value.dark ? 'white' : 'primary'
 	})
 </script>
 

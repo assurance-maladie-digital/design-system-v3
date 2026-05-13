@@ -253,7 +253,7 @@
 }
 
 .v-btn--icon {
-	color: rgb(var(--v-theme-colorPrimary));
+	color: rgb(var(--v-theme-primary));
 	position: absolute;
 	right: 24px;
 }
@@ -274,7 +274,7 @@ h2 {
 	&::after {
 		opacity: 1;
 		border: transparent;
-		outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 	}
 }
@@ -290,7 +290,7 @@ h2 {
 	cursor: grab;
 
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-colorPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: -2px;
 		border-radius: 3px;
 	}

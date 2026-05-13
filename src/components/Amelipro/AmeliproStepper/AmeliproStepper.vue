@@ -359,7 +359,7 @@
 
 	&.step-number--active {
 		&::before {
-			background-color: rgb(var(--v-theme-colorPrimary));
+			background-color: rgb(var(--v-theme-primary));
 			border: 0;
 		}
 
@@ -387,7 +387,7 @@
 .active-step-title {
 	position: relative;
 	width: calc(100% - 96px);
-	background-color: rgb(var(--v-theme-colorPrimary));
+	background-color: rgb(var(--v-theme-primary));
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
 	color: rgb(var(--v-theme-apWhite-base));
@@ -403,7 +403,7 @@
 
 .amelipro-stepper__content--default {
 	padding: 3rem 1rem 1rem;
-	background-color: rgb(var(--v-theme-colorSurface));
+	background-color: rgb(var(--v-theme-surface));
 	border: 1px solid rgb(var(--v-theme-ap-green-lighten-2));
 	border-radius: 8px;
 	border-top-left-radius: 0;

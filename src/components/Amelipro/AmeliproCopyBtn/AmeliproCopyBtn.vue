@@ -63,7 +63,7 @@
 	right: 30px;
 	padding: var(--v-padding-2) var(--v-padding-4);
 	max-width: 200px;
-	background: rgb(var(--v-theme-colorSurface));
+	background: rgb(var(--v-theme-surface));
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 	border-radius: var(--v-ap-btnRadius);
 	z-index: 10;

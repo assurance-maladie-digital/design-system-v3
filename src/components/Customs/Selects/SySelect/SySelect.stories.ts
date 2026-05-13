@@ -57,7 +57,7 @@ const meta: Meta<typeof SySelect> = {
 		},
 		color: {
 			control: 'select',
-			options: ['colorPrimary', 'secondary', 'success', 'error', 'warning'],
+			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 			description: 'Couleur du champ',
 		},
 		density: {
@@ -1137,7 +1137,7 @@ export const FormValidation: Story = {
     />
     <VBtn
       type="submit"
-      color="colorPrimary"
+      color="primary"
       class="mt-4"
     >
       Soumettre
@@ -1216,7 +1216,7 @@ const onSubmit = (event) => {
 						/>
 						<VBtn
 							type="submit"
-                            color="colorPrimary"
+                            color="primary"
 							class="mt-4"
 						>
 							Soumettre
@@ -1249,7 +1249,7 @@ export const VuetifyValidation: Story = {
       :show-success-messages="false"
       :rules="[v => !!v || 'Ce champ est requis']"
     />
-    <VBtn type="submit" color="colorPrimary" class="mt-4">
+    <VBtn type="submit" color="primary" class="mt-4">
       Soumettre
     </VBtn>
   </SyForm>
@@ -1318,7 +1318,7 @@ function onSubmit(event: { isValid: boolean }) {
 					/>
 					<VBtn
 						type="submit"
-                        color="colorPrimary"
+                        color="primary"
 						class="mt-4"
 					>
 						Soumettre

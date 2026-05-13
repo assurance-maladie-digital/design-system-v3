@@ -1,13 +1,13 @@
 export const config = {
 	btn: {
 		variant: 'outlined' as const,
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'text-wrap',
 		minHeight: '36px',
 		height: 'auto',
 	},
 	icon: {
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'mr-3',
 	},
 }

@@ -33,7 +33,7 @@
 	}>()
 
 	const theme = useTheme()
-	const primary = theme.current.value.colors.colorPrimary
+	const primary = theme.current.value.colors.primary
 	const { isDesktop } = useHeaderResponsiveMode()
 
 	const routeType = computed(() => {
@@ -114,7 +114,7 @@
 	display: flex;
 	height: 52px;
 	align-items: center;
-	color: rgb(var(--v-theme-colorPrimary));
+	color: rgb(var(--v-theme-primary));
 	line-height: 1.45;
 	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;

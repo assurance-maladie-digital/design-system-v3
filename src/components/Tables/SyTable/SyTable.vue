@@ -242,7 +242,7 @@
 		<VDataTable
 			ref="table"
 			v-model="model"
-			color="colorPrimary"
+			color="primary"
 			:headers="displayHeadersWithPinned"
 			v-bind="propsFacade"
 			:row-props="clickableRowProps"
@@ -299,7 +299,7 @@
 									<SyCheckbox
 										:model-value="slotProps.allSelected"
 										:indeterminate="slotProps.someSelected && !slotProps.allSelected"
-										color="colorPrimary"
+										color="primary"
 										density="compact"
 										hide-details
 										:is-header="true"
@@ -381,7 +381,7 @@
 						>
 							<VBtn
 								size="small"
-								color="colorPrimary"
+								color="primary"
 								variant="outlined"
 								@click="filters = []"
 							>
@@ -484,7 +484,7 @@
 
 @mixin striped-rows {
 	.v-table tbody tr:nth-child(even) {
-		background-color: rgba(var(--v-theme-colorPrimary), 0.05);
+		background-color: rgba(var(--v-theme-primary), 0.05);
 	}
 }
 
@@ -539,7 +539,7 @@
 	position: sticky !important;
 	left: 0 !important;
 	z-index: 3;
-	background: rgb(var(--v-theme-colorSurface)) !important;
+	background: rgb(var(--v-theme-surface)) !important;
 }
 
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),

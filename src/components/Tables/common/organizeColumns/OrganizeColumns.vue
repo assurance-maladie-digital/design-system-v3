@@ -143,7 +143,7 @@
 				<VBtn
 					:title="locales.reorganizeColumns"
 					variant="outlined"
-					color="colorPrimary"
+					color="primary"
 					v-bind="props"
 					aria-haspopup="menu"
 					:aria-controls="isMenuOpen ? columnsMenuId : undefined"
@@ -180,7 +180,7 @@
 									:title="header.hidden ? locales.showColumn(header.title as string) : locales.hideColumn(header.title as string)"
 									elevation="0"
 									variant="text"
-									color="colorPrimary"
+									color="primary"
 									width="45"
 									min-width="45"
 									class="mr-2"
@@ -199,7 +199,7 @@
 								<VBtnGroup
 									variant="text"
 									tile
-									active-color="colorPrimary"
+									active-color="primary"
 									slim
 									density="compact"
 								>
@@ -208,7 +208,7 @@
 										:disabled="index === 0"
 										width="45"
 										min-width="45"
-										color="colorPrimary"
+										color="primary"
 										@click="left(header)"
 									>
 										<SyIcon
@@ -222,7 +222,7 @@
 										:disabled="index === headers!.length - 1"
 										width="45"
 										min-width="45"
-										color="colorPrimary"
+										color="primary"
 										@click="right(header)"
 									>
 										<SyIcon

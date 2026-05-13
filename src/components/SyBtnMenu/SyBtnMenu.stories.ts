@@ -616,8 +616,8 @@ const primaryInfo = 'Information principale'
 const menuItems = ['Option 1', 'Option 2']
 const options = {
 	menu: { height: '200px' },
-	btn: { variant: 'outlined', textColor: 'colorPrimary', color: 'colorPrimary' },
-	list: { dense: true, textColor: 'colorPrimary' },
+	btn: { variant: 'outlined', textColor: 'primary', color: 'primary' },
+	list: { dense: true, textColor: 'primary' },
 }
 </script>
 				`,
@@ -628,8 +628,8 @@ const options = {
 		menuItems: ['Option 1', 'Option 2'],
 		options: {
 			menu: { height: '200px' },
-			btn: { variant: 'outlined', textColor: 'colorPrimary', color: 'colorPrimary' },
-			list: { dense: true, textColor: 'colorPrimary' },
+			btn: { variant: 'outlined', textColor: 'primary', color: 'primary' },
+			list: { dense: true, textColor: 'primary' },
 		},
 	},
 	render: (args) => {

@@ -135,8 +135,8 @@ export const SlotAction: Story = {
                         <ErrorPage :hide-btn="true">
                             <template #action>
                                 <div style="display: flex; gap: 8px; margin-top: 16px;">
-                                    <VBtn href="/" color="colorPrimary">Retour à l'accueil</VBtn>
-                                    <VBtn variant="outlined" color="colorPrimary">Déconnexion</VBtn>
+                                    <VBtn href="/" color="primary">Retour à l'accueil</VBtn>
+                                    <VBtn variant="outlined" color="primary">Déconnexion</VBtn>
                                 </div>
                             </template>
                         </ErrorPage>
@@ -160,8 +160,8 @@ export const SlotAction: Story = {
             <ErrorPage :hide-btn="true">
                 <template #action>
                     <div style="display: flex; gap: 8px; margin-top: 16px;">
-                        <VBtn href="/" color="colorPrimary">Retour à l'accueil</VBtn>
-                        <VBtn variant="outlined" color="colorPrimary">Déconnexion</VBtn>
+                        <VBtn href="/" color="primary">Retour à l'accueil</VBtn>
+                        <VBtn variant="outlined" color="primary">Déconnexion</VBtn>
                     </div>
                 </template>
             </ErrorPage>

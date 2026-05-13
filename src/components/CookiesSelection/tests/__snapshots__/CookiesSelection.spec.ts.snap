@@ -83,7 +83,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <button
         class="
           ma-2
-          text-colorPrimary
+          text-primary
           v-btn
           v-btn--density-default
           v-btn--size-default
@@ -107,7 +107,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <button
         class="
           ma-2
-          text-colorPrimary
+          text-primary
           v-btn
           v-btn--density-default
           v-btn--size-default
@@ -653,7 +653,7 @@ exports[`CookiesSelection > renders correctly 1`] = `
       <div class="v-spacer"></div>
       <button
         class="
-          bg-colorPrimary
+          bg-primary
           v-btn
           v-btn--density-default
           v-btn--elevated

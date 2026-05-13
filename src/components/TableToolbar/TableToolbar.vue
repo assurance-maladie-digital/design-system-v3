@@ -78,7 +78,7 @@
 			<slot name="search-left" />
 			<VTextField
 				v-bind="options.textField"
-				color="colorPrimary"
+				color="primary"
 				:model-value="search"
 				class="sy-form-input"
 				:class="textFieldClasses"
@@ -164,23 +164,23 @@
 
 	p,
 	.text-primary {
-		color: rgba(var(--v-theme-colorOnPrimary), 0.6) !important;
+		color: rgba(var(--v-theme-onPrimary), 0.6) !important;
 	}
 
 	svg {
-		fill: rgb(var(--v-theme-colorOnPrimary)) !important;
+		fill: rgb(var(--v-theme-onPrimary)) !important;
 	}
 
 	.v-label {
-		color: rgba(var(--v-theme-colorOnPrimary), 0.6) !important;
+		color: rgba(var(--v-theme-onPrimary), 0.6) !important;
 	}
 
 	.v-field__input {
-		color: rgb(var(--v-theme-colorOnPrimary)) !important;
+		color: rgb(var(--v-theme-onPrimary)) !important;
 	}
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgba(var(--v-theme-colorOnPrimary), 0.1);
+	background: rgba(var(--v-theme-onPrimary), 0.1);
 }
 </style>

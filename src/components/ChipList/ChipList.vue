@@ -30,10 +30,10 @@
 	}
 
 	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'feedbackSuccessVariant',
-		warning: 'feedbackWarningVariant',
-		error: 'feedbackErrorVariant',
-		info: 'feedbackInfoVariant',
+		success: 'success',
+		warning: 'warning',
+		error: 'error',
+		info: 'info',
 	} as const
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
@@ -125,7 +125,7 @@
 			return vuetifyColor
 		}
 		// Sinon on utilise la couleur basée sur l'état
-		return state ? BACKGROUND_COLORS[state] : 'colorPrimary'
+		return state ? BACKGROUND_COLORS[state] : 'primary'
 	}
 
 	/**
@@ -278,7 +278,7 @@
 			<VBtn
 				v-if="showAllItems"
 				variant="text"
-				color="colorPrimary"
+				color="primary"
 				size="small"
 				class="hide-extra-btn px-1 mr-2"
 				@click="toggleShowAllItems"
@@ -289,7 +289,7 @@
 			<VBtn
 				v-if="!readonly"
 				variant="text"
-				color="colorPrimary"
+				color="primary"
 				size="small"
 				data-test-id="reset-btn"
 				class="overflow-btn px-1"
@@ -340,30 +340,30 @@
 }
 
 .sy-chip-success {
-	color: rgb(var(--v-theme-feedbackOnSuccessVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackOnSuccessVariant)) !important;
+	color: rgb(var(--v-theme-onSuccess)) !important;
+	border: 1px solid rgb(var(--v-theme-onSuccess)) !important;
 }
 
 .sy-chip-error {
-	color: rgb(var(--v-theme-feedbackOnErrorVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackOnErrorVariant)) !important;
+	color: rgb(var(--v-theme-onError)) !important;
+	border: 1px solid rgb(var(--v-theme-onError)) !important;
 }
 
 .sy-chip-info {
-	color: rgb(var(--v-theme-feedbackOnInfoVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackOnInfoVariant)) !important;
+	color: rgb(var(--v-theme-onInfo)) !important;
+	border: 1px solid rgb(var(--v-theme-onInfo)) !important;
 }
 
 .sy-chip-warning {
-	color: rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
+	color: rgb(var(--v-theme-feedbackOnWarnin)) !important;
+	border: 1px solid rgb(var(--v-theme-onWarning)) !important;
 }
 
 .overflow-chip {
 	cursor: pointer;
 
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-colorPrimary)) !important;
+		outline: 2px solid rgb(var(--v-theme-primary)) !important;
 		outline-offset: 2px !important;
 	}
 }
@@ -375,27 +375,27 @@
 
 // Bouton "Réinitialiser le filtre" - améliorer le contraste de la bordure de focus
 .overflow-btn:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-colorPrimary)) !important;
+	outline: 2px solid rgb(var(--v-theme-primary)) !important;
 }
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackOnSuccessVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-onSuccess)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackOnInfoVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-onInfo)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackOnWarningVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-onWarning)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-feedbackOnErrorVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-onError)) !important;
 	outline-offset: -2px !important;
 }
 </style>

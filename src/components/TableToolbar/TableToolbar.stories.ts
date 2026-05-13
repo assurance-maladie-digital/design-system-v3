@@ -102,7 +102,7 @@ const meta = {
 	},
 	addBtn: {
 		variant: 'outlined',
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'my-1 px-2 px-md-4',
 		minWidth: '44px',
 	},
@@ -1076,7 +1076,7 @@ export const OtherSlots: Story = {
 						>
 							<template #search-left>
 								<VBtn
-									color="colorPrimary"
+									color="primary"
 									variant="outlined"
 									size="small"
 									class="mx-5"
@@ -1111,7 +1111,7 @@ export const OtherSlots: Story = {
 							>
 								<template #search-left>
 									<VBtn
-										color="colorPrimary"
+										color="primary"
 										variant="outlined"
 										size="small"
 										class="mx-5"

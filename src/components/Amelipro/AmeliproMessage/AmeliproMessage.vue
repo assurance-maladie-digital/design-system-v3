@@ -94,7 +94,7 @@
 		return convertToHex(props.color || AmeliproMessageTypes[props.type]!.color)
 	})
 
-	const colorBorderLeftMessageTitle = computed(() => convertToHex(props.textColor
+	const borderLeftMessageTitle = computed(() => convertToHex(props.textColor
 		|| AmeliproMessageTypes[props.type]!.textColor
 		|| props.color
 		|| AmeliproMessageTypes[props.type]!.color))
@@ -178,7 +178,7 @@
 				<p
 					v-if="borderLeftMessageTitle"
 					class="text-h5 mb-0"
-					:style="`color: ${colorBorderLeftMessageTitle};`"
+					:style="`color: ${borderLeftMessageTitle};`"
 				>
 					{{ borderLeftMessageTitle }}
 				</p>

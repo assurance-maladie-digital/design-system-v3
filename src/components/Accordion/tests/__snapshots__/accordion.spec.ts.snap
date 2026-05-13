@@ -4,9 +4,9 @@ exports[`Accordion > renders correctly 1`] = `
 <div
   class="sy-accordion"
   style="
-    --accordion-hover-color: var(--v-theme-colorPrimary);
-    --accordion-focus-color: var(--v-theme-colorPrimary);
-    --accordion-active-color: var(--v-theme-colorPrimary);
+    --accordion-hover-color: var(--v-theme-primary);
+    --accordion-focus-color: var(--v-theme-primary);
+    --accordion-active-color: var(--v-theme-primary);
   "
 >
   <div class="
@@ -25,7 +25,7 @@ exports[`Accordion > renders correctly 1`] = `
       <h2 class="sy-accordion-heading">
         <span class="
           sy-accordion-title
-          text-colorPrimary
+          text-primary
         ">
           <span class="sy-accordion-icon">
             <sy-icon-stub
@@ -71,7 +71,7 @@ exports[`Accordion > renders correctly 1`] = `
       <h2 class="sy-accordion-heading">
         <span class="
           sy-accordion-title
-          text-colorPrimary
+          text-primary
         ">
           <span class="sy-accordion-icon">
             <sy-icon-stub
@@ -117,7 +117,7 @@ exports[`Accordion > renders correctly 1`] = `
       <h2 class="sy-accordion-heading">
         <span class="
           sy-accordion-title
-          text-colorPrimary
+          text-primary
         ">
           <span class="sy-accordion-icon">
             <sy-icon-stub

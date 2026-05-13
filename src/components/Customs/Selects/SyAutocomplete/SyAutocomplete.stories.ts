@@ -270,7 +270,7 @@ export const FormValidation: Story = {
       display-asterisk
       class="mb-4"
     />
-    <VBtn type="submit" color="colorPrimary">Soumettre</VBtn>
+    <VBtn type="submit" color="primary">Soumettre</VBtn>
   </SyForm>
 </template>
         `,
@@ -337,7 +337,7 @@ const onSubmit = (event) => {
 							v-bind="args"
 							class="mb-4"
 						/>
-                      <VBtn type="submit" color="colorPrimary">Soumettre</VBtn>
+                      <VBtn type="submit" color="primary">Soumettre</VBtn>
 					</SyForm>
 				</div>
 			`,
@@ -502,7 +502,7 @@ export const ReturnObjectWithCustomKeys: Story = {
       required
       display-asterisk
     />
-    <VBtn type="submit" class="mt-4" color="colorPrimary">Soumettre</VBtn>
+    <VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
   </SyForm>
 </template>
         `,
@@ -572,7 +572,7 @@ const onSubmit = (event) => {
 							v-bind="args"
 							class="mb-4"
 						/>
-                      <VBtn type="submit" class="mt-4" color="colorPrimary">Soumettre</VBtn>
+                      <VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
 					</SyForm>
 				</div>
 			`,

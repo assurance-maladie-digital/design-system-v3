@@ -29,7 +29,7 @@
 		<a
 			ref="skipLink"
 			:href="target"
-			class="sy-skip-link text-colorPrimary d-block d-sr-only-focusable px-2"
+			class="sy-skip-link text-primary d-block d-sr-only-focusable px-2"
 		>
 			<slot>{{ label }}</slot>
 		</a>
@@ -44,7 +44,7 @@
 	right: 0;
 	transition: none;
 	width: 100%;
-	background: rgb(var(--v-theme-colorSurface));
+	background: rgb(var(--v-theme-surface));
 	outline: none; // Disable outline to use border
 	border: 2px solid rgb(var(--v-theme-blue-darken60));
 }

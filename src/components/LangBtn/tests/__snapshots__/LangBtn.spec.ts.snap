@@ -9,7 +9,7 @@ exports[`LangBtn > renders correctly 1`] = `
     aria-label="Choix de la langue. Actuellement Français"
     aria-owns="lang-menu-id"
     class="
-      text-colorPrimary
+      text-primary
       v-btn
       v-btn--density-default
       v-btn--size-default

@@ -191,7 +191,7 @@
 		>
 			<v-card-text class="d-flex justify-space-between align-center px-4 py-2">
 				<SyHeading
-					class="text-h6 text-colorPrimary"
+					class="text-h6 text-primary"
 					:level="3"
 				>
 					Filtres
@@ -221,7 +221,7 @@
 									hide-details
 									item-title="title"
 									item-value="value"
-									color="colorPrimary"
+									color="primary"
 								/>
 							</v-col>
 							<v-col
@@ -237,7 +237,7 @@
 									density="comfortable"
 									hide-details
 									clearable
-									color="colorPrimary"
+									color="primary"
 									:disabled="!hasDataForCategory"
 									placeholder="Sélectionnez un thème"
 								/>
@@ -256,7 +256,7 @@
 									hide-details
 									:prepend-inner-icon="mdiMagnifyIcon"
 									clearable
-									color="colorPrimary"
+									color="primary"
 									placeholder="Rechercher par critères, actions ou numéro de règle ou de thème"
 									:disabled="!hasDataForCategory"
 								/>
@@ -271,7 +271,7 @@
 								<v-btn
 									:prepend-icon="mdiRefreshIcon"
 									variant="text"
-									color="colorPrimary"
+									color="primary"
 									@click="resetFilters"
 								>
 									Réinitialiser
@@ -333,7 +333,7 @@
 							class="d-flex flex-column"
 							elevation="2"
 						>
-							<v-card-title class="text-subtitle-1 text-colorPrimary font-weight-bold title-multiline">
+							<v-card-title class="text-subtitle-1 text-primary font-weight-bold title-multiline">
 								<v-chip
 									:color="getBadgeColor(rule.theme)"
 									size="small"
@@ -354,7 +354,7 @@
 								<v-spacer />
 								<v-btn
 									variant="text"
-									color="colorPrimary"
+									color="primary"
 									@click="showRuleDetails(rule)"
 								>
 									Détails
@@ -374,7 +374,7 @@
 						:length="totalPages"
 						total-visible="7"
 						rounded
-						color="colorPrimary"
+						color="primary"
 					/>
 				</v-col>
 			</v-row>
@@ -500,7 +500,7 @@
 					<v-spacer />
 					<v-btn
 						variant="outlined"
-						color="colorPrimary"
+						color="primary"
 						@click="detailDialog = false"
 					>
 						Fermer

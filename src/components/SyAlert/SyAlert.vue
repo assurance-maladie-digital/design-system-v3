@@ -96,7 +96,7 @@
 				#close
 			>
 				<VBtn
-					:color="props.variant === 'outlined' ? undefined : 'colorPrimary'"
+					:color="props.variant === 'outlined' ? undefined : 'primary'"
 					:ripple="false"
 					variant="text"
 					width="auto"
@@ -168,7 +168,7 @@
 
 	&:focus-visible {
 		outline: solid 2px black !important;
-		outline-color: var(--v-theme-colorPrimary) !important;
+		outline-color: var(--v-theme-primary) !important;
 		outline-offset: 2px !important;
 
 		&::after {
@@ -185,7 +185,7 @@
 	.alert {
 		display: flex;
 		flex-direction: column;
-		background-color: rgb(var(--v-theme-colorSurface));
+		background-color: rgb(var(--v-theme-surface));
 
 		:deep(.v-alert__content) {
 			align-self: flex-start !important;
@@ -217,7 +217,7 @@
 @mixin redesign($type, $map) {
 	&.alert--#{$type}.v-alert--variant-tonal {
 		background: map.get($map, 'background') !important;
-		color: rgb(var(--v-theme-colorOnSurface)) !important;
+		color: rgb(var(--v-theme-onSurface)) !important;
 
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;
@@ -256,48 +256,48 @@
 	@include redesign(
 		'warning',
 		(
-			'background': rgb(var(--v-theme-feedbackWarningVariant)),
-			'accent': rgb(var(--v-theme-feedbackWarning)),
-			'border': rgb(var(--v-theme-feedbackWarning)),
-			'icon': rgb(var(--v-theme-feedbackWarning)),
-			'icon-bg': rgb(var(--v-theme-feedbackWarningVariant)),
+			'background': rgb(var(--v-theme-warningVariant)),
+        'accent': rgb(var(--v-theme-warning)),
+        'border': rgb(var(--v-theme-warning)),
+        'icon': rgb(var(--v-theme-warning)),
+        'icon-bg': rgb(var(--v-theme-warningVariant)),
 		)
 	);
 	@include redesign(
 		'success',
 		(
-			'background': rgb(var(--v-theme-feedbackSuccessVariant)),
-			'accent': rgb(var(--v-theme-feedbackSuccess)),
-			'border': rgb(var(--v-theme-feedbackSuccess)),
-			'icon':rgb(var(--v-theme-feedbackSuccess)),
-			'icon-bg': rgb(var(--v-theme-feedbackSuccessVariant)),
+			'background': rgb(var(--v-theme-successVariant)),
+        'accent': rgb(var(--v-theme-success)),
+        'border': rgb(var(--v-theme-success)),
+        'icon':rgb(var(--v-theme-success)),
+        'icon-bg': rgb(var(--v-theme-successVariant)),
 		)
 	);
 	@include redesign(
 		'error',
 		(
-			'background': rgb(var(--v-theme-feedbackErrorVariant)),
-			'accent': rgb(var(--v-theme-feedbackError)),
-			'border': rgb(var(--v-theme-feedbackError)),
-			'icon':rgb(var(--v-theme-feedbackError)),
-			'icon-bg': rgb(var(--v-theme-feedbackErrorVariant)),
+			'background': rgb(var(--v-theme-errorVariant)),
+        'accent': rgb(var(--v-theme-error)),
+        'border': rgb(var(--v-theme-error)),
+        'icon':rgb(var(--v-theme-error)),
+        'icon-bg': rgb(var(--v-theme-errorVariant)),
 		)
 	);
 	@include redesign(
 		'info',
 		(
-			'background': rgb(var(--v-theme-feedbackInfoVariant)),
-			'accent': rgb(var(--v-theme-feedbackInfo)),
-			'border': rgb(var(--v-theme-feedbackInfo)),
-			'icon':rgb(var(--v-theme-feedbackInfo)),
-			'icon-bg': rgb(var(--v-theme-feedbackInfoVariant)),
+			'background': rgb(var(--v-theme-infoVariant)),
+        'accent': rgb(var(--v-theme-info)),
+        'border': rgb(var(--v-theme-info)),
+        'icon':rgb(var(--v-theme-info)),
+        'icon-bg': rgb(var(--v-theme-infoVariant)),
 		)
 	);
 }
 
 .v-alert.v-theme--dark {
 	&.v-alert--variant-outlined {
-		background-color: rgb(var(--v-theme-colorSurface)) !important;
+		background-color: rgb(var(--v-theme-surface)) !important;
 	}
 
 	.alert-close-btn {

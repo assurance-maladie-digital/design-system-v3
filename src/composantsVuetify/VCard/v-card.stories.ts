@@ -86,7 +86,7 @@ export const Primary: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-card color="colorPrimary" style="max-width: 400px;">
+				code: `<v-card color="primary" style="max-width: 400px;">
     <v-card-title>Carte Primary</v-card-title>
     <v-card-text>
         Cette carte utilise la couleur "primary".
@@ -119,7 +119,7 @@ export const PrimaryTonal: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-card color="colorPrimary" variant="tonal" style="max-width: 400px;">
+				code: `<v-card color="primary" variant="tonal" style="max-width: 400px;">
     <v-card-title>Carte Primary Tonal</v-card-title>
     <v-card-text>
         Cette carte utilise la couleur "primary" et la variant "tonal".
@@ -153,7 +153,7 @@ export const PrimaryElevated: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-card color="colorPrimary" variant="elevated" :elevation="4" style="max-width: 400px;">
+				code: `<v-card color="primary" variant="elevated" :elevation="4" style="max-width: 400px;">
     <v-card-title>Carte Primary Elevated</v-card-title>
     <v-card-text>
         Cette carte utilise la couleur "primary" et la variant "elevated".
@@ -177,8 +177,8 @@ export const PrimaryOutlined: Story = {
                     Cette carte utilise la couleur "primary" et la variant "outlined". Elle contient également des boutons d'action.
                 </VCardText>
                 <VCardActions class="justify-end">
-                  <VBtn variant="text" color="colorPrimary">Annuler</VBtn>
-                  <VBtn variant="tonal" color="colorPrimary">Confirmer</VBtn>
+                  <VBtn variant="text" color="primary">Annuler</VBtn>
+                  <VBtn variant="tonal" color="primary">Confirmer</VBtn>
                 </VCardActions>
             </VCard>
         `,
@@ -190,14 +190,14 @@ export const PrimaryOutlined: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-card color="colorPrimary" variant="outlined" style="max-width: 400px;">
+				code: `<v-card color="primary" variant="outlined" style="max-width: 400px;">
     <v-card-title>Carte Primary Outlined</v-card-title>
     <v-card-text>
         Cette carte utilise la couleur "primary" et la variant "outlined". Elle contient également des boutons d'action.
     </v-card-text>
     <v-card-actions class="justify-end">
-        <v-btn variant="text" color="colorPrimary">Annuler</v-btn>
-        <v-btn variant="tonal" color="colorPrimary">Confirmer</v-btn>
+        <v-btn variant="text" color="primary">Annuler</v-btn>
+        <v-btn variant="tonal" color="primary">Confirmer</v-btn>
     </v-card-actions>
 </v-card>`,
 			},
@@ -229,7 +229,7 @@ export const Loading: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-card :loading="true" color="colorPrimary" style="max-width: 400px;">
+				code: `<v-card :loading="true" color="primary" style="max-width: 400px;">
     <v-card-title>Carte Primary en chargement</v-card-title>
     <v-card-text>
         Cette carte utilise la couleur "primary" et affiche un état de chargement.

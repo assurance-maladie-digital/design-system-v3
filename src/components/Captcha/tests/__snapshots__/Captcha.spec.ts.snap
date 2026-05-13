@@ -30,7 +30,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
   <div class="captcha">
     <button
       class="
-        bg-colorPrimary
+        bg-primary
         captcha-audio
         mt-4
         text-none
@@ -200,7 +200,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
       <button
         class="
           captcha-btn
-          colorPrimary
+          primary
         "
         type="button"
       >
@@ -240,7 +240,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
       <button
         class="
           captcha-btn
-          colorPrimary
+          primary
         "
         type="button"
       >
@@ -321,7 +321,7 @@ exports[`Captcha > renders correctly in choice mode 1`] = `
       <button
         class="
           captcha-btn
-          colorPrimary
+          primary
         "
         type="button"
       >
@@ -353,7 +353,7 @@ exports[`Captcha > renders correctly in choice mode 1`] = `
       <button
         class="
           captcha-btn
-          colorPrimary
+          primary
         "
         type="button"
       >
@@ -542,7 +542,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
       <button
         class="
           captcha-btn
-          colorPrimary
+          primary
         "
         type="button"
       >
@@ -582,7 +582,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
       <button
         class="
           captcha-btn
-          colorPrimary
+          primary
         "
         type="button"
       >

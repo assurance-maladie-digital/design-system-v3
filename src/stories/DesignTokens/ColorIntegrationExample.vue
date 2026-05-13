@@ -25,7 +25,7 @@
 			<div style="margin-top: 16px; padding: 12px; background-color: #f5f5f5; border-radius: 4px;">
 				<pre style="margin: 0; font-size: 12px; color: #333;"><code>
 .my-color {
-    color: rgb(var(--v-theme-colorPrimary)) !important;
+    color: rgb(var(--v-theme-primary)) !important;
  }</code></pre>
 			</div>
 		</div>

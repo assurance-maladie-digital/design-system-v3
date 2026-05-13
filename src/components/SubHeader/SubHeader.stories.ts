@@ -180,7 +180,7 @@ export const Default: Story = {
 		'right-content': undefined,
 		'vuetifyOptions': {
 			sheet: {
-				color: 'colorPrimary',
+				color: 'primary',
 			},
 			backBtn: {
 				size: 'small',

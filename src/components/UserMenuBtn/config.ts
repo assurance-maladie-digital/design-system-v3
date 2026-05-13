@@ -14,11 +14,11 @@ export const defaultOptions = {
 		color: 'secondary',
 	},
 	logoutListItem: {
-		class: 'text-colorPrimary',
+		class: 'text-primary',
 		minWidth: '198px',
 	},
 	logoutIcon: {
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'mr-4',
 	},
 } as const

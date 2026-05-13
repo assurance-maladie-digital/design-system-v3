@@ -166,7 +166,7 @@
 				ref="rejectRadioRef"
 				:label="locales.reject"
 				:value="'reject'"
-				color="colorPrimary"
+				color="primary"
 			/>
 
 			<VRadio
@@ -174,7 +174,7 @@
 				:label="locales.accept"
 				:value="'accept'"
 				class="mr-0"
-				color="colorPrimary"
+				color="primary"
 			/>
 		</VRadioGroup>
 	</div>

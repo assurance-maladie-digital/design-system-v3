@@ -168,7 +168,7 @@ export const Default: Story = {
 			label="Nom"
 			variant="outlined"
 			hide-details
-			color="colorPrimary"
+			color="primary"
 		/>
 	</template>
 
@@ -185,7 +185,7 @@ export const Default: Story = {
 			variant="outlined"
 			return-object
 			hide-details
-			color="colorPrimary"
+			color="primary"
 		/>
 	</template>
 
@@ -200,7 +200,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
-			color="colorPrimary"
+			color="primary"
 		/>
 	</template>
 </FilterInline>
@@ -221,7 +221,7 @@ export const Default: Story = {
 			label="Nom"
 			variant="outlined"
 			hide-details
-			color="colorPrimary"
+			color="primary"
 		/>
 	</template>
 
@@ -238,7 +238,7 @@ export const Default: Story = {
 			variant="outlined"
 			return-object
 			hide-details
-			color="colorPrimary"
+			color="primary"
 		/>
 	</template>
 
@@ -253,7 +253,7 @@ export const Default: Story = {
 		<SearchListField
 			v-bind="props"
 			:items="professionList"
-			color="colorPrimary"
+			color="primary"
 		/>
 	</template>
 </FilterInline>
@@ -507,7 +507,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -524,7 +524,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -553,7 +553,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -570,7 +570,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -585,7 +585,7 @@ export const FilterCombination: Story = {
 					<SearchListField
 						v-bind="props"
 						:items="professionList"
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 			</FilterInline>
@@ -608,7 +608,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -625,7 +625,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -653,7 +653,7 @@ export const FilterCombination: Story = {
 						label="Nom"
 						variant="outlined"
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -670,7 +670,7 @@ export const FilterCombination: Story = {
 						variant="outlined"
 						return-object
 						hide-details
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 
@@ -685,7 +685,7 @@ export const FilterCombination: Story = {
 					<SearchListField
 						v-bind="props"
 						:items="professionList"
-						color="colorPrimary"
+						color="primary"
 					/>
 				</template>
 			</FilterInline>
@@ -789,7 +789,7 @@ const BooleanFilter = defineComponent({
 	<VCheckbox
 		:model-value="modelValue === title"
 		:label="label"
-		color="colorPrimary"
+		color="primary"
 		@update:model-value="(value) => $emit('update:modelValue', value ? title : null)"
 	/>
 	`,
@@ -814,7 +814,7 @@ export const Boolean: Story = {
 		template: `
 <FilterInline v-model="filters" v-bind="args">
 	<template #eligibility="{ props }">
-		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 		<BooleanFilter
 			v-bind="props"
 			label="Eligible RQTH"
@@ -832,7 +832,7 @@ export const Boolean: Story = {
 				code: `
 <FilterInline v-model="filters">
 	<template #eligibility="{ props }">
-		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<p class="pt-2">Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 		<BooleanFilter
 			v-bind="props"
 			label="Eligible RQTH"
@@ -877,7 +877,7 @@ export const Boolean: Story = {
 	<VCheckbox
 		:model-value="modelValue === title"
 		:label
-		color="colorPrimary"
+		color="primary"
 		@update:model-value="value => modelValue = value ? props.title : undefined"
 	/>
 </template>
@@ -921,29 +921,29 @@ const ManyFilters = defineComponent({
 	},
 	template: `
 		<div>
-			<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+			<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 			<VCheckbox
 				v-model="rqth"
 				label="Eligible RQTH"
-				color="colorPrimary"
+				color="primary"
 			/>
 			<hr>
 			<p class="mt-6">
-				Est ce que le patient est éligible à <em class="text-colorPrimary">Prestation de Compensation du Handicap</em>&nbsp;?
+				Est ce que le patient est éligible à <em class="text-primary">Prestation de Compensation du Handicap</em>&nbsp;?
 			</p>
 			<VCheckbox
 				v-model="pch"
 				label="Eligible PCH"
-				color="colorPrimary"
+				color="primary"
 			/>
 			<hr>
 			<p class="mt-6">
-				Est ce que le patient est éligible à <em class="text-colorPrimary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
+				Est ce que le patient est éligible à <em class="text-primary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
 			</p>
 			<VCheckbox
 				v-model="aeeh"
 				label="Eligible AEEH"
-				color="colorPrimary"
+				color="primary"
 			/>
 		</div>
 	`,
@@ -1036,29 +1036,29 @@ export const ManyFields: Story = {
 
 <template>
 	<div>
-		<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-colorPrimary">Qualité de travailleur handicapé</em>&nbsp;?</p>
+		<p>Est ce que le patient est éligible à la Reconnaissance en <em class="text-primary">Qualité de travailleur handicapé</em>&nbsp;?</p>
 		<VCheckbox
 			v-model="rqth"
 			label="Eligible RQTH"
-			color="colorPrimary"
+			color="primary"
 		/>
 		<hr>
 		<p class="mt-6">
-			Est ce que le patient est éligible à <em class="text-colorPrimary">Prestation de Compensation du Handicap</em>&nbsp;?
+			Est ce que le patient est éligible à <em class="text-primary">Prestation de Compensation du Handicap</em>&nbsp;?
 		</p>
 		<VCheckbox
 			v-model="pch"
 			label="Eligible PCH"
-			color="colorPrimary"
+			color="primary"
 		/>
 		<hr>
 		<p class="mt-6">
-			Est ce que le patient est éligible à <em class="text-colorPrimary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
+			Est ce que le patient est éligible à <em class="text-primary">l'Allocation d'Education de l'Enfant Handicapé</em>&nbsp;?
 		</p>
 		<VCheckbox
 			v-model="aeeh"
 			label="Eligible AEEH"
-			color="colorPrimary"
+			color="primary"
 		/>
 	</div>
 </template>

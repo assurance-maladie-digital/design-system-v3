@@ -175,7 +175,7 @@
 					:active="selectedLanguage === code"
 					role="menuitem"
 					:lang="code"
-					color="colorPrimary"
+					color="primary"
 					tabindex="0"
 					:aria-label="`${props.ariaLabel} ${langData.nativeName}`"
 					@click="updateLang(code)"
@@ -195,7 +195,7 @@
 
 .v-list-item:focus-visible {
 	&::after {
-		color: rgb(var(--v-theme-colorPrimary));
+		color: rgb(var(--v-theme-primary));
 		opacity: 1;
 	}
 

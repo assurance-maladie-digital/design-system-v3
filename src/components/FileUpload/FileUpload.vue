@@ -174,14 +174,14 @@
 .sy-file-upload {
 	cursor: pointer;
 	position: relative;
-	border: 1px dashed rgb(var(--v-theme-colorPrimary));
+	border: 1px dashed rgb(var(--v-theme-primary));
 	border-radius: var(--v-radius-roundedLg);
 	transition: background 0.25s;
 
 	&:hover,
 	&:focus-within,
 	&.dragover {
-		background: rgb(var(--v-theme-colorSurfaceDim));
+		background: rgb(var(--v-theme-surfaceDim));
 	}
 
 	&.dark-mode {

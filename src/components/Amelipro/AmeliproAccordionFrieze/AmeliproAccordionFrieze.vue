@@ -372,18 +372,18 @@
 	border: 1px solid rgb(var(--v-theme-ap-grey-lighten-3));
 	border-radius: 8px;
 	text-align: center;
-	background-color: rgb(var(--v-theme-colorSurface));
+	background-color: rgb(var(--v-theme-surface));
 
 	&:hover,
 	&:focus {
 		padding: 11px 12px;
 		background-color: rgb(var(--v-theme-ap-blue-lighten-3));
-		border: 2px solid rgb(var(--v-theme-colorPrimary));
+		border: 2px solid rgb(var(--v-theme-primary));
 	}
 }
 
 .item-btn__link-style-text {
-	color: rgb(var(--v-theme-colorPrimary));
+	color: rgb(var(--v-theme-primary));
 	font-size: var(--v-ap-fontSizeXs);
 	text-decoration: underline;
 }

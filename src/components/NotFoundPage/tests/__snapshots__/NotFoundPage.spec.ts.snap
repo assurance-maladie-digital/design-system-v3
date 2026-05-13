@@ -100,7 +100,7 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
           <div class="
             mb-4
             sy-code
-            text-colorPrimary
+            text-primary
           ">
             <span class="d-sr-only">
               Code d'erreur&nbsp;:
@@ -252,7 +252,7 @@ exports[`NotFoundPage > renders correctly 1`] = `
           <div class="
             mb-4
             sy-code
-            text-colorPrimary
+            text-primary
           ">
             <span class="d-sr-only">
               Code d'erreur&nbsp;:

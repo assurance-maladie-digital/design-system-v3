@@ -189,7 +189,7 @@ describe('SyServerTable', () => {
 		expect(pinnedTd.length).toBeGreaterThan(0)
 		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
 		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
-		expect(pinnedTd.every(td => (td.attributes('style') || '').includes('background: rgb(var(--v-theme-colorSurface))'))).toBe(true)
+		expect(pinnedTd.every(td => (td.attributes('style') || '').includes('background: rgb(var(--v-theme-surface))'))).toBe(true)
 
 		activeWrappers.push(wrapper)
 	})

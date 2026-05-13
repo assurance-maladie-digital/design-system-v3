@@ -1173,7 +1173,7 @@ Cette story montre l'utilisation du NirField dans un formulaire avec validation.
 	/>
 	<v-btn
 		type="submit"
-		color="colorPrimary"
+		color="primary"
 		class="mt-4"
 	>
 		Valider
@@ -1235,7 +1235,7 @@ const onSubmit = async () => {
 				/>
 				<v-btn
 					type="submit"
-					color="colorPrimary"
+					color="primary"
 					class="mt-4"
 				>
 					Valider

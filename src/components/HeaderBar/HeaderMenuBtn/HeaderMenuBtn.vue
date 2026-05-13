@@ -48,8 +48,8 @@
 	flex-shrink: 0;
 	justify-content: center;
 	font-weight: 700;
-	background-color: rgb(var(--v-theme-colorPrimary));
-	color: rgb(var(--v-theme-colorOnPrimary));
+	background-color: rgb(var(--v-theme-primary));
+	color: rgb(var(--v-theme-onPrimary));
 	border: 2px solid transparent;
 	border-bottom:
 		solid 2px linear-gradient(
@@ -62,17 +62,17 @@
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border 0.15s 0.1s;
 
 	&:focus-visible {
-		background-color: rgb(var(--v-theme-colorSurface));
-		color: rgb(var(--v-theme-colorPrimary));
+		background-color: rgb(var(--v-theme-surface));
+		color: rgb(var(--v-theme-primary));
 		outline: none;
-		border: 2px solid rgb(var(--v-theme-colorPrimary));
+		border: 2px solid rgb(var(--v-theme-primary));
 	}
 }
 
 .header-menu-btn__open {
-	background-color: rgb(var(--v-theme-colorSurface));
-	color: rgb(var(--v-theme-colorPrimary));
-	border-color: rgb(var(--v-theme-colorOnPrimary));
+	background-color: rgb(var(--v-theme-surface));
+	color: rgb(var(--v-theme-primary));
+	border-color: rgb(var(--v-theme-onPrimary));
 }
 
 @media screen and (max-width: ($header-breakpoint + 1)) {

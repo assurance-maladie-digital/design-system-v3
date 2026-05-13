@@ -115,7 +115,7 @@ describe('SyIconButton', () => {
 			props: {
 				icon: 'mdi-close',
 				label: 'Fermer',
-				color: 'colorPrimary',
+				color: 'primary',
 			},
 			...globalStubs,
 		})

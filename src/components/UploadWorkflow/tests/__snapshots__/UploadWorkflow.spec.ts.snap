@@ -104,7 +104,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                 M13,9V3.5L18.5,9M6,2C4.89,2
                 mdi
                 notranslate
-                text-colorPrimary
+                text-primary
                 v-icon
                 v-theme--light
               "
@@ -141,7 +141,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
             class="
               file-item__action
               file-item__action-upload
-              text-colorPrimary
+              text-primary
               v-btn
               v-btn--density-default
               v-btn--size-default
@@ -177,7 +177,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                   M2
                   mdi
                   notranslate
-                  text-colorPrimary
+                  text-primary
                   v-icon
                   v-icon--size-default
                   v-theme--light
@@ -220,7 +220,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                 M13,9V3.5L18.5,9M6,2C4.89,2
                 mdi
                 notranslate
-                text-colorPrimary
+                text-primary
                 v-icon
                 v-theme--light
               "
@@ -257,7 +257,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
             class="
               file-item__action
               file-item__action-upload
-              text-colorPrimary
+              text-primary
               v-btn
               v-btn--density-default
               v-btn--size-default
@@ -293,7 +293,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
                   M2
                   mdi
                   notranslate
-                  text-colorPrimary
+                  text-primary
                   v-icon
                   v-icon--size-default
                   v-theme--light
@@ -408,7 +408,7 @@ exports[`UploadWorkflow > render the upload list 1`] = `
               M11
               mdi
               notranslate
-              text-colorPrimary
+              text-primary
               v-icon
               v-theme--light
             "

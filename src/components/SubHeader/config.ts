@@ -2,7 +2,7 @@ import type { VariantType } from '@/types/vuetifyTypes'
 
 export const config = {
 	sheet: {
-		color: 'colorPrimary',
+		color: 'primary',
 	},
 	backBtn: {
 		size: 'small',

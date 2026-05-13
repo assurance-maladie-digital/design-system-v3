@@ -316,7 +316,7 @@ input {
 		padding: 0.75rem 3rem 0.75rem 1rem;
 		border-radius: 5px;
 		border: 1px solid rgb(var(--v-theme-ap-grey));
-		background-color: rgb(var(--v-theme-colorSurface));
+		background-color: rgb(var(--v-theme-surface));
 		cursor: pointer;
 	}
 
@@ -330,8 +330,8 @@ input {
 			right: 1rem;
 			width: 1rem;
 			height: 0.5rem;
-			border-bottom: 2px solid rgb(var(--v-theme-colorPrimary));
-			border-left: 2px solid rgb(var(--v-theme-colorPrimary));
+			border-bottom: 2px solid rgb(var(--v-theme-primary));
+			border-left: 2px solid rgb(var(--v-theme-primary));
 			transform: rotate(-50deg);
 			content: '';
 		}

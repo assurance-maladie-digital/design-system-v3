@@ -63,13 +63,13 @@ const meta = {
 					detail: ` {
 	btn: {
 		variant: 'outlined',
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'text-wrap',
 		minHeight: '36px',
 		height: 'auto',
 	},
 	icon: {
-		color: 'colorPrimary',
+		color: 'primary',
 		class: 'mr-3',
 	},
 }`,
@@ -94,13 +94,13 @@ const meta = {
 		vuetifyOptions: {
 			btn: {
 				variant: 'outlined',
-				color: 'colorPrimary',
+				color: 'primary',
 				class: 'text-wrap',
 				minHeight: '36px',
 				height: 'auto',
 			},
 			icon: {
-				color: 'colorPrimary',
+				color: 'primary',
 				class: 'mr-3',
 			},
 		},
@@ -240,7 +240,7 @@ export const Dark: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-	<VSheet color="colorPrimary" class="pa-4">
+	<VSheet color="primary" class="pa-4">
 		<DownloadBtn
 			dark
 			:file-promise="download"
@@ -273,7 +273,7 @@ export const Dark: Story = {
 			return { args }
 		},
 		template: `
-			<VSheet color="colorPrimary" class="pa-4">
+			<VSheet color="primary" class="pa-4">
 				<DownloadBtn v-bind="args">{{ args.default }}</DownloadBtn>
 			</VSheet>
 		`,
@@ -362,7 +362,7 @@ export const Notify: Story = {
 				<div class="d-flex">
 					<DownloadBtn
 						:file-promise="args.filePromise"
-						:btn="{ color: 'colorPrimary'}"
+						:btn="{ color: 'primary'}"
 						@error="notify('Une error est survenue', 'error')"
 						@success="notify('Votre attestation a été téléchargée', 'success')"
 					>
