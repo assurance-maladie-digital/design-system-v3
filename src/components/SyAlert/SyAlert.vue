@@ -260,7 +260,7 @@
 			'accent': rgb(var(--v-theme-warning)),
 			'border': rgb(var(--v-theme-warning)),
 			'icon': rgb(var(--v-theme-onWarning)),
-        'icon-bg': rgb(var(--v-theme-warningVariant)),
+			'icon-bg': rgb(var(--v-theme-warningVariant)),
 		)
 	);
 	@include redesign(
