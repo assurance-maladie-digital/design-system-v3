@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyAutocomplete from './SyAutocomplete.vue'
 import SyForm from '../../SyForm/SyForm.vue'
 import AccessibilityDocs from './accessibilite/Accessibility.mdx'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { fn } from '@storybook/test'
-import { VBtn } from 'vuetify/components'
+import { VBtn, VCheckbox, VDivider, VListItem, VListItemTitle } from 'vuetify/components'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SyAutocomplete> = {
@@ -1064,6 +1064,137 @@ const items = [
 			`,
 		}
 	},
+}
+
+export const PrependItem: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Le slot `#prepend-item` permet d\'insérer du contenu personnalisé en tête de la liste déroulante. Exemple typique : un bouton « Tous » pour la sélection multiple, avec état indéterminé quand la sélection est partielle.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedValues"
+    :items="items"
+    label="Sélectionner des prénoms"
+    multiple
+    clearable
+  >
+    <template #prepend-item>
+      <VListItem
+        role="option"
+        :aria-selected="allSelected ? 'true' : 'false'"
+        @mousedown.prevent
+        @click="toggleAll"
+      >
+        <template #prepend>
+          <div aria-hidden="true" inert>
+            <VCheckbox
+              :model-value="allSelected"
+              :indeterminate="someSelected"
+              density="compact"
+              hide-details
+              color="primary"
+              class="mt-0 pt-0 mr-1"
+            />
+          </div>
+        </template>
+        <VListItemTitle>Tous</VListItemTitle>
+      </VListItem>
+      <VDivider role="none" />
+    </template>
+  </SyAutocomplete>
+  <div class="mt-4">Valeurs sélectionnées : {{ selectedValues }}</div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+import { VCheckbox, VDivider, VListItem, VListItemTitle } from 'vuetify/components'
+
+const items = [
+  { text: 'Adrien', value: 'Adrien' },
+  { text: 'Axel', value: 'Axel' },
+  { text: 'Baptiste', value: 'Baptiste' },
+  { text: 'Clement', value: 'Clement' },
+  { text: 'Corentin', value: 'Corentin' },
+  { text: 'Damien', value: 'Damien' },
+  { text: 'David', value: 'David' },
+  { text: 'Eloi', value: 'Eloi' },
+  { text: 'Louis', value: 'Louis' },
+  { text: 'Valentin', value: 'Valentin' },
+]
+
+const selectedValues = ref([])
+const allSelected = computed(() => Array.isArray(selectedValues.value) && selectedValues.value.length === items.length)
+const someSelected = computed(() => Array.isArray(selectedValues.value) && selectedValues.value.length > 0 && !allSelected.value)
+
+const toggleAll = () => {
+  selectedValues.value = allSelected.value ? [] : items.map(i => i.value)
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Sélectionner des prénoms',
+		multiple: true,
+		clearable: true,
+	},
+	render: args => ({
+		components: { SyAutocomplete, VCheckbox, VDivider, VListItem, VListItemTitle },
+		setup() {
+			const selectedValues = ref<string[]>([])
+			const allSelected = computed(() => Array.isArray(selectedValues.value) && selectedValues.value.length === sampleItems.length)
+			const someSelected = computed(() => Array.isArray(selectedValues.value) && selectedValues.value.length > 0 && !allSelected.value)
+			const toggleAll = () => {
+				selectedValues.value = allSelected.value ? [] : sampleItems.map(i => i.value)
+			}
+			return { args, selectedValues, allSelected, someSelected, toggleAll }
+		},
+		template: `
+			<div class="pa-4">
+				<SyAutocomplete
+					v-model="selectedValues"
+					v-bind="args"
+				>
+					<template #prepend-item>
+						<VListItem
+							role="option"
+							:aria-selected="allSelected ? 'true' : 'false'"
+							@mousedown.prevent
+							@click="toggleAll"
+						>
+							<template #prepend>
+								<div aria-hidden="true" inert>
+									<VCheckbox
+										:model-value="allSelected"
+										:indeterminate="someSelected"
+										density="compact"
+										hide-details
+										color="primary"
+										class="mt-0 pt-0 mr-1"
+									/>
+								</div>
+							</template>
+							<VListItemTitle>Tous</VListItemTitle>
+						</VListItem>
+						<VDivider role="none" />
+					</template>
+				</SyAutocomplete>
+				<div class="mt-4">Valeurs sélectionnées : {{ selectedValues }}</div>
+			</div>
+		`,
+	}),
 }
 
 export const WithCustomKeys: Story = {
