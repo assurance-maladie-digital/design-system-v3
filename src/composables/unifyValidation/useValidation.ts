@@ -129,7 +129,7 @@ export function useValidation(params: {
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
 			params.maxErrors,
-			params.label,
+			ref<string | undefined>(undefined),
 			params.label,
 			params.readonly,
 			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),

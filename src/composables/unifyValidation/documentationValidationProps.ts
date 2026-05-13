@@ -18,7 +18,7 @@ function generateBuiltInRuleType(type: 'base' | 'date' | 'number' | 'string' | '
 	}
 }
 
-export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 'all' = 'all') {
+export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 'string' | 'all' = 'all') {
 	const builtInRuleType = generateBuiltInRuleType(type)
 
 	return {
