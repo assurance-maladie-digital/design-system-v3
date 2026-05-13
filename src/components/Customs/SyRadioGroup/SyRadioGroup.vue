@@ -221,8 +221,9 @@
 	color: rgb(var(--v-theme-error));
 }
 
-.sy-radio-group__messages {
+:deep(.sy-radio-group__messages) {
 	align-items: flex-start;
+	margin-top: -22px !important;
 }
 
 .sy-radio-group__help-text {
