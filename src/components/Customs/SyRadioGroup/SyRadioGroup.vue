@@ -290,11 +290,11 @@
 
 .warning-field {
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackWarningVariant)) !important;
+    color: rgb(var(--v-theme-feedbackWarning)) !important;
 	}
 
 	:deep(.v-selection-control__input) {
-		color: rgb(var(--v-theme-feedbackWarningVariant));
+    color: rgb(var(--v-theme-feedbackWarning));
 	}
 }
 
@@ -306,7 +306,7 @@
 
 .success-field {
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-feedbackSuccessVariant)) !important;
+    color: rgb(var(--v-theme-feedbackSuccess)) !important;
 	}
 }
 

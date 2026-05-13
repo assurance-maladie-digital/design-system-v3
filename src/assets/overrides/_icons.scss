@@ -1,10 +1,11 @@
 .v-theme--ap2026.v-btn--icon .v-icon {
-	color: rgb(var(--v-theme-colorPrimary));
+  color: rgb(var(--v-theme-colorPrimary)) !important;
 	transition: color 0.2s ease;
 }
 
 .v-theme--cnam.v-btn--icon .v-icon,
-.v-theme--pa.v-btn--icon .v-icon {
+.v-theme--pa.v-btn--icon .v-icon,
+.v-theme--ap.v-btn--icon .v-icon {
 	color: rgb(var(--v-theme-colorPrimary));
 	transition: color 0.2s ease;
 }

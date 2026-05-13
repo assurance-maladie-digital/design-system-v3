@@ -531,28 +531,28 @@ export const CustomColors: Story = {
 						/>
 						<SyCheckBoxGroup
 							v-model="value2"
-							color="secondary"
+							color="colorSecondary"
 							label="Couleur secondaire"
 							:options="options"
 							:show-success-messages="false"
 						/>
 						<SyCheckBoxGroup
 							v-model="value3"
-							color="success"
+							color="feedbackSuccess"
 							label="Couleur succès"
 							:options="options"
 							:show-success-messages="false"
 						/>
 						<SyCheckBoxGroup
 							v-model="value4"
-							color="error"
+							color="feedbackError"
 							label="Couleur erreur"
 							:options="options"
 							:show-success-messages="false"
 						/>
 						<SyCheckBoxGroup
 							v-model="value5"
-							color="warning"
+							color="feedbackWarning"
 							label="Couleur avertissement"
 							:options="options"
 							:show-success-messages="false"
@@ -607,10 +607,18 @@ Le composant SyCheckBoxGroup peut être personnalisé avec différentes couleurs
               <SyCheckBoxGroup v-model="value1" color="colorPrimary" label="Couleur primaire (par défaut)"
                                :options="options" :show-success-messages="false"
               />
-				<SyCheckBoxGroup v-model="value2" color="secondary" label="Couleur secondaire" :options="options" :show-success-messages="false" />
-				<SyCheckBoxGroup v-model="value3" color="success" label="Couleur succès" :options="options" :show-success-messages="false" />
-				<SyCheckBoxGroup v-model="value4" color="error" label="Couleur erreur" :options="options" :show-success-messages="false" />
-				<SyCheckBoxGroup v-model="value5" color="warning" label="Couleur avertissement" :options="options" :show-success-messages="false" />
+              <SyCheckBoxGroup v-model="value2" color="colorSecondary" label="Couleur secondaire" :options="options"
+                               :show-success-messages="false"
+              />
+              <SyCheckBoxGroup v-model="value3" color="feedbackSuccess" label="Couleur succès" :options="options"
+                               :show-success-messages="false"
+              />
+              <SyCheckBoxGroup v-model="value4" color="feedbackError" label="Couleur erreur" :options="options"
+                               :show-success-messages="false"
+              />
+              <SyCheckBoxGroup v-model="value5" color="feedbackWarning" label="Couleur avertissement" :options="options"
+                               :show-success-messages="false"
+              />
 			</div>
 		`,
 	}),
