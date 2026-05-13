@@ -468,7 +468,7 @@
 
 	.amelipro-validation-rule {
 		&.is-valid {
-			color: rgb(var(--v-theme-successVariant));
+			color: rgb(var(--v-theme-success));
 		}
 	}
 }

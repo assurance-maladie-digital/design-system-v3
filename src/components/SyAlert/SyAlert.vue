@@ -259,8 +259,8 @@
 			'background': rgb(var(--v-theme-warningVariant)),
 			'accent': rgb(var(--v-theme-warning)),
 			'border': rgb(var(--v-theme-warning)),
-        'icon': rgb(var(--v-theme-warning)),
-        'icon-bg': rgb(var(--v-theme-warningVariant)),
+			'icon': rgb(var(--v-theme-warning)),
+			'icon-bg': rgb(var(--v-theme-warningVariant)),
 		)
 	);
 	@include redesign(
@@ -269,8 +269,8 @@
 			'background': rgb(var(--v-theme-successVariant)),
 			'accent': rgb(var(--v-theme-success)),
 			'border': rgb(var(--v-theme-success)),
-        'icon':rgb(var(--v-theme-success)),
-        'icon-bg': rgb(var(--v-theme-successVariant)),
+			'icon':rgb(var(--v-theme-success)),
+			'icon-bg': rgb(var(--v-theme-successVariant)),
 		)
 	);
 	@include redesign(
@@ -279,8 +279,8 @@
 			'background': rgb(var(--v-theme-errorVariant)),
 			'accent': rgb(var(--v-theme-error)),
 			'border': rgb(var(--v-theme-error)),
-        'icon':rgb(var(--v-theme-error)),
-        'icon-bg': rgb(var(--v-theme-errorVariant)),
+			'icon':rgb(var(--v-theme-error)),
+			'icon-bg': rgb(var(--v-theme-errorVariant)),
 		)
 	);
 	@include redesign(
@@ -289,8 +289,8 @@
 			'background': rgb(var(--v-theme-infoVariant)),
 			'accent': rgb(var(--v-theme-info)),
 			'border': rgb(var(--v-theme-info)),
-        'icon':rgb(var(--v-theme-info)),
-        'icon-bg': rgb(var(--v-theme-infoVariant)),
+			'icon':rgb(var(--v-theme-info)),
+			'icon-bg': rgb(var(--v-theme-infoVariant)),
 		)
 	);
 }

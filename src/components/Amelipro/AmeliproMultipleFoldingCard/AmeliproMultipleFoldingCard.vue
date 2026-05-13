@@ -350,9 +350,9 @@
 	}
 
 	&.checked-btn {
-		border: 1px solid rgb(var(--v-theme-successVariant));
+		border: 1px solid rgb(var(--v-theme-success));
 		background-color: rgb(var(--v-theme-ap-turquoise-lighten-1));
-		color: rgb(var(--v-theme-successVariant));
+		color: rgb(var(--v-theme-success));
 	}
 
 	&.error-btn {
