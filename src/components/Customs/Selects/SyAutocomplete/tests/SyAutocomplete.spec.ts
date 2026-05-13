@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { VMenu } from 'vuetify/components'
+import { defineComponent, ref } from 'vue'
+import { VCheckbox, VDivider, VListItem, VListItemTitle, VMenu } from 'vuetify/components'
 
 import SyAutocomplete from '../SyAutocomplete.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -1065,6 +1066,274 @@ describe('SyAutocomplete', () => {
 			await flushPromises()
 			await wrapper.vm.$nextTick()
 			expect(wrapper.find('.v-messages').text()).toContain('Succès externe')
+		})
+	})
+
+	describe('slot prepend-item', () => {
+		it('reçoit le focus en premier à l\'ouverture du menu', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test prepend focus',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				slots: {
+					'prepend-item': '<li class="v-list-item prepend-item-btn">Tous</li>',
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+
+			const prependEl = document.body.querySelector('.prepend-item-btn')
+			expect(prependEl?.classList.contains('keyboard-focused')).toBe(true)
+		})
+
+		it('ArrowDown depuis le prepend va au premier item', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test prepend arrow',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				slots: {
+					'prepend-item': '<li class="v-list-item prepend-item-btn">Tous</li>',
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+
+			const inputEl = document.getElementById(`${menuId}-input`) as HTMLInputElement
+			inputEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }))
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			const firstOption = document.body.querySelector(`#${menuId}-option-0`)
+			expect(firstOption?.classList.contains('keyboard-focused')).toBe(true)
+			expect(document.body.querySelector('.prepend-item-btn')?.classList.contains('keyboard-focused')).toBe(false)
+		})
+
+		it('ArrowUp depuis le premier item revient au prepend', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test prepend arrow up',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				slots: {
+					'prepend-item': '<li class="v-list-item prepend-item-btn">Tous</li>',
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+
+			const inputEl = document.getElementById(`${menuId}-input`) as HTMLInputElement
+
+			// ArrowDown → premier item
+			inputEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }))
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			// ArrowUp → retour au prepend
+			inputEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }))
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+
+			expect(document.body.querySelector('.prepend-item-btn')?.classList.contains('keyboard-focused')).toBe(true)
+		})
+
+		it('Enter sur le prepend déclenche un click sur l\'élément', async () => {
+			wrapper.unmount()
+			let clicked = false
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test prepend enter',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				slots: {
+					'prepend-item': `<li class="v-list-item prepend-item-btn">Tous</li>`,
+				},
+				attachTo: document.body,
+			})
+
+			// Ajouter un listener click sur le bouton après montage
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			await wrapper.vm.$nextTick()
+
+			const prependEl = document.body.querySelector('.prepend-item-btn')
+			prependEl?.addEventListener('click', () => {
+				clicked = true
+			})
+
+			const inputEl = document.getElementById(`${menuId}-input`) as HTMLInputElement
+			inputEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			expect(clicked).toBe(true)
+		})
+
+		it('Enter sur un VListItem du slot prepend-item active son @click', async () => {
+			wrapper.unmount()
+
+			const HostComponent = defineComponent({
+				components: { SyAutocomplete, VCheckbox, VDivider, VListItem, VListItemTitle },
+				setup() {
+					const selectedValues = ref<string[]>([])
+					const toggleAll = () => {
+						selectedValues.value = selectedValues.value.length === items.length
+							? []
+							: items.map(item => item.value as string)
+					}
+
+					return {
+						items,
+						menuId,
+						selectedValues,
+						toggleAll,
+					}
+				},
+				template: `
+					<SyAutocomplete
+						v-model="selectedValues"
+						:items="items"
+						label="Test prepend enter on VListItem"
+						text-key="text"
+						value-key="value"
+						:menu-id="menuId"
+						multiple
+					>
+						<template #prepend-item>
+							<VListItem
+								class="prepend-item-btn"
+								@mousedown.prevent
+								@click="toggleAll"
+							>
+								<template #prepend>
+									<VCheckbox
+										:model-value="selectedValues.length === items.length"
+										:indeterminate="selectedValues.length > 0 && selectedValues.length < items.length"
+										density="compact"
+										hide-details
+										color="primary"
+										class="mt-0 pt-0 mr-1"
+									/>
+								</template>
+								<VListItemTitle>Tous</VListItemTitle>
+							</VListItem>
+							<VDivider />
+						</template>
+					</SyAutocomplete>
+				`,
+			})
+
+			const hostWrapper = mount(HostComponent, {
+				attachTo: document.body,
+			})
+
+			const input = hostWrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await hostWrapper.vm.$nextTick()
+			await hostWrapper.vm.$nextTick()
+
+			const inputEl = document.getElementById(`${menuId}-input`) as HTMLInputElement
+			inputEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }))
+			await flushPromises()
+			await hostWrapper.vm.$nextTick()
+
+			expect((hostWrapper.vm as { selectedValues: string[] }).selectedValues).toEqual(['1', '2', '3'])
+
+			hostWrapper.unmount()
+		})
+
+		it('rend le contenu du slot dans le listbox', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test prepend-item',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				slots: {
+					'prepend-item': '<button class="prepend-item-btn">Tous</button>',
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(isMenuOverlayActive()).toBe(true)
+
+			// Le slot est dans le listbox
+			const listbox = document.body.querySelector(`#${menuId}`)
+			expect(listbox!.querySelector('.prepend-item-btn')).not.toBeNull()
+
+			// Il n'y a pas de container prepend séparé
+			expect(document.body.querySelector(`#${menuId}-prepend`)).toBeNull()
+		})
+
+		it('n\'affiche pas le contenu du slot quand le menu est fermé', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: null,
+					items,
+					label: 'Test prepend-item fermé',
+					textKey: 'text',
+					valueKey: 'value',
+					menuId,
+				},
+				slots: {
+					'prepend-item': '<button class="prepend-item-btn">Tous</button>',
+				},
+				attachTo: document.body,
+			})
+
+			expect(isMenuOverlayActive()).toBe(false)
+			expect(document.body.querySelector('.prepend-item-btn')).toBeNull()
 		})
 	})
 

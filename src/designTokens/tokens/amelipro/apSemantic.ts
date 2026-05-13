@@ -79,7 +79,7 @@ export const apSemanticTokens = {
 		overlay: {
 			fullpage: apColorsTokens.grey.darken60,
 			onDark: apColorsTokens.cyan.darken40,
-			onLight: apColorsTokens.white.base,
+			onLight: apColorsTokens.cyan.darken20,
 		},
 		interactive: {
 			selectionEnabled: apColorsTokens.white.base,

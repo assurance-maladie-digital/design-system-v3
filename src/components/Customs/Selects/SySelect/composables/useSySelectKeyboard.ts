@@ -12,6 +12,7 @@ export interface UseSySelectKeyboardOptions {
 	getItemText: (item: unknown) => unknown
 	optionIdPrefix?: string
 	focusListItem?: boolean
+	skipInitialFocus?: Ref<boolean>
 }
 
 export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
@@ -23,6 +24,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 		getItemText,
 		optionIdPrefix = 'option',
 		focusListItem = true,
+		skipInitialFocus,
 	} = options
 
 	const getOptionId = (index: number) => `${optionIdPrefix}-${index}`
@@ -339,6 +341,7 @@ export function useSySelectKeyboard(options: UseSySelectKeyboardOptions) {
 	// Gérer l'ouverture et la fermeture de la liste
 	watch(isOpen, (open) => {
 		if (open) {
+			if (skipInitialFocus?.value) return
 			// À l'ouverture, restaurer le dernier focus ou initialiser au premier élément
 			nextTick(() => {
 				if (lastFocusedIndex.value >= 0 && lastFocusedIndex.value < formattedItems.value.length) {
