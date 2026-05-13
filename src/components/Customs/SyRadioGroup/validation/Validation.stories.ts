@@ -250,6 +250,72 @@ const onSubmit = (event: { isValid: boolean }) => {
 }
 
 /**
+ * showSuccessMessages: false — les messages de succès sont masqués
+ * Le champ est validé mais aucun message positif n'est affiché
+ */
+export const NoSuccessMessage: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### showSuccessMessages à false
+Avec **showSuccessMessages: false**, la validation se produit normalement mais les messages de succès ne s'affichent pas.
+
+**Caractéristiques :**
+- Sélectionner une option valide le champ silencieusement
+- Aucun message vert n'est affiché
+- Utile quand le feedback positif est jugé superflu
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyRadioGroup
+		v-model="selected"
+		label="Choisissez une option"
+		:options="options"
+		:show-success-messages="false"
+		required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const selected = ref<string | null>('a')
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref<string | null>('a')
+			return { args, selected }
+		},
+		template: `
+			<SyRadioGroup
+				v-model="selected"
+				v-bind="args"
+				:show-success-messages="false"
+			/>
+		`,
+	}),
+}
+
+/**
  * disableErrorHandling: true — la validation est complètement désactivée
  */
 export const DisableErrorHandling: Story = {
@@ -402,6 +468,105 @@ const onSubmit = (event: { isValid: boolean }) => {
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
 			</SyForm>
+		`,
+	}),
+}
+
+/**
+ * Validation avec VForm natif (sans useVuetifyValidation)
+ * Utilise VForm de Vuetify avec la validation Synapse
+ */
+export const VFormValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation avec VForm natif
+Intégration avec **VForm** natif Vuetify en conservant la validation Synapse. La soumission appelle **validateOnSubmit()** manuellement sur le composant pour déclencher la validation.
+
+**Caractéristiques :**
+- Validation Synapse (customRules, required, etc.)
+- Pas de useVuetifyValidation
+- Appel manuel de validateOnSubmit() sur le ref du composant
+				`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<VForm @submit.prevent="onSubmit">
+		<SyRadioGroup
+			ref="radioRef"
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			required
+			class="mb-4"
+		/>
+		<VBtn type="submit" color="primary">Valider</VBtn>
+	</VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+const radioRef = ref(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+
+async function onSubmit() {
+	const isValid = await radioRef.value?.validateOnSubmit()
+	if (isValid) {
+		alert('Formulaire valide : ' + JSON.stringify(selected.value))
+	} else {
+		alert('Formulaire invalide : veuillez choisir une option.')
+	}
+}
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup, VForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+			const radioRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			async function onSubmit() {
+				const isValid = await radioRef.value?.validateOnSubmit()
+				if (isValid) {
+					alert(`Formulaire valide : ${JSON.stringify(selected.value)}`)
+				}
+				else {
+					alert('Formulaire invalide : veuillez choisir une option.')
+				}
+			}
+
+			return { args, selected, radioRef, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<VForm @submit.prevent="onSubmit">
+					<SyRadioGroup
+						ref="radioRef"
+						v-model="selected"
+						v-bind="args"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary">Valider</VBtn>
+				</VForm>
+			</div>
 		`,
 	}),
 }
@@ -603,171 +768,6 @@ const onSubmit = (event: { isValid: boolean }) => {
 				/>
 				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
 			</SyForm>
-		`,
-	}),
-}
-
-/**
- * Validation avec VForm natif (sans useVuetifyValidation)
- * Utilise VForm de Vuetify avec la validation Synapse
- */
-export const VFormValidation: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: `
-### Validation avec VForm natif
-Intégration avec **VForm** natif Vuetify en conservant la validation Synapse. La soumission appelle **validateOnSubmit()** manuellement sur le composant pour déclencher la validation.
-
-**Caractéristiques :**
-- Validation Synapse (customRules, required, etc.)
-- Pas de useVuetifyValidation
-- Appel manuel de validateOnSubmit() sur le ref du composant
-				`,
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-	<VForm @submit.prevent="onSubmit">
-		<SyRadioGroup
-			ref="radioRef"
-			v-model="selected"
-			label="Choisissez une option"
-			:options="options"
-			required
-			class="mb-4"
-		/>
-		<VBtn type="submit" color="primary">Valider</VBtn>
-	</VForm>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { ref } from 'vue'
-import { SyRadioGroup } from '@cnamts/synapse'
-import { VBtn, VForm } from 'vuetify/components'
-
-const selected = ref<string | null>(null)
-const radioRef = ref(null)
-
-const options = [
-	{ label: 'Option A', value: 'a' },
-	{ label: 'Option B', value: 'b' },
-]
-
-async function onSubmit() {
-	const isValid = await radioRef.value?.validateOnSubmit()
-	if (isValid) {
-		alert('Formulaire valide : ' + JSON.stringify(selected.value))
-	} else {
-		alert('Formulaire invalide : veuillez choisir une option.')
-	}
-}
-</script>`,
-			},
-		],
-	},
-
-	render: args => ({
-		components: { SyRadioGroup, VForm, VBtn },
-		setup() {
-			const selected = ref<string | null>(null)
-			const radioRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-
-			async function onSubmit() {
-				const isValid = await radioRef.value?.validateOnSubmit()
-				if (isValid) {
-					alert(`Formulaire valide : ${JSON.stringify(selected.value)}`)
-				}
-				else {
-					alert('Formulaire invalide : veuillez choisir une option.')
-				}
-			}
-
-			return { args, selected, radioRef, onSubmit }
-		},
-		template: `
-			<div class="pa-4">
-				<VForm @submit.prevent="onSubmit">
-					<SyRadioGroup
-						ref="radioRef"
-						v-model="selected"
-						v-bind="args"
-						class="mb-4"
-					/>
-					<VBtn type="submit" color="primary">Valider</VBtn>
-				</VForm>
-			</div>
-		`,
-	}),
-}
-
-/**
- * showSuccessMessages: false — les messages de succès sont masqués
- * Le champ est validé mais aucun message positif n'est affiché
- */
-export const NoSuccessMessage: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: `
-### showSuccessMessages à false
-Avec **showSuccessMessages: false**, la validation se produit normalement mais les messages de succès ne s'affichent pas.
-
-**Caractéristiques :**
-- Sélectionner une option valide le champ silencieusement
-- Aucun message vert n'est affiché
-- Utile quand le feedback positif est jugé superflu
-				`,
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-	<SyRadioGroup
-		v-model="selected"
-		label="Choisissez une option"
-		:options="options"
-		:show-success-messages="false"
-		required
-	/>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { ref } from 'vue'
-import { SyRadioGroup } from '@cnamts/synapse'
-
-const selected = ref<string | null>('a')
-
-const options = [
-	{ label: 'Option A', value: 'a' },
-	{ label: 'Option B', value: 'b' },
-]
-</script>`,
-			},
-		],
-	},
-
-	render: args => ({
-		components: { SyRadioGroup },
-		setup() {
-			const selected = ref<string | null>('a')
-			return { args, selected }
-		},
-		template: `
-			<SyRadioGroup
-				v-model="selected"
-				v-bind="args"
-				:show-success-messages="false"
-			/>
 		`,
 	}),
 }
