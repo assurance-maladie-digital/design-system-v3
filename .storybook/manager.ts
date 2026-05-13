@@ -60,6 +60,7 @@ const apComponents = [
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
 	'composants-vue-d-ensemble--docs',
+    'composants-formulaires-selects-selectbtnfield',
 ]
 
 // Get stored theme or default to CNAM
