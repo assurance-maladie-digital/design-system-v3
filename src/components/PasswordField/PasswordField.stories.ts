@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import PasswordField from './PasswordField.vue'
 import type { PasswordFieldProps } from './types'
 import { fn } from '@storybook/test'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 type PasswordFieldStoryArgs = PasswordFieldProps & {
 	'onUpdate:modelValue': (...args: unknown[]) => unknown
@@ -27,6 +28,7 @@ const meta = {
 		},
 	},
 	argTypes: {
+		...getValidationDocumentation('string'),
 		'modelValue': {
 			control: 'text',
 			description: 'Valeur du champ de mot de passe',
@@ -45,57 +47,9 @@ const meta = {
 			control: 'text',
 			description: 'Libellé du champ',
 		},
-		'required': {
-			control: 'boolean',
-			description: 'Indique si le champ est obligatoire',
-		},
-		'errorMessages': {
-			control: 'object',
-			description: 'Messages d\'erreur à afficher',
-		},
-		'warningMessages': {
-			control: 'object',
-			description: 'Messages d\'avertissement à afficher',
-		},
-		'successMessages': {
-			control: 'object',
-			description: 'Messages de succès à afficher',
-		},
-		'readonly': {
-			control: 'boolean',
-			description: 'Indique si le champ est en lecture seule',
-		},
-		'disabled': {
-			control: 'boolean',
-			description: 'Indique si le champ est désactivé',
-		},
-		'placeholder': {
-			control: 'text',
-			description: 'Texte d\'indication affiché lorsque le champ est vide',
-		},
-		'customRules': {
-			control: 'object',
-			description: 'Règles de validation personnalisées',
-		},
-		'customWarningRules': {
-			control: 'object',
-			description: 'Règles d\'avertissement personnalisées',
-		},
-		'customSuccessRules': {
-			control: 'object',
-			description: 'Règles de succès personnalisées',
-		},
-		'showSuccessMessages': {
-			control: 'boolean',
-			description: 'Indique si les messages de succès doivent être affichés',
-		},
 		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque à côté du libellé pour indiquer que le champ est obligatoire',
-		},
-		'isValidateOnBlur': {
-			control: 'boolean',
-			description: 'Indique si la validation doit être effectuée lors de la perte de focus',
 		},
 		'bgColor': {
 			control: 'color',
