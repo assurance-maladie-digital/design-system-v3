@@ -854,6 +854,10 @@
 		fill: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
+	:deep(.v-label.v-field-label) {
+		color: rgb(var(--v-theme-borderWarning)) !important;
+	}
+
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-warningVariant)) !important;
 
@@ -921,6 +925,10 @@
 
 	:deep(.v-icon__svg) {
 		fill: rgb(var(--v-theme-success)) !important;
+	}
+
+	:deep(.v-label.v-field-label) {
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 	}
 
 	:deep(.v-field) {

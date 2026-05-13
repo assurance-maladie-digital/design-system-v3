@@ -123,6 +123,8 @@ export const ariaManager = {
 		activeDescendant: Ref<string>,
 		loading: boolean,
 		inputLabel?: string,
+		required?: boolean,
+		hasError?: boolean,
 	): void {
 		nextTick(() => {
 			const tf = textFieldRef.value
@@ -175,7 +177,7 @@ export const ariaManager = {
 						}
 					})
 				}
-				ariaManager.updateValidationAttributes(inputEl, false, false)
+				ariaManager.updateValidationAttributes(inputEl, required ?? false, hasError ?? false)
 				nextTick(() => {
 					const popupStillThere = Boolean(document.getElementById(menuId))
 					if (isOpen.value && popupStillThere) {

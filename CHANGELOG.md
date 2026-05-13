@@ -1,3 +1,81 @@
+## v1.0.26 (11-05-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- RatingPicker: improve accessibility and add documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2092">#2092</a>
+      </td>
+      <td>- SyTabs: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2168">#2168</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: improve validation and documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2151">#2151</a>
+      </td>
+      <td>- ChipList: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2161">#2161</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix invalid date bug
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2149">#2149</a>
+      </td>
+      <td>- Accordion: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2160">#2160</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix showSuccessMessages prop
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2158">#2158</a>
+      </td>
+      <td>- NotificationBar: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2138">#2138</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve accessibility section 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2156">#2156</a>
+      </td>
+      <td>- DialogBox: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2148">#2148</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: fix uuid plugin
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2154">#2154</a>
+      </td>
+      <td>- Tooltip: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2114">#2114</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- imrpove Cypress visual tests and CI
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2153">#2153</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2150">#2150</a>
+      </td>
+      <td>- FilterSideBar: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2157">#2157</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Optimise Build 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2110">#2110</a>
+      </td>
+      <td>- VCard: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2135">#2135</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.25 (27-04-2026)
 
 <table>

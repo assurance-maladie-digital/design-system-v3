@@ -5,165 +5,154 @@ import AccessibilityDocs from './accessibilite/Accessibility.mdx'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 import { VBtn } from 'vuetify/components'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SyAutocomplete> = {
 	title: 'Composants/Formulaires/Selects/SyAutocomplete',
 	component: SyAutocomplete,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['selectedValue', 'isOpen', 'closeList'] },
-		docs: { page: AccessibilityDocs },
+		controls: { exclude: ['selectedValue', 'closeList', 'clearValidation', 'checkErrorOnBlur', 'isOpen', 'selectItem'] },
+		docs: {
+			page: AccessibilityDocs,
+			controls: { sort: 'none' },
+		},
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
+		...getValidationDocumentation(),
+
+		// Override : défaut false sur SyAutocomplete (la validation se déclenche à la sélection, pas à chaque frappe)
+		'isValidateOnBlur': {
+			control: 'boolean',
+			description: 'Détermine si la validation doit être déclenchée lors de la saisie ou du blur de l\'input. Par défaut `false` sur ce composant : la validation se déclenche dès qu\'une option est sélectionnée.',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
+			},
+		},
+
 		'bgColor': {
 			control: 'text',
 			description: 'Couleur de fond du champ',
+			table: { category: 'props' },
 		},
 		'chips': {
 			control: 'boolean',
 			description: 'Affiche les options sélectionnées sous forme de chips',
+			table: { category: 'props' },
 		},
 		'clearable': {
 			control: 'boolean',
 			description: 'Permet de vider la sélection',
-		},
-		'customRules': {
-			control: 'object',
-			description: 'Règles de validation personnalisées',
-		},
-		'customSuccessRules': {
-			control: 'object',
-			description: 'Règles de succès personnalisées',
-		},
-		'customWarningRules': {
-			control: 'object',
-			description: 'Règles d\'avertissement personnalisées',
+			table: { category: 'props' },
 		},
 		'debounce': {
 			control: 'number',
-			description: 'Délai en millisecondes avant le filtrage (défaut: 200)',
+			description: 'Délai en millisecondes entre la dernière frappe et l\'émission de l\'événement search. Permet de limiter les appels lors d\'une recherche asynchrone.',
+			table: { category: 'props' },
 		},
 		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Définit la densité du champ',
-		},
-		'disableErrorHandling': {
-			control: 'boolean',
-			description: 'Désactive la gestion des erreurs',
+			table: { category: 'props' },
 		},
 		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque pour les champs obligatoires',
-		},
-		'errorMessages': {
-			control: 'object',
-			description: 'Messages d\'erreur personnalisés',
+			table: { category: 'props' },
 		},
 		'filter': {
 			control: 'boolean',
 			description: 'Active le filtrage des options basé sur la saisie',
+			table: { category: 'props' },
 		},
-		'hasError': {
-			control: 'boolean',
-			description: 'Indique si le champ a une erreur',
-		},
-		'hasSuccess': {
-			control: 'boolean',
-			description: 'Indique si le champ est en succès',
-		},
-		'hasWarning': {
-			control: 'boolean',
-			description: 'Indique si le champ a un avertissement',
+		'helpText': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ',
+			table: { category: 'props' },
 		},
 		'hideNoData': {
 			control: 'boolean',
 			description: 'Cache le message "aucune option" quand la liste est vide',
+			table: { category: 'props' },
 		},
-		'isValidateOnBlur': {
-			control: 'boolean',
-			description: 'Valide le champ à la perte de focus',
-		},
-		'items': { control: 'object' },
-		'label': {
-			control: 'text',
-			description: 'Libellé du champ',
+		'items': {
+			control: 'object',
+			table: { category: 'props' },
 		},
 		'loading': {
 			control: 'boolean',
 			description: 'Affiche un indicateur de chargement',
+			table: { category: 'props' },
 		},
 		'menuId': {
 			control: 'text',
-			description: 'ID personnalisé pour le menu',
+			description: 'Identifiant HTML du menu déroulant. Utile pour éviter les conflits d\'ID en cas de multiples instances sur la même page.',
+			table: { category: 'props' },
 		},
-		'modelValue': { control: 'text' },
+		'modelValue': {
+			control: 'text',
+			table: { category: 'props' },
+		},
 		'multiple': {
 			control: 'boolean',
 			description: 'Permet la sélection multiple d\'options',
+			table: { category: 'props' },
 		},
 		'noDataText': {
 			control: 'text',
 			description: 'Texte affiché quand aucune option n\'est disponible',
+			table: { category: 'props' },
 		},
 		'placeholder': {
 			control: 'text',
 			description: 'Texte d\'indice affiché quand le champ est vide',
+			table: { category: 'props' },
 		},
 		'plainTextKey': {
 			control: 'text',
-			description: 'Nom de la propriété pour le texte brut de filtrage',
-		},
-		'onSearch': {
-			action: 'search',
-			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. Utile pour déclencher des recherches asynchrones.',
-		},
-		'onUpdate:modelValue': {
-			action: 'update:modelValue',
-			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
-		},
-		'disabled': {
-			control: 'boolean',
-			description: 'Désactive le champ',
-		},
-		'readonly': {
-			control: 'boolean',
-			description: 'Rend le champ en lecture seule',
-		},
-		'required': {
-			control: 'boolean',
-			description: 'Marque le champ comme obligatoire',
+			description: 'Propriété de l\'objet utilisée pour le filtrage côté client (filter: true). Si absente, c\'est textKey qui est utilisée.',
+			table: { category: 'props' },
 		},
 		'returnObject': {
 			control: 'boolean',
-			description: 'Retourne l\'objet complet sélectionné',
-		},
-		'showSuccessMessages': {
-			control: 'boolean',
-			description: 'Affiche les messages de succès',
-		},
-		'successMessages': {
-			control: 'object',
-			description: 'Messages de succès personnalisés',
-		},
-		'textKey': {
-			control: 'text',
-			description: 'Nom de la propriété qui contient le texte à afficher',
-		},
-		'valueKey': {
-			control: 'text',
-			description: 'Nom de la propriété qui contient la valeur à retourner',
+			description: 'Retourne l\'objet complet sélectionné au lieu de la seule valeur de valueKey.',
+			table: { category: 'props' },
 		},
 		'selectionText': {
 			control: false,
 			description: 'Fonction de personnalisation du texte affiché dans l\'input en mode multiple. Reçoit le tableau des valeurs sélectionnées et retourne une chaîne.',
+			table: { category: 'props' },
 		},
-		'warningMessages': {
-			control: 'object',
-			description: 'Messages d\'avertissement personnalisés',
+		'textKey': {
+			control: 'text',
+			description: 'Nom de la propriété qui contient le texte à afficher',
+			table: { category: 'props' },
+		},
+		'valueKey': {
+			control: 'text',
+			description: 'Nom de la propriété qui contient la valeur à retourner',
+			table: { category: 'props' },
+		},
+		'onSearch': {
+			action: 'search',
+			description: 'Émis à chaque frappe dans le champ. Reçoit la valeur saisie en paramètre. Utile pour déclencher des recherches asynchrones.',
+			table: { category: 'events' },
+		},
+		'onUpdate:modelValue': {
+			action: 'update:modelValue',
+			description: 'Émis lors de la sélection d\'une option. Reçoit la valeur sélectionnée.',
+			table: { category: 'events' },
+		},
+		'validateOnSubmit': {
+			control: false,
+			description: 'Déclenche la validation du champ (équivalent à un submit de formulaire). Retourne une promesse résolue en `true` si le champ est valide.',
+			table: { category: 'expose' },
 		},
 	},
 } as Meta<typeof SyAutocomplete>
@@ -187,7 +176,7 @@ const sampleItems = [
 
 export const Default: Story = {
 	parameters: {
-
+		docs: { controls: { sort: 'none' } },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -249,122 +238,84 @@ export const Default: Story = {
 	},
 }
 
-export const FormValidation: Story = {
+export const HelpText: Story = {
 	parameters: {
-		docs: {
-			description: {
-				story: 'Le champ requis ne montre l\'erreur qu\'après interaction (blur/submit), pas au mount.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyForm @submit="onSubmit">
-    <SyAutocomplete
-      v-model="value"
-      :items="items"
-      label="Recherche obligatoire"
-      required
-      display-asterisk
-      class="mb-4"
-    />
-    <VBtn type="submit" color="primary">Soumettre</VBtn>
-  </SyForm>
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete, SyForm } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
-
-const value = ref('')
-const items = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' },
-  { text: 'Option 3', value: '3' }
-]
-
-const onSubmit = (event) => {
-  if (event.isValid) {
-    alert('Formulaire valide : ' + JSON.stringify(value.value))
-  } else {
-    alert('Formulaire invalide : veuillez choisir une option.')
-  }
-}
-</script>
-        `,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-			{ text: 'Option 3', value: '3' },
-		],
-		label: 'Recherche obligatoire',
-		required: true,
-		displayAsterisk: true,
-	},
-	render: (args) => {
-		return {
-			components: { SyAutocomplete, SyForm, VBtn },
-			setup() {
-				const value = ref('')
-
-				const onSubmit = (event: { isValid: boolean }) => {
-					if (event.isValid) {
-						alert(`Formulaire valide : ${JSON.stringify(value.value)}`)
-					}
-					else {
-						alert('Formulaire invalide : veuillez choisir une option.')
-					}
-				}
-
-				return { args, value, onSubmit }
-			},
-			template: `
-				<div class="pa-4">
-					<SyForm @submit="onSubmit">
-						<SyAutocomplete
-							v-model="value"
-							v-bind="args"
-							class="mb-4"
-						/>
-                      <VBtn type="submit" color="primary">Soumettre</VBtn>
-					</SyForm>
-				</div>
-			`,
-		}
-	},
-}
-
-export const ExternalErrorToggle: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Démontre l\'affichage d\'un message d\'erreur externe injecté via `error-messages`.',
-			},
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <template>
   <SyAutocomplete
-    v-model="value"
+    v-model="selectedValue"
     :items="items"
-    label="Erreur serveur"
-    :error-messages="errorMessages"
+    label="Rechercher un prénom"
+    help-text="Texte d'aide à la saisie"
   />
-  <VBtn class="mt-2" @click="triggerError">Déclencher l'erreur</VBtn>
-  <VBtn class="mt-2 ml-2" variant="text" @click="clearError">Effacer</VBtn>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const selectedValue = ref('')
+const items = [
+  { text: 'Adrien', value: 'Adrien' },
+  { text: 'Axel', value: 'Axel' },
+  { text: 'Baptiste', value: 'Baptiste' },
+  { text: 'Clement', value: 'Clement' },
+  { text: 'Corentin', value: 'Corentin' },
+  { text: 'Damien', value: 'Damien' },
+  { text: 'David', value: 'David' },
+  { text: 'Eloi', value: 'Eloi' },
+  { text: 'Louis', value: 'Louis' },
+  { text: 'Valentin', value: 'Valentin' },
+]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Rechercher un prénom',
+		helpText: 'Texte d\'aide à la saisie',
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref('')
+				return { args, selectedValue }
+			},
+			template: `
+				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedValue"
+    :items="items"
+    label="Champ obligatoire"
+    required
+  />
 </template>
         `,
 			},
@@ -374,22 +325,12 @@ export const ExternalErrorToggle: Story = {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyAutocomplete } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
 
-const value = ref('')
+const selectedValue = ref()
 const items = [
   { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' }
+  { text: 'Option 2', value: '2' },
 ]
-const errorMessages = ref<string[]>([])
-
-const triggerError = () => {
-  errorMessages.value = ['Erreur serveur : sélection invalide']
-}
-
-const clearError = () => {
-  errorMessages.value = []
-}
 </script>
         `,
 			},
@@ -400,78 +341,83 @@ const clearError = () => {
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
-		label: 'Erreur serveur',
+		label: 'Champ obligatoire',
+		required: true,
 	},
 	render: (args) => {
 		return {
-			components: { SyAutocomplete, VBtn },
+			components: { SyAutocomplete },
 			setup() {
-				const value = ref('')
-				const errorMessages = ref<string[]>([])
-				const triggerError = () => {
-					errorMessages.value = ['Erreur serveur : sélection invalide']
-				}
-				const clearError = () => {
-					errorMessages.value = []
-				}
-				return { args, value, errorMessages, triggerError, clearError }
+				const selectedValue = ref()
+				return { args, selectedValue }
 			},
 			template: `
-				<div class="pa-4 d-flex flex-column gap-2">
+				<div class="pa-4">
 					<SyAutocomplete
-						v-model="value"
+						v-model="selectedValue"
 						v-bind="args"
-						:error-messages="errorMessages"
 					/>
-					<div class="d-flex align-center gap-2">
-						<VBtn color="error" @click="triggerError">Déclencher l'erreur</VBtn>
-						<VBtn variant="text" @click="clearError">Effacer</VBtn>
-					</div>
 				</div>
 			`,
 		}
 	},
 }
 
-export const WarningSuccessMessages: Story = {
+export const RequiredWithAsterisk: Story = {
 	parameters: {
-		docs: {
-			description: {
-				story: 'Déclenche un warning si "Option 1" est choisi et un succès si "Option 2" est choisi.',
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyAutocomplete
+    v-model="selectedValue"
+    :items="items"
+    label="Champ obligatoire"
+    required
+    display-asterisk
+  />
+</template>
+        `,
 			},
-		},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyAutocomplete } from '@cnamts/synapse'
+
+const selectedValue = ref()
+const items = [
+  { text: 'Option 1', value: '1' },
+  { text: 'Option 2', value: '2' },
+]
+</script>
+        `,
+			},
+		],
 	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
 			{ text: 'Option 2', value: '2' },
 		],
-		label: 'Avec warning & succès',
+		label: 'Champ obligatoire',
+		required: true,
+		displayAsterisk: true,
 	},
 	render: (args) => {
 		return {
 			components: { SyAutocomplete },
 			setup() {
-				const value = ref('')
-				const warningMessages = ref<string[]>([])
-				const successMessages = ref<string[]>([])
-
-				const handleChange = (newVal: unknown) => {
-					value.value = newVal as string
-					warningMessages.value = newVal === '1' ? ['Attention: Option 1 choisie'] : []
-					successMessages.value = newVal === '2' ? ['Succès: Option 2 valide'] : []
-				}
-
-				return { args, value, warningMessages, successMessages, handleChange }
+				const selectedValue = ref()
+				return { args, selectedValue }
 			},
 			template: `
 				<div class="pa-4">
 					<SyAutocomplete
-						v-model="value"
+						v-model="selectedValue"
 						v-bind="args"
-						:warning-messages="warningMessages"
-						:success-messages="successMessages"
-						@update:modelValue="handleChange"
 					/>
 				</div>
 			`,
@@ -572,7 +518,7 @@ const onSubmit = (event) => {
 							v-bind="args"
 							class="mb-4"
 						/>
-                      <VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
+						<VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
 					</SyForm>
 				</div>
 			`,
@@ -908,69 +854,6 @@ const loadOnClick = () => {
 	},
 }
 
-export const RequiredField: Story = {
-	parameters: {
-
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyAutocomplete
-    v-model="selectedValue"
-    :items="items"
-    label="Champ obligatoire"
-    required
-    display-asterisk
-  />
-</template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete } from '@cnamts/synapse'
-
-const selectedValue = ref()
-const items = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' },
-]
-</script>
-        `,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-		],
-		label: 'Champ obligatoire',
-		required: true,
-		displayAsterisk: true,
-	},
-	render: (args) => {
-		return {
-			components: { SyAutocomplete },
-			setup() {
-				const selectedValue = ref()
-				return { args, selectedValue }
-			},
-			template: `
-				<div class="pa-4">
-					<SyAutocomplete
-						v-model="selectedValue"
-						v-bind="args"
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
 export const HideDetails: Story = {
 	parameters: {
 		sourceCode: [
@@ -1051,88 +934,6 @@ const value2 = ref('1')
 						:has-success="true"
 						:success-messages="['Sélection valide']"
 						:hide-details="true"
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
-export const DisableErrorHandling: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-	<div class="d-flex flex-column gap-4">
-		<SyAutocomplete
-			v-model="value1"
-			:items="items"
-			label="Avec validation interne (défaut)"
-			required
-		/>
-
-		<SyAutocomplete
-			v-model="value2"
-			:items="items"
-			label="Validation interne désactivée"
-			required
-			disable-error-handling
-		/>
-	</div>
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { SyAutocomplete } from '@cnamts/synapse'
-
-const items = [
-	{ text: 'Option 1', value: '1' },
-	{ text: 'Option 2', value: '2' },
-	{ text: 'Option 3', value: '3' },
-]
-
-const value1 = ref(null)
-const value2 = ref(null)
-</script>
-				`,
-			},
-		],
-	},
-	args: {
-		items: [
-			{ text: 'Option 1', value: '1' },
-			{ text: 'Option 2', value: '2' },
-			{ text: 'Option 3', value: '3' },
-		],
-	},
-	render: (args) => {
-		return {
-			components: { SyAutocomplete },
-			setup() {
-				const value1 = ref(null)
-				const value2 = ref(null)
-				return { args, value1, value2 }
-			},
-			template: `
-				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
-					<SyAutocomplete
-						v-model="value1"
-						v-bind="args"
-						label="Avec validation interne (défaut)"
-						required
-					/>
-					<SyAutocomplete
-						v-model="value2"
-						v-bind="args"
-						label="Validation interne désactivée"
-						required
-						disable-error-handling
 					/>
 				</div>
 			`,
