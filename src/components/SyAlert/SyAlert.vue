@@ -259,7 +259,7 @@
 			'background': rgb(var(--v-theme-warningVariant)),
 			'accent': rgb(var(--v-theme-warning)),
 			'border': rgb(var(--v-theme-warning)),
-        'icon': rgb(var(--v-theme-onWarning)),
+			'icon': rgb(var(--v-theme-onWarning)),
         'icon-bg': rgb(var(--v-theme-warningVariant)),
 		)
 	);
@@ -270,7 +270,7 @@
 			'accent': rgb(var(--v-theme-success)),
 			'border': rgb(var(--v-theme-success)),
 			'icon':rgb(var(--v-theme-success)),
-        'icon-bg': rgb(var(--v-theme-successVariant)),
+			'icon-bg': rgb(var(--v-theme-successVariant)),
 		)
 	);
 	@include redesign(
