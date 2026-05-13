@@ -4,12 +4,11 @@
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateModelValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDateValidation, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap } from '../composables'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidationBridge } from '../composables'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -250,69 +249,6 @@
 		(e: 'date-selected', value: DateModelValue): void
 	}>()
 
-	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: 'Date',
-		disableErrorHandling: props.disableErrorHandling,
-	})
-	const { errors, warnings, successes, validateField: baseValidateField, clearValidation: baseClearValidation } = validation
-
-	const clearValidation = () => baseClearValidation()
-
-	watch(() => props.readonly, () => {
-		// When toggling readonly, reset validation state to avoid stale success/errors
-		errors.value = []
-		warnings.value = []
-		successes.value = []
-	})
-
-	const validateField = (
-		value: unknown,
-		rules: ValidationRule[] = [],
-		warningRules: ValidationRule[] = [],
-		successRules: ValidationRule[] = [],
-	): Promise<ValidationResult> | ValidationResult => {
-		if (props.readonly) {
-			return {
-				hasError: false,
-				hasWarning: false,
-				hasSuccess: false,
-				state: { errors: [], warnings: [], successes: [] },
-			}
-		}
-
-		return baseValidateField(value, rules, warningRules, successRules)
-	}
-
-	const validateFieldForDateValidation = (
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		value: any,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		rules: any[] = [],
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- compat signature with useDateValidation
-		warningRules: any[] = [],
-	): ValidationResult => {
-		if (props.readonly) {
-			return {
-				hasError: false,
-				hasWarning: false,
-				hasSuccess: false,
-				state: {
-					errors: [],
-					warnings: [],
-					successes: [],
-				},
-			}
-		}
-
-		return validateField(value, rules, warningRules, []) as ValidationResult
-	}
-
-	const errorMessages = errors
-	const warningMessages = warnings
-	const successMessages = validation.displaySuccesses
-	const isOnSuccess = computed(() => successes.value.length > 0 && errors.value.length === 0 && warnings.value.length === 0)
-
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
 	const preventCloseOnKeyboardNavigation = ref(false)
@@ -320,78 +256,37 @@
 	const currentRangeIsValid = ref(true)
 	const getRangeValidationError = ref('')
 
-	const { validateDates: coreValidateDates } = useDateValidation({
-		noCalendar: props.noCalendar,
-		// On garde la logique "required" spécifique à CalendarMode
-		required: false,
-		displayRange: props.displayRange,
+	const {
+		validation,
+		errors,
+		warnings,
+		successes,
+		clearValidation,
+		validateDates,
+	} = useDatePickerValidationBridge({
+		showSuccessMessages: props.showSuccessMessages,
 		disableErrorHandling: props.disableErrorHandling,
+		noCalendar: props.noCalendar,
+		required: props.required,
+		displayRange: props.displayRange,
 		customRules: computed(() => props.customRules),
 		customWarningRules: computed(() => props.customWarningRules),
 		selectedDates: selectedDates as Ref<DateObjectValue>,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
 		getRangeValidationError,
-		clearValidation,
-		validateField: validateFieldForDateValidation,
-		errors,
-		warnings,
-		successes,
+		readonly: computed(() => props.readonly),
+		skipValidationWhenReadonly: true,
+		useCalendarModeRequiredFlow: true,
+		isInitialValidation,
+		isValidateOnBlur: computed(() => props.isValidateOnBlur),
+		onblur,
 	})
 
-	// Fonction pour valider les dates
-	const validateDates = async (forceValidation = false) => {
-		if (props.noCalendar) {
-			// En mode no-calendar, on délègue la validation au DateTextInput
-			return
-		}
-
-		// Réinitialiser la validation
-		clearValidation()
-
-		// Si la gestion des erreurs est désactivée, on effectue la validation interne
-		// mais on n'ajoute pas les messages d'erreur
-		const shouldDisplayErrors = !props.disableErrorHandling
-
-		// Vérifier si le champ est requis et vide
-		if ((forceValidation || !isUpdatingFromInternal.value) && props.required && (!selectedDates.value || (Array.isArray(selectedDates.value) && selectedDates.value.length === 0))) {
-			if (props.readonly) {
-				return
-			}
-			// Ne pas afficher d'erreur si on est sur une perte de focus et si isValidateOnBlur est false
-			if (onblur.value && !props.isValidateOnBlur) {
-				return
-			}
-			// Ne pas afficher d'erreur si on est dans le contexte du mounted initial
-			if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
-				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
-			}
-			return
-		}
-		// Permettre aux custom rules de s'exécuter même sur des champs vides
-		if (!selectedDates.value) {
-			if (!props.customRules || props.customRules.length === 0) return
-
-			if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
-				// Comportement historique : exécuter directement les règles personnalisées même si la valeur est vide
-				await validateField(
-					selectedDates.value,
-					props.customRules,
-					props.customWarningRules,
-				)
-				// Dédoublonner les messages comme auparavant
-				errors.value = [...new Set(errors.value)]
-				warnings.value = [...new Set(warnings.value)]
-				successes.value = [...new Set(successes.value)]
-			}
-			return
-		}
-
-		// Ne pas afficher d'erreurs de custom rules si on est dans le contexte du mounted initial
-		if (shouldDisplayErrors && (!isInitialValidation.value || forceValidation)) {
-			await coreValidateDates(forceValidation)
-		}
-	}
+	const errorMessages = errors
+	const warningMessages = warnings
+	const successMessages = validation.displaySuccesses
+	const isOnSuccess = computed(() => successes.value.length > 0 && errors.value.length === 0 && warnings.value.length === 0)
 
 	// Fonction centralisée pour mettre à jour le modèle
 	const updateModel = async (value: DateModelValue) => {
@@ -497,7 +392,7 @@
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
 	const handleDateTextInputUpdate = async (value: DateModelValue) => {
-		if (isUpdatingFromInternal.value) return
+		if (isUpdatingFromInternal.value && !props.noCalendar) return
 
 		try {
 			isUpdatingFromInternal.value = true

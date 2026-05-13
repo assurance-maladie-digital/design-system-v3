@@ -59,6 +59,24 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
+	it('preserves autoClamp in text input mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
 	it('respects disabled and readonly props when opening the calendar', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -319,6 +337,29 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
 	})
 
+	it('surfaces custom warning rules without blocking submit in calendar mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			customWarningRules: [
+				{
+					type: 'custom',
+					options: {
+						validate: () => false,
+						warningMessage: 'Warning de contrat ComplexDatePicker',
+					},
+				},
+			],
+		})
+
+		wrapper.vm.selectedDates = new Date(2025, 0, 1)
+		const result = await wrapper.vm.validateOnSubmit()
+
+		expect(result).toBe(true)
+		expect(wrapper.vm.errorMessages).toEqual([])
+		expect(wrapper.vm.warningMessages).toContain('Warning de contrat ComplexDatePicker')
+	})
+
 	it('validateDates flags an error when end date is before start date in range mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -378,5 +419,16 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.selectedDates).toBeNull()
 		expect(wrapper.vm.errorMessages.length).toBe(0)
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('keeps deprecated birthDate prop as an alias for birth date mode', () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			birthDate: true,
+			format: 'DD/MM/YYYY',
+		})
+
+		expect(wrapper.props('birthDate')).toBe(true)
+		expect(wrapper.vm.currentViewMode).toBe('year')
 	})
 })

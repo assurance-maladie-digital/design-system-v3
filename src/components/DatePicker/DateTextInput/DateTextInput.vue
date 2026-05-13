@@ -523,6 +523,19 @@
 				const nextCursorPosition = nextEditableIndex(dateFormat, editPosition + 1)
 				updateDateValue(updatedDateText, nextCursorPosition)
 			}
+			else if (isEditingLeftDate && separatorIndex !== -1) {
+				const rightStartPosition = nextEditableIndex(dateFormat, 0)
+				const updatedRightDateText = overwriteAt(rightDateText, rightStartPosition, keyboardEvent.key)
+				const nextCursorPosition = nextEditableIndex(dateFormat, rightStartPosition + 1)
+
+				isOverwriteEditing.value = true
+				inputValue.value = `${leftDateText}${rangeSeparator}${updatedRightDateText}`
+				requestAnimationFrame(() => {
+					const absoluteCursorPosition = separatorIndex + rangeSeparator.length + nextCursorPosition
+					inputElement.setSelectionRange(absoluteCursorPosition, absoluteCursorPosition)
+					isOverwriteEditing.value = false
+				})
+			}
 			return
 		}
 
@@ -659,6 +672,30 @@
 		else handlePasteSingle(evt)
 	}
 
+	function applyAutoClampOnCurrentInput(syncModel = true): boolean {
+		if (!props.autoClamp || !inputValue.value) return false
+
+		const clamped = clampIfNeeded(inputValue.value)
+		if (clamped === inputValue.value) return false
+
+		inputValue.value = clamped
+		if (!syncModel) return true
+
+		// Sync model après clamp uniquement si la valeur a changé.
+		isFormatting.value = true
+		if (isRange.value) {
+			const [startDate, endDate] = parseRangeInput(inputValue.value)
+			if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
+			else if (startDate) emit('date-selected', toReturnFormat(startDate))
+		}
+		else {
+			const parsedDate = parseDate(inputValue.value, displayFormat.value)
+			if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
+		}
+
+		return true
+	}
+
 	async function onFocus() {
 		isFocused.value = true
 		// Si aucun chiffre n'a été saisi (champ vide ou squelette), bootstrap et place le caret au début
@@ -683,6 +720,11 @@
 			runRules('')
 			return
 		}
+
+		// Le mode overwrite désactive le clamp pendant la frappe pour préserver le curseur.
+		// On l'applique donc avant la validation au blur, sinon une date comme 31/04
+		// sort en erreur avant d'atteindre la logique d'autoClamp.
+		applyAutoClampOnCurrentInput(false)
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
@@ -730,24 +772,7 @@
 		}
 
 		// autoClamp au blur
-		if (props.autoClamp) {
-			const clamped = clampIfNeeded(inputValue.value)
-			if (clamped !== inputValue.value) {
-				inputValue.value = clamped
-
-				// Sync model après clamp uniquement si la valeur a changé
-				isFormatting.value = true
-				if (isRange.value) {
-					const [startDate, endDate] = parseRangeInput(inputValue.value)
-					if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
-					else if (startDate) emit('date-selected', toReturnFormat(startDate))
-				}
-				else {
-					const parsedDate = parseDate(inputValue.value, displayFormat.value)
-					if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
-				}
-			}
-		}
+		applyAutoClampOnCurrentInput()
 
 		runRules(inputValue.value)
 
