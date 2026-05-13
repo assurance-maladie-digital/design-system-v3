@@ -599,11 +599,11 @@
 
 .sy-number-warnings,
 .sy-key-warnings {
-  color: rgb(var(--v-theme-feedbackOnWarning));
+	color: rgb(var(--v-theme-feedbackOnWarning));
 }
 
 .sy-number-success,
 .sy-key-success {
-  color: rgb(var(--v-theme-feedbackSuccess));
+	color: rgb(var(--v-theme-feedbackSuccess));
 }
 </style>

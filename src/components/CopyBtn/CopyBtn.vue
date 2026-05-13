@@ -145,11 +145,11 @@
 }
 
 .v-theme--ap.v-btn--icon .v-icon {
-  color: rgb(var(--v-theme-colorPrimary)) !important;
+	color: rgb(var(--v-theme-colorPrimary)) !important;
 	transition: color 0.2s ease;
 
 	&:hover {
-    color: rgb(var(--v-theme-colorSecondary)) !important;
+		color: rgb(var(--v-theme-colorSecondary)) !important;
 	}
 }
 </style>
