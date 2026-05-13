@@ -16,7 +16,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidation, validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { SyTextFieldProps } from './types'
+	import type { SyTextFieldProps } from './types'
 
 	const props = withDefaults(
 		defineProps<SyTextFieldProps>(),
