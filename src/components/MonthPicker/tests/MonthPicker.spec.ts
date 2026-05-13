@@ -84,8 +84,8 @@ describe('mounthpicker', () => {
 
 			expect(wrapper.find('input').element.value).toBe('11/2025')
 
-			// @ts-expect-error - Vue Test Utils cannot infer props from complex intersection type
-			await wrapper.setProps({ modelValue: '12/2026' })
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type			await wrapper.setProps({ modelValue: '12/2026' })
 			expect(wrapper.find('input').element.value).toBe('12/2026')
 
 			wrapper.unmount()
@@ -435,8 +435,8 @@ describe('mounthpicker', () => {
 				await yearButton.trigger('keydown', { key: 'ArrowRight' })
 				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
 
-				// @ts-expect-error - Vue Test Utils cannot infer props from complex intersection type
-				await wrapper.setProps({ yearsOrder: 'asc' })
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type				await wrapper.setProps({ yearsOrder: 'asc' })
 				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
 				await yearButton.trigger('keydown', { key: 'ArrowUp' })
 				expect(yearSelector.find('.year-2022').attributes('tabindex')).toBe('0')
@@ -475,7 +475,8 @@ describe('mounthpicker', () => {
 			expect(yearButtons[0]!.text()).toBe('2100')
 			expect(yearButtons[yearButtons.length - 1]!.text()).toBe('1900')
 
-			// @ts-expect-error - Vue Test Utils cannot infer props from complex intersection type
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type
 			await wrapper.setProps({ yearsOrder: 'asc' })
 
 			const newYearButtons = wrapper.findComponent({ name: 'YearSelector' }).findAll('.year-selector__year')
