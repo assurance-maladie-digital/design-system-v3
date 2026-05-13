@@ -36,6 +36,13 @@
 		info: 'info',
 	} as const
 
+	const ICON_COLORS: Record<NonEmptyChipState, string> = {
+		success: 'onSuccessVariant',
+		warning: 'onWarningVariant',
+		error: 'onError',
+		info: 'onInfo',
+	} as const
+
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
 		items: () => [],
 		overflowLimit: 4,
@@ -127,6 +134,12 @@
 		// Sinon on utilise la couleur basée sur l'état
 		return state ? BACKGROUND_COLORS[state] : 'primary'
 	}
+
+	function getIconColor(state: ChipState): string {
+		return state ? ICON_COLORS[state] : 'surface'
+	}
+
+	// item.state || 'white'/
 
 	/**
 	 * Retourne l'icône correspondant à l'état du chip
@@ -245,7 +258,7 @@
 						<SyIcon
 							v-bind="options.icon"
 							:icon="deleteIcon"
-							:color="item.state || 'white'"
+							:color="getIconColor(item.state)"
 							decorative
 						/>
 					</VBtn>
@@ -340,8 +353,8 @@
 }
 
 .sy-chip-success {
-	color: rgb(var(--v-theme-onSuccess)) !important;
-	border: 1px solid rgb(var(--v-theme-onSuccess)) !important;
+	color: rgb(var(--v-theme-onSuccessVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onSuccessVariant)) !important;
 }
 
 .sy-chip-error {
@@ -355,8 +368,8 @@
 }
 
 .sy-chip-warning {
-	color: rgb(var(--v-theme-feedbackOnWarnin)) !important;
-	border: 1px solid rgb(var(--v-theme-onWarning)) !important;
+	color: rgb(var(--v-theme-onWarningVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onWarningVariant)) !important;
 }
 
 .overflow-chip {

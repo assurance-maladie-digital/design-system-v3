@@ -538,7 +538,7 @@ export const CustomColors: Story = {
 						/>
 						<SyCheckBoxGroup
 							v-model="value3"
-							color="success"
+							color="onSuccessVariant"
 							label="Couleur succès"
 							:options="options"
 							:show-success-messages="false"
@@ -552,7 +552,7 @@ export const CustomColors: Story = {
 						/>
 						<SyCheckBoxGroup
 							v-model="value5"
-							color="warning"
+							color="onWarningVariant"
 							label="Couleur avertissement"
 							:options="options"
 							:show-success-messages="false"
@@ -610,13 +610,14 @@ Le composant SyCheckBoxGroup peut être personnalisé avec différentes couleurs
               <SyCheckBoxGroup v-model="value2" color="secondary" label="Couleur secondaire" :options="options"
                                :show-success-messages="false"
               />
-              <SyCheckBoxGroup v-model="value3" color="success" label="Couleur succès" :options="options"
+              <SyCheckBoxGroup v-model="value3" color="onSuccessVariant" label="Couleur succès" :options="options"
                                :show-success-messages="false"
               />
               <SyCheckBoxGroup v-model="value4" color="error" label="Couleur erreur" :options="options"
                                :show-success-messages="false"
               />
-              <SyCheckBoxGroup v-model="value5" color="warning" label="Couleur avertissement" :options="options"
+              <SyCheckBoxGroup v-model="value5" color="onWarningVariant" label="Couleur avertissement"
+                               :options="options"
                                :show-success-messages="false"
               />
 			</div>

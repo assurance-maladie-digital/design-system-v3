@@ -1154,10 +1154,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-warningVariant)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-warningVariant)) !important;
+			color: rgb(var(--v-theme-warning)) !important;
 		}
 	}
 
@@ -1165,7 +1165,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-warningVariant)) !important;
+			color: rgb(var(--v-theme-warning)) !important;
 		}
 	}
 }
@@ -1189,10 +1189,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-successVariant)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-successVariant)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 
@@ -1200,7 +1200,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-successVariant)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 }

@@ -146,7 +146,7 @@
 	}
 
 	.notification--success {
-		background-color: rgb(var(--v-theme-successVariant, '86, 194, 113'));
+		background-color: rgb(var(--v-theme-success, '86, 194, 113'));
 		color: rgb(var(--v-theme-onSuccess));
 
 		.notification__close:focus-visible {
@@ -155,7 +155,7 @@
 	}
 
 	.notification--warning {
-		background-color: rgb(var(--v-theme-warningVariant));
+		background-color: rgb(var(--v-theme-warning));
 		color: rgb(var(--v-theme-onSurface));
 
 		.notification__close:focus-visible {

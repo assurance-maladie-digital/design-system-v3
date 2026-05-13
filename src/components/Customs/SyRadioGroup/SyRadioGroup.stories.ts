@@ -312,7 +312,7 @@ export const CustomColors: Story = {
                     />
                     <SyRadioGroup 
                       v-model="value3" 
-                      color="success" 
+                      color="onSuccessVariant" 
                       label="Couleur succès" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false"
@@ -326,7 +326,7 @@ export const CustomColors: Story = {
                     />
                       <SyRadioGroup 
                         v-model="value5" 
-                        color="warning" 
+                        color="onWarningVariant" 
                         label="Couleur avertissement" 
                         :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                         :show-success-messages="false"
@@ -385,7 +385,7 @@ Le composant SyRadioGroup peut être personnalisé avec différentes couleurs po
                 />
               <SyRadioGroup
                   v-model="value3"
-                  color="success"
+                  color="onSuccessVariant"
                     label="Couleur succès" 
                     :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                     :show-success-messages="false" 
@@ -399,7 +399,7 @@ Le composant SyRadioGroup peut être personnalisé avec différentes couleurs po
                 />
                   <SyRadioGroup
                       v-model="value5"
-                      color="warning"
+                      color="onWarningVariant"
                       label="Couleur avertissement" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false" 

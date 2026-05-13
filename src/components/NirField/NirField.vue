@@ -599,7 +599,7 @@
 
 .sy-number-warnings,
 .sy-key-warnings {
-	color: rgb(var(--v-theme-onWarning));
+	color: rgb(var(--v-theme-warning));
 }
 
 .sy-number-success,

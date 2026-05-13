@@ -1217,13 +1217,13 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-successVariant)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-successVariant)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 }
 

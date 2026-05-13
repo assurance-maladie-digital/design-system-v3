@@ -360,18 +360,7 @@
 	&:hover {
 		/* stylelint-disable-next-line custom-property-pattern */
 		color: rgb(var(--v-theme-onPrimary)) !important;
-	}
-
-	&:hover::before {
-		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgba(var(--v-theme-interactionDarkHover));
-		color: rgb(var(--v-theme-onPrimary));
-	}
-
-	&--selected:hover::before {
-		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-interactionDarkPressed));
-		color: rgb(var(--v-theme-onPrimary));
 	}
 }
 
