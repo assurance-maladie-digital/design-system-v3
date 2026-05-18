@@ -41,6 +41,7 @@
 		headingLevel: 2,
 		clickableRow: false,
 		pageInput: false,
+		hideDefaultFooter: false,
 	})
 
 	const emit = defineEmits<{
@@ -457,7 +458,7 @@
 						v-model:headers="headers"
 					/>
 					<SyTablePagination
-						v-if="filteredItems.length > 0"
+						v-if="filteredItems.length > 0 && !props.hideDefaultFooter"
 						:page="page"
 						:items-per-page="itemsPerPageValue"
 						:heading-level="props.headingLevel"
