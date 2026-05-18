@@ -152,6 +152,39 @@ describe('CalendarMode.vue - Events', () => {
 		expect(wrapperWithRange.props('displayRange')).toBe(true)
 	})
 
+	it('handleInputKeydown ne fait rien si readonly', async () => {
+		const wrapperReadonly = mount(DatePicker, {
+			props: {
+				label: 'Date',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				readonly: true,
+			},
+		})
+		// Appel direct sans await pour ne pas déclencher les promises internes
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapperReadonly.vm as any).handleInputKeydown(new KeyboardEvent('keydown', { key: 'Enter' }))
+		await nextTick()
+		expect(wrapperReadonly.vm.isDatePickerVisible).toBe(false)
+		wrapperReadonly.unmount()
+	})
+
+	it('handleInputKeydown Escape ferme le calendrier', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+		w.vm.isDatePickerVisible = true
+		await nextTick()
+
+		// Appel direct sans await pour éviter le blocage sur validateDates async
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(w.vm as any).handleInputKeydown(new KeyboardEvent('keydown', { key: 'Escape' }))
+		await nextTick()
+
+		expect(w.vm.isDatePickerVisible).toBe(false)
+		w.unmount()
+	})
+
 	it('valide les dates selon les règles personnalisées', async () => {
 		const customRule = {
 			type: 'isDateValid',

@@ -1051,6 +1051,7 @@
 				:title="props.title"
 				:hint="props.hint"
 				:persistent-hint="props.persistentHint"
+				:skip-internal-validation="true"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -1084,6 +1085,7 @@
 							ref="dateCalendarTextInputRef"
 							:key="fieldKey"
 							:model-value="textInputValue"
+							:skip-internal-validation="true"
 							:label="labelWithAsterisk"
 							:placeholder="props.placeholder"
 							:format="props.format"

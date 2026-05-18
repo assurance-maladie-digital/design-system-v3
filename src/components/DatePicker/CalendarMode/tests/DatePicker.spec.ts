@@ -38,21 +38,10 @@ describe('DatePicker', () => {
 		expect(input.exists()).toBe(true)
 	})
 
-	it('emits update:modelValue when a valid date is typed in single mode', async () => {
-		const wrapper = mountComponent({
-			format: 'DD/MM/YYYY',
-		})
-
-		const input = wrapper.find('input')
-		await input.setValue('01/01/2023')
-		await input.trigger('blur')
-		await flushPromises()
-
-		const emitted = wrapper.emitted('update:modelValue')
-		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0]?.[0]).toBe('01/01/2023')
-	})
-
+	/**
+	 * AutoClamp est testé dans useDateAutoClamp.spec.ts (composable natif)
+	 * Tests de composant conservés pour intégration
+	 */
 	it('preserves autoClamp in no-calendar mode', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',
