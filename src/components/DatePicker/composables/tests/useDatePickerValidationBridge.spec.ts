@@ -3,8 +3,6 @@ import { computed, nextTick, ref } from 'vue'
 import { useDatePickerValidationBridge } from '../useDatePickerValidationBridge'
 import type { DateObjectValue } from '../../types'
 
-const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-
 const createBridgeOptions = (overrides = {}) => ({
 	showSuccessMessages: true,
 	disableErrorHandling: false,
@@ -96,14 +94,13 @@ describe('useDatePickerValidationBridge', () => {
 			customRules,
 			selectedDates: ref<DateObjectValue>(new Date('2026-05-13')),
 			revalidateOnCustomRulesChange: true,
-			revalidateCustomRulesDelay: 0,
 		}))
 
 		customRules.value = [
 			{ type: 'custom', options: { validate: secondValidate } },
 		]
 
-		await wait(10)
+		await nextTick()
 
 		expect(secondValidate).toHaveBeenCalledTimes(1)
 		expect(firstValidate).not.toHaveBeenCalled()
@@ -119,14 +116,13 @@ describe('useDatePickerValidationBridge', () => {
 			customRules,
 			selectedDates: ref<DateObjectValue>(null),
 			revalidateOnCustomRulesChange: true,
-			revalidateCustomRulesDelay: 0,
 		}))
 
 		customRules.value = [
 			{ type: 'custom', options: { validate } },
 		]
 
-		await wait(10)
+		await nextTick()
 
 		expect(validate).not.toHaveBeenCalled()
 	})

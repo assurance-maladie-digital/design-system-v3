@@ -304,9 +304,9 @@
 		}
 		finally {
 			// S'assurer que le flag est toujours réinitialisé
-			setTimeout(() => {
+			queueMicrotask(() => {
 				isUpdatingFromInternal.value = false
-			}, 0)
+			})
 		}
 	}
 
@@ -342,9 +342,9 @@
 				}
 			}
 			finally {
-				setTimeout(() => {
+				queueMicrotask(() => {
 					isUpdatingFromInternal.value = false
-				}, 0)
+				})
 			}
 		}
 		else {

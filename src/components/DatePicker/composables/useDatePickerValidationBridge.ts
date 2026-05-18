@@ -30,7 +30,6 @@ export type DatePickerValidationBridgeOptions = {
 	onblur?: Ref<boolean>
 	fieldIdentifier?: string
 	revalidateOnCustomRulesChange?: boolean
-	revalidateCustomRulesDelay?: number
 }
 
 const emptyValidationResult = (): ValidationResult => ({
@@ -117,7 +116,7 @@ export function useDatePickerValidationBridge(options: DatePickerValidationBridg
 				return
 			}
 
-			setTimeout(async () => {
+			queueMicrotask(async () => {
 				clearValidation()
 
 				const datesToValidate = Array.isArray(options.selectedDates.value)
@@ -131,7 +130,7 @@ export function useDatePickerValidationBridge(options: DatePickerValidationBridg
 						options.customWarningRules.value,
 					))
 				}
-			}, options.revalidateCustomRulesDelay ?? 5)
+			})
 		}, { deep: true })
 	}
 

@@ -931,7 +931,7 @@
 						})).validateDates()
 					}
 					finally {
-						setTimeout(() => (isUpdatingFromInternal.value = false), 0)
+						queueMicrotask(() => (isUpdatingFromInternal.value = false))
 					}
 
 					if (result.isComplete && result.dates[1]) {
@@ -949,7 +949,7 @@
 
 				emit('input', result.formattedValue)
 				if (result.cursorPosition !== undefined && !isHandlingBackspace.value) {
-					setTimeout(() => inputEl?.setSelectionRange(result.cursorPosition!, result.cursorPosition!), 0)
+					queueMicrotask(() => inputEl?.setSelectionRange(result.cursorPosition!, result.cursorPosition!))
 				}
 			}
 			else {
@@ -1049,7 +1049,7 @@
 							successes,
 						})).validateDates()
 					}
-					finally { setTimeout(() => (isUpdatingFromInternal.value = false), 0) }
+					finally { queueMicrotask(() => (isUpdatingFromInternal.value = false)) }
 					inputValue.value = formatRangeForDisplay(sd, ed)
 					runRules(inputValue.value)
 				}

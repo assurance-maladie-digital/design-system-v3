@@ -879,9 +879,9 @@
 			}
 		}
 		finally {
-			setTimeout(() => {
+			queueMicrotask(() => {
 				isUpdatingFromInternal.value = false
-			}, 0)
+			})
 		}
 	}
 
