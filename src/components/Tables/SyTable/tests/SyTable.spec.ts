@@ -1047,6 +1047,70 @@ describe('SyTable selectionKey', () => {
 	})
 })
 
+describe('SyTable hideDefaultFooter', () => {
+	const manyItems = Array.from({ length: 11 }, (_, i) => ({
+		id: i + 1,
+		name: `User ${i + 1}`,
+		age: 20 + i,
+	}))
+
+	it('shows pagination footer by default (hideDefaultFooter is false)', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'hide-footer-test',
+				hideDefaultFooter: false,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const pagination = wrapper.findComponent({ name: 'SyTablePagination' })
+		expect(pagination.exists()).toBe(true)
+	})
+
+	it('hides pagination footer when hideDefaultFooter is true', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'hide-footer-test',
+				hideDefaultFooter: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const pagination = wrapper.findComponent({ name: 'SyTablePagination' })
+		expect(pagination.exists()).toBe(false)
+	})
+
+	it('still shows OrganizeColumns when hideDefaultFooter is true and enableColumnControls is enabled', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'hide-footer-col-controls-test',
+				hideDefaultFooter: true,
+				enableColumnControls: true,
+			},
+			attrs: { items: manyItems, headers },
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		const organizeColumns = wrapper.findComponent({ name: 'OrganizeColumns' })
+		expect(organizeColumns.exists()).toBe(true)
+
+		const pagination = wrapper.findComponent({ name: 'SyTablePagination' })
+		expect(pagination.exists()).toBe(false)
+	})
+})
+
 describe('SyTable pageInput', () => {
 	const manyItems = Array.from({ length: 11 }, (_, i) => ({
 		id: i + 1,

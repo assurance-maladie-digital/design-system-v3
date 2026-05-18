@@ -212,6 +212,15 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
+		'hideDefaultFooter': {
+			description: 'Masque le footer par défaut du tableau (pagination et contrôles de page). Utile lorsque l\'on souhaite gérer la pagination manuellement ou ne pas en afficher.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'header.<columnKey>': {
@@ -4917,6 +4926,91 @@ export const ComplexItemsDisplay: Story = {
 						Depuis le {{ item.period.start }} jusqu'au {{ item.period.end }}
 					</template>
 				</SyTable>
+			`,
+		}
+	},
+}
+
+export const HideDefaultFooter: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyTable
+						v-model:options="options"
+						:headers="headers"
+						:items="items"
+						suffix="hide-footer-table"
+						hide-default-footer
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyTable } from '@cnamts/synapse'
+
+					const options = ref({ itemsPerPage: -1 })
+
+					const headers = ref([
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					])
+
+					const items = ref([
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+					])
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'items': [
+			{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+			{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+			{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+			{ firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com' },
+			{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+			{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+		],
+		'options': { itemsPerPage: -1 },
+		'suffix': 'hide-footer-table',
+		'hideDefaultFooter': true,
+		'density': 'default',
+		'striped': false,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyTable },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyTable
+					v-model:options="args.options"
+					v-bind="args"
+				/>
 			`,
 		}
 	},
