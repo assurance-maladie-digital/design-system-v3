@@ -783,6 +783,202 @@ describe('SySelect.vue', () => {
 
 			wrapper.unmount()
 		})
+
+		it('ne valide pas lors d\'un changement de valeur mais seulement à la fermeture du menu quand isValidateOnBlur est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: true,
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							message: 'Test error message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+
+			// Changement de valeur programmatique — l'erreur ne doit PAS apparaître
+			await wrapper.setProps({ modelValue: '1' })
+			await wrapper.vm.$nextTick()
+			expect(instance.hasError).toBe(false)
+
+			// Ouverture puis fermeture du menu (= blur) — l'erreur doit apparaître
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			await vi.waitUntil(() => instance.hasError === true)
+			expect(wrapper.find('.v-messages').text()).toContain('Test error message')
+
+			wrapper.unmount()
+		})
+
+		it('déclenche la validation au blur natif sans ouvrir le menu', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+
+			// Simuler un blur natif sur l'input sans jamais ouvrir le menu
+			const input = wrapper.find('input')
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+
+			await vi.waitUntil(() => instance.hasError === true)
+			expect(wrapper.find('.v-messages').text()).toContain('requis')
+
+			wrapper.unmount()
+		})
+
+		it('affiche un avertissement avec customWarningRules', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					customWarningRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							warningMessage: 'Option 1 est dépréciée.',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasWarning).toBe(false)
+
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.findComponent(VList).findAll('.v-list-item').at(0)!.trigger('click')
+			await wrapper.setProps({ modelValue: '1' })
+
+			await vi.waitUntil(() => instance.hasWarning === true)
+			expect(wrapper.find('.v-messages').text()).toContain('Option 1 est dépréciée.')
+
+			wrapper.unmount()
+		})
+
+		it('validateOnSubmit retourne true quand le champ est valide', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: '1',
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const isValid = await (wrapper.vm as any).validateOnSubmit()
+			await nextTick()
+
+			expect(isValid).toBe(true)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			expect((wrapper.vm as any).hasError).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('affiche le message de succès avec customSuccessRules quand showSuccessMessages est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					showSuccessMessages: true,
+					customSuccessRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							successMessage: 'Test success message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasSuccess).toBe(false)
+
+			await wrapper.setProps({ modelValue: '2' })
+
+			await vi.waitUntil(() => instance.hasSuccess === true)
+			expect(wrapper.find('.success-field').exists()).toBe(true)
+			expect(wrapper.find('.v-messages').text()).toContain('Test success message')
+
+			wrapper.unmount()
+		})
+
+		it('clearValidation remet l\'état d\'erreur à zéro', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+
+			await instance.validateOnSubmit()
+			await nextTick()
+			expect(instance.hasError).toBe(true)
+
+			instance.clearValidation()
+			await nextTick()
+			expect(instance.hasError).toBe(false)
+			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('Comportement du menu', () => {

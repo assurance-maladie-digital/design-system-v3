@@ -26,12 +26,6 @@ export const baseContextualTokens = {
 		default: '24px',
 		large: '32px',
 	},
-	radius: {
-		rounded0: '0',
-		rounded: '4px',
-		roundedLg: '8px',
-		roundedPill: '64px',
-	},
 	padding: {
 		0: '0',
 		2: '8px',

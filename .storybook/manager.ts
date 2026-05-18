@@ -28,6 +28,7 @@ const apOnlyStories = [
 
 // Components to display in AP theme
 const apComponents = [
+	'composants-boutons-backtotopbtn',
 	'composants-boutons-copybtn',
 	'composants-boutons-downloadbtn',
 	'composants-boutons-syiconbutton',
@@ -59,8 +60,9 @@ const apComponents = [
 	'composants-structure-footerbar',
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
+	'composants-vue-d-ensemble--docs',
     'composants-tableaux-tabletoolbar',
-    'composants-vue-d-ensemble--docs',
+	'composants-formulaires-selects-selectbtnfield',
 ]
 
 // Get stored theme or default to CNAM
