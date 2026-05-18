@@ -174,7 +174,8 @@
 	const clearValidation = () => {
 		if (readonly.value) {
 			readonlyValidation.clearValidation()
-		} else {
+		}
+		else {
 			bridgeValidation.clearValidation()
 		}
 	}
