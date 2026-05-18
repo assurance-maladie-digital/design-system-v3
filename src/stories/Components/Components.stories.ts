@@ -493,7 +493,7 @@ export const ComponentsList: StoryObj = {
 					'SyTabs',
 					'SelectBtnField',
 					'BackToTopBtn',
-                    'TableToolbar',
+					'TableToolbar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
