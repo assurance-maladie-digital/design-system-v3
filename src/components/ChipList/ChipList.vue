@@ -30,17 +30,17 @@
 	}
 
 	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'success',
-		warning: 'warning',
-		error: 'error',
-		info: 'info',
+		success: 'successVariant',
+		warning: 'warningVariant',
+		error: 'errorVariant',
+		info: 'infoVariant',
 	} as const
 
 	const ICON_COLORS: Record<NonEmptyChipState, string> = {
 		success: 'onSuccessVariant',
 		warning: 'onWarningVariant',
-		error: 'onError',
-		info: 'onInfo',
+		error: 'onErrorVariant',
+		info: 'onInfoVariant',
 	} as const
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
@@ -222,7 +222,6 @@
 						<SyIcon
 							v-bind="options.icon"
 							:icon="customIcon || getIcon(item.state)"
-							:color="item.state"
 							decorative
 							class="mr-1"
 						/>
@@ -358,13 +357,13 @@
 }
 
 .sy-chip-error {
-	color: rgb(var(--v-theme-onError)) !important;
-	border: 1px solid rgb(var(--v-theme-onError)) !important;
+	color: rgb(var(--v-theme-onErrorVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onErrorVariant)) !important;
 }
 
 .sy-chip-info {
-	color: rgb(var(--v-theme-onInfo)) !important;
-	border: 1px solid rgb(var(--v-theme-onInfo)) !important;
+	color: rgb(var(--v-theme-onInfoVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onInfoVariant)) !important;
 }
 
 .sy-chip-warning {
@@ -393,22 +392,22 @@
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onSuccess)) !important;
+	outline: 2px solid rgb(var(--v-theme-onSuccessVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onInfo)) !important;
+	outline: 2px solid rgb(var(--v-theme-onInfoVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onWarning)) !important;
+	outline: 2px solid rgb(var(--v-theme-onWarningVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onError)) !important;
+	outline: 2px solid rgb(var(--v-theme-onErrorVariant)) !important;
 	outline-offset: -2px !important;
 }
 </style>
