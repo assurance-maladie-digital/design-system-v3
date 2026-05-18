@@ -491,6 +491,7 @@ export const ComponentsList: StoryObj = {
 					'Accordion',
 					'ChipList',
 					'SyTabs',
+                    'TableToolbar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

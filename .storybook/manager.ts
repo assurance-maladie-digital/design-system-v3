@@ -59,7 +59,8 @@ const apComponents = [
 	'composants-structure-footerbar',
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
-	'composants-vue-d-ensemble--docs',
+    'composants-tableaux-tabletoolbar',
+    'composants-vue-d-ensemble--docs',
 ]
 
 // Get stored theme or default to CNAM
