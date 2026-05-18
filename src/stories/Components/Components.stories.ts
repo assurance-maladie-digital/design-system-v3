@@ -151,7 +151,7 @@ export const ComponentsList: StoryObj = {
 						title: 'BackToTopBtn',
 						description: 'Utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page.',
 						link: '/?path=/docs/composants-boutons-backtotopbtn--docs',
-						img: '/components/back-to-top-btn.svg',
+						img: `/components/back-to-top-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -492,6 +492,7 @@ export const ComponentsList: StoryObj = {
 					'ChipList',
 					'SyTabs',
 					'SelectBtnField',
+					'BackToTopBtn',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
