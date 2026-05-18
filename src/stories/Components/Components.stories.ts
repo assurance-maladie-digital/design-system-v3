@@ -333,7 +333,7 @@ export const ComponentsList: StoryObj = {
 						title: 'PaginatedTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify avec une pagination persistante.',
 						link: '/?path=/docs/composants-tableaux-paginatedtable--docs',
-						img: '/components/paginated-table.svg',
+						img: `/components/paginated-table${isAp ? '-ap' : ''}.svg`,
 						category: 'Tableaux',
 					},
 					{
@@ -493,6 +493,10 @@ export const ComponentsList: StoryObj = {
 					'SyTabs',
 					'SelectBtnField',
 					'BackToTopBtn',
+					'PaginatedTable',
+					'SyTable',
+					'SyServerTable',
+
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

@@ -62,6 +62,9 @@ const apComponents = [
 	'composants-structure-headerloading',
 	'composants-vue-d-ensemble--docs',
 	'composants-formulaires-selects-selectbtnfield',
+    'composants-tableaux-sytable',
+    'composants-tableaux-syservertable',
+    'composants-tableaux-paginatedtable',
 ]
 
 // Get stored theme or default to CNAM
