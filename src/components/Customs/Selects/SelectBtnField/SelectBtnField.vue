@@ -358,10 +358,14 @@
 		border-radius: var(--v-radius-rounded);
 	}
 
-	&:hover {
+	&:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		color: rgb(var(--v-theme-onPrimary)) !important;
-		background-color: rgba(var(--v-theme-interactionDarkHover));
+		background-color: rgba(var(--v-theme-interactionDarkHover), 0.2);
+	}
+
+	&--selected:hover::before {
+		/* stylelint-disable-next-line custom-property-pattern */
+		background-color: rgba(var(--v-theme-interactionLightenHover), 0.2);
 	}
 }
 

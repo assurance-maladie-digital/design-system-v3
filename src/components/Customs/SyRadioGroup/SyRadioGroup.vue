@@ -294,7 +294,7 @@
 	}
 
 	:deep(.v-selection-control__input) {
-		color: rgb(var(--v-theme-warning));
+		color: rgb(var(--v-theme-onWarningVariant));
 	}
 }
 
@@ -306,7 +306,7 @@
 
 .success-field {
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-success)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 }
 

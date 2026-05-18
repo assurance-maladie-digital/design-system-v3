@@ -99,7 +99,7 @@ export const ColorIntegration: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const primary: StoryObj = {
+export const mainColors: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
@@ -108,16 +108,16 @@ export const primary: StoryObj = {
 				const colorTitleLevel = 3
 				const colorDescription = 'Fond et texte (sous condition de contraste) un texte pourrait être en : On-surface ou On-surface variant ...'
 				const cnamColors = {
-					'color-primary': cnamLightTheme.primary,
-					'color-primary-variant': cnamLightTheme.primaryVariant,
-					'color-secondary': cnamLightTheme.secondary,
-					'color-secondary-variant': cnamLightTheme.secondaryVariant,
+					'primary': cnamLightTheme.primary,
+					'primary-variant': cnamLightTheme.primaryVariant,
+					'secondary': cnamLightTheme.secondary,
+					'secondary-variant': cnamLightTheme.secondaryVariant,
 				}
 				const paColors = {
-					'color-primary': paLightTheme.primary,
-					'color-primary-variant': paLightTheme.primaryVariant,
-					'color-secondary': paLightTheme.secondary,
-					'color-secondary-variant': paLightTheme.secondaryVariant,
+					'primary': paLightTheme.primary,
+					'primary-variant': paLightTheme.primaryVariant,
+					'secondary': paLightTheme.secondary,
+					'secondary-variant': paLightTheme.secondaryVariant,
 				}
 				const apColors2026 = {
 					primary: apLightTheme2026.primary,
@@ -128,10 +128,10 @@ export const primary: StoryObj = {
 					warning: apLightTheme2026.warning,
 				}
 				const apColors = {
-					'color-primary': apLightTheme.primary,
-					'color-primary-variant': apLightTheme.primaryVariant,
-					'color-secondary': apLightTheme.secondary,
-					'color-secondary-variant': apLightTheme.secondaryVariant,
+					'primary': apLightTheme.primary,
+					'primary-variant': apLightTheme.primaryVariant,
+					'secondary': apLightTheme.secondary,
+					'secondary-variant': apLightTheme.secondaryVariant,
 				}
 				return {
 					cnamColors,
@@ -146,7 +146,7 @@ export const primary: StoryObj = {
 			template: `
               <ColorDisplay
                   displayEmptyColors
-                  colorCategory="primary"
+                  colorCategory="mainColors"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"
@@ -300,13 +300,13 @@ export const Disabled: StoryObj = {
 				const displayEmptyColors = false
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'color-disabled': cnamLightTheme.disabled,
+					disabled: cnamLightTheme.disabled,
 				}
 				const paColors = {
-					'color-disabled': paLightTheme.disabled,
+					disabled: paLightTheme.disabled,
 				}
 				const apColors = {
-					'color-disabled': apLightTheme.disabled,
+					disabled: apLightTheme.disabled,
 				}
 				const apColors2026 = {}
 				return {
@@ -338,10 +338,10 @@ export const Disabled: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const primarySection = {
+export const mainSection = {
 	render() {
 		return h(createSection('Couleurs de base', [
-			primary,
+			mainColors,
 			ColorOn,
 		]))
 	},
@@ -552,13 +552,13 @@ export const Overlay: StoryObj = {
 				const colorTitle = 'Overlay'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'color-overlay': cnamLightTheme.overlay,
+					overlay: cnamLightTheme.overlay,
 				}
 				const paColors = {
-					'color-overlay': paLightTheme.overlay,
+					overlay: paLightTheme.overlay,
 				}
 				const apColors = {
-					'color-overlay': apLightTheme.overlay,
+					overlay: apLightTheme.overlay,
 				}
 				const apColors2026 = {}
 				return {
@@ -595,22 +595,22 @@ export const Borders: StoryObj = {
 				const colorTitleLevel = 3
 				const colorDescription = 'Ce sont les couleurs à utiliser pour les contours de tous les éléments d’interface (quand nécessaire)'
 				const cnamColors = {
-					'color-border': cnamLightTheme.border,
-					'color-border-variant': cnamLightTheme.borderVariant,
-					'color-border-bright': cnamLightTheme.borderBright,
-					'color-border-dim': cnamLightTheme.borderDim,
+					'border': cnamLightTheme.border,
+					'border-variant': cnamLightTheme.borderVariant,
+					'border-bright': cnamLightTheme.borderBright,
+					'border-dim': cnamLightTheme.borderDim,
 				}
 				const paColors = {
-					'color-border': paLightTheme.border,
-					'color-border-variant': paLightTheme.borderVariant,
-					'color-border-bright': paLightTheme.borderBright,
-					'color-border-dim': paLightTheme.borderDim,
+					'border': paLightTheme.border,
+					'border-variant': paLightTheme.borderVariant,
+					'border-bright': paLightTheme.borderBright,
+					'border-dim': paLightTheme.borderDim,
 				}
 				const apColors = {
-					'color-border': apLightTheme.border,
-					'color-border-variant': apLightTheme.borderVariant,
-					'color-border-bright': apLightTheme.borderBright,
-					'color-border-dim': apLightTheme.borderDim,
+					'border': apLightTheme.border,
+					'border-variant': apLightTheme.borderVariant,
+					'border-bright': apLightTheme.borderBright,
+					'border-dim': apLightTheme.borderDim,
 				}
 				const apColors2026 = {}
 				return {
@@ -692,34 +692,34 @@ export const Feedback: StoryObj = {
 				const colorTitleLevel = 3
 				const colorDescription = 'Fonds de composants (ou de containers) indiquant un message de statut'
 				const cnamColors = {
-					'feedback-error': cnamLightTheme.error,
-					'feedback-error-variant': cnamLightTheme.errorVariant,
-					'feedback-success': cnamLightTheme.success,
-					'feedback-success-variant': cnamLightTheme.successVariant,
-					'feedback-warning': cnamLightTheme.warning,
-					'feedback-warning-variant': cnamLightTheme.warningVariant,
-					'feedback-info': cnamLightTheme.info,
-					'feedback-info-variant': cnamLightTheme.infoVariant,
+					'error': cnamLightTheme.error,
+					'error-variant': cnamLightTheme.errorVariant,
+					'success': cnamLightTheme.success,
+					'success-variant': cnamLightTheme.successVariant,
+					'warning': cnamLightTheme.warning,
+					'warning-variant': cnamLightTheme.warningVariant,
+					'info': cnamLightTheme.info,
+					'info-variant': cnamLightTheme.infoVariant,
 				}
 				const paColors = {
-					'feedback-error': paLightTheme.error,
-					'feedback-error-variant': paLightTheme.errorVariant,
-					'feedback-success': paLightTheme.success,
-					'feedback-success-variant': paLightTheme.successVariant,
-					'feedback-warning': paLightTheme.warning,
-					'feedback-warning-variant': paLightTheme.warningVariant,
-					'feedback-info': paLightTheme.info,
-					'feedback-info-variant': paLightTheme.infoVariant,
+					'error': paLightTheme.error,
+					'error-variant': paLightTheme.errorVariant,
+					'success': paLightTheme.success,
+					'success-variant': paLightTheme.successVariant,
+					'warning': paLightTheme.warning,
+					'warning-variant': paLightTheme.warningVariant,
+					'info': paLightTheme.info,
+					'info-variant': paLightTheme.infoVariant,
 				}
 				const apColors = {
-					'feedback-error': apLightTheme.error,
-					'feedback-error-variant': apLightTheme.errorVariant,
-					'feedback-success': apLightTheme.success,
-					'feedback-success-variant': apLightTheme.successVariant,
-					'feedback-warning': apLightTheme.warning,
-					'feedback-warning-variant': apLightTheme.warningVariant,
-					'feedback-info': apLightTheme.info,
-					'feedback-info-variant': apLightTheme.infoVariant,
+					'error': apLightTheme.error,
+					'error-variant': apLightTheme.errorVariant,
+					'success': apLightTheme.success,
+					'success-variant': apLightTheme.successVariant,
+					'warning': apLightTheme.warning,
+					'warning-variant': apLightTheme.warningVariant,
+					'info': apLightTheme.info,
+					'info-variant': apLightTheme.infoVariant,
 				}
 				const apColors2026 = {}
 				return {
@@ -759,34 +759,34 @@ export const OnFeedback: StoryObj = {
 				const colorTitleLevel = 3
 				const colorDescription = 'Textes/ Icônes sur fond de statut.'
 				const cnamColors = {
-					'feedback-on-error': cnamLightTheme.onError,
-					'feedback-on-error-variant': cnamLightTheme.onErrorVariant,
-					'feedback-on-success': cnamLightTheme.onSuccess,
-					'feedback-on-success-variant': cnamLightTheme.onSuccessVariant,
-					'feedback-on-warning': cnamLightTheme.onWarning,
-					'feedback-on-warning-variant': cnamLightTheme.onWarningVariant,
-					'feedback-on-info': cnamLightTheme.onInfo,
-					'feedback-on-info-variant': cnamLightTheme.onInfoVariant,
+					'on-error': cnamLightTheme.onError,
+					'on-error-variant': cnamLightTheme.onErrorVariant,
+					'on-success': cnamLightTheme.onSuccess,
+					'on-success-variant': cnamLightTheme.onSuccessVariant,
+					'on-warning': cnamLightTheme.onWarning,
+					'on-warning-variant': cnamLightTheme.onWarningVariant,
+					'on-info': cnamLightTheme.onInfo,
+					'on-info-variant': cnamLightTheme.onInfoVariant,
 				}
 				const paColors = {
-					'feedback-on-error': paLightTheme.onError,
-					'feedback-on-error-variant': paLightTheme.onErrorVariant,
-					'feedback-on-success': paLightTheme.onSuccess,
-					'feedback-on-success-variant': paLightTheme.onSuccessVariant,
-					'feedback-on-warning': paLightTheme.onWarning,
-					'feedback-on-warning-variant': paLightTheme.onWarningVariant,
-					'feedback-on-info': paLightTheme.onInfo,
-					'feedback-on-info-variant': paLightTheme.onInfoVariant,
+					'on-error': paLightTheme.onError,
+					'on-error-variant': paLightTheme.onErrorVariant,
+					'on-success': paLightTheme.onSuccess,
+					'on-success-variant': paLightTheme.onSuccessVariant,
+					'on-warning': paLightTheme.onWarning,
+					'on-warning-variant': paLightTheme.onWarningVariant,
+					'on-info': paLightTheme.onInfo,
+					'on-info-variant': paLightTheme.onInfoVariant,
 				}
 				const apColors = {
-					'feedback-on-error': apLightTheme.onError,
-					'feedback-on-error-variant': apLightTheme.onErrorVariant,
-					'feedback-on-success': apLightTheme.onSuccess,
-					'feedback-on-success-variant': apLightTheme.onSuccessVariant,
-					'feedback-on-warning': apLightTheme.onWarning,
-					'feedback-on-warning-variant': apLightTheme.onWarningVariant,
-					'feedback-on-info': apLightTheme.onInfo,
-					'feedback-on-info-variant': apLightTheme.onInfoVariant,
+					'on-error': apLightTheme.onError,
+					'on-error-variant': apLightTheme.onErrorVariant,
+					'on-success': apLightTheme.onSuccess,
+					'on-success-variant': apLightTheme.onSuccessVariant,
+					'on-warning': apLightTheme.onWarning,
+					'on-warning-variant': apLightTheme.onWarningVariant,
+					'on-info': apLightTheme.onInfo,
+					'on-info-variant': apLightTheme.onInfoVariant,
 				}
 				const apColors2026 = {}
 				return {

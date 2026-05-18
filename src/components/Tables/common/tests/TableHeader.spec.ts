@@ -6,7 +6,7 @@ import type { VDataTable } from 'vuetify/components'
 
 describe('TableHeader', () => {
 	// Test for basic rendering
-	it('renderadis correctly with basic props', () => {
+	it('render correctly with basic props', () => {
 		const column = {
 			title: 'Test Column',
 			key: 'test',

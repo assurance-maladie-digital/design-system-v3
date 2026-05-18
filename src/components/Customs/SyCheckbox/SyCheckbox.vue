@@ -216,10 +216,10 @@
 		switch (props.color) {
 		case 'error':
 			return 'rgb(var(--v-theme-error))'
-		case 'success':
-			return 'rgb(var(--v-theme-success))'
-		case 'warning':
-			return 'rgb(var(--v-theme-warning))'
+		case 'onSuccessVariant':
+			return 'rgb(var(--v-theme-onSuccessVariant))'
+		case 'onWarningVariant':
+			return 'rgb(var(--v-theme-onWarningVariant))'
 		case 'primary':
 			return cnamSemanticTokens.colors.text.base
 		default:

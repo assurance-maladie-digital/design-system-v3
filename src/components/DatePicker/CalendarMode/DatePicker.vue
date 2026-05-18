@@ -1316,7 +1316,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: rgb(var(--v-theme-secondary)) !important;
+	background-color: rgb(var(--v-theme-primaryVariant)) !important;
 }
 
 .fade-enter-active,
