@@ -85,7 +85,8 @@ describe('mounthpicker', () => {
 			expect(wrapper.find('input').element.value).toBe('11/2025')
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type			await wrapper.setProps({ modelValue: '12/2026' })
+			// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type
+			await wrapper.setProps({ modelValue: '12/2026' })
 			expect(wrapper.find('input').element.value).toBe('12/2026')
 
 			wrapper.unmount()
@@ -436,7 +437,8 @@ describe('mounthpicker', () => {
 				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
 
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-				// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type				await wrapper.setProps({ yearsOrder: 'asc' })
+				// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type
+				await wrapper.setProps({ yearsOrder: 'asc' })
 				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
 				await yearButton.trigger('keydown', { key: 'ArrowUp' })
 				expect(yearSelector.find('.year-2022').attributes('tabindex')).toBe('0')
