@@ -112,6 +112,7 @@ export const mainColors: StoryObj = {
 					'primary-variant': cnamLightTheme.primaryVariant,
 					'secondary': cnamLightTheme.secondary,
 					'secondary-variant': cnamLightTheme.secondaryVariant,
+					'risque-pro': cnamLightTheme.risquePro,
 				}
 				const paColors = {
 					'primary': paLightTheme.primary,

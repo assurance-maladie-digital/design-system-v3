@@ -164,6 +164,10 @@
 </template>
 
 <style lang="scss" scoped>
+:deep(.v-messages) {
+	opacity: 1 !important;
+}
+
 .success-field {
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;

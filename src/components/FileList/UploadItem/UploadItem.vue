@@ -97,7 +97,7 @@
 							v-else-if="state === 'success'"
 							:icon="mdiCheckCircle"
 							:size="cnamContextualTokens.iconSize.default"
-							color="success"
+							color="onSuccessVariant"
 							decorative
 						/>
 
