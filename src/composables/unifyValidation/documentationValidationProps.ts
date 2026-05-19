@@ -231,5 +231,5 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 				category: 'props',
 			},
 		},
-	}
+	} as const
 }

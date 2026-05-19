@@ -1,69 +1,51 @@
 <script lang="ts" setup>
 
-	import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, ref } from 'vue'
 	import type { VRadioGroup } from 'vuetify/components'
 	import { VMessages } from 'vuetify/components'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
 	import { locales } from './locales'
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: PropertyKey | null
-			label?: string
-			displayAsterisk?: boolean
 			ariaLabel?: string
 			ariaLabelledby?: string
-			title?: string
 			color?: string
-			disabled?: boolean
-			readonly?: boolean
-			hideDetails?: boolean | 'auto'
 			density?: 'default' | 'comfortable' | 'compact'
-			options?: Array<{ label: string, value: PropertyKey }>
-			name?: string
+			displayAsterisk?: boolean
+			helpText?: string
+			hideDetails?: boolean | 'auto'
 			id?: string
-			required?: boolean
-			errorMessages?: string[] | null
-			warningMessages?: string[] | null
-			successMessages?: string[] | null
-			customRules?: ValidationRule[]
-			customWarningRules?: ValidationRule[]
-			customSuccessRules?: ValidationRule[]
-			showSuccessMessages?: boolean
-			isValidateOnBlur?: boolean
-			disableErrorHandling?: boolean
-		}>(),
+			label?: string
+			modelValue?: PropertyKey | null
+			name?: string
+			options?: Array<{ label: string, value: PropertyKey }>
+			title?: string
+		} & FieldValidationProps>(),
 		{
-			modelValue: null,
-			label: undefined,
-			displayAsterisk: false,
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
-			title: undefined,
 			color: 'primary',
-			disabled: false,
-			readonly: false,
-			hideDetails: 'auto',
 			density: 'default',
-			options: () => [],
-			name: undefined,
+			displayAsterisk: false,
+			helpText: '',
+			hideDetails: 'auto',
 			id: undefined,
-			required: false,
-			errorMessages: null,
-			warningMessages: null,
-			successMessages: null,
-			customRules: () => [],
-			customWarningRules: () => [],
-			customSuccessRules: () => [],
-			showSuccessMessages: true,
-			isValidateOnBlur: false,
-			disableErrorHandling: false,
+			label: undefined,
+			modelValue: null,
+			name: undefined,
+			options: () => [],
+			title: undefined,
+			...validationPropsDefaults,
+			isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection pour les radios
 		},
 	)
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 	const radioGroupRef = ref<VRadioGroup | null>(null)
+	const focused = ref(false)
 	const model = computed({
 		get() {
 			return props.modelValue
@@ -75,81 +57,29 @@
 	})
 
 	const generatedLabel = computed(() =>
-		(props.label || '') + (props.displayAsterisk ? '*' : ''),
+		(props.label || '') + (props.displayAsterisk ? ' *' : ''),
 	)
 
-	// Initialisation du composable de validation
-	// Variable pour suivre si le formulaire a été soumis
-	const isSubmitted = ref(false)
+	// Utilisation du composable de validation dédié
+	const {
+		validateOnSubmit,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+	} = useSyRadioGroupValidation(props, model, focused)
 
-	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label,
-		disableErrorHandling: props.disableErrorHandling,
-	})
+	// Intégration avec le système de validation du formulaire
+	useValidatable(validateOnSubmit)
 
-	// Synchronisation des messages externes
-	watch(() => props.errorMessages, value => (validation.errors.value = value || []), { immediate: true })
-	watch(() => props.warningMessages, value => (validation.warnings.value = value || []), { immediate: true })
-	watch(() => props.successMessages, value => (validation.successes.value = value || []), { immediate: true })
-
-	// Construction des règles de validation
-	const defaultRules = computed<ValidationRule[]>(() =>
-		props.required
-			? [{
-				type: 'required',
-				options: {
-					message: `Le champ ${props.label || 'ce champ'} est requis.`,
-					fieldIdentifier: props.label,
-				},
-			}]
-			: [],
+	const hasMessages = computed(() =>
+		errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0,
 	)
 
-	const validateField = async (value: PropertyKey | null) => {
-		// const stringValue = value != null ? String(value) : null
-
-		if (props.readonly) {
-			validation.clearValidation()
-			return true
-		}
-
-		if (value === null && !props.required) {
-			validation.clearValidation()
-			return true
-		}
-
-		const result = await validation.validateField(
-			value,
-			[...defaultRules.value, ...props.customRules],
-			props.customWarningRules,
-			props.customSuccessRules,
-		)
-		return !result.hasError
-	}
-
-	const validateOnSubmit = async () => {
-		isSubmitted.value = true
-		return await validateField(model.value)
-	}
-
-	const checkErrorOnBlur = () => {
-		validateField(model.value)
-	}
-
-	watch(model, (newValue) => {
-		if (!props.isValidateOnBlur) {
-			validateField(newValue)
-		}
-	})
-
-	const hasError = computed(() => validation.hasError.value)
-	const hasWarning = computed(() => validation.hasWarning.value)
-	const hasSuccess = computed(() => validation.hasSuccess.value)
-
-	const errors = computed(() => validation.errors.value)
-	const warnings = computed(() => validation.warnings.value)
-	const displaySuccesses = computed(() => validation.displaySuccesses.value)
+	const showHelpTextAsMessage = computed(() => !!props.helpText && !hasMessages.value)
+	const showHelpTextBelow = computed(() => !!props.helpText && hasMessages.value && props.hideDetails !== true)
 
 	const getAriaChecked = (value: PropertyKey) => {
 		return model.value === value ? 'true' : 'false'
@@ -168,6 +98,9 @@
 		return undefined
 	})
 
+	// Workaround Vuetify: Vuetify ajoute aria-disabled="false" sur tous les radios non désactivés
+	// Ce n'est pas nécessaire car la spécification ARIA ne requiert pas aria-disabled="false"
+	// On supprime cet attribut pour éviter le bruit dans les lecteurs d'écran
 	const removeAriaAttributesForRadio = () => {
 		nextTick(() => {
 			if (radioGroupRef.value) {
@@ -182,22 +115,14 @@
 	// Appliquer la correction lors du montage et de la mise à jour du composant
 	onMounted(() => {
 		removeAriaAttributesForRadio()
-		if (!props.isValidateOnBlur && !props.required) {
-			validateField(model.value)
-		}
 	})
 
 	onUpdated(() => {
 		removeAriaAttributesForRadio()
 	})
 
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
-
 	defineExpose({
-		validation,
 		validateOnSubmit,
-		checkErrorOnBlur,
 	})
 
 </script>
@@ -220,7 +145,7 @@
 		:color="props.color"
 		:disabled="props.disabled"
 		:readonly="props.readonly"
-		:hide-details="props.hideDetails"
+		:hide-details="showHelpTextAsMessage ? false : props.hideDetails"
 		:density="props.density"
 		:error="hasError"
 		:error-messages="hasError ? errors : undefined"
@@ -233,7 +158,8 @@
 			role="radio"
 			:label="opt.label"
 			:aria-checked="getAriaChecked(opt.value)"
-			@blur="checkErrorOnBlur"
+			@focus="focused = true"
+			@blur="focused = false"
 		/>
 		<template
 			v-if="$slots.label"
@@ -256,17 +182,32 @@
 			}}</span>.
 		</span>
 		<template
-			v-if="!hasError && (hasWarning || hasSuccess)"
+			v-if="(!hasError && (hasWarning || hasSuccess) && props.showSuccessMessages) || showHelpTextAsMessage"
 			#details
 		>
 			<div class="v-input__details sy-radio-group__messages">
 				<VMessages
-					:active="hasWarning || (hasSuccess && displaySuccesses.length > 0)"
-					:messages="hasWarning ? warnings : displaySuccesses"
+					v-if="!hasError && (hasWarning || hasSuccess) && props.showSuccessMessages"
+					:active="hasWarning || (hasSuccess && successes.length > 0)"
+					:messages="hasWarning ? warnings : successes"
 				/>
+				<div
+					v-if="showHelpTextAsMessage"
+					class="sy-radio-group__help-text"
+					:class="{ 'text-disabled': props.disabled }"
+				>
+					{{ props.helpText }}
+				</div>
 			</div>
 		</template>
 	</v-radio-group>
+	<div
+		v-if="showHelpTextBelow"
+		class="help-text-below px-1 mt-1"
+		:class="{ 'text-disabled': props.disabled }"
+	>
+		{{ props.helpText }}
+	</div>
 </template>
 
 <style scoped>
@@ -280,12 +221,22 @@
 	color: rgb(var(--v-theme-error));
 }
 
-.sy-radio-group__messages {
+:deep(.sy-radio-group__messages) {
 	align-items: flex-start;
+	margin-top: -22px !important;
+}
+
+.sy-radio-group__help-text {
+	font-size: 0.75rem;
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
 .sb-show-main.sb-main-centered #storybook-root {
 	margin: none !important;
+}
+
+:deep(.v-messages) {
+	opacity: 1 !important;
 }
 
 .warning-field {
@@ -312,6 +263,10 @@
 
 :deep(.v-messages__message) {
 	animation: sy-messages-in 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+:deep(.v-label) {
+	margin-inline-start: 0 !important;
 }
 
 @keyframes sy-messages-in {
