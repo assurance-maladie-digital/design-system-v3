@@ -7,12 +7,13 @@
 		useDateInputEditing,
 		useDateAutoClamp,
 		useDateTextField,
+		useDatePickerValidationBridge,
 	} from '../composables'
 	import { ref, computed, watch, nextTick, onMounted, toRefs } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { useValidation, type ValidationRule, type ValidationResult } from '@/composables/validation/useValidation'
+	import type { ValidationRule, ValidationResult } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
@@ -48,6 +49,8 @@
 		required?: boolean
 		showSuccessMessages?: boolean
 		title?: string | false
+		/** @internal Désactive la validation interne quand utilisé dans un parent avec validation */
+		skipInternalValidation?: boolean
 	}>(), {
 		autoClamp: true,
 		bgColor: 'white',
@@ -74,6 +77,7 @@
 		required: false,
 		showSuccessMessages: true,
 		title: false,
+		skipInternalValidation: false,
 	})
 
 	const emit = defineEmits<{
@@ -98,13 +102,35 @@
 
 	/**
 	 * =====================
-	 * Validation setup (safe wrapper for readonly, reactive to toggles)
+	 * Validation setup (using DatePickerValidationBridge)
 	 * =====================
 	 */
-	const baseValidation = useValidation({
+	const selectedDates = ref<DateObjectValue>(null)
+	const currentRangeIsValid = ref(true)
+	const getRangeValidationError = ref('')
+	const isUpdatingFromInternal = ref(false)
+
+	// Quand skipInternalValidation est true, on utilise le readonlyValidation (pas de validation active)
+	// pour éviter la double validation avec le parent
+	const shouldUseInternalValidation = computed(() => !props.skipInternalValidation && !readonly.value)
+
+	const bridgeValidation = useDatePickerValidationBridge({
 		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label || props.placeholder,
 		disableErrorHandling: props.disableErrorHandling,
+		noCalendar: true,
+		required: props.required,
+		displayRange: props.displayRange,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Compatibility with legacy rule format
+		customRules: computed(() => shouldUseInternalValidation.value ? props.customRules as any : []),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Compatibility with legacy rule format
+		customWarningRules: computed(() => shouldUseInternalValidation.value ? props.customWarningRules as any : []),
+		selectedDates,
+		isUpdatingFromInternal,
+		currentRangeIsValid,
+		getRangeValidationError,
+		skipValidationWhenReadonly: true,
+		readonly: readonly,
+		fieldIdentifier: props.label || props.placeholder || 'Date',
 	})
 
 	const readonlyValidation = {
@@ -122,39 +148,56 @@
 		} as ValidationResult),
 	}
 
-	const validationApi = computed(() => (readonly.value ? readonlyValidation : baseValidation))
-
 	const errors = computed({
-		get: () => validationApi.value.errors.value,
-		set: (value) => { validationApi.value.errors.value = value },
+		get: () => readonly.value ? readonlyValidation.errors.value : bridgeValidation.errors.value,
+		set: (value) => {
+			if (!readonly.value) bridgeValidation.errors.value = value
+		},
 	})
 	const warnings = computed({
-		get: () => validationApi.value.warnings.value,
-		set: (value) => { validationApi.value.warnings.value = value },
+		get: () => readonly.value ? readonlyValidation.warnings.value : bridgeValidation.warnings.value,
+		set: (value) => {
+			if (!readonly.value) bridgeValidation.warnings.value = value
+		},
 	})
 	const successes = computed({
-		get: () => validationApi.value.successes.value,
-		set: (value) => { validationApi.value.successes.value = value },
+		get: () => readonly.value ? readonlyValidation.successes.value : bridgeValidation.successes.value,
+		set: (value) => {
+			if (!readonly.value) bridgeValidation.successes.value = value
+		},
 	})
 	const hasError = computed(() => {
-		const api = validationApi.value
-		// baseValidation exposes a computed hasError, readonly stub exposes a ref
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- computed/ref dual shape
-		return (api as any).hasError?.value ?? api.errors.value.length > 0
+		if (readonly.value) return false
+		return bridgeValidation.errors.value.length > 0
 	})
 
-	const clearValidation = () => validationApi.value.clearValidation()
+	const clearValidation = () => {
+		if (readonly.value) {
+			readonlyValidation.clearValidation()
+		}
+		else {
+			bridgeValidation.clearValidation()
+		}
+	}
 
 	const validateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): Promise<ValidationResult> => await validationApi.value.validateField(value, rules, warningRules)
+	): Promise<ValidationResult> => {
+		if (readonly.value) {
+			return readonlyValidation.validateField()
+		}
+		return await bridgeValidation.validateField(value, rules, warningRules)
+	}
 
 	// Agrégation des erreurs internes et externes
 	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
 	const warningMessages = warnings
-	const displaySuccesses = computed(() => (validationApi.value as typeof baseValidation).displaySuccesses?.value ?? [])
+	const displaySuccesses = computed(() => {
+		if (readonly.value) return []
+		return (bridgeValidation.validation as { displaySuccesses?: { value: string[] } }).displaySuccesses?.value ?? []
+	})
 	const successMessages = displaySuccesses
 
 	/**
@@ -176,7 +219,6 @@
 	 * Range input + validations
 	 * =====================
 	 */
-	const selectedDates = ref<DateObjectValue>(null)
 	const {
 		handleRangeInput,
 		resetState,
@@ -187,14 +229,22 @@
 		handlePaste: handlePasteRange,
 	} = useDateRangeInput(displayFormat.value, isRange.value, parseDate, formatDate)
 
-	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(selectedDates, isRange.value)
+	// Note: currentRangeIsValid et getRangeValidationError sont déjà définis pour le Bridge
+	// On met juste à jour les refs depuis useDateRangeValidation
+	const rangeValidation = useDateRangeValidation(selectedDates, isRange.value)
+	watch(() => rangeValidation.currentRangeIsValid.value, (v) => {
+		currentRangeIsValid.value = v
+	})
+	watch(() => rangeValidation.getRangeValidationError.value, (v) => {
+		getRangeValidationError.value = v
+	})
 
 	/**
 	 * =====================
 	 * Format + manual validation
 	 * =====================
 	 */
-	const isUpdatingFromInternal = ref(false)
+	// isUpdatingFromInternal est déjà déclaré plus haut pour le Bridge
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
 	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
@@ -523,6 +573,19 @@
 				const nextCursorPosition = nextEditableIndex(dateFormat, editPosition + 1)
 				updateDateValue(updatedDateText, nextCursorPosition)
 			}
+			else if (isEditingLeftDate && separatorIndex !== -1) {
+				const rightStartPosition = nextEditableIndex(dateFormat, 0)
+				const updatedRightDateText = overwriteAt(rightDateText, rightStartPosition, keyboardEvent.key)
+				const nextCursorPosition = nextEditableIndex(dateFormat, rightStartPosition + 1)
+
+				isOverwriteEditing.value = true
+				inputValue.value = `${leftDateText}${rangeSeparator}${updatedRightDateText}`
+				requestAnimationFrame(() => {
+					const absoluteCursorPosition = separatorIndex + rangeSeparator.length + nextCursorPosition
+					inputElement.setSelectionRange(absoluteCursorPosition, absoluteCursorPosition)
+					isOverwriteEditing.value = false
+				})
+			}
 			return
 		}
 
@@ -659,6 +722,30 @@
 		else handlePasteSingle(evt)
 	}
 
+	function applyAutoClampOnCurrentInput(syncModel = true): boolean {
+		if (!props.autoClamp || !inputValue.value) return false
+
+		const clamped = clampIfNeeded(inputValue.value)
+		if (clamped === inputValue.value) return false
+
+		inputValue.value = clamped
+		if (!syncModel) return true
+
+		// Sync model après clamp uniquement si la valeur a changé.
+		isFormatting.value = true
+		if (isRange.value) {
+			const [startDate, endDate] = parseRangeInput(inputValue.value)
+			if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
+			else if (startDate) emit('date-selected', toReturnFormat(startDate))
+		}
+		else {
+			const parsedDate = parseDate(inputValue.value, displayFormat.value)
+			if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
+		}
+
+		return true
+	}
+
 	async function onFocus() {
 		isFocused.value = true
 		// Si aucun chiffre n'a été saisi (champ vide ou squelette), bootstrap et place le caret au début
@@ -683,6 +770,11 @@
 			runRules('')
 			return
 		}
+
+		// Le mode overwrite désactive le clamp pendant la frappe pour préserver le curseur.
+		// On l'applique donc avant la validation au blur, sinon une date comme 31/04
+		// sort en erreur avant d'atteindre la logique d'autoClamp.
+		applyAutoClampOnCurrentInput(false)
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
@@ -730,24 +822,7 @@
 		}
 
 		// autoClamp au blur
-		if (props.autoClamp) {
-			const clamped = clampIfNeeded(inputValue.value)
-			if (clamped !== inputValue.value) {
-				inputValue.value = clamped
-
-				// Sync model après clamp uniquement si la valeur a changé
-				isFormatting.value = true
-				if (isRange.value) {
-					const [startDate, endDate] = parseRangeInput(inputValue.value)
-					if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
-					else if (startDate) emit('date-selected', toReturnFormat(startDate))
-				}
-				else {
-					const parsedDate = parseDate(inputValue.value, displayFormat.value)
-					if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
-				}
-			}
-		}
+		applyAutoClampOnCurrentInput()
 
 		runRules(inputValue.value)
 
@@ -906,7 +981,7 @@
 						})).validateDates()
 					}
 					finally {
-						setTimeout(() => (isUpdatingFromInternal.value = false), 0)
+						queueMicrotask(() => (isUpdatingFromInternal.value = false))
 					}
 
 					if (result.isComplete && result.dates[1]) {
@@ -924,7 +999,7 @@
 
 				emit('input', result.formattedValue)
 				if (result.cursorPosition !== undefined && !isHandlingBackspace.value) {
-					setTimeout(() => inputEl?.setSelectionRange(result.cursorPosition!, result.cursorPosition!), 0)
+					queueMicrotask(() => inputEl?.setSelectionRange(result.cursorPosition!, result.cursorPosition!))
 				}
 			}
 			else {
@@ -1024,7 +1099,7 @@
 							successes,
 						})).validateDates()
 					}
-					finally { setTimeout(() => (isUpdatingFromInternal.value = false), 0) }
+					finally { queueMicrotask(() => (isUpdatingFromInternal.value = false)) }
 					inputValue.value = formatRangeForDisplay(sd, ed)
 					runRules(inputValue.value)
 				}
