@@ -61,6 +61,7 @@ const apComponents = [
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
 	'composants-vue-d-ensemble--docs',
+    'composants-tableaux-tabletoolbar',
 	'composants-formulaires-selects-selectbtnfield',
 ]
 
