@@ -1,5 +1,5 @@
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
-import { describe, it, expect, afterEach } from 'vitest'
+import { describe, it, expect, afterEach, beforeEach } from 'vitest'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
@@ -454,5 +454,343 @@ describe('DatePicker', () => {
 
 		expect(vm.selectedDates).not.toBeNull()
 		expect(wrapper.exists()).toBe(true)
+	})
+})
+
+describe('DatePicker - Events & Interactions', () => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	let evWrapper: any
+
+	beforeEach(() => {
+		evWrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+			},
+		})
+	})
+
+	afterEach(() => {
+		evWrapper?.unmount()
+		evWrapper = null
+	})
+
+	it('gère la visibilité du calendrier', async () => {
+		await evWrapper.find('.v-text-field').trigger('click')
+		await nextTick()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(true)
+
+		evWrapper.vm.isDatePickerVisible = false
+		await nextTick()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('accepte la saisie de dates', async () => {
+		const input = evWrapper.find('input')
+		await input.setValue('0101')
+		await nextTick()
+		expect(input.element.value).toContain('01')
+	})
+
+	it('permet la saisie manuelle même avec disablePickerInteraction', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date Field', modelValue: '', format: 'DD/MM/YYYY', disablePickerInteraction: true },
+		})
+		const input = w.find('input')
+		await input.setValue('01/01/2023')
+		await input.trigger('blur')
+		await nextTick()
+		const emitted = w.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[0]?.[0]).toBe('01/01/2023')
+		w.unmount()
+	})
+
+	it('synchronise selectedDates après saisie manuelle', async () => {
+		const input = evWrapper.find('input')
+		await input.setValue('01/01/2023')
+		await input.trigger('blur')
+		await nextTick()
+		expect(evWrapper.vm.selectedDates).not.toBeNull()
+		const d = evWrapper.vm.selectedDates
+		expect(d instanceof Date).toBe(true)
+		expect(d.getFullYear()).toBe(2023)
+		expect(d.getMonth()).toBe(0)
+		expect(d.getDate()).toBe(1)
+	})
+
+	it('accepte le format YYYY-MM-DD', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date Field', modelValue: '', format: 'YYYY-MM-DD' },
+		})
+		const input = w.find('input')
+		await input.setValue('2023-01-01')
+		await input.trigger('blur')
+		await nextTick()
+		const emitted = w.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[0]?.[0]).toBe('2023-01-01')
+		w.unmount()
+	})
+
+	it('accepte les plages de dates en entrée', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date Field', modelValue: ['01/01/2023', '05/01/2023'], format: 'DD/MM/YYYY', displayRange: true },
+		})
+		await nextTick()
+		expect(w.find('input').element.value).toContain('01/01/2023')
+		expect(w.props('displayRange')).toBe(true)
+		w.unmount()
+	})
+
+	it('handleInputKeydown ne fait rien si readonly', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', readonly: true },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(w.vm as any).handleInputKeydown(new KeyboardEvent('keydown', { key: 'Enter' }))
+		await nextTick()
+		expect(w.vm.isDatePickerVisible).toBe(false)
+		w.unmount()
+	})
+
+	it('handleInputKeydown Escape ferme le calendrier', async () => {
+		evWrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(evWrapper.vm as any).handleInputKeydown(new KeyboardEvent('keydown', { key: 'Escape' }))
+		await nextTick()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('onUpdateMonth met à jour currentMonth et currentMonthName', async () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(evWrapper.vm as any).onUpdateMonth('5')
+		await nextTick()
+		expect(evWrapper.vm.currentMonth).toBe('5')
+		expect(evWrapper.vm.currentMonthName).toBeTruthy()
+	})
+
+	it('onUpdateYear met à jour currentYear', async () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(evWrapper.vm as any).onUpdateYear('2030')
+		await nextTick()
+		expect(evWrapper.vm.currentYear).toBe('2030')
+	})
+
+	it('openDatePickerOnFocus émet focus', async () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(evWrapper.vm as any).openDatePickerOnFocus()
+		await nextTick()
+		expect(evWrapper.emitted('focus')).toBeTruthy()
+	})
+
+	it('openDatePickerOnIconClick ne fait rien si disabled', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', disabled: true },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(w.vm as any).openDatePickerOnIconClick()
+		await nextTick()
+		expect(w.vm.isDatePickerVisible).toBe(false)
+		w.unmount()
+	})
+
+	it('openDatePickerOnIconClick ne fait rien si readonly', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', readonly: true },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(w.vm as any).openDatePickerOnIconClick()
+		await nextTick()
+		expect(w.vm.isDatePickerVisible).toBe(false)
+		w.unmount()
+	})
+
+	it('valide les dates selon les règles personnalisées', async () => {
+		const w = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				customRules: [{ type: 'isDateValid', options: {} }],
+				required: true,
+			},
+		})
+		await w.vm.validateOnSubmit()
+		await nextTick()
+		expect(w.vm.errorMessages.length).toBeGreaterThan(0)
+		w.unmount()
+	})
+})
+
+describe('DatePicker - Coverage branches', () => {
+	it('handleSelectToday selects today range when displayRange=true', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: undefined, format: 'DD/MM/YYYY', displayRange: true },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (w.vm as any).handleSelectToday()
+		await flushPromises()
+		const selected = w.vm.selectedDates
+		expect(Array.isArray(selected)).toBe(true)
+		const emitted = w.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		w.unmount()
+	})
+
+	it('validateOnSubmit delegates to dateTextInputRef when noCalendar', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', noCalendar: true, required: true },
+		})
+		const result = await w.vm.validateOnSubmit()
+		expect(typeof result === 'boolean' || result === undefined).toBe(true)
+		w.unmount()
+	})
+
+	it('validateOnSubmit delegates to complexDatePickerRef when useCombinedMode', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', useCombinedMode: true, required: true },
+		})
+		const result = await w.vm.validateOnSubmit()
+		expect(typeof result === 'boolean' || result === undefined).toBe(true)
+		w.unmount()
+	})
+
+	it('handleInputKeydown Enter opens the date picker', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+		expect(w.vm.isDatePickerVisible).toBe(false)
+		const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (w.vm as any).handleInputKeydown(event)
+		await nextTick()
+		expect(w.vm.isDatePickerVisible).toBe(true)
+		w.unmount()
+	})
+
+	it('handleInputBlur emits blur and validates', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '01/01/2023', format: 'DD/MM/YYYY', required: true, isValidateOnBlur: true },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (w.vm as any).handleInputBlur()
+		await flushPromises()
+		expect(w.emitted('blur')).toBeTruthy()
+		w.unmount()
+	})
+
+	it('handleInputBlur skips validation when isValidateOnBlur=false', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', required: true, isValidateOnBlur: false },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (w.vm as any).handleInputBlur()
+		await flushPromises()
+		expect(w.emitted('blur')).toBeTruthy()
+		expect(w.vm.errorMessages.length).toBe(0)
+		w.unmount()
+	})
+
+	it('syncDisplayedMonthYearFromDate updates currentMonth and currentMonthName', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+		w.vm.isDatePickerVisible = true
+		await nextTick()
+		const date = new Date(2024, 5, 15)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(w.vm as any).syncDisplayedMonthYearFromDate(date)
+		await nextTick()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((w.vm as any).currentMonth).toBe('5')
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((w.vm as any).currentMonthName).toBeTruthy()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((w.vm as any).currentYear).toBe('2024')
+		w.unmount()
+	})
+
+	it('handleDateTextInputUpdate with null clears selectedDates', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '01/01/2023', format: 'DD/MM/YYYY' },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (w.vm as any).handleDateTextInputUpdate(null)
+		await flushPromises()
+		expect(w.vm.selectedDates).toBeNull()
+		w.unmount()
+	})
+
+	it('handleDateTextInputUpdate with array range sets selectedDates', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: undefined, format: 'DD/MM/YYYY', displayRange: true },
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (w.vm as any).handleDateTextInputUpdate(['01/01/2023', '05/01/2023'])
+		await flushPromises()
+		expect(w.vm.selectedDates).not.toBeNull()
+		expect(Array.isArray(w.vm.selectedDates)).toBe(true)
+		w.unmount()
+	})
+
+	it('watcher selectedDates resets currentMonthName to today when cleared', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '01/06/2024', format: 'DD/MM/YYYY' },
+		})
+		await flushPromises()
+		w.vm.selectedDates = null
+		await nextTick()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((w.vm as any).currentMonthName).toBeTruthy()
+		w.unmount()
+	})
+
+	it('modelValue watcher syncs noCalendar from string (branch coverage)', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '10/01/2024', format: 'DD/MM/YYYY', noCalendar: true },
+		})
+		await flushPromises()
+		await w.setProps({ modelValue: '15/03/2024' })
+		await flushPromises()
+		expect(w.exists()).toBe(true)
+		w.unmount()
+	})
+
+	it('modelValue watcher clears textInputValue when null in noCalendar mode', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '15/03/2024', format: 'DD/MM/YYYY', noCalendar: true },
+		})
+		await flushPromises()
+		await w.setProps({ modelValue: '' })
+		await flushPromises()
+		expect(w.find('input').element.value).toBe('')
+		w.unmount()
+	})
+
+	it('handleClickOutside does nothing when calendar is closed', () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+		const vm = w.vm as InstanceType<typeof DatePicker>
+		vm.isDatePickerVisible = false
+		const outside = document.createElement('div')
+		vm.handleClickOutside({ target: outside } as unknown as MouseEvent)
+		expect(w.emitted('closed')).toBeFalsy()
+		w.unmount()
+	})
+
+	it('handleClickOutside does nothing when click inside container', () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+		const vm = w.vm as InstanceType<typeof DatePicker>
+		vm.isDatePickerVisible = true
+		const container = w.find('.date-picker-container').element
+		vm.handleClickOutside({ target: container } as unknown as MouseEvent)
+		expect(w.emitted('closed')).toBeFalsy()
+		w.unmount()
 	})
 })

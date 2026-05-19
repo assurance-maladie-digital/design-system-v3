@@ -1,7 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-import DateTextInput from '../DateTextInput/DateTextInput.vue'
+import ComplexDatePicker from '../ComplexDatePicker.vue'
+import DateTextInput from '../../DateTextInput/DateTextInput.vue'
 
 /**
  * Tests de régression pour les messages de succès
