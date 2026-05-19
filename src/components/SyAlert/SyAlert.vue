@@ -241,7 +241,7 @@
 			background: map.get($map, 'icon-bg');
 
 			:deep(svg) {
-				fill: map.get($map, 'accent');
+				fill: map.get($map, 'icon');
 			}
 		}
 	}
@@ -257,20 +257,20 @@
 		'warning',
 		(
 			'background': rgb(var(--v-theme-warningVariant)),
-			'accent': rgb(var(--v-theme-warning)),
-			'border': rgb(var(--v-theme-warning)),
-			'icon': rgb(var(--v-theme-onWarning)),
-			'icon-bg': rgb(var(--v-theme-warningVariant)),
+			'accent': rgb(var(--v-theme-onWarningVariant)),
+			'border': rgb(var(--v-theme-onWarningVariant)),
+			'icon': rgb(var(--v-theme-onWarningVariant)),
+			'icon-bg': rgb(var(--v-theme-warningVariant90)),
 		)
 	);
 	@include redesign(
 		'success',
 		(
 			'background': rgb(var(--v-theme-successVariant)),
-			'accent': rgb(var(--v-theme-success)),
-			'border': rgb(var(--v-theme-success)),
-			'icon':rgb(var(--v-theme-success)),
-			'icon-bg': rgb(var(--v-theme-successVariant)),
+			'accent': rgb(var(--v-theme-onSuccessVariant)),
+			'border': rgb(var(--v-theme-onSuccessVariant)),
+			'icon':rgb(var(--v-theme-onSuccessVariant)),
+			'icon-bg': rgb(var(--v-theme-successVariant90)),
 		)
 	);
 	@include redesign(
@@ -280,7 +280,7 @@
 			'accent': rgb(var(--v-theme-error)),
 			'border': rgb(var(--v-theme-error)),
 			'icon':rgb(var(--v-theme-error)),
-			'icon-bg': rgb(var(--v-theme-errorVariant)),
+			'icon-bg': rgb(var(--v-theme-errorVariant90)),
 		)
 	);
 	@include redesign(
@@ -290,7 +290,7 @@
 			'accent': rgb(var(--v-theme-info)),
 			'border': rgb(var(--v-theme-info)),
 			'icon':rgb(var(--v-theme-info)),
-			'icon-bg': rgb(var(--v-theme-infoVariant)),
+			'icon-bg': rgb(var(--v-theme-infoVariant90)),
 		)
 	);
 }

@@ -22,8 +22,8 @@ const ap2026OnlyStories = [
 	'design-tokens-couleurs--interactive-section',
 ]
 const apOnlyStories = [
-	'footerbar--back-office',
-	'footerbar--with-phone-number',
+	'composants-structure-footerbar--back-office',
+	'composants-structure-footerbar--with-phone-number',
 ]
 
 // Components to display in AP theme

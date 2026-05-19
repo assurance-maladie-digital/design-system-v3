@@ -366,7 +366,7 @@ a {
 		color: rgb(var(--v-theme-onPrimary));
 
 		&.version {
-			color: rgb(var(--v-theme-onSurfaceVariant));
+			color: rgb(var(--v-theme-surface));
 		}
 	}
 

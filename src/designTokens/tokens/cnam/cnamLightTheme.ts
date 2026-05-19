@@ -45,20 +45,24 @@ export const cnamLightTheme = {
 
 	// Feedback
 	info: baseTokens.color.blue.base,
-	infoVariant: baseTokens.color.blue.lighten80,
+    infoVariant: baseTokens.color.blue.lighten80,
+    infoVariant90: baseTokens.color.blue.lighten90,
 	onInfo: baseTokens.color.white.base,
 	onInfoVariant: baseTokens.color.blue.darken20,
 	error: baseTokens.color.orange.darken20,
 	onError: baseTokens.color.white.base,
-	errorVariant: baseTokens.color.orange.lighten80,
+    errorVariant: baseTokens.color.orange.lighten80,
+    errorVariant90: baseTokens.color.orange.lighten90,
 	onErrorVariant: baseTokens.color.orange.darken60,
 	success: baseTokens.color.green.base,
-	successVariant: baseTokens.color.green.lighten80,
+    successVariant: baseTokens.color.green.lighten80,
+    successVariant90: baseTokens.color.green.lighten90,
 	onSuccess: baseTokens.color.grey.darken60,
 	onSuccessVariant: baseTokens.color.green.darken60,
 	warning: baseTokens.color.yellow.base,
 	onWarning: baseTokens.color.grey.darken60,
-	warningVariant: baseTokens.color.yellow.lighten80,
+    warningVariant: baseTokens.color.yellow.lighten80,
+    warningVariant90: baseTokens.color.yellow.lighten90,
 	onWarningVariant: baseTokens.color.yellow.darken60,
 
 	// Interaction
