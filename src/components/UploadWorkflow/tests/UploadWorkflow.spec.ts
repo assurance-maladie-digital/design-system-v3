@@ -48,10 +48,12 @@ describe('UploadWorkflow', () => {
 	})
 
 	it('handles undefined upload list without crashing', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 		const wrapper = mount(UploadWorkflow, {
 			/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 			props: {} as any,
 		})
+		warnSpy.mockRestore()
 
 		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.findAll('.file-item')).toHaveLength(0)

@@ -1,12 +1,28 @@
 import { describe, it, expect, vi } from 'vitest'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, defineComponent } from 'vue'
+import { mount } from '@vue/test-utils'
 import { useFormFieldErrorHandling } from '../useFormFieldErrorHandling'
+
+function withSetup<T>(
+	composable: () => T,
+): { result: T, unmount: () => void } {
+	let result!: T
+	const Component = defineComponent({
+		setup() {
+			result = composable()
+			return {}
+		},
+		template: '<div />',
+	})
+	const wrapper = mount(Component)
+	return { result, unmount: () => wrapper.unmount() }
+}
 
 describe('useFormFieldErrorHandling', () => {
 	describe('initialisation', () => {
 		it('retourne les champs attendus', () => {
 			const modelValue = ref<unknown>(null)
-			const result = useFormFieldErrorHandling({}, modelValue)
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling({}, modelValue))
 
 			expect(result).toHaveProperty('validateField')
 			expect(result).toHaveProperty('validateOnSubmit')
@@ -17,102 +33,113 @@ describe('useFormFieldErrorHandling', () => {
 			expect(result).toHaveProperty('errors')
 			expect(result).toHaveProperty('warnings')
 			expect(result).toHaveProperty('successes')
+			unmount()
 		})
 
 		it('synchronise errorMessages externes immédiatement', () => {
 			const modelValue = ref<unknown>(null)
-			const { errors } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ errorMessages: ['Erreur externe'] },
 				modelValue,
-			)
-			expect(errors.value).toContain('Erreur externe')
+			))
+			expect(result.errors.value).toContain('Erreur externe')
+			unmount()
 		})
 
 		it('synchronise warningMessages externes immédiatement', () => {
 			const modelValue = ref<unknown>(null)
-			const { warnings } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ warningMessages: ['Attention'] },
 				modelValue,
-			)
-			expect(warnings.value).toContain('Attention')
+			))
+			expect(result.warnings.value).toContain('Attention')
+			unmount()
 		})
 
 		it('synchronise successMessages externes immédiatement', () => {
 			const modelValue = ref<unknown>(null)
-			const { successes } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ successMessages: ['OK'] },
 				modelValue,
-			)
-			expect(successes.value).toContain('OK')
+			))
+			expect(result.successes.value).toContain('OK')
+			unmount()
 		})
 	})
 
 	describe('validateField', () => {
 		it('retourne true pour une valeur null non requise', async () => {
 			const modelValue = ref<unknown>(null)
-			const { validateField } = useFormFieldErrorHandling({}, modelValue)
-			const result = await validateField(null)
-			expect(result).toBe(true)
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling({}, modelValue))
+			const res = await result.validateField(null)
+			expect(res).toBe(true)
+			unmount()
 		})
 
 		it('retourne true pour un tableau vide non requis', async () => {
 			const modelValue = ref<unknown>([])
-			const { validateField } = useFormFieldErrorHandling({}, modelValue)
-			const result = await validateField([])
-			expect(result).toBe(true)
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling({}, modelValue))
+			const res = await result.validateField([])
+			expect(res).toBe(true)
+			unmount()
 		})
 
 		it('retourne true et vide la validation si disableErrorHandling', async () => {
 			const modelValue = ref<unknown>('test')
-			const { validateField, hasError } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ disableErrorHandling: true },
 				modelValue,
-			)
-			const result = await validateField('test')
-			expect(result).toBe(true)
-			expect(hasError.value).toBe(false)
+			))
+			const res = await result.validateField('test')
+			expect(res).toBe(true)
+			expect(result.hasError.value).toBe(false)
+			unmount()
 		})
 
 		it('échoue si required et valeur null', async () => {
 			const modelValue = ref<unknown>(null)
-			const { validateField } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ required: true, label: 'Nom' },
 				modelValue,
-			)
-			const result = await validateField(null)
-			expect(result).toBe(false)
+			))
+			const res = await result.validateField(null)
+			expect(res).toBe(false)
+			unmount()
 		})
 
 		it('réussit si required et valeur non nulle', async () => {
 			const modelValue = ref<unknown>('Alice')
-			const { validateField } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ required: true, label: 'Nom' },
 				modelValue,
-			)
-			const result = await validateField('Alice')
-			expect(result).toBe(true)
+			))
+			const res = await result.validateField('Alice')
+			expect(res).toBe(true)
+			unmount()
 		})
 	})
 
 	describe('validateOnSubmit', () => {
 		it('valide la valeur courante du modelValue', async () => {
 			const modelValue = ref<unknown>('valeur')
-			const { validateOnSubmit } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ required: true },
 				modelValue,
-			)
-			const result = await validateOnSubmit()
-			expect(result).toBe(true)
+			))
+			const res = await result.validateOnSubmit()
+			expect(res).toBe(true)
+			unmount()
 		})
 
 		it('échoue si modelValue est null et required', async () => {
 			const modelValue = ref<unknown>(null)
-			const { validateOnSubmit } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ required: true, label: 'Champ' },
 				modelValue,
-			)
-			const result = await validateOnSubmit()
-			expect(result).toBe(false)
+			))
+			const res = await result.validateOnSubmit()
+			expect(res).toBe(false)
+			unmount()
 		})
 	})
 
@@ -120,83 +147,88 @@ describe('useFormFieldErrorHandling', () => {
 		it('appelle emitUpdate si fourni', async () => {
 			const modelValue = ref<unknown>('test')
 			const emitUpdate = vi.fn()
-			const { checkErrorOnBlur } = useFormFieldErrorHandling({}, modelValue, emitUpdate)
-			checkErrorOnBlur()
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling({}, modelValue, emitUpdate))
+			result.checkErrorOnBlur()
 			await nextTick()
 			expect(emitUpdate).toHaveBeenCalledOnce()
+			unmount()
 		})
 
 		it('ne plante pas si emitUpdate n\'est pas fourni', () => {
 			const modelValue = ref<unknown>('test')
-			const { checkErrorOnBlur } = useFormFieldErrorHandling({}, modelValue)
-			expect(() => checkErrorOnBlur()).not.toThrow()
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling({}, modelValue))
+			expect(() => result.checkErrorOnBlur()).not.toThrow()
+			unmount()
 		})
 	})
 
 	describe('hasError / hasWarning / hasSuccess', () => {
 		it('hasError reflète le prop hasError externe', () => {
 			const modelValue = ref<unknown>(null)
-			const { hasError } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ hasError: true },
 				modelValue,
-			)
-			expect(hasError.value).toBe(true)
+			))
+			expect(result.hasError.value).toBe(true)
+			unmount()
 		})
 
 		it('hasWarning reflète le prop hasWarning externe', () => {
 			const modelValue = ref<unknown>(null)
-			const { hasWarning } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ hasWarning: true },
 				modelValue,
-			)
-			expect(hasWarning.value).toBe(true)
+			))
+			expect(result.hasWarning.value).toBe(true)
+			unmount()
 		})
 
 		it('hasSuccess prop externe est indépendant de hasError externe', async () => {
 			const modelValue = ref<unknown>(null)
-			const { hasSuccess } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ hasError: true, hasSuccess: true },
 				modelValue,
-			)
-			// props.hasSuccess externe n'est pas bloqué par hasError externe dans le computed
-			expect(hasSuccess.value).toBe(true)
+			))
+			expect(result.hasSuccess.value).toBe(true)
+			unmount()
 		})
 
 		it('disableErrorHandling vide les erreurs de validation', async () => {
 			const modelValue = ref<unknown>(null)
-			const { hasError } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ disableErrorHandling: true },
 				modelValue,
-			)
+			))
 			await nextTick()
-			expect(hasError.value).toBe(false)
+			expect(result.hasError.value).toBe(false)
+			unmount()
 		})
 	})
 
 	describe('watcher modelValue', () => {
 		it('re-valide automatiquement quand modelValue change (isValidateOnBlur=false)', async () => {
 			const modelValue = ref<unknown>(null)
-			const { errors } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ required: true, label: 'Test', isValidateOnBlur: false },
 				modelValue,
-			)
+			))
 			modelValue.value = 'nouvelle valeur'
 			await nextTick()
 			await nextTick()
-			expect(errors.value.length).toBe(0)
+			expect(result.errors.value.length).toBe(0)
+			unmount()
 		})
 
 		it('ne re-valide pas automatiquement si isValidateOnBlur=true', async () => {
 			const modelValue = ref<unknown>(null)
-			const validateFieldSpy = vi.fn().mockResolvedValue(true)
-			const { errors } = useFormFieldErrorHandling(
+			const { result, unmount } = withSetup(() => useFormFieldErrorHandling(
 				{ required: true, isValidateOnBlur: true },
 				modelValue,
-			)
+			))
 			modelValue.value = 'test'
 			await nextTick()
-			expect(validateFieldSpy).not.toHaveBeenCalled()
-			expect(errors.value.length).toBe(0)
+			expect(result.errors.value.length).toBe(0)
+			unmount()
 		})
 	})
 })
