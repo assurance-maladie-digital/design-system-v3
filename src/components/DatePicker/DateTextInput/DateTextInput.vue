@@ -52,7 +52,7 @@
 		/** @internal Désactive la validation interne quand utilisé dans un parent avec validation */
 		skipInternalValidation?: boolean
 	}>(), {
-		autoClamp: true,
+		autoClamp: false,
 		bgColor: 'white',
 		customRules: () => [],
 		customWarningRules: () => [],
@@ -774,7 +774,10 @@
 		// Le mode overwrite désactive le clamp pendant la frappe pour préserver le curseur.
 		// On l'applique donc avant la validation au blur, sinon une date comme 31/04
 		// sort en erreur avant d'atteindre la logique d'autoClamp.
+		// isFormatting bloque le watcher inputValue pour éviter une double émission du modèle.
+		isFormatting.value = true
 		applyAutoClampOnCurrentInput(false)
+		isFormatting.value = false
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
@@ -820,9 +823,6 @@
 				return
 			}
 		}
-
-		// autoClamp au blur
-		applyAutoClampOnCurrentInput()
 
 		runRules(inputValue.value)
 

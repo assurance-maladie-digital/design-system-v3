@@ -105,6 +105,8 @@ export default defineConfig({
 				'src/components/customizableOptions.vue',
 				'src/components/gridsTests.vue',
 				'src/components/TestDesignTokensComponent/*',
+				'src/components/DatePicker/docExamples/**',
+				'src/components/DatePicker/playground/**',
 				...coverageConfigDefaults.exclude,
 			],
 			/* thresholds: {
