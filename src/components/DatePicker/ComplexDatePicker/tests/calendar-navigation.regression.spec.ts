@@ -1,7 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { nextTick } from 'vue'
-import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
+import ComplexDatePicker from '../ComplexDatePicker.vue'
 
 /**
  * Tests de régression pour la navigation du calendrier

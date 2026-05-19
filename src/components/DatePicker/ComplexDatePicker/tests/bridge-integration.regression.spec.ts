@@ -1,8 +1,8 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
 import { nextTick } from 'vue'
-import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-import DateTextInput from '../DateTextInput/DateTextInput.vue'
+import ComplexDatePicker from '../ComplexDatePicker.vue'
+import DateTextInput from '../../DateTextInput/DateTextInput.vue'
 
 /**
  * Tests de régression pour l'intégration Bridge + validation
