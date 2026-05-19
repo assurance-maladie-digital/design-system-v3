@@ -210,8 +210,8 @@
 	const wrapperClasses = computed(() => [
 		alignClass.value,
 		{
-			'h-100': !props.wrapTitle,
-			'v-data-table-header__content--wrap': props.wrapTitle,
+			'h-100': !props.wrapTitle || props.resizableColumns,
+			'v-data-table-header__content--wrap': props.wrapTitle && !props.resizableColumns,
 		},
 	])
 </script>
