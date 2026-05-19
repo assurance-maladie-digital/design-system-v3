@@ -8,6 +8,13 @@ describe('DateTextInput.clean', () => {
 		props: { label: 'Date', ...props },
 	})
 
+	const typeDigits = async (input: ReturnType<ReturnType<typeof mountComponent>['find']>, digits: string) => {
+		for (const digit of digits) {
+			await input.trigger('keydown', { key: digit })
+			await flushPromises()
+		}
+	}
+
 	it('renders a single-date text field by default', () => {
 		const wrapper = mountComponent({
 			label: 'Date',
@@ -32,6 +39,18 @@ describe('DateTextInput.clean', () => {
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[0]?.[0]).toBe('01/01/2025')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+	})
+
+	it('forwards externalErrorMessages to the underlying text field', () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			externalErrorMessages: ['Erreur externe de contrat DateTextInput'],
+		})
+
+		const textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).toEqual(['Erreur externe de contrat DateTextInput'])
 	})
 
 	it('formats modelValue according to dateFormatReturn in single mode', async () => {
@@ -49,6 +68,103 @@ describe('DateTextInput.clean', () => {
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[0]?.[0]).toBe('2025-01-01')
+	})
+
+	it('auto-clamps invalid day on blur in single mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
+	it('auto-clamps a masked keyboard input on blur in single mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await typeDigits(input, '31042025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
+	it.each([
+		['DD-MM-YYYY', '31042025', '30-04-2025'],
+		['YYYY.MM.DD', '20250431', '2025.04.30'],
+	])('auto-clamps masked keyboard input with %s format', async (format, digits, expected) => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await typeDigits(input, digits)
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe(expected)
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe(expected)
+	})
+
+	it('auto-clamps invalid days on blur in range mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Plage de dates',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025 - 29/02/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025 - 28/02/2025')
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		const last = emitted && emitted[emitted.length - 1]?.[0]
+		expect(last).toEqual(['30/04/2025', '28/02/2025'])
+	})
+
+	it('auto-clamps a masked keyboard input on blur in range mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Plage de dates',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await typeDigits(input, '2902202531042025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('28/02/2025 - 30/04/2025')
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		const last = emitted && emitted[emitted.length - 1]?.[0]
+		expect(last).toEqual(['28/02/2025', '30/04/2025'])
 	})
 
 	it('validates on submit for required single date', async () => {
@@ -376,6 +492,150 @@ describe('DateTextInput.clean', () => {
 
 		// Le watcher doit resynchroniser depuis modelValue
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+	})
+
+	it('keyboard Backspace efface le chiffre précédent en mode single (overwrite)', async () => {
+		const wrapper = mountComponent({ format: 'DD/MM/YYYY' })
+		const input = wrapper.find('input')
+		await typeDigits(input, '01')
+		await input.trigger('keydown', { key: 'Backspace' })
+		await flushPromises()
+		// Le masque de saisie doit avoir remplacé le dernier chiffre par '_'
+		expect(input.element.value).toContain('_')
+	})
+
+	it('keyboard digit avec sélection remplace la sélection en mode single', async () => {
+		const wrapper = mountComponent({ format: 'DD/MM/YYYY' })
+		const input = wrapper.find('input')
+		await typeDigits(input, '01012025')
+		await flushPromises()
+		// Simuler une sélection puis un chiffre
+		input.element.setSelectionRange(0, 2)
+		await input.trigger('keydown', { key: '2' })
+		await flushPromises()
+		expect(input.element.value).toBeTruthy()
+	})
+
+	it('keyboard Backspace avec sélection efface la sélection en mode single', async () => {
+		const wrapper = mountComponent({ format: 'DD/MM/YYYY' })
+		const input = wrapper.find('input')
+		await typeDigits(input, '01012025')
+		await flushPromises()
+		input.element.setSelectionRange(0, 2)
+		await input.trigger('keydown', { key: 'Backspace' })
+		await flushPromises()
+		expect(input.element.value).toContain('_')
+	})
+
+	it('readonly : validateField retourne un résultat sans erreur', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			readonly: true,
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const result = await (wrapper.vm as any).validateField('01/01/2025')
+		expect(result).toBeDefined()
+		expect(result.hasError).toBe(false)
+	})
+
+	it('watcher modelValue met à jour inputValue pour une plage de dates', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			modelValue: ['01/01/2025', '10/01/2025'],
+		})
+		await flushPromises()
+		const input = wrapper.find('input')
+		expect(input.element.value).toContain('01/01/2025')
+		expect(input.element.value).toContain('10/01/2025')
+	})
+
+	it('watcher modelValue met à jour inputValue pour une date unique', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			modelValue: '15/06/2025',
+		})
+		await flushPromises()
+		const input = wrapper.find('input')
+		expect(input.element.value).toBe('15/06/2025')
+	})
+
+	it('watcher modelValue efface inputValue si la nouvelle valeur est vide', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			modelValue: '15/06/2025',
+		})
+		await flushPromises()
+		await wrapper.setProps({ modelValue: '' })
+		await flushPromises()
+		const input = wrapper.find('input')
+		expect(input.element.value).toBe('')
+	})
+
+	it('keyboard Backspace en mode range efface un chiffre', async () => {
+		const wrapper = mountComponent({ format: 'DD/MM/YYYY', displayRange: true })
+		const input = wrapper.find('input')
+		await typeDigits(input, '01012025')
+		await input.trigger('keydown', { key: 'Backspace' })
+		await flushPromises()
+		expect(input.element.value).toContain('_')
+	})
+
+	it('keyboard digit en mode range saisit un chiffre', async () => {
+		const wrapper = mountComponent({ format: 'DD/MM/YYYY', displayRange: true })
+		const input = wrapper.find('input')
+		await typeDigits(input, '01012025')
+		await flushPromises()
+		expect(input.element.value).toContain('2025')
+	})
+
+	it('watcher modelValue initialise correctement une plage avec dateFormatReturn différent', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+			modelValue: ['2025-01-01', '2025-01-10'],
+		})
+		await flushPromises()
+		const input = wrapper.find('input')
+		expect(input.element.value).toContain('01/01/2025')
+		expect(input.element.value).toContain('10/01/2025')
+	})
+
+	it('watcher modelValue initialise une plage avec un seul élément sans crash', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			modelValue: ['01/01/2025'],
+		})
+		// Ne doit pas crasher ; la valeur peut être partiellement affichée
+		await flushPromises()
+		expect(wrapper.find('input').exists()).toBe(true)
+	})
+
+	it('autoClamp sync model en mode range (735-746)', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			autoClamp: true,
+		})
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025 - 29/02/2025')
+		await input.trigger('blur')
+		await flushPromises()
+		// Les dates doivent être clampées et le modèle émis
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+	})
+
+	it('isOverwriteEditing : émission correcte après saisie overwrite en mode range', async () => {
+		const wrapper = mountComponent({ format: 'DD/MM/YYYY', displayRange: true })
+		const input = wrapper.find('input')
+		await typeDigits(input, '0101202510012025')
+		await input.trigger('blur')
+		await flushPromises()
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
 	})
 
 	it('restores range from modelValue when disabled and input is cleared', async () => {
