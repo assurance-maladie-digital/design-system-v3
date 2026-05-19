@@ -231,7 +231,7 @@ export const Default: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="rest"
@@ -303,7 +303,7 @@ export const ButtonTexts: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -375,7 +375,7 @@ export const HideActions: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -443,7 +443,7 @@ export const Persistent: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -514,7 +514,7 @@ export const ActionsSlot: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -522,7 +522,7 @@ export const ActionsSlot: Story = {
 					>
 						<template #actions>
 							<VBtn
-                                color="primary"
+								color="primary"
 								@click="args.modelValue = false"
 							>Action</VBtn>
 						</template>
@@ -668,7 +668,7 @@ export const Width: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -763,7 +763,7 @@ export const VuetifyOptions: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"
@@ -860,7 +860,7 @@ export const Draggable: Story = {
 				<div class="pa-4">
 					<VBtn
 						@click="args.modelValue = !args.modelValue"
-                        color="primary"
+						color="primary"
 					>Toggle DialogBox</VBtn>
 					<DialogBox
 						v-bind="args"

@@ -1210,7 +1210,7 @@ export const ValidateOnBlur: Story = {
 					v-model="value"
 				/>
 				<div class="mt-4">
-                  <VBtn type="submit" color="primary">
+					<VBtn type="submit" color="primary">
 						Valider
 					</VBtn>
 				</div>

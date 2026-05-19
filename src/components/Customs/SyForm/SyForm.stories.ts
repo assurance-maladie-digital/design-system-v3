@@ -443,7 +443,7 @@ export const Reset: Story = {
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
           <div class="d-flex gap-3">
               <v-btn color="secondary" class="mr-2" @click="clearAll">Reset</v-btn>
-            <v-btn type="submit" color="primary">Soumettre</v-btn>
+              <v-btn type="submit" color="primary">Soumettre</v-btn>
           </div>
         </div>
       </SyForm>

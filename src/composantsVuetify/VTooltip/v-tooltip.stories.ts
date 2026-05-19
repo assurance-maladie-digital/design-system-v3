@@ -10,7 +10,7 @@ const meta: Meta = {
 		template: `
             <v-tooltip :text="args.text" :location="args.location" :disabled="args.disabled">
                 <template v-slot:activator="{ props }">
-                  <v-btn v-bind="props" color="primary">{{ args.activator }}</v-btn>
+                    <v-btn v-bind="props" color="primary">{{ args.activator }}</v-btn>
                 </template>
             </v-tooltip>
         `,

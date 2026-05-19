@@ -177,8 +177,8 @@ export const PrimaryOutlined: Story = {
                     Cette carte utilise la couleur "primary" et la variant "outlined". Elle contient également des boutons d'action.
                 </VCardText>
                 <VCardActions class="justify-end">
-                  <VBtn variant="text" color="primary">Annuler</VBtn>
-                  <VBtn variant="tonal" color="primary">Confirmer</VBtn>
+                    <VBtn variant="text" color="primary">Annuler</VBtn>
+                    <VBtn variant="tonal" color="primary">Confirmer</VBtn>
                 </VCardActions>
             </VCard>
         `,

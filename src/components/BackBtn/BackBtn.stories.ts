@@ -87,7 +87,7 @@ export const Default: Story = {
 			template: `
 				<VSheet
 					v-if="args.dark"
-                    color="primary"
+					color="primary"
 					class="pa-4"
 				>
 					<BackBtn v-bind="args" />
@@ -135,7 +135,7 @@ export const Dark: Story = {
 			},
 			template: `
 				<VSheet
-                    color="primary"
+					color="primary"
 					class="pa-4"
 				>
 				<BackBtn v-bind="args" />
@@ -223,7 +223,7 @@ export const DarkAndHideBackIcon: Story = {
 			},
 			template: `
 				<VSheet
-                    color="primary"
+					color="primary"
 					class="pa-4"
 				>
 				<BackBtn v-bind="args" />

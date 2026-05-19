@@ -587,7 +587,7 @@ const validateForm = async (): Promise<void> => {
 						/>
 						<VBtn
 							type="submit"
-                            color="primary"
+							color="primary"
 							class="mt-1"
 						>
 							Valider

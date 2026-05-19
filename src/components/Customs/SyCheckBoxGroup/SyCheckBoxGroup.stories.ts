@@ -228,7 +228,7 @@ export const Required: Story = {
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup v-model="value" required v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
-              <VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
+				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
 			</SyForm>
 		`,
 	}),
@@ -377,7 +377,7 @@ export const MultipleRequired: Story = {
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup v-model="value" required v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
-              <VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
 			</SyForm>
 		`,
 	}),
@@ -466,7 +466,7 @@ export const FormValidation: Story = {
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup v-model="value" required v-bind="args" />
 				<div class="mt-2">Sélection : {{ value }}</div>
-              <VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
+				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
 			</SyForm>
 		`,
 	}),
