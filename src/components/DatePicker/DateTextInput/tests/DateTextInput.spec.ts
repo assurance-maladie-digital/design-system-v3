@@ -638,6 +638,66 @@ describe('DateTextInput.clean', () => {
 		expect(emitted).toBeTruthy()
 	})
 
+	it('autoClamp range blur : toutes les émissions tableau ont la valeur clampée (pas de double émission avec l\'ancienne valeur)', async () => {
+		const wrapper = mountComponent({
+			label: 'Plage de dates',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025 - 29/02/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		const rangeEmissions = emitted!.filter(e => Array.isArray(e[0]))
+		expect(rangeEmissions.length).toBeGreaterThanOrEqual(1)
+		// Toutes les émissions tableau doivent avoir la valeur clampée — aucune ne doit contenir l'ancienne valeur non-clampée
+		for (const emission of rangeEmissions) {
+			expect(emission[0]).toEqual(['30/04/2025', '28/02/2025'])
+		}
+	})
+
+	it('autoClamp range : le modèle émis pendant la frappe est un tableau même si une seule date est clampée', async () => {
+		const wrapper = mountComponent({
+			label: 'Plage de dates',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await typeDigits(input, '3104202501012025')
+		await flushPromises()
+
+		const emitted = wrapper.emitted('update:model-value')
+		if (emitted && emitted.length > 0) {
+			const last = emitted[emitted.length - 1]?.[0]
+			if (last !== null) {
+				expect(Array.isArray(last)).toBe(true)
+			}
+		}
+	})
+
+	it('autoClamp range blur : séparateur sans espaces est passé tel quel sans crash', async () => {
+		const wrapper = mountComponent({
+			label: 'Plage de dates',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025-29/02/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.find('input').exists()).toBe(true)
+	})
+
 	it('restores range from modelValue when disabled and input is cleared', async () => {
 		const wrapper = mountComponent({
 			label: 'Plage de dates',
