@@ -504,7 +504,8 @@ describe('ComplexDatePicker.clean', () => {
 	})
 
 	const makeKeydownEvent = (key: string, inputProps: Partial<HTMLInputElement> = {}) => {
-		const fakeInput = Object.assign(document.createElement('input'), inputProps)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const fakeInput = Object.assign(document.createElement('input'), inputProps) as any
 		fakeInput.setSelectionRange = () => {}
 		const event = new KeyboardEvent('keydown', { key, bubbles: true })
 		Object.defineProperty(event, 'target', { value: fakeInput, writable: false })
