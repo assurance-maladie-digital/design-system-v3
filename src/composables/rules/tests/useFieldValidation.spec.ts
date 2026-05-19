@@ -44,6 +44,38 @@ describe('useFieldValidation', () => {
 		expect(await rule(null)).toEqual({ error: 'This field is required.' })
 	})
 
+	it('should validate required rule with warning mode', async () => {
+		const rules = generateRules([{ type: 'required', options: { isWarning: true, warningMessage: 'Warning: field required.' } }])
+		const rule = rules[0]!
+
+		expect(await rule('')).toEqual({ warning: 'Warning: field required.' })
+		expect(await rule('value')).toEqual({ success: 'Le champ est valide.' })
+	})
+
+	it('should use fieldIdentifier in error messages', async () => {
+		const rules = generateRules([{
+			type: 'required',
+			options: { fieldIdentifier: 'l\'email du destinataire' },
+		}])
+		const rule = rules[0]!
+
+		expect(await rule('')).toEqual({ error: 'Vous devez renseigner l\'email du destinataire.' })
+	})
+
+	it('should use default error message when no message provided', async () => {
+		const rules = generateRules([{ type: 'required', options: { fieldName: 'Nom' } }])
+		const rule = rules[0]!
+
+		expect(await rule('')).toEqual({ error: 'Vous devez renseigner Nom.' })
+	})
+
+	it('should use default warning message when no warningMessage provided', async () => {
+		const rules = generateRules([{ type: 'min', options: { value: 5, isWarning: true } }])
+		const rule = rules[0]!
+
+		expect(await rule(3)).toHaveProperty('warning')
+	})
+
 	it('should validate min rule', async () => {
 		const rules = generateRules([{ type: 'min', options: { value: 5, message: 'Value must be at least 5.' } }])
 		const rule = rules[0]!
@@ -64,6 +96,26 @@ describe('useFieldValidation', () => {
 		expect(await rule('')).toEqual({}) // Empty string should be ignored
 	})
 
+	it('should validate min and max rules with warning mode', async () => {
+		const minRule = generateRules([{ type: 'min', options: { value: 5, isWarning: true } }])[0]!
+		const maxRule = generateRules([{ type: 'max', options: { value: 10, isWarning: true } }])[0]!
+
+		expect(await minRule(3)).toHaveProperty('warning')
+		expect(await maxRule(15)).toHaveProperty('warning')
+	})
+
+	it('should handle non-number values for min and max rules', async () => {
+		const minRule = generateRules([{ type: 'min', options: { value: 5, message: 'Min error.' } }])[0]!
+		const maxRule = generateRules([{ type: 'max', options: { value: 10, message: 'Max error.' } }])[0]!
+
+		// Test avec des strings (typeof value !== 'number' est true, donc la condition échoue)
+		expect(await minRule('not-a-number')).toEqual({ error: 'Min error.' })
+		expect(await maxRule('not-a-number')).toEqual({ error: 'Max error.' })
+		// Test avec des objets
+		expect(await minRule({})).toEqual({ error: 'Min error.' })
+		expect(await maxRule({})).toEqual({ error: 'Max error.' })
+	})
+
 	it('should validate minLength rule', async () => {
 		const rules = generateRules([{ type: 'minLength', options: { length: 5, message: 'Minimum length is 5.' } }])
 		const rule = rules[0]!
@@ -72,6 +124,32 @@ describe('useFieldValidation', () => {
 		expect(await rule('12345')).toEqual({ success: 'Le champ est valide.' })
 		expect(await rule('123456')).toEqual({ success: 'Le champ est valide.' })
 		expect(await rule('')).toEqual({}) // Empty string should be ignored
+	})
+
+	it('should validate minLength and maxLength with warning mode', async () => {
+		const minLenRule = generateRules([{ type: 'minLength', options: { length: 5, isWarning: true } }])[0]!
+		const maxLenRule = generateRules([{ type: 'maxLength', options: { length: 5, isWarning: true } }])[0]!
+
+		expect(await minLenRule('1234')).toHaveProperty('warning')
+		expect(await maxLenRule('123456')).toHaveProperty('warning')
+	})
+
+	it('should handle non-string values for string-based rules', async () => {
+		const minLenRule = generateRules([{ type: 'minLength', options: { length: 5, message: 'MinLength error.' } }])[0]!
+		const maxLenRule = generateRules([{ type: 'maxLength', options: { length: 5, message: 'MaxLength error.' } }])[0]!
+		const exactLenRule = generateRules([{ type: 'exactLength', options: { length: 5, message: 'ExactLength error.' } }])[0]!
+		const emailRule = generateRules([{ type: 'email', options: { message: 'Email error.' } }])[0]!
+		const patternRule = generateRules([{ type: 'matchPattern', options: { pattern: /^[a-z]+$/, message: 'Pattern error.' } }])[0]!
+
+		// Test avec des nombres (typeof value !== 'string' est true)
+		expect(await minLenRule(12345)).toEqual({ error: 'MinLength error.' })
+		expect(await maxLenRule(12345)).toEqual({ error: 'MaxLength error.' })
+		expect(await exactLenRule(12345)).toEqual({ error: 'ExactLength error.' })
+		expect(await emailRule(12345)).toEqual({ error: 'Email error.' })
+		expect(await patternRule(12345)).toEqual({ error: 'Pattern error.' })
+		// Test avec des objets
+		expect(await minLenRule({})).toEqual({ error: 'MinLength error.' })
+		expect(await emailRule({})).toEqual({ error: 'Email error.' })
 	})
 
 	it('should validate minLength rule with ignoreSpace option', async () => {
@@ -140,6 +218,14 @@ describe('useFieldValidation', () => {
 		expect(await rule('1 2 3 4 5')).toEqual({ success: 'Le champ est valide.' }) // Length without spaces is 5
 	})
 
+	it('should validate exactLength and matchPattern with warning mode', async () => {
+		const exactLenRule = generateRules([{ type: 'exactLength', options: { length: 5, isWarning: true } }])[0]!
+		const patternRule = generateRules([{ type: 'matchPattern', options: { pattern: /^[a-z]+$/, isWarning: true } }])[0]!
+
+		expect(await exactLenRule('1234')).toHaveProperty('warning')
+		expect(await patternRule('ABC')).toHaveProperty('warning')
+	})
+
 	it('should validate email rule', async () => {
 		// Vérifions d'abord que la regex EMAIL_REGEXP fonctionne comme prévu
 		expect(EMAIL_REGEXP.test('invalid-email')).toBe(false)
@@ -154,6 +240,13 @@ describe('useFieldValidation', () => {
 		expect(await rule('test@example.com')).toEqual({ success: 'Le champ est valide.' })
 		expect(await rule('test.name@example.co.uk')).toEqual({ success: 'Le champ est valide.' })
 		expect(await rule('')).toEqual({}) // Empty string should be ignored
+	})
+
+	it('should validate email rule with warning mode', async () => {
+		const emailRule = generateRules([{ type: 'email', options: { isWarning: true, warningMessage: 'Invalid email warning.' } }])[0]!
+
+		expect(await emailRule('invalid')).toEqual({ warning: 'Invalid email warning.' })
+		expect(await emailRule('test@example.com')).toEqual({ success: 'Le champ est valide.' })
 	})
 
 	it('should validate matchPattern rule', async () => {
@@ -183,6 +276,10 @@ describe('useFieldValidation', () => {
 		// 13 janvier 2023 est un vendredi (jour 5)
 		expect(await rule(new Date(2023, 0, 13))).toEqual({ success: 'Le champ est valide.' })
 		expect(await rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(null)).toEqual({}) // Null should be ignored
+		expect(await rule(undefined)).toEqual({}) // Undefined should be ignored
+		// Test avec une date invalide (string qui ne parse pas)
+		expect(await rule('invalid-date-string')).toEqual({ error: 'Date invalide' })
 	})
 
 	it('should validate notBeforeToday rule', async () => {
@@ -199,6 +296,10 @@ describe('useFieldValidation', () => {
 		// 16 janvier 2023 est après aujourd'hui
 		expect(await rule(new Date(2023, 0, 16))).toEqual({ success: 'Le champ est valide.' })
 		expect(await rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(null)).toEqual({}) // Null should be ignored
+		expect(await rule(undefined)).toEqual({}) // Undefined should be ignored
+		// Test avec une date invalide (string qui ne parse pas)
+		expect(await rule('not-a-valid-date')).toEqual({ error: 'Date invalide' })
 	})
 
 	it('should validate notAfterToday rule', async () => {
@@ -215,6 +316,29 @@ describe('useFieldValidation', () => {
 		// 14 janvier 2023 est avant aujourd'hui
 		expect(await rule(new Date(2023, 0, 14))).toEqual({ success: 'Le champ est valide.' })
 		expect(await rule('')).toEqual({}) // Empty string should be ignored
+		expect(await rule(null)).toEqual({}) // Null should be ignored
+		expect(await rule(undefined)).toEqual({}) // Undefined should be ignored
+		// Test avec une date invalide (string qui ne parse pas)
+		expect(await rule('bad-date-format')).toEqual({ error: 'Date invalide' })
+	})
+
+	it('should validate date rules with warning mode', async () => {
+		const notWeekendRule = generateRules([{
+			type: 'notWeekend',
+			options: { isWarning: true, warningMessage: 'Weekend warning.' },
+		}])[0]!
+		const notBeforeTodayRule = generateRules([{
+			type: 'notBeforeToday',
+			options: { isWarning: true, warningMessage: 'Before today warning.' },
+		}])[0]!
+		const notAfterTodayRule = generateRules([{
+			type: 'notAfterToday',
+			options: { isWarning: true, warningMessage: 'After today warning.' },
+		}])[0]!
+
+		expect(await notWeekendRule(new Date(2023, 0, 15))).toEqual({ warning: 'Weekend warning.' })
+		expect(await notBeforeTodayRule(new Date(2023, 0, 14))).toEqual({ warning: 'Before today warning.' })
+		expect(await notAfterTodayRule(new Date(2023, 0, 16))).toEqual({ warning: 'After today warning.' })
 	})
 
 	it('should test parseDate function directly', () => {
@@ -296,6 +420,37 @@ describe('useFieldValidation', () => {
 			options: { date: undefined as unknown as string, message: 'Date cannot be before reference date.' },
 		}])[0]!
 		expect(await ruleWithUndefinedDate(new Date())).toEqual({})
+		// Test avec valeur null/undefined
+		expect(await rule(null)).toEqual({}) // Null should be ignored
+		expect(await rule(undefined)).toEqual({}) // Undefined should be ignored
+		// Test avec une date de référence invalide (string qui ne parse pas)
+		const ruleWithInvalidRefDate = generateRules([{
+			type: 'notBeforeDate',
+			options: { date: 'invalid-date', message: 'Date cannot be before reference date.' },
+		}])[0]!
+		expect(await ruleWithInvalidRefDate(new Date())).toEqual({ error: 'Date de référence invalide' })
+	})
+
+	it('should validate notBeforeDate and notAfterDate with warning mode', async () => {
+		const notBeforeDateRule = generateRules([{
+			type: 'notBeforeDate',
+			options: {
+				date: '10/01/2023',
+				isWarning: true,
+				warningMessage: 'Date before ref warning.',
+			},
+		}])[0]!
+		const notAfterDateRule = generateRules([{
+			type: 'notAfterDate',
+			options: {
+				date: '20/01/2023',
+				isWarning: true,
+				warningMessage: 'Date after ref warning.',
+			},
+		}])[0]!
+
+		expect(await notBeforeDateRule(new Date(2023, 0, 9))).toEqual({ warning: 'Date before ref warning.' })
+		expect(await notAfterDateRule(new Date(2023, 0, 21))).toEqual({ warning: 'Date after ref warning.' })
 	})
 
 	it('should throw when date reference is not a string in notBeforeDate rule', async () => {
@@ -348,6 +503,15 @@ describe('useFieldValidation', () => {
 			options: { date: undefined as unknown as string, message: 'Date cannot be after reference date.' },
 		}])[0]!
 		expect(await ruleWithUndefinedDate(new Date())).toEqual({})
+		// Test avec valeur null/undefined
+		expect(await rule(null)).toEqual({}) // Null should be ignored
+		expect(await rule(undefined)).toEqual({}) // Undefined should be ignored
+		// Test avec une date de référence invalide (string qui ne parse pas)
+		const ruleWithInvalidRefDate = generateRules([{
+			type: 'notAfterDate',
+			options: { date: 'invalid-date', message: 'Date cannot be after reference date.' },
+		}])[0]!
+		expect(await ruleWithInvalidRefDate(new Date())).toEqual({ error: 'Date de référence invalide' })
 	})
 
 	it('should throw when date reference is not a string in notAfterDate rule', async () => {
@@ -400,6 +564,29 @@ describe('useFieldValidation', () => {
 			options: { date: undefined as unknown as string, message: 'Date must be exactly the reference date.' },
 		}])[0]!
 		expect(await ruleWithUndefinedDate(new Date())).toEqual({})
+		// Test avec valeur null/undefined
+		expect(await rule(null)).toEqual({}) // Null should be ignored
+		expect(await rule(undefined)).toEqual({}) // Undefined should be ignored
+		// Test avec une date de référence invalide (string qui ne parse pas)
+		const ruleWithInvalidRefDate = generateRules([{
+			type: 'dateExact',
+			options: { date: 'invalid-date', message: 'Date must be exactly the reference date.' },
+		}])[0]!
+		expect(await ruleWithInvalidRefDate(new Date())).toEqual({ error: 'Date de référence invalide' })
+	})
+
+	it('should validate dateExact with warning mode', async () => {
+		const dateExactRule = generateRules([{
+			type: 'dateExact',
+			options: {
+				date: '15/01/2023',
+				isWarning: true,
+				warningMessage: 'Not exact date warning.',
+			},
+		}])[0]!
+
+		expect(await dateExactRule(new Date(2023, 0, 14))).toEqual({ warning: 'Not exact date warning.' })
+		expect(await dateExactRule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
 	})
 
 	it('should throw when date reference is not a string in dateExact rule', async () => {
@@ -432,6 +619,165 @@ describe('useFieldValidation', () => {
 			options: { validate: (value: unknown) => value === 'valid' ? true : 'Custom error message' },
 		}])[0]!
 		expect(await customMessageRule('invalid')).toEqual({ error: 'Custom error message' })
+	})
+
+	it('should validate custom rule with async function', async () => {
+		// Test avec une fonction async (Promise)
+		const asyncRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: async (value: unknown) => {
+					await new Promise(resolve => setTimeout(resolve, 10))
+					return value === 'async-valid'
+				},
+				message: 'Async validation failed.',
+			},
+		}])[0]!
+
+		expect(await asyncRule('invalid')).toEqual({ error: 'Async validation failed.' })
+		expect(await asyncRule('async-valid')).toEqual({ success: 'Le champ est valide.' })
+	})
+
+	it('should handle custom rule async function returning string message', async () => {
+		const asyncStringRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: async (value: unknown) => {
+					await new Promise(resolve => setTimeout(resolve, 10))
+					return value === 'valid' ? true : 'Custom async error'
+				},
+			},
+		}])[0]!
+
+		expect(await asyncStringRule('invalid')).toEqual({ error: 'Custom async error' })
+		expect(await asyncStringRule('valid')).toEqual({ success: 'Le champ est valide.' })
+	})
+
+	it('should handle custom rule async function throwing error', async () => {
+		const asyncErrorRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: async () => {
+					throw new Error('Async error message')
+				},
+				// Pas de message défini pour que l'erreur soit capturée
+			},
+		}])[0]!
+
+		expect(await asyncErrorRule('any')).toEqual({ error: 'Async error message' })
+	})
+
+	it('should handle custom rule with warning and async function', async () => {
+		const asyncWarningRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: async (value: unknown) => {
+					await new Promise(resolve => setTimeout(resolve, 10))
+					return value === 'warning' ? 'Warning message' : true
+				},
+				isWarning: true,
+			},
+		}])[0]!
+
+		expect(await asyncWarningRule('warning')).toEqual({ warning: 'Warning message' })
+		expect(await asyncWarningRule('valid')).toEqual({ success: 'Le champ est valide.' })
+	})
+
+	it('should handle custom rule without validate function in error mode', async () => {
+		// Test sans validate et isWarning=false (branche error par défaut)
+		const noValidateErrorRule = generateRules([{
+			type: 'custom',
+			options: { message: 'No validate function provided.' },
+		}])[0]!
+
+		expect(await noValidateErrorRule('any')).toEqual({ error: 'No validate function provided.' })
+	})
+
+	it('should handle custom rule without validate function with default error message', async () => {
+		// Test sans validate ni message (branche baseMessages.error)
+		const noValidateDefaultRule = generateRules([{
+			type: 'custom',
+			options: { fieldName: 'TestField' },
+		}])[0]!
+
+		expect(await noValidateDefaultRule('any')).toHaveProperty('error')
+	})
+
+	it('should handle custom rule without validate function in warning mode', async () => {
+		const noValidateWarningRule = generateRules([{
+			type: 'custom',
+			options: {
+				warningMessage: 'Warning: no validation.',
+				isWarning: true,
+			},
+		}])[0]!
+
+		expect(await noValidateWarningRule('any')).toEqual({ warning: 'Warning: no validation.' })
+	})
+
+	it('should handle custom rule returning false with warning', async () => {
+		const falseWarningRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: () => false,
+				isWarning: true,
+				warningMessage: 'Custom warning for false.',
+			},
+		}])[0]!
+
+		expect(await falseWarningRule('any')).toEqual({ warning: 'Custom warning for false.' })
+	})
+
+	it('should handle custom rule returning false with default warning', async () => {
+		// Test res === false avec isWarning=true mais sans warningMessage (branche baseMessages.warning)
+		const falseDefaultWarningRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: () => false,
+				isWarning: true,
+				fieldName: 'TestField',
+			},
+		}])[0]!
+
+		expect(await falseDefaultWarningRule('any')).toHaveProperty('warning')
+	})
+
+	it('should handle custom rule async error with warningMessage', async () => {
+		const asyncErrorWarningRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: async () => { throw new Error('Thrown error') },
+				isWarning: true,
+				warningMessage: 'Caught async warning.',
+			},
+		}])[0]!
+
+		expect(await asyncErrorWarningRule('any')).toEqual({ warning: 'Caught async warning.' })
+	})
+
+	it('should handle async error that is not an Error instance', async () => {
+		// Test où err n'est pas une instance de Error (branche String(err))
+		const asyncNonErrorRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: async () => { throw 'String error message' },
+			},
+		}])[0]!
+
+		expect(await asyncNonErrorRule('any')).toEqual({ error: 'String error message' })
+	})
+
+	it('should handle custom rule returning string with warning', async () => {
+		// Test typeof res === 'string' avec isWarning=true
+		const stringWarningRule = generateRules([{
+			type: 'custom',
+			options: {
+				validate: () => 'Custom warning string',
+				isWarning: true,
+			},
+		}])[0]!
+
+		expect(await stringWarningRule('any')).toEqual({ warning: 'Custom warning string' })
 	})
 
 	it('should handle warning mode instead of error', async () => {
@@ -497,5 +843,33 @@ describe('useFieldValidation', () => {
 		const rule = rules[0]!
 
 		expect(await rule('any value')).toEqual({ error: 'La règle spécifiée pour ce champ n\'existe pas.' })
+	})
+
+	it('should validate isHolidayDay rule', async () => {
+		const rules = generateRules([{
+			type: 'isHolidayDay',
+			options: { message: 'Date cannot be a holiday.' },
+		}])
+		const rule = rules[0]!
+
+		// Test avec une date valide (pas un jour férié)
+		expect(await rule(new Date(2023, 0, 13))).toEqual({ success: 'Le champ est valide.' })
+		// Test avec null/undefined/empty
+		expect(await rule(null)).toEqual({}) // Null should be ignored
+		expect(await rule(undefined)).toEqual({}) // Undefined should be ignored
+		expect(await rule('')).toEqual({}) // Empty string should be ignored
+		// Test avec une date invalide
+		expect(await rule('invalid-date')).toEqual({ error: 'Date invalide' })
+	})
+
+	it('should validate isHolidayDay with warning mode', async () => {
+		const holidayRule = generateRules([{
+			type: 'isHolidayDay',
+			options: { isWarning: true, warningMessage: 'Holiday warning.' },
+		}])[0]!
+
+		// Le 1er janvier 2023 est un jour férié
+		expect(await holidayRule(new Date(2023, 0, 1))).toEqual({ warning: 'Holiday warning.' })
+		expect(await holidayRule(new Date(2023, 0, 13))).toEqual({ success: 'Le champ est valide.' })
 	})
 })

@@ -21,6 +21,13 @@ describe('DatePicker', () => {
 		return wrapper
 	}
 
+	const typeDigits = async (input: ReturnType<ReturnType<typeof mountComponent>['find']>, digits: string) => {
+		for (const digit of digits) {
+			await input.trigger('keydown', { key: digit })
+			await flushPromises()
+		}
+	}
+
 	it('renders the calendar mode activator input by default', () => {
 		const wrapper = mountComponent({
 			required: true,
@@ -31,19 +38,141 @@ describe('DatePicker', () => {
 		expect(input.exists()).toBe(true)
 	})
 
-	it('emits update:modelValue when a valid date is typed in single mode', async () => {
+	/**
+	 * AutoClamp est testé dans useDateAutoClamp.spec.ts (composable natif)
+	 * Tests de composant conservés pour intégration
+	 */
+	it('preserves autoClamp in no-calendar mode', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',
+			noCalendar: true,
+			autoClamp: true,
 		})
 
 		const input = wrapper.find('input')
-		await input.setValue('01/01/2023')
+		await input.setValue('31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
+	it('preserves autoClamp with masked keyboard input in no-calendar mode', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			noCalendar: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await typeDigits(input, '31042025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
+	it('preserves autoClamp in combined mode', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			useCombinedMode: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
+	it('preserves autoClamp with masked keyboard input in combined mode', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			useCombinedMode: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await typeDigits(input, '31042025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
+	it('preserves autoClamp in combined mode with dateFormatReturn', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			useCombinedMode: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('2025-04-30')
+	})
+
+	it('preserves autoClamp in combined range mode', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			useCombinedMode: true,
+			displayRange: true,
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('29/02/2025 - 31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('28/02/2025 - 30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toEqual(['28/02/2025', '30/04/2025'])
+	})
+
+	it('keeps combined autoClamp value visible after parent v-model sync', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			useCombinedMode: true,
+			autoClamp: true,
+			modelValue: undefined,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025')
 		await input.trigger('blur')
 		await flushPromises()
 
 		const emitted = wrapper.emitted('update:modelValue')
-		expect(emitted).toBeTruthy()
-		expect(emitted && emitted[0]?.[0]).toBe('01/01/2023')
+		const clampedValue = emitted && emitted[emitted.length - 1]?.[0]
+		expect(clampedValue).toBe('30/04/2025')
+
+		await wrapper.setProps({ modelValue: clampedValue })
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('30/04/2025')
 	})
 
 	it('handles invalid typed date input gracefully', async () => {
@@ -208,6 +337,21 @@ describe('DatePicker', () => {
 		expect(vm.errorMessages.length).toBe(0)
 	})
 
+	it('keeps current disableErrorHandling contract: required empty submit does not expose errors', async () => {
+		const wrapper = mountComponent({
+			required: true,
+			format: 'DD/MM/YYYY',
+			disableErrorHandling: true,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.selectedDates = null
+		const result = await vm.validateOnSubmit()
+
+		expect(result).toBe(true)
+		expect(vm.errorMessages).toEqual([])
+	})
+
 	it('toggles date picker visibility with openDatePicker', async () => {
 		const wrapper = mountComponent()
 		const vm = wrapper.vm as DatePickerInstance
@@ -277,6 +421,15 @@ describe('DatePicker', () => {
 		await nextTick()
 		expect(vm.isDatePickerVisible).toBe(true)
 	}, 20000)
+
+	it('keeps deprecated birthDate prop as an alias for birth date mode', () => {
+		const wrapper = mountComponent({
+			birthDate: true,
+		})
+
+		expect(wrapper.props('birthDate')).toBe(true)
+		expect(wrapper.vm.currentViewMode).toBe('year')
+	})
 
 	it('emits closed when handleClickOutside is called while open', () => {
 		const wrapper = mountComponent({
