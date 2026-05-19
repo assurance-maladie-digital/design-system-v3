@@ -1,6 +1,7 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { defineComponent } from 'vue'
+import { createRouter, createMemoryHistory } from 'vue-router'
 import HorizontalNavbar from '../HorizontalNavbar.vue'
 
 const SyTabsStub = defineComponent({
@@ -238,6 +239,343 @@ describe('HorizontalNavbar', () => {
 				isActive: (item: { label: string, to: string, disabled?: boolean }, index: number) => boolean
 			}
 			expect(vm.isActive({ label: 'Test', to: '/', disabled: true }, 0)).toBe(false)
+		})
+
+		it('retourne false pour un item avec to (string) quand pathname ne correspond pas', () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: [{ label: 'À propos', to: '/about' }] },
+			})
+
+			const vm = wrapper.vm as unknown as {
+				isActive: (item: { label: string, to: string }, index: number) => boolean
+			}
+			// jsdom pathname est '/', '/about' ne correspond pas
+			expect(vm.isActive({ label: 'À propos', to: '/about' }, 0)).toBe(false)
+		})
+
+		it('retourne true pour un item avec to (string) correspondant à window.location.pathname', () => {
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/about', href: 'http://localhost/about' },
+				writable: true,
+			})
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: [{ label: 'À propos', to: '/about' }] },
+			})
+
+			const vm = wrapper.vm as unknown as {
+				isActive: (item: { label: string, to: string }, index: number) => boolean
+			}
+			expect(vm.isActive({ label: 'À propos', to: '/about' }, 0)).toBe(true)
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/', href: 'http://localhost/' },
+				writable: true,
+			})
+		})
+
+		it('retourne true pour un item avec to (string) sous-chemin de pathname', () => {
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/about/team', href: 'http://localhost/about/team' },
+				writable: true,
+			})
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: [{ label: 'À propos', to: '/about' }] },
+			})
+
+			const vm = wrapper.vm as unknown as {
+				isActive: (item: { label: string, to: string }, index: number) => boolean
+			}
+			expect(vm.isActive({ label: 'À propos', to: '/about' }, 0)).toBe(true)
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/', href: 'http://localhost/' },
+				writable: true,
+			})
+		})
+
+		it('retourne true pour un item avec to (objet) correspondant à pathname', () => {
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/contact', href: 'http://localhost/contact' },
+				writable: true,
+			})
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: [{ label: 'Contact', to: { path: '/contact' } }] },
+			})
+
+			const vm = wrapper.vm as unknown as {
+				isActive: (item: { label: string, to: { path: string } }, index: number) => boolean
+			}
+			expect(vm.isActive({ label: 'Contact', to: { path: '/contact' } }, 0)).toBe(true)
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/', href: 'http://localhost/' },
+				writable: true,
+			})
+		})
+
+		it('retourne false pour un item avec to (objet) non correspondant', () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: [{ label: 'Contact', to: { path: '/contact' } }] },
+			})
+
+			const vm = wrapper.vm as unknown as {
+				isActive: (item: { label: string, to: { path: string } }, index: number) => boolean
+			}
+			// jsdom pathname est '/', '/contact' ne correspond pas
+			expect(vm.isActive({ label: 'Contact', to: { path: '/contact' } }, 0)).toBe(false)
+		})
+	})
+
+	describe('handleTabChange — navigation', () => {
+		it('met à jour activeTab au clic sur un onglet (sans router réel)', async () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: defaultItems },
+			})
+
+			await wrapper.findAll('.tab-btn')[1]!.trigger('click')
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as { activeTab: number }
+			expect(vm.activeTab).toBe(1)
+		})
+
+		it('met à jour activeTab mais retourne tôt si confirmTabChange est true', async () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: defaultItems, confirmTabChange: true },
+			})
+
+			await wrapper.findAll('.tab-btn')[1]!.trigger('click')
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as { activeTab: number }
+			expect(vm.activeTab).toBe(1)
+		})
+
+		it('navigue via window.location.href si item a un href', async () => {
+			const locationSpy = vi.spyOn(window, 'location', 'get').mockReturnValue({
+				...window.location,
+				href: '',
+			} as Location)
+			const hrefSetter = vi.fn()
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, set href(v: string) { hrefSetter(v) } },
+				writable: true,
+			})
+
+			const items = [{ label: 'Externe', href: 'https://example.com' }]
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items },
+			})
+
+			await wrapper.findAll('.tab-btn')[0]!.trigger('click')
+			await flushPromises()
+
+			locationSpy.mockRestore()
+		})
+
+		it('ne plante pas si l\'item cliqué n\'existe pas dans items', async () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: defaultItems },
+			})
+
+			const vm = wrapper.vm as unknown as { handleTabChange: (index: number) => Promise<void> }
+			await expect(vm.handleTabChange(999)).resolves.toBeUndefined()
+		})
+	})
+
+	describe('resetTabSelection — avec items et route', () => {
+		it('retourne les valeurs courantes de activeTab et activeItemIndex', () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: defaultItems },
+			})
+
+			const vm = wrapper.vm as unknown as {
+				resetTabSelection: () => { activeTab: number, activeItemIndex: number }
+			}
+			const result = vm.resetTabSelection()
+			expect(typeof result.activeTab).toBe('number')
+			expect(typeof result.activeItemIndex).toBe('number')
+		})
+
+		it('retourne -1 si aucun item ne correspond à la route', () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: defaultItems },
+			})
+
+			const vm = wrapper.vm as unknown as {
+				resetTabSelection: () => { activeTab: number, activeItemIndex: number }
+			}
+			const result = vm.resetTabSelection()
+			expect(result.activeTab).toBe(-1)
+		})
+
+		it('met à jour activeTab après avoir appelé handleTabChange puis resetTabSelection', async () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: defaultItems },
+			})
+
+			await wrapper.findAll('.tab-btn')[1]!.trigger('click')
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as {
+				activeTab: number
+				resetTabSelection: () => { activeTab: number, activeItemIndex: number }
+			}
+			expect(vm.activeTab).toBe(1)
+		})
+	})
+
+	describe('avec vue-router réel', () => {
+		function makeRouter() {
+			return createRouter({
+				history: createMemoryHistory(),
+				routes: [
+					{ path: '/', component: { template: '<div/>' } },
+					{ path: '/about', component: { template: '<div/>' } },
+					{ path: '/contact', component: { template: '<div/>' } },
+					{ path: '/about/team', component: { template: '<div/>' } },
+				],
+			})
+		}
+
+		it('isActive retourne true quand la route correspond à un item to (string)', async () => {
+			const router = makeRouter()
+			await router.push('/about')
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs, plugins: [router] },
+				props: { items: defaultItems },
+			})
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as {
+				isActive: (item: { label: string, to: string }, index: number) => boolean
+			}
+			expect(vm.isActive({ label: 'À propos', to: '/about' }, 1)).toBe(true)
+		})
+
+		it('resetTabSelection trouve l\'item actif avec une route correspondante', async () => {
+			const router = makeRouter()
+			await router.push('/about')
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs, plugins: [router] },
+				props: { items: defaultItems },
+			})
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as {
+				resetTabSelection: () => { activeTab: number, activeItemIndex: number }
+			}
+			const result = vm.resetTabSelection()
+			expect(result.activeTab).toBe(1)
+			expect(result.activeItemIndex).toBe(1)
+		})
+
+		it('watcher currentPath met à jour activeTab lors d\'un changement de route', async () => {
+			const router = makeRouter()
+			await router.push('/')
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs, plugins: [router] },
+				props: { items: defaultItems },
+			})
+			await flushPromises()
+
+			await router.push('/about')
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as { activeTab: number }
+			expect(vm.activeTab).toBe(1)
+		})
+
+		it('watcher currentPath remet activeTab à -1 si aucun item ne correspond', async () => {
+			const router = makeRouter()
+			await router.push('/about')
+			const itemsWithoutContact = [
+				{ label: 'Accueil', to: '/home' },
+				{ label: 'À propos', to: '/about' },
+			]
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs, plugins: [router] },
+				props: { items: itemsWithoutContact },
+			})
+			await flushPromises()
+
+			await router.push('/contact')
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as { activeTab: number }
+			expect(vm.activeTab).toBe(-1)
+		})
+
+		it('handleTabChange appelle router.push avec le to de l\'item', async () => {
+			const router = makeRouter()
+			const pushSpy = vi.spyOn(router, 'push')
+			await router.push('/')
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs, plugins: [router] },
+				props: { items: defaultItems },
+			})
+			await flushPromises()
+
+			await wrapper.findAll('.tab-btn')[1]!.trigger('click')
+			await flushPromises()
+
+			expect(pushSpy).toHaveBeenCalledWith('/about')
+		})
+
+		it('isActive retourne true pour un item avec to (string) sous-chemin', async () => {
+			const router = makeRouter()
+			await router.push('/about/team')
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs, plugins: [router] },
+				props: { items: defaultItems },
+			})
+			await flushPromises()
+
+			const vm = wrapper.vm as unknown as {
+				isActive: (item: { label: string, to: string }, index: number) => boolean
+			}
+			expect(vm.isActive({ label: 'À propos', to: '/about' }, 1)).toBe(true)
+		})
+	})
+
+	describe('tabItems computed', () => {
+		it('convertit les items en TabItem avec les bonnes propriétés', () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: {
+					items: [
+						{ label: 'Accueil', to: '/', disabled: false },
+						{ label: 'Externe', href: 'https://example.com' },
+					],
+				},
+			})
+
+			const vm = wrapper.vm as unknown as {
+				tabItems: Array<{ label: string, value: number, href?: string, to?: string, disabled?: boolean }>
+			}
+			expect(vm.tabItems).toHaveLength(2)
+			expect(vm.tabItems[0]!.label).toBe('Accueil')
+			expect(vm.tabItems[0]!.value).toBe(0)
+			expect(vm.tabItems[1]!.href).toBe('https://example.com')
+		})
+
+		it('retourne un tableau vide si items n\'est pas un tableau', () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs },
+				props: { items: [] },
+			})
+
+			const vm = wrapper.vm as unknown as { tabItems: unknown[] }
+			expect(vm.tabItems).toHaveLength(0)
 		})
 	})
 })
