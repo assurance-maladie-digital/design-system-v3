@@ -649,13 +649,13 @@ export const WithClearQueue: Story = (args) => {
                 Ajouter info
               </VBtn>
               <VBtn
-                  color="success"
+                  color="onSuccessVariant"
                   @click="envoyerNotification('Notification succès', 'success')"
               >
                 Ajouter succès
               </VBtn>
               <VBtn
-                  color="warning"
+                  color="onWarningVariant"
                   @click="envoyerNotification('Notification avertissement', 'warning')"
               >
                 Ajouter avertissement

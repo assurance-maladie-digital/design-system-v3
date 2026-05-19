@@ -146,8 +146,8 @@
 	}
 
 	.notification--success {
-		background-color: rgb(var(--v-theme-onSuccessVariant, '86, 194, 113'));
-		color: rgb(var(--v-theme-successVariant));
+		background-color: rgb(var(--v-theme-success, '86, 194, 113'));
+		color: rgb(var(--v-theme-onSuccess));
 
 		.notification__close:focus-visible {
 			outline: 2px solid rgb(var(--v-theme-onSuccess));
@@ -155,8 +155,8 @@
 	}
 
 	.notification--warning {
-		background-color: rgb(var(--v-theme-onWarningVariant));
-		color: rgb(var(--v-theme-warningVariant));
+		background-color: rgb(var(--v-theme-warning));
+		color: rgb(var(--v-theme-onWarning));
 
 		.notification__close:focus-visible {
 			outline: 2px solid rgb(var(--v-theme-onSurface));

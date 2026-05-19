@@ -180,7 +180,7 @@ const preview: Preview = {
 			values: [
 				{
 					name: 'main',
-					value: '#e7ecf5',
+					value: '#fff',
 				},
 				{
 					name: 'surface',
