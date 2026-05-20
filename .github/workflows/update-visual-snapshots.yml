@@ -7,6 +7,10 @@ on:
         description: "Branch to update snapshots on (leave empty for current branch)"
         required: false
         type: string
+      spec:
+        description: "Spec filter (e.g. 'ChipList' or 'Accordion,ChipList'). Leave empty to update all."
+        required: false
+        type: string
   push:
     tags:
       - 'update-snapshots'
@@ -59,7 +63,13 @@ jobs:
       - name: Install Cypress binary
         run: pnpm cypress install
       - name: Update visual test snapshots
-        run: pnpm test:visual:update
+        run: |
+          if [ -n "${{ github.event.inputs.spec }}" ]; then
+            SPECS=$(echo "${{ github.event.inputs.spec }}" | tr ',' '\n' | sed 's|.*|src/components/**/*&*.visual.cy.ts|' | tr '\n' ',')
+            pnpm cypress run --component --browser electron --env updateSnapshots=true --spec "$SPECS"
+          else
+            pnpm test:visual:update
+          fi
       - name: Check for changes
         id: verify
         run: |
