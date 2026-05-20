@@ -241,7 +241,7 @@
 
 .warning-field {
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-warning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	:deep(.v-selection-control__input) {
