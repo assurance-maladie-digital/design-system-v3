@@ -16,7 +16,7 @@ describe('SearchListField - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-text-field').should('be.visible')
+		cy.get('.sy-search-list').should('be.visible')
 		cy.matchImageSnapshot('search-list-field-default', cy.get('.v-application'))
 	})
 
@@ -29,7 +29,7 @@ describe('SearchListField - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-text-field').should('be.visible')
+		cy.get('.sy-search-list').should('be.visible')
 		cy.matchImageSnapshot('search-list-field-with-selection', cy.get('.v-application'))
 	})
 })
