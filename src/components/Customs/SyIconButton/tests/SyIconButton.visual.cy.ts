@@ -1,10 +1,11 @@
 import SyIconButton from '../SyIconButton.vue'
+import { mdiPencil, mdiDelete, mdiPlus } from '@mdi/js'
 
 describe('SyIconButton - Visual regression tests', () => {
 	it('displays the icon button by default', () => {
 		cy.mountWithVuetify(SyIconButton, {
 			props: {
-				icon: 'mdi-pencil',
+				icon: mdiPencil,
 				label: 'Modifier',
 			},
 		})
@@ -16,7 +17,7 @@ describe('SyIconButton - Visual regression tests', () => {
 	it('displays the icon button with primary color', () => {
 		cy.mountWithVuetify(SyIconButton, {
 			props: {
-				icon: 'mdi-delete',
+				icon: mdiDelete,
 				label: 'Supprimer',
 				color: 'error',
 			},
@@ -29,7 +30,7 @@ describe('SyIconButton - Visual regression tests', () => {
 	it('displays the icon button in large size', () => {
 		cy.mountWithVuetify(SyIconButton, {
 			props: {
-				icon: 'mdi-plus',
+				icon: mdiPlus,
 				label: 'Ajouter',
 				size: 'large',
 			},
@@ -42,7 +43,7 @@ describe('SyIconButton - Visual regression tests', () => {
 	it('displays the icon button in disabled state', () => {
 		cy.mountWithVuetify(SyIconButton, {
 			props: {
-				icon: 'mdi-pencil',
+				icon: mdiPencil,
 				label: 'Modifier',
 				disabled: true,
 			},

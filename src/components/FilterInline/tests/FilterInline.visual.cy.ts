@@ -3,19 +3,13 @@ import FilterInline from '../FilterInline.vue'
 const defaultFilters = [
 	{
 		name: 'statut',
-		label: 'Statut',
-		choices: [
-			{ label: 'Actif', value: 'actif' },
-			{ label: 'Inactif', value: 'inactif' },
-		],
+		title: 'Statut',
+		value: ['actif'],
 	},
 	{
 		name: 'type',
-		label: 'Type',
-		choices: [
-			{ label: 'Type A', value: 'a' },
-			{ label: 'Type B', value: 'b' },
-		],
+		title: 'Type',
+		value: null,
 	},
 ]
 

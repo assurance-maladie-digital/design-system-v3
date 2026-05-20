@@ -1,9 +1,17 @@
 import StatusPage from '../StatusPage.vue'
+import { h } from 'vue'
+
+const illustrationSlot = {
+	illustration: () => h('div', {
+		style: 'width:120px;height:120px;background:#e0e7ff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:48px;',
+	}, '404'),
+}
 
 describe('StatusPage - Visual regression tests', () => {
 	it('displays the status page with a title', () => {
 		cy.mountWithVuetify(StatusPage, {
 			props: { pageTitle: 'Erreur 404' },
+			slots: illustrationSlot,
 		})
 
 		cy.get('.v-application').should('be.visible')
@@ -18,6 +26,7 @@ describe('StatusPage - Visual regression tests', () => {
 				btnText: 'Retour à l\'accueil',
 				btnHref: '/',
 			},
+			slots: illustrationSlot,
 		})
 
 		cy.get('.v-application').should('be.visible')
