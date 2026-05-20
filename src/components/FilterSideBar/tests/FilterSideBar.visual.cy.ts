@@ -3,11 +3,13 @@ import FilterSideBar from '../FilterSideBar.vue'
 const defaultFilters = [
 	{
 		name: 'statut',
-		label: 'Statut',
-		choices: [
-			{ label: 'Actif', value: 'actif' },
-			{ label: 'Inactif', value: 'inactif' },
-		],
+		title: 'Statut',
+		value: ['actif'],
+	},
+	{
+		name: 'type',
+		title: 'Type',
+		value: null,
 	},
 ]
 
