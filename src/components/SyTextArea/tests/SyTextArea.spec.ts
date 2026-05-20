@@ -1,7 +1,6 @@
 import { it, describe, expect, vi } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
 import { ref } from 'vue'
-import { VTextarea } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import SyIcon from '../../Customs/SyIcon/SyIcon.vue'
 import SyTextArea from '../SyTextArea.vue'
@@ -569,7 +568,7 @@ describe('SyTextArea', () => {
 				attachTo: document.body,
 			})
 
-			expect(wrapper.find('.v-field__clearable').exists()).toBe(true)
+			expect(wrapper.find('.sy-textarea__clear-button').exists()).toBe(true)
 
 			wrapper.unmount()
 		})
@@ -584,7 +583,7 @@ describe('SyTextArea', () => {
 				attachTo: document.body,
 			})
 
-			expect(wrapper.find('.v-field__clearable').exists()).toBe(false)
+			expect(wrapper.find('.sy-textarea__clear-button').exists()).toBe(false)
 
 			wrapper.unmount()
 		})
@@ -599,8 +598,8 @@ describe('SyTextArea', () => {
 				attachTo: document.body,
 			})
 
-			const vtextarea = wrapper.findComponent(VTextarea)
-			vtextarea.vm.$emit('click:clear')
+			const clearButton = wrapper.find('.sy-textarea__clear-button')
+			await clearButton.trigger('click')
 			await flushPromises()
 
 			expect(wrapper.emitted('update:modelValue')).toBeTruthy()

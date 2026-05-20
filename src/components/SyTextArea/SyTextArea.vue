@@ -117,9 +117,9 @@
 	const hasMessages = computed(() => hasError.value || hasWarning.value || hasSuccess.value)
 
 	const validationIconColor = computed(() => {
-		if (hasError.value) return 'rgb(var(--v-theme-iconError))'
-		if (hasWarning.value) return 'rgb(var(--v-theme-iconWarning))'
-		if (hasSuccess.value) return 'rgb(var(--v-theme-iconSuccess))'
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
 		return 'rgb(var(--v-theme-iconBase))'
 	})
 
