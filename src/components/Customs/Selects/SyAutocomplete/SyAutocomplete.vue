@@ -585,7 +585,7 @@
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-primary)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 

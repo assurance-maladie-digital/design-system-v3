@@ -1398,20 +1398,9 @@ export const FormValidation: Story = {
 						</ul>
 					</div>
 
-					<button
-						type="submit"
-						style="
-							background-color: #1976d2;
-							color: white;
-							padding: 8px 16px;
-							border: none;
-							border-radius: 4px;
-							cursor: pointer;
-							font-size: 1rem;
-						"
-					>
+				    <VBtn type="submit" color="primary">
 						Soumettre
-					</button>
+					</VBtn>
 				</form>
 			</div>
 		`,
@@ -1479,20 +1468,9 @@ export const FormValidation: Story = {
 						</ul>
 					</div>
 
-					<button
-						type="submit"
-						style="
-							background-color: #1976d2;
-							color: white;
-							padding: 8px 16px;
-							border: none;
-							border-radius: 4px;
-							cursor: pointer;
-							font-size: 1rem;
-						"
-					>
+		    <VBtn type="submit" color="primary">
 						Soumettre
-					</button>
+					</VBtn>
 				</form>
 			</div>
 	</div>

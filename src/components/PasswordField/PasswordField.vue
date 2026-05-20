@@ -362,10 +362,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-warning)) !important;
 		}
 	}
 
@@ -373,7 +373,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-warning)) !important;
 		}
 	}
 }
@@ -381,11 +381,11 @@
 .error-field {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 }
 
@@ -397,10 +397,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 
@@ -408,7 +408,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 }

@@ -164,15 +164,19 @@
 </template>
 
 <style lang="scss" scoped>
+:deep(.v-messages) {
+	opacity: 1 !important;
+}
+
 .success-field {
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-success));
+		color: rgb(var(--v-theme-onSuccessVariant));
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-success));
+		color: rgb(var(--v-theme-onSuccessVariant));
 	}
 }
 
@@ -180,11 +184,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-borderWarning));
+		color: rgb(var(--v-theme-onWarningVariant));
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-borderWarning));
+		color: rgb(var(--v-theme-onWarningVariant));
 	}
 }
 </style>

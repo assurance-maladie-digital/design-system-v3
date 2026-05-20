@@ -168,7 +168,7 @@
 
 	&:focus-visible {
 		outline: solid 2px black !important;
-		outline-color: var(--v-primary-base) !important;
+		outline-color: var(--v-theme-primary) !important;
 		outline-offset: 2px !important;
 
 		&::after {
@@ -217,7 +217,7 @@
 @mixin redesign($type, $map) {
 	&.alert--#{$type}.v-alert--variant-tonal {
 		background: map.get($map, 'background') !important;
-		color: rgb(var(--v-theme-textBase)) !important;
+		color: rgb(var(--v-theme-onSurface)) !important;
 
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;
@@ -241,7 +241,7 @@
 			background: map.get($map, 'icon-bg');
 
 			:deep(svg) {
-				fill: map.get($map, 'accent');
+				fill: map.get($map, 'icon');
 			}
 		}
 	}
@@ -256,41 +256,41 @@
 	@include redesign(
 		'warning',
 		(
-			'background': var(--alert-warning-background),
-			'accent': var(--alert-warning-accent),
-			'border': var(--alert-warning-border),
-			'icon':var(--alert-warning-icon),
-			'icon-bg': var(--alert-warning-icon-bg),
+			'background': rgb(var(--v-theme-warningVariant)),
+			'accent': rgb(var(--v-theme-onWarningVariant)),
+			'border': rgb(var(--v-theme-onWarningVariant)),
+			'icon': rgb(var(--v-theme-onWarningVariant)),
+			'icon-bg': rgb(var(--v-theme-warningVariant90)),
 		)
 	);
 	@include redesign(
 		'success',
 		(
-			'background': var(--alert-success-background),
-			'accent': var(--alert-success-accent),
-			'border': var(--alert-success-border),
-			'icon':var(--alert-success-icon),
-			'icon-bg': var(--alert-success-icon-bg),
+			'background': rgb(var(--v-theme-successVariant)),
+			'accent': rgb(var(--v-theme-onSuccessVariant)),
+			'border': rgb(var(--v-theme-onSuccessVariant)),
+			'icon':rgb(var(--v-theme-onSuccessVariant)),
+			'icon-bg': rgb(var(--v-theme-successVariant90)),
 		)
 	);
 	@include redesign(
 		'error',
 		(
-			'background': var(--alert-error-background),
-			'accent': var(--alert-error-accent),
-			'border': var(--alert-error-border),
-			'icon':var(--alert-error-icon),
-			'icon-bg': var(--alert-error-icon-bg),
+			'background': rgb(var(--v-theme-errorVariant)),
+			'accent': rgb(var(--v-theme-error)),
+			'border': rgb(var(--v-theme-error)),
+			'icon':rgb(var(--v-theme-error)),
+			'icon-bg': rgb(var(--v-theme-errorVariant90)),
 		)
 	);
 	@include redesign(
 		'info',
 		(
-			'background': var(--alert-info-background),
-			'accent': var(--alert-info-accent),
-			'border': var(--alert-info-border),
-			'icon':var(--alert-info-icon),
-			'icon-bg': var(--alert-info-icon-bg),
+			'background': rgb(var(--v-theme-infoVariant)),
+			'accent': rgb(var(--v-theme-info)),
+			'border': rgb(var(--v-theme-info)),
+			'icon':rgb(var(--v-theme-info)),
+			'icon-bg': rgb(var(--v-theme-infoVariant90)),
 		)
 	);
 }

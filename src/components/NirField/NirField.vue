@@ -594,16 +594,16 @@
 
 .sy-number-errors,
 .sy-key-errors {
-	color: rgb(var(--v-theme-textError));
+	color: rgb(var(--v-theme-error));
 }
 
 .sy-number-warnings,
 .sy-key-warnings {
-	color: rgb(var(--v-theme-textWarning));
+	color: rgb(var(--v-theme-onWarningVariant));
 }
 
 .sy-number-success,
 .sy-key-success {
-	color: rgb(var(--v-theme-textSuccess));
+	color: rgb(var(--v-theme-onSuccessVariant));
 }
 </style>

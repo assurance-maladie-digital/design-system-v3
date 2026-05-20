@@ -7,7 +7,7 @@
 		<ThemeSwitcher class="theme-switcher-position" />
 
 		<VSheet
-			color="primary"
+      color="primary"
 			class="pa-4"
 		>
 			start developing here

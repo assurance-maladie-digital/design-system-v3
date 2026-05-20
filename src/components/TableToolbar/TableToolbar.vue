@@ -61,7 +61,7 @@
 <template>
 	<VToolbar
 		v-bind="options.toolbar"
-		:class="{ 'v-theme-dark': theme.current.value.dark}"
+		:class="{ 'v-theme-grey-darken80': theme.current.value.dark}"
 		class="sy-table-toolbar px-4 py-2 d-flex flex-wrap align-center justify-space-between"
 	>
 		<p
@@ -164,23 +164,23 @@
 
 	p,
 	.text-primary {
-		color: rgba(var(--v-theme-textOnDark), 0.6) !important;
+		color: rgba(var(--v-theme-onPrimary), 0.6) !important;
 	}
 
 	svg {
-		fill: rgb(var(--v-theme-textOnDark)) !important;
+		fill: rgb(var(--v-theme-onPrimary)) !important;
 	}
 
 	.v-label {
-		color: rgba(var(--v-theme-textOnDark), 0.6) !important;
+		color: rgba(var(--v-theme-onPrimary), 0.6) !important;
 	}
 
 	.v-field__input {
-		color: rgb(var(--v-theme-textOnDark)) !important;
+		color: rgb(var(--v-theme-onPrimary)) !important;
 	}
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgba(var(--v-theme-textOnDark), 0.1);
+	background: rgba(var(--v-theme-onPrimary), 0.1);
 }
 </style>

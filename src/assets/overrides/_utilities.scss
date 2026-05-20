@@ -1,50 +1,9 @@
 .theme-cnam,
 .theme-pa {
 	--footer-background: rgb(var(--v-theme-parma-darken60));
-	--alert-warning-background: rgb(var(--v-theme-backgroundWarning));
-	--alert-warning-accent: rgb(var(--v-theme-borderWarning));
-	--alert-warning-border: rgb(var(--v-theme-borderWarning));
-	--alert-warning-icon: rgb(var(--v-theme-iconWarning));
-	--alert-warning-icon-bg: rgb(var(--v-theme-backgroundWarningSubdued));
-	--alert-info-background: rgb(var(--v-theme-backgroundInfo));
-	--alert-info-accent: rgb(var(--v-theme-borderInfo));
-	--alert-info-border: rgb(var(--v-theme-borderInfo));
-	--alert-info-icon: rgb(var(--v-theme-iconInfo));
-	--alert-info-icon-bg: rgb(var(--v-theme-backgroundInfoSubdued));
-	--alert-success-background: rgb(var(--v-theme-backgroundSuccess));
-	--alert-success-accent: rgb(var(--v-theme-borderSuccess));
-	--alert-success-border: rgb(var(--v-theme-borderSuccess));
-	--alert-success-icon: rgb(var(--v-theme-iconSuccess));
-	--alert-success-icon-bg: rgb(var(--v-theme-backgroundSuccessSubdued));
-	--alert-error-background: rgb(var(--v-theme-backgroundError));
-	--alert-error-accent: rgb(var(--v-theme-borderError));
-	--alert-error-border: rgb(var(--v-theme-borderError));
-	--alert-error-icon: rgb(var(--v-theme-iconError));
-	--alert-error-icon-bg: rgb(var(--v-theme-backgroundErrorSubdued));
 }
 
 .theme-ap,
 .theme-ap2026 {
-	--footer-background: rgb(var(--v-theme-accentPrimaryContrasted));
-	--alert-background: rgb(var(--v-theme-accentPrimaryContrasted));
-	--alert-warning-background: rgb(var(--v-theme-backgroundWarning));
-	--alert-warning-accent: rgb(var(--v-theme-borderWarning));
-	--alert-warning-border: rgb(var(--v-theme-borderWarning));
-	--alert-warning-icon: rgb(var(--v-theme-iconWarning));
-	--alert-warning-icon-bg: rgb(var(--v-theme-backgroundWarningSubdued));
-	--alert-info-background: rgb(var(--v-theme-backgroundInfo));
-	--alert-info-accent: rgb(var(--v-theme-borderInfo));
-	--alert-info-border: rgb(var(--v-theme-borderInfo));
-	--alert-info-icon: rgb(var(--v-theme-iconInfo));
-	--alert-info-icon-bg: rgb(var(--v-theme-backgroundInfoSubdued));
-	--alert-success-background: rgb(var(--v-theme-backgroundSuccess));
-	--alert-success-accent: rgb(var(--v-theme-borderSuccess));
-	--alert-success-border: rgb(var(--v-theme-borderSuccess));
-	--alert-success-icon: rgb(var(--v-theme-iconSuccess));
-	--alert-success-icon-bg: rgb(var(--v-theme-backgroundSuccessSubdued));
-	--alert-error-background: rgb(var(--v-theme-backgroundError));
-	--alert-error-accent: rgb(var(--v-theme-borderError));
-	--alert-error-border: rgb(var(--v-theme-borderError));
-	--alert-error-icon: rgb(var(--v-theme-iconError));
-	--alert-error-icon-bg: rgb(var(--v-theme-backgroundErrorSubdued));
+	--footer-background: rgb(var(--v-theme-primary));
 }

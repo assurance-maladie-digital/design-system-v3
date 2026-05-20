@@ -37,6 +37,7 @@ export const baseContextualTokens = {
 		14: '56px',
 		16: '64px',
 	},
+
 	fontSize: {
 		titres: '24px',
 		titresAlternatifs: '20px',

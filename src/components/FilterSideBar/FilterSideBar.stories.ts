@@ -486,7 +486,7 @@ export const FilterCombination: Story = {
 	decorators: [
 		() => ({
 			template: `
-			<VApp style="height: 500px; overflow-y: hidden;">
+			<VApp style="height: 500px; overflow-y: hidden; background: none">
 				<div class="pa-4">
 					<story />
 				</div>

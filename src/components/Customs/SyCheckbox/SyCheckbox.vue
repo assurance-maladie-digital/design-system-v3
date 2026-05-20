@@ -216,10 +216,10 @@
 		switch (props.color) {
 		case 'error':
 			return 'rgb(var(--v-theme-error))'
-		case 'success':
-			return 'rgb(var(--v-theme-success))'
-		case 'warning':
-			return 'rgb(var(--v-theme-warning))'
+		case 'onSuccessVariant':
+			return 'rgb(var(--v-theme-onSuccessVariant))'
+		case 'onWarningVariant':
+			return 'rgb(var(--v-theme-onWarningVariant))'
 		case 'primary':
 			return cnamSemanticTokens.colors.text.base
 		default:
@@ -393,19 +393,19 @@
 
 <style scoped>
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-success)) !important;
+	color: rgb(var(--v-theme-onSuccessVariant)) !important;
 }
 
 .success-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-success));
+	color: rgb(var(--v-theme-onSuccessVariant));
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-borderWarning)) !important;
+	color: rgb(var(--v-theme-onWarningVariant)) !important;
 }
 
 .warning-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-borderWarning));
+	color: rgb(var(--v-theme-onWarningVariant));
 }
 
 :deep(.v-input--dirty .v-selection-control__input) {
