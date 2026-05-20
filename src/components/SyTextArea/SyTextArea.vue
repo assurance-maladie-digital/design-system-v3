@@ -187,21 +187,21 @@
 
 <style lang="scss" scoped>
 .sy-textarea {
-  position: relative;
+	position: relative;
 }
 
 .sy-textarea__state-icon {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  pointer-events: none;
-  z-index: 1;
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	pointer-events: none;
+	z-index: 1;
 }
 
 .sy-textarea:has(.sy-textarea__state-icon) {
-  :deep(.v-field__input) {
-    padding-right: 36px;
-  }
+	:deep(.v-field__input) {
+		padding-right: 36px;
+	}
 }
 
 .success-field {

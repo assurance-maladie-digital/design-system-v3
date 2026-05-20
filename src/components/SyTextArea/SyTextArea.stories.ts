@@ -187,8 +187,8 @@ const text = ref('')
 		],
 	},
 	args: {
-		label: 'Observations médicales',
-		helpText: 'Décrivez les symptômes observés, leur durée et leur intensité.',
+		'label': 'Observations médicales',
+		'helpText': 'Décrivez les symptômes observés, leur durée et leur intensité.',
 		'onUpdate:modelValue': fn(),
 	},
 }
@@ -252,8 +252,8 @@ const text = ref('')
 		],
 	},
 	args: {
-		label: 'Note interne',
-		hideDetails: true,
+		'label': 'Note interne',
+		'hideDetails': true,
 		'onUpdate:modelValue': fn(),
 	},
 	render: () => ({

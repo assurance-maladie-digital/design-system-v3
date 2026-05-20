@@ -150,7 +150,7 @@ export const WithWarning: Story = {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
-const value = ref(null)
+const value = ref<string | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -481,7 +481,7 @@ const applyButtonValue = async (newValue) => {
 		return {
 			components: { SySelect, VBtn },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 				const validationMode = ref<'neutral' | 'invalid' | 'valid'>('neutral')
 

@@ -434,7 +434,7 @@ import { computed, nextTick, ref } from 'vue'
 import { SyAutocomplete } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref(null)
+const value = ref<string | null>(null)
 const autocompleteRef = ref(null)
 const validationMode = ref('neutral')
 const items = [
@@ -502,7 +502,7 @@ const applyButtonValue = async (newValue) => {
 		return {
 			components: { SyAutocomplete, VBtn },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean>, clearValidation: () => void } | null>(null)
 				const validationMode = ref<'neutral' | 'invalid' | 'valid'>('neutral')
 
