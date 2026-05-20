@@ -32,7 +32,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -p tsconfig.app.json && vite build",
-    "storybook": "pnpm generate:conformite && storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006",
     "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
@@ -49,7 +49,6 @@
     "docs:update": "node ./scripts/a11y-update.mjs",
     "docs:check": "node ./scripts/docs-check-update.mjs",
     "a11y:status": "node generate-a11y-report.mjs",
-    "generate:conformite": "node scripts/conformite-props-report.js",
     "info:components": "node generate-component-info.mjs",
     "test:visual": "cypress run --component --browser electron",
     "test:visual:open": "cypress open --component --browser electron",

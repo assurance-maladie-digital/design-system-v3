@@ -1,7 +1,6 @@
 import React from 'react'
-import { addons, types } from 'storybook/manager-api'
+import { addons, types, useChannel } from '@storybook/manager-api'
 import { AddonPanel } from '@storybook/components'
-import conformiteData from '../conformite-report.json'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
@@ -602,11 +601,76 @@ if (typeof window !== 'undefined') {
 }
 
 const ConformitePanel = ({ active }) => {
-	const currentPath = new URLSearchParams(window.location.search).get('path') || ''
-	const currentStoryId = currentPath.replace(/^\/story\//, '').replace(/^\/docs\//, '')
+	const [result, setResult] = React.useState(null)
 
-	const currentRows = conformiteData.filter(row =>
-		currentStoryId.startsWith(row.storyPrefix),
+	useChannel({
+		'conformite-design-system/result': (data) => {
+			setResult(data)
+		},
+	})
+
+	React.useEffect(() => {
+		const updateTabVisibility = () => {
+			const path = new URLSearchParams(window.location.search).get('path') || ''
+			const isDefaultStory = path.endsWith('--default')
+
+			const tabs = Array.from(document.querySelectorAll('[role="tab"]')) as HTMLElement[]
+			const conformiteTab = tabs.find(tab => tab.textContent?.trim() === 'Conformité')
+
+			if (conformiteTab) {
+				conformiteTab.style.display = isDefaultStory ? '' : 'none'
+			}
+		}
+
+		updateTabVisibility()
+
+		window.addEventListener('popstate', updateTabVisibility)
+
+		const observer = new MutationObserver(updateTabVisibility)
+		observer.observe(document.body, { childList: true, subtree: true })
+
+		return () => {
+			window.removeEventListener('popstate', updateTabVisibility)
+			observer.disconnect()
+		}
+	}, [])
+
+	if (!result) {
+		return React.createElement(
+			AddonPanel,
+			{ active },
+			React.createElement(
+				'div',
+				{ style: { padding: 16 } },
+				'Aucune donnée conformité disponible.',
+			),
+		)
+	}
+	const isFormComponent = result?.themeMode
+		&& String(result.componentCategory || '')
+			.toLowerCase()
+			.includes('formulaires')
+
+	const headers = [
+		'Component',
+		'Props / Slots documentés',
+		'Onglet source code',
+		...(isFormComponent
+			? ['Stories manquantes']
+			: []),
+		'Page usages UX',
+	]
+
+	if (
+		['HeaderBar', 'FooterBar'].includes(result.component)
+	) {
+		headers.push('Theme visuel')
+	}
+
+	headers.push(
+		'Theme mode',
+		'Playground interactif',
+		'Criticité',
 	)
 
 	return React.createElement(
@@ -615,36 +679,74 @@ const ConformitePanel = ({ active }) => {
 		React.createElement(
 			'div',
 			{ style: { padding: 16, overflow: 'auto' } },
+
+			React.createElement(
+				'h3',
+				{ style: { marginBottom: 16 } },
+				`${result.component} - ${result.story}`,
+			),
+
 			React.createElement(
 				'table',
 				{ style: { width: '100%', borderCollapse: 'collapse' } },
+
 				React.createElement(
 					'thead',
 					null,
 					React.createElement(
 						'tr',
 						null,
-						['Component', 'Stories', 'Props', 'Doc', 'Issues auto', 'Score', 'Priorité']
-							.map(label => React.createElement('th', {
-								key: label,
-								style: { textAlign: 'left', padding: 8, borderBottom: '1px solid #ddd' },
-							}, label)),
+						headers.map(label =>
+							React.createElement(
+								'th',
+								{
+									key: label,
+									style: {
+										textAlign: 'left',
+										padding: 8,
+										borderBottom: '1px solid #ddd',
+										verticalAlign: 'top',
+										whiteSpace: 'normal',
+									},
+								},
+								label,
+							),
+						),
 					),
 				),
+
 				React.createElement(
 					'tbody',
 					null,
-					currentRows.map(row => React.createElement(
+					React.createElement(
 						'tr',
-						{ key: row.component },
-						React.createElement('td', { style: { padding: 8 } }, row.component),
-						React.createElement('td', { style: { padding: 8 } }, row.stories),
-						React.createElement('td', { style: { padding: 8 } }, row.props),
-						React.createElement('td', { style: { padding: 8 } }, row.doc),
-						React.createElement('td', { style: { padding: 8 } }, row.issues?.join(', ')),
-						React.createElement('td', { style: { padding: 8 } }, `${row.score}%`),
-						React.createElement('td', { style: { padding: 8 } }, row.priority),
-					)),
+						null,
+
+						React.createElement('td', { style: { padding: 8 } }, result.component),
+						React.createElement('td', { style: { padding: 8 } }, result.doc),
+						React.createElement('td', { style: { padding: 8 } }, result.sourceCode),
+						...(isFormComponent
+							? [
+									React.createElement(
+										'td',
+										{
+											key: 'requiredStories',
+											style: { padding: 8 },
+										},
+										result.requiredStories,
+									),
+								]
+							: []), React.createElement('td', { style: { padding: 8 } }, result.usagePage),
+						['HeaderBar', 'FooterBar'].includes(result.component)
+							? React.createElement(
+									'td',
+									{ style: { padding: 8 } },
+									result.visualTheme,
+								)
+							: null, React.createElement('td', { style: { padding: 8 } }, result.themeMode),
+						React.createElement('td', { style: { padding: 8 } }, result.playground),
+						React.createElement('td', { style: { padding: 8 } }, result.criticality),
+					),
 				),
 			),
 		),

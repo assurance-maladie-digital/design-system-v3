@@ -1,0 +1,240 @@
+import { Meta } from '@storybook/addon-docs';
+import qualityData from './code-quality-status.json';
+import '../../styles/shared.css';
+import { useState } from 'react';
+
+<Meta title="Accessibilité/Design System/Qualité code" />
+<div className="header">
+  <h1>Avancement de la qualité code Design System</h1>
+</div>
+<div className="quality-grid">
+  <div className="quality-card">
+    <h3> Props / Slots documentés</h3>
+    <p>
+      Vérifie que les props publiques, slots et événements sont décrits
+      dans la documentation Storybook.
+    </p>
+  </div>
+
+  <div className="quality-card">
+    <h3>Onglet source code</h3>
+    <p>
+      Vérifie que le composant expose son code source Template + Script ou un exemple clair
+      d’implémentation.
+    </p>
+  </div>
+
+  <div className="quality-card">
+    <h3>Stories requises</h3>
+    <p>
+      Vérifie la présence des stories importantes :
+      Default, Disabled, Validation, Error…
+    </p>
+  </div>
+
+  <div className="quality-card">
+    <h3> Theme visuel Dark/Light</h3>
+    <p>
+      Vérifie les modes visuels. Certains comoposants doivent être testés en mode Dark et/ou Light pour garantir une bonne lisibilité et accessibilité dans les deux thèmes.
+      </p>
+  </div>
+
+    <div className="quality-card">
+    <h3> Theme mode AmeliPro/PA</h3>
+    <p>
+Vérifie que le composant possède les déclinaisons graphiques nécessaires 
+pour les différents univers du Design System. Si existant, un lien vers le composant.
+      </p>
+  </div>
+
+  <div className="quality-card">
+    <h3>Playground interactif</h3>
+    <p>
+      Vérifie la présence d’un playground ou d’exemples interactifs permettant de manipuler les props et visualiser dynamiquement le comportement du composant.
+    </p>
+  </div>
+
+  <div className="quality-card">
+    <h3>Criticité</h3>
+    <p>
+      Identifie les éléments bloquants ou incomplets impactant la qualité globale du composant (documentation manquante, stories absentes, variantes non couvertes, exemples insuffisants…).
+    </p>
+  </div>
+</div>
+
+{(() => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const components = qualityData.results;
+
+  const compliantCount = components.filter(item => item.isFullyCompliant).length;
+  const totalCount = components.length;
+  const percentage = totalCount > 0
+    ? ((compliantCount / totalCount) * 100).toFixed(2)
+    : '0.00';
+
+  const filteredComponents = components.filter(item =>
+    searchTerm === '' ||
+    item.componentName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const getTagClass = (value) => {
+    if (value === true || value === 'Complet' || value === 'Présent') return 'tag-green';
+    if (value === false || value === 'Manquant' || value === 'Absent') return 'tag-red';
+    if (value === 'Partiel' || value === 'À compléter') return 'tag-blue';
+    return 'tag-gray';
+  };
+
+  const renderBooleanTag = (value, trueLabel = 'Présent', falseLabel = 'Absent') => (
+    <span className={`carbon-tag ${getTagClass(value)}`}>
+      {value ? trueLabel : falseLabel}
+    </span>
+  );
+
+  return (
+    <div className="carbon-a11y-container">
+      <div className="header-section">
+        <h2 className="title">
+          Statut de la qualité code par composant
+        </h2>
+{/* 
+        <div className="meta-info">
+          <strong>Statut :</strong> {compliantCount} / {totalCount} composants conformes ({percentage}%)
+          {' | '}
+          <strong>Dernière mise à jour :</strong>{' '}
+          {new Date(qualityData.date).toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </div> */}
+      </div>
+
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Rechercher un composant..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+
+        {searchTerm && (
+          <div className="search-results-count">
+            {filteredComponents.length} résultat{filteredComponents.length > 1 ? 's' : ''} trouvé{filteredComponents.length > 1 ? 's' : ''}
+          </div>
+        )}
+      </div>
+
+      <div className="table-wrapper">
+        <table className="carbon-table">
+          <thead>
+            <tr>
+              <th>Composant</th>
+              <th>Props / Slots documentés</th>
+              <th>Onglet source code</th>
+              <th>Stories requises</th>
+              <th>Page usages UX</th>
+              <th>Theme visuel</th>
+              <th>Theme mode</th>
+              <th>Playground interactif</th>
+              <th>Criticité</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {filteredComponents.map((item) => (
+              <tr key={item.componentName}>
+                <td className="component-name">
+                  {item.storybookTitle ? (
+                    <a
+                      className="carbon-link"
+                      href={`/?path=/docs/${item.storybookTitle
+                        .toLowerCase()
+                        .replace(/\s+/g, '-')
+                        .replace(/[^\w/-]/g, '')}--docs`}
+                    >
+                      {item.componentName.split('/').pop()}
+                    </a>
+                  ) : (
+                    item.componentName.split('/').pop()
+                  )}
+                </td>
+
+                <td>{renderBooleanTag(item.hasPropsDocumentation, 'Documenté', 'Manquant')}</td>
+
+                <td>{renderBooleanTag(item.hasSourceTab, 'Présent', 'Absent')}</td>
+
+                <td>
+                  <span className={`carbon-tag ${getTagClass(item.requiredStoriesStatus)}`}>
+                    {item.requiredStoriesStatus}
+                  </span>
+                </td>
+
+                <td>{renderBooleanTag(item.hasUxUsagePage, 'Présente', 'Absente')}</td>
+
+                <td>
+                  <span className={`carbon-tag ${getTagClass(item.themeModeStatus)}`}>
+                    {item.themeModeStatus}
+                  </span>
+                </td>
+
+                <td>
+                  <span className={`carbon-tag ${getTagClass(item.themeStatus)}`}>
+                    {item.themeStatus}
+                  </span>
+                </td>
+
+                <td>{renderBooleanTag(item.hasInteractivePlayground, 'Présent', 'Absent')}</td>
+
+                <td>
+                  {item.criticality ? (
+                    <span className="carbon-tag tag-red">{item.criticality}</span>
+                  ) : (
+                    <span className="carbon-tag tag-green">Aucune</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+})()}
+<style>
+{`
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.quality-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.quality-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.quality-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: #0C419A;
+  font-size: 1rem;
+}
+
+.quality-card p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #525252;
+  line-height: 1.5;
+}
+`}
+</style>
