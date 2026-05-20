@@ -1,10 +1,10 @@
 import ContextualMenu from '../ContextualMenu.vue'
 
 const defaultItems = [
-	{ label: 'Accueil', level: 1 },
-	{ label: 'Mon compte', level: 1 },
-	{ label: 'Paramètres', level: 2 },
-	{ label: 'Déconnexion', level: 1 },
+	{ text: 'Accueil', hash: '#accueil', level: 1 },
+	{ text: 'Mon compte', hash: '#mon-compte', level: 1 },
+	{ text: 'Paramètres', hash: '#parametres', level: 2 },
+	{ text: 'Déconnexion', hash: '#deconnexion', level: 1 },
 ]
 
 describe('ContextualMenu - Visual regression tests', () => {
@@ -16,7 +16,7 @@ describe('ContextualMenu - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
+		cy.get('.vd-contextual-menu-container').should('be.visible')
 		cy.matchImageSnapshot('contextual-menu-default', cy.get('.v-application'))
 	})
 
@@ -25,7 +25,7 @@ describe('ContextualMenu - Visual regression tests', () => {
 			props: {
 				ariaLabel: 'Menu de navigation',
 				items: defaultItems,
-				modelValue: 'Accueil',
+				modelValue: '#accueil',
 			},
 		})
 

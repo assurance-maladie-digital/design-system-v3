@@ -1,9 +1,9 @@
 import ChipList from '../ChipList.vue'
 
 const defaultItems = [
-	{ value: 'option1', label: 'Option 1' },
-	{ value: 'option2', label: 'Option 2' },
-	{ value: 'option3', label: 'Option 3' },
+	{ value: 'option1', text: 'Option 1' },
+	{ value: 'option2', text: 'Option 2' },
+	{ value: 'option3', text: 'Option 3' },
 ]
 
 describe('ChipList - Visual regression tests', () => {
@@ -32,9 +32,9 @@ describe('ChipList - Visual regression tests', () => {
 		cy.mountWithVuetify(ChipList, {
 			props: {
 				items: [
-					{ value: 'ok', label: 'Succès', state: 'success' },
-					{ value: 'warn', label: 'Attention', state: 'warning' },
-					{ value: 'err', label: 'Erreur', state: 'error' },
+					{ value: 'ok', text: 'Succès', state: 'success' },
+					{ value: 'warn', text: 'Attention', state: 'warning' },
+					{ value: 'err', text: 'Erreur', state: 'error' },
 				],
 				displayPrependStateIcon: true,
 			},
