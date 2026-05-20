@@ -8,7 +8,7 @@ on:
         required: false
         type: string
       spec:
-        description: "Spec filter (e.g. 'ChipList' or 'Accordion,ChipList'). Leave empty to update all."
+        description: "Spec glob pattern (e.g. 'src/components/ChipList/**/*.visual.cy.ts'). Leave empty to update all."
         required: false
         type: string
   push:
@@ -65,8 +65,7 @@ jobs:
       - name: Update visual test snapshots
         run: |
           if [ -n "${{ github.event.inputs.spec }}" ]; then
-            SPECS=$(echo "${{ github.event.inputs.spec }}" | tr ',' '\n' | sed 's|.*|src/components/**/*&*.visual.cy.ts|' | tr '\n' ',')
-            pnpm cypress run --component --browser electron --env updateSnapshots=true --spec "$SPECS"
+            pnpm cypress run --component --browser electron --env updateSnapshots=true --spec "${{ github.event.inputs.spec }}"
           else
             pnpm test:visual:update
           fi
