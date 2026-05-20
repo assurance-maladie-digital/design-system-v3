@@ -1,0 +1,18 @@
+{
+  "date": "2026-04-21T10:20:34.097Z",
+  "results": [
+    {
+      "componentName": "Accordion",
+      "hasPropsDocumentation": true,
+      "hasSourceTab": true,
+      "requiredStoriesStatus": "Partiel",
+      "hasUxUsagePage": true,
+      "themeModeStatus": "Non concerné",
+      "themeStatus": "AmeliPro",
+      "hasInteractivePlayground": true,
+      "criticality": "Stories required manquantes : disabled, form validation",
+      "isFullyCompliant": false,
+      "storybookTitle": "Composants/Données/Accordion"
+    }
+  ]
+}

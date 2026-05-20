@@ -1,7 +1,4 @@
-import React from 'react'
-import { addons, types } from 'storybook/manager-api'
-import { AddonPanel } from '@storybook/components'
-import conformiteData from '../conformite-report.json'
+import { addons } from 'storybook/manager-api'
 import type { API } from 'storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
@@ -223,61 +220,3 @@ if (typeof window !== 'undefined') {
 		},
 	)
 }
-
-const ConformitePanel = ({ active }) => {
-	const currentPath = new URLSearchParams(window.location.search).get('path') || ''
-	const currentStoryId = currentPath.replace(/^\/story\//, '').replace(/^\/docs\//, '')
-
-	const currentRows = conformiteData.filter(row =>
-		currentStoryId.startsWith(row.storyPrefix),
-	)
-
-	return React.createElement(
-		AddonPanel,
-		{ active },
-		React.createElement(
-			'div',
-			{ style: { padding: 16, overflow: 'auto' } },
-			React.createElement(
-				'table',
-				{ style: { width: '100%', borderCollapse: 'collapse' } },
-				React.createElement(
-					'thead',
-					null,
-					React.createElement(
-						'tr',
-						null,
-						['Component', 'Stories', 'Props', 'Doc', 'Issues auto', 'Score', 'Priorité']
-							.map(label => React.createElement('th', {
-								key: label,
-								style: { textAlign: 'left', padding: 8, borderBottom: '1px solid #ddd' },
-							}, label)),
-					),
-				),
-				React.createElement(
-					'tbody',
-					null,
-					currentRows.map(row => React.createElement(
-						'tr',
-						{ key: row.component },
-						React.createElement('td', { style: { padding: 8 } }, row.component),
-						React.createElement('td', { style: { padding: 8 } }, row.stories),
-						React.createElement('td', { style: { padding: 8 } }, row.props),
-						React.createElement('td', { style: { padding: 8 } }, row.doc),
-						React.createElement('td', { style: { padding: 8 } }, row.issues?.join(', ')),
-						React.createElement('td', { style: { padding: 8 } }, `${row.score}%`),
-						React.createElement('td', { style: { padding: 8 } }, row.priority),
-					)),
-				),
-			),
-		),
-	)
-}
-
-addons.register('conformite-design-system', () => {
-	addons.add('conformite-design-system/panel', {
-		type: types.PANEL,
-		title: 'Conformité',
-		render: ({ active }) => React.createElement(ConformitePanel, { active }),
-	})
-})

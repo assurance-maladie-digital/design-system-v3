@@ -92,6 +92,206 @@ const preview: Preview = {
 				document.body.classList.add('storybook-docs-mode')
 			}
 
+			const channel = (window as any).__STORYBOOK_ADDONS_CHANNEL__
+
+			const argTypes = context.argTypes || {}
+			const args = context.args || {}
+
+			const props = Object.entries(argTypes)
+				.filter(([name, config]: any) =>
+					config?.table?.category === 'props'
+					&& !['default'].includes(name),
+				)
+
+			const slots = Object.entries(argTypes)
+				.filter(([, config]: any) =>
+					config?.table?.category === 'slots',
+				)
+
+			const documentedProps = props.filter(([, config]: any) =>
+				Boolean(config?.description),
+			)
+
+			const documentedSlots = slots.filter(([, config]: any) =>
+				Boolean(config?.description),
+			)
+
+			const issues: string[] = []
+			const missingRequiredStories: string[] = []
+
+			const missingDescriptions: string[] = []
+			const badBooleanNames: string[] = []
+			const badEventNames: string[] = []
+
+			props.forEach(([name, config]: any) => {
+				const typeName = String(
+					config?.type?.name
+					|| config?.type?.summary
+					|| config?.table?.type?.summary
+					|| '',
+				)
+
+				if (!config?.description) {
+					missingDescriptions.push(name)
+				}
+
+				if (
+					typeName.includes('boolean')
+					&& !/^(is|has|can|should)[A-Z]/.test(name)
+				) {
+					badBooleanNames.push(name)
+				}
+
+				if (
+					typeName.includes('function')
+					|| typeName.includes('=>')
+				) {
+					if (!/^on[A-Z]/.test(name)) {
+						badEventNames.push(name)
+					}
+				}
+			})
+
+			const originalSource = context.parameters?.docs?.source?.originalSource || ''
+			const sourceCode = context.parameters?.docs?.source?.code || ''
+			const sourceCodeCombined = `${originalSource}\n${sourceCode}`
+
+			const hasTemplate
+	= /name:\s*['"`]Template['"`]/.test(sourceCodeCombined)
+		|| sourceCodeCombined.includes('<template')
+
+			const hasScript
+	= /name:\s*['"`]Script['"`]/.test(sourceCodeCombined)
+		|| sourceCodeCombined.includes('<script')
+
+			const sourceCodeStatus = hasTemplate && hasScript
+				? 'Présent'
+				: 'Incomplet'
+
+			const storyId = context.id || ''
+			const storyName = context.name || ''
+
+			const isFormComponent = String(context.title || '')
+				.toLowerCase()
+				.includes('formulaires')
+
+			const requiredStoryNames = ['disabled', 'required', 'form-validation']
+
+			const componentId = String(context.id || '').split('--')[0].toLowerCase()
+
+			const sidebarStories = Array.from(
+				window.parent.document.querySelectorAll('.sidebar-item'),
+			).map((item: any) => ({
+				text: String(item.textContent || '').trim().toLowerCase(),
+				id: String(item.getAttribute('data-item-id') || '').toLowerCase(),
+			}))
+
+			if (isFormComponent) {
+				requiredStoryNames.forEach((requiredStory) => {
+					const exists = sidebarStories.some(item =>
+						item.id.startsWith(componentId)
+						&& (
+							item.id.includes(requiredStory)
+							|| item.text.includes(requiredStory.replace('-', ' '))
+							|| item.text.includes(requiredStory.replace('-', ''))
+						),
+					)
+
+					if (!exists) {
+						missingRequiredStories.push(requiredStory)
+					}
+				})
+			}
+
+			const requiredStoriesStatus = isFormComponent
+				? missingRequiredStories.length
+					? `Partiel — manquantes : ${missingRequiredStories.join(', ')}`
+					: 'Complètes'
+				: ''
+
+			const propsAndSlotsTotal = props.length + slots.length
+			const documentedTotal = documentedProps.length + documentedSlots.length
+
+			const docStatus = `${documentedTotal}/${propsAndSlotsTotal} documentés`
+
+			const componentName = context.title.split('/').at(-1)
+
+			const hasUsagesStory = Array.from(
+				window.parent.document.querySelectorAll('.sidebar-item'),
+			).some((item: any) => {
+				const itemText = String(item.textContent || '').trim().toLowerCase()
+				const itemId = String(item.getAttribute('data-item-id') || '').toLowerCase()
+				const componentId = String(context.id || '').split('--')[0].toLowerCase()
+
+				return (
+					itemText === 'usages'
+					&& itemId.startsWith(componentId)
+				)
+			})
+
+			const usagePageStatus = hasUsagesStory
+				? 'Présente'
+				: 'Absente'
+
+			const isHeaderOrFooter = ['HeaderBar', 'FooterBar'].includes(componentName)
+
+			const storyLabel = `${context.id} ${context.name}`.toLowerCase()
+
+			const visualThemeStatus = isHeaderOrFooter
+				? storyLabel.includes('dark') || storyLabel.includes('custom-theme')
+					? 'dark'
+					: 'light'
+				: ''
+			const themeModeStatus = context.globals.theme || 'Non défini'
+
+			const playgroundStatus = props.length > 0
+				? 'Présent'
+				: 'Absent'
+
+			const criticality = [
+				missingDescriptions.length
+					? `Description manquante : ${missingDescriptions.join(', ')}`
+					: '',
+
+				badBooleanNames.length
+					? `Bool mal nommé : ${badBooleanNames.join(', ')}`
+					: '',
+
+				badEventNames.length
+					? `Event mal nommé : ${badEventNames.join(', ')}`
+					: '',
+
+				...(isFormComponent && missingRequiredStories.length
+					? [
+							`Story requise manquante : ${missingRequiredStories.join(', ')}`,
+						]
+					: []),
+			]
+				.filter(Boolean)
+				.join(' | ') || 'RAS'
+
+			const score = propsAndSlotsTotal
+				? Math.max(
+						0,
+						Math.round((documentedTotal / propsAndSlotsTotal) * 100 - issues.length * 3),
+					)
+				: 100
+
+			channel?.emit('conformite-design-system/result', {
+				component: context.title.split('/').at(-1),
+				componentCategory: context.title,
+				story: storyName,
+				doc: docStatus,
+				sourceCode: sourceCodeStatus,
+				requiredStories: requiredStoriesStatus,
+				usagePage: usagePageStatus,
+				visualTheme: visualThemeStatus,
+				themeMode: themeModeStatus,
+				playground: playgroundStatus,
+				criticality,
+				score,
+			})
+
 			return story()
 		},
 	],
