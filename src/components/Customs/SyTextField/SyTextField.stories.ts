@@ -1109,19 +1109,53 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 	}),
 }
 
-export const WithTooltips: Story = {
+// Persistent values that survive re-renders
+const withTooltipsValueTest = ref('')
+
+export const WithTooltipsTest: Story = {
 	args: {
-		modelValue: '',
-		label: 'Champ avec tooltips',
-		prependTooltip: 'Information à gauche du champ',
-		appendTooltip: 'Information à droite du champ',
-		tooltipLocation: 'top',
+		label: 'Champ SANS tooltips (test)',
+		isClearable: true,
 	},
 	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value = ref(args.modelValue)
-			return { args, value }
+			return { args, value: withTooltipsValueTest }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					Test sans tooltips - la valeur doit persister après perte de focus.
+					Valeur actuelle: "{{ value }}"
+				</p>
+				<SyTextField
+					v-model="value"
+					v-bind="args"
+				/>
+			</div>
+		`,
+	}),
+	parameters: {
+		docs: { description: { story: 'Test sans tooltips' } },
+	},
+}
+
+// Persistent value for WithTooltips
+const withTooltipsValueMain = ref('')
+
+export const WithTooltips: Story = {
+	args: {
+		label: 'Champ avec tooltips',
+		prependTooltip: 'Information à gauche du champ',
+		appendTooltip: 'Information à droite du champ',
+		tooltipLocation: 'top',
+		isClearable: true,
+		disableClickButton: true,
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			return { args, value: withTooltipsValueMain }
 		},
 		template: `
 			<div>
