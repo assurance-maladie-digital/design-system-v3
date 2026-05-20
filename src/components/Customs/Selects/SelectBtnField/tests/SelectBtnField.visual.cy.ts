@@ -1,8 +1,8 @@
 import SelectBtnField from '../SelectBtnField.vue'
 
 const defaultItems = [
-	{ label: 'Oui', value: 'oui' },
-	{ label: 'Non', value: 'non' },
+	{ text: 'Oui', value: 'oui' },
+	{ text: 'Non', value: 'non' },
 ]
 
 describe('SelectBtnField - Visual regression tests', () => {
