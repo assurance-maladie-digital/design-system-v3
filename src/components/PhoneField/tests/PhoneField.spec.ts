@@ -18,7 +18,6 @@ describe('PhoneField', () => {
 		const input = wrapper.find('input')
 		await input.setValue('1234567890')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-		// change est émis au blur, pas à chaque frappe
 		await input.trigger('blur')
 		expect(wrapper.emitted('change')).toBeTruthy()
 	})
@@ -59,7 +58,7 @@ describe('PhoneField', () => {
 		const wrapper = mount(PhoneField, {
 			props: {
 				withCountryCode: true,
-				isValidatedOnBlur: false,
+				isValidateOnBlur: false,
 				modelValue: '',
 			},
 		})
@@ -122,7 +121,8 @@ describe('PhoneField', () => {
 		const wrapper = mount(PhoneField, {
 			props: { modelValue: '0619123456' },
 		})
-		expect(wrapper.vm.computedValue).toBe('06 19 12 34 56')
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBe('06 19 12 34 56')
 	})
 
 	it('renders SySelect when withCountryCode is true', () => {
@@ -161,8 +161,8 @@ describe('PhoneField', () => {
 		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
 		await wrapper.vm.$nextTick()
 		// dialCode is normalized against the canonical indicatifs list by code
-		expect(wrapper.vm.phoneMask).toBe('### ### ####')
-		expect(wrapper.vm.counter).toBe(10)
+		expect(wrapper.vm.usedIndicatif.mask).toBe('### ### ####')
+		expect(wrapper.vm.usedIndicatif.phoneLength).toBe(10)
 	})
 
 	it('validates phone number with country code on blur', async () => {
@@ -175,8 +175,7 @@ describe('PhoneField', () => {
 				isValidatedOnBlur: true,
 			},
 		})
-
-		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
+		wrapper.setProps({ dialCodeModel: { code: '+1', phoneLength: 10, mask: '###-###-####' } })
 		await wrapper.vm.$nextTick()
 
 		const input = wrapper.find('input')
@@ -185,8 +184,8 @@ describe('PhoneField', () => {
 		expect(wrapper.vm.hasError).toBe(false)
 	})
 
-	it('uses only custom indicatifs when useCustomIndicatifsOnly is true', () => {
-		const customIndicatifs = [{ code: '+99', abbreviation: 'XX', country: 'Testland', phoneLength: 10 }]
+	it('uses only custom indicatifs when useCustomIndicatifsOnly is true', async () => {
+		const customIndicatifs = [{ code: '+99', abbreviation: 'XX', country: 'Testland', phoneLength: 10, displayText: '+99' }]
 		const wrapper = mount(PhoneField, {
 			props: {
 				useCustomIndicatifsOnly: true,
@@ -194,7 +193,7 @@ describe('PhoneField', () => {
 			},
 		})
 
-		expect(wrapper.vm.mergedDialCodes).toEqual(customIndicatifs)
+		expect(wrapper.vm.dialCodeList).toEqual(customIndicatifs)
 	})
 
 	it('validates phone number with valid country code on blur', async () => {
@@ -274,17 +273,18 @@ describe('PhoneField', () => {
 		expect(typeof dialCode.displayText).toBe('string')
 	})
 
-	it('formats phone number correctly', () => {
+	it('formats phone number correctly', async () => {
 		const wrapper = mount(PhoneField, {
 			props: {
 				modelValue: '0123456789',
 			},
 		})
-
-		expect(wrapper.vm.computedValue).toBe('01 23 45 67 89')
+		await wrapper.vm.$nextTick()
+		const input = wrapper.find('input')
+		expect(input.element.value).toBe('01 23 45 67 89')
 	})
 
-	it('emits update:selectedDialCode when dialCode changes', async () => {
+	it('emits update:dialCodeModel when dialCode changes', async () => {
 		const wrapper = mount(PhoneField, {
 			props: {
 				withCountryCode: true,
@@ -295,8 +295,8 @@ describe('PhoneField', () => {
 		wrapper.vm.dialCode = dialCodeValue
 		await wrapper.vm.$nextTick()
 
-		expect(wrapper.emitted('update:selectedDialCode')).toBeTruthy()
-		const emittedEvents = wrapper.emitted('update:selectedDialCode')
+		expect(wrapper.emitted('update:dialCodeModel')).toBeTruthy()
+		const emittedEvents = wrapper.emitted('update:dialCodeModel')
 		const lastEmitted = emittedEvents && emittedEvents[emittedEvents.length - 1]?.[0]
 		expect(lastEmitted).toHaveProperty('code', dialCodeValue.code)
 	})
@@ -335,13 +335,9 @@ describe('PhoneField', () => {
 	it('exposes necessary properties and methods', () => {
 		const wrapper = mount(PhoneField)
 
-		expect(wrapper.vm.computedValue).toBeDefined()
 		expect(wrapper.vm.dialCode).toBeDefined()
 		expect(wrapper.vm.phoneMask).toBeDefined()
-		expect(wrapper.vm.counter).toBeDefined()
-		expect(wrapper.vm.hasError).toBeDefined()
 		expect(wrapper.vm.phoneNumber).toBeDefined()
-		expect(wrapper.vm.mergedDialCodes).toBeDefined()
 		expect(wrapper.vm.validation).toBeDefined()
 		expect(wrapper.vm.validateOnSubmit).toBeDefined()
 	})
@@ -354,13 +350,14 @@ describe('PhoneField', () => {
 			},
 		})
 
-		expect(wrapper.vm.counter).toBe(10)
-
-		wrapper.vm.dialCode = { code: '+44', abbreviation: 'UK', country: 'United Kingdom', phoneLength: 11, mask: '### ### #####' }
+		expect(wrapper.findComponent({ name: 'SyTextField' }).props('counter')).toBe(10)
+		await wrapper.setProps({
+			dialCodeModel: { code: '+44', abbreviation: 'UK', country: 'United Kingdom', phoneLength: 11, mask: '### ### #####' },
+		})
 		await wrapper.vm.$nextTick()
 
-		// dialCode is normalized against the canonical indicatifs list by code
-		expect(wrapper.vm.counter).toBe(10)
+		// In the indicatifs list, +44 is associed with phoneLength 10
+		expect(wrapper.findComponent({ name: 'SyTextField' }).props('counter')).toBe(10)
 	})
 
 	it('handles disabled state correctly', async () => {
@@ -401,12 +398,11 @@ describe('PhoneField', () => {
 			},
 		})
 
-		await wrapper.vm.$nextTick()
-
-		expect(wrapper.vm.phoneMask).toBe('## ## ## ## ##')
-		expect(wrapper.vm.counter).toBe(10)
-
+		const phoneInput = wrapper.find<HTMLInputElement>('input[type="tel"]')
+		await phoneInput.setValue('0123456789')
+		expect(phoneInput.element.value).toBe('01 23 45 67 89')
 		const textField = wrapper.findComponent({ name: 'SyTextField' })
+
 		expect(textField.exists()).toBe(true)
 		expect(textField.props('counter')).toBe(10)
 
@@ -424,7 +420,7 @@ describe('PhoneField', () => {
 		})
 
 		// France est sélectionnée par défaut quand withCountryCode=true
-		expect(wrapper.vm.dialCode).toMatchObject({ code: '+33' })
+		expect(wrapper.vm.usedIndicatif).toMatchObject({ code: '+33' })
 
 		await wrapper.setProps({
 			dialCodeModel: { code: '+1', country: 'USA', abbreviation: 'US', phoneLength: 10, mask: '###-###-####' },
@@ -447,8 +443,8 @@ describe('PhoneField', () => {
 
 		expect(dialCode.code).toBe('+1')
 		expect(dialCode.country).toBe('USA/Canada')
-		expect(wrapper.vm.phoneMask).toBe('### ### ####')
-		expect(wrapper.vm.counter).toBe(10)
+		expect(wrapper.vm.usedIndicatif.mask).toBe('### ### ####')
+		expect(wrapper.vm.usedIndicatif.phoneLength).toBe(10)
 	})
 
 	it('handles dialCodeModel objects without displayText property', async () => {
@@ -558,7 +554,7 @@ describe('PhoneField', () => {
 		expect(phoneInput.attributes('autocomplete')).toBe('tel-national')
 
 		// Check that country code select has default tel-country-code autocomplete
-		const selectInput = wrapper.find('.custom-select input')
+		const selectInput = wrapper.find('.dial-code-select input')
 		expect(selectInput.attributes('autocomplete')).toBe('tel-country-code')
 	})
 
@@ -579,7 +575,7 @@ describe('PhoneField', () => {
 		expect(phoneInput.attributes('autocomplete')).toBe('tel-extension')
 
 		// Check that country code select has custom autocomplete
-		const selectInput = wrapper.find('.custom-select input')
+		const selectInput = wrapper.find('.dial-code-select input')
 		expect(selectInput.attributes('autocomplete')).toBe('tel-country-code')
 	})
 
@@ -602,7 +598,7 @@ describe('PhoneField', () => {
 		expect(telAutocomplete).toBe('tel-national')
 
 		// Verify country select input has correct autocomplete
-		const selectInput = wrapper.find('.custom-select input')
+		const selectInput = wrapper.find('.dial-code-select input')
 		expect(selectInput.exists()).toBe(true)
 		const selectAutocomplete = selectInput.attributes('autocomplete')
 		expect(selectAutocomplete).toBe('tel-country-code')
@@ -624,7 +620,7 @@ describe('PhoneField', () => {
 		expect(phoneInput.attributes('autocomplete')).toBe('tel')
 
 		// Check that country code select doesn't exist
-		const selectInput = wrapper.find('.custom-select input')
+		const selectInput = wrapper.find('.dial-code-select input')
 		expect(selectInput.exists()).toBe(false)
 	})
 
@@ -762,9 +758,9 @@ describe('PhoneField', () => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			expect((wrapper.vm.dialCode as any).code).toBe('+44')
 			// Vérifier que le masque est appliqué (le format exact peut varier)
-			expect(wrapper.vm.phoneMask).toBeDefined()
+			expect(wrapper.vm.usedIndicatif.mask).toBeDefined()
 			// Vérifier que le counter est défini selon la phoneLength
-			expect(wrapper.vm.counter).toBeDefined()
+			expect(wrapper.vm.usedIndicatif.phoneLength).toBeDefined()
 		})
 
 		it('initializes with a default dialCode string', async () => {
@@ -778,7 +774,7 @@ describe('PhoneField', () => {
 			await wrapper.vm.$nextTick()
 
 			// Vérifier que le dialCode est correctement initialisé
-			expect(wrapper.vm.dialCode).toBe('+33')
+			expect(wrapper.vm.dialCode).toEqual(expect.objectContaining({ code: '+33' }))
 		})
 	})
 
@@ -881,8 +877,8 @@ describe('PhoneField', () => {
 			})
 
 			// Vérifier que les indicatifs personnalisés sont ajoutés aux indicatifs standards
-			expect(wrapper.vm.mergedDialCodes.length).toBe(indicatifs.length + customIndicatifs.length)
-			expect(wrapper.vm.mergedDialCodes).toContainEqual(customIndicatifs[0])
+			expect(wrapper.vm.dialCodeList.length).toBe(indicatifs.length + customIndicatifs.length)
+			expect(wrapper.vm.dialCodeList).toContainEqual(customIndicatifs[0])
 		})
 
 		it('uses only custom indicatifs when useCustomIndicatifsOnly is true', () => {
@@ -896,8 +892,8 @@ describe('PhoneField', () => {
 			})
 
 			// Vérifier que seuls les indicatifs personnalisés sont utilisés
-			expect(wrapper.vm.mergedDialCodes.length).toBe(customIndicatifs.length)
-			expect(wrapper.vm.mergedDialCodes).toEqual(customIndicatifs)
+			expect(wrapper.vm.dialCodeList.length).toBe(customIndicatifs.length)
+			expect(wrapper.vm.dialCodeList).toEqual(expect.arrayContaining(customIndicatifs.map(ind => expect.objectContaining(ind))))
 		})
 
 		it('updates phone mask and counter based on selected custom indicatif', async () => {
@@ -914,8 +910,8 @@ describe('PhoneField', () => {
 			await wrapper.vm.$nextTick()
 
 			// Vérifier que le masque et le counter sont mis à jour
-			expect(wrapper.vm.counter).toBe(8)
-			expect(wrapper.vm.phoneMask).toBe('## ## ## ##')
+			expect(wrapper.vm.usedIndicatif.phoneLength).toBe(8)
+			expect(wrapper.vm.usedIndicatif.mask).toBe('## ## ## ##')
 		})
 	})
 

@@ -2,37 +2,79 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import PhoneField from './PhoneField.vue'
 import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { fn } from '@storybook/test'
 
 const meta = {
 	title: 'Composants/Formulaires/PhoneField',
 	component: PhoneField,
 	parameters: {
 		layout: 'fullscreen',
-		actions: {
-			handles: ['update:modelValue', 'update:selectedDialCode', 'update:dialCodeModel', 'change'],
-		},
-		controls: { exclude: ['computedValue', 'phoneMask', 'counter', 'hasError', 'phoneNumber', 'mergedDialCodes'] },
+		actions: { argTypesRegex: '^on.*' },
+		controls: { exclude: /^on*/ },
 	},
 	argTypes: {
-		'modelValue': { control: false },
-		'dialCodeModel': { control: false },
-		'onUpdate:modelValue': { action: 'update:modelValue' },
-		'onUpdate:selectedDialCode': { action: 'update:selectedDialCode' },
-		'onUpdate:dialCodeModel': { action: 'update:dialCodeModel' },
-		'onChange': { action: 'change' },
-		'required': { control: 'boolean' },
+		'modelValue': {
+			control: 'string',
+			description: 'Valeur du champ numéro de téléphone. Ne doit contenir que les chiffres du numéro national, sans l\'indicatif pays. Par exemple, pour un numéro français +33 6 12 34 56 78, le `modelValue` doit être `0612345678`.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		'bgColor': {
+			control: 'color',
+			description: 'Couleur de fond du champ.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		'dialCodeModel': {
+			control: 'string',
+			description: 'Valeur de l\'indicatif pays sélectionné. Peut être une chaîne (ex : "+33") ou un objet indicatif complet (ex : { code: "+33", country: "France", abbreviation: "FR" }).' },
 		'outlined': { control: 'boolean' },
-		'outlinedIndicatif': { control: 'boolean' },
-		'withCountryCode': { control: 'boolean' },
-		'countryCodeRequired': { control: 'boolean' },
+		'withCountryCode': {
+			control: 'boolean',
+			description: 'Affiche un sélecteur d\'indicatif pays à côté du champ numéro de téléphone. Lorsque cette prop est à `true`, le champ est divisé en deux parties : un sélecteur pour l\'indicatif pays et un champ pour le numéro national.',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
 		'displayFormat': {
 			control: { type: 'select' },
-			description: 'Format d\'affichage des items',
+			description: 'Format d\'affichage des options d\'indicatif pays dans le sélecteur. Les formats disponibles sont :\n\n- `code` (ex : +33)\n- `code-abbreviation` (ex : +33 - FR)\n- `code-country` (ex : +33 - France)\n- `country` (ex : France)\n- `abbreviation` (ex : FR)',
 			options: ['code', 'code-abbreviation', 'code-country', 'country', 'abbreviation'],
+			table: {
+				type: {
+					summary: `'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'`,
+				},
+			},
 		},
 		'customIndicatifs': {
+			table: {
+				type: {
+					summary: 'Indicatif[]',
+					details: `{
+	code: string
+	abbreviation: string
+	country: string
+	countryFr?: string
+	mask?: string
+	phoneLength?: number
+}[]					
+` },
+			},
 			control: 'object',
 			description: 'Permet d\'ajouter des indicatifs à la liste pre-existante',
+		},
+		'countryCodeRequired': {
+			control: 'boolean',
+			description: 'Rend la sélection de l\'indicatif pays obligatoire. Si `withCountryCode` est à `true` et que cette prop est également à `true`, l\'utilisateur doit sélectionner un indicatif pays pour que le champ soit considéré comme valide.',
 		},
 		'useCustomIndicatifsOnly': {
 			control: 'boolean',
@@ -41,20 +83,61 @@ const meta = {
 		'helpText': {
 			control: 'text',
 			description: 'Texte d\'aide affiché sous le champ. Lorsque présent, les messages d\'erreur incluent un exemple concret distinct du texte d\'aide.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
 		},
 		'autocompleteCountryCode': {
 			control: 'text',
 			description: 'Valeur de l\'attribut `autocomplete` pour le champ indicatif pays. Utiliser `tel-country-code` (défaut) lorsque le numéro est séparé en deux champs (indicatif + numéro national), conformément à [WHATWG](https://html.spec.whatwg.org/#autofill-field-tel-country-code) et [WCAG 1.3.5](https://www.w3.org/WAI/WCAG21/quickref/#identify-input-purpose).',
+			table: {
+				type: {
+					summary: `'autocomplete' | 'tel-country-code' | undefined`,
+				},
+			},
 		},
 		'autocompletePhone': {
 			control: 'text',
+			table: {
+				type: {
+					summary: `'autocomplete' | 'tel-national' | 'tel' | 'tel-extension'`,
+				},
+			},
 			description: 'Valeur de l\'attribut `autocomplete` pour le champ numéro de téléphone. Valeurs recommandées selon le scénario :\n\n- `tel-national` (défaut) — numéro sans indicatif, lorsque le composant est en mode deux champs (`withCountryCode`).\n- `tel` — numéro complet avec indicatif intégré, pour un champ unique sans sélecteur de pays.\n- `tel-extension` — poste ou extension téléphonique.',
 		},
-		'isValidatedOnBlur': { control: 'boolean' },
 		'displayAsterisk': { control: 'boolean' },
-		'disableErrorHandling': { control: 'boolean' },
-		'disabled': { control: 'boolean' },
-		'readonly': { control: 'boolean' },
+		'update:modelValue': {
+			action: 'update:modelValue',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
+		'update:dialCodeModel': {
+			action: 'update:dialCodeModel',
+			table: {
+				type: {
+					summary: 'Indicatif',
+					details: `{
+	code: string
+	abbreviation: string
+	country: string
+	countryFr?: string
+	mask?: string
+	phoneLength?: number
+}					
+`,
+				},
+			},
+		},
+		...getValidationDocumentation('string'),
+	} as Record<string, unknown>,
+	args: {
+		'onUpdate:modelValue': fn(),
+		'onUpdate:dialCodeModel': fn(),
 	} as Record<string, unknown>,
 } satisfies Meta<typeof PhoneField>
 
@@ -80,7 +163,7 @@ export const Default: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -98,7 +181,7 @@ export const Default: Story = {
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -108,13 +191,12 @@ export const Default: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: true,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -126,12 +208,11 @@ export const Default: Story = {
 				return { args }
 			},
 			template: `
-				<div class="pa-4">
-				<PhoneField
-					v-bind="args"
-				/>
+				<div class="pa-4 mb-8">
+					<PhoneField
+						v-bind="args"
+					/>
 				</div>
-				<br><br><br><br><br>
 			`,
 		}
 	},
@@ -155,7 +236,7 @@ export const Required: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -173,7 +254,7 @@ export const Required: Story = {
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -183,13 +264,12 @@ export const Required: Story = {
 		modelValue: '',
 		required: true,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: true,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -301,7 +381,7 @@ export const HelpText: Story = {
 			<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
 			<PhoneField
 				v-model="phoneValue2"
-				v-model:selected-dial-code="selectedDialCode"
+				v-model:selected-dial-code="dialCodeModel"
 				required
 				with-country-code
 				help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
@@ -316,7 +396,7 @@ export const HelpText: Story = {
 			<h4>Valeurs actuelles :</h4>
 			<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
 			<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
-			<pre class="text-caption">selectedDialCode: {{ selectedDialCode }}</pre>
+			<pre class="text-caption">dialCodeModel: {{ dialCodeModel }}</pre>
 		</div>
 	</div>
 </template>`,
@@ -329,7 +409,7 @@ import PhoneField from './PhoneField.vue'
 
 const phoneValue1 = ref('')
 const phoneValue2 = ref('')
-const selectedDialCode = ref('')
+const dialCodeModel = ref('')
 </script>`,
 			},
 		],
@@ -344,13 +424,13 @@ const selectedDialCode = ref('')
 			setup() {
 				const phoneValue1 = ref('')
 				const phoneValue2 = ref('')
-				const selectedDialCode = ref('')
+				const dialCodeModel = ref('')
 
 				return {
 					args,
 					phoneValue1,
 					phoneValue2,
-					selectedDialCode,
+					dialCodeModel,
 				}
 			},
 			template: `
@@ -373,7 +453,7 @@ const selectedDialCode = ref('')
 						<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
 						<PhoneField
 							v-model="phoneValue2"
-							v-model:selected-dial-code="selectedDialCode"
+							v-model:selected-dial-code="dialCodeModel"
 							required
 							with-country-code
 							help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
@@ -388,7 +468,7 @@ const selectedDialCode = ref('')
 						<h4>Valeurs actuelles :</h4>
 						<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
 						<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
-						<pre class="text-caption">selectedDialCode: {{ selectedDialCode }}</pre>
+						<pre class="text-caption">dialCodeModel: {{ dialCodeModel }}</pre>
 					</div>
 				</div>
 			`,
@@ -429,7 +509,7 @@ Les attributs \`autocomplete\` permettent aux navigateurs et aux outils d'assist
 			<h4 class="mb-2">Avec indicatif pays (autocomplete="tel-country-code")</h4>
 			<PhoneField
 				v-model="phoneValue1"
-				v-model:selected-dial-code="selectedDialCode1"
+				v-model:selected-dial-code="dialCodeModel1"
 				required
 				with-country-code
 				autocomplete-country-code="tel-country-code"
@@ -464,7 +544,7 @@ Les attributs \`autocomplete\` permettent aux navigateurs et aux outils d'assist
 		<div class="mt-4">
 			<h4>Valeurs actuelles :</h4>
 			<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
-			<pre class="text-caption">selectedDialCode1: {{ selectedDialCode1 }}</pre>
+			<pre class="text-caption">dialCodeModel1: {{ dialCodeModel1 }}</pre>
 			<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
 			<pre class="text-caption">phoneValue3: {{ phoneValue3 }}</pre>
 		</div>
@@ -478,7 +558,7 @@ import { ref } from 'vue'
 import PhoneField from './PhoneField.vue'
 
 const phoneValue1 = ref('')
-const selectedDialCode1 = ref('')
+const dialCodeModel1 = ref('')
 const phoneValue2 = ref('')
 const phoneValue3 = ref('')
 </script>`,
@@ -497,14 +577,14 @@ const phoneValue3 = ref('')
 			components: { PhoneField },
 			setup() {
 				const phoneValue1 = ref('')
-				const selectedDialCode1 = ref('')
+				const dialCodeModel1 = ref('')
 				const phoneValue2 = ref('')
 				const phoneValue3 = ref('')
 
 				return {
 					args,
 					phoneValue1,
-					selectedDialCode1,
+					dialCodeModel1,
 					phoneValue2,
 					phoneValue3,
 				}
@@ -520,7 +600,7 @@ const phoneValue3 = ref('')
 						<h4 class="mb-2">Avec indicatif pays (autocomplete="tel-country-code")</h4>
 						<PhoneField
 							v-model="phoneValue1"
-							v-model:selected-dial-code="selectedDialCode1"
+							v-model:selected-dial-code="dialCodeModel1"
 							required
 							with-country-code
 							autocomplete-country-code="tel-country-code"
@@ -555,7 +635,7 @@ const phoneValue3 = ref('')
 					<div class="mt-4">
 						<h4>Valeurs actuelles :</h4>
 						<pre class="text-caption">phoneValue1: {{ phoneValue1 }}</pre>
-						<pre class="text-caption">selectedDialCode1: {{ selectedDialCode1 }}</pre>
+						<pre class="text-caption">dialCodeModel1: {{ dialCodeModel1 }}</pre>
 						<pre class="text-caption">phoneValue2: {{ phoneValue2 }}</pre>
 						<pre class="text-caption">phoneValue3: {{ phoneValue3 }}</pre>
 					</div>
@@ -583,7 +663,7 @@ export const CustomIndicatifs: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -606,7 +686,7 @@ export const CustomIndicatifs: Story = {
 						{ code: '+198', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 10 },
 					]
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -616,7 +696,6 @@ export const CustomIndicatifs: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'code',
@@ -627,7 +706,6 @@ export const CustomIndicatifs: Story = {
 			{ code: '+98', country: 'Paradise', abbreviation: 'PA', mask: '## ## ## ##', phoneLength: 18 },
 		],
 		useCustomIndicatifsOnly: true,
-		isValidatedOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -667,7 +745,7 @@ export const NotValidatedOnBlur: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -685,7 +763,7 @@ export const NotValidatedOnBlur: Story = {
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(false)
+					const isValidateOnBlur = ref(false)
 				</script>
 				`,
 			},
@@ -695,13 +773,12 @@ export const NotValidatedOnBlur: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: false,
+		isValidateOnBlur: false,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -741,7 +818,7 @@ export const DisplayFormatCode: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -759,7 +836,7 @@ export const DisplayFormatCode: Story = {
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -769,13 +846,12 @@ export const DisplayFormatCode: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -815,7 +891,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -833,7 +909,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 					const displayFormat = ref('code-abbreviation')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -843,13 +919,12 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'code-abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -889,7 +964,7 @@ export const DisplayFormatCodeCountry: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -907,7 +982,7 @@ export const DisplayFormatCodeCountry: Story = {
 					const displayFormat = ref('code-country')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -917,13 +992,12 @@ export const DisplayFormatCodeCountry: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -963,7 +1037,7 @@ export const DisplayFormatCountry: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -981,7 +1055,7 @@ export const DisplayFormatCountry: Story = {
 					const displayFormat = ref('country')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -991,13 +1065,12 @@ export const DisplayFormatCountry: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -1037,7 +1110,7 @@ export const DisplayFormatAbbreviation: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -1055,7 +1128,7 @@ export const DisplayFormatAbbreviation: Story = {
 					const displayFormat = ref('abbreviation')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -1065,13 +1138,12 @@ export const DisplayFormatAbbreviation: Story = {
 		modelValue: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
@@ -1112,7 +1184,7 @@ export const DefaultDialCode: Story = {
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 					/>
 				</template>
 				`,
@@ -1141,7 +1213,7 @@ export const DefaultDialCode: Story = {
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code-country')
 					const useCustomIndicatifsOnly = ref(true)
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 				</script>
 				`,
 			},
@@ -1152,7 +1224,6 @@ export const DefaultDialCode: Story = {
 		dialCodeModel: { code: '+3433', country: 'Exemple', abbreviation: 'EX', phoneLength: 10, mask: '## ## ## ## ##' },
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: true,
 		displayFormat: 'code-country',
@@ -1162,7 +1233,7 @@ export const DefaultDialCode: Story = {
 			{ code: '+41', country: 'Suisse', abbreviation: 'CH', phoneLength: 9, mask: '### ### ###' },
 		],
 		useCustomIndicatifsOnly: true,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -1231,13 +1302,12 @@ export const DefaultDialCodeStandard: Story = {
 		dialCodeModel: indicatifs.find(ind => ind.country === 'France'),
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: true,
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -1275,18 +1345,18 @@ export const DisplayModels: Story = {
 				code: `
         <template>
         	<span>
-				Indicatif: {{ selectedDialCode }}<br/>Numéro: {{ modelValue }}
+				Indicatif: {{ dialCodeModel }}<br/>Numéro: {{ modelValue }}
 			</span>
           <PhoneField
             v-model="modelValue"
-            v-model:selectedDialCode="selectedDialCode"
+            v-model:dialCodeModel="dialCodeModel"
             :required="required"
             :withCountryCode="withCountryCode"
             :countryCodeRequired="countryCodeRequired"
             :displayFormat="displayFormat"
             :customIndicatifs="customIndicatifs"
             :useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-            :isValidatedOnBlur="isValidatedOnBlur"
+            :isValidateOnBlur="isValidateOnBlur"
           />
         </template>
         `,
@@ -1298,14 +1368,14 @@ export const DisplayModels: Story = {
           import { PhoneField } from '@cnamts/synapse'
 
           const modelValue = ref('')
-          const selectedDialCode = ref('')
+          const dialCodeModel = ref('')
           const required = ref(true)
           const withCountryCode = ref(true)
           const countryCodeRequired = ref(true)
           const displayFormat = ref('code-country')
           const customIndicatifs = ref([])
           const useCustomIndicatifsOnly = ref(false)
-          const isValidatedOnBlur = ref(true)
+          const isValidateOnBlur = ref(true)
         </script>
         `,
 			},
@@ -1316,13 +1386,12 @@ export const DisplayModels: Story = {
 		dialCodeModel: '',
 		required: false,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: false,
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		readonly: false,
 		bgColor: 'white',
 	},
@@ -1330,13 +1399,13 @@ export const DisplayModels: Story = {
 		components: { PhoneField },
 		setup() {
 			const modelValue = ref(args.modelValue)
-			const selectedDialCode = ref(args.dialCodeModel)
+			const dialCodeModel = ref(args.dialCodeModel)
 
 			// Sync ref -> args (pour afficher les modèles dans la story)
 			watch(modelValue, (val) => {
 				args.modelValue = val
 			})
-			watch(selectedDialCode, (val) => {
+			watch(dialCodeModel, (val) => {
 				args.dialCodeModel = val
 			})
 			// Sync args -> ref (quand on change les controls Storybook)
@@ -1344,25 +1413,25 @@ export const DisplayModels: Story = {
 				modelValue.value = val
 			})
 			watch(() => args.dialCodeModel, (val) => {
-				selectedDialCode.value = val
+				dialCodeModel.value = val
 			})
 
 			return {
 				args,
 				modelValue,
-				selectedDialCode,
+				dialCodeModel,
 			}
 		},
 		template: `
     <div class="pa-4">
       <div class="pa-4">
-        Indicatif: {{ selectedDialCode }}<br/>Numéro: {{ modelValue }}
+        Indicatif: {{ dialCodeModel }}<br/>Numéro: {{ modelValue }}
       </div>
 
       <PhoneField
         v-bind="args"
         v-model="modelValue"
-        v-model:selectedDialCode="selectedDialCode"
+        v-model:dialCodeModel="dialCodeModel"
       />
     </div>
   `,
@@ -1389,7 +1458,7 @@ export const DisabledErrorHandling: Story = {
 						:withCountryCode="withCountryCode"
 						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
-						:isValidatedOnBlur="isValidatedOnBlur"
+						:isValidateOnBlur="isValidateOnBlur"
 						:disableErrorHandling="disableErrorHandling"
 					/>
 				</template>
@@ -1406,7 +1475,7 @@ export const DisabledErrorHandling: Story = {
 					const withCountryCode = ref(true)
 					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
-					const isValidatedOnBlur = ref(true)
+					const isValidateOnBlur = ref(true)
 					const disableErrorHandling = ref(true)
 				</script>
 				`,
@@ -1417,13 +1486,12 @@ export const DisabledErrorHandling: Story = {
 		modelValue: '',
 		required: true,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: true,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		disableErrorHandling: true,
 		readonly: false,
 		disabled: false,
@@ -1475,7 +1543,7 @@ export const FormValidation: Story = {
 							:outlinedIndicatif="true"
 							:withCountryCode="true"
 							:country-code-required="true"
-							:isValidatedOnBlur="true"
+							:isValidateOnBlur="true"
 							:readonly="readonly"
 							:disabled="disabled"
 						/>
@@ -1524,13 +1592,12 @@ export const FormValidation: Story = {
 		modelValue: '',
 		required: true,
 		outlined: true,
-		outlinedIndicatif: true,
 		withCountryCode: true,
 		countryCodeRequired: true,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
-		isValidatedOnBlur: true,
+		isValidateOnBlur: true,
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
@@ -1576,7 +1643,7 @@ export const FormValidation: Story = {
 					<div class="mt-8">
 						<h3>Comment utiliser la validation à la soumission</h3>
 						<p>1. Ajoutez une référence au composant PhoneField avec <code>ref="phoneFieldRef"</code></p>
-						<p>2. Désactivez la validation au blur si nécessaire avec <code>:isValidatedOnBlur="false"</code></p>
+						<p>2. Désactivez la validation au blur si nécessaire avec <code>:isValidateOnBlur="false"</code></p>
 						<p>3. Dans votre méthode de soumission, appelez <code>phoneFieldRef.value.validateOnSubmit()</code></p>
 						<p>4. Cette méthode retourne une Promise qui résout à <code>true</code> si le champ est valide, <code>false</code> sinon</p>
 					</div>

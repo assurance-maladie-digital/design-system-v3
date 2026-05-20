@@ -314,6 +314,10 @@
 			return
 		}
 
+		if (event.inputType === 'insertFromPaste') {
+			return
+		}
+
 		const allowedPattern = props.type === 'number'
 			? NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN
 			: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN

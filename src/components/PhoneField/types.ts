@@ -1,0 +1,29 @@
+import { type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+import { type locales as defaultLocales } from './locales'
+
+export type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
+export type Indicatif = {
+	code: string
+	abbreviation: string
+	country: string
+	countryFr?: string
+	mask?: string
+	phoneLength?: number
+}
+export type PhoneFieldProps = FieldValidationProps & {
+	modelValue?: string
+	dialCodeModel?: string | Indicatif
+	outlined?: boolean
+	withCountryCode?: boolean
+	countryCodeRequired?: boolean
+	displayFormat?: DisplayFormat
+	customIndicatifs?: Indicatif[]
+	useCustomIndicatifsOnly?: boolean
+	displayAsterisk?: boolean
+	bgColor?: string
+	helpText?: string
+	autocompleteCountryCode?: string
+	autocompletePhone?: string
+	withoutFieldset?: boolean
+	locales?: typeof defaultLocales
+}
