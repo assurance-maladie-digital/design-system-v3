@@ -16,8 +16,8 @@ describe('ContextualMenu - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.vd-contextual-menu-container').should('be.visible')
-		cy.matchImageSnapshot('contextual-menu-default', cy.get('.v-application'))
+		cy.get('.vd-contextual-menu').should('be.visible')
+		cy.matchImageSnapshot('contextual-menu-default', cy.get('.vd-contextual-menu-container'))
 	})
 
 	it('displays the contextual menu with a selected item', () => {
@@ -29,7 +29,7 @@ describe('ContextualMenu - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('contextual-menu-selected', cy.get('.v-application'))
+		cy.get('.vd-contextual-menu').should('be.visible')
+		cy.matchImageSnapshot('contextual-menu-selected', cy.get('.vd-contextual-menu-container'))
 	})
 })

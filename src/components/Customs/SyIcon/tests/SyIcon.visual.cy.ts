@@ -1,10 +1,11 @@
 import SyIcon from '../SyIcon.vue'
+import { mdiHome, mdiInformation, mdiStar, mdiAlert, mdiCheck, mdiPencil } from '@mdi/js'
 
 describe('SyIcon - Visual regression tests', () => {
 	it('displays a decorative icon by default', () => {
 		cy.mountWithVuetify(SyIcon, {
 			props: {
-				icon: 'mdi-home',
+				icon: mdiHome,
 				decorative: true,
 			},
 		})
@@ -16,7 +17,7 @@ describe('SyIcon - Visual regression tests', () => {
 	it('displays an informative icon with label', () => {
 		cy.mountWithVuetify(SyIcon, {
 			props: {
-				icon: 'mdi-information',
+				icon: mdiInformation,
 				decorative: false,
 				label: 'Information importante',
 			},
@@ -30,7 +31,7 @@ describe('SyIcon - Visual regression tests', () => {
 	it('hides a decorative icon from assistive tech (aria-hidden)', () => {
 		cy.mountWithVuetify(SyIcon, {
 			props: {
-				icon: 'mdi-star',
+				icon: mdiStar,
 				decorative: true,
 			},
 		})
@@ -41,7 +42,7 @@ describe('SyIcon - Visual regression tests', () => {
 	it('displays an icon with a custom color', () => {
 		cy.mountWithVuetify(SyIcon, {
 			props: {
-				icon: 'mdi-alert',
+				icon: mdiAlert,
 				decorative: true,
 				color: 'error',
 			},
@@ -54,7 +55,7 @@ describe('SyIcon - Visual regression tests', () => {
 	it('displays an icon with size large', () => {
 		cy.mountWithVuetify(SyIcon, {
 			props: {
-				icon: 'mdi-check',
+				icon: mdiCheck,
 				decorative: true,
 				size: 'large',
 			},
@@ -67,7 +68,7 @@ describe('SyIcon - Visual regression tests', () => {
 	it('displays an icon with role button', () => {
 		cy.mountWithVuetify(SyIcon, {
 			props: {
-				icon: 'mdi-pencil',
+				icon: mdiPencil,
 				decorative: false,
 				label: 'Éditer',
 				role: 'button',
