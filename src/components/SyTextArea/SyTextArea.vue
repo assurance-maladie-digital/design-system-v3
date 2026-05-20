@@ -1,11 +1,13 @@
 <script setup lang="ts">
 	import { computed, nextTick, ref, toRef, watch } from 'vue'
+	import { mdiCloseCircle } from '@mdi/js'
 	import type { VTextarea } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import useTextActions from './useTextActions'
 	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { locales } from './locales'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string
@@ -115,11 +117,21 @@
 	const hasMessages = computed(() => hasError.value || hasWarning.value || hasSuccess.value)
 
 	const validationIconColor = computed(() => {
-		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
+		if (hasError.value) return 'rgb(var(--v-theme-iconError))'
+		if (hasWarning.value) return 'rgb(var(--v-theme-iconWarning))'
+		if (hasSuccess.value) return 'rgb(var(--v-theme-iconSuccess))'
 		return 'rgb(var(--v-theme-iconBase))'
 	})
+
+	const showClear = computed(() =>
+		props.clearable && !props.disabled && !props.readonly && internalValue.value !== ''
+	)
+
+	function clearField() {
+		internalValue.value = ''
+		clearValidation()
+		hasInteracted.value = false
+	}
 
 	const displayMessages = computed(() => {
 		if (hasError.value) return errors.value
@@ -169,12 +181,23 @@
 			:aria-label="computedLabel"
 			:required="required"
 			:aria-required="required ? 'true' : undefined"
-			:clearable="clearable"
 			:hide-details="hideDetails && !hasMessages"
 			@update:model-value="execValueChange"
 			@update:focused="(e: boolean) => { focused = e; if (!e) execBlurChange() }"
-			@click:clear="internalValue = ''"
 		/>
+		<button
+			v-if="showClear"
+			type="button"
+			class="sy-textarea__clear-button"
+			:aria-label="locales.clearField"
+			@click="clearField"
+		>
+			<SyIcon
+				:icon="mdiCloseCircle"
+				class="sy-textarea__clear-icon"
+				:decorative="true"
+			/>
+		</button>
 		<SyIcon
 			v-if="validationIcon"
 			class="sy-textarea__state-icon"
@@ -198,37 +221,103 @@
 	z-index: 1;
 }
 
-.sy-textarea:has(.sy-textarea__state-icon) {
+.sy-textarea__clear-button {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	background: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+}
+
+.sy-textarea__clear-icon {
+	color: rgb(var(--v-theme-iconBase)) !important;
+	opacity: var(--v-medium-emphasis-opacity);
+
+	&:hover {
+		opacity: 1;
+	}
+}
+
+.sy-textarea:has(.sy-textarea__state-icon) .sy-textarea__clear-button {
+	right: 40px;
+}
+
+.sy-textarea:has(.sy-textarea__state-icon),
+.sy-textarea:has(.sy-textarea__clear-button) {
 	:deep(.v-field__input) {
 		padding-right: 36px;
 	}
 }
 
+.sy-textarea:has(.sy-textarea__state-icon):has(.sy-textarea__clear-button) {
+	:deep(.v-field__input) {
+		padding-right: 68px;
+	}
+}
+
 .success-field {
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-borderSuccess)) !important;
+
+		--v-medium-emphasis-opacity: 1;
+	}
+
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-borderSuccess));
+		color: rgb(var(--v-theme-borderSuccess)) !important;
+	}
+
+	:deep(.v-label.v-field-label) {
+		color: rgb(var(--v-theme-borderSuccess)) !important;
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-borderSuccess));
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 	}
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textSuccess)) !important;
+		fill: rgb(var(--v-theme-iconSuccess)) !important;
 	}
 }
 
 .warning-field {
+	:deep(.v-field) {
+		color: rgb(var(--v-theme-borderWarning)) !important;
+
+		--v-medium-emphasis-opacity: 1;
+	}
+
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-borderWarning));
+		color: rgb(var(--v-theme-borderWarning)) !important;
+	}
+
+	:deep(.v-label.v-field-label) {
+		color: rgb(var(--v-theme-borderWarning)) !important;
+	}
+
+	:deep(.v-messages) {
+		opacity: 1 !important;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-borderWarning));
+		color: rgb(var(--v-theme-borderWarning)) !important;
+	}
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-iconWarning)) !important;
 	}
 }
 </style>

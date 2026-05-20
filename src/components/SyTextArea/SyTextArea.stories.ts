@@ -273,6 +273,54 @@ const text = ref('')
 	}),
 }
 
+export const Clearable: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Avec `clearable: true`, un bouton permet de vider rapidement le contenu du textarea quand une valeur est présente.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyTextArea
+		v-model="text"
+		label="Commentaire"
+		clearable
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+const text = ref('Texte initial')
+</script>`,
+			},
+		],
+	},
+	args: {
+		'label': 'Commentaire',
+		'clearable': true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: () => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref('Texte initial')
+			return { value }
+		},
+		template: `
+			<SyTextArea
+				v-model="value"
+				label="Commentaire"
+				clearable
+			/>
+		`,
+	}),
+}
+
 export const Trim: Story = {
 	args: {
 		'label': 'Trim text area',

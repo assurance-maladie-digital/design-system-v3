@@ -3,6 +3,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { ref } from 'vue'
 import { VTextarea } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
+import SyIcon from '../../Customs/SyIcon/SyIcon.vue'
 import SyTextArea from '../SyTextArea.vue'
 
 describe('SyTextArea', () => {
@@ -326,6 +327,118 @@ describe('SyTextArea', () => {
 		await flushPromises()
 
 		expect(wrapper.text()).toContain('Succès personnalisé')
+	})
+
+	it('validates only on blur when isValidateOnBlur is true', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				isValidateOnBlur: true,
+				customRules: [
+					{
+						type: 'custom',
+						options: {
+							validate: (value: string) => value !== 'interdit',
+							message: 'Erreur isValidateOnBlur',
+						},
+					},
+				],
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('interdit')
+		await flushPromises()
+
+		expect(wrapper.text()).not.toContain('Erreur isValidateOnBlur')
+
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.text()).toContain('Erreur isValidateOnBlur')
+	})
+
+	it('keeps success visual state but hides success text when showSuccessMessages is false', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				isValidateOnBlur: false,
+				showSuccessMessages: false,
+				customSuccessRules: [
+					{
+						type: 'custom',
+						options: {
+							successMessage: 'Succès masqué',
+							validate: () => true,
+						},
+					},
+				],
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('valeur')
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((wrapper.vm as any).hasSuccess).toBe(true)
+		expect(wrapper.find('.success-field').exists()).toBe(true)
+		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
+		expect(wrapper.findComponent(SyIcon).props('color')).toBe('success')
+		expect(wrapper.text()).not.toContain('Succès masqué')
+	})
+
+	it('applies warning visual state and warning icon when warning rules fail', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				isValidateOnBlur: false,
+				customWarningRules: [
+					{
+						type: 'custom',
+						options: {
+							warningMessage: 'Avertissement visuel',
+							validate: () => false,
+						},
+					},
+				],
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('valeur')
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.find('.warning-field').exists()).toBe(true)
+		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
+		expect(wrapper.findComponent(SyIcon).props('color')).toBe('warning')
+	})
+
+	it('applies error visual state and error icon when validation fails', async () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				modelValue: '',
+				label: 'Description des symptomes',
+				required: true,
+			},
+		})
+
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.find('.error-field').exists()).toBe(true)
+		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
+		expect(wrapper.findComponent(SyIcon).props('color')).toBe('error')
 	})
 
 	describe('Affichage de l\'astérisque', () => {
