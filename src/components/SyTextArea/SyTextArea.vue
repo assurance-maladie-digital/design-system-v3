@@ -124,7 +124,7 @@
 	})
 
 	const showClear = computed(() =>
-		props.clearable && !props.disabled && !props.readonly && internalValue.value !== ''
+		props.clearable && !props.disabled && !props.readonly && internalValue.value !== '',
 	)
 
 	function clearField() {
