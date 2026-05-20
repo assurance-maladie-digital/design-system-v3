@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import SySelect from '../SySelect.vue'
 import SyForm from '../../../SyForm/SyForm.vue'
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { fn } from '@storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
 
@@ -379,7 +379,7 @@ export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `isValidateOnBlur: false`, la validation se déclenche **immédiatement** dès que la valeur change, sans attendre que le champ perde le focus.\n\nCliquez sur « Définir une valeur invalide » : l\'erreur apparaît aussitôt, sans qu\'il soit nécessaire d\'ouvrir ou de fermer le menu. Avec le comportement par défaut (`isValidateOnBlur: true`), la même action ne déclencherait aucune erreur tant que l\'utilisateur n\'a pas interagi avec le champ.',
+				story: 'Dans cette story, une sélection directe garde le composant dans un état neutre. Seuls les boutons activent un scénario de validation visible.',
 			},
 		},
 		sourceCode: [
@@ -389,22 +389,20 @@ export const NoValidateOnBlur: Story = {
 <template>
   <div class="d-flex flex-column gap-4 pa-4">
     <SySelect
-      v-model="value"
+      ref="selectRef"
+      :model-value="value"
       :items="items"
       label="Option"
       :is-validate-on-blur="false"
-      :custom-rules="[{
-        type: 'custom',
-        options: {
-          validate: (v) => v !== '1',
-          message: 'Option 1 n\\'est pas autorisée.'
-        }
-      }]"
+      :show-success-messages="true"
+      :custom-rules="customRules"
+      :custom-success-rules="customSuccessRules"
+      @update:model-value="handleManualChange"
     />
     <div class="d-flex gap-4 mt-2">
-      <VBtn color="primary" class="mr-1" @click="value = '1'">Définir une valeur invalide</VBtn>
-      <VBtn color="primary" class="mr-1" @click="value = '2'">Définir une valeur valide</VBtn>
-      <VBtn @click="value = null">Réinitialiser</VBtn>
+      <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
+      <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
+      <VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
     </div>
   </div>
 </template>`,
@@ -413,16 +411,62 @@ export const NoValidateOnBlur: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
 const value = ref(null)
+const selectRef = ref(null)
+const validationMode = ref('neutral')
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+
+const customRules = computed(() => validationMode.value === 'invalid'
+  ? [{
+      type: 'custom',
+      options: {
+        validate: (v) => v !== '1',
+        message: "Option 1 n'est pas autorisée."
+      }
+    }]
+  : [])
+
+const customSuccessRules = computed(() => {
+  if (validationMode.value === 'neutral') {
+    return [{
+      type: 'custom',
+      options: {
+        validate: () => false
+      }
+    }]
+  }
+
+  if (validationMode.value === 'valid') {
+    return [{
+      type: 'custom',
+      options: {
+        validate: (v) => v !== null && v !== undefined,
+        successMessage: 'Option sélectionnée avec succès.'
+      }
+    }]
+  }
+
+  return []
+})
+
+const handleManualChange = (newValue) => {
+  validationMode.value = 'neutral'
+  value.value = newValue
+}
+
+const applyButtonValue = async (newValue) => {
+  validationMode.value = newValue === '1' ? 'invalid' : newValue ? 'valid' : 'neutral'
+  value.value = newValue
+  await selectRef.value?.validateOnSubmit()
+}
 </script>`,
 			},
 		],
@@ -431,31 +475,76 @@ const items = [
 		items,
 		label: 'Option',
 		isValidateOnBlur: false,
+		showSuccessMessages: true,
 	},
 	render: (args) => {
 		return {
 			components: { SySelect, VBtn },
 			setup() {
 				const value = ref(null)
-				return { args, value }
+				const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+				const validationMode = ref<'neutral' | 'invalid' | 'valid'>('neutral')
+
+				const customRules = computed(() => validationMode.value === 'invalid'
+					? [{
+							type: 'custom',
+							options: {
+								validate: (v: string | null) => v !== '1',
+								message: 'Option 1 n\'est pas autorisée.',
+							},
+						}]
+					: [])
+
+				const customSuccessRules = computed(() => {
+					if (validationMode.value === 'neutral') {
+						return [{
+							type: 'custom',
+							options: {
+								validate: () => false,
+							},
+						}]
+					}
+
+					if (validationMode.value === 'valid') {
+						return [{
+							type: 'custom',
+							options: {
+								validate: (v: string | null) => v !== null && v !== undefined,
+								successMessage: 'Option sélectionnée avec succès.',
+							},
+						}]
+					}
+
+					return []
+				})
+
+				const handleManualChange = (newValue: string | null) => {
+					validationMode.value = 'neutral'
+					value.value = newValue
+				}
+
+				const applyButtonValue = async (newValue: string | null) => {
+					validationMode.value = newValue === '1' ? 'invalid' : newValue ? 'valid' : 'neutral'
+					value.value = newValue
+					await selectRef.value?.validateOnSubmit()
+				}
+
+				return { args, value, selectRef, customRules, customSuccessRules, handleManualChange, applyButtonValue }
 			},
 			template: `
 				<div class="d-flex flex-column gap-4 pa-4">
 					<SySelect
-						v-model="value"
+						ref="selectRef"
+						:model-value="value"
 						v-bind="args"
-						:custom-rules="[{
-							type: 'custom',
-							options: {
-								validate: (v) => v !== '1',
-								message: 'Option 1 n\\'est pas autorisée.'
-							}
-						}]"
+						:custom-rules="customRules"
+						:custom-success-rules="customSuccessRules"
+						@update:model-value="handleManualChange"
 					/>
 					<div class="d-flex gap-4 mt-2">
-						<VBtn color="primary" class="mr-1" @click="value = '1'">Définir une valeur invalide</VBtn>
-						<VBtn color="primary" class="mr-1" @click="value = '2'">Définir une valeur valide</VBtn>
-						<VBtn @click="value = null">Réinitialiser</VBtn>
+						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
+						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
+						<VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
 					</div>
 				</div>
 			`,

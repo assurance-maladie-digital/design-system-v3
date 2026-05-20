@@ -1,16 +1,16 @@
 <script setup lang="ts">
-	import { computed, ref, toRef, watch } from 'vue'
+	import { computed, nextTick, ref, toRef, watch } from 'vue'
 	import type { VTextarea } from 'vuetify/components'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import useTextActions from './useTextActions'
-	import { useDefaultValidationRules, type TextareaRule as Rule } from './useDefaultValidationRules'
-	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
+	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string
 		trim?: boolean
 		replaceTabs?: number
-		rules?: Array<Rule>
 		required?: boolean
 		maxLines?: number
 		autoWrap?: number
@@ -20,11 +20,14 @@
 		color?: string
 		label: string
 		bgColor?: string
+		clearable?: boolean
+		helpText?: string
+		hideDetails?: boolean
+		displayAsterisk?: boolean
 	} & FieldValidationProps>(), {
 		modelValue: '',
 		trim: false,
 		replaceTabs: undefined,
-		rules: () => [],
 		maxLines: undefined,
 		autoWrap: undefined,
 		normalize: false,
@@ -32,6 +35,10 @@
 		variant: 'outlined',
 		color: 'primary',
 		bgColor: 'white',
+		clearable: false,
+		helpText: '',
+		hideDetails: false,
+		displayAsterisk: false,
 		...validationPropsDefaults,
 	})
 
@@ -41,7 +48,6 @@
 
 	const textAreaRef = ref<VTextarea | null>(null)
 	const hasInteracted = ref(false)
-	const focused = ref(false)
 
 	const internalValue = ref(props.modelValue)
 	watch(
@@ -88,95 +94,129 @@
 		internalValue.value = value
 	}
 
-	const { vuetifyRules: defaultVuetifyRules, customRules: defaultCustomRules } = useDefaultValidationRules({
-		required: toRef(props, 'required'),
-		maxLines: toRef(props, 'maxLines'),
-		hasInteracted,
-	})
-
-	const mergedCustomRules = computed<SyValidationRule[]>(() => [
-		...defaultCustomRules.value,
-		...(props.customRules || []),
-	])
-
-	const mergedVuetifyRules = computed<Rule[]>(() => [
-		...(props.rules || []),
-		...defaultVuetifyRules.value,
-	])
-
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: internalValue,
-		readonly: toRef(props, 'readonly'),
-		disabled: toRef(props, 'disabled'),
-		required: toRef(props, 'required'),
-		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
-		showSuccessMessages: toRef(props, 'showSuccessMessages'),
-		disableErrorHandling: toRef(props, 'disableErrorHandling'),
-		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
-		label: toRef(props, 'label'),
-		rules: mergedVuetifyRules,
-		customRules: mergedCustomRules,
-		customWarningRules: toRef(props, 'customWarningRules'),
-		customSuccessRules: toRef(props, 'customSuccessRules'),
-		errorMessages: toRef(props, 'errorMessages'),
-		warningMessages: toRef(props, 'warningMessages'),
-		successMessages: toRef(props, 'successMessages'),
-		hasErrorProp: toRef(props, 'hasError'),
-		hasWarningProp: toRef(props, 'hasWarning'),
-		hasSuccessProp: toRef(props, 'hasSuccess'),
-		maxErrors: toRef(props, 'maxErrors'),
+	const {
 		focused,
+		validate,
+		clearValidation,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+		validationIcon,
+		mergedVuetifyRules,
+	} = useSyTextAreaValidation(props, { internalValue, hasInteracted })
+
+	const computedLabel = computed(() =>
+		props.displayAsterisk && props.required ? `${props.label} *` : props.label,
+	)
+
+	const hasMessages = computed(() => hasError.value || hasWarning.value || hasSuccess.value)
+
+	const validationIconColor = computed(() => {
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
+		return 'rgb(var(--v-theme-iconBase))'
 	})
+
+	const displayMessages = computed(() => {
+		if (hasError.value) return errors.value
+		if (hasWarning.value) return warnings.value
+		if (hasSuccess.value) return successes.value
+		if (props.helpText && !props.hideDetails) return [props.helpText]
+		return []
+	})
+
+	const validateOnSubmit = async () => {
+		hasInteracted.value = true
+		await nextTick()
+		return validate()
+	}
+
+	useValidatable(validateOnSubmit, clearValidation)
 
 	defineExpose({
-		validateOnSubmit: validate,
+		validateOnSubmit,
+		clearValidation,
 	})
 
 </script>
 
 <template>
-	<VTextarea
-		ref="textAreaRef"
-		:model-value="internalValue"
-		:variant="variant"
-		:color="color"
-		:bg-color="props.bgColor"
-		:error="hasError"
-		:error-messages="errors"
-		:class="{
-			'success-field': hasSuccess && !hasError && !hasWarning,
-			'warning-field': hasWarning && !hasError,
-			'error-field': hasError,
-		}"
-		:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? successes : []))"
-		:max-errors="props.maxErrors"
-		:disabled="props.disabled"
-		:readonly="props.readonly"
-		:validate-on="validateOn"
-		:rules="props.useVuetifyValidation ? mergedVuetifyRules : undefined"
-		:label="label"
-		:aria-label="label"
-		:required="required"
-		:aria-required="required ? 'true' : undefined"
-		@update:model-value="execValueChange"
-		@update:focused="(e: boolean) => { focused = e; if (!e) execBlurChange() }"
-	/>
+	<div class="sy-textarea">
+		<VTextarea
+			ref="textAreaRef"
+			:model-value="internalValue"
+			:variant="variant"
+			:color="color"
+			:bg-color="props.bgColor"
+			:error="hasError"
+			:error-messages="errors"
+			:class="{
+				'success-field': hasSuccess && !hasError && !hasWarning,
+				'warning-field': hasWarning && !hasError,
+				'error-field': hasError,
+			}"
+			:messages="displayMessages"
+			:max-errors="props.maxErrors"
+			:disabled="props.disabled"
+			:readonly="props.readonly"
+			:validate-on="validateOn"
+			:rules="props.useVuetifyValidation ? mergedVuetifyRules : undefined"
+			:label="computedLabel"
+			:aria-label="computedLabel"
+			:required="required"
+			:aria-required="required ? 'true' : undefined"
+			:clearable="clearable"
+			:hide-details="hideDetails && !hasMessages"
+			@update:model-value="execValueChange"
+			@update:focused="(e: boolean) => { focused = e; if (!e) execBlurChange() }"
+			@click:clear="internalValue = ''"
+		/>
+		<SyIcon
+			v-if="validationIcon"
+			class="sy-textarea__state-icon"
+			:icon="validationIcon"
+			:color="validationIconColor"
+			:decorative="true"
+		/>
+	</div>
 </template>
 
 <style lang="scss" scoped>
-:deep(.v-messages) {
-	opacity: 1 !important;
+.sy-textarea {
+  position: relative;
+}
+
+.sy-textarea__state-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sy-textarea:has(.sy-textarea__state-icon) {
+  :deep(.v-field__input) {
+    padding-right: 36px;
+  }
 }
 
 .success-field {
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-onSuccessVariant));
+		color: rgb(var(--v-theme-borderSuccess));
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onSuccessVariant));
+		color: rgb(var(--v-theme-borderSuccess));
+	}
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-textSuccess)) !important;
 	}
 }
 
@@ -184,11 +224,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-onWarningVariant));
+		color: rgb(var(--v-theme-borderWarning));
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onWarningVariant));
+		color: rgb(var(--v-theme-borderWarning));
 	}
 }
 </style>

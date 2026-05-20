@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyTextArea from './SyTextArea.vue'
 import type { VTextarea } from 'vuetify/components'
 import { fn } from '@storybook/test'
+import { ref, onMounted, nextTick } from 'vue'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
 	title: 'Composants/Formulaires/SyTextArea',
@@ -17,6 +19,7 @@ const meta = {
 		},
 	},
 	argTypes: {
+		...getValidationDocumentation('string'),
 		label: {
 			control: { type: 'text' },
 			description: 'Texte affiché au-dessus du champ',
@@ -83,148 +86,40 @@ const meta = {
 				defaultValue: { summary: 'outlined' },
 			},
 		},
-		required: {
+		clearable: {
 			control: { type: 'boolean' },
-			description: 'Indique si le champ est requis',
+			description: 'Affiche un bouton pour vider le champ',
 			table: {
 				type: { summary: 'boolean' },
 				defaultValue: { summary: 'false' },
-				category: 'validation',
+				category: 'props',
 			},
 		},
-		rules: {
-			control: { type: 'object' },
-			description: 'Règles de validation Vuetify (mode useVuetifyValidation=true)',
+		helpText: {
+			control: { type: 'text' },
+			description: 'Texte d\'aide affiché sous le champ en l\'absence de messages de validation',
 			table: {
-				type: { summary: 'Array<(value: string) => boolean | string>' },
-				defaultValue: { summary: '[]' },
-				category: 'validation',
+				type: { summary: 'string' },
+				defaultValue: { summary: '' },
+				category: 'props',
 			},
 		},
-		useVuetifyValidation: {
+		hideDetails: {
 			control: { type: 'boolean' },
-			description: 'Active la validation Vuetify (sinon validation unifiée customRules)',
+			description: 'Masque la zone des messages (erreurs, aide…)',
 			table: {
 				type: { summary: 'boolean' },
 				defaultValue: { summary: 'false' },
-				category: 'validation',
+				category: 'props',
 			},
 		},
-		isValidateOnBlur: {
+		displayAsterisk: {
 			control: { type: 'boolean' },
-			description: 'Déclenche la validation au blur (sinon à la saisie)',
-			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'true' },
-				category: 'validation',
-			},
-		},
-		disableErrorHandling: {
-			control: { type: 'boolean' },
-			description: 'Désactive la gestion des messages d\'erreur/alerte/succès',
+			description: 'Affiche un astérisque après le label quand le champ est requis',
 			table: {
 				type: { summary: 'boolean' },
 				defaultValue: { summary: 'false' },
-				category: 'validation',
-			},
-		},
-		showSuccessMessages: {
-			control: { type: 'boolean' },
-			description: 'Affiche les messages de succès',
-			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'true' },
-				category: 'validation',
-			},
-		},
-		customRules: {
-			control: { type: 'object' },
-			description: 'Règles d\'erreur pour le mode validation unifiée',
-			table: {
-				type: { summary: 'ValidationRule[]' },
-				defaultValue: { summary: '[]' },
-				category: 'validation',
-			},
-		},
-		customWarningRules: {
-			control: { type: 'object' },
-			description: 'Règles d\'alerte pour le mode validation unifiée',
-			table: {
-				type: { summary: 'ValidationRule[]' },
-				defaultValue: { summary: '[]' },
-				category: 'validation',
-			},
-		},
-		customSuccessRules: {
-			control: { type: 'object' },
-			description: 'Règles de succès pour le mode validation unifiée',
-			table: {
-				type: { summary: 'ValidationRule[]' },
-				defaultValue: { summary: '[]' },
-				category: 'validation',
-			},
-		},
-		errorMessages: {
-			control: { type: 'object' },
-			description: 'Messages d\'erreur externes ajoutés au résultat de validation',
-			table: {
-				type: { summary: 'string[] | null' },
-				defaultValue: { summary: 'null' },
-				category: 'validation',
-			},
-		},
-		warningMessages: {
-			control: { type: 'object' },
-			description: 'Messages d\'alerte externes ajoutés au résultat de validation',
-			table: {
-				type: { summary: 'string[] | null' },
-				defaultValue: { summary: 'null' },
-				category: 'validation',
-			},
-		},
-		successMessages: {
-			control: { type: 'object' },
-			description: 'Messages de succès externes ajoutés au résultat de validation',
-			table: {
-				type: { summary: 'string[] | null' },
-				defaultValue: { summary: 'null' },
-				category: 'validation',
-			},
-		},
-		hasError: {
-			control: { type: 'boolean' },
-			description: 'Force l\'état erreur',
-			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'false' },
-				category: 'validation',
-			},
-		},
-		hasWarning: {
-			control: { type: 'boolean' },
-			description: 'Force l\'état alerte',
-			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'false' },
-				category: 'validation',
-			},
-		},
-		hasSuccess: {
-			control: { type: 'boolean' },
-			description: 'Force l\'état succès',
-			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'false' },
-				category: 'validation',
-			},
-		},
-		maxErrors: {
-			control: { type: 'number' },
-			description: 'Nombre maximum de messages d\'erreur affichés',
-			table: {
-				type: { summary: 'number' },
-				defaultValue: { summary: '1' },
-				category: 'validation',
+				category: 'props',
 			},
 		},
 	},
@@ -264,6 +159,40 @@ const text = ref('')
 	},
 }
 
+export const HelpText: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'La prop `helpText` affiche un texte d\'aide sous le champ. Il disparaît au profit des messages de validation quand ceux-ci sont présents.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyTextArea
+		v-model="text"
+		label="Observations médicales"
+		help-text="Décrivez les symptômes observés, leur durée et leur intensité."
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+const text = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Observations médicales',
+		helpText: 'Décrivez les symptômes observés, leur durée et leur intensité.',
+		'onUpdate:modelValue': fn(),
+	},
+}
+
 export const Required: Story = {
 	args: {
 		'label': 'Texte requis',
@@ -279,7 +208,6 @@ export const Required: Story = {
 		v-model="text"
 		label="Texte requis"
 		:required="true"
-		style="width: 100%"
 	/>
 </template>
 				`,
@@ -294,6 +222,55 @@ const text = ref('')
 			},
 		],
 	},
+}
+
+export const HideDetails: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Avec `hideDetails: true`, la zone des messages est masquée tant qu\'il n\'y a pas de messages de validation. Utile pour gagner de l\'espace vertical dans les formulaires denses.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyTextArea
+		v-model="text"
+		label="Note interne"
+		:hide-details="true"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+const text = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Note interne',
+		hideDetails: true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: () => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref('')
+			return { value }
+		},
+		template: `
+			<SyTextArea
+				v-model="value"
+				label="Note interne"
+				:hide-details="true"
+				:show-success-messages="false"
+			/>
+		`,
+	}),
 }
 
 export const Trim: Story = {
@@ -377,12 +354,6 @@ const text = ref('')
 }
 
 export const MaxLines: Story = {
-	args: {
-		'label': 'Max lines text area',
-		'modelValue': 'Lorem ipsum dolor sit amet,\n consectetur adipiscing elit,\n sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n Ut enim ad minim veniam,\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n Excepteur sint occaecat cupidatat non proident,\n sunt in culpa qui officia deserunt mollit anim id est laborum.',
-		'maxLines': 5,
-		'onUpdate:modelValue': fn(),
-	},
 	parameters: {
 		sourceCode: [
 			{
@@ -415,6 +386,28 @@ const text = ref('')
 </div>`,
 		}),
 	],
+	render: () => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref('Lorem ipsum dolor sit amet,\n consectetur adipiscing elit,\n sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n Ut enim ad minim veniam,\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n Excepteur sint occaecat cupidatat non proident,\n sunt in culpa qui officia deserunt mollit anim id est laborum.')
+			const textAreaRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			onMounted(async () => {
+				await nextTick()
+				textAreaRef.value?.validateOnSubmit()
+			})
+
+			return { value, textAreaRef }
+		},
+		template: `
+			<SyTextArea
+				ref="textAreaRef"
+				v-model="value"
+				label="Max lines text area"
+				:max-lines="5"
+			/>
+		`,
+	}),
 }
 
 export const AutoWrap: Story = {
@@ -464,6 +457,11 @@ export const Normalize: Story = {
 		'onUpdate:modelValue': fn(),
 	},
 	parameters: {
+		docs: {
+			description: {
+				story: 'La normalisation NFC (Canonical Decomposition, followed by Canonical Composition) unifie les représentations Unicode d\'un même caractère. Par exemple, le caractère `é` peut être encodé de deux façons : comme un seul point de code (`U+00E9`) ou comme la lettre `e` suivie d\'un accent aigu combinant (`U+0065` + `U+0301`). Avec `normalize: true`, ces deux formes sont automatiquement converties en une seule représentation canonique à la saisie, garantissant la cohérence des données.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -490,7 +488,7 @@ const text = ref('')
 		story => ({
 			components: { story },
 			template: `<div>
-	<p class="pb-5">Le texte sera normalisé selon la norme NFC</p>
+	<p class="pb-5">La normalisation NFC unifie les représentations Unicode d'un même caractère. Par exemple, le caractère <code>é</code> peut être encodé de deux façons : comme un seul point de code (<code>U+00E9</code>) ou comme la lettre <code>e</code> suivie d'un accent aigu combinant (<code>U+0065</code> + <code>U+0301</code>).<br/>Avec <code>normalize: true</code>, ces deux formes sont automatiquement converties en une seule représentation canonique à la saisie, garantissant la cohérence des données.</p>
 	<story />
 </div>`,
 		}),
