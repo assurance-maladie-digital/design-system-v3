@@ -238,6 +238,90 @@ export const WithSuccess: Story = {
 	}),
 }
 
+export const NoSuccessMessage: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Avec `showSuccessMessages: false`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché. Utile quand un retour positif silencieux est suffisant.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyTextArea
+    ref="textAreaRef"
+    v-model="value"
+    label="Commentaire"
+    :show-success-messages="false"
+    :custom-success-rules="[
+      {
+        type: 'custom',
+        options: {
+          validate: (v) => v.length >= 20,
+          successMessage: 'Description suffisamment détaillée.'
+        }
+      }
+    ]"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+
+const value = ref('Voici une description bien détaillée du problème rencontré.')
+const textAreaRef = ref(null)
+
+onMounted(() => {
+  textAreaRef.value?.validateOnSubmit()
+})
+</script>`,
+			},
+		],
+	},
+	args: {
+		'label': 'Commentaire',
+		'showSuccessMessages': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref('Voici une description bien détaillée du problème rencontré.')
+			const textAreaRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			onMounted(() => {
+				textAreaRef.value?.validateOnSubmit()
+			})
+
+			return { args, value, textAreaRef }
+		},
+		template: `
+			<div class="pa-4">
+				<SyTextArea
+					ref="textAreaRef"
+					v-model="value"
+					v-bind="args"
+					:custom-success-rules="[
+						{
+							type: 'custom',
+							options: {
+								validate: (v) => v.length >= 20,
+								successMessage: 'Description suffisamment détaillée.'
+							}
+						}
+					]"
+				/>
+			</div>
+		`,
+	}),
+}
+
 export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
@@ -580,6 +664,188 @@ async function onSubmit() {
 						label="Description obligatoire"
 						:required="true"
 						:display-asterisk="true"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary">Soumettre</VBtn>
+				</VForm>
+			</div>
+		`,
+	}),
+}
+
+export const SyFormVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans `SyForm`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm @submit="onSubmit">
+    <SyTextArea
+      v-model="value"
+      label="Description"
+      use-vuetify-validation
+      validate-on="submit"
+      :show-success-messages="false"
+      :rules="[v => !!v || 'Ce champ est requis']"
+      class="mb-4"
+    />
+    <VBtn type="submit" color="primary">Soumettre</VBtn>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextArea, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('')
+
+function onSubmit(event: { isValid: boolean }) {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide.')
+  }
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		'label': 'Description',
+		'useVuetifyValidation': true,
+		'validateOn': 'submit',
+		'showSuccessMessages': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SyTextArea, SyForm, VBtn },
+		setup() {
+			const value = ref('')
+			const rules = [
+				(v: string) => !!v || 'Ce champ est requis',
+			]
+
+			function onSubmit(event: { isValid: boolean }) {
+				if (event.isValid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide.')
+				}
+			}
+
+			return { args, value, rules, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<SyForm @submit="onSubmit">
+					<SyTextArea
+						v-model="value"
+						v-bind="args"
+						:rules="rules"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary">Soumettre</VBtn>
+				</SyForm>
+			</div>
+		`,
+	}),
+}
+
+export const VFormVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans `VForm`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <VForm ref="form" @submit.prevent="onSubmit">
+    <SyTextArea
+      v-model="value"
+      label="Description"
+      use-vuetify-validation
+      validate-on="submit"
+      :show-success-messages="false"
+      :rules="[v => !!v || 'Ce champ est requis']"
+      class="mb-4"
+    />
+    <VBtn type="submit" color="primary">Soumettre</VBtn>
+  </VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const value = ref('')
+const form = ref<InstanceType<typeof VForm> | null>(null)
+
+async function onSubmit() {
+  const { valid } = await form.value?.validate() || { valid: false }
+  if (valid) {
+    alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide.')
+  }
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		'label': 'Description',
+		'useVuetifyValidation': true,
+		'validateOn': 'submit',
+		'showSuccessMessages': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SyTextArea, VBtn, VForm },
+		setup() {
+			const value = ref('')
+			const form = ref<InstanceType<typeof VForm> | null>(null)
+			const rules = [
+				(v: string) => !!v || 'Ce champ est requis',
+			]
+
+			async function onSubmit() {
+				const { valid } = await form.value?.validate() || { valid: false }
+				if (valid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide.')
+				}
+			}
+
+			return { args, value, form, rules, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<VForm ref="form" @submit.prevent="onSubmit">
+					<SyTextArea
+						v-model="value"
+						v-bind="args"
+						:rules="rules"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary">Soumettre</VBtn>
