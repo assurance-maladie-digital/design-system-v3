@@ -1,14 +1,7 @@
 import SkipLink from '../SkipLink.vue'
 
 describe('SkipLink - Visual regression tests', () => {
-	it('displays the skip link (visually hidden by default)', () => {
-		cy.mountWithVuetify(SkipLink)
-
-		cy.get('.sy-skip-link-container').should('exist')
-		cy.matchImageSnapshot('skip-link-default', cy.get('.v-application'))
-	})
-
-	it('displays the skip link with custom label', () => {
+	it('displays the skip link when focused', () => {
 		cy.mountWithVuetify(SkipLink, {
 			props: {
 				label: 'Aller au contenu principal',
@@ -16,7 +9,8 @@ describe('SkipLink - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.sy-skip-link-container').should('exist')
-		cy.matchImageSnapshot('skip-link-custom-label', cy.get('.v-application'))
+		cy.get('.sy-skip-link').focus()
+		cy.get('.sy-skip-link').should('be.visible')
+		cy.matchImageSnapshot('skip-link-focused', cy.get('.v-application'))
 	})
 })

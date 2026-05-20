@@ -1,19 +1,34 @@
 import NotificationBar from '../NotificationBar.vue'
+import { useNotificationService } from '@/services/NotificationService'
 
 describe('NotificationBar - Visual regression tests', () => {
-	it('displays the notification bar (empty state)', () => {
-		cy.mountWithVuetify(NotificationBar)
-
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('notification-bar-empty', cy.get('.v-application'))
+	beforeEach(() => {
+		const { clearQueue } = useNotificationService()
+		clearQueue()
 	})
 
-	it('displays the notification bar at bottom position', () => {
+	it('displays the notification bar with an info notification', () => {
+		const { addNotification } = useNotificationService()
+		addNotification({ id: '1', message: 'Ceci est une notification informative', type: 'info' })
+
 		cy.mountWithVuetify(NotificationBar, {
-			props: { bottom: true },
+			props: { showAll: true },
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('notification-bar-bottom', cy.get('.v-application'))
+		cy.get('.notification-bar').should('be.visible')
+		cy.matchImageSnapshot('notification-bar-info', cy.get('.v-application'))
+	})
+
+	it('displays the notification bar with multiple types', () => {
+		const { addNotification } = useNotificationService()
+		addNotification({ id: '1', message: 'Succès de l\'opération', type: 'success' })
+		addNotification({ id: '2', message: 'Une erreur est survenue', type: 'error' })
+
+		cy.mountWithVuetify(NotificationBar, {
+			props: { showAll: true },
+		})
+
+		cy.get('.notification-bar').should('be.visible')
+		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.v-application'))
 	})
 })

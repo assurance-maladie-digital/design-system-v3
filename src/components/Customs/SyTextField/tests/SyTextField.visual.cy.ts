@@ -65,7 +65,7 @@ describe('SyTextField - Visual regression tests', () => {
 		cy.mountWithVuetify(SyTextField, {
 			props: {
 				label: 'Recherche',
-				prependInnerIcon: 'mdi-magnify',
+				prependInnerIcon: 'info',
 			},
 		})
 
