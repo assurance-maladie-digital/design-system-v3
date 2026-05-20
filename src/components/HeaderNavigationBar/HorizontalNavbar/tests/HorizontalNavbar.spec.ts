@@ -82,6 +82,7 @@ describe('HorizontalNavbar', () => {
 			const wrapper = mount(HorizontalNavbar, {
 				global: { stubs },
 				props: { items: defaultItems },
+				// @ts-expect-error Vue Test Utils requires all slots but partial is valid at runtime
 				slots: { 'navigation-bar-prepend': '<span class="prepend-content">Logo</span>' },
 			})
 			expect(wrapper.find('.prepend-content').exists()).toBe(true)
@@ -92,6 +93,7 @@ describe('HorizontalNavbar', () => {
 			const wrapper = mount(HorizontalNavbar, {
 				global: { stubs },
 				props: { items: defaultItems },
+				// @ts-expect-error Vue Test Utils requires all slots but partial is valid at runtime
 				slots: { 'navigation-bar-append': '<span class="append-content">Actions</span>' },
 			})
 			expect(wrapper.find('.append-content').exists()).toBe(true)
