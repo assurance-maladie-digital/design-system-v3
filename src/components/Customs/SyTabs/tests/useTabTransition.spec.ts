@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
-import { defineComponent } from 'vue'
 import { useTabTransition } from '../useTabTransition'
 
 function makeTablistEl(activeLeft = 50, activeWidth = 120, containerLeft = 10): HTMLElement {
@@ -122,17 +121,7 @@ describe('useTabTransition', () => {
 			container.appendChild(btn1)
 			container.appendChild(btn2)
 
-			const Comp = defineComponent({
-				setup() {
-					const tablist = ref<HTMLElement | null>(container)
-					const activeItemIndex = ref(0)
-					const result = useTabTransition(tablist, activeItemIndex)
-					return { ...result, activeItemIndex }
-				},
-				template: '<div />',
-			})
-
-			const wrapper = mount(Comp)
+			const wrapper = mount(makeComponent(container, 0))
 			await nextTick()
 			await nextTick()
 

@@ -82,7 +82,11 @@ describe('HorizontalNavbar', () => {
 			const wrapper = mount(HorizontalNavbar, {
 				global: { stubs },
 				props: { items: defaultItems },
-				slots: { 'navigation-bar-prepend': '<span class="prepend-content">Logo</span>' },
+				slots: {
+					'navigation-bar-prepend': '<span class="prepend-content">Logo</span>',
+					'navigation-bar-append': '',
+					'default': '',
+				},
 			})
 			expect(wrapper.find('.prepend-content').exists()).toBe(true)
 			expect(wrapper.find('.prepend-content').text()).toBe('Logo')
@@ -92,7 +96,11 @@ describe('HorizontalNavbar', () => {
 			const wrapper = mount(HorizontalNavbar, {
 				global: { stubs },
 				props: { items: defaultItems },
-				slots: { 'navigation-bar-append': '<span class="append-content">Actions</span>' },
+				slots: {
+					'navigation-bar-prepend': '',
+					'navigation-bar-append': '<span class="append-content">Actions</span>',
+					'default': '',
+				},
 			})
 			expect(wrapper.find('.append-content').exists()).toBe(true)
 		})
