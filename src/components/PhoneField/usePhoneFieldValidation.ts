@@ -60,15 +60,6 @@ export function usePhoneFieldValidation(params: {
 				successMessage: params.locales.value.success(params.phoneFieldIdentifier.value),
 				fieldIdentifier: params.phoneFieldIdentifier.value,
 			},
-		},
-		{
-			type: 'custom',
-			options: {
-				validate: (value: string) => {
-					console.log('Validating phone number with custom rule:', value)
-					return true
-				},
-			},
 		})
 
 		if (params.required.value) {
