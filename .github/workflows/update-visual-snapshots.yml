@@ -31,22 +31,24 @@ jobs:
           ref: ${{ github.event.inputs.branch || github.head_ref || github.ref }}
       - name: Split specs into 4 groups
         id: split
+        shell: bash
         run: |
           SPEC_INPUT="${{ github.event.inputs.spec }}"
           if [ -n "$SPEC_INPUT" ]; then
             echo "single-spec=$SPEC_INPUT" >> $GITHUB_OUTPUT
             echo "specs=[]" >> $GITHUB_OUTPUT
           else
-            FILES=$(find src -name "*.visual.cy.ts" | sort)
-            TOTAL=$(echo "$FILES" | wc -l)
+            mapfile -t SPECS_ARRAY < <(find src -name "*.visual.cy.ts" | sort)
+            TOTAL=${#SPECS_ARRAY[@]}
             CHUNK=$(( (TOTAL + 3) / 4 ))
             GROUPS=()
-            while IFS= read -r line; do SPECS_ARRAY+=("$line"); done <<< "$FILES"
             for i in 0 1 2 3; do
               START=$((i * CHUNK))
               SLICE=("${SPECS_ARRAY[@]:$START:$CHUNK}")
-              JOINED=$(IFS=,; echo "${SLICE[*]}")
-              GROUPS+=("\"$JOINED\"")
+              if [ ${#SLICE[@]} -gt 0 ]; then
+                JOINED=$(IFS=,; echo "${SLICE[*]}")
+                GROUPS+=("\"$JOINED\"")
+              fi
             done
             JSON="[$(IFS=,; echo "${GROUPS[*]}")]"
             echo "specs=$JSON" >> $GITHUB_OUTPUT
