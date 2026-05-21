@@ -9,6 +9,8 @@ describe('SyTextArea', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 			},
@@ -20,6 +22,8 @@ describe('SyTextArea', () => {
 	it('sets aria-required when required is true', () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				required: true,
 				label: 'Description des symptomes',
@@ -33,6 +37,8 @@ describe('SyTextArea', () => {
 	it('does not show required error message by default', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				required: true,
 				label: 'Description des symptomes',
@@ -45,6 +51,8 @@ describe('SyTextArea', () => {
 	it('shows required error message when empty after interaction', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				required: true,
 				label: 'Description des symptomes',
@@ -60,6 +68,8 @@ describe('SyTextArea', () => {
 	it('remove the white spaces at the beginning of the text as we try to add them', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				trim: true,
 				label: 'Description des symptomes',
@@ -75,6 +85,8 @@ describe('SyTextArea', () => {
 	it('does not remove the white spaces at the middle of the text', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				trim: true,
 				label: 'Description des symptomes',
@@ -90,6 +102,8 @@ describe('SyTextArea', () => {
 	it('removes the white spaces at the end of the text at blur', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				trim: true,
 				label: 'Description des symptomes',
@@ -107,6 +121,8 @@ describe('SyTextArea', () => {
 	it('removes the tabs with the number of spaces defined in the prop', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				replaceTabs: 2,
 				label: 'Description des symptomes',
@@ -122,6 +138,8 @@ describe('SyTextArea', () => {
 	it('show an error message when the text is too long', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				maxLines: 5,
 				label: 'Description des symptomes',
@@ -144,6 +162,8 @@ describe('SyTextArea', () => {
 	it('adds a line break when a line is too long', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				autoWrap: 50,
 				label: 'Description des symptomes',
@@ -163,6 +183,8 @@ describe('SyTextArea', () => {
 	it('adds a line break when a line is too long 2', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				autoWrap: 50,
 				label: 'Description des symptomes',
@@ -182,6 +204,8 @@ describe('SyTextArea', () => {
 	it('normalizes the text to NFC', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				normalize: true,
 				label: 'Description des symptomes',
@@ -197,6 +221,8 @@ describe('SyTextArea', () => {
 	it('updates the text when the modelValue prop changes', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				replaceTabs: 2,
 				trim: true,
@@ -212,6 +238,8 @@ describe('SyTextArea', () => {
 	it('shows custom error from customRules in custom validation mode', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -240,6 +268,8 @@ describe('SyTextArea', () => {
 	it('shows vuetify rule error when useVuetifyValidation is true', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				useVuetifyValidation: true,
@@ -261,6 +291,8 @@ describe('SyTextArea', () => {
 	it('shows custom warning from customWarningRules in custom validation mode', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -296,6 +328,8 @@ describe('SyTextArea', () => {
 	it('shows custom success from customSuccessRules in custom validation mode', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
