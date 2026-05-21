@@ -14,8 +14,8 @@
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
 	import type { IconType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import type { ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { useSyTextFieldValidation } from './useSyTextFieldValidation'
 	import type { SyTextFieldProps } from './types'
 
 	const props = withDefaults(
@@ -139,18 +139,7 @@
 
 	const attrs = useAttrs()
 	const focused = ref(false)
-	// Construction des règles de validation
-	const defaultRules = computed<ValidationRule[]>(() => props.required
-		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
-		: [],
-	)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, validationIcon, hasMessages } = useSyTextFieldValidation({
 		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -161,10 +150,7 @@
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
 		label: toRef(props, 'label'),
 		rules: toRef(props, 'rules'),
-		customRules: computed(() => {
-			const customRules = props.customRules ? props.customRules : []
-			return [...defaultRules.value, ...customRules]
-		}),
+		customRules: toRef(props, 'customRules'),
 		customWarningRules: toRef(props, 'customWarningRules'),
 		customSuccessRules: toRef(props, 'customSuccessRules'),
 		errorMessages: toRef(props, 'errorMessages'),
@@ -174,7 +160,7 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
-		focused: focused,
+		focused,
 	})
 
 	const forwardedAttrs = computed(() => {
@@ -208,20 +194,6 @@
 		if (props.isClearable && newValue === '') {
 			emit('clear')
 		}
-	})
-
-	const iconColor = computed(() => {
-		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return 'rgba(0, 0, 0, 1)'
-	})
-
-	const clearButtonColorClass = computed(() => {
-		if (hasError.value) return 'error-field'
-		if (hasWarning.value) return 'warning-field'
-		if (hasSuccess.value) return 'success-field'
-		return 'text-iconBase'
 	})
 
 	const handlePrependIconClick = () => {
@@ -292,25 +264,12 @@
 		emit('keydown', event)
 	}
 
-	const validationIcon = computed(() => {
-		if (hasError.value) return ICONS['error']
-		if (hasWarning.value) return ICONS['warning']
-		if (hasSuccess.value) return ICONS['success']
-		return null
-	})
-
 	const isShouldDisplayAsterisk = computed(() => {
 		return props.displayAsterisk && props.required
 	})
 
 	const labelWithAsterisk = computed(() => {
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
-	})
-
-	// Détermine s'il y a des messages d'erreur ou d'état
-	const hasMessages = computed(() => {
-		if (props.disableErrorHandling) return false
-		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages)
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
