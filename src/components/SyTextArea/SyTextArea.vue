@@ -46,18 +46,43 @@
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string): void
+		(e: 'clear'): void
 	}>()
 
 	const textAreaRef = ref<VTextarea | null>(null)
 	const hasInteracted = ref(false)
 
 	const internalValue = ref(props.modelValue)
+
+	const { changeActions, blurActions } = useTextActions(textAreaRef, {
+		trim: toRef(props, 'trim'),
+		replaceTabs: toRef(props, 'replaceTabs'),
+		autoWrap: toRef(props, 'autoWrap'),
+		normalize: toRef(props, 'normalize'),
+	})
+
+	// Applique les changeActions et blurActions sans mettre hasInteracted à true (pour les changements externes)
+	function applyExternalValue(value: string) {
+		let processedValue = value
+		// Applique d'abord les changeActions (replaceTabs, normalize)
+		changeActions.value.forEach((action) => {
+			processedValue = action(processedValue)
+		})
+		// Puis les blurActions (trim, autoWrap)
+		blurActions.value.forEach((action) => {
+			processedValue = action(processedValue)
+		})
+		return processedValue
+	}
+
 	watch(
 		() => props.modelValue,
 		(newValue) => {
 			if (newValue !== internalValue.value) {
-				execValueChange(newValue)
-				execBlurChange()
+				const processedValue = applyExternalValue(newValue)
+				if (processedValue !== internalValue.value) {
+					internalValue.value = processedValue
+				}
 			}
 		},
 	)
@@ -69,13 +94,6 @@
 			}
 		},
 	)
-
-	const { changeActions, blurActions } = useTextActions(textAreaRef, {
-		trim: toRef(props, 'trim'),
-		replaceTabs: toRef(props, 'replaceTabs'),
-		autoWrap: toRef(props, 'autoWrap'),
-		normalize: toRef(props, 'normalize'),
-	})
 
 	function execValueChange(value: string) {
 		changeActions.value.forEach((action) => {
@@ -124,13 +142,14 @@
 	})
 
 	const showClear = computed(() =>
-		props.clearable && !props.disabled && !props.readonly && internalValue.value !== '',
+		props.clearable && !props.disabled && !props.readonly && !!internalValue.value,
 	)
 
 	function clearField() {
 		internalValue.value = ''
 		clearValidation()
 		hasInteracted.value = false
+		emits('clear')
 	}
 
 	const displayMessages = computed(() => {
@@ -151,6 +170,7 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearField,
 		clearValidation,
 	})
 
