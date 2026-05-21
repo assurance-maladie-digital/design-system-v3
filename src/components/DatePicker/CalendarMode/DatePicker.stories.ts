@@ -973,7 +973,7 @@ export const WithWarning: Story = {
 			{
 				type: 'notBeforeDate', options: {
 					warningMessage: 'Attention : la date est antérieure à la date de référence',
-					date: '01/01/2024',
+					date: '01/01/2031',
 					isWarning: true,
 				},
 			},
