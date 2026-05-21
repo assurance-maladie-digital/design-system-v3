@@ -1323,7 +1323,7 @@
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
 	// background-color: rgb(var(--v-theme-background));
-	background: green !important;
+	background: rgb(var(--v-theme-background)) !important;
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
