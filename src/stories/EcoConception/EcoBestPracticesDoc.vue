@@ -565,7 +565,7 @@
 	}
 
 	.eco-pdf-sidebar {
-		background: #ffffff;
+		background: #fff;
 		border-right: 1px solid #e3e8f2;
 	}
 
@@ -576,7 +576,7 @@
 		border: 0;
 		border-radius: 14px;
 		background: #07479f;
-		color: #ffffff;
+		color: #fff;
 		font-weight: 700;
 		text-align: center;
 		cursor: pointer;
@@ -586,7 +586,7 @@
 	.eco-pdf-pillar:hover,
 	.eco-pdf-pillar--active {
 		background: #06377c;
-		box-shadow: 0 10px 24px rgba(7, 71, 159, 0.24);
+		box-shadow: 0 10px 24px rgb(7 71 159 / 24%);
 		transform: translateY(-2px);
 	}
 
@@ -608,7 +608,7 @@
 		border: 1px solid #c9d8ef;
 		border-radius: 999px;
 		padding: 8px 14px;
-		background: #ffffff;
+		background: #fff;
 		color: #07479f;
 		font-weight: 700;
 		cursor: pointer;
@@ -616,7 +616,7 @@
 
 	.eco-filter--active {
 		background: #07479f;
-		color: #ffffff;
+		color: #fff;
 		border-color: #07479f;
 	}
 
@@ -632,17 +632,17 @@
 	}
 
 	.eco-pdf-column {
-		background: #ffffff;
+		background: #fff;
 		border-radius: 18px;
 		padding: 18px;
-		box-shadow: 0 10px 30px rgba(12, 37, 86, 0.08);
+		box-shadow: 0 10px 30px rgb(12 37 86 / 8%);
 	}
 
 	.eco-pdf-column__header {
 		border-radius: 10px;
 		padding: 10px 14px;
 		margin-bottom: 14px;
-		color: #ffffff;
+		color: #fff;
 		font-weight: 800;
 		text-align: center;
 	}
@@ -660,7 +660,7 @@
 		width: 100%;
 		border: 1px solid #e3e8f2;
 		border-radius: 12px;
-		background: #ffffff;
+		background: #fff;
 		padding: 12px 14px;
 		margin-bottom: 10px;
 		text-align: left;
@@ -671,7 +671,7 @@
 	.eco-pdf-practice:hover,
 	.eco-pdf-practice--active {
 		border-color: #07479f;
-		box-shadow: 0 8px 20px rgba(7, 71, 159, 0.12);
+		box-shadow: 0 8px 20px rgb(7 71 159 / 12%);
 		transform: translateY(-1px);
 	}
 
@@ -701,7 +701,7 @@
 	.eco-rule-sheet {
 		border-radius: 20px;
 		overflow: hidden;
-		box-shadow: 0 12px 36px rgba(12, 37, 86, 0.1);
+		box-shadow: 0 12px 36px rgb(12 37 86 / 10%);
 	}
 
 	.eco-rule-sheet__header {
@@ -728,7 +728,7 @@
 
 	.eco-rule-sheet__title {
 		margin: 0;
-		color: #ffffff;
+		color: #fff;
 		font-size: 26px;
 		font-weight: 800;
 		line-height: 1.25;
@@ -739,7 +739,7 @@
 
 	.eco-rule-sheet__chip {
 		flex-shrink: 0;
-		color: #ffffff !important;
+		color: #fff !important;
 		font-weight: 800;
 	}
 
@@ -794,7 +794,7 @@
 	}
 
 	.eco-table-card {
-		background: #ffffff;
+		background: #fff;
 		border: 1px solid #e3e8f2;
 		border-radius: 16px;
 		padding: 18px;
@@ -851,7 +851,7 @@
 		gap: 10px;
 	}
 
-	@media (max-width: 960px) {
+	@media (width <= 960px) {
 		.eco-pdf-columns {
 			grid-template-columns: 1fr;
 		}
