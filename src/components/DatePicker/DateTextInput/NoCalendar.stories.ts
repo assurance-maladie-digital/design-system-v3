@@ -413,27 +413,37 @@ export const EuropeanFormat: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePicker
-						v-model="date"
-						format="DD/MM/YYYY"
-						date-format-return="YYYY/MM/DD"
-						placeholder="JJ/MM/AAAA"
-						required
-						no-icon
-						no-calendar
-					/>
-
-					<DatePicker
-						v-model="date"
-						format="DD/MM/YYYY"
-						date-format-return="YYYY/MM/DD"
-						placeholder="JJ/MM/AAAA"
-						required
-						no-icon
-						no-calendar
-						displayAsterisk
-					/>
+					<div style="padding: 20px;">
+						<h4 class="mb-4">Format européen avec règles de base (format de date valide) :</h4>
+						<DatePicker
+							v-model="date"
+							v-bind="args"
+						/>
+						<div style="margin-top: 10px; font-family: monospace; color: #666;">
+							Valeur (dateFormatReturn: 'YYYY/MM/DD') : {{ date }}
+						</div>
+					</div>
 				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+					const args = {
+						noCalendar: true,
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY/MM/DD',
+						placeholder: 'JJ/MM/AAAA',
+						label: 'Date avec règles de validation',
+						required: true,
+						noIcon: true,
+					}
+				</script>
 				`,
 			},
 		],

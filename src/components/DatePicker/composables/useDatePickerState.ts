@@ -1,13 +1,13 @@
-import { computed, ref, watch, type Ref, type ComputedRef } from 'vue'
+import { computed, ref, unref, watch, type Ref, type ComputedRef, type MaybeRef } from 'vue'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 export interface UseDatePickerStateOptions {
 	selectedDates: Ref<Date | (Date | null)[] | null>
 	rangeBoundaryDates?: Ref<[Date | null, Date | null] | null>
-	format: string
+	format: MaybeRef<string>
 	dateFormatReturn?: string
-	displayRange?: boolean
+	displayRange?: MaybeRef<boolean>
 	parseDate: (value: string, format: string) => Date | null
 	formatDate: (date: Date | null, format: string) => string
 	initializeSelectedDates: (value: DateInput | null, format: string, dateFormatReturn?: string) => Date | (Date | null)[] | null
@@ -47,9 +47,9 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 	const formattedDate = computed<DateModelValue>(() => {
 		if (!selectedDates.value) return ''
-		const rf = dateFormatReturn || format
+		const rf = dateFormatReturn || unref(format)
 
-		if (displayRange && rangeBoundaryDates?.value) {
+		if (unref(displayRange) && rangeBoundaryDates?.value) {
 			return [
 				formatDate(rangeBoundaryDates.value[0], rf),
 				formatDate(rangeBoundaryDates.value[1], rf),
@@ -74,15 +74,15 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 		if (Array.isArray(selectedDates.value)) {
 			if (selectedDates.value.length >= 2) {
-				return `${formatDate(selectedDates.value[0]!, format)}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(
+				return `${formatDate(selectedDates.value[0]!, unref(format))}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(
 					selectedDates.value[selectedDates.value.length - 1]!,
-					format,
+					unref(format),
 				)}`
 			}
-			return formatDate(selectedDates.value[0]!, format)
+			return formatDate(selectedDates.value[0]!, unref(format))
 		}
 
-		return formatDate(selectedDates.value, format)
+		return formatDate(selectedDates.value, unref(format))
 	})
 
 	watch(
@@ -95,10 +95,10 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			if (Array.isArray(newValue) && newValue.length === 2) {
 				// Mode plage : afficher "startDate - endDate" dans l'input
 				const startStr = dateFormatReturn
-					? formatDate(parseDate(newValue[0]!, dateFormatReturn), format)
+					? formatDate(parseDate(newValue[0]!, dateFormatReturn), unref(format))
 					: newValue[0]!
 				const endStr = dateFormatReturn
-					? formatDate(parseDate(newValue[1]!, dateFormatReturn), format)
+					? formatDate(parseDate(newValue[1]!, dateFormatReturn), unref(format))
 					: newValue[1]!
 				textInputValue.value = `${startStr}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${endStr}`
 			}
@@ -106,7 +106,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 				if (dateFormatReturn) {
 					const date = parseDate(newValue, dateFormatReturn)
 					if (date) {
-						const formattedForDisplay = formatDate(date, format)
+						const formattedForDisplay = formatDate(date, unref(format))
 						textInputValue.value = formattedForDisplay
 					}
 				}
@@ -127,9 +127,9 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			return
 		}
 
-		selectedDates.value = initializeSelectedDates(newValue ?? null, format, dateFormatReturn)
+		selectedDates.value = initializeSelectedDates(newValue ?? null, unref(format), dateFormatReturn)
 
-		if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length === 2) {
+		if (unref(displayRange) && Array.isArray(selectedDates.value) && selectedDates.value.length === 2) {
 			const startDate = selectedDates.value[0]
 			const endDate = selectedDates.value[1]
 			if (startDate && endDate && generateDateRange) {
@@ -139,11 +139,11 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		}
 
 		if (selectedDates.value) {
-			if (displayRange && Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
+			if (unref(displayRange) && Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
 				const startDate = selectedDates.value[0]
 				const endDate = selectedDates.value[selectedDates.value.length - 1]
 				if (startDate && endDate) {
-					textInputValue.value = `${formatDate(startDate, format)}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(endDate, format)}`
+					textInputValue.value = `${formatDate(startDate, unref(format))}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(endDate, unref(format))}`
 				}
 			}
 			else {
@@ -151,7 +151,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 					? selectedDates.value[0]
 					: selectedDates.value
 				if (firstDate) {
-					textInputValue.value = formatDate(firstDate, format)
+					textInputValue.value = formatDate(firstDate, unref(format))
 				}
 			}
 			if (Array.isArray(formattedDate.value)) {
@@ -172,11 +172,11 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			return
 		}
 
-		if (displayRange && Array.isArray(value) && value.length >= 2) {
+		if (unref(displayRange) && Array.isArray(value) && value.length >= 2) {
 			const startDate = value[0]
 			const endDate = value[value.length - 1]
 			if (startDate && endDate) {
-				const formattedForInput = `${formatDate(startDate, format)}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(endDate, format)}`
+				const formattedForInput = `${formatDate(startDate, unref(format))}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(endDate, unref(format))}`
 				if (textInputValue.value !== formattedForInput) {
 					textInputValue.value = formattedForInput
 				}
@@ -187,7 +187,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		const firstDate = Array.isArray(value) ? (value[0] ?? null) : value
 		if (!firstDate) return
 
-		const formattedForInput = formatDate(firstDate, format)
+		const formattedForInput = formatDate(firstDate, unref(format))
 		if (textInputValue.value !== formattedForInput) {
 			textInputValue.value = formattedForInput
 		}

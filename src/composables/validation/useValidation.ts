@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, unref, type MaybeRef } from 'vue'
 import { useFieldValidation, type RuleOptions, type ValidationResult as FieldValidationResult } from '../rules/useFieldValidation'
 
 type builtInDateRuleType =
@@ -32,8 +32,8 @@ interface StandardValidationRule {
 export type ValidationRule = CustomValidationRule | StandardValidationRule
 
 export interface ValidationOptions {
-	showSuccessMessages?: boolean
-	disableErrorHandling?: boolean
+	showSuccessMessages?: MaybeRef<boolean>
+	disableErrorHandling?: MaybeRef<boolean>
 	fieldIdentifier?: string
 }
 
@@ -56,6 +56,8 @@ export interface ValidationResult {
  * @returns Un objet contenant les états et méthodes de validation
  */
 export function useValidation(options: ValidationOptions = { showSuccessMessages: false }) {
+	// Set local par instance pour éviter les interférences entre composants
+	const fieldsWithCustomSuccess = new Set<string>()
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
@@ -71,7 +73,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		successState.value && !hasError.value && !hasWarning.value,
 	)
 	const displaySuccesses = computed(() =>
-		options.showSuccessMessages !== false ? successes.value : [],
+		unref(options.showSuccessMessages) !== false ? successes.value : [],
 	)
 
 	const clearValidation = () => {
@@ -79,6 +81,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		warnings.value = []
 		successes.value = []
 		successState.value = false
+		// Ne pas réinitialiser hasCustomSuccessMessage ici
 	}
 
 	/**
@@ -148,15 +151,9 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	})
 
 	/** Adds a default success message when no custom success rules are provided. */
-	const addDefaultSuccessMessage = (rules: ValidationRule[]) => {
-		const customSuccessMessage = rules.find(rule => rule.options?.successMessage)?.options.successMessage
-		if (customSuccessMessage) {
-			successes.value.push(customSuccessMessage)
-		}
-		else {
-			const defaultMessage = options.fieldIdentifier ? `Le champ ${options.fieldIdentifier} est valide.` : 'Champ valide'
-			successes.value.push(defaultMessage)
-		}
+	const addDefaultSuccessMessage = () => {
+		const defaultMessage = options.fieldIdentifier ? `Le champ ${options.fieldIdentifier} est valide.` : 'Champ valide'
+		successes.value.push(defaultMessage)
 	}
 
 	const validateField = (
@@ -168,32 +165,63 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		const token = ++currentValidationToken
 		clearValidation()
 
-		if (options.disableErrorHandling) return buildResult()
+		if (unref(options.disableErrorHandling)) return buildResult()
 
 		const resolved = executeRules(rules, value)
 
 		return thenOrSync(resolved, token, (ruleResults) => {
 			let hasValidationError = false
+			let hasRuleSuccess = false
 			for (const result of ruleResults) {
 				if (result.error) {
 					errors.value.push(result.error)
 					hasValidationError = true
 				}
+				if (result.success) {
+					hasRuleSuccess = true
+				}
+			}
+
+			// Traiter les successMessages des rules normales (uniquement si successMessage est explicitement défini quand des successRules sont présentes)
+			const ruleSuccessMessages = new Set(rules.map(r => r.options?.successMessage).filter(Boolean))
+			if (!hasValidationError) {
+				for (const result of ruleResults) {
+					if (result.success && unref(options.showSuccessMessages) !== false) {
+						if (successRules.length === 0 || ruleSuccessMessages.has(result.success)) {
+							successes.value.push(result.success)
+						}
+					}
+				}
 			}
 
 			const isValueFilled = Array.isArray(value) ? value.length > 0 : !!value
-			if (!hasValidationError && isValueFilled && successRules.length === 0) {
+			// Vérifier si une règle a un successMessage personnalisé
+			const hasRuleWithCustomSuccessMessage = rules.some(rule => rule.options?.successMessage)
+			const hasWarningRuleWithCustomSuccessMessage = warningRules.some(rule => rule.options?.successMessage)
+			if ((hasRuleWithCustomSuccessMessage || hasWarningRuleWithCustomSuccessMessage) && options.fieldIdentifier) {
+				fieldsWithCustomSuccess.add(options.fieldIdentifier)
+			}
+			// N'ajouter le message par défaut que si la valeur est remplie, aucune règle n'a de successMessage personnalisé, et aucun succès n'a été retourné
+			if (!hasValidationError && isValueFilled && successRules.length === 0 && successes.value.length === 0 && !hasRuleSuccess && !hasWarningRuleWithCustomSuccessMessage && !(options.fieldIdentifier && fieldsWithCustomSuccess.has(options.fieldIdentifier))) {
 				successState.value = true
-				if (options.showSuccessMessages !== false) {
-					addDefaultSuccessMessage(rules)
+				if (unref(options.showSuccessMessages) !== false) {
+					addDefaultSuccessMessage()
 				}
+			}
+			else if (!hasValidationError && isValueFilled && (successes.value.length > 0 || hasRuleSuccess)) {
+				successState.value = true
 			}
 
 			if (!hasValidationError && warningRules.length > 0) {
 				const warningResolved = executeRules(warningRules, value, { isWarning: true })
 				return thenOrSync(warningResolved, token, (warningResults) => {
+					const warningSuccessMessages = new Set(warningRules.map(r => r.options?.successMessage).filter(Boolean))
 					for (const r of warningResults) {
 						if (r.warning) warnings.value.push(r.warning)
+						if (r.success && warningSuccessMessages.has(r.success) && unref(options.showSuccessMessages) !== false) {
+							successes.value.push(r.success)
+							successState.value = true
+						}
 					}
 					return runSuccessRules(hasValidationError, value, successRules, token)
 				})
@@ -218,7 +246,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 			successState.value = successResults.some(result => Boolean(result.success))
 
 			for (const r of successResults) {
-				if (r.success && options.showSuccessMessages !== false) {
+				if (r.success && unref(options.showSuccessMessages) !== false) {
 					successes.value.push(r.success)
 				}
 			}
