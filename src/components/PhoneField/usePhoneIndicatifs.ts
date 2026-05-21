@@ -11,7 +11,7 @@ export function usePhoneIndicatifs(
 	function getIndicatifDisplayText(indicatif: Indicatif): string {
 		switch (displayFormat.value) {
 			case 'code-abbreviation':
-				return `${indicatif.code} ${indicatif.abbreviation}`
+				return `${indicatif.code} (${indicatif.abbreviation})`
 			case 'code-country':
 				return `${indicatif.code} ${indicatif.countryFr || indicatif.country}`
 			case 'country':
@@ -25,16 +25,27 @@ export function usePhoneIndicatifs(
 
 	const dialCodeList = computed(() => {
 		const mergedDialCodes = useCustomIndicatifsOnly.value ? customIndicatifs.value : [...indicatifs, ...customIndicatifs.value]
-		return mergedDialCodes.map(indicatif => ({
-			displayText: getIndicatifDisplayText(indicatif),
-			...indicatif,
-			phoneLength: indicatif.phoneLength || indicatif.mask?.replace(/[^#]/g, '').length,
-		}))
+		return mergedDialCodes.map((indicatif) => {
+			const countryName = indicatif.countryFr || indicatif.country
+			let displayText = getIndicatifDisplayText(indicatif)
+			const plainDisplayText = displayText
+
+			if (displayFormat.value === 'code-abbreviation' || displayFormat.value === 'abbreviation') {
+				displayText = displayText.replace(indicatif.abbreviation, `<abbr title="${countryName}">${indicatif.abbreviation}</abbr>`)
+			}
+
+			return {
+				...indicatif,
+				displayText,
+				plainDisplayText,
+				phoneLength: indicatif.phoneLength || indicatif.mask?.replace(/[^#]/g, '').length,
+			}
+		})
 	})
 
 	const dialCode = ref<string | Indicatif>()
 	watch(defaultDialCode, (newVal) => {
-		if (typeof newVal === 'string') {
+		if (typeof newVal === 'string' && newVal !== '') {
 			const searchDial = dialCodeList.value.find(indicatif => indicatif.code === newVal)
 			if (searchDial) {
 				dialCode.value = searchDial
@@ -44,6 +55,12 @@ export function usePhoneIndicatifs(
 			const searchDial = dialCodeList.value.find(indicatif => indicatif.code === newVal.code) || newVal
 			if (searchDial) {
 				dialCode.value = searchDial
+			}
+		}
+		else {
+			const defaultDial = dialCodeList.value.find(indicatif => indicatif.code === '+33')
+			if (defaultDial) {
+				dialCode.value = defaultDial
 			}
 		}
 	}, { immediate: true })

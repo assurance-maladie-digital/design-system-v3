@@ -1,6 +1,7 @@
 import { type ValidationRule } from '@/composables/validation/useValidation'
 import { computed, ref, type Ref } from 'vue'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
+import type { locales } from './locales'
 
 export function usePhoneFieldValidation(params: {
 	modelValue: Ref<string>
@@ -8,7 +9,6 @@ export function usePhoneFieldValidation(params: {
 	disabled: Ref<boolean>
 	required: Ref<boolean>
 	counter: Ref<number>
-	label: Ref<string>
 	phoneFieldIdentifier: Ref<string>
 	shouldDisableErrorHandling: Ref<boolean>
 	hasError: Ref<boolean>
@@ -22,18 +22,54 @@ export function usePhoneFieldValidation(params: {
 	warningRules?: Ref<ValidationRule[]>
 	successRules?: Ref<ValidationRule[]>
 	rules?: Ref<((value: string) => true | string)[]>
+	errorMessages?: Ref<string[] | null | undefined>
+	warningMessages?: Ref<string[] | null | undefined>
+	successMessages?: Ref<string[] | null | undefined>
+	locales: Ref<typeof locales>
+	useVuetifyValidation?: Ref<boolean>
+	dialCode?: Ref<unknown>
+	countryCodeRequired?: Ref<boolean>
+	withCountryCode?: Ref<boolean>
 }) {
 	const validationRules = computed<ValidationRule[]>(() => {
-		const rules = [{
+		const rules = [] as ValidationRule[]
+
+		if (params.withCountryCode?.value && params.countryCodeRequired?.value) {
+			rules.push({
+				type: 'custom',
+				options: {
+					validate: () => {
+						const hasDialCode = !!params.dialCode?.value && (
+							typeof params.dialCode.value === 'string'
+								? params.dialCode.value.trim() !== ''
+								: !!(params.dialCode.value as Record<string, unknown>).code
+						)
+						return hasDialCode
+					},
+					message: params.locales.value.errorRequired(params.locales.value.indicatifLabel || 'Indicatif'),
+				},
+			})
+		}
+
+		rules.push({
 			type: 'exactLength',
 			options: {
 				length: params.counter.value,
 				ignoreSpace: true,
-				message: `Le numéro de téléphone doit contenir ${params.counter.value} chiffres.`,
-				successMessage: `Le champ ${params.phoneFieldIdentifier.value} est valide.`,
+				message: params.locales.value.errorLength(params.counter.value),
+				successMessage: params.locales.value.success(params.phoneFieldIdentifier.value),
 				fieldIdentifier: params.phoneFieldIdentifier.value,
 			},
-		}] as ValidationRule[]
+		},
+		{
+			type: 'custom',
+			options: {
+				validate: (value: string) => {
+					console.log('Validating phone number with custom rule:', value)
+					return true
+				},
+			},
+		})
 
 		if (params.required.value) {
 			rules.unshift({
@@ -41,7 +77,7 @@ export function usePhoneFieldValidation(params: {
 				options: {
 					length: params.counter.value,
 					ignoreSpace: true,
-					message: `Le champ ${params.phoneFieldIdentifier.value} est requis.`,
+					message: params.locales.value.errorRequired(params.phoneFieldIdentifier.value),
 					fieldIdentifier: params.phoneFieldIdentifier.value,
 				},
 			})
@@ -50,7 +86,7 @@ export function usePhoneFieldValidation(params: {
 		return rules
 	})
 
-	const { hasError, hasWarning, hasSuccess, errors, warnings, successes } = useValidation({
+	const { hasError, hasWarning, hasSuccess, errors, warnings, successes, validate, clearValidation } = useValidation({
 		modelValue: params.modelValue,
 		readonly: params.readonly,
 		disabled: params.disabled,
@@ -58,14 +94,22 @@ export function usePhoneFieldValidation(params: {
 		isValidateOnBlur: params.isValidateOnBlur,
 		showSuccessMessages: params.showSuccessMessages,
 		disableErrorHandling: params.disableErrorHandling,
-		label: params.label,
+		label: params.phoneFieldIdentifier,
 		focused: params.focused,
-		customRules: params.customRules,
+		customRules: computed(() => [
+			...validationRules.value,
+			...params.customRules.value,
+		]),
 		customWarningRules: params.warningRules ?? ref([]),
 		customSuccessRules: params.successRules ?? ref([]),
-		useVuetifyValidation: ref(false),
+		useVuetifyValidation: params.useVuetifyValidation ?? ref(false),
 		rules: params.rules ?? ref(undefined),
-
+		hasErrorProp: params.hasError,
+		hasWarningProp: params.hasWarning,
+		hasSuccessProp: params.hasSuccess,
+		errorMessages: params.errorMessages,
+		warningMessages: params.warningMessages,
+		successMessages: params.successMessages,
 	})
 
 	const iconColor = computed(() => {
@@ -85,5 +129,7 @@ export function usePhoneFieldValidation(params: {
 		hasSuccess,
 		validationRules,
 		iconColor,
+		validate,
+		clearValidation,
 	}
 }

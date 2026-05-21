@@ -200,7 +200,7 @@ export const Default: Story = {
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -273,7 +273,7 @@ export const Required: Story = {
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -300,7 +300,7 @@ export const RequiredWithAsterisk: Story = {
 		required: true,
 		displayAsterisk: true,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	parameters: {
 		a11y: {
 			disable: false,
@@ -417,7 +417,7 @@ const dialCodeModel = ref('')
 	args: {
 		required: true,
 		helpText: 'Saisissez votre numéro de téléphone français au format 01 23 45 67 89',
-	},
+	} as Record<string, unknown>,
 	render(args) {
 		return {
 			components: { PhoneField },
@@ -571,7 +571,7 @@ const phoneValue3 = ref('')
 		autocompleteCountryCode: 'tel-country-code',
 		autocompletePhone: 'tel-national',
 		helpText: 'Utilisez les valeurs autocomplete appropriées pour l\'accessibilité',
-	},
+	} as Record<string, unknown>,
 	render(args) {
 		return {
 			components: { PhoneField },
@@ -709,7 +709,7 @@ export const CustomIndicatifs: Story = {
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -782,7 +782,7 @@ export const NotValidatedOnBlur: Story = {
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -855,7 +855,7 @@ export const DisplayFormatCode: Story = {
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -928,7 +928,7 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -1001,7 +1001,7 @@ export const DisplayFormatCodeCountry: Story = {
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -1074,7 +1074,7 @@ export const DisplayFormatCountry: Story = {
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -1147,7 +1147,7 @@ export const DisplayFormatAbbreviation: Story = {
 		readonly: false,
 		disabled: false,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -1237,7 +1237,7 @@ export const DefaultDialCode: Story = {
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -1311,7 +1311,7 @@ export const DefaultDialCodeStandard: Story = {
 		bgColor: 'white',
 		readonly: false,
 		disabled: false,
-	},
+	} as Record<string, unknown>,
 	render: (args) => {
 		return {
 			components: { PhoneField },
@@ -1394,25 +1394,26 @@ export const DisplayModels: Story = {
 		isValidateOnBlur: true,
 		readonly: false,
 		bgColor: 'white',
-	},
+	} as Record<string, unknown>,
 	render: args => ({
 		components: { PhoneField },
 		setup() {
-			const modelValue = ref(args.modelValue)
-			const dialCodeModel = ref(args.dialCodeModel)
+			const _args = args as Record<string, unknown>
+			const modelValue = ref(_args.modelValue as string)
+			const dialCodeModel = ref(_args.dialCodeModel)
 
 			// Sync ref -> args (pour afficher les modèles dans la story)
 			watch(modelValue, (val) => {
-				args.modelValue = val
+				_args.modelValue = val
 			})
 			watch(dialCodeModel, (val) => {
-				args.dialCodeModel = val
+				_args.dialCodeModel = val
 			})
 			// Sync args -> ref (quand on change les controls Storybook)
-			watch(() => args.modelValue, (val) => {
-				modelValue.value = val
+			watch(() => _args.modelValue, (val) => {
+				modelValue.value = val as string
 			})
-			watch(() => args.dialCodeModel, (val) => {
+			watch(() => _args.dialCodeModel, (val) => {
 				dialCodeModel.value = val
 			})
 
@@ -1436,219 +1437,4 @@ export const DisplayModels: Story = {
     </div>
   `,
 	}),
-}
-
-/**
- * Story qui montre le comportement du composant lorsque la gestion des erreurs est désactivée.
- * Aucun message d'erreur ne sera affiché, même si le champ est requis et vide.
- */
-export const DisabledErrorHandling: Story = {
-	parameters: {
-		a11y: {
-			disable: false,
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<PhoneField
-						v-model="modelValue"
-						:required="required"
-						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
-						:displayFormat="displayFormat"
-						:isValidateOnBlur="isValidateOnBlur"
-						:disableErrorHandling="disableErrorHandling"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { PhoneField } from '@cnamts/synapse'
-					
-					const modelValue = ref('')
-					const required = ref(true)
-					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
-					const displayFormat = ref('code')
-					const isValidateOnBlur = ref(true)
-					const disableErrorHandling = ref(true)
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		modelValue: '',
-		required: true,
-		outlined: true,
-		withCountryCode: true,
-		countryCodeRequired: true,
-		displayFormat: 'code',
-		customIndicatifs: [],
-		useCustomIndicatifsOnly: false,
-		isValidateOnBlur: true,
-		disableErrorHandling: true,
-		readonly: false,
-		disabled: false,
-		bgColor: 'white',
-	},
-	render: (args) => {
-		return {
-			components: { PhoneField },
-			setup() {
-				return { args }
-			},
-			template: `
-				<div class="pa-4">
-					<h3>Gestion des erreurs désactivée</h3>
-					<p>Ce champ est requis mais n'affichera pas d'erreur même s'il est vide.</p>
-					<PhoneField
-						v-bind="args"
-					/>
-					<div class="mt-6">
-						<h3>Comparaison avec gestion des erreurs activée</h3>
-						<p>Ce champ est requis et affichera une erreur s'il est vide.</p>
-						<PhoneField
-							v-bind="args"
-							:disable-error-handling="false"
-						/>
-					</div>
-				</div>
-			`,
-		}
-	},
-}
-
-export const FormValidation: Story = {
-	parameters: {
-		a11y: {
-			disable: false,
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<form @submit.prevent="submitForm" class="d-flex flex-column">
-						<PhoneField
-							ref="phoneFieldRef"
-							v-model="phoneNumber"
-							:required="true"
-							:outlined="true"
-							:outlinedIndicatif="true"
-							:withCountryCode="true"
-							:country-code-required="true"
-							:isValidateOnBlur="true"
-							:readonly="readonly"
-							:disabled="disabled"
-						/>
-						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
-						<div v-if="formSubmitted" class="mt-4 pa-2" :class="{ 'bg-success': formIsValid, 'bg-error': !formIsValid }" style="width: fit-content;">
-							<p v-if="formIsValid" class="text-white">Formulaire valide !</p>
-							<p v-else class="text-white">Formulaire invalide !</p>
-						</div>
-					</form>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { PhoneField } from '@cnamts/synapse'
-					
-					const phoneFieldRef = ref(null)
-					const phoneNumber = ref('')
-					const formSubmitted = ref(false)
-					const formIsValid = ref(false)
-					const readonly = ref(false)
-					const disabled = ref(false)
-					
-					const submitForm = async () => {
-						formSubmitted.value = true
-						// Validation du champ téléphone
-						let isValid = false
-						if (phoneFieldRef.value) {
-							// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à validateOnSubmit
-							isValid = await (phoneFieldRef.value as any).validateOnSubmit()
-						}
-						
-						formIsValid.value = isValid
-						
-						console.log(isValid ? 'Formulaire valide !' : 'Formulaire invalide !')
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		modelValue: '',
-		required: true,
-		outlined: true,
-		withCountryCode: true,
-		countryCodeRequired: true,
-		displayFormat: 'code',
-		customIndicatifs: [],
-		useCustomIndicatifsOnly: false,
-		isValidateOnBlur: true,
-		bgColor: 'white',
-		readonly: false,
-		disabled: false,
-	},
-	render: (args) => {
-		return {
-			components: { PhoneField },
-			setup() {
-				const phoneFieldRef = ref(null)
-				const phoneNumber = ref('')
-				const formSubmitted = ref(false)
-				const formIsValid = ref(false)
-
-				const submitForm = async () => {
-					formSubmitted.value = true
-					// Validation du champ téléphone
-					let isValid = false
-					if (phoneFieldRef.value) {
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à validateOnSubmit
-						isValid = await (phoneFieldRef.value as any).validateOnSubmit()
-					}
-
-					formIsValid.value = isValid
-
-					console.log(isValid ? 'Formulaire valide !' : 'Formulaire invalide !')
-				}
-
-				return { phoneFieldRef, phoneNumber, formSubmitted, formIsValid, submitForm, args }
-			},
-			template: `
-				<div class="pa-4">
-					<form @submit.prevent="submitForm" class="d-flex flex-column">
-						<PhoneField
-							ref="phoneFieldRef"
-							v-bind="args"
-						/>
-						<v-btn type="submit" color="primary" class="mt-4" style="width: 200px;">Soumettre le formulaire</v-btn>
-						<div v-if="formSubmitted" class="mt-4 pa-2" :class="{ 'bg-success': formIsValid, 'bg-error': !formIsValid }" style="width: fit-content;">
-							<p v-if="formIsValid" class="text-white">Formulaire valide !</p>
-							<p v-else class="text-white">Formulaire invalide !</p>
-						</div>
-					</form>
-					<div class="mt-8">
-						<h3>Comment utiliser la validation à la soumission</h3>
-						<p>1. Ajoutez une référence au composant PhoneField avec <code>ref="phoneFieldRef"</code></p>
-						<p>2. Désactivez la validation au blur si nécessaire avec <code>:isValidateOnBlur="false"</code></p>
-						<p>3. Dans votre méthode de soumission, appelez <code>phoneFieldRef.value.validateOnSubmit()</code></p>
-						<p>4. Cette méthode retourne une Promise qui résout à <code>true</code> si le champ est valide, <code>false</code> sinon</p>
-					</div>
-				</div>
-			`,
-		}
-	},
 }

@@ -10,6 +10,7 @@
 	import { usePhoneIndicatifs } from './usePhoneIndicatifs'
 	import { vMaska } from 'maska/vue'
 	import type { Indicatif } from './types'
+	import { usePhoneFieldValidation } from './usePhoneFieldValidation'
 
 	const props = withDefaults(defineProps<PhoneFieldProps>(), {
 		...validationPropsDefaults,
@@ -47,23 +48,81 @@
 		emits('update:modelValue', newVal)
 	})
 
+	watch (() => props.modelValue, (newVal) => {
+		if (newVal !== phoneNumber.value) {
+			phoneNumber.value = newVal || ''
+		}
+	})
+
 	watch (dialCode, (newVal) => {
 		emits('update:dialCodeModel', newVal)
 	})
 
 	const showHelpTextBelow = computed(() => !!props.helpText?.trim())
-	const iconColor = computed(() => {
-		if (props.shouldDisableErrorHandling) return '#222324'
-		if (props.hasError) return 'error'
-		if (props.hasWarning) return 'warning'
-		if (props.hasSuccess) return 'success'
-		return '#222324'
+	const focused = ref(false)
+
+	const {
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+		iconColor,
+		validate,
+		clearValidation,
+	} = usePhoneFieldValidation({
+		modelValue: phoneNumber,
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		counter: computed(() => usedIndicatif.value.phoneLength || 10),
+		label: computed(() => props.withCountryCode ? props.locales?.phoneNumberWithoutCountryLabel || 'Numéro de téléphone' : props.locales?.label || 'Téléphone'),
+		phoneFieldIdentifier: computed(() => props.withCountryCode ? props.locales?.phoneNumberWithoutCountryLabel || 'Numéro de téléphone' : props.locales?.label || 'Téléphone'),
+		shouldDisableErrorHandling: computed(() => props.disableErrorHandling || props.readonly),
+		hasError: toRef(props, 'hasError'),
+		hasWarning: toRef(props, 'hasWarning'),
+		hasSuccess: toRef(props, 'hasSuccess'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		focused,
+		customRules: toRef(props, 'customRules'),
+		warningRules: toRef(props, 'customWarningRules'),
+		successRules: toRef(props, 'customSuccessRules'),
+		rules: toRef(props, 'rules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		locales: toRef(props, 'locales'),
+		dialCode,
+		countryCodeRequired: toRef(props, 'countryCodeRequired'),
+		withCountryCode: toRef(props, 'withCountryCode'),
 	})
+
+	const validation = {
+		clearValidation,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+	}
+
+	const phoneMask = computed(() => usedIndicatif.value.mask)
 
 	defineExpose({
 		phoneNumber,
 		dialCode,
 		usedIndicatif,
+		dialCodeList,
+		hasError,
+		errors,
+		validation,
+		validateOnSubmit: validate,
+		phoneMask,
+		clearValidation,
 	})
 
 </script>
@@ -92,7 +151,7 @@
 					:required="props.countryCodeRequired"
 					:aria-required="props.countryCodeRequired"
 					:display-asterisk="props.displayAsterisk"
-					:disable-error-handling="props.shouldDisableErrorHandling"
+					:disable-error-handling="props.disableErrorHandling || props.readonly"
 					:bg-color="props.bgColor"
 					:readonly="props.readonly"
 					:disabled="props.disabled"
@@ -113,12 +172,12 @@
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="props.required"
 					:aria-required="props.required"
-					:error="props.hasError"
-					:error-messages="props.errors"
-					:warning-messages="props.warnings"
-					:success-messages="props.successes"
+					:error="hasError"
+					:error-messages="errors"
+					:warning-messages="warnings"
+					:success-messages="successes"
 					:show-success-messages="props.showSuccessMessages"
-					:disable-error-handling="props.shouldDisableErrorHandling"
+					:disable-error-handling="props.disableErrorHandling || props.readonly"
 					:variant="props.outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="props.displayAsterisk"
 					:readonly="props.readonly"
@@ -127,29 +186,31 @@
 					:autocomplete="props.autocompletePhone"
 					:class="{
 						'phone-field': true,
-						'error-field': props.hasError,
-						'warning-field': props.hasWarning,
-						'success-field': props.hasSuccess
+						'error-field': hasError,
+						'warning-field': hasWarning,
+						'success-field': hasSuccess
 					}"
 					color="primary"
 					type="tel"
+					@focus="focused = true"
+					@blur="focused = false"
 				>
 					<template #append-inner>
 						<div class="d-flex align-center">
 							<SyIcon
-								v-if="props.hasError"
+								v-if="hasError"
 								color="error"
 								:icon="mdiInformation"
 								decorative
 							/>
 							<SyIcon
-								v-else-if="props.hasWarning"
+								v-else-if="hasWarning"
 								color="warning"
 								:icon="mdiAlertOutline"
 								decorative
 							/>
 							<SyIcon
-								v-else-if="props.hasSuccess"
+								v-else-if="hasSuccess"
 								color="success"
 								:icon="mdiCheck"
 								decorative
@@ -169,7 +230,7 @@
 			v-if="showHelpTextBelow"
 			class="help-text-below px-4"
 			:style="{
-				marginTop: props.hasError || props.hasWarning || props.hasSuccess ? '0.25rem' : '-1rem',
+				marginTop: hasError || hasWarning || hasSuccess ? '0.25rem' : '-1rem',
 			}"
 			:class="{ 'text-disabled': disabled }"
 		>

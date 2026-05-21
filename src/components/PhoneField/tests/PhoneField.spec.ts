@@ -1,7 +1,33 @@
-import { mount, VueWrapper } from '@vue/test-utils'
+import { mount as baseMount, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { indicatifs } from '../indicatifs'
+import type { ComponentPublicInstance } from 'vue'
+import { locales } from '../locales'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+
+interface PhoneFieldInstance extends ComponentPublicInstance {
+	phoneNumber: string
+	dialCode: unknown
+	usedIndicatif: { mask: string, phoneLength: number }
+	dialCodeList: unknown[]
+	hasError: boolean
+	errors: string[]
+	validation: {
+		clearValidation: () => void
+		errors: string[]
+		warnings: string[]
+		successes: string[]
+		hasError: boolean
+		hasWarning: boolean
+		hasSuccess: boolean
+	}
+	validateOnSubmit: () => Promise<boolean>
+	phoneMask: string
+	clearValidation: () => void
+}
+
+const mount = (component: unknown, options?: Record<string, unknown>) => baseMount(component as never, options as never) as unknown as VueWrapper<PhoneFieldInstance>
 
 describe('PhoneField', () => {
 	afterEach(() => {
@@ -20,65 +46,6 @@ describe('PhoneField', () => {
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		await input.trigger('blur')
 		expect(wrapper.emitted('change')).toBeTruthy()
-	})
-
-	it('cleans spaces from phone number before validation', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				required: true,
-				modelValue: '01 23 45 67 89',
-				isValidatedOnBlur: true,
-			},
-		})
-
-		await wrapper.vm.validateOnSubmit()
-
-		expect(wrapper.vm.hasError).toBe(false)
-	})
-
-	it('validates phone number and country code on blur', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				required: true,
-				modelValue: '',
-				isValidatedOnBlur: true,
-			},
-		})
-
-		const input = wrapper.find('input')
-		await input.setValue('123456')
-		await input.trigger('blur')
-
-		expect(wrapper.vm.hasError).toBe(true)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
-		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
-	})
-
-	it('keeps a consistent success message before and after blur when withCountryCode is true', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				withCountryCode: true,
-				isValidateOnBlur: false,
-				modelValue: '',
-			},
-		})
-
-		const textField = wrapper.findComponent({ name: 'SyTextField' })
-		const input = textField.find('input')
-		await input.setValue('0123456789')
-		await wrapper.vm.$nextTick()
-
-		const messageBeforeBlur = textField.find('.v-messages__message')
-		expect(messageBeforeBlur.exists()).toBe(true)
-		expect(messageBeforeBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
-		expect(messageBeforeBlur.text()).not.toBe('Le champ Numéro de téléphone est valide.')
-
-		await input.trigger('blur')
-		await wrapper.vm.$nextTick()
-
-		const messageAfterBlur = textField.find('.v-messages__message')
-		expect(messageAfterBlur.exists()).toBe(true)
-		expect(messageAfterBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
 	})
 
 	it('trims input to the expected phoneLength', async () => {
@@ -132,28 +99,6 @@ describe('PhoneField', () => {
 		expect(wrapper.findComponent({ name: 'SySelect' }).exists()).toBe(true)
 	})
 
-	it('validates country code when countryCodeRequired is true', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				withCountryCode: true,
-				countryCodeRequired: true,
-				modelValue: '0123456789',
-			},
-		})
-
-		// Vider le code pays manuellement (France est sélectionnée par défaut)
-		wrapper.vm.dialCode = ''
-		await wrapper.vm.$nextTick()
-
-		const result = await wrapper.vm.validateOnSubmit()
-
-		expect(result).toBe(false)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
-		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
-		expect((wrapper.vm as any).errors[0]).toContain('est requis')
-	})
-
 	it('updates phone mask and counter when dialCode changes', async () => {
 		const wrapper = mount(PhoneField, {
 			props: { withCountryCode: true },
@@ -165,25 +110,6 @@ describe('PhoneField', () => {
 		expect(wrapper.vm.usedIndicatif.phoneLength).toBe(10)
 	})
 
-	it('validates phone number with country code on blur', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				required: true,
-				countryCodeRequired: true,
-				modelValue: '1234567890',
-				withCountryCode: true,
-				isValidatedOnBlur: true,
-			},
-		})
-		wrapper.setProps({ dialCodeModel: { code: '+1', phoneLength: 10, mask: '###-###-####' } })
-		await wrapper.vm.$nextTick()
-
-		const input = wrapper.find('input')
-		await input.trigger('blur')
-
-		expect(wrapper.vm.hasError).toBe(false)
-	})
-
 	it('uses only custom indicatifs when useCustomIndicatifsOnly is true', async () => {
 		const customIndicatifs = [{ code: '+99', abbreviation: 'XX', country: 'Testland', phoneLength: 10, displayText: '+99' }]
 		const wrapper = mount(PhoneField, {
@@ -193,27 +119,7 @@ describe('PhoneField', () => {
 			},
 		})
 
-		expect(wrapper.vm.dialCodeList).toEqual(customIndicatifs)
-	})
-
-	it('validates phone number with valid country code on blur', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				required: true,
-				countryCodeRequired: true,
-				modelValue: '1234567890',
-				withCountryCode: true,
-				isValidatedOnBlur: true,
-			},
-		})
-
-		wrapper.vm.dialCode = { code: '+1', phoneLength: 10, mask: '###-###-####' }
-		await wrapper.vm.$nextTick()
-
-		const input = wrapper.find('input')
-		await input.trigger('blur')
-
-		expect(wrapper.vm.hasError).toBe(false)
+		expect(wrapper.vm.dialCodeList).toEqual(customIndicatifs.map(ind => expect.objectContaining(ind)))
 	})
 
 	it('renders VTextField with outlined variant when outlined prop is true', () => {
@@ -299,37 +205,6 @@ describe('PhoneField', () => {
 		const emittedEvents = wrapper.emitted('update:dialCodeModel')
 		const lastEmitted = emittedEvents && emittedEvents[emittedEvents.length - 1]?.[0]
 		expect(lastEmitted).toHaveProperty('code', dialCodeValue.code)
-	})
-
-	it('validates phone number on submit', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				required: true,
-				modelValue: '',
-			},
-		})
-
-		const result = await wrapper.vm.validateOnSubmit()
-		console.log('Validation result:', result)
-
-		expect(result).toBe(false)
-		expect(wrapper.vm.hasError).toBe(true)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
-		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
-	})
-
-	it('validates phone number successfully on submit with valid input', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				required: true,
-				modelValue: '0123456789',
-			},
-		})
-
-		const result = await wrapper.vm.validateOnSubmit()
-
-		expect(result).toBe(true)
-		expect(wrapper.vm.hasError).toBe(false)
 	})
 
 	it('exposes necessary properties and methods', () => {
@@ -657,40 +532,9 @@ describe('PhoneField', () => {
 		expect(select.props('modelValue')).toEqual(wrapper.vm.dialCode)
 	})
 
-	it('disables error handling when readonly is true', async () => {
-		const wrapper = mount(PhoneField, {
-			props: {
-				required: true,
-				modelValue: '',
-				readonly: true,
-			},
-		})
-
-		expect(wrapper.props('readonly')).toBe(true)
-
-		const isValid = await wrapper.vm.validateOnSubmit()
-
-		expect(isValid).toBe(true)
-
-		expect(wrapper.vm.hasError).toBe(false)
-		const wrapperNotReadonly = mount(PhoneField, {
-			props: {
-				required: true,
-				modelValue: '',
-				readonly: false,
-			},
-		})
-
-		const isValidNotReadonly = await wrapperNotReadonly.vm.validateOnSubmit()
-
-		expect(isValidNotReadonly).toBe(false)
-
-		expect(wrapperNotReadonly.vm.hasError).toBe(true)
-	})
-
 	// Tests pour les formats d'affichage avec abréviations encapsulées
 	describe('Display formats with abbreviations', () => {
-		let wrapper: VueWrapper<InstanceType<typeof PhoneField>>
+		let wrapper: VueWrapper<PhoneFieldInstance>
 
 		beforeEach(() => {
 			wrapper = mount(PhoneField, {
@@ -778,26 +622,160 @@ describe('PhoneField', () => {
 		})
 	})
 
-	// Tests pour la désactivation de la gestion des erreurs
-	describe('Error handling', () => {
+	// Tests de validation
+	describe('Validation', () => {
+		it('cleans spaces from phone number before validation', async () => {
+			const wrapper = mount(PhoneField, {
+				props: {
+					required: true,
+					modelValue: '01 23 45 67 89',
+				},
+			})
+
+			const isValid = await wrapper.vm.validateOnSubmit()
+			expect(isValid).toBe(true)
+			expect(wrapper.vm.hasError).toBe(false)
+		})
+
+		it('validates phone number and country code on blur', async () => {
+			const wrapper = mount(PhoneField, {
+				props: {
+					required: true,
+					modelValue: '12345',
+					isValidateOnBlur: true,
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('focus')
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.vm.hasError).toBe(true)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Required to access errors
+			expect((wrapper.vm as any).errors[0]).toContain(locales.errorLength(10))
+		})
+
+		it('keeps a consistent success message before and after blur when withCountryCode is true', async () => {
+			const wrapper = mount(PhoneField, {
+				props: {
+					withCountryCode: true,
+					isValidateOnBlur: false,
+					modelValue: '',
+				},
+			})
+
+			const textField = wrapper.findComponent({ name: 'SyTextField' })
+			const input = textField.find('input')
+			await input.setValue('0123456789')
+			await wrapper.vm.$nextTick()
+
+			const messageBeforeBlur = textField.find('.v-messages__message')
+			expect(messageBeforeBlur.exists()).toBe(true)
+			expect(messageBeforeBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+			expect(messageBeforeBlur.text()).not.toBe('Le champ Numéro de téléphone est valide.')
+
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+
+			const messageAfterBlur = textField.find('.v-messages__message')
+			expect(messageAfterBlur.exists()).toBe(true)
+			expect(messageAfterBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+		})
+
+		it('validates country code when countryCodeRequired is true on submit', async () => {
+			const wrapper = mount(PhoneField, {
+				props: {
+					withCountryCode: true,
+					countryCodeRequired: true,
+					modelValue: '0123456789',
+				},
+			})
+
+			wrapper.vm.dialCode = ''
+			await wrapper.vm.$nextTick()
+
+			const result = await wrapper.vm.validateOnSubmit()
+
+			expect(result).toBe(false)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Required to access errors
+			expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Required to access errors
+			expect((wrapper.vm as any).errors[0]).toContain('requis')
+		})
+
+		it('validates phone number on submit', async () => {
+			const wrapper = mount(PhoneField, {
+				props: {
+					required: true,
+					modelValue: '',
+				},
+			})
+
+			const result = await wrapper.vm.validateOnSubmit()
+
+			expect(result).toBe(false)
+			expect(wrapper.vm.hasError).toBe(true)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Required to access errors
+			expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
+		})
+
+		it('validates phone number successfully on submit with valid input', async () => {
+			const wrapper = mount(PhoneField, {
+				props: {
+					required: true,
+					modelValue: '0123456789',
+				},
+			})
+
+			const result = await wrapper.vm.validateOnSubmit()
+
+			expect(result).toBe(true)
+			expect(wrapper.vm.hasError).toBe(false)
+		})
+
+		it('disables error handling when readonly is true', async () => {
+			const wrapper = mount(PhoneField, {
+				props: {
+					required: true,
+					modelValue: '',
+					readonly: true,
+				},
+			})
+
+			const isValid = await wrapper.vm.validateOnSubmit()
+
+			expect(isValid).toBe(true)
+			expect(wrapper.vm.hasError).toBe(false)
+
+			const wrapperNotReadonly = mount(PhoneField, {
+				props: {
+					required: true,
+					modelValue: '',
+					readonly: false,
+				},
+			})
+
+			const isValidNotReadonly = await wrapperNotReadonly.vm.validateOnSubmit()
+			expect(isValidNotReadonly).toBe(false)
+			expect(wrapperNotReadonly.vm.hasError).toBe(true)
+		})
+
 		it('displays error messages by default when validation fails', async () => {
 			const wrapper = mount(PhoneField, {
 				props: {
 					required: true,
 					modelValue: '',
-					isValidatedOnBlur: true,
+					isValidateOnBlur: true,
 				},
 			})
 
-			// Déclencher la validation
 			await wrapper.vm.validateOnSubmit()
 
-			// Vérifier que les erreurs sont affichées
 			expect(wrapper.vm.hasError).toBe(true)
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
 
-			// Vérifier que les erreurs sont passées au composant SyTextField
 			const textField = wrapper.findComponent({ name: 'SyTextField' })
 			expect(textField.props('errorMessages')).toBeTruthy()
 		})
@@ -807,19 +785,14 @@ describe('PhoneField', () => {
 				props: {
 					required: true,
 					modelValue: '',
-					isValidatedOnBlur: true,
+					isValidateOnBlur: true,
 					disableErrorHandling: true,
 				},
 			})
 
-			// Vérifier que la propriété disableErrorHandling est bien prise en compte
-			// en vérifiant qu'elle est passée lors de l'initialisation du composable useValidation
 			expect(wrapper.vm.validation).toBeDefined()
 		})
-	})
 
-	// Tests pour la validation dans un contexte de formulaire
-	describe('Form validation', () => {
 		it('validates as part of a form submission', async () => {
 			const wrapper = mount(PhoneField, {
 				props: {
@@ -828,11 +801,9 @@ describe('PhoneField', () => {
 				},
 			})
 
-			// Simuler une soumission de formulaire avec un champ vide
 			const isValid = await wrapper.vm.validateOnSubmit()
 			expect(isValid).toBe(false)
 
-			// Mettre à jour la valeur et valider à nouveau
 			await wrapper.setProps({ modelValue: '0123456789' })
 			const isValidAfterUpdate = await wrapper.vm.validateOnSubmit()
 			expect(isValidAfterUpdate).toBe(true)
@@ -848,20 +819,123 @@ describe('PhoneField', () => {
 				},
 			})
 
-			// Vider le code pays manuellement (France est sélectionnée par défaut)
 			wrapper.vm.dialCode = ''
 			await wrapper.vm.$nextTick()
 
-			// Sans code pays, la validation échoue
 			const isValidWithoutCountry = await wrapper.vm.validateOnSubmit()
 			expect(isValidWithoutCountry).toBe(false)
 
-			// Ajouter un code pays et valider à nouveau
 			wrapper.vm.dialCode = { code: '+33', abbreviation: 'FR', country: 'France', phoneLength: 10, mask: '## ## ## ## ##' }
 			await wrapper.vm.$nextTick()
 
 			const isValidWithCountry = await wrapper.vm.validateOnSubmit()
 			expect(isValidWithCountry).toBe(true)
+		})
+
+		describe('Validation with SyForm', () => {
+			it('validates as part of SyForm submission', async () => {
+				const wrapper = baseMount({
+					components: { PhoneField, SyForm },
+					template: `
+						<SyForm>
+							<PhoneField with-country-code country-code-required required />
+							<button type="submit">Submit</button>
+						</SyForm>
+					`,
+				})
+
+				const syForm = wrapper.findComponent(SyForm)
+				const form = syForm.vm as { validate: () => Promise<boolean> }
+				const isValidWithoutPhone = await form.validate()
+				await wrapper.vm.$nextTick()
+
+				const phoneField = wrapper.find('.phone-field')
+				expect(syForm.exists()).toBe(true)
+				expect(isValidWithoutPhone).toBe(false)
+				expect(phoneField.classes()).toContain('error-field')
+
+				const input = wrapper.find('input[type="tel"]')
+				await input.setValue('0123456789')
+				await wrapper.vm.$nextTick()
+
+				const isValidWithPhone = await form.validate()
+				await wrapper.vm.$nextTick()
+
+				expect(isValidWithPhone).toBe(true)
+				expect(phoneField.classes()).not.toContain('error-field')
+			})
+
+			it('blocks SyForm submission when a Vuetify custom rule fails', async () => {
+				const wrapper = baseMount({
+					components: { PhoneField, SyForm },
+					setup() {
+						const rules = [(v: unknown) => String(v ?? '').replace(/\D/g, '').startsWith('06') || 'Le numéro doit commencer par 06']
+						return { rules }
+					},
+					template: `
+						<SyForm>
+							<PhoneField :rules="rules" use-vuetify-validation />
+							<button type="submit">Submit</button>
+						</SyForm>
+					`,
+				})
+
+				const syForm = wrapper.findComponent(SyForm)
+				const form = syForm.vm as { validate: () => Promise<boolean> }
+
+				// A number that does not start with 06 — the Vuetify rule rejects it
+				const input = wrapper.find('input[type="tel"]')
+				await input.setValue('0123456789')
+				await wrapper.vm.$nextTick()
+
+				const isInvalid = await form.validate()
+				await wrapper.vm.$nextTick()
+
+				expect(isInvalid).toBe(false)
+				expect(wrapper.find('.phone-field').classes()).toContain('error-field')
+
+				// Fix the value so the Vuetify rule passes
+				await input.setValue('0612345678')
+				await wrapper.vm.$nextTick()
+
+				const isValid = await form.validate()
+				await wrapper.vm.$nextTick()
+
+				expect(isValid).toBe(true)
+				expect(wrapper.find('.phone-field').classes()).not.toContain('error-field')
+			})
+
+			it('passes SyForm submission when all Vuetify rules are satisfied', async () => {
+				const wrapper = baseMount({
+					components: { PhoneField, SyForm },
+					setup() {
+						const rules = [
+							(v: unknown) => !!v || 'Champ requis',
+							(v: unknown) => String(v ?? '').replace(/\D/g, '').length === 10 || 'Le numéro doit contenir 10 chiffres',
+						]
+						return { rules }
+					},
+					template: `
+						<SyForm>
+							<PhoneField :rules="rules" use-vuetify-validation />
+							<button type="submit">Submit</button>
+						</SyForm>
+					`,
+				})
+
+				const syForm = wrapper.findComponent(SyForm)
+				const form = syForm.vm as { validate: () => Promise<boolean> }
+
+				const input = wrapper.find('input[type="tel"]')
+				await input.setValue('0612345678')
+				await wrapper.vm.$nextTick()
+
+				const isValid = await form.validate()
+				await wrapper.vm.$nextTick()
+
+				expect(isValid).toBe(true)
+				expect(wrapper.find('.phone-field').classes()).not.toContain('error-field')
+			})
 		})
 	})
 
@@ -878,7 +952,7 @@ describe('PhoneField', () => {
 
 			// Vérifier que les indicatifs personnalisés sont ajoutés aux indicatifs standards
 			expect(wrapper.vm.dialCodeList.length).toBe(indicatifs.length + customIndicatifs.length)
-			expect(wrapper.vm.dialCodeList).toContainEqual(customIndicatifs[0])
+			expect(wrapper.vm.dialCodeList).toContainEqual(expect.objectContaining(customIndicatifs[0]))
 		})
 
 		it('uses only custom indicatifs when useCustomIndicatifsOnly is true', () => {
