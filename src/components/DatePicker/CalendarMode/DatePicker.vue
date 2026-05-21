@@ -8,7 +8,7 @@
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateModelValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidationBridge } from '../composables'
+	import { useWeekendDays, useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useAsteriskDisplay, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidation } from '../composables'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -263,7 +263,8 @@
 		successes,
 		clearValidation,
 		validateDates,
-	} = useDatePickerValidationBridge({
+		validateCalendarModeDates,
+	} = useDatePickerValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
@@ -281,6 +282,7 @@
 		isInitialValidation,
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		onblur,
+		revalidateOnCustomRulesChange: false,
 	})
 
 	const errorMessages = errors
@@ -312,8 +314,11 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, async (newValue) => {
-		// Valider les dates
-		await validateDates()
+		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
+		if (props.isValidateOnBlur && !isInitialValidation.value) {
+			// Valider les dates avec le flux spécifique CalendarMode
+			await validateCalendarModeDates()
+		}
 		// Marquer les jours fériés après la mise à jour des dates
 		markHolidayDays()
 
@@ -589,13 +594,6 @@
 			displayFormattedDate.value = displayFormattedDateComputed.value
 		}
 
-		// Valider les dates au montage, mais sans afficher d'erreur pour le required
-		// Forcer la validation si il y a des règles (erreur ou warning) et que le champ est rempli
-		const hasValidationRules = (props.customRules && props.customRules.length > 0)
-			|| (props.customWarningRules && props.customWarningRules.length > 0)
-		const hasValue = selectedDates.value !== null && selectedDates.value !== undefined
-		validateDates(hasValidationRules && hasValue)
-
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
 			isInitialValidation.value = false
@@ -617,7 +615,9 @@
 			return await complexDatePickerRef.value?.validateOnSubmit()
 		}
 		// Forcer la validation pour ignorer les conditions de validation interactive
-		await validateDates(true)
+		// S'assurer que isInitialValidation est false pour que la validation required fonctionne
+		isInitialValidation.value = false
+		await validateCalendarModeDates(true)
 		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
 		return errors.value.length === 0
 	}
@@ -680,8 +680,13 @@
 	const handleInputBlur = async () => {
 		emit('blur')
 		onblur.value = true
+		// Ne pas valider si isValidateOnBlur est false
 		if (props.isValidateOnBlur) {
-			await validateDates(true)
+			await validateCalendarModeDates(true)
+		}
+		else {
+			// Quand isValidateOnBlur est false, on s'assure qu'il n'y a pas d'erreurs
+			clearValidation()
 		}
 	}
 

@@ -1,7 +1,9 @@
 import type { Ref } from 'vue'
 import type { ValidationResult } from '@/composables/validation/useValidation'
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
-import { useManualDateValidation } from './useManualDateValidation'
+import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
+import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
+import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 export interface UseDateTextFieldManualValidationOptions {
 	required: boolean
@@ -58,21 +60,93 @@ export interface UseDateTextFieldOptions {
 export const useDateTextField = (options: UseDateTextFieldOptions) => {
 	const { autoClamp, isRange, displayFormat, autoClampDate, manualValidation, submit, reset: resetOptions } = options
 
-	const { validateManualInput } = useManualDateValidation({
-		format: displayFormat.value,
-		required: manualValidation.required,
-		disableErrorHandling: manualValidation.disableErrorHandling,
-		customRules: manualValidation.customRules,
-		customWarningRules: manualValidation.customWarningRules,
-		hasInteracted: manualValidation.hasInteracted,
-		errors: manualValidation.errors,
-		clearValidation: manualValidation.clearValidation,
-		validateDateFormat: manualValidation.validateDateFormat,
-		isDateComplete: manualValidation.isDateComplete,
-		parseDate: manualValidation.parseDate,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		validateField: manualValidation.validateField as (value: unknown, rules?: any[], warningRules?: any[]) => Promise<ValidationResult>,
-	})
+	// Fonction locale de validation manuelle pour remplacer useManualDateValidation
+	const validateManualInput = (value: string): boolean | Promise<boolean> => {
+		manualValidation.clearValidation()
+
+		// Vérifier les cas de champ vide ou incomplet
+		const emptyCheck = validateEmptyOrIncompleteDate(
+			value,
+			manualValidation.required,
+			(val: string) => isDateComplete(val, displayFormat.value),
+			manualValidation.hasInteracted.value,
+		)
+
+		// Gérer les erreurs pour champ vide requis
+		if (!emptyCheck.isValid && !manualValidation.disableErrorHandling && emptyCheck.errorMessage) {
+			manualValidation.errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+		}
+
+		// Si on ne doit pas continuer la validation (champ vide/incomplet)
+		if (!emptyCheck.shouldContinue) {
+			return emptyCheck.isValid
+		}
+
+		// Valider le format de la date
+		const formatValidation = validateDateFormat(
+			value,
+			displayFormat.value,
+			displayFormat.value,
+			manualValidation.required,
+			manualValidation.hasInteracted.value,
+			manualValidation.disableErrorHandling,
+		)
+		if (!formatValidation.isValid) {
+			if (!manualValidation.disableErrorHandling && formatValidation.message) {
+				manualValidation.errors.value.push(formatValidation.message)
+			}
+			return false
+		}
+
+		// Si le format est valide, vérifier si la date peut être parsée
+		const date = manualValidation.parseDate(value, displayFormat.value)
+		if (!date) {
+			// La date n'a pas pu être parsée
+			if (!manualValidation.disableErrorHandling) {
+				manualValidation.errors.value.push(`Format de date invalide (${displayFormat.value})`)
+			}
+			return false
+		}
+
+		// Valider les règles personnalisées
+		if (!manualValidation.disableErrorHandling) {
+			const currentCustomRules = manualValidation.customRules
+			const currentCustomWarningRules = manualValidation.customWarningRules
+
+			// Filtrer les règles qui sont prêtes (ont une date définie)
+			const readyRules = currentCustomRules.filter((rule: { type?: string, options?: { date?: unknown } }) => {
+				if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
+					return rule.options && rule.options.date !== undefined
+				}
+				return true
+			})
+
+			// Si aucune règle n'est prête, skip la validation
+			if (readyRules.length === 0 && currentCustomRules.length > 0) {
+				return true
+			}
+
+			// Adapter les règles prêtes pour maintenir la compatibilité avec les tests existants
+			const safeCustomRules = adaptCustomRules(readyRules, displayFormat.value)
+			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, displayFormat.value)
+
+			// Appeler validateField pour évaluer les règles
+			const result = manualValidation.validateField(
+				date,
+				safeCustomRules,
+				safeWarningRules,
+			)
+
+			if (result instanceof Promise) {
+				return result.then(resolvedResult => !resolvedResult.hasError)
+			}
+
+			const validationResult = result as ValidationResult
+			return !validationResult.hasError
+		}
+
+		return manualValidation.errors.value.length === 0
+	}
 
 	const validateOnSubmit = async () => {
 		if (!submit) return true

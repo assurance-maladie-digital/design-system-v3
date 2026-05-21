@@ -2,12 +2,12 @@
 	import {
 		useDateRangeInput,
 		useDateRangeValidation,
-		useDateFormatValidation,
-		useDateValidation,
 		useDateInputEditing,
 		useDateAutoClamp,
 		useDateTextField,
-		useDatePickerValidationBridge,
+		useDatePickerValidation,
+		validateDateFormat,
+		isDateComplete,
 	} from '../composables'
 	import { ref, computed, watch, nextTick, onMounted, toRefs } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
@@ -114,7 +114,7 @@
 	// pour éviter la double validation avec le parent
 	const shouldUseInternalValidation = computed(() => !props.skipInternalValidation && !readonly.value)
 
-	const bridgeValidation = useDatePickerValidationBridge({
+	const bridgeValidation = useDatePickerValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: true,
@@ -158,12 +158,6 @@
 		get: () => readonly.value ? readonlyValidation.warnings.value : bridgeValidation.warnings.value,
 		set: (value) => {
 			if (!readonly.value) bridgeValidation.warnings.value = value
-		},
-	})
-	const successes = computed({
-		get: () => readonly.value ? readonlyValidation.successes.value : bridgeValidation.successes.value,
-		set: (value) => {
-			if (!readonly.value) bridgeValidation.successes.value = value
 		},
 	})
 	const hasError = computed(() => {
@@ -249,25 +243,17 @@
 	const hasInteracted = ref(false)
 	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
 
-	const { validateDateFormat: _validateDateFormat } = useDateFormatValidation({
-		format: displayFormat.value,
-		dateFormatReturn: dateFormatReturn.value,
-		required: required.value,
-		hasInteracted,
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
 	function validateDateFormatForSingleOrRange(input: string): { isValid: boolean, message: string } {
 		if (readonly.value) return { isValid: true, message: '' }
 		if (isRange.value && input.includes(' - ')) {
 			const [start = '', end = ''] = input.split(' - ').map(s => s?.trim() ?? '')
-			const startDateFormatValidation = _validateDateFormat(start)
-			const endDateFormatValidation = end ? _validateDateFormat(end) : { isValid: true, message: '' }
+			const startDateFormatValidation = validateDateFormat(start, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
+			const endDateFormatValidation = end ? validateDateFormat(end, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling) : { isValid: true, message: '' }
 			if (startDateFormatValidation.isValid && endDateFormatValidation.isValid) return { isValid: true, message: '' }
 			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_START} (${displayFormat.value})` }
 			return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_END} (${displayFormat.value})` }
 		}
-		return _validateDateFormat(input)
+		return validateDateFormat(input, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 	}
 
 	const inputValue = ref('')
@@ -613,7 +599,7 @@
 			errors,
 			clearValidation,
 			validateDateFormat: validateDateFormatForSingleOrRange,
-			isDateComplete: (val: string) => val.length >= displayFormat.value.length,
+			isDateComplete: (val: string) => isDateComplete(val, displayFormat.value),
 			parseDate,
 			validateField: safeValidateField,
 		},
@@ -962,23 +948,7 @@
 					selectedDates.value = result.dates
 					try {
 						isUpdatingFromInternal.value = true
-						;(useDateValidation({
-							noCalendar: false,
-							required: required.value,
-							displayRange: isRange.value,
-							disableErrorHandling: props.disableErrorHandling,
-							customRules: props.customRules,
-							customWarningRules: props.customWarningRules,
-							selectedDates,
-							isUpdatingFromInternal,
-							currentRangeIsValid,
-							getRangeValidationError,
-							clearValidation,
-							validateField: safeValidateField,
-							errors,
-							warnings,
-							successes,
-						})).validateDates()
+						;(bridgeValidation).validateDates()
 					}
 					finally {
 						queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -1081,23 +1051,7 @@
 					selectedDates.value = [sd, ed]
 					try {
 						isUpdatingFromInternal.value = true
-						;(useDateValidation({
-							noCalendar: false,
-							required: required.value,
-							displayRange: isRange.value,
-							disableErrorHandling: props.disableErrorHandling,
-							customRules: props.customRules,
-							customWarningRules: props.customWarningRules,
-							selectedDates,
-							isUpdatingFromInternal,
-							currentRangeIsValid,
-							getRangeValidationError,
-							clearValidation,
-							validateField: safeValidateField,
-							errors,
-							warnings,
-							successes,
-						})).validateDates()
+						;(bridgeValidation).validateDates()
 					}
 					finally { queueMicrotask(() => (isUpdatingFromInternal.value = false)) }
 					inputValue.value = formatRangeForDisplay(sd, ed)

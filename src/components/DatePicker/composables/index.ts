@@ -8,11 +8,9 @@ export { useDateTextField } from './useDateTextField'
 
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'
-export { useDateValidation } from './useDateValidation'
-export { useDatePickerValidationBridge } from './useDatePickerValidationBridge'
-export { useDateFormatValidation } from './useDateFormatValidation'
+export { useDatePickerValidation } from './useDatePickerValidation'
+export { validateDateFormat, isDateComplete } from './useDateFormatUtils'
 export { useDateRangeValidation } from './useDateRangeValidation'
-export { useManualDateValidation } from './useManualDateValidation'
 
 // CalendarMode UI and interaction
 export { useDatePickerViewMode } from './useDatePickerViewMode'

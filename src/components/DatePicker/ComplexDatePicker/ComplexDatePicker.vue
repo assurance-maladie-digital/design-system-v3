@@ -17,10 +17,9 @@
 	import {
 		useAsteriskDisplay,
 		useCalendarKeyboardNavigation,
-		useDateFormatValidation,
 		useDatePickerFocusTrap,
 		useDatePickerState,
-		useDatePickerValidationBridge,
+		useDatePickerValidation,
 		useDatePickerViewMode,
 		useDatePickerVisibility,
 		useDateRangeValidation,
@@ -28,9 +27,10 @@
 		useDisplayedDateString,
 		useHolidayHighlighting,
 		useInputBlurHandler,
-		useManualDateValidation,
 		useMonthButtonCustomization,
 		useTodayButton,
+		validateDateFormat as validateDateFormatUtil,
+		isDateComplete as isDateCompleteUtil,
 	} from '../composables'
 	import dayjs from 'dayjs'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -44,6 +44,7 @@
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
+	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
@@ -250,14 +251,6 @@
 	const hasInteracted = ref(false)
 	const preventCloseOnInternalUpdate = ref(false)
 
-	const { validateDateFormat, isDateComplete } = useDateFormatValidation({
-		format: props.format,
-		dateFormatReturn: props.dateFormatReturn,
-		required: props.required,
-		hasInteracted,
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
 	const {
 		errors,
 		warnings,
@@ -265,7 +258,7 @@
 		validateField,
 		clearValidation,
 		validateDates,
-	} = useDatePickerValidationBridge({
+	} = useDatePickerValidation({
 		showSuccessMessages: props.showSuccessMessages,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
@@ -679,7 +672,7 @@
 		parseDate,
 		formatDate,
 		generateDateRange: dateSelectionResult.generateDateRange,
-		isDateComplete: isDateComplete.value,
+		isDateComplete: (val: string) => isDateCompleteUtil(val, props.format),
 		displayFormattedDate,
 		selectedDates,
 		isFormatting,
@@ -789,20 +782,84 @@
 	/**
 	 * Manual input validation on blur
 	 */
-	const { validateManualInput } = useManualDateValidation({
-		format: props.format,
-		required: props.required,
-		disableErrorHandling: props.disableErrorHandling,
-		customRules: computed(() => props.customRules),
-		customWarningRules: computed(() => props.customWarningRules),
-		hasInteracted,
-		errors,
-		clearValidation,
-		validateDateFormat,
-		isDateComplete: isDateComplete.value,
-		parseDate,
-		validateField,
-	})
+	const validateManualInput = (value: string): boolean | Promise<boolean> => {
+		clearValidation()
+
+		// Vérifier les cas de champ vide ou incomplet
+		const emptyCheck = validateEmptyOrIncompleteDate(
+			value,
+			props.required,
+			(val: string) => isDateCompleteUtil(val, props.format),
+			hasInteracted.value,
+		)
+
+		// Gérer les erreurs pour champ vide requis
+		if (!emptyCheck.isValid && !props.disableErrorHandling && emptyCheck.errorMessage) {
+			errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+		}
+
+		// Si on ne doit pas continuer la validation (champ vide/incomplet)
+		if (!emptyCheck.shouldContinue) {
+			return emptyCheck.isValid
+		}
+
+		// Valider le format de la date
+		const formatValidation = validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling)
+		if (!formatValidation.isValid) {
+			if (!props.disableErrorHandling && formatValidation.message) {
+				errors.value.push(formatValidation.message)
+			}
+			return false
+		}
+
+		// Si le format est valide, vérifier si la date peut être parsée
+		const date = parseDate(value, props.format)
+		if (!date) {
+			// La date n'a pas pu être parsée
+			if (!props.disableErrorHandling) {
+				errors.value.push(`Format de date invalide (${props.format})`)
+			}
+			return false
+		}
+
+		// Valider les règles personnalisées
+		if (!props.disableErrorHandling) {
+			const currentCustomRules = props.customRules
+			const currentCustomWarningRules = props.customWarningRules
+
+			// Filtrer les règles qui sont prêtes (ont une date définie)
+			const readyRules = currentCustomRules.filter((rule) => {
+				if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
+					return rule.options && rule.options.date !== undefined
+				}
+				return true
+			})
+
+			// Si aucune règle n'est prête, skip la validation
+			if (readyRules.length === 0 && currentCustomRules.length > 0) {
+				return true
+			}
+
+			// Adapter les règles prêtes pour maintenir la compatibilité avec les tests existants
+			const safeCustomRules = adaptCustomRules(readyRules, props.format)
+			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, props.format)
+
+			// Appeler validateField pour évaluer les règles
+			const result = validateField(
+				date,
+				safeCustomRules,
+				safeWarningRules,
+			)
+
+			if (result instanceof Promise) {
+				return result.then(resolvedResult => !resolvedResult.hasError)
+			}
+
+			return !result.hasError
+		}
+
+		return errors.value.length === 0
+	}
 
 	const emitBlurEvent = () => emit('blur')
 
@@ -816,7 +873,7 @@
 		isUpdatingFromInternal,
 		selectedDates,
 		errors,
-		validateDateFormat,
+		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
 		parseDate,
 		formatDate,
 		updateModel,
@@ -1004,7 +1061,7 @@
 		validateDates,
 		formatDateInput,
 		emitBlur: emitBlurEvent,
-		validateDateFormat,
+		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
 		displayFormattedDate,
 		// Expose for consumers
 		handleDateSelected,
