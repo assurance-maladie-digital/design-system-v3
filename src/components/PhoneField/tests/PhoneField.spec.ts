@@ -582,6 +582,51 @@ describe('PhoneField', () => {
 			const expectedCountry = firstItem.countryFr || firstItem.country
 			expect(firstItem.displayText).toBe(`<abbr title="${expectedCountry}">${firstItem.abbreviation}</abbr>`)
 		})
+
+		it('escapes HTML special characters in country name and abbreviation for code-abbreviation format', async () => {
+			const maliciousIndicatif = {
+				code: '+99',
+				country: 'Bad"Country<script>',
+				abbreviation: 'B&D',
+				phoneLength: 10,
+				mask: '## ## ## ##',
+			}
+			await wrapper.setProps({
+				displayFormat: 'code-abbreviation',
+				customIndicatifs: [maliciousIndicatif],
+				useCustomIndicatifsOnly: true,
+			})
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const item = select.props('items')[0]
+			expect(item.displayText).not.toContain('<script>')
+			expect(item.displayText).not.toContain('"Country')
+			expect(item.displayText).toContain('&quot;Country')
+			expect(item.displayText).toContain('&lt;')
+			expect(item.displayText).toContain('&amp;')
+			expect(item.plainDisplayText).toBe(`${maliciousIndicatif.code} (${maliciousIndicatif.abbreviation})`)
+		})
+
+		it('escapes HTML special characters in country name and abbreviation for abbreviation format', async () => {
+			const maliciousIndicatif = {
+				code: '+99',
+				country: 'Evil<img src=x onerror=alert(1)>',
+				abbreviation: '<XSS>',
+				phoneLength: 10,
+				mask: '## ## ## ##',
+			}
+			await wrapper.setProps({
+				displayFormat: 'abbreviation',
+				customIndicatifs: [maliciousIndicatif],
+				useCustomIndicatifsOnly: true,
+			})
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const item = select.props('items')[0]
+			expect(item.displayText).not.toContain('<img')
+			expect(item.displayText).not.toContain('<XSS>')
+			expect(item.displayText).toContain('&lt;XSS&gt;')
+			expect(item.displayText).toContain('&lt;img')
+			expect(item.plainDisplayText).toBe(maliciousIndicatif.abbreviation)
+		})
 	})
 
 	// Tests pour l'initialisation avec un dialCode par défaut
@@ -845,7 +890,7 @@ describe('PhoneField', () => {
 				})
 
 				const syForm = wrapper.findComponent(SyForm)
-				const form = syForm.vm as { validate: () => Promise<boolean> }
+				const form = syForm.vm as unknown as { validate: () => Promise<boolean> }
 				const isValidWithoutPhone = await form.validate()
 				await wrapper.vm.$nextTick()
 
@@ -881,7 +926,7 @@ describe('PhoneField', () => {
 				})
 
 				const syForm = wrapper.findComponent(SyForm)
-				const form = syForm.vm as { validate: () => Promise<boolean> }
+				const form = syForm.vm as unknown as { validate: () => Promise<boolean> }
 
 				// A number that does not start with 06 — the Vuetify rule rejects it
 				const input = wrapper.find('input[type="tel"]')
@@ -924,7 +969,7 @@ describe('PhoneField', () => {
 				})
 
 				const syForm = wrapper.findComponent(SyForm)
-				const form = syForm.vm as { validate: () => Promise<boolean> }
+				const form = syForm.vm as unknown as { validate: () => Promise<boolean> }
 
 				const input = wrapper.find('input[type="tel"]')
 				await input.setValue('0612345678')

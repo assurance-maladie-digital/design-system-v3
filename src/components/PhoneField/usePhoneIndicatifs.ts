@@ -31,7 +31,9 @@ export function usePhoneIndicatifs(
 			const plainDisplayText = displayText
 
 			if (displayFormat.value === 'code-abbreviation' || displayFormat.value === 'abbreviation') {
-				displayText = displayText.replace(indicatif.abbreviation, `<abbr title="${countryName}">${indicatif.abbreviation}</abbr>`)
+				const safeCountry = escapeHtml(countryName)
+				const safeAbbr = escapeHtml(indicatif.abbreviation)
+				displayText = displayText.replace(indicatif.abbreviation, `<abbr title="${safeCountry}">${safeAbbr}</abbr>`)
 			}
 
 			return {
@@ -86,4 +88,13 @@ export function usePhoneIndicatifs(
 		dialCodeList,
 		usedIndicatif,
 	}
+}
+
+function escapeHtml(value: string): string {
+	return value
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;')
 }
