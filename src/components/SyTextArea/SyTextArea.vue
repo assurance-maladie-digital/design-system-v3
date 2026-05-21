@@ -10,6 +10,7 @@
 	import { locales } from './locales'
 
 	const props = withDefaults(defineProps<{
+		uniqueId: string
 		modelValue?: string
 		trim?: boolean
 		replaceTabs?: number
@@ -179,6 +180,7 @@
 <template>
 	<div class="sy-textarea">
 		<VTextarea
+			:id="uniqueId"
 			ref="textAreaRef"
 			:model-value="internalValue"
 			:variant="variant"
