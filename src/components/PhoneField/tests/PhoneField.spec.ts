@@ -627,6 +627,27 @@ describe('PhoneField', () => {
 			expect(item.displayText).toContain('&lt;img')
 			expect(item.plainDisplayText).toBe(maliciousIndicatif.abbreviation)
 		})
+
+		it('escapes HTML in country name for non-abbreviation formats (code-country, country)', async () => {
+			const maliciousIndicatif = {
+				code: '+99',
+				country: '<img src=x onerror=alert(1)>',
+				abbreviation: 'XX',
+				phoneLength: 10,
+				mask: '## ## ## ##',
+			}
+			for (const format of ['code-country', 'country'] as const) {
+				await wrapper.setProps({
+					displayFormat: format,
+					customIndicatifs: [maliciousIndicatif],
+					useCustomIndicatifsOnly: true,
+				})
+				const select = wrapper.findComponent({ name: 'SySelect' })
+				const item = select.props('items')[0]
+				expect(item.displayText).not.toContain('<img')
+				expect(item.displayText).toContain('&lt;img')
+			}
+		})
 	})
 
 	// Tests pour l'initialisation avec un dialCode par défaut

@@ -27,13 +27,13 @@ export function usePhoneIndicatifs(
 		const mergedDialCodes = useCustomIndicatifsOnly.value ? customIndicatifs.value : [...indicatifs, ...customIndicatifs.value]
 		return mergedDialCodes.map((indicatif) => {
 			const countryName = indicatif.countryFr || indicatif.country
-			let displayText = getIndicatifDisplayText(indicatif)
-			const plainDisplayText = displayText
+			const plainDisplayText = getIndicatifDisplayText(indicatif)
+			let displayText = escapeHtml(plainDisplayText)
 
 			if (displayFormat.value === 'code-abbreviation' || displayFormat.value === 'abbreviation') {
 				const safeCountry = escapeHtml(countryName)
 				const safeAbbr = escapeHtml(indicatif.abbreviation)
-				displayText = displayText.replace(indicatif.abbreviation, `<abbr title="${safeCountry}">${safeAbbr}</abbr>`)
+				displayText = displayText.replace(safeAbbr, `<abbr title="${safeCountry}">${safeAbbr}</abbr>`)
 			}
 
 			return {
