@@ -7,7 +7,7 @@ describe('NotificationBar - Visual regression tests', () => {
 		clearQueue()
 	})
 
-	it('displays the notification bar with an info notification', () => {
+	it('displays the notification bar at top (info)', () => {
 		const { addNotification } = useNotificationService()
 		addNotification({ id: '1', message: 'Ceci est une notification informative', type: 'info' })
 
@@ -15,8 +15,20 @@ describe('NotificationBar - Visual regression tests', () => {
 			props: { showAll: true },
 		})
 
-		cy.get('.notification-bar').should('be.visible')
-		cy.matchImageSnapshot('notification-bar-info', cy.get('.v-application'))
+		cy.get('.notification-bar-transition').should('be.visible')
+		cy.matchImageSnapshot('notification-bar-info', cy.get('.notification-bar-transition'))
+	})
+
+	it('displays the notification bar at bottom', () => {
+		const { addNotification } = useNotificationService()
+		addNotification({ id: '1', message: 'Notification en bas de page', type: 'warning' })
+
+		cy.mountWithVuetify(NotificationBar, {
+			props: { showAll: true, bottom: true },
+		})
+
+		cy.get('.notification-bar-transition').should('be.visible')
+		cy.matchImageSnapshot('notification-bar-bottom', cy.get('.notification-bar-transition'))
 	})
 
 	it('displays the notification bar with multiple types', () => {
@@ -28,7 +40,7 @@ describe('NotificationBar - Visual regression tests', () => {
 			props: { showAll: true },
 		})
 
-		cy.get('.notification-bar').should('be.visible')
-		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.v-application'))
+		cy.get('.notification-bar-transition').should('be.visible')
+		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.notification-bar-transition'))
 	})
 })

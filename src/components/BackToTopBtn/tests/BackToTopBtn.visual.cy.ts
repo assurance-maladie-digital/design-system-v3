@@ -1,12 +1,20 @@
 import BackToTopBtn from '../BackToTopBtn.vue'
 
+function triggerScroll(scrollY = 200) {
+	cy.window().then((win) => {
+		Object.defineProperty(win, 'scrollY', { value: scrollY, writable: true })
+		win.dispatchEvent(new Event('scroll'))
+	})
+}
+
 describe('BackToTopBtn - Visual regression tests', () => {
-	it('displays the button when visible is forced', () => {
+	it('displays the button after scroll', () => {
 		cy.mountWithVuetify(BackToTopBtn, {
 			props: { threshold: 0 },
 		})
 
-		cy.get('.v-btn').should('exist')
+		triggerScroll()
+		cy.get('.vd-back-to-top-btn').should('be.visible')
 		cy.matchImageSnapshot('back-to-top-btn-default', cy.get('.v-application'))
 	})
 
@@ -19,7 +27,8 @@ describe('BackToTopBtn - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-btn').should('exist')
+		triggerScroll()
+		cy.get('.vd-back-to-top-btn').should('be.visible')
 		cy.matchImageSnapshot('back-to-top-btn-custom-nudge', cy.get('.v-application'))
 	})
 })
