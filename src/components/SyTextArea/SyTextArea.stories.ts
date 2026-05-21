@@ -29,6 +29,15 @@ const meta = {
 				category: 'props',
 			},
 		},
+		counter: {
+			control: { type: 'number' },
+			description: 'Défini la valeur du compteur de caractères',
+			table: {
+				type: { summary: 'number' },
+				defaultValue: { summary: '255' },
+				category: 'props',
+			},
+		},
 		label: {
 			control: { type: 'text' },
 			description: 'Texte affiché au-dessus du champ',

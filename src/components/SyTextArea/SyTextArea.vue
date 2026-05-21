@@ -11,6 +11,7 @@
 
 	const props = withDefaults(defineProps<{
 		uniqueId: string
+		counter: number | 255
 		modelValue?: string
 		trim?: boolean
 		replaceTabs?: number
@@ -186,6 +187,7 @@
 			:variant="variant"
 			:color="color"
 			:bg-color="props.bgColor"
+			:counter="counter"
 			:error="hasError"
 			:error-messages="errors"
 			:class="{
