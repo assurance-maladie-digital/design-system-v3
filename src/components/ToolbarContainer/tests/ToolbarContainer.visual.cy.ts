@@ -1,14 +1,16 @@
 import ToolbarContainer from '../ToolbarContainer.vue'
+import { h } from 'vue'
+import { VBtn } from 'vuetify/components'
 
 describe('ToolbarContainer - Visual regression tests', () => {
 	it('displays the toolbar container with buttons', () => {
 		cy.mountWithVuetify(ToolbarContainer, {
 			slots: {
-				default: `
-					<button>Action 1</button>
-					<button>Action 2</button>
-					<button>Action 3</button>
-				`,
+				default: () => [
+					h(VBtn, {}, () => 'Action 1'),
+					h(VBtn, {}, () => 'Action 2'),
+					h(VBtn, {}, () => 'Action 3'),
+				],
 			},
 		})
 
@@ -19,10 +21,10 @@ describe('ToolbarContainer - Visual regression tests', () => {
 	it('displays the toolbar container with links', () => {
 		cy.mountWithVuetify(ToolbarContainer, {
 			slots: {
-				default: `
-					<a href="#">Lien 1</a>
-					<a href="#">Lien 2</a>
-				`,
+				default: () => [
+					h('a', { href: '#' }, 'Lien 1'),
+					h('a', { href: '#' }, 'Lien 2'),
+				],
 			},
 		})
 

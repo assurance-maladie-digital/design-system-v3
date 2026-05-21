@@ -1,9 +1,10 @@
 import PageContainer from '../PageContainer.vue'
+import { h } from 'vue'
 
 describe('PageContainer - Visual regression tests', () => {
 	it('displays the page container by default', () => {
 		cy.mountWithVuetify(PageContainer, {
-			slots: { default: '<p>Contenu de la page</p>' },
+			slots: { default: () => h('p', 'Contenu de la page') },
 		})
 
 		cy.get('.v-application').should('be.visible')
@@ -13,7 +14,7 @@ describe('PageContainer - Visual regression tests', () => {
 	it('displays the page container with md size', () => {
 		cy.mountWithVuetify(PageContainer, {
 			props: { size: 'md' },
-			slots: { default: '<p>Contenu de la page</p>' },
+			slots: { default: () => h('p', 'Contenu de la page') },
 		})
 
 		cy.get('.v-application').should('be.visible')
@@ -23,7 +24,7 @@ describe('PageContainer - Visual regression tests', () => {
 	it('displays the page container with background color', () => {
 		cy.mountWithVuetify(PageContainer, {
 			props: { color: 'blue-lighten-5' },
-			slots: { default: '<p>Contenu de la page</p>' },
+			slots: { default: () => h('p', 'Contenu de la page') },
 		})
 
 		cy.get('.v-application').should('be.visible')

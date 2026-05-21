@@ -15,7 +15,9 @@ describe('NotificationBar - Visual regression tests', () => {
 			props: { showAll: true },
 		})
 
+		// Wait for notification to be visible
 		cy.get('.notification-bar-transition').should('be.visible')
+		cy.get('.v-notification').should('contain', 'Ceci est une notification informative')
 		cy.matchImageSnapshot('notification-bar-info', cy.get('.notification-bar-transition'))
 	})
 
@@ -27,7 +29,9 @@ describe('NotificationBar - Visual regression tests', () => {
 			props: { showAll: true, bottom: true },
 		})
 
+		// Wait for notification to be visible
 		cy.get('.notification-bar-transition').should('be.visible')
+		cy.get('.v-notification').should('contain', 'Notification en bas de page')
 		cy.matchImageSnapshot('notification-bar-bottom', cy.get('.notification-bar-transition'))
 	})
 
@@ -40,7 +44,11 @@ describe('NotificationBar - Visual regression tests', () => {
 			props: { showAll: true },
 		})
 
+		// Wait for all notifications to be visible
 		cy.get('.notification-bar-transition').should('be.visible')
+		cy.get('.v-notification').should('have.length', 2)
+		cy.get('.v-notification').should('contain', 'Succès de l\'opération')
+		cy.get('.v-notification').should('contain', 'Une erreur est survenue')
 		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.notification-bar-transition'))
 	})
 })
