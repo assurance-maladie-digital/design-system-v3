@@ -157,6 +157,7 @@
 					:disabled="props.disabled"
 					:autocomplete="props.autocompleteCountryCode"
 					:return-object="true"
+					:allow-html="true"
 					class="dial-code-select mr-0 mr-sm-4"
 					text-key="displayText"
 					plain-text-key="plainDisplayText"
