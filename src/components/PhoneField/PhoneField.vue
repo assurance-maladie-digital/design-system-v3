@@ -6,7 +6,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { PhoneFieldProps } from './types'
+	import type { PhoneFieldProps } from './types'
 	import { usePhoneIndicatifs } from './usePhoneIndicatifs'
 	import { vMaska } from 'maska/vue'
 	import type { Indicatif } from './types'
@@ -32,8 +32,8 @@
 	})
 
 	const emits = defineEmits<{
-		'update:modelValue': (value: string) => true
-		'update:dialCodeModel': (value: Indicatif) => true
+		'update:modelValue': [value: string]
+		'update:dialCodeModel': [value: Indicatif | string | undefined]
 	}>()
 
 	const phoneNumber = ref<string>(props.modelValue)
@@ -77,7 +77,6 @@
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
 		counter: computed(() => usedIndicatif.value.phoneLength || 10),
-		label: computed(() => props.withCountryCode ? props.locales?.phoneNumberWithoutCountryLabel || 'Numéro de téléphone' : props.locales?.label || 'Téléphone'),
 		phoneFieldIdentifier: computed(() => props.withCountryCode ? props.locales?.phoneNumberWithoutCountryLabel || 'Numéro de téléphone' : props.locales?.label || 'Téléphone'),
 		shouldDisableErrorHandling: computed(() => props.disableErrorHandling || props.readonly),
 		hasError: toRef(props, 'hasError'),

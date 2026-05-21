@@ -2,6 +2,7 @@ import { type ValidationRule } from '@/composables/validation/useValidation'
 import { computed, ref, type Ref } from 'vue'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { locales } from './locales'
+import type { VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 export function usePhoneFieldValidation(params: {
 	modelValue: Ref<string>
@@ -21,7 +22,7 @@ export function usePhoneFieldValidation(params: {
 	customRules: Ref<ValidationRule[]>
 	warningRules?: Ref<ValidationRule[]>
 	successRules?: Ref<ValidationRule[]>
-	rules?: Ref<((value: string) => true | string)[]>
+	rules?: Ref<VuetifyValidationRule[] | undefined>
 	errorMessages?: Ref<string[] | null | undefined>
 	warningMessages?: Ref<string[] | null | undefined>
 	successMessages?: Ref<string[] | null | undefined>
