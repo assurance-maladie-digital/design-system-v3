@@ -15,7 +15,7 @@ describe('BackToTopBtn - Visual regression tests', () => {
 
 		triggerScroll()
 		cy.get('.vd-back-to-top-btn').should('be.visible')
-		cy.matchImageSnapshot('back-to-top-btn-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('back-to-top-btn-default', cy.get('.vd-back-to-top-btn'))
 	})
 
 	it('displays the button with custom nudge', () => {
@@ -29,6 +29,6 @@ describe('BackToTopBtn - Visual regression tests', () => {
 
 		triggerScroll()
 		cy.get('.vd-back-to-top-btn').should('be.visible')
-		cy.matchImageSnapshot('back-to-top-btn-custom-nudge', cy.get('.v-application'))
+		cy.matchImageSnapshot('back-to-top-btn-custom-nudge', cy.get('.vd-back-to-top-btn'))
 	})
 })
