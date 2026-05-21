@@ -1,26 +1,35 @@
 import DataListGroup from '../DataListGroup.vue'
+import { mdiAccount, mdiCalendar, mdiEmail, mdiPhone } from '@mdi/js'
 
 const defaultItems = [
 	{
-		listTitle: 'Identité',
+		title: 'Identité',
 		items: [
-			{ label: 'Nom', value: 'Dupont' },
-			{ label: 'Prénom', value: 'Jean' },
+			{ key: 'Nom', value: 'Dupont', icon: 'person' },
+			{ key: 'Prénom', value: 'Jean', icon: 'person' },
+			{ key: 'Date de naissance', value: '01/01/1980', icon: 'calendar' },
 		],
 	},
 	{
-		listTitle: 'Contact',
+		title: 'Contact',
 		items: [
-			{ label: 'Email', value: 'jean.dupont@example.com' },
-			{ label: 'Téléphone', value: '0102030405' },
+			{ key: 'Email', value: 'jean.dupont@example.com', icon: 'email' },
+			{ key: 'Téléphone', value: '0102030405', icon: 'phone' },
 		],
 	},
 ]
 
+const iconsMap = {
+	person: mdiAccount,
+	calendar: mdiCalendar,
+	email: mdiEmail,
+	phone: mdiPhone,
+}
+
 describe('DataListGroup - Visual regression tests', () => {
 	it('displays the data list group by default', () => {
 		cy.mountWithVuetify(DataListGroup, {
-			props: { items: defaultItems },
+			props: { items: defaultItems, icons: iconsMap },
 		})
 
 		cy.get('.v-application').should('be.visible')
@@ -31,6 +40,7 @@ describe('DataListGroup - Visual regression tests', () => {
 		cy.mountWithVuetify(DataListGroup, {
 			props: {
 				items: defaultItems,
+				icons: iconsMap,
 				loading: true,
 			},
 		})
