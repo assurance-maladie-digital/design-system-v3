@@ -54,7 +54,7 @@
 
 	&:focus-visible {
 		/* stylelint-disable-next-line custom-property-pattern */
-		outline: 2px solid rgb(var(--v-theme-accentPrimary, 12, 65, 154));
+		outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
 	}
 }
 </style>

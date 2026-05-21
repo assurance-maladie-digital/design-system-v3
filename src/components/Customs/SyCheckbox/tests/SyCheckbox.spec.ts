@@ -122,8 +122,8 @@ describe('SyCheckbox', () => {
 		// Créer une règle de validation au format attendu par le composant
 		const customRule = {
 			type: 'custom',
-			validator: (value: boolean) => value === true,
 			options: {
+				validate: (value: boolean) => value === true,
 				message: 'This checkbox must be checked',
 				fieldIdentifier: 'Custom checkbox',
 			},

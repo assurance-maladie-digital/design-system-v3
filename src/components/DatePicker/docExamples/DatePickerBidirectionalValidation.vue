@@ -207,7 +207,7 @@
 
 			<v-btn
 				size="small"
-				color="success"
+				color="onSuccessVariant"
 				class="mr-2"
 				@click="setTestDates"
 			>

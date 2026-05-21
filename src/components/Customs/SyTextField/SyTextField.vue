@@ -752,7 +752,7 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textWarning)) !important;
+		fill: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
@@ -760,14 +760,14 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-onWarningVariant)) !important;
 		}
 	}
 
@@ -775,7 +775,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-onWarningVariant)) !important;
 		}
 	}
 }
@@ -783,7 +783,7 @@
 /* stylelint-disable-next-line selector-class-pattern */
 .text-iconBase {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-borderAccentPrimary)) !important;
+		fill: rgb(var(--v-theme-primary)) !important;
 	}
 }
 
@@ -795,16 +795,16 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textError)) !important;
+		fill: rgb(var(--v-theme-error)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-borderError)) !important;
+			color: rgb(var(--v-theme-error)) !important;
 		}
 	}
 
@@ -812,7 +812,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderError)) !important;
+			color: rgb(var(--v-theme-error)) !important;
 		}
 	}
 }
@@ -825,7 +825,7 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textSuccess)) !important;
+		fill: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
@@ -833,14 +833,14 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 
@@ -848,7 +848,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 }
@@ -859,13 +859,13 @@
 	}
 
 	:deep(.v-field--focused .v-field__outline) {
-		color: rgb(var(--v-theme-borderAccentPrimary)) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 		opacity: 1 !important;
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 		opacity: 1;
 	}

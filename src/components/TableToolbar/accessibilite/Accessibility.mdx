@@ -1,12 +1,86 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../TableToolbar.stories.ts';
+import { Meta, Story } from '@storybook/blocks';
+import * as Stories from '../TableToolbar.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+    AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+    componentName="TableToolbar"
+    iconSrc={AccessibilityIcon}
+>
+    <AuditSection>
+        <div>Rapport d’audit manuel :{' '}<a href="/audits/TableToolbar.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a></div>
+        <div style={{color: 'grey', fontSize: '14px', marginTop: '0px'}}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/925" target="_blank" style={{color: '#0C41BD'}}>issue #925</a>)</div>
+    </AuditSection>
 
-<br />
+    <CriteriaSection>
+        <CriteriaCard icon="🏷️" title="Structure et rôles">
+            <ul>
+                <li>Le conteneur est un <code>VToolbar</code> servant de barre d’outils et non de navigation principale.</li>
+                <li>Le champ de recherche est un <code>VTextField</code> avec label explicite via <code>searchLabel</code>.</li>
+                <li>Le bouton d’ajout est un <code>VBtn</code> avec icône <code>mdiPlus</code> et texte visible selon le breakpoint.</li>
+                <li>Le compteur (<code>nbTotal / nbFiltered</code>) est rendu sous forme de texte informatif, sans rôle interactif.</li>
+                <li>Les slots <code>filters</code>, <code>search-left</code> et <code>search-right</code> permettent d’injecter des contrôles additionnels sans casser la sémantique.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="⌨️" title="Navigation clavier">
+            <ul>
+                <li>Le champ de recherche est entièrement accessible au clavier (Tab / Shift+Tab).</li>
+                <li>Le bouton d’ajout est activable via Entrée / Espace.</li>
+                <li>Les éléments injectés via slots doivent respecter l’ordre de tabulation naturel du DOM.</li>
+                <li>Le focus reste logique lors du redimensionnement (mobile / desktop).</li>
+                <li>Les éléments désactivés via <code>loading</code> sont correctement inaccessibles au clavier.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🎨" title="Contraste et lisibilité">
+            <ul>
+                <li>Le toolbar adapte son thème (clair/sombre) via <code>v-theme--dark</code>.</li>
+                <li>Le texte du compteur reste lisible avec contraste réduit en mode sombre.</li>
+                <li>Les icônes (loupe, plus) sont décoratives et ne portent pas de sens sans label associé.</li>
+                <li>Le champ de recherche conserve un focus visible cohérent avec le design system.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="📱" title="Responsive et lisibilité mobile">
+            <ul>
+                <li>Sur mobile, le champ de recherche passe en largeur complète (<code>flex-grow</code> ajusté).</li>
+                <li>Le texte du bouton “Ajouter” est masqué sur petit écran pour privilégier l’icône.</li>
+                <li>L’ordre des éléments est conservé pour éviter toute confusion de navigation.</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
+
+    <DemoSection componentName="TableToolbar">
+        <Story of={Stories.Default}/>
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Fournissez un <code>searchLabel</code> explicite pour éviter une recherche non contextualisée.</li>
+            <li>Évitez d’injecter trop d’actions dans le slot <code>search-right</code> pour ne pas surcharger la barre.</li>
+            <li>Activez <code>loading</code> pour bloquer les interactions pendant les requêtes.</li>
+            <li>Gardez le bouton “Ajouter” avec un libellé court et actionnable.</li>
+            <li>Utilisez le slot <code>filters</code> uniquement pour des contrôles secondaires liés au tableau.</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices – Toolbar Pattern</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/focus-visible.html" target="_blank" rel="noopener noreferrer">WCAG – Focus Visible (2.4.7)</a></li>
+            <li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – critères 10.7 (focus), 10.8 (contenus cachés)</a></li>
+        </ul>
+    </ResourcesSection>
+</AccessibilityGuideLayout>
