@@ -29,12 +29,12 @@ export function useSyTextFieldValidation(params: {
 	const defaultRules = computed<SyValidationRule[]>(() =>
 		params.required.value
 			? [{
-				type: 'required',
-				options: {
-					message: `Le champ ${params.label.value || 'ce champ'} est requis.`,
-					fieldIdentifier: params.label.value,
-				},
-			}]
+					type: 'required',
+					options: {
+						message: `Le champ ${params.label.value || 'ce champ'} est requis.`,
+						fieldIdentifier: params.label.value,
+					},
+				}]
 			: [],
 	)
 
