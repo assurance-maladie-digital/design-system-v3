@@ -1,10 +1,23 @@
 import DataList from '../DataList.vue'
+import { mdiAccount, mdiEmail, mdiBriefcase } from '@mdi/js'
 
 const defaultItems = [
-	{ label: 'Nom', value: 'Dupont' },
-	{ label: 'Prénom', value: 'Jean' },
-	{ label: 'Date de naissance', value: '01/01/1980' },
+	{ key: 'Nom', value: 'Dupont' },
+	{ key: 'Prénom', value: 'Jean' },
+	{ key: 'Date de naissance', value: '01/01/1980' },
 ]
+
+const itemsWithIcons = [
+	{ key: 'Nom', value: 'Dupont', icon: 'person' },
+	{ key: 'Email', value: 'jean.dupont@example.com', icon: 'email' },
+	{ key: 'Profession', value: 'Développeur', icon: 'job' },
+]
+
+const iconsMap = {
+	person: mdiAccount,
+	email: mdiEmail,
+	job: mdiBriefcase,
+}
 
 describe('DataList - Visual regression tests', () => {
 	it('displays the data list by default', () => {
@@ -50,5 +63,17 @@ describe('DataList - Visual regression tests', () => {
 
 		cy.get('.v-application').should('be.visible')
 		cy.matchImageSnapshot('data-list-row', cy.get('.v-application'))
+	})
+
+	it('displays the data list with icons', () => {
+		cy.mountWithVuetify(DataList, {
+			props: {
+				items: itemsWithIcons,
+				icons: iconsMap,
+			},
+		})
+
+		cy.get('.v-application').should('be.visible')
+		cy.matchImageSnapshot('data-list-with-icons', cy.get('.v-application'))
 	})
 })

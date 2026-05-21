@@ -1,6 +1,7 @@
 import type { AxiosResponse } from 'axios'
 import DownloadBtn from '../DownloadBtn.vue'
 import { h } from 'vue'
+import { VSheet } from 'vuetify/components'
 
 function fakeFilePromise(): Promise<AxiosResponse<Blob>> {
 	return Promise.resolve({
@@ -26,12 +27,12 @@ describe('DownloadBtn - Visual regression tests', () => {
 
 	it('displays the download button in dark mode', () => {
 		cy.mountWithVuetify(
-			h('div', { style: 'background-color: #121212; padding: 16px; display: inline-block;' }, [
-				h(DownloadBtn, { filePromise: fakeFilePromise, dark: true }),
+			h(VSheet, { color: 'primary', class: 'pa-4', style: 'display: inline-block;' }, () => [
+				h(DownloadBtn, { filePromise: fakeFilePromise, dark: true }, () => 'Télécharger'),
 			]),
 		)
 
-		cy.get('.v-btn').should('be.visible')
-		cy.matchImageSnapshot('download-btn-dark', cy.get('.sy-download-btn').parent())
+		cy.get('.sy-download-btn').should('be.visible')
+		cy.matchImageSnapshot('download-btn-dark', cy.get('.v-sheet'))
 	})
 })
