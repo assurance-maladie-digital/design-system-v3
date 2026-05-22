@@ -5,7 +5,7 @@
 		mdiCloseCircle,
 	} from '@mdi/js'
 	import { computed, ref, watch, nextTick, toRef } from 'vue'
-	import { usePasswordField } from './usePasswordField'
+	import { usePasswordField } from './usePasswordFieldValidation'
 	import { config } from './config'
 	import { locales } from './locales'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'

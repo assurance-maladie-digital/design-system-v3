@@ -79,9 +79,9 @@ export function usePasswordField(params: {
 
 	const validationColor = computed(() => {
 		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return 'rgb(0 0 0 / 100%)'
+		if (hasWarning.value) return 'onWarningVariant'
+		if (hasSuccess.value) return 'onSuccessVariant'
+		return 'rgb(var(--v-theme-onSurface))'
 	})
 
 	return {
