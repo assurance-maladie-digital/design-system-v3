@@ -241,11 +241,12 @@
 	z-index: 1;
 }
 
-/* stylelint-disable-next-line selector-class-pattern */
+/* stylelint-disable selector-class-pattern */
 .text-onWarningVariant.sy-textarea__state-icon,
 .text-onSuccessVariant.sy-textarea__state-icon {
 	opacity: 0.6;
 }
+/* stylelint-enable selector-class-pattern */
 
 .sy-textarea__clear-button {
 	position: absolute;
