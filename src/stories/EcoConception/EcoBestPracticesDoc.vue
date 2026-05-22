@@ -565,7 +565,7 @@
 	}
 
 	.eco-pdf-sidebar {
-		background: #fff;
+		background: #ffffff;
 		border-right: 1px solid #e3e8f2;
 	}
 
@@ -576,7 +576,7 @@
 		border: 0;
 		border-radius: 14px;
 		background: #07479f;
-		color: #fff;
+		color: #ffffff;
 		font-weight: 700;
 		text-align: center;
 		cursor: pointer;
@@ -608,7 +608,7 @@
 		border: 1px solid #c9d8ef;
 		border-radius: 999px;
 		padding: 8px 14px;
-		background: #fff;
+		background: #ffffff;
 		color: #07479f;
 		font-weight: 700;
 		cursor: pointer;
@@ -616,7 +616,7 @@
 
 	.eco-filter--active {
 		background: #07479f;
-		color: #fff;
+		color: #ffffff;
 		border-color: #07479f;
 	}
 
@@ -632,7 +632,7 @@
 	}
 
 	.eco-pdf-column {
-		background: #fff;
+		background: #ffffff;
 		border-radius: 18px;
 		padding: 18px;
 		box-shadow: 0 10px 30px rgb(12 37 86 / 8%);
@@ -642,7 +642,7 @@
 		border-radius: 10px;
 		padding: 10px 14px;
 		margin-bottom: 14px;
-		color: #fff;
+		color: #ffffff;
 		font-weight: 800;
 		text-align: center;
 	}
@@ -660,7 +660,7 @@
 		width: 100%;
 		border: 1px solid #e3e8f2;
 		border-radius: 12px;
-		background: #fff;
+		background: #ffffff;
 		padding: 12px 14px;
 		margin-bottom: 10px;
 		text-align: left;
@@ -728,7 +728,7 @@
 
 	.eco-rule-sheet__title {
 		margin: 0;
-		color: #fff;
+		color: #ffffff;
 		font-size: 26px;
 		font-weight: 800;
 		line-height: 1.25;
@@ -739,7 +739,7 @@
 
 	.eco-rule-sheet__chip {
 		flex-shrink: 0;
-		color: #fff !important;
+		color: #ffffff !important;
 		font-weight: 800;
 	}
 
@@ -794,7 +794,7 @@
 	}
 
 	.eco-table-card {
-		background: #fff;
+		background: #ffffff;
 		border: 1px solid #e3e8f2;
 		border-radius: 16px;
 		padding: 18px;
