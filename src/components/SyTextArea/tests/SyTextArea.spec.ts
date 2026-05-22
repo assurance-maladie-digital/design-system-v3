@@ -365,6 +365,8 @@ describe('SyTextArea', () => {
 	it('validates only on blur when isValidateOnBlur is true', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: true,
@@ -396,6 +398,8 @@ describe('SyTextArea', () => {
 	it('keeps success visual state but hides success text when showSuccessMessages is false', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -429,6 +433,8 @@ describe('SyTextArea', () => {
 	it('applies warning visual state and warning icon when warning rules fail', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -458,6 +464,8 @@ describe('SyTextArea', () => {
 	it('applies error visual state and error icon when validation fails', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				required: true,
@@ -478,6 +486,8 @@ describe('SyTextArea', () => {
 		it('affiche l\'astérisque quand displayAsterisk et required sont true', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Test Label',
 					displayAsterisk: true,
@@ -491,6 +501,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas l\'astérisque quand displayAsterisk est false', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Test Label',
 					displayAsterisk: false,
@@ -505,6 +517,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas l\'astérisque quand required est false', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Test Label',
 					displayAsterisk: true,
@@ -520,6 +534,8 @@ describe('SyTextArea', () => {
 		it('affiche le helpText quand aucun message de validation n\'est présent', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					helpText: 'Texte d\'aide',
@@ -532,6 +548,8 @@ describe('SyTextArea', () => {
 		it('masque le helpText quand des erreurs sont présentes', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					helpText: 'Texte d\'aide',
@@ -552,6 +570,8 @@ describe('SyTextArea', () => {
 		it('masque la zone des messages quand hideDetails est true et qu\'il n\'y a pas de messages', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					hideDetails: true,
@@ -564,6 +584,8 @@ describe('SyTextArea', () => {
 		it('affiche la zone des messages quand hideDetails est true mais qu\'il y a des erreurs', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					hideDetails: true,
@@ -582,6 +604,8 @@ describe('SyTextArea', () => {
 		it('affiche la zone des messages par défaut (hideDetails vaut false)', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 				},
@@ -595,6 +619,8 @@ describe('SyTextArea', () => {
 		it('affiche le bouton de suppression quand clearable est true et qu\'une valeur est saisie', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'contenu',
 					label: 'Description',
 					clearable: true,
@@ -610,6 +636,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas le bouton de suppression quand clearable est false', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'contenu',
 					label: 'Description',
 					clearable: false,
@@ -625,6 +653,8 @@ describe('SyTextArea', () => {
 		it('vide le champ au clic sur le bouton de suppression', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'contenu',
 					label: 'Description',
 					clearable: true,
@@ -648,6 +678,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas d\'erreur pour un champ requis sans valeur quand disableErrorHandling est true', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					required: true,
@@ -667,6 +699,8 @@ describe('SyTextArea', () => {
 		it('affiche les erreurs normalement quand disableErrorHandling est false', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					required: true,
@@ -686,6 +720,8 @@ describe('SyTextArea', () => {
 		it('validateOnSubmit retourne true quand le champ est valide', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'valeur',
 					label: 'Description',
 					required: true,
@@ -702,6 +738,8 @@ describe('SyTextArea', () => {
 		it('validateOnSubmit retourne false quand le champ est invalide', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					isValidateOnBlur: false,
@@ -732,6 +770,8 @@ describe('SyTextArea', () => {
 		it('validateOnSubmit retourne false quand un champ requis est vide', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					required: true,
@@ -749,6 +789,8 @@ describe('SyTextArea', () => {
 		it('clearValidation remet l\'état d\'erreur à zéro', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					isValidateOnBlur: false,
