@@ -388,7 +388,7 @@ describe('SyTextArea', () => {
 		expect((wrapper.vm as any).hasSuccess).toBe(true)
 		expect(wrapper.find('.success-field').exists()).toBe(true)
 		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
-		expect(wrapper.findComponent(SyIcon).props('color')).toBe('success')
+		expect(wrapper.findComponent(SyIcon).props('color')).toBe('onSuccessVariant')
 		expect(wrapper.text()).not.toContain('Succès masqué')
 	})
 
@@ -418,7 +418,7 @@ describe('SyTextArea', () => {
 
 		expect(wrapper.find('.warning-field').exists()).toBe(true)
 		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
-		expect(wrapper.findComponent(SyIcon).props('color')).toBe('warning')
+		expect(wrapper.findComponent(SyIcon).props('color')).toBe('onWarningVariant')
 	})
 
 	it('applies error visual state and error icon when validation fails', async () => {

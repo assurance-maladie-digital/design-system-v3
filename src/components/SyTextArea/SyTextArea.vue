@@ -136,9 +136,9 @@
 
 	const validationIconColor = computed(() => {
 		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return 'rgb(var(--v-theme-iconBase))'
+		if (hasWarning.value) return 'onWarningVariant'
+		if (hasSuccess.value) return 'onSuccessVariant'
+		return 'rgb(var(--v-theme-onSurface))'
 	})
 
 	const showClear = computed(() =>
@@ -241,6 +241,12 @@
 	z-index: 1;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
+.text-onWarningVariant.sy-textarea__state-icon,
+.text-onSuccessVariant.sy-textarea__state-icon {
+	opacity: 0.6;
+}
+
 .sy-textarea__clear-button {
 	position: absolute;
 	top: 12px;
@@ -283,7 +289,7 @@
 
 .success-field {
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-success)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
@@ -291,11 +297,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 
 	:deep(.v-messages) {
@@ -303,17 +309,13 @@
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
-	}
-
-	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-iconSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 }
 
 .warning-field {
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
@@ -321,11 +323,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	:deep(.v-messages) {
@@ -333,11 +335,7 @@
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
-	}
-
-	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-iconWarning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 }
 </style>
