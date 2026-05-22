@@ -236,8 +236,8 @@ devDependencies:
     specifier: ^3.5.18
     version: 3.5.34(typescript@5.9.3)
   vue-component-type-helpers:
-    specifier: 2.2.0
-    version: 2.2.0
+    specifier: 2.2.12
+    version: 2.2.12
   vue-router:
     specifier: ^4.4.5
     version: 4.6.4(vue@3.5.34)
@@ -8400,10 +8400,6 @@ packages:
       path-browserify: 1.0.1
       typescript: 5.9.3
       vue-component-type-helpers: 2.2.12
-    dev: true
-
-  /vue-component-type-helpers@2.2.0:
-    resolution: {integrity: sha512-cYrAnv2me7bPDcg9kIcGwjJiSB6Qyi08+jLDo9yuvoFQjzHiPTzML7RnkJB1+3P6KMsX/KbCD4QE3Tv/knEllw==}
     dev: true
 
   /vue-component-type-helpers@2.2.12:
