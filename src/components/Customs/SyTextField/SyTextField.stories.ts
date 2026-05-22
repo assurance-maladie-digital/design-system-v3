@@ -22,6 +22,9 @@ const meta = {
 				component: `SyTextField`,
 			},
 		},
+		controls: {
+			exclude: /^on*/,
+		},
 	},
 	argTypes: {
 		...getValidationDocumentation('string'),

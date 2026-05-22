@@ -880,11 +880,11 @@ function reset() {
 					:success-messages="successMessages"
 					width="400px"
 				/>
-				<div class="mt-4 d-flex flex-wrap ga-2">
+				<div class="mt-4 d-flex flex-wrap ga-2 pa-2">
 					<VBtn color="error" variant="outlined" @click="setError">Simuler une erreur</VBtn>
 					<VBtn color="warning" variant="outlined" @click="setWarning">Simuler un avertissement</VBtn>
 					<VBtn color="success" variant="outlined" @click="setSuccess">Simuler un succès</VBtn>
-					<VBtn variant="outlined" @click="reset">Réinitialiser</VBtn>
+					<VBtn color="black" variant="outlined" @click="reset">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,
