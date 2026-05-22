@@ -1,8 +1,8 @@
 @mixin tablestyles {
 	.v-table {
-		border: 1px solid rgb(var(--v-theme-borderSubdued));
+		border: 1px solid rgb(var(--v-theme-disabled));
 
-		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-backgroundInfo)) 20%, white);
+		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-infoVariant)) 20%, white);
 
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
@@ -17,13 +17,13 @@
 
 	table thead tr.filters,
 	table thead tr.reset {
-		background-color: rgb(var(--v-theme-backgroundInfoSubdued));
+		background-color: rgb(var(--v-theme-infoVariant));
 	}
 
 	caption,
 	table thead tr.headers,
 	table thead tr.reset {
-		background-color: rgba(var(--v-theme-backgroundInfo), 0.2);
+		background-color: rgba(var(--v-theme-infoVariant), 0.2);
 	}
 
 	&.fixed-min-height {
