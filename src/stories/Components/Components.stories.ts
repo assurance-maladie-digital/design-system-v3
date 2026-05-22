@@ -494,6 +494,7 @@ export const ComponentsList: StoryObj = {
 					'SelectBtnField',
 					'BackToTopBtn',
 					'TableToolbar',
+					'PhoneField',
 					'PaginatedTable',
 					'SyTable',
 					'SyServerTable',
