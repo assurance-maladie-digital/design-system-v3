@@ -207,7 +207,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SyTextArea',
 						description: 'Utilisé pour la collecte de grandes quantités de données textuelles.',
 						link: '/?path=/docs/composants-formulaires-sytextarea--docs',
-						img: '/components/sy-text-area.svg',
+						img: `/components/sy-text-area${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
