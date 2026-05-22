@@ -23,6 +23,8 @@
 		clearable: false,
 		bgColor: 'white',
 		autocompleteType: 'current-password',
+		helpText: undefined,
+		hideDetails: false,
 		...validationPropsDefaults,
 	})
 
@@ -167,6 +169,8 @@
 		:aria-describedby="`${passwordFieldId}-status${props.customRules && props.customRules.length > 0 ? ' ' + passwordFieldId + '-guidelines' : ''}`"
 		:display-asterisk="props.displayAsterisk"
 		:autocomplete="props.autocompleteType"
+		:help-text="props.helpText"
+		:hide-details="props.hideDetails"
 		class="vd-password"
 		@focus="focused = true"
 		@blur="focused = false"

@@ -12,4 +12,6 @@ export interface PasswordFieldProps extends CustomizableOptions, FieldValidation
 	displayAsterisk?: boolean
 	bgColor?: string
 	autocompleteType?: 'current-password' | 'new-password'
+	helpText?: string
+	hideDetails?: boolean
 }

@@ -868,7 +868,7 @@ function reset() {
 	}),
 }
 
-export const VFormValidation: Story = {
+export const VFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {

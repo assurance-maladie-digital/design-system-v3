@@ -307,3 +307,80 @@ export const ReadOnly: Story = {
 		modelValue: 'MonMotDePasse123',
 	},
 }
+
+export const HelpText: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:help-text="helpText"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('MonMotDePasse123')
+					const helpText = ref('Votre mot de passe doit contenir au moins 8 caractères.')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		helpText: 'Votre mot de passe doit contenir au moins 8 caractères.',
+		modelValue: 'MonMotDePasse123',
+	},
+}
+
+export const HideDetails: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe"
+						:hide-details="true"
+						required
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		hideDetails: true,
+		required: true,
+		modelValue: '',
+	},
+}
