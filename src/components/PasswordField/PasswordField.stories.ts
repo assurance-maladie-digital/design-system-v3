@@ -55,6 +55,10 @@ const meta = {
 			control: 'color',
 			description: 'Couleur de fond du champ',
 		},
+		'clear': {
+			control: 'boolean',
+			description: 'Affiche un bouton pour vider le champ',
+		},
 		'autocompleteType': {
 			control: 'select',
 			options: ['current-password', 'new-password'],
@@ -83,6 +87,7 @@ const meta = {
 		'customSuccessRules': [],
 		'showSuccessMessages': true,
 		'displayAsterisk': false,
+		'clear': false,
 		'isValidateOnBlur': true,
 		'bgColor': 'white',
 		'onUpdate:modelValue': fn(),

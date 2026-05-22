@@ -5,6 +5,7 @@
 		mdiAlertCircle,
 		mdiAlert,
 		mdiCheck,
+		mdiClose,
 	} from '@mdi/js'
 	import { ref, computed, watch, nextTick, toRef } from 'vue'
 	import { config } from './config'
@@ -22,6 +23,7 @@
 		color: 'primary',
 		placeholder: undefined,
 		displayAsterisk: false,
+		clearable: false,
 		bgColor: 'white',
 		autocompleteType: 'current-password',
 		...validationPropsDefaults,
@@ -105,6 +107,12 @@
 		return 'rgb(0 0 0 / 100%)'
 	})
 
+	const showClear = computed(() => {
+		if (!props.clearable) return false
+		if (props.disabled || props.readonly) return false
+		return password.value !== null && password.value !== ''
+	})
+
 	// Ne pas revalider automatiquement à chaque changement de valeur.
 	// La validation est gérée explicitement au blur et à la soumission.
 	watch(
@@ -139,6 +147,11 @@
 				alertMessage.value = ''
 			}, 2000)
 		})
+	}
+
+	function clearPassword() {
+		password.value = ''
+		emit('update:modelValue', '')
 	}
 
 	// Reset hook utilisé par SyForm.reset() via useValidatable interne au composable
@@ -204,6 +217,22 @@
 			<div
 				class="d-flex align-center"
 			>
+				<VBtn
+					v-if="showClear"
+					type="button"
+					class="mr-2 password-clear-button"
+					:aria-label="props.label ? locales.clearPassword(props.label) : locales.clearPassword('')"
+					:title="props.label ? locales.clearPassword(props.label) : locales.clearPassword('')"
+					v-bind="options.btn"
+					@click.stop="clearPassword"
+				>
+					<SyIcon
+						:icon="mdiClose"
+						color="rgb(0 0 0 / 70%)"
+						:aria-hidden="true"
+						decorative
+					/>
+				</VBtn>
 				<SyIcon
 					v-if="validationIcon"
 					:icon="validationIcon"

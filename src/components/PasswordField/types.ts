@@ -7,6 +7,7 @@ export interface PasswordFieldProps extends CustomizableOptions, FieldValidation
 	variantStyle?: 'outlined' | 'underlined'
 	color?: ColorType
 	label: string
+	clearable?: boolean
 	placeholder?: string
 	displayAsterisk?: boolean
 	bgColor?: string

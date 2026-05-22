@@ -38,6 +38,33 @@ describe('PasswordField.vue', () => {
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['new-password'])
 	})
 
+	it('shows clear button and clears value when clearable is enabled', async () => {
+		const withoutClearWrapper = mount(PasswordField, {
+			props: {
+				label: 'Password',
+				modelValue: 'initial-password',
+				clearable: false,
+			},
+		})
+		expect(withoutClearWrapper.find('.password-clear-button').exists()).toBe(false)
+
+		const wrapper = mount(PasswordField, {
+			props: {
+				label: 'Password',
+				modelValue: 'initial-password',
+				clearable: true,
+			},
+		})
+
+		const clearButton = wrapper.find('.password-clear-button')
+		expect(clearButton.exists()).toBe(true)
+
+		await clearButton.trigger('click')
+
+		const emitted = wrapper.emitted('update:modelValue')?.at(-1)
+		expect(emitted).toEqual([''])
+	})
+
 	it('validates the password field on blur', async () => {
 		const wrapper = mount(PasswordField, {
 			props: {
