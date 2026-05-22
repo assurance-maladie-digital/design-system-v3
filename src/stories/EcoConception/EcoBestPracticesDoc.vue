@@ -90,12 +90,15 @@
 		})
 	))
 
-	const selectedPractice = computed(() => (
-		filteredPractices.value.find(practice => practice.id === selectedPracticeId.value)
-		?? filteredPractices.value[0]
-		?? currentPillarPractices.value[0]
-		?? practices[0]
-	))
+	const hasNoFilteredPractice = computed(() => filteredPractices.value.length === 0)
+
+	const selectedPractice = computed<PracticeItem | null>(() => {
+		if (hasNoFilteredPractice.value) return null
+
+		return filteredPractices.value.find(practice => practice.id === selectedPracticeId.value)
+			?? filteredPractices.value[0]
+			?? null
+	})
 
 	const uxUiPractices = computed(() => (
 		filteredPractices.value.filter(practice => practice.audience === 'UX / UI')
@@ -104,8 +107,6 @@
 	const technicalPractices = computed(() => (
 		filteredPractices.value.filter(practice => practice.audience !== 'UX / UI')
 	))
-
-	const hasNoFilteredPractice = computed(() => filteredPractices.value.length === 0)
 
 	const selectPillar = (pillarId: string) => {
 		selectedPillarId.value = pillarId
@@ -123,10 +124,7 @@
 
 	watch([selectedAudience, selectedFilter, selectedPillarId], () => {
 		if (!filteredPractices.value.some(practice => practice.id === selectedPracticeId.value)) {
-			selectedPracticeId.value = filteredPractices.value[0]?.id
-				?? currentPillarPractices.value[0]?.id
-				?? practices[0]?.id
-				?? ''
+			selectedPracticeId.value = filteredPractices.value[0]?.id ?? ''
 		}
 	})
 
@@ -259,17 +257,19 @@
 				<div
 					v-if="!hasNoFilteredPractice"
 					class="eco-pdf-columns mb-6"
+					:class="{
+						'eco-pdf-columns--single':
+							(selectedAudience === 'UX / UI' && uxUiPractices.length)
+							|| ((selectedAudience === 'Dev Front' || selectedAudience === 'Back') && technicalPractices.length)
+					}"
 				>
-					<div class="eco-pdf-column eco-pdf-column--ux">
+					<!-- UX/UI -->
+					<div
+						v-if="selectedAudience === 'all' || selectedAudience === 'UX / UI'"
+						class="eco-pdf-column eco-pdf-column--ux"
+					>
 						<div class="eco-pdf-column__header">
 							UX / UI
-						</div>
-
-						<div
-							v-if="uxUiPractices.length === 0"
-							class="eco-empty-column"
-						>
-							Aucune action UX/UI pour ces filtres.
 						</div>
 
 						<button
@@ -280,21 +280,27 @@
 							:class="{ 'eco-pdf-practice--active': selectedPractice?.id === practice.id }"
 							@click="selectPractice(practice)"
 						>
-							<span class="eco-pdf-practice__actions">{{ formatActions(practice) }}</span>
-							<span class="eco-pdf-practice__title">{{ practice.title }}</span>
+							<span class="eco-pdf-practice__actions">
+								{{ formatActions(practice) }}
+							</span>
+
+							<span class="eco-pdf-practice__title">
+								{{ practice.title }}
+							</span>
 						</button>
 					</div>
 
-					<div class="eco-pdf-column eco-pdf-column--front">
+					<!-- DEV FRONT / BACK -->
+					<div
+						v-if="
+							selectedAudience === 'all'
+								|| selectedAudience === 'Dev Front'
+								|| selectedAudience === 'Back'
+						"
+						class="eco-pdf-column eco-pdf-column--front"
+					>
 						<div class="eco-pdf-column__header">
 							Dev Front / Back
-						</div>
-
-						<div
-							v-if="technicalPractices.length === 0"
-							class="eco-empty-column"
-						>
-							Aucune action Dev Front / Back pour ces filtres.
 						</div>
 
 						<button
@@ -305,8 +311,13 @@
 							:class="{ 'eco-pdf-practice--active': selectedPractice?.id === practice.id }"
 							@click="selectPractice(practice)"
 						>
-							<span class="eco-pdf-practice__actions">{{ formatActions(practice) }}</span>
-							<span class="eco-pdf-practice__title">{{ practice.title }}</span>
+							<span class="eco-pdf-practice__actions">
+								{{ formatActions(practice) }}
+							</span>
+
+							<span class="eco-pdf-practice__title">
+								{{ practice.title }}
+							</span>
 						</button>
 					</div>
 				</div>
@@ -435,13 +446,14 @@
 
 						<v-row class="mt-1">
 							<v-col
+								v-if="selectedPractice.control?.length"
 								cols="12"
 								md="6"
 							>
 								<div class="eco-section eco-section--check">
 									<h4>🔎 Moyen de contrôle</h4>
 
-									<ul v-if="selectedPractice.control?.length">
+									<ul>
 										<li
 											v-for="item in selectedPractice.control"
 											:key="item"
@@ -449,24 +461,18 @@
 											{{ item }}
 										</li>
 									</ul>
-
-									<p
-										v-else
-										class="eco-empty-section"
-									>
-										Non précisé pour cette bonne pratique.
-									</p>
 								</div>
 							</v-col>
 
 							<v-col
+								v-if="selectedPractice.impacts?.length"
 								cols="12"
 								md="6"
 							>
 								<div class="eco-section eco-section--impact">
 									<h4>🌍 Impacts attendus</h4>
 
-									<ul v-if="selectedPractice.impacts?.length">
+									<ul>
 										<li
 											v-for="impact in selectedPractice.impacts"
 											:key="impact.label"
@@ -480,13 +486,6 @@
 											</p>
 										</li>
 									</ul>
-
-									<p
-										v-else
-										class="eco-empty-section"
-									>
-										Non précisé pour cette bonne pratique.
-									</p>
 								</div>
 							</v-col>
 						</v-row>
@@ -526,15 +525,6 @@
 							>
 								Essentielle
 							</v-chip>
-
-							<v-chip
-								v-for="sourcePage in selectedPractice.sourcePages"
-								:key="`page-${sourcePage}`"
-								color="info"
-								variant="tonal"
-							>
-								Page {{ sourcePage }}
-							</v-chip>
 						</div>
 					</v-card-text>
 				</v-card>
@@ -569,6 +559,9 @@
 		border-right: 1px solid #e3e8f2;
 	}
 
+	.eco-pdf-columns--single {
+		grid-template-columns: 1fr;
+	}
 	.eco-pdf-pillar {
 		width: calc(100% - 24px);
 		margin: 12px;
