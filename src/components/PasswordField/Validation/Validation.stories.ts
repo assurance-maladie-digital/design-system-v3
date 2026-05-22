@@ -979,13 +979,13 @@ export const SyFormValidation: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-    <SyForm @submit.prevent="handleSubmit">
+    <SyForm @submit="handleSubmit">
         <PasswordField
             ref="fieldRef"
             v-model="password"
             label="Mot de passe"
-            :use-syform-validation="true"
             :custom-rules="customRules"
+			required
         />
         <div class="mt-4">
             <VBtn type="submit" color="primary">Valider</VBtn>
@@ -1079,7 +1079,7 @@ function handleSubmit(e) {
 		},
 		template: `
             <div>
-                <SyForm @submit.prevent="handleSubmit">
+                <SyForm @submit="handleSubmit">
                     <PasswordField
                         v-model="password"
                         v-bind="args"
@@ -1092,6 +1092,9 @@ function handleSubmit(e) {
             </div>
         `,
 	}),
+	args: {
+		required: true,
+	},
 }
 
 export const SyFormVuetifyValidation: Story = {
@@ -1104,7 +1107,6 @@ export const SyFormVuetifyValidation: Story = {
         <PasswordField
             v-model="password"
             label="Mot de passe"
-            :use-syform-validation="true"
             :use-vuetify-validation="true"
             :rules="vuetifyRules"
         />
@@ -1164,7 +1166,6 @@ function handleSubmit(e) {
                     <PasswordField
                         v-model="password"
                         v-bind="args"
-                        :use-syform-validation="true"
                         :use-vuetify-validation="true"
                         :rules="vuetifyRules"
                     />
