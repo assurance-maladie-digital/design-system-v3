@@ -55,7 +55,7 @@ const meta = {
 			control: 'color',
 			description: 'Couleur de fond du champ',
 		},
-		'clear': {
+		'clearable': {
 			control: 'boolean',
 			description: 'Affiche un bouton pour vider le champ',
 		},
@@ -87,7 +87,7 @@ const meta = {
 		'customSuccessRules': [],
 		'showSuccessMessages': true,
 		'displayAsterisk': false,
-		'clear': false,
+		'clearable': false,
 		'isValidateOnBlur': true,
 		'bgColor': 'white',
 		'onUpdate:modelValue': fn(),

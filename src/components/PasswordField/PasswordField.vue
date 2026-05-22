@@ -2,7 +2,7 @@
 	import {
 		mdiEyeOutline,
 		mdiEyeOffOutline,
-		mdiClose,
+		mdiCloseCircle,
 	} from '@mdi/js'
 	import { computed, ref, watch, nextTick, toRef } from 'vue'
 	import { usePasswordField } from './usePasswordField'
@@ -185,7 +185,7 @@
 					@click.stop="clearPassword"
 				>
 					<SyIcon
-						:icon="mdiClose"
+						:icon="mdiCloseCircle"
 						color="rgb(0 0 0 / 70%)"
 						:aria-hidden="true"
 						decorative
@@ -196,7 +196,7 @@
 					:icon="validationIcon"
 					:color="validationColor"
 					decorative
-					class="mr-2"
+					class="mr-1 opacity-60"
 				/>
 				<VBtn
 					type="button"
@@ -322,6 +322,20 @@
 .basic-field {
 	:deep(.v-icon__svg) {
 		fill: rgb(0 0 0 / 70%);
+	}
+}
+
+.password-clear-button {
+	cursor: pointer;
+	padding: 0;
+
+	&:focus-visible {
+		background-color: rgb(0 0 0 / 8%);
+		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
+	}
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-primary)) !important;
 	}
 }
 </style>
