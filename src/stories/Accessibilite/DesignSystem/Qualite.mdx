@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 <Meta title="Accessibilité/Design System/Qualité code" />
 <div className="header">
-  <h1>Avancement de la qualité code Design System</h1>
+  <h1>Qualité code des composants Studio Design</h1>
 </div>
 <div className="quality-grid">
   <div className="quality-card">
@@ -63,9 +63,16 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
 </div>
 
 {(() => {
-  const [searchTerm, setSearchTerm] = useState('');
+const [searchTerm, setSearchTerm] = useState('');
+const [selectedCategory, setSelectedCategory] = useState('Toutes');
 
-  const components = qualityData.results;
+const components = qualityData.results.filter(Boolean);
+const categories = [
+  'Toutes',
+  ...new Set(
+    components.map(item => item.category).filter(Boolean)
+  ),
+];
 
   const compliantCount = components.filter(item => item.isFullyCompliant).length;
   const totalCount = components.length;
@@ -73,10 +80,16 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
     ? ((compliantCount / totalCount) * 100).toFixed(2)
     : '0.00';
 
-  const filteredComponents = components.filter(item =>
-    searchTerm === '' ||
-    item.componentName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+ const filteredComponents = components.filter((item) => {
+  const matchesSearch =
+    searchTerm === ''
+    || item.componentName.toLowerCase().includes(searchTerm.toLowerCase());
+
+  const matchesCategory =
+	selectedCategory === 'Toutes'
+	|| item.category === selectedCategory
+  return matchesSearch && matchesCategory;
+});
 
   const getTagClass = (value) => {
     if (value === true || value === 'Complet' || value === 'Présent') return 'tag-green';
@@ -84,6 +97,7 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
     if (value === 'Partiel' || value === 'À compléter') return 'tag-blue';
     return 'tag-gray';
   };
+
 
   const renderBooleanTag = (value, trueLabel = 'Présent', falseLabel = 'Absent') => (
     <span className={`carbon-tag ${getTagClass(value)}`}>
@@ -94,9 +108,7 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
   return (
     <div className="carbon-a11y-container">
       <div className="header-section">
-        <h2 className="title">
-          Statut de la qualité code par composant
-        </h2>
+    
 {/* 
         <div className="meta-info">
           <strong>Statut :</strong> {compliantCount} / {totalCount} composants conformes ({percentage}%)
@@ -110,21 +122,37 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
         </div> */}
       </div>
 
-      <div className="search-container">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Rechercher un composant..."
-          value={searchTerm}
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
+ <div className="quality-filters">
+  <label className="filter-field">
+    <span>Catégorie</span>
+    <select
+      className="filter-input"
+      value={selectedCategory}
+      onChange={(event) => setSelectedCategory(event.target.value)}
+    >
+      {categories.map(category => (
+        <option key={category} value={category}>
+          {category}
+        </option>
+      ))}
+    </select>
+  </label>
 
-        {searchTerm && (
-          <div className="search-results-count">
-            {filteredComponents.length} résultat{filteredComponents.length > 1 ? 's' : ''} trouvé{filteredComponents.length > 1 ? 's' : ''}
-          </div>
-        )}
-      </div>
+  <label className="filter-field filter-search">
+    <span>Recherche</span>
+    <input
+      type="text"
+      className="filter-input"
+      placeholder="Rechercher un composant..."
+      value={searchTerm}
+      onChange={(event) => setSearchTerm(event.target.value)}
+    />
+  </label>
+
+  <div className="filter-count">
+    {filteredComponents.length} composant{filteredComponents.length > 1 ? 's' : ''}
+  </div>
+</div>
 
       <div className="table-wrapper">
         <table className="carbon-table">
@@ -173,11 +201,22 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
 
                 <td>{renderBooleanTag(item.hasUxUsagePage, 'Présente', 'Absente')}</td>
 
-                <td>
-                  <span className={`carbon-tag ${getTagClass(item.themeModeStatus)}`}>
-                    {item.themeModeStatus}
-                  </span>
-                </td>
+<td>
+  {item.themeModeStatus === 'AmeliPro' ? (
+<a
+  className="theme-link"
+  href={`${window.location.origin}/?path=/docs/composants-${item.category.toLowerCase()}-${item.componentName.toLowerCase()}--docs&globals=theme:ap`}
+  target="_blank"
+  rel="noreferrer"
+>
+  AmeliPro
+</a>
+  ) : (
+    <span className={`carbon-tag ${getTagClass(item.themeModeStatus)}`}>
+      {item.themeModeStatus}
+    </span>
+  )}
+</td>
 
                 <td>
                   <span className={`carbon-tag ${getTagClass(item.themeStatus)}`}>
@@ -219,6 +258,12 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
   transition: box-shadow 0.2s ease;
 }
 
+.theme-link {
+  color: #0c419a;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 .quality-card:hover {
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
@@ -235,6 +280,57 @@ pour les différents univers du Design System. Si existant, un lien vers le comp
   font-size: 0.875rem;
   color: #525252;
   line-height: 1.5;
+}
+
+.quality-filters {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #f8f9fc;
+  border: 1px solid #dbe3f0;
+  border-radius: 8px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 220px;
+}
+
+.filter-search {
+  flex: 1;
+}
+
+.filter-field span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0c419a;
+}
+
+.filter-input {
+  height: 40px;
+  padding: 0 0.75rem;
+  border: 1px solid #b8c4d8;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.875rem;
+}
+
+.filter-input:focus {
+  outline: 2px solid #0c419a;
+  outline-offset: 2px;
+}
+
+.filter-count {
+  padding: 0.6rem 0.9rem;
+  background: #e7ecf5;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  color: #0c419a;
+  white-space: nowrap;
 }
 `}
 </style>

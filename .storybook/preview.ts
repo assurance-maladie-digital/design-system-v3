@@ -244,7 +244,11 @@ const preview: Preview = {
 				: ''
 			const themeModeStatus = context.globals.theme || 'Non défini'
 
-			const playgroundStatus = props.length > 0
+			const hasInteractivePlayground
+	= props.length > 0
+		|| Object.keys(context.argTypes || {}).length > 0
+
+			const playgroundStatus = hasInteractivePlayground
 				? 'Présent'
 				: 'Absent'
 

@@ -54,6 +54,7 @@
     "info:components": "node ./scripts/generate-component-info.mjs",
 =======
     "a11y:status": "node generate-a11y-report.mjs",
+    "quality:status": "node scripts/generate-code-quality-status.js",
     "info:components": "node generate-component-info.mjs",
 >>>>>>> 3e7308f8 (premier jet)
     "test:visual": "cypress run --component --browser electron",
