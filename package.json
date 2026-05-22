@@ -49,6 +49,7 @@
     "docs:update": "node ./scripts/a11y-update.mjs",
     "docs:check": "node ./scripts/docs-check-update.mjs",
     "a11y:status": "node generate-a11y-report.mjs",
+    "quality:status": "node scripts/generate-code-quality-status.js",
     "info:components": "node generate-component-info.mjs",
     "test:visual": "cypress run --component --browser electron",
     "test:visual:open": "cypress open --component --browser electron",
