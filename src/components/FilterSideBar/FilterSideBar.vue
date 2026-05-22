@@ -218,8 +218,9 @@
 							size="large"
 							class="sy-filters-side-bar__apply-btn"
 							variant="elevated"
-							type="submit"
+							type="button"
 							:aria-label="locales.applyAriaLabel"
+							@click.prevent="applyFilters"
 						>
 							{{ locales.apply }}
 						</VBtn>
