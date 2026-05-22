@@ -562,6 +562,7 @@
 	.eco-pdf-columns--single {
 		grid-template-columns: 1fr;
 	}
+
 	.eco-pdf-pillar {
 		width: calc(100% - 24px);
 		margin: 12px;
