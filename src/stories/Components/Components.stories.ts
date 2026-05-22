@@ -494,6 +494,7 @@ export const ComponentsList: StoryObj = {
 					'SelectBtnField',
 					'BackToTopBtn',
 					'TableToolbar',
+					'PhoneField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

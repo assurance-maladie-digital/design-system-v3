@@ -47,8 +47,10 @@ const apComponents = [
 	'composants-feedback-notificationbar',
 	'composants-filtres-filterssidebar',
 	'composants-formulaires-nirfield',
+	'composants-formulaires-phonefield',
 	'composants-formulaires-selects-syautocomplete',
 	'composants-formulaires-selects-syselect',
+	'composants-formulaires-selects-selectbtnfield',
 	'composants-formulaires-sycheckbox',
 	'composants-formulaires-sycheckboxgroup',
 	'composants-formulaires-syradiogroup',
@@ -60,9 +62,8 @@ const apComponents = [
 	'composants-structure-footerbar',
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
+	'composants-tableaux-tabletoolbar',
 	'composants-vue-d-ensemble--docs',
-    'composants-tableaux-tabletoolbar',
-	'composants-formulaires-selects-selectbtnfield',
 ]
 
 // Get stored theme or default to CNAM
