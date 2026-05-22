@@ -26,6 +26,7 @@ describe('DataList - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-data-list').should('be.visible')
+		cy.get('.sy-data-list-item').should('have.length', 3)
 		cy.matchImageSnapshot('data-list-default', cy.get('.sy-data-list'))
 	})
 
@@ -38,6 +39,7 @@ describe('DataList - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-data-list').should('be.visible')
+		cy.get('.sy-data-list-item').should('have.length', 3)
 		cy.matchImageSnapshot('data-list-with-title', cy.get('.sy-data-list'))
 	})
 
@@ -50,6 +52,7 @@ describe('DataList - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-data-list').should('be.visible')
+		cy.get('.v-skeleton-loader').should('be.visible')
 		cy.matchImageSnapshot('data-list-loading', cy.get('.sy-data-list'))
 	})
 
@@ -62,6 +65,7 @@ describe('DataList - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-data-list').should('be.visible')
+		cy.get('.sy-data-list-item').should('have.length', 3)
 		cy.matchImageSnapshot('data-list-row', cy.get('.sy-data-list'))
 	})
 
@@ -74,6 +78,8 @@ describe('DataList - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-data-list').should('be.visible')
+		cy.get('.sy-data-list-item').should('have.length', 3)
+		cy.get('.sy-data-list-item .v-icon').should('have.length', 3)
 		cy.matchImageSnapshot('data-list-with-icons', cy.get('.sy-data-list'))
 	})
 })
