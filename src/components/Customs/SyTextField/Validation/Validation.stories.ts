@@ -891,7 +891,7 @@ function reset() {
 	}),
 }
 
-export const VFormValidation: Story = {
+export const VFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
@@ -1155,6 +1155,72 @@ function handleSubmit(e) {
 					</div>
 				</SyForm>
 			</div>
+		`,
+	}),
+}
+
+export const EmailValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation d'email
+
+Cette story montre un cas d'usage courant : la validation d'une adresse email. Le champ :
+- Est requis
+- Vérifie le format de l'email
+- Affiche un message de succès quand l'email est valide
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyTextField
+	v-model="value"
+	autocomplete="email"
+	label="Email"
+	helpText="Format attendu : nom@domaine.fr"
+	required
+	:customRules="[
+		{
+			type: 'email',
+			options: {
+				message: 'L'email n'est pas valide'
+				successMessage: 'L'email est valide'
+			}
+		}
+	]"
+	showSuccessMessages
+/>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-model="value"
+				v-bind="args"
+				label="Email"
+				helpText="Format attendu : nom@domaine.fr"
+				autocomplete="email"
+				required
+				:customRules="[
+					{
+						type: 'email',
+						options: {
+							message: 'L\\'email n\\'est pas valide',
+							successMessage: 'L\\'email est valide'
+						}
+					}
+				]"
+				showSuccessMessages
+			/>
 		`,
 	}),
 }
