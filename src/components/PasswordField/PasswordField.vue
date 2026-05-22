@@ -2,16 +2,13 @@
 	import {
 		mdiEyeOutline,
 		mdiEyeOffOutline,
-		mdiAlertCircle,
-		mdiAlert,
-		mdiCheck,
 		mdiClose,
 	} from '@mdi/js'
-	import { ref, computed, watch, nextTick, toRef } from 'vue'
+	import { computed, ref, watch, nextTick, toRef } from 'vue'
+	import { usePasswordField } from './usePasswordField'
 	import { config } from './config'
 	import { locales } from './locales'
-	import type { ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -32,17 +29,6 @@
 	const options = useCustomizableOptions(config, props)
 	const emit = defineEmits(['update:modelValue'])
 
-	const eyeIcon = mdiEyeOutline
-	const eyeOffIcon = mdiEyeOffOutline
-	const showEyeIcon = ref(false)
-	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
-	const alertMessage = ref('')
-	// Force re-render of SyTextField when needed (e.g., after reset)
-	const fieldKey = ref(0)
-	const focused = ref(false)
-
-	const btnLabel = locales.showPassword
-
 	const password = ref<string | null>(props.modelValue)
 	watch(
 		() => props.modelValue,
@@ -51,36 +37,87 @@
 		},
 	)
 
-	// Construction des règles de validation
-	const allCustomRules = computed<ValidationRule[]>(() => {
-		const rules: ValidationRule[] = []
+	watch(
+		() => password.value,
+		(newVal) => {
+			emit('update:modelValue', newVal)
+		},
+	)
 
-		if (props.required) {
-			rules.push({
-				type: 'required',
-				options: {
-					message: 'Le mot de passe est requis',
-					fieldIdentifier: props.label || 'password',
-				},
-			})
-		}
+	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
+	const alertMessage = ref('')
+	const fieldKey = ref(0)
+	const focused = ref(false)
+	const btnLabel = locales.showPassword
 
-		return [...rules, ...(props.customRules || [])]
+	const showClear = computed(() => {
+		if (!props.clearable) return false
+		if (props.disabled || props.readonly) return false
+		return password.value !== null && password.value !== ''
 	})
 
-	// Initialisation du composable de validation
-	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = useValidation({
-		modelValue: password,
+	function clearPassword() {
+		password.value = ''
+		emit('update:modelValue', '')
+	}
+
+	const reset = () => {
+		clearValidation()
+		alertMessage.value = ''
+		showEyeIcon.value = false
+
+		password.value = null
+		emit('update:modelValue', null)
+
+		fieldKey.value++
+	}
+
+	const showEyeIcon = ref(false)
+
+	function togglePasswordVisibility() {
+		showEyeIcon.value = !showEyeIcon.value
+		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
+		nextTick(() => {
+			const inputElement = document.getElementById(passwordFieldId.value)
+			const statusId = `${passwordFieldId.value}-status`
+
+			if (inputElement) {
+				const existingDescribedby = inputElement.getAttribute('aria-describedby')
+				const ids = existingDescribedby ? existingDescribedby.split(' ').filter(id => id !== statusId) : []
+				ids.push(statusId)
+				inputElement.setAttribute('aria-describedby', ids.join(' '))
+			}
+
+			setTimeout(() => {
+				alertMessage.value = ''
+			}, 2000)
+		})
+	}
+
+	const {
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+		validationIcon,
+		validationColor,
+		validate,
+		clearValidation,
+	} = usePasswordField({
+		password,
+		focused,
+		required: toRef(props, 'required'),
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
-		required: toRef(props, 'required'),
+		label: toRef(props, 'label'),
 		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
 		showSuccessMessages: toRef(props, 'showSuccessMessages'),
 		disableErrorHandling: toRef(props, 'disableErrorHandling'),
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
-		label: toRef(props, 'label'),
 		rules: toRef(props, 'rules'),
-		customRules: allCustomRules,
+		customRules: toRef(props, 'customRules'),
 		customWarningRules: toRef(props, 'customWarningRules'),
 		customSuccessRules: toRef(props, 'customSuccessRules'),
 		errorMessages: toRef(props, 'errorMessages'),
@@ -90,87 +127,9 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
-		focused,
 	})
-
-	const validationIcon = computed(() => {
-		if (hasError.value) return mdiAlertCircle
-		if (hasWarning.value) return mdiAlert
-		if (hasSuccess.value) return mdiCheck
-		return ''
-	})
-
-	const validationColor = computed(() => {
-		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return 'rgb(0 0 0 / 100%)'
-	})
-
-	const showClear = computed(() => {
-		if (!props.clearable) return false
-		if (props.disabled || props.readonly) return false
-		return password.value !== null && password.value !== ''
-	})
-
-	// Ne pas revalider automatiquement à chaque changement de valeur.
-	// La validation est gérée explicitement au blur et à la soumission.
-	watch(
-		() => password.value,
-		(newVal) => {
-			emit('update:modelValue', newVal)
-		},
-	)
-
-	function togglePasswordVisibility() {
-		showEyeIcon.value = !showEyeIcon.value
-		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
-		nextTick(() => {
-			// Connect input to status message via aria-describedby
-			const inputElement = document.getElementById(passwordFieldId.value)
-			const statusId = `${passwordFieldId.value}-status`
-
-			if (inputElement) {
-				// Get existing describedby IDs
-				const existingDescribedby = inputElement.getAttribute('aria-describedby')
-				const ids = existingDescribedby ? existingDescribedby.split(' ').filter(id => id !== statusId) : []
-
-				// Add our status ID
-				ids.push(statusId)
-
-				// Set the attribute
-				inputElement.setAttribute('aria-describedby', ids.join(' '))
-			}
-
-			// Reset the message after a short delay to avoid repeated announcements
-			setTimeout(() => {
-				alertMessage.value = ''
-			}, 2000)
-		})
-	}
-
-	function clearPassword() {
-		password.value = ''
-		emit('update:modelValue', '')
-	}
-
-	// Reset hook utilisé par SyForm.reset() via useValidatable interne au composable
-	const reset = () => {
-		// Réinitialiser d'abord l'état de validation et d'interaction
-		clearValidation()
-		alertMessage.value = ''
-		showEyeIcon.value = false
-
-		// Réinitialiser le contenu du champ
-		password.value = null
-		emit('update:modelValue', null)
-
-		// Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
-		fieldKey.value++
-	}
 
 	defineExpose({
-		showEyeIcon,
 		errors,
 		warnings,
 		successes,
@@ -252,7 +211,7 @@
 					@keydown.enter.prevent="togglePasswordVisibility"
 				>
 					<SyIcon
-						:icon="showEyeIcon ? eyeIcon : eyeOffIcon"
+						:icon="showEyeIcon ? mdiEyeOutline : mdiEyeOffOutline"
 						color="rgb(0 0 0 / 70%)"
 						:aria-hidden="true"
 						decorative
