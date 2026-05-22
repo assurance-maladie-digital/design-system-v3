@@ -1,9 +1,16 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { VIcon } from 'vuetify/components'
+import { ref } from 'vue'
 
 import SyTextField from '../SyTextField.vue'
-import type { IconType } from '../types'
+import type { IconType, SyTextFieldProps } from '../types'
+import { SyForm } from '@/components'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface SyFormInstance extends Record<string, any> {
+	validate: () => Promise<boolean>
+}
 
 describe('SyTextField', () => {
 	let wrapper: ReturnType<typeof mount<typeof SyTextField>>
@@ -71,28 +78,28 @@ describe('SyTextField', () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'success' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('success')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('success')
 	})
 
 	it('should update icon when validation state changes with warning', async () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'warning' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('warning')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('warning')
 	})
 
 	it('should update icon when validation state changes with error', async () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'error' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('error')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('error')
 	})
 
 	it('should update icon when validation state changes with success', async () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'success' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('success')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('success')
 	})
 
 	it('emits prepend-icon-click event when prepend icon is clicked', async () => {
@@ -181,7 +188,7 @@ describe('SyTextField', () => {
 			props: { customRules: [customRule], label: 'Test Field' },
 		})
 
-		await wrapper.setProps({ modelValue: 'ab' })
+		await wrapper.setProps({ modelValue: 'ab' } as Parameters<typeof wrapper.setProps>[0])
 		await wrapper.find('input').trigger('focus')
 		await wrapper.vm.$nextTick()
 		await wrapper.find('input').trigger('blur')
@@ -364,7 +371,7 @@ describe('SyTextField', () => {
 			},
 		})
 
-		await wrapper.setProps({ modelValue: 'ab' })
+		await wrapper.setProps({ modelValue: 'ab' } as Parameters<typeof wrapper.setProps>[0])
 		await wrapper.vm.$nextTick()
 
 		// settle all pending promises to ensure validation has completed
@@ -377,7 +384,7 @@ describe('SyTextField', () => {
 		expect(messages.text()).toContain('Test error message')
 
 		// Vérifie que l'erreur disparaît quand la valeur devient valide
-		await wrapper.setProps({ modelValue: 'abc' })
+		await wrapper.setProps({ modelValue: 'abc' } as Parameters<typeof wrapper.setProps>[0])
 		await wrapper.vm.$nextTick()
 
 		// the async validation should have updated the error messages, so we wait for the next tick before checking the messages again
@@ -389,5 +396,26 @@ describe('SyTextField', () => {
 		})
 
 		expect(messages.text()).not.toContain('Test error message')
+	})
+
+	it('s\'enregistre auprès d\'un SyForm parent et déclenche la validation à la soumission', async () => {
+		const wrapper = mount({
+			components: { SyForm, SyTextField },
+			template: `
+        <SyForm ref="form">
+          <SyTextField v-model="value" label="Nom" required />
+        </SyForm>
+      `,
+			setup() {
+				return { value: ref('') }
+			},
+		})
+
+		const form = wrapper.getComponent(SyForm)
+		const isValid = await (form.vm as unknown as SyFormInstance).validate()
+		await flushPromises()
+
+		expect(isValid).toBe(false) // champ requis vide
+		expect(wrapper.find('.v-messages__message').exists()).toBe(true)
 	})
 })
