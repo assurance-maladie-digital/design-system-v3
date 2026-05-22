@@ -95,7 +95,7 @@ export function useCustomValidation(
 	)
 
 	watch(focused, (newVal) => {
-		if (!newVal && !disableErrorHandling.value) {
+		if (isValidateOnBlur.value && !newVal && !disableErrorHandling.value) {
 			validate()
 		}
 	})
