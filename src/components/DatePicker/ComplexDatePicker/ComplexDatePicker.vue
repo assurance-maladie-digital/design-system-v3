@@ -1253,40 +1253,40 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textSuccess)) !important;
+		color: rgb(var(--v-theme-success)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-success)) !important;
 	}
 }
 
 .v-messages__message--error {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 }
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: rgb(var(--v-theme-textWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-textWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 	}
 }
 
@@ -1322,7 +1322,8 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: rgb(var(--v-theme-backgroundMain));
+	// background-color: rgb(var(--v-theme-background));
+	background: green !important;
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
@@ -1330,7 +1331,7 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: rgb(var(--v-theme-backgroundAccentContrasted)) !important;
+	background-color: rgb(var(--v-theme-primaryVariant)) !important;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {

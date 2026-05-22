@@ -450,6 +450,271 @@ describe('SyTabs', () => {
 		})
 	})
 
+	// Tests items désactivés avec navigation (branches template lignes 444-504)
+	describe('Items désactivés en mode navigation', () => {
+		it('rend un <button> désactivé pour un item avec to et disabled', () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					items: [
+						{ label: 'Nav 1', value: 'nav1', to: '/path-1' },
+						{ label: 'Désactivé', value: 'nav2', to: '/path-2', disabled: true },
+					],
+				},
+			})
+
+			const buttons = wrapper.findAll('.sy-tabs__button')
+			const disabledBtn = buttons.find(b => b.attributes('disabled') !== undefined)
+			expect(disabledBtn).toBeDefined()
+			expect(disabledBtn!.element.tagName).toBe('BUTTON')
+		})
+
+		it('rend un <button> désactivé pour un item avec href et disabled', () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					items: [
+						{ label: 'Externe', value: 'ext', href: 'https://example.com', disabled: true },
+					],
+				},
+			})
+
+			const btn = wrapper.find('.sy-tabs__button')
+			expect(btn.element.tagName).toBe('BUTTON')
+			expect(btn.attributes('disabled')).toBeDefined()
+			expect(btn.attributes('aria-disabled')).toBe('true')
+		})
+
+		it('rend un <a> pour un item avec href non désactivé', () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					items: [
+						{ label: 'Externe', value: 'ext', href: 'https://example.com' },
+					],
+				},
+			})
+
+			const link = wrapper.find('.sy-tabs__button')
+			expect(link.element.tagName).toBe('A')
+			expect(link.attributes('href')).toBe('https://example.com')
+		})
+
+		it('ne change pas d\'onglet au clic sur un item désactivé (button)', async () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					items: [
+						{ label: 'Tab 1', value: 'tab1', content: 'Contenu 1' },
+						{ label: 'Désactivé', value: 'tab2', content: '', disabled: true },
+					],
+				},
+			})
+
+			const vm = wrapper.vm as unknown as { activeItemIndex: number }
+			expect(vm.activeItemIndex).toBe(0)
+
+			const disabledBtn = wrapper.findAll('.sy-tabs__button')[1]!
+			await disabledBtn.trigger('click')
+
+			expect(vm.activeItemIndex).toBe(0)
+		})
+	})
+
+	// Tests Escape key (setupAccessibilityFeatures)
+	describe('Escape key', () => {
+		it('remet focusedItemIndex à -1 sur Escape quand focus >= 0', async () => {
+			const wrapper = createWrapper()
+			const vm = wrapper.vm as unknown as { focusedItemIndex: number }
+
+			vm.focusedItemIndex = 1
+
+			window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+			await nextTick()
+
+			expect(vm.focusedItemIndex).toBe(-1)
+		})
+
+		it('ne fait rien sur Escape quand focusedItemIndex est -1', async () => {
+			const wrapper = createWrapper()
+			const vm = wrapper.vm as unknown as { focusedItemIndex: number }
+
+			vm.focusedItemIndex = -1
+			window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
+			await nextTick()
+
+			expect(vm.focusedItemIndex).toBe(-1)
+		})
+
+		it('retire l\'écouteur keydown au démontage', () => {
+			const removeSpy = vi.spyOn(window, 'removeEventListener')
+			const wrapper = createWrapper()
+			wrapper.unmount()
+
+			expect(removeSpy).toHaveBeenCalledWith('keydown', expect.any(Function))
+		})
+	})
+
+	// Tests lazy prop
+	describe('Lazy loading', () => {
+		it('ne rend le panneau que quand il devient actif avec lazy=true', async () => {
+			const wrapper = createWrapper({
+				props: {
+					...defaultMountOptions.props,
+					lazy: true,
+				},
+			})
+
+			const secondTab = wrapper.findAll('.sy-tabs__button')[1]!
+			await secondTab.trigger('click')
+			await nextTick()
+
+			expect(wrapper.find('#panel-1').exists()).toBe(true)
+		})
+	})
+
+	// Tests onMounted branches
+	describe('onMounted — branches', () => {
+		it('ne plante pas avec items vides', () => {
+			expect(() => createWrapper({
+				props: { items: [] },
+			})).not.toThrow()
+		})
+
+		it('utilise pathname pour trouver l\'index actif si modelValue est un nombre', async () => {
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/tab2' },
+				writable: true,
+			})
+
+			const items = [
+				{ label: 'Tab 1', value: 'tab1', content: 'C1', to: '/tab1' },
+				{ label: 'Tab 2', value: 'tab2', content: 'C2', to: '/tab2' },
+			]
+			const wrapper = createWrapper({
+				props: { items, modelValue: 0 },
+			})
+			await nextTick()
+
+			const vm = wrapper.vm as unknown as { activeItemIndex: number }
+			expect(vm.activeItemIndex).toBe(1)
+
+			Object.defineProperty(window, 'location', {
+				value: { ...window.location, pathname: '/' },
+				writable: true,
+			})
+		})
+	})
+
+	// Tests find*EnabledTab avec tous désactivés
+	describe('Navigation avec tous les onglets désactivés', () => {
+		it('findNextEnabledTab retourne -1 si tous désactivés', async () => {
+			const allDisabled = [
+				{ label: 'A', value: 'a', content: '', disabled: true },
+				{ label: 'B', value: 'b', content: '', disabled: true },
+			]
+			const wrapper = createWrapper({ props: { items: allDisabled } })
+			const vm = wrapper.vm as unknown as {
+				findNextEnabledTab: (i: number) => number
+			}
+			expect(vm.findNextEnabledTab(0)).toBe(-1)
+		})
+
+		it('findPreviousEnabledTab retourne -1 si tous désactivés', () => {
+			const allDisabled = [
+				{ label: 'A', value: 'a', content: '', disabled: true },
+				{ label: 'B', value: 'b', content: '', disabled: true },
+			]
+			const wrapper = createWrapper({ props: { items: allDisabled } })
+			const vm = wrapper.vm as unknown as {
+				findPreviousEnabledTab: (i: number) => number
+			}
+			expect(vm.findPreviousEnabledTab(0)).toBe(-1)
+		})
+
+		it('findFirstEnabledTab retourne -1 si tous désactivés', () => {
+			const allDisabled = [
+				{ label: 'A', value: 'a', content: '', disabled: true },
+			]
+			const wrapper = createWrapper({ props: { items: allDisabled } })
+			const vm = wrapper.vm as unknown as {
+				findFirstEnabledTab: () => number
+			}
+			expect(vm.findFirstEnabledTab()).toBe(-1)
+		})
+
+		it('findLastEnabledTab retourne -1 si tous désactivés', () => {
+			const allDisabled = [
+				{ label: 'A', value: 'a', content: '', disabled: true },
+			]
+			const wrapper = createWrapper({ props: { items: allDisabled } })
+			const vm = wrapper.vm as unknown as {
+				findLastEnabledTab: () => number
+			}
+			expect(vm.findLastEnabledTab()).toBe(-1)
+		})
+
+		it('handleArrowNavigation ne fait rien si items est vide', () => {
+			const wrapper = createWrapper({ props: { items: [] } })
+			const vm = wrapper.vm as unknown as {
+				handleArrowNavigation: (event: KeyboardEvent, index: number) => void
+			}
+			const event = new KeyboardEvent('keydown', { key: 'ArrowRight' })
+			event.preventDefault = vi.fn()
+			expect(() => vm.handleArrowNavigation(event, 0)).not.toThrow()
+		})
+
+		it('handleArrowNavigation ne fait rien pour une touche non gérée', () => {
+			const wrapper = createWrapper()
+			const vm = wrapper.vm as unknown as {
+				handleArrowNavigation: (event: KeyboardEvent, index: number) => void
+			}
+			const event = new KeyboardEvent('keydown', { key: 'Tab' })
+			expect(() => vm.handleArrowNavigation(event, 0)).not.toThrow()
+			expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		})
+	})
+
+	// Tests watcher modelValue
+	describe('Watcher modelValue', () => {
+		it('ne fait rien si newValue est undefined', async () => {
+			const wrapper = createWrapper({
+				props: { ...defaultMountOptions.props, modelValue: 1 },
+			})
+			const vm = wrapper.vm as unknown as { activeItemIndex: number }
+
+			await wrapper.setProps({ modelValue: undefined })
+			await nextTick()
+
+			expect(vm.activeItemIndex).toBe(1)
+		})
+
+		it('met à jour activeItemIndex via watcher modelValue string', async () => {
+			const wrapper = createWrapper({
+				props: { ...defaultMountOptions.props, modelValue: 'tab1' },
+			})
+			const vm = wrapper.vm as unknown as { activeItemIndex: number }
+
+			await wrapper.setProps({ modelValue: 'tab3' })
+			await nextTick()
+
+			expect(vm.activeItemIndex).toBe(2)
+		})
+
+		it('ne change pas activeItemIndex si modelValue string inconnu', async () => {
+			const wrapper = createWrapper({
+				props: { ...defaultMountOptions.props, modelValue: 'tab1' },
+			})
+			const vm = wrapper.vm as unknown as { activeItemIndex: number }
+			const before = vm.activeItemIndex
+
+			await wrapper.setProps({ modelValue: 'unknown-value' })
+			await nextTick()
+
+			expect(vm.activeItemIndex).toBe(before)
+		})
+	})
+
 	// Tests avec différentes configurations
 	describe('Configurations personnalisées', () => {
 		it('doit permettre de personnaliser les options', () => {

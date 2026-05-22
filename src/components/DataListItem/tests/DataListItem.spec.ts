@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 import DataListItem from '../DataListItem.vue'
 
@@ -59,6 +59,7 @@ describe('DataListItem', () => {
 	})
 
 	it('renders correctly a value as plain HTML', () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 		const wrapper = mount(DataListItem, {
 			props: {
 				label: 'Test',
@@ -66,6 +67,7 @@ describe('DataListItem', () => {
 				renderHtmlValue: true,
 			},
 		})
+		warnSpy.mockRestore()
 
 		const elValue = wrapper.find('.sy-data-list-item-value span')
 

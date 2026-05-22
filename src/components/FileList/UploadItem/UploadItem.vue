@@ -97,7 +97,7 @@
 							v-else-if="state === 'success'"
 							:icon="mdiCheckCircle"
 							:size="cnamContextualTokens.iconSize.default"
-							color="success"
+							color="onSuccessVariant"
 							decorative
 						/>
 
@@ -211,7 +211,7 @@
 	flex-direction: column;
 	gap: var(--v-gap-3);
 	padding-block: var(--v-padding-4);
-	border-bottom: 1px solid rgb(var(--v-theme-borderSubdued));
+	border-bottom: 1px solid rgb(var(--v-theme-disabled));
 
 	&:first-child:last-child {
 		border-bottom: none;
@@ -224,7 +224,7 @@
 
 .file-item__name {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-textBase));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 .file-item__description {
@@ -278,7 +278,7 @@
 
 .file-item__message {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-textSubdued));
+	color: rgb(var(--v-theme-onSurfaceVariant));
 }
 
 .file-item__message-success,
