@@ -15,12 +15,12 @@ interface PasswordFieldVM {
 
 describe('PasswordField.vue', () => {
 	it('renders the password field', () => {
-		const wrapper = mount(PasswordField)
+		const wrapper = mount(PasswordField, { props: { label: 'Password' } })
 		expect(wrapper.exists()).toBe(true)
 	})
 
 	it('toggles password visibility', async () => {
-		const wrapper = mount(PasswordField)
+		const wrapper = mount(PasswordField, { props: { label: 'Password' } })
 		const vm = wrapper.vm as unknown as PasswordFieldVM
 
 		const button = wrapper.find('.password-toggle-button')
@@ -32,7 +32,7 @@ describe('PasswordField.vue', () => {
 	})
 
 	it('emits update:modelValue event on input', async () => {
-		const wrapper = mount(PasswordField)
+		const wrapper = mount(PasswordField, { props: { label: 'Password' } })
 		const input = wrapper.find('input')
 		await input.setValue('new-password')
 		expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['new-password'])

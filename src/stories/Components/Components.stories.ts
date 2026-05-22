@@ -151,7 +151,7 @@ export const ComponentsList: StoryObj = {
 						title: 'BackToTopBtn',
 						description: 'Utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page.',
 						link: '/?path=/docs/composants-boutons-backtotopbtn--docs',
-						img: '/components/back-to-top-btn.svg',
+						img: `/components/back-to-top-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -305,7 +305,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SelectBtnField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.',
 						link: '/?path=/docs/composants-formulaires-selectbtnfield--docs',
-						img: '/components/select-btn-field.svg',
+						img: `/components/select-btn-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -340,7 +340,7 @@ export const ComponentsList: StoryObj = {
 						title: 'TableToolbar',
 						description: 'Utilisé pour afficher une barre d\'outils pour les tableaux.',
 						link: '/?path=/docs/composants-tableaux-tabletoolbar--docs',
-						img: '/components/table-toolbar.svg',
+						img: `/components/table-toolbar${isAp ? '-ap' : ''}.svg`,
 						category: 'Tableaux',
 					},
 					{
@@ -491,6 +491,9 @@ export const ComponentsList: StoryObj = {
 					'Accordion',
 					'ChipList',
 					'SyTabs',
+					'SelectBtnField',
+					'BackToTopBtn',
+					'TableToolbar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

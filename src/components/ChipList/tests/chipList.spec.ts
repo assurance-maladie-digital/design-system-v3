@@ -80,10 +80,10 @@ describe('ChipList', () => {
 		expect(chips[3]?.classes()).toContain('sy-chip-error')
 
 		// Vérifie les couleurs de fond via les classes
-		expect(chips[0]?.classes()).toContain('bg-backgroundSuccessSubdued')
-		expect(chips[1]?.classes()).toContain('bg-backgroundInfoSubdued')
-		expect(chips[2]?.classes()).toContain('bg-backgroundWarningSubdued')
-		expect(chips[3]?.classes()).toContain('bg-backgroundErrorSubdued')
+		expect(chips[0]?.classes()).toContain('bg-successVariant')
+		expect(chips[1]?.classes()).toContain('bg-infoVariant')
+		expect(chips[2]?.classes()).toContain('bg-warningVariant')
+		expect(chips[3]?.classes()).toContain('bg-errorVariant')
 		expect(chips[4]?.classes()).toContain('bg-primary') // État par défaut
 	})
 

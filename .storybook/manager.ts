@@ -22,12 +22,13 @@ const ap2026OnlyStories = [
 	'design-tokens-couleurs--interactive-section',
 ]
 const apOnlyStories = [
-	'footerbar--back-office',
-	'footerbar--with-phone-number',
+	'composants-structure-footerbar--back-office',
+	'composants-structure-footerbar--with-phone-number',
 ]
 
 // Components to display in AP theme
 const apComponents = [
+	'composants-boutons-backtotopbtn',
 	'composants-boutons-copybtn',
 	'composants-boutons-downloadbtn',
 	'composants-boutons-syiconbutton',
@@ -60,6 +61,8 @@ const apComponents = [
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
 	'composants-vue-d-ensemble--docs',
+    'composants-tableaux-tabletoolbar',
+	'composants-formulaires-selects-selectbtnfield',
 ]
 
 // Get stored theme or default to CNAM

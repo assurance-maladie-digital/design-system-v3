@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs, toRef, type Ref } from 'vue'
+	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
 	import type { VList, VTextField } from 'vuetify/components'
@@ -13,8 +13,8 @@
 	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales } from './locales'
-	import type { ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useSySelectValidation } from './composables/useSySelectValidation'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -121,9 +121,9 @@
 
 	const iconColor = computed(() => {
 		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return 'rgb(var(--v-theme-iconBase))'
+		if (hasWarning.value) return 'onWarningVariant'
+		if (hasSuccess.value) return 'onSuccessVariant'
+		return 'rgb(var(--v-theme-onSurface))'
 	})
 
 	const variant = computed(() => {
@@ -134,43 +134,9 @@
 	const isOpen = ref(false)
 	// Initialize selectedItem with props.modelValue or empty array for multiple mode
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
-	const focused = ref(false)
 	const menuMinWidth = ref<number | null>(null)
 
-	const defaultRules = computed<ValidationRule[]>(() => props.required
-		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
-		: [],
-	)
-
-	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: toRef(props, 'modelValue') as Ref<unknown>,
-		readonly: toRef(props, 'readonly'),
-		disabled: toRef(props, 'disabled'),
-		required: toRef(props, 'required'),
-		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
-		showSuccessMessages: toRef(props, 'showSuccessMessages'),
-		disableErrorHandling: toRef(props, 'disableErrorHandling'),
-		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
-		label: toRef(props, 'label'),
-		rules: toRef(props, 'rules'),
-		customRules: computed(() => [...defaultRules.value, ...(props.customRules ?? [])]),
-		customWarningRules: toRef(props, 'customWarningRules'),
-		customSuccessRules: toRef(props, 'customSuccessRules'),
-		errorMessages: toRef(props, 'errorMessages'),
-		warningMessages: toRef(props, 'warningMessages'),
-		successMessages: toRef(props, 'successMessages'),
-		hasErrorProp: toRef(props, 'hasError'),
-		hasWarningProp: toRef(props, 'hasWarning'),
-		hasSuccessProp: toRef(props, 'hasSuccess'),
-		maxErrors: toRef(props, 'maxErrors'),
-		focused: focused,
-	})
+	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props)
 
 	const labelWidth = ref(0)
 	const labelRef = ref<HTMLElement | null>(null)
@@ -567,14 +533,6 @@
 		return formattedErrorMessages.value || 'Le champ contient une erreur.'
 	})
 
-	const validationIcon = computed(() => {
-		if (props.useVuetifyValidation) return null
-		if (hasError.value) return mdiAlertCircle
-		if (hasWarning.value) return mdiAlertOutline
-		if (hasSuccess.value) return mdiCheck
-		return null
-	})
-
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
 	})
@@ -944,6 +902,14 @@
 			}
 		}
 
+		const onBlur = () => {
+			// Trigger blur validation only when focus truly leaves the component.
+			// Skip if the menu is open — focus is moving to the dropdown list, not exiting.
+			if (!isOpen.value) {
+				validate()
+			}
+		}
+
 		return {
 			...activatorProps,
 			onKeydown: undefined,
@@ -953,7 +919,8 @@
 				textInput.value = el
 				activatorProps.ref?.(el)
 			},
-			onFocus: onFocus,
+			onFocus,
+			onBlur,
 		}
 	}
 </script>
@@ -1270,12 +1237,12 @@
 
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
-		fill: rgb(var(--v-theme-iconBase));
+		fill: rgb(var(--v-theme-onSurface));
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
@@ -1283,30 +1250,30 @@
 
 .warning-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textWarning)) !important;
+		fill: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	:deep(.v-icon.arrow) {
-		color: rgb(var(--v-theme-iconBase)) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-iconBase)) !important;
+		fill: rgb(var(--v-theme-primary)) !important;
 	}
 
 	:deep(.sy-select__clear-icon .v-icon__svg) {
-		fill: rgb(var(--v-theme-iconBase)) !important;
+		fill: rgb(var(--v-theme-primary)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-onWarningVariant)) !important;
 		}
 	}
 
@@ -1314,19 +1281,19 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-onWarningVariant)) !important;
 		}
 	}
 }
 
 .error-field {
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-borderError)) !important;
+			color: rgb(var(--v-theme-error)) !important;
 		}
 	}
 
@@ -1334,45 +1301,45 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderError)) !important;
+			color: rgb(var(--v-theme-error)) !important;
 		}
 	}
 
 	:deep(.v-icon.arrow) {
-		color: rgb(var(--v-theme-iconSubdued)) !important;
+		color: rgb(var(--v-theme-onSurfaceVariant)) !important;
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-iconSubdued)) !important;
+		fill: rgb(var(--v-theme-onSurfaceVariant)) !important;
 	}
 }
 
 .success-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textSuccess)) !important;
+		fill: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 
 	:deep(.v-icon.arrow) {
-		color: rgb(var(--v-theme-iconBase)) !important;
+		color: rgb(var(--v-theme-onSurface)) !important;
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-iconBase)) !important;
+		fill: rgb(var(--v-theme-onSurface)) !important;
 	}
 
 	:deep(.sy-select__clear-icon .v-icon__svg) {
-		fill: rgb(var(--v-theme-iconBase)) !important;
+		fill: rgb(var(--v-theme-onSurface)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 
@@ -1380,14 +1347,14 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 }
 
 .basic-field {
 	:deep(.v-field--focused .v-field__outline) {
-		color: rgb(var(--v-theme-borderAccentPrimary)) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 		opacity: 1 !important;
 	}
 }
@@ -1415,29 +1382,29 @@
 }
 
 .help-text {
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
 .help-text.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+	color: rgba(var(--v-theme-onSurface), var(--v-disabled-opacity));
 }
 
 .help-text-below {
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
 .help-text-below.text-disabled {
-	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+	color: rgba(var(--v-theme-onSurface), var(--v-disabled-opacity));
 }
 
 /* Ensure focus styles match selection styles for keyboard navigation */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
-	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
 }
@@ -1467,7 +1434,7 @@
 }
 
 .sy-select__clear-icon {
-	color: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-onSurface)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
@@ -1512,7 +1479,7 @@
 
 .sy-select :deep(.v-field__input) {
 	opacity: 1;
-	color: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-onSurface)) !important;
 	cursor: pointer;
 	caret-color: transparent;
 	padding-right: 25px;

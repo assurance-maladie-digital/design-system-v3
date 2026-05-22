@@ -137,38 +137,38 @@
 
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {
-		background-color: rgb(var(--v-theme-backgroundInfoContrasted, '12, 65, 154'));
-		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+		background-color: rgb(var(--v-theme-info));
+		color: rgb(var(--v-theme-onPrimary));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+			outline: 2px solid rgb(var(--v-theme-onPrimary));
 		}
 	}
 
 	.notification--success {
-		background-color: rgb(var(--v-theme-backgroundSuccessContrasted, '86, 194, 113'));
-		color: rgb(var(--v-theme-feedbackOnSuccess));
+		background-color: rgb(var(--v-theme-success, '86, 194, 113'));
+		color: rgb(var(--v-theme-onSuccess));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-feedbackOnSuccess));
+			outline: 2px solid rgb(var(--v-theme-onSuccess));
 		}
 	}
 
 	.notification--warning {
-		background-color: rgb(var(--v-theme-backgroundWarningContrasted, '240, 179, 35'));
-		color: rgb(var(--v-theme-textBase, '0, 0, 0'));
+		background-color: rgb(var(--v-theme-warning));
+		color: rgb(var(--v-theme-onWarning));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textBase, '0, 0, 0'));
+			outline: 2px solid rgb(var(--v-theme-onSurface));
 		}
 	}
 
 	.notification--error {
-		background-color: rgb(var(--v-theme-backgroundErrorContrasted, '179, 63, 46'));
-		color: rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+		background-color: rgb(var(--v-theme-error));
+		color: rgb(var(--v-theme-onPrimary));
 
 		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-textOnDark, '255, 255, 255'));
+			outline: 2px solid rgb(var(--v-theme-onPrimary));
 		}
 	}
 

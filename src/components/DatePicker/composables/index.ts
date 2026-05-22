@@ -9,6 +9,7 @@ export { useDateTextField } from './useDateTextField'
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'
 export { useDateValidation } from './useDateValidation'
+export { useDatePickerValidationBridge } from './useDatePickerValidationBridge'
 export { useDateFormatValidation } from './useDateFormatValidation'
 export { useDateRangeValidation } from './useDateRangeValidation'
 export { useManualDateValidation } from './useManualDateValidation'

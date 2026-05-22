@@ -1109,19 +1109,22 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 	}),
 }
 
+// Persistent value for WithTooltips
+const withTooltipsValueMain = ref('')
+
 export const WithTooltips: Story = {
 	args: {
-		modelValue: '',
 		label: 'Champ avec tooltips',
 		prependTooltip: 'Information à gauche du champ',
 		appendTooltip: 'Information à droite du champ',
 		tooltipLocation: 'top',
+		isClearable: true,
+		disableClickButton: true,
 	},
 	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value = ref(args.modelValue)
-			return { args, value }
+			return { args, value: withTooltipsValueMain }
 		},
 		template: `
 			<div>
@@ -1398,20 +1401,9 @@ export const FormValidation: Story = {
 						</ul>
 					</div>
 
-					<button
-						type="submit"
-						style="
-							background-color: #1976d2;
-							color: white;
-							padding: 8px 16px;
-							border: none;
-							border-radius: 4px;
-							cursor: pointer;
-							font-size: 1rem;
-						"
-					>
+				    <VBtn type="submit" color="primary">
 						Soumettre
-					</button>
+					</VBtn>
 				</form>
 			</div>
 		`,
@@ -1479,20 +1471,9 @@ export const FormValidation: Story = {
 						</ul>
 					</div>
 
-					<button
-						type="submit"
-						style="
-							background-color: #1976d2;
-							color: white;
-							padding: 8px 16px;
-							border: none;
-							border-radius: 4px;
-							cursor: pointer;
-							font-size: 1rem;
-						"
-					>
+		    <VBtn type="submit" color="primary">
 						Soumettre
-					</button>
+					</VBtn>
 				</form>
 			</div>
 	</div>

@@ -27,7 +27,7 @@ exports[`LogoBrandSection > renders correctly 1`] = `
   <svg
     aria-hidden="true"
     class="vd-divider"
-    fill="#0c419a"
+    fill="#0C419A"
     focusable="false"
     viewBox="0 0 22 64"
     width="22"
