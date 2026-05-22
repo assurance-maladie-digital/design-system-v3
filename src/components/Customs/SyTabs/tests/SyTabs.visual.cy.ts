@@ -13,7 +13,7 @@ describe('SyTabs - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-tabs').should('be.visible')
-		cy.matchImageSnapshot('sy-tabs-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-tabs-default', cy.get('.sy-tabs'))
 	})
 
 	it('displays the tabs with second tab active', () => {
@@ -25,6 +25,6 @@ describe('SyTabs - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-tabs').should('be.visible')
-		cy.matchImageSnapshot('sy-tabs-second-active', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-tabs-second-active', cy.get('.sy-tabs'))
 	})
 })

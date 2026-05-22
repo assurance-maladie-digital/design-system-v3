@@ -15,8 +15,8 @@ describe('CollapsibleList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('collapsible-list-default', cy.get('.v-application'))
+		cy.get('.vd-collapse-list').should('be.visible')
+		cy.matchImageSnapshot('collapsible-list-default', cy.get('.vd-collapse-list'))
 	})
 
 	it('displays the list without title', () => {
@@ -27,7 +27,7 @@ describe('CollapsibleList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('collapsible-list-no-title', cy.get('.v-application'))
+		cy.get('.vd-collapse-list').should('be.visible')
+		cy.matchImageSnapshot('collapsible-list-no-title', cy.get('.vd-collapse-list'))
 	})
 })

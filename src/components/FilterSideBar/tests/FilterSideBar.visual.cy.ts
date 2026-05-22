@@ -19,8 +19,8 @@ describe('FilterSideBar - Visual regression tests', () => {
 			props: { modelValue: defaultFilters },
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('filter-sidebar-default', cy.get('.v-application'))
+		cy.get('.sy-filters-side-bar').should('be.visible')
+		cy.matchImageSnapshot('filter-sidebar-default', cy.get('.sy-filters-side-bar'))
 	})
 
 	it('displays the sidebar filter in modale mode', () => {
@@ -31,7 +31,7 @@ describe('FilterSideBar - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('filter-sidebar-modale', cy.get('.v-application'))
+		cy.get('.sy-filters-side-bar').should('be.visible')
+		cy.matchImageSnapshot('filter-sidebar-modale', cy.get('.sy-filters-side-bar'))
 	})
 })

@@ -13,7 +13,7 @@ describe('ChipList - Visual regression tests', () => {
 		})
 
 		cy.get('.v-chip').should('be.visible')
-		cy.matchImageSnapshot('chip-list-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('chip-list-default', cy.get('.sy-chip-list'))
 	})
 
 	it('displays chips in readonly mode', () => {
@@ -25,7 +25,7 @@ describe('ChipList - Visual regression tests', () => {
 		})
 
 		cy.get('.v-chip').should('be.visible')
-		cy.matchImageSnapshot('chip-list-readonly', cy.get('.v-application'))
+		cy.matchImageSnapshot('chip-list-readonly', cy.get('.sy-chip-list'))
 	})
 
 	it('displays chips with state icons', () => {
@@ -41,6 +41,6 @@ describe('ChipList - Visual regression tests', () => {
 		})
 
 		cy.get('.v-chip').should('be.visible')
-		cy.matchImageSnapshot('chip-list-state-icons', cy.get('.v-application'))
+		cy.matchImageSnapshot('chip-list-state-icons', cy.get('.sy-chip-list'))
 	})
 })

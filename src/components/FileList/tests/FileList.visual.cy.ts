@@ -12,8 +12,8 @@ describe('FileList - Visual regression tests', () => {
 			props: { uploadList: defaultUploadList },
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('file-list-default', cy.get('.v-application'))
+		cy.get('.upload-list').should('be.visible')
+		cy.matchImageSnapshot('file-list-default', cy.get('.upload-list'))
 	})
 
 	it('displays the file list with delete buttons', () => {
@@ -25,7 +25,7 @@ describe('FileList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('file-list-with-delete', cy.get('.v-application'))
+		cy.get('.upload-list').should('be.visible')
+		cy.matchImageSnapshot('file-list-with-delete', cy.get('.upload-list'))
 	})
 })

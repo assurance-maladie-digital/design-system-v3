@@ -19,7 +19,7 @@ describe('FilterInline - Visual regression tests', () => {
 			props: { modelValue: defaultFilters },
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('filter-inline-default', cy.get('.v-application'))
+		cy.get('.sy-filters-inline').should('be.visible')
+		cy.matchImageSnapshot('filter-inline-default', cy.get('.sy-filters-inline'))
 	})
 })

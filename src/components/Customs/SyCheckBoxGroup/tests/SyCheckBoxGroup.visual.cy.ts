@@ -12,8 +12,8 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 			props: { options: defaultOptions },
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-default', cy.get('.v-application'))
+		cy.get('.sy-checkbox-group').should('be.visible')
+		cy.matchImageSnapshot('sy-checkbox-group-default', cy.get('.sy-checkbox-group'))
 	})
 
 	it('displays the checkbox group with some items selected', () => {
@@ -25,8 +25,8 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-selected', cy.get('.v-application'))
+		cy.get('.sy-checkbox-group').should('be.visible')
+		cy.matchImageSnapshot('sy-checkbox-group-selected', cy.get('.sy-checkbox-group'))
 	})
 
 	it('displays the checkbox group with a label', () => {
@@ -37,8 +37,8 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-with-label', cy.get('.v-application'))
+		cy.get('.sy-checkbox-group').should('be.visible')
+		cy.matchImageSnapshot('sy-checkbox-group-with-label', cy.get('.sy-checkbox-group'))
 	})
 
 	it('displays the checkbox group in disabled state', () => {
@@ -49,7 +49,7 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-checkbox-group-disabled', cy.get('.v-application'))
+		cy.get('.sy-checkbox-group').should('be.visible')
+		cy.matchImageSnapshot('sy-checkbox-group-disabled', cy.get('.sy-checkbox-group'))
 	})
 })

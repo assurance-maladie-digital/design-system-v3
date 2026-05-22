@@ -10,7 +10,7 @@ describe('SyPagination - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-pagination').should('be.visible')
-		cy.matchImageSnapshot('sy-pagination-first-page', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-pagination-first-page', cy.get('.sy-pagination'))
 	})
 
 	it('displays pagination on middle page', () => {
@@ -22,7 +22,7 @@ describe('SyPagination - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-pagination').should('be.visible')
-		cy.matchImageSnapshot('sy-pagination-middle-page', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-pagination-middle-page', cy.get('.sy-pagination'))
 	})
 
 	it('displays pagination with label', () => {
@@ -35,6 +35,6 @@ describe('SyPagination - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-pagination').should('be.visible')
-		cy.matchImageSnapshot('sy-pagination-with-label', cy.get('.v-application'))
+		cy.matchImageSnapshot('sy-pagination-with-label', cy.get('.sy-pagination'))
 	})
 })

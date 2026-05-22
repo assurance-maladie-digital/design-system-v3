@@ -14,8 +14,8 @@ describe('ToolbarContainer - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('toolbar-container-default', cy.get('.v-application'))
+		cy.get('.sy-toolbar').should('be.visible')
+		cy.matchImageSnapshot('toolbar-container-default', cy.get('.sy-toolbar'))
 	})
 
 	it('displays the toolbar container with links', () => {
@@ -28,7 +28,7 @@ describe('ToolbarContainer - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('toolbar-container-links', cy.get('.v-application'))
+		cy.get('.sy-toolbar').should('be.visible')
+		cy.matchImageSnapshot('toolbar-container-links', cy.get('.sy-toolbar'))
 	})
 })

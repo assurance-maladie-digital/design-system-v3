@@ -11,8 +11,8 @@ describe('UserMenuBtn - Visual regression tests', () => {
 			props: { menuItems: defaultMenuItems },
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('user-menu-btn-default', cy.get('.v-application'))
+		cy.get('.user-menu-btn').should('be.visible')
+		cy.matchImageSnapshot('user-menu-btn-default', cy.get('.user-menu-btn'))
 	})
 
 	it('displays the user menu button with full name', () => {
@@ -24,8 +24,8 @@ describe('UserMenuBtn - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('user-menu-btn-with-name', cy.get('.v-application'))
+		cy.get('.user-menu-btn').should('be.visible')
+		cy.matchImageSnapshot('user-menu-btn-with-name', cy.get('.user-menu-btn'))
 	})
 
 	it('displays the user menu button without logout', () => {
@@ -36,7 +36,7 @@ describe('UserMenuBtn - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('user-menu-btn-no-logout', cy.get('.v-application'))
+		cy.get('.user-menu-btn').should('be.visible')
+		cy.matchImageSnapshot('user-menu-btn-no-logout', cy.get('.user-menu-btn'))
 	})
 })

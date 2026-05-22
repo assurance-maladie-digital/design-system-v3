@@ -17,7 +17,7 @@ describe('SearchListField - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-search-list').should('be.visible')
-		cy.matchImageSnapshot('search-list-field-default', cy.get('.v-application'))
+		cy.matchImageSnapshot('search-list-field-default', cy.get('.sy-search-list'))
 	})
 
 	it('displays the search list field with selected items', () => {
@@ -30,6 +30,6 @@ describe('SearchListField - Visual regression tests', () => {
 		})
 
 		cy.get('.sy-search-list').should('be.visible')
-		cy.matchImageSnapshot('search-list-field-with-selection', cy.get('.v-application'))
+		cy.matchImageSnapshot('search-list-field-with-selection', cy.get('.sy-search-list'))
 	})
 })

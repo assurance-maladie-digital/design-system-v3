@@ -14,8 +14,8 @@ describe('SelectBtnField - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-default', cy.get('.v-application'))
+		cy.get('.select-btn-field').should('be.visible')
+		cy.matchImageSnapshot('select-btn-field-default', cy.get('.select-btn-field'))
 	})
 
 	it('displays the button select field with a selected value', () => {
@@ -27,8 +27,8 @@ describe('SelectBtnField - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-selected', cy.get('.v-application'))
+		cy.get('.select-btn-field').should('be.visible')
+		cy.matchImageSnapshot('select-btn-field-selected', cy.get('.select-btn-field'))
 	})
 
 	it('displays the button select field in inline mode', () => {
@@ -40,8 +40,8 @@ describe('SelectBtnField - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-inline', cy.get('.v-application'))
+		cy.get('.select-btn-field').should('be.visible')
+		cy.matchImageSnapshot('select-btn-field-inline', cy.get('.select-btn-field'))
 	})
 
 	it('displays the button select field in readonly mode', () => {
@@ -54,7 +54,7 @@ describe('SelectBtnField - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('select-btn-field-readonly', cy.get('.v-application'))
+		cy.get('.select-btn-field').should('be.visible')
+		cy.matchImageSnapshot('select-btn-field-readonly', cy.get('.select-btn-field'))
 	})
 })

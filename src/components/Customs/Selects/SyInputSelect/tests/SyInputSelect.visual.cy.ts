@@ -15,8 +15,8 @@ describe('SyInputSelect - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-input-select-default', cy.get('.v-application'))
+		cy.get('.sy-input-select').should('be.visible')
+		cy.matchImageSnapshot('sy-input-select-default', cy.get('.sy-input-select'))
 	})
 
 	it('displays the input select with a value', () => {
@@ -28,8 +28,8 @@ describe('SyInputSelect - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-input-select-with-value', cy.get('.v-application'))
+		cy.get('.sy-input-select').should('be.visible')
+		cy.matchImageSnapshot('sy-input-select-with-value', cy.get('.sy-input-select'))
 	})
 
 	it('displays the input select as required', () => {
@@ -42,7 +42,7 @@ describe('SyInputSelect - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('sy-input-select-required', cy.get('.v-application'))
+		cy.get('.sy-input-select').should('be.visible')
+		cy.matchImageSnapshot('sy-input-select-required', cy.get('.sy-input-select'))
 	})
 })

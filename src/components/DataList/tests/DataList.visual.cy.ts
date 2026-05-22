@@ -25,8 +25,8 @@ describe('DataList - Visual regression tests', () => {
 			props: { items: defaultItems },
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-default', cy.get('.v-application'))
+		cy.get('.sy-data-list').should('be.visible')
+		cy.matchImageSnapshot('data-list-default', cy.get('.sy-data-list'))
 	})
 
 	it('displays the data list with a title', () => {
@@ -37,8 +37,8 @@ describe('DataList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-with-title', cy.get('.v-application'))
+		cy.get('.sy-data-list').should('be.visible')
+		cy.matchImageSnapshot('data-list-with-title', cy.get('.sy-data-list'))
 	})
 
 	it('displays the data list in loading state', () => {
@@ -49,8 +49,8 @@ describe('DataList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-loading', cy.get('.v-application'))
+		cy.get('.sy-data-list').should('be.visible')
+		cy.matchImageSnapshot('data-list-loading', cy.get('.sy-data-list'))
 	})
 
 	it('displays the data list in row layout', () => {
@@ -61,8 +61,8 @@ describe('DataList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-row', cy.get('.v-application'))
+		cy.get('.sy-data-list').should('be.visible')
+		cy.matchImageSnapshot('data-list-row', cy.get('.sy-data-list'))
 	})
 
 	it('displays the data list with icons', () => {
@@ -73,7 +73,7 @@ describe('DataList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.v-application').should('be.visible')
-		cy.matchImageSnapshot('data-list-with-icons', cy.get('.v-application'))
+		cy.get('.sy-data-list').should('be.visible')
+		cy.matchImageSnapshot('data-list-with-icons', cy.get('.sy-data-list'))
 	})
 })
