@@ -220,7 +220,6 @@
 							variant="elevated"
 							type="submit"
 							:aria-label="locales.applyAriaLabel"
-							@click.stop="applyFilters"
 						>
 							{{ locales.apply }}
 						</VBtn>
