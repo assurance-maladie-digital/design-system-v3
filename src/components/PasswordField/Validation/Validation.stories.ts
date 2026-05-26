@@ -5,6 +5,8 @@ import PasswordField from '../PasswordField.vue'
 import type { PasswordFieldProps } from '../types'
 import { fn } from '@storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+import { VForm } from 'vuetify/components/VForm'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 type PasswordFieldStoryArgs = PasswordFieldProps & {
 	'onUpdate:modelValue': (...args: unknown[]) => unknown
@@ -21,92 +23,54 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: 'on*' },
 		docs: {
 			description: {
-				component: `Exemples de validation pour le composant PasswordField`,
+				component: `PasswordField est un champ de saisie sécurisé pour les mots de passe`,
 			},
 		},
 	},
 	argTypes: {
-		modelValue: {
+		...getValidationDocumentation('string'),
+		'modelValue': {
 			control: 'text',
 			description: 'Valeur du champ de mot de passe',
 		},
-		variantStyle: {
+		'variantStyle': {
 			control: 'select',
 			options: ['outlined', 'underlined'],
 			description: 'Style du champ (contour ou souligné)',
 		},
-		color: {
+		'color': {
 			control: 'select',
 			options: ['primary', 'secondary', 'error', 'warning', 'success', 'info'],
 			description: 'Couleur principale du champ',
 		},
-		label: {
+		'label': {
 			control: 'text',
 			description: 'Libellé du champ',
 		},
-		required: {
-			control: 'boolean',
-			description: 'Indique si le champ est obligatoire',
-		},
-		errorMessages: {
-			control: 'object',
-			description: 'Messages d\'erreur à afficher',
-		},
-		warningMessages: {
-			control: 'object',
-			description: 'Messages d\'avertissement à afficher',
-		},
-		successMessages: {
-			control: 'object',
-			description: 'Messages de succès à afficher',
-		},
-		readonly: {
-			control: 'boolean',
-			description: 'Indique si le champ est en lecture seule',
-		},
-		disabled: {
-			control: 'boolean',
-			description: 'Indique si le champ est désactivé',
-		},
-		placeholder: {
-			control: 'text',
-			description: 'Texte d\'indication affiché lorsque le champ est vide',
-		},
-		customRules: {
-			control: 'object',
-			description: 'Règles de validation personnalisées',
-		},
-		customWarningRules: {
-			control: 'object',
-			description: 'Règles d\'avertissement personnalisées',
-		},
-		customSuccessRules: {
-			control: 'object',
-			description: 'Règles de succès personnalisées',
-		},
-		showSuccessMessages: {
-			control: 'boolean',
-			description: 'Indique si les messages de succès doivent être affichés',
-		},
-		displayAsterisk: {
+		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque à côté du libellé pour indiquer que le champ est obligatoire',
 		},
-		isValidateOnBlur: {
-			control: 'boolean',
-			description: 'Indique si la validation doit être effectuée lors de la perte de focus',
-		},
-		bgColor: {
+		'bgColor': {
 			control: 'color',
 			description: 'Couleur de fond du champ',
 		},
-		autocompleteType: {
+		'clearable': {
+			control: 'boolean',
+			description: 'Affiche un bouton pour vider le champ',
+		},
+		'autocompleteType': {
 			control: 'select',
 			options: ['current-password', 'new-password'],
 			description: 'Type d\'auto-complétion',
 			default: 'current-password',
+		},
+		'update:modelValue': {
+			action: 'update:modelValue',
+			description: 'Événement émis lors de la mise à jour de la valeur du champ',
 		},
 	},
 	args: {
@@ -890,7 +854,6 @@ Cela permet de réutiliser des règles existantes écrites pour Vuetify sans ada
 				code: `<template>
 	<VForm @submit.prevent="handleSubmit">
 		<PasswordField
-			ref="fieldRef"
 			v-model="password"
 			label="Mot de passe"
 			:use-vuetify-validation="true"
@@ -910,7 +873,6 @@ import { ref } from 'vue'
 import { PasswordField } from '@cnamts/synapse'
 
 const password = ref('')
-const fieldRef = ref()
 
 const rules = [
 	(value: string) => !!value || 'Le mot de passe est requis',
@@ -920,8 +882,8 @@ const rules = [
 	(value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
 ]
 
-async function handleSubmit() {
-	const isValid = await fieldRef.value?.validateOnSubmit()
+async function handleSubmit(e) {
+	const isValid = (await e).valid
 	alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
@@ -929,10 +891,9 @@ async function handleSubmit() {
 		],
 	},
 	render: args => ({
-		components: { PasswordField, VBtn },
+		components: { VForm, PasswordField, VBtn },
 		setup() {
 			const password = ref('')
-			const fieldRef = ref()
 
 			const rules = [
 				(value: string) => !!value || 'Le mot de passe est requis',
@@ -942,12 +903,12 @@ async function handleSubmit() {
 				(value: string) => /[!@#$%^&*(),.?":{}|<>]/.test(value) || 'Au moins un caractère spécial requis',
 			]
 
-			async function handleSubmit() {
-				const isValid = await fieldRef.value?.validateOnSubmit()
+			async function handleSubmit(e) {
+				const isValid = (await e).valid
 				alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, password, fieldRef, rules, handleSubmit }
+			return { args, password, rules, handleSubmit }
 		},
 		template: `
 			<div>
@@ -957,7 +918,7 @@ async function handleSubmit() {
 				</p>
 				<VForm @submit.prevent="handleSubmit">
 					<PasswordField
-						ref="fieldRef"
+						v-bind="args"
 						v-model="password"
 						label="Mot de passe"
 						:use-vuetify-validation="true"
@@ -1176,4 +1137,126 @@ function handleSubmit(e) {
             </div>
         `,
 	}),
+}
+
+export const VFormValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VForm @submit.prevent="handleSubmit">
+		<PasswordField
+			ref="fieldRef"
+			v-model="password"
+			label="Mot de passe"
+			required
+			:custom-rules="customRules"
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Valider</VBtn>
+		</div>
+	</VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { PasswordField } from '@cnamts/synapse'
+
+const password = ref('')
+const fieldRef = ref()
+
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => {
+				return value.length >= 8
+			},
+			message: 'Au moins 8 caractères requis',
+			fieldIdentifier: 'password',
+		},
+	},
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => {
+				return /[A-Z]/.test(value)
+			},
+			message: 'Au moins une lettre majuscule requise',
+			fieldIdentifier: 'password',
+		},
+	},
+]
+
+async function handleSubmit() {
+	const isValid = await fieldRef.value?.validateOnSubmit()
+	alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { PasswordField, VBtn },
+		setup() {
+			const password = ref('')
+			const fieldRef = ref()
+
+			const customRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							return value.length >= 8
+						},
+						message: 'Au moins 8 caractères requis',
+						fieldIdentifier: 'password',
+					},
+				},
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							return /[A-Z]/.test(value)
+						},
+						message: 'Au moins une lettre majuscule requise',
+						fieldIdentifier: 'password',
+					},
+				},
+			]
+
+			async function handleSubmit() {
+				const isValid = await fieldRef.value?.validateOnSubmit()
+				alert(isValid ? 'Mot de passe valide !' : 'Veuillez corriger les erreurs.')
+			}
+
+			return { args, password, fieldRef, customRules, handleSubmit }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					Il est préférable d'utiliser <code>SyForm</code> pour bénéficier de toutes les fonctionnalités de validation, mais voici un exemple d'utilisation avec <code>VForm</code> et la méthode <code>validateOnSubmit()</code> du champ.
+				</p>
+				<VForm @submit.prevent="handleSubmit">
+					<PasswordField
+						v-bind="args"
+						ref="fieldRef"
+						v-model="password"
+						label="Mot de passe"
+						required
+						:custom-rules="customRules"
+					/>
+					<div class="mt-4">
+						<VBtn type="submit" color="primary">Valider</VBtn>
+					</div>
+				</VForm>
+			</div>
+		`,
+	}),
+	args: {
+		modelValue: '',
+	},
 }
