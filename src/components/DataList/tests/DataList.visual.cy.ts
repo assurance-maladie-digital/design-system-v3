@@ -51,9 +51,9 @@ describe('DataList - Visual regression tests', () => {
 			},
 		})
 
-		cy.get('.sy-data-list').should('be.visible')
+		cy.get('.sy-data-list-loading').should('be.visible')
 		cy.get('.v-skeleton-loader').should('be.visible')
-		cy.matchImageSnapshot('data-list-loading', cy.get('.sy-data-list'))
+		cy.matchImageSnapshot('data-list-loading', cy.get('.sy-data-list-loading'))
 	})
 
 	it('displays the data list in row layout', () => {
