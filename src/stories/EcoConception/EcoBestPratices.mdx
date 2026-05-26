@@ -1,0 +1,26 @@
+import { Meta, Story } from '@storybook/addon-docs';
+import * as EcoStories from './ecoconception-best-practices.stories.ts';
+import '../styles/shared.css';
+
+<Meta title="Éco-conception/Bonnes pratiques essentielles" />
+
+<div className="eco-wide-doc">
+  <Story of={EcoStories.BonnesPratiquesEssentielles} />
+</div>
+
+<style>
+{
+  `
+  .eco-wide-doc {
+    width: 70vw;
+    max-width: none;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .eco-wide-doc .sb-story,
+  .eco-wide-doc .docs-story {
+    width: 100%;
+  }
+`}
+</style>

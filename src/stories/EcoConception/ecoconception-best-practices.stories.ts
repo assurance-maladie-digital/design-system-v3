@@ -2,20 +2,11 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import EcoBestPracticesDoc from './EcoBestPracticesDoc.vue'
 
 export default {
-	title: 'Éco-conception/Bonnes pratiques essentielles',
+	title: 'Éco-conception',
 	component: EcoBestPracticesDoc,
-	parameters: {
-		layout: 'fullscreen',
-		docs: {
-			description: {
-				component: 'Documentation Storybook inspirée de la synthèse PDF avec navigation par catégories, filtres, tableaux, moyens de contrôle et impacts.',
-			},
-		},
-	},
-	tags: ['!autodocs'],
-} as Meta<typeof EcoBestPracticesDoc>
+} as Meta
 
-export const BonnesPratiques: StoryObj<typeof EcoBestPracticesDoc> = {
+export const BonnesPratiquesEssentielles: StoryObj = {
 	render: () => ({
 		components: {
 			EcoBestPracticesDoc,
@@ -25,4 +16,5 @@ export const BonnesPratiques: StoryObj<typeof EcoBestPracticesDoc> = {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	tags: ['!dev'],
 }
