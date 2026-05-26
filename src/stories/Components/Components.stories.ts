@@ -204,6 +204,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyTextArea',
+						description: 'Utilisé pour la collecte de grandes quantités de données textuelles.',
+						link: '/?path=/docs/composants-formulaires-sytextarea--docs',
+						img: `/components/sy-text-area${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
 						title: 'SyAutocomplete',
 						description: 'Utilisé pour permettre à l’utilisateur de rechercher et sélectionner une valeur dans une liste d\'options (alternative au v-autocomplete de Vuetify).',
 						link: '/?path=/docs/composants-formulaires-selects-syautocomplete--docs',
@@ -495,6 +502,7 @@ export const ComponentsList: StoryObj = {
 					'BackToTopBtn',
 					'TableToolbar',
 					'PhoneField',
+					'SyTextArea',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
