@@ -881,10 +881,10 @@ function reset() {
 					width="400px"
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2 pa-2">
-					<VBtn color="error" variant="outlined" @click="setError">Simuler une erreur</VBtn>
-					<VBtn color="warning" variant="outlined" @click="setWarning">Simuler un avertissement</VBtn>
-					<VBtn color="success" variant="outlined" @click="setSuccess">Simuler un succès</VBtn>
-					<VBtn color="black" variant="outlined" @click="reset">Réinitialiser</VBtn>
+					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+					<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+					<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+					<VBtn color="black" @click="reset">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,
@@ -1154,6 +1154,74 @@ function handleSubmit(e) {
 						<VBtn type="submit" color="primary">Valider</VBtn>
 					</div>
 				</SyForm>
+			</div>
+		`,
+	}),
+}
+
+export const VFormValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VForm @submit.prevent="handleSubmit">
+		<SyTextField
+			ref="textFieldRef"
+			v-model="value"
+			label="Adresse email"
+			required
+		/>
+		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+	</VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const value = ref('')
+const textFieldRef = ref()
+
+function handleSubmit() {
+	if (textFieldRef.value) {
+		textFieldRef.value.validateOnSubmit()
+	}
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyTextField, VBtn, VForm },
+		setup() {
+			const value = ref('')
+			const textFieldRef = ref()
+
+			function handleSubmit() {
+				if (textFieldRef.value) {
+					textFieldRef.value.validateOnSubmit()
+				}
+			}
+
+			return { args, value, textFieldRef, handleSubmit }
+		},
+		template: `
+			<div>
+				<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de intégration.</p>
+				<VForm @submit.prevent="handleSubmit">
+					<SyTextField
+						ref="textFieldRef"
+						v-model="value"
+						label="Adresse email"
+						required
+						width="400px"
+					/>
+					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+				</VForm>
 			</div>
 		`,
 	}),

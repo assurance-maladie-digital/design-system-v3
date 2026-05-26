@@ -731,6 +731,7 @@ async function onSubmit() {
 			template: `
 				<div class="pa-4">
 					<VForm @submit.prevent="onSubmit">
+						<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de intégration.</p>
 						<SySelect
 							ref="selectRef"
 							v-model="value"
