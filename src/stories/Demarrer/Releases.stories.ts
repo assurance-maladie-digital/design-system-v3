@@ -66,7 +66,8 @@ export const List = {
 				}
 
 				const formatMarkdown = (markdown?: string | null) => {
-					return marked.parse(markdown ?? '')
+					const html = marked.parse(markdown ?? '') as string
+					return html.replace(/<blockquote>[\s\S]*?<\/blockquote>/g, '')
 				}
 
 				const getReleaseAlerts = (release: GitHubRelease) => {
