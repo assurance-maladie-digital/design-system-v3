@@ -851,7 +851,7 @@ const rules = [
 ]
 
 async function handleSubmit(e) {
-	alert(e.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+	alert((await e).valid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
 			},
@@ -870,8 +870,9 @@ async function handleSubmit(e) {
 				(value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'L\'adresse email est invalide',
 			]
 
-			async function handleSubmit(e: { isValid: boolean }) {
-				alert(e.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+			async function handleSubmit(e: Promise<{ valid: boolean }>) {
+				const result = await e
+				alert(result.valid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
 
 			return { args, value, rules, handleSubmit }
