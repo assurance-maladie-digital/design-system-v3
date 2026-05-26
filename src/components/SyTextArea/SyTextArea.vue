@@ -11,6 +11,7 @@
 
 	const props = withDefaults(defineProps<{
 		uniqueId: string
+		counter?: boolean | number | string
 		modelValue?: string
 		trim?: boolean
 		replaceTabs?: number
@@ -31,6 +32,7 @@
 		modelValue: '',
 		trim: false,
 		replaceTabs: undefined,
+		counter: false,
 		maxLines: undefined,
 		autoWrap: undefined,
 		normalize: false,
@@ -54,7 +56,6 @@
 	const hasInteracted = ref(false)
 
 	const internalValue = ref(props.modelValue)
-	const countLength = computed(() => () => internalValue.value.length)
 
 	const { changeActions, blurActions } = useTextActions(textAreaRef, {
 		trim: toRef(props, 'trim'),
@@ -187,7 +188,7 @@
 			:variant="variant"
 			:color="color"
 			:bg-color="props.bgColor"
-			:counter-value="countLength"
+			:counter="props.counter === false ? undefined : props.counter"
 			:error="hasError"
 			:error-messages="errors"
 			:class="{
