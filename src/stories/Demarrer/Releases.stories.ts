@@ -24,7 +24,7 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'tokens-simplification',
 		releaseVersion: 'v1.0.27',
-		message: 'Nous avons procédé à une simplification des tokens, merci de vous référer à la page des',
+		message: 'Nous avons procédé à une simplification des tokens, merci de vous référer à la page des ',
 		type: 'warning',
 		variant: 'tonal',
 		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
