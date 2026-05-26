@@ -1,7 +1,5 @@
 ## v1.0.27 (26-05-2026)
 
-> Nous avons procédé à une simplification des tokens, merci de vous référer à la page des [couleurs](/?path=/docs/design-tokens-couleurs--docs).
-
 <table>
   <thead>
     <tr style="vertical-align: top;">
