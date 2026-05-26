@@ -144,6 +144,8 @@
 		return 'rgb(var(--v-theme-onSurface))'
 	})
 
+	const counter = computed(() => props.counter === false ? undefined : props.counter)
+
 	const showClear = computed(() =>
 		props.clearable && !props.disabled && !props.readonly && !!internalValue.value,
 	)
@@ -188,7 +190,7 @@
 			:variant="variant"
 			:color="color"
 			:bg-color="props.bgColor"
-			:counter="props.counter === false ? undefined : props.counter"
+			:counter="counter"
 			:error="hasError"
 			:error-messages="errors"
 			:class="{

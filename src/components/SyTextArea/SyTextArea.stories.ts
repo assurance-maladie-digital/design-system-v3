@@ -30,11 +30,11 @@ const meta = {
 			},
 		},
 		counter: {
-			control: { type: 'number' },
-			description: 'Défini la valeur du compteur de caractères',
+			control: { type: 'boolean' },
+			description: 'Affiche un compteur de caractères. `true` affiche uniquement le nombre de caractères saisis, un nombre affiche le format `X / N`.',
 			table: {
-				type: { summary: 'number' },
-				defaultValue: { summary: '255' },
+				type: { summary: 'boolean | number' },
+				defaultValue: { summary: 'false' },
 				category: 'props',
 			},
 		},

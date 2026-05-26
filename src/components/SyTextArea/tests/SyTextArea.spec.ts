@@ -19,6 +19,18 @@ describe('SyTextArea', () => {
 		expect(wrapper.text()).toContain('Description des symptomes')
 	})
 
+	it('applique l\'attribut id depuis uniqueId', () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				uniqueId: 'my-textarea-id',
+				modelValue: '',
+				label: 'Description',
+			},
+		})
+
+		expect(wrapper.find('textarea').attributes('id')).toBe('my-textarea-id')
+	})
+
 	it('sets aria-required when required is true', () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
@@ -817,6 +829,52 @@ describe('SyTextArea', () => {
 			instance.clearValidation()
 			await flushPromises()
 			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+		})
+	})
+
+	describe('counter', () => {
+		it('n\'affiche pas le compteur par défaut', () => {
+			const wrapper = mount(SyTextArea, {
+				props: {
+					uniqueId: 'textarea-1',
+					modelValue: 'hello',
+					label: 'Description',
+				},
+			})
+
+			expect(wrapper.find('.v-counter').exists()).toBe(false)
+		})
+
+		it('affiche uniquement le nombre de caractères quand counter est true', async () => {
+			const wrapper = mount(SyTextArea, {
+				props: {
+					uniqueId: 'textarea-1',
+					modelValue: '',
+					label: 'Description',
+					counter: true,
+				},
+			})
+
+			const textarea = wrapper.find('textarea')
+			await textarea.setValue('hello')
+
+			expect(wrapper.find('.v-counter').text()).toBe('5')
+		})
+
+		it('affiche le format X / N quand counter est un nombre', async () => {
+			const wrapper = mount(SyTextArea, {
+				props: {
+					uniqueId: 'textarea-1',
+					modelValue: '',
+					label: 'Description',
+					counter: 255,
+				},
+			})
+
+			const textarea = wrapper.find('textarea')
+			await textarea.setValue('hello')
+
+			expect(wrapper.find('.v-counter').text()).toBe('5 / 255')
 		})
 	})
 
