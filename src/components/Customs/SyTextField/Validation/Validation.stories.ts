@@ -356,7 +356,10 @@ export const WithCustomRules: Story = {
 	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value = ref(args.modelValue ?? '')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 
 			const customRules = [
 				{
@@ -448,6 +451,7 @@ l'affichage des messages de succès lors de la validation. Par défaut, cette pr
 		setup() {
 			const value1 = ref('valeur valide')
 			const value2 = ref('valeur valide')
+
 			return { value1, value2 }
 		},
 		template: `
@@ -540,10 +544,11 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
 					options: {
 						validate: (value: string) => {
 							if (!value || value.trim().length === 0) {
-								return 'Ce champ est requis.'
+								return false
 							}
 							return true
 						},
+						message: 'Ce champ est requis.',
 						fieldIdentifier: 'field',
 					},
 				},
@@ -641,7 +646,10 @@ const value = ref('')
 	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 			return { args, value }
 		},
 		template: `
@@ -741,7 +749,10 @@ function reset() {
 	render: args => ({
 		components: { SyTextField, VBtn },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 			const errorMessages = ref<string[] | null>(null)
 			const warningMessages = ref<string[] | null>(null)
 			const successMessages = ref<string[] | null>(null)
@@ -849,7 +860,10 @@ async function handleSubmit(e) {
 	render: args => ({
 		components: { SyTextField, VBtn, VForm },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 
 			const rules = [
 				(value: string) => !!value || 'Ce champ est requis',
@@ -940,7 +954,10 @@ function handleSubmit(e) {
 	render: args => ({
 		components: { SyTextField, VBtn, SyForm },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 
 			const customRules = [
 				{
@@ -959,7 +976,6 @@ function handleSubmit(e) {
 			]
 
 			function handleSubmit(e: { isValid: boolean }) {
-				console.log(e)
 				const isValid = e.isValid
 				alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
@@ -970,8 +986,8 @@ function handleSubmit(e) {
 			<div>
 				<SyForm @submit="handleSubmit">
 					<SyTextField
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						label="Adresse email"
 						:custom-rules="customRules"
 						width="400px"
@@ -1029,7 +1045,10 @@ function handleSubmit(e) {
 	render: args => ({
 		components: { SyTextField, VBtn, SyForm },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 
 			const vuetifyRules = [
 				(value: string) => !!value || 'Ce champ est requis',
@@ -1047,8 +1066,8 @@ function handleSubmit(e) {
 			<div>
 				<SyForm @submit="handleSubmit">
 					<SyTextField
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						label="Adresse email"
 						:use-vuetify-validation="true"
 						:rules="vuetifyRules"
@@ -1113,7 +1132,10 @@ async function handleSubmit() {
 	render: args => ({
 		components: { SyTextField, VBtn, VForm },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 			const textFieldRef = ref()
 
 			async function handleSubmit() {
@@ -1130,6 +1152,7 @@ async function handleSubmit() {
 				<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de intégration.</p>
 				<VForm @submit.prevent="handleSubmit">
 					<SyTextField
+						v-bind="args"
 						ref="textFieldRef"
 						v-model="value"
 						label="Adresse email"
