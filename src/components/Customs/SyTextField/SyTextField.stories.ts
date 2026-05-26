@@ -343,7 +343,7 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { SyTextField, VIcon },
+			components: { SyTextField },
 			setup() {
 				const value = ref(args.modelValue)
 				watch(() => args.modelValue, (newValue) => {

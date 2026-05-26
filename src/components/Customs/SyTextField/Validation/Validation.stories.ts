@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import { fn } from '@storybook/test'
@@ -122,6 +122,22 @@ export const WithError: Story = {
 			},
 		],
 	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-bind="args"
+				v-model="value"
+			/>
+		`,
+	}),
 }
 
 export const WithWarning: Story = {
@@ -180,6 +196,22 @@ export const WithWarning: Story = {
 			},
 		],
 	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-bind="args"
+				v-model="value"
+			/>
+		`,
+	}),
 }
 
 export const WithSuccess: Story = {
@@ -238,6 +270,22 @@ export const WithSuccess: Story = {
 			},
 		],
 	},
+	render: args => ({
+		components: { SyTextField },
+		setup() {
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			return { args, value }
+		},
+		template: `
+			<SyTextField
+				v-bind="args"
+				v-model="value"
+			/>
+		`,
+	}),
 }
 
 export const WithCustomRules: Story = {
@@ -354,152 +402,6 @@ export const WithCustomRules: Story = {
 				:custom-rules="customRules"
 				width="400px"
 			/>
-		`,
-	}),
-}
-
-export const WithErrorWarningSuccess: Story = {
-	parameters: {
-		a11y: {
-			disable: true,
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SyTextField
-						v-model="value"
-						label="Nom d'utilisateur"
-						required
-						:custom-rules="customRules"
-						:custom-warning-rules="customWarningRules"
-						:custom-success-rules="customSuccessRules"
-						:show-success-messages="true"
-						:is-validate-on-blur="false"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyTextField } from '@cnamts/synapse'
-
-					const value = ref('')
-
-					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (!value || value.length < 3) {
-										return 'Le nom doit contenir au moins 3 caractères.'
-									}
-									return true
-								},
-								fieldIdentifier: 'username',
-							},
-						},
-					]
-
-					const customWarningRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => value.length <= 20,
-								warningMessage: 'Le nom est très long (plus de 20 caractères).',
-								fieldIdentifier: 'username',
-							},
-						},
-					]
-
-					const customSuccessRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => value.length >= 3 && value.length <= 20,
-								successMessage: 'Le nom d\\'utilisateur est valide.',
-								fieldIdentifier: 'username',
-							},
-						},
-					]
-				</script>
-				`,
-			},
-		],
-	},
-	render: args => ({
-		components: { SyTextField },
-		setup() {
-			const value = ref('')
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || value.length < 3) {
-								return 'Le nom doit contenir au moins 3 caractères.'
-							}
-							return true
-						},
-						fieldIdentifier: 'username',
-					},
-				},
-			]
-
-			const customWarningRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => value.length <= 20,
-						warningMessage: 'Le nom est très long (plus de 20 caractères).',
-						fieldIdentifier: 'username',
-					},
-				},
-			]
-
-			const customSuccessRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => value.length >= 3 && value.length <= 20,
-						successMessage: 'Le nom d\'utilisateur est valide.',
-						fieldIdentifier: 'username',
-					},
-				},
-			]
-
-			return { args, value, customRules, customWarningRules, customSuccessRules }
-		},
-		template: `
-			<div>
-				<p class="mb-2">Saisissez un nom d'utilisateur pour voir les différents types de validation :</p>
-				<SyTextField
-					v-bind="args"
-					v-model="value"
-					label="Nom d'utilisateur"
-					required
-					:custom-rules="customRules"
-					:custom-warning-rules="customWarningRules"
-					:custom-success-rules="customSuccessRules"
-					:show-success-messages="true"
-					:is-validate-on-blur="true"
-					width="400px"
-				/>
-				<div class="mt-4">
-					<p><strong>Conseils pour tester :</strong></p>
-					<ul>
-						<li>Laissez le champ vide pour voir l'erreur de champ requis</li>
-						<li>Saisissez 1 ou 2 caractères pour voir l'erreur de longueur minimale</li>
-						<li>Saisissez plus de 20 caractères pour voir l'avertissement</li>
-						<li>Saisissez entre 3 et 20 caractères pour voir le message de succès</li>
-					</ul>
-				</div>
-			</div>
 		`,
 	}),
 }
@@ -1017,10 +919,11 @@ const customRules = [
         options: {
             validate: (value: string) => {
                 if (!value || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)) {
-                    return 'L\\'adresse email est invalide.'
+                    return false
                 }
                 return true
             },
+            message: 'L\\'adresse email est invalide.',
             fieldIdentifier: 'email',
         },
     },
@@ -1045,10 +948,11 @@ function handleSubmit(e) {
 					options: {
 						validate: (value: string) => {
 							if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-								return 'L\'adresse email est invalide.'
+								return false
 							}
 							return true
 						},
+						message: 'L\'adresse email est invalide.',
 						fieldIdentifier: 'email',
 					},
 				},
@@ -1170,6 +1074,16 @@ export const VFormValidation: Story = {
 			ref="textFieldRef"
 			v-model="value"
 			label="Adresse email"
+			:custom-rules="[
+				{
+					type: 'custom',
+					options: {
+						validate: (value) => !!value && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+						message: 'L\\'adresse email est invalide.',
+						fieldIdentifier: 'email',
+					},
+				},
+			]"
 			required
 		/>
 		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
@@ -1186,9 +1100,10 @@ import { VBtn, VForm } from 'vuetify/components'
 const value = ref('')
 const textFieldRef = ref()
 
-function handleSubmit() {
+async function handleSubmit() {
 	if (textFieldRef.value) {
-		textFieldRef.value.validateOnSubmit()
+		const result = await textFieldRef.value.validateOnSubmit()
+		alert(result ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 	}
 }
 </script>`,
@@ -1201,9 +1116,10 @@ function handleSubmit() {
 			const value = ref('')
 			const textFieldRef = ref()
 
-			function handleSubmit() {
+			async function handleSubmit() {
 				if (textFieldRef.value) {
-					textFieldRef.value.validateOnSubmit()
+					const result = await textFieldRef.value.validateOnSubmit()
+					alert(result ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 				}
 			}
 
@@ -1217,6 +1133,16 @@ function handleSubmit() {
 						ref="textFieldRef"
 						v-model="value"
 						label="Adresse email"
+						:custom-rules="[
+							{
+								type: 'custom',
+								options: {
+									validate: (value) => !!value && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+									message: 'L\\'adresse email est invalide.',
+									fieldIdentifier: 'email',
+								},
+							},
+						]"
 						required
 						width="400px"
 					/>
@@ -1267,13 +1193,16 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 			return { args, value }
 		},
 		template: `
 			<SyTextField
-				v-model="value"
 				v-bind="args"
+				v-model="value"
 				label="Email"
 				helpText="Format attendu : nom@domaine.fr"
 				autocomplete="email"
