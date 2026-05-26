@@ -1,3 +1,95 @@
+## v1.0.27 (26-05-2026)
+
+> Nous avons procédé à une simplification des tokens, merci de vous référer à la page des <a href="/?path=/docs/design-tokens-couleurs--docs">couleurs</a>.
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyTextArea: improve validation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2195">#2195</a>
+      </td>
+      <td>- PhoneField: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2197">#2197</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilterSideBar: remove redundant click handler on apply button
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2211">#2211</a>
+      </td>
+      <td>- TableToolbar: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2183">#2183</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: improve documentation (WithTooltip) 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2193">#2193</a>
+      </td>
+      <td>- SelectBtnField: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2171">#2171</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: improve validation 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2174">#2174</a>
+      </td>
+      <td>- BackToTopBtn: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2182">#2182</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Core: improve tokens 
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2164">#2164</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2200">#2200</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Filters: improve period filter
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2191">#2191</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyAutocomplete: improve validation and add prepend item slot
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2169">#2169</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2176">#2176</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DateTextInput: fix autoClamp default value and prevent double model emission on blur
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2189">#2189</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: add hideDefaultFooter prop
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2184">#2184</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyRadioGroup: improve validation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2167">#2167</a>
+      </td>
+      <td></td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyIconButton: add import
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2179">#2179</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+
 ## v1.0.26 (11-05-2026)
 
 <table>

@@ -98,16 +98,20 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 				= typedValue.from !== undefined && typedValue.to !== undefined
 
 			if (isPeriodField) {
-				if (typedValue.from === null || typedValue.to === null) {
+				const hasFrom = typedValue.from !== null
+				const hasTo = typedValue.to !== null
+
+				if (!hasFrom && !hasTo) {
 					return []
 				}
 
-				return [
-					{
-						text: `${typedValue.from} – ${typedValue.to}`,
-						value: typedValue,
-					},
-				]
+				const text = hasFrom && hasTo
+					? `${typedValue.from} – ${typedValue.to}`
+					: hasFrom
+						? `${typedValue.from} –`
+						: `– ${typedValue.to}`
+
+				return [{ text, value: typedValue }]
 			}
 
 			// Handle single select objects (VSelect with return-object but without multiple)

@@ -106,6 +106,7 @@ export type SyTableProps = {
 	pinnedColumnKey?: string
 	clickableRow?: boolean
 	pageInput?: boolean
+	hideDefaultFooter?: boolean
 }
 
 export type SyServerTableProps = {
@@ -134,4 +135,5 @@ export type SyServerTableProps = {
 	pinnedColumnKey?: string
 	clickableRow?: boolean
 	pageInput?: boolean
+	hideDefaultFooter?: boolean
 }

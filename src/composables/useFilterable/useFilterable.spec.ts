@@ -213,6 +213,48 @@ describe('Filterable', () => {
 			expect(filterCount).toBe(0)
 		})
 
+		it('returns a chip when only from is set', () => {
+			const { getChips, getFilterCount } = useFilterable(
+				ref([]),
+				() => {},
+			)
+
+			const filter = {
+				name: 'Test',
+				value: {
+					from: '2024-01-01',
+					to: null,
+				},
+			}
+
+			const chips = getChips(filter)
+			const filterCount = getFilterCount(filter)
+
+			expect(chips).toEqual([{ text: '2024-01-01 –', value: { from: '2024-01-01', to: null } }])
+			expect(filterCount).toBe(1)
+		})
+
+		it('returns a chip when only to is set', () => {
+			const { getChips, getFilterCount } = useFilterable(
+				ref([]),
+				() => {},
+			)
+
+			const filter = {
+				name: 'Test',
+				value: {
+					from: null,
+					to: '2024-12-31',
+				},
+			}
+
+			const chips = getChips(filter)
+			const filterCount = getFilterCount(filter)
+
+			expect(chips).toEqual([{ text: '– 2024-12-31', value: { from: null, to: '2024-12-31' } }])
+			expect(filterCount).toBe(1)
+		})
+
 		it('returns the correct text when the value is an object', () => {
 			const { getChips, getFilterCount } = useFilterable(
 				ref([]),

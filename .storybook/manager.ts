@@ -22,12 +22,13 @@ const ap2026OnlyStories = [
 	'design-tokens-couleurs--interactive-section',
 ]
 const apOnlyStories = [
-	'footerbar--back-office',
-	'footerbar--with-phone-number',
+	'composants-structure-footerbar--back-office',
+	'composants-structure-footerbar--with-phone-number',
 ]
 
 // Components to display in AP theme
 const apComponents = [
+	'composants-boutons-backtotopbtn',
 	'composants-boutons-copybtn',
 	'composants-boutons-downloadbtn',
 	'composants-boutons-syiconbutton',
@@ -46,8 +47,10 @@ const apComponents = [
 	'composants-feedback-notificationbar',
 	'composants-filtres-filterssidebar',
 	'composants-formulaires-nirfield',
+	'composants-formulaires-phonefield',
 	'composants-formulaires-selects-syautocomplete',
 	'composants-formulaires-selects-syselect',
+	'composants-formulaires-selects-selectbtnfield',
 	'composants-formulaires-sycheckbox',
 	'composants-formulaires-sycheckboxgroup',
 	'composants-formulaires-syradiogroup',
@@ -59,6 +62,7 @@ const apComponents = [
 	'composants-structure-footerbar',
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
+	'composants-tableaux-tabletoolbar',
 	'composants-vue-d-ensemble--docs',
 ]
 

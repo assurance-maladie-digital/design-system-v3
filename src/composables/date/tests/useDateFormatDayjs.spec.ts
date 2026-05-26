@@ -96,5 +96,36 @@ describe('useDateFormatDayjs', () => {
 				process.env.TZ = previousTz
 			}
 		})
+
+		it('handles non-string non-Date input by converting to string', () => {
+			// Test avec un nombre qui sera converti en string
+			const result = parseDate(20230115 as unknown as string, 'YYYYMMDD')
+			expect(result).not.toBeNull()
+			expect(result?.getFullYear()).toBe(2023)
+		})
+
+		it('handles undefined input', () => {
+			expect(parseDate(undefined, 'DD/MM/YYYY')).toBeNull()
+		})
+	})
+
+	describe('useDateFormat composable', () => {
+		it('returns parseDate and formatDate functions', async () => {
+			const { useDateFormat } = await import('../useDateFormatDayjs')
+			const hook = useDateFormat()
+			expect(hook.parseDate).toBeDefined()
+			expect(hook.formatDate).toBeDefined()
+			expect(typeof hook.parseDate).toBe('function')
+			expect(typeof hook.formatDate).toBe('function')
+		})
+
+		it('uses returned functions correctly', async () => {
+			const { useDateFormat } = await import('../useDateFormatDayjs')
+			const { parseDate: hookParse, formatDate: hookFormat } = useDateFormat()
+
+			const date = hookParse('15/01/2023', 'DD/MM/YYYY')
+			expect(date).not.toBeNull()
+			expect(hookFormat(date, 'DD/MM/YYYY')).toBe('15/01/2023')
+		})
 	})
 })

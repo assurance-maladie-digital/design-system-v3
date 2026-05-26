@@ -253,7 +253,7 @@
 }
 
 .v-btn--icon {
-	color: rgb(var(--v-theme-iconBase));
+	color: rgb(var(--v-theme-primary));
 	position: absolute;
 	right: 24px;
 }

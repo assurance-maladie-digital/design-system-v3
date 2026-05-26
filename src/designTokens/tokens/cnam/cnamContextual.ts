@@ -16,4 +16,10 @@ export const cnamContextualTokens = {
 		interactiveDisabled: '#fff',
 		interactiveHoverOnSelected: '#CED9EB',
 	},
+	radius: {
+		rounded0: '0',
+		rounded: '4px',
+		roundedLg: '8px',
+		roundedPill: '64px',
+	},
 }

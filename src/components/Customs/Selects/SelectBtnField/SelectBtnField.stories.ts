@@ -418,6 +418,10 @@ export const itemUnique: Story = {
 						aria-labelledby="contact-method"
 					/>
 				</div>
+                <p class="text-caption" style="margin-top: 20px;">
+                  Les items marqués avec <code>unique: true</code> sont exclusifs&nbsp;: lorsqu’ils sont sélectionnés,
+                  tous les autres items sont automatiquement désélectionnés.
+                </p>
             `,
 		}
 	},
