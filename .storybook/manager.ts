@@ -46,6 +46,7 @@ const apComponents = [
 	'composants-feedback-dialogbox',
 	'composants-feedback-notificationbar',
 	'composants-filtres-filterssidebar',
+	'composants-formulaires-datepicker-introduction--docs',
 	'composants-formulaires-nirfield',
 	'composants-formulaires-phonefield',
 	'composants-formulaires-selects-syautocomplete',
