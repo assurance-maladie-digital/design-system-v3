@@ -822,10 +822,10 @@ function reset() {
 					:success-messages="successMessages"
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2">
-					<VBtn color="error" variant="outlined" @click="setError">Simuler une erreur</VBtn>
-					<VBtn color="warning" variant="outlined" @click="setWarning">Simuler un avertissement</VBtn>
-					<VBtn color="success" variant="outlined" @click="setSuccess">Simuler un succès</VBtn>
-					<VBtn variant="outlined" @click="reset">Réinitialiser</VBtn>
+					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+					<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+					<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+					<VBtn @click="reset">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,

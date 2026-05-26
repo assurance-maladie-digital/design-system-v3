@@ -179,10 +179,10 @@
 			<div
 				class="d-flex align-center"
 			>
-				<VBtn
+				<button
 					v-if="showClear"
 					type="button"
-					class="mr-2 password-clear-button"
+					class="mr-1 password-clear-button"
 					:aria-label="props.label ? locales.clearPassword(props.label) : locales.clearPassword('')"
 					:title="props.label ? locales.clearPassword(props.label) : locales.clearPassword('')"
 					v-bind="options.btn"
@@ -190,17 +190,19 @@
 				>
 					<SyIcon
 						:icon="mdiCloseCircle"
-						color="rgb(0 0 0 / 70%)"
 						:aria-hidden="true"
 						decorative
 					/>
-				</VBtn>
+				</button>
 				<SyIcon
 					v-if="validationIcon"
 					:icon="validationIcon"
 					:color="validationColor"
 					decorative
-					class="mr-1 opacity-60"
+					class="mr-1"
+					:class="{
+						'opacity-60': !hasError,
+					}"
 				/>
 				<VBtn
 					type="button"
@@ -339,7 +341,9 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-primary)) !important;
+		fill: rgb(var(--v-theme-onSurface)) !important;
+		opacity: var(--v-medium-emphasis-opacity) !important;
 	}
 }
+
 </style>
