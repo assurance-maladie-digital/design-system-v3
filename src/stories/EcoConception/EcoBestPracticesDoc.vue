@@ -554,37 +554,36 @@
 </template>
 
 <style scoped>
-	.eco-pdf-doc {
-		width: 100%;
+.eco-pdf-doc {
+	width: 100%;
 	min-height: auto;
-		background: #f5f7fb;
-	}
+	background: #f5f7fb;
+}
 
-	.eco-pdf-hero {
-		background: #07479f;
-		padding: 28px 32px;
-		text-align: center;
-	}
+.eco-pdf-hero {
+	background: #07479f;
+	padding: 28px 32px;
+	text-align: center;
+}
 
-	.eco-pdf-layout {
+.eco-pdf-layout {
 	height: auto;
 	min-height: auto;
 }
 
-	.eco-pdf-main {
-		min-width: 0;
-		padding-bottom: 0 !important;
+.eco-pdf-main {
+	min-width: 0;
+	padding-bottom: 0 !important;
+}
 
-	}
+.eco-pdf-sidebar {
+	background: #fff;
+	border-right: 1px solid #e3e8f2;
+}
 
-	.eco-pdf-sidebar {
-		background: #fff;
-		border-right: 1px solid #e3e8f2;
-	}
-
-	.eco-pdf-columns--single {
-		grid-template-columns: 1fr;
-	}
+.eco-pdf-columns--single {
+	grid-template-columns: 1fr;
+}
 
 .eco-pdf-pillar {
 	position: relative;
@@ -599,7 +598,6 @@
 	font-weight: 700;
 	text-align: center;
 	cursor: pointer;
-
 	transition:
 		background 0.2s ease,
 		transform 0.2s ease,
@@ -615,284 +613,283 @@
 .eco-pdf-pillar--active {
 	background: #fff !important;
 	color: #07479f !important;
-
 	border: 2px solid #07479f;
-
-	box-shadow:
-		0 8px 20px rgb(7 71 159 / 15%);
+	box-shadow: 0 8px 20px rgb(7 71 159 / 15%);
 }
+
 .eco-pdf-pillar__icon {
 	display: block;
 	font-size: 28px;
 	line-height: 1;
 	margin-bottom: 8px;
 }
-	.eco-filters {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		margin-bottom: 18px;
-	}
 
-	.eco-filter {
-		border: 1px solid #c9d8ef;
-		border-radius: 999px;
-		padding: 8px 14px;
-		background: #fff;
-		color: #07479f;
-		font-weight: 700;
-		cursor: pointer;
-	}
+.eco-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 18px;
+}
 
-	.eco-filter--active {
-		background: #07479f;
-		color: #fff;
-		border-color: #07479f;
-	}
+.eco-filter {
+	border: 1px solid #c9d8ef;
+	border-radius: 999px;
+	padding: 8px 14px;
+	background: #fff;
+	color: #07479f;
+	font-weight: 700;
+	cursor: pointer;
+}
 
-	.eco-filter--reset {
-		border-color: #f5b827;
-		color: #14315f;
-	}
+.eco-filter--active {
+	background: #07479f;
+	color: #fff;
+	border-color: #07479f;
+}
 
+.eco-filter--reset {
+	border-color: #f5b827;
+	color: #14315f;
+}
+
+.eco-pdf-columns {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 18px;
+}
+
+.eco-pdf-column {
+	background: #fff;
+	border-radius: 18px;
+	padding: 18px;
+	box-shadow: 0 10px 30px rgb(12 37 86 / 80%);
+}
+
+.eco-pdf-column__header {
+	border-radius: 10px;
+	padding: 10px 14px;
+	margin-bottom: 14px;
+	color: #fff;
+	font-weight: 800;
+	text-align: center;
+}
+
+.eco-pdf-column--ux .eco-pdf-column__header {
+	background: #e86bb5;
+}
+
+.eco-pdf-column--front .eco-pdf-column__header {
+	background: #f5b827;
+}
+
+.eco-pdf-practice {
+	display: block;
+	width: 100%;
+	border: 1px solid #e3e8f2;
+	border-radius: 12px;
+	background: #fff;
+	padding: 12px 14px;
+	margin-bottom: 10px;
+	text-align: left;
+	cursor: pointer;
+	transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.eco-pdf-practice:hover,
+.eco-pdf-practice--active {
+	border-color: #07479f;
+	box-shadow: 0 8px 20px rgb(7 71 159 / 12%);
+	transform: translateY(-1px);
+}
+
+.eco-pdf-practice__actions {
+	display: block;
+	font-size: 12px;
+	font-weight: 700;
+	color: #0097c7;
+	margin-bottom: 4px;
+}
+
+.eco-pdf-practice__title {
+	display: block;
+	font-weight: 700;
+	color: #14315f;
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+
+.eco-empty-column,
+.eco-empty-section {
+	color: #60708d;
+	font-size: 14px;
+	margin: 0;
+}
+
+.eco-rule-sheet {
+	border-radius: 20px;
+	overflow: hidden;
+	box-shadow: 0 12px 36px rgb(12 37 86 / 10%);
+}
+
+.eco-rule-sheet__header {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	align-items: flex-start;
+	padding: 22px 26px;
+	background: #07479f;
+	min-width: 0;
+}
+
+.eco-rule-sheet__title-block {
+	min-width: 0;
+	max-width: 100%;
+}
+
+.eco-rule-sheet__eyebrow {
+	color: #71d4f6;
+	font-weight: 800;
+	font-size: 13px;
+	margin-bottom: 6px;
+}
+
+.eco-rule-sheet__title {
+	margin: 0;
+	color: #fff;
+	font-size: 26px;
+	font-weight: 800;
+	line-height: 1.25;
+	white-space: normal;
+	overflow-wrap: anywhere;
+	word-break: normal;
+}
+
+.eco-rule-sheet__chip {
+	flex-shrink: 0;
+	color: #fff !important;
+	font-weight: 800;
+}
+
+.eco-rule-sheet__chip--ux {
+	background: #e86bb5 !important;
+}
+
+.eco-rule-sheet__chip--front {
+	background: #f5b827 !important;
+	color: #14315f !important;
+}
+
+.eco-rule-sheet__chip--back {
+	background: #2e7d32 !important;
+}
+
+.eco-section {
+	height: 100%;
+	border-radius: 16px;
+	padding: 18px;
+}
+
+.eco-section h4,
+.eco-table-card h4 {
+	margin-bottom: 12px;
+	color: #14315f;
+}
+
+.eco-section li {
+	margin-bottom: 8px;
+	color: #263b5e;
+}
+
+.eco-section--do {
+	background: #eefbf4;
+}
+
+.eco-section--dont {
+	background: #fff1f2;
+}
+
+.eco-section--check {
+	background: #eef6ff;
+}
+
+.eco-section--impact {
+	background: #fff8e7;
+}
+
+.eco-table-section {
+	margin: 24px 0 8px;
+}
+
+.eco-table-card {
+	background: #fff;
+	border: 1px solid #e3e8f2;
+	border-radius: 16px;
+	padding: 18px;
+	margin-bottom: 16px;
+}
+
+.eco-table-wrapper {
+	width: 100%;
+	overflow-x: auto;
+}
+
+.eco-table {
+	width: 100%;
+	border-collapse: collapse;
+	min-width: 640px;
+}
+
+.eco-table th,
+.eco-table td {
+	border: 1px solid #d9e1ef;
+	padding: 12px;
+	text-align: center;
+	color: #263b5e;
+	vertical-align: top;
+}
+
+.eco-table th {
+	background: #f5f7fb;
+	color: #14315f;
+	font-weight: 800;
+}
+
+.eco-table td:first-child {
+	font-weight: 800;
+	color: #14315f;
+}
+
+.eco-impact-item {
+	margin-bottom: 14px;
+}
+
+.eco-impact-item p {
+	margin: 4px 0;
+}
+
+.eco-impact-gain {
+	font-weight: 800;
+	color: #0f8f4f;
+}
+
+.eco-rule-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+@media (width <= 960px) {
 	.eco-pdf-columns {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 18px;
+		grid-template-columns: 1fr;
 	}
 
-	.eco-pdf-column {
-		background: #fff;
-		border-radius: 18px;
-		padding: 18px;
-		box-shadow: 0 10px 30px rgb(12 37 86 / 80%);
-	}
-
-	.eco-pdf-column__header {
-		border-radius: 10px;
-		padding: 10px 14px;
-		margin-bottom: 14px;
-		color: #fff;
-		font-weight: 800;
-		text-align: center;
-	}
-
-	.eco-pdf-column--ux .eco-pdf-column__header {
-		background: #e86bb5;
-	}
-
-	.eco-pdf-column--front .eco-pdf-column__header {
-		background: #f5b827;
-	}
-
-	.eco-pdf-practice {
-		display: block;
-		width: 100%;
-		border: 1px solid #e3e8f2;
-		border-radius: 12px;
-		background: #fff;
-		padding: 12px 14px;
-		margin-bottom: 10px;
-		text-align: left;
-		cursor: pointer;
-		transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-	}
-
-	.eco-pdf-practice:hover,
-	.eco-pdf-practice--active {
-		border-color: #07479f;
-		box-shadow: 0 8px 20px rgb(7 71 159 / 12%);
-		transform: translateY(-1px);
-	}
-
-	.eco-pdf-practice__actions {
-		display: block;
-		font-size: 12px;
-		font-weight: 700;
-		color: #0097c7;
-		margin-bottom: 4px;
-	}
-
-	.eco-pdf-practice__title {
-		display: block;
-		font-weight: 700;
-		color: #14315f;
-		white-space: normal;
-		overflow-wrap: anywhere;
-	}
-
-	.eco-empty-column,
-	.eco-empty-section {
-		color: #60708d;
-		font-size: 14px;
-		margin: 0;
-	}
-
-	.eco-rule-sheet {
-		border-radius: 20px;
-		overflow: hidden;
-		box-shadow: 0 12px 36px rgb(12 37 86 / 10%);
+	.eco-pdf-sidebar {
+		border-right: 0;
+		border-bottom: 1px solid #e3e8f2;
 	}
 
 	.eco-rule-sheet__header {
-		display: flex;
-		justify-content: space-between;
-		gap: 16px;
-		align-items: flex-start;
-		padding: 22px 26px;
-		background: #07479f;
-		min-width: 0;
+		flex-direction: column;
 	}
-
-	.eco-rule-sheet__title-block {
-		min-width: 0;
-		max-width: 100%;
-	}
-
-	.eco-rule-sheet__eyebrow {
-		color: #71d4f6;
-		font-weight: 800;
-		font-size: 13px;
-		margin-bottom: 6px;
-	}
-
-	.eco-rule-sheet__title {
-		margin: 0;
-		color: #fff;
-		font-size: 26px;
-		font-weight: 800;
-		line-height: 1.25;
-		white-space: normal;
-		overflow-wrap: anywhere;
-		word-break: normal;
-	}
-
-	.eco-rule-sheet__chip {
-		flex-shrink: 0;
-		color: #fff !important;
-		font-weight: 800;
-	}
-
-	.eco-rule-sheet__chip--ux {
-		background: #e86bb5 !important;
-	}
-
-	.eco-rule-sheet__chip--front {
-		background: #f5b827 !important;
-		color: #14315f !important;
-	}
-
-	.eco-rule-sheet__chip--back {
-		background: #2e7d32 !important;
-	}
-
-	.eco-section {
-		height: 100%;
-		border-radius: 16px;
-		padding: 18px;
-	}
-
-	.eco-section h4,
-	.eco-table-card h4 {
-		margin-bottom: 12px;
-		color: #14315f;
-	}
-
-	.eco-section li {
-		margin-bottom: 8px;
-		color: #263b5e;
-	}
-
-	.eco-section--do {
-		background: #eefbf4;
-	}
-
-	.eco-section--dont {
-		background: #fff1f2;
-	}
-
-	.eco-section--check {
-		background: #eef6ff;
-	}
-
-	.eco-section--impact {
-		background: #fff8e7;
-	}
-
-	.eco-table-section {
-		margin: 24px 0 8px;
-	}
-
-	.eco-table-card {
-		background: #fff;
-		border: 1px solid #e3e8f2;
-		border-radius: 16px;
-		padding: 18px;
-		margin-bottom: 16px;
-	}
-
-	.eco-table-wrapper {
-		width: 100%;
-		overflow-x: auto;
-	}
-
-	.eco-table {
-		width: 100%;
-		border-collapse: collapse;
-		min-width: 640px;
-	}
-
-	.eco-table th,
-	.eco-table td {
-		border: 1px solid #d9e1ef;
-		padding: 12px;
-		text-align: center;
-		color: #263b5e;
-		vertical-align: top;
-	}
-
-	.eco-table th {
-		background: #f5f7fb;
-		color: #14315f;
-		font-weight: 800;
-	}
-
-	.eco-table td:first-child {
-		font-weight: 800;
-		color: #14315f;
-	}
-
-	.eco-impact-item {
-		margin-bottom: 14px;
-	}
-
-	.eco-impact-item p {
-		margin: 4px 0;
-	}
-
-	.eco-impact-gain {
-		font-weight: 800;
-		color: #0f8f4f;
-	}
-
-	.eco-rule-meta {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-	}
-
-	@media (width <= 960px) {
-		.eco-pdf-columns {
-			grid-template-columns: 1fr;
-		}
-
-		.eco-pdf-sidebar {
-			border-right: 0;
-			border-bottom: 1px solid #e3e8f2;
-		}
-
-		.eco-rule-sheet__header {
-			flex-direction: column;
-		}
-	}
+}
 </style>
