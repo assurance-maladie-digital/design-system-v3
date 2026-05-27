@@ -568,7 +568,7 @@ export const VFormValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <VForm>
+  <VForm @submit.prevent="onSubmit">
 	<PhoneField
 	  v-model="phone"
 	  required
@@ -593,6 +593,9 @@ import { PhoneField } from '@cnamts/synapse'
 import { VForm, VBtn } from 'vuetify/components'
 
 const phone = ref('')
+async function onSubmit(e) {
+  alert('Le formulaire est : ' + ((await e).valid ? 'valide' : 'invalide'))
+}
 </script>`,
 			},
 		],
@@ -601,14 +604,14 @@ const phone = ref('')
 		components: { PhoneField, VForm, VBtn },
 		setup() {
 			const phone = ref('')
-			function onSubmit(e) {
-				alert('Le formulaire est : ' + (e.isValid ? 'valide' : 'invalide'))
+			async function onSubmit(e) {
+				alert('Le formulaire est : ' + ((await e).valid ? 'valide' : 'invalide'))
 			}
 			return { args, phone, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
-				<VForm @submit="onSubmit">
+				<VForm @submit.prevent="onSubmit">
 					<PhoneField
 						v-model="phone"
 						v-bind="args"
@@ -802,11 +805,15 @@ const phone = ref('')
 		components: { PhoneField, VForm, VBtn },
 		setup() {
 			const phone = ref('')
-			return { args, phone }
+			async function onSubmit(e: Promise<{ valid: boolean }>) {
+				const result = await e
+				alert('Le formulaire est : ' + (result.valid ? 'valide' : 'invalide'))
+			}
+			return { args, phone, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
-				<VForm>
+				<VForm @submit.prevent="onSubmit">
 					<PhoneField
 						v-model="phone"
 						v-bind="args"
