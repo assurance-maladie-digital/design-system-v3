@@ -21,6 +21,12 @@ const meta = {
 			description: {
 				component: `Exemples de validation pour le composant MonthPicker`,
 			},
+			controls: {
+				exclude: ['onUpdate:modelValue', 'onUpdate:open'],
+			},
+		},
+		controls: {
+			exclude: ['width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open'],
 		},
 	},
 	argTypes: {
@@ -32,6 +38,14 @@ const meta = {
 		label: {
 			control: 'text',
 			description: 'Libellé du champ',
+		},
+		clearable: {
+			control: 'boolean',
+			description: 'Affiche un bouton permettant de vider le champ',
+			table: {
+				type: { summary: 'boolean' },
+				category: 'props',
+			},
 		},
 	},
 	args: {
@@ -155,6 +169,7 @@ export const WithWarning: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
+									if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
 									const [month, year] = value.split('/').map(Number) as [number, number]
 									const currentDate = new Date()
 									const currentYear = currentDate.getFullYear()
@@ -181,6 +196,7 @@ export const WithWarning: Story = {
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
+						if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
 						const [month, year] = value.split('/').map(Number) as [number, number]
 						const currentDate = new Date()
 						const currentYear = currentDate.getFullYear()
@@ -230,6 +246,7 @@ export const WithSuccess: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
+									if (!value || value === '') return false // Ne pas afficher de succès si le champ est vide
 									const [, year] = value.split('/').map(Number) as [number, number]
 									const currentYear = new Date().getFullYear()
 									return year === currentYear
@@ -251,6 +268,7 @@ export const WithSuccess: Story = {
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
+						if (!value || value === '') return true // Ne pas afficher de success si le champ est vide
 						const [, year] = value.split('/').map(Number) as [number, number]
 						const currentYear = new Date().getFullYear()
 						return year === currentYear
@@ -307,12 +325,14 @@ export const WithCustomRules: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
+									if (!value) return true // Ne pas afficher d'erreur si le champ est vide
 									const [month] = value.split('/').map(Number)
 									if (!month || month < 1 || month > 12) {
-										return 'Le mois doit être compris entre 01 et 12.'
+										return false
 									}
 									return true
 								},
+								message: 'Le mois doit être compris entre 01 et 12.',
 								fieldIdentifier: 'selectedMonth',
 							},
 						},
@@ -320,13 +340,15 @@ export const WithCustomRules: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
+									if (!value) return true // Ne pas afficher d'erreur si le champ est vide
 									const [, year] = value.split('/').map(Number) as [number, number]
 									const currentYear = new Date().getFullYear()
 									if (year < currentYear - 10) {
-										return 'La date ne peut pas être antérieure à 10 ans.'
+										return false
 									}
 									return true
 								},
+								message: 'La date ne peut pas être antérieure à 10 ans.',
 								fieldIdentifier: 'selectedMonth',
 							},
 						},
@@ -347,10 +369,11 @@ export const WithCustomRules: Story = {
 					options: {
 						validate: (value: string) => {
 							if (!value || !/^\d{2}\/\d{4}$/.test(value)) {
-								return 'Le format doit être MM/YYYY (ex: 03/2026).'
+								return false
 							}
 							return true
 						},
+						message: 'Le format doit être MM/YYYY (ex: 03/2026).',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
@@ -358,12 +381,14 @@ export const WithCustomRules: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
+							if (!value || value === '') return true // Ne pas afficher d'erreur si le champ est vide
 							const [month] = value.split('/').map(Number)
 							if (!month || month < 1 || month > 12) {
-								return 'Le mois doit être compris entre 01 et 12.'
+								return false
 							}
 							return true
 						},
+						message: 'Le mois doit être compris entre 01 et 12.',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
@@ -371,13 +396,15 @@ export const WithCustomRules: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
+							if (!value || value === '') return true // Ne pas afficher d'erreur si le champ est vide
 							const [, year] = value.split('/').map(Number) as [number, number]
 							const currentYear = new Date().getFullYear()
 							if (year < currentYear - 10) {
-								return 'La date ne peut pas être antérieure à 10 ans.'
+								return false
 							}
 							return true
 						},
+						message: 'La date ne peut pas être antérieure à 10 ans.',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
@@ -434,10 +461,11 @@ export const WithErrorWarningSuccess: Story = {
 							options: {
 								validate: (value: string) => {
 									if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
-										return 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).'
+										return false
 									}
 									return true
 								},
+								message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
 								fieldIdentifier: 'selectedMonth',
 							},
 						},
@@ -448,6 +476,7 @@ export const WithErrorWarningSuccess: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
+									if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
 									const [month, year] = value.split('/').map(Number) as [number, number]
 									const currentDate = new Date()
 									const currentYear = currentDate.getFullYear()
@@ -468,6 +497,7 @@ export const WithErrorWarningSuccess: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
+									if (!value || value === '') return false // Ne pas afficher d'erreur si le champ est vide
 									const [, year] = value.split('/').map(Number) as [number, number]
 									const currentYear = new Date().getFullYear()
 									return year >= currentYear && year <= currentYear + 5
@@ -493,10 +523,11 @@ export const WithErrorWarningSuccess: Story = {
 					options: {
 						validate: (value: string) => {
 							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-								return 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).'
+								return false
 							}
 							return true
 						},
+						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
@@ -507,6 +538,7 @@ export const WithErrorWarningSuccess: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
+							if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
 							const [month, year] = value.split('/').map(Number) as [number, number]
 							const currentDate = new Date()
 							const currentYear = currentDate.getFullYear()
@@ -527,6 +559,7 @@ export const WithErrorWarningSuccess: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
+							if (!value || value === '') return false // Ne pas afficher de succès si le champ est vide
 							const [, year] = value.split('/').map(Number) as [number, number]
 							const currentYear = new Date().getFullYear()
 							return year >= currentYear && year <= currentYear + 5
@@ -1082,10 +1115,11 @@ const customRules = [
         options: {
             validate: (value: string) => {
                 if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
-                    return 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).'
+                    return false
                 }
                 return true
             },
+			message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
             fieldIdentifier: 'selectedMonth',
         },
     },
@@ -1110,17 +1144,17 @@ function handleSubmit(e) {
 					options: {
 						validate: (value: string) => {
 							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-								return 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).'
+								return false
 							}
 							return true
 						},
+						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
 			]
 
 			function handleSubmit(e: { isValid: boolean }) {
-				console.log(e)
 				const isValid = e.isValid
 				alert(isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}

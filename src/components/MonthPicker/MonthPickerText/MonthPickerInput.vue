@@ -101,4 +101,9 @@
 	color: rgb(var(--v-theme-warning, 96, 72, 14));
 }
 
+:deep(.v-field__clearable .v-icon__svg) {
+	fill: rgb(var(--v-theme-iconBase)) !important;
+	opacity: var(--v-medium-emphasis-opacity) !important;
+}
+
 </style>

@@ -7,12 +7,14 @@ export type TextFieldProps = {
 	placeholder?: string
 	disabled?: boolean
 	readonly?: boolean
+	clearable?: boolean
 }
 
 export const defaultTextFieldProps = {
 	density: 'default',
 	disabled: false,
 	readonly: false,
+	clearable: false,
 } as const satisfies Partial<TextFieldProps>
 
 export function useTextField(props: TextFieldProps) {
@@ -23,5 +25,6 @@ export function useTextField(props: TextFieldProps) {
 		placeholder: props.placeholder,
 		disabled: props.disabled ? true : undefined,
 		readonly: props.readonly ? true : undefined,
+		clearable: props.clearable,
 	}))
 }

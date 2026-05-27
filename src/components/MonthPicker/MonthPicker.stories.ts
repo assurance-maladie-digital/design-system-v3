@@ -22,6 +22,14 @@ const meta: Meta<typeof MonthPicker> = {
 				type: { summary: 'object' },
 			},
 		},
+		'clearable': {
+			control: 'boolean',
+			description: 'Affiche un bouton permettant de vider le champ',
+			table: {
+				type: { summary: 'boolean' },
+				category: 'props',
+			},
+		},
 		'minYear': {
 			description: 'Année minimale affichée dans le sélecteur visuel. Ne concerne pas la validation.',
 			table: {
@@ -325,9 +333,9 @@ export const MonthValidation: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
+									if (!value || value === '') return false
 									const [month] = value.split('/').map(Number)
 									if (
-										!value ||
 										!month ||
 										!/^\\d{2}\\/\\d{4}$/.test(value) ||
 										month < 1 ||
@@ -346,6 +354,7 @@ export const MonthValidation: Story = {
 						type: 'custom',
 						options: {
 							validate: (value: string) => {
+								if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
 								const [month, year] = value.split('/').map(Number) as [number, number]
 								const currentDate = new Date()
 								const currentYear = currentDate.getFullYear()
@@ -377,6 +386,7 @@ export const MonthValidation: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
+							if (!value || value === '') return false // Ne pas afficher d'erreur si le champ est vide
 							const [month] = value.split('/').map(Number)
 							if (
 								!month
@@ -397,6 +407,7 @@ export const MonthValidation: Story = {
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
+						if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
 						const [month, year] = value.split('/').map(Number) as [number, number]
 						const currentDate = new Date()
 						const currentYear = currentDate.getFullYear()
