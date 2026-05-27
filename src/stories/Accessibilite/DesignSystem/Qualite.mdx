@@ -7,7 +7,7 @@ import { useState } from 'react';
 <div className="header">
   <h1>Qualité code des composants Studio Design</h1>
 </div>
-<div className="quality-grid">
+<div className="quality-carousel">
   <div className="quality-card">
     <h3> Props / Slots documentés</h3>
     <p>
@@ -243,43 +243,54 @@ const categories = [
 })()}
 <style>
 {`
-.quality-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.quality-card {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1rem;
-  transition: box-shadow 0.2s ease;
-}
-
 .theme-link {
   color: #0c419a;
   font-weight: 600;
   text-decoration: underline;
 }
 
-.quality-card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+.quality-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.5rem 0 1rem;
+  margin: 2rem 0;
 }
 
+.quality-carousel .quality-card {
+  min-width: 300px;
+  max-width: 340px;
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+}
+.quality-card {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+  border: 1px solid #dbe3f0;
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 14px rgba(12, 65, 154, 0.08);
+}
+
+
 .quality-card h3 {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
-  color: #0C419A;
-  font-size: 1rem;
+  margin: 1rem 0 0.75rem;
+  color: #0c419a;
+  font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .quality-card p {
   margin: 0;
-  font-size: 0.875rem;
-  color: #525252;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.55;
+}
+
+.quality-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(12, 65, 154, 0.14);
 }
 
 .quality-filters {
