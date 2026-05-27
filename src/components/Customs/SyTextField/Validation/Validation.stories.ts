@@ -90,10 +90,11 @@ export const WithError: Story = {
 								validate: (value: string) => {
 									const valid = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)
 									if (!valid) {
-										return 'L\\'adresse email est invalide.'
+										return false
 									}
 									return true
 								},
+								message: 'L\\'adresse email est invalide.',
 								fieldIdentifier: 'email',
 							},
 						},
@@ -321,9 +322,10 @@ export const WithCustomRules: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
-									if (!value) return 'Le mot de passe est requis.'
+									if (!value || value === '') return false
 									return true
 								},
+								message: 'Le mot de passe est requis.',
 								fieldIdentifier: 'password',
 							},
 						},
@@ -331,9 +333,10 @@ export const WithCustomRules: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
-									if (value.length < 8) return 'Le mot de passe doit contenir au moins 8 caractères.'
+									if (value.length < 8) return false
 									return true
 								},
+								message: 'Le mot de passe doit contenir au moins 8 caractères.',
 								fieldIdentifier: 'password',
 							},
 						},
@@ -341,9 +344,10 @@ export const WithCustomRules: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
-									if (!/[A-Z]/.test(value)) return 'Le mot de passe doit contenir au moins une majuscule.'
+									if (!/[A-Z]/.test(value)) return false
 									return true
 								},
+								message: 'Le mot de passe doit contenir au moins une majuscule.',
 								fieldIdentifier: 'password',
 							},
 						},
@@ -366,9 +370,11 @@ export const WithCustomRules: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
-							if (!value) return 'Le mot de passe est requis.'
+							console.log('Validation 1 - required:', value)
+							if (!value || value === '') return false
 							return true
 						},
+						message: 'Le mot de passe est requis.',
 						fieldIdentifier: 'password',
 					},
 				},
@@ -376,9 +382,11 @@ export const WithCustomRules: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
-							if (value.length < 8) return 'Le mot de passe doit contenir au moins 8 caractères.'
+							console.log('Validation 2 - min length:', value)
+							if (value.length < 8) return false
 							return true
 						},
+						message: 'Le mot de passe doit contenir au moins 8 caractères.',
 						fieldIdentifier: 'password',
 					},
 				},
@@ -386,9 +394,10 @@ export const WithCustomRules: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
-							if (!/[A-Z]/.test(value)) return 'Le mot de passe doit contenir au moins une majuscule.'
+							if (!/[A-Z]/.test(value)) return false
 							return true
 						},
+						message: 'Le mot de passe doit contenir au moins une majuscule.',
 						fieldIdentifier: 'password',
 					},
 				},
