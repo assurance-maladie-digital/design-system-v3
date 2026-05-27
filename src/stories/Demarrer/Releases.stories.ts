@@ -17,9 +17,18 @@ type ReleaseAlert = {
 	message: string
 	type: 'success' | 'info' | 'warning' | 'error'
 	variant: 'tonal' | 'outlined'
+	link?: { href: string, text: string }
 }
 
 const releaseAlerts: ReleaseAlert[] = [
+	{
+		id: 'tokens-simplification',
+		releaseVersion: 'v1.0.27',
+		message: 'Nous avons procédé à une simplification des tokens, merci de vous référer à la page des ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
+	},
 	{
 		id: 'starter-kit-2-0-32',
 		releaseVersion: 'v1.0.24',
@@ -57,7 +66,8 @@ export const List = {
 				}
 
 				const formatMarkdown = (markdown?: string | null) => {
-					return marked.parse(markdown ?? '')
+					const html = marked.parse(markdown ?? '') as string
+					return html.replace(/<blockquote>[\s\S]*?<\/blockquote>/g, '')
 				}
 
 				const getReleaseAlerts = (release: GitHubRelease) => {
@@ -101,7 +111,7 @@ export const List = {
 								:closable="false"
 								class="mt-2 mb-4"
 							>
-								<template #default>{{ alert.message }}</template>
+								<template #default>{{ alert.message }}<template v-if="alert.link"> <a :href="alert.link.href">{{ alert.link.text }}</a>.</template></template>
 							</SyAlert>
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>

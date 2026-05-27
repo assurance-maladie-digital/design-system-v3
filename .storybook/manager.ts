@@ -54,6 +54,7 @@ const apComponents = [
 	'composants-formulaires-sycheckbox',
 	'composants-formulaires-sycheckboxgroup',
 	'composants-formulaires-syradiogroup',
+	'composants-formulaires-sytextarea',
 	'composants-formulaires-sytextfield',
 	'composants-layout-pagecontainer',
 	'composants-navigation-skiplink',
