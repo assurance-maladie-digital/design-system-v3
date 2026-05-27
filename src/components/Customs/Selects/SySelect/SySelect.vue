@@ -527,6 +527,41 @@
 
 	const formattedErrorMessages = computed(() => errors.value.join(' '))
 
+	// --- Fallback <select> natif (RGAA 10.2 — CSS désactivé) ---
+	// Masqué par la classe CSS .sy-select-native (display:none).
+	// Sans CSS : la règle disparaît → le <select> natif devient visible et opérationnel.
+	// Délègue intégralement à selectItem() : validation, état, émission identiques.
+	const nativeSelectValues = computed<string[]>(() => {
+		if (props.multiple) {
+			if (!Array.isArray(selectedItem.value)) return []
+			return (selectedItem.value as SelectItemArrayType).map((s) => {
+				if (props.returnObject) return String((s as Record<string, unknown>)[props.valueKey] ?? '')
+				return String(s ?? '')
+			})
+		}
+		if (selectedItem.value === null || selectedItem.value === undefined) return []
+		if (props.returnObject) return [String((selectedItem.value as Record<string, unknown>)[props.valueKey] ?? '')]
+		return [String(selectedItem.value)]
+	})
+
+	const handleNativeSelectChange = (event: Event) => {
+		const select = event.target as HTMLSelectElement
+		const selectedValues = Array.from(select.selectedOptions).map(o => o.value)
+		const matchedItems = formattedItems.value.filter(item =>
+			selectedValues.includes(String(item[props.valueKey])),
+		)
+		if (props.multiple) {
+			// Réinitialiser puis sélectionner chaque item via selectItem() (toggle)
+			selectedItem.value = []
+			emit('update:modelValue', [])
+			matchedItems.forEach(item => selectItem(item))
+		}
+		else {
+			const item = matchedItems[0]
+			if (item) selectItem(item)
+		}
+	}
+
 	const liveRegionMessage = computed(() => {
 		if (!hasError.value) return ''
 
@@ -1190,6 +1225,34 @@
 			</VList>
 		</VMenu>
 
+		<!--
+			Fallback RGAA 10.2 : select natif masqué par CSS.
+			Sans CSS, .sy-select-native { display:none } disparaît
+			→ le contrôle natif du navigateur devient visible et opérationnel.
+			@change délègue à selectItem() : validation et état identiques au composant custom.
+		-->
+		<div class="sy-select-native">
+			<select
+				:aria-label="labelWithAsterisk"
+				:multiple="props.multiple || undefined"
+				:disabled="props.disabled || undefined"
+				:required="isRequired || undefined"
+				:aria-describedby="describedByIds || undefined"
+				:aria-invalid="hasError ? 'true' : undefined"
+				@change="handleNativeSelectChange"
+				@blur="validate"
+			>
+				<option
+					v-for="item in formattedItems"
+					:key="String(item[props.valueKey])"
+					:value="String(item[props.valueKey])"
+					:selected="nativeSelectValues.includes(String(item[props.valueKey]))"
+				>
+					{{ getPlainItemText(item) }}
+				</option>
+			</select>
+		</div>
+
 		<div
 			v-if="(showHelpTextAsMessage || showHelpTextBelow) && props.helpText"
 			:id="helpTextId"
@@ -1531,5 +1594,11 @@
 
 .pointer-events-none {
 	pointer-events: none;
+}
+
+// Masqué visuellement quand CSS est actif.
+// Sans CSS : cette règle disparaît → le <select> natif devient visible.
+.sy-select-native {
+	display: none;
 }
 </style>

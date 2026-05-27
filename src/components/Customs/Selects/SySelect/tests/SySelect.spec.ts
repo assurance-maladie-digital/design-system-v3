@@ -1561,4 +1561,94 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('Fallback <select> natif RGAA 10.2/10.3 (CSS désactivé)', () => {
+		it('rend un <select> natif avec les options correspondant aux items', () => {
+			const items = [{ text: 'Option A', value: 'a' }, { text: 'Option B', value: 'b' }]
+			const wrapper = mount(SySelect, {
+				props: { items, label: 'Mon champ' },
+				attachTo: document.body,
+			})
+
+			const nativeSelect = wrapper.find('.sy-select-native select')
+			expect(nativeSelect.exists()).toBe(true)
+			const options = nativeSelect.findAll('option')
+			expect(options).toHaveLength(2)
+			expect(options.at(0)?.text()).toBe('Option A')
+			expect(options.at(1)?.text()).toBe('Option B')
+
+			wrapper.unmount()
+		})
+
+		it('le <select> natif porte un aria-label avec le texte du label', () => {
+			const wrapper = mount(SySelect, {
+				props: { items: [], label: 'Ville' },
+				attachTo: document.body,
+			})
+
+			const nativeSelect = wrapper.find('.sy-select-native select')
+			expect(nativeSelect.attributes('aria-label')).toContain('Ville')
+
+			wrapper.unmount()
+		})
+
+		it('reflète la valeur sélectionnée dans le <select> natif', async () => {
+			const items = [{ text: 'Option A', value: 'a' }, { text: 'Option B', value: 'b' }]
+			const wrapper = mount(SySelect, {
+				props: { items, modelValue: 'b' },
+				attachTo: document.body,
+			})
+
+			await wrapper.vm.$nextTick()
+			const selectedOptions = wrapper.find('.sy-select-native select').findAll('option')
+				.filter(o => o.attributes('value') === 'b')
+			expect(selectedOptions.at(0)?.attributes('selected')).toBeDefined()
+
+			wrapper.unmount()
+		})
+
+		it('émet update:modelValue et déclenche la validation via selectItem() au @change', async () => {
+			const items = [{ text: 'Option A', value: 'a' }, { text: 'Option B', value: 'b' }]
+			const wrapper = mount(SySelect, {
+				props: { items, required: true, modelValue: null as unknown as string },
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-select-native select').setValue('b')
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.emitted()['update:modelValue']?.[0]).toEqual(['b'])
+
+			wrapper.unmount()
+		})
+
+		it('déclenche validate() au @blur du <select> natif', async () => {
+			const wrapper = mount(SySelect, {
+				props: { items: [], required: true, label: 'Test' },
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-select-native select').trigger('blur')
+			await wrapper.vm.$nextTick()
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).hasError).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('porte les attributs disabled, required, multiple sur le <select> natif', () => {
+			const wrapper = mount(SySelect, {
+				props: { items: [], disabled: true, required: true, multiple: true },
+				attachTo: document.body,
+			})
+
+			const sel = wrapper.find('.sy-select-native select')
+			expect(sel.attributes('disabled')).toBeDefined()
+			expect(sel.attributes('required')).toBeDefined()
+			expect(sel.attributes('multiple')).toBeDefined()
+
+			wrapper.unmount()
+		})
+	})
 })
