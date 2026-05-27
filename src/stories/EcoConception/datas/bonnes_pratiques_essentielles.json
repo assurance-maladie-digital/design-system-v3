@@ -8,8 +8,8 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
+    
     },
     "summary": "Limiter le volume de données transférées en choisissant le média le plus léger qui permet d’atteindre l’objectif UX et métier.",
     "objective": "Limiter le volume de données transférées en choisissant le média le plus léger qui permet d’atteindre l’objectif UX et métier.",
@@ -42,8 +42,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
     },
     "summary": "Empêcher le chargement et la lecture de médias lourds sans action explicite de l’utilisateur.",
     "objective": "Empêcher le chargement et la lecture de médias lourds sans action explicite de l’utilisateur, pour réduire la consommation de données et améliorer le confort d’usage.",
@@ -76,8 +75,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
     },
     "summary": "Permettre l’accès au contenu sans charger la vidéo complète lorsque le visuel n’est pas indispensable.",
     "objective": "Permettre l’accès au contenu sans charger la vidéo complète, particulièrement utile pour les connexions limitées, les utilisateurs mobiles et les besoins d’accessibilité.",
@@ -108,8 +106,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
     },
     "summary": "Réduire les calculs graphiques et scripts côté client, améliorer l’accessibilité et éviter les distractions.",
     "objective": "Réduire les calculs graphiques et scripts côté client, améliorer l’accessibilité et éviter les distractions.",
@@ -139,8 +136,8 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
+    
     },
     "summary": "Réduire les temps de conception et de développement, limiter les composants redondants et la dette technique.",
     "objective": "Réduire les temps de conception et de développement, limiter la création de composants redondants et donc la dette technique, pour un service plus sobre et plus maintenable.",
@@ -173,8 +170,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
     },
     "summary": "Adapter format, poids et niveau de compression des images à l’usage réel.",
     "objective": "Réduire le poids des images tout en conservant une qualité adaptée au contexte d’affichage.",
@@ -253,8 +249,8 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
+    
     },
     "summary": "Choisir codec, format et débit adaptés au terminal, au contenu et à la durée.",
     "objective": "Réduire le poids des vidéos tout en conservant une qualité adaptée au contexte de visualisation.",
@@ -338,8 +334,8 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "contents",
-      "title": "Optimiser les contenus",
-      "icon": "▶"
+      "title": "Optimiser les contenus"
+    
     },
     "summary": "Éviter de servir une ressource plus grande que nécessaire.",
     "objective": "Adapter les dimensions des images et vidéos au contexte réel d’affichage.",
@@ -418,8 +414,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "interaction",
-      "title": "Optimiser l’interaction utilisateur",
-      "icon": "👆"
+      "title": "Optimiser l’interaction utilisateur"
     },
     "summary": "Garantir une interface utilisable sur différents écrans sans multiplier les versions.",
     "objective": "Garantir une interface utilisable sur des écrans variés sans multiplier les versions de pages, tout en évitant des mises en page lourdes et complexes.",
@@ -451,8 +446,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "interaction",
-      "title": "Optimiser l’interaction utilisateur",
-      "icon": "👆"
+      "title": "Optimiser l’interaction utilisateur"
     },
     "summary": "Limiter les allers-retours réseau lors de la saisie utilisateur.",
     "objective": "Limiter le nombre d’allers-retours réseau en regroupant les informations nécessaires dans une même requête, pour réduire la charge serveur et le temps de traitement.",
@@ -485,8 +479,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "interaction",
-      "title": "Optimiser l’interaction utilisateur",
-      "icon": "👆"
+      "title": "Optimiser l’interaction utilisateur"
     },
     "summary": "Notifier uniquement ce qui est utile et laisser le contrôle à l’utilisateur.",
     "objective": "Réduire le trafic réseau et la sollicitation cognitive, tout en évitant une consultation compulsive du service.",
@@ -516,8 +509,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "requests",
-      "title": "Limiter les requêtes et le poids",
-      "icon": "🏋️"
+      "title": "Limiter les requêtes et le poids"
     },
     "summary": "Filtrer avant recherche, paginer et éviter les résultats massifs.",
     "objective": "Limiter les volumes de données renvoyés par le serveur et affichés à l’écran, en aidant l’utilisateur à cibler sa recherche avant de lancer la requête.",
@@ -553,8 +545,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "requests",
-      "title": "Limiter les requêtes et le poids",
-      "icon": "🏋️"
+      "title": "Limiter les requêtes et le poids"
     },
     "summary": "Réduire le poids transféré et activer la compression côté serveur.",
     "objective": "Réduire le poids des fichiers texte transférés au client.",
@@ -607,8 +598,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "requests",
-      "title": "Limiter les requêtes et le poids",
-      "icon": "🏋️"
+      "title": "Limiter les requêtes et le poids"
     },
     "summary": "Définir des budgets mesurables par écran ou parcours.",
     "objective": "Fixer des limites de poids et de requêtes afin de maîtriser les ressources transférées.",
@@ -705,8 +695,7 @@
     "audience": "UX / UI",
     "pillar": {
       "id": "heavy",
-      "title": "Optimiser les traitements “lourds”",
-      "icon": "▰"
+      "title": "Optimiser les traitements “lourds”"
     },
     "summary": "Informer sur les formats et poids acceptés, et éviter les téléchargements complets inutiles.",
     "objective": "Réduire les échecs de téléchargement et les transferts inutiles en cadrant les formats acceptés et en permettant une gestion plus fine des gros fichiers.",
@@ -739,8 +728,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "heavy",
-      "title": "Optimiser les traitements “lourds”",
-      "icon": "▰"
+      "title": "Optimiser les traitements “lourds”"
     },
     "summary": "Limiter les domaines et maîtriser les ressources statiques.",
     "objective": "Regrouper les ressources statiques maîtrisées afin de limiter les domaines, les cookies et les transferts inutiles.",
@@ -794,8 +782,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "heavy",
-      "title": "Optimiser les traitements “lourds”",
-      "icon": "▰"
+      "title": "Optimiser les traitements “lourds”"
     },
     "summary": "Éviter les recalculs et transferts inutiles grâce à une stratégie de cache.",
     "objective": "Mettre en cache les ressources et contenus transférés dont le service numérique a le contrôle.",
@@ -849,8 +836,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "heavy",
-      "title": "Optimiser les traitements “lourds”",
-      "icon": "▰"
+      "title": "Optimiser les traitements “lourds”"
     },
     "summary": "Charger au bon moment, seulement pour les fonctionnalités utilisées.",
     "objective": "Éviter de charger du code, des images ou des styles inutilisés avant que l’utilisateur en ait besoin.",
@@ -904,8 +890,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "heavy",
-      "title": "Optimiser les traitements “lourds”",
-      "icon": "▰"
+      "title": "Optimiser les traitements “lourds”"
     },
     "summary": "Limiter les repaint/reflow et regrouper les modifications DOM.",
     "objective": "Réduire les manipulations DOM coûteuses et répétées.",
@@ -993,8 +978,7 @@
     "audience": "Dev Front",
     "pillar": {
       "id": "async",
-      "title": "Favoriser les traitements asynchrones",
-      "icon": "↻"
+      "title": "Favoriser les traitements asynchrones"
     },
     "summary": "Déporter les traitements longs et éviter le blocage utilisateur.",
     "objective": "Favoriser les traitements asynchrones lorsque cela est possible afin d’éviter les blocages et les surcharges.",
