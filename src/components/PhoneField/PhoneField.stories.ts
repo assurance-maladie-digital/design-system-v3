@@ -11,7 +11,7 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		actions: { argTypesRegex: '^on.*' },
-		controls: { exclude: /^on*/ },
+		controls: { exclude: /^on*|undefined/ },
 	},
 	argTypes: {
 		'modelValue': {

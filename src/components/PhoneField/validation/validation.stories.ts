@@ -11,6 +11,7 @@ const meta: Meta<typeof PhoneField> = {
 	component: PhoneField,
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: /^on*|undefined/ },
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
