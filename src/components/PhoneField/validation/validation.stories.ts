@@ -362,7 +362,7 @@ export const NoValidateOnBlur: Story = {
         }
       }]"
     />
-    <div class="d-flex gap-4 mt-2">
+    <div class="d-flex ga-4 mt-2">
       <VBtn color="primary" @click="phone = '123'">Définir une valeur invalide</VBtn>
       <VBtn color="primary" @click="phone = '0612345678'">Définir une valeur valide</VBtn>
       <VBtn @click="phone = ''">Réinitialiser</VBtn>
@@ -405,7 +405,7 @@ const phone = ref('')
 						}
 					}]"
 				/>
-				<div class="d-flex gap-4 mt-2">
+				<div class="d-flex ga-4 mt-2">
 					<VBtn color="primary" @click="phone = '123'">Définir une valeur invalide</VBtn>
 					<VBtn color="primary" @click="phone = '0612345678'">Définir une valeur valide</VBtn>
 					<VBtn @click="phone = ''">Réinitialiser</VBtn>
