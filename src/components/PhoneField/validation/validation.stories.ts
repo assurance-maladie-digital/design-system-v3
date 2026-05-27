@@ -350,7 +350,7 @@ export const NoValidateOnBlur: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4 pa-4">
+  <div class="d-flex flex-column ga-4 pa-4">
     <PhoneField
       v-model="phone"
       :is-validate-on-blur="false"
@@ -393,7 +393,7 @@ const phone = ref('')
 			return { args, phone }
 		},
 		template: `
-			<div class="d-flex flex-column gap-4 pa-4">
+			<div class="d-flex flex-column ga-4 pa-4">
 				<PhoneField
 					v-model="phone"
 					v-bind="args"
@@ -548,7 +548,7 @@ const onSubmit = (e) => {
 							}
 						}]"
 					/>
-					<VBtn type="submit">Soumettre</VBtn>
+					<VBtn type="submit" class="mt-4">Soumettre</VBtn>
 				</SyForm>
 			</div>
 		`,
@@ -620,7 +620,7 @@ const phone = ref('')
 							}
 						}]"
 					/>
-					<VBtn type="submit">Soumettre</VBtn>
+					<VBtn type="submit" class="mt-4">Soumettre</VBtn>
 				</VForm>
 			</div>
 		`,
@@ -639,7 +639,7 @@ export const SyFromVuetifyValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-8">
+  <div class="d-flex flex-column ga-8">
     <div>
       <h3>Formulaire avec SyForm</h3>
       <SyForm @submit="onSyFormSubmit">
@@ -729,7 +729,7 @@ async function onVFormSubmit() {
 			return { args, phone1, phone2, phoneRef, onSyFormSubmit, onVFormSubmit }
 		},
 		template: `
-			<div class="pa-4 d-flex flex-column gap-8">
+			<div class="pa-4 d-flex flex-column ga-8">
 				<div>
 					<h3 class="mb-4">Formulaire avec SyForm</h3>
 					<SyForm @submit="onSyFormSubmit">
@@ -805,14 +805,14 @@ const phone = ref('')
 		},
 		template: `
 			<div class="pa-4">
-				<VForm v-slot="{ isValid }">
+				<VForm>
 					<PhoneField
 						v-model="phone"
 						v-bind="args"
 						:use-vuetify-validation="true"
 						:rules="[(value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.']"
 					/>
-					<VBtn type="submit" :disabled="isValid === false">Soumettre</VBtn>
+					<VBtn type="submit" class="mt-4">Soumettre</VBtn>
 				</VForm>
 			</div>
 		`,
