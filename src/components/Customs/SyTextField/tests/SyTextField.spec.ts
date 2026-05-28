@@ -418,4 +418,20 @@ describe('SyTextField', () => {
 		expect(isValid).toBe(false) // champ requis vide
 		expect(wrapper.find('.v-messages__message').exists()).toBe(true)
 	})
+
+	it('does not show error messages when hideDetails is true even with validation errors', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: null,
+				label: 'Test hideDetails + erreur',
+				hideDetails: true,
+				hasError: true,
+				errorMessages: ['Erreur de validation'],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('.v-input__details').exists()).toBe(false)
+		expect(wrapper.find('.v-messages').exists()).toBe(false)
+	})
 })

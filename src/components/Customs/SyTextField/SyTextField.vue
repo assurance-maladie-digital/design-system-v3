@@ -44,7 +44,7 @@
 			isDirty: false,
 			isFlat: false,
 			isFocused: false,
-			areDetailsHidden: false,
+			hideDetails: false,
 			areSpinButtonsHidden: false,
 			hint: undefined,
 			id: undefined,
@@ -280,7 +280,7 @@
 
 	const showHelpTextBelow = computed(() => {
 		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
-		return props.helpText && hasMessages.value && !props.areDetailsHidden
+		return props.helpText && hasMessages.value && !props.hideDetails
 	})
 
 	// Use title prop if provided, otherwise fall back to accessible label
@@ -535,7 +535,7 @@
 			:error-messages="errors"
 			:flat="props.isFlat"
 			:focused="props.isFocused"
-			:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+			:hide-details="props.hideDetails"
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
@@ -547,7 +547,7 @@
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"
 			:persistent-counter="props.displayPersistentCounter"
-			:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
+			:persistent-hint="props.displayPersistentHint"
 			:persistent-placeholder="props.displayPersistentPlaceholder"
 			:placeholder="props.placeholder"
 			:prefix="props.prefix"

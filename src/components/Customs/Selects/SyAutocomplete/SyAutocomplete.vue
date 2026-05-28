@@ -404,7 +404,7 @@
 					:disable-error-handling="disableErrorHandling"
 					:loading="loading"
 					:help-text="helpText"
-					:are-details-hidden="hideDetails"
+					:hide-details="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"

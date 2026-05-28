@@ -33,7 +33,6 @@ export type SyTextFieldProps = {
 	disabled?: boolean
 	isFlat?: boolean
 	isFocused?: boolean
-	areDetailsHidden?: boolean | 'auto'
 	areSpinButtonsHidden?: boolean
 	hint?: string
 	id?: string
@@ -64,4 +63,5 @@ export type SyTextFieldProps = {
 	helpText?: string
 	maxlength?: string | number
 	title?: string | false
+	hideDetails?: boolean | 'auto'
 } & FieldValidationProps
