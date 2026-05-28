@@ -506,7 +506,6 @@ export const ComponentsList: StoryObj = {
 					'PaginatedTable',
 					'SyTable',
 					'SyServerTable',
-
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
