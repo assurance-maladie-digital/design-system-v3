@@ -32,221 +32,373 @@ const meta = {
 		'label': {
 			description: 'Texte affiché comme label du champ',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'autocomplete': {
 			description: 'Valeur de l\'attribut autocomplete',
 			control: 'text',
+			table: {
+				type: { summary: 'on|off' },
+			},
 		},
 		'prependIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'appendIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'prependInnerIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'appendInnerIcon': {
 			control: 'select',
 			options: ['info', 'success', 'warning', 'error', 'close'],
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'variantStyle': {
 			control: 'select',
 			options: ['outlined', 'plain', 'underlined', 'filled', 'solo', 'solo-inverted', 'solo-filled'],
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'color': {
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 			description: 'Couleur du champ',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Densité du champ',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'isActive': {
 			description: 'Force l\'état actif du champ (label flottant et styles visuels)',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'isClearable': {
 			description: 'Affiche un bouton pour effacer le contenu du champ',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'prependTooltip': {
 			description: 'Si le texte du prepend tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'appendTooltip': {
 			description: 'Si le texte du append tooltip est renseigné alors l\'icône du  tooltip s\'affiche',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'tooltipLocation': {
 			description: 'Position des tooltips',
 			control: 'select',
 			options: ['top', 'bottom', 'start', 'end'],
 			default: 'top',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'displayAsterisk': {
 			description: 'Affiche un astérisque à côté du label',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'disableClickButton': {
 			description: 'Désactive le click sur les icônes append et prepend',
 			control: 'boolean',
 			default: true,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'baseColor': {
 			description: 'Couleur de base du champ (par défaut hérite de color)',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'bgColor': {
 			description: 'Couleur de fond du champ',
 			control: 'color',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'centerAffix': {
 			description: 'Centre verticalement les éléments ajoutés avant/après le champ',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'counter': {
 			description: 'Affiche un compteur de caractères',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'counterValue': {
 			description: 'Fonction personnalisée pour calculer la valeur du compteur',
 			control: 'object',
+			table: {
+				type: { summary: '(value: unknown) => number' },
+			},
 		},
 		'direction': {
 			description: 'Direction du champ (horizontal ou vertical)',
 			control: 'select',
 			options: ['horizontal', 'vertical'],
+			table: {
+				type: { summary: 'horizontal | vertical' },
+			},
 		},
 		'isDirty': {
 			description: 'Indique si le champ a été modifié',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'isFlat': {
 			description: 'Supprime l\'élévation du champ',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'isFocused': {
 			description: 'Force l\'état focus du champ',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'areDetailsHidden': {
 			description: 'Masque la section des détails (messages d\'erreur, compteur)',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'areSpinButtonsHidden': {
 			description: 'Masque les boutons d\'incrémentation pour les champs numériques',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'hint': {
 			description: 'Texte d\'aide affiché sous le champ',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'helpText': {
 			description: 'Texte d\'aide affiché sous le champ',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'maxlength': {
 			description: 'Nombre maximal de caractères autorisés dans le champ',
 			control: { type: 'text' },
+			table: {
+				type: { summary: 'number' },
+			},
 		},
 		'loading': {
 			description: 'Affiche un indicateur de chargement',
 			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'maxWidth': {
 			description: 'Largeur maximale du champ',
 			control: { type: 'text' },
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'minWidth': {
 			description: 'Largeur minimale du champ',
 			control: { type: 'text' },
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'name': {
 			description: 'Nom du champ pour les formulaires',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'displayPersistentClear': {
 			description: 'Affiche toujours le bouton de réinitialisation',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'displayPersistentCounter': {
 			description: 'Affiche toujours le compteur',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'displayPersistentHint': {
 			description: 'Affiche toujours le texte d\'aide',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'displayPersistentPlaceholder': {
 			description: 'Garde le placeholder visible. Si le champ est vide, le placeholder reste affiché',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'placeholder': {
 			description: 'Texte affiché quand le champ est vide',
 			control: 'text',
 			default: 'Placeholder',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'prefix': {
 			description: 'Texte affiché avant la valeur: prefix="€" : affichera "€" avant la valeur saisie',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'isReversed': {
 			description: 'Inverse l\'ordre des éléments',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'role': {
 			description: 'Rôle ARIA du champ',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'rounded': {
 			description: 'Arrondit les coins du champ',
 			control: { type: 'text' },
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'isOnSingleLine': {
 			description: 'Force l\'affichage sur une seule ligne',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'suffix': {
 			description: 'Texte affiché après la valeur',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'theme': {
 			description: 'Thème à appliquer au champ',
 			control: 'text',
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'isTiled': {
 			description: 'Applique un style tuile',
 			control: 'boolean',
 			default: false,
+			table: {
+				type: { summary: 'boolean' },
+			},
 		},
 		'type': {
 			description: 'Type du champ de saisie',
 			control: 'select',
 			options: ['text', 'number', 'password', 'email', 'tel', 'url', 'search'],
 			default: 'text',
+			table: {
+				type: {
+					summary: 'string',
+					detail: 'text | number | password | email | tel | url | search',
+				},
+			},
 		},
 		'width': {
 			description: 'Largeur du champ',
 			control: { type: 'text' },
+			table: {
+				type: { summary: 'string' },
+			},
 		},
 		'validateOnSubmit': {
 			description: 'Valide le champ avec la valeur donnée',
-			type: '(value: string | number | null) => Promise<void>',
+			table: {
+				type: { summary: '(value: string | number | null) => Promise<void>' },
+			},
 		},
 		'append': {
 			description: 'Slot pour ajouter du contenu à droite du champ',
