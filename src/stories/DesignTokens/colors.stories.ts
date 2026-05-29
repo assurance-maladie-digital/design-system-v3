@@ -8,6 +8,7 @@ import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 import { apColorsTokens } from '@/designTokens/tokens/amelipro/apColors'
 import ColorDisplay from './ColorDisplay.vue'
 import ColorIntegrationExample from './ColorIntegrationExample.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { h } from 'vue'
 import { useTheme } from 'vuetify'
 import type { StoryObj } from '@storybook/vue3'
@@ -56,6 +57,18 @@ export default {
 }
 
 type ThemeKey = 'cnam' | 'pa' | 'ap' | 'ap2026'
+
+export const TokenOptimisationWarning: StoryObj = {
+	render: () => ({
+		components: { SyAlert },
+		template: `
+			<SyAlert type="warning" style="margin-bottom: 25px;">
+				Suite à l'ajout du thème Amelipro dans Synapse, nous avons dû procéder à une simplification et optimisation des tokens.
+			</SyAlert>
+		`,
+	}),
+	tags: ['!dev'],
+}
 
 export const Theme: StoryObj = {
 	render: () => {
