@@ -1191,8 +1191,8 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 		{
 			type: 'email',
 			options: {
-				message: 'L'email n'est pas valide'
-				successMessage: 'L'email est valide'
+				message: 'L\\'email n\\'est pas valide',
+				successMessage: 'L\\'email est valide'
 			}
 		}
 	]"
