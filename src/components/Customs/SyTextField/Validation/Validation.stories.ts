@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-import { fn } from '@storybook/test'
+import { fn, userEvent, within } from '@storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import type { FieldValidationProps } from '@/composables/unifyValidation/useValidation'
@@ -139,6 +139,12 @@ export const WithError: Story = {
 			/>
 		`,
 	}),
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByRole('textbox')
+		await userEvent.clear(input)
+		await userEvent.type(input, 'invalid-email')
+		input.blur()
+	},
 }
 
 export const WithWarning: Story = {
@@ -213,6 +219,12 @@ export const WithWarning: Story = {
 			/>
 		`,
 	}),
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByRole('textbox')
+		await userEvent.clear(input)
+		await userEvent.type(input, 'ab')
+		input.blur()
+	},
 }
 
 export const WithSuccess: Story = {
@@ -287,6 +299,12 @@ export const WithSuccess: Story = {
 			/>
 		`,
 	}),
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByRole('textbox')
+		await userEvent.clear(input)
+		await userEvent.type(input, 'exemple@domaine.fr')
+		input.blur()
+	},
 }
 
 export const WithCustomRules: Story = {
