@@ -121,7 +121,7 @@
 
 	const iconColor = computed(() => {
 		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
+		if (hasWarning.value) return 'onWarningVariant'
 		if (hasSuccess.value) return 'onSuccessVariant'
 		return 'rgb(var(--v-theme-onSurface))'
 	})
