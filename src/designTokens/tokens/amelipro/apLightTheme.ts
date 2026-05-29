@@ -46,6 +46,7 @@ export const apLightTheme = {
 	// Feedback
 	info: baseTokens.color.parma.darken40,
 	infoVariant: baseTokens.color.parma.lighten80,
+	infoVariant90: baseTokens.color.parma.lighten90,
 	onInfo: baseTokens.color.white.base,
 	onInfoVariant: baseTokens.color.parma.darken60,
 	error: baseTokens.color.red.darken20,

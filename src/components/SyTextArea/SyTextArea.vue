@@ -10,6 +10,8 @@
 	import { locales } from './locales'
 
 	const props = withDefaults(defineProps<{
+		uniqueId: string
+		counter?: boolean | number | string
 		modelValue?: string
 		trim?: boolean
 		replaceTabs?: number
@@ -30,6 +32,7 @@
 		modelValue: '',
 		trim: false,
 		replaceTabs: undefined,
+		counter: false,
 		maxLines: undefined,
 		autoWrap: undefined,
 		normalize: false,
@@ -141,6 +144,8 @@
 		return 'rgb(var(--v-theme-onSurface))'
 	})
 
+	const counter = computed(() => props.counter === false ? undefined : props.counter)
+
 	const showClear = computed(() =>
 		props.clearable && !props.disabled && !props.readonly && !!internalValue.value,
 	)
@@ -179,11 +184,13 @@
 <template>
 	<div class="sy-textarea">
 		<VTextarea
+			:id="uniqueId"
 			ref="textAreaRef"
 			:model-value="internalValue"
 			:variant="variant"
 			:color="color"
 			:bg-color="props.bgColor"
+			:counter="counter"
 			:error="hasError"
 			:error-messages="errors"
 			:class="{
