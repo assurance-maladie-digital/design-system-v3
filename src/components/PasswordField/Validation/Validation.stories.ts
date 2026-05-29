@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import PasswordField from '../PasswordField.vue'
 import type { PasswordFieldProps } from '../types'
-import { fn } from '@storybook/test'
+import { fn, userEvent, within } from '@storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { VForm } from 'vuetify/components/VForm'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
@@ -164,6 +164,12 @@ export const WithError: Story = {
 			},
 		],
 	},
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByLabelText('Mot de passe')
+		await userEvent.clear(input)
+		await userEvent.type(input, 'Mdp123')
+		input.blur()
+	},
 }
 
 export const WithWarning: Story = {
@@ -323,6 +329,7 @@ export const WithCustomRules: Story = {
 					<PasswordField
 						v-model="password"
 						label="Mot de passe"
+						required
 						:custom-rules="customRules"
 					/>
 				</template>
@@ -437,6 +444,9 @@ export const WithCustomRules: Story = {
 			/>
 		`,
 	}),
+	args: {
+		required: true,
+	},
 }
 
 export const NoSuccessMessages: Story = {

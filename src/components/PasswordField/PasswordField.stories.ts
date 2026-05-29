@@ -20,7 +20,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: 'on*' },
+		controls: { exclude: '^on*' },
 		docs: {
 			description: {
 				component: `PasswordField est un champ de saisie sécurisé pour les mots de passe`,
@@ -68,6 +68,10 @@ const meta = {
 		'update:modelValue': {
 			action: 'update:modelValue',
 			description: 'Événement émis lors de la mise à jour de la valeur du champ',
+			table: {
+				type: 'string',
+			},
+			category: 'Events',
 		},
 	},
 	args: {
