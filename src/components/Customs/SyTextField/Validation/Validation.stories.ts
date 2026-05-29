@@ -303,6 +303,7 @@ export const WithCustomRules: Story = {
 						v-model="value"
 						label="Mot de passe"
 						type="password"
+						required
 						:custom-rules="customRules"
 					/>
 				</template>
@@ -318,17 +319,6 @@ export const WithCustomRules: Story = {
 					const value = ref('')
 
 					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (!value || value === '') return false
-									return true
-								},
-								message: 'Le mot de passe est requis.',
-								fieldIdentifier: 'password',
-							},
-						},
 						{
 							type: 'custom',
 							options: {
@@ -370,19 +360,6 @@ export const WithCustomRules: Story = {
 					type: 'custom',
 					options: {
 						validate: (value: string) => {
-							console.log('Validation 1 - required:', value)
-							if (!value || value === '') return false
-							return true
-						},
-						message: 'Le mot de passe est requis.',
-						fieldIdentifier: 'password',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							console.log('Validation 2 - min length:', value)
 							if (value.length < 8) return false
 							return true
 						},
@@ -411,6 +388,7 @@ export const WithCustomRules: Story = {
 				v-model="value"
 				label="Mot de passe"
 				type="password"
+				required
 				:custom-rules="customRules"
 				width="400px"
 			/>
