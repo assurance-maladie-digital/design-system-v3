@@ -337,6 +337,20 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyTable',
+						description: 'Utilisé pour afficher une VDataTable de Vuetify',
+						link: '/?path=/docs/composants-tableaux-sytable--docs',
+						img: `/components/sy-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
+						title: 'SyServerTable',
+						description: 'Utilisé pour afficher une VDataTable Vuetify avec gestion des données côté serveur',
+						link: '/?path=/docs/composants-tableaux-syservertable--docs',
+						img: `/components/sy-server-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
 						title: 'PaginatedTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify avec une pagination persistante.',
 						link: '/?path=/docs/composants-tableaux-paginatedtable--docs',
