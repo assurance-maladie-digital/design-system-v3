@@ -46,6 +46,7 @@ export const paLightTheme = {
 	// Feedback
 	info: baseTokens.color.blue.base,
 	infoVariant: baseTokens.color.blue.lighten80,
+	infoVariant90: baseTokens.color.blue.lighten90,
 	onInfo: baseTokens.color.white.base,
 	onInfoVariant: baseTokens.color.blue.darken20,
 	error: baseTokens.color.orange.darken20,
