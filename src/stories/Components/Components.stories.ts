@@ -270,7 +270,7 @@ export const ComponentsList: StoryObj = {
 						title: 'NirField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir un numéro de Sécurité sociale (NIR).',
 						link: '/?path=/docs/composants-formulaires-nirfield--docs',
-						img: '/components/nir-field.svg',
+						img: `/components/nir-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{

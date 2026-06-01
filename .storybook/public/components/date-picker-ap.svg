@@ -1,8 +1,8 @@
 <svg width="541" height="357" viewBox="0 0 541 357" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="541" height="357" fill="#E7ECF5"/>
 <rect x="63" y="88" width="415" height="181" fill="white"/>
-<rect x="171" y="151" width="200" height="56" rx="4" fill="white"/>
-<rect x="171.5" y="151.5" width="199" height="55" rx="3.5" stroke="black" stroke-opacity="0.38"/>
+<path d="M171 159C171 154.582 174.582 151 179 151H363C367.418 151 371 154.582 371 159V199C371 203.418 367.418 207 363 207H179C174.582 207 171 203.418 171 199V159Z" fill="white"/>
+<path d="M179 151.5H363C367.142 151.5 370.5 154.858 370.5 159V199C370.5 203.142 367.142 206.5 363 206.5H179C174.858 206.5 171.5 203.142 171.5 199V159C171.5 154.858 174.858 151.5 179 151.5Z" stroke="black" stroke-opacity="0.38"/>
 <g clip-path="url(#clip0_7702_4192)">
 <path d="M352 179H347V184H352V179ZM351 168V170H343V168H341V170H340C338.89 170 338.01 170.9 338.01 172L338 186C338 187.1 338.89 188 340 188H354C355.1 188 356 187.1 356 186V172C356 170.9 355.1 170 354 170H353V168H351ZM354 186H340V175H354V186Z" fill="black" fill-opacity="0.6"/>
 </g>
