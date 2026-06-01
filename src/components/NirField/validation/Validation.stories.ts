@@ -638,7 +638,7 @@ const applyValue = async (newValue: string | null) => {
 		showSuccessMessages: true,
 		required: true,
 	},
-	render: (args) => ({
+	render: args => ({
 		components: { NirField, VBtn },
 		setup() {
 			const value = ref<string | null>(null)
