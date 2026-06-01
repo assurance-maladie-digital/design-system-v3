@@ -1,6 +1,7 @@
 import type { StoryObj, Meta } from '@storybook/vue3'
 import { ref } from 'vue'
 import NirField from './NirField.vue'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof NirField> = {
 	title: 'Composants/Formulaires/NirField',
@@ -14,6 +15,7 @@ const meta: Meta<typeof NirField> = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
+		...getValidationDocumentation('string'),
 		modelValue: {
 			description: 'La valeur du modèle pour le champ.',
 			control: 'text',
@@ -346,6 +348,21 @@ const meta: Meta<typeof NirField> = {
 				type: {
 					summary: 'boolean',
 				},
+			},
+		},
+		helpText: {
+			description: 'Texte d\'aide affiché sous le champ. Remplace la zone de messages quand il n\'y a pas d\'erreur, sinon s\'affiche en dessous des messages.',
+			control: 'text',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: '\'\'' },
+			},
+		},
+		successMessages: {
+			description: 'Permet d\'injecter des messages de succès depuis le parent pour le champ numéro. Aucun calcul de validation n\'est exécuté.',
+			control: 'object',
+			table: {
+				type: { summary: 'array<string>' },
 			},
 		},
 		customLocale: {

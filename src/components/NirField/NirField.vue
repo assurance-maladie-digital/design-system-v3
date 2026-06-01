@@ -5,6 +5,7 @@
 	import { locales } from './locales'
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -12,6 +13,7 @@
 		numberLabel?: string
 		keyLabel?: string
 		displayKey?: boolean
+		helpText?: string
 		nirTooltip?: string
 		keyTooltip?: string
 		nirTooltipPosition?: 'prepend' | 'append'
@@ -40,6 +42,7 @@
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé de validation',
 		displayKey: true,
+		helpText: '',
 		nirTooltip: undefined,
 		keyRules: () => [],
 		keyTooltip: undefined,
@@ -74,6 +77,13 @@
 		nirType: 'simple',
 		withoutFieldset: false,
 		customLocale: () => locales,
+		errorMessages: null,
+		warningMessages: null,
+		successMessages: null,
+		hasError: false,
+		hasWarning: false,
+		hasSuccess: false,
+		maxErrors: 1,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -181,6 +191,7 @@
 		if (newValue === undefined || newValue === null) {
 			numberValue.value = ''
 			keyValue.value = ''
+			clearValidation()
 			return
 		}
 		if (newValue.length === 15) {
@@ -228,6 +239,7 @@
 		keyValidation,
 		validateFields,
 		hasFieldErrors,
+		clearValidation,
 	} = useNirValidation(
 		numberValue,
 		keyValue,
@@ -255,11 +267,29 @@
 		toRef(props, 'useVuetifyValidation'),
 		toRef(props, 'numberRules'),
 		toRef(props, 'keyRules'),
+		toRef(props, 'errorMessages'),
+		toRef(props, 'warningMessages'),
+		toRef(props, 'successMessages'),
+		toRef(props, 'hasError'),
+		toRef(props, 'hasWarning'),
+		toRef(props, 'hasSuccess'),
+		toRef(props, 'maxErrors'),
 	)
 
 	const validateOnSubmit = () => {
 		return validateFields(true)
 	}
+
+	useValidatable(validateOnSubmit, clearValidation)
+
+	const hasMessages = computed(() => {
+		if (props.disableErrorHandling) return false
+		return hasFieldErrors.value
+			|| numberValidation.hasWarning.value
+			|| keyValidation.hasWarning.value
+			|| (numberValidation.hasSuccess.value && props.showSuccessMessages)
+			|| (keyValidation.hasSuccess.value && props.showSuccessMessages)
+	})
 
 	// Propriétés calculées pour les attributs ARIA et les états d'erreur
 	const ariaRequired = computed(() => props.required ? 'true' : undefined)
@@ -339,12 +369,14 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation,
 		numberMask,
 		keyMask,
 		numberValidation,
 		keyValidation,
 	} satisfies {
 		validateOnSubmit: () => Promise<boolean>
+		clearValidation: () => void
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		numberMask: { mask: string, preProcess: (value: string) => string, tokens: Record<string, any> }
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -449,6 +481,13 @@
 			/>
 		</div>
 		<div
+			v-if="helpText && !hasMessages && !hideDetails"
+			class="sy-nir-help-text"
+			style="flex: 1 0 100%;"
+		>
+			{{ helpText }}
+		</div>
+		<div
 			class="sy-messages"
 			style="flex: 1 0 100%;"
 		>
@@ -512,6 +551,13 @@
 					:messages="keyValidation.successes.value"
 				/>
 			</div>
+		</div>
+		<div
+			v-if="helpText && hasMessages && !hideDetails"
+			class="sy-nir-help-text"
+			style="flex: 1 0 100%;"
+		>
+			{{ helpText }}
 		</div>
 	</component>
 </template>
@@ -590,6 +636,15 @@
 
 .sy-hide-detail {
 	padding-bottom: 6px;
+}
+
+.sy-nir-help-text {
+	font-size: 0.75rem;
+	font-weight: 400;
+	letter-spacing: 0.0333em;
+	line-height: 16px;
+	padding-inline: 16px;
+	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
 }
 
 .sy-number-errors,

@@ -13,16 +13,23 @@ export type NirValidationProps = {
 	customNumberWarningRules?: SyValidationRule[]
 	customRulesPrecedence?: boolean
 	disabled?: boolean
+	errorMessages?: string[] | null
+	hasError?: boolean
+	hasSuccess?: boolean
+	hasWarning?: boolean
 	isValidateOnBlur?: boolean
 	keyLabel?: string
 	keyRules?: VuetifyValidationRule[]
+	maxErrors?: number
 	nirType?: 'simple' | 'complexe'
 	numberLabel?: string
 	numberRules?: VuetifyValidationRule[]
 	readonly?: boolean
 	required?: boolean
 	showSuccessMessages?: boolean
+	successMessages?: string[] | null
 	useVuetifyValidation?: boolean
+	warningMessages?: string[] | null
 }
 
 /**
@@ -55,6 +62,13 @@ export function useNirValidation(
 	useVuetifyValidation: Ref<boolean>,
 	vuetifyNumberRules: Ref<VuetifyValidationRule[]>,
 	vuetifyKeyRules: Ref<VuetifyValidationRule[]>,
+	errorMessages: Ref<string[] | null | undefined>,
+	warningMessages: Ref<string[] | null | undefined>,
+	successMessages: Ref<string[] | null | undefined>,
+	hasErrorProp: Ref<boolean>,
+	hasWarningProp: Ref<boolean>,
+	hasSuccessProp: Ref<boolean>,
+	maxErrors: Ref<number>,
 ) {
 	// Règles de validation
 	const numberRules = computed(() => {
@@ -212,6 +226,13 @@ export function useNirValidation(
 		customWarningRules: computed(() => unmaskedNumberValue.value.length === 13 ? customNumberWarningRules.value : []),
 		rules: vuetifyNumberRules,
 		focused: numberFieldFocused,
+		errorMessages,
+		warningMessages,
+		successMessages,
+		hasErrorProp,
+		hasWarningProp,
+		hasSuccessProp,
+		maxErrors,
 	})
 
 	const keyValidation = useValidation({
@@ -268,10 +289,16 @@ export function useNirValidation(
 
 	const hasFieldErrors = computed(() => numberValidation.hasError.value || (displayKey.value && keyValidation.hasError.value))
 
+	const clearValidation = () => {
+		numberValidation.clearValidation()
+		keyValidation.clearValidation()
+	}
+
 	return {
 		numberValidation,
 		keyValidation,
 		validateFields,
 		hasFieldErrors,
+		clearValidation,
 	}
 }
