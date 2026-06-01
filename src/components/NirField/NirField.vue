@@ -183,36 +183,6 @@
 		}
 	})
 
-	// Synchronisation avec modelValue
-	watch(modelValueRef, (newValue) => {
-		// Ignorer les mises à jour internes pour éviter les boucles infinies
-		if (isInternalUpdate.value) return
-
-		if (newValue === undefined || newValue === null) {
-			numberValue.value = ''
-			keyValue.value = ''
-			clearValidation()
-			return
-		}
-		if (newValue.length === 15) {
-			const number = newValue.slice(0, -2)
-			const key = newValue.slice(-2)
-			numberValue.value = number
-			keyValue.value = key
-		}
-		if (newValue.length === 14) {
-			const number = newValue.slice(0, -1)
-			const key = newValue.slice(-1)
-			numberValue.value = number
-			keyValue.value = key
-		}
-		if (newValue.length <= 13) {
-			const number = newValue
-			numberValue.value = number
-			keyValue.value = ''
-		}
-	}, { immediate: true })
-
 	// Émission de la valeur
 	const emitValue = () => {
 		const number = unmaskedNumberValue.value
@@ -275,6 +245,35 @@
 		toRef(props, 'hasSuccess'),
 		toRef(props, 'maxErrors'),
 	)
+
+	// Synchronisation avec modelValue — placé après useNirValidation pour éviter le TDZ sur clearValidation
+	watch(modelValueRef, (newValue) => {
+		if (isInternalUpdate.value) return
+
+		if (newValue === undefined || newValue === null) {
+			numberValue.value = ''
+			keyValue.value = ''
+			clearValidation()
+			return
+		}
+		if (newValue.length === 15) {
+			const number = newValue.slice(0, -2)
+			const key = newValue.slice(-2)
+			numberValue.value = number
+			keyValue.value = key
+		}
+		if (newValue.length === 14) {
+			const number = newValue.slice(0, -1)
+			const key = newValue.slice(-1)
+			numberValue.value = number
+			keyValue.value = key
+		}
+		if (newValue.length <= 13) {
+			const number = newValue
+			numberValue.value = number
+			keyValue.value = ''
+		}
+	}, { immediate: true })
 
 	const validateOnSubmit = () => {
 		return validateFields(true)

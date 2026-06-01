@@ -446,4 +446,76 @@ describe('useNirValidation via NirField component', () => {
 		const isValid = await wrapper.vm.validateOnSubmit()
 		expect(isValid).toBe(true)
 	})
+
+	it('ne devrait afficher aucune erreur ni état quand disableErrorHandling est vrai', async () => {
+		wrapper = await createWrapper({ required: true, disableErrorHandling: true })
+
+		await wrapper.find('.number-field input').trigger('focus')
+		await wrapper.find('.number-field input').trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+		expect(wrapper.vm.numberValidation.hasError.value).toBe(false)
+
+		await wrapper.find('.key-field input').trigger('focus')
+		await wrapper.find('.key-field input').trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.keyValidation.errors.value).toEqual([])
+		expect(wrapper.vm.keyValidation.hasError.value).toBe(false)
+	})
+
+	it('devrait valider à chaque changement de valeur quand isValidateOnBlur est faux', async () => {
+		wrapper = await createWrapper({ required: true, isValidateOnBlur: false })
+
+		const numberInput = wrapper.find('.number-field input')
+
+		// Saisie d'une valeur invalide sans blur
+		await numberInput.setValue('123')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// L'erreur doit apparaître immédiatement, sans blur
+		expect(wrapper.vm.numberValidation.errors.value).toContain(locales.errorInvalidNumber)
+
+		// Correction vers une valeur valide
+		await numberInput.setValue('2940375120005')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+	})
+
+	it('devrait afficher les errorMessages injectés depuis le parent', async () => {
+		const injectedError = 'Erreur injectée depuis le parent'
+		wrapper = await createWrapper({ errorMessages: [injectedError] })
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// L'état d'erreur doit refléter le message injecté sans déclencher de validation
+		expect(wrapper.vm.numberValidation.hasError.value).toBe(true)
+		expect(wrapper.vm.numberValidation.errors.value).toContain(injectedError)
+	})
+
+	it('devrait réinitialiser la validation quand modelValue passe à null ou undefined', async () => {
+		// Partir d'un NIR invalide pour avoir une erreur
+		wrapper = await createWrapper({ required: true, modelValue: '199012345678' })
+
+		await wrapper.vm.validateOnSubmit()
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value.length).toBeGreaterThan(0)
+
+		// Remettre modelValue à undefined simule un reset depuis le parent
+		await wrapper.setProps({ modelValue: undefined })
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+		expect(wrapper.vm.keyValidation.errors.value).toEqual([])
+	})
 })
