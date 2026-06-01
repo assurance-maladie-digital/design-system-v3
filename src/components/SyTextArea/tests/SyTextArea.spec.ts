@@ -345,6 +345,7 @@ describe('SyTextArea', () => {
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
+				showSuccessMessages: true,
 				customRules: [
 					{
 						type: 'custom',

@@ -250,6 +250,92 @@ const onSubmit = (event: { isValid: boolean }) => {
 }
 
 /**
+ * Validation avec customSuccessRules (règles de succès Synapse)
+ * Affiche un message de succès quand une option valide est sélectionnée
+ */
+export const WithSuccess: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Une option valide est présélectionnée et déclenche la confirmation de succès au chargement.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyRadioGroup
+		ref="radioRef"
+		v-model="selected"
+		label="Choisissez une option"
+		:options="options"
+		show-success-messages
+		:custom-success-rules="[
+			{
+				type: 'custom',
+				options: {
+					validate: (v) => v !== null && v !== undefined,
+					successMessage: 'Sélection confirmée.'
+				}
+			}
+		]"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyRadioGroup } from '@cnamts/synapse'
+
+const selected = ref<string | null>('a')
+const radioRef = ref(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+
+onMounted(() => {
+	radioRef.value?.validateOnSubmit()
+})
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyRadioGroup },
+		setup() {
+			const selected = ref<string | null>('a')
+			const radioRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			const customSuccessRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (v: unknown) => v !== null && v !== undefined,
+						successMessage: 'Sélection confirmée.',
+					},
+				},
+			]
+
+			return { args, selected, radioRef, customSuccessRules }
+		},
+		template: `
+			<SyRadioGroup
+				ref="radioRef"
+				v-model="selected"
+				v-bind="args"
+				show-success-messages
+				:custom-success-rules="customSuccessRules"
+			/>
+		`,
+	}),
+}
+
+/**
  * showSuccessMessages: false — les messages de succès sont masqués
  * Le champ est validé mais aucun message positif n'est affiché
  */

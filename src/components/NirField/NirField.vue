@@ -52,7 +52,7 @@
 		customNumberWarningRules: () => [],
 		customKeyWarningRules: () => [],
 		customRulesPrecedence: false,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		width: '100%',
 		bgColor: 'white',
 		disabled: false,

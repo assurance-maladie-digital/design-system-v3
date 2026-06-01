@@ -115,7 +115,7 @@
 		placeholder: undefined,
 		readonly: false,
 		required: false,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		showWeekNumber: false,
 		textFieldActivator: false,
 		title: false,

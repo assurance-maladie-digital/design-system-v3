@@ -51,7 +51,7 @@
 		customRules: () => [],
 		customWarningRules: () => [],
 		customSuccessRules: () => [],
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		displayAsterisk: false,
 		isValidateOnBlur: true,
 		disableErrorHandling: false,
