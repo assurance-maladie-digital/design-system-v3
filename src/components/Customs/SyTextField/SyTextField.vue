@@ -145,7 +145,7 @@
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
 		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
-		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		successDisplay: toRef(props, 'successDisplay'),
 		disableErrorHandling: toRef(props, 'disableErrorHandling'),
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
 		label: toRef(props, 'label'),
@@ -542,7 +542,7 @@
 			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? (props.showSuccessMessages ? successes : []) : messages))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? (props.successDisplay === 'all' ? successes : []) : messages))"
 			:min-width="props.minWidth"
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"
@@ -567,8 +567,8 @@
 			:class="{
 				'error-field': hasError,
 				'warning-field': hasWarning,
-				'success-field': hasSuccess && props.showSuccessMessages,
-				'basic-field': !hasError && !hasWarning && (!hasSuccess || !props.showSuccessMessages)
+				'success-field': hasSuccess && props.successDisplay !== 'none',
+				'basic-field': !hasError && !hasWarning && (!hasSuccess || props.successDisplay === 'none')
 			}"
 			@focus="focused = true; emit('focus')"
 			@blur="focused = false; emit('blur')"

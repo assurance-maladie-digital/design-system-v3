@@ -31,7 +31,7 @@
 		customRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
 		customSuccessRules?: ValidationRule[]
-		showSuccessMessages?: boolean
+		successDisplay?: 'none' | 'icon' | 'all'
 		displayAsterisk?: boolean
 		isValidateOnBlur?: boolean
 		disableErrorHandling?: boolean
@@ -51,7 +51,7 @@
 		customRules: () => [],
 		customWarningRules: () => [],
 		customSuccessRules: () => [],
-		showSuccessMessages: false,
+		successDisplay: 'none',
 		displayAsterisk: false,
 		isValidateOnBlur: true,
 		disableErrorHandling: false,
@@ -101,7 +101,7 @@
 	// Initialisation du composable de validation
 	const { errors, warnings, successes, displaySuccesses, validateField } = !props.readonly
 		? useValidation({
-			showSuccessMessages: props.showSuccessMessages,
+			showSuccessMessages: props.successDisplay === 'all',
 			fieldIdentifier: props.label || 'password',
 			disableErrorHandling: props.disableErrorHandling,
 		})
@@ -120,14 +120,14 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlert
-		if (hasSuccess.value && props.showSuccessMessages) return mdiCheck
+		if (hasSuccess.value && props.successDisplay !== 'none') return mdiCheck
 		return ''
 	})
 
 	const validationColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value && props.showSuccessMessages) return 'success'
+		if (hasSuccess.value && props.successDisplay !== 'none') return 'success'
 		return 'rgb(0 0 0 / 100%)'
 	})
 
@@ -257,7 +257,7 @@
 		:warning-messages="warnings"
 		:success-messages="displaySuccesses"
 		:has-success="hasSuccess"
-		:show-success-messages="props.showSuccessMessages"
+		:success-display="props.successDisplay"
 		:readonly="props.readonly"
 		:disabled="props.disabled"
 		:placeholder="props.placeholder"

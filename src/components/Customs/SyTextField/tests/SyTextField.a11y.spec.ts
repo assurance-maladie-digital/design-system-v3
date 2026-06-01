@@ -15,7 +15,7 @@ describe('SyTextField – accessibility (axe)', () => {
 				label: 'Nom',
 				modelValue: '',
 				required: true,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 			},
 		})
 

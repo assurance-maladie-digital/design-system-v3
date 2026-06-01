@@ -9,7 +9,7 @@ export function useSyTextFieldValidation(params: {
 	disabled: Ref<boolean>
 	required: Ref<boolean>
 	isValidateOnBlur: Ref<boolean>
-	showSuccessMessages: Ref<boolean>
+	successDisplay: Ref<'none' | 'icon' | 'all'>
 	disableErrorHandling: Ref<boolean>
 	useVuetifyValidation: Ref<boolean>
 	label: Ref<string | undefined>
@@ -44,7 +44,7 @@ export function useSyTextFieldValidation(params: {
 		disabled: params.disabled,
 		required: params.required,
 		isValidateOnBlur: params.isValidateOnBlur,
-		showSuccessMessages: params.showSuccessMessages,
+		showSuccessMessages: computed(() => params.successDisplay.value === 'all'),
 		disableErrorHandling: params.disableErrorHandling,
 		useVuetifyValidation: params.useVuetifyValidation,
 		label: params.label,
@@ -68,27 +68,27 @@ export function useSyTextFieldValidation(params: {
 	const iconColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value && params.showSuccessMessages.value) return 'success'
+		if (hasSuccess.value && params.successDisplay.value !== 'none') return 'success'
 		return 'rgba(0, 0, 0, 1)'
 	})
 
 	const clearButtonColorClass = computed(() => {
 		if (hasError.value) return 'error-field'
 		if (hasWarning.value) return 'warning-field'
-		if (hasSuccess.value && params.showSuccessMessages.value) return 'success-field'
+		if (hasSuccess.value && params.successDisplay.value !== 'none') return 'success-field'
 		return 'text-iconBase'
 	})
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlertOutline
-		if (hasSuccess.value && params.showSuccessMessages.value) return mdiCheck
+		if (hasSuccess.value && params.successDisplay.value !== 'none') return mdiCheck
 		return null
 	})
 
 	const hasMessages = computed(() => {
 		if (params.disableErrorHandling.value) return false
-		return (params.errorMessages.value?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && params.showSuccessMessages.value)
+		return (params.errorMessages.value?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && params.successDisplay.value !== 'none')
 	})
 
 	return {

@@ -215,7 +215,7 @@ export const WithSuccess: Story = {
     v-model="value"
     :items="items"
     label="Option"
-    show-success-messages
+    success-display
     :customSuccessRules="[
       {
         type: 'custom',
@@ -247,7 +247,7 @@ const items = [
 	args: {
 		'items': items,
 		'label': 'Option',
-		'showSuccessMessages': true,
+		'successDisplay': 'all',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -287,7 +287,7 @@ export const NoSuccessMessage: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `showSuccessMessages: false`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché. Utile quand un retour positif silencieux est suffisant.',
+				story: 'Avec `successDisplay: \'none\'`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché. Utile quand un retour positif silencieux est suffisant.',
 			},
 		},
 		sourceCode: [
@@ -300,7 +300,7 @@ export const NoSuccessMessage: Story = {
     v-model="value"
     :items="items"
     label="Option"
-    :show-success-messages="false"
+    success-display="icon"
     :customSuccessRules="[
       {
         type: 'custom',
@@ -339,7 +339,7 @@ onMounted(() => {
 	args: {
 		'items': items,
 		'label': 'Option',
-		'showSuccessMessages': false,
+		'successDisplay': 'icon',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -394,7 +394,7 @@ export const NoValidateOnBlur: Story = {
       :items="items"
       label="Option"
       :is-validate-on-blur="false"
-      :show-success-messages="true"
+      :success-display="true"
       :custom-rules="customRules"
       :custom-success-rules="customSuccessRules"
       @update:model-value="handleManualChange"
@@ -475,7 +475,7 @@ const applyButtonValue = async (newValue) => {
 		items,
 		label: 'Option',
 		isValidateOnBlur: false,
-		showSuccessMessages: true,
+		successDisplay: 'all',
 	},
 	render: (args) => {
 		return {
@@ -853,7 +853,7 @@ export const SyFormVuetifyValidation: Story = {
       :items="items"
       label="Option"
       use-vuetify-validation
-      :show-success-messages="false"
+      success-display="none"
       :rules="[v => !!v || 'Ce champ est requis']"
     />
     <VBtn type="submit" color="primary" class="mt-4">
@@ -892,7 +892,7 @@ function onSubmit(event: { isValid: boolean }) {
 		'items': items,
 		'label': 'Option',
 		'useVuetifyValidation': true,
-		'showSuccessMessages': false,
+		'successDisplay': 'none',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({

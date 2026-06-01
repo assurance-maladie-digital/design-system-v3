@@ -11,7 +11,7 @@ export type ValidationProps = {
 	hasError?: boolean
 	hasWarning?: boolean
 	hasSuccess?: boolean
-	showSuccessMessages?: boolean
+	successDisplay?: 'none' | 'icon' | 'all'
 }
 
 export function useMonthPickerValidation(props: ValidationProps) {
@@ -25,6 +25,6 @@ export function useMonthPickerValidation(props: ValidationProps) {
 		hasError: props.hasError,
 		hasWarning: props.hasWarning,
 		hasSuccess: props.hasSuccess,
-		showSuccessMessages: props.showSuccessMessages,
+		successDisplay: props.successDisplay,
 	}))
 }

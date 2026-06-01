@@ -73,7 +73,7 @@ const meta = {
 			description: 'Règles de succès personnalisées',
 			control: 'object',
 		},
-		showSuccessMessages: {
+		successDisplay: {
 			description: 'Afficher les messages de succès',
 			control: 'boolean',
 		},

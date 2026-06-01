@@ -28,7 +28,7 @@ export function useSyAutocompleteValidation(props: FieldValidationProps) {
 		disabled: toRef(props, 'disabled') as Ref<boolean>,
 		required: toRef(props, 'required') as Ref<boolean>,
 		isValidateOnBlur: toRef(props, 'isValidateOnBlur') as Ref<boolean>,
-		showSuccessMessages: toRef(props, 'showSuccessMessages') as Ref<boolean>,
+		showSuccessMessages: computed(() => props.successDisplay === 'all'),
 		disableErrorHandling: toRef(props, 'disableErrorHandling') as Ref<boolean>,
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation') as Ref<boolean>,
 		label: toRef(props, 'label') as Ref<string | undefined>,
@@ -65,7 +65,7 @@ export function useSyAutocompleteValidation(props: FieldValidationProps) {
 		if (props.useVuetifyValidation) return null
 		if (displayHasError.value) return mdiAlertCircle
 		if (displayHasWarning.value) return mdiAlertOutline
-		if (displayHasSuccess.value && props.showSuccessMessages) return mdiCheck
+		if (displayHasSuccess.value && props.successDisplay !== 'none') return mdiCheck
 		return null
 	})
 

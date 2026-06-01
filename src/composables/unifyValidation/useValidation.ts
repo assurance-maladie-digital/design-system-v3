@@ -24,7 +24,7 @@ export interface FieldValidationProps {
 	readonly?: boolean
 	required?: boolean
 	rules?: VuetifyValidationRule[]
-	showSuccessMessages?: boolean
+	successDisplay?: 'none' | 'icon' | 'all'
 	successMessages?: string[] | null
 	// When true (Vuetify native mode), the controller should not handle errors/successes
 	useVuetifyValidation?: boolean
@@ -45,7 +45,7 @@ export const validationPropsDefaults = {
 	disabled: false,
 	required: false,
 	isValidateOnBlur: true,
-	showSuccessMessages: false,
+	successDisplay: 'none',
 	disableErrorHandling: false,
 	customRules: () => [],
 	customWarningRules: () => [],

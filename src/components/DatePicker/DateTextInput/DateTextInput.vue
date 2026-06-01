@@ -47,7 +47,7 @@
 		placeholder?: string
 		readonly?: boolean
 		required?: boolean
-		showSuccessMessages?: boolean
+		successDisplay?: 'none' | 'icon' | 'all'
 		title?: string | false
 		/** @internal Désactive la validation interne quand utilisé dans un parent avec validation */
 		skipInternalValidation?: boolean
@@ -75,7 +75,7 @@
 		placeholder: undefined,
 		readonly: false,
 		required: false,
-		showSuccessMessages: false,
+		successDisplay: 'none',
 		title: false,
 		skipInternalValidation: false,
 	})
@@ -115,7 +115,7 @@
 	const shouldUseInternalValidation = computed(() => !props.skipInternalValidation && !readonly.value)
 
 	const bridgeValidation = useDatePickerValidationBridge({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: props.successDisplay === 'all',
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: true,
 		required: props.required,
@@ -1201,7 +1201,7 @@
 		:warning-messages="warningMessages"
 		:success-messages="successMessages"
 		:has-success="isOnSuccess"
-		:show-success-messages="props.showSuccessMessages"
+		:success-display="props.successDisplay"
 		:bg-color="props.bgColor"
 		color="primary"
 		:is-clearable="!props.readonly"

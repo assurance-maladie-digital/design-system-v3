@@ -40,7 +40,7 @@
 					options: { message: locales.required },
 				}
 			]"
-			:show-success-messages="false"
+			success-display="none"
 			:has-success="success"
 			:disabled="state === 'rejected'"
 			:label="label"

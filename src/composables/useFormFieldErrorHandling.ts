@@ -12,7 +12,7 @@ export interface UseFormFieldErrorHandlingProps {
 	customRules?: ValidationRule[]
 	customWarningRules?: ValidationRule[]
 	customSuccessRules?: ValidationRule[]
-	showSuccessMessages?: boolean
+	successDisplay?: 'none' | 'icon' | 'all'
 	disableErrorHandling?: boolean
 	required?: boolean
 	label?: string
@@ -38,7 +38,7 @@ export const useFormFieldErrorHandling = (
 	emitUpdate?: () => void,
 ): UseFormFieldErrorHandlingReturn => {
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages ?? false,
+		showSuccessMessages: props.successDisplay === 'all',
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling ?? false,
 	})

@@ -4,6 +4,6 @@ export const config = {
 		class: 'ma-3',
 		variant: 'outlined',
 		noIcon: true,
-		showSuccessMessages: false,
+		successDisplay: 'none',
 	},
 } as const

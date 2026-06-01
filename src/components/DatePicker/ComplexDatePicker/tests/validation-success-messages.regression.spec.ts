@@ -15,7 +15,7 @@ describe('Validation Success Messages Regression', () => {
 				modelValue: '',
 				label: 'Date de test',
 				format: 'DD/MM/YYYY',
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				required: true,
 			},
 		})
@@ -39,7 +39,7 @@ describe('Validation Success Messages Regression', () => {
 				modelValue: '',
 				label: 'Date isolée',
 				format: 'DD/MM/YYYY',
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				required: true,
 			},
 		})
@@ -62,7 +62,7 @@ describe('Validation Success Messages Regression', () => {
 				modelValue: '',
 				label: 'Date avec skip',
 				format: 'DD/MM/YYYY',
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				required: true,
 				skipInternalValidation: true, // Simule utilisation dans ComplexDatePicker
 			},

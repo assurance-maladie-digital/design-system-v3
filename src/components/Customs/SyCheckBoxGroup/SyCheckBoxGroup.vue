@@ -30,7 +30,7 @@
 			options?: Option[]
 			readonly?: boolean
 			required?: boolean
-			showSuccessMessages?: boolean
+			successDisplay?: 'none' | 'icon' | 'all'
 			successMessages?: string[] | null
 			title?: string
 			warningMessages?: string[] | null
@@ -57,7 +57,7 @@
 			options: () => [],
 			readonly: false,
 			required: false,
-			showSuccessMessages: false,
+			successDisplay: 'none',
 			successMessages: null,
 			title: undefined,
 			warningMessages: null,
@@ -83,7 +83,7 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: props.successDisplay === 'all',
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -192,7 +192,7 @@
 	const computedAriaDescribedby = computed(() => {
 		const ids: string[] = []
 
-		const shouldShowMessages = props.hideDetails !== true && (hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages))
+		const shouldShowMessages = props.hideDetails !== true && (hasError.value || hasWarning.value || (hasSuccess.value && props.successDisplay !== 'none'))
 		if (vMessagesId.value && shouldShowMessages) {
 			ids.push(vMessagesId.value)
 		}
@@ -225,7 +225,7 @@
 		class="sy-checkbox-group"
 		:class="{
 			'warning-field': hasWarning && !hasError,
-			'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
+			'success-field': hasSuccess && !hasError && !hasWarning && props.successDisplay !== 'none',
 			'error-field': hasError,
 		}"
 		:aria-describedby="computedAriaDescribedby"
@@ -262,7 +262,7 @@
 		</div>
 
 		<div
-			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages))"
+			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.successDisplay !== 'none'))"
 			class="v-input__details sy-checkbox-group__messages"
 		>
 			<VMessages

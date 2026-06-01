@@ -345,7 +345,7 @@ describe('SyTextArea', () => {
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				customRules: [
 					{
 						type: 'custom',
@@ -408,7 +408,7 @@ describe('SyTextArea', () => {
 		expect(wrapper.text()).toContain('Erreur isValidateOnBlur')
 	})
 
-	it('keeps success visual state but hides success text when showSuccessMessages is false', async () => {
+	it('keeps success visual state but hides success text when successDisplay is \'none\'', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
 				uniqueId: 'textarea-1',
@@ -416,7 +416,7 @@ describe('SyTextArea', () => {
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
-				showSuccessMessages: false,
+				successDisplay: 'none',
 				customSuccessRules: [
 					{
 						type: 'custom',

@@ -4,7 +4,7 @@ import { useDatePickerValidationBridge } from '../useDatePickerValidationBridge'
 import type { DateObjectValue } from '../../types'
 
 const createBridgeOptions = (overrides = {}) => ({
-	showSuccessMessages: true,
+	successDisplay: 'all',
 	disableErrorHandling: false,
 	noCalendar: false,
 	required: false,

@@ -36,7 +36,7 @@
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
-		showSuccessMessages: { type: Boolean, default: false },
+		successDisplay: { type: String as PropType<'none' | 'icon' | 'all'>, default: 'none' },
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
@@ -301,7 +301,7 @@
 	})
 
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: props.successDisplay === 'all',
 		disableErrorHandling: shouldDisableErrorHandling.value,
 	})
 
@@ -318,7 +318,7 @@
 		if (shouldDisableErrorHandling.value) return '#222324'
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value && props.showSuccessMessages) return 'success'
+		if (hasSuccess.value && props.successDisplay !== 'none') return 'success'
 		return '#222324'
 	})
 
@@ -476,7 +476,7 @@
 					:error-messages="errors"
 					:warning-messages="warnings"
 					:success-messages="successes"
-					:show-success-messages="props.showSuccessMessages"
+					:success-display="props.successDisplay"
 					:disable-error-handling="shouldDisableErrorHandling"
 					:variant="outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="displayAsterisk"
@@ -488,7 +488,7 @@
 						'phone-field': true,
 						'error-field': hasError,
 						'warning-field': hasWarning,
-						'success-field': hasSuccess && props.showSuccessMessages
+						'success-field': hasSuccess && props.successDisplay !== 'none'
 					}"
 					color="primary"
 					type="tel"
@@ -512,7 +512,7 @@
 								decorative
 							/>
 							<SyIcon
-								v-else-if="hasSuccess"
+								v-else-if="hasSuccess && props.successDisplay !== 'none'"
 								color="success"
 								:icon="mdiCheck"
 								decorative

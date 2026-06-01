@@ -32,7 +32,7 @@ describe('Validation Croisée Regression Tests', () => {
 				label: 'Date B',
 				format: 'DD/MM/YYYY',
 				customRules: dateBRules.value,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 			},
 		})
 
@@ -125,7 +125,7 @@ describe('Validation Croisée Regression Tests', () => {
 				label: 'Date',
 				format: 'DD/MM/YYYY',
 				customRules: [], // Pas de règles
-				showSuccessMessages: true,
+				successDisplay: 'all',
 			},
 		})
 

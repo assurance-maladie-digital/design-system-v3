@@ -131,7 +131,7 @@ const meta: Meta<typeof NirField> = {
 				},
 			},
 		},
-		showSuccessMessages: {
+		successDisplay: {
 			description: 'Indique si les messages de succès sont affichés.',
 			control: 'boolean',
 			default: false,
@@ -523,7 +523,7 @@ export const WithoutKey: Story = {
 export const WithSuccessMessages: Story = {
 	args: {
 		...Default.args,
-		showSuccessMessages: true,
+		successDisplay: 'all',
 	},
 	parameters: {
 		...Default.parameters,
@@ -537,7 +537,7 @@ export const WithSuccessMessages: Story = {
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
-      :showSuccessMessages="true"
+      success-display="all"
      />
     </template>
     `,
@@ -564,7 +564,7 @@ export const WithoutSuccessMessages: Story = {
 				story: `
 ### Messages de succès
 
-Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
+Cette story illustre l'utilisation de la propriété \`successDisplay\` qui permet de contrôler
 l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
 
 Cela peut être utile pour réduire la verbosité de l'interface lorsque les messages de succès
@@ -588,7 +588,7 @@ ne sont pas nécessaires dans certains contextes.
     v-model="value"
     label="NIR sans messages de succès"
     required
-    :showSuccessMessages="false"
+    :successDisplay="false"
   />
 </template>`,
 			},
@@ -611,7 +611,7 @@ ne sont pas nécessaires dans certains contextes.
               v-model="value1"
               label="NIR avec messages de succès"
               required
-              showSuccessMessages
+              successDisplay
             />
           </div>
 
@@ -621,7 +621,7 @@ ne sont pas nécessaires dans certains contextes.
               v-model="value2"
               label="NIR sans messages de succès"
               required
-              :showSuccessMessages="false"
+              :successDisplay="false"
             />
           </div>
         </div>
@@ -970,7 +970,6 @@ L'infobulle est positionnée après le champ et s'affiche au survol de l'icône 
 export const WithWarnings: Story = {
 	args: {
 		...Default.args,
-		showSuccessMessages: false,
 		customNumberWarningRules: [
 			{
 				type: 'custom',
@@ -1064,7 +1063,7 @@ Les erreurs sont affichées en rouge et bloquent la validation.
      <NirField
       v-model="value"
       :required="false"
-      :show-success-messages="true"
+      :success-display="true"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
       :display-key="true"
@@ -1168,7 +1167,7 @@ Cette story montre l'utilisation du NirField dans un formulaire avec validation.
 		label="NirField"
 		required
 		:displayKey="false"
-		showSuccessMessages
+		successDisplay
 		ref="nirField"
 	/>
 	<v-btn
@@ -1229,7 +1228,7 @@ const onSubmit = async () => {
 					v-bind="args"
 					label="NirField"
 					required
-					showSuccessMessages
+					successDisplay
                     :displayKey="false"
 					ref="nirField"
 				/>
@@ -1330,7 +1329,7 @@ export const WithCustomLocale: Story = {
 	args: {
 		...Default.args,
 		required: true,
-		showSuccessMessages: true,
+		successDisplay: 'all',
 		customLocale: {
 			numberLabel: 'Numéro de sécurité sociale',
 			keyLabel: 'Clé',
@@ -1369,7 +1368,7 @@ Clés supportées :
   <NirField
     v-model="value"
     required
-    show-success-messages
+    success-display
     :custom-locale="{
       errorRequiredNumber: 'Veuillez renseigner votre numéro de sécurité sociale (13 caractères).',
       errorInvalidNumber: 'Format NIR non reconnu, merci de vérifier.',

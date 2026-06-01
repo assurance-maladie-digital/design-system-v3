@@ -55,7 +55,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 				options: defaultOptions,
 				hasWarning: true,
 				warningMessages: ['This is a warning message'],
-				showSuccessMessages: true,
+				successDisplay: 'all',
 			},
 		})
 
@@ -72,7 +72,7 @@ describe('SyRadioGroup - Visual regression tests', () => {
 				modelValue: 'A',
 				required: true,
 				hasSuccess: true,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				successMessages: ['Sélection valide.'],
 			},
 		})

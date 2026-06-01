@@ -26,7 +26,7 @@
 			customRules?: ValidationRule[]
 			customWarningRules?: ValidationRule[]
 			customSuccessRules?: ValidationRule[]
-			showSuccessMessages?: boolean
+			successDisplay?: 'none' | 'icon' | 'all'
 			isValidateOnBlur?: boolean
 			disableErrorHandling?: boolean
 			id?: string
@@ -57,7 +57,7 @@
 			customRules: () => [],
 			customWarningRules: () => [],
 			customSuccessRules: () => [],
-			showSuccessMessages: false,
+			successDisplay: 'none',
 			isValidateOnBlur: false,
 			disableErrorHandling: false,
 			id: undefined,
@@ -107,7 +107,7 @@
 	const isSubmitted = ref(false)
 
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: props.successDisplay === 'all',
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -348,7 +348,7 @@
 			:title="props.title"
 			:color="props.color"
 			:class="{
-				'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
+				'success-field': hasSuccess && !hasError && !hasWarning && props.successDisplay !== 'none',
 				'warning-field': hasWarning && !hasError,
 				'error-field': hasError,
 			}"

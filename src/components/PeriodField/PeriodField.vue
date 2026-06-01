@@ -31,7 +31,7 @@
 		placeholderTo?: string
 		readonly?: boolean
 		required?: boolean
-		showSuccessMessages?: boolean
+		successDisplay?: 'none' | 'icon' | 'all'
 		showWeekNumber?: boolean
 	}>(), {
 		bgColor: 'white',
@@ -54,7 +54,7 @@
 		placeholderTo: 'Fin',
 		readonly: false,
 		required: false,
-		showSuccessMessages: false,
+		successDisplay: 'none',
 		showWeekNumber: false,
 	})
 
@@ -70,13 +70,13 @@
 
 	// Utiliser le composable de validation
 	const fromDateValidation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: props.successDisplay === 'all',
 		fieldIdentifier: 'fromDate',
 		disableErrorHandling: props.disableErrorHandling,
 	})
 
 	const toDateValidation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: props.successDisplay === 'all',
 		fieldIdentifier: 'toDate',
 		disableErrorHandling: props.disableErrorHandling,
 	})
@@ -151,8 +151,8 @@
 	)
 
 	// Variable réactive pour contrôler l'affichage des messages de succès
-	const showSuccessMessagesActual = computed(() =>
-		props.disableErrorHandling ? false : props.showSuccessMessages,
+	const successDisplayActual = computed(() =>
+		props.disableErrorHandling ? 'none' : props.successDisplay,
 	)
 
 	// Règles de validation pour la date de fin
@@ -355,7 +355,7 @@
 				:label="props.placeholderFrom"
 				:required="props.disableErrorHandling ? false : props.required"
 				:show-week-number="props.showWeekNumber"
-				:show-success-messages="showSuccessMessagesActual"
+				:success-display="successDisplayActual"
 				:success-message="fromDateValidation.hasSuccess"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
@@ -384,7 +384,7 @@
 				:label="props.placeholderTo"
 				:required="props.disableErrorHandling ? false : props.required"
 				:show-week-number="props.showWeekNumber"
-				:show-success-messages="showSuccessMessagesActual"
+				:success-display="successDisplayActual"
 				:success-message="toDateValidation.hasSuccess"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"

@@ -1040,7 +1040,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 			}
 		}
 	]"
-	showSuccessMessages
+	success-display="all"
 />`,
 			},
 		],
@@ -1069,7 +1069,7 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 						}
 					}
 				]"
-				showSuccessMessages
+				success-display="all"
 			/>
 		`,
 	}),

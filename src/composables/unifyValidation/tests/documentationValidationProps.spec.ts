@@ -6,7 +6,7 @@ const EXPECTED_KEYS = [
 	'disabled',
 	'required',
 	'isValidateOnBlur',
-	'showSuccessMessages',
+	'successDisplay',
 	'disableErrorHandling',
 	'useVuetifyValidation',
 	'label',
@@ -111,9 +111,9 @@ describe('getValidationDocumentation', () => {
 			expect(doc.isValidateOnBlur.table.defaultValue).toEqual({ summary: 'true' })
 		})
 
-		it('showSuccessMessages a un defaultValue true', () => {
+		it('successDisplay a un defaultValue \'none\'', () => {
 			const doc = getValidationDocumentation()
-			expect(doc.showSuccessMessages.table.defaultValue).toEqual({ summary: 'true' })
+			expect(doc.successDisplay.table.defaultValue).toEqual({ summary: '\'none\'' })
 		})
 
 		it('disableErrorHandling a un defaultValue false', () => {
@@ -130,10 +130,15 @@ describe('getValidationDocumentation', () => {
 	describe('contrôles Storybook', () => {
 		it('les props booléennes ont control="boolean"', () => {
 			const doc = getValidationDocumentation()
-			const booleanProps = ['readonly', 'disabled', 'required', 'isValidateOnBlur', 'showSuccessMessages', 'disableErrorHandling', 'useVuetifyValidation', 'hasError', 'hasWarning', 'hasSuccess', 'hideDetails'] as const
+			const booleanProps = ['readonly', 'disabled', 'required', 'isValidateOnBlur', 'disableErrorHandling', 'useVuetifyValidation', 'hasError', 'hasWarning', 'hasSuccess', 'hideDetails'] as const
 			for (const key of booleanProps) {
 				expect(doc[key].control).toBe('boolean')
 			}
+		})
+
+		it('successDisplay a control=\'select\'', () => {
+			const doc = getValidationDocumentation()
+			expect(doc.successDisplay.control).toBe('select')
 		})
 
 		it('label a control="text"', () => {

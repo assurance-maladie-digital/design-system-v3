@@ -931,7 +931,7 @@ describe('SyAutocomplete', () => {
 					label: 'Test success',
 					textKey: 'text',
 					valueKey: 'value',
-					showSuccessMessages: true,
+					successDisplay: 'all',
 					customSuccessRules: [successRule],
 				},
 			})
@@ -941,7 +941,7 @@ describe('SyAutocomplete', () => {
 			expect(wrapper.find('.v-messages').text()).toContain('Succès test')
 		})
 
-		it('hides success message text when showSuccessMessages is false', async () => {
+		it('hides success message text when successDisplay is \'none\'', async () => {
 			wrapper.unmount()
 			const successRule = {
 				type: 'custom',
@@ -951,11 +951,11 @@ describe('SyAutocomplete', () => {
 				props: {
 					modelValue: '1',
 					items,
-					label: 'Test showSuccessMessages false',
+					label: 'Test successDisplay none',
 					textKey: 'text',
 					valueKey: 'value',
 					customSuccessRules: [successRule],
-					showSuccessMessages: false,
+					successDisplay: 'none',
 				},
 			})
 			await wrapper.vm.validateOnSubmit()
@@ -1060,7 +1060,7 @@ describe('SyAutocomplete', () => {
 					label: 'Test successMessages',
 					textKey: 'text',
 					valueKey: 'value',
-					showSuccessMessages: true,
+					successDisplay: 'all',
 					successMessages: ['Succès externe'],
 				},
 			})

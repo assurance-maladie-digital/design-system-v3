@@ -122,7 +122,7 @@
 	const iconColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'onWarningVariant'
-		if (hasSuccess.value && props.showSuccessMessages) return 'onSuccessVariant'
+		if (hasSuccess.value && props.successDisplay !== 'none') return 'onSuccessVariant'
 		return 'rgb(var(--v-theme-onSurface))'
 	})
 
@@ -956,7 +956,7 @@
 						:aria-label="accessibleLabel"
 						:error="hasError"
 						:error-messages="errors"
-						:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : undefined))"
+						:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.successDisplay === 'all' ? successes : undefined))"
 						:variant="variant"
 						:bg-color="props.bgColor"
 						:density="props.density"
@@ -971,8 +971,8 @@
 						:class="{
 							'error-field': hasError,
 							'warning-field': hasWarning,
-							'success-field': hasSuccess && props.showSuccessMessages,
-							'basic-field': !hasError && !hasWarning && (!hasSuccess || !props.showSuccessMessages),
+							'success-field': hasSuccess && props.successDisplay !== 'none',
+							'basic-field': !hasError && !hasWarning && (!hasSuccess || props.successDisplay === 'none'),
 						}"
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),

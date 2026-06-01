@@ -93,7 +93,7 @@ const meta: Meta<typeof PeriodField> = {
 			control: 'boolean',
 			description: 'Désactive la gestion des erreurs',
 		},
-		showSuccessMessages: {
+		successDisplay: {
 			control: 'boolean',
 			description: 'Affiche les messages de succès',
 		},
@@ -599,6 +599,7 @@ export const WithSuccess: Story = {
 		displayAppendIcon: true,
 		disabled: false,
 		noIcon: false,
+		successDisplay: 'all',
 		modelValue: { from: '22/01/2024', to: '23/01/2024' },
 		customRules: [
 			{
@@ -826,11 +827,10 @@ export const ValidationBehaviors: Story = {
 	</div>
 
 	<div class="mb-8">
-		<h3 class="mb-4">Messages de succès désactivés (showSuccessMessages=false)</h3>
+		<h3 class="mb-4">Messages de succès désactivés (successDisplay='none')</h3>
 		<PeriodField
 			v-model="periodNoSuccess"
 			required
-			:show-success-messages="false"
 		/>
 	</div>
 
@@ -840,7 +840,6 @@ export const ValidationBehaviors: Story = {
 			v-model="periodNoValidation"
 			required
 			:disable-error-handling="true"
-			:show-success-messages="false"
 		/>
 	</div>
 </template>
@@ -892,11 +891,11 @@ const periodNoValidation = ref({ from: null, to: null })
 			</div>
 
 			<div class="mb-8">
-				<h3 class="mb-4">Messages de succès désactivés (showSuccessMessages=false)</h3>
+				<h3 class="mb-4">Messages de succès désactivés (successDisplay='none')</h3>
 				<PeriodField
 					v-model="periodNoSuccess"
 					required
-					:show-success-messages="false"
+					success-display="none"
 				/>
 			</div>
 
@@ -906,7 +905,7 @@ const periodNoValidation = ref({ from: null, to: null })
 					v-model="periodNoValidation"
 					required
 					:disable-error-handling="true"
-					:show-success-messages="false"
+					success-display="none"
 				/>
 			</div>
 		`,

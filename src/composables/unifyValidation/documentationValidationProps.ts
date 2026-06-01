@@ -58,12 +58,13 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 				category: 'props',
 			},
 		},
-		showSuccessMessages: {
-			description: 'Affiche les messages de succès lorsque la validation est réussie. Si la prop est à `false` cela cache uniquement les messages texte, l\'état visuel reste actif.',
-			control: 'boolean',
+		successDisplay: {
+			description: 'Contrôle l\'affichage du succès. `none` masque tout le visuel, `icon` affiche la bordure et l\'icône sans texte, `all` affiche la bordure, l\'icône et les messages texte.',
+			control: 'select',
+			options: ['none', 'icon', 'all'],
 			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'true' },
+				type: { summary: '\'none\' | \'icon\' | \'all\'' },
+				defaultValue: { summary: '\'none\'' },
 				category: 'props',
 			},
 		},

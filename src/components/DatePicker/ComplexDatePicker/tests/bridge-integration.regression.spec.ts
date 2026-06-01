@@ -57,7 +57,7 @@ describe('Bridge Integration Regression Tests', () => {
 				label: 'Date',
 				format: 'DD/MM/YYYY',
 				readonly: true,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				customRules: [{ type: 'custom', options: { validate: validateSpy } }],
 			},
 		})
@@ -84,7 +84,7 @@ describe('Bridge Integration Regression Tests', () => {
 				modelValue: '',
 				label: 'Date parent',
 				format: 'DD/MM/YYYY',
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				customRules: [{ type: 'custom', options: { validate: parentValidate } }],
 			},
 		})
@@ -118,7 +118,7 @@ describe('Bridge Integration Regression Tests', () => {
 				label: 'Date',
 				format: 'DD/MM/YYYY',
 				customRules: [{ type: 'custom', options: { validate: validateRule } }],
-				showSuccessMessages: true,
+				successDisplay: 'all',
 			},
 		})
 
@@ -143,7 +143,7 @@ describe('Bridge Integration Regression Tests', () => {
 				modelValue: '15/05/2025',
 				label: 'Date',
 				format: 'DD/MM/YYYY',
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				required: true,
 			},
 		})

@@ -77,7 +77,7 @@ const meta = {
 			control: 'object',
 			description: 'Règles de succès personnalisées',
 		},
-		showSuccessMessages: {
+		successDisplay: {
 			control: 'boolean',
 			description: 'Indique si les messages de succès doivent être affichés',
 		},
@@ -115,7 +115,6 @@ const meta = {
 		customRules: [],
 		customWarningRules: [],
 		customSuccessRules: [],
-		showSuccessMessages: true,
 		displayAsterisk: false,
 		isValidateOnBlur: true,
 		bgColor: 'white',
@@ -182,7 +181,7 @@ export const Default: Story = {
 				:custom-rules="args.customRules"
 				:custom-warning-rules="args.customWarningRules"
 				:custom-success-rules="args.customSuccessRules"
-				:show-success-messages="args.showSuccessMessages"
+				:success-display="args.successDisplay"
 				:display-asterisk="args.displayAsterisk"
 				:is-validate-on-blur="args.isValidateOnBlur"
 			/>
@@ -546,6 +545,7 @@ export const WithSuccess: Story = {
 	},
 	args: {
 		modelValue: 'MotDePasse123!@#',
+		successDisplay: 'all',
 		customSuccessRules: [
 			{
 				type: 'custom',
@@ -589,7 +589,7 @@ export const WithValidation: Story = {
 						:custom-rules="customRules"
 						:custom-warning-rules="customWarningRules"
 						:custom-success-rules="customSuccessRules"
-						:show-success-messages="true"
+						:success-display="true"
 						:display-asterisk="true"
 						:is-validate-on-blur="false"
 					/>
@@ -727,7 +727,7 @@ export const WithValidation: Story = {
 					:custom-rules="customRules"
 					:custom-warning-rules="customWarningRules"
 					:custom-success-rules="customSuccessRules"
-					:show-success-messages="true"
+					:success-display="true"
 					:display-asterisk="true"
 					:is-validate-on-blur="true"
 				/>
@@ -878,7 +878,7 @@ export const WithCustomRules: Story = {
 				:disabled="args.disabled"
 				:placeholder="args.placeholder"
 				:custom-rules="customRules"
-				:show-success-messages="args.showSuccessMessages"
+				:success-display="args.successDisplay"
 				:display-asterisk="args.displayAsterisk"
 				:is-validate-on-blur="args.isValidateOnBlur"
 			/>
@@ -1069,13 +1069,9 @@ export const WithoutSuccessMessages: Story = {
 		docs: {
 			description: {
 				story: `
-### Messages de succès
+### Contrôle de l'affichage du succès
 
-Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
-l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
-
-Cela peut être utile pour réduire la verbosité de l'interface lorsque les messages de succès
-ne sont pas nécessaires dans certains contextes.
+Cette story illustre la propriété \`successDisplay\` avec ses trois valeurs : \`'none'\` (défaut, rien affiché), \`'icon'\` (bordure + icône sans texte), \`'all'\` (tout affiché).
 `,
 			},
 		},
@@ -1083,19 +1079,22 @@ ne sont pas nécessaires dans certains contextes.
 			{
 				name: 'Template',
 				code: `<template>
-  <!-- Champ avec messages de succès (par défaut) -->
   <PasswordField
     v-model="value1"
-    label="Mot de passe avec messages de succès"
+    label="successDisplay: 'all'"
     required
+    success-display="all"
   />
-
-  <!-- Champ sans messages de succès -->
   <PasswordField
     v-model="value2"
-    label="Mot de passe sans messages de succès"
+    label="successDisplay: 'icon'"
     required
-    :showSuccessMessages="false"
+    success-display="icon"
+  />
+  <PasswordField
+    v-model="value3"
+    label="successDisplay: 'none' (défaut)"
+    required
   />
 </template>`,
 			},
@@ -1106,46 +1105,26 @@ ne sont pas nécessaires dans certains contextes.
 		setup() {
 			const value1 = ref('P@ssw0rd123')
 			const value2 = ref('P@ssw0rd123')
+			const value3 = ref('P@ssw0rd123')
 
-			return { value1, value2 }
+			return { value1, value2, value3 }
 		},
 		template: `
-      <div>
-        <p class="mb-4">Cette démonstration compare un PasswordField avec <code>showSuccessMessages=true</code> (par défaut) et un avec <code>showSuccessMessages=false</code>.</p>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-          <div>
-            <p class="text-subtitle-2 mb-2">Avec messages de succès</p>
-            <PasswordField
-              v-model="value1"
-              label="Mot de passe avec messages de succès"
-              required
-              showSuccessMessages
-            />
-          </div>
-
-          <div>
-            <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
-            <PasswordField
-              v-model="value2"
-              label="Mot de passe sans messages de succès"
-              required
-              :showSuccessMessages="false"
-            />
-          </div>
-        </div>
-
-        <div class="mt-4 text-body-2">
-          <p>Observations :</p>
-          <ul>
-            <li class="ml-4">Les deux champs ont la même valeur valide</li>
-            <li class="ml-4">Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
-            <li class="ml-4">Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
-            <li class="ml-4">Essayez de modifier les valeurs puis de les rendre à nouveau valides</li>
-          </ul>
-        </div>
-      </div>
-    `,
+			<div class="pa-4 d-flex flex-column" style="gap: 24px;">
+				<div>
+					<p class="text-subtitle-2 mb-2">successDisplay="all" — bordure + icône + texte</p>
+					<PasswordField v-model="value1" label="Mot de passe" required success-display="all" />
+				</div>
+				<div>
+					<p class="text-subtitle-2 mb-2">successDisplay="icon" — bordure + icône, sans texte</p>
+					<PasswordField v-model="value2" label="Mot de passe" required success-display="icon" />
+				</div>
+				<div>
+					<p class="text-subtitle-2 mb-2">successDisplay="none" (défaut) — rien affiché</p>
+					<PasswordField v-model="value3" label="Mot de passe" required />
+				</div>
+			</div>
+		`,
 	}),
 }
 

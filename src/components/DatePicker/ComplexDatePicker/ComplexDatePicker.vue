@@ -165,7 +165,7 @@
 			placeholder?: string
 			readonly?: boolean
 			required?: boolean
-			showSuccessMessages?: boolean
+			successDisplay?: 'none' | 'icon' | 'all'
 			showWeekNumber?: boolean
 			textFieldActivator?: boolean
 			title?: string | false
@@ -203,7 +203,7 @@
 			placeholder: undefined,
 			readonly: false,
 			required: false,
-			showSuccessMessages: false,
+			successDisplay: 'none',
 			showWeekNumber: false,
 			textFieldActivator: false,
 			title: false,
@@ -266,7 +266,7 @@
 		clearValidation,
 		validateDates,
 	} = useDatePickerValidationBridge({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: props.successDisplay === 'all',
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
 		required: props.required,
@@ -1042,7 +1042,7 @@
 				:display-prepend-icon="props.displayPrependIcon"
 				:no-icon="props.noIcon"
 				:disable-error-handling="props.disableErrorHandling"
-				:show-success-messages="props.showSuccessMessages"
+				:success-display="props.successDisplay"
 				:bg-color="props.bgColor"
 				:auto-clamp="props.autoClamp"
 				:external-error-messages="errorMessages"
@@ -1103,7 +1103,7 @@
 							:custom-warning-rules="props.customWarningRules"
 							:display-asterisk="props.displayAsterisk"
 							:disable-error-handling="props.disableErrorHandling"
-							:show-success-messages="props.showSuccessMessages"
+							:success-display="props.successDisplay"
 							:bg-color="props.bgColor"
 							:display-range="props.displayRange"
 							:is-validate-on-blur="props.isValidateOnBlur"

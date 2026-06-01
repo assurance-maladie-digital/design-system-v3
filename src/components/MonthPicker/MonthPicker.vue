@@ -17,7 +17,7 @@
 		modelValue: undefined,
 		locales: () => defaultLocales,
 		hint: 'Format MM/AAAA',
-		showSuccessMessages: false,
+		successDisplay: 'none',
 		...defaultMonthPickerVisualProps,
 		...defaultTextFieldProps,
 		disabled: false,

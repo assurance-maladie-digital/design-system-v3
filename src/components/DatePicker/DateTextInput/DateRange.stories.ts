@@ -28,7 +28,7 @@ interface DatePickerProps {
 	'readonly'?: boolean
 	'width'?: string
 	'disableErrorHandling'?: boolean
-	'showSuccessMessages'?: boolean
+	'successDisplay'?: boolean
 	'bgColor'?: string
 	'hideDetails'?: boolean | 'auto'
 	'displayWeekendDays'?: boolean
@@ -142,7 +142,7 @@ const meta = {
 			description: 'Désactive la gestion des erreurs par le composant',
 			defaultValue: false,
 		},
-		showSuccessMessages: {
+		successDisplay: {
 			control: 'boolean',
 			description: 'Affiche les messages de succès',
 			defaultValue: true,

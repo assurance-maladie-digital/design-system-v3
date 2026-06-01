@@ -748,7 +748,7 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 
-		it('masque le message de succes mais conserve l\'etat de succes quand showSuccessMessages est false', async () => {
+		it('masque le message de succes mais conserve l\'etat de succes quand successDisplay est \'none\'', async () => {
 			const wrapper = mount(SySelect, {
 				props: {
 					items: [
@@ -758,7 +758,7 @@ describe('SySelect.vue', () => {
 					label: 'Test Label',
 					modelValue: undefined,
 					isValidateOnBlur: false,
-					showSuccessMessages: false,
+					successDisplay: 'none',
 					customSuccessRules: [{
 						type: 'custom',
 						options: {
@@ -916,7 +916,7 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 
-		it('affiche le message de succès avec customSuccessRules quand showSuccessMessages est true', async () => {
+		it('affiche le message de succès avec customSuccessRules quand successDisplay est \'all\'', async () => {
 			const wrapper = mount(SySelect, {
 				props: {
 					items: [
@@ -926,7 +926,7 @@ describe('SySelect.vue', () => {
 					label: 'Test Label',
 					modelValue: undefined,
 					isValidateOnBlur: false,
-					showSuccessMessages: true,
+					successDisplay: 'all',
 					customSuccessRules: [{
 						type: 'custom',
 						options: {

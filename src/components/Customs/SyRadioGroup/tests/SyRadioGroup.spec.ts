@@ -206,7 +206,7 @@ describe('SyRadioGroup', () => {
 				'label': 'Warning/Success Rules Radio',
 				'customWarningRules': [warningRule],
 				'customSuccessRules': [successRule],
-				'showSuccessMessages': true,
+				'successDisplay': 'all',
 				'isValidateOnBlur': false,
 				'options': [
 					{ label: 'Option A', value: 'A' },

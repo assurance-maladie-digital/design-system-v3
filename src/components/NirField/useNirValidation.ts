@@ -21,7 +21,7 @@ export type NirValidationProps = {
 	numberRules?: VuetifyValidationRule[]
 	readonly?: boolean
 	required?: boolean
-	showSuccessMessages?: boolean
+	successDisplay?: 'none' | 'icon' | 'all'
 	useVuetifyValidation?: boolean
 }
 
@@ -49,7 +49,7 @@ export function useNirValidation(
 	customRulesPrecedence: Ref<boolean>,
 	nirType: Ref<'simple' | 'complexe'>,
 	label: Ref<string>,
-	showSuccessMessages: Ref<boolean>,
+	successDisplay: Ref<'none' | 'icon' | 'all'>,
 	disableErrorHandling: Ref<boolean>,
 	isValidateOnBlur: Ref<boolean>,
 	useVuetifyValidation: Ref<boolean>,
@@ -197,6 +197,8 @@ export function useNirValidation(
 		keyInput?.removeEventListener('focus', onKeyFocus)
 		keyInput?.removeEventListener('blur', onKeyBlur)
 	})
+
+	const showSuccessMessages = computed(() => successDisplay.value === 'all')
 
 	const numberValidation = useValidation({
 		modelValue: numberValue,

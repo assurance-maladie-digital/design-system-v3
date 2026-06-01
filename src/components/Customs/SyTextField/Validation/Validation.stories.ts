@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-import { fn, userEvent, within } from '@storybook/test'
+import { fn } from '@storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import type { FieldValidationProps } from '@/composables/unifyValidation/useValidation'
@@ -46,7 +46,6 @@ const meta = {
 		'customRules': [],
 		'customWarningRules': [],
 		'customSuccessRules': [],
-		'showSuccessMessages': true,
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
@@ -127,24 +126,21 @@ export const WithError: Story = {
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			return { args, value }
+			onMounted(() => {
+				fieldRef.value?.validateOnSubmit()
+			})
+			return { args, value, fieldRef }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-			/>
+			<div class="pa-4">
+				<SyTextField ref="fieldRef" v-bind="args" v-model="value" />
+			</div>
 		`,
 	}),
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, 'invalid-email')
-		input.blur()
-	},
 }
 
 export const WithWarning: Story = {
@@ -207,24 +203,21 @@ export const WithWarning: Story = {
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			return { args, value }
+			onMounted(() => {
+				fieldRef.value?.validateOnSubmit()
+			})
+			return { args, value, fieldRef }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-			/>
+			<div class="pa-4">
+				<SyTextField ref="fieldRef" v-bind="args" v-model="value" />
+			</div>
 		`,
 	}),
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, 'ab')
-		input.blur()
-	},
 }
 
 export const WithSuccess: Story = {
@@ -272,6 +265,7 @@ export const WithSuccess: Story = {
 	args: {
 		label: 'Adresse email',
 		modelValue: 'exemple@domaine.fr',
+		successDisplay: 'all',
 		customSuccessRules: [
 			{
 				type: 'custom',
@@ -287,24 +281,21 @@ export const WithSuccess: Story = {
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			return { args, value }
+			onMounted(() => {
+				fieldRef.value?.validateOnSubmit()
+			})
+			return { args, value, fieldRef }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-			/>
+			<div class="pa-4">
+				<SyTextField ref="fieldRef" v-bind="args" v-model="value" />
+			</div>
 		`,
 	}),
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, 'exemple@domaine.fr')
-		input.blur()
-	},
 }
 
 export const WithCustomRules: Story = {
@@ -421,78 +412,78 @@ export const NoSuccessMessages: Story = {
 		},
 		docs: {
 			description: {
-				story: `
-### Messages de succès
-
-Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
-l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
-`,
+				story: 'Avec `successDisplay: \'icon\'`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché.',
 			},
 		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<template>
-  <!-- Champ avec messages de succès (par défaut) -->
+				code: `
+<template>
   <SyTextField
-    v-model="value1"
-    label="Avec messages de succès"
-    required
-  />
-
-  <!-- Champ sans messages de succès -->
-  <SyTextField
-    v-model="value2"
-    label="Sans messages de succès"
-    required
-    :show-success-messages="false"
+    ref="fieldRef"
+    v-model="value"
+    label="Adresse email"
+    success-display="icon"
+    :custom-success-rules="[
+      {
+        type: 'custom',
+        options: {
+          validate: (v) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(v),
+          successMessage: 'L\\'adresse email est valide.'
+        }
+      }
+    ]"
   />
 </template>`,
 			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('exemple@domaine.fr')
+const fieldRef = ref(null)
+
+onMounted(() => {
+  fieldRef.value?.validateOnSubmit()
+})
+</script>`,
+			},
 		],
 	},
-	render: () => ({
+	args: {
+		label: 'Adresse email',
+		modelValue: 'exemple@domaine.fr',
+		successDisplay: 'icon',
+		customSuccessRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+					successMessage: 'L\'adresse email est valide.',
+				},
+			},
+		],
+	},
+	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value1 = ref('valeur valide')
-			const value2 = ref('valeur valide')
-
-			return { value1, value2 }
+			const value = ref(args.modelValue)
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			onMounted(() => {
+				fieldRef.value?.validateOnSubmit()
+			})
+			return { args, value, fieldRef }
 		},
 		template: `
-			<div>
-				<p class="mb-4">Cette démonstration compare un SyTextField avec <code>showSuccessMessages=true</code> (par défaut) et un avec <code>showSuccessMessages=false</code>.</p>
-
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-					<div>
-						<p class="text-subtitle-2 mb-2">Avec messages de succès</p>
-						<SyTextField
-							v-model="value1"
-							label="Nom"
-							required
-							show-success-messages
-						/>
-					</div>
-
-					<div>
-						<p class="text-subtitle-2 mb-2">Sans messages de succès</p>
-						<SyTextField
-							v-model="value2"
-							label="Nom"
-							required
-							:show-success-messages="false"
-						/>
-					</div>
-				</div>
-
-				<div class="mt-4 text-body-2">
-					<p>Observations :</p>
-					<ul>
-						<li class="ml-4">Les deux champs ont la même valeur valide</li>
-						<li class="ml-4">Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
-						<li class="ml-4">Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
-					</ul>
-				</div>
+			<div class="pa-4">
+				<SyTextField ref="fieldRef" v-bind="args" v-model="value" />
 			</div>
 		`,
 	}),
@@ -633,7 +624,7 @@ de la valeur plutôt qu'à la perte de focus. Utile pour un retour immédiat à 
 				},
 			},
 		]"
-		show-success-messages
+		success-display
 	/>
 </template>`,
 			},
@@ -674,7 +665,7 @@ const value = ref('')
 							},
 						},
 					]"
-					show-success-messages
+					success-display
 					width="400px"
 				/>
 			</div>
@@ -1214,7 +1205,7 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 			}
 		}
 	]"
-	showSuccessMessages
+	success-display="all"
 />`,
 			},
 		],
@@ -1245,7 +1236,7 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 						}
 					}
 				]"
-				showSuccessMessages
+				success-display="all"
 			/>
 		`,
 	}),

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import SyRadioGroup from '../SyRadioGroup.vue'
 import SyForm from '../../SyForm/SyForm.vue'
 import { VBtn, VForm } from 'vuetify/components'
@@ -21,7 +21,7 @@ const meta: Meta<typeof SyRadioGroup> = {
 		disabled: { control: 'boolean', description: 'Désactivé' },
 		readonly: { control: 'boolean', description: 'Lecture seule' },
 		useVuetifyValidation: { control: 'boolean', description: 'Validation Vuetify native' },
-		showSuccessMessages: { control: 'boolean', description: 'Afficher les messages de succès' },
+		successDisplay: { control: 'boolean', description: 'Afficher les messages de succès' },
 	},
 	args: {
 		label: 'Choisissez une option',
@@ -270,7 +270,7 @@ export const WithSuccess: Story = {
 		v-model="selected"
 		label="Choisissez une option"
 		:options="options"
-		show-success-messages
+		success-display="all"
 		:custom-success-rules="[
 			{
 				type: 'custom',
@@ -305,8 +305,11 @@ onMounted(() => {
 		],
 	},
 
+	args: {
+		successDisplay: 'all',
+	},
 	render: args => ({
-		components: { SyRadioGroup },
+		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string | null>('a')
 			const radioRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
@@ -321,82 +324,30 @@ onMounted(() => {
 				},
 			]
 
-			return { args, selected, radioRef, customSuccessRules }
+			onMounted(() => {
+				radioRef.value?.validateOnSubmit()
+			})
+
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert('Formulaire valide !')
+				}
+			}
+
+			return { args, selected, radioRef, customSuccessRules, onSubmit }
 		},
 		template: `
-			<SyRadioGroup
-				ref="radioRef"
-				v-model="selected"
-				v-bind="args"
-				show-success-messages
-				:custom-success-rules="customSuccessRules"
-			/>
-		`,
-	}),
-}
-
-/**
- * showSuccessMessages: false — les messages de succès sont masqués
- * Le champ est validé mais aucun message positif n'est affiché
- */
-export const NoSuccessMessage: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: `
-### showSuccessMessages à false
-Avec **showSuccessMessages: false**, la validation se produit normalement mais les messages de succès ne s'affichent pas.
-
-**Caractéristiques :**
-- Sélectionner une option valide le champ silencieusement
-- Aucun message vert n'est affiché
-- Utile quand le feedback positif est jugé superflu
-				`,
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-	<SyRadioGroup
-		v-model="selected"
-		label="Choisissez une option"
-		:options="options"
-		:show-success-messages="false"
-		required
-	/>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { ref } from 'vue'
-import { SyRadioGroup } from '@cnamts/synapse'
-
-const selected = ref<string | null>('a')
-
-const options = [
-	{ label: 'Option A', value: 'a' },
-	{ label: 'Option B', value: 'b' },
-]
-</script>`,
-			},
-		],
-	},
-
-	render: args => ({
-		components: { SyRadioGroup },
-		setup() {
-			const selected = ref<string | null>('a')
-			return { args, selected }
-		},
-		template: `
-			<SyRadioGroup
-				v-model="selected"
-				v-bind="args"
-				:show-success-messages="false"
-			/>
+			<div class="pa-4">
+				<SyForm @submit="onSubmit">
+					<SyRadioGroup
+						ref="radioRef"
+						v-model="selected"
+						v-bind="args"
+						:custom-success-rules="customSuccessRules"
+					/>
+					<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+				</SyForm>
+			</div>
 		`,
 	}),
 }

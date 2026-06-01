@@ -39,7 +39,7 @@ export function useSyTextAreaValidation(
 		disabled: computed(() => props.disabled ?? false),
 		required: computed(() => props.required ?? false),
 		isValidateOnBlur: computed(() => props.isValidateOnBlur ?? true),
-		showSuccessMessages: computed(() => props.showSuccessMessages ?? false),
+		showSuccessMessages: computed(() => props.successDisplay === 'all'),
 		disableErrorHandling: computed(() => props.disableErrorHandling ?? false),
 		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),
 		label: computed(() => props.label ?? ''),
@@ -61,7 +61,7 @@ export function useSyTextAreaValidation(
 		if (props.useVuetifyValidation) return null
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlertOutline
-		if (hasSuccess.value && props.showSuccessMessages) return mdiCheck
+		if (hasSuccess.value && props.successDisplay !== 'none') return mdiCheck
 		return null
 	})
 

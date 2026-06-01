@@ -20,7 +20,7 @@ describe('SyTextField', () => {
 			props: {
 				modelValue: undefined,
 				required: true,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				outlined: true,
 				label: 'Test Field',
 			},
@@ -214,7 +214,7 @@ describe('SyTextField', () => {
 			props: {
 				modelValue: 'test',
 				customWarningRules: [warningRule],
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				label: 'Test Field',
 			},
 		})

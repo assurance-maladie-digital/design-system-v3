@@ -60,7 +60,7 @@ describe('PhoneField', () => {
 			props: {
 				withCountryCode: true,
 				isValidatedOnBlur: false,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				modelValue: '',
 			},
 		})

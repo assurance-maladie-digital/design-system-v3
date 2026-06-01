@@ -162,7 +162,7 @@ const meta: Meta<typeof MonthPicker> = {
 				category: 'props',
 			},
 		},
-		'showSuccessMessages': {
+		'successDisplay': {
 			description: 'Indique si les messages de succès doivent être affichés.',
 			control: 'boolean',
 			table: {

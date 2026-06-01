@@ -10,7 +10,7 @@ export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	customWarningRules?: ValidationRule[]
 	customSuccessRules?: ValidationRule[]
 	isValidateOnBlur?: boolean
-	showSuccessMessages?: boolean
+	successDisplay?: 'none' | 'icon' | 'all'
 	useVuetifyValidation?: boolean
 	rules?: VuetifyValidationRule[]
 	errorMessages?: string[] | null
@@ -73,7 +73,7 @@ export function useSyRadioGroupValidation(
 
 	// Vuetify ne gère pas les messages de succès, on désactive automatiquement en mode Vuetify
 	const effectiveShowSuccessMessages = computed(() =>
-		props.useVuetifyValidation ? false : (props.showSuccessMessages ?? false),
+		props.useVuetifyValidation ? false : (props.successDisplay === 'all'),
 	)
 
 	const {

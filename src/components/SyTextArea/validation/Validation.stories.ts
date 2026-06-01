@@ -185,7 +185,7 @@ export const WithSuccess: Story = {
     ref="textAreaRef"
     v-model="value"
     label="Commentaire"
-    show-success-messages
+    success-display
     :custom-success-rules="[
       {
         type: 'custom',
@@ -202,7 +202,7 @@ export const WithSuccess: Story = {
 	},
 	args: {
 		'label': 'Commentaire',
-		'showSuccessMessages': true,
+		'successDisplay': 'all',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -242,7 +242,7 @@ export const NoSuccessMessage: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `showSuccessMessages: false`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché. Utile quand un retour positif silencieux est suffisant.',
+				story: 'Avec `successDisplay: \'none\'`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché. Utile quand un retour positif silencieux est suffisant.',
 			},
 		},
 		sourceCode: [
@@ -254,7 +254,7 @@ export const NoSuccessMessage: Story = {
     ref="textAreaRef"
     v-model="value"
     label="Commentaire"
-    :show-success-messages="false"
+    success-display="icon"
     :custom-success-rules="[
       {
         type: 'custom',
@@ -286,7 +286,7 @@ onMounted(() => {
 	},
 	args: {
 		'label': 'Commentaire',
-		'showSuccessMessages': false,
+		'successDisplay': 'icon',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -691,7 +691,7 @@ export const SyFormVuetifyValidation: Story = {
       label="Description"
       use-vuetify-validation
       validate-on="submit"
-      :show-success-messages="false"
+      success-display="none"
       :rules="[v => !!v || 'Ce champ est requis']"
       class="mb-4"
     />
@@ -724,7 +724,7 @@ function onSubmit(event: { isValid: boolean }) {
 		'label': 'Description',
 		'useVuetifyValidation': true,
 		'validateOn': 'submit',
-		'showSuccessMessages': false,
+		'successDisplay': 'none',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -780,7 +780,7 @@ export const VFormVuetifyValidation: Story = {
       label="Description"
       use-vuetify-validation
       validate-on="submit"
-      :show-success-messages="false"
+      success-display="none"
       :rules="[v => !!v || 'Ce champ est requis']"
       class="mb-4"
     />
@@ -815,7 +815,7 @@ async function onSubmit() {
 		'label': 'Description',
 		'useVuetifyValidation': true,
 		'validateOn': 'submit',
-		'showSuccessMessages': false,
+		'successDisplay': 'none',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({

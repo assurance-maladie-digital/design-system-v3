@@ -52,7 +52,7 @@
 		customNumberWarningRules: () => [],
 		customKeyWarningRules: () => [],
 		customRulesPrecedence: false,
-		showSuccessMessages: false,
+		successDisplay: 'none',
 		width: '100%',
 		bgColor: 'white',
 		disabled: false,
@@ -249,7 +249,7 @@
 		toRef(props, 'customRulesPrecedence'),
 		toRef(props, 'nirType'),
 		toRef(props, 'label'),
-		toRef(props, 'showSuccessMessages'),
+		toRef(props, 'successDisplay'),
 		toRef(props, 'disableErrorHandling'),
 		toRef(props, 'isValidateOnBlur'),
 		toRef(props, 'useVuetifyValidation'),
@@ -497,7 +497,7 @@
 				class="sy-number-success"
 			>
 				<VMessages
-					v-show="numberValidation.hasSuccess.value && showSuccessMessages"
+					v-show="numberValidation.hasSuccess.value && successDisplay !== 'none'"
 					:active="numberValidation.hasSuccess.value"
 					:messages="numberValidation.successes.value"
 				/>
@@ -507,7 +507,7 @@
 				class="sy-key-success"
 			>
 				<VMessages
-					v-show="keyValidation.hasSuccess.value && showSuccessMessages"
+					v-show="keyValidation.hasSuccess.value && successDisplay !== 'none'"
 					:active="keyValidation.hasSuccess.value"
 					:messages="keyValidation.successes.value"
 				/>

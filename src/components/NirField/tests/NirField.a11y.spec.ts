@@ -15,7 +15,7 @@ describe('NirField – accessibility (axe)', () => {
 			props: {
 				modelValue: undefined,
 				required: true,
-				showSuccessMessages: true,
+				successDisplay: 'all',
 				displayKey: true,
 				nirType: 'simple',
 			},
