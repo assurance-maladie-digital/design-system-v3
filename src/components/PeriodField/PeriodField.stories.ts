@@ -94,8 +94,13 @@ const meta: Meta<typeof PeriodField> = {
 			description: 'Désactive la gestion des erreurs',
 		},
 		successDisplay: {
-			control: 'boolean',
-			description: 'Affiche les messages de succès',
+			control: 'select',
+			options: ['none', 'icon', 'all'],
+			description: 'Contrôle l\'affichage du succès : `none` masque tout, `icon` affiche bordure + icône sans texte, `all` affiche tout.',
+			table: {
+				type: { summary: '\'none\' | \'icon\' | \'all\'' },
+				defaultValue: { summary: '\'none\'' },
+			},
 		},
 	},
 } as Meta<typeof PeriodField>

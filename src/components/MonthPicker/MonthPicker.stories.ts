@@ -163,10 +163,12 @@ const meta: Meta<typeof MonthPicker> = {
 			},
 		},
 		'successDisplay': {
-			description: 'Indique si les messages de succès doivent être affichés.',
-			control: 'boolean',
+			description: 'Contrôle l\'affichage du succès : `none` masque tout, `icon` affiche bordure + icône sans texte, `all` affiche tout.',
+			control: 'select',
+			options: ['none', 'icon', 'all'],
 			table: {
-				type: { summary: 'boolean' },
+				type: { summary: '\'none\' | \'icon\' | \'all\'' },
+				defaultValue: { summary: '\'none\'' },
 				category: 'props',
 			},
 		},

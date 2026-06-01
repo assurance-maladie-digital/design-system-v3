@@ -132,13 +132,12 @@ const meta: Meta<typeof NirField> = {
 			},
 		},
 		successDisplay: {
-			description: 'Indique si les messages de succès sont affichés.',
-			control: 'boolean',
-			default: false,
+			description: 'Contrôle l\'affichage du succès : `none` masque tout, `icon` affiche bordure + icône sans texte, `all` affiche tout.',
+			control: 'select',
+			options: ['none', 'icon', 'all'],
 			table: {
-				type: {
-					summary: 'boolean',
-				},
+				type: { summary: '\'none\' | \'icon\' | \'all\'' },
+				defaultValue: { summary: '\'none\'' },
 			},
 		},
 		customNumberRules: {
@@ -588,7 +587,7 @@ ne sont pas nécessaires dans certains contextes.
     v-model="value"
     label="NIR sans messages de succès"
     required
-    :successDisplay="false"
+    success-display="none"
   />
 </template>`,
 			},
@@ -611,7 +610,7 @@ ne sont pas nécessaires dans certains contextes.
               v-model="value1"
               label="NIR avec messages de succès"
               required
-              successDisplay
+              success-display="all"
             />
           </div>
 
@@ -621,7 +620,7 @@ ne sont pas nécessaires dans certains contextes.
               v-model="value2"
               label="NIR sans messages de succès"
               required
-              :successDisplay="false"
+              success-display="none"
             />
           </div>
         </div>
@@ -1167,7 +1166,7 @@ Cette story montre l'utilisation du NirField dans un formulaire avec validation.
 		label="NirField"
 		required
 		:displayKey="false"
-		successDisplay
+		success-display="all"
 		ref="nirField"
 	/>
 	<v-btn
@@ -1228,7 +1227,7 @@ const onSubmit = async () => {
 					v-bind="args"
 					label="NirField"
 					required
-					successDisplay
+					success-display="all"
                     :displayKey="false"
 					ref="nirField"
 				/>

@@ -78,8 +78,13 @@ const meta = {
 			description: 'Règles de succès personnalisées',
 		},
 		successDisplay: {
-			control: 'boolean',
-			description: 'Indique si les messages de succès doivent être affichés',
+			control: 'select',
+			options: ['none', 'icon', 'all'],
+			description: 'Contrôle l\'affichage du succès : `none` masque tout, `icon` affiche bordure + icône sans texte, `all` affiche tout.',
+			table: {
+				type: { summary: '\'none\' | \'icon\' | \'all\'' },
+				defaultValue: { summary: '\'none\'' },
+			},
 		},
 		displayAsterisk: {
 			control: 'boolean',

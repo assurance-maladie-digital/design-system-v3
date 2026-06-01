@@ -74,8 +74,13 @@ const meta = {
 			control: 'object',
 		},
 		successDisplay: {
-			description: 'Afficher les messages de succès',
-			control: 'boolean',
+			control: 'select',
+			options: ['none', 'icon', 'all'],
+			description: 'Contrôle l\'affichage du succès : `none` masque tout, `icon` affiche bordure + icône sans texte, `all` affiche tout.',
+			table: {
+				type: { summary: '\'none\' | \'icon\' | \'all\'' },
+				defaultValue: { summary: '\'none\'' },
+			},
 		},
 		isValidateOnBlur: {
 			description: 'Vérifie la validité lors de la perte de focus',

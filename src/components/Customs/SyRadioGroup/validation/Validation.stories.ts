@@ -21,7 +21,7 @@ const meta: Meta<typeof SyRadioGroup> = {
 		disabled: { control: 'boolean', description: 'Désactivé' },
 		readonly: { control: 'boolean', description: 'Lecture seule' },
 		useVuetifyValidation: { control: 'boolean', description: 'Validation Vuetify native' },
-		successDisplay: { control: 'boolean', description: 'Afficher les messages de succès' },
+		successDisplay: { control: 'select', options: ['none', 'icon', 'all'], description: 'Contrôle l\'affichage du succès : `none` masque tout, `icon` affiche bordure + icône sans texte, `all` affiche tout.' },
 	},
 	args: {
 		label: 'Choisissez une option',

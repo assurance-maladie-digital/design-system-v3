@@ -254,9 +254,13 @@ const meta = {
 			defaultValue: false,
 		},
 		'successDisplay': {
-			control: 'boolean',
-			description: 'Affiche les messages de succès quand la validation est passée avec succès',
-			defaultValue: true,
+			control: 'select',
+			options: ['none', 'icon', 'all'],
+			description: 'Contrôle l\'affichage du succès : `none` masque tout, `icon` affiche bordure + icône sans texte, `all` affiche tout.',
+			table: {
+				type: { summary: '\'none\' | \'icon\' | \'all\'' },
+				defaultValue: { summary: '\'none\'' },
+			},
 		},
 		'bgColor': {
 			control: 'text',
