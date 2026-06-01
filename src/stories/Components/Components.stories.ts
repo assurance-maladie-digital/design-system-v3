@@ -255,8 +255,8 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'DatePicker',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de saisir une date.',
-						link: '/?path=/docs/composants-formulaires-datepicker--docs',
-						img: '/components/date-picker.svg',
+						link: '/?path=/docs/composants-formulaires-datepicker-introduction--docs',
+						img: `/components/date-picker${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -270,7 +270,7 @@ export const ComponentsList: StoryObj = {
 						title: 'NirField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir un numéro de Sécurité sociale (NIR).',
 						link: '/?path=/docs/composants-formulaires-nirfield--docs',
-						img: '/components/nir-field.svg',
+						img: `/components/nir-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -520,6 +520,7 @@ export const ComponentsList: StoryObj = {
 					'PaginatedTable',
 					'SyTable',
 					'SyServerTable',
+					'DatePicker',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

@@ -1322,8 +1322,7 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	// background-color: rgb(var(--v-theme-background));
-	background: green !important;
+	background-color: rgb(var(--v-theme-background));
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
@@ -1335,12 +1334,12 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 }
 
 /* day before weekend */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1358,7 +1357,7 @@
 
 /* Style de base du ::after */
 :deep(.custom-year-btn::after) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1368,7 +1367,7 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;
