@@ -11,7 +11,7 @@ export type DatePickerValidationRule = {
 }
 
 export type DatePickerValidationBridgeOptions = {
-	showSuccessMessages: boolean
+	successDisplay: 'none' | 'icon' | 'all'
 	disableErrorHandling: boolean
 	noCalendar: boolean
 	required: boolean
@@ -45,7 +45,7 @@ const emptyValidationResult = (): ValidationResult => ({
 
 export function useDatePickerValidationBridge(options: DatePickerValidationBridgeOptions) {
 	const validation = useValidation({
-		showSuccessMessages: options.showSuccessMessages,
+		showSuccessMessages: options.successDisplay === 'all',
 		fieldIdentifier: options.fieldIdentifier ?? 'Date',
 		disableErrorHandling: options.disableErrorHandling,
 	})
