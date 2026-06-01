@@ -134,7 +134,7 @@
 		v-model="model"
 		:class="{
 			'warning-field': hasWarning && !hasError,
-			'success-field': hasSuccess && !hasError && !hasWarning,
+			'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
 			'error-field': hasError,
 		}"
 		:label="generatedLabel"

@@ -45,7 +45,7 @@ export function useSySelectValidation(props: FieldValidationProps & { modelValue
 		if (props.useVuetifyValidation) return null
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlertOutline
-		if (hasSuccess.value) return mdiCheck
+		if (hasSuccess.value && props.showSuccessMessages) return mdiCheck
 		return null
 	})
 

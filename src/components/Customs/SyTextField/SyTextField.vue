@@ -567,8 +567,8 @@
 			:class="{
 				'error-field': hasError,
 				'warning-field': hasWarning,
-				'success-field': hasSuccess,
-				'basic-field': !hasError && !hasWarning && !hasSuccess
+				'success-field': hasSuccess && props.showSuccessMessages,
+				'basic-field': !hasError && !hasWarning && (!hasSuccess || !props.showSuccessMessages)
 			}"
 			@focus="focused = true; emit('focus')"
 			@blur="focused = false; emit('blur')"

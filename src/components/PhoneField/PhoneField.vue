@@ -36,7 +36,7 @@
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
-		showSuccessMessages: { type: Boolean, default: true },
+		showSuccessMessages: { type: Boolean, default: false },
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
@@ -318,7 +318,7 @@
 		if (shouldDisableErrorHandling.value) return '#222324'
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
+		if (hasSuccess.value && props.showSuccessMessages) return 'success'
 		return '#222324'
 	})
 
@@ -488,7 +488,7 @@
 						'phone-field': true,
 						'error-field': hasError,
 						'warning-field': hasWarning,
-						'success-field': hasSuccess
+						'success-field': hasSuccess && props.showSuccessMessages
 					}"
 					color="primary"
 					type="tel"
