@@ -265,72 +265,86 @@ export const WithSuccess: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<SyRadioGroup
-		ref="radioRef"
-		v-model="selected"
-		label="Choisissez une option"
-		:options="options"
-		show-success-messages
-		:custom-success-rules="[
-			{
-				type: 'custom',
-				options: {
-					validate: (v) => v !== null && v !== undefined,
-					successMessage: 'Sélection confirmée.'
-				}
-			}
-		]"
-	/>
+	<SyForm ref="form" @submit="onSubmit">
+		<SyRadioGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			show-success-messages
+			:custom-success-rules="customSuccessRules"
+		/>
+		<VBtn type="submit" color="primary">Valider</VBtn>
+	</SyForm>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { SyRadioGroup } from '@cnamts/synapse'
+import { ref } from 'vue'
+import { SyRadioGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('a')
-const radioRef = ref(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
 	{ label: 'Option B', value: 'b' },
 ]
 
-onMounted(() => {
-	radioRef.value?.validateOnSubmit()
-})
+const customSuccessRules: ValidationRule[] = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: unknown) => value !== null && value !== undefined,
+			successMessage: 'Sélection confirmée.',
+		},
+	},
+]
+
+const onSubmit = (event: { isValid: boolean }) => {
+	if (event.isValid) {
+		alert('Formulaire valide !')
+	}
+}
 </script>`,
 			},
 		],
 	},
 
 	render: args => ({
-		components: { SyRadioGroup },
+		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string | null>('a')
-			const radioRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			const customSuccessRules = [
 				{
 					type: 'custom',
 					options: {
-						validate: (v: unknown) => v !== null && v !== undefined,
+						validate: (value: unknown) => value !== null && value !== undefined,
 						successMessage: 'Sélection confirmée.',
 					},
 				},
 			]
 
-			return { args, selected, radioRef, customSuccessRules }
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert('Formulaire valide !')
+				}
+			}
+
+			return { args, selected, customSuccessRules, onSubmit }
 		},
 		template: `
-			<SyRadioGroup
-				ref="radioRef"
-				v-model="selected"
-				v-bind="args"
-				show-success-messages
-				:custom-success-rules="customSuccessRules"
-			/>
+			<SyForm ref="form" @submit="onSubmit">
+				<SyRadioGroup
+					v-model="selected"
+					v-bind="args"
+					show-success-messages
+					:custom-success-rules="customSuccessRules"
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</SyForm>
 		`,
 	}),
 }
