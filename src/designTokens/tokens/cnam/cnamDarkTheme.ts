@@ -1,5 +1,5 @@
-import { cnamColorsTokens } from './cnamColors'
+import { baseTokens } from '@/designTokens/tokens/baseTokens'
 
 export const cnamDarkTheme = {
-	backgroundSurface: cnamColorsTokens.parma.darken60,
+	backgroundSurface: baseTokens.color.parma.darken60,
 }

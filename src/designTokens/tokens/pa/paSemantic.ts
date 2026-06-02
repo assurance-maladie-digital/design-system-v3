@@ -1,4 +1,5 @@
 import { paColorsTokens } from './paColors'
+import { cnamColorsTokens } from '@/designTokens'
 
 export const paSemanticTokens = {
 	colors: {
@@ -6,6 +7,7 @@ export const paSemanticTokens = {
 			main: paColorsTokens.blue.lighten90,
 			surface: paColorsTokens.white.base,
 			mainAlt: paColorsTokens.white.base,
+			mainTer: cnamColorsTokens.grey.lighten97,
 			surfaceAlt: paColorsTokens.blue.lighten90,
 			raised: paColorsTokens.blue.lighten97,
 			accent: paColorsTokens.blue.base,

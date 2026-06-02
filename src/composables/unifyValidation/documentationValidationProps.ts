@@ -137,11 +137,11 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 	type: ${builtInRuleType},
 	options: {
 		validate: (value: unknown) => boolean | string,
-		message: string,
+		warningMessage: string,
 		[key: string]: unknown
 	}
 }
-					`,
+						`,
 				},
 				category: 'props',
 			},
@@ -157,11 +157,11 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 	type: ${builtInRuleType},
 	options: {
 		validate: (value: unknown) => boolean | string,
-		message: string,
+		successMessage: string,
 		[key: string]: unknown
 	}
 }
-					`,
+						`,
 				},
 				category: 'props',
 			},
@@ -231,5 +231,5 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 				category: 'props',
 			},
 		},
-	}
+	} as const
 }

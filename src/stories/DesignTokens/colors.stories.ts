@@ -8,6 +8,7 @@ import { apColorsTokens2026 } from '@/designTokens/tokens/amelipro/apColors2026'
 import { apColorsTokens } from '@/designTokens/tokens/amelipro/apColors'
 import ColorDisplay from './ColorDisplay.vue'
 import ColorIntegrationExample from './ColorIntegrationExample.vue'
+import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { h } from 'vue'
 import { useTheme } from 'vuetify'
 import type { StoryObj } from '@storybook/vue3'
@@ -57,6 +58,18 @@ export default {
 
 type ThemeKey = 'cnam' | 'pa' | 'ap' | 'ap2026'
 
+export const TokenOptimisationWarning: StoryObj = {
+	render: () => ({
+		components: { SyAlert },
+		template: `
+			<SyAlert type="warning" style="margin-bottom: 25px;">
+				Suite à l'ajout du thème Amelipro dans Synapse, nous avons dû procéder à une simplification et optimisation des tokens.
+			</SyAlert>
+		`,
+	}),
+	tags: ['!dev'],
+}
+
 export const Theme: StoryObj = {
 	render: () => {
 		return {
@@ -99,29 +112,26 @@ export const ColorIntegration: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const ColorBase: StoryObj = {
+export const mainColors: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = ''
+				const colorTitle = 'Couleurs Principales'
 				const colorTitleLevel = 3
+				const colorDescription = 'Fond et texte (sous condition de contraste) un texte pourrait être en : On-surface ou On-surface variant ...'
 				const cnamColors = {
 					'primary': cnamLightTheme.primary,
+					'primary-variant': cnamLightTheme.primaryVariant,
 					'secondary': cnamLightTheme.secondary,
-					'error': cnamLightTheme.error,
-					'info': cnamLightTheme.info,
-					'success': cnamLightTheme.success,
-					'warning': cnamLightTheme.warning,
+					'secondary-variant': cnamLightTheme.secondaryVariant,
 					'risque-pro': cnamLightTheme.risquePro,
 				}
 				const paColors = {
-					primary: paLightTheme.primary,
-					secondary: paLightTheme.secondary,
-					error: paLightTheme.error,
-					info: paLightTheme.info,
-					success: paLightTheme.success,
-					warning: paLightTheme.warning,
+					'primary': paLightTheme.primary,
+					'primary-variant': paLightTheme.primaryVariant,
+					'secondary': paLightTheme.secondary,
+					'secondary-variant': paLightTheme.secondaryVariant,
 				}
 				const apColors2026 = {
 					primary: apLightTheme2026.primary,
@@ -132,12 +142,10 @@ export const ColorBase: StoryObj = {
 					warning: apLightTheme2026.warning,
 				}
 				const apColors = {
-					primary: apLightTheme.primary,
-					secondary: apLightTheme.secondary,
-					error: apLightTheme.error,
-					info: apLightTheme.info,
-					success: apLightTheme.success,
-					warning: apLightTheme.warning,
+					'primary': apLightTheme.primary,
+					'primary-variant': apLightTheme.primaryVariant,
+					'secondary': apLightTheme.secondary,
+					'secondary-variant': apLightTheme.secondaryVariant,
 				}
 				return {
 					cnamColors,
@@ -146,18 +154,20 @@ export const ColorBase: StoryObj = {
 					apColors,
 					colorTitle,
 					colorTitleLevel,
+					colorDescription,
 				}
 			},
 			template: `
               <ColorDisplay
                   displayEmptyColors
-                  colorCategory="base"
+                  colorCategory="mainColors"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"
                   :apColors2026="apColors2026"
                   :colorTitle="colorTitle"
                   :colorTitleLevel="colorTitleLevel"
+                  :colorDescription="colorDescription"
               />
             `,
 		}
@@ -165,28 +175,31 @@ export const ColorBase: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const ColorPrimary: StoryObj = {
+export const ColorOn: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Accent Primary'
+				const colorTitle = 'On-Couleurs'
 				const colorTitleLevel = 3
-				const colorDescription = 'Ces couleurs sont à utiliser pour mettre en avant des containers de manière marquée.'
+				const colorDescription = 'Texte/icône sur fond'
 				const cnamColors = {
-					'accent-primary-light': cnamLightTheme.accentPrimaryLight,
-					'accent-primary': cnamLightTheme.accentPrimary,
-					'accent-primary-contrasted': cnamLightTheme.accentPrimaryContrasted,
+					'on-primary': cnamLightTheme.onPrimary,
+					'on-primary-variant': cnamLightTheme.onPrimaryVariant,
+					'on-secondary': cnamLightTheme.onSecondary,
+					'on-secondary-variant': cnamLightTheme.onSecondaryVariant,
 				}
 				const paColors = {
-					'accent-primary-light': paLightTheme.accentPrimaryLight,
-					'accent-primary': paLightTheme.accentPrimary,
-					'accent-primary-contrasted': paLightTheme.accentPrimaryContrasted,
+					'on-primary': paLightTheme.onPrimary,
+					'on-primary-variant': paLightTheme.onPrimaryVariant,
+					'on-secondary': paLightTheme.onSecondary,
+					'on-secondary-variant': paLightTheme.onSecondaryVariant,
 				}
 				const apColors = {
-					'accent-primary-light': apLightTheme.accentPrimaryLight,
-					'accent-primary': apLightTheme.accentPrimary,
-					'accent-primary-contrasted': apLightTheme.accentPrimaryContrasted,
+					'on-primary': apLightTheme.onPrimary,
+					'on-primary-variant': apLightTheme.onPrimaryVariant,
+					'on-secondary': apLightTheme.onSecondary,
+					'on-secondary-variant': apLightTheme.onSecondaryVariant,
 				}
 				const apColors2026 = {}
 				return {
@@ -202,8 +215,8 @@ export const ColorPrimary: StoryObj = {
 			template: `
 				<ColorDisplay
 					displayEmptyColors
-					colorCategory="base" 
-					:cnamColors="cnamColors" 
+                    colorCategory="on-couleurs"
+                    :cnamColors="cnamColors"
 					:paColors="paColors"
                     :apColors="apColors"
                     :apColors2026="apColors2026"
@@ -217,105 +230,7 @@ export const ColorPrimary: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const ColorSecondary: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Accent Secondary'
-				const colorTitleLevel = 3
-				const colorDescription = 'Ces couleurs sont à utiliser pour mettre en avant des containers de manière marquée.'
-				const cnamColors = {
-					'accent-secondary-light': cnamLightTheme.accentSecondaryLight,
-					'accent-secondary': cnamLightTheme.accentSecondary,
-					'accent-secondarys-contrasted': cnamLightTheme.accentSecondaryContrasted,
-				}
-				const paColors = {
-					'accent-secondary-light': paLightTheme.accentSecondaryLight,
-					'accent-secondary': paLightTheme.accentSecondary,
-					'accent-secondarys-contrasted': paLightTheme.accentSecondaryContrasted,
-				}
-				const apColors = {
-					'accent-secondary-light': apLightTheme.accentSecondaryLight,
-					'accent-secondary': apLightTheme.accentSecondary,
-					'accent-secondarys-contrasted': apLightTheme.accentSecondaryContrasted,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="base"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const ColorAlternatives: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Accent Alternatives'
-				const colorTitleLevel = 3
-				const colorDescription = 'Cette couleur est à utiliser pour mettre en avant des containers de manière marquée.'
-				const cnamColors = {
-					'accent-alt': cnamLightTheme.accentAlt,
-				}
-				const paColors = {
-					'accent-alt': paLightTheme.accentAlt,
-				}
-				const apColors = {
-					'accent-alt': apLightTheme.accentAlt,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="base"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const Interactive: StoryObj = {
+export const Interaction: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
@@ -325,34 +240,40 @@ export const Interactive: StoryObj = {
 				const displayEmptyColors = false
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'interactive-selection-enabled': cnamLightTheme.interactiveSelectionEnabled,
-					'interactive-selection-hover': cnamLightTheme.interactiveSelectionHover,
-					'interactive-selection-pressed': cnamLightTheme.interactiveSelectionPressed,
-					'interactive-selection-selected': cnamLightTheme.interactiveSelectionSelected,
-					'interactive-selection-hover-on-selected': cnamLightTheme.interactiveSelectionHoverOnSelected,
-					'interactive-selection-selected-accent': cnamLightTheme.interactiveSelectionSelectedAccent,
-					'interactive-selection-hover-on-selected-accent': cnamLightTheme.interactiveSelectionHoverOnSelectedAccent,
-					'interactive-selection-disabled': cnamLightTheme.interactiveSelectionDisabled,
+					'interaction-lighten-enabled': cnamLightTheme.interactionLightenEnabled,
+					'interactiion-lighten-hover': cnamLightTheme.interactionLightenHover,
+					'interaction-lighten-selected': cnamLightTheme.interactionLightenSelected,
+					'interaction-lighten-pressed': cnamLightTheme.interactionLightenPressed,
+					'interaction-darke-hover': cnamLightTheme.interactionDarkEnabled,
+					'interaction-dark-hover': cnamLightTheme.interactionDarkHover,
+					'interaction-dark-pressed': cnamLightTheme.interactionDarkPressed,
+					'interaction-darken-enabled': cnamLightTheme.interactionDarkenEnabled,
+					'interaction-darken-hover': cnamLightTheme.interactionDarkenHover,
+					'interaction-darken-pressed': cnamLightTheme.interactionDarkenPressed,
 				}
 				const paColors = {
-					'interactive-selection-enabled': paLightTheme.interactiveSelectionEnabled,
-					'interactive-selection-hover': paLightTheme.interactiveSelectionHover,
-					'interactive-selection-pressed': paLightTheme.interactiveSelectionPressed,
-					'interactive-selection-selected': paLightTheme.interactiveSelectionSelected,
-					'interactive-selection-hover-on-selected': paLightTheme.interactiveSelectionHoverOnSelected,
-					'interactive-selection-selected-accent': paLightTheme.interactiveSelectionSelectedAccent,
-					'interactive-selection-hover-on-selected-accent': paLightTheme.interactiveSelectionHoverOnSelectedAccent,
-					'interactive-selection-disabled': paLightTheme.interactiveSelectionDisabled,
+					'interaction-lighten-enabled': paLightTheme.interactionLightenEnabled,
+					'interactiion-lighten-hover': paLightTheme.interactionLightenHover,
+					'interaction-lighten-selected': paLightTheme.interactionLightenSelected,
+					'interaction-lighten-pressed': paLightTheme.interactionLightenPressed,
+					'interaction-darke-hover': paLightTheme.interactionDarkEnabled,
+					'interaction-dark-hover': paLightTheme.interactionDarkHover,
+					'interaction-dark-pressed': paLightTheme.interactionDarkPressed,
+					'interaction-darken-enabled': paLightTheme.interactionDarkenEnabled,
+					'interaction-darken-hover': paLightTheme.interactionDarkenHover,
+					'interaction-darken-pressed': paLightTheme.interactionDarkenPressed,
 				}
 				const apColors = {
-					'interactive-selection-enabled': apLightTheme.interactiveSelectionEnabled,
-					'interactive-selection-hover': apLightTheme.interactiveSelectionHover,
-					'interactive-selection-pressed': apLightTheme.interactiveSelectionPressed,
-					'interactive-selection-selected': apLightTheme.interactiveSelectionSelected,
-					'interactive-selection-hover-on-selected': apLightTheme.interactiveSelectionHoverOnSelected,
-					'interactive-selection-selected-accent': apLightTheme.interactiveSelectionSelectedAccent,
-					'interactive-selection-hover-on-selected-accent': apLightTheme.interactiveSelectionHoverOnSelectedAccent,
-					'interactive-selection-disabled': apLightTheme.interactiveSelectionDisabled,
+					'interaction-lighten-enabled': apLightTheme.interactionLightenEnabled,
+					'interactiion-lighten-hover': apLightTheme.interactionLightenHover,
+					'interaction-lighten-selected': apLightTheme.interactionLightenSelected,
+					'interaction-lighten-pressed': apLightTheme.interactionLightenPressed,
+					'interaction-darke-hover': apLightTheme.interactionDarkEnabled,
+					'interaction-dark-hover': apLightTheme.interactionDarkHover,
+					'interaction-dark-pressed': apLightTheme.interactionDarkPressed,
+					'interaction-darken-enabled': apLightTheme.interactionDarkenEnabled,
+					'interaction-darken-hover': apLightTheme.interactionDarkenHover,
+					'interaction-darken-pressed': apLightTheme.interactionDarkenPressed,
 				}
 				const apColors2026 = {}
 				return {
@@ -369,7 +290,54 @@ export const Interactive: StoryObj = {
 			template: `
               <ColorDisplay
                   :displayEmptyColors="displayEmptyColors"
-                  colorCategory="interactive"
+                  colorCategory="interaction"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+export const Disabled: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Disabled'
+				const colorDescription = 'Fond et container des éléments désactivés'
+				const displayEmptyColors = false
+				const colorTitleLevel = 3
+				const cnamColors = {
+					disabled: cnamLightTheme.disabled,
+				}
+				const paColors = {
+					disabled: paLightTheme.disabled,
+				}
+				const apColors = {
+					disabled: apLightTheme.disabled,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+					displayEmptyColors,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  :displayEmptyColors="displayEmptyColors"
+                  colorCategory="disabled"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"
@@ -384,62 +352,35 @@ export const Interactive: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const ColorBaseSection = {
+export const mainSection = {
 	render() {
 		return h(createSection('Couleurs de base', [
-			ColorBase,
+			mainColors,
+			ColorOn,
 		]))
 	},
 }
-
-export const AccentSection = {
-	render() {
-		return h(createSection('Accent', [
-			ColorPrimary,
-			ColorSecondary,
-			ColorAlternatives,
-		], 'ap2026'))
-	},
-}
-export const InteractiveSection = {
-	render() {
-		return h(createSection('Interactive', [
-			Interactive,
-		], 'ap2026'))
-	},
-}
-
-export const BorderBase: StoryObj = {
+export const Backgrounds: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Base'
+				const colorTitle = 'Backgrounds'
+				const colorDescription = 'backgrounds principaux de la plateforme'
 				const colorTitleLevel = 3
-				const colorDescription = 'Ce sont les couleurs les plus courantes à utiliser pour les contours de tous les éléments d’interface (quand nécessaire)'
 				const cnamColors = {
-					'border-base': cnamLightTheme.borderBase,
-					'border-darker': cnamLightTheme.borderDarker,
-					'border-subdued': cnamLightTheme.borderSubdued,
-					'border-disabled': cnamLightTheme.borderDisabled,
-					'border-disabled-on-dark': cnamLightTheme.borderDisabledOnDark,
+					'background': cnamLightTheme.background,
+					'background-variant': cnamLightTheme.backgroundVariant,
 				}
 				const paColors = {
-					'border-base': paLightTheme.borderBase,
-					'border-darker': paLightTheme.borderDarker,
-					'border-subdued': paLightTheme.borderSubdued,
-					'border-disabled': paLightTheme.borderDisabled,
-					'border-disabled-on-dark': paLightTheme.borderDisabledOnDark,
+					'background': paLightTheme.background,
+					'background-variant': paLightTheme.backgroundVariant,
 				}
 				const apColors = {
-					'border-base': apLightTheme.borderBase,
-					'border-darker': apLightTheme.borderDarker,
-					'border-subdued': apLightTheme.borderSubdued,
-					'border-disabled': apLightTheme.borderDisabled,
-					'border-disabled-on-dark': apLightTheme.borderDisabledOnDark,
-
+					'background': apLightTheme.background,
+					'background-variant': apLightTheme.backgroundVariant,
 				}
-				const apColors2026 = {}
+				const apColors2026 = { 'ap-grey-lighten-6': apColorsTokens2026.apGrey.lighten6 }
 				return {
 					cnamColors,
 					paColors,
@@ -453,7 +394,7 @@ export const BorderBase: StoryObj = {
 			template: `
               <ColorDisplay
                   displayEmptyColors
-                  colorCategory="border"
+                  colorCategory="backgrounds"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"
@@ -467,29 +408,25 @@ export const BorderBase: StoryObj = {
 	},
 	tags: ['!dev'],
 }
-
-export const BorderPrimary: StoryObj = {
+export const OnBackgrounds: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Accent Primary'
-				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des éléments par leur contour.'
+				const colorTitle = 'On-Backgrounds'
+				const colorDescription = 'Texte/icône sur fond'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'border-accent-primary': cnamLightTheme.borderAccentPrimary,
-					'border-accent-primary-contrasted': cnamLightTheme.borderAccentPrimaryContrasted,
-					'border-accent-primary-on-dark': cnamLightTheme.borderAccentPrimaryOnDark,
+					'on-background': cnamLightTheme.onBackground,
+					'on-background-variant': cnamLightTheme.onBackgroundVariant,
 				}
 				const paColors = {
-					'border-accent-primary': paLightTheme.borderAccentPrimary,
-					'border-accent-primary-contrasted': paLightTheme.borderAccentPrimaryContrasted,
-					'border-accent-primary-on-dark': paLightTheme.borderAccentPrimaryOnDark,
+					'on-background': paLightTheme.onBackground,
+					'on-background-variant': paLightTheme.onBackgroundVariant,
 				}
 				const apColors = {
-					'border-accent-primary': apLightTheme.borderAccentPrimary,
-					'border-accent-primary-contrasted': apLightTheme.borderAccentPrimaryContrasted,
-					'border-accent-primary-on-dark': apLightTheme.borderAccentPrimaryOnDark,
+					'on-background': apLightTheme.onBackground,
+					'on-background-variant': apLightTheme.onBackgroundVariant,
 				}
 				const apColors2026 = {}
 				return {
@@ -505,7 +442,7 @@ export const BorderPrimary: StoryObj = {
 			template: `
               <ColorDisplay
                   displayEmptyColors
-                  colorCategory="border"
+                  colorCategory="OnBackgrounds"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"
@@ -519,26 +456,31 @@ export const BorderPrimary: StoryObj = {
 	},
 	tags: ['!dev'],
 }
-
-export const BorderSecondary: StoryObj = {
+export const Surfaces: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'Accent Secondary'
-				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des éléments par leur contour.'
+				const colorTitle = 'Surfaces'
+				const colorDescription = ' Surface en superposition du background principal.'
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'border-accent-secondary': cnamLightTheme.borderAccentSecondary,
-					'border-accent-secondary-contrasted': cnamLightTheme.borderAccentSecondaryContrasted,
+					'surface': cnamLightTheme.surface,
+					'surface-dim': cnamLightTheme.surfaceDim,
+					'surface-bright': cnamLightTheme.surfaceBright,
+					'inverse-surface': cnamLightTheme.inverseSurface,
 				}
 				const paColors = {
-					'border-accent-secondary': paLightTheme.borderAccentSecondary,
-					'border-accent-secondary-contrasted': paLightTheme.borderAccentSecondaryContrasted,
+					'surface': paLightTheme.surface,
+					'surface-dim': paLightTheme.surfaceDim,
+					'surface-bright': paLightTheme.surfaceBright,
+					'inverse-surface': paLightTheme.inverseSurface,
 				}
 				const apColors = {
-					'border-accent-secondary': apLightTheme.borderAccentSecondary,
-					'border-accent-secondary-contrasted': apLightTheme.borderAccentSecondaryContrasted,
+					'surface': apLightTheme.surface,
+					'surface-dim': apLightTheme.surfaceDim,
+					'surface-bright': apLightTheme.surfaceBright,
+					'inverse-surface': apLightTheme.inverseSurface,
 				}
 				const apColors2026 = {}
 				return {
@@ -554,7 +496,7 @@ export const BorderSecondary: StoryObj = {
 			template: `
               <ColorDisplay
                   displayEmptyColors
-                  colorCategory="border"
+                  colorCategory="surfaces"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"
@@ -568,32 +510,25 @@ export const BorderSecondary: StoryObj = {
 	},
 	tags: ['!dev'],
 }
-
-export const BorderStates: StoryObj = {
+export const OnSurfaces: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
 			setup() {
-				const colorTitle = 'States'
-				const colorDescription = 'Ces couleurs sont à utiliser pour les contours d’éléments d’interface présentant un message d’information, de succès, d’attention ou de danger.'
+				const colorTitle = 'On-Surfaces'
+				const colorDescription = 'Texte/icône sur une surface '
 				const colorTitleLevel = 3
 				const cnamColors = {
-					'border-info': cnamLightTheme.borderInfo,
-					'border-success': cnamLightTheme.borderSuccess,
-					'border-warning': cnamLightTheme.borderWarning,
-					'border-error': cnamLightTheme.borderError,
+					'on-surface': cnamLightTheme.onSurface,
+					'on-surface-variant': cnamLightTheme.onSurfaceVariant,
 				}
 				const paColors = {
-					'border-info': paLightTheme.borderInfo,
-					'border-success': paLightTheme.borderSuccess,
-					'border-warning': paLightTheme.borderWarning,
-					'border-error': paLightTheme.borderError,
+					'on-surface': paLightTheme.onSurface,
+					'on-surface-variant': paLightTheme.onSurfaceVariant,
 				}
 				const apColors = {
-					'border-info': apLightTheme.borderInfo,
-					'border-success': apLightTheme.borderSuccess,
-					'border-warning': apLightTheme.borderWarning,
-					'border-error': apLightTheme.borderError,
+					'on-surface': apLightTheme.onSurface,
+					'on-surface-variant': apLightTheme.onSurfaceVariant,
 				}
 				const apColors2026 = {}
 				return {
@@ -609,7 +544,103 @@ export const BorderStates: StoryObj = {
 			template: `
               <ColorDisplay
                   displayEmptyColors
-                  colorCategory="border"
+                  colorCategory="onsurfaces"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+export const Overlay: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Overlay'
+				const colorTitleLevel = 3
+				const cnamColors = {
+					overlay: cnamLightTheme.overlay,
+				}
+				const paColors = {
+					overlay: paLightTheme.overlay,
+				}
+				const apColors = {
+					overlay: apLightTheme.overlay,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorTitleLevel,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  displayEmptyColors
+                  colorCategory="overlay"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+export const Borders: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Borders'
+				const colorTitleLevel = 3
+				const colorDescription = 'Ce sont les couleurs à utiliser pour les contours de tous les éléments d’interface (quand nécessaire)'
+				const cnamColors = {
+					'border': cnamLightTheme.border,
+					'border-variant': cnamLightTheme.borderVariant,
+					'border-bright': cnamLightTheme.borderBright,
+					'border-dim': cnamLightTheme.borderDim,
+				}
+				const paColors = {
+					'border': paLightTheme.border,
+					'border-variant': paLightTheme.borderVariant,
+					'border-bright': paLightTheme.borderBright,
+					'border-dim': paLightTheme.borderDim,
+				}
+				const apColors = {
+					'border': apLightTheme.border,
+					'border-variant': apLightTheme.borderVariant,
+					'border-bright': apLightTheme.borderBright,
+					'border-dim': apLightTheme.borderDim,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  displayEmptyColors
+                  colorCategory="borders"
                   :cnamColors="cnamColors"
                   :paColors="paColors"
                   :apColors="apColors"
@@ -626,1041 +657,186 @@ export const BorderStates: StoryObj = {
 
 export const BorderSection = {
 	render() {
-		return h(createSection('Border', [
-			BorderBase,
-			BorderPrimary,
-			BorderSecondary,
-			BorderStates,
+		return h(createSection('Borders', [
+			Borders,
 		], 'ap2026'))
 	},
-}
-export const TextBase: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Base'
-				const colorTitleLevel = 3
-				const colorDescription = 'Ce sont les couleurs les plus courantes à utiliser pour les textes.'
-				const cnamColors = {
-					'text-base': cnamLightTheme.textBase,
-					'text-subdued': cnamLightTheme.textSubdued,
-					'text-disabled': cnamLightTheme.textDisabled,
-					'text-on-dark': cnamLightTheme.textOnDark,
-					'text-subdued-on-dark': cnamLightTheme.textSubduedOnDark,
-					'text-disabled-on-dark': cnamLightTheme.textDisabledOnDark,
-				}
-				const paColors = {
-					'text-base': paLightTheme.textBase,
-					'text-subdued': paLightTheme.textSubdued,
-					'text-disabled': paLightTheme.textDisabled,
-					'text-on-dark': paLightTheme.textOnDark,
-					'text-subdued-on-dark': paLightTheme.textSubduedOnDark,
-					'text-disabled-on-dark': paLightTheme.textDisabledOnDark,
-				}
-				const apColors = {
-					'text-base': apLightTheme.textBase,
-					'text-subdued': apLightTheme.textSubdued,
-					'text-disabled': apLightTheme.textDisabled,
-					'text-on-dark': apLightTheme.textOnDark,
-					'text-subdued-on-dark': apLightTheme.textSubduedOnDark,
-					'text-disabled-on-dark': apLightTheme.textDisabledOnDark,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="text"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />`,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const TextPrimary: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Accent Primary'
-				const colorDescription = 'Ce sont les couleurs les plus courantes à utiliser pour les textes.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'text-accent-primary': cnamLightTheme.textAccentPrimary,
-					'text-accent-primary-contrasted': cnamLightTheme.textAccentPrimaryContrasted,
-				}
-				const paColors = {
-					'text-accent-primary': paLightTheme.textAccentPrimary,
-					'text-accent-primary-contrasted': paLightTheme.textAccentPrimaryContrasted,
-				}
-				const apColors = {
-					'text-accent-primary': apLightTheme.textAccentPrimary,
-					'text-accent-primarycontrasted': apLightTheme.textAccentPrimaryContrasted,
-
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="text"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />`,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const TextSecondary: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Accent Secondary'
-				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des textes.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'text-accent-secondary': cnamLightTheme.textAccentSecondary,
-				}
-				const paColors = {
-					'text-accent-secondary': paLightTheme.textAccentSecondary,
-
-				}
-				const apColors = {
-					'text-accent-secondary': apLightTheme.textAccentSecondary,
-
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="text"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />`,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const TextState: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'State'
-				const colorDescription = 'Ces couleurs sont à utiliser pour les textes présentant un message d’information, de succès, d’attention ou de danger.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'text-info': cnamLightTheme.textInfo,
-					'text-success': cnamLightTheme.textSuccess,
-					'text-warning': cnamLightTheme.textWarning,
-					'text-error': cnamLightTheme.textError,
-				}
-				const paColors = {
-					'text-info': paLightTheme.textInfo,
-					'text-success': paLightTheme.textSuccess,
-					'text-warning': paLightTheme.textWarning,
-					'text-error': paLightTheme.textError,
-				}
-				const apColors = {
-					'text-info': apLightTheme.textInfo,
-					'text-success': apLightTheme.textSuccess,
-					'text-warning': apLightTheme.textWarning,
-					'text-error': apLightTheme.textError,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="text"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />`,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const TextSection = {
-	render() {
-		return h(createSection('Text', [
-			TextBase,
-			TextPrimary,
-			TextSecondary,
-			TextState,
-		], 'ap2026'))
-	},
-}
-
-export const IconBase: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Base'
-				const colorDescription = 'Ce sont les couleurs les plus courantes à utiliser pour les icônes dont la seule vocation est informative ou décorative.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'icon-base': cnamLightTheme.iconBase,
-					'icon-subdued': cnamLightTheme.iconSubdued,
-					'icon-subdued-on-dark': cnamLightTheme.iconSubduedOnDark,
-					'icon-on-dark': cnamLightTheme.iconOnDark,
-					'icon-disabled': cnamLightTheme.iconDisabled,
-					'icon-disabled-on-dark': cnamLightTheme.iconDisabledOnDark,
-				}
-				const paColors = {
-					'icon-base': paLightTheme.iconBase,
-					'icon-subdued': paLightTheme.iconSubdued,
-					'icon-subdued-on-dark': paLightTheme.iconSubduedOnDark,
-					'icon-on-dark': paLightTheme.iconOnDark,
-					'icon-disabled': paLightTheme.iconDisabled,
-					'icon-disabled-on-dark': paLightTheme.iconDisabledOnDark,
-				}
-				const apColors = {
-					'icon-base': apLightTheme.iconBase,
-					'icon-subdued': apLightTheme.iconSubdued,
-					'icon-subdued-on-dark': apLightTheme.iconSubduedOnDark,
-					'icon-on-dark': apLightTheme.iconOnDark,
-					'icon-disabled': apLightTheme.iconDisabled,
-					'icon-disabled-on-dark': apLightTheme.iconDisabledOnDark,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="icons"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-export const IconPrimary: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Accent Primary'
-				const colorDescription = 'Ce sont les couleurs à utiliser dès qu’un icône symbolise une action.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'icon-accent-primary': cnamLightTheme.iconAccentPrimary,
-					'icon-accent-primary-contrasted': cnamLightTheme.iconAccentPrimaryContrasted,
-				}
-				const paColors = {
-					'icon-accent-primary': paLightTheme.iconAccentPrimary,
-					'icon-accent-primary-contrasted': paLightTheme.iconAccentPrimaryContrasted,
-				}
-				const apColors = {
-					'icon-accent-primary': apLightTheme.iconAccentPrimary,
-					'icon-accent-primary-contrasted': apLightTheme.iconAccentPrimaryContrasted,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="icons"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-export const IconSecondary: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Accent Secondary'
-				const colorDescription = 'Ce sont les couleurs à utiliser pour mettre en exergue des icônes.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'icon-accent-secondary': cnamLightTheme.iconAccentSecondary,
-				}
-				const paColors = {
-					'icon-accent-secondary': paLightTheme.iconAccentSecondary,
-				}
-				const apColors = {
-					'icon-accent-secondary': apLightTheme.iconAccentSecondary,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="icons"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-export const IconState: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'State'
-				const colorDescription = 'Ces couleurs sont à utiliser pour les icônes présentant un message d’information, de succès, d’attention ou de danger.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'icon-info': cnamLightTheme.iconInfo,
-					'icon-success': cnamLightTheme.iconSuccess,
-					'icon-warning': cnamLightTheme.iconWarning,
-					'icon-error': cnamLightTheme.iconError,
-				}
-				const paColors = {
-					'icon-info': paLightTheme.iconInfo,
-					'icon-success': paLightTheme.iconSuccess,
-					'icon-warning': paLightTheme.iconWarning,
-					'icon-error': paLightTheme.iconError,
-				}
-				const apColors = {
-					'icon-info': apLightTheme.iconInfo,
-					'icon-success': apLightTheme.iconSuccess,
-					'icon-warning': apLightTheme.iconWarning,
-					'icon-error': apLightTheme.iconError,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="icons"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-export const IconSection = {
-	render() {
-		return h(createSection('Icons', [
-			IconBase,
-			IconPrimary,
-			IconSecondary,
-			IconState,
-		], 'ap2026'))
-	},
-}
-
-export const MainBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Main'
-				const colorDescription = 'Ce sont les couleurs à utiliser pour le background principal de la plateforme.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-main': cnamLightTheme.backgroundMain,
-					'background-main-alt': cnamLightTheme.backgroundMainAlt,
-					'background-main-ter': cnamLightTheme.backgroundMainTer,
-				}
-				const paColors = {
-					'background-main': paLightTheme.backgroundMain,
-					'background-surface': paLightTheme.backgroundSurface,
-					'background-surface-alt': paLightTheme.backgroundSurfaceAlt,
-				}
-				const apColors = {
-					'background-main': apLightTheme.backgroundMain,
-					'background-surface': apLightTheme.backgroundSurface,
-					'background-surface-alt': apLightTheme.backgroundSurfaceAlt,
-				}
-				const apColors2026 = { 'ap-grey-lighten-6': apColorsTokens2026.apGrey.lighten6 }
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="mainBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const SurfaceBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Surface'
-				const colorDescription = 'Ce sont les couleurs à utiliser sur les containers présents en surperposition du background principal. Le principe étant d’utiliser la variante “surface” au dessus du “main” et les “alt” au dessus des “alt”.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-surface': cnamLightTheme.backgroundSurface,
-					'background-surface-alt': cnamLightTheme.backgroundSurfaceAlt,
-				}
-				const paColors = {
-					'background-surface': paLightTheme.backgroundSurface,
-					'background-surface-alt': paLightTheme.backgroundSurfaceAlt,
-				}
-				const apColors = {
-					'background-surface': apLightTheme.backgroundSurface,
-					'background-surface-alt': apLightTheme.backgroundSurfaceAlt,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="alternativeBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const AlternativeBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Alternative'
-				const colorDescription = ''
-				const colorTitleLevel = 3
-				const cnamColors = {}
-				const paColors = {}
-				const apColors = {}
-				const apColors2026 = { 'ap-blue-lighten-3': apColorsTokens2026.apBlue.lighten3 }
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="alternativeBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const RaisedBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Raised'
-				const colorDescription = 'Elle s’utilise sur les éléments ayant besoin d’une légère mise en exergue.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-raised': cnamLightTheme.backgroundRaised,
-				}
-				const paColors = {
-					'background-raised': paLightTheme.backgroundRaised,
-				}
-				const apColors = {
-					'background-raised': apLightTheme.backgroundRaised,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="alternativeBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const DisabledBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Disabled'
-				const colorDescription = 'Elle s’utilise sur les background des éléments désactivés.'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-disabled': cnamLightTheme.backgroundDisabled,
-					'background-disabled-on-dark': cnamLightTheme.backgroundDisabledOnDark,
-				}
-				const paColors = {
-					'background-disabled': paLightTheme.backgroundDisabled,
-					'background-disabled-on-dark': paLightTheme.backgroundDisabledOnDark,
-				}
-				const apColors = {
-					'background-disabled': apLightTheme.backgroundDisabled,
-					'background-disabled-on-dark': apLightTheme.backgroundDisabledOnDark,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorDescription,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="alternativeBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorDescription="colorDescription"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const InformationalBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Informational'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-info': cnamLightTheme.backgroundInfo,
-					'background-info-subdued': cnamLightTheme.backgroundInfoSubdued,
-					'background-info-contrasted': cnamLightTheme.backgroundInfoContrasted,
-				}
-				const paColors = {
-					'background-info': paLightTheme.backgroundInfo,
-					'background-info-subdued': paLightTheme.backgroundInfoSubdued,
-					'background-info-contrasted': paLightTheme.backgroundInfoContrasted,
-				}
-				const apColors = {
-					'background-info': apLightTheme.backgroundInfo,
-					'background-info-subdued': apLightTheme.backgroundInfoSubdued,
-					'background-info-contrasted': apLightTheme.backgroundInfoContrasted,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="informationalBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const SuccessBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Success'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-success': cnamLightTheme.backgroundSuccess,
-					'background-success-subdued': cnamLightTheme.backgroundSuccessSubdued,
-					'background-success-contrasted': cnamLightTheme.backgroundSuccessContrasted,
-				}
-				const paColors = {
-					'background-success': paLightTheme.backgroundSuccess,
-					'background-success-subdued': paLightTheme.backgroundSuccessSubdued,
-					'background-success-contrasted': paLightTheme.backgroundSuccessContrasted,
-				}
-				const apColors = {
-					'background-success': apLightTheme.backgroundSuccess,
-					'background-success-subdued': apLightTheme.backgroundSuccessSubdued,
-					'background-success-contrasted': apLightTheme.backgroundSuccessContrasted,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="successBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const WarningBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Warning'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-warning': cnamLightTheme.backgroundWarning,
-					'background-warning-subdued': cnamLightTheme.backgroundWarningSubdued,
-					'background-warning-contrasted': cnamLightTheme.backgroundWarningContrasted,
-				}
-				const paColors = {
-					'background-warning': paLightTheme.backgroundWarning,
-					'background-warning-subdued': paLightTheme.backgroundWarningSubdued,
-					'background-warning-contrasted': paLightTheme.backgroundWarningContrasted,
-				}
-				const apColors = {
-					'background-warning': apLightTheme.backgroundWarning,
-					'background-warning-subdued': apLightTheme.backgroundWarningSubdued,
-					'background-warning-contrasted': apLightTheme.backgroundWarningContrasted,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="warningBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const ErrorBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Error'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-error': cnamLightTheme.backgroundError,
-					'background-error-subdued': cnamLightTheme.backgroundErrorSubdued,
-					'background-error-contrasted': cnamLightTheme.backgroundErrorContrasted,
-				}
-				const paColors = {
-					'background-error': paLightTheme.backgroundError,
-					'background-error-subdued': paLightTheme.backgroundErrorSubdued,
-					'background-error-contrasted': paLightTheme.backgroundErrorContrasted,
-				}
-				const apColors = {
-					'background-error': apLightTheme.backgroundError,
-					'background-error-subdued': apLightTheme.backgroundErrorSubdued,
-					'background-error-contrasted': apLightTheme.backgroundErrorContrasted,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="errorBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const OtherBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Other'
-				const colorTitleLevel = 3
-				const cnamColors = {
-					'background-assure': cnamLightTheme.backgroundAssure,
-					'background-professionnel': cnamLightTheme.backgroundProfessionnel,
-					'background-entreprise': cnamLightTheme.backgroundEntreprise,
-				}
-				const paColors = {
-					'background-assure': paLightTheme.backgroundAssure,
-					'background-professionnel': paLightTheme.backgroundProfessionnel,
-					'background-entreprise': paLightTheme.backgroundEntreprise,
-				}
-				const apColors = {
-					'background-assure': apLightTheme.backgroundAssure,
-					'background-professionnel': apLightTheme.backgroundProfessionnel,
-					'background-entreprise': apLightTheme.backgroundEntreprise,
-				}
-				const apColors2026 = {}
-				return {
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  displayEmptyColors
-                  colorCategory="otherBackgrounds"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorTitleLevel="colorTitleLevel"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const StatusBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Fonds pour les statuts'
-				const colorTitleLevel = 3
-				const displayEmptyColors = false
-				const cnamColors = {}
-				const paColors = {}
-				const apColors = {}
-				const apColors2026 = {
-					'ap-blue-lighten-2': apColorsTokens2026.apBlue.lighten2,
-					'ap-parme': apColorsTokens2026.apParme.base,
-					'ap-yellow-lighten-3': apColorsTokens2026.apYellow.lighten3,
-					'ap-red-lighten-2': apColorsTokens2026.apRed.lighten2,
-					'ap-red-lighten-3': apColorsTokens2026.apRed.lighten3,
-					'ap-green-lighten-2': apColorsTokens2026.apGreen.lighten2,
-					'ap-grey-lighten-2': apColorsTokens2026.apGrey.lighten2,
-				}
-				return {
-					displayEmptyColors,
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  colorCategory="base"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorTitleLevel="colorTitleLevel"
-                  :displayEmptyColors="displayEmptyColors"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
-}
-
-export const MessagesBackgrounds: StoryObj = {
-	render: () => {
-		return {
-			components: { ColorDisplay },
-			setup() {
-				const colorTitle = 'Fonds pour les messages'
-				const colorTitleLevel = 3
-				const displayEmptyColors = false
-				const cnamColors = {}
-				const paColors = {}
-				const apColors = {}
-				const apColors2026 = {
-					'ap-red': apColorsTokens2026.apRed.base,
-					'ap-turquoise-darken-1': apColorsTokens2026.apTurquoise.darken1,
-					'ap-yellow': apColorsTokens2026.apYellow.base,
-					'ap-parme-darken-1': apColorsTokens2026.apParme.darken1,
-				}
-				return {
-					displayEmptyColors,
-					cnamColors,
-					paColors,
-					apColors,
-					apColors2026,
-					colorTitle,
-					colorTitleLevel,
-				}
-			},
-			template: `
-              <ColorDisplay
-                  colorCategory="base"
-                  :cnamColors="cnamColors"
-                  :paColors="paColors"
-                  :apColors="apColors"
-                  :apColors2026="apColors2026"
-                  :colorTitle="colorTitle"
-                  :colorTitleLevel="colorTitleLevel"
-                  :displayEmptyColors="displayEmptyColors"
-              />
-            `,
-		}
-	},
-	tags: ['!dev'],
 }
 
 export const BackgroundSection = {
 	render() {
-		return h(createSection('Background', [
-			MainBackgrounds,
-			SurfaceBackgrounds,
-			AlternativeBackgrounds,
-			RaisedBackgrounds,
-			DisabledBackgrounds,
-			InformationalBackgrounds,
-			SuccessBackgrounds,
-			WarningBackgrounds,
-			ErrorBackgrounds,
-			OtherBackgrounds,
-			StatusBackgrounds,
-			MessagesBackgrounds,
+		return h(createSection('Fonds et surfaces', [
+			Backgrounds,
+			OnBackgrounds,
+			Surfaces,
+			OnSurfaces,
 		]))
+	},
+}
+export const OverlaySection = {
+	render() {
+		return h(createSection('Fonds et surfaces', [
+			Overlay,
+		]))
+	},
+}
+
+export const InteractionSection = {
+	render() {
+		return h(createSection('Interaction', [
+			Interaction,
+		], 'ap2026'))
+	},
+}
+
+export const DisabledSection = {
+	render() {
+		return h(createSection('Disabled', [
+			Disabled,
+		], 'ap2026'))
+	},
+}
+
+export const Feedback: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'Feedback'
+				const colorTitleLevel = 3
+				const colorDescription = 'Fonds de composants (ou de containers) indiquant un message de statut'
+				const cnamColors = {
+					'error': cnamLightTheme.error,
+					'error-variant': cnamLightTheme.errorVariant,
+					'success': cnamLightTheme.success,
+					'success-variant': cnamLightTheme.successVariant,
+					'warning': cnamLightTheme.warning,
+					'warning-variant': cnamLightTheme.warningVariant,
+					'info': cnamLightTheme.info,
+					'info-variant': cnamLightTheme.infoVariant,
+				}
+				const paColors = {
+					'error': paLightTheme.error,
+					'error-variant': paLightTheme.errorVariant,
+					'success': paLightTheme.success,
+					'success-variant': paLightTheme.successVariant,
+					'warning': paLightTheme.warning,
+					'warning-variant': paLightTheme.warningVariant,
+					'info': paLightTheme.info,
+					'info-variant': paLightTheme.infoVariant,
+				}
+				const apColors = {
+					'error': apLightTheme.error,
+					'error-variant': apLightTheme.errorVariant,
+					'success': apLightTheme.success,
+					'success-variant': apLightTheme.successVariant,
+					'warning': apLightTheme.warning,
+					'warning-variant': apLightTheme.warningVariant,
+					'info': apLightTheme.info,
+					'info-variant': apLightTheme.infoVariant,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  displayEmptyColors
+                  colorCategory="feedback"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const OnFeedback: StoryObj = {
+	render: () => {
+		return {
+			components: { ColorDisplay },
+			setup() {
+				const colorTitle = 'On-Feedback'
+				const colorTitleLevel = 3
+				const colorDescription = 'Textes/ Icônes sur fond de statut.'
+				const cnamColors = {
+					'on-error': cnamLightTheme.onError,
+					'on-error-variant': cnamLightTheme.onErrorVariant,
+					'on-success': cnamLightTheme.onSuccess,
+					'on-success-variant': cnamLightTheme.onSuccessVariant,
+					'on-warning': cnamLightTheme.onWarning,
+					'on-warning-variant': cnamLightTheme.onWarningVariant,
+					'on-info': cnamLightTheme.onInfo,
+					'on-info-variant': cnamLightTheme.onInfoVariant,
+				}
+				const paColors = {
+					'on-error': paLightTheme.onError,
+					'on-error-variant': paLightTheme.onErrorVariant,
+					'on-success': paLightTheme.onSuccess,
+					'on-success-variant': paLightTheme.onSuccessVariant,
+					'on-warning': paLightTheme.onWarning,
+					'on-warning-variant': paLightTheme.onWarningVariant,
+					'on-info': paLightTheme.onInfo,
+					'on-info-variant': paLightTheme.onInfoVariant,
+				}
+				const apColors = {
+					'on-error': apLightTheme.onError,
+					'on-error-variant': apLightTheme.onErrorVariant,
+					'on-success': apLightTheme.onSuccess,
+					'on-success-variant': apLightTheme.onSuccessVariant,
+					'on-warning': apLightTheme.onWarning,
+					'on-warning-variant': apLightTheme.onWarningVariant,
+					'on-info': apLightTheme.onInfo,
+					'on-info-variant': apLightTheme.onInfoVariant,
+				}
+				const apColors2026 = {}
+				return {
+					cnamColors,
+					paColors,
+					apColors,
+					apColors2026,
+					colorTitle,
+					colorDescription,
+					colorTitleLevel,
+				}
+			},
+			template: `
+              <ColorDisplay
+                  displayEmptyColors
+                  colorCategory="feedback"
+                  :cnamColors="cnamColors"
+                  :paColors="paColors"
+                  :apColors="apColors"
+                  :apColors2026="apColors2026"
+                  :colorTitle="colorTitle"
+                  :colorDescription="colorDescription"
+                  :colorTitleLevel="colorTitleLevel"
+              />
+            `,
+		}
+	},
+	tags: ['!dev'],
+}
+
+export const FeedbackSection = {
+	render() {
+		return h(createSection('Feedback', [
+			Feedback,
+			OnFeedback,
+		], 'ap2026'))
 	},
 }
 

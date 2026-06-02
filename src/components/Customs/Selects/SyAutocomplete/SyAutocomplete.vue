@@ -404,7 +404,7 @@
 					:disable-error-handling="disableErrorHandling"
 					:loading="loading"
 					:help-text="helpText"
-					:are-details-hidden="hideDetails"
+					:hide-details="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
@@ -585,7 +585,7 @@
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-primary)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 

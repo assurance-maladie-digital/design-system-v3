@@ -338,8 +338,8 @@
 	background-color: rgb(var(--v-theme-surface));
 
 	&--selected {
-		color: rgb(var(--v-theme-textOnDark));
 		background-color: rgb(var(--v-theme-primary));
+		color: rgb(var(--v-theme-onPrimary));
 	}
 
 	&:focus-visible {
@@ -360,12 +360,12 @@
 
 	&:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-overlayOnLight), 0.2);
+		background-color: rgba(var(--v-theme-interactionDarkHover), 0.2);
 	}
 
 	&--selected:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-overlayOnDark), 0.2);
+		background-color: rgba(var(--v-theme-interactionLightenHover), 0.2);
 	}
 }
 
@@ -378,7 +378,7 @@
 }
 
 .select-btn-field__options--error .select-btn-field__item {
-	color: rgb(var(--v-theme-textError));
-	border-color: rgb(var(--v-theme-borderError));
+	color: rgb(var(--v-theme-error));
+	border-color: rgb(var(--v-theme-error));
 }
 </style>

@@ -7,6 +7,10 @@ on:
         description: "Branch to update snapshots on (leave empty for current branch)"
         required: false
         type: string
+      spec:
+        description: "Spec filter (e.g. 'ChipList' or 'Accordion,ChipList'). Leave empty to update all."
+        required: false
+        type: string
   push:
     tags:
       - 'update-snapshots'
@@ -32,7 +36,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-      - name: Install pnpm
+      - name: Install pnpm 
         run: npm install -g pnpm@8
       - name: Install Arial font
         run: sudo apt-get update && sudo apt-get install -y ttf-mscorefonts-installer
@@ -59,16 +63,22 @@ jobs:
       - name: Install Cypress binary
         run: pnpm cypress install
       - name: Update visual test snapshots
-        run: pnpm test:visual:update
+        run: |
+          if [ -n "${{ github.event.inputs.spec }}" ]; then
+            SPECS=$(echo "${{ github.event.inputs.spec }}" | tr ',' '\n' | sed 's|.*|src/components/**/*&*.visual.cy.ts|' | tr '\n' ',')
+            pnpm cypress run --component --browser electron --env updateSnapshots=true --spec "$SPECS"
+          else
+            pnpm test:visual:update
+          fi
       - name: Check for changes
         id: verify
         run: |
-          if git diff --quiet; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
-      - name: Commit and push updated snapshots
+      - name: Commit and push updated snapshots 
         if: steps.verify.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
