@@ -227,7 +227,8 @@
 }
 
 .sy-radio-group__help-text {
-	font-size: 0.75rem;
+	margin-top: 10px;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 

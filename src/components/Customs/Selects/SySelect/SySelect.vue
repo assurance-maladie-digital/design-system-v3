@@ -466,10 +466,11 @@
 		return props.required === true
 	})
 
-	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
+	// Détecte s'il y a un message réellement affiché (le succès ne compte que s'il est affiché
+	// via showSuccessMessages, sinon le helpText doit occuper la position du message sans espace vide)
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return hasError.value || hasWarning.value || hasSuccess.value
+		return hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages)
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -973,6 +974,7 @@
 							'warning-field': hasWarning,
 							'success-field': hasSuccess,
 							'basic-field': !hasError && !hasWarning && !hasSuccess,
+							'help-text-as-hint': showHelpTextAsMessage,
 						}"
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
@@ -1356,6 +1358,16 @@
 	:deep(.v-field--focused .v-field__outline) {
 		color: rgb(var(--v-theme-primary)) !important;
 		opacity: 1 !important;
+	}
+}
+
+.help-text-as-hint {
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity)) !important;
+		}
 	}
 }
 
