@@ -281,7 +281,7 @@ export const CustomColors: Story = {
                     />
                     <SyRadioGroup 
                       v-model="value3" 
-                      color="success" 
+                      color="onSuccessVariant" 
                       label="Couleur succès" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false"
@@ -295,7 +295,7 @@ export const CustomColors: Story = {
                     />
                       <SyRadioGroup 
                         v-model="value5" 
-                        color="warning" 
+                        color="onWarningVariant" 
                         label="Couleur avertissement" 
                         :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                         :show-success-messages="false"
@@ -339,36 +339,36 @@ Le composant SyRadioGroup peut être personnalisé avec différentes couleurs po
 		template: `
 			<div>
                 <SyRadioGroup 
-                    v-model="value1" 
-                    color="primary" 
+                    v-model="value1"
+                    color="primary"
                     label="Couleur primaire (par défaut)" 
                     :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                     :show-success-messages="false" 
                 />
-                <SyRadioGroup 
-                    v-model="value2" 
-                    color="secondary" 
+              <SyRadioGroup
+                  v-model="value2"
+                  color="secondary"
                     label="Couleur secondaire" 
                     :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]"  
                     :show-success-messages="false" 
                 />
-                <SyRadioGroup 
-                    v-model="value3" 
-                    color="success" 
+              <SyRadioGroup
+                  v-model="value3"
+                  color="onSuccessVariant"
                     label="Couleur succès" 
                     :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                     :show-success-messages="false" 
                 />
-                  <SyRadioGroup 
-                      v-model="value4" 
-                      color="error" 
+              <SyRadioGroup
+                  v-model="value4"
+                  color="error"
                       label="Couleur erreur" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false" 
                 />
-                  <SyRadioGroup 
-                      v-model="value5" 
-                      color="warning" 
+                  <SyRadioGroup
+                      v-model="value5"
+                      color="onWarningVariant"
                       label="Couleur avertissement" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false" 

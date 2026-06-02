@@ -121,17 +121,17 @@
 
 .month-selector__month--selected {
 	/* stylelint-disable-next-line custom-property-pattern */
-	background-color: rgb(var(--v-theme-accentPrimary, 12, 65, 154));
+	background-color: rgb(var(--v-theme-primary, 12, 65, 154));
 	color: white;
 
 	&:hover {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgb(var(--v-theme-accentPrimaryContrasted, 7, 39, 92));
+		background-color: rgb(var(--v-theme-primaryVariant, 7, 39, 92));
 	}
 }
 
 .month-selector__month--active:focus {
 	/* stylelint-disable-next-line custom-property-pattern */
-	outline: 2px solid rgb(var(--v-theme-accentPrimary, 12, 65, 154));
+	outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
 }
 </style>

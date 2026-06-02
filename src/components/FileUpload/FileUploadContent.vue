@@ -96,7 +96,7 @@
 
 .sy-file-upload-caption {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-textSubdued));
+	color: rgb(var(--v-theme-onSurfaceVariant));
 }
 
 .sy-file-upload-btn {

@@ -1,10 +1,119 @@
-import { Meta, Story } from '@storybook/addon-docs';
-import * as SyTable from '../SyTable.stories';
+import { Meta, Story } from '@storybook/blocks';
+import * as Stories from '../SyTable.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import '@/stories/styles/shared.css';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+    AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={SyTable} />
+<Meta of={Stories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+    componentName="SyTable"
+    iconSrc={AccessibilityIcon}
+>
+
+    [//]: # (<AuditSection>)
+
+    [//]: # ( <div>)
+
+        [//]: # ( Rapport d’audit manuel :{' '})
+
+        [//]: # ( <a href="/audits/SyTable.xlsx" style={{color: '#0C41BD'}}>Voir le rapport</a>)
+
+        [//]: # ( </div>)
+
+    [//]: # ( <div style={{color: 'grey', fontSize: '14px', marginTop: '0px'}}>)
+
+        [//]: # ( Correctifs associés &#40;)
+
+        [//]: # ( <a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/XXX" target="_blank" rel="noopener noreferrer" style={{color: '#0C41BD'}}>issue #XXX</a>&#41;)
+
+        [//]: # ( </div>)
+
+    [//]: # (</AuditSection>)
+
+    <CriteriaSection>
+        <CriteriaCard icon="🏷️" title="Structure et rôles">
+            <ul>
+                <li>Le composant repose sur <code>VDataTable</code> et conserve la structure sémantique native d’un tableau HTML (<code>table</code>, <code>caption</code>, <code>thead</code>, <code>tbody</code>, <code>th</code>, <code>td</code>).</li>
+                <li>Une légende (<code>caption</code>) est injectée dynamiquement au montage et reste accessible via la classe <code>d-sr-only</code> lorsqu’elle est masquée visuellement.</li>
+                <li>Les en-têtes utilisent des cellules <code>th</code> avec <code>scope="col"</code> et exposent les états de tri via <code>aria-sort</code>.</li>
+                <li>Les filtres et la pagination conservent les rôles natifs des composants de formulaire.</li>
+                <li>Les slots permettent d’étendre le tableau sans altérer sa structure sémantique.</li>
+                <li>L’état de tri, pagination et sélection peut être persisté sans impacter l’accessibilité.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="⌨️" title="Navigation clavier">
+            <ul>
+                <li>Les en-têtes de colonnes sont focalisables via <code>tabindex="0"</code> et activables au clavier.</li>
+                <li>Les actions de tri sont accessibles via Entrée ou Espace.</li>
+                <li>Les filtres sont navigables dans l’ordre naturel de tabulation.</li>
+                <li>Les cases à cocher de sélection (ligne et globale) sont entièrement accessibles au clavier.</li>
+                <li>La pagination est utilisable au clavier (page, items par page, navigation).</li>
+                <li>Les lignes cliquables restent accessibles via clavier lorsqu’activées.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="📢" title="Annonces aux technologies d’assistance">
+            <ul>
+                <li>Le <code>caption</code> fournit un contexte global de lecture du tableau.</li>
+                <li>Un region <code>role="status"</code> avec <code>aria-live="polite"</code> annonce les changements de résultats.</li>
+                <li>Les états de tri sont exposés via <code>aria-sort</code> sur les en-têtes.</li>
+                <li>Les contrôles de pagination et filtres utilisent des libellés explicites.</li>
+                <li>Les attributs ARIA inutiles (ex: <code>aria-describedby</code>) sont supprimés pour éviter les doublons de lecture.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="🎨" title="Contraste et lisibilité">
+            <ul>
+                <li>Les styles du design system assurent un contraste suffisant pour texte, bordures et focus.</li>
+                <li>Les lignes alternées (<code>striped</code>) améliorent la lisibilité sans nuire au contraste.</li>
+                <li>Les colonnes figées conservent un fond opaque et des ombres pour la lisibilité.</li>
+                <li>Les états actifs (focus, tri, sélection) restent perceptibles visuellement et via ARIA.</li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard icon="📌" title="Fonctionnalités avancées accessibles">
+            <ul>
+                <li>Le tri multi-colonnes et obligatoire reste accessible via attributs ARIA.</li>
+                <li>Les filtres par colonne utilisent des champs correctement libellés.</li>
+                <li>La sélection simple ou multiple est annoncée clairement aux lecteurs d’écran.</li>
+                <li>Les colonnes épinglées restent accessibles sans modifier l’ordre de lecture.</li>
+                <li>L’organisation des colonnes est configurable sans perte de sémantique.</li>
+                <li>La persistance locale de l’état n’impacte pas l’accessibilité du tableau.</li>
+            </ul>
+        </CriteriaCard>
+    </CriteriaSection>
+
+    <DemoSection componentName="SyTable">
+        <Story of={Stories.Default}/>
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>Fournir toujours un <code>caption</code> clair et descriptif pour le tableau.</li>
+            <li>Limiter les actions dans les headers pour éviter la surcharge cognitive.</li>
+            <li>Tester systématiquement tri, filtres et pagination au clavier.</li>
+            <li>Vérifier les annonces lecteur d’écran lors des changements de données.</li>
+            <li>Éviter les libellés ambigus sur les colonnes et filtres.</li>
+            <li>Contrôler la cohérence visuelle entre états ARIA et styles CSS.</li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://www.w3.org/WAI/tutorials/tables/" target="_blank" rel="noopener noreferrer">W3C WAI – Tables Tutorial</a></li>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/table/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices – Table Pattern</a></li>
+            <li><a href="https://www.w3.org/WAI/WCAG21/Understanding/status-messages.html" target="_blank" rel="noopener noreferrer">WCAG – Status Messages (4.1.3)</a></li>
+            <li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – critères 5, 7 et 10</a></li>
+        </ul>
+    </ResourcesSection>
+</AccessibilityGuideLayout>

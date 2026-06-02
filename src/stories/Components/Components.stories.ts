@@ -204,6 +204,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyTextArea',
+						description: 'Utilisé pour la collecte de grandes quantités de données textuelles.',
+						link: '/?path=/docs/composants-formulaires-sytextarea--docs',
+						img: `/components/sy-text-area${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
 						title: 'SyAutocomplete',
 						description: 'Utilisé pour permettre à l’utilisateur de rechercher et sélectionner une valeur dans une liste d\'options (alternative au v-autocomplete de Vuetify).',
 						link: '/?path=/docs/composants-formulaires-selects-syautocomplete--docs',
@@ -248,8 +255,8 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'DatePicker',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de saisir une date.',
-						link: '/?path=/docs/composants-formulaires-datepicker--docs',
-						img: '/components/date-picker.svg',
+						link: '/?path=/docs/composants-formulaires-datepicker-introduction--docs',
+						img: `/components/date-picker${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -263,7 +270,7 @@ export const ComponentsList: StoryObj = {
 						title: 'NirField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir un numéro de Sécurité sociale (NIR).',
 						link: '/?path=/docs/composants-formulaires-nirfield--docs',
-						img: '/components/nir-field.svg',
+						img: `/components/nir-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -330,10 +337,24 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyTable',
+						description: 'Utilisé pour afficher une VDataTable de Vuetify',
+						link: '/?path=/docs/composants-tableaux-sytable--docs',
+						img: `/components/sy-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
+						title: 'SyServerTable',
+						description: 'Utilisé pour afficher une VDataTable Vuetify avec gestion des données côté serveur',
+						link: '/?path=/docs/composants-tableaux-syservertable--docs',
+						img: `/components/sy-server-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
 						title: 'PaginatedTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify avec une pagination persistante.',
 						link: '/?path=/docs/composants-tableaux-paginatedtable--docs',
-						img: '/components/paginated-table.svg',
+						img: `/components/paginated-table${isAp ? '-ap' : ''}.svg`,
 						category: 'Tableaux',
 					},
 					{
@@ -494,6 +515,12 @@ export const ComponentsList: StoryObj = {
 					'SelectBtnField',
 					'BackToTopBtn',
 					'TableToolbar',
+					'PhoneField',
+					'SyTextArea',
+					'PaginatedTable',
+					'SyTable',
+					'SyServerTable',
+					'DatePicker',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

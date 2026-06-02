@@ -327,12 +327,12 @@ describe('useValidation (unifyValidation)', () => {
 					expect(result.errors.value).toContain('Requis blur')
 				})
 
-				it('with isValidateOnBlur=false, does not validate while focused then validates on blur', async () => {
+				it('with isValidateOnBlur=false, does not validate on blur (validates on input change instead)', async () => {
 					const params = makeParams({
 						useVuetifyValidation: false as const,
 						isValidateOnBlur: ref(false),
 						focused: ref(true),
-						modelValue: ref(''),
+						modelValue: ref('valeur initiale'),
 						customRules: ref([{ type: 'required', options: { message: 'Requis blur input-mode' } }]),
 					})
 					const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
@@ -341,6 +341,10 @@ describe('useValidation (unifyValidation)', () => {
 					expect(result.errors.value).toEqual([])
 
 					params.focused.value = false
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					params.modelValue.value = ''
 					await nextTick()
 					expect(result.errors.value).toContain('Requis blur input-mode')
 				})

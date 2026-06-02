@@ -1,5 +1,5 @@
-// import { apColorsTokens } from '../amelipro/apColors'
+import { baseTokens } from '@/designTokens/tokens/baseTokens'
 
 export const apDarkTheme = {
-	// backgroundSurface: apColorsTokens.parma.darken60,
+	backgroundSurface: baseTokens.color.parma.darken60,
 }

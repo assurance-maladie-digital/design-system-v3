@@ -84,8 +84,8 @@ export const useFormFieldErrorHandling = (
 
 		const result = await validation.validateField(
 			value,
-			[...defaultRules.value, ...props.customRules!],
-			props.customWarningRules!,
+			[...defaultRules.value, ...(props.customRules ?? [])],
+			props.customWarningRules ?? [],
 		)
 
 		return !result.hasError

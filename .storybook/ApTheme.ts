@@ -7,8 +7,8 @@ export default create({
     brandImage: '/logos/logo-amelipro-color.svg',
 	brandTarget: '_self',
 
-    colorPrimary: '#0084b2',
-    colorSecondary: '#006386',
+    colorPrimary: '#0084B2',
+    colorSecondary: '#0084B2',
 
 	// UI
     appBg: '#FFFFFF',
