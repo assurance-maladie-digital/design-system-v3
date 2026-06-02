@@ -318,7 +318,7 @@
 		if (shouldDisableErrorHandling.value) return '#222324'
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value && props.showSuccessMessages) return 'success'
+		if (hasSuccess.value) return 'success'
 		return '#222324'
 	})
 
@@ -488,7 +488,7 @@
 						'phone-field': true,
 						'error-field': hasError,
 						'warning-field': hasWarning,
-						'success-field': hasSuccess && props.showSuccessMessages
+						'success-field': hasSuccess
 					}"
 					color="primary"
 					type="tel"

@@ -348,7 +348,7 @@
 			:title="props.title"
 			:color="props.color"
 			:class="{
-				'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
+				'success-field': hasSuccess && !hasError && !hasWarning,
 				'warning-field': hasWarning && !hasError,
 				'error-field': hasError,
 			}"

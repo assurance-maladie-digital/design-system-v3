@@ -437,8 +437,8 @@ describe('SyTextArea', () => {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		expect((wrapper.vm as any).hasSuccess).toBe(true)
-		expect(wrapper.find('.success-field').exists()).toBe(false)
-		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(false)
+		expect(wrapper.find('.success-field').exists()).toBe(true)
+		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
 		expect(wrapper.text()).not.toContain('Succès masqué')
 	})
 

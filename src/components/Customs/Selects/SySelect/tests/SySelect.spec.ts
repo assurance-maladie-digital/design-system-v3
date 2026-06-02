@@ -777,7 +777,7 @@ describe('SySelect.vue', () => {
 			await wrapper.setProps({ modelValue: '2' })
 
 			await vi.waitUntil(() => instance.hasSuccess === true)
-			expect(wrapper.find('.success-field').exists()).toBe(false)
+			expect(wrapper.find('.success-field').exists()).toBe(true)
 			expect(wrapper.findAll('.v-messages__message')).toHaveLength(0)
 			expect(wrapper.text()).not.toContain('Test success message')
 

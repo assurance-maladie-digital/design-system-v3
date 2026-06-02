@@ -120,14 +120,14 @@
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlert
-		if (hasSuccess.value && props.showSuccessMessages) return mdiCheck
+		if (hasSuccess.value) return mdiCheck
 		return ''
 	})
 
 	const validationColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value && props.showSuccessMessages) return 'success'
+		if (hasSuccess.value) return 'success'
 		return 'rgb(0 0 0 / 100%)'
 	})
 

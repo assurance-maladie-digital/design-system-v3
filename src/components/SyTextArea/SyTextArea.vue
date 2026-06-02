@@ -140,7 +140,7 @@
 	const validationIconColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'onWarningVariant'
-		if (hasSuccess.value && props.showSuccessMessages) return 'onSuccessVariant'
+		if (hasSuccess.value) return 'onSuccessVariant'
 		return 'rgb(var(--v-theme-onSurface))'
 	})
 
@@ -194,7 +194,7 @@
 			:error="hasError"
 			:error-messages="errors"
 			:class="{
-				'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
+				'success-field': hasSuccess && !hasError && !hasWarning,
 				'warning-field': hasWarning && !hasError,
 				'error-field': hasError,
 			}"

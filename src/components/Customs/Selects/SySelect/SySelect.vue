@@ -122,7 +122,7 @@
 	const iconColor = computed(() => {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'onWarningVariant'
-		if (hasSuccess.value && props.showSuccessMessages) return 'onSuccessVariant'
+		if (hasSuccess.value) return 'onSuccessVariant'
 		return 'rgb(var(--v-theme-onSurface))'
 	})
 
@@ -971,8 +971,8 @@
 						:class="{
 							'error-field': hasError,
 							'warning-field': hasWarning,
-							'success-field': hasSuccess && props.showSuccessMessages,
-							'basic-field': !hasError && !hasWarning && (!hasSuccess || !props.showSuccessMessages),
+							'success-field': hasSuccess,
+							'basic-field': !hasError && !hasWarning && !hasSuccess,
 						}"
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),

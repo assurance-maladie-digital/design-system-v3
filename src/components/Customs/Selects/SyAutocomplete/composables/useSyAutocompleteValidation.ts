@@ -65,7 +65,7 @@ export function useSyAutocompleteValidation(props: FieldValidationProps) {
 		if (props.useVuetifyValidation) return null
 		if (displayHasError.value) return mdiAlertCircle
 		if (displayHasWarning.value) return mdiAlertOutline
-		if (displayHasSuccess.value && props.showSuccessMessages) return mdiCheck
+		if (displayHasSuccess.value) return mdiCheck
 		return null
 	})
 

@@ -225,7 +225,7 @@
 		class="sy-checkbox-group"
 		:class="{
 			'warning-field': hasWarning && !hasError,
-			'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
+			'success-field': hasSuccess && !hasError && !hasWarning,
 			'error-field': hasError,
 		}"
 		:aria-describedby="computedAriaDescribedby"

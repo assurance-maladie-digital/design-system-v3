@@ -134,7 +134,7 @@
 		v-model="model"
 		:class="{
 			'warning-field': hasWarning && !hasError,
-			'success-field': hasSuccess && !hasError && !hasWarning && props.showSuccessMessages,
+			'success-field': hasSuccess && !hasError && !hasWarning,
 			'error-field': hasError,
 		}"
 		:label="generatedLabel"
@@ -182,12 +182,12 @@
 			}}</span>.
 		</span>
 		<template
-			v-if="(!hasError && (hasWarning || hasSuccess) && props.showSuccessMessages) || showHelpTextAsMessage"
+			v-if="(!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))) || showHelpTextAsMessage"
 			#details
 		>
 			<div class="v-input__details sy-radio-group__messages">
 				<VMessages
-					v-if="!hasError && (hasWarning || hasSuccess) && props.showSuccessMessages"
+					v-if="!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))"
 					:active="hasWarning || (hasSuccess && successes.length > 0)"
 					:messages="hasWarning ? warnings : successes"
 				/>
