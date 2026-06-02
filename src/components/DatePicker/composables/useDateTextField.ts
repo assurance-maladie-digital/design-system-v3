@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 import type { ValidationResult } from '@/composables/validation/useValidation'
-import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
+import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { useManualDateValidation } from './useManualDateValidation'
 
 export interface UseDateTextFieldManualValidationOptions {
@@ -37,7 +37,7 @@ export interface UseDateTextFieldResetOptions {
 	inputValue: Ref<string>
 	selectedDates: Ref<unknown>
 	resetState: () => void
-	emitModel: (value: DateValue) => void
+	emitModel: (value: DateModelValue) => void
 }
 
 export interface UseDateTextFieldOptions {
@@ -80,7 +80,6 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 		isValidating.value = true
 		hasInteracted.value = true
 		const ok = await runRules(inputValue.value)
-		console.log('ok from validateOnSubmit:', ok)
 		isValidating.value = false
 		return ok
 	}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
-	import type { VDataTable } from 'vuetify/components'
+	import type { VDataTable } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
@@ -41,6 +41,7 @@
 		headingLevel: 2,
 		clickableRow: false,
 		pageInput: false,
+		hideDefaultFooter: false,
 	})
 
 	const emit = defineEmits<{
@@ -457,7 +458,7 @@
 						v-model:headers="headers"
 					/>
 					<SyTablePagination
-						v-if="filteredItems.length > 0"
+						v-if="filteredItems.length > 0 && !props.hideDefaultFooter"
 						:page="page"
 						:items-per-page="itemsPerPageValue"
 						:heading-level="props.headingLevel"

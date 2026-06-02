@@ -40,14 +40,9 @@ export function useDefaultValidationRules(params: {
 
 		if (params.required.value) {
 			rules.push({
-				type: 'custom',
+				type: 'required',
 				options: {
-					validate: (value: string) => {
-						if (!params.hasInteracted.value) {
-							return true
-						}
-						return !!value || locales.required
-					},
+					message: locales.required,
 				},
 			})
 		}

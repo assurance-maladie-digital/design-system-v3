@@ -3,7 +3,8 @@
 	import useFilterable from '@/composables/useFilterable/useFilterable'
 	import { mdiFilterVariant } from '@mdi/js'
 	import { computed, onMounted, ref, toRef, watch } from 'vue'
-	import { type VBtn, type VNavigationDrawer } from 'vuetify/components'
+	import type { VBtn } from 'vuetify/components/VBtn'
+	import type { VNavigationDrawer } from 'vuetify/components/VNavigationDrawer'
 	import ChipList from '../ChipList/ChipList.vue'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { locales as defaultLocales } from './locales'
@@ -217,9 +218,9 @@
 							size="large"
 							class="sy-filters-side-bar__apply-btn"
 							variant="elevated"
-							type="submit"
+							type="button"
 							:aria-label="locales.applyAriaLabel"
-							@click.stop="applyFilters"
+							@click.prevent="applyFilters"
 						>
 							{{ locales.apply }}
 						</VBtn>

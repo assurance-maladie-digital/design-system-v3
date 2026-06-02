@@ -226,6 +226,15 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
+		'hideDefaultFooter': {
+			description: 'Masque le footer par défaut du tableau (pagination et contrôles de page). Utile lorsque l\'on souhaite gérer la pagination manuellement ou ne pas en afficher.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'header.<columnKey>': {
@@ -7346,6 +7355,160 @@ export const ComplexItemsDisplay: Story = {
 						</span>
 					</template>
 				</SyServerTable>
+			</div>
+			`,
+		}
+	},
+}
+
+export const HideDefaultFooter: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyServerTable
+						v-model:options="options"
+						:items="users"
+						:headers="headers"
+						:server-items-length="totalUsers"
+						:loading="state === StateEnum.PENDING"
+						suffix="server-hide-footer"
+						hide-default-footer
+						@update:options="fetchData"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyServerTable } from '@cnamts/synapse'
+					import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
+					import type { DataOptions } from '@cnamts/synapse/src/components/Tables/common/types'
+
+					const totalUsers = ref(0)
+					const users = ref([])
+					const state = ref(StateEnum.IDLE)
+					const options = ref({ itemsPerPage: -1, page: 1 })
+
+					const headers = [
+						{ title: 'Nom', key: 'lastname' },
+						{ title: 'Prénom', key: 'firstname' },
+						{ title: 'Email', key: 'email' },
+					]
+
+					const fetchData = async () => {
+						const { items, total } = await getDataFromApi(options.value)
+						users.value = items
+						totalUsers.value = total
+					}
+
+					const getDataFromApi = async ({ page, itemsPerPage }: DataOptions) => {
+						state.value = StateEnum.PENDING
+						await new Promise(resolve => setTimeout(resolve, 500))
+						const allItems = getUsers()
+						const total = allItems.length
+						const items = itemsPerPage > 0
+							? allItems.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							: allItems
+						state.value = StateEnum.RESOLVED
+						return { items, total }
+					}
+
+					const getUsers = () => [
+						{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+						{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+						{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+						{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+						{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+						{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+					]
+
+					fetchData()
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		'options': { itemsPerPage: -1, page: 1 },
+		'headers': [
+			{ title: 'Nom', key: 'lastname' },
+			{ title: 'Prénom', key: 'firstname' },
+			{ title: 'Email', key: 'email' },
+		],
+		'serverItemsLength': 6,
+		'suffix': 'server-hide-footer',
+		'density': 'default',
+		'striped': false,
+		'hideDefaultFooter': true,
+		'onUpdate:options': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyServerTable },
+			setup() {
+				const totalUsers = ref(0)
+				const users = ref<User[]>([])
+				const state = ref(StateEnum.IDLE)
+				const options = ref({ ...args.options })
+
+				watch(options, (newVal) => {
+					if (args.options) {
+						Object.assign(args.options, JSON.parse(JSON.stringify(newVal)))
+					}
+				}, { deep: true })
+
+				const fetchData = async (): Promise<void> => {
+					const { items, total } = await getDataFromApi(options.value as DataOptions)
+					users.value = items
+					totalUsers.value = total
+				}
+
+				const getDataFromApi = async ({ page, itemsPerPage }: DataOptions): Promise<{ items: User[], total: number }> => {
+					state.value = StateEnum.PENDING
+					await new Promise(resolve => setTimeout(resolve, 500))
+					return new Promise((resolve) => {
+						const allItems = getUsers()
+						const total = allItems.length
+						const items = itemsPerPage > 0
+							? allItems.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+							: allItems
+						resolve({ items, total })
+						state.value = StateEnum.RESOLVED
+					})
+				}
+
+				const getUsers = (): User[] => [
+					{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+					{ firstname: 'Simone', lastname: 'Bellefeuille', email: 'simone.bellefeuille@example.com' },
+					{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+					{ firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com' },
+					{ firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com' },
+					{ firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com' },
+				]
+
+				fetchData()
+
+				return { args, users, state, fetchData, options, totalUsers, StateEnum }
+			},
+			template: `
+			<div>
+				<SyServerTable
+					v-model:options="options"
+					:items="users"
+					:server-items-length="totalUsers"
+					:loading="state === StateEnum.PENDING"
+					v-bind="args"
+					@update:options="fetchData"
+				/>
 			</div>
 			`,
 		}

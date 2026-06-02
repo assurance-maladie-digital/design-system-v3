@@ -22,6 +22,12 @@ export const FauxPositifsCards: StoryObj = {
 						explanation: 'Une boîte de dialogue de type modale doit posséder la balise aria-modal="true" pour indiquer qu’elle est modale (voir motif de conception \'Dialog\' du W3C).',
 					},
 					{
+						tanaguruCategory: 'mandatory-elements',
+						tanaguruIssue: 'Propriétés ARIA non autorisées sur leur élément.',
+						component: 'RatingPicker',
+						explanation: 'Un élément de type \'Rating\' doit posséder la balise role="radiogroup" pour indiquer qu’il s’agit d’un groupe de boutons radio (voir motif de conception \'Rating\' du W3C). Il peux poseder un aria-disabled="true" pour indiquer qu’il est désactivé.',
+					},
+					{
 						tanaguruCategory: 'navigation',
 						tanaguruIssue: 'Eléments intéractifs non atteignables en navigation clavier.',
 						component: 'Tabs',

@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { VList } from 'vuetify/components'
+import { nextTick } from 'vue'
 import SySelect from '../SySelect.vue'
 
 type ItemType = {
@@ -129,12 +130,105 @@ describe('SySelect.vue', () => {
 	it('renders error messages when provided', () => {
 		const errorMessages = ['Error 1']
 		const wrapper = mount(SySelect, {
-			props: { errorMessages, hideMessages: false },
+			props: { errorMessages, hideDetails: false },
 			attachTo: document.body,
 		})
 		const message = wrapper.find('.v-messages__message')
 		expect(message.exists()).toBe(true)
 		expect(message.text()).toContain('Error 1')
+
+		wrapper.unmount()
+	})
+
+	describe('hideDetails', () => {
+		it('masque les messages de validation quand hideDetails est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					errorMessages: ['Erreur de test'],
+					hideDetails: true,
+				},
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('affiche les messages de validation quand hideDetails est false', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					errorMessages: ['Erreur de test'],
+					hideDetails: false,
+				},
+				attachTo: document.body,
+			})
+
+			const message = wrapper.find('.v-messages__message')
+			expect(message.exists()).toBe(true)
+			expect(message.text()).toContain('Erreur de test')
+
+			wrapper.unmount()
+		})
+
+		it('affiche la zone de messages par défaut (hideDetails vaut false par défaut)', () => {
+			const wrapper = mount(SySelect, {
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.v-messages').exists()).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('n\'affiche pas le helpText en dessous du champ quand hideDetails est true et qu\'il y a des erreurs', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					helpText: 'Texte d\'aide',
+					errorMessages: ['Erreur de test'],
+					hideDetails: true,
+				},
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.help-text-below').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('affiche le helpText en dessous du champ quand hideDetails est false et qu\'il y a des erreurs', () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					helpText: 'Texte d\'aide',
+					errorMessages: ['Erreur de test'],
+					hideDetails: false,
+				},
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('.help-text-below').exists()).toBe(true)
+			expect(wrapper.find('.help-text-below').text()).toContain('Texte d\'aide')
+
+			wrapper.unmount()
+		})
+	})
+
+	it('keeps the label active when a validation error is displayed', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+				label: 'Option',
+				required: true,
+			},
+			attachTo: document.body,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- exposed method is not part of the inferred public instance type
+		const isValid = await (wrapper.vm as any).validateOnSubmit()
+		await nextTick()
+
+		expect(isValid).toBe(false)
+		expect(wrapper.find('.v-field').classes()).toContain('v-field--active')
 
 		wrapper.unmount()
 	})
@@ -522,25 +616,366 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 
-		it('n\'affiche pas d\'erreur quand disableErrorHandling est true', async () => {
+		describe('disableErrorHandling', () => {
+			it('n\'affiche pas d\'erreur pour un champ requis sans valeur quand disableErrorHandling est true', async () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						required: true,
+						label: 'Test Label',
+						modelValue: undefined,
+						disableErrorHandling: true,
+					},
+					attachTo: document.body,
+				})
+
+				await wrapper.find('.v-field').trigger('click')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('.v-field').trigger('click')
+				await wrapper.vm.$nextTick()
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(false)
+
+				wrapper.unmount()
+			})
+
+			it('ignore les errorMessages quand disableErrorHandling est true', () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						errorMessages: ['Erreur forcée'],
+						disableErrorHandling: true,
+					},
+					attachTo: document.body,
+				})
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(false)
+				expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+				wrapper.unmount()
+			})
+
+			it('n\'évalue pas les customRules quand disableErrorHandling est true', async () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						modelValue: '1',
+						disableErrorHandling: true,
+						isValidateOnBlur: false,
+						customRules: [{
+							type: 'custom',
+							options: {
+								validate: () => false,
+								message: 'Toujours invalide',
+							},
+						}],
+					},
+					attachTo: document.body,
+				})
+
+				await wrapper.vm.$nextTick()
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(false)
+				expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+				wrapper.unmount()
+			})
+
+			it('affiche les erreurs normalement quand disableErrorHandling est false', async () => {
+				const wrapper = mount(SySelect, {
+					props: {
+						errorMessages: ['Erreur visible'],
+						disableErrorHandling: false,
+					},
+					attachTo: document.body,
+				})
+
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+				const instance = wrapper.vm as any
+				expect(instance.hasError).toBe(true)
+				expect(wrapper.find('.v-messages__message').text()).toContain('Erreur visible')
+
+				wrapper.unmount()
+			})
+		})
+
+		it('valide immédiatement quand isValidateOnBlur est false', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							message: 'Test error message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+
+			// Sélection de Option 1 via interaction utilisateur
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.findComponent(VList).findAll('.v-list-item').at(0)!.trigger('click')
+			await wrapper.setProps({ modelValue: '1' })
+
+			await vi.waitUntil(() => instance.hasError === true)
+			expect(wrapper.find('.v-messages').text()).toContain('Test error message')
+
+			// Sélection de Option 2 via interaction utilisateur
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.findComponent(VList).findAll('.v-list-item').at(1)!.trigger('click')
+			await wrapper.setProps({ modelValue: '2' })
+
+			await vi.waitUntil(() => instance.hasError === false)
+			expect(wrapper.find('.v-messages').text()).not.toContain('Test error message')
+
+			wrapper.unmount()
+		})
+
+		it('masque le message de succes mais conserve l\'etat de succes quand showSuccessMessages est false', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					showSuccessMessages: false,
+					customSuccessRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							successMessage: 'Test success message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasSuccess).toBe(false)
+
+			await wrapper.setProps({ modelValue: '2' })
+
+			await vi.waitUntil(() => instance.hasSuccess === true)
+			expect(wrapper.find('.success-field').exists()).toBe(true)
+			expect(wrapper.findAll('.v-messages__message')).toHaveLength(0)
+			expect(wrapper.text()).not.toContain('Test success message')
+
+			wrapper.unmount()
+		})
+
+		it('ne valide pas lors d\'un changement de valeur mais seulement à la fermeture du menu quand isValidateOnBlur est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: true,
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							message: 'Test error message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasError).toBe(false)
+
+			// Changement de valeur programmatique — l'erreur ne doit PAS apparaître
+			await wrapper.setProps({ modelValue: '1' })
+			await wrapper.vm.$nextTick()
+			expect(instance.hasError).toBe(false)
+
+			// Ouverture puis fermeture du menu (= blur) — l'erreur doit apparaître
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+
+			await vi.waitUntil(() => instance.hasError === true)
+			expect(wrapper.find('.v-messages').text()).toContain('Test error message')
+
+			wrapper.unmount()
+		})
+
+		it('déclenche la validation au blur natif sans ouvrir le menu', async () => {
 			const wrapper = mount(SySelect, {
 				props: {
 					required: true,
 					label: 'Test Label',
 					modelValue: undefined,
-					disableErrorHandling: true,
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
 				},
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.v-field').trigger('click')
-			await wrapper.vm.$nextTick()
-			await wrapper.find('.v-field').trigger('click')
-			await wrapper.vm.$nextTick()
-
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 			const instance = wrapper.vm as any
 			expect(instance.hasError).toBe(false)
+
+			// Simuler un blur natif sur l'input sans jamais ouvrir le menu
+			const input = wrapper.find('input')
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+
+			await vi.waitUntil(() => instance.hasError === true)
+			expect(wrapper.find('.v-messages').text()).toContain('requis')
+
+			wrapper.unmount()
+		})
+
+		it('affiche un avertissement avec customWarningRules', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					customWarningRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							warningMessage: 'Option 1 est dépréciée.',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasWarning).toBe(false)
+
+			await wrapper.find('.v-field').trigger('click')
+			await wrapper.vm.$nextTick()
+			await wrapper.findComponent(VList).findAll('.v-list-item').at(0)!.trigger('click')
+			await wrapper.setProps({ modelValue: '1' })
+
+			await vi.waitUntil(() => instance.hasWarning === true)
+			expect(wrapper.find('.v-messages').text()).toContain('Option 1 est dépréciée.')
+
+			wrapper.unmount()
+		})
+
+		it('validateOnSubmit retourne true quand le champ est valide', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: '1',
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const isValid = await (wrapper.vm as any).validateOnSubmit()
+			await nextTick()
+
+			expect(isValid).toBe(true)
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			expect((wrapper.vm as any).hasError).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('affiche le message de succès avec customSuccessRules quand showSuccessMessages est true', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+					label: 'Test Label',
+					modelValue: undefined,
+					isValidateOnBlur: false,
+					showSuccessMessages: true,
+					customSuccessRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => value === '2',
+							successMessage: 'Test success message',
+						},
+					}],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+			expect(instance.hasSuccess).toBe(false)
+
+			await wrapper.setProps({ modelValue: '2' })
+
+			await vi.waitUntil(() => instance.hasSuccess === true)
+			expect(wrapper.find('.success-field').exists()).toBe(true)
+			expect(wrapper.find('.v-messages').text()).toContain('Test success message')
+
+			wrapper.unmount()
+		})
+
+		it('clearValidation remet l\'état d\'erreur à zéro', async () => {
+			const wrapper = mount(SySelect, {
+				props: {
+					required: true,
+					label: 'Test Label',
+					modelValue: undefined,
+					items: [
+						{ text: 'Option 1', value: '1' },
+						{ text: 'Option 2', value: '2' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
+			const instance = wrapper.vm as any
+
+			await instance.validateOnSubmit()
+			await nextTick()
+			expect(instance.hasError).toBe(true)
+
+			instance.clearValidation()
+			await nextTick()
+			expect(instance.hasError).toBe(false)
+			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
 
 			wrapper.unmount()
 		})

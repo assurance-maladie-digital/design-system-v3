@@ -2,7 +2,7 @@
 	import { ref, watch, provide, computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from './types'
 	import { filterItems } from './tableFilterUtils'
-	import type { DateValue } from '@/composables/date/useDateInitializationDayjs'
+	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import getFilterComponent from './filters/getFilterComponent'
 
 	const props = defineProps({
@@ -59,7 +59,7 @@
 	const filtersMap = ref<{
 		text: Record<string, string>
 		number: Record<string, number>
-		date: Record<string, DateValue>
+		date: Record<string, DateModelValue>
 		period: Record<string, { from: string | null, to: string | null }>
 		select: Record<string, string | number | Record<string, unknown> | undefined>
 		autocomplete: Record<string, string | number | Record<string, unknown> | Array<string | number | Record<string, unknown>> | undefined>
@@ -93,7 +93,7 @@
 			filtersMap.value.number[key] = value as number
 			break
 		case 'date':
-			filtersMap.value.date[key] = value as DateValue
+			filtersMap.value.date[key] = value as DateModelValue
 			break
 		case 'period':
 			if (value && typeof value === 'object' && 'from' in value && 'to' in value) {
@@ -184,7 +184,7 @@
 			filtersMap.value.select[key] = value as string | number | Record<string, unknown> | undefined
 		}
 		else if (header.filterType === 'date') {
-			filtersMap.value.date[key] = value as DateValue
+			filtersMap.value.date[key] = value as DateModelValue
 		}
 		else if (header.filterType === 'period') {
 			filtersMap.value.period[key] = value as { from: string | null, to: string | null }

@@ -59,7 +59,7 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 			},
 		},
 		showSuccessMessages: {
-			description: 'Affiche les messages de succès lorsque la validation est réussie.',
+			description: 'Affiche les messages de succès lorsque la validation est réussie. Si la prop est à `false` cela cache uniquement les messages texte, l\'état visuel reste actif.',
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
@@ -107,7 +107,7 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 			},
 		},
 		customRules: {
-			description: 'Les règles de validation personnalisées à appliquer au champ.',
+			description: 'Les règles de validation personnalisées d\'erreur (bloquantes) à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
 			control: 'object',
 			table: {
 				type: {
@@ -127,7 +127,7 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 			},
 		},
 		customWarningRules: {
-			description: 'Les règles de validation personnalisées pour les avertissements à appliquer au champ.',
+			description: 'Les règles de validation personnalisées d\'avertissement (non bloquantes) à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
 			control: 'object',
 			table: {
 				type: {
@@ -137,17 +137,17 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 	type: ${builtInRuleType},
 	options: {
 		validate: (value: unknown) => boolean | string,
-		message: string,
+		warningMessage: string,
 		[key: string]: unknown
 	}
 }
-					`,
+						`,
 				},
 				category: 'props',
 			},
 		},
 		customSuccessRules: {
-			description: 'Les règles de validation personnalisées pour les succès à appliquer au champ.',
+			description: 'Les règles de validation personnalisées de succès à appliquer au champ. Elles sont évaluées à partir de la valeur du champ.',
 			control: 'object',
 			table: {
 				type: {
@@ -157,17 +157,17 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 	type: ${builtInRuleType},
 	options: {
 		validate: (value: unknown) => boolean | string,
-		message: string,
+		successMessage: string,
 		[key: string]: unknown
 	}
 }
-					`,
+						`,
 				},
 				category: 'props',
 			},
 		},
 		errorMessages: {
-			description: 'Permet de forcer des messages d\'erreur spécifiques.',
+			description: 'Permet d\'injecter des messages d\'erreur depuis le parent. Aucun calcul de validation n\'est exécuté.',
 			control: 'object',
 			table: {
 				type: { summary: 'array<string>' },
@@ -175,7 +175,7 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 			},
 		},
 		warningMessages: {
-			description: 'Permet de forcer des messages d\'avertissement spécifiques.',
+			description: 'Permet d\'injecter des messages d\'avertissement depuis le parent. Aucun calcul de validation n\'est exécuté.',
 			control: 'object',
 			table: {
 				type: { summary: 'array<string>' },
@@ -183,7 +183,7 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 			},
 		},
 		successMessages: {
-			description: 'Permet de forcer des messages de succès spécifiques.',
+			description: 'Permet d\'injecter des messages de succès depuis le parent. Aucun calcul de validation n\'est exécuté.',
 			control: 'object',
 			table: {
 				type: { summary: 'array<string>' },
@@ -231,5 +231,5 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 				category: 'props',
 			},
 		},
-	}
+	} as const
 }

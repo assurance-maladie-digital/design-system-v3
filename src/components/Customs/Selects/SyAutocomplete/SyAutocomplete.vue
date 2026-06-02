@@ -1,176 +1,85 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, watch, type PropType } from 'vue'
-	import { VMenu, VList, VListItem, VListItemTitle, VChip } from 'vuetify/components'
+	import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue'
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import { ariaManager } from './utils/ariaManager'
-	import { useFormFieldErrorHandling } from '@/composables/useFormFieldErrorHandling'
-	import { type ValidationRule } from '@/composables/validation/useValidation'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import type { ItemType, SelectValue, SelectArray } from './types'
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSelectionLogic } from './utils/useSelectionLogic'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales } from './locales'
 
-	const props = defineProps({
-		bgColor: {
-			type: String,
-			default: 'white',
+	interface SyAutocompleteProps {
+		bgColor?: string
+		chips?: boolean
+		clearable?: boolean
+		debounce?: number
+		density?: 'default' | 'comfortable' | 'compact' | undefined
+		displayAsterisk?: boolean
+		filter?: boolean
+		hideDetails?: boolean
+		hideNoData?: boolean
+		items?: ItemType[]
+		label?: string
+		loading?: boolean
+		menuId?: string
+		modelValue?: SelectValue | SelectArray
+		multiple?: boolean
+		noDataText?: string
+		placeholder?: string
+		plainTextKey?: string
+		helpText?: string
+		returnObject?: boolean
+		selectionText?: (selected: SelectArray) => string
+		textKey?: string
+		valueKey?: string
+	}
+
+	const props = withDefaults(
+		defineProps<SyAutocompleteProps & FieldValidationProps>(),
+		{
+			bgColor: 'white',
+			chips: false,
+			clearable: false,
+			debounce: 200,
+			density: 'default',
+			displayAsterisk: false,
+			filter: true,
+			hideDetails: false,
+			hideNoData: false,
+			items: () => [],
+			label: 'Rechercher',
+			loading: false,
+			menuId: 'sy-autocomplete-menu',
+			modelValue: null,
+			multiple: false,
+			noDataText: locales.noData,
+			helpText: '',
+			selectionText: undefined,
+			placeholder: '',
+			plainTextKey: '',
+			returnObject: false,
+			textKey: 'text',
+			valueKey: 'value',
+			...validationPropsDefaults,
+			// Diverge du défaut global (true) : modelValue ne change que lors d'une sélection (pas à chaque frappe),
+			// donc valider sur ce changement donne un retour immédiat après sélection sans erreurs prématurées pendant la saisie.
+			isValidateOnBlur: false,
 		},
-		chips: {
-			type: Boolean,
-			default: false,
-		},
-		clearable: {
-			type: Boolean,
-			default: false,
-		},
-		customRules: {
-			type: Array as PropType<ValidationRule[]>,
-			default: () => [],
-		},
-		customSuccessRules: {
-			type: Array as PropType<ValidationRule[]>,
-			default: () => [],
-		},
-		customWarningRules: {
-			type: Array as PropType<ValidationRule[]>,
-			default: () => [],
-		},
-		debounce: {
-			type: Number,
-			default: 200,
-		},
-		density: {
-			type: String as PropType<'default' | 'comfortable' | 'compact' | undefined>,
-			default: 'default',
-		},
-		disableErrorHandling: {
-			type: Boolean,
-			default: false,
-		},
-		displayAsterisk: {
-			type: Boolean,
-			default: false,
-		},
-		errorMessages: {
-			type: Array as PropType<string[] | null>,
-			default: null,
-		},
-		filter: {
-			type: Boolean,
-			default: true,
-		},
-		hasError: {
-			type: Boolean,
-			default: false,
-		},
-		hasSuccess: {
-			type: Boolean,
-			default: false,
-		},
-		hasWarning: {
-			type: Boolean,
-			default: false,
-		},
-		hideDetails: {
-			type: Boolean,
-			default: false,
-		},
-		hideNoData: {
-			type: Boolean,
-			default: false,
-		},
-		isValidateOnBlur: {
-			type: Boolean,
-			default: false,
-		},
-		items: {
-			type: Array as PropType<ItemType[]>,
-			default: () => [],
-		},
-		label: {
-			type: String,
-			default: 'Rechercher',
-		},
-		loading: {
-			type: Boolean,
-			default: false,
-		},
-		menuId: {
-			type: String,
-			default: 'sy-autocomplete-menu',
-		},
-		modelValue: {
-			type: [Object, String, Number, Array, null] as PropType<SelectValue | SelectArray>,
-			default: null,
-		},
-		multiple: {
-			type: Boolean,
-			default: false,
-		},
-		noDataText: {
-			type: String,
-			default: locales.noData,
-		},
-		placeholder: {
-			type: String,
-			default: '',
-		},
-		plainTextKey: {
-			type: String,
-			default: '',
-		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
-		readonly: {
-			type: Boolean,
-			default: false,
-		},
-		required: {
-			type: Boolean,
-			default: false,
-		},
-		returnObject: {
-			type: Boolean,
-			default: false,
-		},
-		showSuccessMessages: {
-			type: Boolean,
-			default: true,
-		},
-		successMessages: {
-			type: Array as PropType<string[] | null>,
-			default: null,
-		},
-		selectionText: {
-			type: Function as PropType<(selected: SelectArray) => string>,
-			default: undefined,
-		},
-		textKey: {
-			type: String,
-			default: 'text',
-		},
-		valueKey: {
-			type: String,
-			default: 'value',
-		},
-		warningMessages: {
-			type: Array as PropType<string[] | null>,
-			default: null,
-		},
-	})
+	)
 
 	const emit = defineEmits(['update:modelValue', 'search'])
+
+	const slots = useSlots()
+	const hasPrependItem = computed(() => !!slots['prepend-item'])
 
 	const isOpen = ref(false)
 	const search = ref('')
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
-	const hasInteracted = ref(false)
 	const suppressNextInput = ref(false)
 	const suppressMenuOpen = ref(false)
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
@@ -180,7 +89,21 @@
 	const optionIdPrefixed = computed(() => `${uniqueMenuId.value}-option`)
 	const activeDescendantId = ref('')
 
-	const errorHandling = useFormFieldErrorHandling(props, selected)
+	const {
+		focused,
+		hasInteracted,
+		markInteracted,
+		clearValidation,
+		validateOnSubmit,
+		validateOnBlur,
+		displayErrors,
+		displayWarnings,
+		displaySuccesses,
+		displayHasError,
+		displayHasWarning,
+		displayHasSuccess,
+		validationIcon,
+	} = useSyAutocompleteValidation(props)
 
 	const formattedItems = computed(() => props.items.map((item) => {
 		if (typeof item === 'string') {
@@ -223,12 +146,11 @@
 		})
 	})
 
-	const markInteracted = () => {
-		hasInteracted.value = true
-	}
-
 	const selectItem = (item: ItemType | string | number | null | undefined) => {
 		markInteracted()
+		if (item === null || item === undefined) {
+			clearValidation()
+		}
 		updateValue(item ?? null)
 		if (props.multiple) {
 			suppressNextInput.value = true
@@ -258,13 +180,12 @@
 
 		focusInput(textFieldRef)
 
-		if (!props.filter) return
-
 		if (debounceHandle) {
 			clearTimeout(debounceHandle)
 		}
 
 		debounceHandle = setTimeout(() => {
+			emit('search', search.value)
 		}, props.debounce)
 	})
 
@@ -316,7 +237,7 @@
 			: index
 	}
 
-	const { focusInput, keyboardActiveId, handleTabKey } = useSyAutocompleteKeyboard({
+	const { focusInput, focusPrepend, keyboardActiveId, handleTabKey } = useSyAutocompleteKeyboard({
 		multiple: props.multiple,
 		chips: props.chips,
 	}, {
@@ -328,6 +249,7 @@
 		filteredItems,
 		uniqueMenuId,
 		focusListItem: false,
+		hasPrependItem,
 	})
 
 	watch(keyboardActiveId, (val) => {
@@ -344,41 +266,6 @@
 		return (textFieldRef.value?.$el as HTMLElement | undefined)?.querySelector('.v-field') ?? undefined
 	})
 
-	const shouldDisableErrorHandling = computed(() => props.disableErrorHandling)
-
-	const externalErrors = computed(() => props.errorMessages || [])
-	const displayErrors = computed(() => {
-		if (shouldDisableErrorHandling.value) return []
-		return externalErrors.value.length > 0
-			? externalErrors.value
-			: (hasInteracted.value ? errorHandling.errors.value : [])
-	})
-	const displayWarnings = computed(() => {
-		if (shouldDisableErrorHandling.value) return []
-		return hasInteracted.value ? errorHandling.warnings.value : []
-	})
-	const displaySuccesses = computed(() => {
-		if (shouldDisableErrorHandling.value) return []
-		return hasInteracted.value ? errorHandling.successes.value : []
-	})
-	const displayHasError = computed(() => {
-		if (shouldDisableErrorHandling.value) return false
-		return externalErrors.value.length > 0 || (hasInteracted.value && errorHandling.hasError.value)
-	})
-	const displayHasWarning = computed(() => {
-		if (shouldDisableErrorHandling.value) return false
-		return hasInteracted.value && errorHandling.hasWarning.value
-	})
-	const displayHasSuccess = computed(() => {
-		if (shouldDisableErrorHandling.value) return false
-		return hasInteracted.value && errorHandling.hasSuccess.value
-	})
-
-	const validateOnSubmit = () => {
-		markInteracted()
-		return errorHandling.validateOnSubmit()
-	}
-
 	const checkErrorOnBlur = (event?: FocusEvent) => {
 		const relatedTarget = event?.relatedTarget as HTMLElement | null | undefined
 		if (relatedTarget?.closest('.sy-autocomplete__chip') || relatedTarget?.closest('.sy-autocomplete__clear-button')) {
@@ -388,8 +275,7 @@
 			})
 			return
 		}
-		markInteracted()
-		return errorHandling.checkErrorOnBlur()
+		validateOnBlur()
 	}
 
 	const getInputValue = (value: string | Event): string | null => {
@@ -419,13 +305,13 @@
 			updateValue(null)
 		}
 
-		emit('search', inputValue)
 		openAndFocus()
 	}
 
 	const openAndFocus = () => {
 		if (props.disabled || props.readonly) return
 		markInteracted()
+		focused.value = true
 		isOpen.value = true
 		focusInput(textFieldRef)
 	}
@@ -443,12 +329,12 @@
 
 	onMounted(() => {
 		syncSearchFromValue()
-		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label)
+		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label, props.required, displayHasError.value)
 		focusInput(textFieldRef, true)
 	})
 
-	watch([isOpen, activeDescendantId, () => props.loading], () => {
-		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label)
+	watch([isOpen, activeDescendantId, () => props.loading, displayHasError, () => props.required], () => {
+		ariaManager.setupAriaAttributesForAutocomplete(textFieldRef, isOpen, uniqueMenuId.value, activeDescendantId, props.loading, props.label, props.required, displayHasError.value)
 	}, { flush: 'post' })
 
 	watch(isOpen, (open) => {
@@ -457,9 +343,17 @@
 		}
 	})
 
+	// flush: 'post' + rAF: Vuetify uses requestAnimationFrame (requestNewFrame) for overlay rendering,
+	// so nextTick/setTimeout(0) fire before the listbox is in the DOM.
+	watch(isOpen, (open) => {
+		if (open && hasPrependItem.value) {
+			requestAnimationFrame(() => focusPrepend())
+		}
+	}, { flush: 'post' })
+
 	defineExpose({
-		validation: errorHandling.validation,
 		validateOnSubmit,
+		clearValidation,
 		checkErrorOnBlur,
 		isOpen,
 		selectItem,
@@ -504,11 +398,13 @@
 					:has-error="displayHasError"
 					:has-warning="displayHasWarning"
 					:has-success="displayHasSuccess"
+					:show-success-messages="showSuccessMessages"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
 					:disable-error-handling="disableErrorHandling"
 					:loading="loading"
-					:are-details-hidden="hideDetails"
+					:help-text="helpText"
+					:hide-details="hideDetails"
 					:aria-label="hasInlineSelections ? label : undefined"
 					@click="openAndFocus"
 					@update:model-value="handleInput"
@@ -516,10 +412,19 @@
 					@keydown.tab="handleTabKey"
 				>
 					<template #append-inner>
+						<SyIcon
+							v-if="validationIcon"
+							class="mr-6"
+							:color="displayHasError ? 'error' : (displayHasWarning ? 'warning' : 'success')"
+							:icon="validationIcon"
+							role="presentation"
+							:decorative="true"
+						/>
 						<button
 							v-if="clearable && hasSelectionToClear"
 							type="button"
 							class="sy-autocomplete__clear-button"
+							:class="{ 'sy-autocomplete__clear-button--with-icon': validationIcon }"
 							:aria-label="locales.clearSelection"
 							@click.stop.prevent="selectItem(null)"
 						>
@@ -581,6 +486,7 @@
 				tabindex="-1"
 				@click.stop
 			>
+				<slot name="prepend-item" />
 				<template v-if="filteredItems.length === 0 && !hideNoData && !loading">
 					<VListItem
 						:title="noDataText"
@@ -603,16 +509,18 @@
 							v-if="multiple"
 							#prepend
 						>
-							<SyCheckbox
-								:model-value="isItemSelected(item)"
-								density="compact"
-								hide-details
-								color="primary"
-								class="mt-0 pt-0 mr-1"
-								:title="getItemText(item) as string"
-								:aria-label="getItemText(item) as string"
-								@mousedown.stop.prevent="() => selectItem(item)"
-							/>
+							<div
+								aria-hidden="true"
+								inert
+							>
+								<SyCheckbox
+									:model-value="isItemSelected(item)"
+									density="compact"
+									hide-details
+									color="primary"
+									class="mt-0 pt-0 mr-1"
+								/>
+							</div>
 						</template>
 						<VListItemTitle>
 							{{ getItemText(item) }}
@@ -649,7 +557,13 @@
 	border: 0;
 }
 
+.v-icon.arrow {
+	position: absolute;
+	right: 10px;
+}
+
 .sy-autocomplete__clear-button {
+	position: absolute;
 	background: transparent;
 	border: none;
 	padding: 0;
@@ -657,10 +571,22 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 42px;
+
+	&--with-icon {
+		right: 62px;
+	}
+
+	.v-icon {
+		position: static;
+	}
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-iconBase));
+	color: rgb(var(--v-theme-primary)) !important;
+	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
 .sy-autocomplete__chip {
@@ -724,12 +650,50 @@ li:hover {
 }
 
 /* Ensure focus styles match selection styles for keyboard navigation (align with SySelect) */
+
+/* :deep() is required for keyboard-focused so the style applies to slot content (prepend-item),
+   which carries the parent's scoped attribute, not SyAutocomplete's. */
 .v-list-item:focus-visible,
-.v-list-item.keyboard-focused,
-li:focus-visible,
-li.keyboard-focused {
+li:focus-visible {
 	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
 	outline-offset: -2px;
 	background-color: rgb(0 0 0 / 8%);
+}
+
+:deep(.v-list-item.keyboard-focused),
+:deep(li.keyboard-focused) {
+	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+	outline-offset: -2px;
+	background-color: rgb(0 0 0 / 8%);
+}
+
+:deep(.error-field .v-icon.arrow),
+:deep(.error-field .v-icon.arrow .v-icon__svg) {
+	color: rgb(var(--v-theme-iconSubdued)) !important;
+	fill: rgb(var(--v-theme-iconSubdued)) !important;
+}
+
+:deep(.error-field .sy-autocomplete__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.warning-field .v-icon.arrow),
+:deep(.warning-field .v-icon.arrow .v-icon__svg) {
+	color: rgb(var(--v-theme-iconBase)) !important;
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.warning-field .sy-autocomplete__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.success-field .v-icon.arrow),
+:deep(.success-field .v-icon.arrow .v-icon__svg) {
+	color: rgb(var(--v-theme-iconBase)) !important;
+	fill: rgb(var(--v-theme-iconBase)) !important;
+}
+
+:deep(.success-field .sy-autocomplete__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-iconBase)) !important;
 }
 </style>

@@ -30,10 +30,17 @@
 	}
 
 	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'backgroundSuccessSubdued',
-		warning: 'backgroundWarningSubdued',
-		error: 'backgroundErrorSubdued',
-		info: 'backgroundInfoSubdued',
+		success: 'successVariant',
+		warning: 'warningVariant',
+		error: 'errorVariant',
+		info: 'infoVariant',
+	} as const
+
+	const ICON_COLORS: Record<NonEmptyChipState, string> = {
+		success: 'onSuccessVariant',
+		warning: 'onWarningVariant',
+		error: 'onErrorVariant',
+		info: 'onInfoVariant',
 	} as const
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
@@ -128,6 +135,12 @@
 		return state ? BACKGROUND_COLORS[state] : 'primary'
 	}
 
+	function getIconColor(state: ChipState): string {
+		return state ? ICON_COLORS[state] : 'surface'
+	}
+
+	// item.state || 'white'/
+
 	/**
 	 * Retourne l'icône correspondant à l'état du chip
 	 *
@@ -209,7 +222,6 @@
 						<SyIcon
 							v-bind="options.icon"
 							:icon="customIcon || getIcon(item.state)"
-							:color="item.state"
 							decorative
 							class="mr-1"
 						/>
@@ -245,7 +257,7 @@
 						<SyIcon
 							v-bind="options.icon"
 							:icon="deleteIcon"
-							:color="item.state || 'white'"
+							:color="getIconColor(item.state)"
 							decorative
 						/>
 					</VBtn>
@@ -340,23 +352,23 @@
 }
 
 .sy-chip-success {
-	color: rgb(var(--v-theme-textSuccess)) !important;
-	border: 1px solid rgb(var(--v-theme-borderSuccess)) !important;
+	color: rgb(var(--v-theme-onSuccessVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onSuccessVariant)) !important;
 }
 
 .sy-chip-error {
-	color: rgb(var(--v-theme-textError)) !important;
-	border: 1px solid rgb(var(--v-theme-borderError)) !important;
+	color: rgb(var(--v-theme-onErrorVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onErrorVariant)) !important;
 }
 
 .sy-chip-info {
-	color: rgb(var(--v-theme-textInfo)) !important;
-	border: 1px solid rgb(var(--v-theme-borderInfo)) !important;
+	color: rgb(var(--v-theme-onInfoVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onInfoVariant)) !important;
 }
 
 .sy-chip-warning {
-	color: rgb(var(--v-theme-textWarning)) !important;
-	border: 1px solid rgb(var(--v-theme-borderWarning)) !important;
+	color: rgb(var(--v-theme-onWarningVariant)) !important;
+	border: 1px solid rgb(var(--v-theme-onWarningVariant)) !important;
 }
 
 .overflow-chip {
@@ -380,22 +392,22 @@
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-borderSuccess)) !important;
+	outline: 2px solid rgb(var(--v-theme-onSuccessVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-borderInfo)) !important;
+	outline: 2px solid rgb(var(--v-theme-onInfoVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-borderWarning)) !important;
+	outline: 2px solid rgb(var(--v-theme-onWarningVariant)) !important;
 	outline-offset: -2px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-borderError)) !important;
+	outline: 2px solid rgb(var(--v-theme-onErrorVariant)) !important;
 	outline-offset: -2px !important;
 }
 </style>

@@ -11,7 +11,7 @@ export const apSemanticTokens = {
 			accent: apColorsTokens.cyan.darken20,
 			accentContrasted: apColorsTokens.cyan.darken60,
 			accentAlt: apColorsTokens.grey.base,
-			info: apColorsTokens.blue.lighten80,
+			info: apColorsTokens.parma.lighten80,
 			infoSubdued: apColorsTokens.blue.lighten90,
 			infoContrasted: apColorsTokens.parma.darken40,
 			success: apColorsTokens.forestGreen.lighten80,
@@ -79,7 +79,7 @@ export const apSemanticTokens = {
 		overlay: {
 			fullpage: apColorsTokens.grey.darken60,
 			onDark: apColorsTokens.cyan.darken40,
-			onLight: apColorsTokens.white.base,
+			onLight: apColorsTokens.cyan.darken20,
 		},
 		interactive: {
 			selectionEnabled: apColorsTokens.white.base,

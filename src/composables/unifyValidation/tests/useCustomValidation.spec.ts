@@ -187,6 +187,36 @@ describe('useCustomValidation', () => {
 		expect(args.errors.value).toEqual([])
 	})
 
+	it('does not trigger validation on blur when isValidateOnBlur is false', async () => {
+		const args = defaultArgs()
+		args.focused.value = true
+		args.modelValue.value = ''
+		args.isValidateOnBlur.value = false
+		withSetup(() =>
+			useCustomValidation(
+				args.modelValue,
+				args.customRules,
+				args.customWarningRules,
+				args.customSuccessRules,
+				args.errors,
+				args.warnings,
+				args.successes,
+				args.showSuccessMessages,
+				args.label,
+				args.focused,
+				args.isValidateOnBlur,
+				args.disableErrorHandling,
+			),
+		)
+
+		args.focused.value = false
+		await nextTick()
+
+		expect(args.errors.value).toEqual([])
+		expect(args.warnings.value).toEqual([])
+		expect(args.successes.value).toEqual([])
+	})
+
 	it('triggers validation on modelValue change when isValidateOnBlur is false', async () => {
 		const args = defaultArgs()
 		args.isValidateOnBlur.value = false
@@ -468,7 +498,8 @@ describe('useCustomValidation', () => {
 				args.disableErrorHandling,
 			),
 		)
-		await result.validate()
+		const validationResult = await result.validate()
+		expect(validationResult.hasSuccess).toBe(true)
 		expect(args.successes.value).toEqual([])
 	})
 

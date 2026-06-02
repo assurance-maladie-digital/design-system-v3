@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 541 357"><path fill="#E7ECF5" d="M0 0h541v357H0z"/><path fill="#fff" d="M63 88h415v181H63z"/><g clip-path="url(#a)"><rect width="248" height="32" x="147" y="163" fill="#E7ECF5" rx="4"/></g><g clip-path="url(#b)"><rect width="248" height="31" x="147" y="121" fill="#0C419A" rx="4"/></g><g clip-path="url(#c)"><rect width="248" height="31" x="147" y="206" fill="#E7ECF5" rx="4"/></g><defs><clipPath id="a"><rect width="248" height="32" x="147" y="163" fill="#fff" rx="4"/></clipPath><clipPath id="b"><rect width="248" height="31" x="147" y="121" fill="#fff" rx="4"/></clipPath><clipPath id="c"><rect width="248" height="31" x="147" y="206" fill="#fff" rx="4"/></clipPath></defs></svg>
+<svg width="541" height="357" viewBox="0 0 541 357" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="541" height="357" fill="#E7ECF5"/>
+<rect x="63" y="88" width="415" height="181" fill="white"/>
+<rect opacity="0.5" x="139" y="105" width="214" height="19" rx="9.5" fill="#CED9EB"/>
+<path d="M143 132.5H398C399.933 132.5 401.5 134.067 401.5 136V184C401.5 185.933 399.933 187.5 398 187.5H143C141.067 187.5 139.5 185.933 139.5 184V136C139.5 134.067 141.067 132.5 143 132.5Z" fill="white"/>
+<path d="M143 132.5H398C399.933 132.5 401.5 134.067 401.5 136V184C401.5 185.933 399.933 187.5 398 187.5H143C141.067 187.5 139.5 185.933 139.5 184V136C139.5 134.067 141.067 132.5 143 132.5Z" stroke="#0C419A"/>
+<rect opacity="0.5" x="147" y="150.5" width="136" height="19" rx="9.5" fill="#CED9EB"/>
+<path d="M143 196.5H398C399.933 196.5 401.5 198.067 401.5 200V248C401.5 249.933 399.933 251.5 398 251.5H143C141.067 251.5 139.5 249.933 139.5 248V200C139.5 198.067 141.067 196.5 143 196.5Z" fill="white"/>
+<path d="M143 196.5H398C399.933 196.5 401.5 198.067 401.5 200V248C401.5 249.933 399.933 251.5 398 251.5H143C141.067 251.5 139.5 249.933 139.5 248V200C139.5 198.067 141.067 196.5 143 196.5Z" stroke="#0C419A"/>
+<rect opacity="0.5" x="147" y="214.5" width="136" height="19" rx="9.5" fill="#CED9EB"/>
+</svg>

@@ -35,7 +35,7 @@
 		(e: 'update:error-messages', value: string[] | undefined): void
 	}>()
 
-	const internalValue = ref<SelectBtnValue>(null)
+	const internalValue = ref<SelectBtnValue>(props.multiple ? [] : null)
 	const darktheme = ref<boolean>(false)
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
@@ -48,11 +48,12 @@
 	})
 
 	watch(() => props.modelValue, (value) => {
-		if (value === null && props.multiple) {
-			internalValue.value = []
-			return
+		if (props.multiple) {
+			internalValue.value = Array.isArray(value) ? value : []
 		}
-		internalValue.value = value
+		else {
+			internalValue.value = value ?? null
+		}
 	}, {
 		immediate: true,
 		deep: true,
@@ -79,10 +80,12 @@
 
 	function getNewValue(item: SelectBtnItem): SelectBtnValue {
 		if (props.multiple) {
-			const typedValue = internalValue.value as Array<string | number>
+			const typedValue = Array.isArray(internalValue.value)
+				? internalValue.value
+				: []
 
 			// if the item is unique, select only it
-			if (item.unique && typedValue.includes(item.value) === false) {
+			if (item.unique && !typedValue.includes(item.value)) {
 				return [item.value]
 			}
 
@@ -199,8 +202,7 @@
 		// Don't auto-select if focus was caused by mouse interaction
 		if (isMouseInteraction.value) {
 			const element = e.target as HTMLElement
-			const index = optionsRef.value.findIndex(item => item === element)
-			focusedIndex.value = index
+			focusedIndex.value = optionsRef.value.findIndex(item => item === element)
 			return
 		}
 
@@ -265,7 +267,7 @@
 				}"
 				role="option"
 				:tabindex="index === focusedIndex ? '0' : '-1'"
-				:aria-selected="!props.multiple ? (isSelected(item.value) ? 'true' : 'false') : undefined"
+				:aria-selected="props.multiple ? undefined : (isSelected(item.value) ? 'true' : 'false')"
 				:aria-checked="props.multiple ? (isSelected(item.value) ? 'true' : 'false') : undefined"
 				@keydown.space.prevent="toggleItem(item)"
 				@mousedown="handleMouseDown"
@@ -329,15 +331,15 @@
 	color: rgb(var(--v-theme-primary));
 	border: 1px solid rgb(var(--v-theme-primary));
 	min-height: 56px;
-	border-radius: 4px;
+	border-radius: var(--v-radius-rounded);
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
 	background-color: rgb(var(--v-theme-surface));
 
 	&--selected {
-		color: rgb(var(--v-theme-textOnDark));
 		background-color: rgb(var(--v-theme-primary));
+		color: rgb(var(--v-theme-onPrimary));
 	}
 
 	&:focus-visible {
@@ -353,16 +355,17 @@
 		width: 100%;
 		height: 100%;
 		transition: background-color 0.2s;
+		border-radius: var(--v-radius-rounded);
 	}
 
 	&:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-overlayOnLight), 0.2);
+		background-color: rgba(var(--v-theme-interactionDarkHover), 0.2);
 	}
 
 	&--selected:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-overlayOnDark), 0.2);
+		background-color: rgba(var(--v-theme-interactionLightenHover), 0.2);
 	}
 }
 
@@ -375,7 +378,7 @@
 }
 
 .select-btn-field__options--error .select-btn-field__item {
-	color: rgb(var(--v-theme-textError));
-	border-color: rgb(var(--v-theme-borderError));
+	color: rgb(var(--v-theme-error));
+	border-color: rgb(var(--v-theme-error));
 }
 </style>

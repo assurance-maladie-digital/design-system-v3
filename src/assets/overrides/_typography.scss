@@ -2,7 +2,8 @@
 @use 'breakpoints' as bp;
 
 .theme-cnam,
-.theme-pa {
+.theme-pa,
+.theme-ap {
 	/* Headings with Vuetify classes */
 	.text-h1 {
 		font-size: var(--v-typography-h1-font-size);

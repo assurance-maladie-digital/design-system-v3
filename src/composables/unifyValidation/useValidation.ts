@@ -4,34 +4,41 @@ import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
 
+export type { VuetifyValidationRule }
+export type { SyValidationRule as ValidationRule }
+
 export interface FieldValidationProps {
+	customRules?: SyValidationRule[]
+	customSuccessRules?: SyValidationRule[]
+	customWarningRules?: SyValidationRule[]
+	disableErrorHandling?: boolean
+	disabled?: boolean
+	errorMessages?: string[] | null
+	hasError?: boolean
+	hasSuccess?: boolean
+	hasWarning?: boolean
+	isValidateOnBlur?: boolean
+	label?: string
+	maxErrors?: number
 	modelValue?: unknown
 	readonly?: boolean
-	disabled?: boolean
 	required?: boolean
-	isValidateOnBlur?: boolean
+	rules?: VuetifyValidationRule[]
 	showSuccessMessages?: boolean
-	disableErrorHandling?: boolean
+	successMessages?: string[] | null
 	// When true (Vuetify native mode), the controller should not handle errors/successes
 	useVuetifyValidation?: boolean
-	label: string
-	rules?: VuetifyValidationRule[]
-	customRules?: SyValidationRule[]
-	customWarningRules?: SyValidationRule[]
-	customSuccessRules?: SyValidationRule[]
-	errorMessages?: string[] | null
 	warningMessages?: string[] | null
-	successMessages?: string[] | null
-	hasError?: boolean
-	hasWarning?: boolean
-	hasSuccess?: boolean
-	maxErrors?: number
 }
 
 /**
- * Entrypoint to handle validation in fields components.
- * It handles both Vuetify native validation (if useVuetifyValidation is true) and Synapse custom validation (if customRules are provided).
- * It also provides a unified interface to handle errors, warnings and successes, and to trigger validation on demand.
+ * Point d'entrée de la validation pour les composants de champ.
+ * Gère à la fois la validation native Vuetify (si useVuetifyValidation vaut true)
+ * et la validation custom Synapse (si customRules/customWarningRules/customSuccessRules sont fournis).
+ * customRules correspond aux règles d'erreur bloquantes.
+ * errorMessages/warningMessages/successMessages sont des messages externes injectés par le parent
+ * et ne déclenchent aucun calcul de validation.
+ * Expose aussi une interface unifiée pour les erreurs, avertissements, succès et la validation à la demande.
  */
 export const validationPropsDefaults = {
 	readonly: false,
@@ -61,7 +68,7 @@ export function useValidation(params: {
 	isValidateOnBlur: Ref<boolean>
 	showSuccessMessages: Ref<boolean>
 	disableErrorHandling: Ref<boolean>
-	label: Ref<string>
+	label: Ref<string | undefined>
 	focused: Ref<boolean>
 	errorMessages?: Ref<string[] | null | undefined>
 	warningMessages?: Ref<string[] | null | undefined>
@@ -95,13 +102,15 @@ export function useValidation(params: {
 			errors: ref<string[]>([]),
 			warnings: ref<string[]>([]),
 			successes: ref<string[]>([]),
-			hasError: computed(() => false),
-			hasWarning: computed(() => false),
-			hasSuccess: computed(() => false),
+			hasError: computed(() => params.hasErrorProp?.value ?? false),
+			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
+			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
 			validate: async () => true,
+			clearValidation: () => {},
 		}
 	}
-	const innerErrors = ref<string[]>([])
+	const vuetifyErrors = ref<string[]>([])
+	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
 	const innerSuccesses = ref<string[]>([])
 
@@ -112,7 +121,7 @@ export function useValidation(params: {
 			params.modelValue,
 			params.rules,
 			params.disabled,
-			innerErrors,
+			vuetifyErrors,
 			params.hasErrorProp || ref(false),
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
@@ -129,7 +138,7 @@ export function useValidation(params: {
 		params.customRules,
 		params.customWarningRules,
 		params.customSuccessRules,
-		innerErrors,
+		customErrors,
 		innerWarnings,
 		innerSuccesses,
 		params.showSuccessMessages,
@@ -143,7 +152,8 @@ export function useValidation(params: {
 
 	async function validate(): Promise<boolean> {
 		if (params.readonly.value || params.disabled.value || params.disableErrorHandling.value) {
-			innerErrors.value = []
+			vuetifyErrors.value = []
+			customErrors.value = []
 			innerWarnings.value = []
 			innerSuccesses.value = []
 
@@ -162,7 +172,8 @@ export function useValidation(params: {
 	}
 
 	const errors = computed(() => [...new Set([
-		...innerErrors.value,
+		...vuetifyErrors.value,
+		...customErrors.value,
 		...(params.errorMessages?.value || []),
 	])])
 	const warnings = computed(() => [...new Set([
@@ -173,10 +184,26 @@ export function useValidation(params: {
 		...(params.showSuccessMessages.value ? innerSuccesses.value : []),
 		...(params.successMessages?.value || []),
 	])])
+	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
 	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
-	const hasSuccess = computed(() => (successes.value.length > 0 && !hasError.value && !hasWarning.value) || params.hasSuccessProp?.value)
+	// TODO: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
+	const hasSuccess = computed(() => {
+		if (toValue(params.useVuetifyValidation)) {
+			return params.hasSuccessProp?.value ?? false
+		}
+		return (
+			(internalHasSuccess.value || (params.successMessages?.value?.length ?? 0) > 0)
+			&& !hasError.value
+			&& !hasWarning.value
+		) || (params.hasSuccessProp?.value ?? false)
+	})
+
+	function clearValidation() {
+		vuetifyErrors.value = []
+		customValidator.clearValidation()
+	}
 
 	return {
 		errors,
@@ -186,5 +213,6 @@ export function useValidation(params: {
 		hasWarning,
 		hasSuccess,
 		validate,
+		clearValidation,
 	}
 }

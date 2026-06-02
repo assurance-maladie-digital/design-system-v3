@@ -14,7 +14,10 @@ dayjs.extend(timezone)
 dayjs.locale('fr')
 
 // Types
-export type DateValue = string | [string, string] | null
+export type DateModelValue = string | [string, string] | null
+
+/** @deprecated Utilisez DateModelValue à la place */
+export type DateValue = DateModelValue
 export type DateInput = string | string[] | null | object
 
 /**

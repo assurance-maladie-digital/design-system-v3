@@ -90,7 +90,7 @@ describe('useValidation', () => {
 		expect(validResult.hasSuccess).toBe(true)
 	})
 
-	it('should respect showSuccessMessages option', async () => {
+	it('keeps the success state when showSuccessMessages is false while hiding messages', async () => {
 		const validation = useValidation({ showSuccessMessages: false })
 		const rules = [{
 			type: 'required',
@@ -101,7 +101,7 @@ describe('useValidation', () => {
 		}]
 
 		const result = await validation.validateField('test', rules)
-		expect(result.hasSuccess).toBe(false)
+		expect(result.hasSuccess).toBe(true)
 		expect(result.state.successes).toEqual([])
 	})
 

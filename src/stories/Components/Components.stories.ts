@@ -78,6 +78,20 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'Card',
+						description: 'Conteneur transparent utilisé pour afficher une page.',
+						link: '/?path=/docs/composants-composants-vuetify-vcard--docs',
+						img: `/components/card${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
+						title: 'SyTabs',
+						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
+						link: '/?path=/docs/composants-navigation-sytabs--docs',
+						img: `/components/sy-tabs${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
@@ -137,7 +151,7 @@ export const ComponentsList: StoryObj = {
 						title: 'BackToTopBtn',
 						description: 'Utilisé pour afficher un bouton permettant à l’utilisateur de remonter en haut de la page.',
 						link: '/?path=/docs/composants-boutons-backtotopbtn--docs',
-						img: '/components/back-to-top-btn.svg',
+						img: `/components/back-to-top-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -146,6 +160,13 @@ export const ComponentsList: StoryObj = {
 						link: '/?path=/docs/composants-boutons-copybtn--docs',
 						img: `/components/copy-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
+					},
+					{
+						title: 'Tooltip',
+						description: 'Utilisé pour transmettre des informations lorsqu’un utilisateur survole un élément.',
+						link: '/?path=/docs/composants-composants-vuetify-vtooltip--docs',
+						img: `/components/tooltip${isAp ? '-ap' : ''}.svg`,
+						category: 'Feedback',
 					},
 					{
 						title: 'LangBtn',
@@ -180,6 +201,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour proposer une alternative au TextField de Vuetify, conforme au style du Design System et qui respecte les règles d\'accessibilité RGAA.',
 						link: '/?path=/docs/composants-formulaires-sytextfield--docs',
 						img: '/components/sy-text-field.svg',
+						category: 'Formulaires',
+					},
+					{
+						title: 'SyTextArea',
+						description: 'Utilisé pour la collecte de grandes quantités de données textuelles.',
+						link: '/?path=/docs/composants-formulaires-sytextarea--docs',
+						img: `/components/sy-text-area${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -227,8 +255,8 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'DatePicker',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de saisir une date.',
-						link: '/?path=/docs/composants-formulaires-datepicker--docs',
-						img: '/components/date-picker.svg',
+						link: '/?path=/docs/composants-formulaires-datepicker-introduction--docs',
+						img: `/components/date-picker${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -242,7 +270,7 @@ export const ComponentsList: StoryObj = {
 						title: 'NirField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir un numéro de Sécurité sociale (NIR).',
 						link: '/?path=/docs/composants-formulaires-nirfield--docs',
-						img: '/components/nir-field.svg',
+						img: `/components/nir-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -284,7 +312,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SelectBtnField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.',
 						link: '/?path=/docs/composants-formulaires-selectbtnfield--docs',
-						img: '/components/select-btn-field.svg',
+						img: `/components/select-btn-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -309,17 +337,31 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyTable',
+						description: 'Utilisé pour afficher une VDataTable de Vuetify',
+						link: '/?path=/docs/composants-tableaux-sytable--docs',
+						img: `/components/sy-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
+						title: 'SyServerTable',
+						description: 'Utilisé pour afficher une VDataTable Vuetify avec gestion des données côté serveur',
+						link: '/?path=/docs/composants-tableaux-syservertable--docs',
+						img: `/components/sy-server-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
 						title: 'PaginatedTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify avec une pagination persistante.',
 						link: '/?path=/docs/composants-tableaux-paginatedtable--docs',
-						img: '/components/paginated-table.svg',
+						img: `/components/paginated-table${isAp ? '-ap' : ''}.svg`,
 						category: 'Tableaux',
 					},
 					{
 						title: 'TableToolbar',
 						description: 'Utilisé pour afficher une barre d\'outils pour les tableaux.',
 						link: '/?path=/docs/composants-tableaux-tabletoolbar--docs',
-						img: '/components/table-toolbar.svg',
+						img: `/components/table-toolbar${isAp ? '-ap' : ''}.svg`,
 						category: 'Tableaux',
 					},
 					{
@@ -347,7 +389,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ChipList',
 						description: 'Utilisé pour afficher une liste de puces.',
 						link: '/?path=/docs/composants-donn%C3%A9es-chiplist--docs',
-						img: '/components/chip-list.svg',
+						img: `/components/chip-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -355,6 +397,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour afficher une liste d’informations.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalist--docs',
 						img: '/components/data-list.svg',
+						category: 'Données',
+					},
+					{
+						title: 'Accordion',
+						description: 'Utilisé pour optimiser l’espace vertical lors de l’affichage d’une grande quantité d’informations.',
+						link: '/?path=/docs/composants-donn%C3%A9es-accordion--docs',
+						img: `/components/accordion${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -389,14 +438,14 @@ export const ComponentsList: StoryObj = {
 						title: 'DialogBox',
 						description: 'Utilisé pour afficher une boîte de dialogue avec des boutons d\'action.',
 						link: '/?path=/docs/composants-feedback-dialogbox--docs',
-						img: '/components/dialog-box.svg',
+						img: `/components/dialog-box${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
 						title: 'NotificationBar',
 						description: 'Utilisé pour afficher des notifications à l’utilisateur.',
 						link: '/?path=/docs/composants-feedback-notificationbar--docs',
-						img: '/components/notification-bar.svg',
+						img: `/components/notification-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -413,6 +462,13 @@ export const ComponentsList: StoryObj = {
 						img: '/components/rating-picker.svg',
 						category: 'Feedback',
 					},
+					{
+						title: 'FilterSideBar',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
 				]
 
 				const categoryOrder = [
@@ -424,12 +480,14 @@ export const ComponentsList: StoryObj = {
 					'Tableaux',
 					'Données',
 					'Feedback',
+					'Filtres',
 				]
 
 				const apComponents = [
 					'FooterBar',
 					'HeaderBar',
 					'HeaderLoading',
+					'Breadcrumbs',
 					'PageContainer',
 					'CopyBtn',
 					'DownloadBtn',
@@ -442,6 +500,27 @@ export const ComponentsList: StoryObj = {
 					'SyRadioGroup',
 					'SyIconBtn',
 					'NirField',
+					'Card',
+					'FilterSideBar',
+					'SyTextField',
+					'Switch',
+					'Tooltip',
+					'SkeletonLoader',
+					'OTPInput',
+					'DialogBox',
+					'NotificationBar',
+					'Accordion',
+					'ChipList',
+					'SyTabs',
+					'SelectBtnField',
+					'BackToTopBtn',
+					'TableToolbar',
+					'PhoneField',
+					'SyTextArea',
+					'PaginatedTable',
+					'SyTable',
+					'SyServerTable',
+					'DatePicker',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

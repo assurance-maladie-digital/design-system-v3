@@ -327,12 +327,12 @@ describe('useValidation (unifyValidation)', () => {
 					expect(result.errors.value).toContain('Requis blur')
 				})
 
-				it('with isValidateOnBlur=false, does not validate while focused then validates on blur', async () => {
+				it('with isValidateOnBlur=false, does not validate on blur (validates on input change instead)', async () => {
 					const params = makeParams({
 						useVuetifyValidation: false as const,
 						isValidateOnBlur: ref(false),
 						focused: ref(true),
-						modelValue: ref(''),
+						modelValue: ref('valeur initiale'),
 						customRules: ref([{ type: 'required', options: { message: 'Requis blur input-mode' } }]),
 					})
 					const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
@@ -341,6 +341,10 @@ describe('useValidation (unifyValidation)', () => {
 					expect(result.errors.value).toEqual([])
 
 					params.focused.value = false
+					await nextTick()
+					expect(result.errors.value).toEqual([])
+
+					params.modelValue.value = ''
 					await nextTick()
 					expect(result.errors.value).toContain('Requis blur input-mode')
 				})
@@ -1490,6 +1494,7 @@ describe('useValidation (unifyValidation)', () => {
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			await result.validate()
+			expect(result.hasSuccess.value).toBe(true)
 			expect(result.successes.value).toContain('Succès externe')
 		})
 
@@ -1510,8 +1515,29 @@ describe('useValidation (unifyValidation)', () => {
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			await result.validate()
+			expect(result.hasSuccess.value).toBe(true)
 			expect(result.successes.value).not.toContain('Succès interne')
 			expect(result.successes.value).toContain('Succès externe')
+		})
+
+		it('keeps hasSuccess true when inner success messages are hidden', async () => {
+			const params = makeParams({
+				modelValue: ref('ok'),
+				showSuccessMessages: ref(false),
+				customRules: ref([]),
+				customSuccessRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => value === 'ok',
+						successMessage: 'Succès interne',
+					},
+				}]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await result.validate()
+			expect(result.hasSuccess.value).toBe(true)
+			expect(result.successes.value).toEqual([])
 		})
 	})
 

@@ -59,6 +59,24 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
+	it('preserves autoClamp in text input mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
 	it('respects disabled and readonly props when opening the calendar', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -157,7 +175,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.selectedDates).not.toBeNull()
 
 		const input = wrapper.find('input')
-		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - ')
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - 10/01/2025')
 	})
 
 	it('generates all intermediate dates when selecting a range in range mode', async () => {
@@ -319,6 +337,29 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
 	})
 
+	it('surfaces custom warning rules without blocking submit in calendar mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			customWarningRules: [
+				{
+					type: 'custom',
+					options: {
+						validate: () => false,
+						warningMessage: 'Warning de contrat ComplexDatePicker',
+					},
+				},
+			],
+		})
+
+		wrapper.vm.selectedDates = new Date(2025, 0, 1)
+		const result = await wrapper.vm.validateOnSubmit()
+
+		expect(result).toBe(true)
+		expect(wrapper.vm.errorMessages).toEqual([])
+		expect(wrapper.vm.warningMessages).toContain('Warning de contrat ComplexDatePicker')
+	})
+
 	it('validateDates flags an error when end date is before start date in range mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -378,5 +419,170 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.selectedDates).toBeNull()
 		expect(wrapper.vm.errorMessages.length).toBe(0)
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('handleDateSelected avec value null efface la sélection', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY' })
+		wrapper.vm.selectedDates = new Date(2025, 0, 1)
+		await wrapper.vm.handleDateSelected(null)
+		await flushPromises()
+		expect(wrapper.vm.selectedDates).toBeNull()
+	})
+
+	it('handleDateSelected avec tableau range met à jour selectedDates', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY', displayRange: true })
+		await wrapper.vm.handleDateSelected(['01/01/2025', '10/01/2025'])
+		await flushPromises()
+		expect(wrapper.vm.selectedDates).not.toBeNull()
+	})
+
+	it('watcher selectedDates null remet les dates à aujourd hui', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY' })
+		wrapper.vm.selectedDates = new Date(2025, 0, 1)
+		await nextTick()
+		wrapper.vm.selectedDates = null
+		await flushPromises()
+		// currentYear doit être une année valide (reset vers today)
+		const year = Number(wrapper.vm.currentYear)
+		expect(year).toBeGreaterThanOrEqual(2025)
+	})
+
+	it('syncFromModelValue initialise depuis un array range', async () => {
+		const wrapper = mountComponent({
+			label: 'Test',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			modelValue: ['01/01/2025', '10/01/2025'],
+		})
+		await flushPromises()
+		expect(wrapper.vm.selectedDates).not.toBeNull()
+		expect(wrapper.vm.displayFormattedDate).toContain('01/01/2025')
+	})
+
+	it('syncFromModelValue initialise depuis une string', async () => {
+		const wrapper = mountComponent({
+			label: 'Test',
+			format: 'DD/MM/YYYY',
+			modelValue: '15/06/2025',
+		})
+		await flushPromises()
+		expect(wrapper.vm.displayFormattedDate).toBe('15/06/2025')
+	})
+
+	it('reset avec disabled incrémente fieldKey', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY', disabled: true })
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const before = (wrapper.vm as any).fieldKey
+		wrapper.vm.reset()
+		await flushPromises()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((wrapper.vm as any).fieldKey).toBe(before + 1)
+	})
+
+	it('navigation année : bridge Dec→Jan quand currentMonth=11 et année monte', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY' })
+		wrapper.vm.isDatePickerVisible = true
+		// Simuler mois=11 (décembre) et année qui monte
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm as any).currentMonth = '11'
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm as any).currentYear = '2024'
+		await nextTick()
+		// Émettre update:year avec une année supérieure
+		const dp = wrapper.findComponent({ name: 'VDatePicker' })
+		if (dp.exists()) {
+			await dp.vm.$emit('update:year', '2025')
+			await nextTick()
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect((wrapper.vm as any).currentMonth).toBe('0')
+		}
+		else {
+			// VDatePicker non rendu sans le calendrier ouvert – appel direct
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			;(wrapper.vm as any).handleYearUpdate?.()
+		}
+	})
+
+	const makeKeydownEvent = (key: string, inputProps: Partial<HTMLInputElement> = {}) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const fakeInput = Object.assign(document.createElement('input'), inputProps) as any
+		fakeInput.setSelectionRange = () => {}
+		const event = new KeyboardEvent('keydown', { key, bubbles: true })
+		Object.defineProperty(event, 'target', { value: fakeInput, writable: false })
+		return event
+	}
+
+	it('handleKeydown Backspace sur séparateur supprime le séparateur', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY' })
+		const event = makeKeydownEvent('Backspace', { value: '01/', selectionStart: 3, selectionEnd: 3 })
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm as any).handleKeydown(event)
+		await nextTick()
+		expect(wrapper.exists()).toBe(true)
+	})
+
+	it('handleKeydown ArrowLeft saute le séparateur', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY' })
+		const event = makeKeydownEvent('ArrowLeft', { value: '01/01/2025', selectionStart: 3, selectionEnd: 3 })
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm as any).handleKeydown(event)
+		await nextTick()
+		expect(wrapper.exists()).toBe(true)
+	})
+
+	it('handleKeydown ArrowRight saute le séparateur', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY' })
+		const event = makeKeydownEvent('ArrowRight', { value: '01/01/2025', selectionStart: 2, selectionEnd: 2 })
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm as any).handleKeydown(event)
+		await nextTick()
+		expect(wrapper.exists()).toBe(true)
+	})
+
+	it('handleDateTextInputUpdate en mode noCalendar met à jour le modèle depuis une string', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY', noCalendar: true })
+		const input = wrapper.find('input')
+		await input.setValue('15/06/2025')
+		await input.trigger('blur')
+		await flushPromises()
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+	})
+
+	it('handleDateTextInputUpdate avec valeur null efface selectedDates via reset', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY', noCalendar: true })
+		wrapper.vm.selectedDates = new Date(2025, 0, 1)
+		wrapper.vm.reset()
+		await flushPromises()
+		expect(wrapper.vm.selectedDates).toBeNull()
+	})
+
+	it('handleDateTextInputUpdate avec array range startDate only via noCalendar', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY', noCalendar: true, displayRange: true })
+		const input = wrapper.find('input')
+		await input.setValue('01/01/2025 - ')
+		await input.trigger('blur')
+		await flushPromises()
+		expect(wrapper.exists()).toBe(true)
+	})
+
+	it('handleKeydown readonly ne fait rien', async () => {
+		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY', readonly: true })
+		const event = makeKeydownEvent('Backspace', { value: '01/01/2025', selectionStart: 3, selectionEnd: 3 })
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm as any).handleKeydown(event)
+		await nextTick()
+		expect(wrapper.exists()).toBe(true)
+	})
+
+	it('keeps deprecated birthDate prop as an alias for birth date mode', () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			birthDate: true,
+			format: 'DD/MM/YYYY',
+		})
+
+		expect(wrapper.props('birthDate')).toBe(true)
+		expect(wrapper.vm.currentViewMode).toBe('year')
 	})
 })

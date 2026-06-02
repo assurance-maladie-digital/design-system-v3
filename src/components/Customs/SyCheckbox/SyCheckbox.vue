@@ -204,7 +204,7 @@
 
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
-	const successes = computed(() => validation.successes.value)
+	const displaySuccesses = computed(() => validation.displaySuccesses.value)
 
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
@@ -216,10 +216,10 @@
 		switch (props.color) {
 		case 'error':
 			return 'rgb(var(--v-theme-error))'
-		case 'success':
-			return 'rgb(var(--v-theme-success))'
-		case 'warning':
-			return 'rgb(var(--v-theme-warning))'
+		case 'onSuccessVariant':
+			return 'rgb(var(--v-theme-onSuccessVariant))'
+		case 'onWarningVariant':
+			return 'rgb(var(--v-theme-onWarningVariant))'
 		case 'primary':
 			return cnamSemanticTokens.colors.text.base
 		default:
@@ -347,6 +347,11 @@
 			:aria-labelledby="props.ariaLabelledby"
 			:title="props.title"
 			:color="props.color"
+			:class="{
+				'success-field': hasSuccess && !hasError && !hasWarning,
+				'warning-field': hasWarning && !hasError,
+				'error-field': hasError,
+			}"
 			:style="{ color: labelColor }"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
@@ -354,7 +359,7 @@
 			:density="props.density"
 			:error="hasError"
 			:error-messages="errors"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? displaySuccesses : []))"
 			:indeterminate="internalIndeterminate"
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
@@ -387,6 +392,22 @@
 </template>
 
 <style scoped>
+.success-field :deep(.v-messages__message) {
+	color: rgb(var(--v-theme-onSuccessVariant)) !important;
+}
+
+.success-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-onSuccessVariant));
+}
+
+.warning-field :deep(.v-messages__message) {
+	color: rgb(var(--v-theme-onWarningVariant)) !important;
+}
+
+.warning-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-onWarningVariant));
+}
+
 :deep(.v-input--dirty .v-selection-control__input) {
 	color: v-bind('props.color');
 }

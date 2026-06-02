@@ -1,43 +1,42 @@
 	<script lang="ts" setup>
 	import {
-		ref,
-		computed,
-		watch,
-		onMounted,
-		onBeforeUnmount,
-		nextTick,
 		type ComponentPublicInstance,
+		computed,
+		nextTick,
+		onBeforeUnmount,
+		onMounted,
+		ref,
 		type Ref,
+		watch,
 	} from 'vue'
 	import {
-		useDateInitialization,
 		type DateInput,
-		type DateValue,
+		type DateModelValue,
+		useDateInitialization,
 	} from '@/composables/date/useDateInitializationDayjs'
 	import {
 		useAsteriskDisplay,
+		useCalendarKeyboardNavigation,
+		useDateFormatValidation,
 		useDatePickerFocusTrap,
 		useDatePickerState,
-		useDateFormatValidation,
-		useDateValidation,
+		useDatePickerValidationBridge,
 		useDatePickerViewMode,
 		useDatePickerVisibility,
 		useDateRangeValidation,
 		useDateSelection,
 		useDisplayedDateString,
+		useHolidayHighlighting,
 		useInputBlurHandler,
 		useManualDateValidation,
 		useMonthButtonCustomization,
 		useTodayButton,
-		useHolidayHighlighting,
-		useCalendarKeyboardNavigation,
 	} from '../composables'
 	import dayjs from 'dayjs'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useInputHandler } from '../composables/useInputHandler'
-	import { useValidation } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import type { DateObjectValue } from '../types'
@@ -130,6 +129,7 @@
 		defineProps<{
 			autoClamp?: boolean
 			bgColor?: string
+			/** @deprecated Utilisez isBirthDate à la place */
 			birthDate?: boolean
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 			customRules?: { type: string, options: any }[]
@@ -212,12 +212,12 @@
 	)
 
 	const emit = defineEmits<{
-		(e: 'update:modelValue', value: DateValue): void
+		(e: 'update:modelValue', value: DateModelValue): void
 		(e: 'closed'): void
 		(e: 'focus'): void
 		(e: 'blur'): void
 		(e: 'input', value: string): void
-		(e: 'date-selected', value: DateValue): void
+		(e: 'date-selected', value: DateModelValue): void
 	}>()
 
 	/**
@@ -231,22 +231,6 @@
 	 * Validation + messages
 	 */
 	const isDatePickerVisible = ref(false)
-	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: 'Date',
-		disableErrorHandling: props.disableErrorHandling,
-	})
-	const { errors, warnings, successes, validateField, clearValidation } = validation
-	const errorMessages = computed(() => errors.value)
-	const warningMessages = computed(() => warnings.value)
-	const successMessages = computed(() => successes.value)
-
-	const getMessageClasses = () => ({
-		'dp-width': true,
-		'v-messages__message--error': errorMessages.value.length > 0,
-		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
-		'v-messages__message--success': successMessages.value.length > 0 && errorMessages.value.length === 0 && warningMessages.value.length === 0,
-	})
 
 	/**
 	 * Selection state
@@ -274,22 +258,36 @@
 		disableErrorHandling: props.disableErrorHandling,
 	})
 
-	const { validateDates } = useDateValidation({
+	const {
+		errors,
+		warnings,
+		successes,
+		validateField,
+		clearValidation,
+		validateDates,
+	} = useDatePickerValidationBridge({
+		showSuccessMessages: props.showSuccessMessages,
+		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
 		required: props.required,
 		displayRange: props.displayRange,
-		disableErrorHandling: props.disableErrorHandling,
 		customRules: computed(() => props.customRules),
 		customWarningRules: computed(() => props.customWarningRules),
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
 		getRangeValidationError,
-		clearValidation,
-		validateField,
-		errors,
-		warnings,
-		successes,
+		revalidateOnCustomRulesChange: true,
+	})
+	const errorMessages = computed(() => errors.value)
+	const warningMessages = computed(() => warnings.value)
+	const successMessages = computed(() => successes.value)
+
+	const getMessageClasses = () => ({
+		'dp-width': true,
+		'v-messages__message--error': errorMessages.value.length > 0,
+		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
+		'v-messages__message--success': successMessages.value.length > 0 && errorMessages.value.length === 0 && warningMessages.value.length === 0,
 	})
 
 	const {
@@ -313,14 +311,14 @@
 		emitFocus: () => emit('focus'),
 	})
 
-	const updateModel = (value: DateValue) => {
+	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
 		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
 	// Keep and expose this so consumers can listen to `date-selected`
-	const handleDateSelected = (value: DateValue) => {
+	const handleDateSelected = (value: DateModelValue) => {
 		if (props.readonly) return
 
 		// 1) Update v-model
@@ -342,30 +340,12 @@
 			}
 		}
 		else {
-			const dateObject = parseDate(value, returnFormat.value)
-			selectedDates.value = dateObject
+			selectedDates.value = parseDate(value, returnFormat.value)
 		}
 
 		// 3) Re-emit upward
 		emit('date-selected', value)
 	}
-	// Watcher pour re-valider quand les customRules changent
-	watch(() => props.customRules, () => {
-		if (selectedDates.value !== null) {
-			// Retarder légèrement pour s'assurer que les computed sont mis à jour
-			setTimeout(async () => {
-				clearValidation()
-				const datesToValidate = Array.isArray(selectedDates.value) ? selectedDates.value : [selectedDates.value]
-				for (const date of datesToValidate) {
-					await Promise.resolve(validateField(
-						date,
-						props.customRules,
-						props.customWarningRules,
-					))
-				}
-			}, 5)
-		}
-	}, { deep: true })
 	// Range handling
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 	const dateSelectionResult = useDateSelection(parseDate, selectedDates, props.format, props.displayRange)
@@ -709,7 +689,7 @@
 		validateField: (value, rules, warningRules) =>
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 			validateField(value, rules as any[], warningRules as any[]),
-		updateModel: value => updateModel(value as DateValue),
+		updateModel: value => updateModel(value as DateModelValue),
 		emitInput: value => emit('input', value),
 		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
 	})
@@ -727,8 +707,7 @@
 
 			if (!charBeforeCursor || !/\d/.test(charBeforeCursor)) {
 				event.preventDefault()
-				const newValue = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
-				displayFormattedDate.value = newValue
+				displayFormattedDate.value = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
 				queueMicrotask(() => {
 					const newCursorPos = cursorPos - 2
 					input.setSelectionRange(newCursorPos, newCursorPos)
@@ -848,7 +827,7 @@
 	/**
 	 * Gère les mises à jour de DateTextInput avec contrôle
 	 */
-	const handleDateTextInputUpdate = (value: DateValue) => {
+	const handleDateTextInputUpdate = (value: DateModelValue) => {
 		// Ne pas traiter les mises à jour internes pour éviter les boucles
 		if (isUpdatingFromInternal.value) return
 
@@ -900,9 +879,9 @@
 			}
 		}
 		finally {
-			setTimeout(() => {
+			queueMicrotask(() => {
 				isUpdatingFromInternal.value = false
-			}, 0)
+			})
 		}
 	}
 
@@ -1072,6 +1051,7 @@
 				:title="props.title"
 				:hint="props.hint"
 				:persistent-hint="props.persistentHint"
+				:skip-internal-validation="true"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -1105,6 +1085,7 @@
 							ref="dateCalendarTextInputRef"
 							:key="fieldKey"
 							:model-value="textInputValue"
+							:skip-internal-validation="true"
 							:label="labelWithAsterisk"
 							:placeholder="props.placeholder"
 							:format="props.format"
@@ -1272,40 +1253,40 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textSuccess)) !important;
+		color: rgb(var(--v-theme-success)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-success)) !important;
 	}
 }
 
 .v-messages__message--error {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 }
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: rgb(var(--v-theme-textWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-textWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 	}
 }
 
@@ -1341,7 +1322,7 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: rgb(var(--v-theme-backgroundMain));
+	background-color: rgb(var(--v-theme-background));
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
@@ -1349,16 +1330,16 @@
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: rgb(var(--v-theme-backgroundAccentContrasted)) !important;
+	background-color: rgb(var(--v-theme-primaryVariant)) !important;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 }
 
 /* day before weekend */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1376,7 +1357,7 @@
 
 /* Style de base du ::after */
 :deep(.custom-year-btn::after) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1386,7 +1367,7 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;

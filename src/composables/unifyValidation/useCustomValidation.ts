@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { watch, computed, ref } from 'vue'
+import { reactive,watch, computed, ref } from 'vue'
 import type { Ref } from 'vue'
 
 /**
@@ -15,29 +15,41 @@ export function useCustomValidation(
 	warnings: Ref<string[]>,
 	successes: Ref<string[]>,
 	showSuccessMessages: Ref<boolean>,
-	label: Ref<string>,
+	label: Ref<string | undefined>,
 	focused: Ref<boolean>,
 	isValidateOnBlur: Ref<boolean>,
 	disableErrorHandling: Ref<boolean>,
 	readonly?: Ref<boolean>,
 	disabled?: Ref<boolean>,
 ) {
-	let validator = useValidation({
+	const hasSuccess = ref(false)
+
+	const validatorOptions = reactive({
 		showSuccessMessages: showSuccessMessages.value,
 		fieldIdentifier: label.value,
 		disableErrorHandling: disableErrorHandling.value,
 	})
 
-	watch(
-		() => [showSuccessMessages.value, label.value, customRules?.value, customWarningRules?.value, customSuccessRules?.value, disableErrorHandling.value],
-		() => {
-			validator = useValidation({
-				showSuccessMessages: showSuccessMessages.value,
-				fieldIdentifier: label.value,
-				disableErrorHandling: disableErrorHandling.value,
-			})
+	const validator = useValidation(validatorOptions)
 
-			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0
+	watch(
+		() => [showSuccessMessages.value, label.value, disableErrorHandling.value],
+		() => {
+			validatorOptions.showSuccessMessages = showSuccessMessages.value
+			validatorOptions.fieldIdentifier = label.value
+			validatorOptions.disableErrorHandling = disableErrorHandling.value
+
+			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
+			if (isDirty) {
+				validate()
+			}
+		},
+	)
+
+	watch(
+		() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value],
+		() => {
+			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
 			if (isDirty) {
 				validate()
 			}
@@ -52,6 +64,7 @@ export function useCustomValidation(
 			errors.value = []
 			warnings.value = []
 			successes.value = []
+			hasSuccess.value = false
 			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [] as string[], warnings: [] as string[], successes: [] as string[] } }
 		}
 
@@ -67,6 +80,7 @@ export function useCustomValidation(
 		errors.value = result.state.errors
 		warnings.value = result.state.warnings
 		successes.value = result.state.successes
+		hasSuccess.value = result.hasSuccess
 
 		return result
 	}
@@ -80,13 +94,14 @@ export function useCustomValidation(
 			warnings.value = []
 			successes.value = []
 			isPristine.value = true
+			hasSuccess.value = false
 		},
 		() => modelValue.value = undefined,
 		computed(() => isPristine.value ? null : errors.value.length < 1),
 	)
 
 	watch(focused, (newVal) => {
-		if (!newVal && !disableErrorHandling.value) {
+		if (isValidateOnBlur.value && !newVal && !disableErrorHandling.value) {
 			validate()
 		}
 	})
@@ -97,5 +112,12 @@ export function useCustomValidation(
 		}
 	})
 
-	return { validate }
+	function clearValidation() {
+		errors.value = []
+		warnings.value = []
+		successes.value = []
+		hasSuccess.value = false
+	}
+
+	return { validate, hasSuccess, clearValidation }
 }

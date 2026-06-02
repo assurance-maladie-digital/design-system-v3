@@ -99,7 +99,7 @@
 	})
 
 	// Initialisation du composable de validation
-	const { errors, warnings, successes, validateField } = !props.readonly
+	const { errors, warnings, successes, displaySuccesses, validateField } = !props.readonly
 		? useValidation({
 			showSuccessMessages: props.showSuccessMessages,
 			fieldIdentifier: props.label || 'password',
@@ -109,12 +109,13 @@
 			errors: ref<string[]>([]),
 			warnings: ref<string[]>([]),
 			successes: ref<string[]>([]),
+			displaySuccesses: ref<string[]>([]),
 			validateField: () => ({ hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }),
 		}
 
 	const hasError = computed(() => errors.value.length > 0)
 	const hasWarning = computed(() => warnings.value.length > 0)
-	const hasSuccess = computed(() => successes.value.length > 0 && props.showSuccessMessages)
+	const hasSuccess = computed(() => successes.value.length > 0 && !hasError.value && !hasWarning.value)
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle
@@ -254,7 +255,9 @@
 		:required="props.required"
 		:error-messages="errors"
 		:warning-messages="warnings"
-		:success-messages="successes"
+		:success-messages="displaySuccesses"
+		:has-success="hasSuccess"
+		:show-success-messages="props.showSuccessMessages"
 		:readonly="props.readonly"
 		:disabled="props.disabled"
 		:placeholder="props.placeholder"
@@ -283,6 +286,7 @@
 				class="d-flex align-center"
 			>
 				<SyIcon
+					v-if="validationIcon"
 					:icon="validationIcon"
 					:color="validationColor"
 					decorative
@@ -358,10 +362,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-warning)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-warning)) !important;
 		}
 	}
 
@@ -369,7 +373,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-warning)) !important;
 		}
 	}
 }
@@ -377,11 +381,11 @@
 .error-field {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-textError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 }
 
@@ -393,10 +397,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 
@@ -404,7 +408,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 }

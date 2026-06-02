@@ -175,7 +175,7 @@
 
 	const errors = computed(() => validation.errors.value)
 	const warnings = computed(() => validation.warnings.value)
-	const successes = computed(() => validation.successes.value)
+	const displaySuccesses = computed(() => validation.displaySuccesses.value)
 
 	const labelId = computed(() => (props.id ? `${props.id}-label` : undefined))
 	const computedAriaLabelledby = computed(() => {
@@ -267,8 +267,8 @@
 		>
 			<VMessages
 				ref="messagesRef"
-				:active="hasError || hasWarning || (hasSuccess && props.showSuccessMessages)"
-				:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
+				:active="hasError || hasWarning || (hasSuccess && displaySuccesses.length > 0)"
+				:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? displaySuccesses : []))"
 			/>
 		</div>
 
@@ -298,7 +298,7 @@
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-warning)) !important;
+	color: rgb(var(--v-theme-onWarningVariant)) !important;
 }
 
 .error-field :deep(.v-messages__message) {
@@ -310,7 +310,7 @@
 }
 
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-success)) !important;
+	color: rgb(var(--v-theme-onSuccessVariant)) !important;
 }
 
 :deep(.v-messages__message) {

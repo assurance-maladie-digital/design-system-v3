@@ -12,72 +12,14 @@
 		mdiCalendar,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
-	import type { IconType, VariantStyle, ColorType } from '@/types/vuetifyTypes'
+	import type { IconType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import type { ValidationRule } from '@/composables/validation/useValidation'
-	import { useValidation, validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { useSyTextFieldValidation } from './useSyTextFieldValidation'
+	import type { SyTextFieldProps } from './types'
 
 	const props = withDefaults(
-		defineProps<{
-			modelValue?: string | number | null | undefined
-			prependIcon?: IconType
-			appendIcon?: IconType
-			prependInnerIcon?: IconType
-			appendInnerIcon?: IconType
-			prependTooltip?: string
-			appendTooltip?: string
-			tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
-			variantStyle?: VariantStyle
-			color?: ColorType
-			isClearable?: boolean
-			showDivider?: boolean
-			label?: string
-			readonly?: boolean
-			isActive?: boolean
-			baseColor?: string
-			bgColor?: string
-			centerAffix?: boolean
-			counter?: string | number | boolean
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			counterValue?: number | ((value: any) => number)
-			density?: 'default' | 'comfortable' | 'compact'
-			direction?: 'horizontal' | 'vertical'
-			isDirty?: boolean
-			disabled?: boolean
-			isFlat?: boolean
-			isFocused?: boolean
-			areDetailsHidden?: boolean | 'auto'
-			areSpinButtonsHidden?: boolean
-			hint?: string
-			id?: string
-			loading?: string | boolean
-			maxWidth?: string | number
-			messages?: string | string[]
-			minWidth?: string | number
-			name?: string
-			displayPersistentClear?: boolean
-			displayPersistentCounter?: boolean
-			displayPersistentHint?: boolean
-			displayPersistentPlaceholder?: boolean
-			placeholder?: string
-			prefix?: string
-			isReversed?: boolean
-			role?: string
-			rounded?: string | number | boolean
-			isOnSingleLine?: boolean
-			suffix?: string
-			theme?: string
-			isTiled?: boolean
-			type?: string
-			width?: string | number
-			displayAsterisk?: boolean
-			noIcon?: boolean
-			disableClickButton?: boolean
-			autocomplete?: string
-			helpText?: string
-			maxlength?: string | number
-			title?: string | false
-		} & FieldValidationProps>(),
+		defineProps<SyTextFieldProps>(),
 		{
 			modelValue: undefined,
 			prependIcon: undefined,
@@ -102,7 +44,7 @@
 			isDirty: false,
 			isFlat: false,
 			isFocused: false,
-			areDetailsHidden: false,
+			hideDetails: false,
 			areSpinButtonsHidden: false,
 			hint: undefined,
 			id: undefined,
@@ -197,18 +139,7 @@
 
 	const attrs = useAttrs()
 	const focused = ref(false)
-	// Construction des règles de validation
-	const defaultRules = computed<ValidationRule[]>(() => props.required
-		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
-		: [],
-	)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, validationIcon, hasMessages } = useSyTextFieldValidation({
 		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -219,10 +150,7 @@
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
 		label: toRef(props, 'label'),
 		rules: toRef(props, 'rules'),
-		customRules: computed(() => {
-			const customRules = props.customRules ? props.customRules : []
-			return [...defaultRules.value, ...customRules]
-		}),
+		customRules: toRef(props, 'customRules'),
 		customWarningRules: toRef(props, 'customWarningRules'),
 		customSuccessRules: toRef(props, 'customSuccessRules'),
 		errorMessages: toRef(props, 'errorMessages'),
@@ -232,7 +160,7 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
-		focused: focused,
+		focused,
 	})
 
 	const forwardedAttrs = computed(() => {
@@ -266,13 +194,6 @@
 		if (props.isClearable && newValue === '') {
 			emit('clear')
 		}
-	})
-
-	const iconColor = computed(() => {
-		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return 'rgba(0, 0, 0, 1)'
 	})
 
 	const handlePrependIconClick = () => {
@@ -343,25 +264,12 @@
 		emit('keydown', event)
 	}
 
-	const validationIcon = computed(() => {
-		if (hasError.value) return ICONS['error']
-		if (hasWarning.value) return ICONS['warning']
-		if (hasSuccess.value && props.showSuccessMessages) return ICONS['success']
-		return null
-	})
-
 	const isShouldDisplayAsterisk = computed(() => {
 		return props.displayAsterisk && props.required
 	})
 
 	const labelWithAsterisk = computed(() => {
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
-	})
-
-	// Détermine s'il y a des messages d'erreur ou d'état
-	const hasMessages = computed(() => {
-		if (props.disableErrorHandling) return false
-		return (props.errorMessages?.length ?? 0) > 0 || hasError.value || hasWarning.value || hasSuccess.value
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -372,7 +280,7 @@
 
 	const showHelpTextBelow = computed(() => {
 		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
-		return props.helpText && hasMessages.value && !props.areDetailsHidden
+		return props.helpText && hasMessages.value && !props.hideDetails
 	})
 
 	// Use title prop if provided, otherwise fall back to accessible label
@@ -627,19 +535,19 @@
 			:error-messages="errors"
 			:flat="props.isFlat"
 			:focused="props.isFocused"
-			:hide-details="props.areDetailsHidden && !showHelpTextAsMessage"
+			:hide-details="props.hideDetails"
 			:hint="showHelpTextAsMessage ? props.helpText : props.hint"
 			:label="labelWithAsterisk"
 			:loading="props.loading"
 			:maxlength="props.maxlength"
 			:max-errors="props.maxErrors"
 			:max-width="props.maxWidth"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : messages))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? (props.showSuccessMessages ? successes : []) : messages))"
 			:min-width="props.minWidth"
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"
 			:persistent-counter="props.displayPersistentCounter"
-			:persistent-hint="props.displayPersistentHint || !!showHelpTextAsMessage"
+			:persistent-hint="props.displayPersistentHint"
 			:persistent-placeholder="props.displayPersistentPlaceholder"
 			:placeholder="props.placeholder"
 			:prefix="props.prefix"
@@ -778,7 +686,8 @@
 					<!-- Keyboard-focusable clear button -->
 					<VBtn
 						v-if="showClear"
-						class="v-btn v-btn--density-compact mr-1 text-iconBase"
+						class="v-btn v-btn--density-compact mr-1"
+						:class="clearButtonColorClass"
 						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiClose"
@@ -843,14 +752,22 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textWarning)) !important;
+		fill: rgb(var(--v-theme-onWarningVariant)) !important;
+	}
+
+	:deep(.v-label.v-field-label) {
+		color: rgb(var(--v-theme-borderWarning)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
+
+		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			--v-field-border-opacity: 1;
+
+			color: rgb(var(--v-theme-onWarningVariant)) !important;
 		}
 	}
 
@@ -858,8 +775,15 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderWarning)) !important;
+			color: rgb(var(--v-theme-onWarningVariant)) !important;
 		}
+	}
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.text-iconBase {
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-primary)) !important;
 	}
 }
 
@@ -870,11 +794,17 @@
 		opacity: 1 !important;
 	}
 
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-error)) !important;
+	}
+
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderError)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-borderError)) !important;
+			--v-field-border-opacity: 1;
+
+			color: rgb(var(--v-theme-error)) !important;
 		}
 	}
 
@@ -882,7 +812,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderError)) !important;
+			color: rgb(var(--v-theme-error)) !important;
 		}
 	}
 }
@@ -895,16 +825,22 @@
 	}
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-textSuccess)) !important;
+		fill: rgb(var(--v-theme-onSuccessVariant)) !important;
+	}
+
+	:deep(.v-label.v-field-label) {
+		color: rgb(var(--v-theme-borderSuccess)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			--v-field-border-opacity: 1;
+
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 
@@ -912,7 +848,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-borderSuccess)) !important;
+			color: rgb(var(--v-theme-onSuccessVariant)) !important;
 		}
 	}
 }
@@ -923,13 +859,13 @@
 	}
 
 	:deep(.v-field--focused .v-field__outline) {
-		color: rgb(var(--v-theme-borderAccentPrimary)) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 		opacity: 1 !important;
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
 	:deep(.v-input__append .v-icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 		opacity: 1;
 	}
