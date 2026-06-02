@@ -170,7 +170,8 @@
       "postcss": ">=8.5.10",
       "fast-uri": ">=3.1.2",
       "js-cookie": ">=3.0.7",
-      "qs": ">=6.15.2"
+      "qs": ">=6.15.2",
+      "tmp": ">=0.2.6"
     },
     "patchedDependencies": {
       "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"
