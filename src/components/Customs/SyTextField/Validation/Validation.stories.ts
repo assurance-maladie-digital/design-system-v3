@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-import { fn, userEvent, within } from '@storybook/test'
+import { fn } from '@storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import type { FieldValidationProps } from '@/composables/unifyValidation/useValidation'
@@ -46,7 +46,6 @@ const meta = {
 		'customRules': [],
 		'customWarningRules': [],
 		'customSuccessRules': [],
-		'showSuccessMessages': true,
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
@@ -127,24 +126,21 @@ export const WithError: Story = {
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			return { args, value }
+			onMounted(() => {
+				fieldRef.value?.validateOnSubmit()
+			})
+			return { args, value, fieldRef }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-			/>
+			<div class="pa-4">
+				<SyTextField ref="fieldRef" v-bind="args" v-model="value" />
+			</div>
 		`,
 	}),
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, 'invalid-email')
-		input.blur()
-	},
 }
 
 export const WithWarning: Story = {
@@ -207,24 +203,21 @@ export const WithWarning: Story = {
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			return { args, value }
+			onMounted(() => {
+				fieldRef.value?.validateOnSubmit()
+			})
+			return { args, value, fieldRef }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-			/>
+			<div class="pa-4">
+				<SyTextField ref="fieldRef" v-bind="args" v-model="value" />
+			</div>
 		`,
 	}),
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, 'ab')
-		input.blur()
-	},
 }
 
 export const WithSuccess: Story = {
@@ -272,6 +265,7 @@ export const WithSuccess: Story = {
 	args: {
 		label: 'Adresse email',
 		modelValue: 'exemple@domaine.fr',
+		showSuccessMessages: true,
 		customSuccessRules: [
 			{
 				type: 'custom',
@@ -287,24 +281,21 @@ export const WithSuccess: Story = {
 		components: { SyTextField },
 		setup() {
 			const value = ref(args.modelValue)
+			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			return { args, value }
+			onMounted(() => {
+				fieldRef.value?.validateOnSubmit()
+			})
+			return { args, value, fieldRef }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-			/>
+			<div class="pa-4">
+				<SyTextField ref="fieldRef" v-bind="args" v-model="value" />
+			</div>
 		`,
 	}),
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, 'exemple@domaine.fr')
-		input.blur()
-	},
 }
 
 export const WithCustomRules: Story = {
