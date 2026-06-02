@@ -266,7 +266,7 @@
 		clearValidation,
 		validateDates,
 	} = useDatePickerValidationBridge({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
 		required: props.required,
@@ -1322,8 +1322,7 @@
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	// background-color: rgb(var(--v-theme-background));
-	background: green !important;
+	background-color: rgb(var(--v-theme-background));
 }
 
 :deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {

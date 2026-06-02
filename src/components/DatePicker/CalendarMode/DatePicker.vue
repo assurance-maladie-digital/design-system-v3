@@ -264,7 +264,7 @@
 		clearValidation,
 		validateDates,
 	} = useDatePickerValidationBridge({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
 		required: props.required,
@@ -958,7 +958,7 @@
 							:class="[getMessageClasses(), 'label-hidden-on-focus']"
 							:error-messages="errorMessages"
 							:warning-messages="warningMessages"
-							:success-messages="successMessages"
+							:success-messages="props.showSuccessMessages ? successMessages : []"
 							:has-success="isOnSuccess"
 							:disabled="props.disabled"
 							:disable-click-button="false"
