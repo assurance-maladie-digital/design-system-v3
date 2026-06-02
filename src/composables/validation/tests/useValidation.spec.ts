@@ -14,7 +14,7 @@ describe('useValidation', () => {
 	})
 
 	it('should handle basic validation rules', async () => {
-		const validation = useValidation()
+		const validation = useValidation({ showSuccessMessages: true })
 		const rules = [{
 			type: 'required',
 			options: {
@@ -206,7 +206,7 @@ describe('useValidation', () => {
 
 	it('should discard a slow async validation when a newer one is triggered after', async () => {
 		vi.useFakeTimers()
-		const validation = useValidation()
+		const validation = useValidation({ showSuccessMessages: true })
 
 		// Slow rule: resolves after 100ms with an error
 		const slowRules = [{

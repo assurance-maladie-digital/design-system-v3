@@ -931,6 +931,7 @@ describe('SyAutocomplete', () => {
 					label: 'Test success',
 					textKey: 'text',
 					valueKey: 'value',
+					showSuccessMessages: true,
 					customSuccessRules: [successRule],
 				},
 			})
@@ -1059,6 +1060,7 @@ describe('SyAutocomplete', () => {
 					label: 'Test successMessages',
 					textKey: 'text',
 					valueKey: 'value',
+					showSuccessMessages: true,
 					successMessages: ['Succès externe'],
 				},
 			})

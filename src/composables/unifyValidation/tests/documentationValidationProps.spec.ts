@@ -111,9 +111,9 @@ describe('getValidationDocumentation', () => {
 			expect(doc.isValidateOnBlur.table.defaultValue).toEqual({ summary: 'true' })
 		})
 
-		it('showSuccessMessages a un defaultValue true', () => {
+		it('showSuccessMessages a un defaultValue false', () => {
 			const doc = getValidationDocumentation()
-			expect(doc.showSuccessMessages.table.defaultValue).toEqual({ summary: 'true' })
+			expect(doc.showSuccessMessages.table.defaultValue).toEqual({ summary: 'false' })
 		})
 
 		it('disableErrorHandling a un defaultValue false', () => {
