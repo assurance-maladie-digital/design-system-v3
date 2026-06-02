@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { reactive,watch, computed, ref } from 'vue'
+import { reactive, watch, computed, ref } from 'vue'
 import type { Ref } from 'vue'
 
 /**
