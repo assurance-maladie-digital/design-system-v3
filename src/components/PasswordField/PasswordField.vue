@@ -101,7 +101,9 @@
 	// Initialisation du composable de validation
 	const { errors, warnings, successes, displaySuccesses, validateField } = !props.readonly
 		? useValidation({
-			showSuccessMessages: props.showSuccessMessages,
+			// L'état de succès (et donc l'icône) est toujours calculé ; l'affichage du
+			// texte des messages reste filtré en aval par SyTextField via showSuccessMessages.
+			showSuccessMessages: true,
 			fieldIdentifier: props.label || 'password',
 			disableErrorHandling: props.disableErrorHandling,
 		})
