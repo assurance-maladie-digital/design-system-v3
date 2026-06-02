@@ -115,7 +115,7 @@ const meta = {
 		customRules: [],
 		customWarningRules: [],
 		customSuccessRules: [],
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		displayAsterisk: false,
 		isValidateOnBlur: true,
 		bgColor: 'white',
