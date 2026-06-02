@@ -611,6 +611,7 @@ des messages depuis le parent sans déclencher de règle de validation.
 	<SyTextField
 		v-model="value"
 		label="Nom"
+		:show-success-messages="true"
 		:error-messages="errorMessages"
 		:warning-messages="warningMessages"
 		:success-messages="successMessages"
@@ -658,6 +659,9 @@ function reset() {
 			},
 		],
 	},
+	args: {
+		showSuccessMessages: true,
+	},
 	render: args => ({
 		components: { SyTextField, VBtn },
 		setup() {
@@ -700,6 +704,7 @@ function reset() {
 				<SyTextField
 					v-model="value"
 					label="Nom"
+					:show-success-messages="true"
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"

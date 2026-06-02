@@ -256,11 +256,13 @@ export const NoValidateOnBlur: Story = {
       :model-value="value"
       label="Description"
       :is-validate-on-blur="false"
+      :show-success-messages="true"
       :custom-rules="[{
         type: 'custom',
         options: {
           validate: (v) => v !== 'Contenu interdit',
-          message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.'
+          message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.',
+          successMessage: 'Le contenu est valide.'
         }
       }]"
       @update:model-value="handleManualChange"
@@ -306,6 +308,7 @@ const applyButtonValue = (newValue) => {
 	args: {
 		'label': 'Description',
 		'isValidateOnBlur': false,
+		'showSuccessMessages': true,
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -342,7 +345,8 @@ const applyButtonValue = (newValue) => {
 						type: 'custom',
 						options: {
 							validate: (v) => v !== 'Contenu interdit',
-							message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.'
+							message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.',
+							successMessage: 'Le contenu est valide.'
 						}
 					}]"
 					@update:model-value="handleManualChange"
