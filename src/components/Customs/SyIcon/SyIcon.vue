@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import type { ComponentPublicInstance } from 'vue'
 	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
 	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 	import { computed, onMounted, onUpdated, ref, watch } from 'vue'
@@ -46,7 +47,7 @@
 		}
 	})
 
-	const svg = ref(null)
+	const svg = ref<ComponentPublicInstance | null>(null)
 
 	// Vérification à l'initialisation du composant
 	onMounted(() => {
