@@ -2,6 +2,7 @@
 	import { computed, ref, watch } from 'vue'
 	import bestPracticesData from './datas/bonnes_pratiques_essentielles.json'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { mdiMagnify, mdiRefresh } from '@mdi/js'
 
 	type Audience = 'UX / UI' | 'Dev Front' | 'Back'
 	type AudienceFilter = 'all' | Audience
@@ -49,10 +50,15 @@
 
 	const practices = bestPracticesData as PracticeItem[]
 
-	const selectedPillarId = ref(practices[0]?.pillar.id ?? '')
+	const selectedPillarId = ref<string>('all')
 	const selectedPracticeId = ref('')
 	const selectedAudience = ref<AudienceFilter>('all')
 	const selectedFilter = ref<PracticeFilter>('all')
+	const search = ref('')
+	const detailDialog = ref(false)
+
+	const mdiMagnifyIcon = mdiMagnify
+	const mdiRefreshIcon = mdiRefresh
 
 	const pillars = computed<Pillar[]>(() => {
 		const uniquePillars = new Map<string, Pillar>()
@@ -66,17 +72,16 @@
 		return Array.from(uniquePillars.values())
 	})
 
-	const selectedPillar = computed(() => (
-		pillars.value.find(pillar => pillar.id === selectedPillarId.value)
-		?? pillars.value[0]
-	))
-
-	const currentPillarPractices = computed(() => (
-		practices.filter(practice => practice.pillar.id === selectedPillarId.value)
-	))
+	const normalizeText = (value = '') => value
+		.toLowerCase()
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
 
 	const filteredPractices = computed(() => (
-		currentPillarPractices.value.filter((practice) => {
+		practices.filter((practice) => {
+			const pillarOk = selectedPillarId.value === 'all'
+				|| practice.pillar.id === selectedPillarId.value
+
 			const audienceOk = selectedAudience.value === 'all'
 				|| practice.audience === selectedAudience.value
 
@@ -86,11 +91,25 @@
 			const essentialOk = selectedFilter.value !== 'essential'
 				|| practice.essential === true
 
-			return audienceOk && priorityOk && essentialOk
+			const query = normalizeText(search.value.trim())
+			const searchableContent = normalizeText([
+				practice.title,
+				practice.summary,
+				practice.objective,
+				practice.pillar.title,
+				practice.audience,
+				practice.priority,
+				practice.difficulty,
+				practice.actionNumbers?.join(' '),
+				practice.do?.join(' '),
+				practice.dont?.join(' '),
+			].filter(Boolean).join(' '))
+
+			const searchOk = !query || searchableContent.includes(query)
+
+			return pillarOk && audienceOk && priorityOk && essentialOk && searchOk
 		})
 	))
-
-	const hasNoFilteredPractice = computed(() => filteredPractices.value.length === 0)
 
 	const selectedPractice = computed<PracticeItem | null>(() => {
 		if (!selectedPracticeId.value) return null
@@ -98,21 +117,7 @@
 		return filteredPractices.value.find(practice => practice.id === selectedPracticeId.value) ?? null
 	})
 
-	const detailDialog = ref(false)
-
-	const uxUiPractices = computed(() => (
-		filteredPractices.value.filter(practice => practice.audience === 'UX / UI')
-	))
-
-	const technicalPractices = computed(() => (
-		filteredPractices.value.filter(practice => practice.audience !== 'UX / UI')
-	))
-
-	const selectPillar = (pillarId: string) => {
-		selectedPillarId.value = pillarId
-		selectedPracticeId.value = ''
-		detailDialog.value = false
-	}
+	const hasNoFilteredPractice = computed(() => filteredPractices.value.length === 0)
 
 	const openPracticeDetails = (practice: PracticeItem) => {
 		selectedPracticeId.value = practice.id
@@ -124,771 +129,666 @@
 		selectedPracticeId.value = ''
 	}
 
-	const resetFilters = () => {
-		selectedAudience.value = 'all'
-		selectedFilter.value = 'all'
-	}
-
-	watch([selectedAudience, selectedFilter, selectedPillarId], () => {
+	watch([selectedPillarId, selectedAudience, selectedFilter, search], () => {
 		if (!filteredPractices.value.some(practice => practice.id === selectedPracticeId.value)) {
 			selectedPracticeId.value = ''
 			detailDialog.value = false
 		}
 	})
 
+	const resetFilters = () => {
+		selectedPillarId.value = 'all'
+		selectedAudience.value = 'all'
+		selectedFilter.value = 'all'
+		search.value = ''
+		selectedPracticeId.value = ''
+		detailDialog.value = false
+	}
+
 	const formatActions = (practice: PracticeItem) => practice.actionNumbers?.length
 		? practice.actionNumbers.map(number => `Action #${number}`).join(' · ')
 		: 'Bonne pratique essentielle'
 
 	const getAudienceClass = (audience: Audience) => {
-		if (audience === 'UX / UI') return 'eco-rule-sheet__chip--ux'
-		if (audience === 'Back') return 'eco-rule-sheet__chip--back'
-		return 'eco-rule-sheet__chip--front'
+		if (audience === 'UX / UI') return 'practice-badge--ux'
+		if (audience === 'Back') return 'practice-badge--back'
+		return 'practice-badge--front'
 	}
 
 	const getAudienceLabel = (audience: Audience) => audience === 'Back' ? 'Back' : audience
 
-	const setAudienceFilter = (audience: AudienceFilter) => {
-		selectedAudience.value = audience
-	}
-
-	const togglePracticeFilter = (filter: Exclude<PracticeFilter, 'all'>) => {
-		selectedFilter.value = selectedFilter.value === filter ? 'all' : filter
-	}
 </script>
 
 <template>
 	<v-container
 		fluid
-		class="eco-pdf-doc pa-0"
+		class="eco-referential-page"
 	>
-		<section class="eco-pdf-hero">
-			<div class="eco-pdf-hero__title">
-				<SyHeading
-					:level="2"
-					class="text-white mb-1"
-				>
-					20 bonnes pratiques essentielles d’écoconception
-				</SyHeading>
-			</div>
-		</section>
+		<div class="header">
+			<SyHeading :level="1">
+				20 bonnes pratiques essentielles d'ecoconception
+			</SyHeading>
 
-		<v-row class="ma-0 eco-pdf-layout">
-			<v-col
-				cols="12"
-				md="3"
-				class="pa-0 eco-pdf-sidebar"
-			>
-				<button
-					v-for="pillar in pillars"
-					:key="pillar.id"
-					type="button"
-					class="eco-pdf-pillar"
-					:class="{ 'eco-pdf-pillar--active': selectedPillarId === pillar.id }"
-					@click="selectPillar(pillar.id)"
-				>
-					<span class="eco-pdf-pillar__icon">{{ pillar.icon }}</span>
-					<span>{{ pillar.title }}</span>
-				</button>
-			</v-col>
+			<p>
+				Consultez les 20 bonnes pratiques essentielles d’écoconception
+				classées par thématique, audience et priorité.
+			</p>
+		</div>
 
-			<v-col
-				cols="12"
-				md="9"
-				class="pa-4 pa-md-6 eco-pdf-main"
-			>
-				<div class="eco-filters">
-					<button
-						type="button"
-						class="eco-filter"
-						:class="{ 'eco-filter--active': selectedAudience === 'all' }"
-						@click="setAudienceFilter('all')"
-					>
-						Tous
-					</button>
+		<v-card
+			flat
+			class="filters-card"
+		>
+			<v-card-text class="pa-0">
+				<div class="filters-title">
+					Filtres
+				</div>
 
-					<button
-						type="button"
-						class="eco-filter"
-						:class="{ 'eco-filter--active': selectedAudience === 'UX / UI' }"
-						@click="setAudienceFilter('UX / UI')"
-					>
-						UX/UI
-					</button>
+				<div class="filters-grid">
+					<v-select
+						v-model="selectedPillarId"
+						:items="[
+							{ title: 'Toutes les thématiques', value: 'all' },
+							...pillars.map(pillar => ({
+								title: pillar.title,
+								value: pillar.id,
+							})),
+						]"
+						label="Thématique"
+						variant="outlined"
+						density="comfortable"
+						hide-details
+						color="primary"
+					/>
 
-					<button
-						type="button"
-						class="eco-filter"
-						:class="{ 'eco-filter--active': selectedAudience === 'Dev Front' }"
-						@click="setAudienceFilter('Dev Front')"
-					>
-						Dev Front
-					</button>
+					<v-select
+						v-model="selectedAudience"
+						:items="[
+							{ title: 'Toutes les audiences', value: 'all' },
+							{ title: 'UX/UI', value: 'UX / UI' },
+							{ title: 'Dev Front', value: 'Dev Front' },
+							{ title: 'Back', value: 'Back' },
+						]"
+						label="Audience"
+						variant="outlined"
+						density="comfortable"
+						hide-details
+						color="primary"
+					/>
+				</div>
 
-					<button
-						type="button"
-						class="eco-filter"
-						:class="{ 'eco-filter--active': selectedAudience === 'Back' }"
-						@click="setAudienceFilter('Back')"
-					>
-						Back
-					</button>
+				<div class="search-row">
+					<v-text-field
+						v-model="search"
+						label="Rechercher"
+						variant="outlined"
+						density="comfortable"
+						hide-details
+						clearable
+						color="primary"
+						:prepend-inner-icon="mdiMagnifyIcon"
+						placeholder="Rechercher par titre, résumé, action ou thématique"
+					/>
+				</div>
 
-					<button
-						type="button"
-						class="eco-filter"
-						:class="{ 'eco-filter--active': selectedFilter === 'priority' }"
-						@click="togglePracticeFilter('priority')"
-					>
-						Actions prioritaires
-					</button>
-
-					<button
-						type="button"
-						class="eco-filter"
-						:class="{ 'eco-filter--active': selectedFilter === 'essential' }"
-						@click="togglePracticeFilter('essential')"
-					>
-						Essentielles
-					</button>
-
-					<button
-						v-if="selectedAudience !== 'all' || selectedFilter !== 'all'"
-						type="button"
-						class="eco-filter eco-filter--reset"
+				<div class="reset-row">
+					<v-btn
+						:prepend-icon="mdiRefreshIcon"
+						variant="text"
+						color="primary"
 						@click="resetFilters"
 					>
 						Réinitialiser
-					</button>
+					</v-btn>
 				</div>
+			</v-card-text>
+		</v-card>
 
-				<div
-					v-if="!hasNoFilteredPractice"
-					class="eco-pdf-columns mb-6"
-					:class="{
-						'eco-pdf-columns--single':
-							(selectedAudience === 'UX / UI' && uxUiPractices.length)
-							|| ((selectedAudience === 'Dev Front' || selectedAudience === 'Back') && technicalPractices.length)
-					}"
+		<v-divider class="my-6" />
+
+		<v-alert
+			v-if="hasNoFilteredPractice"
+			type="info"
+			variant="tonal"
+			class="mb-6"
+		>
+			Aucune bonne pratique ne correspond aux filtres sélectionnés.
+		</v-alert>
+
+		<v-row v-else>
+			<v-col
+				v-for="practice in filteredPractices"
+				:key="practice.id"
+				cols="12"
+				sm="6"
+				md="6"
+			>
+				<v-card
+					height="100%"
+					class="practice-card"
+					elevation="2"
 				>
-					<!-- UX/UI -->
-					<div
-						v-if="uxUiPractices.length"
-						class="eco-pdf-column eco-pdf-column--ux"
-					>
-						<div class="eco-pdf-column__header">
-							UX / UI
-						</div>
-
-						<button
-							v-for="practice in uxUiPractices"
-							:key="practice.id"
-							type="button"
-							class="eco-pdf-practice"
-							:class="{ 'eco-pdf-practice--active': selectedPractice?.id === practice.id }"
-							@click="openPracticeDetails(practice)"
-						>
-							<span class="eco-pdf-practice__actions">
-								{{ formatActions(practice) }}
-							</span>
-
-							<span class="eco-pdf-practice__title">
-								{{ practice.title }}
-							</span>
-						</button>
-					</div>
-
-					<!-- DEV FRONT / BACK -->
-					<div
-						v-if="technicalPractices.length"
-						class="eco-pdf-column eco-pdf-column--front"
-					>
-						<div class="eco-pdf-column__header">
-							Dev Front / Back
-						</div>
-
-						<button
-							v-for="practice in technicalPractices"
-							:key="practice.id"
-							type="button"
-							class="eco-pdf-practice"
-							:class="{ 'eco-pdf-practice--active': selectedPractice?.id === practice.id }"
-							@click="openPracticeDetails(practice)"
-						>
-							<span class="eco-pdf-practice__actions">
-								{{ formatActions(practice) }}
-							</span>
-
-							<span class="eco-pdf-practice__title">
-								{{ practice.title }}
-							</span>
-						</button>
-					</div>
-				</div>
-
-				<v-alert
-					v-else
-					type="info"
-					variant="tonal"
-					class="mb-6"
-				>
-					Aucune bonne pratique ne correspond aux filtres sélectionnés.
-				</v-alert>
-
-				<v-dialog
-					v-model="detailDialog"
-					max-width="1180"
-					scrollable
-				>
-					<v-card
-						v-if="selectedPractice"
-						class="eco-rule-sheet"
-						elevation="0"
-					>
-						<div class="eco-rule-sheet__header">
-							<div class="eco-rule-sheet__title-block">
-								<div class="eco-rule-sheet__eyebrow">
-									{{ selectedPillar?.title }}
-								</div>
-
-								<h3 class="eco-rule-sheet__title">
-									{{ selectedPractice.title }}
-								</h3>
-							</div>
-
+					<v-card-title class="practice-card__title">
+						<div class="practice-card__topline">
 							<v-chip
-								class="eco-rule-sheet__chip"
-								:class="getAudienceClass(selectedPractice.audience)"
 								size="small"
+								class="practice-number"
+								color="primary"
+								variant="tonal"
 							>
-								{{ getAudienceLabel(selectedPractice.audience) }}
+								{{ formatActions(practice) }}
 							</v-chip>
 						</div>
 
-						<v-card-text class="pa-5 pa-md-6">
-							<v-alert
-								color="primary"
+						<span class="practice-title-text">
+							{{ practice.title }}
+						</span>
+					</v-card-title>
+
+					<v-card-text class="practice-card__content">
+						<p>{{ practice.summary }}</p>
+
+						<div class="practice-meta">
+							<v-chip
+								v-if="practice.priority"
+								size="small"
+								:color="practice.priority === 'Haute' ? 'error' : 'warning'"
 								variant="tonal"
-								class="mb-5"
-								density="comfortable"
 							>
-								{{ selectedPractice.objective || selectedPractice.summary }}
-							</v-alert>
+								Priorité {{ practice.priority }}
+							</v-chip>
 
-							<v-row>
-								<v-col
-									cols="12"
-									md="6"
-								>
-									<div class="eco-section eco-section--do">
-										<h4>✅ À faire</h4>
-										<ul>
-											<li
-												v-for="item in selectedPractice.do"
-												:key="item"
-											>
-												{{ item }}
-											</li>
-										</ul>
-									</div>
-								</v-col>
-
-								<v-col
-									cols="12"
-									md="6"
-								>
-									<div class="eco-section eco-section--dont">
-										<h4>❌ À éviter</h4>
-										<ul>
-											<li
-												v-for="item in selectedPractice.dont"
-												:key="item"
-											>
-												{{ item }}
-											</li>
-										</ul>
-									</div>
-								</v-col>
-							</v-row>
-
-							<div
-								v-if="selectedPractice.tables?.length"
-								class="eco-table-section"
+							<v-chip
+								v-if="practice.difficulty"
+								size="small"
+								color="success"
+								variant="tonal"
 							>
-								<div
-									v-for="table in selectedPractice.tables"
-									:key="table.title"
-									class="eco-table-card"
-								>
-									<h4>{{ table.title }}</h4>
+								Difficulté {{ practice.difficulty }}
+							</v-chip>
+						</div>
+					</v-card-text>
 
-									<div class="eco-table-wrapper">
-										<table class="eco-table">
-											<thead>
-												<tr>
-													<th
-														v-for="header in table.headers"
-														:key="header"
-													>
-														{{ header }}
-													</th>
-												</tr>
-											</thead>
-
-											<tbody>
-												<tr
-													v-for="(row, rowIndex) in table.rows"
-													:key="rowIndex"
-												>
-													<td
-														v-for="(cell, cellIndex) in row"
-														:key="`${rowIndex}-${cellIndex}`"
-													>
-														{{ cell }}
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-
-							<v-row class="mt-1">
-								<v-col
-									v-if="selectedPractice.control?.length"
-									cols="12"
-									md="6"
-								>
-									<div class="eco-section eco-section--check">
-										<h4>Moyen de contrôle</h4>
-
-										<ul>
-											<li
-												v-for="item in selectedPractice.control"
-												:key="item"
-											>
-												{{ item }}
-											</li>
-										</ul>
-									</div>
-								</v-col>
-
-								<v-col
-									v-if="selectedPractice.impacts?.length"
-									cols="12"
-									md="6"
-								>
-									<div class="eco-section eco-section--impact">
-										<h4>Impacts attendus</h4>
-
-										<ul>
-											<li
-												v-for="impact in selectedPractice.impacts"
-												:key="impact.label"
-												class="eco-impact-item"
-											>
-												<strong>{{ impact.label }}</strong>
-												<p>{{ impact.before }}</p>
-												<p>{{ impact.after }}</p>
-												<p class="eco-impact-gain">
-													{{ impact.gain }}
-												</p>
-											</li>
-										</ul>
-									</div>
-								</v-col>
-							</v-row>
-
-							<v-divider class="my-5" />
-
-							<div class="eco-rule-meta">
-								<v-chip
-									v-for="number in selectedPractice.actionNumbers"
-									:key="number"
-									color="primary"
-									variant="tonal"
-								>
-									Action #{{ number }}
-								</v-chip>
-
-								<v-chip
-									v-if="selectedPractice.priority"
-									:color="selectedPractice.priority === 'Haute' ? 'error' : 'warning'"
-									variant="tonal"
-								>
-									Priorité {{ selectedPractice.priority }}
-								</v-chip>
-
-								<v-chip
-									v-if="selectedPractice.difficulty"
-									color="success"
-									variant="tonal"
-								>
-									Difficulté {{ selectedPractice.difficulty }}
-								</v-chip>
-
-								<v-chip
-									v-if="selectedPractice.essential"
-									color="primary"
-									variant="tonal"
-								>
-									Essentielle
-								</v-chip>
-							</div>
-							<v-card-actions class="pa-5 pt-0">
-								<v-spacer />
-								<v-btn
-									color="primary"
-									variant="outlined"
-									@click="closePracticeDetails"
-								>
-									Fermer
-								</v-btn>
-							</v-card-actions>
-						</v-card-text>
-					</v-card>
-				</v-dialog>
+					<v-card-actions>
+						<v-spacer />
+						<v-btn
+							variant="text"
+							color="primary"
+							@click="openPracticeDetails(practice)"
+						>
+							Détails
+						</v-btn>
+					</v-card-actions>
+				</v-card>
 			</v-col>
 		</v-row>
+
+		<v-dialog
+			v-model="detailDialog"
+			max-width="1180"
+			scrollable
+		>
+			<v-card
+				v-if="selectedPractice"
+				class="detail-card"
+				elevation="3"
+			>
+				<v-card-item>
+					<div class="detail-header">
+						<div>
+							<div class="detail-eyebrow">
+								{{ selectedPractice.pillar.title }}
+							</div>
+
+							<SyHeading :level="3">
+								{{ selectedPractice.title }}
+							</SyHeading>
+						</div>
+
+						<v-chip
+							class="practice-badge"
+							:class="getAudienceClass(selectedPractice.audience)"
+							size="small"
+						>
+							{{ getAudienceLabel(selectedPractice.audience) }}
+						</v-chip>
+					</div>
+
+					<p class="detail-objective">
+						{{ selectedPractice.objective || selectedPractice.summary }}
+					</p>
+
+					<v-row>
+						<v-col
+							cols="12"
+							md="6"
+						>
+							<div class="detail-section detail-section--do">
+								<h4>À faire</h4>
+								<ul>
+									<li
+										v-for="item in selectedPractice.do"
+										:key="item"
+									>
+										{{ item }}
+									</li>
+								</ul>
+							</div>
+						</v-col>
+
+						<v-col
+							cols="12"
+							md="6"
+						>
+							<div class="detail-section detail-section--dont">
+								<h4>À éviter</h4>
+								<ul>
+									<li
+										v-for="item in selectedPractice.dont"
+										:key="item"
+									>
+										{{ item }}
+									</li>
+								</ul>
+							</div>
+						</v-col>
+					</v-row>
+
+					<div
+						v-if="selectedPractice.tables?.length"
+						class="detail-table-section"
+					>
+						<div
+							v-for="table in selectedPractice.tables"
+							:key="table.title"
+							class="detail-table-card"
+						>
+							<h4>{{ table.title }}</h4>
+
+							<div class="detail-table-wrapper">
+								<table class="detail-table">
+									<thead>
+										<tr>
+											<th
+												v-for="header in table.headers"
+												:key="header"
+											>
+												{{ header }}
+											</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr
+											v-for="(row, rowIndex) in table.rows"
+											:key="rowIndex"
+										>
+											<td
+												v-for="(cell, cellIndex) in row"
+												:key="`${rowIndex}-${cellIndex}`"
+											>
+												{{ cell }}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<v-row>
+						<v-col
+							v-if="selectedPractice.control?.length"
+							cols="12"
+							md="6"
+						>
+							<div class="detail-section detail-section--control">
+								<h4>Moyen de contrôle</h4>
+								<ul>
+									<li
+										v-for="item in selectedPractice.control"
+										:key="item"
+									>
+										{{ item }}
+									</li>
+								</ul>
+							</div>
+						</v-col>
+
+						<v-col
+							v-if="selectedPractice.impacts?.length"
+							cols="12"
+							md="6"
+						>
+							<div class="detail-section detail-section--impact">
+								<h4>Impacts attendus</h4>
+								<ul>
+									<li
+										v-for="impact in selectedPractice.impacts"
+										:key="impact.label"
+										class="impact-item"
+									>
+										<strong>{{ impact.label }}</strong>
+										<p>{{ impact.before }}</p>
+										<p>{{ impact.after }}</p>
+										<p class="impact-gain">
+											{{ impact.gain }}
+										</p>
+									</li>
+								</ul>
+							</div>
+						</v-col>
+					</v-row>
+				</v-card-item>
+
+				<v-card-actions class="pa-4">
+					<v-spacer />
+					<v-btn
+						variant="outlined"
+						color="primary"
+						@click="closePracticeDetails"
+					>
+						Fermer
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
 	</v-container>
 </template>
 
 <style scoped>
-.eco-pdf-doc {
-	width: 100%;
-	min-height: auto;
-	background: #f5f7fb;
-}
-
-.eco-pdf-hero {
-	background: #07479f;
-	padding: 28px 32px;
-	text-align: center;
-}
-
-.eco-pdf-layout {
-	height: auto;
-	min-height: auto;
-}
-
-.eco-pdf-main {
-	min-width: 0;
-	padding-bottom: 0 !important;
-}
-
-.eco-pdf-sidebar {
+.eco-referential-page {
+	max-width: 1180px;
+	margin: 0 auto;
+	padding: 48px 32px;
 	background: #fff;
-	border-right: 1px solid #e3e8f2;
+	color: #001b3f;
 }
 
-.eco-pdf-columns--single {
-	grid-template-columns: 1fr;
+.header {
+	margin-bottom: 56px;
 }
 
-.eco-pdf-pillar {
-	position: relative;
-	display: block;
-	width: calc(100% - 24px);
-	margin: 12px;
-	padding: 18px 14px;
-	border: 3px solid transparent;
-	border-radius: 14px;
-	background: #07479f;
-	color: #fff;
-	font-weight: 700;
-	text-align: center;
-	cursor: pointer;
-	transition:
-		background 0.2s ease,
-		transform 0.2s ease,
-		box-shadow 0.2s ease,
-		border 0.2s ease;
+.header :deep(h1) {
+	color: #003f9f;
+	font-size: 42px;
+	font-weight: 800;
+	line-height: 1.15;
+	margin-bottom: 22px;
 }
 
-.eco-pdf-pillar:hover {
-	background: #06377c;
-	transform: translateY(-2px);
+.header p {
+	font-size: 18px;
+	line-height: 1.5;
+	margin: 0;
+	color: #001b3f;
 }
 
-.eco-pdf-pillar--active {
-	background: #fff !important;
-	color: #07479f !important;
-	border: 2px solid #07479f;
-	box-shadow: 0 8px 20px rgb(7 71 159 / 15%);
+.filters-card {
+	margin-bottom: 18px;
+	background: transparent;
 }
 
-.eco-pdf-pillar__icon {
-	display: block;
-	font-size: 28px;
-	line-height: 1;
-	margin-bottom: 8px;
+.filters-title {
+	margin: 0 0 28px 8px;
+	color: #003f9f;
+	font-size: 18px;
+	font-weight: 800;
 }
 
-.eco-filters {
+.filters-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px;
+	margin-bottom: 22px;
+}
+
+.search-row {
+	margin-bottom: 28px;
+}
+
+.reset-row {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
+	justify-content: flex-end;
 	margin-bottom: 18px;
 }
 
-.eco-filter {
-	border: 1px solid #c9d8ef;
+.filter-chips {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 8px;
+}
+
+.filter-chip {
+	border: 1px solid #cbd7eb;
 	border-radius: 999px;
 	padding: 8px 14px;
 	background: #fff;
-	color: #07479f;
+	color: #003f9f;
 	font-weight: 700;
 	cursor: pointer;
 }
 
-.eco-filter--active {
-	background: #07479f;
+.filter-chip--active {
+	background: #003f9f;
 	color: #fff;
-	border-color: #07479f;
+	border-color: #003f9f;
 }
 
-.eco-filter--reset {
-	border-color: #f5b827;
-	color: #14315f;
-}
-
-.eco-pdf-columns {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 18px;
-}
-
-.eco-pdf-column {
-	background: #fff;
-	border-radius: 18px;
-	padding: 18px;
-	box-shadow: 0 10px 30px rgb(12 37 86 / 80%);
-}
-
-.eco-pdf-column__header {
-	border-radius: 10px;
-	padding: 10px 14px;
-	margin-bottom: 14px;
-	color: #fff;
-	font-weight: 800;
-	text-align: center;
-}
-
-.eco-pdf-column--ux .eco-pdf-column__header {
-	background: #e86bb5;
-}
-
-.eco-pdf-column--front .eco-pdf-column__header {
-	background: #f5b827;
-}
-
-.eco-pdf-practice {
-	display: block;
-	width: 100%;
-	border: 1px solid #e3e8f2;
-	border-radius: 12px;
-	background: #fff;
-	padding: 12px 14px;
-	margin-bottom: 10px;
-	text-align: left;
-	cursor: pointer;
-	transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.eco-pdf-practice:hover,
-.eco-pdf-practice--active {
-	border-color: #07479f;
-	box-shadow: 0 8px 20px rgb(7 71 159 / 12%);
-	transform: translateY(-1px);
-}
-
-.eco-pdf-practice__actions {
-	display: block;
-	font-size: 12px;
-	font-weight: 700;
-	color: #0097c7;
-	margin-bottom: 4px;
-}
-
-.eco-pdf-practice__title {
-	display: block;
-	font-weight: 700;
-	color: #14315f;
-	white-space: normal;
-	overflow-wrap: anywhere;
-}
-
-.eco-empty-column,
-.eco-empty-section {
-	color: #60708d;
-	font-size: 14px;
-	margin: 0;
-}
-
-.eco-rule-sheet {
-	border-radius: 20px;
-	overflow: hidden;
-	box-shadow: 0 12px 36px rgb(12 37 86 / 10%);
-}
-
-.eco-rule-sheet__header {
+.practice-card {
 	display: flex;
-	justify-content: space-between;
-	gap: 16px;
-	align-items: flex-start;
-	padding: 22px 26px;
-	background: #07479f;
-	min-width: 0;
+	flex-direction: column;
+	border-radius: 4px;
+	background: #fff;
+	border: 1px solid rgb(0 0 0 / 6%);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.eco-rule-sheet__title-block {
-	min-width: 0;
-	max-width: 100%;
+.practice-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px rgb(0 0 0 / 14%);
 }
 
-.eco-rule-sheet__eyebrow {
-	color: #71d4f6;
+.practice-card__title {
+	display: block;
+	padding: 20px 20px 10px;
+	white-space: normal;
+}
+
+.practice-card__topline {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.practice-title-text {
+	display: block;
+	color: #003f9f;
+	font-size: 20px;
 	font-weight: 800;
-	font-size: 13px;
-	margin-bottom: 6px;
-}
-
-.eco-rule-sheet__title {
-	margin: 0;
-	color: #fff;
-	font-size: 26px;
-	font-weight: 800;
-	line-height: 1.25;
+	line-height: 1.35;
 	white-space: normal;
 	overflow-wrap: anywhere;
-	word-break: normal;
 }
 
-.eco-rule-sheet__chip {
-	flex-shrink: 0;
-	color: #fff !important;
+.practice-card__content {
+	flex-grow: 1;
+	padding: 0 20px 8px;
+}
+
+.practice-card__content p {
+	font-size: 18px;
+	line-height: 1.45;
+	color: #001b3f;
+	margin: 0 0 18px;
+}
+
+.practice-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.practice-number {
+	font-weight: 700;
+}
+
+.practice-badge {
 	font-weight: 800;
+	color: #fff !important;
 }
 
-.eco-rule-sheet__chip--ux {
+.practice-badge--ux {
 	background: #e86bb5 !important;
 }
 
-.eco-rule-sheet__chip--front {
+.practice-badge--front {
 	background: #f5b827 !important;
 	color: #14315f !important;
 }
 
-.eco-rule-sheet__chip--back {
+.practice-badge--back {
 	background: #2e7d32 !important;
 }
 
-.eco-section {
-	height: 100%;
-	border-radius: 16px;
-	padding: 18px;
+.detail-card {
+	padding: 24px;
+	border-radius: 4px;
 }
 
-.eco-section h4,
-.eco-table-card h4 {
-	margin-bottom: 12px;
-	color: #14315f;
+.detail-header {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+	align-items: flex-start;
+	margin-bottom: 20px;
 }
 
-.eco-section li {
+.detail-header :deep(h3) {
+	color: #003f9f;
+	line-height: 1.25;
+}
+
+.detail-eyebrow {
+	color: #60708d;
+	font-weight: 700;
 	margin-bottom: 8px;
-	color: #263b5e;
 }
 
-.eco-section--do {
-	background: #eefbf4;
+.detail-objective {
+	padding: 16px;
+	background: #f5f7fb;
+	border-left: 4px solid #003f9f;
+	line-height: 1.5;
+	margin-bottom: 24px;
 }
 
-.eco-section--dont {
-	background: #fff1f2;
+.detail-section {
+	height: 100%;
+	border-radius: 4px;
+	padding: 18px;
+	border: 1px solid rgb(0 0 0 / 8%);
 }
 
-.eco-section--check {
-	background: #eef6ff;
+.detail-section h4,
+.detail-table-card h4 {
+	color: #003f9f;
+	font-size: 18px;
+	font-weight: 800;
+	margin-bottom: 12px;
 }
 
-.eco-section--impact {
+.detail-section li {
+	margin-bottom: 8px;
+	line-height: 1.45;
+}
+
+.detail-section--do {
+	background: #f0fbf5;
+}
+
+.detail-section--dont {
+	background: #fff3f4;
+}
+
+.detail-section--control {
+	background: #f1f7ff;
+}
+
+.detail-section--impact {
 	background: #fff8e7;
 }
 
-.eco-table-section {
-	margin: 24px 0 8px;
+.detail-table-section {
+	margin: 24px 0 16px;
 }
 
-.eco-table-card {
-	background: #fff;
-	border: 1px solid #e3e8f2;
-	border-radius: 16px;
+.detail-table-card {
+	border: 1px solid rgb(0 0 0 / 8%);
+	border-radius: 4px;
 	padding: 18px;
-	margin-bottom: 16px;
 }
 
-.eco-table-wrapper {
+.detail-table-wrapper {
 	width: 100%;
 	overflow-x: auto;
 }
 
-.eco-table {
+.detail-table {
 	width: 100%;
-	border-collapse: collapse;
 	min-width: 640px;
+	border-collapse: collapse;
 }
 
-.eco-table th,
-.eco-table td {
+.detail-table th,
+.detail-table td {
 	border: 1px solid #d9e1ef;
 	padding: 12px;
 	text-align: center;
-	color: #263b5e;
 	vertical-align: top;
 }
 
-.eco-table th {
+.detail-table th {
 	background: #f5f7fb;
-	color: #14315f;
+	color: #003f9f;
 	font-weight: 800;
 }
 
-.eco-table td:first-child {
+.detail-table td:first-child {
 	font-weight: 800;
-	color: #14315f;
+	color: #003f9f;
 }
 
-.eco-impact-item {
+.impact-item {
 	margin-bottom: 14px;
 }
 
-.eco-impact-item p {
+.impact-item p {
 	margin: 4px 0;
 }
 
-.eco-impact-gain {
-	font-weight: 800;
+.impact-gain {
 	color: #0f8f4f;
-}
-
-.eco-rule-meta {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
+	font-weight: 800;
 }
 
 @media (width <= 960px) {
-	.eco-pdf-columns {
+	.eco-referential-page {
+		padding: 32px 18px;
+	}
+
+	.filters-grid {
 		grid-template-columns: 1fr;
 	}
 
-	.eco-pdf-sidebar {
-		border-right: 0;
-		border-bottom: 1px solid #e3e8f2;
+	.header :deep(h1) {
+		font-size: 34px;
 	}
 
-	.eco-rule-sheet__header {
+	.detail-header {
 		flex-direction: column;
 	}
 }
