@@ -135,7 +135,7 @@ const modelValue = ref('abc')
 			{
 				type: 'custom',
 				options: {
-					validate: (v: unknown) => { 
+					validate: (v: unknown) => {
 						console.log('Validation custom', v)
 						return (String(v || '')).length === 6
 					},
@@ -464,8 +464,9 @@ const value = ref('abc')
 	play: async ({ canvasElement }) => {
 		const input = within(canvasElement).getByRole('textbox')
 		await userEvent.clear(input)
-		await userEvent.type(input, 'abc')
-		input.blur()
+		await userEvent.type(input, 'abcdef')
+		await new Promise(resolve => setTimeout(resolve, 500))
+		await userEvent.type(input, 'abcde')
 	},
 }
 
@@ -556,13 +557,13 @@ export const ExternalMessages: Story = {
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
 				/>
-				<div class="mt-4 d-flex flex-wrap ga-2">
-					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
-					<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
-					<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
-					<VBtn color="black" @click="reset">Réinitialiser</VBtn>
-				</div>
 			</VCard>
+			<div class="mt-4 d-flex flex-wrap ga-2">
+				<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+				<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+				<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+				<VBtn color="black" @click="reset">Réinitialiser</VBtn>
+			</div>
 		`,
 	}),
 }
@@ -597,7 +598,7 @@ export const DisableErrorHandling: Story = {
 			},
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { Captcha, VCard },
 		setup() {
 			const value1 = ref('')
@@ -626,17 +627,18 @@ export const DisableErrorHandling: Story = {
 				},
 			]
 
-			return { value1, value2, customRules, verifyCaptcha }
+			return { args, value1, value2, customRules, verifyCaptcha }
 		},
 		template: `
 			<div>
 				<p class="mb-4">Cette démonstration compare un Captcha standard et un avec <code>disableErrorHandling=true</code>.</p>
 
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 16px;">
 					<div>
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<VCard class="pa-8" max-width="400" min-width="400">
 							<Captcha
+								v-bind="args"
 								:service="verifyCaptcha"
 								v-model="value1"
 								required
@@ -649,6 +651,7 @@ export const DisableErrorHandling: Story = {
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<VCard class="pa-8" max-width="400" min-width="400">
 							<Captcha
+								v-bind="args"
 								:service="verifyCaptcha"
 								v-model="value2"
 								required
@@ -944,7 +947,7 @@ async function handleSubmit() {
 		},
 		template: `
 			<div>
-				<p class="mb-4">Il faut privilégier l'utilisation d'un formulaire pour déclencher la validation à la soumission.</p>
+				<p class="mb-4">Il faut privilégier l'utilisation du composant SyForm pour déclencher la validation à la soumission.</p>
 				<VForm @submit.prevent="handleSubmit">
 					<VCard class="pa-8" max-width="400" min-width="400">
 						<Captcha

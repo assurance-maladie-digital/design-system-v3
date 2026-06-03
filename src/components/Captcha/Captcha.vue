@@ -20,6 +20,7 @@
 		type: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
+		isClearable: false,
 		locale: navigator.language,
 		locales: () => defaultLocales,
 		...validationPropsDefaults,
@@ -196,6 +197,7 @@
 					:is-validate-on-blur="props.isValidateOnBlur"
 					:max-errors="props.maxErrors"
 					:loading="state === 'pending'"
+					:is-clearable="props.isClearable"
 					@update:model-value="emitChangeValueEvent"
 					@focus="onFocus"
 					@blur="onBlur"
@@ -306,6 +308,7 @@
 					:custom-success-rules="props.customSuccessRules"
 					:use-vuetify-validation="props.useVuetifyValidation"
 					:max-errors="props.maxErrors"
+					:is-clearable="props.isClearable"
 					@update:model-value="emitChangeValueEvent"
 					@focus="onFocus"
 					@blur="onBlur"

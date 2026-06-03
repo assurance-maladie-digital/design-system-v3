@@ -11,6 +11,7 @@ export type CaptchaProps = FieldValidationProps & {
 	type?: CaptchaType
 	tagTitle?: string
 	helpDesk?: string | false
+	isClearable?: boolean
 	locale?: string
 	locales?: typeof defaultLocales
 }

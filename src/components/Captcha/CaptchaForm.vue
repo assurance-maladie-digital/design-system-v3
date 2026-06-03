@@ -20,6 +20,7 @@
 		disableErrorHandling?: boolean
 		required?: boolean
 		maxErrors?: number
+		isClearable?: boolean
 	}
 
 	const props = withDefaults(defineProps<Props>(), {
@@ -78,7 +79,7 @@
 			:label="label"
 			hide-details="auto"
 			:readonly="props.success"
-			:is-clearable="!props.hasSuccess"
+			:is-clearable="props.isClearable && !props.success"
 			aria-required="required"
 			@update:model-value="emitChangeEvent"
 			@focus="emitFocusEvent"
