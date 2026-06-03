@@ -60,7 +60,6 @@ const meta = {
 		'customRules': [],
 		'customWarningRules': [],
 		'customSuccessRules': [],
-		'showSuccessMessages': true,
 		'isValidateOnBlur': true,
 		'onUpdate:modelValue': fn(),
 	},
@@ -615,7 +614,7 @@ export const WithErrorWarningSuccess: Story = {
 	}),
 }
 
-export const NoSuccessMessages: Story = {
+export const showSuccessMessages: Story = {
 	parameters: {
 		a11y: {
 			disable: true,
@@ -626,7 +625,7 @@ export const NoSuccessMessages: Story = {
 ### Messages de succès
 
 Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
-l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
+l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`false\`.
 `,
 			},
 		},
@@ -638,6 +637,7 @@ l'affichage des messages de succès lors de la validation. Par défaut, cette pr
   <MonthPicker
     v-model="value1"
     label="Avec messages de succès"
+	show-success-messages
     required
   />
 
@@ -646,7 +646,6 @@ l'affichage des messages de succès lors de la validation. Par défaut, cette pr
     v-model="value2"
     label="Sans messages de succès"
     required
-    :show-success-messages="false"
   />
 </template>`,
 			},
@@ -992,10 +991,10 @@ function reset() {
 					width="400px"
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2">
-					<VBtn color="error" variant="outlined" @click="setError">Simuler une erreur</VBtn>
-					<VBtn color="warning" variant="outlined" @click="setWarning">Simuler un avertissement</VBtn>
-					<VBtn color="success" variant="outlined" @click="setSuccess">Simuler un succès</VBtn>
-					<VBtn variant="outlined" @click="reset">Réinitialiser</VBtn>
+					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+					<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+					<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+					<VBtn @click="reset">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,
@@ -1048,8 +1047,9 @@ const rules = [
 	(value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
 ]
 
-async function handleSubmit(e) {
-	alert(e.isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
+async function handleSubmit(e: Promise<{ valid: boolean }>) {
+	const result = await e
+	alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
 			},
@@ -1066,8 +1066,9 @@ async function handleSubmit(e) {
 				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
 			]
 
-			async function handleSubmit(e: { isValid: boolean }) {
-				alert(e.isValid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
+			async function handleSubmit(e: Promise<{ valid: boolean }>) {
+				const result = await e
+				alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 
 			return { args, selectedMonth, fieldRef, rules, handleSubmit }
