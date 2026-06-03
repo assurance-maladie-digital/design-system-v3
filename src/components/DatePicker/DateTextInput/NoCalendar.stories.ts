@@ -167,7 +167,7 @@ const meta = {
 		'showSuccessMessages': {
 			control: 'boolean',
 			description: 'Affiche les messages de succès quand la validation est passée avec succès',
-			defaultValue: true,
+			defaultValue: false,
 		},
 		'bgColor': {
 			control: 'color',

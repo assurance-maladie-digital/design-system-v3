@@ -106,6 +106,7 @@ describe('PasswordField.vue', () => {
 			props: {
 				label: 'Password',
 				modelValue: 'test',
+				showSuccessMessages: true,
 				warningMessages: ['Attention: mot de passe court'],
 				successMessages: ['Mot de passe valide'],
 			},
@@ -119,6 +120,7 @@ describe('PasswordField.vue', () => {
 				label: 'Password',
 				modelValue: 'test',
 				successMessages: ['Mot de passe valide'],
+				showSuccessMessages: true,
 			},
 		})
 		const successMessages = successWrapper.findAll('.v-messages__message')
@@ -132,6 +134,7 @@ describe('PasswordField.vue', () => {
 				props: {
 					label: 'Password',
 					modelValue,
+					showSuccessMessages: true,
 					customRules: [{
 						type: 'custom',
 						options: {

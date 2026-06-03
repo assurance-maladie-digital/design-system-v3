@@ -39,7 +39,7 @@ export function useSyTextAreaValidation(
 		disabled: computed(() => props.disabled ?? false),
 		required: computed(() => props.required ?? false),
 		isValidateOnBlur: computed(() => props.isValidateOnBlur ?? true),
-		showSuccessMessages: computed(() => props.showSuccessMessages ?? true),
+		showSuccessMessages: computed(() => props.showSuccessMessages ?? false),
 		disableErrorHandling: computed(() => props.disableErrorHandling ?? false),
 		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),
 		label: computed(() => props.label ?? ''),

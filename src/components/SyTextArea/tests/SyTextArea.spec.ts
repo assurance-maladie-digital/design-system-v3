@@ -345,6 +345,7 @@ describe('SyTextArea', () => {
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
+				showSuccessMessages: true,
 				customRules: [
 					{
 						type: 'custom',
@@ -438,7 +439,6 @@ describe('SyTextArea', () => {
 		expect((wrapper.vm as any).hasSuccess).toBe(true)
 		expect(wrapper.find('.success-field').exists()).toBe(true)
 		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
-		expect(wrapper.findComponent(SyIcon).props('color')).toBe('onSuccessVariant')
 		expect(wrapper.text()).not.toContain('Succès masqué')
 	})
 

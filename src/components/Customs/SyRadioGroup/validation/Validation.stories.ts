@@ -250,22 +250,14 @@ const onSubmit = (event: { isValid: boolean }) => {
 }
 
 /**
- * showSuccessMessages: false — les messages de succès sont masqués
- * Le champ est validé mais aucun message positif n'est affiché
+ * Validation avec customSuccessRules (règles de succès Synapse)
+ * Affiche un message de succès quand une option valide est sélectionnée
  */
-export const NoSuccessMessage: Story = {
+export const WithSuccess: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: `
-### showSuccessMessages à false
-Avec **showSuccessMessages: false**, la validation se produit normalement mais les messages de succès ne s'affichent pas.
-
-**Caractéristiques :**
-- Sélectionner une option valide le champ silencieusement
-- Aucun message vert n'est affiché
-- Utile quand le feedback positif est jugé superflu
-				`,
+				story: 'Une option valide est présélectionnée et déclenche la confirmation de succès au chargement.',
 			},
 		},
 		sourceCode: [
@@ -273,20 +265,25 @@ Avec **showSuccessMessages: false**, la validation se produit normalement mais l
 				name: 'Template',
 				code: `
 <template>
-	<SyRadioGroup
-		v-model="selected"
-		label="Choisissez une option"
-		:options="options"
-		:show-success-messages="false"
-		required
-	/>
+	<SyForm ref="form" @submit="onSubmit">
+		<SyRadioGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			show-success-messages
+			:custom-success-rules="customSuccessRules"
+		/>
+		<VBtn type="submit" color="primary">Valider</VBtn>
+	</SyForm>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
-import { SyRadioGroup } from '@cnamts/synapse'
+import { SyRadioGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('a')
 
@@ -294,27 +291,66 @@ const options = [
 	{ label: 'Option A', value: 'a' },
 	{ label: 'Option B', value: 'b' },
 ]
+
+const customSuccessRules: ValidationRule[] = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: unknown) => value !== null && value !== undefined,
+			successMessage: 'Sélection confirmée.',
+		},
+	},
+]
+
+const onSubmit = (event: { isValid: boolean }) => {
+	if (event.isValid) {
+		alert('Formulaire valide !')
+	}
+}
 </script>`,
 			},
 		],
 	},
 
 	render: args => ({
-		components: { SyRadioGroup },
+		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string | null>('a')
-			return { args, selected }
+
+			const customSuccessRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => value !== null && value !== undefined,
+						successMessage: 'Sélection confirmée.',
+					},
+				},
+			]
+
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert('Formulaire valide !')
+				}
+			}
+
+			return { args, selected, customSuccessRules, onSubmit }
 		},
 		template: `
-			<SyRadioGroup
-				v-model="selected"
-				v-bind="args"
-				:show-success-messages="false"
-			/>
+			<SyForm ref="form" @submit="onSubmit">
+				<SyRadioGroup
+					v-model="selected"
+					v-bind="args"
+					show-success-messages
+					:custom-success-rules="customSuccessRules"
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</SyForm>
 		`,
 	}),
 }
 
+/**
+ * showSuccessMessages: false — les messages de succès sont masqués
 /**
  * disableErrorHandling: true — la validation est complètement désactivée
  */

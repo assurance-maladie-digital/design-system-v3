@@ -89,7 +89,7 @@ const meta = {
 		'customRules': [],
 		'customWarningRules': [],
 		'customSuccessRules': [],
-		'showSuccessMessages': true,
+		'showSuccessMessages': false,
 		'displayAsterisk': false,
 		'clearable': false,
 		'isValidateOnBlur': true,

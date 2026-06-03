@@ -36,7 +36,7 @@
 		isValidatedOnBlur: { type: Boolean, default: true },
 		displayAsterisk: { type: Boolean, default: false },
 		disableErrorHandling: { type: Boolean, default: false },
-		showSuccessMessages: { type: Boolean, default: true },
+		showSuccessMessages: { type: Boolean, default: false },
 		bgColor: { type: String, default: 'white' },
 		readonly: { type: Boolean, default: false },
 		disabled: { type: Boolean, default: false },
@@ -621,7 +621,7 @@
 }
 
 .help-text-below {
-	font-size: 0.75rem;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.25rem;
 	color: rgb(var(--v-theme-on-surface));
 	opacity: 0.6;
