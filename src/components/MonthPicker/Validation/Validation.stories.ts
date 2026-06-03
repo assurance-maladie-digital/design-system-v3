@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import MonthPicker from '../MonthPicker.vue'
-import { fn } from '@storybook/test'
+import { fn, userEvent, within } from '@storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import type { MonthPickerProps } from '../types'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
@@ -102,12 +102,9 @@ export const WithError: Story = {
 							type: 'custom',
 							options: {
 								validate: (value: string) => {
-									const match = /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)
-									if (!match) {
-										return 'Le format doit être MM/YYYY avec un mois entre 01 et 12 (ex: 03/2026).'
-									}
-									return true
+									return /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)
 								},
+								message: 'Le format doit être MM/YYYY avec un mois entre 01 et 12 (ex: 03/2026).',
 								fieldIdentifier: 'selectedMonth',
 							},
 						},
@@ -124,17 +121,21 @@ export const WithError: Story = {
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
-						const match = /^(0[1-9]|1[0-2])\/\d{4}$/.test(value)
-						if (!match) {
-							return 'Le format doit être MM/YYYY avec un mois entre 01 et 12 (ex: 03/2026).'
-						}
-						return true
+						return /^(0[1-9]|1[0-2])\/\d{4}$/.test(value)
 					},
+					message: 'Le format doit être MM/YYYY avec un mois entre 01 et 12 (ex: 03/2026).',
 					fieldIdentifier: 'selectedMonth',
 				},
 			},
 		],
 	},
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByRole('textbox')
+		await userEvent.clear(input)
+		await userEvent.type(input, '13/2025')
+		input.blur()
+	},
+
 }
 
 export const WithWarning: Story = {
@@ -212,6 +213,12 @@ export const WithWarning: Story = {
 			},
 		],
 	},
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByRole('textbox')
+		await userEvent.clear(input)
+		await userEvent.type(input, '01/2035')
+		input.blur()
+	},
 }
 
 export const WithSuccess: Story = {
@@ -278,6 +285,13 @@ export const WithSuccess: Story = {
 				},
 			},
 		],
+	},
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByRole('textbox')
+		await userEvent.clear(input)
+		const currentYear = new Date().getFullYear()
+		await userEvent.type(input, `06/${currentYear}`)
+		input.blur()
 	},
 }
 
