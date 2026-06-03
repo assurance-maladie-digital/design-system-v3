@@ -24,6 +24,39 @@ const outputPath = path.resolve(
 )
 const requiredFormStories = ['disabled', 'required', 'form-validation']
 
+const ap2026Components = [
+	'composants-layout-pagecontainer',
+	'composants-navigation-sypagination',
+	'composants-navigation-sytabs',
+	'composants-navigation-skiplink',
+	'composants-formulaires-sytextfield',
+	'composants-formulaires-sytextarea',
+	'composants-formulaires-sycheckbox',
+	'composants-formulaires-sycheckboxgroup',
+	'composants-formulaires-syradiogroup',
+	'composants-formulaires-nirfield',
+	'composants-formulaires-phonefield',
+	'composants-formulaires-selects-syselect',
+	'composants-formulaires-selects-syautocomplete',
+	'composants-formulaires-selects-selectbtnfield',
+	'composants-données-accordion',
+	'composants-données-chiplist',
+	'composants-feedback-dialogbox',
+	'composants-feedback-notificationbar',
+	'composants-filtres-filterssidebar',
+	'composants-boutons-copybtn',
+	'composants-boutons-downloadbtn',
+	'composants-boutons-backtotopbtn',
+	'composants-boutons-syiconbutton',
+	'composants-structure-footerbar',
+	'composants-structure-headerbar',
+	'composants-structure-headerloading',
+	'composants-tableaux-tabletoolbar',
+	'composants-tableaux-sytable',
+	'composants-tableaux-syservertable',
+	'composants-tableaux-paginatedtable',
+]
+
 function slugify(value) {
 	return value
 		.toLowerCase()
@@ -45,10 +78,27 @@ function getStorybookTitle(content, componentName) {
 	return match?.[1] || componentName
 }
 
-function hasUsagesStory(content) {
-	return /export\s+const\s+Usages\b/.test(content)
-}
+function getPropsAndSlotsDocumentationDetails(content) {
+	const props = extractPropsFromArgTypes(content)
 
+	const slots = Array.from(content.matchAll(/table\s*:\s*{[\s\S]*?category\s*:\s*['"`]slots['"`][\s\S]*?}/gi))
+		.map((_, index) => `slot-${index}`)
+
+	const documentedProps = props.filter((prop) => {
+		const propRegex = new RegExp(`${prop}\\s*:\\s*{[\\s\\S]*?description\\s*:`, 'm')
+		return propRegex.test(content)
+	})
+
+	const total = props.length + slots.length
+	const documented = documentedProps.length + slots.length
+
+	return {
+		total,
+		documented,
+		label: `${documented}/${total} documentés`,
+		isComplete: total > 0 && documented === total,
+	}
+}
 function hasPlayground(content, docsContent = '') {
 	const combined = `${content}\n${docsContent}`
 
@@ -201,10 +251,27 @@ function main() {
 				? readFileSync(mdxPath, 'utf8')
 				: ''
 			const componentName = getComponentName(filePath)
+
+			const componentDir = path.dirname(filePath)
+
+			const files = globSync('**/*', {
+				cwd: componentDir,
+				nodir: true,
+			})
+
+			const hasUnitTest = files.some(file =>
+				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.spec.ts`)
+				&& !file.toLowerCase().endsWith(`${componentName.toLowerCase()}.a11y.spec.ts`),
+			)
+
+			const hasA11yTest = files.some(file =>
+				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.a11y.spec.ts`),
+			)
+
+			const hasCypressTest = files.some(file =>
+				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.visual.cy.ts`),
+			)
 			const storybookTitle = getStorybookTitle(content, componentName)
-			if (!storybookTitle.startsWith('Composants/')) {
-				return null
-			}
 
 			const excludedNames = [
 				'FilterRules',
@@ -216,14 +283,20 @@ function main() {
 				return null
 			}
 
-			const propsDocumentation = hasPropsDocumentation(content)
+			const propsDetails = getPropsAndSlotsDocumentationDetails(content)
+			const propsDocumentation = propsDetails.isComplete
 			const sourceTab = hasSourceCode(content)
 			const requiredStoriesStatus = getRequiredStoriesStatus(content, storybookTitle)
-			const uxUsagePage = hasUsagesStory(content)
+			const uxUsagePage = files.some(file => file.toLowerCase().endsWith('usages.mdx'))
 			const interactivePlayground = hasPlayground(content, docsContent)
 			const themeStatus = getVisualThemeStatus(componentName, content)
 			const themeModeStatus = getThemeModeStatus(content)
+			const storyPath = slugify(storybookTitle)
 
+			const hasAp2026Theme = ap2026Components.some(id =>
+				storyPath === id
+				|| storyPath.startsWith(`${id}-`),
+			)
 			const criticality = getCriticality({
 				hasPropsDocumentation: propsDocumentation,
 				hasSourceTab: sourceTab,
@@ -237,15 +310,20 @@ function main() {
 			return {
 				componentName,
 				hasPropsDocumentation: propsDocumentation,
+				propsDocumentationLabel: propsDetails.label,
 				hasSourceTab: sourceTab,
 				requiredStoriesStatus,
 				hasUxUsagePage: uxUsagePage,
 				themeStatus,
+				hasAp2026Theme: hasAp2026Theme,
 				themeModeStatus,
 				hasInteractivePlayground: interactivePlayground,
 				criticality,
 				isFullyCompliant,
 				storybookTitle,
+				hasUnitTest,
+				hasA11yTest,
+				hasCypressTest,
 				storybookId: `${slugify(storybookTitle)}--docs`,
 				category: getCategory(storybookTitle),
 			}

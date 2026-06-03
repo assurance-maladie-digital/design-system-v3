@@ -4,92 +4,92 @@ import '../../styles/shared.css';
 import { useState } from 'react';
 
 <Meta title="Accessibilité/Design System/Qualité code" />
+
 <div className="header">
   <h1>Qualité code des composants Studio Design</h1>
 </div>
+
 <div className="quality-carousel">
   <div className="quality-card">
-    <h3> Props / Slots documentés</h3>
-    <p>
-      Vérifie que les props publiques, slots et événements sont décrits
-      dans la documentation Storybook.
-    </p>
+    <h3>Props / Slots documentés</h3>
+    <p>Vérifie que les props publiques, slots et événements sont décrits dans la documentation Storybook.</p>
   </div>
 
   <div className="quality-card">
     <h3>Onglet source code</h3>
-    <p>
-      Vérifie que le composant expose son code source Template + Script ou un exemple clair
-      d’implémentation.
-    </p>
+    <p>Vérifie que le composant expose son code source Template + Script ou un exemple clair d’implémentation.</p>
   </div>
 
   <div className="quality-card">
     <h3>Stories requises</h3>
-    <p>
-      Vérifie la présence des stories importantes :
-      Default, Disabled, Validation, Error…
-    </p>
+    <p>Vérifie la présence des stories importantes : Default, Disabled, Validation. </p>
+  </div>
+<div className="quality-card">
+  <h3>Page usages UX</h3>
+  <p>Vérifie la présence d’une page Usages rédigés par les UX designers dédiée au composant.</p>
+</div>
+
+<div className="quality-card">
+  <h3>Tests</h3>
+  <p>Vérifie la présence des tests unitaires, accessibilité et Cypress.</p>
+</div>
+
+  <div className="quality-card">
+    <h3>Theme visuel Dark/Light</h3>
+    <p>Vérifie les modes visuels Dark et Light pour garantir une bonne lisibilité et accessibilité.</p>
   </div>
 
   <div className="quality-card">
-    <h3> Theme visuel Dark/Light</h3>
-    <p>
-      Vérifie les modes visuels. Certains comoposants doivent être testés en mode Dark et/ou Light pour garantir une bonne lisibilité et accessibilité dans les deux thèmes.
-      </p>
-  </div>
-
-    <div className="quality-card">
-    <h3> Theme mode AmeliPro/PA</h3>
-    <p>
-Vérifie que le composant possède les déclinaisons graphiques nécessaires 
-pour les différents univers du Design System. Si existant, un lien vers le composant.
-      </p>
+    <h3>Theme mode Compte Améli / AmeliPro </h3>
+    <p>Vérifie que le composant possède les déclinaisons graphiques nécessaires.</p>
   </div>
 
   <div className="quality-card">
     <h3>Playground interactif</h3>
-    <p>
-      Vérifie la présence d’un playground ou d’exemples interactifs permettant de manipuler les props et visualiser dynamiquement le comportement du composant.
-    </p>
+    <p>Vérifie la présence d’un playground ou d’exemples interactifs permettant de manipuler les props.</p>
   </div>
 
   <div className="quality-card">
     <h3>Criticité</h3>
-    <p>
-      Identifie les éléments bloquants ou incomplets impactant la qualité globale du composant (documentation manquante, stories absentes, variantes non couvertes, exemples insuffisants…).
-    </p>
+    <p>Identifie les éléments bloquants ou incomplets impactant la qualité globale du composant.</p>
   </div>
 </div>
 
 {(() => {
-const [searchTerm, setSearchTerm] = useState('');
-const [selectedCategory, setSelectedCategory] = useState('Toutes');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('Toutes');
 
-const components = qualityData.results.filter(Boolean);
-const categories = [
+const components = qualityData.results
+  .filter(Boolean)
+  .filter(item =>
+    !item.componentName?.toLowerCase().startsWith('amelipro')
+    && !item.storybookTitle?.toLowerCase().includes('amelipro')
+    && item.category?.toLowerCase() !== 'amelipro'
+  );
+
+  const categories = [
   'Toutes',
   ...new Set(
-    components.map(item => item.category).filter(Boolean)
+    components
+      .map(item => item.category)
+      .filter(category =>
+        category &&
+        category.toLowerCase() !== 'amelipro'
+      )
   ),
 ];
 
-  const compliantCount = components.filter(item => item.isFullyCompliant).length;
-  const totalCount = components.length;
-  const percentage = totalCount > 0
-    ? ((compliantCount / totalCount) * 100).toFixed(2)
-    : '0.00';
+  const filteredComponents = components.filter((item) => {
+    const matchesSearch =
+      searchTerm === ''
+      || item.componentName.toLowerCase().includes(searchTerm.toLowerCase());
 
- const filteredComponents = components.filter((item) => {
-  const matchesSearch =
-    searchTerm === ''
-    || item.componentName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === 'Toutes'
+      || item.category === selectedCategory;
 
-  const matchesCategory =
-	selectedCategory === 'Toutes'
-	|| item.category === selectedCategory
-  return matchesSearch && matchesCategory;
-});
+    return matchesSearch && matchesCategory;
+  });
 
   const getTagClass = (value) => {
     if (value === true || value === 'Complet' || value === 'Présent') return 'tag-green';
@@ -97,7 +97,6 @@ const categories = [
     if (value === 'Partiel' || value === 'À compléter') return 'tag-blue';
     return 'tag-gray';
   };
-
 
   const renderBooleanTag = (value, trueLabel = 'Présent', falseLabel = 'Absent') => (
     <span className={`carbon-tag ${getTagClass(value)}`}>
@@ -107,52 +106,37 @@ const categories = [
 
   return (
     <div className="carbon-a11y-container">
-      <div className="header-section">
-    
-{/* 
-        <div className="meta-info">
-          <strong>Statut :</strong> {compliantCount} / {totalCount} composants conformes ({percentage}%)
-          {' | '}
-          <strong>Dernière mise à jour :</strong>{' '}
-          {new Date(qualityData.date).toLocaleDateString('fr-FR', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          })}
-        </div> */}
+      <div className="quality-filters">
+        <label className="filter-field">
+          <span>Catégorie</span>
+          <select
+            className="filter-input"
+            value={selectedCategory}
+            onChange={(event) => setSelectedCategory(event.target.value)}
+          >
+            {categories.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="filter-field filter-search">
+          <span>Recherche</span>
+          <input
+            type="text"
+            className="filter-input"
+            placeholder="Rechercher un composant..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+        </label>
+
+        <div className="filter-count">
+          {filteredComponents.length} composant{filteredComponents.length > 1 ? 's' : ''}
+        </div>
       </div>
-
- <div className="quality-filters">
-  <label className="filter-field">
-    <span>Catégorie</span>
-    <select
-      className="filter-input"
-      value={selectedCategory}
-      onChange={(event) => setSelectedCategory(event.target.value)}
-    >
-      {categories.map(category => (
-        <option key={category} value={category}>
-          {category}
-        </option>
-      ))}
-    </select>
-  </label>
-
-  <label className="filter-field filter-search">
-    <span>Recherche</span>
-    <input
-      type="text"
-      className="filter-input"
-      placeholder="Rechercher un composant..."
-      value={searchTerm}
-      onChange={(event) => setSearchTerm(event.target.value)}
-    />
-  </label>
-
-  <div className="filter-count">
-    {filteredComponents.length} composant{filteredComponents.length > 1 ? 's' : ''}
-  </div>
-</div>
 
       <div className="table-wrapper">
         <table className="carbon-table">
@@ -166,87 +150,139 @@ const categories = [
               <th>Theme visuel</th>
               <th>Theme mode</th>
               <th>Playground interactif</th>
+              <th>Tests</th>
               <th>Criticité</th>
             </tr>
           </thead>
 
           <tbody>
-            {filteredComponents.map((item) => (
-              <tr key={item.componentName}>
-                <td className="component-name">
-                  {item.storybookTitle ? (
-                    <a
-                      className="carbon-link"
-                      href={`/?path=/docs/${item.storybookTitle
-                        .toLowerCase()
-                        .replace(/\s+/g, '-')
-                        .replace(/[^\w/-]/g, '')}--docs`}
-                    >
-                      {item.componentName.split('/').pop()}
-                    </a>
-                  ) : (
-                    item.componentName.split('/').pop()
-                  )}
-                </td>
+            {filteredComponents.map((item) => {
+              const storyPath = item.storybookTitle
+                ?.toLowerCase()
+                .replaceAll('/', '-')
+                .replaceAll(' ', '');
 
-                <td>{renderBooleanTag(item.hasPropsDocumentation, 'Documenté', 'Manquant')}</td>
+              const compteAmeliLink =
+                `${window.location.origin}/?path=/docs/${storyPath}--docs`;
 
-                <td>{renderBooleanTag(item.hasSourceTab, 'Présent', 'Absent')}</td>
+              const ameliProLink =
+                `${window.location.origin}/?path=/docs/${storyPath}--docs&globals=theme:ap2026`;
 
-                <td>
-                  <span className={`carbon-tag ${getTagClass(item.requiredStoriesStatus)}`}>
-                    {item.requiredStoriesStatus}
-                  </span>
-                </td>
+              return (
+                <tr key={item.componentName}>
+                  <td>{item.componentName}</td>
 
-                <td>{renderBooleanTag(item.hasUxUsagePage, 'Présente', 'Absente')}</td>
-
-<td>
-  {item.themeModeStatus === 'AmeliPro' ? (
-<a
-  className="theme-link"
-  href={`${window.location.origin}/?path=/docs/composants-${item.category.toLowerCase()}-${item.componentName.toLowerCase()}--docs&globals=theme:ap`}
-  target="_blank"
-  rel="noreferrer"
->
-  AmeliPro
-</a>
-  ) : (
-    <span className={`carbon-tag ${getTagClass(item.themeModeStatus)}`}>
-      {item.themeModeStatus}
-    </span>
-  )}
+                  <td>
+	<span className={`carbon-tag ${getTagClass(item.hasPropsDocumentation)}`}>
+		{item.propsDocumentationLabel || (item.hasPropsDocumentation ? 'Documenté' : 'Manquant')}
+	</span>
 </td>
 
-                <td>
-                  <span className={`carbon-tag ${getTagClass(item.themeStatus)}`}>
-                    {item.themeStatus}
-                  </span>
-                </td>
+                  <td>{renderBooleanTag(item.hasSourceTab, 'Présent', 'Absent')}</td>
 
-                <td>{renderBooleanTag(item.hasInteractivePlayground, 'Présent', 'Absent')}</td>
+                  <td>
+                    <span className={`carbon-tag ${getTagClass(item.requiredStoriesStatus)}`}>
+                      {item.requiredStoriesStatus}
+                    </span>
+                  </td>
 
-                <td>
-                  {item.criticality ? (
-                    <span className="carbon-tag tag-red">{item.criticality}</span>
-                  ) : (
-                    <span className="carbon-tag tag-green">Aucune</span>
-                  )}
-                </td>
-              </tr>
-            ))}
+                  <td>{renderBooleanTag(item.hasUxUsagePage, 'Présente', 'Absente')}</td>
+  <td>
+                    <span className={`carbon-tag ${getTagClass(item.themeStatus)}`}>
+                      {item.themeStatus}
+                    </span>
+                  </td>
+                  <td>
+                    <div className="theme-links">
+                      <a
+                        href={compteAmeliLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="theme-link"
+                      >
+                        Compte Ameli
+                      </a>
+
+                      <a
+                        href={ameliProLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="theme-link"
+                      >
+                        AmeliPro
+                      </a>
+                    </div>
+                  </td>
+
+                
+
+                  <td>{renderBooleanTag(item.hasInteractivePlayground, 'Présent', 'Absent')}</td>
+
+                  <td>
+                    <div className="tests-column">
+                      <span className={item.hasUnitTest ? 'test-ok' : 'test-ko'}>UT</span>
+                      <span className={item.hasA11yTest ? 'test-ok' : 'test-ko'}>A11y</span>
+                      <span className={item.hasCypressTest ? 'test-ok' : 'test-ko'}>Cypress</span>
+                    </div>
+                  </td>
+
+                  <td>
+                    {item.criticality ? (
+                      <span className="carbon-tag tag-red">{item.criticality}</span>
+                    ) : (
+                      <span className="carbon-tag tag-green">Aucune</span>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
     </div>
   );
 })()}
+
 <style>
 {`
+.theme-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
 .theme-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 120px;
+
+  padding: 8px 14px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.theme-link:first-child {
+  background: #e7ecf5;
   color: #0c419a;
-  font-weight: 600;
-  text-decoration: underline;
+}
+
+.theme-link:last-child {
+  background: #dff4e7;
+  color: #107c41;
+}
+
+.theme-link:hover {
+  transform: translateY(-1px);
 }
 
 .quality-carousel {
@@ -264,8 +300,8 @@ const categories = [
   flex: 0 0 320px;
   scroll-snap-align: start;
 }
+
 .quality-card {
-  position: relative;
   background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
   border: 1px solid #dbe3f0;
   border-radius: 14px;
@@ -273,9 +309,8 @@ const categories = [
   box-shadow: 0 4px 14px rgba(12, 65, 154, 0.08);
 }
 
-
 .quality-card h3 {
-  margin: 1rem 0 0.75rem;
+  margin: 0 0 0.75rem;
   color: #0c419a;
   font-size: 1.05rem;
   font-weight: 700;
@@ -342,6 +377,55 @@ const categories = [
   font-size: 0.875rem;
   color: #0c419a;
   white-space: nowrap;
+}
+
+.tests-column {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.test-ok {
+  background: #d4edda;
+  color: #1e7e34;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.test-ko {
+  background: #f8d7da;
+  color: #c82333;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.sbdocs-wrapper,
+.sbdocs-content,
+.docs-story {
+  max-width: 100% !important;
+}
+
+.sbdocs-content {
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.carbon-table {
+  min-width: auto;
+}
+.carbon-table {
+  width: 100%;
+  table-layout: auto;
 }
 `}
 </style>
