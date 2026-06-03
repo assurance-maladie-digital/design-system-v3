@@ -1,9 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
 import Captcha from '../Captcha.vue'
 
-const CaptchaBaseStub = defineComponent({
+const CaptchaBaseStub = {
 	name: 'CaptchaBase',
 	emits: ['update:modelValue', 'create-captcha:init', 'create-captcha:success', 'create-captcha:error'],
 	template: `
@@ -21,13 +20,13 @@ const CaptchaBaseStub = defineComponent({
 			/>
 		</div>
 	`,
-})
+}
 
-const CaptchaFormStub = defineComponent({
+const CaptchaFormStub = {
 	name: 'CaptchaForm',
 	emits: ['update:modelValue'],
 	template: '<div class="captcha-form-stub" />',
-})
+}
 
 describe('Captcha behavior', () => {
 	it('emits update:type when captcha type changes from CaptchaBase', async () => {

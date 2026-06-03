@@ -6,7 +6,7 @@ import { VBtn, VCard, VForm } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
-const meta: Meta<typeof Captcha> = {
+const meta: Meta = {
 	title: 'Composants/Formulaires/Captcha/Validation',
 	component: Captcha,
 	argTypes: {
@@ -53,7 +53,11 @@ const meta: Meta<typeof Captcha> = {
 }
 
 export default meta
-type Story = StoryObj<typeof meta>
+type StoryArgs = {
+	modelValue?: string
+} & Record<string, unknown>
+
+type Story = StoryObj<StoryArgs>
 
 export const WithError: Story = {
 	parameters: {
