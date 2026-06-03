@@ -1,8 +1,7 @@
-import { type ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { checkNIR, isNIRKeyValid } from './nirValidation'
 import { locales } from './locales'
-import { useValidation } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type ValidationRule as SyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyTextField } from '@/main'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 

@@ -238,73 +238,6 @@ onMounted(() => {
 	}),
 }
 
-export const NoSuccessMessages: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Avec `showSuccessMessages: false`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <NirField
-    ref="nirRef"
-    v-model="value"
-    label="Identifiant assuré"
-    required
-    :show-success-messages="false"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { NirField } from '@cnamts/synapse'
-
-const value = ref('184027512345674')
-const nirRef = ref(null)
-
-onMounted(() => {
-  nirRef.value?.validateOnSubmit()
-})
-</script>`,
-			},
-		],
-	},
-	args: {
-		label: 'Identifiant assuré',
-		required: true,
-		showSuccessMessages: false,
-	},
-	render: args => ({
-		components: { NirField },
-		setup() {
-			const value = ref(VALID_NIR)
-			const nirRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-
-			onMounted(() => {
-				nirRef.value?.validateOnSubmit()
-			})
-
-			return { args, value, nirRef }
-		},
-		template: `
-			<div class="pa-4">
-				<NirField
-					ref="nirRef"
-					v-model="value"
-					v-bind="args"
-				/>
-			</div>
-		`,
-	}),
-}
-
 export const DisableErrorHandling: Story = {
 	parameters: {
 		sourceCode: [
@@ -488,97 +421,6 @@ const value = ref('')
 	}),
 }
 
-export const SyFormValidation: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Le NirField s\'intègre automatiquement dans un SyForm via `useValidatable`. La soumission du formulaire déclenche la validation sans configuration supplémentaire.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyForm @submit="onSubmit">
-    <NirField
-      v-model="value"
-      label="Identifiant assuré"
-      required
-      display-asterisk
-      show-success-messages
-      class="mb-4"
-    />
-    <VBtn type="submit" color="primary" class="mt-4">
-      Soumettre
-    </VBtn>
-  </SyForm>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { ref } from 'vue'
-import { NirField, SyForm } from '@cnamts/synapse'
-import { VBtn } from 'vuetify/components'
-
-const value = ref('')
-
-const onSubmit = (event) => {
-  if (event.isValid) {
-    alert('Formulaire valide : ' + value.value)
-  } else {
-    alert('Formulaire invalide.')
-  }
-}
-</script>`,
-			},
-		],
-	},
-	args: {
-		label: 'Identifiant assuré',
-		required: true,
-		displayAsterisk: true,
-		showSuccessMessages: true,
-	},
-	render: args => ({
-		components: { NirField, SyForm, VBtn },
-		setup() {
-			const value = ref('')
-
-			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert(`Formulaire valide : ${value.value}`)
-				}
-				else {
-					alert('Formulaire invalide.')
-				}
-			}
-
-			return { args, value, onSubmit }
-		},
-		template: `
-			<div class="pa-4">
-				<SyForm @submit="onSubmit">
-					<NirField
-						v-model="value"
-						v-bind="args"
-						class="mb-4"
-					/>
-					<VBtn
-						type="submit"
-						color="primary"
-						class="mt-4"
-					>
-						Soumettre
-					</VBtn>
-				</SyForm>
-			</div>
-		`,
-	}),
-}
-
 export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
@@ -673,6 +515,97 @@ const applyValue = async (newValue: string | null) => {
 	}),
 }
 
+export const SyFormValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Le NirField s\'intègre automatiquement dans un SyForm via `useValidatable`. La soumission du formulaire déclenche la validation sans configuration supplémentaire.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm @submit="onSubmit">
+    <NirField
+      v-model="value"
+      label="Identifiant assuré"
+      required
+      display-asterisk
+      show-success-messages
+      class="mb-4"
+    />
+    <VBtn type="submit" color="primary" class="mt-4">
+      Soumettre
+    </VBtn>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { NirField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('')
+
+const onSubmit = (event) => {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide.')
+  }
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Identifiant assuré',
+		required: true,
+		displayAsterisk: true,
+		showSuccessMessages: true,
+	},
+	render: args => ({
+		components: { NirField, SyForm, VBtn },
+		setup() {
+			const value = ref('')
+
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide.')
+				}
+			}
+
+			return { args, value, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<SyForm @submit="onSubmit">
+					<NirField
+						v-model="value"
+						v-bind="args"
+						class="mb-4"
+					/>
+					<VBtn
+						type="submit"
+						color="primary"
+						class="mt-4"
+					>
+						Soumettre
+					</VBtn>
+				</SyForm>
+			</div>
+		`,
+	}),
+}
+
 export const VFormValidation: Story = {
 	parameters: {
 		docs: {
@@ -695,7 +628,7 @@ export const VFormValidation: Story = {
       show-success-messages
       class="mb-4"
     />
-    <VBtn type="submit" color="primary">Soumettre</VBtn>
+    <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
   </VForm>
 </template>`,
 			},
@@ -755,7 +688,168 @@ async function onSubmit() {
 						v-bind="args"
 						class="mb-4"
 					/>
-					<VBtn type="submit" color="primary">Soumettre</VBtn>
+					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+				</VForm>
+			</div>
+		`,
+	}),
+}
+
+export const SyFormVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify via `useVuetifyValidation`. Les règles sont au format Vuetify (fonctions retournant `true` ou un message d\'erreur), passées via `numberRules`/`keyRules`. Soumettez le formulaire pour déclencher la validation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyForm @submit="onSubmit">
+    <NirField
+      v-model="value"
+      label="Identifiant assuré"
+      use-vuetify-validation
+      :number-rules="[v => !!v || 'Le numéro est requis']"
+      class="mb-4"
+    />
+    <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+  </SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { NirField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('')
+
+const onSubmit = (event) => {
+  if (event.isValid) {
+    alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide.')
+  }
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Identifiant assuré',
+		useVuetifyValidation: true,
+	},
+	render: args => ({
+		components: { NirField, SyForm, VBtn },
+		setup() {
+			const value = ref('')
+
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide.')
+				}
+			}
+
+			return { args, value, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<SyForm @submit="onSubmit">
+					<NirField
+						v-model="value"
+						v-bind="args"
+						:number-rules="[v => !!v || 'Le numéro est requis']"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+				</SyForm>
+			</div>
+		`,
+	}),
+}
+
+export const VFormAndVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans un `VForm` natif (sans SyForm). La soumission déclenche la validation via `form.validate()`.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <VForm ref="formRef" @submit.prevent="onSubmit">
+    <NirField
+      v-model="value"
+      label="Identifiant assuré"
+      use-vuetify-validation
+      :number-rules="[v => !!v || 'Le numéro est requis']"
+      class="mb-4"
+    />
+    <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+  </VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { NirField } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const value = ref('')
+const formRef = ref(null)
+
+async function onSubmit() {
+  const result = await formRef.value?.validate()
+  if (result?.valid) {
+    alert('Formulaire valide : ' + value.value)
+  }
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Identifiant assuré',
+		useVuetifyValidation: true,
+	},
+	render: args => ({
+		components: { NirField, VBtn, VForm },
+		setup() {
+			const value = ref('')
+			const formRef = ref<InstanceType<typeof VForm> | null>(null)
+
+			async function onSubmit() {
+				const result = await formRef.value?.validate()
+				if (result?.valid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+			}
+
+			return { args, value, formRef, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<VForm ref="formRef" @submit.prevent="onSubmit">
+					<NirField
+						v-model="value"
+						v-bind="args"
+						:number-rules="[v => !!v || 'Le numéro est requis']"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
 				</VForm>
 			</div>
 		`,

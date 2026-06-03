@@ -74,6 +74,7 @@
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
 		numberRules: () => [],
+		useVuetifyValidation: false,
 		nirType: 'simple',
 		withoutFieldset: false,
 		customLocale: () => locales,
@@ -421,7 +422,7 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:clearable="props.clearable"
+				:is-clearable="props.clearable"
 				:counter="props.counter"
 				:hint="props.numberHint || locales.numberHint"
 				:persistent-hint="props.persistentHint"
@@ -459,7 +460,7 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:clearable="props.clearable"
+				:is-clearable="props.clearable"
 				:counter="props.counter"
 				:hint="props.keyHint || locales.keyHint"
 				:persistent-hint="props.persistentHint"
