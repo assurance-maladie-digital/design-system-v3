@@ -1168,7 +1168,7 @@ describe('mounthpicker', () => {
 						options: {
 							validate: (value: string) => {
 								const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
-								return regex.test(value) || 'Invalid month/year format. Use MM/YYYY.'
+								return regex.test(value)
 							},
 							message: 'Invalid month/year format. Use MM/YYYY.',
 						},
@@ -1196,7 +1196,7 @@ describe('mounthpicker', () => {
 						options: {
 							validate: (value: string) => {
 								const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
-								return regex.test(value) || 'Invalid month/year format. Use MM/YYYY.'
+								return regex.test(value)
 							},
 							message: 'Invalid month/year format. Use MM/YYYY.',
 						},
@@ -1324,6 +1324,7 @@ describe('mounthpicker', () => {
 					label: 'Début du projet',
 					modelValue: '03/2026',
 					successMessages: ['Mois accepté'],
+					showSuccessMessages: true,
 				},
 			})
 			const successMsg = successWrapper.findAll('.v-messages__message')
@@ -1362,6 +1363,7 @@ describe('mounthpicker', () => {
 								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
 							},
 						}],
+						showSuccessMessages: true,
 					},
 				})
 				await wrapper.find('input').trigger('focus')
