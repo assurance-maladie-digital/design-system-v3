@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
-	import { ref, watch } from 'vue'
+	import { computed, ref, toRef, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -10,28 +10,19 @@
 	import CaptchaInformation from './CaptchaInformation.vue'
 	import volumeUp from './icons/volumeUp.vue'
 	import { locales as defaultLocales } from './locales'
-	import { type CaptchaType, type StateType } from './types'
+	import { type CaptchaProps, type CaptchaType, type StateType } from './types'
+	import { useCaptchaValidation } from './useCaptchaValidation'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation.ts'
 
-	const props = withDefaults(defineProps<{
-		urlCreate: string
-		urlGetImage: string
-		urlGetAudio: string
-		modelValue?: string | undefined
-		errorMessage?: string
-		type?: CaptchaType
-		tagTitle?: string
-		helpDesk?: string | false
-		locale?: string
-		locales?: typeof defaultLocales
-	}>(), {
+	const props = withDefaults(defineProps<CaptchaProps>(), {
 		modelValue: undefined,
-		errorMessage: undefined,
 		type: 'image',
 		helpDesk: '3648',
 		tagTitle: 'h3',
 		locale: navigator.language,
 		locales: () => defaultLocales,
+		...validationPropsDefaults,
 	})
 
 	const emit = defineEmits<{
@@ -41,19 +32,19 @@
 		(e: 'audioError'): void
 		(e: 'creationError'): void
 	}>()
-	const text = ref<string | null>(null)
+	const text = ref<string | null>(props.modelValue ?? null)
 	const type = ref<CaptchaType>(props.type)
 	const id = ref<string | null>(null)
 	const state = ref<StateType>('idle')
-	const captchaValid = ref<boolean>(false)
 
 	watch(() => props.modelValue, (val) => {
 		text.value = val ?? null
-	}, { immediate: true })
+	})
 
 	watch(() => props.type, (val) => {
 		type.value = val
-	}, { immediate: true })
+		resetValidation()
+	})
 
 	watch(text, (val) => {
 		if (val !== props.modelValue) {
@@ -61,12 +52,18 @@
 		}
 	})
 
+	let firstLoading = true
 	function createCaptchaInit() {
+		if (firstLoading) {
+			firstLoading = false
+			return
+		}
 		text.value = null
 	}
 
 	function createCaptchaSuccess(captchaId: string | null) {
 		id.value = captchaId
+		resetValidation()
 	}
 
 	function emitChangeValueEvent(val: string) {
@@ -74,6 +71,7 @@
 	}
 
 	function emitChangeTypeEvent() {
+		resetValidation()
 		emit('update:type', type.value)
 	}
 
@@ -85,6 +83,51 @@
 			emit('creationError')
 		}
 	}
+
+	const focused = ref(false)
+
+	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useCaptchaValidation({
+		modelValue: text,
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		label: computed(() => props.type === 'image' ? props.locales.image.textfieldLabel : props.locales.audio.textfieldLabel),
+		rules: toRef(props, 'rules'),
+		customRules: toRef(props, 'customRules'),
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
+		focused,
+		locales: toRef(props, 'locales'),
+	})
+
+	const hasMessages = computed(() => hasError.value || hasWarning.value || hasSuccess.value)
+
+	function resetValidation() {
+		clearValidation()
+	}
+
+	function onFocus() {
+		focused.value = true
+	}
+
+	function onBlur() {
+		focused.value = false
+	}
+
+	defineExpose({
+		validate,
+	})
 
 </script>
 
@@ -141,10 +184,21 @@
 					:locales
 					:label="locales.image.textfieldLabel"
 					:state="createCaptchaState"
-					:errors="props.errorMessage ? [props.errorMessage] : []"
+					:error-messages="errors"
+					:warning-messages="warnings"
+					:success-messages="successes"
+					:has-error="hasError"
+					:has-warning="hasWarning"
+					:has-success="hasSuccess"
+					:show-success-messages="props.showSuccessMessages"
+					:disable-error-handling="props.disableErrorHandling"
+					:required="props.required"
+					:is-validate-on-blur="props.isValidateOnBlur"
+					:max-errors="props.maxErrors"
 					:loading="state === 'pending'"
-					:success="captchaValid"
 					@update:model-value="emitChangeValueEvent"
+					@focus="onFocus"
+					@blur="onBlur"
 				/>
 
 				<div class="captcha-config pt-4 d-flex flex-column ga-2 align-start">
@@ -236,9 +290,25 @@
 					:label="locales.audio.textfieldLabel"
 					:state="createCaptchaState"
 					:loading="state === 'pending'"
-					:errors="props.errorMessage ? [props.errorMessage] : []"
-					:success="captchaValid"
+					:error-messages="hasMessages ? errors : (props.errorMessages ?? [])"
+					:warning-messages="warnings"
+					:success-messages="successes"
+					:has-error="hasError"
+					:has-warning="hasWarning"
+					:has-success="hasSuccess"
+					:show-success-messages="props.showSuccessMessages"
+					:disable-error-handling="props.disableErrorHandling"
+					:required="props.required"
+					:is-validate-on-blur="props.isValidateOnBlur"
+					:rules="props.rules"
+					:custom-rules="props.customRules"
+					:custom-warning-rules="props.customWarningRules"
+					:custom-success-rules="props.customSuccessRules"
+					:use-vuetify-validation="props.useVuetifyValidation"
+					:max-errors="props.maxErrors"
 					@update:model-value="emitChangeValueEvent"
+					@focus="onFocus"
+					@blur="onBlur"
 				/>
 				<div class="captcha-config pt-4 d-flex flex-column ga-2 align-start">
 					<p class="label-options text-textSubdued">
@@ -282,9 +352,7 @@
 					>
 						{{ locales.choiceCaptcha.image }}
 					</CaptchaBtn>
-					<CaptchaBtn
-						@click="chooseAudio"
-					>
+					<CaptchaBtn @click="chooseAudio">
 						<volume-up
 							fill="#0C419A"
 							aria-hidden="true"
@@ -311,5 +379,4 @@
 	gap: var(--v-gap-2);
 	letter-spacing: 0%;
 }
-
 </style>

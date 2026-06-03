@@ -135,7 +135,10 @@ const modelValue = ref('abc')
 			{
 				type: 'custom',
 				options: {
-					validate: (v: unknown) => (String(v || '')).length === 6,
+					validate: (v: unknown) => { 
+						console.log('Validation custom', v)
+						return (String(v || '')).length === 6
+					},
 					message: 'Le captcha doit contenir 6 caractères.',
 				},
 			},

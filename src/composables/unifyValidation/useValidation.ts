@@ -97,18 +97,6 @@ export function useValidation(params: {
 	rules: Ref<VuetifyValidationRule[] | undefined>
 	maxErrors?: Ref<number>
 })) {
-	if (params.disableErrorHandling.value) {
-		return {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			hasError: computed(() => params.hasErrorProp?.value ?? false),
-			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
-			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
-			validate: async () => true,
-			clearValidation: () => {},
-		}
-	}
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
@@ -157,6 +145,9 @@ export function useValidation(params: {
 			innerWarnings.value = []
 			innerSuccesses.value = []
 
+			if (params.disableErrorHandling.value) {
+				return params.hasErrorProp?.value !== false
+			}
 			return true
 		}
 
@@ -171,19 +162,29 @@ export function useValidation(params: {
 		}
 	}
 
-	const errors = computed(() => [...new Set([
-		...vuetifyErrors.value,
-		...customErrors.value,
-		...(params.errorMessages?.value || []),
-	])])
-	const warnings = computed(() => [...new Set([
-		...innerWarnings.value,
-		...(params.warningMessages?.value || []),
-	])])
-	const successes = computed(() => [...new Set([
-		...(params.showSuccessMessages.value ? innerSuccesses.value : []),
-		...(params.successMessages?.value || []),
-	])])
+	const errors = computed(() => {
+		const errorslist = [...params.errorMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			errorslist.push(...vuetifyErrors.value)
+			errorslist.push(...customErrors.value)
+		}
+		return [...new Set(errorslist)]
+	})
+
+	const warnings = computed(() => {
+		const warningsList = [...params.warningMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			warningsList.push(...innerWarnings.value)
+		}
+		return [...new Set(warningsList)]
+	})
+	const successes = computed(() => {
+		const successesList = [...params.successMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			successesList.push(...innerSuccesses.value)
+		}
+		return [...new Set(successesList)]
+	})
 	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 
 	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)

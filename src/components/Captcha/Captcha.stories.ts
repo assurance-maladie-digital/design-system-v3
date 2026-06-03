@@ -3,6 +3,7 @@ import type { StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
 import { ref, watch } from 'vue'
 import SyAlert from '../SyAlert/SyAlert.vue'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps.ts'
 
 export default {
 	title: 'Composants/Formulaires/Captcha',
@@ -111,8 +112,8 @@ export default {
 				type: { summary: 'void' },
 			},
 		},
+		...getValidationDocumentation(),
 	},
-
 }
 
 type Story = StoryObj<typeof Captcha>

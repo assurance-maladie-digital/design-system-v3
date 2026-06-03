@@ -1,5 +1,7 @@
+/* eslint-disable vue/one-component-per-file */
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { defineComponent } from 'vue'
 import Captcha from '../Captcha.vue'
 
 describe('Captcha', () => {
@@ -265,5 +267,183 @@ describe('Captcha', () => {
 		await new Promise(resolve => setTimeout(resolve, 50))
 
 		expect(wrapper.find('.captcha-helpdesk').exists()).toBe(false)
+	})
+
+	it('displays required validation error on blur when captcha text is empty', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				required: true,
+				modelValue: '',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+		await new Promise(resolve => setTimeout(resolve, 50))
+
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.text()).toContain('est requis')
+	})
+
+	it('applies customRules and displays custom error message on blur', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				modelValue: 'abc',
+				customRules: [{
+					type: 'custom',
+					options: {
+						validate: () => false,
+						message: 'Erreur custom captcha',
+					},
+				}],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+		await new Promise(resolve => setTimeout(resolve, 50))
+
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.text()).toContain('Erreur custom captcha')
+	})
+
+	it('applies customWarningRules and displays custom warning message on blur', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				modelValue: 'abc',
+				customWarningRules: [{
+					type: 'custom',
+					options: {
+						validate: () => false,
+						isWarning: true,
+						warningMessage: 'Warning custom captcha',
+					},
+				}],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+		await new Promise(resolve => setTimeout(resolve, 50))
+
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.text()).toContain('Warning custom captcha')
+	})
+
+	it('applies customSuccessRules and displays custom success message on blur', async () => {
+		const CaptchaBaseStub = defineComponent({
+			name: 'CaptchaBase',
+			template: `
+				<div>
+					<slot
+						name="image"
+						:choose-image="() => {}"
+						:choose-audio="() => {}"
+						:url="''"
+						:state="'idle'"
+						:is-error="false"
+						:error-message="null"
+					/>
+				</div>
+			`,
+		})
+
+		const CaptchaFormStub = defineComponent({
+			name: 'CaptchaForm',
+			props: {
+				customRules: { type: Array, default: () => [] },
+				customWarningRules: { type: Array, default: () => [] },
+				customSuccessRules: { type: Array, default: () => [] },
+			},
+			template: '<div class="captcha-form-stub" />',
+		})
+
+		const customRules = [{ type: 'custom', options: { validate: () => false, message: 'Erreur custom captcha' } }]
+		const customWarningRules = [{ type: 'custom', options: { validate: () => false, isWarning: true, warningMessage: 'Warning custom captcha' } }]
+		const customSuccessRules = [{ type: 'custom', options: { validate: () => true, successMessage: 'Succès custom captcha' } }]
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				customRules,
+				customWarningRules,
+				customSuccessRules,
+			},
+			global: {
+				stubs: {
+					CaptchaInformation: true,
+					CaptchaBase: CaptchaBaseStub,
+					CaptchaImg: true,
+					CaptchaAlert: true,
+					CaptchaBtn: true,
+					CaptchaHelpdesk: true,
+					CaptchaForm: CaptchaFormStub,
+					volumeUp: true,
+					SyIcon: true,
+					VBtn: true,
+				},
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		const form = wrapper.findComponent(CaptchaFormStub)
+		expect(form.exists()).toBe(true)
+		expect(form.props('customRules')).toEqual(customRules)
+		expect(form.props('customWarningRules')).toEqual(customWarningRules)
+		expect(form.props('customSuccessRules')).toEqual(customSuccessRules)
 	})
 })
