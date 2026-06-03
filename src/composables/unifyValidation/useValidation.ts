@@ -89,6 +89,7 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules?: never
+	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: Ref<boolean>
 	customRules: Ref<SyValidationRule[]>
@@ -171,11 +172,16 @@ export function useValidation(params: {
 		}
 	}
 
-	const errors = computed(() => [...new Set([
-		...vuetifyErrors.value,
-		...customErrors.value,
-		...(params.errorMessages?.value || []),
-	])])
+	const errors = computed(() => {
+		const allErrors = [...new Set([
+			...vuetifyErrors.value,
+			...customErrors.value,
+			...(params.errorMessages?.value || []),
+		])]
+		// Plafonne le nombre d'erreurs affichées (maxErrors, défaut 1), tous modes confondus.
+		const max = params.maxErrors?.value
+		return max && max > 0 ? allErrors.slice(0, max) : allErrors
+	})
 	const warnings = computed(() => [...new Set([
 		...innerWarnings.value,
 		...(params.warningMessages?.value || []),
