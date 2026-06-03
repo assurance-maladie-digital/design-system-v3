@@ -45,7 +45,7 @@ export const validationPropsDefaults = {
 	disabled: false,
 	required: false,
 	isValidateOnBlur: true,
-	showSuccessMessages: true,
+	showSuccessMessages: false,
 	disableErrorHandling: false,
 	customRules: () => [],
 	customWarningRules: () => [],

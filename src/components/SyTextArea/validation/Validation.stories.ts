@@ -238,90 +238,6 @@ export const WithSuccess: Story = {
 	}),
 }
 
-export const NoSuccessMessage: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Avec `showSuccessMessages: false`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché. Utile quand un retour positif silencieux est suffisant.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <SyTextArea
-    ref="textAreaRef"
-    v-model="value"
-    label="Commentaire"
-    :show-success-messages="false"
-    :custom-success-rules="[
-      {
-        type: 'custom',
-        options: {
-          validate: (v) => v.length >= 20,
-          successMessage: 'Description suffisamment détaillée.'
-        }
-      }
-    ]"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { SyTextArea } from '@cnamts/synapse'
-
-const value = ref('Voici une description bien détaillée du problème rencontré.')
-const textAreaRef = ref(null)
-
-onMounted(() => {
-  textAreaRef.value?.validateOnSubmit()
-})
-</script>`,
-			},
-		],
-	},
-	args: {
-		'label': 'Commentaire',
-		'showSuccessMessages': false,
-		'onUpdate:modelValue': fn(),
-	},
-	render: args => ({
-		components: { SyTextArea },
-		setup() {
-			const value = ref('Voici une description bien détaillée du problème rencontré.')
-			const textAreaRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-
-			onMounted(() => {
-				textAreaRef.value?.validateOnSubmit()
-			})
-
-			return { args, value, textAreaRef }
-		},
-		template: `
-			<div class="pa-4">
-				<SyTextArea
-					ref="textAreaRef"
-					v-model="value"
-					v-bind="args"
-					:custom-success-rules="[
-						{
-							type: 'custom',
-							options: {
-								validate: (v) => v.length >= 20,
-								successMessage: 'Description suffisamment détaillée.'
-							}
-						}
-					]"
-				/>
-			</div>
-		`,
-	}),
-}
-
 export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
@@ -340,11 +256,13 @@ export const NoValidateOnBlur: Story = {
       :model-value="value"
       label="Description"
       :is-validate-on-blur="false"
+      :show-success-messages="true"
       :custom-rules="[{
         type: 'custom',
         options: {
           validate: (v) => v !== 'Contenu interdit',
-          message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.'
+          message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.',
+          successMessage: 'Le contenu est valide.'
         }
       }]"
       @update:model-value="handleManualChange"
@@ -390,6 +308,7 @@ const applyButtonValue = (newValue) => {
 	args: {
 		'label': 'Description',
 		'isValidateOnBlur': false,
+		'showSuccessMessages': true,
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -426,7 +345,8 @@ const applyButtonValue = (newValue) => {
 						type: 'custom',
 						options: {
 							validate: (v) => v !== 'Contenu interdit',
-							message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.'
+							message: 'Le contenu « Contenu interdit » n\\'est pas autorisé.',
+							successMessage: 'Le contenu est valide.'
 						}
 					}]"
 					@update:model-value="handleManualChange"

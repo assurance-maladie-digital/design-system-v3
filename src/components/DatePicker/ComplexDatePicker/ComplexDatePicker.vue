@@ -203,7 +203,7 @@
 			placeholder: undefined,
 			readonly: false,
 			required: false,
-			showSuccessMessages: true,
+			showSuccessMessages: false,
 			showWeekNumber: false,
 			textFieldActivator: false,
 			title: false,
@@ -266,7 +266,7 @@
 		clearValidation,
 		validateDates,
 	} = useDatePickerValidationBridge({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
 		required: props.required,

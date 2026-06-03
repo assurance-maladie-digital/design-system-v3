@@ -397,28 +397,15 @@ describe('NirField.vue', () => {
 		})
 
 		it('respects showSuccessMessages prop', async () => {
-			// Par défaut, showSuccessMessages = true
+			// Par défaut, showSuccessMessages = false
 			await wrapper.setProps({ showSuccessMessages: true })
-
-			// On ne peut pas tester facilement le DOM de VMessages dans ce contexte jsdom avec Vuetify
-			// On vérifie donc que la prop showSuccessMessages est bien transmise aux éléments enfants
-			// internes si applicable, ou que le comportement conditionnel est correctement câblé.
-			// La prop showSuccessMessages est utilisée dans v-show="numberValidation.hasSuccess.value && showSuccessMessages"
-
-			// Pour tester que Vue applique bien la condition, on vérifie l'état de notre wrapper
 			expect(wrapper.props('showSuccessMessages')).toBe(true)
 
-			// Avec showSuccessMessages = false
 			await wrapper.setProps({ showSuccessMessages: false })
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
 			expect(wrapper.props('showSuccessMessages')).toBe(false)
-
-			// On vérifie également que l'attribut est passé aux sous-composants s'ils l'utilisent
-			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
-			// SyTextField a showSuccessMessages false en dur dans NirField
-			expect(textFields[0]?.props('showSuccessMessages')).toBe(false)
 		})
 
 		it('respects disableErrorHandling prop', async () => {

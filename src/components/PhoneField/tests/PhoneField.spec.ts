@@ -48,6 +48,68 @@ describe('PhoneField', () => {
 		expect(wrapper.emitted('change')).toBeTruthy()
 	})
 
+	it('cleans spaces from phone number before validation', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				required: true,
+				modelValue: '01 23 45 67 89',
+				isValidateOnBlur: true,
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+
+		expect(wrapper.vm.hasError).toBe(false)
+	})
+
+	it('validates phone number and country code on blur', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				required: true,
+				modelValue: '',
+				isValidateOnBlur: true,
+				showSuccessMessages: true,
+			},
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.setValue('123456')
+		await input.trigger('blur')
+
+		expect(wrapper.vm.hasError).toBe(true)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Nécessaire pour accéder à errors
+		expect((wrapper.vm as any).errors.length).toBeGreaterThan(0)
+	})
+
+	it('keeps a consistent success message before and after blur when withCountryCode is true', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				withCountryCode: true,
+				isValidateOnBlur: false,
+				showSuccessMessages: true,
+				modelValue: '',
+			},
+		})
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		const input = textField.find('input')
+		await input.setValue('0123456789')
+		await wrapper.vm.$nextTick()
+
+		const messageBeforeBlur = textField.find('.v-messages__message')
+		expect(messageBeforeBlur.exists()).toBe(true)
+		expect(messageBeforeBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+		expect(messageBeforeBlur.text()).not.toBe('Le champ Numéro de téléphone est valide.')
+
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+
+		const messageAfterBlur = textField.find('.v-messages__message')
+		expect(messageAfterBlur.exists()).toBe(true)
+		expect(messageAfterBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
+	})
+
 	it('trims input to the expected phoneLength', async () => {
 		const wrapper = mount(PhoneField, {
 			props: {
@@ -728,6 +790,7 @@ describe('PhoneField', () => {
 					withCountryCode: true,
 					isValidateOnBlur: false,
 					modelValue: '',
+					showSuccessMessages: true,
 				},
 			})
 

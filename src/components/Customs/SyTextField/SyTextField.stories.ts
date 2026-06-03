@@ -557,7 +557,6 @@ export const HelpText: Story = {
 			},
 			template: `
 				<div>
-					{{ args.hideDetails ? 'true' : 'false' }}
 					<SyTextField v-bind="args" v-model="value" />
 				</div>
 			`,

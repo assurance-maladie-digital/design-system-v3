@@ -80,6 +80,7 @@ describe('PasswordField.vue', () => {
 			props: {
 				label: 'Password',
 				modelValue: 'test',
+				showSuccessMessages: true,
 				warningMessages: ['Attention: mot de passe court'],
 				successMessages: ['Mot de passe valide'],
 			},
@@ -100,6 +101,7 @@ describe('PasswordField.vue', () => {
 			props: {
 				label: 'Password',
 				modelValue: 'test',
+				showSuccessMessages: true,
 				customRules: [{
 					type: 'custom',
 					options: {
@@ -145,6 +147,7 @@ describe('PasswordField.vue', () => {
 			props: {
 				label: 'Password',
 				modelValue: 'test',
+				showSuccessMessages: true,
 				customRules: [{
 					type: 'custom',
 					options: {

@@ -551,7 +551,7 @@
 			:name="props.name"
 			:persistent-clear="props.displayPersistentClear"
 			:persistent-counter="props.displayPersistentCounter"
-			:persistent-hint="props.displayPersistentHint"
+			:persistent-hint="!!showHelpTextAsMessage || props.displayPersistentHint"
 			:persistent-placeholder="props.displayPersistentPlaceholder"
 			:placeholder="props.placeholder"
 			:prefix="props.prefix"
@@ -572,7 +572,8 @@
 				'error-field': hasError,
 				'warning-field': hasWarning,
 				'success-field': hasSuccess,
-				'basic-field': !hasError && !hasWarning && !hasSuccess
+				'basic-field': !hasError && !hasWarning && !hasSuccess,
+				'help-text-as-hint': showHelpTextAsMessage,
 			}"
 			@focus="focused = true; emit('focus')"
 			@blur="focused = false; emit('blur')"
@@ -872,6 +873,18 @@
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 		opacity: 1;
+	}
+}
+
+// Quand le helpText occupe la position du message (état neutre ou succès sans message texte),
+// il conserve sa couleur neutre quel que soit l'état du champ (ne prend pas le vert de succès).
+.help-text-as-hint {
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity)) !important;
+		}
 	}
 }
 
