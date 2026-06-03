@@ -112,6 +112,14 @@ export default {
 				type: { summary: 'void' },
 			},
 		},
+		'isClearable': {
+			description: 'Indique si le champ de captcha est effaçable ou non.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 		...getValidationDocumentation(),
 	},
 }
