@@ -5,6 +5,7 @@
     "noImplicitAny": false,
     "declaration": true,
     "declarationDir": "./dist/src",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "paths": {
       "@/*": [
         "./src/*"
@@ -20,12 +21,15 @@
     "src/**/*",
     "src/**/*.vue",
     "src/**/*.json",
-    "tests/**/*",
     "package.json",
     "src/vuetifyConfig.ts"
   ],
   "exclude": [
     "**/*.visual.cy.ts",
-    "cypress/**/*"
+    "cypress/**/*",
+    "tests/**",
+    "**/__tests__/**",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ]
 }

@@ -89,6 +89,7 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules?: never
+	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: Ref<boolean>
 	customRules: Ref<SyValidationRule[]>
