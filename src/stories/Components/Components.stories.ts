@@ -277,7 +277,7 @@ export const ComponentsList: StoryObj = {
 						title: 'PasswordField',
 						description: 'Utilisé pour afficher un champ de saisie de mot de passe et gérer sa validation.',
 						link: '/?path=/docs/composants-formulaires-passwordfield--docs',
-						img: '/components/password-field.svg',
+						img: `/components/password-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -521,6 +521,7 @@ export const ComponentsList: StoryObj = {
 					'SyTable',
 					'SyServerTable',
 					'DatePicker',
+					'PasswordField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
