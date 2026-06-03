@@ -536,13 +536,74 @@ export const WithoutKey: Story = {
 	},
 }
 
-export const WithSuccessMessages: Story = {
+export const WithHelpText: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Un texte d\'aide s\'affiche sous le champ quand il n\'y a pas de message de validation. Il se déplace sous les messages quand une erreur est présente.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <NirField
+    v-model="value"
+    label="Identifiant assuré"
+    required
+    help-text="Saisissez les 13 chiffres du numéro de sécurité sociale, puis la clé à 2 chiffres."
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { NirField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Identifiant assuré',
+		required: true,
+		helpText: 'Saisissez les 13 chiffres du numéro de sécurité sociale, puis la clé à 2 chiffres.',
+	},
+	render: args => ({
+		components: { NirField },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+			<NirField
+				v-model="value"
+				v-bind="args"
+			/>
+		`,
+	}),
+}
+
+export const WithNirTooltip: Story = {
 	args: {
 		...Default.args,
-		showSuccessMessages: true,
+		nirTooltip: 'Ceci est un tooltip pour le champs numéro de sécurité sociale si le champs `nirTooltip` est saisi',
+		nirTooltipPosition: 'prepend',
 	},
 	parameters: {
-		...Default.parameters,
+		docs: {
+			description: {
+				story: `
+### Tooltip sur le champ NIR
+
+Cette story montre l'affichage d'une infobulle sur le champ du numéro de sécurité sociale.
+L'infobulle est positionnée avant le champ et s'affiche au survol de l'icône d'information.`,
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -553,7 +614,9 @@ export const WithSuccessMessages: Story = {
       :required="false"
       numberLabel="Numéro de sécurité sociale"
       keyLabel="Clé"
-      :showSuccessMessages="true"
+      :displayKey="true"
+      :nirTooltip="'Ceci est un tooltip pour le champs numéro de sécurité sociale'"
+      nirTooltipPosition="prepend"
      />
     </template>
     `,
@@ -564,7 +627,55 @@ export const WithSuccessMessages: Story = {
     <script setup lang="ts">
      import { NirField } from '@cnamts/synapse'
      import { ref } from 'vue'
-     
+
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+}
+
+export const WithKeyTooltip: Story = {
+	args: {
+		...Default.args,
+		keyTooltip: 'Ceci est un tooltip pour la clef du numéro de sécurité sociale',
+		keyTooltipPosition: 'append',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Tooltip sur le champ clé
+
+Cette story montre l'affichage d'une infobulle sur le champ de la clé.
+L'infobulle est positionnée après le champ et s'affiche au survol de l'icône d'information.`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+      :keyTooltip="'Ceci est un tooltip pour la clef du numéro de sécurité sociale'"
+      keyTooltipPosition="append"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import { NirField } from '@cnamts/synapse'
+     import { ref } from 'vue'
+
      const value = ref('')
     </script>
     `,

@@ -611,6 +611,17 @@
 	width: 100%;
 }
 
+/* La zone de détails interne des champs ne sert qu'au hint au focus : on ne réserve
+   pas d'espace vide sous l'input (helpText/messages NirField gérés à part), pour coller
+   le helpText au champ comme SySelect. Elle grandit naturellement si un hint s'affiche au focus. */
+.nir-field :deep(.v-input__details) {
+	min-height: 0 !important;
+}
+
+.nir-field :deep(.v-input__details .v-messages) {
+	min-height: 0;
+}
+
 .key-field {
 	min-width: 110px;
 	flex-wrap: wrap;
@@ -638,7 +649,7 @@
 }
 
 .sy-nir-help-text {
-	font-size: 0.75rem;
+	font-size: var(--v-fontSize-liensEtLibelles);
 	font-weight: 400;
 	letter-spacing: 0.0333em;
 	line-height: 16px;
