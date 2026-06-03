@@ -712,7 +712,8 @@ export const SyFormVuetifyValidation: Story = {
       v-model="value"
       label="Identifiant assuré"
       use-vuetify-validation
-      :number-rules="[v => !!v || 'Le numéro est requis']"
+      :number-rules="[v => (v && v.replaceAll(' ', '').length === 13) || 'Le numéro doit contenir 13 chiffres']"
+      :key-rules="[v => (v && v.replaceAll(' ', '').length === 2) || 'La clé doit contenir 2 chiffres']"
       class="mb-4"
     />
     <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
@@ -766,7 +767,8 @@ const onSubmit = (event) => {
 					<NirField
 						v-model="value"
 						v-bind="args"
-						:number-rules="[v => !!v || 'Le numéro est requis']"
+						:number-rules="[v => (v && v.replaceAll(' ', '').length === 13) || 'Le numéro doit contenir 13 chiffres']"
+						:key-rules="[v => (v && v.replaceAll(' ', '').length === 2) || 'La clé doit contenir 2 chiffres']"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
@@ -793,7 +795,8 @@ export const VFormAndVuetifyValidation: Story = {
       v-model="value"
       label="Identifiant assuré"
       use-vuetify-validation
-      :number-rules="[v => !!v || 'Le numéro est requis']"
+      :number-rules="[v => (v && v.replaceAll(' ', '').length === 13) || 'Le numéro doit contenir 13 chiffres']"
+      :key-rules="[v => (v && v.replaceAll(' ', '').length === 2) || 'La clé doit contenir 2 chiffres']"
       class="mb-4"
     />
     <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
@@ -815,6 +818,8 @@ async function onSubmit() {
   const result = await formRef.value?.validate()
   if (result?.valid) {
     alert('Formulaire valide : ' + value.value)
+  } else {
+    alert('Formulaire invalide.')
   }
 }
 </script>`,
@@ -836,6 +841,9 @@ async function onSubmit() {
 				if (result?.valid) {
 					alert(`Formulaire valide : ${value.value}`)
 				}
+				else {
+					alert('Formulaire invalide.')
+				}
 			}
 
 			return { args, value, formRef, onSubmit }
@@ -846,7 +854,8 @@ async function onSubmit() {
 					<NirField
 						v-model="value"
 						v-bind="args"
-						:number-rules="[v => !!v || 'Le numéro est requis']"
+						:number-rules="[v => (v && v.replaceAll(' ', '').length === 13) || 'Le numéro doit contenir 13 chiffres']"
+						:key-rules="[v => (v && v.replaceAll(' ', '').length === 2) || 'La clé doit contenir 2 chiffres']"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
