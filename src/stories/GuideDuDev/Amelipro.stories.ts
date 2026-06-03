@@ -30,7 +30,19 @@ export const AmeliproComponents: StoryObj = {
 
 				const baseUrl = 'https://cnam-design-system.netlify.app/?path=/docs/composants-'
 
-				const getComponentUrl = (item: { name: string, type: string }) => {
+				type ComponentType =
+					| 'composants vuetify'
+					| 'structure'
+					| 'layout'
+					| 'navigation'
+					| 'boutons'
+					| 'formulaires'
+					| 'tableaux'
+					| 'données'
+					| 'feedback'
+					| 'filtres'
+
+				const getComponentUrl = (item: { name: string, type: ComponentType }) => {
 					const typePath = item.type
 						.trim()
 						.toLowerCase()
@@ -627,8 +639,8 @@ export const AmeliproComponents: StoryObj = {
 					}, {
 						title: 'AmeliproAccordion',
 						synapse: {
-							name: 'Composant synapse',
-							url: '',
+							name: 'Accordion',
+							url: getComponentUrl({ name: 'Accordion', type: 'données' }),
 						},
 						amelipro: {
 							name: 'AmeliproAccordion',
@@ -657,8 +669,8 @@ export const AmeliproComponents: StoryObj = {
 					}, {
 						title: 'AmeliproTable',
 						synapse: {
-							name: 'Composant synapse',
-							url: '',
+							name: 'SyTable',
+							url: getComponentUrl({ name: 'Sytable', type: 'tableaux' }),
 						},
 						amelipro: {
 							name: 'AmeliproTable',
