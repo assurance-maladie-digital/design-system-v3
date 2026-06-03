@@ -63,7 +63,7 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
-				defaultValue: { summary: 'true' },
+				defaultValue: { summary: 'false' },
 				category: 'props',
 			},
 		},

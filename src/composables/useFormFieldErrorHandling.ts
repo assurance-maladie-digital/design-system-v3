@@ -38,7 +38,7 @@ export const useFormFieldErrorHandling = (
 	emitUpdate?: () => void,
 ): UseFormFieldErrorHandlingReturn => {
 	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages ?? true,
+		showSuccessMessages: props.showSuccessMessages ?? false,
 		fieldIdentifier: props.label,
 		disableErrorHandling: props.disableErrorHandling ?? false,
 	})

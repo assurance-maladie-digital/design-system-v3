@@ -54,7 +54,7 @@
 		placeholderTo: 'Fin',
 		readonly: false,
 		required: false,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		showWeekNumber: false,
 	})
 

@@ -114,7 +114,6 @@ export const Default: Story = {
 			{ label: 'Option B', value: 'b' },
 			{ label: 'Option C', value: 'c' },
 		],
-		showSuccessMessages: true,
 	},
 
 	render: args => ({

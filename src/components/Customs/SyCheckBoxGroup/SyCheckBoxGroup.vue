@@ -57,7 +57,7 @@
 			options: () => [],
 			readonly: false,
 			required: false,
-			showSuccessMessages: true,
+			showSuccessMessages: false,
 			successMessages: null,
 			title: undefined,
 			warningMessages: null,
