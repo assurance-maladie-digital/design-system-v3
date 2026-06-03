@@ -237,6 +237,12 @@ export const WithWarning: Story = {
 			},
 		],
 	},
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByLabelText('Mot de passe')
+		await userEvent.clear(input)
+		await userEvent.type(input, 'MotDePasse123')
+		input.blur()
+	},
 }
 
 export const WithSuccess: Story = {
@@ -313,6 +319,12 @@ export const WithSuccess: Story = {
 				},
 			},
 		],
+	},
+	play: async ({ canvasElement }) => {
+		const input = within(canvasElement).getByLabelText('Mot de passe')
+		await userEvent.clear(input)
+		await userEvent.type(input, 'MotDePasse123!@#')
+		input.blur()
 	},
 }
 
