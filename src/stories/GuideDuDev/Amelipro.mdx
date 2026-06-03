@@ -13,3 +13,34 @@ import '../styles/shared.css';
 Suite au besoin de migration de l'ensemble des applications du parc de Amelipro vers Vue.js 3, les composants graphiques ont été unifiés. Voici les composants Amelipro et leur équivalence dans la stack front Vue.js 3.
 
 <Story of={AmeliproStories.ApComponents}/>
+<h5>
+
+    Dépréciation des composants métier
+</h5>
+
+                  Pourquoi ce composant est déprécié ?
+
+                  Ce composant est fortement couplé à un besoin métier spécifique.
+
+                  Il ne répond plus aux principes du Design System, dont l'objectif est de fournir des briques UI génériques, réutilisables et indépendantes des règles fonctionnelles propres à chaque projet.
+                  Le maintien de composants métier dans le Design System entraîne :
+
+                  une complexité accrue de maintenance ;
+
+                  des évolutions difficiles à mutualiser ;
+
+                  une réutilisation limitée entre les différents produits ;
+
+                  un risque de dépendances fonctionnelles non souhaitées.
+
+                  Que faire à la place ?
+
+                  Les équipes projet doivent désormais construire ce composant au sein de leur application en s'appuyant sur les composants génériques disponibles dans le Design System.
+                  Cette approche permet :
+
+                  d'adapter le comportement aux besoins métier spécifiques ;
+
+                  de conserver un Design System centré sur des composants réutilisables ;
+
+                  de réduire le couplage entre les produits et la bibliothèque partagée.
+
