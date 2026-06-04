@@ -164,6 +164,7 @@
 		:placeholder="props.placeholder"
 		:bg-color="props.bgColor"
 		:type="showEyeIcon ? 'text' : 'password'"
+		:required="props.required"
 		:aria-invalid="hasError"
 		:aria-required="props.required"
 		:aria-describedby="`${passwordFieldId}-status${props.customRules && props.customRules.length > 0 ? ' ' + passwordFieldId + '-guidelines' : ''}`"
