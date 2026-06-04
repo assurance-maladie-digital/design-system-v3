@@ -347,7 +347,7 @@ export const ComponentsList: StoryObj = {
 						title: 'Captcha',
 						description: 'Utilisé pour confirmer que les interactions des utilisateurs sont effectuées par des humains et non par des robots.',
 						link: '/?path=/docs/composants-formulaires-captcha--docs',
-						img: `/components/sy-radiogroup${isAp ? '-ap' : ''}.svg`,
+						img: `/components/captcha${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
