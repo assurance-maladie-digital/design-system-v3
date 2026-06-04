@@ -285,17 +285,18 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tooltips',
 						},
 					},
+					{
+						title: 'AmeliproTransmission',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproTransmission',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-transmission',
+						},
+					},
 					// {
-					// 	title: 'AmeliproTransmission',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproTransmission',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-transmission',
-					// 	},
-					// }, {
 					// 	title: 'StructureMenu',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
