@@ -10,7 +10,7 @@ import RangeField from '../RangeField/RangeField.vue'
 import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
 const meta = {
-	title: 'Composants/Filtres/FiltersSideBar',
+	title: 'Composants/Filtres/FilterSideBar',
 	component: FilterSideBar,
 
 	argTypes: {

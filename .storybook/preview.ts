@@ -147,7 +147,7 @@ const preview: Preview = {
 						'Boutons', ['BackBtn', 'BackToTopBtn', 'CopyBtn', 'DownloadBtn', 'FranceConnectBtn', 'LangBtn', 'UserMenuBtn'],
 						'Formulaires', ['Captcha', 'DatePicker', ['Introduction', 'CalendarMode', 'CombinedMode', 'DateInput', 'Validation'], 'DiacriticPicker', 'FileUpload', 'NirField', 'PasswordField', 'PeriodField', 'PhoneField', 'RangeField', 'Selects', ['Introduction', 'SelectBtnField', 'SyInputSelect', 'SySelect'], 'SyCheckBox', 'SyCheckBoxGroup', 'SyRadioGroup', 'SyTextArea', 'SyTextField', 'UploadWorkflow'],
 						'Tableaux', ['PaginatedTable', 'SyServerTable', 'SyTable', 'TableToolbar'],
-						'Filtres', ['FilterModule', 'FiltersInline', 'FiltersSideBar', 'SearchListField'],
+						'Filtres', ['FilterInline', 'FilterSideBar', 'SearchListField'],
 						'Données', ['Accordion', 'ChipList', 'CollapsibleList', 'DataList', 'DataListGroup', 'FileList', 'FilePreview', 'Logo', 'LogoBrandSection'],
 						'Feedback', ['CookieBanner', 'DialogBox', 'NotificationBar', 'RatingPicker', 'SyAlert'],
 						'Composants Vuetify', ['Introduction', 'VBreadcrumbs', 'VBtn', 'VCard', 'VOtpInput', 'VSkeletonLoader', 'VStepper', 'VSwitch', 'VTooltip'],

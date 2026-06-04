@@ -476,6 +476,13 @@ export const ComponentsList: StoryObj = {
 						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
+					{
+						title: 'FilterInline',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterinline--docs',
+						img: `/components/filters-inline${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
 				]
 
 				const categoryOrder = [
