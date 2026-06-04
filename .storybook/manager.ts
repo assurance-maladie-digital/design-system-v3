@@ -47,6 +47,7 @@ const apComponents = [
 	'composants-feedback-dialogbox',
 	'composants-feedback-notificationbar',
 	'composants-filtres-filterssidebar',
+	'composants-formulaires-captcha',
 	'composants-formulaires-datepicker-introduction--docs',
 	'composants-formulaires-datepicker-calendarmode',
 	'composants-formulaires-datepicker-combinedmode',

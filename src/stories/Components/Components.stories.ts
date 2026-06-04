@@ -344,6 +344,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'Captcha',
+						description: 'Utilisé pour confirmer que les interactions des utilisateurs sont effectuées par des humains et non par des robots.',
+						link: '/?path=/docs/composants-formulaires-captcha--docs',
+						img: `/components/captcha${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
 						title: 'SyTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify',
 						link: '/?path=/docs/composants-tableaux-sytable--docs',
@@ -530,6 +537,7 @@ export const ComponentsList: StoryObj = {
 					'DatePicker',
 					'PasswordField',
 					'Stepper',
+					'Captcha',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

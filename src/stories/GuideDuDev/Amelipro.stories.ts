@@ -684,17 +684,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion',
 						},
 					},
-					// {
-					// 	title: 'AmeliproCaptcha',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproCaptcha',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-captcha',
-					// 	},
-					// },
+					{
+						title: 'AmeliproCaptcha',
+						synapse: {
+							name: 'Captcha',
+							url: getComponentUrl({ name: 'Captcha', type: 'formulaires' }),
+						},
+						amelipro: {
+							name: 'AmeliproCaptcha',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-captcha',
+						},
+					},
 					// {
 					// 	title: 'AmeliproUpload',
 					// 	synapse: {
