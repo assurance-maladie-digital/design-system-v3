@@ -65,6 +65,14 @@ const meta = {
 			description: 'Type d\'auto-complétion',
 			default: 'current-password',
 		},
+		'helpText': {
+			control: 'text',
+			description: 'Texte d\'aide affiché sous le champ',
+		},
+		'hideDetails': {
+			control: 'boolean',
+			description: 'Masque la zone de détails (messages d\'erreur, d\'aide…) sous le champ',
+		},
 		'update:modelValue': {
 			action: 'update:modelValue',
 			description: 'Événement émis lors de la mise à jour de la valeur du champ',
