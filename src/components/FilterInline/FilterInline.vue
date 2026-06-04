@@ -15,7 +15,7 @@
 	})
 
 	const emits = defineEmits<{
-		'update:modelValue': (value: FilterProp) => void
+		(e: 'update:modelValue', value: FilterProp): void
 	}>()
 
 	const {
