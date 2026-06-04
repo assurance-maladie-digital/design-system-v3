@@ -311,9 +311,9 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SearchListField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.',
-						link: '/?path=/docs/composants-formulaires-searchlistfield--docs',
+						link: '/?path=/docs/composants-filtres-searchlistfield--docs',
 						img: '/components/search-list-field.svg',
-						category: 'Formulaires',
+						category: 'Filtres',
 					},
 					{
 						title: 'SelectBtnField',
