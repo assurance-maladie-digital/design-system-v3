@@ -3,7 +3,6 @@
 	import type { VCheckbox } from 'vuetify/components'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { locales } from './locales'
 	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 
 	const props = withDefaults(
@@ -380,13 +379,6 @@
 			>
 				<slot />
 			</template>
-			<span
-				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
-				:id="messageId"
-				class="d-sr-only"
-			>
-				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '') }}</span>.
-			</span>
 		</VCheckbox>
 	</div>
 </template>

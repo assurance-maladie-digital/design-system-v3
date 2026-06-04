@@ -13,7 +13,7 @@ export type FilterItem = {
 
 export type FilterProp = FilterItem[]
 
-export default function useFilterable(model: Ref<FilterProp>, emits) {
+export default function useFilterable(model: Ref<FilterProp>) {
 	const filters = ref<FilterProp>([])
 
 	watch(model, (newFilters) => {
@@ -172,7 +172,6 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 				: undefined
 
 			filter.value = newValue
-			updateValue()
 
 			return
 		}
@@ -187,7 +186,6 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 
 			if (isPeriodField) {
 				filter.value = undefined
-				updateValue()
 
 				return
 			}
@@ -197,7 +195,7 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 			if (hasSelectStructure) {
 				// For single select objects, clear the entire value
 				filter.value = undefined
-				updateValue()
+
 				return
 			}
 
@@ -205,29 +203,20 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 			delete typedValue[chipValue]
 			filter.value = typedValue
 		}
-		updateValue()
 	}
 
 	function resetFilter(filter: FilterItem): void {
 		filter.value = undefined
-		updateValue()
 	}
 
 	function resetAllFilters(): void {
-		filters.value.forEach((filter) => {
-			filter.value = undefined
+		filters.value.forEach((filter: FilterItem) => {
+			resetFilter(filter)
 		})
-
-		updateValue()
-	}
-
-	function updateValue(): void {
-		emits('update:modelValue', filters.value)
 	}
 
 	return {
 		filters,
-		updateValue,
 		removeChip,
 		resetFilter,
 		resetAllFilters,

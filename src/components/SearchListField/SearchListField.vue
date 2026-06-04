@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
 	import { mdiMagnify } from '@mdi/js'
+	import { useId } from 'vue'
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
 	import { locales as defaultLocales } from './locales'
@@ -11,7 +12,7 @@
 
 	const props = defineProps({
 		modelValue: {
-			type: Array as PropType<unknown[]>,
+			type: Array as PropType<unknown[] | undefined | null>,
 			default: () => [],
 		},
 		items: {
@@ -52,7 +53,7 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
-			internalValue.value = newValue
+			internalValue.value = Array.isArray(newValue) ? [...newValue] : []
 		}, { immediate: true },
 	)
 
@@ -93,6 +94,8 @@
 	const emitChangeEvent = (value: unknown[]) => {
 		emit('update:modelValue', [...value])
 	}
+
+	const id = useId()
 
 	defineExpose({
 		filteredItems,
@@ -154,23 +157,16 @@
 						'suggestion-item--selected': !!internalValue.find(el => el === (props.returnObject ? item : item.value)),
 					}"
 				>
-					<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
-					<label
-						class="label"
-						:for="`checkbox-${slugify(item.label)}`"
-					>
-						<SyCheckbox
-							:id="`checkbox-${slugify(item.label)}`"
-							hide-details
-							density="compact"
-							class="ml-2"
-							:model-value="!!internalValue.find(el => el === (props.returnObject ? item : item.value))"
-							@update:model-value="(e: boolean)=>toggleCheckbox(item, e)"
-						/>
-						<span>
-							{{ item.label }}
-						</span>
-					</label>
+					<SyCheckbox
+						:id="`checkbox-${slugify(item.label)}-${id}`"
+						:name="`checkbox-${slugify(item.label)}-${id}`"
+						:label="item.label"
+						hide-details
+						density="compact"
+						class="ml-2"
+						:model-value="!!internalValue.find(el => el === (props.returnObject ? item : item.value))"
+						@update:model-value="(e: boolean) => toggleCheckbox(item, e)"
+					/>
 				</li>
 			</ul>
 		</fieldset>

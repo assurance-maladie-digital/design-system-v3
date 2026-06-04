@@ -254,6 +254,7 @@ export const Default: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
+						label="Profession"
 						v-bind="props"
 						label="Profession"
 						:items="professionList"
@@ -602,6 +603,7 @@ export const FilterCombination: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
+						label="Profession"
 						v-bind="props"
 						:items="professionList"
 					/>
@@ -703,6 +705,7 @@ export const FilterCombination: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
+						label="Profession"
 						v-bind="props"
 						:items="professionList"
 					/>

@@ -537,6 +537,7 @@ export const FilterCombination: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
+						label="Profession"
 						v-bind="props"
 						:items="professionList"
 					/>
@@ -583,6 +584,7 @@ export const FilterCombination: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
+						label="Profession"
 						v-bind="props"
 						:items="professionList"
 						color="primary"

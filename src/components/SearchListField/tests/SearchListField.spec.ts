@@ -69,6 +69,56 @@ describe('SearchListField.vue', () => {
 		).toBe(false)
 	})
 
+	it('supports null modelValue and can select an item', async () => {
+		const wrapper = mount(SearchListField, {
+			props: {
+				label: 'Filtrer la liste des Items',
+				items: [
+					{
+						label: 'Item 1',
+						value: 1,
+					},
+					{
+						label: 'Item 2',
+						value: 2,
+					},
+				],
+				modelValue: null,
+			},
+		})
+
+		const listItem = wrapper.find('[data-test-id="suggestions-list"] li')
+		await listItem.find('input[type="checkbox"]').trigger('click')
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:modelValue')).toEqual([[[1]]])
+	})
+
+	it('supports undefined modelValue and can select an item', async () => {
+		const wrapper = mount(SearchListField, {
+			props: {
+				label: 'Filtrer la liste des Items',
+				items: [
+					{
+						label: 'Item 1',
+						value: 1,
+					},
+					{
+						label: 'Item 2',
+						value: 2,
+					},
+				],
+				modelValue: undefined,
+			},
+		})
+
+		const listItem = wrapper.find('[data-test-id="suggestions-list"] li')
+		await listItem.find('input[type="checkbox"]').trigger('click')
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:modelValue')).toEqual([[[1]]])
+	})
+
 	it('selects an item', async () => {
 		const wrapper = mount(SearchListField, {
 			props: {
@@ -392,6 +442,83 @@ describe('SearchListField.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			expect(emittedEvents![1]).toEqual([[]])
+		})
+	})
+
+	describe('reset and immutability', () => {
+		it('clears internalValue when modelValue is reset to undefined after selections', async () => {
+			const wrapper = mount(SearchListField, {
+				props: {
+					label: 'Test',
+					items: [
+						{ label: 'Item 1', value: 1 },
+						{ label: 'Item 2', value: 2 },
+					],
+				},
+			})
+
+			// Select item 1
+			const checkboxes = wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')
+			await checkboxes[0].trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Simulate parent syncing modelValue back
+			await wrapper.setProps({ modelValue: [1] })
+
+			// Reset: parent sets modelValue to undefined (filter reset)
+			await wrapper.setProps({ modelValue: undefined })
+
+			// Select item 2
+			await checkboxes[1].trigger('click')
+			await wrapper.vm.$nextTick()
+
+			const emitted = wrapper.emitted('update:modelValue')!
+			// Last emit should only contain [2], not [1, 2]
+			expect(emitted[emitted.length - 1]).toEqual([[2]])
+		})
+
+		it('does not mutate the modelValue prop array when selecting items', async () => {
+			const modelValue = [1]
+			const wrapper = mount(SearchListField, {
+				props: {
+					label: 'Test',
+					items: [
+						{ label: 'Item 1', value: 1 },
+						{ label: 'Item 2', value: 2 },
+					],
+					modelValue,
+				},
+			})
+
+			await wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')[1].trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Original prop array must not be mutated
+			expect(modelValue).toEqual([1])
+			// Emitted value should include both items
+			expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[1, 2]])
+		})
+
+		it('does not mutate the modelValue prop array when deselecting items', async () => {
+			const modelValue = [1, 2]
+			const wrapper = mount(SearchListField, {
+				props: {
+					label: 'Test',
+					items: [
+						{ label: 'Item 1', value: 1 },
+						{ label: 'Item 2', value: 2 },
+					],
+					modelValue,
+				},
+			})
+
+			await wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')[0].trigger('click')
+			await wrapper.vm.$nextTick()
+
+			// Original prop array must not be mutated
+			expect(modelValue).toEqual([1, 2])
+			// Emitted value should only contain item 2
+			expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[2]])
 		})
 	})
 })
