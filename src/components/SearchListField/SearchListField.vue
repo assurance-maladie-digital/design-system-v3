@@ -113,6 +113,7 @@
 			tabindex="0"
 			data-test-id="search-input"
 			:bg-color="props.bgColor"
+			:disable-error-handling="true"
 		>
 			<template #prepend-inner>
 				<SyIcon
