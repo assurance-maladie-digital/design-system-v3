@@ -28,7 +28,9 @@ export const AmeliproComponents: StoryObj = {
 			setup() {
 				const searchTerm = ref('')
 
-				const baseUrl = 'https://cnam-design-system.netlify.app/?path=/docs/'
+				const baseUrl = import.meta.env.DEV
+					? 'http://localhost:6006/?path=/docs/'
+					: 'https://cnam-design-system.netlify.app/?path=/docs/'
 
 				type ComponentType =
 					| 'composants vuetify'
@@ -104,17 +106,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-btn',
 						},
 					},
-					// {
-					// 	title: 'AmeliproCallback',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproCallback',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-callback',
-					// 	},
-					// },
+					{
+						title: 'AmeliproCallback',
+						synapse: {
+							name: 'NotificationBar',
+							url: getComponentUrl({ name: 'NotificationBar', type: 'feedback' }),
+						},
+						amelipro: {
+							name: 'AmeliproCallback',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-callback',
+						},
+					},
 					{
 						title: 'AmeliproCard',
 						synapse: {
