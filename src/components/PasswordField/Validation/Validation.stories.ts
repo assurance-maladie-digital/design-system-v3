@@ -96,7 +96,7 @@ const meta = {
 		'customRules': [],
 		'customWarningRules': [],
 		'customSuccessRules': [],
-		'showSuccessMessages': true,
+		'showSuccessMessages': false,
 		'displayAsterisk': false,
 		'isValidateOnBlur': true,
 		'bgColor': 'white',
@@ -469,7 +469,7 @@ export const WithCustomRules: Story = {
 	},
 }
 
-export const NoSuccessMessages: Story = {
+export const WithSuccessMessages: Story = {
 	parameters: {
 		a11y: {
 			disable: true,
