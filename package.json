@@ -40,6 +40,7 @@
     "test:unit": "vitest run --exclude='**/*.a11y.spec.ts'",
     "test:a11y": "pnpm vitest run a11y.spec.ts",
     "a11y:report": "node ./scripts/a11y-report.mjs",
+    "usage:report": "node ./scripts/usage-report.mjs",
     "a11y:status": "node generate-a11y-report.mjs",
     "test:visual": "cypress run --component --browser electron",
     "test:visual:open": "cypress open --component --browser electron",

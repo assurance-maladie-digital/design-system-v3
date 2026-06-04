@@ -1,6 +1,11 @@
 # Dependencies
 node_modules
 
+# Variables d'environnement locales (tokens usage:report, etc.)
+.env
+.env.local
+.env.*.local
+
 # Build
 dist
 storybook-static

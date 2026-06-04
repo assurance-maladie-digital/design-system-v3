@@ -1,0 +1,55 @@
+import { Meta } from '@storybook/blocks'
+import usage from '../src/usage/usage.json'
+
+{/* Page de doc réservée au dev : ajoutée au `stories` de main.ts uniquement hors build de prod. */}
+<Meta title="Design System/Adoption" />
+
+# Adoption des composants
+
+Cette page présente l'utilisation de chaque composant de `{usage.package}` par les projets
+consommateurs, sur **GitHub et GitLab**.
+
+{(usage.sources ?? []).length > 0 && <p><em>Sources analysées : {usage.sources.join(' · ')}.</em></p>}
+
+{usage.generatedAt
+	? <p><em>Données générées le {new Date(usage.generatedAt).toLocaleString('fr-FR')}.</em></p>
+	: <p><em>⚠️ Aucune donnée collectée pour le moment. Lancez <code>pnpm usage:report</code> avec un token GitHub et/ou GitLab.</em></p>}
+
+## Composants utilisés
+
+{Object.keys(usage.components).length === 0
+	? <p>Aucune donnée d'utilisation disponible.</p>
+	: (
+		<table>
+			<thead>
+				<tr>
+					<th align="left">Composant</th>
+					<th align="left">Imports</th>
+					<th align="left">Projets</th>
+				</tr>
+			</thead>
+			<tbody>
+				{Object.entries(usage.components)
+					.sort(([, a], [, b]) => (b.imports ?? 0) - (a.imports ?? 0))
+					.map(([name, data]) => (
+						<tr key={name}>
+							<td><strong>{name}</strong></td>
+							<td>{data.imports}</td>
+							<td>{(data.repos ?? []).map(r => r.split('/').pop()).join(', ')}</td>
+						</tr>
+					))}
+			</tbody>
+		</table>
+	)}
+
+## Comment ces données sont produites
+
+- Source : `src/usage/usage.json`, généré par `scripts/usage-report.mjs`.
+- Collecte : **analyse AST** des repos consommateurs, sur **GitHub et GitLab** (instance interne
+  comprise). Chaque repo est cloné, puis ses fichiers `.vue`/`.ts`/`.tsx`/`.js`/`.jsx` sont parsés
+  avec le compilateur TypeScript pour ne compter que les **imports réels** de `{usage.package}`
+  (imports nommés et imports par défaut via sous-chemin).
+- Repos analysés (par fournisseur) : liste explicite (`GITHUB_REPOS` / `GITLAB_PROJECTS`), sinon
+  auto-découverte (`GITHUB_TOKEN` + `GITHUB_ORG` ; `GITLAB_TOKEN` + `GITLAB_GROUP` + `GITLAB_HOST`).
+- Mise à jour : commande `pnpm usage:report` (manuelle) ou via le workflow planifié
+  `.github/workflows/usage-report.yml` (hebdomadaire).
