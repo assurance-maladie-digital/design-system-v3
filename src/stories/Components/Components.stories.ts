@@ -472,7 +472,7 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'FilterSideBar',
 						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
-						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						link: '/?path=/docs/composants-filtres-filtersidebar--docs',
 						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
@@ -516,6 +516,7 @@ export const ComponentsList: StoryObj = {
 					'NirField',
 					'Card',
 					'FilterSideBar',
+					'SearchListField',
 					'SyTextField',
 					'Switch',
 					'Tooltip',
