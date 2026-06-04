@@ -58,7 +58,7 @@
   },
   "license": "ISC",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.11.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.0",
