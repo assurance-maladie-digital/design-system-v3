@@ -250,7 +250,6 @@ export const PAgComponents: StoryObj = {
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-periodfield--docs">PeriodField</a>, 
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-phonefield--docs">PhoneField</a>, 
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-rangefield--docs">RangeField</a>, 
-								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-searchlistfield--docs">SearchListField</a> et
 								<a href="https://cnam-design-system.netlify.app/?path=/docs/composants-formulaires-selectbtnfield--docs">SelectBtnField</a>
 							</p>
 							<p class="mt-4">
