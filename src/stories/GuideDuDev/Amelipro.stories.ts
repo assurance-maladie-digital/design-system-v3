@@ -156,17 +156,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-error-template',
 						},
 					},
-					// {
-					// 	title: 'AmeliproFilePreview',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproFilePreview',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-file-preview',
-					// 	},
-					// },
+					{
+						title: 'AmeliproFilePreview',
+						synapse: {
+							name: 'FilePreview',
+							url: getComponentUrl({ name: 'FilePreview', type: 'données' }),
+						},
+						amelipro: {
+							name: 'AmeliproFilePreview',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-file-preview',
+						},
+					},
 					{
 						title: 'AmeliproFooter',
 						synapse: {

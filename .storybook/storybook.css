@@ -3,6 +3,7 @@ html.theme-cnam {
 	--title-color: #0c419a;
 	--background-list-color: rgb(12 65 154 / 10%);
 	--border-color: white;
+	--border-radius: 4px;
 	--hover-color: rgb(12 65 154 / 5%);
 	--button-bg: #0c419a;
 	--button-text: #fff;
@@ -14,8 +15,20 @@ html.theme-pa {
 	--title-color: #0c419a;
 	--background-list-color: rgb(12 65 154 / 10%);
 	--border-color: white;
+	--border-radius: 4px;
 	--hover-color: rgb(12 65 154 / 5%);
 	--button-bg: #0c419a;
+	--button-text: #fff;
+	--body-font-family: 'Arial';
+}
+
+html.theme-ap {
+	--title-color: #0084b2;
+	--background-list-color: rgb(12 65 154 / 10%);
+	--border-color: white;
+	--border-radius: 12px;
+	--hover-color: rgb(12 65 154 / 5%);
+	--button-bg: #0084b2;
 	--button-text: #fff;
 	--body-font-family: 'Arial';
 }
@@ -54,6 +67,7 @@ pre.prismjs {
 
 #file-test-upload {
 	padding-bottom: 12px;
+	width: 100%;
 }
 
 #file-test-upload::file-selector-button {
@@ -61,7 +75,7 @@ pre.prismjs {
 	margin-right: 12px;
 	background: var(--button-bg);
 	padding: 8px 12px;
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	color: var(--button-text);
 	cursor: pointer;
 	font-weight: bold;

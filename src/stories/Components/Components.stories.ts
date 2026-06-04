@@ -424,7 +424,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FilePreview',
 						description: 'Utilisé pour afficher l\'aperçu d\'un fichier.',
 						link: '/?path=/docs/composants-donn%C3%A9es-filepreview--docs',
-						img: '/components/file-preview.svg',
+						img: `/components/file-preview${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{

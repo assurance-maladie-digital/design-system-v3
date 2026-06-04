@@ -1,12 +1,90 @@
 import { Meta, Story } from '@storybook/addon-docs';
-import * as Stories from '../FilePreview.stories.ts';
-import '@/stories/styles/shared.css';
+import * as FilePreviewStories from '../FilePreview.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+  AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={FilePreviewStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+  componentName="FilePreview"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/tutorials/images/"
+>
+  <AuditSection>
+    <div class="mt-2">
+      <p>Rapport d'audit manuel : <a href="/audits/FilePreview.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+      <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/922" target="_blank" style={{color:'#0C41BD'}}>issue #922</a>)</p>
+    </div>
+  </AuditSection>
 
-<br />
+  <CriteriaSection>
+
+    <CriteriaCard icon="🖼️" title="Prévisualisation des images">
+      <ul>
+        <li><strong>Image native</strong> : Utilisation de l'élément HTML <code>&lt;img&gt;</code></li>
+        <li><strong>Texte alternatif</strong> : Support de l'attribut <code>alt</code> via <code>options.image.alt</code></li>
+        <li><strong>Compatibilité</strong> : Restitution native par les technologies d'assistance</li>
+        <li><strong>Conformité</strong> : Respect du critère RGAA 1.1 relatif aux images porteuses d'information</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="📄" title="Prévisualisation des PDF">
+      <ul>
+        <li><strong>Intégration native</strong> : Utilisation de l'élément <code>&lt;object&gt;</code></li>
+        <li><strong>Type explicite</strong> : Déclaration du MIME type <code>application/pdf</code></li>
+        <li><strong>Fallback accessible</strong> : Message affiché lorsque la prévisualisation n'est pas disponible</li>
+        <li><strong>Compatibilité variable</strong> : Le rendu dépend du navigateur et du lecteur PDF disponible</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="⚠️" title="Gestion des formats non supportés">
+      <ul>
+        <li><strong>Message alternatif</strong> : Affichage d'un contenu de remplacement lorsque le type de fichier n'est pas prévisualisable</li>
+        <li><strong>Slot personnalisé</strong> : Possibilité de fournir un message métier adapté</li>
+        <li><strong>Compréhension utilisateur</strong> : Évite les zones vides ou silencieuses</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard icon="♿" title="Informations accessibles">
+      <ul>
+        <li><strong>Texte alternatif pertinent</strong> : Fournir un <code>alt</code> descriptif lorsque l'image apporte une information</li>
+        <li><strong>Image décorative</strong> : Utiliser un <code>alt=""</code> lorsque l'image n'apporte aucune information utile</li>
+        <li><strong>Message de secours</strong> : Les utilisateurs sont informés lorsqu'un aperçu ne peut être affiché</li>
+        <li><strong>Navigation clavier</strong> : Aucun comportement spécifique requis car le composant n'est pas interactif</li>
+      </ul>
+    </CriteriaCard>
+
+  </CriteriaSection>
+
+  <DemoSection componentName="FilePreview">
+    <Story of={FilePreviewStories.Default} />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li>Renseigner systématiquement <code>options.image.alt</code> pour les images informatives.</li>
+      <li>Prévoir un message explicite pour les formats non pris en charge.</li>
+      <li>Ne pas utiliser la prévisualisation comme unique moyen d'accéder au document.</li>
+      <li>Fournir un lien de téléchargement complémentaire lorsque cela est pertinent.</li>
+      <li>Tester les PDF sur plusieurs navigateurs car leur rendu dépend des capacités natives.</li>
+      <li>Vérifier que le contraste des contenus affichés respecte les exigences d'accessibilité.</li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/tutorials/images/" target="_blank" rel="noopener noreferrer">WAI - ImagesTutorial</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/" target="_blank" rel="noopener noreferrer">Référentiel Général d'Amélioration de l'Accessibilité (RGAA)</a></li>
+    </ul>
+  </ResourcesSection>
+
+</AccessibilityGuideLayout>
