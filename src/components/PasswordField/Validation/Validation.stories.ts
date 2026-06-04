@@ -307,6 +307,7 @@ export const WithSuccess: Story = {
 	},
 	args: {
 		modelValue: 'MotDePasse123!@#',
+		showSuccessMessages: true,
 		customSuccessRules: [
 			{
 				type: 'custom',
@@ -480,7 +481,7 @@ export const WithSuccessMessages: Story = {
 ### Messages de succès
 
 Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
-l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`true\`.
+l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`false\`.
 
 Cela peut être utile pour réduire la verbosité de l'interface lorsque les messages de succès
 ne sont pas nécessaires dans certains contextes.
@@ -764,6 +765,7 @@ Les props \`errorMessages\`, \`warningMessages\` et \`successMessages\`
 		:error-messages="errorMessages"
 		:warning-messages="warningMessages"
 		:success-messages="successMessages"
+		:showSuccessMessages='true'
 	/>
 	<div class="mt-4">
 		<VBtn @click="setError">Simuler une erreur</VBtn>
@@ -850,6 +852,7 @@ function reset() {
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
+					:showSuccessMessages='true'
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2">
 					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
