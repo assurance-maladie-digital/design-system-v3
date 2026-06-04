@@ -585,17 +585,19 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'AmeliproStateTile',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-state-tile',
 					// 	},
-					// }, {
-					// 	title: 'AmeliproStepper',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproStepper',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-stepper',
-					// 	},
-					// }, {
+					// },
+					{
+						title: 'AmeliproStepper',
+						synapse: {
+							name: 'VStepper',
+							url: getComponentUrl({ name: 'VStepper', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproStepper',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-stepper',
+						},
+					},
+					// {
 					// 	title: 'AmeliproStepBtn',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
