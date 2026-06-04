@@ -85,6 +85,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'Stepper',
+						description: 'Affiche la progression par étapes numérotées.',
+						link: '/?path=/docs/composants-composants-vuetify-vstepper--docs',
+						img: `/components/stepper${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'SyTabs',
 						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
 						link: '/?path=/docs/composants-navigation-sytabs--docs',
@@ -522,6 +529,7 @@ export const ComponentsList: StoryObj = {
 					'SyServerTable',
 					'DatePicker',
 					'PasswordField',
+					'Stepper',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
