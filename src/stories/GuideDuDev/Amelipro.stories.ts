@@ -285,17 +285,18 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tooltips',
 						},
 					},
+					{
+						title: 'AmeliproTransmission',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproTransmission',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-transmission',
+						},
+					},
 					// {
-					// 	title: 'AmeliproTransmission',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproTransmission',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-transmission',
-					// 	},
-					// }, {
 					// 	title: 'StructureMenu',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
@@ -684,17 +685,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion',
 						},
 					},
-					// {
-					// 	title: 'AmeliproCaptcha',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproCaptcha',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-captcha',
-					// 	},
-					// },
+					{
+						title: 'AmeliproCaptcha',
+						synapse: {
+							name: 'Captcha',
+							url: getComponentUrl({ name: 'Captcha', type: 'formulaires' }),
+						},
+						amelipro: {
+							name: 'AmeliproCaptcha',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-captcha',
+						},
+					},
 					// {
 					// 	title: 'AmeliproUpload',
 					// 	synapse: {
