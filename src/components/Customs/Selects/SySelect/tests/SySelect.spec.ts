@@ -640,7 +640,7 @@ describe('SySelect.vue', () => {
 				wrapper.unmount()
 			})
 
-			it('affiche les errorMessages quand disableErrorHandling est true', () => {
+			it('Surcharge les errorMessages quand disableErrorHandling est true et que des messages sont passes', () => {
 				const wrapper = mount(SySelect, {
 					props: {
 						errorMessages: ['Erreur forcée'],

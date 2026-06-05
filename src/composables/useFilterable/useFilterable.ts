@@ -1,4 +1,4 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, toRaw, watch, type Ref } from 'vue'
 import type { ChipItem } from '@/components/ChipList/types'
 import slugify from 'slugify'
 import { deepCopy } from '@/utils/functions/deepCopy'
@@ -13,11 +13,11 @@ export type FilterItem = {
 
 export type FilterProp = FilterItem[]
 
-export default function useFilterable(model: Ref<FilterProp>, emits) {
+export default function useFilterable(model: Ref<FilterProp>) {
 	const filters = ref<FilterProp>([])
 
 	watch(model, (newFilters) => {
-		filters.value = deepCopy(newFilters)
+		filters.value = deepCopy(toRaw(newFilters))
 	}, { deep: true, immediate: true })
 
 	function getFilterCount(filter: FilterItem): number {
@@ -172,7 +172,6 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 				: undefined
 
 			filter.value = newValue
-			updateValue()
 
 			return
 		}
@@ -187,7 +186,6 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 
 			if (isPeriodField) {
 				filter.value = undefined
-				updateValue()
 
 				return
 			}
@@ -197,7 +195,7 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 			if (hasSelectStructure) {
 				// For single select objects, clear the entire value
 				filter.value = undefined
-				updateValue()
+
 				return
 			}
 
@@ -205,29 +203,20 @@ export default function useFilterable(model: Ref<FilterProp>, emits) {
 			delete typedValue[chipValue]
 			filter.value = typedValue
 		}
-		updateValue()
 	}
 
 	function resetFilter(filter: FilterItem): void {
 		filter.value = undefined
-		updateValue()
 	}
 
 	function resetAllFilters(): void {
-		filters.value.forEach((filter) => {
-			filter.value = undefined
+		filters.value.forEach((filter: FilterItem) => {
+			resetFilter(filter)
 		})
-
-		updateValue()
-	}
-
-	function updateValue(): void {
-		emits('update:modelValue', filters.value)
 	}
 
 	return {
 		filters,
-		updateValue,
 		removeChip,
 		resetFilter,
 		resetAllFilters,
