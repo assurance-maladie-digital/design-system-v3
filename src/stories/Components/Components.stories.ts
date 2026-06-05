@@ -312,7 +312,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SearchListField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.',
 						link: '/?path=/docs/composants-filtres-searchlistfield--docs',
-						img: '/components/search-list-field.svg',
+						img: `/components/search-list-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
 					{
