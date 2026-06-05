@@ -79,41 +79,59 @@
 		.normalize('NFD')
 		.replace(/[\u0300-\u036f]/g, '')
 
+	const priorityOrder: Record<string, number> = {
+		Haute: 1,
+		Moyenne: 2,
+		Faible: 3,
+	}
+
 	const filteredPractices = computed(() => (
-		practices.filter((practice) => {
-			const pillarOk = selectedPillarId.value === 'all'
-				|| practice.pillar.id === selectedPillarId.value
+		practices
+			.filter((practice) => {
+				const pillarOk = selectedPillarId.value === 'all'
+					|| practice.pillar.id === selectedPillarId.value
 
-			const audienceOk = selectedAudience.value === 'all'
-				|| practice.audience === selectedAudience.value
+				const audienceOk = selectedAudience.value === 'all'
+					|| practice.audience === selectedAudience.value
 
-			const priorityOk = selectedPriority.value === 'all'
-				|| practice.priority === selectedPriority.value
+				const priorityOk = selectedPriority.value === 'all'
+					|| practice.priority === selectedPriority.value
 
-			const difficultyOk = selectedDifficulty.value === 'all'
-				|| practice.difficulty === selectedDifficulty.value
+				const difficultyOk = selectedDifficulty.value === 'all'
+					|| practice.difficulty === selectedDifficulty.value
 
-			const essentialOk = selectedFilter.value !== 'essential'
-				|| practice.essential === true
+				const query = normalizeText((search.value ?? '').trim())
+				const searchableContent = normalizeText([
+					practice.title,
+					practice.summary,
+					practice.objective,
+					practice.pillar.title,
+					practice.audience,
+					practice.priority,
+					practice.difficulty,
+					practice.actionNumbers?.join(' '),
+					practice.do?.join(' '),
+					practice.dont?.join(' '),
+				].filter(Boolean).join(' '))
 
-			const query = normalizeText((search.value ?? '').trim())
-			const searchableContent = normalizeText([
-				practice.title,
-				practice.summary,
-				practice.objective,
-				practice.pillar.title,
-				practice.audience,
-				practice.priority,
-				practice.difficulty,
-				practice.actionNumbers?.join(' '),
-				practice.do?.join(' '),
-				practice.dont?.join(' '),
-			].filter(Boolean).join(' '))
+				const searchOk = !query || searchableContent.includes(query)
 
-			const searchOk = !query || searchableContent.includes(query)
+				return pillarOk
+					&& audienceOk
+					&& priorityOk
+					&& difficultyOk
+					&& searchOk
+			})
+			.sort((a, b) => {
+				const priorityA = priorityOrder[a.priority ?? ''] ?? 99
+				const priorityB = priorityOrder[b.priority ?? ''] ?? 99
 
-			return pillarOk && audienceOk && priorityOk && difficultyOk && essentialOk && searchOk
-		})
+				if (priorityA !== priorityB) {
+					return priorityA - priorityB
+				}
+
+				return a.title.localeCompare(b.title)
+			})
 	))
 
 	const selectedPractice = computed<PracticeItem | null>(() => {
@@ -211,12 +229,12 @@
 					<v-select
 						v-model="selectedAudience"
 						:items="[
-							{ title: 'Toutes les audiences', value: 'all' },
+							{ title: 'Toutes les catégories', value: 'all' },
 							{ title: 'UX/UI', value: 'UX / UI' },
 							{ title: 'Dev Front', value: 'Dev Front' },
 							{ title: 'Back', value: 'Back' },
 						]"
-						label="Audience"
+						label="Catégorie"
 						variant="outlined"
 						density="comfortable"
 						hide-details
@@ -586,29 +604,30 @@
 	gap: 24px;
 	margin-bottom: 22px;
 }
+
 .priority-chip--haute {
-  background: #fde8e8 !important;
-  color: #991b1b !important;
+	background: #fde8e8 !important;
+	color: #991b1b !important;
 }
 
 .priority-chip--moyenne {
-  background: #fef3c7 !important;
-  color: #92400e !important;
+	background: #fef3c7 !important;
+	color: #92400e !important;
 }
 
 .priority-chip--faible {
-  background: #ecfdf5 !important;
-  color: #166534 !important;
+	background: #ecfdf5 !important;
+	color: #166534 !important;
 }
 
 .difficulty-chip--faible {
-  background: #dcfce7 !important;
-  color: #166534 !important;
+	background: #dcfce7 !important;
+	color: #166534 !important;
 }
 
 .difficulty-chip--moyenne {
-  background: #dbeafe !important;
-  color: #1e40af !important;
+	background: #dbeafe !important;
+	color: #1e40af !important;
 }
 
 .search-and-sort-row {
@@ -745,7 +764,7 @@
 
 .detail-eyebrow {
 	color: #60708d;
-	font-weight: 700;
+	font-weight: 500;
 	margin-bottom: 8px;
 }
 
@@ -768,12 +787,12 @@
 .detail-table-card h4 {
 	color: #003f9f;
 	font-size: 18px;
-	font-weight: 800;
+	font-weight: 500;
 	margin-bottom: 12px;
 }
 
 .detail-section li {
-	margin-bottom: 8px;
+	margin-bottom: 12px;
 	line-height: 1.45;
 }
 
@@ -825,11 +844,11 @@
 .detail-table th {
 	background: #f5f7fb;
 	color: #003f9f;
-	font-weight: 800;
+	font-weight: 500;
 }
 
 .detail-table td:first-child {
-	font-weight: 800;
+	font-weight: 500;
 	color: #003f9f;
 }
 
@@ -843,7 +862,15 @@
 
 .impact-gain {
 	color: #0f8f4f;
-	font-weight: 800;
+	font-weight: 700;
+}
+
+.detail-section h4 {
+	margin-bottom: 20px;
+}
+
+.detail-section ul {
+	padding-left: 22px;
 }
 
 @media (width <= 960px) {
