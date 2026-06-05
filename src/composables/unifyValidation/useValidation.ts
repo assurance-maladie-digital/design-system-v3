@@ -76,13 +76,13 @@ export function useValidation(params: {
 	hasErrorProp?: Ref<boolean>
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
+	maxErrors?: Ref<number>
 } & ({
 	useVuetifyValidation: true
 	rules: Ref<VuetifyValidationRule[] | undefined>
 	customRules?: never
 	customWarningRules?: never
 	customSuccessRules?: never
-	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: false
 	customRules: Ref<SyValidationRule[]>
@@ -95,7 +95,6 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<VuetifyValidationRule[] | undefined>
-	maxErrors?: Ref<number>
 })) {
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
@@ -168,7 +167,9 @@ export function useValidation(params: {
 			errorslist.push(...vuetifyErrors.value)
 			errorslist.push(...customErrors.value)
 		}
-		return [...new Set(errorslist)]
+
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(errorslist)].slice(0, max) : [...new Set(errorslist)]
 	})
 
 	const warnings = computed(() => {
@@ -176,14 +177,16 @@ export function useValidation(params: {
 		if (toValue(params.disableErrorHandling) !== true) {
 			warningsList.push(...innerWarnings.value)
 		}
-		return [...new Set(warningsList)]
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(warningsList)].slice(0, max) : [...new Set(warningsList)]
 	})
 	const successes = computed(() => {
 		const successesList = [...params.successMessages?.value || []]
 		if (toValue(params.disableErrorHandling) !== true) {
 			successesList.push(...innerSuccesses.value)
 		}
-		return [...new Set(successesList)]
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(successesList)].slice(0, max) : [...new Set(successesList)]
 	})
 	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 

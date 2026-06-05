@@ -439,6 +439,23 @@ describe('NirField.vue', () => {
 			expect(textFields[1]?.props('appendTooltip')).toBe(keyTooltip)
 		})
 
+		it('affiche les hints internes (numberHint/keyHint) quand persistentHint est true', async () => {
+			const w = mount(NirField, {
+				props: {
+					label: 'Identifiant',
+					numberHint: 'Indice numéro',
+					keyHint: 'Indice clé',
+					persistentHint: true,
+				},
+			})
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.text()).toContain('Indice numéro')
+			expect(w.text()).toContain('Indice clé')
+		})
+
 		it('renders asterisks correctly when displayAsterisk is true AND required is true', async () => {
 			// L'astérisque n'est affiché que si required = true ET displayAsterisk = true
 			await wrapper.setProps({ required: true, displayAsterisk: true, numberLabel: 'Numéro', keyLabel: 'Clé' })
@@ -607,6 +624,123 @@ describe('NirField.vue', () => {
 			expect(focusSpy).not.toHaveBeenCalled()
 
 			focusSpy.mockRestore()
+		})
+	})
+
+	describe('helpText', () => {
+		it('affiche le helpText quand aucun message de validation', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', helpText: 'Saisissez le NIR' } })
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const help = w.find('.sy-nir-help-text')
+			expect(help.exists()).toBe(true)
+			expect(help.text()).toBe('Saisissez le NIR')
+		})
+
+		it('n\'affiche pas le helpText quand hideDetails est true', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', helpText: 'Saisissez le NIR', hideDetails: true } })
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.find('.sy-nir-help-text').exists()).toBe(false)
+		})
+
+		it('affiche toujours le helpText lorsqu\'une erreur est présente', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', helpText: 'Saisissez le NIR', required: true } })
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			// Déclenche l'erreur "requis" (champ vide)
+			await w.vm.validateOnSubmit()
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const help = w.find('.sy-nir-help-text')
+			expect(help.exists()).toBe(true)
+			expect(help.text()).toBe('Saisissez le NIR')
+		})
+	})
+
+	describe('clearable', () => {
+		it('affiche le bouton clear quand clearable et qu\'il y a une valeur', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', clearable: true } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.find('.number-field .sy-text-field__clear').exists()).toBe(true)
+		})
+
+		it('n\'affiche pas le bouton clear quand clearable est false', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', clearable: false } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.find('.number-field .sy-text-field__clear').exists()).toBe(false)
+		})
+
+		it('vide le champ au clic sur le bouton clear', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', clearable: true } })
+			activeWrappers.push(w)
+			const numberInput = w.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			await w.find('.number-field .sy-text-field__clear').trigger('click')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect((numberInput.element as HTMLInputElement).value).toBe('')
+		})
+	})
+
+	describe('validation Vuetify (numberRules / keyRules)', () => {
+		const numberRules = [(v: string) => (!!v && v.replace(/\s/g, '').length === 13) || 'Le numéro doit contenir 13 chiffres']
+		const keyRules = [(v: string) => (!!v && v.replace(/\s/g, '').length === 2) || 'La clé doit contenir 2 chiffres']
+
+		it('applique numberRules : un NIR partiel est invalide', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', useVuetifyValidation: true, numberRules, keyRules } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('12345')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const isValid = await w.vm.validateOnSubmit()
+			await flushPromises()
+			expect(isValid).toBe(false)
+		})
+
+		it('applique keyRules : une clé vide invalide même si le numéro est complet', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', useVuetifyValidation: true, numberRules, keyRules } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const isValid = await w.vm.validateOnSubmit()
+			await flushPromises()
+			expect(isValid).toBe(false)
+		})
+
+		it('valide quand le numéro (13 chiffres) et la clé (2 chiffres) respectent les règles', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', useVuetifyValidation: true, numberRules, keyRules } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.find('.key-field input').setValue('05')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const isValid = await w.vm.validateOnSubmit()
+			await flushPromises()
+			expect(isValid).toBe(true)
 		})
 	})
 })

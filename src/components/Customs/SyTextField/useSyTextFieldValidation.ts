@@ -72,12 +72,8 @@ export function useSyTextFieldValidation(params: {
 		return 'rgba(0, 0, 0, 1)'
 	})
 
-	const clearButtonColorClass = computed(() => {
-		if (hasError.value) return 'error-field'
-		if (hasWarning.value) return 'warning-field'
-		if (hasSuccess.value) return 'success-field'
-		return 'text-iconBase'
-	})
+	// Le bouton clear garde toujours une couleur neutre, quel que soit l'état de validation
+	const clearButtonColorClass = computed(() => 'text-iconBase')
 
 	const validationIcon = computed(() => {
 		if (hasError.value) return mdiAlertCircle

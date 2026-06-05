@@ -39,6 +39,7 @@ const apComponents = [
 	'composants-composants-vuetify-vcard--docs',
 	'composants-composants-vuetify-votpinput--docs',
 	'composants-composants-vuetify-vskeletonloader--docs',
+	'composants-composants-vuetify-vstepper--docs',
 	'composants-composants-vuetify-vswitch--docs',
 	'composants-composants-vuetify-vtooltip--docs',
 	'composants-données-accordion',
@@ -46,6 +47,7 @@ const apComponents = [
 	'composants-feedback-dialogbox',
 	'composants-feedback-notificationbar',
 	'composants-filtres-filterssidebar',
+	'composants-formulaires-captcha',
 	'composants-formulaires-datepicker-introduction--docs',
 	'composants-formulaires-datepicker-calendarmode',
 	'composants-formulaires-datepicker-combinedmode',
@@ -62,6 +64,7 @@ const apComponents = [
 	'composants-formulaires-syradiogroup',
 	'composants-formulaires-sytextarea',
 	'composants-formulaires-sytextfield',
+	'composants-formulaires-passwordfield',
 	'composants-layout-pagecontainer',
 	'composants-navigation-skiplink',
 	'composants-navigation-sypagination',
@@ -71,9 +74,9 @@ const apComponents = [
 	'composants-structure-headerloading',
 	'composants-tableaux-tabletoolbar',
 	'composants-vue-d-ensemble--docs',
-    'composants-tableaux-sytable',
-    'composants-tableaux-syservertable',
-    'composants-tableaux-paginatedtable',
+	'composants-tableaux-sytable',
+	'composants-tableaux-syservertable',
+	'composants-tableaux-paginatedtable',
 ]
 
 // Get stored theme or default to CNAM
