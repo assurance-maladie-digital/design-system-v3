@@ -1,4 +1,4 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, toRaw, watch, type Ref } from 'vue'
 import type { ChipItem } from '@/components/ChipList/types'
 import slugify from 'slugify'
 import { deepCopy } from '@/utils/functions/deepCopy'
@@ -17,7 +17,7 @@ export default function useFilterable(model: Ref<FilterProp>) {
 	const filters = ref<FilterProp>([])
 
 	watch(model, (newFilters) => {
-		filters.value = deepCopy(newFilters)
+		filters.value = deepCopy(toRaw(newFilters))
 	}, { deep: true, immediate: true })
 
 	function getFilterCount(filter: FilterItem): number {
