@@ -311,9 +311,9 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SearchListField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.',
-						link: '/?path=/docs/composants-formulaires-searchlistfield--docs',
-						img: '/components/search-list-field.svg',
-						category: 'Formulaires',
+						link: '/?path=/docs/composants-filtres-searchlistfield--docs',
+						img: `/components/search-list-field${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
 					},
 					{
 						title: 'SelectBtnField',
@@ -341,6 +341,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour permettre à l\'utilisateur de choisir une option parmi plusieurs.',
 						link: '/?path=/docs/composants-formulaires-syradiogroup--docs',
 						img: `/components/sy-radiogroup${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
+						title: 'Captcha',
+						description: 'Utilisé pour confirmer que les interactions des utilisateurs sont effectuées par des humains et non par des robots.',
+						link: '/?path=/docs/composants-formulaires-captcha--docs',
+						img: `/components/captcha${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -472,8 +479,15 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'FilterSideBar',
 						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
-						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						link: '/?path=/docs/composants-filtres-filtersidebar--docs',
 						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
+					{
+						title: 'FilterInline',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterinline--docs',
+						img: `/components/filters-inline${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
 				]
@@ -509,6 +523,7 @@ export const ComponentsList: StoryObj = {
 					'NirField',
 					'Card',
 					'FilterSideBar',
+					'SearchListField',
 					'SyTextField',
 					'Switch',
 					'Tooltip',
@@ -530,6 +545,7 @@ export const ComponentsList: StoryObj = {
 					'DatePicker',
 					'PasswordField',
 					'Stepper',
+					'Captcha',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

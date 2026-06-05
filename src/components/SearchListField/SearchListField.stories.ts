@@ -3,7 +3,7 @@ import SearchListField from './SearchListField.vue'
 import { fn } from '@storybook/test'
 
 const meta = {
-	title: 'Composants/Formulaires/SearchListField',
+	title: 'Composants/Filtres/SearchListField',
 	component: SearchListField,
 	parameters: {
 		layout: 'fullscreen',
