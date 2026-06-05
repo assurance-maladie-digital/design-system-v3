@@ -100,11 +100,11 @@ export function useValidation(params: {
 })) {
 	if (params.disableErrorHandling.value) {
 		return {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			hasError: computed(() => params.hasErrorProp?.value ?? false),
-			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
+			errors: computed(() => params.errorMessages?.value || []),
+			warnings: computed(() => params.warningMessages?.value || []),
+			successes: computed(() => params.successMessages?.value || []),
+			hasError: computed(() => (params.errorMessages?.value?.length ?? 0) > 0 || (params.hasErrorProp?.value ?? false)),
+			hasWarning: computed(() => (params.warningMessages?.value?.length ?? 0) > 0 || (params.hasWarningProp?.value ?? false)),
 			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
 			validate: async () => true,
 			clearValidation: () => {},

@@ -7,6 +7,29 @@ import PeriodFilter from '../filters/PeriodFilter.vue'
 import SelectFilter from '../filters/SelectFilter.vue'
 import TextFilter from '../filters/TextFilter.vue'
 
+vi.mock('../../common/filters/getFilterComponent', () => {
+	return {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		default: (filterType?: string, filterOptions?: unknown) => {
+			if (filterType === 'select') {
+				return SelectFilter
+			}
+			else if (filterType === 'date') {
+				return DateFilter
+			}
+			else if (filterType === 'period') {
+				return PeriodFilter
+			}
+			else if (filterType === 'number') {
+				return NumberFilter
+			}
+			else {
+				return TextFilter
+			}
+		},
+	}
+})
+
 const headers = [
 	{
 		title: 'Nom',
@@ -42,28 +65,6 @@ const items = [
 ]
 
 describe('SyTable - filterByRange', () => {
-	vi.mock('../../common/filters/getFilterComponent', () => {
-		return {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			default: (filterType?: string, filterOptions?: unknown) => {
-				if (filterType === 'select') {
-					return SelectFilter
-				}
-				else if (filterType === 'date') {
-					return DateFilter
-				}
-				else if (filterType === 'period') {
-					return PeriodFilter
-				}
-				else if (filterType === 'number') {
-					return NumberFilter
-				}
-				else {
-					return TextFilter
-				}
-			},
-		}
-	})
 	afterAll(() => {
 		vi.resetModules()
 	})

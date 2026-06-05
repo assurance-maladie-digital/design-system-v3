@@ -2,78 +2,36 @@
 	import {
 		mdiEyeOutline,
 		mdiEyeOffOutline,
-		mdiAlertCircle,
-		mdiAlert,
-		mdiCheck,
+		mdiCloseCircle,
 	} from '@mdi/js'
-	import { ref, computed, watch, nextTick } from 'vue'
+	import { computed, ref, watch, nextTick, toRef } from 'vue'
+	import { usePasswordField } from './usePasswordFieldValidation'
 	import { config } from './config'
 	import { locales } from './locales'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import type { ColorType } from '@/components/Customs/SyTextField/types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { useValidatable } from '@/composables/validation/useValidatable'
+	import type { PasswordFieldProps } from './types'
 
-	const props = withDefaults(defineProps<{
-		modelValue?: string | null
-		variantStyle?: 'outlined' | 'underlined'
-		color?: ColorType
-		label: string
-		required?: boolean
-		errorMessages?: string[] | null
-		warningMessages?: string[] | null
-		successMessages?: string[] | null
-		readonly?: boolean
-		disabled?: boolean
-		placeholder?: string
-		customRules?: ValidationRule[]
-		customWarningRules?: ValidationRule[]
-		customSuccessRules?: ValidationRule[]
-		showSuccessMessages?: boolean
-		displayAsterisk?: boolean
-		isValidateOnBlur?: boolean
-		disableErrorHandling?: boolean
-		bgColor?: string
-		autocompleteType?: 'current-password' | 'new-password'
-	} & CustomizableOptions>(), {
+	const props = withDefaults(defineProps<PasswordFieldProps>(), {
 		modelValue: null,
 		variantStyle: 'outlined',
 		color: 'primary',
-		required: false,
-		errorMessages: null,
-		warningMessages: null,
-		successMessages: null,
-		readonly: false,
-		disabled: false,
 		placeholder: undefined,
-		customRules: () => [],
-		customWarningRules: () => [],
-		customSuccessRules: () => [],
-		showSuccessMessages: false,
 		displayAsterisk: false,
-		isValidateOnBlur: true,
-		disableErrorHandling: false,
+		clearable: false,
 		bgColor: 'white',
 		autocompleteType: 'current-password',
+		helpText: undefined,
+		hideDetails: false,
+		...validationPropsDefaults,
 	})
 
 	const options = useCustomizableOptions(config, props)
-	const emit = defineEmits(['update:modelValue', 'submit'])
-
-	const eyeIcon = mdiEyeOutline
-	const eyeOffIcon = mdiEyeOffOutline
-	const showEyeIcon = ref(false)
-	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
-	const alertMessage = ref('')
-	// Force re-render of SyTextField when needed (e.g., after reset)
-	const fieldKey = ref(0)
-
-	const btnLabel = locales.showPassword
+	const emit = defineEmits(['update:modelValue'])
 
 	const password = ref<string | null>(props.modelValue)
-	const isProgrammaticChange = ref(false)
 	watch(
 		() => props.modelValue,
 		(newVal) => {
@@ -81,79 +39,6 @@
 		},
 	)
 
-	// Construction des règles de validation
-	const defaultRules = computed<ValidationRule[]>(() => {
-		const rules: ValidationRule[] = []
-
-		if (props.required) {
-			rules.push({
-				type: 'required',
-				options: {
-					message: 'Le mot de passe est requis',
-					fieldIdentifier: props.label || 'password',
-				},
-			})
-		}
-
-		return rules
-	})
-
-	// Initialisation du composable de validation
-	const { errors, warnings, successes, displaySuccesses, validateField } = !props.readonly
-		? useValidation({
-			// L'état de succès (et donc l'icône) est toujours calculé ; l'affichage du
-			// texte des messages reste filtré en aval par SyTextField via showSuccessMessages.
-			showSuccessMessages: true,
-			fieldIdentifier: props.label || 'password',
-			disableErrorHandling: props.disableErrorHandling,
-		})
-		: {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			displaySuccesses: ref<string[]>([]),
-			validateField: () => ({ hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }),
-		}
-
-	const hasError = computed(() => errors.value.length > 0)
-	const hasWarning = computed(() => warnings.value.length > 0)
-	const hasSuccess = computed(() => successes.value.length > 0 && !hasError.value && !hasWarning.value)
-
-	const validationIcon = computed(() => {
-		if (hasError.value) return mdiAlertCircle
-		if (hasWarning.value) return mdiAlert
-		if (hasSuccess.value) return mdiCheck
-		return ''
-	})
-
-	const validationColor = computed(() => {
-		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'warning'
-		if (hasSuccess.value) return 'success'
-		return 'rgb(0 0 0 / 100%)'
-	})
-
-	// Synchronisation des messages externes
-	watch(() => props.errorMessages, (newVal) => {
-		if (newVal) {
-			errors.value = newVal
-		}
-	}, { immediate: true })
-
-	watch(() => props.warningMessages, (newVal) => {
-		if (newVal) {
-			warnings.value = newVal
-		}
-	}, { immediate: true })
-
-	watch(() => props.successMessages, (newVal) => {
-		if (newVal) {
-			successes.value = newVal
-		}
-	}, { immediate: true })
-
-	// Ne pas revalider automatiquement à chaque changement de valeur.
-	// La validation est gérée explicitement au blur et à la soumission.
 	watch(
 		() => password.value,
 		(newVal) => {
@@ -161,85 +46,99 @@
 		},
 	)
 
+	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
+	const alertMessage = ref('')
+	const fieldKey = ref(0)
+	const focused = ref(false)
+	const btnLabel = locales.showPassword
+
+	const showClear = computed(() => {
+		if (!props.clearable) return false
+		if (props.disabled || props.readonly) return false
+		return password.value !== null && password.value !== ''
+	})
+
+	function clearPassword() {
+		password.value = ''
+		emit('update:modelValue', '')
+	}
+
+	const reset = () => {
+		clearValidation()
+		alertMessage.value = ''
+		showEyeIcon.value = false
+
+		password.value = null
+		emit('update:modelValue', null)
+
+		fieldKey.value++
+	}
+
+	const showEyeIcon = ref(false)
+
 	function togglePasswordVisibility() {
 		showEyeIcon.value = !showEyeIcon.value
 		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
 		nextTick(() => {
-			// Connect input to status message via aria-describedby
 			const inputElement = document.getElementById(passwordFieldId.value)
 			const statusId = `${passwordFieldId.value}-status`
 
 			if (inputElement) {
-				// Get existing describedby IDs
 				const existingDescribedby = inputElement.getAttribute('aria-describedby')
 				const ids = existingDescribedby ? existingDescribedby.split(' ').filter(id => id !== statusId) : []
-
-				// Add our status ID
 				ids.push(statusId)
-
-				// Set the attribute
 				inputElement.setAttribute('aria-describedby', ids.join(' '))
 			}
 
-			// Reset the message after a short delay to avoid repeated announcements
 			setTimeout(() => {
 				alertMessage.value = ''
 			}, 2000)
 		})
 	}
 
-	async function handleKeydown(event: KeyboardEvent): Promise<void> {
-		if (event.key === 'Enter') {
-			await validateOnSubmit()
-		}
-	}
-
-	const validateOnSubmit = async (): Promise<boolean> => {
-		if (props.readonly) return true // Retourner true au lieu de undefined
-		await validateField(password.value, [...defaultRules.value, ...(props.customRules || [])], props.customWarningRules || [], props.customSuccessRules || [])
-		const isValid = errors.value.length === 0
-		if (isValid) {
-			emit('submit')
-		}
-		return isValid
-	}
-
-	// Nettoie uniquement l'état de validation (messages) sans modifier la valeur
-	const clearValidation = () => {
-		errors.value = []
-		warnings.value = []
-		successes.value = []
-	}
-
-	// Reset hook utilisé par SyForm.reset() via useValidatable
-	const reset = () => {
-		// Réinitialiser d'abord l'état de validation et d'interaction
-		clearValidation()
-		alertMessage.value = ''
-		showEyeIcon.value = false
-
-		// Réinitialiser le contenu du champ
-		isProgrammaticChange.value = true
-		password.value = null
-		emit('update:modelValue', null)
-		isProgrammaticChange.value = false
-
-		// Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
-		fieldKey.value++
-	}
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
-
-	defineExpose({
-		showEyeIcon,
+	const {
 		errors,
 		warnings,
 		successes,
 		hasError,
 		hasWarning,
 		hasSuccess,
-		validateOnSubmit,
+		validationIcon,
+		validationColor,
+		validate,
+		clearValidation,
+	} = usePasswordField({
+		password,
+		focused,
+		required: toRef(props, 'required'),
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		label: toRef(props, 'label'),
+		isValidateOnBlur: toRef(props, 'isValidateOnBlur'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		rules: toRef(props, 'rules'),
+		customRules: toRef(props, 'customRules'),
+		customWarningRules: toRef(props, 'customWarningRules'),
+		customSuccessRules: toRef(props, 'customSuccessRules'),
+		errorMessages: toRef(props, 'errorMessages'),
+		warningMessages: toRef(props, 'warningMessages'),
+		successMessages: toRef(props, 'successMessages'),
+		hasErrorProp: toRef(props, 'hasError'),
+		hasWarningProp: toRef(props, 'hasWarning'),
+		hasSuccessProp: toRef(props, 'hasSuccess'),
+		maxErrors: toRef(props, 'maxErrors'),
+	})
+
+	defineExpose({
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+		validateOnSubmit: validate,
 		clearValidation,
 		reset,
 	})
@@ -254,10 +153,10 @@
 		:variant-style="props.variantStyle"
 		:color="props.color"
 		:label="props.label"
-		:required="props.required"
+		:disable-error-handling="true"
 		:error-messages="errors"
 		:warning-messages="warnings"
-		:success-messages="displaySuccesses"
+		:success-messages="successes"
 		:has-success="hasSuccess"
 		:show-success-messages="props.showSuccessMessages"
 		:readonly="props.readonly"
@@ -265,34 +164,46 @@
 		:placeholder="props.placeholder"
 		:bg-color="props.bgColor"
 		:type="showEyeIcon ? 'text' : 'password'"
+		:required="props.required"
 		:aria-invalid="hasError"
+		:aria-required="props.required"
 		:aria-describedby="`${passwordFieldId}-status${props.customRules && props.customRules.length > 0 ? ' ' + passwordFieldId + '-guidelines' : ''}`"
 		:display-asterisk="props.displayAsterisk"
 		:autocomplete="props.autocompleteType"
+		:help-text="props.helpText"
+		:hide-details="props.hideDetails"
 		class="vd-password"
-		:validate-on="props.isValidateOnBlur ? 'blur lazy' : 'lazy'"
-		@blur="async () => {
-			if (props.isValidateOnBlur && !props.readonly) {
-				await validateField(
-					password,
-					[...defaultRules, ...(props.customRules || [])],
-					props.customWarningRules || [],
-					props.customSuccessRules || []
-				)
-			}
-		}"
-		@keydown="handleKeydown"
+		@focus="focused = true"
+		@blur="focused = false"
 	>
 		<template #append-inner>
 			<div
 				class="d-flex align-center"
 			>
+				<button
+					v-if="showClear"
+					type="button"
+					class="mr-1 password-clear-button"
+					:aria-label="props.label ? locales.clearPassword(props.label) : locales.clearPassword('')"
+					:title="props.label ? locales.clearPassword(props.label) : locales.clearPassword('')"
+					v-bind="options.btn"
+					@click.stop="clearPassword"
+				>
+					<SyIcon
+						:icon="mdiCloseCircle"
+						:aria-hidden="true"
+						decorative
+					/>
+				</button>
 				<SyIcon
 					v-if="validationIcon"
 					:icon="validationIcon"
 					:color="validationColor"
 					decorative
-					class="mr-2"
+					class="mr-1"
+					:class="{
+						'opacity-60': !hasError,
+					}"
 				/>
 				<VBtn
 					type="button"
@@ -306,7 +217,7 @@
 					@keydown.enter.prevent="togglePasswordVisibility"
 				>
 					<SyIcon
-						:icon="showEyeIcon ? eyeIcon : eyeOffIcon"
+						:icon="showEyeIcon ? mdiEyeOutline : mdiEyeOffOutline"
 						color="rgb(0 0 0 / 70%)"
 						:aria-hidden="true"
 						decorative
@@ -420,4 +331,20 @@
 		fill: rgb(0 0 0 / 70%);
 	}
 }
+
+.password-clear-button {
+	cursor: pointer;
+	padding: 0;
+
+	&:focus-visible {
+		background-color: rgb(0 0 0 / 8%);
+		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
+	}
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-onSurface)) !important;
+		opacity: var(--v-medium-emphasis-opacity) !important;
+	}
+}
+
 </style>

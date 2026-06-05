@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { defineComponent, h } from 'vue'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { useFormValidation, useValidatableComponent } from '../useFormValidation'
 import type { ValidatableComponent } from '../useFormValidation'
 
@@ -35,6 +35,15 @@ const ParentWithForm = defineComponent({
 })
 
 describe('useFormValidation', () => {
+	beforeEach(() => {
+		lastChildApi = null
+		vi.clearAllMocks()
+	})
+
+	afterEach(async () => {
+		await flushPromises()
+	})
+
 	it('registers components and avoids duplicates', () => {
 		lastChildApi = null
 
