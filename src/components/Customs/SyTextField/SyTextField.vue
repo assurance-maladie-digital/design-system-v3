@@ -11,6 +11,8 @@
 		mdiCloseCircle,
 		mdiAlertCircle,
 		mdiCalendar,
+		mdiChevronUp,
+		mdiChevronDown,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
 	import type { IconType } from '@/types/vuetifyTypes'
@@ -110,7 +112,13 @@
 			return value
 		}
 
-		return value.replace(NUMBER_ALLOWED_CHARACTERS_PATTERN, '')
+		// Le champ number est rendu en type=text (cf. nativeInputType) pour pouvoir lire
+		// et corriger le texte brut sur tous les navigateurs (Chrome comme Firefox).
+		// On retire les caractères interdits puis on ne conserve qu'un PRÉFIXE de nombre
+		// valide : un seul séparateur décimal, un seul exposant, signes bien placés.
+		const cleaned = value.replace(NUMBER_ALLOWED_CHARACTERS_PATTERN, '')
+		const match = cleaned.match(/^[+-]?\d*\.?\d*(?:[eE][+-]?\d*)?/)
+		return match ? match[0] : ''
 	}
 
 	const sanitizeTelValue = (value: string | number | null | undefined) => {
@@ -139,6 +147,40 @@
 	})
 
 	const attrs = useAttrs()
+
+	// Un champ "number" est rendu en type=text (+ inputmode=decimal) : input.value devient
+	// lisible/corrigeable partout. L'incrément natif étant perdu, il est réimplémenté
+	// ci-dessous (flèches ↑/↓ + boutons +/-).
+	const nativeInputType = computed(() => (props.type === 'number' ? 'text' : props.type))
+
+	const stepValue = (direction: 1 | -1) => {
+		if (props.disabled || props.readonly) {
+			return
+		}
+
+		const rawStep = Number(attrs.step ?? 1)
+		const step = Number.isFinite(rawStep) && rawStep > 0 ? rawStep : 1
+
+		const currentNum = Number(model.value)
+		const base = Number.isFinite(currentNum) ? currentNum : 0
+
+		// Arrondit l'addition AVANT le clamp pour éviter les imprécisions flottantes
+		// (ex. pas de 0.1) sans altérer la précision de min/max.
+		const decimals = (String(step).split('.')[1] ?? '').length
+		let next = Number((base + direction * step).toFixed(decimals))
+
+		const min = attrs.min !== undefined && attrs.min !== '' ? Number(attrs.min) : undefined
+		const max = attrs.max !== undefined && attrs.max !== '' ? Number(attrs.max) : undefined
+		if (min !== undefined && Number.isFinite(min) && next < min) {
+			next = min
+		}
+		if (max !== undefined && Number.isFinite(max) && next > max) {
+			next = max
+		}
+
+		model.value = String(next)
+	}
+
 	const focused = ref(false)
 	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, validationIcon, hasMessages } = useSyTextFieldValidation({
 		modelValue: model,
@@ -260,6 +302,12 @@
 			if (!allowedNonCharacterKeys.includes(event.key) && event.key.length === 1 && !allowedPattern.test(event.key)) {
 				event.preventDefault()
 			}
+		}
+
+		// type=number est rendu en type=text : on réimplémente l'incrément clavier ↑/↓.
+		if (props.type === 'number' && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+			event.preventDefault()
+			stepValue(event.key === 'ArrowUp' ? 1 : -1)
 		}
 
 		emit('keydown', event)
@@ -560,7 +608,7 @@
 			:suffix="props.suffix"
 			:theme="props.theme"
 			:tile="props.isTiled"
-			:type="props.type"
+			:type="nativeInputType"
 			:inputmode="props.type === 'number' ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
 			:variant="props.variantStyle"
 			:width="props.width"
@@ -712,6 +760,38 @@
 						:icon="ICONS[props.appendInnerIcon]"
 						:decorative="true"
 					/>
+					<!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
+					<div
+						v-if="props.type === 'number' && !props.areSpinButtonsHidden && !props.disabled && !props.readonly"
+						class="sy-text-field__spinner"
+					>
+						<button
+							type="button"
+							tabindex="-1"
+							class="sy-text-field__spinner-btn"
+							:aria-label="props.label ? `Augmenter ${props.label}` : 'Augmenter'"
+							@click.stop="stepValue(1)"
+						>
+							<SyIcon
+								:icon="mdiChevronUp"
+								role="presentation"
+								:decorative="true"
+							/>
+						</button>
+						<button
+							type="button"
+							tabindex="-1"
+							class="sy-text-field__spinner-btn"
+							:aria-label="props.label ? `Diminuer ${props.label}` : 'Diminuer'"
+							@click.stop="stepValue(-1)"
+						>
+							<SyIcon
+								:icon="mdiChevronDown"
+								role="presentation"
+								:decorative="true"
+							/>
+						</button>
+					</div>
 				</slot>
 			</template>
 
@@ -877,6 +957,36 @@
 :deep(.sy-text-field__clear .v-icon__svg),
 :deep(.v-field__clearable .v-icon__svg) {
 	fill: rgba(var(--v-theme-onSurface), 0.6) !important;
+}
+
+.sy-text-field__spinner {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	margin-left: 2px;
+}
+
+.sy-text-field__spinner-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 13px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: rgba(var(--v-theme-onSurface), 0.6);
+	cursor: pointer;
+}
+
+.sy-text-field__spinner-btn:hover {
+	color: rgb(var(--v-theme-primary));
+}
+
+.sy-text-field__spinner-btn :deep(.v-icon) {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
 }
 
 .sy-text-field__clear {

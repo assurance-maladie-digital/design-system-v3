@@ -336,6 +336,74 @@ describe('SyTextField', () => {
 		expect(event.defaultPrevented).toBe(false)
 	})
 
+	it('collapses multiple decimal separators when type is number', async () => {
+		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field', type: 'number' },
+		})
+
+		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
+		inputElement.value = '32323.....2332...32.32.323'
+
+		await input.trigger('input')
+
+		// Un seul séparateur décimal conservé (préfixe de nombre valide)
+		expect(inputElement.value).toBe('32323.')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['32323.'])
+	})
+
+	it('renders as a text input (with inputmode decimal) when type is number', () => {
+		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field', type: 'number' },
+		})
+		const input = wrapper.find('input')
+		expect(input.attributes('type')).toBe('text')
+		expect(input.attributes('inputmode')).toBe('decimal')
+	})
+
+	describe('number increment buttons', () => {
+		it('increments via the up button', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '5' },
+			})
+			await wrapper.find('button[aria-label="Augmenter Test Field"]').trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['6'])
+		})
+
+		it('decrements via the down button', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '5' },
+			})
+			await wrapper.find('button[aria-label="Diminuer Test Field"]').trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['4'])
+		})
+
+		it('increments with the ArrowUp key', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '5' },
+			})
+			await wrapper.find('input').trigger('keydown', { key: 'ArrowUp' })
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['6'])
+		})
+
+		it('respects step and clamps to max', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '0.2' },
+				attrs: { step: 0.1, max: 0.25 },
+			})
+			await wrapper.find('button[aria-label="Augmenter Test Field"]').trigger('click')
+			// 0.2 + 0.1 = 0.3 -> plafonné à 0.25
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['0.25'])
+		})
+
+		it('hides the increment buttons when areSpinButtonsHidden is true', () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', areSpinButtonsHidden: true },
+			})
+			expect(wrapper.find('button[aria-label="Augmenter Test Field"]').exists()).toBe(false)
+		})
+	})
+
 	it('filters alphabetic characters when type is tel', async () => {
 		wrapper = mount(SyTextField, {
 			props: {
