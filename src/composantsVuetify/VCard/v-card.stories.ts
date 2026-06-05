@@ -301,7 +301,7 @@ export const WithCustomActions: Story = {
                             color="primary"
                             class="text-none"
                         >
-                            Imprimer sans transmettre
+                            Action personnalisée
                         </VBtn>
                     </div>
 
@@ -311,14 +311,14 @@ export const WithCustomActions: Story = {
                             color="primary"
                             class="mr-2"
                         >
-                            Modifier
+                            Annuler
                         </VBtn>
 
                         <VBtn
                             variant="tonal"
                             color="primary"
                         >
-                            Transmettre
+                            Confirmer
                         </VBtn>
                     </div>
                 </div>
@@ -346,7 +346,7 @@ export const WithCustomActions: Story = {
                     color="primary"
                     class="text-none"
                 >
-                    Imprimer sans transmettre
+                    Action personnalisée
                 </v-btn>
             </div>
 
@@ -356,14 +356,14 @@ export const WithCustomActions: Story = {
                     color="primary"
                     class="mr-2"
                 >
-                    Modifier
+                    Annuler
                 </v-btn>
 
                 <v-btn
                     variant="tonal"
                     color="primary"
                 >
-                    Transmettre
+                    Confirmer
                 </v-btn>
             </div>
         </div>
