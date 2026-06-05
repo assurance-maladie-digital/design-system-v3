@@ -1,28 +1,22 @@
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
-import { globSync } from 'glob'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
+import { globSync } from 'glob'
 
 const root = process.cwd()
 
-const storyFiles = globSync('src/components/**/*.stories.@(js|ts|tsx)', {
-	cwd: root,
-	absolute: true,
-}).filter((file) => {
-	const normalized = file.replace(/\\/g, '/')
-
-	return !normalized.includes('/validation/')
-		&& !normalized.includes('/rules/')
-		&& !normalized.includes('/Usages.')
-		&& !normalized.includes('/usage.')
-		&& !normalized.includes('/accessibilite/')
-		&& !normalized.includes('/accessibilité/')
-})
-
 const outputPath = path.resolve(
 	root,
-	'src/stories/Accessibilite/DesignSystem/code-quality-status.json',
+	'src/stories/Components/code-quality-status.json',
 )
+
 const requiredFormStories = ['disabled', 'required', 'form-validation']
+
+const excludedComponentNames = [
+	'FilterRules',
+	'Usages',
+	'DeclarationAccessibilityPage',
+	'datePickers',
+]
 
 const ap2026Components = [
 	'composants-layout-pagecontainer',
@@ -57,6 +51,19 @@ const ap2026Components = [
 	'composants-tableaux-paginatedtable',
 ]
 
+const storyFiles = globSync('src/components/**/*.stories.@(js|ts|tsx)', {
+	cwd: root,
+	absolute: true,
+}).filter((file) => {
+	const normalized = file.replace(/\\/g, '/')
+
+	return !normalized.includes('/rules/')
+		&& !normalized.includes('/Usages.')
+		&& !normalized.includes('/usage.')
+		&& !normalized.includes('/accessibilite/')
+		&& !normalized.includes('/accessibilité/')
+})
+
 function slugify(value) {
 	return value
 		.toLowerCase()
@@ -78,47 +85,14 @@ function getStorybookTitle(content, componentName) {
 	return match?.[1] || componentName
 }
 
-function getPropsAndSlotsDocumentationDetails(content) {
-	const props = extractPropsFromArgTypes(content)
+function getCategory(storybookTitle) {
+	const parts = storybookTitle.split('/')
 
-	const slots = Array.from(content.matchAll(/table\s*:\s*{[\s\S]*?category\s*:\s*['"`]slots['"`][\s\S]*?}/gi))
-		.map((_, index) => `slot-${index}`)
-
-	const documentedProps = props.filter((prop) => {
-		const propRegex = new RegExp(`${prop}\\s*:\\s*{[\\s\\S]*?description\\s*:`, 'm')
-		return propRegex.test(content)
-	})
-
-	const total = props.length + slots.length
-	const documented = documentedProps.length + slots.length
-
-	return {
-		total,
-		documented,
-		label: `${documented}/${total} documentés`,
-		isComplete: total > 0 && documented === total,
+	if (parts[0] !== 'Composants') {
+		return 'Autres'
 	}
-}
-function hasPlayground(content, docsContent = '') {
-	const combined = `${content}\n${docsContent}`
 
-	return /export\s+const\s+Playground\b/i.test(combined)
-		|| /playground/i.test(combined)
-		|| /<Canvas\s+of=/i.test(combined)
-		|| /<Controls\s+of=/i.test(combined)
-}
-
-function hasSourceCode(content) {
-	const hasTemplate
-		= /name\s*:\s*['"`]Template['"`]/i.test(content)
-			|| /<template[\s>]/i.test(content)
-
-	const hasScript
-		= /name\s*:\s*['"`]Script['"`]/i.test(content)
-			|| /<script[\s>]/i.test(content)
-			|| /import\s+.*from\s+['"`]/i.test(content)
-
-	return hasTemplate && hasScript
+	return parts[1] || 'Autres'
 }
 
 function extractArgTypesBlock(content) {
@@ -146,15 +120,47 @@ function extractPropsFromArgTypes(content) {
 	return Array.from(props)
 }
 
-function hasPropsDocumentation(content) {
+function getPropsAndSlotsDocumentationDetails(content) {
 	const props = extractPropsFromArgTypes(content)
 
-	if (!props.length) return false
+	const slots = Array.from(
+		content.matchAll(/table\s*:\s*{[\s\S]*?category\s*:\s*['"`]slots['"`][\s\S]*?}/gi),
+	).map((_, index) => `slot-${index}`)
 
-	return props.every((prop) => {
+	const documentedProps = props.filter((prop) => {
 		const propRegex = new RegExp(`${prop}\\s*:\\s*{[\\s\\S]*?description\\s*:`, 'm')
 		return propRegex.test(content)
 	})
+
+	const total = props.length + slots.length
+	const documented = documentedProps.length + slots.length
+
+	return {
+		total,
+		documented,
+		label: `${documented}/${total} documentés`,
+		isComplete: total > 0 && documented === total,
+	}
+}
+
+function hasSourceCode(content) {
+	const hasTemplate = /name\s*:\s*['"`]Template['"`]/i.test(content)
+		|| /<template[\s>]/i.test(content)
+
+	const hasScript = /name\s*:\s*['"`]Script['"`]/i.test(content)
+		|| /<script[\s>]/i.test(content)
+		|| /import\s+.*from\s+['"`]/i.test(content)
+
+	return hasTemplate && hasScript
+}
+
+function hasPlayground(content, docsContent = '') {
+	const combined = `${content}\n${docsContent}`
+
+	return /export\s+const\s+Playground\b/i.test(combined)
+		|| /playground/i.test(combined)
+		|| /<Canvas\s+of=/i.test(combined)
+		|| /<Controls\s+of=/i.test(combined)
 }
 
 function getRequiredStoriesStatus(content, title) {
@@ -184,10 +190,9 @@ function getVisualThemeStatus(componentName, content) {
 		return 'Non concerné'
 	}
 
-	const hasDarkStory
-		= /dark/i.test(content)
-			|| /customTheme/i.test(content)
-			|| /custom-theme/i.test(content)
+	const hasDarkStory = /dark/i.test(content)
+		|| /customTheme/i.test(content)
+		|| /custom-theme/i.test(content)
 
 	return hasDarkStory ? 'dark' : 'light'
 }
@@ -217,7 +222,12 @@ function getCriticality({
 	}
 
 	if (requiredStoriesStatus.startsWith('Partiel')) {
-		issues.push(requiredStoriesStatus.replace('Partiel — manquantes :', 'Story requise manquante :'))
+		issues.push(
+			requiredStoriesStatus.replace(
+				'Partiel — manquantes :',
+				'Story requise manquante :',
+			),
+		)
 	}
 
 	if (!hasUxUsagePage) {
@@ -231,33 +241,52 @@ function getCriticality({
 	return issues.join(' | ')
 }
 
-function getCategory(storybookTitle) {
-	const parts = storybookTitle.split('/')
-
-	if (parts[0] !== 'Composants') {
-		return 'Autres'
+function shouldExcludeStory({ componentName, storybookTitle }) {
+	if (excludedComponentNames.includes(componentName)) {
+		return true
 	}
 
-	return parts[1] || 'Autres'
+	const excludedSegments = [
+		'/Accessibility',
+		'/Validation',
+		'/DateInput',
+		'/Submit',
+	]
+
+	return excludedSegments.some(segment => storybookTitle.includes(segment))
 }
 
 function main() {
 	const results = storyFiles
 		.map((filePath) => {
 			const content = readFileSync(filePath, 'utf8')
-			const mdxPath = filePath.replace(/\.stories\.(js|ts|tsx)$/, '.mdx')
+			const componentName = getComponentName(filePath)
+			const componentDir = path.dirname(filePath)
+			const storybookTitle = getStorybookTitle(content, componentName)
 
+			if (shouldExcludeStory({ componentName, storybookTitle })) {
+				return null
+			}
+
+			const mdxPath = filePath.replace(/\.stories\.(js|ts|tsx)$/, '.mdx')
 			const docsContent = existsSync(mdxPath)
 				? readFileSync(mdxPath, 'utf8')
 				: ''
-			const componentName = getComponentName(filePath)
-
-			const componentDir = path.dirname(filePath)
 
 			const files = globSync('**/*', {
 				cwd: componentDir,
 				nodir: true,
 			})
+
+			const propsDetails = getPropsAndSlotsDocumentationDetails(content)
+			const propsDocumentation = propsDetails.isComplete
+			const sourceTab = hasSourceCode(content)
+			const requiredStoriesStatus = getRequiredStoriesStatus(content, storybookTitle)
+			const uxUsagePage = files.some(file => file.toLowerCase().endsWith('usages.mdx'))
+			const interactivePlayground = hasPlayground(content, docsContent)
+			const themeStatus = getVisualThemeStatus(componentName, content)
+			const themeModeStatus = getThemeModeStatus(content)
+			const storyPath = slugify(storybookTitle)
 
 			const hasUnitTest = files.some(file =>
 				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.spec.ts`)
@@ -271,32 +300,12 @@ function main() {
 			const hasCypressTest = files.some(file =>
 				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.visual.cy.ts`),
 			)
-			const storybookTitle = getStorybookTitle(content, componentName)
-
-			const excludedNames = [
-				'FilterRules',
-				'ComplexDatePicker',
-				'Usages',
-			]
-
-			if (excludedNames.includes(componentName)) {
-				return null
-			}
-
-			const propsDetails = getPropsAndSlotsDocumentationDetails(content)
-			const propsDocumentation = propsDetails.isComplete
-			const sourceTab = hasSourceCode(content)
-			const requiredStoriesStatus = getRequiredStoriesStatus(content, storybookTitle)
-			const uxUsagePage = files.some(file => file.toLowerCase().endsWith('usages.mdx'))
-			const interactivePlayground = hasPlayground(content, docsContent)
-			const themeStatus = getVisualThemeStatus(componentName, content)
-			const themeModeStatus = getThemeModeStatus(content)
-			const storyPath = slugify(storybookTitle)
 
 			const hasAp2026Theme = ap2026Components.some(id =>
 				storyPath === id
 				|| storyPath.startsWith(`${id}-`),
 			)
+
 			const criticality = getCriticality({
 				hasPropsDocumentation: propsDocumentation,
 				hasSourceTab: sourceTab,
@@ -304,8 +313,6 @@ function main() {
 				hasUxUsagePage: uxUsagePage,
 				hasInteractivePlayground: interactivePlayground,
 			})
-
-			const isFullyCompliant = !criticality
 
 			return {
 				componentName,
@@ -315,19 +322,20 @@ function main() {
 				requiredStoriesStatus,
 				hasUxUsagePage: uxUsagePage,
 				themeStatus,
-				hasAp2026Theme: hasAp2026Theme,
+				hasAp2026Theme,
 				themeModeStatus,
 				hasInteractivePlayground: interactivePlayground,
 				criticality,
-				isFullyCompliant,
+				isFullyCompliant: !criticality,
 				storybookTitle,
 				hasUnitTest,
 				hasA11yTest,
 				hasCypressTest,
-				storybookId: `${slugify(storybookTitle)}--docs`,
+				storybookId: `${storyPath}--docs`,
 				category: getCategory(storybookTitle),
 			}
-		}).filter(Boolean)
+		})
+		.filter(Boolean)
 
 	writeFileSync(
 		outputPath,
