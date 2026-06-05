@@ -651,7 +651,7 @@ describe('SySelect.vue', () => {
 
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 				const instance = wrapper.vm as any
-				expect(instance.hasError).toBe(false)
+				expect(instance.hasError).toBe(true)
 				expect(wrapper.find('.v-messages__message').exists()).toBe(true)
 
 				wrapper.unmount()
