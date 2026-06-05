@@ -114,6 +114,18 @@ describe('useValidation (unifyValidation)', () => {
 			expect(result.errors.value).toContain('Nouvelle erreur')
 		})
 
+		it('limits the number of errors from errorMessages according to maxErrors', async () => {
+			const errorMessages = ref<string[] | null>(['E1', 'E2', 'E3'])
+			const params = makeParams({ errorMessages, maxErrors: ref(2) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await nextTick()
+			expect(result.errors.value).toHaveLength(2)
+
+			expect(result.errors.value).toEqual(['E1', 'E2'])
+			expect(result.errors.value).not.toContain('E3')
+		})
+
 		it('combines rule validation errors with external errorMessages', async () => {
 			const errorMessages = ref<string[] | null>(['Erreur par défaut'])
 			const params = makeParams({
@@ -125,7 +137,7 @@ describe('useValidation (unifyValidation)', () => {
 
 			const valid = await result.validate()
 			expect(valid).toBe(false)
-			expect(result.errors.value).toEqual(['Erreur règle', 'Erreur par défaut'])
+			expect(result.errors.value).toEqual(['Erreur par défaut', 'Erreur règle'])
 			expect(result.hasError.value).toBe(true)
 		})
 
