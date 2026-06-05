@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 	import { ref, computed, watch } from 'vue'
 	import { mdiMagnify } from '@mdi/js'
+	import { useId } from 'vue'
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
 	import { locales as defaultLocales } from './locales'
@@ -11,7 +12,7 @@
 
 	const props = defineProps({
 		modelValue: {
-			type: Array as PropType<unknown[]>,
+			type: Array as PropType<unknown[] | undefined | null>,
 			default: () => [],
 		},
 		items: {
@@ -52,7 +53,7 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
-			internalValue.value = newValue
+			internalValue.value = Array.isArray(newValue) ? [...newValue] : []
 		}, { immediate: true },
 	)
 
@@ -94,6 +95,8 @@
 		emit('update:modelValue', [...value])
 	}
 
+	const id = useId()
+
 	defineExpose({
 		filteredItems,
 		search,
@@ -113,6 +116,7 @@
 			tabindex="0"
 			data-test-id="search-input"
 			:bg-color="props.bgColor"
+			:disable-error-handling="true"
 		>
 			<template #prepend-inner>
 				<SyIcon
@@ -157,10 +161,11 @@
 					<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
 					<label
 						class="label"
-						:for="`checkbox-${slugify(item.label)}`"
+						:for="`checkbox-${slugify(item.label)}-${id}`"
 					>
 						<SyCheckbox
-							:id="`checkbox-${slugify(item.label)}`"
+							:id="`checkbox-${slugify(item.label)}-${id}`"
+							:name="`checkbox-${slugify(item.label)}-${id}`"
 							hide-details
 							density="compact"
 							class="ml-2"

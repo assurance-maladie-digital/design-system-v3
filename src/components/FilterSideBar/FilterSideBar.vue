@@ -23,19 +23,18 @@
 	})
 
 	const emits = defineEmits<{
-		'update:modelValue': (value: FilterProp) => void
+		(e: 'update:modelValue', value: FilterProp): void
 	}>()
 
 	const {
 		filters,
-		updateValue,
 		removeChip,
 		resetFilter,
 		getChips,
 		getFilterCount,
 		formatFilterName,
 		resetAllFilters,
-	} = useFilterable(toRef(props, 'modelValue'), emits)
+	} = useFilterable(toRef(props, 'modelValue'))
 
 	const drawer = ref(false)
 
@@ -57,7 +56,7 @@
 	}
 
 	function applyFilters(): void {
-		updateValue()
+		emits('update:modelValue', filters.value)
 		drawer.value = false
 	}
 
@@ -76,6 +75,12 @@
 			svg.removeAttribute('role')
 		})
 	})
+
+	function resetAll(): void {
+		resetAllFilters()
+		emits('update:modelValue', filters.value)
+	}
+
 </script>
 
 <template>
@@ -175,7 +180,7 @@
 								<slot
 									:name="`${formatFilterName(filter.name)}`"
 									:props="{
-										modelValue: filter.value as any,
+										modelValue: filter.value,
 										'onUpdate:modelValue': (value: unknown) =>{
 											(filter.value = value)},
 									}"
@@ -207,7 +212,7 @@
 							class="sy-filters-side-bar__reset-btn mb-4"
 							type="reset"
 							:aria-label="locales.resetAriaLabel"
-							@click.stop="resetAllFilters"
+							@click.stop="resetAll"
 						>
 							{{ locales.reset }}
 						</VBtn>

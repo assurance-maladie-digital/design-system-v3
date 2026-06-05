@@ -8,6 +8,7 @@
 		mdiCheck,
 		mdiInformationOutline,
 		mdiClose,
+		mdiCloseCircle,
 		mdiAlertCircle,
 		mdiCalendar,
 	} from '@mdi/js'
@@ -687,12 +688,13 @@
 					<!-- Keyboard-focusable clear button -->
 					<VBtn
 						v-if="showClear"
-						class="v-btn v-btn--density-compact mr-1"
+						class="v-btn v-btn--density-compact mr-1 sy-text-field__clear"
 						:class="clearButtonColorClass"
 						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
-						:icon="mdiClose"
+						:icon="mdiCloseCircle"
 						variant="text"
+						:ripple="false"
 						@click.stop="clearField"
 						@keydown.enter.stop
 						@keydown.space.stop
@@ -870,6 +872,28 @@
 		outline-offset: 2px;
 		opacity: 1;
 	}
+}
+
+:deep(.sy-text-field__clear .v-icon__svg),
+:deep(.v-field__clearable .v-icon__svg) {
+	fill: rgba(var(--v-theme-onSurface), 0.6) !important;
+}
+
+.sy-text-field__clear {
+	transition: none !important;
+}
+
+.sy-text-field__clear:hover :deep(.v-btn__overlay) {
+	opacity: 0 !important;
+}
+
+:deep(.v-field__clearable),
+:deep(.v-field__clearable *) {
+	transition: none !important;
+}
+
+:deep(.v-field__clearable .v-icon) {
+	opacity: 1 !important;
 }
 
 // Quand le helpText occupe la position du message (état neutre ou succès sans message texte),

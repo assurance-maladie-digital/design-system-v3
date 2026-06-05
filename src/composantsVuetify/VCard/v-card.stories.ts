@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { VCard, VCardTitle, VCardText, VCardActions } from 'vuetify/components'
+import { VCard, VCardTitle, VCardText, VCardActions, VDivider } from 'vuetify/components'
 import { VBtn } from 'vuetify/components'
 
 const meta: Meta<typeof VCard> = {
@@ -273,6 +273,106 @@ export const Disabled: Story = {
         <v-btn>Action</v-btn>
     </v-card-actions>
 </v-card>`,
+			},
+		},
+	},
+}
+
+export const WithCustomActions: Story = {
+	render: args => ({
+		components: { VCard, VCardTitle, VCardText, VCardActions, VBtn, VDivider },
+		setup() {
+			return { args }
+		},
+		template: `
+            <div class="w-100">
+                <VCard v-bind="args" variant="outlined" class="mb-6" style="max-width: 100%; border-color: #BDBDBD;">
+                    <VCardTitle style="color: #000000;">Titre de la carte</VCardTitle>
+                    <VDivider color="#BDBDBD" thickness="2" style="width: 96%; margin: 0 auto;"/>
+                    <VCardText style="color: #000000;">
+                        Contenu principal
+                    </VCardText>
+                </VCard>
+
+                <div class="d-flex align-center justify-space-between">
+                    <div>
+                        <VBtn 
+                            variant="text" 
+                            color="primary"
+                            class="text-none"
+                        >
+                            Action personnalisée
+                        </VBtn>
+                    </div>
+
+                    <div class="d-flex justify-end">
+                        <VBtn
+                            variant="outlined"
+                            color="primary"
+                            class="mr-2"
+                        >
+                            Annuler
+                        </VBtn>
+
+                        <VBtn
+                            variant="tonal"
+                            color="primary"
+                        >
+                            Confirmer
+                        </VBtn>
+                    </div>
+                </div>
+            </div>
+        `,
+	}),
+	args: {},
+	parameters: {
+		docs: {
+			source: {
+				code: `<template>
+    <div class="w-100">
+        <v-card class="mb-6" variant="outlined" style="max-width: 100%; border-color: #BDBDBD;">
+            <v-card-title style="color: #000000;">Titre de la carte</v-card-title>
+            <v-divider color="#BDBDBD" :thickness="2" style="width: 96%; margin: 0 auto;"/>
+            <v-card-text style="color: #000000;">
+                Contenu principal
+            </v-card-text>
+        </v-card>
+
+        <div class="d-flex align-center justify-space-between">
+            <div>
+                <v-btn 
+                    variant="text" 
+                    color="primary"
+                    class="text-none"
+                >
+                    Action personnalisée
+                </v-btn>
+            </div>
+
+            <div class="d-flex justify-end">
+                <v-btn
+                    variant="outlined"
+                    color="primary"
+                    class="mr-2"
+                >
+                    Annuler
+                </v-btn>
+
+                <v-btn
+                    variant="tonal"
+                    color="primary"
+                >
+                    Confirmer
+                </v-btn>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { VCard, VCardTitle, VCardText, VDivider, VBtn } from 'vuetify/components'
+</script>`,
 			},
 		},
 	},
