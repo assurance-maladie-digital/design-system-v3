@@ -54,7 +54,9 @@
 	const selectedPracticeId = ref('')
 	const selectedAudience = ref<AudienceFilter>('all')
 	const selectedFilter = ref<PracticeFilter>('all')
-	const search = ref('')
+	const selectedPriority = ref<string>('all')
+	const selectedDifficulty = ref<string>('all')
+	const search = ref<string | null>('')
 	const detailDialog = ref(false)
 
 	const mdiMagnifyIcon = mdiMagnify
@@ -85,13 +87,16 @@
 			const audienceOk = selectedAudience.value === 'all'
 				|| practice.audience === selectedAudience.value
 
-			const priorityOk = selectedFilter.value !== 'priority'
-				|| practice.priority === 'Haute'
+			const priorityOk = selectedPriority.value === 'all'
+				|| practice.priority === selectedPriority.value
+
+			const difficultyOk = selectedDifficulty.value === 'all'
+				|| practice.difficulty === selectedDifficulty.value
 
 			const essentialOk = selectedFilter.value !== 'essential'
 				|| practice.essential === true
 
-			const query = normalizeText(search.value.trim())
+			const query = normalizeText((search.value ?? '').trim())
 			const searchableContent = normalizeText([
 				practice.title,
 				practice.summary,
@@ -107,7 +112,7 @@
 
 			const searchOk = !query || searchableContent.includes(query)
 
-			return pillarOk && audienceOk && priorityOk && essentialOk && searchOk
+			return pillarOk && audienceOk && priorityOk && difficultyOk && essentialOk && searchOk
 		})
 	))
 
@@ -129,7 +134,7 @@
 		selectedPracticeId.value = ''
 	}
 
-	watch([selectedPillarId, selectedAudience, selectedFilter, search], () => {
+	watch([selectedPillarId, selectedAudience, selectedFilter, selectedPriority, selectedDifficulty, search], () => {
 		if (!filteredPractices.value.some(practice => practice.id === selectedPracticeId.value)) {
 			selectedPracticeId.value = ''
 			detailDialog.value = false
@@ -140,6 +145,8 @@
 		selectedPillarId.value = 'all'
 		selectedAudience.value = 'all'
 		selectedFilter.value = 'all'
+		selectedPriority.value = 'all'
+		selectedDifficulty.value = 'all'
 		search.value = ''
 		selectedPracticeId.value = ''
 		detailDialog.value = false
@@ -217,7 +224,7 @@
 					/>
 				</div>
 
-				<div class="search-row">
+				<div class="search-and-sort-row">
 					<v-text-field
 						v-model="search"
 						label="Rechercher"
@@ -227,7 +234,37 @@
 						clearable
 						color="primary"
 						:prepend-inner-icon="mdiMagnifyIcon"
-						placeholder="Rechercher par titre, résumé, action ou thématique"
+						placeholder="Rechercher"
+					/>
+
+					<v-select
+						v-model="selectedPriority"
+						:items="[
+							{ title: 'Toutes les priorités', value: 'all' },
+							{ title: 'Priorité haute', value: 'Haute' },
+							{ title: 'Priorité moyenne', value: 'Moyenne' },
+							{ title: 'Priorité faible', value: 'Faible' },
+						]"
+						label="Priorité"
+						variant="outlined"
+						density="comfortable"
+						hide-details
+						color="primary"
+					/>
+
+					<v-select
+						v-model="selectedDifficulty"
+						:items="[
+							{ title: 'Toutes les difficultés', value: 'all' },
+							{ title: 'Difficulté faible', value: 'Faible' },
+							{ title: 'Difficulté moyenne', value: 'Moyenne' },
+							{ title: 'Difficulté élevée', value: 'Élevée' },
+						]"
+						label="Difficulté"
+						variant="outlined"
+						density="comfortable"
+						hide-details
+						color="primary"
 					/>
 				</div>
 
@@ -292,7 +329,11 @@
 							<v-chip
 								v-if="practice.priority"
 								size="small"
-								:color="practice.priority === 'Haute' ? 'error' : 'warning'"
+								:class="{
+									'priority-chip--haute': practice.priority === 'Haute',
+									'priority-chip--moyenne': practice.priority === 'Moyenne',
+									'priority-chip--faible': practice.priority === 'Faible'
+								}"
 								variant="tonal"
 							>
 								Priorité {{ practice.priority }}
@@ -301,7 +342,10 @@
 							<v-chip
 								v-if="practice.difficulty"
 								size="small"
-								color="success"
+								:class="{
+									'difficulty-chip--moyenne': practice.difficulty === 'Moyenne',
+									'difficulty-chip--faible': practice.difficulty === 'Faible'
+								}"
 								variant="tonal"
 							>
 								Difficulté {{ practice.difficulty }}
@@ -542,8 +586,35 @@
 	gap: 24px;
 	margin-bottom: 22px;
 }
+.priority-chip--haute {
+  background: #fde8e8 !important;
+  color: #991b1b !important;
+}
 
-.search-row {
+.priority-chip--moyenne {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+.priority-chip--faible {
+  background: #ecfdf5 !important;
+  color: #166534 !important;
+}
+
+.difficulty-chip--faible {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+.difficulty-chip--moyenne {
+  background: #dbeafe !important;
+  color: #1e40af !important;
+}
+
+.search-and-sort-row {
+	display: grid;
+	grid-template-columns: minmax(280px, 1.6fr) minmax(180px, 0.7fr) minmax(180px, 0.7fr);
+	gap: 24px;
 	margin-bottom: 28px;
 }
 
@@ -780,7 +851,8 @@
 		padding: 32px 18px;
 	}
 
-	.filters-grid {
+	.filters-grid,
+	.search-and-sort-row {
 		grid-template-columns: 1fr;
 	}
 
