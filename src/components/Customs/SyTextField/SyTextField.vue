@@ -229,11 +229,11 @@
 			return
 		}
 
-		const allowedPattern = props.type === 'number'
-			? NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN
-			: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN
+		const disallowedPattern = props.type === 'number'
+			? NUMBER_ALLOWED_CHARACTERS_PATTERN
+			: TEL_ALLOWED_CHARACTERS_PATTERN
 
-		if (!allowedPattern.test(event.data)) {
+		if (event.data.replace(disallowedPattern, '') !== event.data) {
 			event.preventDefault()
 		}
 	}

@@ -315,6 +315,27 @@ describe('SyTextField', () => {
 		expect(event.defaultPrevented).toBe(true)
 	})
 
+	it('allows multi-character beforeinput data when type is number (spinner increment / paste)', () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Test Field',
+				type: 'number',
+			},
+		})
+
+		const input = wrapper.find('input')
+		// Ex. incrément du spinner 9 -> 10, ou collage d'un nombre : data = "10"
+		const event = new InputEvent('beforeinput', {
+			data: '10',
+			cancelable: true,
+			bubbles: true,
+		})
+
+		input.element.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(false)
+	})
+
 	it('filters alphabetic characters when type is tel', async () => {
 		wrapper = mount(SyTextField, {
 			props: {
@@ -351,6 +372,26 @@ describe('SyTextField', () => {
 		input.element.dispatchEvent(event)
 
 		expect(event.defaultPrevented).toBe(true)
+	})
+
+	it('allows multi-character beforeinput data when type is tel (paste)', () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Telephone',
+				type: 'tel',
+			},
+		})
+
+		const input = wrapper.find('input')
+		const event = new InputEvent('beforeinput', {
+			data: '+33 6 12',
+			cancelable: true,
+			bubbles: true,
+		})
+
+		input.element.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(false)
 	})
 
 	it('validates field immediately when isValidateOnBlur is false', async () => {
