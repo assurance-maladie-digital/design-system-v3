@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import useFilterable, { type FilterItem, type FilterProp } from './useFilterable'
 import type { ChipItem } from '@/components/ChipList/types'
 import { nextTick, ref } from 'vue'
@@ -6,10 +6,7 @@ import { nextTick, ref } from 'vue'
 describe('Filterable', () => {
 	describe('formatFilterName', () => {
 		it('preserves existing behavior for names with spaces', () => {
-			const { formatFilterName } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { formatFilterName } = useFilterable(ref([]))
 
 			const name = formatFilterName('Test Name')
 			expect(name).toBe('test-name')
@@ -19,10 +16,7 @@ describe('Filterable', () => {
 		})
 
 		it('preserves existing behavior for names with special characters', () => {
-			const { formatFilterName } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { formatFilterName } = useFilterable(ref([]))
 
 			const nameWithSpecialChars = formatFilterName('Filter@Name#Test')
 			expect(nameWithSpecialChars).toBe('filternametest')
@@ -32,10 +26,7 @@ describe('Filterable', () => {
 		})
 
 		it('fixes camelCase issue by preserving case for single words', () => {
-			const { formatFilterName } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { formatFilterName } = useFilterable(ref([]))
 
 			const camelCaseName = formatFilterName('totoCase')
 			expect(camelCaseName).toBe('totoCase')
@@ -48,10 +39,7 @@ describe('Filterable', () => {
 		})
 
 		it('handles edge cases correctly', () => {
-			const { formatFilterName } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { formatFilterName } = useFilterable(ref([]))
 
 			// Single lowercase word
 			expect(formatFilterName('name')).toBe('name')
@@ -69,10 +57,7 @@ describe('Filterable', () => {
 
 	describe('getChips', () => {
 		it('uses the formatChip function to compute the chip', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -100,10 +85,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns an empty array when the value is an empty string', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -118,10 +100,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is a string', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -141,10 +120,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is a number', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -164,10 +140,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is a period field object', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -193,10 +166,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns an empty array when the value is a period field object with null values', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -214,10 +184,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns a chip when only from is set', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -235,10 +202,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns a chip when only to is set', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -256,10 +220,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is an object', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -290,10 +251,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is an array', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -317,10 +275,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is an array of objects', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -355,10 +310,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is an array of objects with text properties', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -393,10 +345,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns the correct text when the value is an array of objects with text and value properties', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -435,10 +384,7 @@ describe('Filterable', () => {
 		})
 
 		it('returns an empty array when the value is undefined', () => {
-			const { getChips, getFilterCount } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { getChips, getFilterCount } = useFilterable(ref([]))
 
 			const filter = {} as FilterItem
 
@@ -452,10 +398,7 @@ describe('Filterable', () => {
 
 	describe('removeChip', () => {
 		it('removes the chip from the filter', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -473,10 +416,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is a number', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -494,10 +434,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is an object', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -524,10 +461,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is a period field object', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const periodFilter = {
 				name: 'Test',
@@ -551,10 +485,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is a period field object with null values', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const periodFilter = {
 				name: 'Test',
@@ -578,10 +509,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is an array', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const arrayFilter = {
 				name: 'Test',
@@ -599,10 +527,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is an array of objects', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const arrayFilter = {
 				name: 'Test',
@@ -633,10 +558,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is an empty array', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const arrayFilter = {
 				name: 'Test',
@@ -654,10 +576,7 @@ describe('Filterable', () => {
 		})
 
 		it('removes the chip from the filter when the value is an array of strings', () => {
-			const { removeChip } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { removeChip } = useFilterable(ref([]))
 
 			const arrayFilter = {
 				name: 'Test',
@@ -677,10 +596,7 @@ describe('Filterable', () => {
 
 	describe('resetFilter', () => {
 		it('resets the filter', () => {
-			const { resetFilter } = useFilterable(
-				ref([]),
-				() => {},
-			)
+			const { resetFilter } = useFilterable(ref([]))
 
 			const filter = {
 				name: 'Test',
@@ -694,42 +610,89 @@ describe('Filterable', () => {
 	})
 
 	describe('resetAllFilters', () => {
-		it('resets all filters', async () => {
-			const filters = ref<FilterProp>([])
-			const emitsFunction = vi.fn()
-			const { resetAllFilters } = useFilterable(
-				filters,
-				emitsFunction,
-			)
-
-			filters.value = [
-				{
-					name: 'Test',
-					value: 'test',
-				},
-				{
-					name: 'Test 2',
-					value: 'test 2',
-				},
-			]
-
-			await nextTick()
+		it('sets all filter values to undefined', async () => {
+			const model = ref<FilterProp>([
+				{ name: 'Test', value: 'test' },
+				{ name: 'Test 2', value: 'test 2' },
+			])
+			const { filters, resetAllFilters } = useFilterable(model)
 
 			resetAllFilters()
 
-			expect(emitsFunction).toHaveBeenCalledTimes(1)
-			const emittedCall = emitsFunction.mock.calls[0]
-			expect(emittedCall?.[0]).toBe('update:modelValue')
+			expect(filters.value.every(f => f.value === undefined)).toBe(true)
+		})
+	})
 
-			// Use JSON serialization for robust comparison in CI environments
-			const emittedArray = emittedCall?.[1]
-			const expectedArray = [
-				{ name: 'Test', value: undefined },
-				{ name: 'Test 2', value: undefined },
+	describe('model sync (full replacement)', () => {
+		it('initializes filters with a deep copy of the model on mount', () => {
+			const model = ref<FilterProp>([
+				{ name: 'folder', value: ['cardio'] },
+			])
+
+			const { filters } = useFilterable(model)
+
+			expect(filters.value).toEqual([{ name: 'folder', value: ['cardio'] }])
+			// Ensure it is a deep copy, not the same object reference
+			expect(filters.value[0]).not.toBe(model.value[0])
+		})
+
+		it('replaces local pending state when model updates another filter externally', async () => {
+			const model = ref<FilterProp>([
+				{ name: 'folder', value: undefined },
+				{ name: 'profession', value: undefined },
+			])
+
+			const { filters } = useFilterable(model)
+
+			// Simulate a local pending selection in FilterSideBar (not yet applied)
+			filters.value.find(f => f.name === 'profession')!.value = ['infirmier']
+
+			// FilterInline updates 'folder' in the shared model
+			model.value = [
+				{ name: 'folder', value: ['cardiologie'] },
+				{ name: 'profession', value: undefined },
 			]
+			await nextTick()
 
-			// Compare as JSON strings to avoid reference/prototype issues
-			expect(JSON.stringify(emittedArray)).toBe(JSON.stringify(expectedArray))
+			// Current behavior: full model deep-copy on external change resets local pending state
+			expect(filters.value.find(f => f.name === 'profession')?.value).toBeUndefined()
+			// 'folder' must reflect the external change
+			expect(filters.value.find(f => f.name === 'folder')?.value).toEqual(['cardiologie'])
+		})
+
+		it('replaces local state when the model externally changes the same filter', async () => {
+			const model = ref<FilterProp>([
+				{ name: 'folder', value: ['old-value'] },
+			])
+
+			const { filters } = useFilterable(model)
+
+			// User has a local pending selection (not yet applied)
+			filters.value.find(f => f.name === 'folder')!.value = ['local-pending']
+
+			// External update changes the same filter
+			model.value = [{ name: 'folder', value: ['new-external'] }]
+			await nextTick()
+
+			expect(filters.value.find(f => f.name === 'folder')?.value).toEqual(['new-external'])
+		})
+
+		it('replaces local pending state even when model content is identical', async () => {
+			const model = ref<FilterProp>([
+				{ name: 'folder', value: undefined },
+			])
+
+			const { filters } = useFilterable(model)
+
+			// User has local pending state
+			filters.value.find(f => f.name === 'folder')!.value = ['local']
+
+			// Re-assign the model with the same content (e.g. echo from own emit)
+			model.value = [{ name: 'folder', value: undefined }]
+			await nextTick()
+
+			// Current behavior: update is applied from model, local pending state is replaced
+			expect(filters.value.find(f => f.name === 'folder')?.value).toBeUndefined()
 		})
 	})
 })

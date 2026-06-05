@@ -4,11 +4,11 @@ import { afterAll, describe, expect, it, vi } from 'vitest'
 import HeaderNavbar from '../HeaderNavigationBar.vue'
 import HorizontalNavbar from '../HorizontalNavbar/HorizontalNavbar.vue'
 
-describe('HeaderNavigationBar', () => {
-	vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
-		default: (fn: (...args: unknown[]) => void) => fn,
-	}))
+vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
+	default: (fn: (...args: unknown[]) => void) => fn,
+}))
 
+describe('HeaderNavigationBar', () => {
 	afterAll(() => {
 		vi.restoreAllMocks()
 		document.body.innerHTML = ''
