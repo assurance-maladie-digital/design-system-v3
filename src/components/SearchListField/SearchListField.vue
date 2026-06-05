@@ -157,16 +157,24 @@
 						'suggestion-item--selected': !!internalValue.find(el => el === (props.returnObject ? item : item.value)),
 					}"
 				>
-					<SyCheckbox
-						:id="`checkbox-${slugify(item.label)}-${id}`"
-						:name="`checkbox-${slugify(item.label)}-${id}`"
-						:label="item.label"
-						hide-details
-						density="compact"
-						class="ml-2"
-						:model-value="!!internalValue.find(el => el === (props.returnObject ? item : item.value))"
-						@update:model-value="(e: boolean) => toggleCheckbox(item, e)"
-					/>
+					<!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
+					<label
+						class="label"
+						:for="`checkbox-${slugify(item.label)}-${id}`"
+					>
+						<SyCheckbox
+							:id="`checkbox-${slugify(item.label)}-${id}`"
+							:name="`checkbox-${slugify(item.label)}-${id}`"
+							hide-details
+							density="compact"
+							class="ml-2"
+							:model-value="!!internalValue.find(el => el === (props.returnObject ? item : item.value))"
+							@update:model-value="(e: boolean)=>toggleCheckbox(item, e)"
+						/>
+						<span>
+							{{ item.label }}
+						</span>
+					</label>
 				</li>
 			</ul>
 		</fieldset>
