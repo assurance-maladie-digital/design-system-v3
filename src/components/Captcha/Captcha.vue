@@ -56,7 +56,6 @@
 	let firstLoading = true
 	function createCaptchaInit() {
 		if (firstLoading) {
-			firstLoading = false
 			return
 		}
 		text.value = null
@@ -64,6 +63,10 @@
 
 	function createCaptchaSuccess(captchaId: string | null) {
 		id.value = captchaId
+		if (firstLoading) {
+			firstLoading = false
+			return
+		}
 		resetValidation()
 	}
 
@@ -192,7 +195,6 @@
 					:has-warning="hasWarning"
 					:has-success="hasSuccess"
 					:show-success-messages="props.showSuccessMessages"
-					:disable-error-handling="props.disableErrorHandling"
 					:required="props.required"
 					:is-validate-on-blur="props.isValidateOnBlur"
 					:max-errors="props.maxErrors"

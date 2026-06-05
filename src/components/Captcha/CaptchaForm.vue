@@ -71,7 +71,7 @@
 			:has-error="props.hasError"
 			:has-warning="props.hasWarning"
 			:has-success="props.hasSuccess"
-			:disable-error-handling="props.disableErrorHandling"
+			disable-error-handling
 			:show-success-messages="props.showSuccessMessages"
 			:required="props.required"
 			:max-errors="props.maxErrors"

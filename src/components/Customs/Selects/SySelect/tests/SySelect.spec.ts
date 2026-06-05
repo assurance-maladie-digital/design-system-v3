@@ -640,7 +640,7 @@ describe('SySelect.vue', () => {
 				wrapper.unmount()
 			})
 
-			it('ignore les errorMessages quand disableErrorHandling est true', () => {
+			it('affiche les errorMessages quand disableErrorHandling est true', () => {
 				const wrapper = mount(SySelect, {
 					props: {
 						errorMessages: ['Erreur forcée'],
@@ -651,8 +651,8 @@ describe('SySelect.vue', () => {
 
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 				const instance = wrapper.vm as any
-				expect(instance.hasError).toBe(false)
-				expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+				expect(instance.hasError).toBe(true)
+				expect(wrapper.find('.v-messages__message').exists()).toBe(true)
 
 				wrapper.unmount()
 			})
