@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import useFilterable, { type FilterProp } from '@/composables/useFilterable/useFilterable'
 	import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
-	import { toRef } from 'vue'
+	import { toRef, watch } from 'vue'
 	import ChipList from '../ChipList/ChipList.vue'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -15,19 +15,25 @@
 	})
 
 	const emits = defineEmits<{
-		'update:modelValue': (value: FilterProp) => void
+		(e: 'update:modelValue', value: FilterProp): void
 	}>()
 
 	const {
 		filters,
-		updateValue,
 		removeChip,
 		resetFilter,
 		getChips,
 		getFilterCount,
 		formatFilterName,
-	} = useFilterable(toRef(props, 'modelValue'), emits)
+	} = useFilterable(toRef(props, 'modelValue'))
 
+	watch(filters, (newFilters) => {
+		if (JSON.stringify(newFilters) === JSON.stringify(props.modelValue)) {
+			// a new array or object do not mean a new value
+			return
+		}
+		emits('update:modelValue', filters.value)
+	}, { deep: true })
 </script>
 
 <template>
@@ -88,7 +94,6 @@
 						'onUpdate:modelValue': (value: unknown) => {
 							if (value !== filter.value) {
 								filter.value = value
-								updateValue()
 							}
 						},
 					}"
