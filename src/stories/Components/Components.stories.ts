@@ -312,7 +312,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SearchListField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.',
 						link: '/?path=/docs/composants-filtres-searchlistfield--docs',
-						img: '/components/search-list-field.svg',
+						img: `/components/search-list-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
 					{
@@ -479,8 +479,15 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'FilterSideBar',
 						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
-						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						link: '/?path=/docs/composants-filtres-filtersidebar--docs',
 						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
+					{
+						title: 'FilterInline',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterinline--docs',
+						img: `/components/filters-inline${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
 				]
@@ -516,6 +523,7 @@ export const ComponentsList: StoryObj = {
 					'NirField',
 					'Card',
 					'FilterSideBar',
+					'SearchListField',
 					'SyTextField',
 					'Switch',
 					'Tooltip',
