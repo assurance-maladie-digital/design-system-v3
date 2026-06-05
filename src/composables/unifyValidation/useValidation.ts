@@ -97,13 +97,16 @@ export function useValidation(params: {
 	rules: Ref<VuetifyValidationRule[] | undefined>
 	maxErrors?: Ref<number>
 })) {
+	// Quand disableErrorHandling est activé, aucune validation n'est exécutée.
+	// On retourne directement les messages passés par le parent (errorMessages, warningMessages, successMessages)
+	// pour que le composant puisse quand même les afficher sans lancer sa propre validation.
 	if (params.disableErrorHandling.value) {
 		return {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			hasError: computed(() => params.hasErrorProp?.value ?? false),
-			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
+			errors: computed(() => params.errorMessages?.value || []),
+			warnings: computed(() => params.warningMessages?.value || []),
+			successes: computed(() => params.successMessages?.value || []),
+			hasError: computed(() => (params.errorMessages?.value?.length ?? 0) > 0 || (params.hasErrorProp?.value ?? false)),
+			hasWarning: computed(() => (params.warningMessages?.value?.length ?? 0) > 0 || (params.hasWarningProp?.value ?? false)),
 			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
 			validate: async () => true,
 			clearValidation: () => {},

@@ -153,7 +153,7 @@
 		:variant-style="props.variantStyle"
 		:color="props.color"
 		:label="props.label"
-		:disable-error-handling="props.disableErrorHandling"
+		:disable-error-handling="true"
 		:error-messages="errors"
 		:warning-messages="warnings"
 		:success-messages="successes"
