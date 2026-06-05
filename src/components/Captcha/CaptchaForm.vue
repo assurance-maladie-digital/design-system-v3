@@ -77,7 +77,7 @@
 			:max-errors="props.maxErrors"
 			:disabled="state === 'rejected'"
 			:label="label"
-			hide-details="auto"
+			:hide-details="!props.hasError && !props.hasWarning && !props.hasSuccess"
 			:readonly="props.success"
 			:is-clearable="props.isClearable && !props.success"
 			:aria-required="required"
