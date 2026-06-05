@@ -44,6 +44,7 @@ const apComponents = [
 	'composants-composants-vuetify-vtooltip--docs',
 	'composants-données-accordion',
 	'composants-données-chiplist',
+	'composants-données-filepreview',
 	'composants-feedback-dialogbox',
 	'composants-feedback-notificationbar',
 	'composants-filtres-filterssidebar',
