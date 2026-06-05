@@ -8,6 +8,8 @@ import {
 import DownloadBtn from '../DownloadBtn.vue'
 import { downloadFile } from '@/utils/functions/downloadFile'
 
+vi.mock('@/utils/functions/downloadFile', () => ({ downloadFile: vi.fn() }))
+
 describe('DownloadBtn', () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let wrapper: any
@@ -38,8 +40,6 @@ describe('DownloadBtn', () => {
 	})
 
 	it('works correctly', async () => {
-		vi.mock('@/utils/functions/downloadFile', () => ({ downloadFile: vi.fn() }))
-
 		await element.trigger('click')
 
 		expect(downloadFile).toHaveBeenCalledTimes(1)
