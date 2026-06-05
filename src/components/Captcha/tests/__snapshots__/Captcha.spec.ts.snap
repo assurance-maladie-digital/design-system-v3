@@ -69,10 +69,17 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
       <!---->
       <!---->
     </button>
-    <div class="
-      v-sheet
-      v-theme--light
-    ">
+    <div
+      class="
+        v-sheet
+        v-theme--light
+      "
+      custom-rules=""
+      custom-success-rules=""
+      custom-warning-rules=""
+      is-validate-on-blur="true"
+      use-vuetify-validation="false"
+    >
       <div class="sy-textfield-container">
         <div class="
           basic-field
@@ -128,6 +135,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                   aria-describedby="input-v-4-messages"
                   aria-label="Caractères de l’audio"
                   aria-labelledby="input-v-4-label"
+                  aria-required="false"
                   autocomplete="off"
                   class="v-field__input"
                   direction="horizontal"
@@ -411,10 +419,13 @@ exports[`Captcha > renders correctly in image mode 1`] = `
         width="311"
       />
     </div>
-    <div class="
-      v-sheet
-      v-theme--light
-    ">
+    <div
+      class="
+        v-sheet
+        v-theme--light
+      "
+      is-validate-on-blur="true"
+    >
       <div class="sy-textfield-container">
         <div class="
           basic-field
@@ -470,6 +481,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                   aria-describedby="input-v-3-messages"
                   aria-label="Caractères de l’image"
                   aria-labelledby="input-v-3-label"
+                  aria-required="false"
                   autocomplete="off"
                   class="v-field__input"
                   direction="horizontal"

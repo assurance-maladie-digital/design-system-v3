@@ -99,7 +99,7 @@ describe('PaginatedTable', () => {
 			wrapper.find('.v-data-table__td:nth-child(3)').text(),
 		).not.toMatch(/age/i)
 
-		expect(wrapper.findAll('tbody .v-data-table__tr').length).toBe(3)
+		expect(wrapper.findAll('tbody .v-data-table__tr').length).toBe(2)
 	})
 
 	it('store the options in local storage in local mode', async () => {

@@ -144,9 +144,6 @@ export function useValidation(params: {
 			innerWarnings.value = []
 			innerSuccesses.value = []
 
-			if (params.disableErrorHandling.value) {
-				return params.hasErrorProp?.value !== false
-			}
 			return true
 		}
 
@@ -190,8 +187,8 @@ export function useValidation(params: {
 	})
 	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 
-	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
-	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
+	const hasError = computed(() => errors.value.length > 0 || Boolean(params.hasErrorProp?.value))
+	const hasWarning = computed(() => warnings.value.length > 0 || Boolean(params.hasWarningProp?.value))
 	// TODO: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
 	const hasSuccess = computed(() => {
 		if (toValue(params.useVuetifyValidation)) {

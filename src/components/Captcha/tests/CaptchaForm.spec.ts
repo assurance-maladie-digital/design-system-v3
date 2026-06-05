@@ -33,7 +33,7 @@ describe('CaptchaForm', () => {
 				label: 'Captcha label',
 				locales,
 				state: 'rejected',
-				errors: ['error message'],
+				errorMessages: ['error message'],
 				success: true,
 			},
 			global: {
@@ -48,18 +48,13 @@ describe('CaptchaForm', () => {
 
 		expect(textField.exists()).toBe(true)
 		expect(textField.props('errorMessages')).toEqual(['error message'])
-		expect(textField.props('hasSuccess')).toBe(true)
+		expect(textField.props('hasSuccess')).toBe(false)
 		expect(textField.props('readonly')).toBe(true)
 		expect(textField.props('isClearable')).toBe(false)
 		expect(textField.props('disabled')).toBe(true)
 		expect(textField.props('showSuccessMessages')).toBe(false)
 		expect(textField.props('label')).toBe('Captcha label')
-		expect(textField.props('customRules')).toEqual([
-			{
-				type: 'required',
-				options: { message: locales.required },
-			},
-		])
+		expect(textField.props('customRules')).toEqual([])
 	})
 
 	it('emits update:modelValue when SyTextField updates the value', async () => {

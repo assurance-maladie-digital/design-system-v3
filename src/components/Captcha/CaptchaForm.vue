@@ -80,7 +80,7 @@
 			hide-details="auto"
 			:readonly="props.success"
 			:is-clearable="props.isClearable && !props.success"
-			aria-required="required"
+			:aria-required="required"
 			@update:model-value="emitChangeEvent"
 			@focus="emitFocusEvent"
 			@blur="emitBlurEvent"

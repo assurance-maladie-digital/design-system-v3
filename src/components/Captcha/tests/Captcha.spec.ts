@@ -387,11 +387,13 @@ describe('Captcha', () => {
 			template: `
 				<div>
 					<slot
-						name="image"
+						name="audio"
 						:choose-image="() => {}"
 						:choose-audio="() => {}"
+						:toggle-audio="() => {}"
 						:url="''"
 						:state="'idle'"
+						:is-playing="false"
 						:is-error="false"
 						:error-message="null"
 					/>
@@ -418,6 +420,7 @@ describe('Captcha', () => {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
 				urlGetAudio: '/captcha/captcha.mp3',
+				type: 'audio',
 				customRules,
 				customWarningRules,
 				customSuccessRules,
