@@ -6,13 +6,12 @@ type UnknownValue = any
 /** Deep copy an object or an array without reference */
 export function deepCopy<T = any>(o: UnknownValue): T {
 	const value = toRaw(o)
-	let copy = o
-	let k
+	let copy = value
 
 	if (value && typeof value === 'object') {
-		copy = Object.prototype.toString.call(value) === '[object Array]' ? [] : {}
+		copy = Array.isArray(value) ? [] : {}
 
-		for (k in value) {
+		for (const k of Object.keys(value)) {
 			if (value[k] !== undefined) {
 				copy[k] = deepCopy(value[k])
 			}
