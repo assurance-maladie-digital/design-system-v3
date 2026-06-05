@@ -132,7 +132,6 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-4-messages"
                   aria-label="Caractères de l’audio"
                   aria-labelledby="input-v-4-label"
                   aria-required="false"
@@ -173,20 +172,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
             </div>
           </div>
           <!---->
-          <div class="v-input__details">
-            <transition-group-stub
-              appear="false"
-              class="v-messages"
-              css="true"
-              id="input-v-4-messages"
-              name="slide-y-transition"
-              persisted="false"
-              tag="div"
-            >
-              <!---->
-            </transition-group-stub>
-            <!---->
-          </div>
+          <!---->
         </div>
         <!-- v-if -->
       </div>
@@ -478,7 +464,6 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-3-messages"
                   aria-label="Caractères de l’image"
                   aria-labelledby="input-v-3-label"
                   aria-required="false"
@@ -519,20 +504,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
             </div>
           </div>
           <!---->
-          <div class="v-input__details">
-            <transition-group-stub
-              appear="false"
-              class="v-messages"
-              css="true"
-              id="input-v-3-messages"
-              name="slide-y-transition"
-              persisted="false"
-              tag="div"
-            >
-              <!---->
-            </transition-group-stub>
-            <!---->
-          </div>
+          <!---->
         </div>
         <!-- v-if -->
       </div>
