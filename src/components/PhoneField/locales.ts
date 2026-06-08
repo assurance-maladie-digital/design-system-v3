@@ -5,4 +5,6 @@ export const locales = {
 	errorLength: (length: number) => `Le numéro de téléphone doit contenir ${length} chiffres.`,
 	errorRequired: (fieldIdentifier: string) => `Le champ ${fieldIdentifier} est requis.`,
 	success: (fieldIdentifier: string) => `Le champ ${fieldIdentifier} est valide.`,
+	clearButtonAriaLabel: 'Effacer le numéro de téléphone',
+	clearButtonAriaLabelWithField: (fieldIdentifier: string) => `Effacer le numéro de téléphone du champ ${fieldIdentifier}`,
 }

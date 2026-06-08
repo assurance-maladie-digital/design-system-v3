@@ -116,6 +116,16 @@ const meta = {
 				},
 			},
 		},
+		'isClearable': {
+			control: 'boolean',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				category: 'props',
+			},
+			description: 'Affiche un bouton de nettoyage (clear) dans le champ lorsque du texte est saisi. Lorsque `true`, les utilisateurs peuvent facilement effacer le contenu du champ en cliquant sur ce bouton.',
+		},
 		'update:dialCodeModel': {
 			action: 'update:dialCodeModel',
 			table: {
@@ -381,7 +391,7 @@ export const HelpText: Story = {
 			<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
 			<PhoneField
 				v-model="phoneValue2"
-				v-model:selected-dial-code="dialCodeModel"
+				v-model:dialCodeModel="dialCodeModel"
 				required
 				with-country-code
 				help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
@@ -453,7 +463,7 @@ const dialCodeModel = ref('')
 						<h4 class="mb-2">Avec aide à la saisie et indicatif pays</h4>
 						<PhoneField
 							v-model="phoneValue2"
-							v-model:selected-dial-code="dialCodeModel"
+							v-model:dialCodeModel="dialCodeModel"
 							required
 							with-country-code
 							help-text="Choisissez votre pays et saisissez votre numéro de téléphone"
@@ -509,7 +519,7 @@ Les attributs \`autocomplete\` permettent aux navigateurs et aux outils d'assist
 			<h4 class="mb-2">Avec indicatif pays (autocomplete="tel-country-code")</h4>
 			<PhoneField
 				v-model="phoneValue1"
-				v-model:selected-dial-code="dialCodeModel1"
+				v-model:dialCodeModel="dialCodeModel1"
 				required
 				with-country-code
 				autocomplete-country-code="tel-country-code"
@@ -600,7 +610,7 @@ const phoneValue3 = ref('')
 						<h4 class="mb-2">Avec indicatif pays (autocomplete="tel-country-code")</h4>
 						<PhoneField
 							v-model="phoneValue1"
-							v-model:selected-dial-code="dialCodeModel1"
+							v-model:dialCodeModel="dialCodeModel1"
 							required
 							with-country-code
 							autocomplete-country-code="tel-country-code"
@@ -727,78 +737,6 @@ export const CustomIndicatifs: Story = {
 	},
 }
 
-export const NotValidatedOnBlur: Story = {
-	parameters: {
-		a11y: {
-			disable: false,
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<PhoneField
-						v-bind="args"
-						:required="required"
-						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
-						:displayFormat="displayFormat"
-						:customIndicatifs="customIndicatifs"
-						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
-						:isValidateOnBlur="isValidateOnBlur"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { PhoneField } from '@cnamts/synapse'
-					
-					const modelValue = ref('')
-					const required = ref(true)
-					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
-					const displayFormat = ref('code')
-					const customIndicatifs = ref([])
-					const useCustomIndicatifsOnly = ref(false)
-					const isValidateOnBlur = ref(false)
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		modelValue: '',
-		required: false,
-		outlined: true,
-		withCountryCode: true,
-		countryCodeRequired: false,
-		displayFormat: 'code',
-		customIndicatifs: [],
-		useCustomIndicatifsOnly: false,
-		isValidateOnBlur: false,
-		readonly: false,
-		disabled: false,
-		bgColor: 'white',
-	} as Record<string, unknown>,
-	render: (args) => {
-		return {
-			components: { PhoneField },
-			setup() {
-				return { args }
-			},
-			template: `
-				<div class="pa-4">
-    <PhoneField
-     v-bind="args"
-    />
-				</div>
-   `,
-		}
-	},
-}
 
 export const DisplayFormatCode: Story = {
 	parameters: {

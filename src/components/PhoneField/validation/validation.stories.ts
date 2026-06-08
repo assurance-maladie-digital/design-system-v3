@@ -4,19 +4,11 @@ import type { StoryObj, Meta } from '@storybook/vue3'
 import { ref, onMounted } from 'vue'
 import { VBtn } from 'vuetify/components'
 import { VForm } from 'vuetify/components/VForm'
-import { fn } from '@storybook/test'
+import { default as phoneFieldMeta } from '../PhoneField.stories'
 
 const meta: Meta<typeof PhoneField> = {
+	...phoneFieldMeta,
 	title: 'Composants/Formulaires/PhoneField/Validation',
-	component: PhoneField,
-	parameters: {
-		layout: 'fullscreen',
-		controls: { exclude: /^on*|undefined/ },
-	},
-	args: {
-		'onUpdate:modelValue': fn(),
-		'onUpdate:dialCodeModel': fn(),
-	} as Record<string, unknown>,
 } as Meta<typeof PhoneField>
 
 export default meta
@@ -504,7 +496,7 @@ export const SyFormValidation: Story = {
 		}
 	  }]"
 	/>
-	<VBtn type="submit">Soumettre</VBtn>
+	<VBtn type="submit" color="primary">Soumettre</VBtn>
   </SyForm>
 </template>`,
 			},
@@ -549,7 +541,7 @@ const onSubmit = (e) => {
 							}
 						}]"
 					/>
-					<VBtn type="submit" class="mt-4">Soumettre</VBtn>
+					<VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
 				</SyForm>
 			</div>
 		`,
@@ -571,6 +563,7 @@ export const VFormValidation: Story = {
   <VForm @submit.prevent="onSubmit">
 	<PhoneField
 	  v-model="phone"
+	  ref="phoneFieldRef"
 	  required
 	  :custom-rules="[{
 		type: 'custom',
@@ -580,7 +573,7 @@ export const VFormValidation: Story = {
 		}
 	  }]"
 	/>
-	<VBtn type="submit">Soumettre</VBtn>
+	<VBtn color="primary" type="submit">Soumettre</VBtn>
   </VForm>
 </template>`,
 			},
@@ -592,9 +585,11 @@ import { ref } from 'vue'
 import { PhoneField } from '@cnamts/synapse'
 import { VForm, VBtn } from 'vuetify/components'
 
+const phoneFieldRef = ref(null)
 const phone = ref('')
-async function onSubmit(e) {
-  alert('Le formulaire est : ' + ((await e).valid ? 'valide' : 'invalide'))
+async function onSubmit() {
+  const result = await phoneFieldRef.value.validateOnSubmit()
+  alert('Le formulaire est : ' + (result?.valid ? 'valide' : 'invalide'))
 }
 </script>`,
 			},
@@ -604,34 +599,40 @@ async function onSubmit(e) {
 		components: { PhoneField, VForm, VBtn },
 		setup() {
 			const phone = ref('')
-			async function onSubmit(e) {
-				alert('Le formulaire est : ' + ((await e).valid ? 'valide' : 'invalide'))
+			const phoneFieldRef = ref<{ validateOnSubmit: () => Promise<{ valid: boolean }> } | null>(null)
+			async function onSubmit() {
+				const result = await phoneFieldRef.value!.validateOnSubmit()
+				alert('Le formulaire est : ' + (result?.valid ? 'valide' : 'invalide'))
 			}
-			return { args, phone, onSubmit }
+			return { args, phone, phoneFieldRef, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
 				<VForm @submit.prevent="onSubmit">
+					<p>Preferable d'utiliser SyForm pour bénéficier de la validation globale du formulaire.</p>
 					<PhoneField
 						v-model="phone"
 						v-bind="args"
+						ref="phoneFieldRef" 
 						required
 						:custom-rules="[{
 							type: 'custom',
 							options: {
-								validate: (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')),
+								validate: (value) => {
+									return /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, ''))
+								},
 								message: 'Le numéro de téléphone n\\'est pas valide.'
 							}
 						}]"
 					/>
-					<VBtn type="submit" class="mt-4">Soumettre</VBtn>
+					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
 				</VForm>
 			</div>
 		`,
 	}),
 }
 
-export const SyFromVuetifyValidation: Story = {
+export const SyFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
@@ -643,33 +644,17 @@ export const SyFromVuetifyValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column ga-8">
-    <div>
-      <h3>Formulaire avec SyForm</h3>
-      <SyForm @submit="onSyFormSubmit">
-        <PhoneField
-          v-model="phone1"
-          required
-          display-asterisk
-          class="mb-4"
-        />
-        <VBtn type="submit" color="primary">Soumettre (SyForm)</VBtn>
-      </SyForm>
-    </div>
-    <div>
-      <h3>Formulaire avec VForm</h3>
-      <VForm @submit.prevent="onVFormSubmit">
-        <PhoneField
-          ref="phoneRef"
-          v-model="phone2"
-          required
-          display-asterisk
-          class="mb-4"
-        />
-        <VBtn type="submit" color="primary">Soumettre (VForm)</VBtn>
-      </VForm>
-    </div>
-  </div>
+	<SyForm @submit="onSyFormSubmit">
+		<PhoneField
+			v-model="phone"
+			required
+			display-asterisk
+			class="mb-4"
+			use-vuetify-validation
+			:rules="rules"
+		/>
+		<VBtn type="submit" color="primary">Soumettre (SyForm)</VBtn>
+	</SyForm>
 </template>`,
 			},
 			{
@@ -680,26 +665,20 @@ import { ref } from 'vue'
 import { SyForm, PhoneField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const phone1 = ref('')
-const phone2 = ref('')
-const phoneRef = ref(null)
+const phone = ref('')
+
+const rules = [
+  (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.'
+]
 
 function onSyFormSubmit(event: { isValid: boolean }) {
   if (event.isValid) {
-    alert('SyForm valide : ' + phone1.value)
+    alert('SyForm valide : ' + phone.value)
   } else {
     alert('SyForm invalide : veuillez corriger les erreurs.')
   }
 }
 
-async function onVFormSubmit() {
-  const isValid = await phoneRef.value?.validateOnSubmit()
-  if (isValid) {
-    alert('VForm valide : ' + phone2.value)
-  } else {
-    alert('VForm invalide : veuillez corriger les erreurs.')
-  }
-}
 </script>`,
 			},
 		],
@@ -707,61 +686,36 @@ async function onVFormSubmit() {
 	render: args => ({
 		components: { SyForm, PhoneField, VForm, VBtn },
 		setup() {
-			const phone1 = ref('')
-			const phone2 = ref('')
-			const phoneRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const phone = ref('')
 
 			function onSyFormSubmit(event: { isValid: boolean }) {
 				if (event.isValid) {
-					alert(`SyForm valide : ${phone1.value}`)
+					alert(`SyForm valide : ${phone.value}`)
 				}
 				else {
 					alert('SyForm invalide : veuillez corriger les erreurs.')
 				}
 			}
 
-			async function onVFormSubmit() {
-				const isValid = await phoneRef.value?.validateOnSubmit()
-				if (isValid) {
-					alert(`VForm valide : ${phone2.value}`)
-				}
-				else {
-					alert('VForm invalide : veuillez corriger les erreurs.')
-				}
-			}
+			const rules = [
+				value => /^0[1-9][0-9]{8}$/.test(value.replace(/\s/g, '')) || 'Le numéro de téléphone n\'est pas valide.',
+			]
 
-			return { args, phone1, phone2, phoneRef, onSyFormSubmit, onVFormSubmit }
+			return { args, phone, rules, onSyFormSubmit }
 		},
 		template: `
-			<div class="pa-4 d-flex flex-column ga-8">
-				<div>
-					<h3 class="mb-4">Formulaire avec SyForm</h3>
-					<SyForm @submit="onSyFormSubmit">
-						<PhoneField
-							v-model="phone1"
-							v-bind="args"
-							required
-							display-asterisk
-							class="mb-4"
-						/>
-						<VBtn type="submit" color="primary">Soumettre (SyForm)</VBtn>
-					</SyForm>
-				</div>
-				<div>
-					<h3 class="mb-4">Formulaire avec VForm</h3>
-					<VForm @submit.prevent="onVFormSubmit">
-						<PhoneField
-							ref="phoneRef"
-							v-model="phone2"
-							v-bind="args"
-							required
-							display-asterisk
-							class="mb-4"
-						/>
-						<VBtn type="submit" color="primary">Soumettre (VForm)</VBtn>
-					</VForm>
-				</div>
-			</div>
+			<SyForm @submit="onSyFormSubmit" class="pa-4">
+				<PhoneField
+					v-model="phone"
+					v-bind="args"
+					required
+					display-asterisk
+					class="mb-4"
+					use-vuetify-validation
+					:rules="rules"
+				/>
+				<VBtn type="submit" color="primary">Soumettre (SyForm)</VBtn>
+			</SyForm>
 		`,
 	}),
 }
@@ -784,7 +738,7 @@ export const VFormAndVuetifyValidation: Story = {
 	  :use-vuetify-validation="true"
 	  :rules="[(value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.']"
 	/>
-	<VBtn type="submit" :disabled="isValid === false">Soumettre</VBtn>
+	<VBtn type="submit" :disabled="isValid === false" color="primary">Soumettre</VBtn>
   </VForm>
 </template>`,
 			},
@@ -820,7 +774,7 @@ const phone = ref('')
 						:use-vuetify-validation="true"
 						:rules="[(value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.']"
 					/>
-					<VBtn type="submit" class="mt-4">Soumettre</VBtn>
+					<VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
 				</VForm>
 			</div>
 		`,

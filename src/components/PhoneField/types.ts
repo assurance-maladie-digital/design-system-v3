@@ -12,6 +12,7 @@ export type Indicatif = {
 }
 export type PhoneFieldProps = FieldValidationProps & {
 	modelValue?: string
+	isClearable?: boolean
 	dialCodeModel?: string | Indicatif
 	outlined?: boolean
 	withCountryCode?: boolean
@@ -22,6 +23,7 @@ export type PhoneFieldProps = FieldValidationProps & {
 	displayAsterisk?: boolean
 	bgColor?: string
 	helpText?: string
+	hideDetails?: boolean
 	autocompleteCountryCode?: string
 	autocompletePhone?: string
 	withoutFieldset?: boolean

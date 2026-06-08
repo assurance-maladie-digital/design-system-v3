@@ -4,19 +4,16 @@
 		inheritAttrs: false,
 	})
 	import {
-		mdiAlertOutline,
-		mdiCheck,
 		mdiInformationOutline,
 		mdiClose,
-		mdiAlertCircle,
 		mdiCalendar,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
-	import type { IconType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useSyTextFieldValidation } from './useSyTextFieldValidation'
 	import type { SyTextFieldProps } from './types'
+	import FieldState from './FieldState.vue'
 
 	const props = withDefaults(
 		defineProps<SyTextFieldProps>(),
@@ -79,11 +76,8 @@
 		},
 	)
 
-	const ICONS: Record<NonNullable<IconType>, string> = {
+	const ICONS = {
 		info: mdiInformationOutline,
-		success: mdiCheck,
-		warning: mdiAlertOutline,
-		error: mdiAlertCircle,
 		close: mdiClose,
 		calendar: mdiCalendar,
 	}
@@ -139,7 +133,7 @@
 
 	const attrs = useAttrs()
 	const focused = ref(false)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, validationIcon, hasMessages } = useSyTextFieldValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, state, hasMessages } = useSyTextFieldValidation({
 		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -701,11 +695,9 @@
 						@keydown.enter.stop
 						@keydown.space.stop
 					/>
-					<SyIcon
-						v-if="validationIcon && !props.appendInnerIcon"
-						:icon="validationIcon"
-						role="presentation"
-						:decorative="true"
+					<FieldState
+						v-if="!props.appendInnerIcon"
+						:state="state"
 					/>
 					<SyIcon
 						v-if="props.appendInnerIcon && !props.noIcon"

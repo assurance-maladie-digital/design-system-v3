@@ -327,6 +327,44 @@ describe('PhoneField', () => {
 		expect(select.props('readonly')).toBe(true)
 	})
 
+
+
+	it('forwards hideDetails prop to SyTextField', () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				hideDetails: true,
+			},
+		})
+
+		const textField = wrapper.findComponent({ name: 'SyTextField' })
+		expect(textField.props('hideDetails')).toBe(true)
+	})
+
+	it('shows and handles clear button when isClearable is true', async () => {
+		const wrapper = mount(PhoneField, {
+			props: {
+				isClearable: true,
+				modelValue: '0123456789',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		const clearButton = wrapper.find(`button[aria-label="${locales.clearButtonAriaLabel}"]`)
+		expect(clearButton.exists()).toBe(true)
+
+		await clearButton.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.vm.phoneNumber).toBe('')
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('')
+
+		await wrapper.setProps({ isClearable: false, modelValue: '0123456789' })
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find(`button[aria-label="${locales.clearButtonAriaLabel}"]`).exists()).toBe(false)
+	})
+
 	it('verifies SyTextField and SySelect props are correctly passed', async () => {
 		const wrapper = mount(PhoneField, {
 			props: {

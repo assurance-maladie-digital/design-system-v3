@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { computed, ref, toRef, watch } from 'vue'
-	import { mdiAlertOutline, mdiCheck, mdiInformation, mdiPhone } from '@mdi/js'
+	import { mdiPhone, mdiClose } from '@mdi/js'
 	import { locales as defaultLocales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -11,6 +11,7 @@
 	import { vMaska } from 'maska/vue'
 	import type { Indicatif } from './types'
 	import { usePhoneFieldValidation } from './usePhoneFieldValidation'
+	import FieldState from '@/components/Customs/SyTextField/FieldState.vue'
 
 	const props = withDefaults(defineProps<PhoneFieldProps>(), {
 		...validationPropsDefaults,
@@ -28,6 +29,7 @@
 		autocompleteCountryCode: 'tel-country-code',
 		autocompletePhone: 'tel-national',
 		withoutFieldset: false,
+		isClearable: false,
 		locales: () => defaultLocales,
 	})
 
@@ -68,7 +70,9 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
+		state,
 		iconColor,
+		clearButtonColorClass,
 		validate,
 		clearValidation,
 	} = usePhoneFieldValidation({
@@ -110,6 +114,17 @@
 	}
 
 	const phoneMask = computed(() => usedIndicatif.value.mask)
+
+	const showClear = computed(() => {
+		if (!props.isClearable) return false
+		if (props.disabled) return false
+		return phoneNumber.value !== undefined && phoneNumber.value !== null && String(phoneNumber.value) !== ''
+	})
+
+	function clearField() {
+		phoneNumber.value = ''
+		clearValidation()
+	}
 
 	defineExpose({
 		phoneNumber,
@@ -183,6 +198,7 @@
 					:readonly="props.readonly"
 					:bg-color="props.bgColor"
 					:disabled="props.disabled"
+					:hide-details="props.hideDetails"
 					:autocomplete="props.autocompletePhone"
 					:class="{
 						'phone-field': true,
@@ -197,23 +213,20 @@
 				>
 					<template #append-inner>
 						<div class="d-flex align-center">
-							<SyIcon
-								v-if="hasError"
-								color="error"
-								:icon="mdiInformation"
-								decorative
+							<VBtn
+								v-if="showClear"
+								class="v-btn v-btn--density-compact mr-1"
+								:class="clearButtonColorClass"
+								:aria-label="props.label ? locales.clearButtonAriaLabelWithField(props.label) : locales.clearButtonAriaLabel"
+								:title="props.label ? locales.clearButtonTitleWithField(props.label) : locales.clearButtonTitle"
+								:icon="mdiClose"
+								variant="text"
+								@click.stop="clearField"
+								@keydown.enter.stop
+								@keydown.space.stop
 							/>
-							<SyIcon
-								v-else-if="hasWarning"
-								color="warning"
-								:icon="mdiAlertOutline"
-								decorative
-							/>
-							<SyIcon
-								v-else-if="hasSuccess"
-								color="success"
-								:icon="mdiCheck"
-								decorative
+							<FieldState
+								:state="state"
 							/>
 							<SyIcon
 								class="ml-2"

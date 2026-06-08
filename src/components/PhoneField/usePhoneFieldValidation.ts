@@ -78,7 +78,7 @@ export function usePhoneFieldValidation(params: {
 		return rules
 	})
 
-	const { hasError, hasWarning, hasSuccess, errors, warnings, successes, validate, clearValidation } = useValidation({
+	const { hasError, hasWarning, hasSuccess, errors, warnings, successes, state, validate, clearValidation } = useValidation({
 		modelValue: params.modelValue,
 		readonly: params.readonly,
 		disabled: params.disabled,
@@ -112,6 +112,13 @@ export function usePhoneFieldValidation(params: {
 		return '#222324'
 	})
 
+	const clearButtonColorClass = computed(() => {
+		if (hasError.value) return 'error-field'
+		if (hasWarning.value) return 'warning-field'
+		if (hasSuccess.value) return 'success-field'
+		return 'text-iconBase'
+	})
+
 	return {
 		errors,
 		warnings,
@@ -119,8 +126,10 @@ export function usePhoneFieldValidation(params: {
 		hasError,
 		hasWarning,
 		hasSuccess,
-		validationRules,
 		iconColor,
+		clearButtonColorClass,
+		validationRules,
+		state,
 		validate,
 		clearValidation,
 	}
