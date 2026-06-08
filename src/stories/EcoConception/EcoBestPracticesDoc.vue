@@ -193,11 +193,30 @@
 			<SyHeading :level="1">
 				20 bonnes pratiques essentielles d'ecoconception
 			</SyHeading>
-
+			<p><strong>Pourquoi ces 20 bonnes pratiques essentielles ?</strong> </p>
 			<p>
-				Consultez les 20 bonnes pratiques essentielles d’écoconception
-				classées par thématique, audience et priorité.
+				Afin de faciliter l'intégration de l'écoconception dans les projets numériques,
+				le Studio Design a sélectionné <strong>20 bonnes pratiques essentielles</strong>
+				issues du référentiel d'écoconception numérique, spécifiquement adaptées aux
+				phases <strong>UX/UI</strong> et <strong>Développement Front</strong>.
 			</p>
+			<p>
+				Ces pratiques, concrètes et priorisées, visent à :
+			</p>
+
+			<ul class="header-list">
+				<li>
+					Alléger les interfaces afin de réduire leur empreinte environnementale.
+				</li>
+				<li>
+					Améliorer l'expérience utilisateur en optimisant les performances,
+					les temps de chargement et l'accessibilité.
+				</li>
+				<li>
+					Faciliter la mise en œuvre de l'écoconception grâce à des recommandations
+					concrètes et directement applicables dans les projets.
+				</li>
+			</ul>
 		</div>
 
 		<v-card
@@ -584,6 +603,23 @@
 	line-height: 1.5;
 	margin: 0;
 	color: #001b3f;
+}
+
+.header-list {
+	margin-top: 20px;
+	padding-left: 22px;
+	color: #001b3f;
+	font-size: 17px;
+	line-height: 1.6;
+}
+
+.header-list li {
+	margin-bottom: 8px;
+}
+
+.header strong {
+	font-weight: 600;
+	color: #003f9f;
 }
 
 .filters-card {
