@@ -28,6 +28,14 @@ import { useState } from 'react';
 </tr>
 
 <tr>
+  <td>Composant Figma</td>
+  <td>
+   Lien vers son composant de référence dans Figma.
+  </td>
+  <td>Lien Figma / -</td>
+</tr>
+
+<tr>
   <td>Onglet source code</td>
   <td>Vérifie que le composant expose son code source Template + Script ou un exemple clair d’implémentation.</td>
   <td>Présent / Absent</td>
@@ -43,12 +51,6 @@ import { useState } from 'react';
   <td>Page usages UX</td>
   <td>Vérifie la présence d’une page Usages rédigés par les UX designers dédiée au composant.</td>
   <td>Présente / Absente</td>
-</tr>
-
-<tr>
-  <td>Thème visuel</td>
-  <td>Vérifie les modes visuels Dark et Light.</td>
-  <td>Light / Dark</td>
 </tr>
 
 <tr>
@@ -80,6 +82,12 @@ import { useState } from 'react';
 {(() => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Toutes');
+  const [missingProps, setMissingProps] = useState(false);
+  const [missingUxPage, setMissingUxPage] = useState(false);
+  const [missingSourceCode, setMissingSourceCode] = useState(false);
+  const [missingStories, setMissingStories] = useState(false);
+  const [missingPlayground, setMissingPlayground] = useState(false);
+  const [criticalOnly, setCriticalOnly] = useState(false);
 
 const components = qualityData.results
   .filter(Boolean)
@@ -110,7 +118,18 @@ const components = qualityData.results
       selectedCategory === 'Toutes'
       || item.category === selectedCategory;
 
-    return matchesSearch && matchesCategory;
+   return (
+  matchesSearch &&
+  matchesCategory &&
+  (!missingProps || !item.hasPropsDocumentation) &&
+  (!missingUxPage || !item.hasUxUsagePage) &&
+  (!missingSourceCode || !item.hasSourceTab) &&
+  (!missingStories ||
+    (item.requiredStoriesStatus !== 'Complètes' &&
+     item.requiredStoriesStatus !== 'Non concerné')) &&
+  (!missingPlayground || !item.hasInteractivePlayground) &&
+  (!criticalOnly || !!item.criticality)
+);
   });
 
   const getTagClass = (value) => {
@@ -159,17 +178,71 @@ const components = qualityData.results
           {filteredComponents.length} composant{filteredComponents.length > 1 ? 's' : ''}
         </div>
       </div>
+<div className="quality-checkboxes">
+  <label>
+    <input
+      type="checkbox"
+      checked={missingProps}
+      onChange={(e) => setMissingProps(e.target.checked)}
+    />
+    Props / Slots non documentés
+  </label>
 
+  <label>
+    <input
+      type="checkbox"
+      checked={missingUxPage}
+      onChange={(e) => setMissingUxPage(e.target.checked)}
+    />
+    Page usages UX absente
+  </label>
+
+  <label>
+    <input
+      type="checkbox"
+      checked={missingSourceCode}
+      onChange={(e) => setMissingSourceCode(e.target.checked)}
+    />
+    Onglet source code absent
+  </label>
+
+  <label>
+    <input
+      type="checkbox"
+      checked={missingStories}
+      onChange={(e) => setMissingStories(e.target.checked)}
+    />
+    Stories incomplètes
+  </label>
+
+  <label>
+    <input
+      type="checkbox"
+      checked={missingPlayground}
+      onChange={(e) => setMissingPlayground(e.target.checked)}
+    />
+    Playground absent
+  </label>
+
+  <label>
+    <input
+      type="checkbox"
+      checked={criticalOnly}
+      onChange={(e) => setCriticalOnly(e.target.checked)}
+    />
+    Criticité détectée
+  </label>
+</div>
       <div className="table-wrapper">
         <table className="carbon-table">
           <thead>
             <tr>
               <th>Composant</th>
+              <th>Composant Figma</th>
               <th>Props / Slots documentés</th>
               <th>Onglet source code</th>
               <th>Stories requises</th>
               <th>Page usages UX</th>
-              <th>Theme visuel</th>
               <th>Theme mode</th>
               <th>Playground interactif</th>
               <th>Tests</th>
@@ -193,6 +266,20 @@ const components = qualityData.results
               return (
                 <tr key={item.componentName}>
                   <td>{item.componentName}</td>
+                  <td className="figma-cell">
+  {item.figmaUrl ? (
+    <a
+      href={item.figmaUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="figma-link"
+    >
+     Ouvrir sur Figma
+    </a>
+  ) : (
+    '-'
+  )}
+</td>
 
                   <td>
 	<span className={`carbon-tag ${getTagClass(item.hasPropsDocumentation)}`}>
@@ -209,11 +296,7 @@ const components = qualityData.results
                   </td>
 
                   <td>{renderBooleanTag(item.hasUxUsagePage, 'Présente', 'Absente')}</td>
-  <td>
-                    <span className={`carbon-tag ${getTagClass(item.themeStatus)}`}>
-                      {item.themeStatus}
-                    </span>
-                  </td>
+ 
                   <td>
                     <div className="theme-links">
                       <a
@@ -440,6 +523,38 @@ const components = qualityData.results
   font-size: 0.85rem;
 }
 
+.figma-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0c419a;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.figma-link:hover {
+  text-decoration: underline;
+}
+
+.quality-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 0 1.5rem 0;
+}
+
+.quality-checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.quality-checkboxes input {
+  cursor: pointer;
+}
 
 `}
 </style>
