@@ -278,6 +278,94 @@ export const Disabled: Story = {
 	},
 }
 
+export const WithImage: Story = {
+	render: args => ({
+		components: { VCard, VCardText },
+		setup() {
+			return { args }
+		},
+		template: `
+            <VCard 
+                v-bind="args" 
+                variant="outlined"
+                style="max-width: 250px; border: 2px solid #E0E0E0; padding: 2rem 1rem; cursor: pointer; transition: transform 0.2s ease-in-out;"
+                class="d-flex flex-column align-center text-center"
+                @mouseenter="$event.currentTarget.style.transform = 'translateY(-8px)'"
+                @mouseleave="$event.currentTarget.style.transform = 'translateY(0)'"
+            >
+                <div 
+                    style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"
+                >
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        width="60" 
+                        height="60"
+                        style="fill: #757575;"
+                    >
+                        <path d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22A9,9 0 0,0 21,13A9,9 0 0,0 12,4M12.5,8H11V14L15.75,16.85L16.5,15.62L12.5,13.25V8Z" />
+                    </svg>
+                </div>
+                
+                <VCardText class="pa-0">
+                    <p class="mb-2 text-body-2 font-weight-bold" style="color: #424242;">
+                        Label 1
+                    </p>
+                    <p class="mb-0 text-caption text-uppercase" style="color: #757575; letter-spacing: 0.5px;">
+                        Label 2
+                    </p>
+                </VCardText>
+            </VCard>
+        `,
+	}),
+	args: {
+		elevation: 0,
+	},
+	parameters: {
+		docs: {
+			source: {
+				code: `<template>
+    <v-card 
+        variant="outlined"
+        :elevation="0"
+        style="max-width: 250px; border: 2px solid #E0E0E0; padding: 2rem 1rem; cursor: pointer; transition: transform 0.2s ease-in-out;"
+        class="d-flex flex-column align-center text-center"
+        @mouseenter="$event.currentTarget.style.transform = 'translateY(-8px)'"
+        @mouseleave="$event.currentTarget.style.transform = 'translateY(0)'"
+    >
+        <div 
+            style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;"
+        >
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                width="60" 
+                height="60"
+                style="fill: #757575;"
+            >
+                <path d="M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22A9,9 0 0,0 21,13A9,9 0 0,0 12,4M12.5,8H11V14L15.75,16.85L16.5,15.62L12.5,13.25V8Z" />
+            </svg>
+        </div>
+        
+        <v-card-text class="pa-0">
+            <p class="mb-2 text-body-2 font-weight-bold" style="color: #424242;">
+                Label 1
+            </p>
+            <p class="mb-0 text-caption text-uppercase" style="color: #757575; letter-spacing: 0.5px;">
+                Label 2
+            </p>
+        </v-card-text>
+    </v-card>
+</template>
+
+<script setup lang="ts">
+import { VCard, VCardText } from 'vuetify/components'
+</script>`,
+			},
+		},
+	},
+}
+
 export const WithCustomActions: Story = {
 	render: args => ({
 		components: { VCard, VCardTitle, VCardText, VCardActions, VBtn, VDivider },
