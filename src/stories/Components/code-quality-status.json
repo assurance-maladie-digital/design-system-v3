@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-04T13:52:43.000Z",
+  "date": "2026-06-08T14:13:58.988Z",
   "results": [
     {
       "componentName": "UserMenuBtn",
@@ -17,6 +17,7 @@
       "storybookTitle": "Composants/Boutons/UserMenuBtn",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-usermenubtn--docs",
       "category": "Boutons"
@@ -37,6 +38,7 @@
       "storybookTitle": "Composants/Formulaires/UploadWorkflow",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-uploadworkflow--docs",
       "category": "Formulaires"
@@ -57,6 +59,7 @@
       "storybookTitle": "Composants/Layout/ToolbarContainer",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-layout-toolbarcontainer--docs",
       "category": "Layout"
@@ -77,6 +80,7 @@
       "storybookTitle": "Composants/Tableaux/SyTable",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-tableaux-sytable--docs",
       "category": "Tableaux"
@@ -97,6 +101,7 @@
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-tableaux-syservertable--docs",
       "category": "Tableaux"
@@ -117,6 +122,7 @@
       "storybookTitle": "Composants/Tableaux/TableToolbar",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-tableaux-tabletoolbar--docs",
       "category": "Tableaux"
@@ -137,6 +143,7 @@
       "storybookTitle": "Composants/Formulaires/SyTextArea",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-sytextarea--docs",
       "category": "Formulaires"
@@ -157,6 +164,7 @@
       "storybookTitle": "Composants/Navigation/SyBtnMenu",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-navigation-sybtnmenu--docs",
       "category": "Navigation"
@@ -177,6 +185,7 @@
       "storybookTitle": "Composants/Feedback/SyAlert",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-feedback-syalert--docs",
       "category": "Feedback"
@@ -197,6 +206,7 @@
       "storybookTitle": "Composants/Structure/SubHeader",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-structure-subheader--docs",
       "category": "Structure"
@@ -217,6 +227,7 @@
       "storybookTitle": "Templates/StatusPage",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "templates-statuspage--docs",
       "category": "Autres"
@@ -237,6 +248,7 @@
       "storybookTitle": "Composants/Navigation/SocialMediaLinks",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-navigation-socialmedialinks--docs",
       "category": "Navigation"
@@ -257,6 +269,7 @@
       "storybookTitle": "Composants/Navigation/SkipLink",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-navigation-skiplink--docs",
       "category": "Navigation"
@@ -277,6 +290,7 @@
       "storybookTitle": "Composants/Formulaires/SearchListField",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-searchlistfield--docs",
       "category": "Formulaires"
@@ -297,6 +311,7 @@
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-feedback-ratingpicker--docs",
       "category": "Feedback"
@@ -317,6 +332,7 @@
       "storybookTitle": "Composants/Formulaires/RangeField",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-rangefield--docs",
       "category": "Formulaires"
@@ -337,6 +353,7 @@
       "storybookTitle": "Composants/Formulaires/PhoneField",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-phonefield--docs",
       "category": "Formulaires"
@@ -357,6 +374,7 @@
       "storybookTitle": "Composants/Formulaires/PeriodField",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-periodfield--docs",
       "category": "Formulaires"
@@ -377,6 +395,7 @@
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-passwordfield--docs",
       "category": "Formulaires"
@@ -397,6 +416,7 @@
       "storybookTitle": "Composants/Tableaux/PaginatedTable",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-tableaux-paginatedtable--docs",
       "category": "Tableaux"
@@ -417,6 +437,7 @@
       "storybookTitle": "Composants/Layout/PageContainer",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-layout-pagecontainer--docs",
       "category": "Layout"
@@ -437,6 +458,7 @@
       "storybookTitle": "Composants/Feedback/NotificationBar",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-feedback-notificationbar--docs",
       "category": "Feedback"
@@ -457,6 +479,7 @@
       "storybookTitle": "Templates/NotFoundPage",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "templates-notfoundpage--docs",
       "category": "Autres"
@@ -477,6 +500,7 @@
       "storybookTitle": "Composants/Formulaires/NirField",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-nirfield--docs",
       "category": "Formulaires"
@@ -497,6 +521,7 @@
       "storybookTitle": "Composants/Formulaires/MonthPicker",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-monthpicker--docs",
       "category": "Formulaires"
@@ -517,6 +542,7 @@
       "storybookTitle": "Templates/MaintenancePage",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "templates-maintenancepage--docs",
       "category": "Autres"
@@ -537,6 +563,7 @@
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-lunarcalendar--docs",
       "category": "Formulaires"
@@ -557,6 +584,7 @@
       "storybookTitle": "Composants/Données/LogoBrandSection",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-logobrandsection--docs",
       "category": "Données"
@@ -577,6 +605,7 @@
       "storybookTitle": "Composants/Données/Logo",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-logo--docs",
       "category": "Données"
@@ -597,6 +626,7 @@
       "storybookTitle": "Composants/Boutons/LangBtn",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-langbtn--docs",
       "category": "Boutons"
@@ -617,6 +647,7 @@
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-structure-headertoolbar--docs",
       "category": "Structure"
@@ -637,6 +668,7 @@
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderNavigationBar",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-structure-headerbar-headernavigationbar--docs",
       "category": "Structure"
@@ -657,6 +689,7 @@
       "storybookTitle": "Composants/Structure/HeaderLoading",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-structure-headerloading--docs",
       "category": "Structure"
@@ -677,6 +710,7 @@
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-structure-headerbar--docs",
       "category": "Structure"
@@ -697,6 +731,7 @@
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderBurgerMenu",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-structure-headerbar-headerburgermenu--docs",
       "category": "Structure"
@@ -717,6 +752,7 @@
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderBurgerMenu/HeaderSubMenu",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-structure-headerbar-headerburgermenu-headersubmenu--docs",
       "category": "Structure"
@@ -737,6 +773,7 @@
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderBurgerMenu/HeaderMenuSection",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-structure-headerbar-headerburgermenu-headermenusection--docs",
       "category": "Structure"
@@ -757,6 +794,7 @@
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderBurgerMenu/HeaderMenuItem",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-structure-headerbar-headerburgermenu-headermenuitem--docs",
       "category": "Structure"
@@ -777,6 +815,7 @@
       "storybookTitle": "Composants/Boutons/FranceConnectBtn",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-franceconnectbtn--docs",
       "category": "Boutons"
@@ -797,6 +836,7 @@
       "storybookTitle": "Composants/Structure/FooterBar",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-structure-footerbar--docs",
       "category": "Structure"
@@ -817,6 +857,7 @@
       "storybookTitle": "Composants/Filtres/FiltersSideBar",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-filtres-filterssidebar--docs",
       "category": "Filtres"
@@ -837,6 +878,7 @@
       "storybookTitle": "Composants/Filtres/FilterInline",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-filtres-filterinline--docs",
       "category": "Filtres"
@@ -857,6 +899,7 @@
       "storybookTitle": "Composants/Formulaires/FileUpload",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-fileupload--docs",
       "category": "Formulaires"
@@ -877,6 +920,7 @@
       "storybookTitle": "Composants/Données/FilePreview",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-donnees-filepreview--docs",
       "category": "Données"
@@ -897,6 +941,7 @@
       "storybookTitle": "Composants/Données/FileList",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-filelist--docs",
       "category": "Données"
@@ -917,6 +962,7 @@
       "storybookTitle": "Composants/Navigation/ExternalLinks",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-navigation-externallinks--docs",
       "category": "Navigation"
@@ -937,6 +983,7 @@
       "storybookTitle": "Templates/ErrorPage",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "templates-errorpage--docs",
       "category": "Autres"
@@ -957,6 +1004,7 @@
       "storybookTitle": "Composants/Boutons/DownloadBtn",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-downloadbtn--docs",
       "category": "Boutons"
@@ -977,6 +1025,7 @@
       "storybookTitle": "Composants/Feedback/DialogBox",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-feedback-dialogbox--docs",
       "category": "Feedback"
@@ -997,6 +1046,7 @@
       "storybookTitle": "Composants/Formulaires/DiacriticPicker",
       "hasUnitTest": false,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-diacriticpicker--docs",
       "category": "Formulaires"
@@ -1017,6 +1067,7 @@
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-formulaires-datepicker-combinedmode--docs",
       "category": "Formulaires"
@@ -1037,6 +1088,7 @@
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-formulaires-datepicker-calendarmode--docs",
       "category": "Formulaires"
@@ -1057,6 +1109,7 @@
       "storybookTitle": "Composants/Données/DataListGroup",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-datalistgroup--docs",
       "category": "Données"
@@ -1077,6 +1130,7 @@
       "storybookTitle": "Composants/Données/DataList",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-datalist--docs",
       "category": "Données"
@@ -1097,6 +1151,7 @@
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-sytextfield--docs",
       "category": "Formulaires"
@@ -1117,6 +1172,7 @@
       "storybookTitle": "Composants/Navigation/SyTabs",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-navigation-sytabs--docs",
       "category": "Navigation"
@@ -1137,6 +1193,7 @@
       "storybookTitle": "Composants/Formulaires/SyRadioGroup",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-syradiogroup--docs",
       "category": "Formulaires"
@@ -1157,6 +1214,7 @@
       "storybookTitle": "Composants/Navigation/SyPagination",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-navigation-sypagination--docs",
       "category": "Navigation"
@@ -1177,6 +1235,7 @@
       "storybookTitle": "Composants/Boutons/SyIconButton",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-syiconbutton--docs",
       "category": "Boutons"
@@ -1197,6 +1256,7 @@
       "storybookTitle": "Composants/Données/SyIcon",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-syicon--docs",
       "category": "Données"
@@ -1217,6 +1277,7 @@
       "storybookTitle": "Composants/Formulaires/SyForm",
       "hasUnitTest": false,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-formulaires-syform--docs",
       "category": "Formulaires"
@@ -1237,6 +1298,7 @@
       "storybookTitle": "Composants/Formulaires/SyCheckbox",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-sycheckbox--docs",
       "category": "Formulaires"
@@ -1257,6 +1319,7 @@
       "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-sycheckboxgroup--docs",
       "category": "Formulaires"
@@ -1277,6 +1340,7 @@
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-selects-syselect--docs",
       "category": "Formulaires"
@@ -1297,6 +1361,7 @@
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-selects-syinputselect--docs",
       "category": "Formulaires"
@@ -1317,6 +1382,7 @@
       "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-selects-syautocomplete--docs",
       "category": "Formulaires"
@@ -1337,6 +1403,7 @@
       "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-selects-selectbtnfield--docs",
       "category": "Formulaires"
@@ -1357,6 +1424,7 @@
       "storybookTitle": "Composants/Boutons/CopyBtn",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-copybtn--docs",
       "category": "Boutons"
@@ -1377,6 +1445,7 @@
       "storybookTitle": "Composants/Feedback/CookieBanner",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-feedback-cookiebanner--docs",
       "category": "Feedback"
@@ -1397,6 +1466,7 @@
       "storybookTitle": "Composants/Navigation/ContextualMenu",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-navigation-contextualmenu--docs",
       "category": "Navigation"
@@ -1417,6 +1487,7 @@
       "storybookTitle": "Composants/Données/CollapsibleList",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-collapsiblelist--docs",
       "category": "Données"
@@ -1437,6 +1508,7 @@
       "storybookTitle": "Composants/Données/ChipList",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-chiplist--docs",
       "category": "Données"
@@ -1457,6 +1529,7 @@
       "storybookTitle": "Composants/Formulaires/Captcha",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-captcha--docs",
       "category": "Formulaires"
@@ -1477,6 +1550,7 @@
       "storybookTitle": "Composants/Boutons/BackToTopBtn",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-backtotopbtn--docs",
       "category": "Boutons"
@@ -1497,6 +1571,7 @@
       "storybookTitle": "Composants/Boutons/BackBtn",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-boutons-backbtn--docs",
       "category": "Boutons"
@@ -1517,6 +1592,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/Sous-composants du header/UserMenu",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-sous-composants-du-header-usermenu--docs",
       "category": "Amelipro"
@@ -1537,6 +1613,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/Sous-composants du header/StructureMenu",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-sous-composants-du-header-structuremenu--docs",
       "category": "Amelipro"
@@ -1557,6 +1634,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/Sous-composants du header/ServiceMenu",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-sous-composants-du-header-servicemenu--docs",
       "category": "Amelipro"
@@ -1577,6 +1655,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproUpload",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliproupload--docs",
       "category": "Amelipro"
@@ -1597,6 +1676,7 @@
       "storybookTitle": "Composants/Amelipro/Cartes/AmeliproTransmission",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-cartes-ameliprotransmission--docs",
       "category": "Amelipro"
@@ -1617,6 +1697,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproTooltips",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprotooltips--docs",
       "category": "Amelipro"
@@ -1637,6 +1718,7 @@
       "storybookTitle": "Composants/Amelipro/Tuiles/AmeliproTileBtn",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-tuiles-ameliprotilebtn--docs",
       "category": "Amelipro"
@@ -1657,6 +1739,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproTextField",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliprotextfield--docs",
       "category": "Amelipro"
@@ -1677,6 +1760,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproTextArea",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliprotextarea--docs",
       "category": "Amelipro"
@@ -1697,6 +1781,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproTabs",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliprotabs--docs",
       "category": "Amelipro"
@@ -1717,6 +1802,7 @@
       "storybookTitle": "Composants/Amelipro/Tableaux/AmeliproTable",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-tableaux-ameliprotable--docs",
       "category": "Amelipro"
@@ -1737,6 +1823,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproStepper",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliprostepper--docs",
       "category": "Amelipro"
@@ -1757,6 +1844,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproStatus",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprostatus--docs",
       "category": "Amelipro"
@@ -1777,6 +1865,7 @@
       "storybookTitle": "Composants/Amelipro/Tuiles/AmeliproStateTile",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-tuiles-ameliprostatetile--docs",
       "category": "Amelipro"
@@ -1797,6 +1886,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproSelect",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliproselect--docs",
       "category": "Amelipro"
@@ -1817,6 +1907,7 @@
       "storybookTitle": "Composants/Amelipro/Listes de résultats/AmeliproResultList",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-listes-de-resultats-ameliproresultlist--docs",
       "category": "Amelipro"
@@ -1837,6 +1928,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproRadioGroup",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliproradiogroup--docs",
       "category": "Amelipro"
@@ -1857,6 +1949,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproPostalAddressField",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-amelipropostaladdressfield--docs",
       "category": "Amelipro"
@@ -1877,6 +1970,7 @@
       "storybookTitle": "Composants/Amelipro/IDPA/AmeliproPatientLogin",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-idpa-amelipropatientlogin--docs",
       "category": "Amelipro"
@@ -1897,6 +1991,7 @@
       "storybookTitle": "Composants/Amelipro/IDPA/AmeliproPatientLogged",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-idpa-amelipropatientlogged--docs",
       "category": "Amelipro"
@@ -1917,6 +2012,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/Sous-composants du header/AmeliproPatientBanner",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-sous-composants-du-header-amelipropatientbanner--docs",
       "category": "Amelipro"
@@ -1937,6 +2033,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproPagination",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-amelipropagination--docs",
       "category": "Amelipro"
@@ -1957,6 +2054,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproPageLayout",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-amelipropagelayout--docs",
       "category": "Amelipro"
@@ -1977,6 +2075,7 @@
       "storybookTitle": "Composants/Amelipro/Boites de dialogue/AmeliproOnboarding",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-boites-de-dialogue-ameliproonboarding--docs",
       "category": "Amelipro"
@@ -1997,6 +2096,7 @@
       "storybookTitle": "Composants/Amelipro/Cartes/AmeliproNumberedCard",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-cartes-amelipronumberedcard--docs",
       "category": "Amelipro"
@@ -2017,6 +2117,7 @@
       "storybookTitle": "Composants/Amelipro/Cartes/AmeliproMultipleFoldingCard",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-cartes-amelipromultiplefoldingcard--docs",
       "category": "Amelipro"
@@ -2037,6 +2138,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproMessagingLayout",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-amelipromessaginglayout--docs",
       "category": "Amelipro"
@@ -2057,6 +2159,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproMessage",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-amelipromessage--docs",
       "category": "Amelipro"
@@ -2077,6 +2180,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/Sous-composants du header/AmeliproMenu",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-sous-composants-du-header-amelipromenu--docs",
       "category": "Amelipro"
@@ -2097,6 +2201,7 @@
       "storybookTitle": "Composants/Amelipro/Tuiles/AmeliproMailTile",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-tuiles-amelipromailtile--docs",
       "category": "Amelipro"
@@ -2117,6 +2222,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproIllustratedRadioGroup",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliproillustratedradiogroup--docs",
       "category": "Amelipro"
@@ -2137,6 +2243,7 @@
       "storybookTitle": "Composants/Amelipro/Tuiles/AmeliproIllustratedDataTile",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-tuiles-ameliproillustrateddatatile--docs",
       "category": "Amelipro"
@@ -2157,6 +2264,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproIconBtn",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliproiconbtn--docs",
       "category": "Amelipro"
@@ -2177,6 +2285,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproIcon",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliproicon--docs",
       "category": "Amelipro"
@@ -2197,6 +2306,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproHeader",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliproheader--docs",
       "category": "Amelipro"
@@ -2217,6 +2327,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproFooter",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliprofooter--docs",
       "category": "Amelipro"
@@ -2237,6 +2348,7 @@
       "storybookTitle": "Composants/Amelipro/Boites de dialogue/AmeliproFirstLogin",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-boites-de-dialogue-ameliprofirstlogin--docs",
       "category": "Amelipro"
@@ -2257,6 +2369,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproFilters",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprofilters--docs",
       "category": "Amelipro"
@@ -2277,6 +2390,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproFilePreview",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprofilepreview--docs",
       "category": "Amelipro"
@@ -2297,6 +2411,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproErrorTemplate",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliproerrortemplate--docs",
       "category": "Amelipro"
@@ -2317,6 +2432,7 @@
       "storybookTitle": "Composants/Amelipro/Blocs dépliants/AmeliproDisclosure",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-blocs-depliants-ameliprodisclosure--docs",
       "category": "Amelipro"
@@ -2337,6 +2453,7 @@
       "storybookTitle": "Composants/Amelipro/Boites de dialogue/AmeliproDialog",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-boites-de-dialogue-ameliprodialog--docs",
       "category": "Amelipro"
@@ -2357,6 +2474,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproDentalChart",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprodentalchart--docs",
       "category": "Amelipro"
@@ -2377,6 +2495,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproCustomSelector",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliprocustomselector--docs",
       "category": "Amelipro"
@@ -2397,6 +2516,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproCopyBtn",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprocopybtn--docs",
       "category": "Amelipro"
@@ -2417,6 +2537,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproContentLayout",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliprocontentlayout--docs",
       "category": "Amelipro"
@@ -2437,6 +2558,7 @@
       "storybookTitle": "Composants/Amelipro/Tuiles/AmeliproClickableTile",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-tuiles-ameliproclickabletile--docs",
       "category": "Amelipro"
@@ -2457,6 +2579,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproChips",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprochips--docs",
       "category": "Amelipro"
@@ -2477,6 +2600,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproCheckboxGroup",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliprocheckboxgroup--docs",
       "category": "Amelipro"
@@ -2497,6 +2621,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproCheckbox",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliprocheckbox--docs",
       "category": "Amelipro"
@@ -2517,6 +2642,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproCarousel",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliprocarousel--docs",
       "category": "Amelipro"
@@ -2537,6 +2663,7 @@
       "storybookTitle": "Composants/Amelipro/Cartes/AmeliproCard",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-cartes-ameliprocard--docs",
       "category": "Amelipro"
@@ -2557,6 +2684,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproCaptcha",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliprocaptcha--docs",
       "category": "Amelipro"
@@ -2577,6 +2705,7 @@
       "storybookTitle": "Composants/Amelipro/Cartes/AmeliproCallback",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-cartes-ameliprocallback--docs",
       "category": "Amelipro"
@@ -2597,6 +2726,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproBtn",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprobtn--docs",
       "category": "Amelipro"
@@ -2617,6 +2747,7 @@
       "storybookTitle": "Composants/Amelipro/Mise en page/AmeliproBreadcrumb",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-mise-en-page-ameliprobreadcrumb--docs",
       "category": "Amelipro"
@@ -2637,6 +2768,7 @@
       "storybookTitle": "Composants/Amelipro/AmeliproBadge",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-ameliprobadge--docs",
       "category": "Amelipro"
@@ -2657,6 +2789,7 @@
       "storybookTitle": "Composants/Amelipro/Formulaires/AmeliproAutoCompleteField",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-formulaires-ameliproautocompletefield--docs",
       "category": "Amelipro"
@@ -2677,6 +2810,7 @@
       "storybookTitle": "Composants/Amelipro/Listes de résultats/AmeliproAccordionResultList",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-listes-de-resultats-ameliproaccordionresultlist--docs",
       "category": "Amelipro"
@@ -2697,6 +2831,7 @@
       "storybookTitle": "Composants/Amelipro/Blocs dépliants/AmeliproAccordionResult",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-blocs-depliants-ameliproaccordionresult--docs",
       "category": "Amelipro"
@@ -2717,6 +2852,7 @@
       "storybookTitle": "Composants/Amelipro/Listes de résultats/AmeliproAccordionList",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-listes-de-resultats-ameliproaccordionlist--docs",
       "category": "Amelipro"
@@ -2737,6 +2873,7 @@
       "storybookTitle": "Composants/Amelipro/Blocs dépliants/AmeliproAccordionGroup",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-blocs-depliants-ameliproaccordiongroup--docs",
       "category": "Amelipro"
@@ -2757,6 +2894,7 @@
       "storybookTitle": "Composants/Amelipro/Listes de résultats/AmeliproAccordionFrieze",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-listes-de-resultats-ameliproaccordionfrieze--docs",
       "category": "Amelipro"
@@ -2777,6 +2915,7 @@
       "storybookTitle": "Composants/Amelipro/Blocs dépliants/AmeliproAccordion",
       "hasUnitTest": true,
       "hasA11yTest": false,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": false,
       "storybookId": "composants-amelipro-blocs-depliants-ameliproaccordion--docs",
       "category": "Amelipro"
@@ -2797,6 +2936,7 @@
       "storybookTitle": "Composants/Données/Accordion",
       "hasUnitTest": true,
       "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
       "hasCypressTest": true,
       "storybookId": "composants-donnees-accordion--docs",
       "category": "Données"

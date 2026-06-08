@@ -314,6 +314,9 @@ function main() {
 				hasInteractivePlayground: interactivePlayground,
 			})
 
+			const defaultFigmaUrl
+  = 'https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1'
+
 			return {
 				componentName,
 				hasPropsDocumentation: propsDocumentation,
@@ -330,6 +333,7 @@ function main() {
 				storybookTitle,
 				hasUnitTest,
 				hasA11yTest,
+				figmaUrl: defaultFigmaUrl,
 				hasCypressTest,
 				storybookId: `${storyPath}--docs`,
 				category: getCategory(storybookTitle),
