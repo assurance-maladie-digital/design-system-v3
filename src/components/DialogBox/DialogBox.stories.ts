@@ -926,6 +926,7 @@ export const Custom: Story = {
 		return {
 			components: { DialogBox, VBtn },
 			setup() {
+				const dialogOpen = ref(false)
 				const currentStep = ref(0)
 				const steps = [
 					{
@@ -958,27 +959,33 @@ export const Custom: Story = {
 				}
 
 				const skipTutorial = () => {
-					args.modelValue = false
+					dialogOpen.value = false
 					currentStep.value = 0
 				}
 
 				const finishTutorial = () => {
-					args.modelValue = false
+					dialogOpen.value = false
 					currentStep.value = 0
 				}
 
-				return { args, currentStep, steps, nextStep, previousStep, skipTutorial, finishTutorial }
+				const rest = computed(() => {
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					const { modelValue, 'onUpdate:modelValue': _, ...rest } = args
+					return rest
+				})
+
+				return { args, rest, dialogOpen, currentStep, steps, nextStep, previousStep, skipTutorial, finishTutorial }
 			},
 			template: `
                 <div class="pa-4">
                     <VBtn
-                        @click="args.modelValue = !args.modelValue"
+                        @click="dialogOpen = !dialogOpen"
                         color="primary"
                     >Ouvrir le tutoriel</VBtn>
                     
                     <DialogBox
-                        v-bind="args"
-                        @update:modelValue="args.modelValue = $event"
+                        v-bind="rest"
+                        v-model="dialogOpen"
                     >
                         <div class="d-flex flex-column">
                             <!-- Progress dots -->
