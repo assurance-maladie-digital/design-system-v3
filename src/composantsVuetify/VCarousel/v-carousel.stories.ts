@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { VCarousel, VCarouselItem } from 'vuetify/components'
+import { VCarousel, VCarouselItem, VCard, VCardTitle, VCardText, VBtn } from 'vuetify/components'
 
 const meta: Meta<typeof VCarousel> = {
 	title: 'Composants/Composants Vuetify/VCarousel',
@@ -383,6 +383,149 @@ export const CustomHeight: Story = {
         </div>
     </v-carousel-item>
 </v-carousel>`,
+			},
+		},
+	},
+}
+
+export const WithCustomSlots: Story = {
+	render: args => ({
+		components: { VCarousel, VCarouselItem, VCard, VCardTitle, VCardText, VBtn },
+		setup() {
+			return { args }
+		},
+		template: `
+            <VCarousel v-bind="args">
+                <VCarouselItem>
+                    <div class="d-flex fill-height justify-center align-center pa-4">
+                        <VCard class="w-100" style="max-width: 600px;">
+                            <VCardTitle>Slide 1</VCardTitle>
+                            <VCardText>
+                                <p class="mb-0">
+                                    Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée
+                                    à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le
+                                    faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise
+                                    un texte en faux latin, le Lorem ipsum ou Lipsum.
+                                </p>
+                                <VBtn color="primary" class="mt-2">
+                                    Bouton slide 1
+                                </VBtn>
+                            </VCardText>
+                        </VCard>
+                    </div>
+                </VCarouselItem>
+
+                <VCarouselItem>
+                    <div class="d-flex fill-height justify-center align-center pa-4">
+                        <VCard class="w-100" style="max-width: 600px;">
+                            <VCardTitle>Slide 2</VCardTitle>
+                            <VCardText>
+                                <p class="mb-0">
+                                    Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée
+                                    à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le
+                                    faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise
+                                    un texte en faux latin, le Lorem ipsum ou Lipsum.
+                                </p>
+                                <VBtn color="primary" class="mt-2">
+                                    Bouton slide 2
+                                </VBtn>
+                            </VCardText>
+                        </VCard>
+                    </div>
+                </VCarouselItem>
+
+                <VCarouselItem>
+                    <div class="d-flex fill-height justify-center align-center pa-4">
+                        <VCard class="w-100" style="max-width: 600px;">
+                            <VCardTitle>Slide 3</VCardTitle>
+                            <VCardText>
+                                <p class="mb-0">
+                                    Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée
+                                    à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le
+                                    faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise
+                                    un texte en faux latin, le Lorem ipsum ou Lipsum.
+                                </p>
+                                <VBtn color="primary" class="mt-2">
+                                    Bouton slide 3
+                                </VBtn>
+                            </VCardText>
+                        </VCard>
+                    </div>
+                </VCarouselItem>
+            </VCarousel>
+        `,
+	}),
+	args: {
+		height: 500,
+		showArrows: 'hover',
+	},
+	parameters: {
+		docs: {
+			source: {
+				code: `<template>
+    <v-carousel :height="500" show-arrows="hover">
+        <v-carousel-item>
+            <div class="d-flex fill-height justify-center align-center pa-4">
+                <v-card class="w-100" style="max-width: 600px;">
+                    <v-card-title>Slide 1</v-card-title>
+                    <v-card-text>
+                        <p class="mb-0">
+                            Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée
+                            à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le
+                            faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise
+                            un texte en faux latin, le Lorem ipsum ou Lipsum.
+                        </p>
+                        <v-btn color="primary" class="mt-2">
+                            Bouton slide 1
+                        </v-btn>
+                    </v-card-text>
+                </v-card>
+            </div>
+        </v-carousel-item>
+
+        <v-carousel-item>
+            <div class="d-flex fill-height justify-center align-center pa-4">
+                <v-card class="w-100" style="max-width: 600px;">
+                    <v-card-title>Slide 2</v-card-title>
+                    <v-card-text>
+                        <p class="mb-0">
+                            Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée
+                            à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le
+                            faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise
+                            un texte en faux latin, le Lorem ipsum ou Lipsum.
+                        </p>
+                        <v-btn color="primary" class="mt-2">
+                            Bouton slide 2
+                        </v-btn>
+                    </v-card-text>
+                </v-card>
+            </div>
+        </v-carousel-item>
+
+        <v-carousel-item>
+            <div class="d-flex fill-height justify-center align-center pa-4">
+                <v-card class="w-100" style="max-width: 600px;">
+                    <v-card-title>Slide 3</v-card-title>
+                    <v-card-text>
+                        <p class="mb-0">
+                            Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée
+                            à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le
+                            faux-texte dès qu'il est prêt ou que la mise en page est achevée. Généralement, on utilise
+                            un texte en faux latin, le Lorem ipsum ou Lipsum.
+                        </p>
+                        <v-btn color="primary" class="mt-2">
+                            Bouton slide 3
+                        </v-btn>
+                    </v-card-text>
+                </v-card>
+            </div>
+        </v-carousel-item>
+    </v-carousel>
+</template>
+
+<script setup lang="ts">
+import { VCarousel, VCarouselItem, VCard, VCardTitle, VCardText, VBtn } from 'vuetify/components'
+</script>`,
 			},
 		},
 	},
