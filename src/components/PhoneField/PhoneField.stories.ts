@@ -737,7 +737,6 @@ export const CustomIndicatifs: Story = {
 	},
 }
 
-
 export const DisplayFormatCode: Story = {
 	parameters: {
 		a11y: {

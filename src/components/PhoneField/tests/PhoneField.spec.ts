@@ -327,8 +327,6 @@ describe('PhoneField', () => {
 		expect(select.props('readonly')).toBe(true)
 	})
 
-
-
 	it('forwards hideDetails prop to SyTextField', () => {
 		const wrapper = mount(PhoneField, {
 			props: {
