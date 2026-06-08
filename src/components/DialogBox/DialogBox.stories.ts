@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/vue3'
 import { VBtn } from 'vuetify/components'
 import DialogBox from './DialogBox.vue'
 import { fn } from '@storybook/test'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const meta: Meta<typeof DialogBox> = {
 	title: 'Composants/Feedback/DialogBox',
@@ -906,6 +906,305 @@ export const Draggable: Story = {
 					const dialogOpen = ref(false)
 				</script>
 				`,
+			},
+		],
+	},
+}
+
+export const Custom: Story = {
+	args: {
+		'headingLevel': 2,
+		'modelValue': false,
+		'title': 'Tutoriel',
+		'hideActions': true,
+		'width': '800px',
+		'onCancel': fn(),
+		'onConfirm': fn(),
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DialogBox, VBtn },
+			setup() {
+				const currentStep = ref(0)
+				const steps = [
+					{
+						title: 'Étape 1 : Bienvenue',
+						content: 'Dans cet espace, vous allez pouvoir découvrir les fonctionnalités principales de l\'application. Suivez ce tutoriel pour apprendre à utiliser tous les outils disponibles.',
+						img: 'https://picsum.photos/400/300?random=1',
+					},
+					{
+						title: 'Étape 2 : Navigation',
+						content: 'Utilisez le menu de navigation pour accéder aux différentes sections. Vous pouvez également utiliser les raccourcis clavier pour une navigation plus rapide.',
+						img: 'https://picsum.photos/400/300?random=2',
+					},
+					{
+						title: 'Étape 3 : Terminé',
+						content: 'Vous êtes maintenant prêt à utiliser l\'application ! N\'hésitez pas à consulter la documentation pour plus d\'informations.',
+						img: 'https://picsum.photos/400/300?random=3',
+					},
+				]
+
+				const nextStep = () => {
+					if (currentStep.value < steps.length - 1) {
+						currentStep.value++
+					}
+				}
+
+				const previousStep = () => {
+					if (currentStep.value > 0) {
+						currentStep.value--
+					}
+				}
+
+				const skipTutorial = () => {
+					args.modelValue = false
+					currentStep.value = 0
+				}
+
+				const finishTutorial = () => {
+					args.modelValue = false
+					currentStep.value = 0
+				}
+
+				return { args, currentStep, steps, nextStep, previousStep, skipTutorial, finishTutorial }
+			},
+			template: `
+                <div class="pa-4">
+                    <VBtn
+                        @click="args.modelValue = !args.modelValue"
+                        color="primary"
+                    >Ouvrir le tutoriel</VBtn>
+                    
+                    <DialogBox
+                        v-bind="args"
+                        @update:modelValue="args.modelValue = $event"
+                    >
+                        <div class="d-flex flex-column">
+                            <!-- Progress dots -->
+                            <div class="d-flex align-center mb-4">
+                                <span
+                                    v-for="(step, index) in steps"
+                                    :key="index"
+                                    class="mx-1"
+                                    :style="{
+                                        width: '14px',
+                                        height: '14px',
+                                        borderRadius: '50%',
+                                        border: '2px solid rgb(var(--v-theme-primary))',
+                                        backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))'
+                                    }"
+                                />
+                                <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
+                            </div>
+
+                            <!-- Image -->
+                            <img
+                                :src="steps[currentStep].img"
+                                :alt="steps[currentStep].title"
+                                class="mb-4 mx-auto"
+                                style="max-width: 100%; height: auto; max-height: 300px;"
+                            >
+
+                            <!-- Title -->
+                            <h3 class="text-h5 font-weight-bold mb-4">
+                                {{ steps[currentStep].title }}
+                            </h3>
+
+                            <!-- Content -->
+                            <p class="mb-6">
+                                {{ steps[currentStep].content }}
+                            </p>
+
+                            <!-- Actions -->
+                            <div class="d-flex justify-space-between align-center mt-auto">
+                                <div class="d-flex gap-2">
+                                    <VBtn
+                                        v-if="currentStep > 0"
+                                        color="primary"
+                                        variant="outlined"
+                                        @click="previousStep"
+                                    >
+                                        Précédent
+                                    </VBtn>
+                                    
+                                    <VBtn
+                                        v-if="currentStep < steps.length - 1"
+                                        color="primary"
+                                        @click="nextStep"
+                                    >
+                                        Suivant
+                                    </VBtn>
+
+                                    <VBtn
+                                        v-else
+                                        color="primary"
+                                        @click="finishTutorial"
+                                    >
+                                        Commencer
+                                    </VBtn>
+                                </div>
+
+                                <VBtn
+                                    variant="text"
+                                    color="primary"
+                                    @click="skipTutorial"
+                                >
+                                    Passer
+                                </VBtn>
+                            </div>
+                        </div>
+                    </DialogBox>
+                </div>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+                <template>
+                    <VBtn
+                        color="primary"
+                        @click="dialogOpen = !dialogOpen"
+                    >Ouvrir le tutoriel</VBtn>
+                    
+                    <DialogBox
+                        v-model="dialogOpen"
+                        title="Tutoriel"
+                        :hide-actions="true"
+                        width="800px"
+                    >
+                        <div class="d-flex flex-column">
+                            <!-- Progress dots -->
+                            <div class="d-flex align-center mb-4">
+                                <span
+                                    v-for="(step, index) in steps"
+                                    :key="index"
+                                    class="mx-1"
+                                    :style="{
+                                        width: '14px',
+                                        height: '14px',
+                                        borderRadius: '50%',
+                                        border: '2px solid rgb(var(--v-theme-primary))',
+                                        backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))'
+                                    }"
+                                />
+                                <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
+                            </div>
+
+                            <!-- Image -->
+                            <img
+                                :src="steps[currentStep].img"
+                                :alt="steps[currentStep].title"
+                                class="mb-4 mx-auto"
+                                style="max-width: 100%; height: auto; max-height: 300px;"
+                            >
+
+                            <!-- Title -->
+                            <h3 class="text-h5 font-weight-bold mb-4">
+                                {{ steps[currentStep].title }}
+                            </h3>
+
+                            <!-- Content -->
+                            <p class="mb-6">
+                                {{ steps[currentStep].content }}
+                            </p>
+
+                            <!-- Actions -->
+                            <div class="d-flex justify-space-between align-center mt-auto">
+                                <div class="d-flex gap-2">
+                                    <v-btn
+                                        v-if="currentStep > 0"
+                                        color="primary"
+                                        variant="outlined"
+                                        @click="previousStep"
+                                    >
+                                        Précédent
+                                    </v-btn>
+                                    
+                                    <v-btn
+                                        v-if="currentStep < steps.length - 1"
+                                        color="primary"
+                                        @click="nextStep"
+                                    >
+                                        Suivant
+                                    </v-btn>
+
+                                    <v-btn
+                                        v-else
+                                        color="primary"
+                                        @click="finishTutorial"
+                                    >
+                                        Commencer
+                                    </v-btn>
+                                </div>
+
+                                <v-btn
+                                    variant="text"
+                                    color="primary"
+                                    @click="skipTutorial"
+                                >
+                                    Passer
+                                </v-btn>
+                            </div>
+                        </div>
+                    </DialogBox>
+                </template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `
+                <script setup lang="ts">
+                    import { DialogBox } from '@cnamts/synapse'
+                    import { ref } from 'vue'
+
+                    const dialogOpen = ref(false)
+                    const currentStep = ref(0)
+
+                    const steps = [
+                        {
+                            title: 'Étape 1 : Bienvenue',
+                            content: 'Dans cet espace, vous allez pouvoir découvrir les fonctionnalités principales de l\\'application.',
+                            img: 'https://picsum.photos/400/300?random=1',
+                        },
+                        {
+                            title: 'Étape 2 : Navigation',
+                            content: 'Utilisez le menu de navigation pour accéder aux différentes sections.',
+                            img: 'https://picsum.photos/400/300?random=2',
+                        },
+                        {
+                            title: 'Étape 3 : Terminé',
+                            content: 'Vous êtes maintenant prêt à utiliser l\\'application !',
+                            img: 'https://picsum.photos/400/300?random=3',
+                        },
+                    ]
+
+                    const nextStep = () => {
+                        if (currentStep.value < steps.length - 1) {
+                            currentStep.value++
+                        }
+                    }
+
+                    const previousStep = () => {
+                        if (currentStep.value > 0) {
+                            currentStep.value--
+                        }
+                    }
+
+                    const skipTutorial = () => {
+                        dialogOpen.value = false
+                        currentStep.value = 0
+                    }
+
+                    const finishTutorial = () => {
+                        dialogOpen.value = false
+                        currentStep.value = 0
+                    }
+                </script>
+                `,
 			},
 		],
 	},
