@@ -1,14 +1,21 @@
 /* eslint-disable vue/one-component-per-file */
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { defineComponent, h } from 'vue'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { useFormValidation } from '../useFormValidation'
 import { useValidatable } from '../useValidatable'
 
 type FormValidationApi = ReturnType<typeof useFormValidation>
 
 describe('useValidatable', () => {
-	it('registers component on mount and unregisters on unmount', () => {
+	beforeEach(() => {
+		vi.clearAllMocks()
+	})
+
+	afterEach(async () => {
+		await flushPromises()
+	})
+	it('registers component on mount and unregisters on unmount', async () => {
 		const ChildComponent = defineComponent({
 			name: 'ValidatableChild',
 			setup() {
@@ -63,10 +70,11 @@ describe('useValidatable', () => {
 		expect(childVm.reset).toHaveBeenCalledTimes(1)
 
 		wrapper.unmount()
+		await flushPromises()
 		expect(form.validatableComponents.value).toHaveLength(0)
 	})
 
-	it('does nothing harmful when no form provider is present', () => {
+	it('does nothing harmful when no form provider is present', async () => {
 		const OrphanComponent = defineComponent({
 			name: 'OrphanValidatable',
 			setup() {
@@ -80,11 +88,13 @@ describe('useValidatable', () => {
 			},
 		})
 
-		const mountOrphan = () => {
+		const mountOrphan = async () => {
 			const wrapper = mount(OrphanComponent)
+			await flushPromises()
 			wrapper.unmount()
+			await flushPromises()
 		}
 
-		expect(mountOrphan).not.toThrow()
+		await expect(mountOrphan()).resolves.not.toThrow()
 	})
 })

@@ -10,7 +10,7 @@ Pour consulter les changements récents, veuillez consulter le [CHANGELOG](https
 
 Pour utiliser ce Design System, vous devez avoir au moins les versions suivantes de Node :
 
--   Node : 18.0.0
+-   Node : 20.11.0
 
 ## Stack Technique
 
