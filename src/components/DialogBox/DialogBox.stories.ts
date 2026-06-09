@@ -1026,7 +1026,7 @@ export const Custom: Story = {
 
                             <!-- Actions -->
                             <div class="d-flex justify-space-between align-center mt-auto">
-                                <div class="d-flex gap-2">
+                                <div class="d-flex ga-2">
                                     <VBtn
                                         v-if="currentStep > 0"
                                         color="primary"
@@ -1122,7 +1122,7 @@ export const Custom: Story = {
 
                             <!-- Actions -->
                             <div class="d-flex justify-space-between align-center mt-auto">
-                                <div class="d-flex gap-2">
+                                <div class="d-flex ga-2">
                                     <v-btn
                                         v-if="currentStep > 0"
                                         color="primary"
