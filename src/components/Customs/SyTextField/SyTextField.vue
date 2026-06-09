@@ -6,6 +6,7 @@
 	import {
 		mdiInformationOutline,
 		mdiClose,
+		mdiCloseCircle,
 		mdiCalendar,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'

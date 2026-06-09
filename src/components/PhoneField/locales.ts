@@ -7,4 +7,6 @@ export const locales = {
 	success: (fieldIdentifier: string) => `Le champ ${fieldIdentifier} est valide.`,
 	clearButtonAriaLabel: 'Effacer le numéro de téléphone',
 	clearButtonAriaLabelWithField: (fieldIdentifier: string) => `Effacer le numéro de téléphone du champ ${fieldIdentifier}`,
+	clearButtonTitle: 'Effacer le numéro de téléphone',
+	clearButtonTitleWithField: (fieldIdentifier: string) => `Effacer le numéro de téléphone du champ ${fieldIdentifier}`,
 }
