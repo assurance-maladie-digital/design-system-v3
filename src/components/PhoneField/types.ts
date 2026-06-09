@@ -16,7 +16,6 @@ export type PhoneFieldProps = FieldValidationProps & {
 	dialCodeModel?: string | Indicatif
 	outlined?: boolean
 	withCountryCode?: boolean
-	countryCodeRequired?: boolean
 	displayFormat?: DisplayFormat
 	customIndicatifs?: Indicatif[]
 	useCustomIndicatifsOnly?: boolean

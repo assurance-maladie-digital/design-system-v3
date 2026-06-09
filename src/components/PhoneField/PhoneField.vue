@@ -19,7 +19,6 @@
 		dialCodeModel: '',
 		outlined: true,
 		withCountryCode: false,
-		countryCodeRequired: false,
 		displayFormat: 'code',
 		customIndicatifs: () => [],
 		useCustomIndicatifsOnly: false,
@@ -39,7 +38,7 @@
 	}>()
 
 	const phoneNumber = ref<string>(props.modelValue)
-	const { dialCode, dialCodeList, usedIndicatif } = usePhoneIndicatifs(
+	const { internalDialCode, dialCodeList } = usePhoneIndicatifs(
 		toRef(props, 'dialCodeModel'),
 		toRef(props, 'displayFormat'),
 		toRef(props, 'customIndicatifs'),
@@ -56,7 +55,7 @@
 		}
 	})
 
-	watch (dialCode, (newVal) => {
+	watch (internalDialCode, (newVal) => {
 		emits('update:dialCodeModel', newVal)
 	})
 
@@ -80,7 +79,7 @@
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
-		counter: computed(() => usedIndicatif.value.phoneLength || 10),
+		counter: computed(() => internalDialCode.value.phoneLength || 10),
 		phoneFieldIdentifier: computed(() => props.withCountryCode ? props.locales?.phoneNumberWithoutCountryLabel || 'Numéro de téléphone' : props.locales?.label || 'Téléphone'),
 		shouldDisableErrorHandling: computed(() => props.disableErrorHandling || props.readonly),
 		hasError: toRef(props, 'hasError'),
@@ -98,8 +97,7 @@
 		warningMessages: toRef(props, 'warningMessages'),
 		successMessages: toRef(props, 'successMessages'),
 		locales: toRef(props, 'locales'),
-		dialCode,
-		countryCodeRequired: toRef(props, 'countryCodeRequired'),
+		internalDialCode,
 		withCountryCode: toRef(props, 'withCountryCode'),
 	})
 
@@ -113,7 +111,7 @@
 		hasSuccess,
 	}
 
-	const phoneMask = computed(() => usedIndicatif.value.mask)
+	const phoneMask = computed(() => internalDialCode.value.mask)
 
 	const showClear = computed(() => {
 		if (!props.isClearable) return false
@@ -127,9 +125,6 @@
 	}
 
 	defineExpose({
-		phoneNumber,
-		dialCode,
-		usedIndicatif,
 		dialCodeList,
 		hasError,
 		errors,
@@ -146,6 +141,7 @@
 		:is="!withoutFieldset ? 'fieldset' : 'div'"
 		:class="!withoutFieldset ? 'phone-field-fieldset' : ''"
 	>
+		{{ internalDialCode }}
 		<legend
 			v-if="!withoutFieldset"
 			class="phone-field-legend"
@@ -158,12 +154,11 @@
 				class="phone-field-country"
 			>
 				<SySelect
-					v-model="dialCode"
+					v-model="internalDialCode"
 					:items="dialCodeList"
 					:label="locales.indicatifLabel"
 					:outlined="props.outlined"
-					:required="props.countryCodeRequired"
-					:aria-required="props.countryCodeRequired"
+					:aria-required="true"
 					:display-asterisk="props.displayAsterisk"
 					:disable-error-handling="props.disableErrorHandling || props.readonly"
 					:bg-color="props.bgColor"
@@ -181,8 +176,8 @@
 			<div class="phone-field-number">
 				<SyTextField
 					v-model="phoneNumber"
-					v-maska="usedIndicatif.mask"
-					:counter="usedIndicatif.phoneLength"
+					v-maska="internalDialCode.mask"
+					:counter="internalDialCode.phoneLength"
 					:counter-value="(value: string) => value.replace(/\D/g, '').length"
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="props.required"

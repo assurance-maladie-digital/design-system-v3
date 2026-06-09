@@ -3,7 +3,7 @@ import { indicatifs } from './indicatifs'
 import type { Indicatif, DisplayFormat } from './types'
 
 export function usePhoneIndicatifs(
-	defaultDialCode: Ref<string | Indicatif>,
+	dialCodeProp: Ref<string | Indicatif>,
 	displayFormat: Ref<DisplayFormat>,
 	customIndicatifs: Ref<Indicatif[]>,
 	useCustomIndicatifsOnly: Ref<boolean>,
@@ -45,48 +45,37 @@ export function usePhoneIndicatifs(
 		})
 	})
 
-	const dialCode = ref<string | Indicatif>()
-	watch(defaultDialCode, (newVal) => {
-		if (typeof newVal === 'string' && newVal !== '') {
-			const searchDial = dialCodeList.value.find(indicatif => indicatif.code === newVal)
-			if (searchDial) {
-				dialCode.value = searchDial
-			}
+	const internalDialCode = ref<Indicatif>(
+		getIndicatif(dialCodeProp.value) || getFallbackIndicatif(),
+	)
+	watch(dialCodeList, () => {
+		const foundIndicatif = getIndicatif(internalDialCode.value)
+		if (!foundIndicatif) {
+			internalDialCode.value = getFallbackIndicatif()
 		}
-		else if (typeof newVal === 'object' && newVal !== null) {
-			const searchDial = dialCodeList.value.find(indicatif => indicatif.code === newVal.code) || newVal
-			if (searchDial) {
-				dialCode.value = searchDial
-			}
-		}
-		else {
-			const defaultDial = dialCodeList.value.find(indicatif => indicatif.code === '+33')
-			if (defaultDial) {
-				dialCode.value = defaultDial
-			}
+	})
+
+	watch(dialCodeProp, (newVal) => {
+		const foundIndicatif = getIndicatif(newVal)
+		if (foundIndicatif) {
+			internalDialCode.value = foundIndicatif
 		}
 	}, { immediate: true })
 
-	// Get the pattern and other parameters for the phone field
-	const usedIndicatif = computed<Indicatif>(() => {
-		const countryCode = (typeof dialCode.value === 'string' ? dialCode.value : dialCode.value?.code) || '+33'
+	function getIndicatif(dialCode: string | Indicatif | null | undefined): Indicatif | undefined {
+		const countryCode = (typeof dialCode === 'string' ? dialCode : dialCode?.code)
+		return dialCodeList.value.find(indicatif => indicatif.code === countryCode)
+	}
 
-		const dial = dialCodeList.value.find(indicatif => indicatif.code === countryCode)
-		if (dial) return dial
-
-		// If no default dial code is found, return the first one in the list
-		if (dialCodeList.value[0]) {
-			return dialCodeList.value[0]
-		}
-
-		// Fallback to a default indicatif if the list is empty
-		return indicatifs.find(indicatif => indicatif.code === '+33') as Indicatif
-	})
+	function getFallbackIndicatif(): Indicatif {
+		return dialCodeList.value.find(indicatif => indicatif.code === '+33')
+			|| dialCodeList.value[0]
+			|| indicatifs.find(indicatif => indicatif.code === '+33')!
+	}
 
 	return {
-		dialCode,
+		internalDialCode,
 		dialCodeList,
-		usedIndicatif,
 	}
 }
 

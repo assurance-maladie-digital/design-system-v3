@@ -3,6 +3,7 @@ import { computed, ref, type Ref } from 'vue'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { locales } from './locales'
 import type { VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { Indicatif } from './types'
 
 export function usePhoneFieldValidation(params: {
 	modelValue: Ref<string>
@@ -28,29 +29,11 @@ export function usePhoneFieldValidation(params: {
 	successMessages?: Ref<string[] | null | undefined>
 	locales: Ref<typeof locales>
 	useVuetifyValidation?: Ref<boolean>
-	dialCode?: Ref<unknown>
-	countryCodeRequired?: Ref<boolean>
+	dialCode?: Ref<Indicatif>
 	withCountryCode?: Ref<boolean>
 }) {
 	const validationRules = computed<ValidationRule[]>(() => {
 		const rules = [] as ValidationRule[]
-
-		if (params.withCountryCode?.value && params.countryCodeRequired?.value) {
-			rules.push({
-				type: 'custom',
-				options: {
-					validate: () => {
-						const hasDialCode = !!params.dialCode?.value && (
-							typeof params.dialCode.value === 'string'
-								? params.dialCode.value.trim() !== ''
-								: !!(params.dialCode.value as Record<string, unknown>).code
-						)
-						return hasDialCode
-					},
-					message: params.locales.value.errorRequired(params.locales.value.indicatifLabel || 'Indicatif'),
-				},
-			})
-		}
 
 		rules.push({
 			type: 'exactLength',

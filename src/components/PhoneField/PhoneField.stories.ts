@@ -78,10 +78,6 @@ const meta = {
 			control: 'object',
 			description: 'Permet d\'ajouter des indicatifs à la liste pre-existante',
 		},
-		'countryCodeRequired': {
-			control: 'boolean',
-			description: 'Rend la sélection de l\'indicatif pays obligatoire. Si `withCountryCode` est à `true` et que cette prop est également à `true`, l\'utilisateur doit sélectionner un indicatif pays pour que le champ soit considéré comme valide.',
-		},
 		'useCustomIndicatifsOnly': {
 			control: 'boolean',
 			description: 'Permet d\'utiliser uniquement les indicatifs que vous renseignez dans la props customIndicatifs',
@@ -185,7 +181,6 @@ export const Default: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -203,7 +198,6 @@ export const Default: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
@@ -218,7 +212,6 @@ export const Default: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: true,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -258,7 +251,6 @@ export const Required: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -276,7 +268,6 @@ export const Required: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
@@ -291,7 +282,6 @@ export const Required: Story = {
 		required: true,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: true,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -685,7 +675,6 @@ export const CustomIndicatifs: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -703,7 +692,6 @@ export const CustomIndicatifs: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
 					const customIndicatifs = [
                         { code: '+33', country: 'France', abbreviation: 'FR', phoneLength: 10, mask: '## ## ## ## ##' },
@@ -723,7 +711,6 @@ export const CustomIndicatifs: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: false,
 		displayFormat: 'code',
 		customIndicatifs: [
 			{ code: '+33', country: 'France', abbreviation: 'FR', phoneLength: 10, mask: '## ## ## ## ##' },
@@ -767,7 +754,6 @@ export const DisplayFormatCode: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -785,7 +771,6 @@ export const DisplayFormatCode: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
@@ -800,7 +785,6 @@ export const DisplayFormatCode: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: false,
 		displayFormat: 'code',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -840,7 +824,6 @@ export const DisplayFormatCodeAbbreviation: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -858,7 +841,6 @@ export const DisplayFormatCodeAbbreviation: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code-abbreviation')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
@@ -873,7 +855,6 @@ export const DisplayFormatCodeAbbreviation: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: false,
 		displayFormat: 'code-abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -913,7 +894,6 @@ export const DisplayFormatCodeCountry: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -931,7 +911,6 @@ export const DisplayFormatCodeCountry: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code-country')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
@@ -946,7 +925,6 @@ export const DisplayFormatCodeCountry: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: false,
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -986,7 +964,6 @@ export const DisplayFormatCountry: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -1004,7 +981,6 @@ export const DisplayFormatCountry: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('country')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
@@ -1019,7 +995,6 @@ export const DisplayFormatCountry: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: false,
 		displayFormat: 'country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -1059,7 +1034,6 @@ export const DisplayFormatAbbreviation: Story = {
 						v-model="modelValue"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -1077,7 +1051,6 @@ export const DisplayFormatAbbreviation: Story = {
 					const modelValue = ref('')
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('abbreviation')
 					const customIndicatifs = ref([])
 					const useCustomIndicatifsOnly = ref(false)
@@ -1092,7 +1065,6 @@ export const DisplayFormatAbbreviation: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: false,
 		displayFormat: 'abbreviation',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -1133,7 +1105,6 @@ export const DefaultDialCode: Story = {
 						:dial-code-model="dialCodeModel"
 						:required="required"
 						:withCountryCode="withCountryCode"
-						:countryCodeRequired="countryCodeRequired"
 						:displayFormat="displayFormat"
 						:customIndicatifs="customIndicatifs"
 						:useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -1163,7 +1134,6 @@ export const DefaultDialCode: Story = {
 					
 					const required = ref(true)
 					const withCountryCode = ref(true)
-					const countryCodeRequired = ref(true)
 					const displayFormat = ref('code-country')
 					const useCustomIndicatifsOnly = ref(true)
 					const isValidateOnBlur = ref(true)
@@ -1178,7 +1148,6 @@ export const DefaultDialCode: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: true,
 		displayFormat: 'code-country',
 		customIndicatifs: [
 			{ code: '+3433', country: 'Exemple', abbreviation: 'EX', phoneLength: 10, mask: '## ## ## ## ##' },
@@ -1256,7 +1225,6 @@ export const DefaultDialCodeStandard: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: true,
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,
@@ -1305,7 +1273,6 @@ export const DisplayModels: Story = {
             v-model:dialCodeModel="dialCodeModel"
             :required="required"
             :withCountryCode="withCountryCode"
-            :countryCodeRequired="countryCodeRequired"
             :displayFormat="displayFormat"
             :customIndicatifs="customIndicatifs"
             :useCustomIndicatifsOnly="useCustomIndicatifsOnly"
@@ -1324,7 +1291,6 @@ export const DisplayModels: Story = {
           const dialCodeModel = ref('')
           const required = ref(true)
           const withCountryCode = ref(true)
-          const countryCodeRequired = ref(true)
           const displayFormat = ref('code-country')
           const customIndicatifs = ref([])
           const useCustomIndicatifsOnly = ref(false)
@@ -1340,7 +1306,6 @@ export const DisplayModels: Story = {
 		required: false,
 		outlined: true,
 		withCountryCode: true,
-		countryCodeRequired: false,
 		displayFormat: 'code-country',
 		customIndicatifs: [],
 		useCustomIndicatifsOnly: false,

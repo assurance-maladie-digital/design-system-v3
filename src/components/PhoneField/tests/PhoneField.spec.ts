@@ -848,11 +848,10 @@ describe('PhoneField', () => {
 			expect(messageAfterBlur.text()).toBe('Le champ Numéro de téléphone sans indicatif est valide.')
 		})
 
-		it('validates country code when countryCodeRequired is true on submit', async () => {
+		it('validates country code', async () => {
 			const wrapper = mount(PhoneField, {
 				props: {
 					withCountryCode: true,
-					countryCodeRequired: true,
 					modelValue: '0123456789',
 				},
 			})
@@ -979,8 +978,8 @@ describe('PhoneField', () => {
 				props: {
 					required: true,
 					modelValue: '0123456789',
+					dialCodeModel: { code: 'test', abbreviation: 'TEST', country: 'Test', phoneLength: 3, mask: '###' },
 					withCountryCode: true,
-					countryCodeRequired: true,
 				},
 			})
 
@@ -1003,7 +1002,7 @@ describe('PhoneField', () => {
 					components: { PhoneField, SyForm },
 					template: `
 						<SyForm>
-							<PhoneField with-country-code country-code-required required />
+							<PhoneField with-country-coderequired />
 							<button type="submit">Submit</button>
 						</SyForm>
 					`,
@@ -1151,6 +1150,41 @@ describe('PhoneField', () => {
 			// Vérifier que le masque et le counter sont mis à jour
 			expect(wrapper.vm.usedIndicatif.phoneLength).toBe(8)
 			expect(wrapper.vm.usedIndicatif.mask).toBe('## ## ## ##')
+		})
+
+		it('updates the dialCode when customIndicatifs prop changes', async () => {
+			const initialCustomIndicatifs = [{ code: '+999', abbreviation: 'XX', country: 'Test Country', phoneLength: 8, mask: '## ## ## ##' }]
+			const wrapper = mount(PhoneField, {
+				props: {
+					customIndicatifs: initialCustomIndicatifs,
+					withCountryCode: true,
+				},
+			})
+
+			// Vérifier que le dialCode est initialisé avec l'indicatif personnalisé
+			expect(wrapper.vm.dialCode).toEqual(expect.objectContaining(initialCustomIndicatifs[0]))
+
+			const newCustomIndicatifs = [{ code: '+998', abbreviation: 'YY', country: 'New Test Country', phoneLength: 9, mask: '### ### ###' }]
+			await wrapper.setProps({ customIndicatifs: newCustomIndicatifs })
+			await wrapper.vm.$nextTick()
+
+			// Vérifier que le dialCode est mis à jour avec le nouvel indicatif personnalisé
+			expect(wrapper.vm.dialCode).toEqual(expect.objectContaining(newCustomIndicatifs[0]))
+
+			// Vérifier que le masque et le counter sont mis à jour avec le nouvel indicatif personnalisé
+			expect(wrapper.vm.usedIndicatif.phoneLength).toBe(9)
+			expect(wrapper.vm.usedIndicatif.mask).toBe('### ### ###')
+
+			// Vérifier que les indicatifs affichés dans le select sont mis à jour avec les nouveaux indicatifs personnalisés
+			const select = wrapper.findComponent({ name: 'SySelect' })
+			const items = select.props('items')
+			expect(items).toEqual(expect.arrayContaining(newCustomIndicatifs.map(ind => expect.objectContaining(ind))))
+
+			// Vérifier que les anciens indicatifs personnalisés ne sont plus présents
+			expect(items).not.toEqual(expect.arrayContaining(initialCustomIndicatifs.map(ind => expect.objectContaining(ind))))
+
+			// Vérifier que l'indicatif sélectionné est mis à jour
+			expect(select.props('modelValue')).toEqual(expect.objectContaining(newCustomIndicatifs[0]))
 		})
 	})
 

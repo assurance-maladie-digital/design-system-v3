@@ -101,4 +101,4 @@ export const indicatifs = [
 	{ code: '+267', country: 'Botswana', countryFr: 'Botswana', abbreviation: 'BW', phoneLength: 8, mask: '## ### ###' },
 	{ code: '+268', country: 'Eswatini', countryFr: 'Eswatini', abbreviation: 'SZ', phoneLength: 9, mask: '### ### ###' },
 	{ code: '+269', country: 'Comoros', countryFr: 'Comores', abbreviation: 'KM', phoneLength: 7, mask: '### ####' },
-]
+] as const
