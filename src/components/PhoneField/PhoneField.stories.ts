@@ -35,7 +35,13 @@ const meta = {
 		'dialCodeModel': {
 			control: 'string',
 			description: 'Valeur de l\'indicatif pays sélectionné. Peut être une chaîne (ex : "+33") ou un objet indicatif complet (ex : { code: "+33", country: "France", abbreviation: "FR" }).' },
-		'outlined': { control: 'boolean' },
+		'outlined': {
+			control: 'boolean',
+			description: 'Affiche les champs avec une bordure.',
+			table: {
+				defaultValue: 'true',
+			},
+		},
 		'withCountryCode': {
 			control: 'boolean',
 			description: 'Affiche un sélecteur d\'indicatif pays à côté du champ numéro de téléphone. Lorsque cette prop est à `true`, le champ est divisé en deux parties : un sélecteur pour l\'indicatif pays et un champ pour le numéro national.',
@@ -125,6 +131,16 @@ const meta = {
 				category: 'props',
 			},
 			description: 'Affiche un bouton de nettoyage (clear) dans le champ lorsque du texte est saisi. Lorsque `true`, les utilisateurs peuvent facilement effacer le contenu du champ en cliquant sur ce bouton.',
+		},
+		'withoutFieldset': {
+			control: 'boolean',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				category: 'props',
+			},
+			description: 'N\'entoure pas le champ d\'un élément `<fieldset>`',
 		},
 		'update:dialCodeModel': {
 			action: 'update:dialCodeModel',
@@ -1374,4 +1390,50 @@ export const DisplayModels: Story = {
     </div>
   `,
 	}),
+}
+
+export const WithoutFieldset: Story = {
+	parameters: {
+		a11y: {
+			disable: false,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <PhoneField
+	v-model="phoneNumber"
+	required
+	label="Numéro de téléphone"
+	without-fieldset
+  />
+</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { PhoneField } from '@cnamts/synapse'
+
+const phoneNumber = ref('')
+</script>
+		`,
+			},
+		],
+	},
+	decorators: [
+		() => ({
+			template: '<div style="padding: 20px;"><story/></div>',
+		}),
+	],
+	args: {
+		modelValue: '',
+		required: true,
+		label: 'Numéro de téléphone',
+		withCountryCode: true,
+		withoutFieldset: true,
+	} as Record<string, unknown>,
 }
