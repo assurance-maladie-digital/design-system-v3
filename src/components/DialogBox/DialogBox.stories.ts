@@ -958,15 +958,16 @@ export const Custom: Story = {
 					}
 				}
 
-				const skipTutorial = () => {
+				const closeDialog = () => {
 					dialogOpen.value = false
-					currentStep.value = 0
+					// Réinitialiser après l'animation de fermeture (300ms par défaut dans Vuetify)
+					setTimeout(() => {
+						currentStep.value = 0
+					}, 300)
 				}
 
-				const finishTutorial = () => {
-					dialogOpen.value = false
-					currentStep.value = 0
-				}
+				const skipTutorial = closeDialog
+				const finishTutorial = closeDialog
 
 				const rest = computed(() => {
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -1201,15 +1202,16 @@ export const Custom: Story = {
                         }
                     }
 
-                    const skipTutorial = () => {
+                    const closeDialog = () => {
                         dialogOpen.value = false
-                        currentStep.value = 0
+                        // Réinitialiser après l'animation de fermeture
+                        setTimeout(() => {
+                            currentStep.value = 0
+                        }, 300)
                     }
 
-                    const finishTutorial = () => {
-                        dialogOpen.value = false
-                        currentStep.value = 0
-                    }
+                    const skipTutorial = closeDialog
+                    const finishTutorial = closeDialog
                 </script>
                 `,
 			},
