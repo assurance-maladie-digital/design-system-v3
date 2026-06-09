@@ -327,10 +327,11 @@ export const WithCustomRules: Story = {
 							options: {
 								validate: (value: string) => {
 									if (!value || !/^\\d{2}\\/\\d{4}$/.test(value)) {
-										return 'Le format doit être MM/YYYY (ex: 03/2026).'
+										return false
 									}
 									return true
 								},
+								message: 'Le format doit être MM/YYYY (ex: 03/2026).',
 								fieldIdentifier: 'selectedMonth',
 							},
 						},
@@ -426,12 +427,24 @@ export const WithCustomRules: Story = {
 			return { args, selectedMonth, customRules }
 		},
 		template: `
-			<MonthPicker
-				v-bind="args"
-				v-model="selectedMonth"
-				:custom-rules="customRules"
-				width="400px"
-			/>
+			<div>
+				<p class="mb-2">Saisissez un mois pour voir les différents types de validation :</p>
+				<MonthPicker
+					v-bind="args"
+					v-model="selectedMonth"
+					:custom-rules="customRules"
+					width="400px"
+				/>
+				<div class="mt-4">
+					<p><strong>Conseils pour tester :</strong></p>
+					<ul>
+						<li>Laissez le champ vide pour voir l'erreur de champ requis</li>
+						<li>Saisissez un mois invalide (ex: 13/2026) pour voir l'erreur de format</li>
+						<li>Saisissez une date à plus de 5 ans (ex: 01/2032) pour voir l'avertissement</li>
+						<li>Saisissez une date entre aujourd'hui et dans 5 ans pour voir le message de succès</li>
+					</ul>
+				</div>
+			</div>
 		`,
 	}),
 }
@@ -638,6 +651,7 @@ l'affichage des messages de succès lors de la validation. Par défaut, cette pr
     v-model="value1"
     label="Avec messages de succès"
 	show-success-messages
+	:custom-rules
     required
   />
 
@@ -645,18 +659,62 @@ l'affichage des messages de succès lors de la validation. Par défaut, cette pr
   <MonthPicker
     v-model="value2"
     label="Sans messages de succès"
+	:custom-rules
     required
   />
 </template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { MonthPicker } from '@cnamts/synapse'
+
+	const value1 = ref('06/2026')
+	const value2 = ref('06/2026')
+
+	const customRules = [
+		{
+			type: 'custom',
+			options: {
+				validate: (value: string) => {
+					if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
+						return false
+					}
+					return true
+				},
+				message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+				fieldIdentifier: 'selectedMonth',
+			},
+		},
+	]
+</script>`,
 			},
 		],
 	},
 	render: () => ({
 		components: { MonthPicker },
 		setup() {
+			const customRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
+								return false
+							}
+							return true
+						},
+						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+						fieldIdentifier: 'selectedMonth',
+					},
+				},
+			]
+
 			const value1 = ref('06/2026')
 			const value2 = ref('06/2026')
-			return { value1, value2 }
+			return { value1, value2, customRules }
 		},
 		template: `
 			<div>
@@ -669,6 +727,7 @@ l'affichage des messages de succès lors de la validation. Par défaut, cette pr
 							v-model="value1"
 							label="Mois de début"
 							required
+							:custom-rules="customRules"
 							show-success-messages
 						/>
 					</div>
@@ -679,6 +738,7 @@ l'affichage des messages de succès lors de la validation. Par défaut, cette pr
 							v-model="value2"
 							label="Mois de début"
 							required
+							:custom-rules="customRules"
 							:show-success-messages="false"
 						/>
 					</div>
@@ -902,6 +962,7 @@ des messages depuis le parent sans déclencher de règle de validation.
 		:error-messages="errorMessages"
 		:warning-messages="warningMessages"
 		:success-messages="successMessages"
+		show-success-messages
 	/>
 	<div class="mt-4">
 		<VBtn @click="setError">Simuler une erreur</VBtn>
@@ -988,6 +1049,7 @@ function reset() {
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
+					show-success-messages
 					width="400px"
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2">
@@ -1081,6 +1143,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 				</p>
 				<VForm @submit.prevent="handleSubmit">
 					<MonthPicker
+						v-bind="args"
 						v-model="selectedMonth"
 						label="Mois de début"
 						:use-vuetify-validation="true"
@@ -1095,6 +1158,9 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 			</div>
 		`,
 	}),
+	args: {
+		showSuccessMessages: true,
+	},
 }
 
 export const SyFormValidation: Story = {
