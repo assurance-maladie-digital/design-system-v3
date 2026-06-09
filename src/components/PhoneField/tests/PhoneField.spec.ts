@@ -990,7 +990,6 @@ describe('PhoneField', () => {
 			const isValidWithoutCountry = await wrapper.vm.validateOnSubmit()
 			expect(isValidWithoutCountry).toBe(true)
 
-			
 			await wrapper.vm.$nextTick()
 
 			const isValidWithCountry = await wrapper.vm.validateOnSubmit()
