@@ -921,6 +921,8 @@ export const Custom: Story = {
 		'onCancel': fn(),
 		'onConfirm': fn(),
 		'onUpdate:modelValue': fn(),
+		'onNext': fn(),
+		'onPrevious': fn(),
 	},
 	render: (args) => {
 		return {
@@ -949,12 +951,14 @@ export const Custom: Story = {
 				const nextStep = () => {
 					if (currentStep.value < steps.length - 1) {
 						currentStep.value++
+						args.onNext?.(currentStep.value)
 					}
 				}
 
 				const previousStep = () => {
 					if (currentStep.value > 0) {
 						currentStep.value--
+						args.onPrevious?.(currentStep.value)
 					}
 				}
 
@@ -966,16 +970,28 @@ export const Custom: Story = {
 					}, 300)
 				}
 
-				const skipTutorial = closeDialog
-				const finishTutorial = closeDialog
+				const skipTutorial = () => {
+					args.onCancel?.()
+					closeDialog()
+				}
+
+				const finishTutorial = () => {
+					args.onConfirm?.()
+					closeDialog()
+				}
+
+				const handleUpdateModelValue = (value: boolean) => {
+					dialogOpen.value = value
+					args['onUpdate:modelValue']?.(value)
+				}
 
 				const rest = computed(() => {
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
-					const { modelValue, 'onUpdate:modelValue': _, ...rest } = args
+					const { modelValue, 'onUpdate:modelValue': _, 'onCancel': __, 'onConfirm': ___, 'onNext': ____, 'onPrevious': _____, ...rest } = args
 					return rest
 				})
 
-				return { args, rest, dialogOpen, currentStep, steps, nextStep, previousStep, skipTutorial, finishTutorial }
+				return { args, rest, dialogOpen, currentStep, steps, nextStep, previousStep, skipTutorial, finishTutorial, handleUpdateModelValue }
 			},
 			template: `
                 <div class="pa-4">
@@ -987,6 +1003,7 @@ export const Custom: Story = {
                     <DialogBox
                         v-bind="rest"
                         v-model="dialogOpen"
+                        @update:modelValue="handleUpdateModelValue"
                     >
                         <div class="d-flex flex-column">
                             <!-- Progress dots -->
@@ -1193,12 +1210,14 @@ export const Custom: Story = {
                     const nextStep = () => {
                         if (currentStep.value < steps.length - 1) {
                             currentStep.value++
+                            console.log('Navigation vers étape:', currentStep.value + 1)
                         }
                     }
 
                     const previousStep = () => {
                         if (currentStep.value > 0) {
                             currentStep.value--
+                            console.log('Retour à étape:', currentStep.value + 1)
                         }
                     }
 
