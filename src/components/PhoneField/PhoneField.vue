@@ -141,7 +141,6 @@
 		:is="!withoutFieldset ? 'fieldset' : 'div'"
 		:class="!withoutFieldset ? 'phone-field-fieldset' : ''"
 	>
-		{{ internalDialCode }}
 		<legend
 			v-if="!withoutFieldset"
 			class="phone-field-legend"
