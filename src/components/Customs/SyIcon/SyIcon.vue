@@ -1,7 +1,8 @@
 <script setup lang="ts">
+	import type { ComponentPublicInstance } from 'vue'
 	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
 	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
-	import { computed, onMounted, watch } from 'vue'
+	import { computed, onMounted, onUpdated, ref, watch } from 'vue'
 
 	/**
 	 * Composant SyIcon - Affiche une icône avec gestion de l'accessibilité
@@ -32,6 +33,7 @@
 		autoDetectButton?: boolean
 		color?: string
 		size?: string
+		width?: string
 	}>()
 
 	const resolvedDecorative = computed(() => props.decorative ?? true)
@@ -45,10 +47,25 @@
 		}
 	})
 
+	const svg = ref<ComponentPublicInstance | null>(null)
+
 	// Vérification à l'initialisation du composant
 	onMounted(() => {
 		checkAccessibility(props.icon, resolvedDecorative.value, props.label)
+		setWidth()
 	})
+
+	onUpdated(setWidth)
+
+	function setWidth() {
+		if (svg.value && props.width) {
+			const iconElement = svg.value.$el?.querySelector('svg')
+
+			if (iconElement) {
+				iconElement.setAttribute('width', props.width)
+			}
+		}
+	}
 
 	// Vérification à chaque changement des props concernées
 	watch(
@@ -65,6 +82,7 @@
 
 <template>
 	<v-icon
+		ref="svg"
 		v-rgaa-svg-fix="rgaaSvgFixConfig"
 		:color="props.color"
 		:size="props.size"

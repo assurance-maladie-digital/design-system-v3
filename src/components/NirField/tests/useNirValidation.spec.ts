@@ -446,4 +446,172 @@ describe('useNirValidation via NirField component', () => {
 		const isValid = await wrapper.vm.validateOnSubmit()
 		expect(isValid).toBe(true)
 	})
+
+	it('ne devrait afficher aucune erreur ni état quand disableErrorHandling est vrai', async () => {
+		wrapper = await createWrapper({ required: true, disableErrorHandling: true })
+
+		await wrapper.find('.number-field input').trigger('focus')
+		await wrapper.find('.number-field input').trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+		expect(wrapper.vm.numberValidation.hasError.value).toBe(false)
+
+		await wrapper.find('.key-field input').trigger('focus')
+		await wrapper.find('.key-field input').trigger('blur')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.keyValidation.errors.value).toEqual([])
+		expect(wrapper.vm.keyValidation.hasError.value).toBe(false)
+	})
+
+	it('devrait valider à chaque changement de valeur quand isValidateOnBlur est faux', async () => {
+		wrapper = await createWrapper({ required: true, isValidateOnBlur: false })
+
+		const numberInput = wrapper.find('.number-field input')
+
+		// Saisie d'une valeur invalide sans blur
+		await numberInput.setValue('123')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// L'erreur doit apparaître immédiatement, sans blur
+		expect(wrapper.vm.numberValidation.errors.value).toContain(locales.errorInvalidNumber)
+
+		// Correction vers une valeur valide
+		await numberInput.setValue('2940375120005')
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+	})
+
+	it('devrait afficher les errorMessages injectés depuis le parent', async () => {
+		const injectedError = 'Erreur injectée depuis le parent'
+		wrapper = await createWrapper({ errorMessages: [injectedError] })
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		// L'état d'erreur doit refléter le message injecté sans déclencher de validation
+		expect(wrapper.vm.numberValidation.hasError.value).toBe(true)
+		expect(wrapper.vm.numberValidation.errors.value).toContain(injectedError)
+	})
+
+	it('devrait réinitialiser la validation quand modelValue passe à null ou undefined', async () => {
+		// Partir d'un NIR invalide pour avoir une erreur
+		wrapper = await createWrapper({ required: true, modelValue: '199012345678' })
+
+		await wrapper.vm.validateOnSubmit()
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value.length).toBeGreaterThan(0)
+
+		// Remettre modelValue à undefined simule un reset depuis le parent
+		await wrapper.setProps({ modelValue: undefined })
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.errors.value).toEqual([])
+		expect(wrapper.vm.keyValidation.errors.value).toEqual([])
+	})
+
+	it('devrait afficher les warningMessages injectés depuis le parent', async () => {
+		const injectedWarning = 'Avertissement injecté depuis le parent'
+		wrapper = await createWrapper({ warningMessages: [injectedWarning] })
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.hasWarning.value).toBe(true)
+		expect(wrapper.vm.numberValidation.warnings.value).toContain(injectedWarning)
+	})
+
+	it('devrait afficher les successMessages injectés depuis le parent', async () => {
+		const injectedSuccess = 'Succès injecté depuis le parent'
+		wrapper = await createWrapper({ successMessages: [injectedSuccess], showSuccessMessages: true })
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.hasSuccess.value).toBe(true)
+		expect(wrapper.vm.numberValidation.successes.value).toContain(injectedSuccess)
+	})
+
+	it('devrait refléter l\'état d\'avertissement forcé via la prop hasWarning', async () => {
+		wrapper = await createWrapper({ hasWarning: true })
+
+		expect(wrapper.vm.numberValidation.hasWarning.value).toBe(true)
+	})
+
+	it('devrait refléter l\'état de succès forcé via la prop hasSuccess', async () => {
+		wrapper = await createWrapper({ hasSuccess: true })
+
+		expect(wrapper.vm.numberValidation.hasSuccess.value).toBe(true)
+	})
+
+	it('devrait retourner false sur validateOnSubmit quand le champ est requis et vide', async () => {
+		wrapper = await createWrapper({ required: true })
+
+		const isValid = await wrapper.vm.validateOnSubmit()
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(isValid).toBe(false)
+		expect(wrapper.vm.numberValidation.hasError.value).toBe(true)
+	})
+
+	it('devrait retourner false sur validateOnSubmit quand le NIR est invalide', async () => {
+		wrapper = await createWrapper({ required: true })
+		await wrapper.find('.number-field input').setValue('1234567890123') // 13 chiffres mais NIR invalide
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const isValid = await wrapper.vm.validateOnSubmit()
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(isValid).toBe(false)
+	})
+
+	it('devrait plafonner le nombre d\'erreurs affichées via maxErrors', async () => {
+		const failingRules = [
+			{ type: 'custom', options: { validate: () => false, message: 'Erreur custom 1' } },
+			{ type: 'custom', options: { validate: () => false, message: 'Erreur custom 2' } },
+		]
+
+		const limited = await createWrapper({ customNumberRules: failingRules, maxErrors: 1, modelValue: '199012345678' })
+		await limited.vm.validateOnSubmit()
+		await limited.vm.$nextTick()
+		await flushPromises()
+		expect(limited.vm.numberValidation.errors.value.length).toBe(1)
+
+		const extended = await createWrapper({ customNumberRules: failingRules, maxErrors: 5, modelValue: '199012345678' })
+		await extended.vm.validateOnSubmit()
+		await extended.vm.$nextTick()
+		await flushPromises()
+		expect(extended.vm.numberValidation.errors.value.length).toBeGreaterThan(1)
+	})
+
+	it('ne devrait pas bloquer la soumission à cause d\'un avertissement (warning non bloquant)', async () => {
+		const warningMessage = 'Avertissement non bloquant'
+		// NIR complet et valide (13 chiffres) + clé valide, avec une règle d'avertissement qui se déclenche
+		wrapper = await createWrapper({
+			modelValue: '294037512000591',
+			customNumberWarningRules: [{ type: 'custom', options: { validate: () => warningMessage, message: warningMessage } }],
+		})
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const isValid = await wrapper.vm.validateOnSubmit()
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.numberValidation.hasWarning.value).toBe(true)
+		expect(wrapper.vm.numberValidation.hasError.value).toBe(false)
+		expect(isValid).toBe(true)
+	})
 })

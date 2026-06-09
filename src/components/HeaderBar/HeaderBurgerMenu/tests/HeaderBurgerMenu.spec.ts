@@ -4,6 +4,10 @@ import { registerHeaderMenuKey } from '../../consts'
 import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'
 import { defineComponent, toRef } from 'vue'
 
+vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
+	default: (fn: (...args: unknown[]) => void) => fn,
+}))
+
 describe('HeaderBurgerMenu', () => {
 	const BtnTestComponent = defineComponent({
 		props: {
@@ -17,10 +21,6 @@ describe('HeaderBurgerMenu', () => {
 		},
 		template: `<button @click="$emit('update:modelValue', !open)">Test</button>`,
 	})
-
-	vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
-		default: (fn: (...args: unknown[]) => void) => fn,
-	}))
 
 	afterAll(() => {
 		vi.restoreAllMocks()

@@ -50,10 +50,10 @@ describe('useTodayButton', () => {
 
 	describe('selectToday', () => {
 		it('devrait définir selectedDates à la date du jour en mode date unique', () => {
-			// Créer une date fixe pour le test
+			// Figer l'horloge système sur une date fixe pour le test
 			const fixedDate = new Date('2023-01-01')
-			// Espionner le constructeur Date pour qu'il retourne notre date fixe
-			vi.spyOn(global, 'Date').mockImplementation(() => fixedDate)
+			vi.useFakeTimers()
+			vi.setSystemTime(fixedDate)
 
 			const { selectToday } = useTodayButton({
 				displayRange: false,
@@ -65,15 +65,15 @@ describe('useTodayButton', () => {
 			expect(selectedDates.value).toBeDefined()
 			expect(selectedDates.value).toEqual(fixedDate)
 
-			// Restaurer le mock
-			vi.restoreAllMocks()
+			// Restaurer l'horloge réelle
+			vi.useRealTimers()
 		})
 
 		it('devrait définir selectedDates à un tableau avec deux fois la date du jour en mode plage', () => {
-			// Créer une date fixe pour le test
+			// Figer l'horloge système sur une date fixe pour le test
 			const fixedDate = new Date('2023-01-01')
-			// Espionner le constructeur Date pour qu'il retourne notre date fixe
-			vi.spyOn(global, 'Date').mockImplementation(() => fixedDate)
+			vi.useFakeTimers()
+			vi.setSystemTime(fixedDate)
 
 			const { selectToday } = useTodayButton({
 				displayRange: true,
@@ -90,8 +90,8 @@ describe('useTodayButton', () => {
 				expect(selectedDates.value[1]).toEqual(fixedDate)
 			}
 
-			// Restaurer le mock
-			vi.restoreAllMocks()
+			// Restaurer l'horloge réelle
+			vi.useRealTimers()
 		})
 	})
 })
