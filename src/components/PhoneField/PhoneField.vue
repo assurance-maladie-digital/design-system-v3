@@ -97,7 +97,7 @@
 		warningMessages: toRef(props, 'warningMessages'),
 		successMessages: toRef(props, 'successMessages'),
 		locales: toRef(props, 'locales'),
-		internalDialCode,
+		dialCode: internalDialCode,
 		withCountryCode: toRef(props, 'withCountryCode'),
 	})
 
