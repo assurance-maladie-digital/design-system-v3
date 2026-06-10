@@ -1,3 +1,48 @@
+## v1.1.0 (10-06-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve eco-conception documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2213">#2213</a>
+      </td>
+      <td>- ameliproIllustratedDataTile: depreciate component to VCard
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2252">#2252</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PasswordField: improve validation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2175">#2175</a>
+      </td>
+      <td>- AmeliproFIlePreview: depreciate component to FilePreview
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2246">#2246</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilterSideBar: fix emit issues
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2245">#2245</a>
+      </td>
+      <td>- AmeliproTransmission: depreciate component to VCard
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2242">#2242</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Core: update Vitest to v4 + delete node 18 support
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2238">#2238</a>
+      </td>
+      <td>- AmeliproTransmission: depreciate component to VCard
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2242">#2242</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.0.27 (26-05-2026)
 
 <table>
@@ -86,7 +131,6 @@
     </tr>
   </tbody>
 </table>
-
 
 ## v1.0.26 (11-05-2026)
 
