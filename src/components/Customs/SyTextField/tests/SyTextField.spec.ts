@@ -304,6 +304,7 @@ describe('SyTextField', () => {
 		})
 
 		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
 		const event = new InputEvent('beforeinput', {
 			data: 'a',
 			cancelable: true,
@@ -311,11 +312,14 @@ describe('SyTextField', () => {
 		})
 
 		input.element.dispatchEvent(event)
+		await wrapper.vm.$nextTick()
 
 		expect(event.defaultPrevented).toBe(true)
+		// Le caractère interdit n'est pas inséré : le champ reste vide
+		expect(inputElement.value).toBe('')
 	})
 
-	it('allows multi-character beforeinput data when type is number (spinner increment / paste)', () => {
+	it('allows multi-character beforeinput data when type is number (spinner increment / paste)', async () => {
 		wrapper = mount(SyTextField, {
 			props: {
 				label: 'Test Field',
@@ -324,6 +328,7 @@ describe('SyTextField', () => {
 		})
 
 		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
 		// Ex. incrément du spinner 9 -> 10, ou collage d'un nombre : data = "10"
 		const event = new InputEvent('beforeinput', {
 			data: '10',
@@ -334,6 +339,14 @@ describe('SyTextField', () => {
 		input.element.dispatchEvent(event)
 
 		expect(event.defaultPrevented).toBe(false)
+
+		// La saisie n'étant pas bloquée, le navigateur l'applique : le champ la conserve telle quelle
+		inputElement.value = '10'
+		await input.trigger('input')
+		await wrapper.vm.$nextTick()
+
+		expect(inputElement.value).toBe('10')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['10'])
 	})
 
 	it('collapses multiple decimal separators when type is number', async () => {
