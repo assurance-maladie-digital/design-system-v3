@@ -25,7 +25,7 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'form-success-messages-hidden',
 		releaseVersion: 'v1.1.0',
-		message: 'Cette version modifie le comportement des composants de formulaire, les messages de succès sont désormais masqués par défaut. Cette modification répond à la fois à des besoins projets et à l\'harmonisation des différents thèmes (CNAM, PAG, Amelipro).\nPour les projets souhaitant afficher les messages de succès vous pouvez simplement le faire via la prop `showSuccessMessages`.\nLes composants concernés sont :',
+		message: 'Cette version modifie le comportement des composants de formulaire, les messages de succès sont désormais masqués par défaut. Cette modification répond à la fois à des besoins projets et à l\'harmonisation des différents thèmes (CNAM, PAG, Amelipro).\nPour les projets souhaitant afficher les messages de succès vous pouvez simplement le faire via la prop showSuccessMessages.\nLes composants concernés sont :',
 		type: 'warning',
 		variant: 'tonal',
 		components: [
