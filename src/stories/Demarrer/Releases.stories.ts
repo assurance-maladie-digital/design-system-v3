@@ -18,9 +18,38 @@ type ReleaseAlert = {
 	type: 'success' | 'info' | 'warning' | 'error'
 	variant: 'tonal' | 'outlined'
 	link?: { href: string, text: string }
+	components?: string[]
 }
 
 const releaseAlerts: ReleaseAlert[] = [
+	{
+		id: 'form-success-messages-hidden',
+		releaseVersion: 'v1.1.0',
+		message: 'Sur les composants de formulaire, les messages de succès ont été masqués par défaut mais vous pouvez toujours les afficher via la prop `showSuccessMessages`. Composants concernés :',
+		type: 'warning',
+		variant: 'tonal',
+		components: [
+			'SyTextField',
+			'SyAutocomplete',
+			'SySelect',
+			'SyCheckbox',
+			'SyCheckBoxGroup',
+			'SyRadioGroup',
+			'DatePicker',
+			'MonthPicker',
+			'PeriodField',
+			'NirField',
+			'PasswordField',
+			'PhoneField',
+		],
+	},
+	{
+		id: 'node-18-decommission',
+		releaseVersion: 'v1.1.0',
+		message: 'Fin de support de Node 18.',
+		type: 'warning',
+		variant: 'tonal',
+	},
 	{
 		id: 'tokens-simplification',
 		releaseVersion: 'v1.0.27',
@@ -111,7 +140,7 @@ export const List = {
 								:closable="false"
 								class="mt-2 mb-4"
 							>
-								<template #default>{{ alert.message }}<template v-if="alert.link"> <a :href="alert.link.href">{{ alert.link.text }}</a>.</template></template>
+								<template #default>{{ alert.message }}<template v-if="alert.link"> <a :href="alert.link.href">{{ alert.link.text }}</a>.</template><ul v-if="alert.components" class="mt-2 ml-4"><li v-for="component in alert.components" :key="component">{{ component }}</li></ul></template>
 							</SyAlert>
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>

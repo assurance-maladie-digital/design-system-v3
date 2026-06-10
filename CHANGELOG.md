@@ -12,7 +12,7 @@
       <td>- Documentation: improve eco-conception documentation
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2213">#2213</a>
       </td>
-      <td>- ameliproIllustratedDataTile: depreciate component to VCard
+      <td>- AmeliproIllustratedDataTile: depreciate component to VCard
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2252">#2252</a>
       </td>
     </tr>
@@ -20,7 +20,7 @@
       <td>- PasswordField: improve validation
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2175">#2175</a>
       </td>
-      <td>- AmeliproFIlePreview: depreciate component to FilePreview
+      <td>- AmeliproFilePreview: depreciate component to FilePreview
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2246">#2246</a>
       </td>
     </tr>
@@ -38,6 +38,70 @@
       </td>
       <td>- AmeliproTransmission: depreciate component to VCard
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2242">#2242</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextField: fix number type issues + improve documentation (validation)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2247">#2247</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2181">#2181</a>
+      </td>
+      <td>- AmeliproCallBack: depreciate component to NotificationBar
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2240">#2240</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SearchListField: move component from Formulaires to Filters on documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2239">#2239</a>
+      </td>
+      <td>- Captcha: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2243">#2243</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Validation: success message false by default on form components
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2231">#2231</a>
+      </td>
+      <td>- AmeliproStepper: depreciate component to VStepper
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2243">#2243</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SySelect: improve accessibility (css)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2232">#2232</a>
+      </td>
+      <td>- PasswordField: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2236">#2236</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: improve validation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2228">#2228</a>
+      </td>
+      <td>- SearchListField: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2241">#2241</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Core: add some Cypress tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2203">#2203</a>
+      </td>
+      <td>- SyTable / SyServerTable / PaginatedTable: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2225">#2225</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve colors pages
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2224">#2224</a>
+      </td>
+      <td>- SyTable / SyServerTable / PaginatedTable: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2225">#2225</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2186">#2186</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td></td>
+      <td>- SyTextArea: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2206">#2206</a>
       </td>
     </tr>
   </tbody>
