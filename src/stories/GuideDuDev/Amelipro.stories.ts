@@ -452,17 +452,19 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'AmeliproDisclosure',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-disclosure',
 					// 	},
-					// }, {
-					// 	title: 'AmeliproIllustratedDataTile',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproIllustratedDataTile',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-illustrated-data-tile',
-					// 	},
-					// }, {
+					// },
+					{
+						title: 'AmeliproIllustratedDataTile',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproIllustratedDataTile',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-illustrated-data-tile',
+						},
+					},
+					// {
 					// 	title: 'AmeliproIllustratedRadioGroup',
 					// 	synapse: {
 					// 		name: 'Composant synapse',

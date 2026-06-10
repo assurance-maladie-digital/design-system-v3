@@ -1,17 +1,18 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, afterEach, vi } from 'vitest'
 import { shallowMount, flushPromises } from '@vue/test-utils'
 import SyTableFilter from '../SyTableFilter.vue'
 import type { FilterOption, TableColumnHeader, FilterType } from '../types'
 
-const waitForAsyncFilterResolution = async (wrapper: { vm: { $nextTick: () => Promise<unknown> } }) => {
-	await vi.dynamicImportSettled()
-	await flushPromises()
-	await wrapper.vm.$nextTick()
-}
-
 // Using shallowMount will automatically stub all child components
 
 describe('SyTableFilter', () => {
+	// Les filtres sont chargés via defineAsyncComponent(() => import(...)). On laisse ces
+	// imports dynamiques (et leurs dépendances : SyTextField, DatePicker…) se résoudre avant
+	// le teardown de l'environnement, sinon Vitest 4 lève une EnvironmentTeardownError.
+	afterEach(async () => {
+		await vi.dynamicImportSettled()
+	})
+
 	it('renders text filter correctly', async () => {
 		const filters: FilterOption[] = []
 		const header: TableColumnHeader = {
@@ -28,7 +29,9 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		// Need to wait for async components to load
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
 		expect(textFilter.exists()).toBe(true)
@@ -49,7 +52,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
 		expect(textFilter.exists()).toBe(true)
 	})
@@ -70,7 +74,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 		const numberFilter = wrapper.findComponent({ name: 'NumberFilter' })
 		expect(numberFilter.exists()).toBe(true)
 	})
@@ -96,7 +101,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 		const selectFilter = wrapper.findComponent({ name: 'SelectFilter' })
 		expect(selectFilter.exists()).toBe(true)
 	})
@@ -118,7 +124,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 		const dateFilter = wrapper.findComponent({ name: 'DateFilter' })
 		expect(dateFilter.exists()).toBe(true)
 	})
@@ -140,7 +147,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 		const periodFilter = wrapper.findComponent({ name: 'PeriodFilter' })
 		expect(periodFilter.exists()).toBe(true)
 	})
@@ -161,7 +169,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
 		expect(textFilter.exists()).toBe(true)
@@ -195,7 +204,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
 		expect(textFilter.exists()).toBe(true)
@@ -231,7 +241,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
 		expect(textFilter.exists()).toBe(true)
@@ -266,7 +277,8 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await waitForAsyncFilterResolution(wrapper)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
 
 		// Vérifier que le slot personnalisé est rendu
 		const customFilter = wrapper.find('.test-custom-filter')

@@ -2466,6 +2466,8 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
             <!-- v-if -->
             <!-- v-if -->
             <!-- v-if -->
+            <!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
+            <!-- v-if -->
           </div>
           <div class="v-field__outline">
             <div class="v-field__outline__start"></div>
