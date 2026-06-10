@@ -1,10 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { ref, watch } from 'vue'
 import LunarCalendar from './LunarCalendar.vue'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
 	title: 'Composants/Formulaires/LunarCalendar',
 	component: LunarCalendar,
+	decorators: [
+		() => ({
+			template: '<div style="padding: 20px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		layout: 'fullscreen',
+	},
 	argTypes: {
+		...getValidationDocumentation('date'),
 		modelValue: {
 			description: 'La valeur du calendrier lunaire au format DD/MM/YYYY',
 			control: { type: 'text' },
@@ -13,10 +24,6 @@ const meta = {
 				category: 'props',
 			},
 		},
-		successMessages: {
-			description: 'Messages de succès à afficher sous le champ',
-			control: { type: 'text' },
-		},
 		minYear: {
 			description: 'Année minimale autorisée',
 			control: { type: 'number' },
@@ -24,10 +31,6 @@ const meta = {
 		maxYear: {
 			description: 'Année maximale autorisée',
 			control: { type: 'number' },
-		},
-		required: {
-			description: 'Indique si le champ est requis',
-			control: { type: 'boolean' },
 		},
 		placeholder: {
 			description: 'Texte affiché lorsque le champ est vide',
@@ -45,10 +48,58 @@ const meta = {
 			description: 'Affiche une icône à la fin du champ',
 			control: { type: 'boolean' },
 		},
+		// Nouvelles props iso SyTextField
+		helpText: {
+			description: 'Texte d\'aide affiché sous le champ',
+			control: { type: 'text' },
+		},
+		noIcon: {
+			description: 'Désactive les icônes du champ',
+			control: { type: 'boolean' },
+		},
+		displayAsterisk: {
+			description: 'Affiche l\'astérisque pour les champs requis',
+			control: { type: 'boolean' },
+		},
+		variantStyle: {
+			description: 'Style visuel du champ',
+			control: { type: 'select' },
+			options: ['outlined', 'plain', 'underlined', 'filled', 'solo', 'solo-inverted', 'solo-filled'],
+		},
+		color: {
+			description: 'Couleur du champ',
+			control: { type: 'select' },
+			options: ['primary', 'secondary', 'success', 'info', 'warning', 'error'],
+		},
+		density: {
+			description: 'Densité du champ',
+			control: { type: 'select' },
+			options: ['default', 'comfortable', 'compact'],
+		},
+		loading: {
+			description: 'État de chargement du champ',
+			control: { type: 'boolean' },
+		},
+		hint: {
+			description: 'Indice affiché sous le champ',
+			control: { type: 'text' },
+		},
+		bgColor: {
+			description: 'Couleur de fond du champ',
+			control: { type: 'text' },
+		},
+		counter: {
+			description: 'Compteur de caractères',
+			control: { type: 'boolean' },
+		},
 	},
 	args: {
 		label: 'Date de naissance',
 		modelValue: '',
+		required: false,
+		readonly: false,
+		disabled: false,
+		isValidateOnBlur: true,
 	},
 } satisfies Meta<typeof LunarCalendar>
 
@@ -56,9 +107,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-	args: {
-		modelValue: '',
-	},
 	parameters: {
 		sourceCode: [
 			{
@@ -80,102 +128,29 @@ export const Default: Story = {
 			},
 		],
 	},
-}
-
-export const WithYearConstraints: Story = {
-	args: {
-		modelValue: '16/08/1550',
-		minYear: 1400,
-		maxYear: 1500,
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:min-year="1400"
-						:max-year="1500"
-					/>
-				</template>
-
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('16/08/1550')
-				</script>
-				`,
-			},
-		],
-	},
-}
-
-export const WithMinYearOnly: Story = {
-	args: {
-		modelValue: '12/12/1445',
-		minYear: 1420,
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:min-year="1420"
-					/>
-				</template>
-
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/12/1445')
-				</script>
-				`,
-			},
-		],
-	},
-}
-
-export const WithMaxYearOnly: Story = {
-	args: {
-		modelValue: '12/12/1445',
-		maxYear: 1450,
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:max-year="1450"
-					/>
-				</template>
-
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/12/1445')
-				</script>
-				`,
-			},
-		],
-	},
-}
-
-export const required: Story = {
 	args: {
 		modelValue: '',
-		required: true,
 	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const Required: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -198,14 +173,30 @@ export const required: Story = {
 			},
 		],
 	},
+	args: {
+		modelValue: '',
+		required: true,
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
 }
 
 export const WithClearable: Story = {
-	args: {
-		modelValue: '12/13/1564',
-		placeholder: '21/13/1442',
-		isClearable: true,
-	},
 	parameters: {
 		sourceCode: [
 			{
@@ -215,8 +206,8 @@ export const WithClearable: Story = {
 					<LunarCalendar
 						label="Date de naissance"
 						v-model="dateValue"
-						:placeholder="'21/13/1442'"
-						:is-clearable="true"
+						placeholder="21/13/1442"
+						is-clearable
 					/>
 				</template>
 
@@ -228,5 +219,211 @@ export const WithClearable: Story = {
 				`,
 			},
 		],
+	},
+	args: {
+		modelValue: '12/13/1564',
+		placeholder: '21/13/1442',
+		isClearable: true,
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const HelpText: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LunarCalendar
+						label="Date de naissance"
+						v-model="dateValue"
+						help-text="Format attendu : JJ/MM/AAAA"
+					/>
+				</template>
+
+				<script setup lang="ts">
+				import { ref } from 'vue'
+
+				const dateValue = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		helpText: 'Format attendu : JJ/MM/AAAA',
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithLoading: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LunarCalendar
+						label="Date de naissance"
+						v-model="dateValue"
+						loading
+					/>
+				</template>
+
+				<script setup lang="ts">
+				import { ref } from 'vue'
+
+				const dateValue = ref('12/12/1445')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '12/12/1445',
+		loading: true,
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const Disabled: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LunarCalendar
+						label="Date de naissance"
+						v-model="dateValue"
+						disabled
+					/>
+				</template>
+
+				<script setup lang="ts">
+				import { ref } from 'vue'
+
+				const dateValue = ref('12/12/1445')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '12/12/1445',
+		disabled: true,
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const Readonly: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<LunarCalendar
+						label="Date de naissance"
+						v-model="dateValue"
+						readonly
+					/>
+				</template>
+
+				<script setup lang="ts">
+				import { ref } from 'vue'
+
+				const dateValue = ref('12/12/1445')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: '12/12/1445',
+		readonly: true,
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
 	},
 }
