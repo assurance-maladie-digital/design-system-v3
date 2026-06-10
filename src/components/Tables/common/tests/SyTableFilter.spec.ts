@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, afterEach, vi } from 'vitest'
 import { shallowMount, flushPromises } from '@vue/test-utils'
 import SyTableFilter from '../SyTableFilter.vue'
 import type { FilterOption, TableColumnHeader, FilterType } from '../types'
@@ -6,6 +6,13 @@ import type { FilterOption, TableColumnHeader, FilterType } from '../types'
 // Using shallowMount will automatically stub all child components
 
 describe('SyTableFilter', () => {
+	// Les filtres sont chargés via defineAsyncComponent(() => import(...)). On laisse ces
+	// imports dynamiques (et leurs dépendances : SyTextField, DatePicker…) se résoudre avant
+	// le teardown de l'environnement, sinon Vitest 4 lève une EnvironmentTeardownError.
+	afterEach(async () => {
+		await vi.dynamicImportSettled()
+	})
+
 	it('renders text filter correctly', async () => {
 		const filters: FilterOption[] = []
 		const header: TableColumnHeader = {
