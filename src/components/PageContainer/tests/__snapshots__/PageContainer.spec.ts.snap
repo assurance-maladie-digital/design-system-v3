@@ -3,11 +3,13 @@
 exports[`PageContainer > render correctly 1`] = `
 <div class="
   d-flex
+  flex-column
   justify-center
   px-14
   py-10
   vd-page-container
 ">
+  <!-- Slot prepend en dehors du VSheet -->
   <div
     class="
       bg-transparent
@@ -16,5 +18,6 @@ exports[`PageContainer > render correctly 1`] = `
     "
     style="width: 800px;"
   ></div>
+  <!-- Slot append en dehors du VSheet -->
 </div>
 `;

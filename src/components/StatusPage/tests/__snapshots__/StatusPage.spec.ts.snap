@@ -4,6 +4,7 @@ exports[`StatusPage > renders correctly 1`] = `
 <div
   class="
     d-flex
+    flex-column
     justify-center
     px-14
     py-10
@@ -11,6 +12,7 @@ exports[`StatusPage > renders correctly 1`] = `
   "
   id="v-0-container"
 >
+  <!-- Slot prepend en dehors du VSheet -->
   <div
     class="
       bg-transparent
@@ -121,6 +123,7 @@ exports[`StatusPage > renders correctly 1`] = `
       <span class="v-card__underlay"></span>
     </div>
   </div>
+  <!-- Slot append en dehors du VSheet -->
 </div>
 `;
 
@@ -128,6 +131,7 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
 <div
   class="
     d-flex
+    flex-column
     justify-center
     px-14
     py-10
@@ -135,6 +139,7 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
   "
   id="v-0-container"
 >
+  <!-- Slot prepend en dehors du VSheet -->
   <div
     class="
       bg-transparent
@@ -276,5 +281,6 @@ exports[`StatusPage > renders correctly with undefined route 1`] = `
       <span class="v-card__underlay"></span>
     </div>
   </div>
+  <!-- Slot append en dehors du VSheet -->
 </div>
 `;

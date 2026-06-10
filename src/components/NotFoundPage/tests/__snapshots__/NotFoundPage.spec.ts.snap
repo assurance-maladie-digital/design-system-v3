@@ -4,6 +4,7 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
 <div
   class="
     d-flex
+    flex-column
     justify-center
     px-14
     py-10
@@ -11,6 +12,7 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
   "
   id="v-0-container"
 >
+  <!-- Slot prepend en dehors du VSheet -->
   <div
     class="
       bg-transparent
@@ -149,6 +151,7 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
       <span class="v-card__underlay"></span>
     </div>
   </div>
+  <!-- Slot append en dehors du VSheet -->
 </div>
 `;
 
@@ -156,6 +159,7 @@ exports[`NotFoundPage > renders correctly 1`] = `
 <div
   class="
     d-flex
+    flex-column
     justify-center
     px-14
     py-10
@@ -163,6 +167,7 @@ exports[`NotFoundPage > renders correctly 1`] = `
   "
   id="v-0-container"
 >
+  <!-- Slot prepend en dehors du VSheet -->
   <div
     class="
       bg-transparent
@@ -294,5 +299,6 @@ exports[`NotFoundPage > renders correctly 1`] = `
       <span class="v-card__underlay"></span>
     </div>
   </div>
+  <!-- Slot append en dehors du VSheet -->
 </div>
 `;
