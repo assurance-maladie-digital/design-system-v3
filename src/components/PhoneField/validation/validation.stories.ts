@@ -589,7 +589,7 @@ const phoneFieldRef = ref(null)
 const phone = ref('')
 async function onSubmit() {
   const result = await phoneFieldRef.value.validateOnSubmit()
-  alert('Le formulaire est : ' + (result?.valid ? 'valide' : 'invalide'))
+  alert('Le formulaire est : ' + (result ? 'valide' : 'invalide'))
 }
 </script>`,
 			},
@@ -599,10 +599,10 @@ async function onSubmit() {
 		components: { PhoneField, VForm, VBtn },
 		setup() {
 			const phone = ref('')
-			const phoneFieldRef = ref<{ validateOnSubmit: () => Promise<{ valid: boolean }> } | null>(null)
+			const phoneFieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 			async function onSubmit() {
 				const result = await phoneFieldRef.value!.validateOnSubmit()
-				alert('Le formulaire est : ' + (result?.valid ? 'valide' : 'invalide'))
+				alert('Le formulaire est : ' + (result ? 'valide' : 'invalide'))
 			}
 			return { args, phone, phoneFieldRef, onSubmit }
 		},
