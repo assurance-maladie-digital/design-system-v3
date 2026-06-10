@@ -946,15 +946,13 @@ export const Custom: Story = {
 					},
 				]
 
-				const nextStep = () => {
+				const handleNextOrFinish = () => {
 					if (currentStep.value < steps.length - 1) {
 						currentStep.value++
 					}
-				}
-
-				const previousStep = () => {
-					if (currentStep.value > 0) {
-						currentStep.value--
+					else {
+						args.onConfirm?.()
+						closeDialog()
 					}
 				}
 
@@ -971,11 +969,6 @@ export const Custom: Story = {
 					closeDialog()
 				}
 
-				const finishTutorial = () => {
-					args.onConfirm?.()
-					closeDialog()
-				}
-
 				const handleUpdateModelValue = (value: boolean) => {
 					dialogOpen.value = value
 					args['onUpdate:modelValue']?.(value)
@@ -987,7 +980,7 @@ export const Custom: Story = {
 					return rest
 				})
 
-				return { args, rest, dialogOpen, currentStep, steps, nextStep, previousStep, skipTutorial, finishTutorial, handleUpdateModelValue }
+				return { args, rest, dialogOpen, currentStep, steps, handleNextOrFinish, skipTutorial, handleUpdateModelValue }
 			},
 			template: `
                 <div class="pa-4">
@@ -1039,32 +1032,12 @@ export const Custom: Story = {
 
                             <!-- Actions -->
                             <div class="d-flex justify-space-between align-center mt-auto">
-                                <div class="d-flex ga-2">
-                                    <VBtn
-                                        v-if="currentStep > 0"
-                                        color="primary"
-                                        variant="outlined"
-                                        @click="previousStep"
-                                    >
-                                        Précédent
-                                    </VBtn>
-                                    
-                                    <VBtn
-                                        v-if="currentStep < steps.length - 1"
-                                        color="primary"
-                                        @click="nextStep"
-                                    >
-                                        Suivant
-                                    </VBtn>
-
-                                    <VBtn
-                                        v-else
-                                        color="primary"
-                                        @click="finishTutorial"
-                                    >
-                                        Commencer
-                                    </VBtn>
-                                </div>
+                                <VBtn
+                                    color="primary"
+                                    @click="handleNextOrFinish"
+                                >
+                                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
+                                </VBtn>
 
                                 <VBtn
                                     variant="text"
@@ -1080,5 +1053,4 @@ export const Custom: Story = {
             `,
 		}
 	},
-	// ...existing parameters...
 }
