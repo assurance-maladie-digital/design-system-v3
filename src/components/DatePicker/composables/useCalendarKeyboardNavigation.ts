@@ -34,6 +34,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	const toISO = (date: Date) => dayjs(date).format('YYYY-MM-DD')
 
 	let isListenerAttached = false
+	let attachTimeoutId: ReturnType<typeof setTimeout> | undefined
 
 	const focusMonthButton = (button: HTMLButtonElement | undefined | null) => {
 		button?.focus({ preventScroll: true })
@@ -506,11 +507,19 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			}
 		}
 
-		// Attendre plusieurs ticks pour être sûr que le focusTrap est déjà attaché
-		setTimeout(tryAttach, 100)
+		// Attendre plusieurs ticks pour être sûr que le focusTrap est déjà attaché.
+		// L'id est conservé pour pouvoir annuler le timer au démontage et éviter que
+		// tryAttach ne s'exécute après la destruction du composant (accès à `document`).
+		attachTimeoutId = setTimeout(tryAttach, 100)
 	}
 
 	const detachListeners = () => {
+		// Annuler une éventuelle attache différée encore en attente.
+		if (attachTimeoutId !== undefined) {
+			clearTimeout(attachTimeoutId)
+			attachTimeoutId = undefined
+		}
+
 		if (!isListenerAttached) return
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
 		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
