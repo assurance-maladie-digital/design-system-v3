@@ -19,6 +19,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useSyTextFieldValidation } from './useSyTextFieldValidation'
+	import { useNumberField } from './useNumberField'
 	import type { SyTextFieldProps } from './types'
 
 	const props = withDefaults(
@@ -102,36 +103,7 @@
 		'blur',
 	])
 
-	const NUMBER_ALLOWED_CHARACTERS_PATTERN = /[^0-9eE+.-]/g
-	const NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9eE+.-]$/
-	const TEL_ALLOWED_CHARACTERS_PATTERN = /[^0-9+().\-\s]/g
-	const TEL_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9+().\-\s]$/
-
-	const sanitizeNumberValue = (value: string | number | null | undefined) => {
-		if (props.type !== 'number' || typeof value !== 'string') {
-			return value
-		}
-
-		// Le champ number est rendu en type=text (cf. nativeInputType) pour pouvoir lire
-		// et corriger le texte brut sur tous les navigateurs (Chrome comme Firefox).
-		// On retire les caractères interdits puis on ne conserve qu'un PRÉFIXE de nombre
-		// valide : un seul séparateur décimal, un seul exposant, signes bien placés.
-		const cleaned = value.replace(NUMBER_ALLOWED_CHARACTERS_PATTERN, '')
-		const match = cleaned.match(/^[+-]?\d*\.?\d*(?:[eE][+-]?\d*)?/)
-		return match ? match[0] : ''
-	}
-
-	const sanitizeTelValue = (value: string | number | null | undefined) => {
-		if (props.type !== 'tel' || typeof value !== 'string') {
-			return value
-		}
-
-		return value.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '')
-	}
-
-	const sanitizeTypedValue = (value: string | number | null | undefined) => {
-		return sanitizeTelValue(sanitizeNumberValue(value))
-	}
+	const attrs = useAttrs()
 
 	const lastEmittedModelValue = ref(props.modelValue)
 
@@ -146,39 +118,37 @@
 		},
 	})
 
-	const attrs = useAttrs()
+	// Logique propre au mode number (rendu en type=text, sanitization, incrément ↑/↓ + boutons).
+	const {
+		isNumberField,
+		nativeInputType,
+		sanitizeNumberValue,
+		isAllowedNumberCharacter,
+		hasDisallowedNumberCharacter,
+		stepValue,
+		handleStepKeydown,
+	} = useNumberField({
+		type: toRef(props, 'type'),
+		disabled: toRef(props, 'disabled'),
+		readonly: toRef(props, 'readonly'),
+		model,
+		attrs,
+	})
 
-	// Un champ "number" est rendu en type=text (+ inputmode=decimal) : input.value devient
-	// lisible/corrigeable partout. L'incrément natif étant perdu, il est réimplémenté
-	// ci-dessous (flèches ↑/↓ + boutons +/-).
-	const nativeInputType = computed(() => (props.type === 'number' ? 'text' : props.type))
+	// Filtrage des caractères du mode "tel" (analogue au mode number géré par useNumberField).
+	const TEL_ALLOWED_CHARACTERS_PATTERN = /[^0-9+().\-\s]/g
+	const TEL_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9+().\-\s]$/
 
-	const stepValue = (direction: 1 | -1) => {
-		if (props.disabled || props.readonly) {
-			return
+	const sanitizeTelValue = (value: string | number | null | undefined) => {
+		if (props.type !== 'tel' || typeof value !== 'string') {
+			return value
 		}
 
-		const rawStep = Number(attrs.step ?? 1)
-		const step = Number.isFinite(rawStep) && rawStep > 0 ? rawStep : 1
+		return value.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '')
+	}
 
-		const currentNum = Number(model.value)
-		const base = Number.isFinite(currentNum) ? currentNum : 0
-
-		// Arrondit l'addition AVANT le clamp pour éviter les imprécisions flottantes
-		// (ex. pas de 0.1) sans altérer la précision de min/max.
-		const decimals = (String(step).split('.')[1] ?? '').length
-		let next = Number((base + direction * step).toFixed(decimals))
-
-		const min = attrs.min !== undefined && attrs.min !== '' ? Number(attrs.min) : undefined
-		const max = attrs.max !== undefined && attrs.max !== '' ? Number(attrs.max) : undefined
-		if (min !== undefined && Number.isFinite(min) && next < min) {
-			next = min
-		}
-		if (max !== undefined && Number.isFinite(max) && next > max) {
-			next = max
-		}
-
-		model.value = String(next)
+	const sanitizeTypedValue = (value: string | number | null | undefined) => {
+		return sanitizeTelValue(sanitizeNumberValue(value))
 	}
 
 	const focused = ref(false)
@@ -271,11 +241,11 @@
 			return
 		}
 
-		const disallowedPattern = props.type === 'number'
-			? NUMBER_ALLOWED_CHARACTERS_PATTERN
-			: TEL_ALLOWED_CHARACTERS_PATTERN
+		const hasDisallowed = props.type === 'number'
+			? hasDisallowedNumberCharacter(event.data)
+			: event.data.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '') !== event.data
 
-		if (event.data.replace(disallowedPattern, '') !== event.data) {
+		if (hasDisallowed) {
 			event.preventDefault()
 		}
 	}
@@ -295,20 +265,17 @@
 				'Home',
 				'End',
 			]
-			const allowedPattern = props.type === 'number'
-				? NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN
-				: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN
+			const isAllowedCharacter = props.type === 'number'
+				? isAllowedNumberCharacter(event.key)
+				: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN.test(event.key)
 
-			if (!allowedNonCharacterKeys.includes(event.key) && event.key.length === 1 && !allowedPattern.test(event.key)) {
+			if (!allowedNonCharacterKeys.includes(event.key) && event.key.length === 1 && !isAllowedCharacter) {
 				event.preventDefault()
 			}
 		}
 
-		// type=number est rendu en type=text : on réimplémente l'incrément clavier ↑/↓.
-		if (props.type === 'number' && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
-			event.preventDefault()
-			stepValue(event.key === 'ArrowUp' ? 1 : -1)
-		}
+		// type=number est rendu en type=text : l'incrément clavier ↑/↓ est délégué au composable.
+		handleStepKeydown(event)
 
 		emit('keydown', event)
 	}
@@ -609,7 +576,7 @@
 			:theme="props.theme"
 			:tile="props.isTiled"
 			:type="nativeInputType"
-			:inputmode="props.type === 'number' ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
+			:inputmode="isNumberField ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
 			:variant="props.variantStyle"
 			:width="props.width"
 			v-bind="forwardedAttrs"
@@ -762,7 +729,7 @@
 					/>
 					<!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
 					<div
-						v-if="props.type === 'number' && !props.areSpinButtonsHidden && !props.disabled && !props.readonly"
+						v-if="isNumberField && !props.areSpinButtonsHidden && !props.disabled && !props.readonly"
 						class="sy-text-field__spinner"
 					>
 						<button
