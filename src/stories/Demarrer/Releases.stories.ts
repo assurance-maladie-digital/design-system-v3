@@ -18,13 +18,46 @@ type ReleaseAlert = {
 	type: 'success' | 'info' | 'warning' | 'error'
 	variant: 'tonal' | 'outlined'
 	link?: { href: string, text: string }
+	components?: string[]
 }
 
 const releaseAlerts: ReleaseAlert[] = [
 	{
+		id: 'form-success-messages-hidden',
+		releaseVersion: 'v1.1.0',
+		message: 'Cette version modifie le comportement des composants de formulaire, les messages de succès sont désormais masqués par défaut. Cette modification répond à la fois à des besoins projets et à l\'harmonisation des différents thèmes (CNAM, PAG, Amelipro).\nPour les projets souhaitant afficher les messages de succès vous pouvez simplement le faire via la prop showSuccessMessages.\nLes composants concernés sont :',
+		type: 'warning',
+		variant: 'tonal',
+		components: [
+			'SyTextField',
+			'SyTextArea',
+			'SyAutocomplete',
+			'SySelect',
+			'SyCheckbox',
+			'SyCheckBoxGroup',
+			'SyRadioGroup',
+			'DatePicker',
+			'PeriodField',
+			'MonthPicker',
+			'LunarCalendar',
+			'PeriodField',
+			'NirField',
+			'PasswordField',
+			'PhoneField',
+			'Captcha',
+		],
+	},
+	{
+		id: 'node-18-decommission',
+		releaseVersion: 'v1.1.0',
+		message: 'En lien avec le Starter Kit, fin de support de Node 18.',
+		type: 'warning',
+		variant: 'tonal',
+	},
+	{
 		id: 'tokens-simplification',
 		releaseVersion: 'v1.0.27',
-		message: 'Nous avons procédé à une simplification des tokens, merci de vous référer à la page des ',
+		message: 'Nous avons procédé à une simplification des tokens contraint par l\'ajout du thème Amelipro, merci de vous référer à la page des ',
 		type: 'warning',
 		variant: 'tonal',
 		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
@@ -111,7 +144,7 @@ export const List = {
 								:closable="false"
 								class="mt-2 mb-4"
 							>
-								<template #default>{{ alert.message }}<template v-if="alert.link"> <a :href="alert.link.href">{{ alert.link.text }}</a>.</template></template>
+								<template #default><span style="white-space: pre-line">{{ alert.message }}</span><template v-if="alert.link"> <a :href="alert.link.href">{{ alert.link.text }}</a>.</template><ul v-if="alert.components" class="mt-2 ml-4" style="column-count: 3; max-width: 42rem;"><li v-for="component in alert.components" :key="component">{{ component }}</li></ul></template>
 							</SyAlert>
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>

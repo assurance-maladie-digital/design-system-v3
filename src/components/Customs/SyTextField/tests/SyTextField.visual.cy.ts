@@ -72,4 +72,45 @@ describe('SyTextField - Visual regression tests', () => {
 		cy.get('.v-text-field').should('be.visible')
 		cy.matchImageSnapshot('sy-text-field-prepend-icon', cy.get('.v-text-field'))
 	})
+
+	it('displays the number field with the custom spin buttons', () => {
+		cy.mountWithVuetify(SyTextField, {
+			props: {
+				label: 'Quantité',
+				type: 'number',
+				modelValue: '42',
+			},
+		})
+
+		cy.get('.sy-text-field__spinner').should('be.visible')
+		cy.matchImageSnapshot('sy-text-field-number', cy.get('.v-text-field'))
+	})
+
+	it('displays the number field without the spin buttons when hidden', () => {
+		cy.mountWithVuetify(SyTextField, {
+			props: {
+				label: 'Quantité',
+				type: 'number',
+				modelValue: '42',
+				areSpinButtonsHidden: true,
+			},
+		})
+
+		cy.get('.sy-text-field__spinner').should('not.exist')
+		cy.matchImageSnapshot('sy-text-field-number-no-spinner', cy.get('.v-text-field'))
+	})
+
+	it('displays the number field disabled without the spin buttons', () => {
+		cy.mountWithVuetify(SyTextField, {
+			props: {
+				label: 'Quantité',
+				type: 'number',
+				modelValue: '42',
+				disabled: true,
+			},
+		})
+
+		cy.get('.sy-text-field__spinner').should('not.exist')
+		cy.matchImageSnapshot('sy-text-field-number-disabled', cy.get('.v-text-field'))
+	})
 })
