@@ -55,7 +55,7 @@ export interface ValidationResult {
  * @param options Options de configuration de la validation
  * @returns Un objet contenant les états et méthodes de validation
  */
-export function useValidation(options: ValidationOptions = { showSuccessMessages: true }) {
+export function useValidation(options: ValidationOptions = { showSuccessMessages: false }) {
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])

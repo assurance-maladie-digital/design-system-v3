@@ -115,7 +115,7 @@
 		placeholder: undefined,
 		readonly: false,
 		required: false,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		showWeekNumber: false,
 		textFieldActivator: false,
 		title: false,
@@ -264,7 +264,7 @@
 		clearValidation,
 		validateDates,
 	} = useDatePickerValidationBridge({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: props.noCalendar,
 		required: props.required,
@@ -958,7 +958,7 @@
 							:class="[getMessageClasses(), 'label-hidden-on-focus']"
 							:error-messages="errorMessages"
 							:warning-messages="warningMessages"
-							:success-messages="successMessages"
+							:success-messages="props.showSuccessMessages ? successMessages : []"
 							:has-success="isOnSuccess"
 							:disabled="props.disabled"
 							:disable-click-button="false"
@@ -1225,12 +1225,12 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 }
 
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1247,7 +1247,7 @@
 }
 
 :deep(.custom-year-btn::after) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1257,7 +1257,7 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: #b0b1b1;
+	background-color: rgb(var(--v-theme-grey-lighten60));
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;

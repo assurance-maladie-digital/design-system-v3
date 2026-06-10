@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 
 import UploadWorkflow from '../UploadWorkflow.vue'
 import { locales as fileListLocales } from '@/components/FileList/UploadItem/locales'
 import { locales as FileUploadLocales } from '@/components/FileUpload/locales'
-import { afterEach } from 'node:test'
 import { SySelect } from '@/components'
 
 describe('UploadWorkflow', () => {

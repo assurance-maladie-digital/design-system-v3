@@ -10,6 +10,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with default props', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 			},
 			modelValue: '',
@@ -24,6 +26,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with value', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 			},
 			modelValue: 'Ceci est une description',
@@ -38,6 +42,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with required field', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 				required: true,
 			},
@@ -53,6 +59,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with error messages', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 				required: true,
 			},
@@ -71,6 +79,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with max lines constraint', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 				maxLines: 3,
 			},
@@ -89,6 +99,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with custom rules', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 				rules: [(value: string) => value.length >= 10 || 'Minimum 10 caractères'],
 			},
@@ -107,6 +119,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with different variant', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 				variant: 'filled',
 			},
@@ -122,6 +136,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with custom color', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 				color: 'secondary',
 			},
@@ -137,6 +153,8 @@ describe('SyTextArea – accessibility (axe)', () => {
 	it('has no obvious axe violations with background color', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				label: 'Description',
 				bgColor: 'grey-lighten-2',
 			},

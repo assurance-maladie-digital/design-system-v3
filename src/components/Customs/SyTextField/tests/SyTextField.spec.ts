@@ -1,9 +1,16 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { VIcon } from 'vuetify/components'
+import { ref } from 'vue'
 
 import SyTextField from '../SyTextField.vue'
-import type { IconType } from '../types'
+import type { IconType, SyTextFieldProps } from '../types'
+import { SyForm } from '@/components'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface SyFormInstance extends Record<string, any> {
+	validate: () => Promise<boolean>
+}
 
 describe('SyTextField', () => {
 	let wrapper: ReturnType<typeof mount<typeof SyTextField>>
@@ -71,28 +78,28 @@ describe('SyTextField', () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'success' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('success')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('success')
 	})
 
 	it('should update icon when validation state changes with warning', async () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'warning' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('warning')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('warning')
 	})
 
 	it('should update icon when validation state changes with error', async () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'error' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('error')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('error')
 	})
 
 	it('should update icon when validation state changes with success', async () => {
 		wrapper = mount(SyTextField, {
 			props: { appendInnerIcon: 'success' as IconType, label: 'Test Field' },
 		})
-		expect(wrapper.props('appendInnerIcon')).toBe('success')
+		expect((wrapper.vm.$props as SyTextFieldProps).appendInnerIcon).toBe('success')
 	})
 
 	it('emits prepend-icon-click event when prepend icon is clicked', async () => {
@@ -181,7 +188,7 @@ describe('SyTextField', () => {
 			props: { customRules: [customRule], label: 'Test Field' },
 		})
 
-		await wrapper.setProps({ modelValue: 'ab' })
+		await wrapper.setProps({ modelValue: 'ab' } as Parameters<typeof wrapper.setProps>[0])
 		await wrapper.find('input').trigger('focus')
 		await wrapper.vm.$nextTick()
 		await wrapper.find('input').trigger('blur')
@@ -297,6 +304,7 @@ describe('SyTextField', () => {
 		})
 
 		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
 		const event = new InputEvent('beforeinput', {
 			data: 'a',
 			cancelable: true,
@@ -304,8 +312,109 @@ describe('SyTextField', () => {
 		})
 
 		input.element.dispatchEvent(event)
+		await wrapper.vm.$nextTick()
 
 		expect(event.defaultPrevented).toBe(true)
+		// Le caractère interdit n'est pas inséré : le champ reste vide
+		expect(inputElement.value).toBe('')
+	})
+
+	it('allows multi-character beforeinput data when type is number (spinner increment / paste)', async () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Test Field',
+				type: 'number',
+			},
+		})
+
+		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
+		// Ex. incrément du spinner 9 -> 10, ou collage d'un nombre : data = "10"
+		const event = new InputEvent('beforeinput', {
+			data: '10',
+			cancelable: true,
+			bubbles: true,
+		})
+
+		input.element.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(false)
+
+		// La saisie n'étant pas bloquée, le navigateur l'applique : le champ la conserve telle quelle
+		inputElement.value = '10'
+		await input.trigger('input')
+		await wrapper.vm.$nextTick()
+
+		expect(inputElement.value).toBe('10')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['10'])
+	})
+
+	it('collapses multiple decimal separators when type is number', async () => {
+		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field', type: 'number' },
+		})
+
+		const input = wrapper.find('input')
+		const inputElement = input.element as HTMLInputElement
+		inputElement.value = '32323.....2332...32.32.323'
+
+		await input.trigger('input')
+
+		// Un seul séparateur décimal conservé (préfixe de nombre valide)
+		expect(inputElement.value).toBe('32323.')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['32323.'])
+	})
+
+	it('renders as a text input (with inputmode decimal) when type is number', () => {
+		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field', type: 'number' },
+		})
+		const input = wrapper.find('input')
+		expect(input.attributes('type')).toBe('text')
+		expect(input.attributes('inputmode')).toBe('decimal')
+	})
+
+	describe('number increment buttons', () => {
+		it('increments via the up button', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '5' },
+			})
+			await wrapper.find('button[aria-label="Augmenter Test Field"]').trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['6'])
+		})
+
+		it('decrements via the down button', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '5' },
+			})
+			await wrapper.find('button[aria-label="Diminuer Test Field"]').trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['4'])
+		})
+
+		it('increments with the ArrowUp key', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '5' },
+			})
+			await wrapper.find('input').trigger('keydown', { key: 'ArrowUp' })
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['6'])
+		})
+
+		it('respects step and clamps to max', async () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', modelValue: '0.2' },
+				attrs: { step: 0.1, max: 0.25 },
+			})
+			await wrapper.find('button[aria-label="Augmenter Test Field"]').trigger('click')
+			// 0.2 + 0.1 = 0.3 -> plafonné à 0.25
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['0.25'])
+		})
+
+		it('hides the increment buttons when areSpinButtonsHidden is true', () => {
+			wrapper = mount(SyTextField, {
+				props: { label: 'Test Field', type: 'number', areSpinButtonsHidden: true },
+			})
+			expect(wrapper.find('button[aria-label="Augmenter Test Field"]').exists()).toBe(false)
+		})
 	})
 
 	it('filters alphabetic characters when type is tel', async () => {
@@ -346,6 +455,26 @@ describe('SyTextField', () => {
 		expect(event.defaultPrevented).toBe(true)
 	})
 
+	it('allows multi-character beforeinput data when type is tel (paste)', () => {
+		wrapper = mount(SyTextField, {
+			props: {
+				label: 'Telephone',
+				type: 'tel',
+			},
+		})
+
+		const input = wrapper.find('input')
+		const event = new InputEvent('beforeinput', {
+			data: '+33 6 12',
+			cancelable: true,
+			bubbles: true,
+		})
+
+		input.element.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(false)
+	})
+
 	it('validates field immediately when isValidateOnBlur is false', async () => {
 		const customRule = {
 			type: 'custom',
@@ -364,7 +493,7 @@ describe('SyTextField', () => {
 			},
 		})
 
-		await wrapper.setProps({ modelValue: 'ab' })
+		await wrapper.setProps({ modelValue: 'ab' } as Parameters<typeof wrapper.setProps>[0])
 		await wrapper.vm.$nextTick()
 
 		// settle all pending promises to ensure validation has completed
@@ -377,7 +506,7 @@ describe('SyTextField', () => {
 		expect(messages.text()).toContain('Test error message')
 
 		// Vérifie que l'erreur disparaît quand la valeur devient valide
-		await wrapper.setProps({ modelValue: 'abc' })
+		await wrapper.setProps({ modelValue: 'abc' } as Parameters<typeof wrapper.setProps>[0])
 		await wrapper.vm.$nextTick()
 
 		// the async validation should have updated the error messages, so we wait for the next tick before checking the messages again
@@ -389,5 +518,42 @@ describe('SyTextField', () => {
 		})
 
 		expect(messages.text()).not.toContain('Test error message')
+	})
+
+	it('s\'enregistre auprès d\'un SyForm parent et déclenche la validation à la soumission', async () => {
+		const wrapper = mount({
+			components: { SyForm, SyTextField },
+			template: `
+        <SyForm ref="form">
+          <SyTextField v-model="value" label="Nom" required />
+        </SyForm>
+      `,
+			setup() {
+				return { value: ref('') }
+			},
+		})
+
+		const form = wrapper.getComponent(SyForm)
+		const isValid = await (form.vm as unknown as SyFormInstance).validate()
+		await flushPromises()
+
+		expect(isValid).toBe(false) // champ requis vide
+		expect(wrapper.find('.v-messages__message').exists()).toBe(true)
+	})
+
+	it('does not show error messages when hideDetails is true even with validation errors', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: null,
+				label: 'Test hideDetails + erreur',
+				hideDetails: true,
+				hasError: true,
+				errorMessages: ['Erreur de validation'],
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('.v-input__details').exists()).toBe(false)
+		expect(wrapper.find('.v-messages').exists()).toBe(false)
 	})
 })

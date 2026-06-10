@@ -45,7 +45,7 @@ export const validationPropsDefaults = {
 	disabled: false,
 	required: false,
 	isValidateOnBlur: true,
-	showSuccessMessages: true,
+	showSuccessMessages: false,
 	disableErrorHandling: false,
 	customRules: () => [],
 	customWarningRules: () => [],
@@ -89,6 +89,7 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules?: never
+	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: Ref<boolean>
 	customRules: Ref<SyValidationRule[]>
@@ -99,11 +100,11 @@ export function useValidation(params: {
 })) {
 	if (params.disableErrorHandling.value) {
 		return {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			hasError: computed(() => params.hasErrorProp?.value ?? false),
-			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
+			errors: computed(() => params.errorMessages?.value || []),
+			warnings: computed(() => params.warningMessages?.value || []),
+			successes: computed(() => params.successMessages?.value || []),
+			hasError: computed(() => (params.errorMessages?.value?.length ?? 0) > 0 || (params.hasErrorProp?.value ?? false)),
+			hasWarning: computed(() => (params.warningMessages?.value?.length ?? 0) > 0 || (params.hasWarningProp?.value ?? false)),
 			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
 			validate: async () => true,
 			clearValidation: () => {},
@@ -171,11 +172,16 @@ export function useValidation(params: {
 		}
 	}
 
-	const errors = computed(() => [...new Set([
-		...vuetifyErrors.value,
-		...customErrors.value,
-		...(params.errorMessages?.value || []),
-	])])
+	const errors = computed(() => {
+		const allErrors = [...new Set([
+			...vuetifyErrors.value,
+			...customErrors.value,
+			...(params.errorMessages?.value || []),
+		])]
+		// Plafonne le nombre d'erreurs affichées (maxErrors, défaut 1), tous modes confondus.
+		const max = params.maxErrors?.value
+		return max && max > 0 ? allErrors.slice(0, max) : allErrors
+	})
 	const warnings = computed(() => [...new Set([
 		...innerWarnings.value,
 		...(params.warningMessages?.value || []),

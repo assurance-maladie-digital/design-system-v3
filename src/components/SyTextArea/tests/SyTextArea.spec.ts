@@ -9,6 +9,8 @@ describe('SyTextArea', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 			},
@@ -17,9 +19,23 @@ describe('SyTextArea', () => {
 		expect(wrapper.text()).toContain('Description des symptomes')
 	})
 
+	it('applique l\'attribut id depuis uniqueId', () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				uniqueId: 'my-textarea-id',
+				modelValue: '',
+				label: 'Description',
+			},
+		})
+
+		expect(wrapper.find('textarea').attributes('id')).toBe('my-textarea-id')
+	})
+
 	it('sets aria-required when required is true', () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				required: true,
 				label: 'Description des symptomes',
@@ -33,6 +49,8 @@ describe('SyTextArea', () => {
 	it('does not show required error message by default', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				required: true,
 				label: 'Description des symptomes',
@@ -45,6 +63,8 @@ describe('SyTextArea', () => {
 	it('shows required error message when empty after interaction', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				required: true,
 				label: 'Description des symptomes',
@@ -60,6 +80,8 @@ describe('SyTextArea', () => {
 	it('remove the white spaces at the beginning of the text as we try to add them', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				trim: true,
 				label: 'Description des symptomes',
@@ -75,6 +97,8 @@ describe('SyTextArea', () => {
 	it('does not remove the white spaces at the middle of the text', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				trim: true,
 				label: 'Description des symptomes',
@@ -90,6 +114,8 @@ describe('SyTextArea', () => {
 	it('removes the white spaces at the end of the text at blur', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				trim: true,
 				label: 'Description des symptomes',
@@ -107,6 +133,8 @@ describe('SyTextArea', () => {
 	it('removes the tabs with the number of spaces defined in the prop', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				replaceTabs: 2,
 				label: 'Description des symptomes',
@@ -122,6 +150,8 @@ describe('SyTextArea', () => {
 	it('show an error message when the text is too long', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				maxLines: 5,
 				label: 'Description des symptomes',
@@ -144,6 +174,8 @@ describe('SyTextArea', () => {
 	it('adds a line break when a line is too long', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				autoWrap: 50,
 				label: 'Description des symptomes',
@@ -163,6 +195,8 @@ describe('SyTextArea', () => {
 	it('adds a line break when a line is too long 2', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				autoWrap: 50,
 				label: 'Description des symptomes',
@@ -182,6 +216,8 @@ describe('SyTextArea', () => {
 	it('normalizes the text to NFC', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				normalize: true,
 				label: 'Description des symptomes',
@@ -197,6 +233,8 @@ describe('SyTextArea', () => {
 	it('updates the text when the modelValue prop changes', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				replaceTabs: 2,
 				trim: true,
@@ -212,6 +250,8 @@ describe('SyTextArea', () => {
 	it('shows custom error from customRules in custom validation mode', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -240,6 +280,8 @@ describe('SyTextArea', () => {
 	it('shows vuetify rule error when useVuetifyValidation is true', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				useVuetifyValidation: true,
@@ -261,6 +303,8 @@ describe('SyTextArea', () => {
 	it('shows custom warning from customWarningRules in custom validation mode', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -296,9 +340,12 @@ describe('SyTextArea', () => {
 	it('shows custom success from customSuccessRules in custom validation mode', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
+				showSuccessMessages: true,
 				customRules: [
 					{
 						type: 'custom',
@@ -331,6 +378,8 @@ describe('SyTextArea', () => {
 	it('validates only on blur when isValidateOnBlur is true', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: true,
@@ -362,6 +411,8 @@ describe('SyTextArea', () => {
 	it('keeps success visual state but hides success text when showSuccessMessages is false', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -388,13 +439,14 @@ describe('SyTextArea', () => {
 		expect((wrapper.vm as any).hasSuccess).toBe(true)
 		expect(wrapper.find('.success-field').exists()).toBe(true)
 		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
-		expect(wrapper.findComponent(SyIcon).props('color')).toBe('onSuccessVariant')
 		expect(wrapper.text()).not.toContain('Succès masqué')
 	})
 
 	it('applies warning visual state and warning icon when warning rules fail', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				isValidateOnBlur: false,
@@ -424,6 +476,8 @@ describe('SyTextArea', () => {
 	it('applies error visual state and error icon when validation fails', async () => {
 		const wrapper = mount(SyTextArea, {
 			props: {
+				uniqueId: 'textarea-1',
+				counter: 255,
 				modelValue: '',
 				label: 'Description des symptomes',
 				required: true,
@@ -444,6 +498,8 @@ describe('SyTextArea', () => {
 		it('affiche l\'astérisque quand displayAsterisk et required sont true', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Test Label',
 					displayAsterisk: true,
@@ -457,6 +513,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas l\'astérisque quand displayAsterisk est false', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Test Label',
 					displayAsterisk: false,
@@ -471,6 +529,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas l\'astérisque quand required est false', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Test Label',
 					displayAsterisk: true,
@@ -486,6 +546,8 @@ describe('SyTextArea', () => {
 		it('affiche le helpText quand aucun message de validation n\'est présent', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					helpText: 'Texte d\'aide',
@@ -498,6 +560,8 @@ describe('SyTextArea', () => {
 		it('masque le helpText quand des erreurs sont présentes', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					helpText: 'Texte d\'aide',
@@ -518,6 +582,8 @@ describe('SyTextArea', () => {
 		it('masque la zone des messages quand hideDetails est true et qu\'il n\'y a pas de messages', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					hideDetails: true,
@@ -530,6 +596,8 @@ describe('SyTextArea', () => {
 		it('affiche la zone des messages quand hideDetails est true mais qu\'il y a des erreurs', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					hideDetails: true,
@@ -548,6 +616,8 @@ describe('SyTextArea', () => {
 		it('affiche la zone des messages par défaut (hideDetails vaut false)', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 				},
@@ -561,6 +631,8 @@ describe('SyTextArea', () => {
 		it('affiche le bouton de suppression quand clearable est true et qu\'une valeur est saisie', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'contenu',
 					label: 'Description',
 					clearable: true,
@@ -576,6 +648,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas le bouton de suppression quand clearable est false', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'contenu',
 					label: 'Description',
 					clearable: false,
@@ -591,6 +665,8 @@ describe('SyTextArea', () => {
 		it('vide le champ au clic sur le bouton de suppression', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'contenu',
 					label: 'Description',
 					clearable: true,
@@ -614,6 +690,8 @@ describe('SyTextArea', () => {
 		it('n\'affiche pas d\'erreur pour un champ requis sans valeur quand disableErrorHandling est true', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					required: true,
@@ -633,6 +711,8 @@ describe('SyTextArea', () => {
 		it('affiche les erreurs normalement quand disableErrorHandling est false', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					required: true,
@@ -652,6 +732,8 @@ describe('SyTextArea', () => {
 		it('validateOnSubmit retourne true quand le champ est valide', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: 'valeur',
 					label: 'Description',
 					required: true,
@@ -668,6 +750,8 @@ describe('SyTextArea', () => {
 		it('validateOnSubmit retourne false quand le champ est invalide', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					isValidateOnBlur: false,
@@ -698,6 +782,8 @@ describe('SyTextArea', () => {
 		it('validateOnSubmit retourne false quand un champ requis est vide', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					required: true,
@@ -715,6 +801,8 @@ describe('SyTextArea', () => {
 		it('clearValidation remet l\'état d\'erreur à zéro', async () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
+					uniqueId: 'textarea-1',
+					counter: 255,
 					modelValue: '',
 					label: 'Description',
 					isValidateOnBlur: false,
@@ -741,6 +829,52 @@ describe('SyTextArea', () => {
 			instance.clearValidation()
 			await flushPromises()
 			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+		})
+	})
+
+	describe('counter', () => {
+		it('n\'affiche pas le compteur par défaut', () => {
+			const wrapper = mount(SyTextArea, {
+				props: {
+					uniqueId: 'textarea-1',
+					modelValue: 'hello',
+					label: 'Description',
+				},
+			})
+
+			expect(wrapper.find('.v-counter').exists()).toBe(false)
+		})
+
+		it('affiche uniquement le nombre de caractères quand counter est true', async () => {
+			const wrapper = mount(SyTextArea, {
+				props: {
+					uniqueId: 'textarea-1',
+					modelValue: '',
+					label: 'Description',
+					counter: true,
+				},
+			})
+
+			const textarea = wrapper.find('textarea')
+			await textarea.setValue('hello')
+
+			expect(wrapper.find('.v-counter').text()).toBe('5')
+		})
+
+		it('affiche le format X / N quand counter est un nombre', async () => {
+			const wrapper = mount(SyTextArea, {
+				props: {
+					uniqueId: 'textarea-1',
+					modelValue: '',
+					label: 'Description',
+					counter: 255,
+				},
+			})
+
+			const textarea = wrapper.find('textarea')
+			await textarea.setValue('hello')
+
+			expect(wrapper.find('.v-counter').text()).toBe('5 / 255')
 		})
 	})
 

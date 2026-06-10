@@ -1,0 +1,56 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VStepperStories from './v-stepper.stories'
+
+<Meta title="Composants/Composants Vuetify/VStepper" />
+
+<div className="header">
+    <h1>VStepper</h1>
+Ce composant utilise directement le composant natif `v-stepper` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-stepper/#props).
+</div>
+
+## Primary
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VStepperStories.Primary} />
+</div>
+
+## Primary – Alt Labels
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VStepperStories.PrimaryAltLabels} />
+</div>
+
+## Primary – Flat
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VStepperStories.PrimaryFlat} />
+</div>
+
+## Primary – Désactivé
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VStepperStories.PrimaryDisabled} />
+</div>
+
+## Primary – Avec icônes
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VStepperStories.PrimaryWithIcons} />
+</div>
+
+## Primary – Avec erreur
+
+<div style={{ padding: '24px' }}>
+  <Canvas of={VStepperStories.PrimaryWithError} />
+</div>
+
+## Options disponibles
+
+- `alt-labels` – Affiche les labels en dessous des étapes
+- `flat` – Supprime l'élévation du stepper
+- `disabled` – Désactive toutes les interactions
+- `icon` – Icône personnalisée pour chaque étape
+- `complete` – Marque une étape comme complétée
+- `error` – Marque une étape en erreur
+- Personnalisation avec slots (actions, item, etc.)

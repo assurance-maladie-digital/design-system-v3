@@ -5,6 +5,7 @@
 	import { locales } from './locales'
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -12,6 +13,7 @@
 		numberLabel?: string
 		keyLabel?: string
 		displayKey?: boolean
+		helpText?: string
 		nirTooltip?: string
 		keyTooltip?: string
 		nirTooltipPosition?: 'prepend' | 'append'
@@ -40,6 +42,7 @@
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé de validation',
 		displayKey: true,
+		helpText: '',
 		nirTooltip: undefined,
 		keyRules: () => [],
 		keyTooltip: undefined,
@@ -52,7 +55,7 @@
 		customNumberWarningRules: () => [],
 		customKeyWarningRules: () => [],
 		customRulesPrecedence: false,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		width: '100%',
 		bgColor: 'white',
 		disabled: false,
@@ -71,9 +74,17 @@
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
 		numberRules: () => [],
+		useVuetifyValidation: false,
 		nirType: 'simple',
 		withoutFieldset: false,
 		customLocale: () => locales,
+		errorMessages: null,
+		warningMessages: null,
+		successMessages: null,
+		hasError: false,
+		hasWarning: false,
+		hasSuccess: false,
+		maxErrors: 1,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -173,35 +184,6 @@
 		}
 	})
 
-	// Synchronisation avec modelValue
-	watch(modelValueRef, (newValue) => {
-		// Ignorer les mises à jour internes pour éviter les boucles infinies
-		if (isInternalUpdate.value) return
-
-		if (newValue === undefined || newValue === null) {
-			numberValue.value = ''
-			keyValue.value = ''
-			return
-		}
-		if (newValue.length === 15) {
-			const number = newValue.slice(0, -2)
-			const key = newValue.slice(-2)
-			numberValue.value = number
-			keyValue.value = key
-		}
-		if (newValue.length === 14) {
-			const number = newValue.slice(0, -1)
-			const key = newValue.slice(-1)
-			numberValue.value = number
-			keyValue.value = key
-		}
-		if (newValue.length <= 13) {
-			const number = newValue
-			numberValue.value = number
-			keyValue.value = ''
-		}
-	}, { immediate: true })
-
 	// Émission de la valeur
 	const emitValue = () => {
 		const number = unmaskedNumberValue.value
@@ -228,6 +210,7 @@
 		keyValidation,
 		validateFields,
 		hasFieldErrors,
+		clearValidation,
 	} = useNirValidation(
 		numberValue,
 		keyValue,
@@ -255,11 +238,58 @@
 		toRef(props, 'useVuetifyValidation'),
 		toRef(props, 'numberRules'),
 		toRef(props, 'keyRules'),
+		toRef(props, 'errorMessages'),
+		toRef(props, 'warningMessages'),
+		toRef(props, 'successMessages'),
+		toRef(props, 'hasError'),
+		toRef(props, 'hasWarning'),
+		toRef(props, 'hasSuccess'),
+		toRef(props, 'maxErrors'),
 	)
+
+	// Synchronisation avec modelValue — placé après useNirValidation pour éviter le TDZ sur clearValidation
+	watch(modelValueRef, (newValue) => {
+		if (isInternalUpdate.value) return
+
+		if (newValue === undefined || newValue === null) {
+			numberValue.value = ''
+			keyValue.value = ''
+			clearValidation()
+			return
+		}
+		if (newValue.length === 15) {
+			const number = newValue.slice(0, -2)
+			const key = newValue.slice(-2)
+			numberValue.value = number
+			keyValue.value = key
+		}
+		if (newValue.length === 14) {
+			const number = newValue.slice(0, -1)
+			const key = newValue.slice(-1)
+			numberValue.value = number
+			keyValue.value = key
+		}
+		if (newValue.length <= 13) {
+			const number = newValue
+			numberValue.value = number
+			keyValue.value = ''
+		}
+	}, { immediate: true })
 
 	const validateOnSubmit = () => {
 		return validateFields(true)
 	}
+
+	useValidatable(validateOnSubmit, clearValidation)
+
+	const hasMessages = computed(() => {
+		if (props.disableErrorHandling) return false
+		return hasFieldErrors.value
+			|| numberValidation.hasWarning.value
+			|| keyValidation.hasWarning.value
+			|| (numberValidation.hasSuccess.value && props.showSuccessMessages)
+			|| (keyValidation.hasSuccess.value && props.showSuccessMessages)
+	})
 
 	// Propriétés calculées pour les attributs ARIA et les états d'erreur
 	const ariaRequired = computed(() => props.required ? 'true' : undefined)
@@ -339,12 +369,14 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation,
 		numberMask,
 		keyMask,
 		numberValidation,
 		keyValidation,
 	} satisfies {
 		validateOnSubmit: () => Promise<boolean>
+		clearValidation: () => void
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		numberMask: { mask: string, preProcess: (value: string) => string, tokens: Record<string, any> }
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -390,7 +422,7 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:clearable="props.clearable"
+				:is-clearable="props.clearable"
 				:counter="props.counter"
 				:hint="props.numberHint || locales.numberHint"
 				:persistent-hint="props.persistentHint"
@@ -428,7 +460,7 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:clearable="props.clearable"
+				:is-clearable="props.clearable"
 				:counter="props.counter"
 				:hint="props.keyHint || locales.keyHint"
 				:persistent-hint="props.persistentHint"
@@ -447,6 +479,13 @@
 				:show-success-messages="false"
 				@input="handleKeyInput"
 			/>
+		</div>
+		<div
+			v-if="helpText && !hasMessages && !hideDetails"
+			class="sy-nir-help-text"
+			style="flex: 1 0 100%;"
+		>
+			{{ helpText }}
 		</div>
 		<div
 			class="sy-messages"
@@ -513,6 +552,13 @@
 				/>
 			</div>
 		</div>
+		<div
+			v-if="helpText && hasMessages && !hideDetails"
+			class="sy-nir-help-text"
+			style="flex: 1 0 100%;"
+		>
+			{{ helpText }}
+		</div>
 	</component>
 </template>
 
@@ -566,6 +612,17 @@
 	width: 100%;
 }
 
+/* La zone de détails interne des champs ne sert qu'au hint au focus : on ne réserve
+   pas d'espace vide sous l'input (helpText/messages NirField gérés à part), pour coller
+   le helpText au champ comme SySelect. Elle grandit naturellement si un hint s'affiche au focus. */
+.nir-field :deep(.v-input__details) {
+	min-height: 0 !important;
+}
+
+.nir-field :deep(.v-input__details .v-messages) {
+	min-height: 0;
+}
+
 .key-field {
 	min-width: 110px;
 	flex-wrap: wrap;
@@ -590,6 +647,15 @@
 
 .sy-hide-detail {
 	padding-bottom: 6px;
+}
+
+.sy-nir-help-text {
+	font-size: var(--v-fontSize-liensEtLibelles);
+	font-weight: 400;
+	letter-spacing: 0.0333em;
+	line-height: 16px;
+	padding-inline: 16px;
+	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
 }
 
 .sy-number-errors,

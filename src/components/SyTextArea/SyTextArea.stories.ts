@@ -20,6 +20,24 @@ const meta = {
 	},
 	argTypes: {
 		...getValidationDocumentation('string'),
+		uniqueId: {
+			control: { type: 'text' },
+			description: 'Identifiant unique du composant',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+				category: 'props',
+			},
+		},
+		counter: {
+			control: { type: 'boolean' },
+			description: 'Affiche un compteur de caractères. `true` affiche uniquement le nombre de caractères saisis, un nombre affiche le format `X / N`.',
+			table: {
+				type: { summary: 'boolean | number' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
+			},
+		},
 		label: {
 			control: { type: 'text' },
 			description: 'Texte affiché au-dessus du champ',
@@ -139,6 +157,7 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
+		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Texte"
 		placeholder="Entrez votre texte ici"
@@ -205,6 +224,7 @@ export const Required: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
+		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Texte requis"
 		:required="true"
@@ -333,6 +353,7 @@ export const Trim: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
+		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Trim text area"
 		:trim="true"
@@ -373,6 +394,7 @@ export const ReplaceTabs: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
+	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Replace tabs text area"
 		:replace-tabs="4"
@@ -408,6 +430,7 @@ export const MaxLines: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
+	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Max lines text area"
 		:max-lines="5"
@@ -470,6 +493,7 @@ export const AutoWrap: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
+	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Auto wrap text area"
 		:auto-wrap="50"
@@ -515,6 +539,7 @@ export const Normalize: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
+	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Normalize text area"
 		:normalize="true"

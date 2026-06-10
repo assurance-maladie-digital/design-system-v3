@@ -85,6 +85,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'Stepper',
+						description: 'Affiche la progression par étapes numérotées.',
+						link: '/?path=/docs/composants-composants-vuetify-vstepper--docs',
+						img: `/components/stepper${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'SyTabs',
 						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
 						link: '/?path=/docs/composants-navigation-sytabs--docs',
@@ -204,6 +211,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'SyTextArea',
+						description: 'Utilisé pour la collecte de grandes quantités de données textuelles.',
+						link: '/?path=/docs/composants-formulaires-sytextarea--docs',
+						img: `/components/sy-text-area${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
 						title: 'SyAutocomplete',
 						description: 'Utilisé pour permettre à l’utilisateur de rechercher et sélectionner une valeur dans une liste d\'options (alternative au v-autocomplete de Vuetify).',
 						link: '/?path=/docs/composants-formulaires-selects-syautocomplete--docs',
@@ -248,8 +262,8 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'DatePicker',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de saisir une date.',
-						link: '/?path=/docs/composants-formulaires-datepicker--docs',
-						img: '/components/date-picker.svg',
+						link: '/?path=/docs/composants-formulaires-datepicker-introduction--docs',
+						img: `/components/date-picker${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -263,14 +277,14 @@ export const ComponentsList: StoryObj = {
 						title: 'NirField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir un numéro de Sécurité sociale (NIR).',
 						link: '/?path=/docs/composants-formulaires-nirfield--docs',
-						img: '/components/nir-field.svg',
+						img: `/components/nir-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
 						title: 'PasswordField',
 						description: 'Utilisé pour afficher un champ de saisie de mot de passe et gérer sa validation.',
 						link: '/?path=/docs/composants-formulaires-passwordfield--docs',
-						img: '/components/password-field.svg',
+						img: `/components/password-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -297,9 +311,9 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SearchListField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.',
-						link: '/?path=/docs/composants-formulaires-searchlistfield--docs',
-						img: '/components/search-list-field.svg',
-						category: 'Formulaires',
+						link: '/?path=/docs/composants-filtres-searchlistfield--docs',
+						img: `/components/search-list-field${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
 					},
 					{
 						title: 'SelectBtnField',
@@ -330,10 +344,31 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'Captcha',
+						description: 'Utilisé pour confirmer que les interactions des utilisateurs sont effectuées par des humains et non par des robots.',
+						link: '/?path=/docs/composants-formulaires-captcha--docs',
+						img: `/components/captcha${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
+						title: 'SyTable',
+						description: 'Utilisé pour afficher une VDataTable de Vuetify',
+						link: '/?path=/docs/composants-tableaux-sytable--docs',
+						img: `/components/sy-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
+						title: 'SyServerTable',
+						description: 'Utilisé pour afficher une VDataTable Vuetify avec gestion des données côté serveur',
+						link: '/?path=/docs/composants-tableaux-syservertable--docs',
+						img: `/components/sy-server-table${isAp ? '-ap' : ''}.svg`,
+						category: 'Tableaux',
+					},
+					{
 						title: 'PaginatedTable',
 						description: 'Utilisé pour afficher une VDataTable de Vuetify avec une pagination persistante.',
 						link: '/?path=/docs/composants-tableaux-paginatedtable--docs',
-						img: '/components/paginated-table.svg',
+						img: `/components/paginated-table${isAp ? '-ap' : ''}.svg`,
 						category: 'Tableaux',
 					},
 					{
@@ -396,7 +431,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FilePreview',
 						description: 'Utilisé pour afficher l\'aperçu d\'un fichier.',
 						link: '/?path=/docs/composants-donn%C3%A9es-filepreview--docs',
-						img: '/components/file-preview.svg',
+						img: `/components/file-preview${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -444,8 +479,15 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'FilterSideBar',
 						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
-						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						link: '/?path=/docs/composants-filtres-filtersidebar--docs',
 						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
+					{
+						title: 'FilterInline',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterinline--docs',
+						img: `/components/filters-inline${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
 				]
@@ -481,6 +523,7 @@ export const ComponentsList: StoryObj = {
 					'NirField',
 					'Card',
 					'FilterSideBar',
+					'SearchListField',
 					'SyTextField',
 					'Switch',
 					'Tooltip',
@@ -495,6 +538,14 @@ export const ComponentsList: StoryObj = {
 					'BackToTopBtn',
 					'TableToolbar',
 					'PhoneField',
+					'SyTextArea',
+					'PaginatedTable',
+					'SyTable',
+					'SyServerTable',
+					'DatePicker',
+					'PasswordField',
+					'Stepper',
+					'Captcha',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

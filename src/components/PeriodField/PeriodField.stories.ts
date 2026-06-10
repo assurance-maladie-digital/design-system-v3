@@ -567,8 +567,9 @@ export const WithSuccess: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<PeriodField 
+					<PeriodField
 						v-model="selectedPeriod"
+						:show-success-messages="true"
 						:custom-rules="[
 							{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend', successMessage: 'La date n\\'est pas un week-end' } }
 						]"
@@ -599,6 +600,7 @@ export const WithSuccess: Story = {
 		displayAppendIcon: true,
 		disabled: false,
 		noIcon: false,
+		showSuccessMessages: true,
 		modelValue: { from: '22/01/2024', to: '23/01/2024' },
 		customRules: [
 			{
