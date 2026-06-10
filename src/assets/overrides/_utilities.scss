@@ -7,3 +7,32 @@
 .theme-ap2026 {
 	--footer-background: rgb(var(--v-theme-primary));
 }
+
+.theme-cnam,
+.theme-pa ,
+.theme-ap,
+.theme-ap2026 {
+	--carousel-controls-background: rgb(255, 255, 255);
+}
+
+.v-carousel .v-carousel__controls {
+    background-color: var(--carousel-controls-background) !important;
+}
+
+.v-carousel .v-carousel__controls .v-btn--icon .v-icon {
+	color: rgb(var(--v-theme-disabled)) !important;
+}
+
+// Style pour tous les indicateurs (non actifs)
+.v-carousel__controls__item .v-icon {
+	opacity: 1;
+}
+
+// Style pour l'indicateur actif
+.v-carousel .v-carousel__controls .v-btn--active .v-icon {
+    color: rgb(var(--v-theme-primary)) !important;
+}
+
+
+
+

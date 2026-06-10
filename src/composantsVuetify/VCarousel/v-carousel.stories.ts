@@ -86,7 +86,7 @@ export const Primary: Story = {
 			return { args, colors }
 		},
 		template: `
-            <VCarousel v-bind="args">
+            <VCarousel v-bind="args" class="carousel-white-controls">
                 <VCarouselItem
                     v-for="(color, i) in colors"
                     :key="i"
