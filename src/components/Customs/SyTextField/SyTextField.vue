@@ -20,6 +20,7 @@
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useSyTextFieldValidation } from './useSyTextFieldValidation'
 	import { useNumberField } from './useNumberField'
+	import { locales as defaultLocales } from './locales'
 	import type { SyTextFieldProps } from './types'
 
 	const props = withDefaults(
@@ -79,9 +80,13 @@
 			helpText: '',
 			maxlength: undefined,
 			title: undefined,
+			locales: () => ({}),
 			...validationPropsDefaults,
 		},
 	)
+
+	// Libellés d'accessibilité : valeurs par défaut surchargeables via la prop `locales`.
+	const locales = computed(() => ({ ...defaultLocales, ...props.locales }))
 
 	const ICONS: Record<NonNullable<IconType>, string> = {
 		info: mdiInformationOutline,
@@ -705,7 +710,7 @@
 						v-if="showClear"
 						class="v-btn v-btn--density-compact mr-1 sy-text-field__clear"
 						:class="clearButtonColorClass"
-						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
+						:aria-label="locales.clear(props.label)"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiCloseCircle"
 						variant="text"
@@ -736,7 +741,7 @@
 							type="button"
 							tabindex="-1"
 							class="sy-text-field__spinner-btn"
-							:aria-label="props.label ? `Augmenter ${props.label}` : 'Augmenter'"
+							:aria-label="locales.increment(props.label)"
 							@click.stop="stepValue(1)"
 						>
 							<SyIcon
@@ -749,7 +754,7 @@
 							type="button"
 							tabindex="-1"
 							class="sy-text-field__spinner-btn"
-							:aria-label="props.label ? `Diminuer ${props.label}` : 'Diminuer'"
+							:aria-label="locales.decrement(props.label)"
 							@click.stop="stepValue(-1)"
 						>
 							<SyIcon
@@ -772,7 +777,7 @@
 					indeterminate
 					rounded
 					:color="loaderColor"
-					:aria-label="props.label ? `Chargement de ${props.label}` : 'Chargement en cours'"
+					:aria-label="locales.loading(props.label)"
 				/>
 			</template>
 		</VTextField>
