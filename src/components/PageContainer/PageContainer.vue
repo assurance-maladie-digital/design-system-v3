@@ -62,10 +62,13 @@
 <template>
 	<div
 		:id="uniqueId ? `${uniqueId}-container` : undefined"
-		:class="[spacingClass, 'vd-page-container d-flex justify-center']"
+		:class="[spacingClass, 'vd-page-container d-flex flex-column justify-center']"
 		:role="role"
 		:aria-labelledby="ariaLabelledby"
 	>
+		<!-- Slot prepend en dehors du VSheet -->
+		<slot name="prepend" />
+
 		<VSheet
 			:id="uniqueId ? `${uniqueId}-content` : undefined"
 			:width="containerSize"
@@ -73,14 +76,17 @@
 		>
 			<slot />
 		</VSheet>
+
+		<!-- Slot append en dehors du VSheet -->
+		<slot name="append" />
 	</div>
 </template>
 
 <style lang="scss" scoped>
 .vd-page-container {
-	flex: 1;
-	width: 100%;
-	max-width: 1712px;
-	margin: 0 auto;
+    flex: 1;
+    width: 100%;
+    max-width: 1712px;
+    margin: 0 auto;
 }
 </style>

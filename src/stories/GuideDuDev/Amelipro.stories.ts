@@ -547,17 +547,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-onboarding',
 						},
 					},
-					// {
-					// 	title: 'AmeliproPageLayout',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPageLayout',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-page-layout',
-					// 	},
-					// },
+					{
+						title: 'AmeliproPageLayout',
+						synapse: {
+							name: 'PageContainer',
+							url: getComponentUrl({ name: 'PageContainer', type: 'layout' }),
+						},
+						amelipro: {
+							name: 'AmeliproPageLayout',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-page-layout',
+						},
+					},
 					{
 						title: 'AmeliproPagination',
 						synapse: {
