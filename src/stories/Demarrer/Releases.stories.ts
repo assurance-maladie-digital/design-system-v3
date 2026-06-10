@@ -25,7 +25,7 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'form-success-messages-hidden',
 		releaseVersion: 'v1.1.0',
-		message: 'Sur les composants de formulaire, les messages de succès ont été masqués par défaut mais vous pouvez toujours les afficher via la prop `showSuccessMessages`. Composants concernés :',
+		message: 'Cette version modifie le comportement des composants de formulaire, les messages de succès sont désormais masqués par défaut. Cette modification répond à la fois à des besoins projets et à l\'harmonisation des différents thèmes (CNAM, PAG, Amelipro). Pour les projets souhaitant afficher les messages de succès vous pouvez simplement le faire via la prop `showSuccessMessages`. Les composants concernés sont :',
 		type: 'warning',
 		variant: 'tonal',
 		components: [
@@ -50,14 +50,14 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'node-18-decommission',
 		releaseVersion: 'v1.1.0',
-		message: 'Fin de support de Node 18.',
+		message: 'En lien avec le Starter Kit, fin de support de Node 18.',
 		type: 'warning',
 		variant: 'tonal',
 	},
 	{
 		id: 'tokens-simplification',
 		releaseVersion: 'v1.0.27',
-		message: 'Nous avons procédé à une simplification des tokens, merci de vous référer à la page des ',
+		message: 'Nous avons procédé à une simplification des tokens contraint par l\'ajout du thème Amelipro, merci de vous référer à la page des ',
 		type: 'warning',
 		variant: 'tonal',
 		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
