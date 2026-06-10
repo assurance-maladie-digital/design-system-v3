@@ -690,7 +690,6 @@
 					<SyIcon
 						v-if="props.prependInnerIcon && !props.noIcon"
 						:icon="ICONS[props.prependInnerIcon]"
-						role="presentation"
 						:decorative="true"
 					/>
 					<VDivider
@@ -722,13 +721,11 @@
 					<SyIcon
 						v-if="validationIcon && !props.appendInnerIcon"
 						:icon="validationIcon"
-						role="presentation"
 						:decorative="true"
 					/>
 					<SyIcon
 						v-if="props.appendInnerIcon && !props.noIcon"
 						:color="iconColor"
-						role="presentation"
 						:icon="ICONS[props.appendInnerIcon]"
 						:decorative="true"
 					/>
@@ -746,7 +743,6 @@
 						>
 							<SyIcon
 								:icon="mdiChevronUp"
-								role="presentation"
 								:decorative="true"
 							/>
 						</button>
@@ -759,7 +755,6 @@
 						>
 							<SyIcon
 								:icon="mdiChevronDown"
-								role="presentation"
 								:decorative="true"
 							/>
 						</button>
