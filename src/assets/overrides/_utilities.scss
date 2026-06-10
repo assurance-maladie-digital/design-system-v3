@@ -21,12 +21,12 @@
 
 // Style pour tous les indicateurs (non actifs)
 .v-carousel .v-carousel__controls .v-btn .v-icon {
-    color: rgb(var(--v-theme-disabled)) !important;
-    opacity: 1;
+	color: rgb(var(--v-theme-disabled)) !important;
+	opacity: 1;
 }
 
 // Style pour l'indicateur actif
 .v-carousel .v-carousel__controls .v-btn--active .v-icon {
-    color: rgb(var(--v-theme-primary)) !important;
-    opacity: 1;
+	color: rgb(var(--v-theme-primary)) !important;
+	opacity: 1;
 }
