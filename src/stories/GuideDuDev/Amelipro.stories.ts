@@ -742,17 +742,18 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-group',
 						},
 					},
+					{
+						title: 'AmeliproCarousel',
+						synapse: {
+							name: 'VCarousel',
+							url: getComponentUrl({ name: 'VCarousel', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproCarousel',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-carousel',
+						},
+					},
 					// {
-					// 	title: 'AmeliproCarousel',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproCarousel',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-carousel',
-					// 	},
-					// }, {
 					// 	title: 'AmeliproAccordionResult',
 					// 	synapse: {
 					// 		name: 'Composant synapse',

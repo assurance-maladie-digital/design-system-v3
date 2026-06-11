@@ -1,0 +1,74 @@
+import { Meta, Canvas, Controls, Description } from '@storybook/blocks'
+import * as VCarouselStories from './v-carousel.stories'
+
+<Meta title="Composants/Composants Vuetify/VCarousel" />
+
+<div className="header">
+    <h1>VCarousel</h1>
+Le composant `v-carousel` est utilisé pour afficher un diaporama d'images ou de contenu. Il offre plusieurs options de personnalisation comme le défilement automatique, les indicateurs de pagination, et les flèches de navigation. Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-carousel/#props).
+</div>
+
+
+## Exemple par défaut
+
+<Canvas of={VCarouselStories.Primary} />
+
+## Variantes
+
+### Avec défilement automatique
+
+Utilisez la prop `cycle` pour activer le défilement automatique et `interval` pour définir la durée entre chaque slide.
+
+<Canvas of={VCarouselStories.WithCycle} />
+
+### Sans indicateurs
+
+Masquez les indicateurs de pagination avec la prop `hide-delimiters`.
+
+<Canvas of={VCarouselStories.HideDelimiters} />
+
+### Flèches au survol
+
+Affichez les flèches uniquement au survol avec `show-arrows="hover"`.
+
+<Canvas of={VCarouselStories.ShowArrowsOnHover} />
+
+### Avec barre de progression
+
+Ajoutez une barre de progression avec la prop `progress`.
+
+<Canvas of={VCarouselStories.WithProgress} />
+
+### Avec images
+
+Le carousel peut afficher des images avec la prop `src` sur `v-carousel-item`.
+
+<Canvas of={VCarouselStories.WithImages} />
+
+### Hauteur personnalisée
+
+Ajustez la hauteur du carousel avec la prop `height`.
+
+<Canvas of={VCarouselStories.CustomHeight} />
+
+### Customization
+
+<Canvas of={VCarouselStories.WithCustomSlots} />
+
+## Accessibilité
+
+- Les flèches de navigation sont accessibles au clavier
+- Les indicateurs de pagination peuvent être navigués avec Tab
+- Support des gestes tactiles sur mobile
+
+## Bonnes pratiques
+
+- ✅ Utilisez des images de taille cohérente pour éviter les sauts visuels
+- ✅ Définissez un `interval` raisonnable (3-6 secondes) pour le défilement automatique
+- ✅ Fournissez des alternatives textuelles pour les images
+- ⚠️ Évitez trop de slides (max 5-7 recommandé)
+- ⚠️ N'utilisez pas `cycle` si le contenu nécessite une lecture attentive
+
+## Documentation Vuetify
+
+Pour plus d'informations, consultez la [documentation officielle de Vuetify](https://vuetifyjs.com/en/components/carousels/).
