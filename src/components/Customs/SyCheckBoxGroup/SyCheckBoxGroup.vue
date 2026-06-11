@@ -1,71 +1,37 @@
 <script lang="ts" setup>
-	import { computed, onMounted, ref, watch } from 'vue'
+	import { computed, ref } from 'vue'
 	import { VMessages } from 'vuetify/components'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { useSyCheckBoxGroupValidation } from './composables/useSyCheckBoxGroupValidation'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import { locales } from './locales'
-	import type { Option } from './types'
+	import type { SyCheckBoxGroupProps } from './types'
 
 	const props = withDefaults(
-		defineProps<{
-			ariaLabel?: string
-			ariaLabelledby?: string
-			color?: string
-			customRules?: ValidationRule[]
-			customSuccessRules?: ValidationRule[]
-			customWarningRules?: ValidationRule[]
-			density?: 'default' | 'comfortable' | 'compact'
-			disabled?: boolean
-			disableErrorHandling?: boolean
-			displayAsterisk?: boolean
-			errorMessages?: string[] | null
-			hideDetails?: boolean | 'auto'
-			id?: string
-			isValidateOnBlur?: boolean
-			label?: string
-			modelValue?: (string | number) | (string | number)[] | null
-			multiple?: boolean
-			name?: string
-			options?: Option[]
-			readonly?: boolean
-			required?: boolean
-			showSuccessMessages?: boolean
-			successMessages?: string[] | null
-			title?: string
-			warningMessages?: string[] | null
-		}>(),
+		defineProps<SyCheckBoxGroupProps>(),
 		{
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			color: 'primary',
-			customRules: () => [],
-			customSuccessRules: () => [],
-			customWarningRules: () => [],
 			density: 'default',
-			disabled: false,
-			disableErrorHandling: false,
 			displayAsterisk: false,
-			errorMessages: null,
 			hideDetails: 'auto',
 			id: undefined,
-			isValidateOnBlur: false,
 			label: undefined,
 			modelValue: null,
 			multiple: false,
 			name: undefined,
 			options: () => [],
-			readonly: false,
-			required: false,
-			showSuccessMessages: false,
-			successMessages: null,
 			title: undefined,
-			warningMessages: null,
+			...validationPropsDefaults,
+			isValidateOnBlur: false,
 		},
 	)
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 
+	const focused = ref(false)
 	const isMultiple = computed(() => props.multiple)
 
 	const model = computed({
@@ -80,29 +46,17 @@
 
 	const generatedLabel = computed(() => (props.label || '') + (props.displayAsterisk ? '*' : ''))
 
-	const isSubmitted = ref(false)
-
-	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label,
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
-	watch(() => props.errorMessages, value => (validation.errors.value = value || []), { immediate: true })
-	watch(() => props.warningMessages, value => (validation.warnings.value = value || []), { immediate: true })
-	watch(() => props.successMessages, value => (validation.successes.value = value || []), { immediate: true })
-
-	const defaultRules = computed<ValidationRule[]>(() =>
-		props.required
-			? [{
-				type: 'required',
-				options: {
-					message: `Le champ ${props.label || 'ce champ'} est requis.`,
-					fieldIdentifier: props.label,
-				},
-			}]
-			: [],
-	)
+	// Utilisation du composable de validation unifié
+	const {
+		validateOnSubmit,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+		defaultRules,
+	} = useSyCheckBoxGroupValidation(props, model, focused)
 
 	function isOptionChecked(value: string | number): boolean {
 		if (isMultiple.value) {
@@ -125,57 +79,7 @@
 		model.value = model.value === value ? null : value
 	}
 
-	function getValidationValue(): (string | number) | (string | number)[] | null {
-		if (isMultiple.value) {
-			return Array.isArray(model.value) ? model.value : []
-		}
-		return model.value as (string | number) | null
-	}
-
-	const validateField = async (value: (string | number) | (string | number)[] | null) => {
-		if (props.readonly) {
-			validation.clearValidation()
-			return true
-		}
-
-		if (!props.required && (value === null || (Array.isArray(value) && value.length === 0))) {
-			validation.clearValidation()
-			return true
-		}
-
-		const result = await validation.validateField(
-			value,
-			[...defaultRules.value, ...props.customRules],
-			props.customWarningRules,
-			props.customSuccessRules,
-		)
-		return !result.hasError
-	}
-
-	const validateOnSubmit = async () => {
-		isSubmitted.value = true
-		return await validateField(getValidationValue())
-	}
-
-	const checkErrorOnBlur = () => {
-		validateField(getValidationValue())
-	}
-
-	watch(model, async (newValue) => {
-		if (!props.isValidateOnBlur || isSubmitted.value) {
-			await validateField(newValue as (string | number) | (string | number)[] | null)
-		}
-	})
-
-	const hasError = computed(() => validation.hasError.value)
-	const hasWarning = computed(() => validation.hasWarning.value)
-	const hasSuccess = computed(() => validation.hasSuccess.value)
-
 	const checkboxColor = computed(() => (hasError.value ? 'error' : props.color))
-
-	const errors = computed(() => validation.errors.value)
-	const warnings = computed(() => validation.warnings.value)
-	const displaySuccesses = computed(() => validation.displaySuccesses.value)
 
 	const labelId = computed(() => (props.id ? `${props.id}-label` : undefined))
 	const computedAriaLabelledby = computed(() => {
@@ -204,18 +108,12 @@
 		return ids.length > 0 ? ids.join(' ') : undefined
 	})
 
-	onMounted(() => {
-		if (!props.isValidateOnBlur && !props.required) {
-			validateField(getValidationValue())
-		}
-	})
-
+	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)
 
 	defineExpose({
-		validation,
 		validateOnSubmit,
-		checkErrorOnBlur,
+		defaultRules,
 	})
 </script>
 
@@ -257,7 +155,8 @@
 				:hide-details="props.hideDetails"
 				:density="props.density"
 				@update:model-value="() => toggleOption(opt.value)"
-				@blur="checkErrorOnBlur"
+				@focus="focused = true"
+				@blur="focused = false"
 			/>
 		</div>
 
@@ -267,8 +166,8 @@
 		>
 			<VMessages
 				ref="messagesRef"
-				:active="hasError || hasWarning || (hasSuccess && displaySuccesses.length > 0)"
-				:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? displaySuccesses : []))"
+				:active="hasError || hasWarning || (hasSuccess && successes.length > 0)"
+				:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			/>
 		</div>
 

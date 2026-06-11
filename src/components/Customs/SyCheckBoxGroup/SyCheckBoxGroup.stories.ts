@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
-import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
+import SyCheckBoxGroup from './SyCheckBoxGroup.vue'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { VBtn } from 'vuetify/components'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import type { SyCheckBoxGroupProps } from './types'
 
 const meta: Meta<typeof SyCheckBoxGroup> = {
 	title: 'Composants/Formulaires/SyCheckBoxGroup',
@@ -16,32 +18,64 @@ const meta: Meta<typeof SyCheckBoxGroup> = {
 		layout: 'fullscreen',
 		docs: {
 			description: {
-				component: 'SyCheckBoxGroup est un composant de groupe de cases à cocher basé sur SyCheckbox.',
+				component: `
+SyCheckBoxGroup est un composant de groupe de cases à cocher.
+Il permet de choisir **une ou plusieurs valeurs** parmi une liste d'options.
+			`,
 			},
 		},
 	},
 	argTypes: {
-		'modelValue': { control: false },
-		'onUpdate:modelValue': { action: 'update:modelValue' },
-		'onChange': { action: 'change' },
-		'label': { control: 'text' },
-		'displayAsterisk': { control: 'boolean' },
-		'disabled': { control: 'boolean' },
-		'readonly': { control: 'boolean' },
-		'required': { control: 'boolean' },
-		'multiple': { control: 'boolean' },
-		'hideDetails': { control: 'boolean' },
-		'density': {
+		...getValidationDocumentation(),
+		modelValue: { control: false },
+		label: {
+			description: 'Label du groupe',
+			control: 'text',
+		},
+		options: {
+			description: 'Liste des options du checkbox-group',
+			control: 'object',
+		},
+		color: {
+			control: 'select',
+			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			description: 'Couleur du groupe',
+		},
+		density: {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité du groupe',
 		},
-		'options': { control: 'object' },
+		displayAsterisk: {
+			description: 'Affiche un astérisque pour les champs requis',
+			control: 'boolean',
+		},
+		multiple: {
+			description: 'Permet la sélection multiple (tableau)',
+			control: 'boolean',
+		},
+		ariaLabel: {
+			description: 'Label ARIA pour les lecteurs d\'écran',
+			control: 'text',
+		},
+		ariaLabelledby: {
+			description: 'ID d\'un élément qui labelise le groupe',
+			control: 'text',
+		},
+		title: {
+			description: 'Attribut title du groupe',
+			control: 'text',
+		},
+		name: {
+			description: 'Nom du groupe (attribut name)',
+			control: 'text',
+		},
 	},
 }
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<SyCheckBoxGroupProps>
 
 const baseOptions = [
 	{ label: 'Option A', value: 'a' },
@@ -230,6 +264,71 @@ export const Required: Story = {
 				<div class="mt-2">Sélection : {{ value }}</div>
 				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
 			</SyForm>
+		`,
+	}),
+}
+
+export const RequiredWithAsterisk: Story = {
+	args: {
+		label: 'Champ obligatoire',
+		required: true,
+		displayAsterisk: true,
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+		],
+		multiple: false,
+	},
+
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Affichage de l'astérisque
+Ce story démontre l'affichage d'un astérisque (*) sur le label pour indiquer qu'un champ est obligatoire.
+			`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<SyCheckBoxGroup
+	v-model="selected"
+	label="Champ obligatoire"
+	:options="options"
+	required
+	display-asterisk
+/>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup } from '@cnamts/synapse'
+
+const selected = ref<string | null>(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+</script>`,
+			},
+		],
+	},
+
+	render: args => ({
+		components: { SyCheckBoxGroup },
+		setup() {
+			const selected = ref<string | null>(null)
+			return { args, selected }
+		},
+		template: `
+			<SyCheckBoxGroup
+				v-model="selected"
+				v-bind="args"
+			/>
 		`,
 	}),
 }
@@ -760,23 +859,38 @@ export const Readonly: Story = {
 	},
 }
 
-export const CustomRules: Story = {
+export const EventShowcase: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: `
+### Événements
+Ce story démontre les événements émis par le composant :
+- **update:modelValue** : Émis lorsque la valeur change
+- **change** : Émis lorsque la sélection change
+			`,
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
-					<template>
-						<SyCheckBoxGroup
-							v-model="selected"
-							:options="options"
-							label="Options"
-							:custom-warning-rules="warningRules"
-							:custom-success-rules="successRules"
-							:is-validate-on-blur="false"
-						/>
-					</template>
-				`,
+<template>
+	<div>
+		<SyCheckBoxGroup
+			v-model="selected"
+			label="Sélectionnez une ou plusieurs options"
+			:options="options"
+			:multiple="multiple"
+			@update:model-value="onUpdate"
+			@change="onChange"
+		/>
+		<div class="mt-4">
+			<p>Valeur sélectionnée : {{ selected }}</p>
+			<p>Dernier événement : {{ lastEvent }}</p>
+		</div>
+	</div>
+</template>`,
 			},
 			{
 				name: 'Script',
@@ -784,38 +898,25 @@ export const CustomRules: Story = {
 import { ref } from 'vue'
 import { SyCheckBoxGroup } from '@cnamts/synapse'
 
-const selected = ref<string | null>('A')
+const selected = ref<string | null>(null)
+const lastEvent = ref('')
+const multiple = ref(true)
 
 const options = [
-	{ label: 'Option A', value: 'A' },
-	{ label: 'Option B', value: 'B' },
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+	{ label: 'Option C', value: 'c' },
 ]
 
-const warningRules = [
-	{
-		type: 'custom',
-		options: {
-			validate: (value: string | null) => {
-				if (value !== 'A') {
-					return 'Vous devez sélectionner l’option A'
-				}
-				return true
-			},
-			fieldIdentifier: 'option',
-		},
-	},
-]
+const onUpdate = (value: string | null) => {
+	lastEvent.value = \`update:modelValue: \${value}\`
+	console.log('update:modelValue', value)
+}
 
-const successRules = [
-	{
-		type: 'custom',
-		options: {
-			validate: (value: string | null) => value === 'A',
-			successMessage: 'Option A sélectionnée',
-			fieldIdentifier: 'option',
-		},
-	},
-]
+const onChange = (value: string | null) => {
+	lastEvent.value = \`change: \${value}\`
+	console.log('change', value)
+}
 </script>`,
 			},
 		],
@@ -824,44 +925,126 @@ const successRules = [
 	render: args => ({
 		components: { SyCheckBoxGroup },
 		setup() {
-			const selected = ref<string | null>('A')
+			const selected = ref<(string | number) | (string | number)[] | null>(null)
+			const lastEvent = ref('Aucun événement')
+			const multiple = ref(true)
+
 			const options = [
-				{ label: 'Option A', value: 'A' },
-				{ label: 'Option B', value: 'B' },
+				{ label: 'Option A', value: 'a' },
+				{ label: 'Option B', value: 'b' },
+				{ label: 'Option C', value: 'c' },
 			]
-			const warningRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | null) => {
-							if (value !== 'A') {
-								return 'Vous devez sélectionner l’option A'
-							}
-							return true
-						},
-					},
-				},
-			]
-			const successRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string | null) => value === 'A',
-						successMessage: 'Option A sélectionnée',
-					},
-				},
-			]
-			return { args, selected, options, warningRules, successRules }
+
+			const onUpdate = (value: (string | number) | (string | number)[] | null) => {
+				lastEvent.value = `update:modelValue: ${JSON.stringify(value)}`
+			}
+
+			const onChange = (value: (string | number) | (string | number)[] | null) => {
+				lastEvent.value = `change: ${JSON.stringify(value)}`
+			}
+
+			return { args, selected, options, multiple, lastEvent, onUpdate, onChange }
 		},
 		template: `
-			<SyCheckBoxGroup
-				v-model="selected"
-				label="Options"
-				:options="options"
-				:custom-warning-rules="warningRules"
-				:custom-success-rules="successRules"
-				:is-validate-on-blur="false"
-			/>
+			<div>
+				<SyCheckBoxGroup
+					v-model="selected"
+					label="Sélectionnez une ou plusieurs options"
+					:options="options"
+					:multiple="multiple"
+					@update:model-value="onUpdate"
+					@change="onChange"
+				/>
+				<div class="mt-4 pa-4 bg-grey-lighten-4 rounded">
+					<p><strong>Valeur sélectionnée :</strong> {{ selected || 'Aucune' }}</p>
+					<p><strong>Dernier événement :</strong> {{ lastEvent }}</p>
+				</div>
+			</div>
+		`,
+	}),
+}
+
+export const HideDetails: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### hideDetails
+Contrôle l'affichage de la zone de messages sous le champ.
+
+| Valeur | Comportement |
+|--------|-------------|
+| \`'auto'\` (défaut) | Zone affichée uniquement si un message est présent |
+| \`false\` | Zone toujours affichée (espace réservé même sans message) |
+| \`true\` | Zone toujours masquée |
+			`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm @submit="onSubmit">
+		<p>hide-details="auto" (défaut)</p>
+		<SyCheckBoxGroup v-model="selected" label="Option" :options="options" required hide-details="auto" />
+
+		<p>:hide-details="false" (espace toujours réservé)</p>
+		<SyCheckBoxGroup v-model="selected" label="Option" :options="options" required :hide-details="false" />
+
+		<p>:hide-details="true" (messages jamais affichés)</p>
+		<SyCheckBoxGroup v-model="selected" label="Option" :options="options" required :hide-details="true" />
+
+		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+const onSubmit = (event: { isValid: boolean }) => {
+	if (event.isValid) alert('Formulaire valide !')
+}
+</script>`,
+			},
+		],
+	},
+
+	render: () => ({
+		components: { SyCheckBoxGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+			const options = [
+				{ label: 'Option A', value: 'a' },
+				{ label: 'Option B', value: 'b' },
+			]
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) alert('Formulaire valide !')
+			}
+			return { selected, options, onSubmit }
+		},
+		template: `
+			<SyForm @submit="onSubmit">
+				<p class="mb-1 text-body-2">hide-details="auto" (défaut)</p>
+				<SyCheckBoxGroup v-model="selected" label="Choisissez une option" :options="options" required hide-details="auto" />
+
+				<p class="mt-4 mb-1 text-body-2">:hide-details="false" (espace toujours réservé)</p>
+				<SyCheckBoxGroup v-model="selected" label="Choisissez une option" :options="options" required :hide-details="false" />
+
+				<p class="mt-4 mb-1 text-body-2">:hide-details="true" (messages jamais affichés)</p>
+				<SyCheckBoxGroup v-model="selected" label="Choisissez une option" :options="options" required :hide-details="true" />
+
+				<VBtn type="submit" class="mt-6" color="primary">Valider</VBtn>
+			</SyForm>
 		`,
 	}),
 }
