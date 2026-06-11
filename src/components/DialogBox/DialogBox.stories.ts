@@ -958,7 +958,6 @@ export const Custom: Story = {
 
 				const closeDialog = () => {
 					dialogOpen.value = false
-					// Réinitialiser après l'animation de fermeture (300ms par défaut dans Vuetify)
 					setTimeout(() => {
 						currentStep.value = 0
 					}, 300)
@@ -1052,5 +1051,133 @@ export const Custom: Story = {
                 </div>
             `,
 		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <VBtn
+        color="primary"
+        @click="dialogOpen = !dialogOpen"
+    >
+        Ouvrir le tutoriel
+    </VBtn>
+    
+    <DialogBox
+        v-model="dialogOpen"
+        title="Tutoriel"
+        hide-actions
+        width="800px"
+    >
+        <div class="d-flex flex-column">
+            <!-- Progress dots -->
+            <div class="d-flex align-center mb-4">
+                <span
+                    v-for="(step, index) in steps"
+                    :key="index"
+                    class="mx-1"
+                    :style="{
+                        width: '14px',
+                        height: '14px',
+                        borderRadius: '50%',
+                        border: '2px solid rgb(var(--v-theme-primary))',
+                        backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))'
+                    }"
+                />
+                <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
+            </div>
+
+            <!-- Image -->
+            <img
+                :src="steps[currentStep].img"
+                :alt="steps[currentStep].title"
+                class="mb-4 mx-auto"
+                style="max-width: 100%; height: auto; max-height: 300px;"
+            >
+
+            <!-- Title -->
+            <h3 class="text-h5 font-weight-bold mb-4">
+                {{ steps[currentStep].title }}
+            </h3>
+
+            <!-- Content -->
+            <p class="mb-6">
+                {{ steps[currentStep].content }}
+            </p>
+
+            <!-- Actions -->
+            <div class="d-flex justify-space-between align-center mt-auto">
+                <VBtn
+                    color="primary"
+                    @click="handleNextOrFinish"
+                >
+                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
+                </VBtn>
+
+                <VBtn
+                    variant="text"
+                    color="primary"
+                    @click="skipTutorial"
+                >
+                    Passer
+                </VBtn>
+            </div>
+        </div>
+    </DialogBox>
+</template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+    import { DialogBox } from '@cnamts/synapse'
+    import { VBtn } from 'vuetify/components'
+    import { ref, computed } from 'vue'
+
+    const dialogOpen = ref(false)
+    const currentStep = ref(0)
+    
+    const steps = [
+        {
+            title: 'Étape 1 : Bienvenue',
+            content: 'Dans cet espace, vous allez pouvoir découvrir les fonctionnalités principales de l\\'application. Suivez ce tutoriel pour apprendre à utiliser tous les outils disponibles.',
+            img: 'https://picsum.photos/400/300?random=1',
+        },
+        {
+            title: 'Étape 2 : Navigation',
+            content: 'Utilisez le menu de navigation pour accéder aux différentes sections. Vous pouvez également utiliser les raccourcis clavier pour une navigation plus rapide.',
+            img: 'https://picsum.photos/400/300?random=2',
+        },
+        {
+            title: 'Étape 3 : Terminé',
+            content: 'Vous êtes maintenant prêt à utiliser l\\'application ! N\\'hésitez pas à consulter la documentation pour plus d\\'informations.',
+            img: 'https://picsum.photos/400/300?random=3',
+        },
+    ]
+
+    const handleNextOrFinish = () => {
+        if (currentStep.value < steps.length - 1) {
+            currentStep.value++
+        }
+        else {
+            closeDialog()
+        }
+    }
+
+    const closeDialog = () => {
+        dialogOpen.value = false
+        setTimeout(() => {
+            currentStep.value = 0
+        }, 300)
+    }
+
+    const skipTutorial = () => {
+        closeDialog()
+    }
+</script>
+                `,
+			},
+		],
 	},
 }
