@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { computed, ref, toRef, watch } from 'vue'
-	import { mdiPhone, mdiClose } from '@mdi/js'
+	import { mdiPhone, mdiCloseCircle } from '@mdi/js'
 	import { locales as defaultLocales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -71,7 +71,6 @@
 		hasSuccess,
 		state,
 		iconColor,
-		clearButtonColorClass,
 		validate,
 		clearValidation,
 	} = usePhoneFieldValidation({
@@ -207,18 +206,23 @@
 				>
 					<template #append-inner>
 						<div class="d-flex align-center">
-							<VBtn
+							<button
 								v-if="showClear"
-								class="v-btn v-btn--density-compact mr-1"
-								:class="clearButtonColorClass"
+								type="button"
+								class="phone-field__clear-button mr-1"
 								:aria-label="props.label ? locales.clearButtonAriaLabelWithField(props.label) : locales.clearButtonAriaLabel"
 								:title="props.label ? locales.clearButtonTitleWithField(props.label) : locales.clearButtonTitle"
-								:icon="mdiClose"
-								variant="text"
 								@click.stop="clearField"
 								@keydown.enter.stop
 								@keydown.space.stop
-							/>
+							>
+								<SyIcon
+									class="phone-field__clear-icon"
+									:icon="mdiCloseCircle"
+									:decorative="true"
+									width="24"
+								/>
+							</button>
 							<FieldState
 								:state="state"
 							/>
@@ -334,5 +338,28 @@
 	&.text-disabled {
 		opacity: 0.38;
 	}
+}
+
+.phone-field__clear-button {
+	background: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.v-icon {
+		position: static;
+	}
+}
+
+.phone-field__clear-icon {
+	color: rgb(var(--v-theme-onSurface)) !important;
+	opacity: var(--v-medium-emphasis-opacity) !important;
+}
+
+:deep(.phone-field__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-onSurface)) !important;
 }
 </style>

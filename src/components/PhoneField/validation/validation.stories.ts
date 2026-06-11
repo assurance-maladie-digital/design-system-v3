@@ -250,87 +250,6 @@ onMounted(() => {
 	}),
 }
 
-export const NoSuccessMessage: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: 'Avec `showSuccessMessages: false`, l\'état visuel de succès reste actif (bordure verte, icône) mais le message texte n\'est pas affiché. Utile quand un retour positif silencieux est suffisant.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <PhoneField
-    ref="phoneRef"
-    v-model="phone"
-    :show-success-messages="false"
-    :customSuccessRules="[
-      {
-        type: 'custom',
-        options: {
-			validate: (value) => value.replace(/\\s/g, '').length === 10,
-			successMessage: 'Numéro de téléphone valide.'
-        }
-      }
-    ]"
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { PhoneField } from '@cnamts/synapse'
-
-const phone = ref('0612345678')
-const phoneRef = ref(null)
-
-onMounted(() => {
-  phoneRef.value?.validateOnSubmit()
-})
-</script>`,
-			},
-		],
-	},
-	args: {
-		showSuccessMessages: false,
-	} as Record<string, unknown>,
-	render: args => ({
-		components: { PhoneField },
-		setup() {
-			const phone = ref('0612345678')
-			const phoneRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-
-			onMounted(() => {
-				phoneRef.value?.validateOnSubmit()
-			})
-
-			return { args, phone, phoneRef }
-		},
-		template: `
-			<div class="pa-4">
-				<PhoneField
-					ref="phoneRef"
-					v-model="phone"
-					v-bind="args"
-					:customSuccessRules="[
-						{
-							type: 'custom',
-							options: {
-								validate: (value) => value.replace(/ /g, '').length === 10,
-								successMessage: 'Numéro de téléphone valide.'
-							}
-						}
-					]"
-				/>
-			</div>
-		`,
-	}),
-}
-
 export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
@@ -347,11 +266,19 @@ export const NoValidateOnBlur: Story = {
     <PhoneField
       v-model="phone"
       :is-validate-on-blur="false"
+      :show-success-messages="true"
       :custom-rules="[{
         type: 'custom',
         options: {
           validate: (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')),
           message: 'Le numéro de téléphone n\\'est pas valide.'
+        }
+      }]"
+      :custom-success-rules="[{
+        type: 'custom',
+        options: {
+          validate: (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')),
+          successMessage: 'Numéro de téléphone valide.'
         }
       }]"
     />
@@ -378,6 +305,7 @@ const phone = ref('')
 	},
 	args: {
 		isValidateOnBlur: false,
+		showSuccessMessages: true,
 	} as Record<string, unknown>,
 	render: args => ({
 		components: { PhoneField, VBtn },
@@ -395,6 +323,13 @@ const phone = ref('')
 						options: {
 							validate: (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')),
 							message: 'Le numéro de téléphone n\\'est pas valide.'
+						}
+					}]"
+					:custom-success-rules="[{
+						type: 'custom',
+						options: {
+							validate: (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')),
+							successMessage: 'Numéro de téléphone valide.'
 						}
 					}]"
 				/>
