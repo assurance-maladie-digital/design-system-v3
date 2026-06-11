@@ -911,7 +911,7 @@ export const Draggable: Story = {
 	},
 }
 
-export const Custom: Story = {
+export const Tutoriel: Story = {
 	args: {
 		'headingLevel': 2,
 		'modelValue': false,
@@ -994,23 +994,6 @@ export const Custom: Story = {
                         @update:modelValue="handleUpdateModelValue"
                     >
                         <div class="d-flex flex-column">
-                            <!-- Progress dots -->
-                            <div class="d-flex align-center mb-4">
-                                <span
-                                    v-for="(step, index) in steps"
-                                    :key="index"
-                                    class="mx-1"
-                                    :style="{
-                                        width: '14px',
-                                        height: '14px',
-                                        borderRadius: '50%',
-                                        border: '2px solid rgb(var(--v-theme-primary))',
-                                        backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))'
-                                    }"
-                                />
-                                <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
-                            </div>
-
                             <!-- Image -->
                             <img
                                 :src="steps[currentStep].img"
@@ -1030,20 +1013,47 @@ export const Custom: Story = {
                             </p>
 
                             <!-- Actions -->
-                            <div class="d-flex justify-space-between align-center mt-auto">
-                                <VBtn
-                                    color="primary"
-                                    @click="handleNextOrFinish"
-                                >
-                                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
-                                </VBtn>
-
+                            <div
+                                class="align-center mt-auto"
+                                style="display: grid; grid-template-columns: 1fr auto 1fr;"
+                            >
                                 <VBtn
                                     variant="text"
                                     color="primary"
+                                    style="justify-self: start;"
                                     @click="skipTutorial"
                                 >
                                     Passer
+                                </VBtn>
+
+                                <!-- Progress dots -->
+                                <div class="d-flex align-center justify-center">
+                                    <span
+                                        v-for="(step, index) in steps"
+                                        :key="index"
+                                        class="mx-1"
+                                        role="button"
+                                        :aria-label="'Aller à l\\'étape ' + (index + 1)"
+                                        :aria-current="currentStep === index"
+                                        @click="currentStep = index"
+                                        :style="{
+                                            width: '14px',
+                                            height: '14px',
+                                            borderRadius: '50%',
+                                            border: '2px solid rgb(var(--v-theme-primary))',
+                                            backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))',
+                                            cursor: 'pointer'
+                                        }"
+                                    />
+                                    <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
+                                </div>
+
+                                <VBtn
+                                    color="primary"
+                                    style="justify-self: end;"
+                                    @click="handleNextOrFinish"
+                                >
+                                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
                                 </VBtn>
                             </div>
                         </div>
@@ -1071,23 +1081,6 @@ export const Custom: Story = {
         width="800px"
     >
         <div class="d-flex flex-column">
-            <!-- Progress dots -->
-            <div class="d-flex align-center mb-4">
-                <span
-                    v-for="(step, index) in steps"
-                    :key="index"
-                    class="mx-1"
-                    :style="{
-                        width: '14px',
-                        height: '14px',
-                        borderRadius: '50%',
-                        border: '2px solid rgb(var(--v-theme-primary))',
-                        backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))'
-                    }"
-                />
-                <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
-            </div>
-
             <!-- Image -->
             <img
                 :src="steps[currentStep].img"
@@ -1107,20 +1100,47 @@ export const Custom: Story = {
             </p>
 
             <!-- Actions -->
-            <div class="d-flex justify-space-between align-center mt-auto">
-                <VBtn
-                    color="primary"
-                    @click="handleNextOrFinish"
-                >
-                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
-                </VBtn>
-
+            <div
+                class="align-center mt-auto"
+                style="display: grid; grid-template-columns: 1fr auto 1fr;"
+            >
                 <VBtn
                     variant="text"
                     color="primary"
+                    style="justify-self: start;"
                     @click="skipTutorial"
                 >
                     Passer
+                </VBtn>
+
+                <!-- Progress dots -->
+                <div class="d-flex align-center justify-center">
+                    <span
+                        v-for="(step, index) in steps"
+                        :key="index"
+                        class="mx-1"
+                        role="button"
+                        :aria-label="'Aller à l\\'étape ' + (index + 1)"
+                        :aria-current="currentStep === index"
+                        @click="currentStep = index"
+                        :style="{
+                            width: '14px',
+                            height: '14px',
+                            borderRadius: '50%',
+                            border: '2px solid rgb(var(--v-theme-primary))',
+                            backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))',
+                            cursor: 'pointer'
+                        }"
+                    />
+                    <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
+                </div>
+
+                <VBtn
+                    color="primary"
+                    style="justify-self: end;"
+                    @click="handleNextOrFinish"
+                >
+                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
                 </VBtn>
             </div>
         </div>
