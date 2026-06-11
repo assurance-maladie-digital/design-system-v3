@@ -32,7 +32,6 @@ describe('PhoneField – accessibility (axe)', () => {
 				modelValue: '',
 				required: true,
 				withCountryCode: true,
-				countryCodeRequired: true,
 			},
 			attachTo: document.body,
 		})
