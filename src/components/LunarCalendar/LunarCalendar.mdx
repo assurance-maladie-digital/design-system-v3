@@ -17,17 +17,14 @@ import * as LunarCalendarStories from './LunarCalendar.stories';
 
 # Exemples d'utilisation
 
-## Avec contraintes d'années
+## Champ requis
 
-<Canvas of={LunarCalendarStories.WithYearConstraints} />
+<Canvas of={LunarCalendarStories.Required} />
 
-Limitation de la saisie entre deux années spécifiques.
+## Avec bouton de suppression
 
-## Avec année minimale seulement
+<Canvas of={LunarCalendarStories.WithClearable} />
 
-<Canvas of={LunarCalendarStories.WithMinYearOnly} />
+## Avec texte d'aide
 
-## Avec année maximale seulement
-
-<Canvas of={LunarCalendarStories.WithMaxYearOnly} />
-
+<Canvas of={LunarCalendarStories.HelpText} />

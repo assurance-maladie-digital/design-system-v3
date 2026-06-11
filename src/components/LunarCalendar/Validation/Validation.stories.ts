@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch, onMounted } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
+import { fn } from '@storybook/test'
 import LunarCalendar from '../LunarCalendar.vue'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
@@ -33,20 +34,21 @@ const meta = {
 		},
 	},
 	args: {
-		modelValue: '',
-		label: 'Date de naissance',
-		required: false,
-		errorMessages: null,
-		warningMessages: null,
-		successMessages: null,
-		readonly: false,
-		disabled: false,
-		customRules: [],
-		customWarningRules: [],
-		customSuccessRules: [],
-		isValidateOnBlur: true,
+		'modelValue': '',
+		'label': 'Date de naissance',
+		'required': false,
+		'errorMessages': null,
+		'warningMessages': null,
+		'successMessages': null,
+		'readonly': false,
+		'disabled': false,
+		'customRules': [],
+		'customWarningRules': [],
+		'customSuccessRules': [],
+		'isValidateOnBlur': true,
+		'onUpdate:modelValue': fn(),
 	},
-} satisfies Meta<typeof LunarCalendar>
+} as Meta<typeof LunarCalendar>
 
 export default meta
 
