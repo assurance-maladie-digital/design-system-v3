@@ -32,7 +32,7 @@
 </template>
 <style scoped lang="scss">
 .field-state-icon :deep(.v-icon__svg) {
-	opacity: var(--v-medium-emphasis-opacity);
+	opacity: 1;
 }
 
 .success-icon :deep(.v-icon__svg) {
