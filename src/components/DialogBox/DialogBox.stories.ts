@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/vue3'
 import { VBtn } from 'vuetify/components'
 import DialogBox from './DialogBox.vue'
 import { fn } from '@storybook/test'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const meta: Meta<typeof DialogBox> = {
 	title: 'Composants/Feedback/DialogBox',
@@ -906,6 +906,297 @@ export const Draggable: Story = {
 					const dialogOpen = ref(false)
 				</script>
 				`,
+			},
+		],
+	},
+}
+
+export const Tutoriel: Story = {
+	args: {
+		'headingLevel': 2,
+		'modelValue': false,
+		'title': 'Tutoriel',
+		'hideActions': true,
+		'width': '800px',
+		'onCancel': fn(),
+		'onConfirm': fn(),
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DialogBox, VBtn },
+			setup() {
+				const dialogOpen = ref(false)
+				const currentStep = ref(0)
+				const steps = [
+					{
+						title: 'Étape 1 : Bienvenue',
+						content: 'Dans cet espace, vous allez pouvoir découvrir les fonctionnalités principales de l\'application. Suivez ce tutoriel pour apprendre à utiliser tous les outils disponibles.',
+						img: 'https://picsum.photos/400/300?random=1',
+					},
+					{
+						title: 'Étape 2 : Navigation',
+						content: 'Utilisez le menu de navigation pour accéder aux différentes sections. Vous pouvez également utiliser les raccourcis clavier pour une navigation plus rapide.',
+						img: 'https://picsum.photos/400/300?random=2',
+					},
+					{
+						title: 'Étape 3 : Terminé',
+						content: 'Vous êtes maintenant prêt à utiliser l\'application ! N\'hésitez pas à consulter la documentation pour plus d\'informations.',
+						img: 'https://picsum.photos/400/300?random=3',
+					},
+				]
+
+				const handleNextOrFinish = () => {
+					if (currentStep.value < steps.length - 1) {
+						currentStep.value++
+					}
+					else {
+						args.onConfirm?.()
+						closeDialog()
+					}
+				}
+
+				const closeDialog = () => {
+					dialogOpen.value = false
+					setTimeout(() => {
+						currentStep.value = 0
+					}, 300)
+				}
+
+				const skipTutorial = () => {
+					args.onCancel?.()
+					closeDialog()
+				}
+
+				const handleUpdateModelValue = (value: boolean) => {
+					dialogOpen.value = value
+					args['onUpdate:modelValue']?.(value)
+				}
+
+				const rest = computed(() => {
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					const { modelValue, 'onUpdate:modelValue': _, 'onCancel': __, 'onConfirm': ___, ...rest } = args
+					return rest
+				})
+
+				return { args, rest, dialogOpen, currentStep, steps, handleNextOrFinish, skipTutorial, handleUpdateModelValue }
+			},
+			template: `
+                <div class="pa-4">
+                    <VBtn
+                        @click="dialogOpen = !dialogOpen"
+                        color="primary"
+                    >Ouvrir le tutoriel</VBtn>
+                    
+                    <DialogBox
+                        v-bind="rest"
+                        v-model="dialogOpen"
+                        @update:modelValue="handleUpdateModelValue"
+                    >
+                        <div class="d-flex flex-column">
+                            <!-- Image -->
+                            <img
+                                :src="steps[currentStep].img"
+                                :alt="steps[currentStep].title"
+                                class="mb-4 mx-auto"
+                                style="max-width: 100%; height: auto; max-height: 300px;"
+                            >
+
+                            <!-- Title -->
+                            <h3 class="text-h5 font-weight-bold mb-4">
+                                {{ steps[currentStep].title }}
+                            </h3>
+
+                            <!-- Content -->
+                            <p class="mb-6">
+                                {{ steps[currentStep].content }}
+                            </p>
+
+                            <!-- Actions -->
+                            <div
+                                class="align-center mt-auto"
+                                style="display: grid; grid-template-columns: 1fr auto 1fr;"
+                            >
+                                <VBtn
+                                    variant="text"
+                                    color="primary"
+                                    style="justify-self: start;"
+                                    @click="skipTutorial"
+                                >
+                                    Passer
+                                </VBtn>
+
+                                <!-- Progress dots -->
+                                <div class="d-flex align-center justify-center">
+                                    <span
+                                        v-for="(step, index) in steps"
+                                        :key="index"
+                                        class="mx-1"
+                                        role="button"
+                                        :aria-label="'Aller à l\\'étape ' + (index + 1)"
+                                        :aria-current="currentStep === index"
+                                        @click="currentStep = index"
+                                        :style="{
+                                            width: '14px',
+                                            height: '14px',
+                                            borderRadius: '50%',
+                                            border: '2px solid rgb(var(--v-theme-primary))',
+                                            backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))',
+                                            cursor: 'pointer'
+                                        }"
+                                    />
+                                    <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
+                                </div>
+
+                                <VBtn
+                                    color="primary"
+                                    style="justify-self: end;"
+                                    @click="handleNextOrFinish"
+                                >
+                                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
+                                </VBtn>
+                            </div>
+                        </div>
+                    </DialogBox>
+                </div>
+            `,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <VBtn
+        color="primary"
+        @click="dialogOpen = !dialogOpen"
+    >
+        Ouvrir le tutoriel
+    </VBtn>
+    
+    <DialogBox
+        v-model="dialogOpen"
+        title="Tutoriel"
+        hide-actions
+        width="800px"
+    >
+        <div class="d-flex flex-column">
+            <!-- Image -->
+            <img
+                :src="steps[currentStep].img"
+                :alt="steps[currentStep].title"
+                class="mb-4 mx-auto"
+                style="max-width: 100%; height: auto; max-height: 300px;"
+            >
+
+            <!-- Title -->
+            <h3 class="text-h5 font-weight-bold mb-4">
+                {{ steps[currentStep].title }}
+            </h3>
+
+            <!-- Content -->
+            <p class="mb-6">
+                {{ steps[currentStep].content }}
+            </p>
+
+            <!-- Actions -->
+            <div
+                class="align-center mt-auto"
+                style="display: grid; grid-template-columns: 1fr auto 1fr;"
+            >
+                <VBtn
+                    variant="text"
+                    color="primary"
+                    style="justify-self: start;"
+                    @click="skipTutorial"
+                >
+                    Passer
+                </VBtn>
+
+                <!-- Progress dots -->
+                <div class="d-flex align-center justify-center">
+                    <span
+                        v-for="(step, index) in steps"
+                        :key="index"
+                        class="mx-1"
+                        role="button"
+                        :aria-label="'Aller à l\\'étape ' + (index + 1)"
+                        :aria-current="currentStep === index"
+                        @click="currentStep = index"
+                        :style="{
+                            width: '14px',
+                            height: '14px',
+                            borderRadius: '50%',
+                            border: '2px solid rgb(var(--v-theme-primary))',
+                            backgroundColor: currentStep === index ? 'rgb(var(--v-theme-primary))' : 'rgb(var(--v-theme-surface))',
+                            cursor: 'pointer'
+                        }"
+                    />
+                    <span class="ml-2">{{ currentStep + 1 }}/{{ steps.length }}</span>
+                </div>
+
+                <VBtn
+                    color="primary"
+                    style="justify-self: end;"
+                    @click="handleNextOrFinish"
+                >
+                    {{ currentStep < steps.length - 1 ? 'Suivant' : 'Commencer' }}
+                </VBtn>
+            </div>
+        </div>
+    </DialogBox>
+</template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+    import { DialogBox } from '@cnamts/synapse'
+    import { VBtn } from 'vuetify/components'
+    import { ref, computed } from 'vue'
+
+    const dialogOpen = ref(false)
+    const currentStep = ref(0)
+    
+    const steps = [
+        {
+            title: 'Étape 1 : Bienvenue',
+            content: 'Dans cet espace, vous allez pouvoir découvrir les fonctionnalités principales de l\\'application. Suivez ce tutoriel pour apprendre à utiliser tous les outils disponibles.',
+            img: 'https://picsum.photos/400/300?random=1',
+        },
+        {
+            title: 'Étape 2 : Navigation',
+            content: 'Utilisez le menu de navigation pour accéder aux différentes sections. Vous pouvez également utiliser les raccourcis clavier pour une navigation plus rapide.',
+            img: 'https://picsum.photos/400/300?random=2',
+        },
+        {
+            title: 'Étape 3 : Terminé',
+            content: 'Vous êtes maintenant prêt à utiliser l\\'application ! N\\'hésitez pas à consulter la documentation pour plus d\\'informations.',
+            img: 'https://picsum.photos/400/300?random=3',
+        },
+    ]
+
+    const handleNextOrFinish = () => {
+        if (currentStep.value < steps.length - 1) {
+            currentStep.value++
+        }
+        else {
+            closeDialog()
+        }
+    }
+
+    const closeDialog = () => {
+        dialogOpen.value = false
+        setTimeout(() => {
+            currentStep.value = 0
+        }, 300)
+    }
+
+    const skipTutorial = () => {
+        closeDialog()
+    }
+</script>
+                `,
 			},
 		],
 	},

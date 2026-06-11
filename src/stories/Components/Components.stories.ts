@@ -85,6 +85,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'Carousel',
+						description: 'Utilisé pour afficher un diaporama d\'images ou de contenu.',
+						link: '/?path=/docs/composants-composants-vuetify-vcarousel--docs',
+						img: `/components/carousel${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
 						title: 'Stepper',
 						description: 'Affiche la progression par étapes numérotées.',
 						link: '/?path=/docs/composants-composants-vuetify-vstepper--docs',
@@ -546,6 +553,7 @@ export const ComponentsList: StoryObj = {
 					'PasswordField',
 					'Stepper',
 					'Captcha',
+					'Carousel',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

@@ -11,13 +11,18 @@
 		mdiCloseCircle,
 		mdiAlertCircle,
 		mdiCalendar,
+		mdiChevronUp,
+		mdiChevronDown,
 	} from '@mdi/js'
 	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
 	import type { IconType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useSyTextFieldValidation } from './useSyTextFieldValidation'
+	import { useNumberField } from './useNumberField'
+	import { locales as defaultLocales } from './locales'
 	import type { SyTextFieldProps } from './types'
+	import FieldState from './FieldState.vue'
 
 	const props = withDefaults(
 		defineProps<SyTextFieldProps>(),
@@ -76,9 +81,13 @@
 			helpText: '',
 			maxlength: undefined,
 			title: undefined,
+			locales: () => ({}),
 			...validationPropsDefaults,
 		},
 	)
+
+	// Libellés d'accessibilité : valeurs par défaut surchargeables via la prop `locales`.
+	const locales = computed(() => ({ ...defaultLocales, ...props.locales }))
 
 	const ICONS: Record<NonNullable<IconType>, string> = {
 		info: mdiInformationOutline,
@@ -100,30 +109,7 @@
 		'blur',
 	])
 
-	const NUMBER_ALLOWED_CHARACTERS_PATTERN = /[^0-9eE+.-]/g
-	const NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9eE+.-]$/
-	const TEL_ALLOWED_CHARACTERS_PATTERN = /[^0-9+().\-\s]/g
-	const TEL_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9+().\-\s]$/
-
-	const sanitizeNumberValue = (value: string | number | null | undefined) => {
-		if (props.type !== 'number' || typeof value !== 'string') {
-			return value
-		}
-
-		return value.replace(NUMBER_ALLOWED_CHARACTERS_PATTERN, '')
-	}
-
-	const sanitizeTelValue = (value: string | number | null | undefined) => {
-		if (props.type !== 'tel' || typeof value !== 'string') {
-			return value
-		}
-
-		return value.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '')
-	}
-
-	const sanitizeTypedValue = (value: string | number | null | undefined) => {
-		return sanitizeTelValue(sanitizeNumberValue(value))
-	}
+	const attrs = useAttrs()
 
 	const lastEmittedModelValue = ref(props.modelValue)
 
@@ -138,9 +124,41 @@
 		},
 	})
 
-	const attrs = useAttrs()
+	// Logique propre au mode number (rendu en type=text, sanitization, incrément ↑/↓ + boutons).
+	const {
+		isNumberField,
+		nativeInputType,
+		sanitizeNumberValue,
+		isAllowedNumberCharacter,
+		hasDisallowedNumberCharacter,
+		stepValue,
+		handleStepKeydown,
+	} = useNumberField({
+		type: toRef(props, 'type'),
+		disabled: toRef(props, 'disabled'),
+		readonly: toRef(props, 'readonly'),
+		model,
+		attrs,
+	})
+
+	// Filtrage des caractères du mode "tel" (analogue au mode number géré par useNumberField).
+	const TEL_ALLOWED_CHARACTERS_PATTERN = /[^0-9+().\-\s]/g
+	const TEL_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9+().\-\s]$/
+
+	const sanitizeTelValue = (value: string | number | null | undefined) => {
+		if (props.type !== 'tel' || typeof value !== 'string') {
+			return value
+		}
+
+		return value.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '')
+	}
+
+	const sanitizeTypedValue = (value: string | number | null | undefined) => {
+		return sanitizeTelValue(sanitizeNumberValue(value))
+	}
+
 	const focused = ref(false)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, validationIcon, hasMessages } = useSyTextFieldValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, state, hasMessages } = useSyTextFieldValidation({
 		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -229,11 +247,15 @@
 			return
 		}
 
-		const allowedPattern = props.type === 'number'
-			? NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN
-			: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN
+		if (event.inputType === 'insertFromPaste') {
+			return
+		}
 
-		if (!allowedPattern.test(event.data)) {
+		const hasDisallowed = props.type === 'number'
+			? hasDisallowedNumberCharacter(event.data)
+			: event.data.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '') !== event.data
+
+		if (hasDisallowed) {
 			event.preventDefault()
 		}
 	}
@@ -253,14 +275,17 @@
 				'Home',
 				'End',
 			]
-			const allowedPattern = props.type === 'number'
-				? NUMBER_ALLOWED_SINGLE_CHARACTER_PATTERN
-				: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN
+			const isAllowedCharacter = props.type === 'number'
+				? isAllowedNumberCharacter(event.key)
+				: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN.test(event.key)
 
-			if (!allowedNonCharacterKeys.includes(event.key) && event.key.length === 1 && !allowedPattern.test(event.key)) {
+			if (!allowedNonCharacterKeys.includes(event.key) && event.key?.length === 1 && !isAllowedCharacter) {
 				event.preventDefault()
 			}
 		}
+
+		// type=number est rendu en type=text : l'incrément clavier ↑/↓ est délégué au composable.
+		handleStepKeydown(event)
 
 		emit('keydown', event)
 	}
@@ -560,8 +585,8 @@
 			:suffix="props.suffix"
 			:theme="props.theme"
 			:tile="props.isTiled"
-			:type="props.type"
-			:inputmode="props.type === 'number' ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
+			:type="nativeInputType"
+			:inputmode="isNumberField ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
 			:variant="props.variantStyle"
 			:width="props.width"
 			v-bind="forwardedAttrs"
@@ -670,7 +695,6 @@
 					<SyIcon
 						v-if="props.prependInnerIcon && !props.noIcon"
 						:icon="ICONS[props.prependInnerIcon]"
-						role="presentation"
 						:decorative="true"
 					/>
 					<VDivider
@@ -690,7 +714,7 @@
 						v-if="showClear"
 						class="v-btn v-btn--density-compact mr-1 sy-text-field__clear"
 						:class="clearButtonColorClass"
-						:aria-label="props.label ? `Vider ${props.label}` : 'Vider'"
+						:aria-label="locales.clear(props.label)"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
 						:icon="mdiCloseCircle"
 						variant="text"
@@ -699,19 +723,46 @@
 						@keydown.enter.stop
 						@keydown.space.stop
 					/>
-					<SyIcon
-						v-if="validationIcon && !props.appendInnerIcon"
-						:icon="validationIcon"
-						role="presentation"
-						:decorative="true"
+					<FieldState
+						v-if="!props.appendInnerIcon"
+						:state="state"
 					/>
 					<SyIcon
 						v-if="props.appendInnerIcon && !props.noIcon"
 						:color="iconColor"
-						role="presentation"
 						:icon="ICONS[props.appendInnerIcon]"
 						:decorative="true"
 					/>
+					<!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
+					<div
+						v-if="isNumberField && !props.areSpinButtonsHidden && !props.disabled && !props.readonly"
+						class="sy-text-field__spinner"
+					>
+						<button
+							type="button"
+							tabindex="-1"
+							class="sy-text-field__spinner-btn"
+							:aria-label="locales.increment(props.label)"
+							@click.stop="stepValue(1)"
+						>
+							<SyIcon
+								:icon="mdiChevronUp"
+								:decorative="true"
+							/>
+						</button>
+						<button
+							type="button"
+							tabindex="-1"
+							class="sy-text-field__spinner-btn"
+							:aria-label="locales.decrement(props.label)"
+							@click.stop="stepValue(-1)"
+						>
+							<SyIcon
+								:icon="mdiChevronDown"
+								:decorative="true"
+							/>
+						</button>
+					</div>
 				</slot>
 			</template>
 
@@ -725,7 +776,7 @@
 					indeterminate
 					rounded
 					:color="loaderColor"
-					:aria-label="props.label ? `Chargement de ${props.label}` : 'Chargement en cours'"
+					:aria-label="locales.loading(props.label)"
 				/>
 			</template>
 		</VTextField>
@@ -877,6 +928,36 @@
 :deep(.sy-text-field__clear .v-icon__svg),
 :deep(.v-field__clearable .v-icon__svg) {
 	fill: rgba(var(--v-theme-onSurface), 0.6) !important;
+}
+
+.sy-text-field__spinner {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	margin-left: 2px;
+}
+
+.sy-text-field__spinner-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 13px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: rgba(var(--v-theme-onSurface), 0.6);
+	cursor: pointer;
+}
+
+.sy-text-field__spinner-btn:hover {
+	color: rgb(var(--v-theme-primary));
+}
+
+.sy-text-field__spinner-btn :deep(.v-icon) {
+	width: 18px;
+	height: 18px;
+	font-size: 18px;
 }
 
 .sy-text-field__clear {
