@@ -10,6 +10,7 @@
 	const mask = '##/##/####'
 
 	const props = withDefaults(defineProps<LunarCalendarProps & FieldValidationProps>(), {
+		label: '',
 		maxYear: undefined,
 		minYear: undefined,
 		placeholder: undefined,
