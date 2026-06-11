@@ -99,7 +99,7 @@
 		showSuccessMessages: toRef(props, 'showSuccessMessages'),
 		disableErrorHandling: toRef(props, 'disableErrorHandling'),
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
-		label: computed(() => props.type === 'image' ? props.locales.image.textfieldLabel : props.locales.audio.textfieldLabel),
+		label: computed(() => type.value === 'image' ? props.locales.image.textfieldLabel : props.locales.audio.textfieldLabel),
 		rules: toRef(props, 'rules'),
 		customRules: toRef(props, 'customRules'),
 		customWarningRules: toRef(props, 'customWarningRules'),
@@ -195,7 +195,6 @@
 					:has-success="hasSuccess"
 					:show-success-messages="props.showSuccessMessages"
 					:required="props.required"
-					:is-validate-on-blur="props.isValidateOnBlur"
 					:max-errors="props.maxErrors"
 					:is-clearable="props.isClearable"
 					@update:model-value="emitChangeValueEvent"
@@ -300,7 +299,6 @@
 					:has-success="hasSuccess"
 					:show-success-messages="props.showSuccessMessages"
 					:required="props.required"
-					:is-validate-on-blur="props.isValidateOnBlur"
 					:max-errors="props.maxErrors"
 					:is-clearable="props.isClearable"
 					@update:model-value="emitChangeValueEvent"

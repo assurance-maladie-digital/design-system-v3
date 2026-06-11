@@ -1,7 +1,5 @@
-/* eslint-disable vue/one-component-per-file */
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { defineComponent } from 'vue'
 import Captcha from '../Captcha.vue'
 
 describe('Captcha', () => {
@@ -382,71 +380,42 @@ describe('Captcha', () => {
 	})
 
 	it('applies customSuccessRules and displays custom success message on blur', async () => {
-		const CaptchaBaseStub = defineComponent({
-			name: 'CaptchaBase',
-			template: `
-				<div>
-					<slot
-						name="audio"
-						:choose-image="() => {}"
-						:choose-audio="() => {}"
-						:toggle-audio="() => {}"
-						:url="''"
-						:state="'idle'"
-						:is-playing="false"
-						:is-error="false"
-						:error-message="null"
-					/>
-				</div>
-			`,
-		})
-
-		const CaptchaFormStub = defineComponent({
-			name: 'CaptchaForm',
-			props: {
-				customRules: { type: Array, default: () => [] },
-				customWarningRules: { type: Array, default: () => [] },
-				customSuccessRules: { type: Array, default: () => [] },
-			},
-			template: '<div class="captcha-form-stub" />',
-		})
-
-		const customRules = [{ type: 'custom', options: { validate: () => false, message: 'Erreur custom captcha' } }]
-		const customWarningRules = [{ type: 'custom', options: { validate: () => false, isWarning: true, warningMessage: 'Warning custom captcha' } }]
-		const customSuccessRules = [{ type: 'custom', options: { validate: () => true, successMessage: 'Succès custom captcha' } }]
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
 		const wrapper = mount(Captcha, {
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
 				urlGetAudio: '/captcha/captcha.mp3',
-				type: 'audio',
-				customRules,
-				customWarningRules,
-				customSuccessRules,
-			},
-			global: {
-				stubs: {
-					CaptchaInformation: true,
-					CaptchaBase: CaptchaBaseStub,
-					CaptchaImg: true,
-					CaptchaAlert: true,
-					CaptchaBtn: true,
-					CaptchaHelpdesk: true,
-					CaptchaForm: CaptchaFormStub,
-					volumeUp: true,
-					SyIcon: true,
-					VBtn: true,
-				},
+				modelValue: 'abc',
+				showSuccessMessages: true,
+				customSuccessRules: [{
+					type: 'custom',
+					options: {
+						validate: () => true,
+						successMessage: 'Succès custom captcha',
+					},
+				}],
 			},
 		})
 
 		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+		await new Promise(resolve => setTimeout(resolve, 50))
 
-		const form = wrapper.findComponent(CaptchaFormStub)
-		expect(form.exists()).toBe(true)
-		expect(form.props('customRules')).toEqual(customRules)
-		expect(form.props('customWarningRules')).toEqual(customWarningRules)
-		expect(form.props('customSuccessRules')).toEqual(customSuccessRules)
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.text()).toContain('Succès custom captcha')
 	})
 })
