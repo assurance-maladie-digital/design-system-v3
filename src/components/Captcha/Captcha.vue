@@ -115,8 +115,6 @@
 		locales: toRef(props, 'locales'),
 	})
 
-	const hasMessages = computed(() => hasError.value || hasWarning.value || hasSuccess.value)
-
 	function resetValidation() {
 		clearValidation()
 	}
@@ -188,6 +186,7 @@
 					:locales
 					:label="locales.image.textfieldLabel"
 					:state="createCaptchaState"
+					:loading="state === 'pending'"
 					:error-messages="errors"
 					:warning-messages="warnings"
 					:success-messages="successes"
@@ -198,7 +197,6 @@
 					:required="props.required"
 					:is-validate-on-blur="props.isValidateOnBlur"
 					:max-errors="props.maxErrors"
-					:loading="state === 'pending'"
 					:is-clearable="props.isClearable"
 					@update:model-value="emitChangeValueEvent"
 					@focus="onFocus"
@@ -291,24 +289,18 @@
 				<CaptchaForm
 					v-model="text"
 					:locales
-					:label="locales.audio.textfieldLabel"
+					:label="locales.image.textfieldLabel"
 					:state="createCaptchaState"
 					:loading="state === 'pending'"
-					:error-messages="hasMessages ? errors : (props.errorMessages ?? [])"
+					:error-messages="errors"
 					:warning-messages="warnings"
 					:success-messages="successes"
 					:has-error="hasError"
 					:has-warning="hasWarning"
 					:has-success="hasSuccess"
 					:show-success-messages="props.showSuccessMessages"
-					:disable-error-handling="props.disableErrorHandling"
 					:required="props.required"
 					:is-validate-on-blur="props.isValidateOnBlur"
-					:rules="props.rules"
-					:custom-rules="props.customRules"
-					:custom-warning-rules="props.customWarningRules"
-					:custom-success-rules="props.customSuccessRules"
-					:use-vuetify-validation="props.useVuetifyValidation"
 					:max-errors="props.maxErrors"
 					:is-clearable="props.isClearable"
 					@update:model-value="emitChangeValueEvent"
