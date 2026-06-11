@@ -619,7 +619,7 @@
 		isUpdatingFromInternal,
 		clearValidation,
 		validateField: (value, rules, warningRules) =>
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Type cast for validateField signature compatibility
 			validateField(value, rules as any[], warningRules as any[]),
 		updateModel: value => updateModel(value as DateModelValue),
 		emitInput: value => emit('input', value),
