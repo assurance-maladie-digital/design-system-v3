@@ -316,7 +316,7 @@ describe('SyCheckBoxGroup', () => {
 		expect(typeof wrapper.vm.checkErrorOnBlur).toBe('function')
 
 		// Appeler la méthode (simule le blur)
-		wrapper.vm.checkErrorOnBlur()
+		await wrapper.vm.checkErrorOnBlur()
 		await nextTick()
 
 		// Devrait afficher l'erreur car champ vide

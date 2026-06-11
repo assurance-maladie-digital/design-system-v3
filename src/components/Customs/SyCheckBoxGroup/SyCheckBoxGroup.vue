@@ -44,10 +44,11 @@
 		},
 	})
 
-	const generatedLabel = computed(() => (props.label || '') + (props.displayAsterisk ? '*' : ''))
+	const generatedLabel = computed(() => (props.label || '') + (props.displayAsterisk ? ' *' : ''))
 
 	// Utilisation du composable de validation unifié
 	const {
+		validate,
 		validateOnSubmit,
 		errors,
 		warnings,
@@ -116,6 +117,10 @@
 		defaultRules,
 		checkErrorOnBlur: () => {
 			focused.value = false
+			if (props.isValidateOnBlur) {
+				return validate()
+			}
+			return Promise.resolve(true)
 		},
 	})
 </script>
