@@ -50,6 +50,12 @@
 			emits('update:modelValue', newValue)
 		}
 	})
+
+	const inputProps = computed(() => ({
+		...attrs,
+		...useTextField(props).value,
+		...useMonthPickerValidation(props).value,
+	}))
 </script>
 
 <template>
@@ -57,11 +63,7 @@
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"
-			v-bind="{
-				...attrs,
-				...useTextField(props).value,
-				...useMonthPickerValidation(props).value
-			}"
+			v-bind="inputProps"
 		/>
 		<MonthPickerVisual
 			v-model="internalValue"
