@@ -9,6 +9,7 @@
 	import type { PhoneFieldProps } from './types'
 	import { usePhoneIndicatifs } from './usePhoneIndicatifs'
 	import { vMaska } from 'maska/vue'
+	import { Mask } from 'maska'
 	import type { Indicatif } from './types'
 	import { usePhoneFieldValidation } from './usePhoneFieldValidation'
 	import FieldState from '@/components/Customs/SyTextField/FieldState.vue'
@@ -112,6 +113,28 @@
 
 	const phoneMask = computed(() => internalDialCode.value.mask)
 
+	// Rattrape l'autofill du navigateur : avec un champ indicatif séparé, le navigateur
+	// remplit `tel-national` sans le préfixe national « 0 » (ex. « 612345678 »). On le détecte
+	// via un saut du nombre de chiffres (≠ frappe au clavier) et on repréfixe « 0 ».
+	const maskInstance = computed(() => new Mask({ mask: phoneMask.value }))
+	const previousDigitCount = ref(0)
+
+	function handleNumberInput(event: Event) {
+		const target = event.target as HTMLInputElement | null
+		if (!target) return
+
+		const digits = target.value.replace(/\D/g, '')
+		const jumped = digits.length - previousDigitCount.value > 1
+		previousDigitCount.value = digits.length
+
+		const expectedLength = internalDialCode.value.phoneLength || 10
+		if (props.withCountryCode && jumped && digits.length === expectedLength - 1 && !digits.startsWith('0')) {
+			const normalized = maskInstance.value.masked(`0${digits}`)
+			phoneNumber.value = normalized
+			previousDigitCount.value = expectedLength
+		}
+	}
+
 	const showClear = computed(() => {
 		if (!props.isClearable) return false
 		if (props.disabled) return false
@@ -177,6 +200,7 @@
 					v-maska="internalDialCode.mask"
 					:counter="internalDialCode.phoneLength"
 					:counter-value="(value: string) => value.replace(/\D/g, '').length"
+					@input="handleNumberInput"
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="props.required"
 					:aria-required="props.required"

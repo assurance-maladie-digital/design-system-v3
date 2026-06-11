@@ -279,7 +279,7 @@
 				? isAllowedNumberCharacter(event.key)
 				: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN.test(event.key)
 
-			if (!allowedNonCharacterKeys.includes(event.key) && event.key.length === 1 && !isAllowedCharacter) {
+			if (!allowedNonCharacterKeys.includes(event.key) && event.key?.length === 1 && !isAllowedCharacter) {
 				event.preventDefault()
 			}
 		}
