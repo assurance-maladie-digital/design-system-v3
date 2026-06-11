@@ -200,7 +200,6 @@
 					v-maska="internalDialCode.mask"
 					:counter="internalDialCode.phoneLength"
 					:counter-value="(value: string) => value.replace(/\D/g, '').length"
-					@input="handleNumberInput"
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="props.required"
 					:aria-required="props.required"
@@ -225,6 +224,7 @@
 					}"
 					color="primary"
 					type="tel"
+					@input="handleNumberInput"
 					@focus="focused = true"
 					@blur="focused = false"
 				>
