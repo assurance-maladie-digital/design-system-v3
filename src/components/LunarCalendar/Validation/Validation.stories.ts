@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref, watch, onMounted } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
-import LunarCalendar from '@/components/LunarCalendar/LunarCalendar.vue'
-import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+import LunarCalendar from '../LunarCalendar.vue'
+import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
@@ -46,7 +46,7 @@ const meta = {
 		customSuccessRules: [],
 		isValidateOnBlur: true,
 	},
-} as Meta<typeof LunarCalendar>
+} satisfies Meta<typeof LunarCalendar>
 
 export default meta
 
