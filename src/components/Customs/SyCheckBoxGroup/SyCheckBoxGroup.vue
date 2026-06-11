@@ -114,6 +114,9 @@
 	defineExpose({
 		validateOnSubmit,
 		defaultRules,
+		checkErrorOnBlur: () => {
+			focused.value = false
+		},
 	})
 </script>
 

@@ -1,29 +1,6 @@
 import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
-import { useValidation, type FieldValidationProps, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
-
-export interface SyCheckBoxGroupValidationProps extends FieldValidationProps {
-	modelValue?: (string | number) | (string | number)[] | null
-	multiple?: boolean
-	required?: boolean
-	readonly?: boolean
-	disabled?: boolean
-	customRules?: ValidationRule[]
-	customWarningRules?: ValidationRule[]
-	customSuccessRules?: ValidationRule[]
-	isValidateOnBlur?: boolean
-	showSuccessMessages?: boolean
-	useVuetifyValidation?: boolean
-	rules?: VuetifyValidationRule[]
-	errorMessages?: string[] | null
-	warningMessages?: string[] | null
-	successMessages?: string[] | null
-	hasError?: boolean
-	hasWarning?: boolean
-	hasSuccess?: boolean
-	maxErrors?: number
-	disableErrorHandling?: boolean
-	fieldIdentifier?: string
-}
+import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { SyCheckBoxGroupValidationProps } from '../types'
 
 export interface UseSyCheckBoxGroupValidationReturn {
 	validate: () => Promise<boolean>
@@ -56,7 +33,7 @@ export function useSyCheckBoxGroupValidation(
 	focused?: Ref<boolean>,
 ): UseSyCheckBoxGroupValidationReturn {
 	// Utiliser la variable focused passée en paramètre, sinon en créer une locale
-	const focusedRef = focused || ref(false)
+	const focusedRef = focused !== undefined ? focused : ref(false)
 
 	// Construction des règles de validation par défaut (required)
 	const defaultRules = computed<ValidationRule[]>(() =>
