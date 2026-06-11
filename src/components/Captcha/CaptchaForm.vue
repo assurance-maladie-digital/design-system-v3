@@ -17,7 +17,6 @@
 		hasWarning?: boolean
 		hasSuccess?: boolean
 		showSuccessMessages?: boolean
-		disableErrorHandling?: boolean
 		required?: boolean
 		maxErrors?: number
 		isClearable?: boolean
@@ -34,7 +33,6 @@
 		hasWarning: false,
 		hasSuccess: false,
 		showSuccessMessages: false,
-		disableErrorHandling: false,
 		required: false,
 		maxErrors: undefined,
 	})

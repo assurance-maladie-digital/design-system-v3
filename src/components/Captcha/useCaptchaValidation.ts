@@ -1,4 +1,4 @@
-import { computed, toValue, type Ref } from 'vue'
+import { computed, type Ref } from 'vue'
 import { useValidation, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import type { locales as defaultLocales } from './locales'
@@ -48,9 +48,9 @@ export function useCaptchaValidation(params: {
 		showSuccessMessages: params.showSuccessMessages,
 		disableErrorHandling: params.disableErrorHandling,
 		useVuetifyValidation: params.useVuetifyValidation,
-		label: params.label ?? '',
+		label: params.label,
 		rules: params.rules ?? [],
-		customRules: computed(() => [...toValue(defaultRules.value), ...(params.customRules.value ?? [])]),
+		customRules: computed(() => [...defaultRules.value, ...(params.customRules.value ?? [])]),
 		customWarningRules: computed(() => params.customWarningRules.value ?? []),
 		customSuccessRules: computed(() => params.customSuccessRules.value ?? []),
 		errorMessages: params.errorMessages,
