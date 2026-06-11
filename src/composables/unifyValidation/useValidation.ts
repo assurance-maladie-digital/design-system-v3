@@ -113,7 +113,7 @@ export function useValidation(params: {
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
 			params.maxErrors,
-			params.label,
+			computed(() => toValue(params.useVuetifyValidation) ? params.label?.value : undefined),
 			params.label,
 			params.readonly,
 			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
@@ -189,6 +189,14 @@ export function useValidation(params: {
 
 	const hasError = computed(() => errors.value.length > 0 || Boolean(params.hasErrorProp?.value))
 	const hasWarning = computed(() => warnings.value.length > 0 || Boolean(params.hasWarningProp?.value))
+
+	const state = computed(() => {
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
+		return 'default'
+	})
+
 	// TODO: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
 	const hasSuccess = computed(() => {
 		if (toValue(params.useVuetifyValidation)) {
@@ -213,6 +221,7 @@ export function useValidation(params: {
 		hasError,
 		hasWarning,
 		hasSuccess,
+		state,
 		validate,
 		clearValidation,
 	}

@@ -138,7 +138,7 @@
 				required
 				with-country-code
 				country-code-required
-				:is-validated-on-blur="true"
+				:is-validate-on-blur="true"
 			/>
 			<PasswordField
 				v-model="PasswordValue"

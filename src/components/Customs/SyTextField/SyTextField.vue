@@ -22,6 +22,7 @@
 	import { useNumberField } from './useNumberField'
 	import { locales as defaultLocales } from './locales'
 	import type { SyTextFieldProps } from './types'
+	import FieldState from './FieldState.vue'
 
 	const props = withDefaults(
 		defineProps<SyTextFieldProps>(),
@@ -157,7 +158,7 @@
 	}
 
 	const focused = ref(false)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, validationIcon, hasMessages } = useSyTextFieldValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, state, hasMessages } = useSyTextFieldValidation({
 		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -246,6 +247,10 @@
 			return
 		}
 
+		if (event.inputType === 'insertFromPaste') {
+			return
+		}
+
 		const hasDisallowed = props.type === 'number'
 			? hasDisallowedNumberCharacter(event.data)
 			: event.data.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '') !== event.data
@@ -274,7 +279,7 @@
 				? isAllowedNumberCharacter(event.key)
 				: TEL_ALLOWED_SINGLE_CHARACTER_PATTERN.test(event.key)
 
-			if (!allowedNonCharacterKeys.includes(event.key) && event.key.length === 1 && !isAllowedCharacter) {
+			if (!allowedNonCharacterKeys.includes(event.key) && event.key?.length === 1 && !isAllowedCharacter) {
 				event.preventDefault()
 			}
 		}
@@ -718,10 +723,9 @@
 						@keydown.enter.stop
 						@keydown.space.stop
 					/>
-					<SyIcon
-						v-if="validationIcon && !props.appendInnerIcon"
-						:icon="validationIcon"
-						:decorative="true"
+					<FieldState
+						v-if="!props.appendInnerIcon"
+						:state="state"
 					/>
 					<SyIcon
 						v-if="props.appendInnerIcon && !props.noIcon"

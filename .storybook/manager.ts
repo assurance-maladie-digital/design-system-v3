@@ -37,6 +37,7 @@ const apComponents = [
 	'composants-composants-vuetify-vbreadcrumbs--docs',
 	'composants-composants-vuetify-vbtn--docs',
 	'composants-composants-vuetify-vcard--docs',
+	'composants-composants-vuetify-vcarousel--docs',
 	'composants-composants-vuetify-votpinput--docs',
 	'composants-composants-vuetify-vskeletonloader--docs',
 	'composants-composants-vuetify-vstepper--docs',
