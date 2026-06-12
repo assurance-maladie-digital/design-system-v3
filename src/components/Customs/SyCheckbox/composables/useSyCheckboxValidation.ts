@@ -72,7 +72,7 @@ export function useSyCheckboxValidation(
 		useVuetifyValidation: toRef(() => props.useVuetifyValidation ?? false),
 		label: toRef(() => props.label ?? ''),
 		rules: toRef(() => props.rules),
-		customRules: computed(() => [...defaultRules.value, ...(props.customRules || [])]),
+		customRules: computed(() => [...defaultRules.value, ...(props.customRules ?? [])]),
 		customWarningRules: toRef(() => props.customWarningRules ?? []),
 		customSuccessRules: toRef(() => props.customSuccessRules ?? []),
 		errorMessages: toRef(() => props.errorMessages ?? null),
