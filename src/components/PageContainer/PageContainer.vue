@@ -10,6 +10,7 @@
 		uniqueId?: string
 		role?: AriaRole
 		ariaLabelledby?: string
+		alignCenter?: boolean
 	}>(), {
 		size: undefined,
 		spacing: undefined,
@@ -17,6 +18,7 @@
 		uniqueId: undefined,
 		role: undefined,
 		ariaLabelledby: undefined,
+		alignCenter: false,
 	})
 
 	const display = useDisplay()
@@ -62,7 +64,7 @@
 <template>
 	<div
 		:id="uniqueId ? `${uniqueId}-container` : undefined"
-		:class="[spacingClass, 'vd-page-container d-flex flex-column justify-center']"
+		:class="[spacingClass, 'vd-page-container d-flex flex-column justify-center', { 'align-center': alignCenter }]"
 		:role="role"
 		:aria-labelledby="ariaLabelledby"
 	>
