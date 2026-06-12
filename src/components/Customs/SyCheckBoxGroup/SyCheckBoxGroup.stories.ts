@@ -28,6 +28,10 @@ Il permet de choisir **une ou plusieurs valeurs** parmi une liste d'options.
 	argTypes: {
 		...getValidationDocumentation(),
 		modelValue: { control: false },
+		helpText: {
+			description: 'Texte d\'aide affiché sous le groupe (disparaît en cas de message de validation)',
+			control: 'text',
+		},
 		label: {
 			description: 'Label du groupe',
 			control: 'text',
@@ -884,6 +888,75 @@ const onChange = (value: string | null) => {
 					<p><strong>Dernier événement :</strong> {{ lastEvent }}</p>
 				</div>
 			</div>
+		`,
+	}),
+}
+
+export const HelpText: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Texte d'aide (helpText)
+Affiche un texte d'aide sous les options du groupe. Il disparaît automatiquement lorsqu'un message de validation (erreur, avertissement, succès) est présent, et réapparaît en dessous une fois les messages affichés.
+			`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<SyCheckBoxGroup
+	v-model="value"
+	label="Choisissez une option"
+	:options="options"
+	required
+	help-text="Sélectionnez au moins une option dans la liste."
+	:is-validate-on-blur="false"
+/>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup } from '@cnamts/synapse'
+
+const value = ref<string | null>(null)
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Choisissez une option',
+		required: true,
+		helpText: 'Sélectionnez au moins une option dans la liste.',
+		options: [
+			{ label: 'Option A', value: 'a' },
+			{ label: 'Option B', value: 'b' },
+		],
+		multiple: false,
+		isValidateOnBlur: false,
+	},
+	render: args => ({
+		components: { SyCheckBoxGroup, SyForm, VBtn },
+		setup() {
+			const value = ref<string | null>(null)
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert('Formulaire valide !')
+				}
+			}
+			return { args, value, onSubmit }
+		},
+		template: `
+			<SyForm @submit="onSubmit">
+				<SyCheckBoxGroup v-model="value" v-bind="args" />
+				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
+			</SyForm>
 		`,
 	}),
 }

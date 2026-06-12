@@ -20,6 +20,7 @@ export interface SyCheckBoxGroupProps extends FieldValidationProps {
 	color?: string
 	density?: 'default' | 'comfortable' | 'compact'
 	displayAsterisk?: boolean
+	helpText?: string
 	hideDetails?: boolean | 'auto'
 	id?: string
 	label?: string

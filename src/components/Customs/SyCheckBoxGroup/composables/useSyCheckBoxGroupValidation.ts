@@ -5,6 +5,7 @@ import type { SyCheckBoxGroupValidationProps } from '../types'
 export interface UseSyCheckBoxGroupValidationReturn {
 	validate: () => Promise<boolean>
 	validateOnSubmit: () => Promise<boolean>
+	clearValidation: () => void
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
 	successes: Ref<string[]>
@@ -55,6 +56,7 @@ export function useSyCheckBoxGroupValidation(
 
 	const {
 		validate,
+		clearValidation,
 		errors,
 		warnings,
 		successes,
@@ -92,6 +94,7 @@ export function useSyCheckBoxGroupValidation(
 	return {
 		validate,
 		validateOnSubmit,
+		clearValidation,
 		errors,
 		warnings,
 		successes,

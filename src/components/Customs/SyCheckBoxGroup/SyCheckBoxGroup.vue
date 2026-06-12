@@ -16,6 +16,7 @@
 			color: 'primary',
 			density: 'default',
 			displayAsterisk: false,
+			helpText: '',
 			hideDetails: 'auto',
 			id: undefined,
 			label: undefined,
@@ -50,6 +51,7 @@
 	const {
 		validate,
 		validateOnSubmit,
+		clearValidation,
 		errors,
 		warnings,
 		successes,
@@ -58,6 +60,11 @@
 		hasSuccess,
 		defaultRules,
 	} = useSyCheckBoxGroupValidation(props, model, focused)
+
+	const reset = () => {
+		clearValidation()
+		model.value = props.multiple ? [] : null
+	}
 
 	function isOptionChecked(value: string | number): boolean {
 		if (isMultiple.value) {
@@ -90,6 +97,13 @@
 		return props.ariaLabelledby
 	})
 
+	const hasMessages = computed(() =>
+		errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0,
+	)
+
+	const showHelpTextAsMessage = computed(() => !!props.helpText && !hasMessages.value)
+	const showHelpTextBelow = computed(() => !!props.helpText && hasMessages.value && props.hideDetails !== true)
+
 	const messagesRef = ref<InstanceType<typeof VMessages> | null>(null)
 	const vMessagesId = computed(() => messagesRef.value?.$el.id)
 
@@ -110,10 +124,12 @@
 	})
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation,
+		reset,
 		defaultRules,
 		checkErrorOnBlur: () => {
 			focused.value = false
@@ -169,14 +185,29 @@
 		</div>
 
 		<div
-			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages))"
+			v-if="props.hideDetails !== true && (hasError || hasWarning || (hasSuccess && props.showSuccessMessages) || showHelpTextAsMessage)"
 			class="v-input__details sy-checkbox-group__messages"
 		>
 			<VMessages
+				v-if="hasError || hasWarning || (hasSuccess && props.showSuccessMessages)"
 				ref="messagesRef"
 				:active="hasError || hasWarning || (hasSuccess && successes.length > 0)"
 				:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			/>
+			<div
+				v-if="showHelpTextAsMessage"
+				class="sy-checkbox-group__help-text"
+				:class="{ 'text-disabled': props.disabled }"
+			>
+				{{ props.helpText }}
+			</div>
+		</div>
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-1 mt-1"
+			:class="{ 'text-disabled': props.disabled }"
+		>
+			{{ props.helpText }}
 		</div>
 
 		<span
@@ -202,6 +233,12 @@
 
 :deep(.v-messages) {
 	opacity: 1;
+}
+
+.sy-checkbox-group__help-text {
+	font-size: 0.75rem;
+	padding: 3px 16px 0;
+	color: rgb(var(--v-theme-on-background));
 }
 
 .warning-field :deep(.v-messages__message) {
