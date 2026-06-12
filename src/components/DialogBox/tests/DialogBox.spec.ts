@@ -643,27 +643,38 @@ describe('DialogBox', () => {
 		wrapper.unmount()
 	})
 
-	it('passes the scrollable prop to VDialog', () => {
+	it('adds scrollable classes when scrollable prop is true', () => {
 		const wrapper = mount(DialogBox, {
 			props: {
 				...defaultProps,
 				scrollable: true,
 				headingLevel: 2,
 			},
-			global: {
-				stubs: {
-					VDialog: {
-						props: ['scrollable'],
-						template: '<div data-test-id="v-dialog"><slot /></div>',
-					},
-				},
+			attachTo: document.body,
+		})
+
+		const card = wrapper.getComponent(VCard)
+
+		expect(card.classes()).toContain('sy-dialog-box--scrollable')
+		expect(card.find('.sy-dialog-box-content--scrollable').exists()).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('does not add scrollable classes when scrollable prop is false', () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				scrollable: false,
+				headingLevel: 2,
 			},
 			attachTo: document.body,
 		})
 
-		const dialog = wrapper.findComponent({ name: 'VDialog' })
+		const card = wrapper.getComponent(VCard)
 
-		expect(dialog.props('scrollable')).toBe(true)
+		expect(card.classes()).not.toContain('sy-dialog-box--scrollable')
+		expect(card.find('.sy-dialog-box-content--scrollable').exists()).toBe(false)
 
 		wrapper.unmount()
 	})
