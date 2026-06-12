@@ -48,7 +48,7 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Unit tests without Snapshots
+      - name: Unit tests
         run: pnpm test:unit
 
   test-a11y:
