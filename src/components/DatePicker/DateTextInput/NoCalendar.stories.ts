@@ -1,7 +1,50 @@
 ﻿import type { Meta, StoryObj } from '@storybook/vue3'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
+
+interface DatePickerProps {
+	'modelValue'?: string | string[] | null
+	'label'?: string
+	'placeholder'?: string
+	'format'?: string
+	'dateFormatReturn'?: string
+	'density'?: 'default' | 'comfortable' | 'compact'
+	'isBirthDate'?: boolean
+	'birthDate'?: boolean
+	'showWeekNumber'?: boolean
+	'required'?: boolean
+	'displayRange'?: boolean
+	'displayIcon'?: boolean
+	'displayAppendIcon'?: boolean
+	'displayPrependIcon'?: boolean
+	'customRules'?: DatePickerRule[]
+	'customWarningRules'?: DatePickerRule[]
+	'disabled'?: boolean
+	'noIcon'?: boolean
+	'noCalendar'?: boolean
+	'isOutlined'?: boolean
+	'readonly'?: boolean
+	'width'?: string
+	'disableErrorHandling'?: boolean
+	'showSuccessMessages'?: boolean
+	'bgColor'?: string
+	'hideDetails'?: boolean | 'auto'
+	'displayWeekendDays'?: boolean
+	'displayTodayButton'?: boolean
+	'displayHolidayDays'?: boolean
+	'autoClamp'?: boolean
+	'displayAsterisk'?: boolean
+	'isValidateOnBlur'?: boolean
+	'title'?: string | false
+	'period'?: { min?: string; max?: string }
+	'onUpdate:modelValue'?: () => void
+	'onFocus'?: () => void
+	'onBlur'?: () => void
+	'onInput'?: () => void
+	'onDate-selected'?: () => void
+}
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/DateInput',
@@ -184,11 +227,6 @@ const meta = {
 			description: 'Active la mise en forme automatique lors de la saisie (ajout des séparateurs automatiquement). ⚠️ Peut court-circuiter certaines validations manuelles.',
 			defaultValue: false,
 		},
-		'noCalendar': {
-			control: 'boolean',
-			description: 'Désactive l\'affichage du calendrier, permettant uniquement la saisie manuelle (utile pour les tests automatisés)',
-			defaultValue: true,
-		},
 		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
@@ -224,7 +262,7 @@ const meta = {
 			control: 'text',
 		},
 	},
-} as Meta<typeof DatePicker>
+} as Meta<DatePickerProps>
 
 export default meta
 
@@ -285,7 +323,7 @@ export const Default: Story = {
 		'noIcon': false,
 		'displayRange': false,
 		'displayPrependIcon': false,
-		'showSuccessMessages': true,
+		'showSuccessMessages': false,
 		'disableErrorHandling': false,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -374,7 +412,7 @@ export const Required: Story = {
 		'noIcon': false,
 		'displayRange': false,
 		'displayPrependIcon': false,
-		'showSuccessMessages': true,
+		'showSuccessMessages': false,
 		'disableErrorHandling': false,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
