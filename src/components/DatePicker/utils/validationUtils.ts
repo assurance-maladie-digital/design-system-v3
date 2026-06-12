@@ -1,17 +1,6 @@
-import { formatDate } from '@/utils/formatDate'
+﻿import { formatDate } from '@/utils/formatDate'
 import dayjs from 'dayjs'
-
-/**
- * Type pour une règle de validation personnalisée
- */
-export interface CustomRule {
-	type: string
-	options: {
-		validate: (value: unknown) => boolean
-		message?: string
-		[key: string]: unknown
-	}
-}
+import type { DatePickerRule } from '../types'
 
 /**
  * Adapte les règles personnalisées pour assurer la compatibilité avec différents types de valeurs
@@ -20,16 +9,17 @@ export interface CustomRule {
  * @param format - Format de date à utiliser pour la conversion
  * @returns Règles adaptées pour fonctionner avec les dates et chaînes
  */
-export const adaptCustomRules = (rules: CustomRule[] = [], format: string): CustomRule[] => {
+export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): DatePickerRule[] => {
 	return rules.map((rule) => {
 		if (rule.type === 'custom' && rule.options && rule.options.validate) {
 			// Créer une copie de la règle pour ne pas modifier l'original
-			const safeCopy: CustomRule = { ...rule }
+			const safeCopy: DatePickerRule = { ...rule }
 			const originalValidate = rule.options.validate
 
 			// Remplacer la fonction validate par une version sécurisée
 			safeCopy.options = { ...rule.options }
-			safeCopy.options.validate = (val: unknown) => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			safeCopy.options.validate = ((val: unknown) => {
 				// Si la valeur est une Date mais que la fonction originale attend une chaîne
 				// (détecté par la présence de includes dans le code source)
 				if (val instanceof Date && originalValidate.toString().includes('.includes')) {
@@ -37,7 +27,7 @@ export const adaptCustomRules = (rules: CustomRule[] = [], format: string): Cust
 					return originalValidate(format ? formatDate(dayjs(val), format) : val.toISOString())
 				}
 				return originalValidate(val)
-			}
+			}) as (value: any) => boolean | string
 			return safeCopy
 		}
 		return rule

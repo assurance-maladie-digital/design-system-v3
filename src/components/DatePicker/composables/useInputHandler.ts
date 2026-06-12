@@ -1,4 +1,5 @@
 import { type Ref, type ComponentPublicInstance, type MaybeRef, unref } from 'vue'
+import type { ValidationRule } from '@/composables/validation/useValidation'
 import type { DateObjectValue } from '../types'
 import { useDateInputEditing } from './useDateInputEditing'
 import { useDateRangeInput } from './useDateRangeInput'
@@ -25,7 +26,7 @@ export interface InputHandlerOptions {
 
 	// Fonctions de validation
 	clearValidation: () => void
-	validateField: (value: unknown, rules?: unknown[], warningRules?: unknown[]) => unknown
+	validateField: (value: unknown, rules?: ValidationRule[], warningRules?: ValidationRule[]) => unknown
 
 	// Fonctions d'émission
 	updateModel: (value: unknown) => void

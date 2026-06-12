@@ -3,11 +3,10 @@ import { describe, it, expect, afterEach } from 'vitest'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mountComponent = (props: any = { label: 'Test' }) => {
+const mountComponent = (props: Record<string, unknown> = { label: 'Test' }) => {
 	wrapper = mount(ComplexDatePicker, { props })
 	return wrapper
 }

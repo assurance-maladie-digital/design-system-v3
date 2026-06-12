@@ -14,6 +14,27 @@ export type DateObjectValue = Date | (Date | null)[] | null
 export type DateValue = DateObjectValue
 
 /**
+ * Options d'une règle de validation personnalisée du DatePicker.
+ * Le champ `options` est intentionnellement ouvert car les règles legacy
+ * peuvent contenir des propriétés arbitraires (message, date, validate, …).
+ */
+export interface DatePickerRuleOptions {
+	message?: string
+	date?: string | Date
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	validate?: ((value: any) => boolean | string) | ((value: any) => Promise<boolean | string>)
+	[key: string]: unknown
+}
+
+/**
+ * Règle de validation personnalisée du DatePicker
+ */
+export interface DatePickerRule {
+	type: string
+	options: DatePickerRuleOptions
+}
+
+/**
  * Props communes entre CalendarMode et ComplexDatePicker
  */
 export interface DatePickerCommonProps {
@@ -21,10 +42,8 @@ export interface DatePickerCommonProps {
 	bgColor?: string
 	/** @deprecated Utilisez isBirthDate à la place */
 	birthDate?: boolean
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	customRules?: { type: string, options: any }[]
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	customWarningRules?: { type: string, options: any }[]
+	customRules?: DatePickerRule[]
+	customWarningRules?: DatePickerRule[]
 	dateFormatReturn?: string
 	density?: 'default' | 'comfortable' | 'compact'
 	disableErrorHandling?: boolean

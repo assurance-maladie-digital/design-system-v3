@@ -1,25 +1,23 @@
-import { type Ref, type MaybeRef, unref } from 'vue'
-import type { ValidationResult } from '@/composables/validation/useValidation'
+﻿import { type Ref, type MaybeRef, unref } from 'vue'
+import type { ValidationResult, ValidationRule } from '@/composables/validation/useValidation'
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
 import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import type { DatePickerRule } from '../types'
 
 export interface UseDateTextFieldManualValidationOptions {
 	required: MaybeRef<boolean>
 	disableErrorHandling: MaybeRef<boolean>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	customRules: any
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	customWarningRules: any
+	customRules: DatePickerRule[]
+	customWarningRules: DatePickerRule[]
 	hasInteracted: Ref<boolean>
 	errors: Ref<string[]>
 	clearValidation: () => void
 	validateDateFormat: (dateStr: string) => { isValid: boolean, message: string }
 	isDateComplete: (value: string) => boolean
 	parseDate: (dateStr: string, format: string) => Date | null
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	validateField: (value: unknown, rules?: any[], warningRules?: any[]) => Promise<ValidationResult>
+	validateField: (value: unknown, rules?: ValidationRule[], warningRules?: ValidationRule[]) => Promise<ValidationResult> | ValidationResult
 }
 
 export interface UseDateTextFieldSubmitOptions {
@@ -114,7 +112,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			const currentCustomWarningRules = manualValidation.customWarningRules
 
 			// Filtrer les règles qui sont prêtes (ont une date définie)
-			const readyRules = currentCustomRules.filter((rule: { type?: string, options?: { date?: unknown } }) => {
+			const readyRules = currentCustomRules.filter((rule) => {
 				if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
 					return rule.options && rule.options.date !== undefined
 				}
@@ -133,16 +131,15 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			// Appeler validateField pour évaluer les règles
 			const result = manualValidation.validateField(
 				date,
-				safeCustomRules,
-				safeWarningRules,
+				safeCustomRules as ValidationRule[],
+				safeWarningRules as ValidationRule[],
 			)
 
 			if (result instanceof Promise) {
 				return result.then(resolvedResult => !resolvedResult.hasError)
 			}
 
-			const validationResult = result as ValidationResult
-			return !validationResult.hasError
+			return !result.hasError
 		}
 
 		return manualValidation.errors.value.length === 0

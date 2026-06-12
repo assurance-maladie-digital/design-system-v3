@@ -1,4 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3'
+import type { DatePickerRule } from '../types'
 import DatePickerValidationExamples from '../docExamples/DatePickerValidationExamples.vue'
 import DatePickerBidirectionalValidation from '../docExamples/DatePickerBidirectionalValidation.vue'
 import BidirectionalComplexValidation from '../docExamples/BidirectionalComplexValidation.vue'
@@ -261,7 +262,7 @@ BidirectionalValidation.parameters = {
 
 	// Règles de validation pour la date de début
 	const startDateRules = computed(() => {
-		const rules = [
+		const rules: DatePickerRule[] = [
 			{
 				type: 'required',
 				options: {
@@ -278,8 +279,7 @@ BidirectionalValidation.parameters = {
 				options: {
 					message: 'La date de début ne peut pas être postérieure à la date de fin',
 					date: endDate.value, // Déjà une chaîne au format DD/MM/YYYY
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				},
 			})
 		}
 
@@ -288,7 +288,7 @@ BidirectionalValidation.parameters = {
 
 	// Règles de validation pour la date de fin
 	const endDateRules = computed(() => {
-		const rules = [
+		const rules: DatePickerRule[] = [
 			{
 				type: 'required',
 				options: {
@@ -304,8 +304,7 @@ BidirectionalValidation.parameters = {
 				options: {
 					message: 'La date de fin ne peut pas être antérieure à la date de début',
 					date: startDate.value, // Déjà une chaîne au format DD/MM/YYYY
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				},
 			})
 		}
 		return rules
@@ -557,7 +556,7 @@ BidirectionalComplexDatePickerValidation.parameters = {
 
 	// Règles de validation pour la date de début
 	const startDateRules = computed(() => {
-		const rules = [
+		const rules: DatePickerRule[] = [
 			{
 				type: 'required',
 				options: {
@@ -574,8 +573,7 @@ BidirectionalComplexDatePickerValidation.parameters = {
 				options: {
 					message: 'La date de début ne peut pas être postérieure à la date de fin',
 					date: endDate.value, // Déjà une chaîne au format DD/MM/YYYY
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				},
 			})
 		}
 
@@ -584,7 +582,7 @@ BidirectionalComplexDatePickerValidation.parameters = {
 
 	// Règles de validation pour la date de fin
 	const endDateRules = computed(() => {
-		const rules = [
+		const rules: DatePickerRule[] = [
 			{
 				type: 'required',
 				options: {
@@ -600,8 +598,7 @@ BidirectionalComplexDatePickerValidation.parameters = {
 				options: {
 					message: 'La date de fin ne peut pas être antérieure à la date de début',
 					date: startDate.value, // Déjà une chaîne au format DD/MM/YYYY
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				},
 			})
 		}
 		return rules

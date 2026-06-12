@@ -1,14 +1,10 @@
 import { watch, unref, type Ref, type MaybeRef } from 'vue'
 import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
-import type { DateObjectValue } from '../types'
+import type { DateObjectValue, DatePickerRule } from '../types'
 import { useDateRangeValidation } from './useDateRangeValidation'
 
-export type DatePickerValidationRule = {
-	type: string
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- DatePicker rules are still legacy-shaped during migration.
-	options: any
-}
+export type DatePickerValidationRule = DatePickerRule
 
 export type DatePickerValidationOptions = {
 	showSuccessMessages: MaybeRef<boolean>
@@ -16,8 +12,8 @@ export type DatePickerValidationOptions = {
 	noCalendar: MaybeRef<boolean>
 	required: MaybeRef<boolean>
 	displayRange: MaybeRef<boolean>
-	customRules: Ref<DatePickerValidationRule[]>
-	customWarningRules: Ref<DatePickerValidationRule[]>
+	customRules: Ref<DatePickerRule[]>
+	customWarningRules: Ref<DatePickerRule[]>
 	selectedDates: Ref<DateObjectValue>
 	isUpdatingFromInternal: Ref<boolean>
 	currentRangeIsValid: Ref<boolean>

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+﻿import type { Meta, StoryObj } from '@storybook/vue3'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
@@ -522,7 +522,7 @@ export const CustomRules: Story = {
 		'customRules': [{
 			type: 'custom',
 			options: {
-				validate: (value: string) => !value || !value.includes('2024'),
+				validate: (value: unknown) => !value || !(value as string).includes('2024'),
 				message: 'Les dates en 2024 ne sont pas autorisées',
 				successMessage: 'Les dates hors 2024 sont autorisées',
 				fieldIdentifier: 'date',
@@ -592,7 +592,7 @@ export const WarningRules: Story = {
 		'customWarningRules': [{
 			type: 'custom',
 			options: {
-				validate: (value: string) => !value || !value.includes('2025'),
+				validate: (value: unknown) => !value || !(value as string).includes('2025'),
 				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
 				successMessage: 'Date hors 2025',
 				fieldIdentifier: 'date',

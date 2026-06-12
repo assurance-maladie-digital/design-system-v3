@@ -1,4 +1,4 @@
-	<script lang="ts" setup>
+﻿	<script lang="ts" setup>
 	import {
 		type ComponentPublicInstance,
 		computed,
@@ -48,6 +48,7 @@
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
+	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
@@ -618,9 +619,7 @@
 		isManualInputActive,
 		isUpdatingFromInternal,
 		clearValidation,
-		validateField: (value, rules, warningRules) =>
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Type cast for validateField signature compatibility
-			validateField(value, rules as any[], warningRules as any[]),
+		validateField: (value, rules, warningRules) => validateField(value, rules, warningRules),
 		updateModel: value => updateModel(value as DateModelValue),
 		emitInput: value => emit('input', value),
 		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
@@ -786,8 +785,8 @@
 			// Appeler validateField pour évaluer les règles
 			const result = validateField(
 				date,
-				safeCustomRules,
-				safeWarningRules,
+				safeCustomRules as ValidationRule[],
+				safeWarningRules as ValidationRule[],
 			)
 
 			if (result instanceof Promise) {

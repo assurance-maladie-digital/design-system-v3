@@ -1,16 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useDatePickerFocusTrap } from '../useDatePickerFocusTrap'
 import { ref } from 'vue'
-import type { ComponentPublicInstance } from 'vue'
+import type { Ref, ComponentPublicInstance } from 'vue'
 
 describe('useDatePickerFocusTrap', () => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
-	let isDatePickerVisible: import('vue').Ref<boolean>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
-	let datePickerRef: import('vue').TemplateRef<ComponentPublicInstance>
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
+	let isDatePickerVisible: Ref<boolean>
+	let datePickerRef: Ref<ComponentPublicInstance | null>
 	let onClose: () => void
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
 	let restoreFocus: () => void
 
 	beforeEach(() => {

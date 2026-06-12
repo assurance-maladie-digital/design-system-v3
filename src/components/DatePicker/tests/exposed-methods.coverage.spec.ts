@@ -2,6 +2,9 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import DateTextInput from '../DateTextInput/DateTextInput.vue'
 
+type DateTextInputInstance = InstanceType<typeof DateTextInput>
+type DateTextInputVM = DateTextInputInstance & { focus: () => void, blur: () => void }
+
 /**
  * Tests pour couvrir les méthodes exposées (focus, blur)
  * Zones non couvertes : DateTextInput.vue lignes 1138-1144
@@ -21,11 +24,9 @@ describe('Exposed Methods Coverage Tests', () => {
 			attachTo: document.body,
 		})
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect(typeof (wrapper.vm as any).focus).toBe('function')
+		expect(typeof (wrapper.vm as unknown as DateTextInputVM).focus).toBe('function')
 		// Appel réel pour couvrir le corps de la méthode (ligne 1139)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect(() => (wrapper.vm as any).focus()).not.toThrow()
+		expect(() => (wrapper.vm as unknown as DateTextInputVM).focus()).not.toThrow()
 
 		wrapper.unmount()
 	})
@@ -44,11 +45,9 @@ describe('Exposed Methods Coverage Tests', () => {
 			attachTo: document.body,
 		})
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect(typeof (wrapper.vm as any).blur).toBe('function')
+		expect(typeof (wrapper.vm as unknown as DateTextInputVM).blur).toBe('function')
 		// Appel réel pour couvrir le corps de la méthode (ligne 1142-1143)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect(() => (wrapper.vm as any).blur()).not.toThrow()
+		expect(() => (wrapper.vm as unknown as DateTextInputVM).blur()).not.toThrow()
 
 		wrapper.unmount()
 	})
@@ -67,8 +66,7 @@ describe('Exposed Methods Coverage Tests', () => {
 		})
 
 		// La méthode doit exister
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect((wrapper.vm as any).validateOnSubmit).toBeDefined()
+		expect((wrapper.vm as DateTextInputInstance).validateOnSubmit).toBeDefined()
 
 		wrapper.unmount()
 	})

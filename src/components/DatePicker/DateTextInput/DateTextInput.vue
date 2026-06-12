@@ -90,10 +90,8 @@
 		noCalendar: true,
 		required: computed(() => props.required),
 		displayRange: computed(() => props.displayRange),
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Compatibility with legacy rule format
-		customRules: computed(() => props.customRules as any),
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Compatibility with legacy rule format
-		customWarningRules: computed(() => props.customWarningRules as any),
+		customRules: computed(() => props.customRules ?? []),
+		customWarningRules: computed(() => props.customWarningRules ?? []),
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -549,10 +547,8 @@
 		manualValidation: {
 			required: computed(() => props.required),
 			disableErrorHandling: computed(() => props.disableErrorHandling),
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			customRules: props.customRules as any,
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			customWarningRules: props.customWarningRules as any,
+			customRules: props.customRules ?? [],
+			customWarningRules: props.customWarningRules ?? [],
 			hasInteracted,
 			errors,
 			clearValidation,
