@@ -38,7 +38,7 @@ interface DatePickerProps {
 	'displayAsterisk'?: boolean
 	'isValidateOnBlur'?: boolean
 	'title'?: string | false
-	'period'?: { min?: string; max?: string }
+	'period'?: { min?: string, max?: string }
 	'onUpdate:modelValue'?: () => void
 	'onFocus'?: () => void
 	'onBlur'?: () => void
