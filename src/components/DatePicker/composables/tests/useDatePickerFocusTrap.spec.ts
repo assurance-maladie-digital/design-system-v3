@@ -5,13 +5,13 @@ import type { ComponentPublicInstance } from 'vue'
 
 describe('useDatePickerFocusTrap', () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
-	let isDatePickerVisible: any
+	let isDatePickerVisible: import('vue').Ref<boolean>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
-	let datePickerRef: any
+	let datePickerRef: import('vue').TemplateRef<ComponentPublicInstance>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
-	let onClose: any
+	let onClose: () => void
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Test variable with deferred type assignment
-	let restoreFocus: any
+	let restoreFocus: () => void
 
 	beforeEach(() => {
 		isDatePickerVisible = ref(true)

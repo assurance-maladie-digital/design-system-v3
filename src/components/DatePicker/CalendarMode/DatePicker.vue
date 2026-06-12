@@ -915,9 +915,10 @@
 </template>
 
 <style lang="scss" scoped>
-@import '@/assets/amelipro/apTokens2026.scss';
+@import '@/assets/amelipro/apTokens2026';
 
 $ap-grey-mid: #b0b1b1;
+
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;
