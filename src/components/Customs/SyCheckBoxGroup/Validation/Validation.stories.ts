@@ -129,9 +129,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 			]
 
 			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert('Formulaire valide !')
-				}
+				alert(event.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
 			}
 
 			return { args, selected, customRules, onSubmit }
@@ -335,9 +333,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 			]
 
 			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert('Formulaire valide !')
-				}
+				alert(event.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
 			}
 
 			return { args, selected, customSuccessRules, onSubmit }
@@ -496,9 +492,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 			const selected = ref<string | null>(null)
 
 			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert('Formulaire valide !')
-				}
+				alert(event.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
 			}
 
 			return { args, selected, onSubmit }
@@ -707,9 +701,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 			]
 
 			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert('Formulaire valide ! Sélection : ' + JSON.stringify(selected.value))
-				}
+				alert(event.isValid ? 'Formulaire valide ! Sélection : ' + JSON.stringify(selected.value) : 'Veuillez corriger les erreurs.')
 			}
 
 			return { args, selected, minSelectionRules, onSubmit }
