@@ -196,6 +196,7 @@
 			/>
 			<div
 				v-if="showHelpTextAsMessage"
+				class="help-text-below"
 				:class="{ 'text-disabled': props.disabled }"
 			>
 				{{ props.helpText }}
@@ -228,6 +229,17 @@
 .sy-checkbox-group__label {
 	margin-bottom: 4px;
 	font-weight: 500;
+}
+
+/* helpText aligné sur SyTextField/SySelect (police + couleur medium-emphasis) */
+.help-text-below {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: var(--v-fontSize-liensEtLibelles);
+	line-height: 1.2;
+}
+
+.help-text-below.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
 
 :deep(.v-messages) {
