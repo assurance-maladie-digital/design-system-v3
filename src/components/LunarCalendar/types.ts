@@ -35,4 +35,5 @@ export type LunarCalendarProps = {
 	disabled?: boolean
 	readonly?: boolean
 	required?: boolean
+	hideDetails?: boolean | 'auto'
 } & Omit<FieldValidationProps, 'modelValue'>

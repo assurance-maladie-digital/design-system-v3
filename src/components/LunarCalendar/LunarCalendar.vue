@@ -34,6 +34,7 @@
 		counter: false,
 		id: undefined,
 		name: undefined,
+		hideDetails: false,
 		autocomplete: 'off',
 		...validationPropsDefaults,
 	})
@@ -82,7 +83,7 @@
 		:autocomplete="props.autocomplete"
 		:disabled="props.disabled"
 		:readonly="props.readonly"
-		:required="props.required"
+		:hide-details="props.hideDetails"
 		@focus="focused = true"
 		@blur="focused = false"
 	/>
