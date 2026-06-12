@@ -289,7 +289,6 @@ h2 {
 	justify-content: stretch;
 	gap: 16px;
 	flex-shrink: 0;
-
 }
 
 .sy-dialog-box-draggable .sy-dialog-box-title {
