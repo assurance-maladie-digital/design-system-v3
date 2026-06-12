@@ -538,7 +538,6 @@ export const ListModel: Story = {
 	}),
 }
 
-
 export const CustomColors: Story = {
 	parameters: {
 		sourceCode: [
