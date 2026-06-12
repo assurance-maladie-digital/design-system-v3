@@ -594,17 +594,181 @@ async function onSubmit() {
 			return { args, selected, checkboxRef, onSubmit }
 		},
 		template: `
-			<div class="pa-4">
-				<VForm @submit.prevent="onSubmit">
-					<SyCheckBoxGroup
-						ref="checkboxRef"
-						v-model="selected"
-						v-bind="args"
-						class="mb-4"
-					/>
-					<VBtn type="submit" color="primary">Valider</VBtn>
-				</VForm>
-			</div>
+			<VForm @submit.prevent="onSubmit">
+				<SyCheckBoxGroup
+					ref="checkboxRef"
+					v-model="selected"
+					v-bind="args"
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</VForm>
+		`,
+	}),
+}
+
+/**
+ * Mode de validation natif Vuetify (`useVuetifyValidation`) intégré à `SyForm`.
+ * Les règles sont de simples fonctions `(value) => true | 'message'`, comme la prop `rules` de Vuetify.
+ */
+export const SyFormVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Avec `use-vuetify-validation`, le groupe délègue sa validation à Vuetify via la prop `rules` (fonctions natives), tout en restant intégré à `SyForm`.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm @submit="onSubmit">
+		<SyCheckBoxGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			:use-vuetify-validation="true"
+			:rules="vuetifyRules"
+		/>
+		<VBtn type="submit" color="primary">Valider</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+	{ label: 'Option C', value: 'c' },
+]
+
+const vuetifyRules = [
+	(value: unknown) => (Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined) || 'Veuillez sélectionner au moins une option.',
+]
+
+function onSubmit(e: { isValid: boolean }) {
+	alert(e.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckBoxGroup, SyForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+
+			const vuetifyRules = [
+				(value: unknown) => (Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined) || 'Veuillez sélectionner au moins une option.',
+			]
+
+			function onSubmit(e: { isValid: boolean }) {
+				alert(e.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
+			}
+
+			return { args, selected, vuetifyRules, onSubmit }
+		},
+		template: `
+			<SyForm @submit="onSubmit">
+				<SyCheckBoxGroup
+					v-bind="args"
+					v-model="selected"
+					:use-vuetify-validation="true"
+					:rules="vuetifyRules"
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</SyForm>
+		`,
+	}),
+}
+
+/**
+ * Mode de validation natif Vuetify (`useVuetifyValidation`) dans un `VForm` Vuetify.
+ */
+export const VFormVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation déléguée à Vuetify (`use-vuetify-validation` + `rules`) dans un `VForm` natif.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<VForm @submit.prevent="onSubmit">
+		<SyCheckBoxGroup
+			v-model="selected"
+			label="Choisissez une option"
+			:options="options"
+			:use-vuetify-validation="true"
+			:rules="vuetifyRules"
+		/>
+		<VBtn type="submit" color="primary">Valider</VBtn>
+	</VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyCheckBoxGroup } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const selected = ref<string | null>(null)
+
+const options = [
+	{ label: 'Option A', value: 'a' },
+	{ label: 'Option B', value: 'b' },
+	{ label: 'Option C', value: 'c' },
+]
+
+const vuetifyRules = [
+	(value: unknown) => (Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined) || 'Veuillez sélectionner au moins une option.',
+]
+
+async function onSubmit(e: Promise<{ valid: boolean }>) {
+	const { valid } = await e
+	alert(valid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { SyCheckBoxGroup, VForm, VBtn },
+		setup() {
+			const selected = ref<string | null>(null)
+
+			const vuetifyRules = [
+				(value: unknown) => (Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined) || 'Veuillez sélectionner au moins une option.',
+			]
+
+			async function onSubmit(e: Promise<{ valid: boolean }>) {
+				const { valid } = await e
+				alert(valid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
+			}
+
+			return { args, selected, vuetifyRules, onSubmit }
+		},
+		template: `
+			<VForm @submit.prevent="onSubmit">
+				<SyCheckBoxGroup
+					v-bind="args"
+					v-model="selected"
+					:use-vuetify-validation="true"
+					:rules="vuetifyRules"
+				/>
+				<VBtn type="submit" class="mt-2" color="primary">Valider</VBtn>
+			</VForm>
 		`,
 	}),
 }
