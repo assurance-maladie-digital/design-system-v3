@@ -264,7 +264,7 @@ export const WithHeaderAndFooter: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-    <div class="d-flex flex-column bg-surface" style="min-height: 100vh; width: 100%;">
+    <div class="d-flex flex-column" style="min-height: 100vh; width: 100%;">
         <PageContainer style="flex: 1; width: 100%;">
             <template #prepend>
                 <HeaderBar
@@ -349,7 +349,7 @@ export const WithHeaderAndFooter: Story = {
 				return { args }
 			},
 			template: `
-                <div class="d-flex flex-column bg-surface" style="min-height: 100vh; width: 100%;">
+                <div class="d-flex flex-column" style="min-height: 100vh; width: 100%;">
                     <PageContainer :size="args.size" :spacing="args.spacing" :color="args.color" style="flex: 1; width: 100%;">
                         <template #prepend>
                             <HeaderBar
