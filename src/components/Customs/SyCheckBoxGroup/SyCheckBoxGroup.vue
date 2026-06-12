@@ -231,7 +231,6 @@
 	font-weight: 500;
 }
 
-/* helpText aligné sur SyTextField/SySelect (police + couleur medium-emphasis) */
 .help-text-below {
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 	font-size: var(--v-fontSize-liensEtLibelles);
