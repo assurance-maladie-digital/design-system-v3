@@ -3,6 +3,7 @@
 exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
 <div
   class="
+    align-center
     d-flex
     flex-column
     justify-center
@@ -158,6 +159,7 @@ exports[`NotFoundPage > display the support ID if provided in the url 1`] = `
 exports[`NotFoundPage > renders correctly 1`] = `
 <div
   class="
+    align-center
     d-flex
     flex-column
     justify-center

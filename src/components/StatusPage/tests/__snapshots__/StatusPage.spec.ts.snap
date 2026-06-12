@@ -3,6 +3,7 @@
 exports[`StatusPage > renders correctly 1`] = `
 <div
   class="
+    align-center
     d-flex
     flex-column
     justify-center
@@ -130,6 +131,7 @@ exports[`StatusPage > renders correctly 1`] = `
 exports[`StatusPage > renders correctly with undefined route 1`] = `
 <div
   class="
+    align-center
     d-flex
     flex-column
     justify-center
