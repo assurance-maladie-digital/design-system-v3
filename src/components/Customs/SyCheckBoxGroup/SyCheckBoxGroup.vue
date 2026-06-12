@@ -196,7 +196,6 @@
 			/>
 			<div
 				v-if="showHelpTextAsMessage"
-				class="sy-checkbox-group__help-text"
 				:class="{ 'text-disabled': props.disabled }"
 			>
 				{{ props.helpText }}
@@ -233,12 +232,6 @@
 
 :deep(.v-messages) {
 	opacity: 1;
-}
-
-.sy-checkbox-group__help-text {
-	font-size: 0.75rem;
-	padding: 3px 16px 0;
-	color: rgb(var(--v-theme-on-background));
 }
 
 .warning-field :deep(.v-messages__message) {
