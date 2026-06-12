@@ -1,5 +1,4 @@
 import type { Meta, StoryFn } from '@storybook/vue3'
-import type { DatePickerRule } from '../types'
 import DatePickerValidationExamples from '../docExamples/DatePickerValidationExamples.vue'
 import DatePickerBidirectionalValidation from '../docExamples/DatePickerBidirectionalValidation.vue'
 import BidirectionalComplexValidation from '../docExamples/BidirectionalComplexValidation.vue'
