@@ -642,4 +642,29 @@ describe('DialogBox', () => {
 
 		wrapper.unmount()
 	})
+
+	it('passes the scrollable prop to VDialog', () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				scrollable: true,
+				headingLevel: 2,
+			},
+			global: {
+				stubs: {
+					VDialog: {
+						props: ['scrollable'],
+						template: '<div data-test-id="v-dialog"><slot /></div>',
+					},
+				},
+			},
+			attachTo: document.body,
+		})
+
+		const dialog = wrapper.findComponent({ name: 'VDialog' })
+
+		expect(dialog.props('scrollable')).toBe(true)
+
+		wrapper.unmount()
+	})
 })

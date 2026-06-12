@@ -20,6 +20,7 @@
 		autofocusValidateBtn?: boolean
 		draggable?: boolean
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		scrollable?: boolean
 	} & CustomizableOptions>(), {
 		title: undefined,
 		width: '800px',
@@ -29,6 +30,7 @@
 		persistent: false,
 		autofocusValidateBtn: false,
 		headingLevel: 2,
+		scrollable: false,
 	})
 
 	defineEmits(['cancel', 'confirm', 'update:modelValue'])
@@ -139,6 +141,7 @@
 			:class="{
 				'sy-dialog-box-draggable': props.draggable,
 				'sy-dialog-box-draggable--active': props.draggable && isGrabbing,
+				'sy-dialog-box--scrollable': props.scrollable,
 			}"
 			:aria-label="props.draggable ? locales.draggable : undefined"
 		>
@@ -187,6 +190,7 @@
 
 			<div
 				class="px-6"
+				:class="{ 'sy-dialog-box-content--scrollable': props.scrollable }"
 				v-bind="options.cardText"
 			>
 				<slot />
@@ -284,6 +288,8 @@ h2 {
 	flex-direction: column;
 	justify-content: stretch;
 	gap: 16px;
+	flex-shrink: 0;
+
 }
 
 .sy-dialog-box-draggable .sy-dialog-box-title {
@@ -299,6 +305,17 @@ h2 {
 .sy-dialog-box-draggable--active .sy-dialog-box-title {
 	cursor: grabbing;
 	user-select: none;
+}
+
+.sy-dialog-box--scrollable {
+	display: flex;
+	flex-direction: column;
+	max-height: calc(100vh - 48px);
+}
+
+.sy-dialog-box-content--scrollable {
+	overflow-y: auto;
+	min-height: 0;
 }
 
 @media screen and (width >= 600px) {
