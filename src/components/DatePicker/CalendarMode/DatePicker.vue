@@ -915,6 +915,9 @@
 </template>
 
 <style lang="scss" scoped>
+@import '@/assets/amelipro/apTokens2026.scss';
+
+$ap-grey-mid: #b0b1b1;
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;
@@ -1072,12 +1075,12 @@
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #b0b1b1;
+	background-color: $ap-grey-mid;
 }
 
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: #b0b1b1;
+	background-color: $ap-grey-mid;
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1094,7 +1097,7 @@
 }
 
 :deep(.custom-year-btn::after) {
-	background-color: #b0b1b1;
+	background-color: $ap-grey-mid;
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1104,7 +1107,7 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: #b0b1b1;
+	background-color: $ap-grey-mid;
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;
