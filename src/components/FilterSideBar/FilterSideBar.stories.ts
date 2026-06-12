@@ -89,6 +89,21 @@ const meta = {
 				},
 			},
 		},
+		'title': {
+			description: 'Titre affiché au-dessus des filtres du panneau',
+			control: {
+				type: 'text',
+			},
+			table: {
+				category: 'props',
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'undefined',
+				},
+			},
+		},
 		'onUpdate:modelValue': {
 			description: 'Événement déclenché lors de la mise à jour des filtres',
 			control: {
@@ -923,4 +938,53 @@ export const ZIndex: Story = {
 			},
 		},
 	},
+}
+
+export const Title: Story = {
+	args: {
+		'onUpdate:modelValue': fn(),
+		'title': 'Filtres du tableau personalisé',
+	},
+	decorators: Default.decorators,
+	render: args => ({
+		components: { FilterSideBar, SyTextField },
+		setup() {
+			const filters = ref([
+				{
+					name: 'name',
+					title: 'Identité',
+				},
+				{
+					name: 'folder',
+					title: 'Type de dossier',
+				},
+			])
+
+			return { args, filters }
+		},
+		template: `
+			<FilterSideBar
+				v-bind="args"
+				v-model="filters"
+			>
+				<template #name="{ props }">
+					<SyTextField
+						v-bind="props"
+						label="Nom"
+						variant="outlined"
+						hide-details
+					/>
+				</template>
+
+				<template #folder="{ props }">
+					<SyTextField
+						v-bind="props"
+						label="Type de dossier"
+						variant="outlined"
+						hide-details
+					/>
+				</template>
+			</FilterSideBar>
+		`,
+	}),
 }

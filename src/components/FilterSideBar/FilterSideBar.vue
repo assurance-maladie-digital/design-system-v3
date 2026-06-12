@@ -9,17 +9,22 @@
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { locales as defaultLocales } from './locales'
 	import vLockFocus from '@/directives/lockFocus'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: FilterProp
 		modale?: boolean
 		locales?: typeof defaultLocales
 		zIndex?: number
+		title?: string
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		modelValue: () => [],
 		modale: false,
 		locales: () => defaultLocales,
 		zIndex: undefined,
+		title: undefined,
+		headingLevel: 2,
 	})
 
 	const emits = defineEmits<{
@@ -133,7 +138,7 @@
 				:aria-hidden="drawer ? undefined : 'true'"
 				:inert="drawer ? undefined : 'true'"
 				:aria-modal="props.modale"
-				:aria-label="locales.modaleLabel"
+				:aria-label="props.title || locales.modaleLabel"
 				:style="zIndexStyle"
 				@keydown.escape.prevent="drawer = false"
 			>
@@ -141,6 +146,13 @@
 					v-lock-focus="$props.modale"
 					@submit.prevent="applyFilters"
 				>
+					<SyHeading
+						v-if="props.title"
+						class="sy-filters-side-bar__title px-4 pt-4 pb-2 text-h6 font-weight-bold"
+						:level="props.headingLevel"
+					>
+						{{ props.title }}
+					</SyHeading>
 					<VExpansionPanels
 						variant="accordion"
 						tag="ul"
