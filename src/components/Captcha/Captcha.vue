@@ -44,7 +44,7 @@
 
 	watch(() => props.type, (val) => {
 		type.value = val
-		resetValidation()
+		clearValidation()
 	})
 
 	watch(text, (val) => {
@@ -67,7 +67,7 @@
 			firstLoading = false
 			return
 		}
-		resetValidation()
+		clearValidation()
 	}
 
 	function emitChangeValueEvent(val: string) {
@@ -75,7 +75,7 @@
 	}
 
 	function emitChangeTypeEvent() {
-		resetValidation()
+		clearValidation()
 		emit('update:type', type.value)
 	}
 
@@ -115,10 +115,6 @@
 		locales: toRef(props, 'locales'),
 	})
 
-	function resetValidation() {
-		clearValidation()
-	}
-
 	function onFocus() {
 		focused.value = true
 	}
@@ -127,8 +123,17 @@
 		focused.value = false
 	}
 
+	function reset() {
+		text.value = null
+		state.value = 'idle'
+		clearValidation()
+	}
+
 	defineExpose({
-		validate,
+		validateOnSubmit: validate,
+		clearValidation,
+		reset,
+		captchaId: id,
 	})
 
 </script>

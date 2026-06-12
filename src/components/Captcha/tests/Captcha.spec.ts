@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount, VueWrapper } from '@vue/test-utils'
 import Captcha from '../Captcha.vue'
+import type { ComponentPublicInstance } from 'vue/dist/vue.js';
 
 describe('Captcha', () => {
 	afterEach(() => {
@@ -24,11 +25,9 @@ describe('Captcha', () => {
 		})
 
 		// Wait for the component to fully mount and initialize
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
 
 		// Allow additional time for async initialization
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		expect(fetch).toHaveBeenCalledTimes(1)
 
@@ -64,11 +63,9 @@ describe('Captcha', () => {
 		})
 
 		// Wait for the component to fully mount and initialize
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
 
 		// Allow additional time for async initialization
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		expect(fetch).toHaveBeenCalledTimes(1)
 
@@ -156,12 +153,8 @@ describe('Captcha', () => {
 			},
 		})
 
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
-
 		// Simulate text input change
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		await (wrapper.vm as any).emitChangeValueEvent('new-text-value')
+		await (wrapper.vm as ComponentPublicInstance<typeof Captcha>).emitChangeValueEvent('new-text-value')
 
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['new-text-value'])
@@ -183,9 +176,7 @@ describe('Captcha', () => {
 			},
 		})
 
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		expect(fetch).toHaveBeenCalledWith('/captcha/captcha.json', expect.any(Object))
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -200,7 +191,7 @@ describe('Captcha', () => {
 		} as any
 		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
-		const wrapper = mount(Captcha, {
+		const wrapper = mount<typeof Captcha>(Captcha, {
 			props: {
 				urlCreate: '/captcha/captcha.json',
 				urlGetImage: '/captcha/captcha.png',
@@ -212,11 +203,10 @@ describe('Captcha', () => {
 		await wrapper.vm.$nextTick()
 
 		// Change modelValue prop
-		await wrapper.setProps({ modelValue: 'updated-value' })
+		await (wrapper as VueWrapper<ComponentPublicInstance<typeof Captcha>>).setProps({ modelValue: 'updated-value' })
 		await wrapper.vm.$nextTick()
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		expect((wrapper.vm as any).text).toBe('updated-value')
+		expect((wrapper.vm as ComponentPublicInstance<typeof Captcha>).text).toBe('updated-value')
 	})
 
 	it('handles helpDesk prop correctly', async () => {
@@ -236,9 +226,7 @@ describe('Captcha', () => {
 			},
 		})
 
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		expect(wrapper.text()).toContain('1234')
 	})
@@ -260,9 +248,7 @@ describe('Captcha', () => {
 			},
 		})
 
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		expect(wrapper.find('.captcha-helpdesk').exists()).toBe(false)
 	})
@@ -285,17 +271,13 @@ describe('Captcha', () => {
 			},
 		})
 
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
 
 		await input.trigger('focus')
 		await input.trigger('blur')
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
 
 		expect(wrapper.text()).toContain('est requis')
 	})
@@ -324,17 +306,13 @@ describe('Captcha', () => {
 			},
 		})
 
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
 
 		await input.trigger('focus')
 		await input.trigger('blur')
-		await wrapper.vm.$nextTick()
-		await wrapper.vm.$nextTick()
 
 		expect(wrapper.text()).toContain('Erreur custom captcha')
 	})
@@ -366,7 +344,7 @@ describe('Captcha', () => {
 
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
@@ -406,7 +384,7 @@ describe('Captcha', () => {
 
 		await wrapper.vm.$nextTick()
 		await wrapper.vm.$nextTick()
-		await new Promise(resolve => setTimeout(resolve, 50))
+		await flushPromises()
 
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
@@ -417,5 +395,84 @@ describe('Captcha', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.text()).toContain('Succès custom captcha')
+	})
+
+	it('resets the validation when the exposed clearValidation method is called', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				required: true,
+				modelValue: '',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.text()).toContain('est requis')
+
+		// Call the exposed clearValidation method
+		await (wrapper.vm as ComponentPublicInstance<typeof Captcha>).clearValidation()
+
+		expect(wrapper.text()).not.toContain('est requis')
+	})
+
+	it('resets the field and the validation when the the exposed reset method is called', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				required: true,
+				modelValue: '',
+				customRules: [{
+					type: 'custom',
+					options: {
+						validate: () => false,
+						message: 'Erreur custom captcha',
+					},
+				}],
+			},
+		})
+
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+
+		await input.trigger('focus')
+		await input.setValue('abc')
+		await input.trigger('blur')
+
+		expect(wrapper.text()).toContain('Erreur custom captcha')
+
+		await (wrapper.vm as ComponentPublicInstance<typeof Captcha>).reset()
+
+		expect(wrapper.text()).not.toContain('Erreur custom captcha')
+		expect(input.element.value).toBe('')
 	})
 })
