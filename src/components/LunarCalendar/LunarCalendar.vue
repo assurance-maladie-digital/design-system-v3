@@ -83,7 +83,9 @@
 		:autocomplete="props.autocomplete"
 		:disabled="props.disabled"
 		:readonly="props.readonly"
+		:required="props.required"
 		:hide-details="props.hideDetails"
+		:disable-error-handling="true"
 		@focus="focused = true"
 		@blur="focused = false"
 	/>
