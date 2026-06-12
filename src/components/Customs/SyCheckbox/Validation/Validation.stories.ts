@@ -87,7 +87,7 @@ export const WithWarning: Story = {
 			type: 'custom',
 			options: {
 				validate: (value: unknown) => value === true,
-				message: 'Il est recommandé de cocher cette case.',
+				warningMessage: 'Il est recommandé de cocher cette case.',
 			},
 		}],
 	},
@@ -118,7 +118,7 @@ const warningRules = [{
 	type: 'custom',
 	options: {
 		validate: (value: unknown) => value === true,
-		message: 'Il est recommandé de cocher cette case.',
+		warningMessage: 'Il est recommandé de cocher cette case.',
 	},
 }]
 
