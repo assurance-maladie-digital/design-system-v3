@@ -6,7 +6,7 @@ import { VBtn } from 'vuetify/components'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import type { SyCheckBoxGroupProps } from './types'
 
-const meta: Meta<typeof SyCheckBoxGroup> = {
+const meta: Meta<SyCheckBoxGroupProps> = {
 	title: 'Composants/Formulaires/SyCheckBoxGroup',
 	component: SyCheckBoxGroup,
 	decorators: [
@@ -538,81 +538,6 @@ export const ListModel: Story = {
 	}),
 }
 
-export const FormValidation: Story = {
-	args: {
-		label: 'Choisissez une option (obligatoire)',
-		required: true,
-		options: [
-			{ label: 'Option A', value: 'a' },
-			{ label: 'Option B', value: 'b' },
-		],
-		multiple: false,
-		id: 'sy-checkbox-group-form-validation',
-		isValidateOnBlur: false,
-	},
-	render: args => ({
-		components: { SyCheckBoxGroup, SyForm, VBtn },
-		setup() {
-			const value = ref<string | null>(null)
-			const onSubmit = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert('Formulaire valide !')
-				}
-			}
-			return { args, value, onSubmit }
-		},
-		template: `
-			<SyForm ref="form" @submit="onSubmit">
-				<SyCheckBoxGroup v-model="value" required v-bind="args" />
-				<div class="mt-2">Sélection : {{ value }}</div>
-				<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
-			</SyForm>
-		`,
-	}),
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-					<SyForm ref="form" @submit="onSubmit">
-						<SyCheckBoxGroup
-							v-model="value"
-							label="Choisissez une option (obligatoire)"
-							:options="options"
-							required
-							:is-validate-on-blur="false"
-							id="sy-checkbox-group-form-validation"
-						/>
-						<div class="mt-2">Sélection : {{ value }}</div>
-						<VBtn type="submit" class="mt-4" color="primary">Valider</VBtn>
-					</SyForm>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-					<script setup lang="ts">
-					import { ref } from 'vue'
-					import { VBtn } from 'vuetify/components'
-					import { SyForm, SyCheckBoxGroup } from '@cnamts/synapse'
-
-					const value = ref<string | null>(null)
-					const options = [
-						{ label: 'Option A', value: 'a' },
-						{ label: 'Option B', value: 'b' },
-					]
-
-					const onSubmit = (event: { isValid: boolean }) => {
-						if (event.isValid) {
-							alert('Formulaire valide !')
-						}
-					}
-					</script>
-				`,
-			},
-		],
-	},
-}
 
 export const CustomColors: Story = {
 	parameters: {
