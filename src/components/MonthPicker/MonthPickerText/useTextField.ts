@@ -4,6 +4,7 @@ export type TextFieldProps = {
 	label: string
 	density?: 'default' | 'comfortable' | 'compact'
 	hint?: string | false
+	helpText?: string
 	placeholder?: string
 	disabled?: boolean
 	readonly?: boolean
@@ -22,6 +23,7 @@ export function useTextField(props: TextFieldProps) {
 		label: props.label,
 		density: props.density,
 		hint: props.hint || undefined,
+		helpText: props.helpText || undefined,
 		placeholder: props.placeholder,
 		disabled: props.disabled ? true : undefined,
 		readonly: props.readonly ? true : undefined,

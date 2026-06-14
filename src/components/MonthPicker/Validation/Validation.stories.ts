@@ -5,7 +5,7 @@ import MonthPicker from '../MonthPicker.vue'
 import { fn, userEvent, within } from '@storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import type { MonthPickerProps } from '../types'
-import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { default as MonthPickerMeta } from '../MonthPicker.stories'
 
 const meta = {
 	title: 'Composants/Formulaires/MonthPicker/Validation',
@@ -29,25 +29,7 @@ const meta = {
 			exclude: ['width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open'],
 		},
 	},
-	argTypes: {
-		...getValidationDocumentation('base'),
-		modelValue: {
-			control: 'text',
-			description: 'Valeur du sélecteur de mois au format "MM/YYYY"',
-		},
-		label: {
-			control: 'text',
-			description: 'Libellé du champ',
-		},
-		clearable: {
-			control: 'boolean',
-			description: 'Affiche un bouton permettant de vider le champ',
-			table: {
-				type: { summary: 'boolean' },
-				category: 'props',
-			},
-		},
-	},
+	argTypes: MonthPickerMeta.argTypes,
 	args: {
 		'modelValue': '',
 		'label': 'Mois de début',
