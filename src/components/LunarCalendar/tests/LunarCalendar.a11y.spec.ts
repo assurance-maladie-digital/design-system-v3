@@ -72,7 +72,7 @@ describe('LunarCalendar – accessibility (axe)', () => {
 		const wrapper = mount(LunarCalendar, {
 			props: {
 				label: 'Date de naissance lunaire',
-				successMessages: 'Date valide',
+				successMessages: ['Date valide'],
 			},
 			modelValue: '15/08/2023',
 		})

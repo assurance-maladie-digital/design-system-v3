@@ -178,4 +178,110 @@ describe('SyCheckbox', () => {
 		await wrapper.find('.v-checkbox').trigger('click')
 		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
 	})
+
+	it('affiche le helpText quand aucun message de validation n\'est présent', () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				label: 'CGU',
+				helpText: 'Texte d\'aide',
+			},
+		})
+
+		const help = wrapper.find('.help-text-below')
+		expect(help.exists()).toBe(true)
+		expect(help.text()).toContain('Texte d\'aide')
+	})
+
+	it('masque le helpText et affiche l\'erreur quand la validation échoue', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				label: 'CGU',
+				helpText: 'Texte d\'aide',
+				required: true,
+				modelValue: false,
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+		await nextTick()
+
+		expect(wrapper.find('.help-text-below').exists()).toBe(false)
+		expect(wrapper.find('.v-messages').text()).toContain('CGU est requis')
+	})
+
+	it('disableErrorHandling : aucune erreur affichée même si requis et décoché', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				label: 'CGU',
+				required: true,
+				disableErrorHandling: true,
+				modelValue: false,
+			},
+		})
+
+		const isValid = await wrapper.vm.validateOnSubmit()
+		await nextTick()
+
+		expect(isValid).toBe(true)
+		expect(wrapper.find('.error-field').exists()).toBe(false)
+		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+	})
+
+	it('affiche un message d\'avertissement via customWarningRules', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				label: 'CGU',
+				modelValue: false,
+				customWarningRules: [{
+					type: 'custom',
+					options: {
+						validate: (value: boolean) => value === true,
+						warningMessage: 'Avertissement de test',
+					},
+				}],
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+		await nextTick()
+
+		expect(wrapper.find('.warning-field').exists()).toBe(true)
+		expect(wrapper.find('.v-messages').text()).toContain('Avertissement de test')
+	})
+
+	it('affiche un message de succès via customSuccessRules et showSuccessMessages', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				label: 'CGU',
+				modelValue: true,
+				showSuccessMessages: true,
+				customSuccessRules: [{
+					type: 'custom',
+					options: {
+						validate: (value: boolean) => value === true,
+						successMessage: 'Succès de test',
+					},
+				}],
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+		await nextTick()
+
+		expect(wrapper.find('.success-field').exists()).toBe(true)
+		expect(wrapper.find('.v-messages').text()).toContain('Succès de test')
+	})
+
+	it('affiche les messages externes (errorMessages + hasError)', () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				label: 'CGU',
+				hasError: true,
+				errorMessages: ['Erreur externe'],
+			},
+		})
+
+		expect(wrapper.find('.error-field').exists()).toBe(true)
+		expect(wrapper.find('.v-messages').text()).toContain('Erreur externe')
+	})
 })
