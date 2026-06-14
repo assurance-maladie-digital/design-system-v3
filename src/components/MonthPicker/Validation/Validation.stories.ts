@@ -216,6 +216,7 @@ export const WithSuccess: Story = {
 						v-model="selectedMonth"
 						label="Mois de début"
 						:custom-success-rules="customSuccessRules"
+						show-success-messages
 					/>
 				</template>
 				`,
@@ -251,6 +252,7 @@ export const WithSuccess: Story = {
 	},
 	args: {
 		modelValue: '06/2026',
+		showSuccessMessages: true,
 		customSuccessRules: [
 			{
 				type: 'custom',
@@ -1045,7 +1047,7 @@ function reset() {
 	}),
 }
 
-export const VFormValidation: Story = {
+export const VFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
@@ -1238,6 +1240,109 @@ function handleSubmit(e) {
 						<VBtn type="submit" color="primary">Valider</VBtn>
 					</div>
 				</SyForm>
+			</div>
+		`,
+	}),
+}
+
+export const VFormValidation: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VForm @submit.prevent="handleSubmit">
+		<MonthPicker
+			ref="fieldRef"
+			v-model="selectedMonth"
+			label="Mois de début"
+			:custom-rules="customRules"
+			required
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Valider</VBtn>
+		</div>
+	</VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+
+const selectedMonth = ref('')
+const fieldRef = ref<InstanceType<typeof MonthPicker> | null>(null)
+
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => {
+				if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
+					return false
+				}
+				return true
+			},
+			message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+			fieldIdentifier: 'selectedMonth',
+		},
+	},
+]
+
+async function handleSubmit() {
+	const result = await fieldRef.value?.validateOnSubmit()
+	alert(result ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker, VBtn, VForm },
+		setup() {
+			const selectedMonth = ref('')
+			const fieldRef = ref<InstanceType<typeof MonthPicker> | null>(null)
+
+			const customRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
+								return false
+							}
+							return true
+						},
+						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+						fieldIdentifier: 'selectedMonth',
+					},
+				},
+			]
+
+			async function handleSubmit() {
+				const result = await fieldRef.value?.validateOnSubmit()
+				alert(result ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
+			}
+
+			return { args, selectedMonth, customRules, handleSubmit, fieldRef }
+		},
+		template: `
+			<div>
+				<VForm @submit.prevent="handleSubmit">
+					<MonthPicker
+						v-bind="args"
+						ref="fieldRef"
+						v-model="selectedMonth"
+						label="Mois de début"
+						:custom-rules="customRules"
+						required
+						width="400px"
+					/>
+					<div class="mt-4">
+						<VBtn type="submit" color="primary">Valider</VBtn>
+					</div>
+				</VForm>
 			</div>
 		`,
 	}),

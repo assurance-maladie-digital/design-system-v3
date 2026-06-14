@@ -298,14 +298,13 @@
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
-	// Détermine si le helpText doit être affiché à la position du message ou en dessous
+	// Détermine si le helpText doit être affiché dans le composant VTextField ou en dessous
 	const showHelpTextAsMessage = computed(() => {
-		// Afficher à la position du message si pas de messages d'erreur
 		return props.helpText && !hasMessages.value
 	})
 
 	const showHelpTextBelow = computed(() => {
-		// Afficher en dessous si il y a des messages d'erreur ET hideMessages n'est pas activé
+		// Afficher en dessous si il y a des messages d'erreur ET hideDetails n'est pas activé
 		return props.helpText && hasMessages.value && !props.hideDetails
 	})
 

@@ -16,8 +16,8 @@
 		hasError?: boolean
 		hasWarning?: boolean
 		hasSuccess?: boolean
-		showSuccessMessages?: boolean
 		required?: boolean
+		hideDetails?: boolean
 	} & TextFieldProps>(), {
 		errorMessages: null,
 		warningMessages: null,
@@ -25,8 +25,8 @@
 		hasError: false,
 		hasWarning: false,
 		hasSuccess: false,
-		showSuccessMessages: true,
 		required: false,
+		hideDetails: false,
 	})
 
 	const emits = defineEmits<{
@@ -70,7 +70,9 @@
 		:has-error="props.hasError"
 		:has-warning="props.hasWarning"
 		:has-success="props.hasSuccess"
-		:show-success-messages="props.showSuccessMessages"
+		:required="props.required"
+		:disable-error-handling="true"
+		:hide-details="props.hideDetails"
 		:display-asterisk="props.required"
 		@focus="focused = true"
 		@blur="focused = false"
