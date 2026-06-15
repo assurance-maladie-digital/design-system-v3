@@ -296,58 +296,82 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-transmission',
 						},
 					},
+					{
+						title: 'StructureMenu',
+						usedComponents: [
+							{
+								name: 'DialogBox',
+								type: 'feedback',
+							},
+							{
+								name: 'NotificationBar',
+								type: 'feedback',
+							},
+							{
+								name: 'VSwitch',
+								type: 'composants vuetify',
+							},
+							{
+								name: 'VTooltip',
+								type: 'composants vuetify',
+							},
+						],
+						amelipro: {
+							name: 'StructureMenu',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-menu',
+						},
+					},
+					{
+						title: 'StructureBtn',
+						synapse: {
+							name: 'VBtn',
+							url: getComponentUrl({ name: 'VBtn', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'StructureBtn',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-btn',
+						},
+					},
+					{
+						title: 'StructureItem',
+						synapse: {
+							name: 'SelectBtnField',
+							url: getComponentUrl({ name: 'SelectBtnField', type: 'formulaires selects' }),
+						},
+						amelipro: {
+							name: 'StructureItem',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-item',
+						},
+					},
+					{
+						title: 'StructureList',
+						usedComponents: [
+							{
+								name: 'SyRadioGroup',
+								type: 'formulaires',
+							},
+							{
+								name: 'VBtn',
+								type: 'composants vuetify',
+							},
+						],
+						amelipro: {
+							name: 'StructureList',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-list',
+						},
+					},
+					{
+						title: 'StructureTabs',
+						synapse: {
+							name: 'SyTabs',
+							url: getComponentUrl({ name: 'SyTabs', type: 'navigation' }),
+						},
+						amelipro: {
+							name: 'StructureTabs',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-tabs',
+						},
+					},
 					// {
-					// 	title: 'StructureMenu',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureMenu',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-menu',
-					// 	},
-					// }, {
-					// 	title: 'StructureBtn',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureBtn',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-btn',
-					// 	},
-					// }, {
-					// 	title: 'StructureItem',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureItem',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-item',
-					// 	},
-					// }, {
-					// 	title: 'StructureList',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureList',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-list',
-					// 	},
-					// },
-					// {
-					// 	title: 'StructureTabs',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureTabs',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-tabs',
-					// 	},
-					// }, {
 					// 	title: 'UserMenu',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
@@ -951,16 +975,17 @@ export const AmeliproComponents: StoryObj = {
 						  <p>
 							  Pour reproduire son comportement, utilisez les composants du Design System suivants :
 						  </p>
-
-						  <p v-for="item in component.usedComponents" :key="item.name">
-							  <a
-								  :href="getComponentUrl(item)"
-				                  target="_blank"
-				                  rel="noopener noreferrer"
-							  >
-								  {{ item.name }}
-							  </a>
-						  </p>
+                        <div class="mt-2 mb-2">
+                          <p v-for="item in component.usedComponents" :key="item.name">
+                            <a
+                                :href="getComponentUrl(item)"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                              {{ item.name }}
+                            </a>
+                          </p>
+                        </div>
 
 						  <p>
 							  et implémentez la logique métier directement dans votre projet.
