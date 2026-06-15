@@ -1,45 +1,38 @@
 import type { FieldValidationProps, ValidationRule, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
-export type Option = {
-	label: string
-	value: string | number
-	disabled?: boolean
-	readonly?: boolean
-	id?: string
-	name?: string
-	ariaLabel?: string
-	title?: string
-}
-
 /**
- * Props du composant SyCheckBoxGroup
+ * Props du composant SyCheckbox
  */
-export interface SyCheckBoxGroupProps extends FieldValidationProps {
+export interface SyCheckboxProps extends FieldValidationProps {
+	modelValue?: boolean | null
+	indeterminate?: boolean
+	label?: string
+	helpText?: string
 	ariaLabel?: string
 	ariaLabelledby?: string
-	color?: string
-	density?: 'default' | 'comfortable' | 'compact'
-	displayAsterisk?: boolean
-	helpText?: string
-	hideDetails?: boolean | 'auto'
-	id?: string
-	label?: string
-	modelValue?: (string | number) | (string | number)[] | null
-	multiple?: boolean
-	name?: string
-	options?: Option[]
 	title?: string
+	color?: string
+	hideDetails?: boolean | 'auto'
+	density?: 'default' | 'comfortable' | 'compact'
+	id?: string
+	name?: string
+	value?: unknown
+	trueValue?: unknown
+	falseValue?: unknown
+	controlsIds?: string[]
+	displayAsterisk?: boolean
+	decorative?: boolean
 }
 
 /**
- * Props de validation étendant FieldValidationProps du système unifié
+ * Props de validation passées au composable dédié
  */
-export interface SyCheckBoxGroupValidationProps extends FieldValidationProps {
-	modelValue?: (string | number) | (string | number)[] | null
-	multiple?: boolean
+export interface SyCheckboxValidationProps extends FieldValidationProps {
+	modelValue?: boolean | null
 	required?: boolean
 	readonly?: boolean
 	disabled?: boolean
+	label?: string
 	customRules?: ValidationRule[]
 	customWarningRules?: ValidationRule[]
 	customSuccessRules?: ValidationRule[]
@@ -55,5 +48,4 @@ export interface SyCheckBoxGroupValidationProps extends FieldValidationProps {
 	hasSuccess?: boolean
 	maxErrors?: number
 	disableErrorHandling?: boolean
-	fieldIdentifier?: string
 }

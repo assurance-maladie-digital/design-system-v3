@@ -2169,7 +2169,7 @@ exports[`mounthpicker > should open the menu when clicking on the input 1`] = `
   <div class="visual-picker-header">
     <div
       class="visual-picker-header__title"
-      id="v-4-title"
+      id="v-5-title"
     >
       Sélectionner un mois
     </div>
@@ -2396,6 +2396,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
   <div class="sy-textfield-container">
     <div class="
       basic-field
+      help-text-as-hint
       v-input
       v-input--center-affix
       v-input--density-default
@@ -2439,20 +2440,21 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
                 v-field-label
                 v-label
               "
-              id="input-v-2-label"
+              id="input-v-3-label"
             >
               <!---->
               Début du projet
             </label>
             <!---->
             <input
-              aria-describedby="input-v-2-messages"
+              aria-describedby="input-v-3-messages"
               aria-label="Début du projet"
-              aria-labelledby="input-v-2-label"
+              aria-labelledby="input-v-3-label"
               autocomplete="off"
               class="v-field__input"
               direction="horizontal"
-              id="input-v-2"
+              id="input-v-3"
+              name="v-1"
               size="1"
               title="Début du projet"
               type="text"
@@ -2479,7 +2481,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
                   v-field-label--floating
                   v-label
                 "
-                for="input-v-2"
+                for="input-v-3"
               >
                 <!---->
                 Début du projet
@@ -2523,7 +2525,7 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
       <div
         aria-live="polite"
         class="v-input__details"
-        id="input-v-2-messages"
+        id="input-v-3-messages"
         role="alert"
       >
         <transition-group-stub
@@ -2534,7 +2536,9 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
           persisted="false"
           tag="div"
         >
-          <!---->
+          <div class="v-messages__message">
+            Format MM/AAAA
+          </div>
         </transition-group-stub>
         <!---->
       </div>
