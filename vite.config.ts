@@ -58,6 +58,11 @@ export default defineConfig({
 			},
 		},
 	},
+	esbuild: {
+		supported: {
+			destructuring: true,
+		},
+	},
 	css: {
 		preprocessorOptions: {
 			scss: {
