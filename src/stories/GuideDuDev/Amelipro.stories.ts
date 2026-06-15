@@ -508,17 +508,19 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'AmeliproMailTile',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-mail-tile',
 					// 	},
-					// }, {
-					// 	title: 'AmeliproMultipleFoldingCard',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproMultipleFoldingCard',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-multiple-folding-card',
-					// 	},
-					// }, {
+					// },
+					{
+						title: 'AmeliproMultipleFoldingCard',
+						synapse: {
+							name: 'Accordion',
+							url: getComponentUrl({ name: 'Accordion--with-custom-content', type: 'données' }),
+						},
+						amelipro: {
+							name: 'AmeliproMultipleFoldingCard',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-multiple-folding-card',
+						},
+					},
+					// {
 					// 	title: 'AmeliproNumberedCard',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
