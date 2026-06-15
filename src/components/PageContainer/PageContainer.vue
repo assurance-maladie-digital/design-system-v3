@@ -119,23 +119,23 @@
 
 <style lang="scss" scoped>
 .vd-page-container {
-    flex: 1;
-    width: 100%;
+	flex: 1;
+	width: 100%;
 }
 
 .vd-page-container__content {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }
 
 .vd-page-container__slot-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .vd-page-container__slot-content {
-    margin: 0 auto;
+	margin: 0 auto;
 }
 </style>
