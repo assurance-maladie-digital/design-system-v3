@@ -9,7 +9,7 @@ const meta = {
 	component: PageContainer,
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['spacingClass', 'containerSize'] },
+		controls: { exclude: ['spacingClass', 'containerSize', 'alignCenter'] },
 	},
 	argTypes: {
 		size: {
@@ -266,11 +266,12 @@ export const WithHeaderAndFooter: Story = {
 				code: `<template>
     <div class="d-flex flex-column" style="min-height: 100vh; width: 100%;">
         <PageContainer style="flex: 1; width: 100%;">
-            <template #prepend>
+            <template #prepend="{ width }">
                 <HeaderBar
-                    service-title="Mon espace professionnel"
-                    service-subtitle="Service pour les professionnels de santé"
+                    service-title="Mon espace"
+                    service-subtitle="Service de santé"
                     :heading-level-title="1"
+                    :width="width"
                 >
                     <template #header-side>
                         <div class="d-flex align-center ga-3 text-primary">
@@ -321,8 +322,9 @@ export const WithHeaderAndFooter: Story = {
                 par du texte réel dès que celui-ci est disponible.
             </p>
             
-            <template #append>
+            <template #append="{ width }">
                 <FooterBar
+                    :width="width"
                     version="3.0.0"
                     a11y-compliance="partiellement-conforme"
                 />
@@ -351,13 +353,14 @@ export const WithHeaderAndFooter: Story = {
 			template: `
                 <div class="d-flex flex-column" style="min-height: 100vh; width: 100%;">
                     <PageContainer :size="args.size" :spacing="args.spacing" :color="args.color" style="flex: 1; width: 100%;">
-                        <template #prepend>
+                        <template #prepend="{ width }">
                             <HeaderBar
-                                service-title="Mon espace professionnel"
-                                service-subtitle="Service pour les professionnels de santé"
+                                service-title="Mon espace"
+                                service-subtitle="Service de santé"
                                 :heading-level-title="1"
+                                :width="width"
                             >
-                                <template #header-side>
+                                <template #header-side v-if="args.size !== 'xs' && args.size !== 'sm'">
                                     <div class="d-flex align-center ga-3 text-primary mr-4">
                                         <div class="text-body-2">
                                             <div class="font-weight-medium">Dr. Jean Dupont</div>
@@ -406,8 +409,9 @@ export const WithHeaderAndFooter: Story = {
                             par du texte réel dès que celui-ci est disponible.
                         </p>
                         
-                        <template #append>
+                        <template #append="{ width }">
                             <FooterBar
+                                :width="width"
                                 version="3.0.0"
                                 a11y-compliance="partiellement-conforme"
                             />

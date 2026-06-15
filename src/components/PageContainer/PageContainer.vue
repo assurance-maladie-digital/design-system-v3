@@ -55,6 +55,8 @@
 		}
 	})
 
+	const containerWidth = computed(() => `${containerSize.value}px`)
+
 	defineExpose({
 		spacingClass,
 		containerSize,
@@ -64,31 +66,76 @@
 <template>
 	<div
 		:id="uniqueId ? `${uniqueId}-container` : undefined"
-		:class="[spacingClass, 'vd-page-container d-flex flex-column justify-center', { 'align-center': alignCenter }]"
+		:class="['vd-page-container d-flex flex-column', { 'align-center': alignCenter }]"
 		:role="role"
 		:aria-labelledby="ariaLabelledby"
 	>
-		<!-- Slot prepend en dehors du VSheet -->
-		<slot name="prepend" />
-
-		<VSheet
-			:id="uniqueId ? `${uniqueId}-content` : undefined"
-			:width="containerSize"
-			:color="color"
+		<!-- Slot prepend avec wrapper de largeur fixe -->
+		<div
+			v-if="$slots.prepend"
+			class="vd-page-container__slot-wrapper"
 		>
-			<slot />
-		</VSheet>
+			<div
+				class="vd-page-container__slot-content"
+				:style="{ width: containerWidth }"
+			>
+				<slot
+					name="prepend"
+					:width="containerWidth"
+				/>
+			</div>
+		</div>
 
-		<!-- Slot append en dehors du VSheet -->
-		<slot name="append" />
+		<div
+			:class="spacingClass"
+			class="vd-page-container__content"
+		>
+			<VSheet
+				:id="uniqueId ? `${uniqueId}-content` : undefined"
+				:width="containerSize"
+				:color="color"
+			>
+				<slot />
+			</VSheet>
+		</div>
+
+		<!-- Slot append avec wrapper de largeur fixe -->
+		<div
+			v-if="$slots.append"
+			class="vd-page-container__slot-wrapper"
+		>
+			<div
+				class="vd-page-container__slot-content"
+				:style="{ width: containerWidth }"
+			>
+				<slot
+					name="append"
+					:width="containerWidth"
+				/>
+			</div>
+		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 .vd-page-container {
-	flex: 1;
-	width: 100%;
-	max-width: 1712px;
-	margin: 0 auto;
+    flex: 1;
+    width: 100%;
+}
+
+.vd-page-container__content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.vd-page-container__slot-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.vd-page-container__slot-content {
+    margin: 0 auto;
 }
 </style>
