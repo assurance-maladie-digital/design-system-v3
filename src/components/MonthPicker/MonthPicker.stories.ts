@@ -21,7 +21,7 @@ const meta: Meta<typeof MonthPicker> = {
 			table: {
 				type: {
 					summary: 'object',
-					details: `{
+					detail: `{
 	btnLabel: string,
 	headerSelectYear: string,
 	headerSelectMonth: string,
