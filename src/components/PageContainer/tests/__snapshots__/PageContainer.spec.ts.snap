@@ -4,20 +4,25 @@ exports[`PageContainer > render correctly 1`] = `
 <div class="
   d-flex
   flex-column
-  justify-center
-  px-14
-  py-10
   vd-page-container
 ">
-  <!-- Slot prepend en dehors du VSheet -->
-  <div
-    class="
-      bg-transparent
-      v-sheet
-      v-theme--light
-    "
-    style="width: 800px;"
-  ></div>
-  <!-- Slot append en dehors du VSheet -->
+  <!-- Slot prepend avec wrapper de largeur fixe -->
+  <!-- v-if -->
+  <div class="
+    px-14
+    py-10
+    vd-page-container__content
+  ">
+    <div
+      class="
+        bg-transparent
+        v-sheet
+        v-theme--light
+      "
+      style="width: 800px;"
+    ></div>
+  </div>
+  <!-- Slot append avec wrapper de largeur fixe -->
+  <!-- v-if -->
 </div>
 `;
