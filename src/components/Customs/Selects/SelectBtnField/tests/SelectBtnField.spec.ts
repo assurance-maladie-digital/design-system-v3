@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
+import { ref } from 'vue'
 
 import SelectBtnField from '../SelectBtnField.vue'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 describe('SelectBtnField', () => {
 	it('renders correctly', () => {
@@ -14,7 +16,7 @@ describe('SelectBtnField', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
 				label: 'Test',
-				hint: 'Test',
+				helpText: 'Test',
 				items: [
 					{
 						text: 'Test',
@@ -39,7 +41,7 @@ describe('SelectBtnField', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
 				label: 'Test',
-				hint: 'Test',
+				helpText: 'Test',
 				items: [
 					{
 						text: 'Test',
@@ -65,7 +67,7 @@ describe('SelectBtnField', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
 				label: 'Test',
-				hint: 'Test',
+				helpText: 'Test',
 				items: [
 					{
 						text: 'Test',
@@ -88,7 +90,7 @@ describe('SelectBtnField', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
 				label: 'Test',
-				hint: 'Test',
+				helpText: 'Test',
 				items: [
 					{
 						text: 'Test',
@@ -122,7 +124,7 @@ describe('SelectBtnField', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
 				label: 'Test',
-				hint: 'Test',
+				helpText: 'Test',
 				items: [
 					{
 						text: 'Test',
@@ -153,7 +155,7 @@ describe('SelectBtnField', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
 				label: 'Test',
-				hint: 'Test',
+				helpText: 'Test',
 				items: [
 					{
 						text: 'Test',
@@ -168,7 +170,6 @@ describe('SelectBtnField', () => {
 						value: 'test3',
 					},
 				],
-				error: true,
 				errorMessages: ['Test'],
 			},
 		})
@@ -230,7 +231,7 @@ describe('SelectBtnField', () => {
 				return {
 					props: {
 						label: 'Test',
-						hint: 'Test',
+						helpText: 'Test',
 						items: [
 							{
 								text: 'Test 1',
@@ -241,7 +242,6 @@ describe('SelectBtnField', () => {
 								value: 'test2',
 							},
 						],
-						error: true,
 						errorMessages: ['Test'],
 						multiple: true,
 						inline: true,
@@ -258,7 +258,7 @@ describe('SelectBtnField', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
-	it(`display correctly with in dark mode with an hint`, () => {
+	it(`display correctly with in dark mode with a help text`, () => {
 		const DarkMode = {
 			template: `
 				<v-app>
@@ -276,7 +276,7 @@ describe('SelectBtnField', () => {
 				return {
 					props: {
 						label: 'Test',
-						hint: 'Test',
+						helpText: 'Test',
 						items: [
 							{
 								text: 'Test 1',
@@ -303,7 +303,7 @@ describe('SelectBtnField', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
 				label: 'Test',
-				hint: 'Test',
+				helpText: 'Test',
 				items: [
 					{
 						text: 'Test 1',
@@ -320,21 +320,6 @@ describe('SelectBtnField', () => {
 
 		await wrapper.find('[role="option"]').trigger('click')
 		expect(wrapper.emitted()).not.toHaveProperty('update:modelValue')
-	})
-
-	it('emits update:error and update:error-messages when an item is selected', async () => {
-		const wrapper = mount(SelectBtnField, {
-			props: {
-				items: [{ text: 'Test', value: 'test' }],
-				error: true,
-				errorMessages: ['Champ requis'],
-			},
-		})
-
-		await wrapper.find('[role="option"]').trigger('click')
-
-		expect(wrapper.emitted('update:error')).toEqual([[false]])
-		expect(wrapper.emitted('update:error-messages')).toEqual([[undefined]])
 	})
 
 	it('filters out items with null or undefined value', () => {
@@ -399,7 +384,7 @@ describe('SelectBtnField', () => {
 				label: 'Choix',
 				multiple: true,
 				inline: true,
-				error: true,
+				errorMessages: ['Erreur'],
 			},
 		})
 
@@ -521,10 +506,10 @@ describe('SelectBtnField', () => {
 		expect(emitted![emitted!.length - 1]![0]).toEqual([])
 	})
 
-	it('displays hint when no errorMessages', () => {
+	it('displays helpText when no validation message', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
-				hint: 'Aide contextuelle',
+				helpText: 'Aide contextuelle',
 				items: [{ text: 'A', value: 'a' }],
 			},
 		})
@@ -532,10 +517,10 @@ describe('SelectBtnField', () => {
 		expect(wrapper.text()).toContain('Aide contextuelle')
 	})
 
-	it('displays errorMessages instead of hint when both are provided', () => {
+	it('displays errorMessages instead of helpText when both are provided', () => {
 		const wrapper = mount(SelectBtnField, {
 			props: {
-				hint: 'Aide contextuelle',
+				helpText: 'Aide contextuelle',
 				errorMessages: ['Champ invalide'],
 				items: [{ text: 'A', value: 'a' }],
 			},
@@ -543,5 +528,363 @@ describe('SelectBtnField', () => {
 
 		expect(wrapper.text()).toContain('Champ invalide')
 		expect(wrapper.text()).not.toContain('Aide contextuelle')
+	})
+
+	describe('validation', () => {
+		it('exposes validateOnSubmit and returns false for an empty required field', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					required: true,
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+
+			const vm = wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, errors: string[] }
+			const result = await vm.validateOnSubmit()
+
+			expect(result).toBe(false)
+			expect(vm.errors).toContain('Le champ Moyen de contact est requis.')
+
+			wrapper.unmount()
+		})
+
+		it('validateOnSubmit returns true when a required field is filled', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					required: true,
+					modelValue: 'email',
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+
+			const vm = wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean> }
+			expect(await vm.validateOnSubmit()).toBe(true)
+
+			wrapper.unmount()
+		})
+
+		it('displays an error from a customRule', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					modelValue: 'sms',
+					items: [
+						{ text: 'Email', value: 'email' },
+						{ text: 'SMS', value: 'sms' },
+					],
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (v: unknown) => v !== 'sms',
+							message: 'Le SMS n’est pas disponible.',
+						},
+					}],
+				},
+			})
+			const vm = wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, hasError: boolean, errors: string[] }
+			await vm.validateOnSubmit()
+			await flushPromises()
+
+			expect(vm.hasError).toBe(true)
+			expect(vm.errors).toContain('Le SMS n’est pas disponible.')
+			expect(wrapper.find('[role="listbox"]').attributes('aria-invalid')).toBe('true')
+
+			wrapper.unmount()
+		})
+
+		it('displays a warning and a success message from custom rules', async () => {
+			const warningWrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					modelValue: 'courrier',
+					items: [{ text: 'Courrier', value: 'courrier' }],
+					customWarningRules: [{
+						type: 'custom',
+						options: {
+							validate: (v: unknown) => v !== 'courrier',
+							warningMessage: 'Délais allongés.',
+						},
+					}],
+				},
+			})
+			const warningVm = warningWrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, hasWarning: boolean, warnings: string[] }
+			await warningVm.validateOnSubmit()
+			await flushPromises()
+			expect(warningVm.hasWarning).toBe(true)
+			expect(warningVm.warnings).toContain('Délais allongés.')
+			warningWrapper.unmount()
+
+			const successWrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					modelValue: 'email',
+					showSuccessMessages: true,
+					items: [{ text: 'Email', value: 'email' }],
+					customSuccessRules: [{
+						type: 'custom',
+						options: {
+							validate: (v: unknown) => v === 'email',
+							successMessage: 'Choix optimal.',
+						},
+					}],
+				},
+			})
+			const successVm = successWrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, hasSuccess: boolean, successes: string[] }
+			await successVm.validateOnSubmit()
+			await flushPromises()
+			expect(successVm.hasSuccess).toBe(true)
+			expect(successVm.successes).toContain('Choix optimal.')
+			successWrapper.unmount()
+		})
+
+		it('sets aria-required when required', () => {
+			const wrapper = mount(SelectBtnField, {
+				props: { label: 'Choix', required: true },
+			})
+			expect(wrapper.find('[role="listbox"]').attributes('aria-required')).toBe('true')
+			wrapper.unmount()
+		})
+
+		it('does not display errors when disableErrorHandling is true', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					required: true,
+					disableErrorHandling: true,
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+
+			const vm = wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, errors: string[] }
+			await vm.validateOnSubmit()
+			await flushPromises()
+
+			expect(vm.errors).toHaveLength(0)
+			expect(wrapper.find('[role="listbox"]').attributes('aria-invalid')).toBe('false')
+
+			wrapper.unmount()
+		})
+
+		it('registers with a parent SyForm and is validated on submit', async () => {
+			const wrapper = mount({
+				components: { SyForm, SelectBtnField },
+				template: `
+					<SyForm ref="form">
+						<SelectBtnField v-model="value" label="Moyen de contact" required :items="items" />
+					</SyForm>
+				`,
+				setup() {
+					return {
+						value: ref<string | null>(null),
+						items: [{ text: 'Email', value: 'email' }],
+					}
+				},
+			})
+
+			const form = wrapper.getComponent(SyForm)
+			const isValid = await (form.vm as unknown as { validate: () => Promise<boolean> }).validate()
+			await flushPromises()
+
+			expect(isValid).toBe(false)
+			expect(wrapper.text()).toContain('Le champ Moyen de contact est requis.')
+
+			wrapper.unmount()
+		})
+
+		it('validates on selection change when isValidateOnBlur is false', async () => {
+			const wrapper = mount({
+				components: { SelectBtnField },
+				template: `
+					<SelectBtnField
+						ref="field"
+						v-model="value"
+						label="Moyen de contact"
+						:items="items"
+						:custom-rules="customRules"
+					/>
+				`,
+				setup() {
+					return {
+						value: ref<string | null>(null),
+						items: [
+							{ text: 'Email', value: 'email' },
+							{ text: 'SMS', value: 'sms' },
+						],
+						customRules: [{
+							type: 'custom',
+							options: {
+								validate: (v: unknown) => v !== 'sms',
+								message: 'Le SMS n’est pas disponible.',
+							},
+						}],
+					}
+				},
+			})
+			const vm = wrapper.findComponent(SelectBtnField).vm as unknown as { hasError: boolean, errors: string[] }
+
+			// Sélection d'une valeur invalide -> validation immédiate
+			await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
+			await flushPromises()
+			expect(vm.hasError).toBe(true)
+			expect(vm.errors).toContain('Le SMS n’est pas disponible.')
+
+			// Re-clic pour désélectionner -> l'erreur disparaît
+			await wrapper.find('li:nth-child(2)[role="option"]').trigger('click')
+			await flushPromises()
+			expect(vm.hasError).toBe(false)
+
+			wrapper.unmount()
+		})
+
+		it('supports Vuetify native validation (useVuetifyValidation)', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					useVuetifyValidation: true,
+					rules: [(v: unknown) => !!v || 'Le moyen de contact est requis.'],
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+
+			const vm = wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, errors: string[] }
+			expect(await vm.validateOnSubmit()).toBe(false)
+			await flushPromises()
+			expect(vm.errors).toContain('Le moyen de contact est requis.')
+
+			wrapper.unmount()
+		})
+
+		it('clears the validation state via clearValidation', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					required: true,
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+			const vm = wrapper.vm as unknown as {
+				validateOnSubmit: () => Promise<boolean>
+				clearValidation: () => void
+				errors: string[]
+			}
+
+			await vm.validateOnSubmit()
+			await flushPromises()
+			expect(vm.errors.length).toBeGreaterThan(0)
+
+			vm.clearValidation()
+			await flushPromises()
+			expect(vm.errors).toHaveLength(0)
+
+			wrapper.unmount()
+		})
+
+		it('renders external error, warning and success messages', async () => {
+			const errorWrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					errorMessages: ['Erreur externe'],
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+			expect(errorWrapper.text()).toContain('Erreur externe')
+			expect(errorWrapper.find('.select-btn-field__message--error').exists()).toBe(true)
+			errorWrapper.unmount()
+
+			const warningWrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					warningMessages: ['Avertissement externe'],
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+			expect(warningWrapper.text()).toContain('Avertissement externe')
+			expect(warningWrapper.find('.select-btn-field__message--warning').exists()).toBe(true)
+			warningWrapper.unmount()
+
+			const successWrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					successMessages: ['Succès externe'],
+					showSuccessMessages: true,
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+			expect(successWrapper.text()).toContain('Succès externe')
+			expect(successWrapper.find('.select-btn-field__message--success').exists()).toBe(true)
+			successWrapper.unmount()
+		})
+
+		it('applies the matching state class on the listbox container', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					errorMessages: ['Erreur'],
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+			expect(wrapper.find('.select-btn-field__options--error').exists()).toBe(true)
+			wrapper.unmount()
+		})
+
+		it('does not render the messages area when hideDetails is true', () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					hideDetails: true,
+					errorMessages: ['Erreur masquée'],
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+
+			expect(wrapper.find('.select-btn-field__messages').exists()).toBe(false)
+			expect(wrapper.text()).not.toContain('Erreur masquée')
+
+			wrapper.unmount()
+		})
+
+		it('does not display success message text when showSuccessMessages is false', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					modelValue: 'email',
+					items: [{ text: 'Email', value: 'email' }],
+					customSuccessRules: [{
+						type: 'custom',
+						options: {
+							validate: (v: unknown) => v === 'email',
+							successMessage: 'Choix optimal.',
+						},
+					}],
+				},
+			})
+			const vm = wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, hasSuccess: boolean }
+			await vm.validateOnSubmit()
+			await flushPromises()
+
+			// L'état de succès est actif mais le message texte reste masqué
+			expect(vm.hasSuccess).toBe(true)
+			expect(wrapper.text()).not.toContain('Choix optimal.')
+
+			wrapper.unmount()
+		})
+
+		it('does not allow selection when disabled', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					label: 'Moyen de contact',
+					disabled: true,
+					items: [{ text: 'Email', value: 'email' }],
+				},
+			})
+
+			await wrapper.find('[role="option"]').trigger('click')
+			expect(wrapper.emitted()).not.toHaveProperty('update:modelValue')
+			expect(wrapper.find('[role="listbox"]').attributes('aria-disabled')).toBe('true')
+
+			wrapper.unmount()
+		})
 	})
 })

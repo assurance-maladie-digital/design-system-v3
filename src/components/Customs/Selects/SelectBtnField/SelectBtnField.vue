@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheck } from '@mdi/js'
-	import { computed, onMounted, ref, watch } from 'vue'
-	import { useTheme } from 'vuetify'
+	import { computed, ref, watch } from 'vue'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useSelectBtnFieldValidation } from './composables/useSelectBtnFieldValidation'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
 
 	const props = withDefaults(defineProps<{
@@ -12,39 +13,51 @@
 		ariaLabelledby?: string | undefined
 		multiple?: boolean
 		inline?: boolean
-		hint?: string
-		error?: boolean
-		errorMessages?: string[]
-		readonly?: boolean
-	}>(), {
+		helpText?: string
+		hideDetails?: boolean
+	} & FieldValidationProps>(), {
 		modelValue: null,
 		items: () => [],
 		label: undefined,
 		ariaLabelledby: undefined,
 		multiple: false,
 		inline: false,
-		hint: undefined,
-		error: false,
-		errorMessages: undefined,
-		readonly: false,
+		helpText: undefined,
+		hideDetails: false,
+		...validationPropsDefaults,
+		isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection
 	})
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: SelectBtnValue): void
-		(e: 'update:error', value: boolean): void
-		(e: 'update:error-messages', value: string[] | undefined): void
 	}>()
 
 	const internalValue = ref<SelectBtnValue>(props.multiple ? [] : null)
-	const darktheme = ref<boolean>(false)
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
 
-	onMounted(() => {
-		const theme = useTheme().current
-		if (theme && theme.value) {
-			darktheme.value = theme.value.dark
-		}
+	const {
+		focused,
+		validate,
+		clearValidation,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+	} = useSelectBtnFieldValidation(props)
+
+	defineExpose({
+		validateOnSubmit: validate,
+		validate,
+		clearValidation,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
 	})
 
 	watch(() => props.modelValue, (value) => {
@@ -58,6 +71,23 @@
 		immediate: true,
 		deep: true,
 	})
+
+	const messages = computed<string[]>(() => {
+		if (hasError.value) return errors.value
+		if (hasWarning.value) return warnings.value
+		if (hasSuccess.value && props.showSuccessMessages) return successes.value
+		return []
+	})
+
+	const messageClass = computed(() => {
+		if (hasError.value) return 'select-btn-field__message--error'
+		if (hasWarning.value) return 'select-btn-field__message--warning'
+		if (hasSuccess.value) return 'select-btn-field__message--success'
+		return ''
+	})
+
+	const showHelpText = computed(() => !!props.helpText && messages.value.length === 0)
+
 	const filteredItems = computed(() => props.items.filter((item) => {
 		return item.value !== null && item.value !== undefined
 	}))
@@ -118,13 +148,11 @@
 	}
 
 	function toggleItem(item: SelectBtnItem): void {
-		if (props.readonly) {
+		if (props.readonly || props.disabled) {
 			return
 		}
 
 		internalValue.value = getNewValue(item)
-		emits('update:error', false)
-		emits('update:error-messages', undefined)
 		emits('update:modelValue', internalValue.value)
 	}
 
@@ -192,9 +220,16 @@
 		optionsRef.value[optionsRef.value.length - 1]?.focus()
 	}
 
+	function handleFocusIn(): void {
+		focused.value = true
+	}
+
 	function handleBlur(): void {
 		if ((!listRef.value?.contains(document.activeElement) || !(listRef.value === document.activeElement))) {
 			focusedIndex.value = -1
+		}
+		if (!listRef.value?.contains(document.activeElement)) {
+			focused.value = false
 		}
 	}
 
@@ -237,17 +272,23 @@
 			:class="{
 				'select-btn-field__options--inline': props.inline,
 				'select-btn-field__options--column': !props.inline,
-				'select-btn-field__options--error': error,
+				'select-btn-field__options--error': hasError,
+				'select-btn-field__options--warning': hasWarning && !hasError,
+				'select-btn-field__options--success': hasSuccess && !hasError && !hasWarning,
 				'select-btn-field__options--readonly': readonly,
+				'select-btn-field__options--disabled': disabled,
 			}"
 			:aria-label="props.label"
 			:aria-labelledby="props.ariaLabelledby ?? undefined"
 			role="listbox"
 			:aria-orientation="props.inline ? 'horizontal' : 'vertical'"
 			:aria-multiselectable="props.multiple ? 'true' : 'false'"
-			:aria-invalid="error ? 'true' : 'false'"
+			:aria-invalid="hasError ? 'true' : 'false'"
+			:aria-required="props.required ? 'true' : undefined"
 			:aria-readonly="readonly ? 'true' : 'false'"
+			:aria-disabled="disabled ? 'true' : undefined"
 			:tabindex="focusedIndex === -1 ? '0' : '-1'"
+			@focusin="handleFocusIn"
 			@focusout="handleBlur"
 			@keydown.left.prevent="focusPrevious"
 			@keydown.right.prevent="focusNext"
@@ -260,7 +301,7 @@
 				v-for="(item, index) in filteredItems"
 				:key="`select-btn-field-item-${index}`"
 				ref="optionsRef"
-				v-ripple="!props.readonly"
+				v-ripple="!props.readonly && !props.disabled"
 				class="select-btn-field__item"
 				:class="{
 					'select-btn-field__item--selected': isSelected(item.value),
@@ -288,24 +329,29 @@
 				</div>
 			</li>
 		</ul>
-		<template v-if="errorMessages">
-			<p
-				v-for="(errorMessage, index) in errorMessages"
-				:key="index"
-				:class="darktheme ? 'theme--dark' : 'theme--light'"
-				class="v-messages text-error px-3 mt-2 mb-0 opacity-100"
-			>
-				{{ errorMessage }}
-			</p>
-		</template>
 
-		<p
-			v-else-if="hint"
-			:class="darktheme ? 'theme--dark' : 'theme--light'"
-			class="v-messages px-3 mt-2 mb-0 opacity-100"
+		<div
+			v-if="!props.hideDetails && (messages.length > 0 || showHelpText)"
+			class="select-btn-field__messages px-3 mt-2"
 		>
-			{{ hint }}
-		</p>
+			<template v-if="messages.length > 0">
+				<p
+					v-for="(message, index) in messages"
+					:key="`select-btn-field-message-${index}`"
+					class="select-btn-field__message v-messages mb-0 opacity-100"
+					:class="messageClass"
+				>
+					{{ message }}
+				</p>
+			</template>
+
+			<p
+				v-else-if="showHelpText"
+				class="select-btn-field__help-text mb-0"
+			>
+				{{ props.helpText }}
+			</p>
+		</div>
 	</div>
 </template>
 
@@ -377,8 +423,68 @@
 	gap: 4px;
 }
 
-.select-btn-field__options--error .select-btn-field__item {
+// États de validation :
+// - item non sélectionné : contour + texte à la couleur de l'état ;
+// - item sélectionné : fond rempli de la couleur de l'état, texte et icône en blanc.
+.select-btn-field__options--error .select-btn-field__item:not(.select-btn-field__item--selected) {
 	color: rgb(var(--v-theme-error));
 	border-color: rgb(var(--v-theme-error));
+}
+
+.select-btn-field__options--error .select-btn-field__item--selected {
+	background-color: rgb(var(--v-theme-error));
+	border-color: rgb(var(--v-theme-error));
+	color: rgb(var(--v-theme-onPrimary));
+}
+
+.select-btn-field__options--warning .select-btn-field__item:not(.select-btn-field__item--selected) {
+	color: rgb(var(--v-theme-onWarningVariant));
+	border-color: rgb(var(--v-theme-onWarningVariant));
+}
+
+.select-btn-field__options--warning .select-btn-field__item--selected {
+	background-color: rgb(var(--v-theme-onWarningVariant));
+	border-color: rgb(var(--v-theme-onWarningVariant));
+	color: rgb(var(--v-theme-onPrimary));
+}
+
+.select-btn-field__options--success .select-btn-field__item:not(.select-btn-field__item--selected) {
+	color: rgb(var(--v-theme-onSuccessVariant));
+	border-color: rgb(var(--v-theme-onSuccessVariant));
+}
+
+.select-btn-field__options--success .select-btn-field__item--selected {
+	background-color: rgb(var(--v-theme-onSuccessVariant));
+	border-color: rgb(var(--v-theme-onSuccessVariant));
+	color: rgb(var(--v-theme-onPrimary));
+}
+
+.select-btn-field__options--disabled {
+	opacity: var(--v-disabled-opacity, 0.38);
+	pointer-events: none;
+}
+
+.select-btn-field__messages {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.select-btn-field__message--error {
+	color: rgb(var(--v-theme-error));
+}
+
+.select-btn-field__message--warning {
+	color: rgb(var(--v-theme-onWarningVariant));
+}
+
+.select-btn-field__message--success {
+	color: rgb(var(--v-theme-onSuccessVariant));
+}
+
+.select-btn-field__help-text {
+	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
+	font-size: var(--v-fontSize-liensEtLibelles);
+	line-height: 1.2;
 }
 </style>
