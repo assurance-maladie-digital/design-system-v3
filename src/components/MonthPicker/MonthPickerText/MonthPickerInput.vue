@@ -17,6 +17,7 @@
 		hasWarning?: boolean
 		hasSuccess?: boolean
 		required?: boolean
+		displayAsterisk?: boolean
 		hideDetails?: boolean
 	} & TextFieldProps>(), {
 		errorMessages: null,
@@ -26,6 +27,7 @@
 		hasWarning: false,
 		hasSuccess: false,
 		required: false,
+		displayAsterisk: false,
 		hideDetails: false,
 	})
 
@@ -73,7 +75,7 @@
 		:required="props.required"
 		:disable-error-handling="true"
 		:hide-details="props.hideDetails"
-		:display-asterisk="props.required"
+		:display-asterisk="props.required && props.displayAsterisk"
 		@focus="focused = true"
 		@blur="focused = false"
 	>

@@ -190,6 +190,46 @@ export const Default: Story = {
 	},
 }
 
+export const Required: Story = {
+	args: {
+		'modelValue': '',
+		'label': 'Début du projet',
+		'required': true,
+		'displayAsterisk': true,
+		'width': '400px',
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<MonthPicker
+						v-model="selectedMonth"
+						label="Début du projet"
+						width="400px"
+						required
+						display-asterisk
+					/>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { MonthPicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedMonth = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
 export const CustomDisplayedYears: Story = {
 	args: {
 		'modelValue': '11/2025',

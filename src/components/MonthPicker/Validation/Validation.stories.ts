@@ -433,314 +433,6 @@ export const WithCustomRules: Story = {
 	}),
 }
 
-export const WithErrorWarningSuccess: Story = {
-	parameters: {
-		a11y: {
-			disable: true,
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<MonthPicker
-						v-model="selectedMonth"
-						label="Mois de début"
-						required
-						:custom-rules="customRules"
-						:custom-warning-rules="customWarningRules"
-						:custom-success-rules="customSuccessRules"
-						:show-success-messages="true"
-						:is-validate-on-blur="false"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { MonthPicker } from '@cnamts/synapse'
-
-					const selectedMonth = ref('')
-
-					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
-										return false
-									}
-									return true
-								},
-								message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
-								fieldIdentifier: 'selectedMonth',
-							},
-						},
-					]
-
-					const customWarningRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
-									const [month, year] = value.split('/').map(Number) as [number, number]
-									const currentDate = new Date()
-									const currentYear = currentDate.getFullYear()
-									const currentMonth = currentDate.getMonth() + 1
-									if (year > currentYear + 5 || (year === currentYear + 5 && month > currentMonth)) {
-										return false
-									}
-									return true
-								},
-								warningMessage: 'La date est plus de 5 ans dans le futur.',
-								fieldIdentifier: 'selectedMonth',
-							},
-						},
-					]
-
-					const customSuccessRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (!value || value === '') return false // Ne pas afficher d'erreur si le champ est vide
-									const [, year] = value.split('/').map(Number) as [number, number]
-									const currentYear = new Date().getFullYear()
-									return year >= currentYear && year <= currentYear + 5
-								},
-								successMessage: 'Date dans un horizon de planification raisonnable.',
-								fieldIdentifier: 'selectedMonth',
-							},
-						},
-					]
-				</script>
-				`,
-			},
-		],
-	},
-	render: args => ({
-		components: { MonthPicker },
-		setup() {
-			const selectedMonth = ref('')
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-								return false
-							}
-							return true
-						},
-						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-			]
-
-			const customWarningRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || value === '') return true // Ne pas afficher de warning si le champ est vide
-							const [month, year] = value.split('/').map(Number) as [number, number]
-							const currentDate = new Date()
-							const currentYear = currentDate.getFullYear()
-							const currentMonth = currentDate.getMonth() + 1
-							if (year > currentYear + 5 || (year === currentYear + 5 && month > currentMonth)) {
-								return false
-							}
-							return true
-						},
-						warningMessage: 'La date est plus de 5 ans dans le futur.',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-			]
-
-			const customSuccessRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || value === '') return false // Ne pas afficher de succès si le champ est vide
-							const [, year] = value.split('/').map(Number) as [number, number]
-							const currentYear = new Date().getFullYear()
-							return year >= currentYear && year <= currentYear + 5
-						},
-						successMessage: 'Date dans un horizon de planification raisonnable.',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-			]
-
-			return { args, selectedMonth, customRules, customWarningRules, customSuccessRules }
-		},
-		template: `
-			<div>
-				<p class="mb-2">Saisissez un mois pour voir les différents types de validation :</p>
-				<MonthPicker
-					v-model="selectedMonth"
-					:variant-style="args.variantStyle"
-					label="Mois de début"
-					required
-					:custom-rules="customRules"
-					:custom-warning-rules="customWarningRules"
-					:custom-success-rules="customSuccessRules"
-					:show-success-messages="true"
-					:is-validate-on-blur="true"
-					width="400px"
-				/>
-				<div class="mt-4">
-					<p><strong>Conseils pour tester :</strong></p>
-					<ul>
-						<li>Laissez le champ vide pour voir l'erreur de champ requis</li>
-						<li>Saisissez un mois invalide (ex: 13/2026) pour voir l'erreur de format</li>
-						<li>Saisissez une date à plus de 5 ans (ex: 01/2032) pour voir l'avertissement</li>
-						<li>Saisissez une date entre aujourd'hui et dans 5 ans pour voir le message de succès</li>
-					</ul>
-				</div>
-			</div>
-		`,
-	}),
-}
-
-export const showSuccessMessages: Story = {
-	parameters: {
-		a11y: {
-			disable: true,
-		},
-		docs: {
-			description: {
-				story: `
-### Messages de succès
-
-Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
-l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`false\`.
-`,
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-  <!-- Champ avec messages de succès (par défaut) -->
-  <MonthPicker
-    v-model="value1"
-    label="Avec messages de succès"
-	show-success-messages
-	:custom-rules
-    required
-  />
-
-  <!-- Champ sans messages de succès -->
-  <MonthPicker
-    v-model="value2"
-    label="Sans messages de succès"
-	:custom-rules
-    required
-  />
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `
-<script setup lang="ts">
-	import { ref } from 'vue'
-	import { MonthPicker } from '@cnamts/synapse'
-
-	const value1 = ref('06/2026')
-	const value2 = ref('06/2026')
-
-	const customRules = [
-		{
-			type: 'custom',
-			options: {
-				validate: (value: string) => {
-					if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
-						return false
-					}
-					return true
-				},
-				message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
-				fieldIdentifier: 'selectedMonth',
-			},
-		},
-	]
-</script>`,
-			},
-		],
-	},
-	render: () => ({
-		components: { MonthPicker },
-		setup() {
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-								return false
-							}
-							return true
-						},
-						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
-						fieldIdentifier: 'selectedMonth',
-					},
-				},
-			]
-
-			const value1 = ref('06/2026')
-			const value2 = ref('06/2026')
-			return { value1, value2, customRules }
-		},
-		template: `
-			<div>
-				<p class="mb-4">Cette démonstration compare un MonthPicker avec <code>showSuccessMessages=true</code> (par défaut) et un avec <code>showSuccessMessages=false</code>.</p>
-
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-					<div>
-						<p class="text-subtitle-2 mb-2">Avec messages de succès</p>
-						<MonthPicker
-							v-model="value1"
-							label="Mois de début"
-							required
-							:custom-rules="customRules"
-							show-success-messages
-						/>
-					</div>
-
-					<div>
-						<p class="text-subtitle-2 mb-2">Sans messages de succès</p>
-						<MonthPicker
-							v-model="value2"
-							label="Mois de début"
-							required
-							:custom-rules="customRules"
-							:show-success-messages="false"
-						/>
-					</div>
-				</div>
-
-				<div class="mt-4 text-body-2">
-					<p>Observations :</p>
-					<ul>
-						<li class="ml-4">Les deux champs ont la même valeur valide</li>
-						<li class="ml-4">Le champ de gauche affiche un message de succès et un indicateur visuel vert</li>
-						<li class="ml-4">Le champ de droite n'affiche pas de message de succès, mais conserve l'indicateur visuel</li>
-					</ul>
-				</div>
-			</div>
-		`,
-	}),
-}
-
 export const DisableErrorHandling: Story = {
 	parameters: {
 		a11y: {
@@ -1047,106 +739,6 @@ function reset() {
 	}),
 }
 
-export const VFormVuetifyValidation: Story = {
-	parameters: {
-		docs: {
-			description: {
-				story: `
-### Validation de style Vuetify
-
-En passant \`useVuetifyValidation="true"\`, le composant délègue la validation à Vuetify.
-Les règles sont de simples fonctions qui retournent \`true\` si la valeur est valide,
-ou un message d'erreur (chaîne de caractères) sinon — exactement comme avec la prop \`rules\`
-native de Vuetify.
-`,
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<VForm @submit.prevent="handleSubmit">
-		<MonthPicker
-			v-model="selectedMonth"
-			label="Mois de début"
-			:use-vuetify-validation="true"
-			:rules="rules"
-			required
-			:is-validate-on-blur="true"
-		/>
-		<div class="mt-4">
-			<VBtn type="submit" color="primary">Valider</VBtn>
-		</div>
-	</VForm>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { ref } from 'vue'
-import { MonthPicker } from '@cnamts/synapse'
-
-const selectedMonth = ref('')
-
-const rules = [
-	(value: string) => !!value || 'Le mois est requis',
-	(value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
-]
-
-async function handleSubmit(e: Promise<{ valid: boolean }>) {
-	const result = await e
-	alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
-}
-</script>`,
-			},
-		],
-	},
-	render: args => ({
-		components: { MonthPicker, VBtn, VForm },
-		setup() {
-			const selectedMonth = ref('')
-			const fieldRef = ref()
-
-			const rules = [
-				(value: string) => !!value || 'Le mois est requis',
-				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
-			]
-
-			async function handleSubmit(e: Promise<{ valid: boolean }>) {
-				const result = await e
-				alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
-			}
-
-			return { args, selectedMonth, fieldRef, rules, handleSubmit }
-		},
-		template: `
-			<div>
-				<p class="mb-4">
-					Les règles sont des fonctions Vuetify natives <code>(value) => true | 'message'</code>.
-					Cliquez sur <strong>Valider</strong> ou quittez le champ pour déclencher la validation.
-				</p>
-				<VForm @submit.prevent="handleSubmit">
-					<MonthPicker
-						v-bind="args"
-						v-model="selectedMonth"
-						label="Mois de début"
-						:use-vuetify-validation="true"
-						:rules="rules"
-						:is-validate-on-blur="true"
-						width="400px"
-					/>
-					<div class="mt-4">
-						<VBtn type="submit" color="primary">Valider</VBtn>
-					</div>
-				</VForm>
-			</div>
-		`,
-	}),
-	args: {
-		showSuccessMessages: true,
-	},
-}
-
 export const SyFormValidation: Story = {
 	parameters: {
 		sourceCode: [
@@ -1422,4 +1014,104 @@ function handleSubmit(e) {
 			</div>
 		`,
 	}),
+}
+
+export const VFormVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Validation de style Vuetify
+
+En passant \`useVuetifyValidation="true"\`, le composant délègue la validation à Vuetify.
+Les règles sont de simples fonctions qui retournent \`true\` si la valeur est valide,
+ou un message d'erreur (chaîne de caractères) sinon — exactement comme avec la prop \`rules\`
+native de Vuetify.
+`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<VForm @submit.prevent="handleSubmit">
+		<MonthPicker
+			v-model="selectedMonth"
+			label="Mois de début"
+			:use-vuetify-validation="true"
+			:rules="rules"
+			required
+			:is-validate-on-blur="true"
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Valider</VBtn>
+		</div>
+	</VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+
+const selectedMonth = ref('')
+
+const rules = [
+	(value: string) => !!value || 'Le mois est requis',
+	(value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
+]
+
+async function handleSubmit(e: Promise<{ valid: boolean }>) {
+	const result = await e
+	alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
+}
+</script>`,
+			},
+		],
+	},
+	render: args => ({
+		components: { MonthPicker, VBtn, VForm },
+		setup() {
+			const selectedMonth = ref('')
+			const fieldRef = ref()
+
+			const rules = [
+				(value: string) => !!value || 'Le mois est requis',
+				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
+			]
+
+			async function handleSubmit(e: Promise<{ valid: boolean }>) {
+				const result = await e
+				alert(result.valid ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
+			}
+
+			return { args, selectedMonth, fieldRef, rules, handleSubmit }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					Les règles sont des fonctions Vuetify natives <code>(value) => true | 'message'</code>.
+					Cliquez sur <strong>Valider</strong> ou quittez le champ pour déclencher la validation.
+				</p>
+				<VForm @submit.prevent="handleSubmit">
+					<MonthPicker
+						v-bind="args"
+						v-model="selectedMonth"
+						label="Mois de début"
+						:use-vuetify-validation="true"
+						:rules="rules"
+						:is-validate-on-blur="true"
+						width="400px"
+					/>
+					<div class="mt-4">
+						<VBtn type="submit" color="primary">Valider</VBtn>
+					</div>
+				</VForm>
+			</div>
+		`,
+	}),
+	args: {
+		showSuccessMessages: true,
+	},
 }

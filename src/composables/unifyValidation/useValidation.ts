@@ -99,13 +99,22 @@ export function useValidation(params: {
 	maxErrors?: Ref<number>
 })) {
 	if (params.disableErrorHandling.value) {
+		const hasError = computed(() => (params.errorMessages?.value?.length ?? 0) > 0 || (params.hasErrorProp?.value ?? false))
+		const hasWarning = computed(() => (params.warningMessages?.value?.length ?? 0) > 0 || (params.hasWarningProp?.value ?? false))
+		const hasSuccess = computed(() => params.hasSuccessProp?.value ?? false)
 		return {
 			errors: computed(() => params.errorMessages?.value || []),
 			warnings: computed(() => params.warningMessages?.value || []),
 			successes: computed(() => params.successMessages?.value || []),
-			hasError: computed(() => (params.errorMessages?.value?.length ?? 0) > 0 || (params.hasErrorProp?.value ?? false)),
-			hasWarning: computed(() => (params.warningMessages?.value?.length ?? 0) > 0 || (params.hasWarningProp?.value ?? false)),
-			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
+			hasError,
+			hasWarning,
+			hasSuccess,
+			state: computed<'default' | 'error' | 'success' | 'warning'>(() => {
+				if (hasError.value) return 'error'
+				if (hasWarning.value) return 'warning'
+				if (hasSuccess.value) return 'success'
+				return 'default'
+			}),
 			validate: async () => true,
 			clearValidation: () => {},
 		}

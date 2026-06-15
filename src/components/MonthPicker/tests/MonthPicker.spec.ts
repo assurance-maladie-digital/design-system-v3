@@ -1485,5 +1485,116 @@ describe('mounthpicker', () => {
 
 			wrapper.unmount()
 		})
+
+		it('sets aria-required from the required prop alone (without displaying the asterisk)', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					required: true,
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.attributes('aria-required')).toBe('true')
+			// L'astérisque ne s'affiche pas tant que displayAsterisk n'est pas activé
+			expect(wrapper.find('label').text()).not.toContain('*')
+
+			wrapper.unmount()
+		})
+
+		it('displays the asterisk only when both required and displayAsterisk are true', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					required: true,
+					displayAsterisk: true,
+				},
+			})
+
+			expect(wrapper.find('label').text()).toContain('*')
+			expect(wrapper.find('input').attributes('aria-required')).toBe('true')
+
+			wrapper.unmount()
+
+			// displayAsterisk sans required : pas d'astérisque
+			const asteriskOnlyWrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					displayAsterisk: true,
+				},
+			})
+			expect(asteriskOnlyWrapper.find('label').text()).not.toContain('*')
+			asteriskOnlyWrapper.unmount()
+		})
+
+		it('does not set aria-required nor asterisk by default', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.attributes('aria-required')).toBeUndefined()
+			expect(wrapper.find('label').text()).not.toContain('*')
+
+			wrapper.unmount()
+		})
+
+		it('displays the validation state icon (error / warning / success)', async () => {
+			async function mountAndBlur(modelValue: string) {
+				const wrapper = mount(MonthPicker, {
+					props: {
+						label: 'Début du projet',
+						modelValue,
+						showSuccessMessages: true,
+						customRules: [{
+							type: 'custom',
+							options: {
+								message: 'Le format doit être MM/YYYY.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+						customWarningRules: [{
+							type: 'custom',
+							options: {
+								warningMessage: 'La date est dans le passé.',
+								validate: (value: string) => {
+									const [month, year] = value.split('/').map(Number) as [number, number]
+									const now = new Date()
+									return year > now.getFullYear() || (year === now.getFullYear() && month >= now.getMonth() + 1)
+								},
+							},
+						}],
+						customSuccessRules: [{
+							type: 'custom',
+							options: {
+								successMessage: 'Date valide.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+					},
+				})
+				await wrapper.find('input').trigger('focus')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('input').trigger('blur')
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+				await wrapper.vm.$nextTick()
+				return wrapper
+			}
+
+			const errorWrapper = await mountAndBlur('99/2025')
+			expect(errorWrapper.find('.field-state-icon.error-icon').exists()).toBe(true)
+			errorWrapper.unmount()
+
+			const warningWrapper = await mountAndBlur('01/2020')
+			expect(warningWrapper.find('.field-state-icon.warning-icon').exists()).toBe(true)
+			warningWrapper.unmount()
+
+			const successWrapper = await mountAndBlur('03/2030')
+			expect(successWrapper.find('.field-state-icon.success-icon').exists()).toBe(true)
+			successWrapper.unmount()
+		})
 	})
 })

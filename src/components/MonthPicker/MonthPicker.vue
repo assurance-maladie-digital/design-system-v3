@@ -19,6 +19,7 @@
 		...defaultTextFieldProps,
 		disabled: false,
 		readonly: false,
+		displayAsterisk: false,
 	})
 
 	provide(localesKey, computed(() => props.locales))
@@ -94,6 +95,8 @@
 			v-bind="{
 				...attrs,
 				...useTextField(props).value,
+				required: props.required,
+				displayAsterisk: props.displayAsterisk,
 				errorMessages: errors,
 				warningMessages: warnings,
 				successMessages: successes,
