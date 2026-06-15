@@ -941,6 +941,59 @@ export const ZIndex: Story = {
 }
 
 export const Title: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<FilterSideBar
+		v-model="filters"
+		title="Filtres du tableau personnalisé"
+	>
+		<template #name="{ props }">
+			<SyTextField
+				v-bind="props"
+				label="Nom"
+				variant="outlined"
+				hide-details
+			/>
+		</template>
+
+		<template #folder="{ props }">
+			<SyTextField
+				v-bind="props"
+				label="Type de dossier"
+				variant="outlined"
+				hide-details
+			/>
+		</template>
+	</FilterSideBar>
+</template>
+			`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { FilterSideBar, SyTextField } from '@cnamts/synapse'
+
+const filters = ref([
+	{
+		name: 'name',
+		title: 'Identité',
+	},
+	{
+		name: 'folder',
+		title: 'Type de dossier',
+	},
+])
+</script>
+			`,
+			},
+		],
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 		'title': 'Filtres du tableau personalisé',
