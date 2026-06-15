@@ -1215,6 +1215,54 @@ export const Tutoriel: Story = {
 }
 
 export const Scrollable: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+			<template>
+				<VBtn
+					color="primary"
+					@click="dialogOpen = !dialogOpen"
+				>
+					Ouvrir la DialogBox scrollable
+				</VBtn>
+
+				<DialogBox
+					v-model="dialogOpen"
+					title="DialogBox scrollable"
+					scrollable
+					width="600px"
+					@confirm="dialogOpen = false"
+					@cancel="dialogOpen = false"
+				>
+					<p
+						v-for="index in 20"
+						:key="index"
+						class="mb-4"
+					>
+						Ligne de contenu numéro {{ index }}.
+						Ce contenu permet de vérifier que seule la zone centrale
+						de la boîte de dialogue est scrollable, tandis que les boutons
+						d’action restent visibles en bas.
+					</p>
+				</DialogBox>
+			</template>
+			`,
+			},
+			{
+				name: 'Script',
+				code: `
+			<script setup lang="ts">
+				import { DialogBox } from '@cnamts/synapse'
+				import { ref } from 'vue'
+
+				const dialogOpen = ref(false)
+			</script>
+			`,
+			},
+		],
+	},
 	args: {
 		'headingLevel': 2,
 		'modelValue': false,
