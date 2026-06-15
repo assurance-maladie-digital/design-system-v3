@@ -73,6 +73,7 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused,
+		locales: toRef(props, 'locales'),
 	})
 
 	const inputProps = computed(() => ({
@@ -80,12 +81,12 @@
 		...useTextField(props).value,
 		required: props.required,
 		displayAsterisk: props.displayAsterisk,
-		errorMessages: errors,
-		warningMessages: warnings,
-		successMessages: successes,
-		hasError: hasError,
-		hasWarning: hasWarning,
-		hasSuccess: hasSuccess,
+		errorMessages: errors.value,
+		warningMessages: warnings.value,
+		successMessages: successes.value,
+		hasError: hasError.value,
+		hasWarning: hasWarning.value,
+		hasSuccess: hasSuccess.value,
 		showSuccessMessages: props.showSuccessMessages,
 	}))
 

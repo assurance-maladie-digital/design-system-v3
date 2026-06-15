@@ -1272,6 +1272,7 @@ describe('mounthpicker', () => {
 			await flushPromises()
 			await wrapper.vm.$nextTick()
 
+			console.log('Errors:', vm.errors) // Log the errors to see what is being returned
 			expect(vm.errors).toContain('Le champ Début du projet est requis.')
 
 			wrapper.unmount()
