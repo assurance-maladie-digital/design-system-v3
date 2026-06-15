@@ -1219,7 +1219,7 @@ export const Scrollable: Story = {
 		'headingLevel': 2,
 		'modelValue': false,
 		'title': 'DialogBox scrollable',
-		'scrollable': false,
+		'scrollable': true,
 		'width': '600px',
 		'onCancel': fn(),
 		'onConfirm': fn(),
