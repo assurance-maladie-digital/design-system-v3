@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import { flushPromises, mount, VueWrapper } from '@vue/test-utils'
 import Captcha from '../Captcha.vue'
-import type { ComponentPublicInstance } from 'vue/dist/vue.js';
+import type { ComponentPublicInstance } from 'vue/dist/vue.js'
 
 describe('Captcha', () => {
 	afterEach(() => {
