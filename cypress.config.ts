@@ -32,6 +32,11 @@ async function createCypressViteConfig() {
 				},
 			},
 		},
+		esbuild: {
+			supported: {
+				destructuring: true,
+			},
+		},
 		css: {
 			preprocessorOptions: {
 				scss: { api: 'modern' },
@@ -40,6 +45,11 @@ async function createCypressViteConfig() {
 		},
 		optimizeDeps: {
 			include: ['vuetify', 'vuetify/components', 'vuetify/directives', 'vuetify/iconsets/mdi-svg', 'vuetify/locale'],
+			esbuildOptions: {
+				supported: {
+					destructuring: true,
+				},
+			},
 		},
 	}
 }
