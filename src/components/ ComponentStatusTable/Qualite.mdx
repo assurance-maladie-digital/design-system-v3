@@ -1,0 +1,27 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import '@/stories/styles/shared.css';
+import * as ComponentStatusTableStories from './ComponentStatusTable.stories';
+
+<Meta title="Composants/Statut des composants" />
+
+<Canvas of={ComponentStatusTableStories.Default} />
+
+<style>
+{`
+.sbdocs-wrapper,
+.sbdocs-content,
+.docs-story {
+  max-width: 100% !important;
+}
+
+.sbdocs-content {
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+}
+
+:deep(table) {
+  min-width: 1600px;
+}
+
+`}
+</style>
