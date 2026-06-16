@@ -5,8 +5,6 @@ import type { ValidationRule } from '@/composables/validation/useValidation'
 
 /**
  * Composable de validation dédié au composant SelectBtnField.
- *
- * Calqué sur l'architecture unifiée (cf. useSySelectValidation) :
  * - règle `required` par défaut avec message personnalisé,
  * - support des customRules / customWarningRules / customSuccessRules,
  * - messages externes (errorMessages / warningMessages / successMessages),
