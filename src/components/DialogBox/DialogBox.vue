@@ -258,7 +258,6 @@
 .sy-dialog-box-title {
 	line-height: normal;
 	flex-shrink: 0;
-
 }
 
 .v-btn--icon {
