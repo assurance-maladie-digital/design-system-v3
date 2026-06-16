@@ -871,6 +871,32 @@ describe('SelectBtnField', () => {
 			wrapper.unmount()
 		})
 
+		it('does not enter success state when filled without an explicit success source', async () => {
+			const wrapper = mount({
+				components: { SelectBtnField },
+				template: `<SelectBtnField ref="field" v-model="value" label="Moyen de contact" :items="items" show-success-messages />`,
+				setup() {
+					return {
+						value: ref<string | null>(null),
+						items: [{ text: 'Email', value: 'email' }],
+					}
+				},
+			})
+
+			// Sélection d'un item (champ rempli) sans aucune règle/source de succès
+			await wrapper.find('[role="option"]').trigger('click')
+			await flushPromises()
+
+			const field = wrapper.findComponent(SelectBtnField)
+			const vm = field.vm as unknown as { hasSuccess: boolean, successes: string[] }
+			expect(vm.hasSuccess).toBe(false)
+			expect(vm.successes).toHaveLength(0)
+			// Pas de coloration verte de l'item sélectionné
+			expect(wrapper.find('.select-btn-field__options--success').exists()).toBe(false)
+
+			wrapper.unmount()
+		})
+
 		it('does not allow selection when disabled', async () => {
 			const wrapper = mount(SelectBtnField, {
 				props: {
