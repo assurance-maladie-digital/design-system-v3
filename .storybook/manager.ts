@@ -24,7 +24,8 @@ const ap2026OnlyStories = [
 const apOnlyStories = [
 	'composants-structure-footerbar--back-office',
 	'composants-structure-footerbar--with-phone-number',
-    'composants-données-accordion--with-custom-content'
+	'composants-données-accordion--with-custom-content',
+	'composants-boutons-usermenubtn--with-ps-info',
 ]
 
 // Components to display in AP theme
