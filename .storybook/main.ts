@@ -1,8 +1,14 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
 import { mergeConfig } from 'vite'
 
+const isDev = process.env.NODE_ENV !== 'production'
+
 const config: StorybookConfig = {
-	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+	stories: [
+		'../src/**/*.mdx',
+		'../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+		...(isDev ? ['./Adoption.mdx'] : []),
+	],
 	staticDirs: ['./public'],
 	addons: [
 		'@storybook/addon-links',

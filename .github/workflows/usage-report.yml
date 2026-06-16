@@ -1,0 +1,54 @@
+name: Usage report
+
+on:
+  schedule:
+    # Tous les lundis à 04:00 UTC
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+jobs:
+  usage-report:
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE_NAME: '@cnamts/synapse'
+
+      # --- GitHub ---
+      # Token avec accès lecture aux repos de l'organisation (PAT), pour cloner et analyser les sources.
+      # Le GITHUB_TOKEN par défaut n'a pas accès aux autres repos de l'org.
+      GITHUB_TOKEN: ${{ secrets.USAGE_GITHUB_TOKEN }}
+      GITHUB_ORG: assurance-maladie-digital
+
+      # --- GitLab (instance interne comprise) ---
+      # Token GitLab (PRIVATE-TOKEN, scope read_api + read_repository).
+      GITLAB_TOKEN: ${{ secrets.USAGE_GITLAB_TOKEN }}
+      GITLAB_HOST: gitlab.com        # ← remplacer par l'instance GitLab interne si besoin
+      GITLAB_GROUP: ''               # ← groupe GitLab à analyser (ex: mon-groupe/sous-groupe)
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate usage report
+        run: pnpm usage:report
+
+      - name: Commit usage data if changed
+        run: |
+          if [ -n "$(git status --porcelain src/usage/usage.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add src/usage/usage.json
+            git commit -m "chore: update component usage report"
+            git push
+          else
+            echo "Aucun changement dans usage.json"
+          fi

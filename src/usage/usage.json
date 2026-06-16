@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-06-04T00:00:00.000Z",
+  "package": "@cnamts/synapse",
+  "sources": ["GitHub : org assurance-maladie-digital", "GitLab : groupe assurance-maladie (gitlab.com)"],
+  "components": {
+    "NirField": {
+      "imports": 12,
+      "repos": ["assurance-maladie-digital/ameli-web", "assurance-maladie/portail-agent"]
+    },
+    "SyTextField": {
+      "imports": 34,
+      "repos": ["assurance-maladie-digital/ameli-web", "assurance-maladie-digital/amelipro", "assurance-maladie/portail-agent"]
+    },
+    "SySelect": {
+      "imports": 18,
+      "repos": ["assurance-maladie-digital/ameli-web", "assurance-maladie/portail-agent"]
+    },
+    "HeaderBar": {
+      "imports": 5,
+      "repos": ["assurance-maladie-digital/ameli-web"]
+    }
+  }
+}
