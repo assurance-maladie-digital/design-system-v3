@@ -611,17 +611,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-select',
 						},
 					},
-					// {
-					// 	title: 'AmeliproStateTile',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproStateTile',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-state-tile',
-					// 	},
-					// },
+					{
+						title: 'AmeliproStateTile',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproStateTile',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-state-tile',
+						},
+					},
 					{
 						title: 'AmeliproStepper',
 						synapse: {
