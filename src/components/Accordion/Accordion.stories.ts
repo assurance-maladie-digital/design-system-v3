@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
 import Accordion from './Accordion.vue'
-import { SyIcon } from "@/components";
+import { SyIcon } from '@/components'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 import { mdiCloseCircleOutline } from '@mdi/js'
 import {
-    VStepper,
-    VStepperHeader,
-    VStepperItem,
-    VStepperWindow,
-    VStepperWindowItem,
-    VStepperActions,
+	VStepper,
+	VStepperHeader,
+	VStepperItem,
+	VStepperWindow,
+	VStepperWindowItem,
+	VStepperActions,
 } from 'vuetify/components'
-import {computed, reactive, ref} from 'vue'
+import { computed, reactive, ref } from 'vue'
 
 const meta: Meta<typeof Accordion> = {
 	title: 'Composants/Données/Accordion',
@@ -452,11 +452,11 @@ export const WithVModel: Story = {
 }
 
 export const WithCustomContent: Story = {
-    parameters: {
-        sourceCode: [
-            {
-                language: 'vue',
-                code: `<template>
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				code: `<template>
   <Accordion
     :items="[
       { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
@@ -465,41 +465,41 @@ export const WithCustomContent: Story = {
     :heading-level="5"
   />
 </template>`,
-            },
-        ],
-    },
-    args: {
-        items: defaultItems.slice(0, 1),
-        headingLevel: 3,
-    },
-    render: args => ({
-        components: {
-            Accordion,
-            VStepper,
-            VStepperHeader,
-            VStepperItem,
-            VStepperWindow,
-            VStepperWindowItem,
-            VStepperActions,
-            SyCheckbox,
-            SyIcon
-        },
-        setup() {
-            const steps = reactive([
-                { id: 1, error: false, complete: true, editable:true },
-                { id: 2, error: true, complete: false, editable:true  },
-                { id: 3, error: false, complete: false, editable:true  }
-            ])
-            const step = ref(2)
+			},
+		],
+	},
+	args: {
+		items: defaultItems.slice(0, 1),
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: {
+			Accordion,
+			VStepper,
+			VStepperHeader,
+			VStepperItem,
+			VStepperWindow,
+			VStepperWindowItem,
+			VStepperActions,
+			SyCheckbox,
+			SyIcon,
+		},
+		setup() {
+			const steps = reactive([
+				{ id: 1, error: false, complete: true, editable: true },
+				{ id: 2, error: true, complete: false, editable: true },
+				{ id: 3, error: false, complete: false, editable: true },
+			])
+			const step = ref(2)
 
-            const close = mdiCloseCircleOutline
+			const close = mdiCloseCircleOutline
 
-            const hasError = computed(() =>
-                steps.some(s => s.error)
-            )
-            return { args, step, close, steps, hasError }
-        },
-        template: `
+			const hasError = computed(() =>
+				steps.some(s => s.error),
+			)
+			return { args, step, close, steps, hasError }
+		},
+		template: `
 			<div class="pa-4">
 				<Accordion v-bind="args" >
                   <template #right-content>
@@ -557,7 +557,7 @@ export const WithCustomContent: Story = {
                 </Accordion>
 			</div>
 		`,
-    }),
+	}),
 }
 
 export const PreOpened: Story = {
