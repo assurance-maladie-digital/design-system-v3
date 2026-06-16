@@ -269,7 +269,6 @@ export const Default: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
-						label="Profession"
 						v-bind="props"
 						label="Profession"
 						:items="professionList"
@@ -996,7 +995,7 @@ const filters = ref([
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
-		'title': 'Filtres du tableau personalisé',
+		'title': 'Filtres du tableau personnalisé',
 	},
 	decorators: Default.decorators,
 	render: args => ({
