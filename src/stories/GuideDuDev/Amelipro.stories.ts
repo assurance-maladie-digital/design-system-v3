@@ -518,17 +518,20 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'AmeliproMultipleFoldingCard',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-multiple-folding-card',
 					// 	},
-					// }, {
-					// 	title: 'AmeliproNumberedCard',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproNumberedCard',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-numbered-card',
-					// 	},
 					// },
+					{
+						title: 'AmeliproNumberedCard',
+						usedComponents: [
+							{
+								name: 'VCard',
+								type: 'composants vuetify',
+							},
+						],
+						amelipro: {
+							name: 'AmeliproNumberedCard',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-numbered-card',
+						},
+					},
 					{
 						title: 'AmeliproOnboarding',
 						synapse: {
