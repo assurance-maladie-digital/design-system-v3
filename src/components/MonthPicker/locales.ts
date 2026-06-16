@@ -9,4 +9,5 @@ export const locales = {
 	yearBtnLabelUnselected: (selectedYear: string) => `Sélectionner une année, nous sommes actuellement en ${selectedYear}`,
 	monthBtnLabelSelected: (selectedMonth: string) => `Sélectionner un mois, le mois sélectionné est ${selectedMonth}`,
 	monthBtnLabelUnselected: (selectedMonth: string) => `Sélectionner un mois, nous sommes actuellement en ${selectedMonth}`,
+	fieldRequired: (label?: string) => `${label ? `Le champ ${label}` : 'Ce champ'} est requis.`,
 }

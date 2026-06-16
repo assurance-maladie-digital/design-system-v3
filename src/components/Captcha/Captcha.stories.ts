@@ -3,6 +3,7 @@ import type { StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
 import { ref, watch } from 'vue'
 import SyAlert from '../SyAlert/SyAlert.vue'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps.ts'
 
 export default {
 	title: 'Composants/Formulaires/Captcha',
@@ -17,6 +18,7 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 		'urlGetImage': {
@@ -24,6 +26,7 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 		'urlGetAudio': {
@@ -31,11 +34,16 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 		'modelValue': {
 			description: 'La valeur du champs de captcha',
 			control: 'string',
+			table: {
+				type: { summary: 'string' },
+				category: 'props',
+			},
 		},
 		'type': {
 			description: 'Le type de captcha affiché.',
@@ -46,26 +54,31 @@ export default {
 			table: {
 				type: { summary: 'image | audio | choice' },
 				defaultValue: { summary: '"image"' },
-			},
-		},
-		'errorMessage': {
-			description: 'Message d\'erreur personnalisé à afficher sous le champ de captcha.',
-			control: 'text',
-			table: {
-				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 		'tagTitle': {
 			description: 'Le tag du titre de la section.',
+			control: 'text',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'h2' },
+				category: 'props',
+			},
 		},
 		'helpDesk': {
 			description: 'Le numéro de téléphone du support pour garantir l\'accessibilité du parcours aux personnes en situation de handicap.',
+			table: {
+				type: { summary: 'string' },
+				category: 'props',
+			},
 		},
 		'locale': {
 			description: 'La locale (langue) à utiliser pour la génération du captcha. Par défaut, la langue du navigateur est utilisée.',
 			control: 'text',
 			table: {
 				type: { summary: 'string' },
+				category: 'props',
 			},
 		},
 		'locales': {
@@ -74,6 +87,7 @@ export default {
 			table: {
 				type: { summary: 'object' },
 				defaultValue: { summary: 'locales (importé depuis le fichier locales.ts)' },
+				category: 'props',
 			},
 		},
 		'update:modelValue': {
@@ -81,6 +95,7 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'string' },
+				category: 'events',
 			},
 		},
 		'update:type': {
@@ -88,6 +103,7 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'image | audio' },
+				category: 'events',
 			},
 		},
 		'imageError': {
@@ -95,6 +111,7 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'void' },
+				category: 'events',
 			},
 		},
 		'audioError': {
@@ -102,6 +119,7 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'void' },
+				category: 'events',
 			},
 		},
 		'creationError': {
@@ -109,16 +127,59 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'void' },
+				category: 'events',
 			},
 		},
+		'isClearable': {
+			description: 'Indique si le champ de captcha est effaçable ou non.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+				category: 'props',
+			},
+		},
+		'captchaId': {
+			description: 'L\'identifiant du captcha en cours. Utile pour les tests et la validation.',
+			control: false,
+			table: {
+				type: { summary: 'string' },
+				category: 'expose',
+			},
+		},
+		'clearValidation': {
+			description: 'Méthode exposée pour effacer la validation du captcha.',
+			control: false,
+			table: {
+				type: { summary: '() => void' },
+				category: 'expose',
+			},
+		},
+		'validateOnSubmit': {
+			description: 'Méthode exposée pour déclencher les règles de validation.',
+			control: false,
+			table: {
+				type: { summary: '() => Promise<boolean>' },
+				category: 'expose',
+			},
+		},
+		'reset': {
+			description: 'Méthode exposée pour réinitialiser le captcha.',
+			control: false,
+			table: {
+				type: { summary: '() => void' },
+				category: 'expose',
+			},
+		},
+		...getValidationDocumentation(),
 	},
-
 }
 
 type Story = StoryObj<typeof Captcha>
 
 export const Default: Story = {
 	args: {
+		'showSuccessMessages': true,
 		'onUpdate:modelValue': fn(),
 		'onUpdate:type': fn(),
 		'onImageError': fn(),
@@ -133,26 +194,52 @@ export const Default: Story = {
 				watch(() => args.modelValue, () => {
 					captchaValue.value = args.modelValue
 				})
+
+				// Vérification simulée : seules ces réponses correspondent à l'image.
 				const verifyCaptcha = () => {
 					if (captchaValue.value === 'ytqZNq' || captchaValue.value === '941335') {
 						return Promise.resolve({ response: { data: { message: 'Success' } } })
 					}
-					else {
-						return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
-					}
+					return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
 				}
 
-				return { args, captchaValue, verifyCaptcha }
+				const customRules = [
+					{
+						type: 'custom',
+						options: {
+							validate: (value: string) => String(value || '').length >= 6,
+							message: 'Le captcha doit contenir au moins 6 caractères.',
+						},
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: async () => {
+								try {
+									const r = await verifyCaptcha()
+									return r.response.data.message === 'Success'
+								}
+								catch {
+									return false
+								}
+							},
+							message: 'Le captcha est incorrect',
+							successMessage: 'Le captcha est correct',
+						},
+					},
+				]
+
+				return { args, captchaValue, customRules }
 			},
 			template: `
                 <VCard class="pa-8" max-width="600" min-width="300">
-                    <Captcha 
+                    <Captcha
                         url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
                         url-get-image="/captcha/captcha.png"
                         url-get-audio="/captcha/captcha.mp3"
-						:service="verifyCaptcha"
 						v-bind="args"
 						v-model="captchaValue"
+						:custom-rules="customRules"
                     />
                 </VCard>
             `,
@@ -164,15 +251,12 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
     <VCard class="pa-8" max-width="600">
-        <Captcha 
+        <Captcha
 			url-create="..."
 			url-get-image="..."
 			url-get-audio="/..."
-			service="(e) => {
-				// call the API to verify the captcha and return the response
-			}"
-			@validation:success="(e) => { ... }"
-			@validation:error="(e) => { ... }"
+			:custom-rules="customRules"
+			show-success-messages
 		/>
     </VCard>
 </template>
@@ -183,6 +267,36 @@ export const Default: Story = {
 				code: `<script setup lang="ts">
 import { Captcha } from '@cnamts/Captcha'
 import { VCard } from 'vuetify/components'
+
+const verifyCaptcha = () => {
+	// Appelle l'API pour vérifier le captcha et retourne la réponse
+}
+
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value) => String(value || '').length >= 6,
+			message: 'Le captcha doit contenir au moins 6 caractères.',
+		},
+	},
+	{
+		type: 'custom',
+		options: {
+			validate: async () => {
+				try {
+					const r = await verifyCaptcha()
+					return r.response.data.message === 'Success'
+				}
+				catch {
+					return false
+				}
+			},
+			message: 'Le captcha est incorrect',
+			successMessage: 'Le captcha est correct',
+		},
+	},
+]
 </script>
                 `,
 			},
@@ -207,15 +321,8 @@ export const Choice: Story = {
 				watch(() => args.modelValue, () => {
 					captchaValue.value = args.modelValue
 				})
-				const verifyCaptcha = () => {
-					if (captchaValue.value === 'ytqZNq' || captchaValue.value === '941335') {
-						return Promise.resolve({ response: { data: { message: 'Success' } } })
-					}
-					else {
-						return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
-					}
-				}
-				return { args, captchaValue, verifyCaptcha }
+
+				return { args, captchaValue }
 			},
 			template: `
                 <VCard class="pa-8" max-width="600" min-width="300">
@@ -224,7 +331,6 @@ export const Choice: Story = {
                         url-get-image="/captcha/captcha.png"
                         url-get-audio="/captcha/captcha.mp3"
 						v-bind="args"
-						:service="verifyCaptcha"
 						v-model="captchaValue"
                     />
                 </VCard>
@@ -241,9 +347,6 @@ export const Choice: Story = {
 			url-create="..."
 			url-get-image="..."
 			url-get-audio="/..."
-			service="(e) => {
-				// call the API to verify the captcha and return the response
-			}"
 			@validation:success="(e) => { ... }"
 			@validation:error="(e) => { ... }"
 			type="choice"
