@@ -76,49 +76,26 @@ export function useValidation(params: {
 	hasErrorProp?: Ref<boolean>
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
+	maxErrors?: Ref<number>
 } & ({
 	useVuetifyValidation: true
 	rules: Ref<VuetifyValidationRule[] | undefined>
 	customRules?: never
 	customWarningRules?: never
 	customSuccessRules?: never
-	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: false
 	customRules: Ref<SyValidationRule[]>
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules?: never
-	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: Ref<boolean>
 	customRules: Ref<SyValidationRule[]>
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<VuetifyValidationRule[] | undefined>
-	maxErrors?: Ref<number>
 })) {
-	if (params.disableErrorHandling.value) {
-		const hasError = computed(() => (params.errorMessages?.value?.length ?? 0) > 0 || (params.hasErrorProp?.value ?? false))
-		const hasWarning = computed(() => (params.warningMessages?.value?.length ?? 0) > 0 || (params.hasWarningProp?.value ?? false))
-		const hasSuccess = computed(() => params.hasSuccessProp?.value ?? false)
-		return {
-			errors: computed(() => params.errorMessages?.value || []),
-			warnings: computed(() => params.warningMessages?.value || []),
-			successes: computed(() => params.successMessages?.value || []),
-			hasError,
-			hasWarning,
-			hasSuccess,
-			state: computed<'default' | 'error' | 'success' | 'warning'>(() => {
-				if (hasError.value) return 'error'
-				if (hasWarning.value) return 'warning'
-				if (hasSuccess.value) return 'success'
-				return 'default'
-			}),
-			validate: async () => true,
-			clearValidation: () => {},
-		}
-	}
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
@@ -182,27 +159,36 @@ export function useValidation(params: {
 	}
 
 	const errors = computed(() => {
-		const allErrors = [...new Set([
-			...vuetifyErrors.value,
-			...customErrors.value,
-			...(params.errorMessages?.value || []),
-		])]
-		// Plafonne le nombre d'erreurs affichées (maxErrors, défaut 1), tous modes confondus.
+		const errorslist = [...params.errorMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			errorslist.push(...vuetifyErrors.value)
+			errorslist.push(...customErrors.value)
+		}
+
 		const max = params.maxErrors?.value
-		return max && max > 0 ? allErrors.slice(0, max) : allErrors
+		return max && max > 0 ? [...new Set(errorslist)].slice(0, max) : [...new Set(errorslist)]
 	})
-	const warnings = computed(() => [...new Set([
-		...innerWarnings.value,
-		...(params.warningMessages?.value || []),
-	])])
-	const successes = computed(() => [...new Set([
-		...(params.showSuccessMessages.value ? innerSuccesses.value : []),
-		...(params.successMessages?.value || []),
-	])])
+
+	const warnings = computed(() => {
+		const warningsList = [...params.warningMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			warningsList.push(...innerWarnings.value)
+		}
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(warningsList)].slice(0, max) : [...new Set(warningsList)]
+	})
+	const successes = computed(() => {
+		const successesList = [...params.successMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			successesList.push(...innerSuccesses.value)
+		}
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(successesList)].slice(0, max) : [...new Set(successesList)]
+	})
 	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 
-	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
-	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
+	const hasError = computed(() => errors.value.length > 0 || Boolean(params.hasErrorProp?.value))
+	const hasWarning = computed(() => warnings.value.length > 0 || Boolean(params.hasWarningProp?.value))
 
 	const state = computed(() => {
 		if (hasError.value) return 'error'

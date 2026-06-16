@@ -73,7 +73,22 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused,
+		locales: toRef(props, 'locales'),
 	})
+
+	const inputProps = computed(() => ({
+		...attrs,
+		...useTextField(props).value,
+		required: props.required,
+		displayAsterisk: props.displayAsterisk,
+		errorMessages: errors.value,
+		warningMessages: warnings.value,
+		successMessages: successes.value,
+		hasError: hasError.value,
+		hasWarning: hasWarning.value,
+		hasSuccess: hasSuccess.value,
+		showSuccessMessages: props.showSuccessMessages,
+	}))
 
 	defineExpose({
 		errors,
@@ -92,19 +107,7 @@
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"
-			v-bind="{
-				...attrs,
-				...useTextField(props).value,
-				required: props.required,
-				displayAsterisk: props.displayAsterisk,
-				errorMessages: errors,
-				warningMessages: warnings,
-				successMessages: successes,
-				hasError: hasError,
-				hasWarning: hasWarning,
-				hasSuccess: hasSuccess,
-				showSuccessMessages: props.showSuccessMessages,
-			}"
+			v-bind="inputProps"
 			@focus="focused = true"
 			@blur="focused = false"
 		/>

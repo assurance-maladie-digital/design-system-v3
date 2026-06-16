@@ -19,7 +19,21 @@ const meta: Meta<typeof MonthPicker> = {
 		'locales': {
 			description: 'Objet de traduction pour le sélecteur de mois. Par défaut, les traductions françaises sont utilisées.',
 			table: {
-				type: { summary: 'object' },
+				type: {
+					summary: 'object',
+					detail: `{
+	btnLabel: string,
+	headerSelectYear: string,
+	headerSelectMonth: string,
+	yearSelectorLabel: string,
+	monthSelectorLabel: string,
+	yearBtnLabelSelected: (selectedYear: string) => string,
+	yearBtnLabelUnselected: (selectedYear: string) => string,
+	monthBtnLabelSelected: (selectedMonth: string) => string,
+	monthBtnLabelUnselected: (selectedMonth: string) => string,
+	fieldRequired: (label: string) => string,
+}`,
+				},
 			},
 		},
 		'clearable': {

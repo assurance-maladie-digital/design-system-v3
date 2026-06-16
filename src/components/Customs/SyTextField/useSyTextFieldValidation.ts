@@ -75,7 +75,7 @@ export function useSyTextFieldValidation(params: {
 	const clearButtonColorClass = computed(() => 'text-iconBase')
 
 	const hasMessages = computed(() => {
-		return hasError.value || hasWarning.value || (hasSuccess.value && params.showSuccessMessages.value)
+		return (params.errorMessages.value?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && params.showSuccessMessages.value)
 	})
 
 	return {

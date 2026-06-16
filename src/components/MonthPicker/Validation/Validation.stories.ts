@@ -913,7 +913,7 @@ async function handleSubmit() {
 			]
 
 			async function handleSubmit() {
-				const result = await fieldRef.value?.validateOnSubmit()
+				const result = await (fieldRef.value!.validateOnSubmit! as () => Promise<boolean>)()
 				alert(result ? 'Mois valide !' : 'Veuillez corriger les erreurs.')
 			}
 

@@ -54,7 +54,9 @@ export const AmeliproComponents: StoryObj = {
 					const typePath = normalizedType.replace(/\s+/g, '-')
 					const namePath = item.name.trim().toLowerCase()
 
-					return `${baseUrl}${prefix}${typePath}-${namePath}--docs`
+					const suffix = item.name.includes('--') ? '' : '--docs'
+
+					return `${baseUrl}${prefix}${typePath}-${namePath}${suffix}`
 				}
 
 				const systemLabel = (component: { name: string }) => {
@@ -508,30 +510,31 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'AmeliproMailTile',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-mail-tile',
 					// 	},
-					// }, {
-					// 	title: 'AmeliproMultipleFoldingCard',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproMultipleFoldingCard',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-multiple-folding-card',
-					// 	},
 					// },
 					{
-						title: 'AmeliproNumberedCard',
-						usedComponents: [
-							{
-								name: 'VCard',
-								type: 'composants vuetify',
-							},
-						],
+						title: 'AmeliproMultipleFoldingCard',
+						synapse: {
+							name: 'Accordion',
+							url: getComponentUrl({ name: 'Accordion--with-custom-content', type: 'données' }),
+						},
 						amelipro: {
-							name: 'AmeliproNumberedCard',
-							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-numbered-card',
+							name: 'AmeliproMultipleFoldingCard',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-multiple-folding-card',
 						},
 					},
+                    {
+                        title: 'AmeliproNumberedCard',
+                        usedComponents: [
+                            {
+                                name: 'VCard',
+                                type: 'composants vuetify',
+                            },
+                        ],
+                        amelipro: {
+                            name: 'AmeliproNumberedCard',
+                            url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-numbered-card',
+                        },
+                    },
 					{
 						title: 'AmeliproOnboarding',
 						synapse: {
