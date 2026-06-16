@@ -39,6 +39,17 @@ export function useCaptchaValidation(params: {
 		: [],
 	)
 
+	// Un captcha rempli n'est pas « valide » pour autant : la réponse doit être vérifiée.
+	// On n'autorise donc le succès que s'il existe une source de succès explicite
+	// (règle de succès, règle d'erreur portant un successMessage, message de succès injecté,
+	// ou état de succès forcé) — sinon le succès « champ rempli = valide » par défaut est ignoré.
+	const hasExplicitSuccessSource = computed(() =>
+		(params.customSuccessRules.value?.length ?? 0) > 0
+		|| (params.customRules.value ?? []).some(rule => !!rule.options?.successMessage)
+		|| (params.successMessages.value?.length ?? 0) > 0
+		|| params.hasSuccessProp.value,
+	)
+
 	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
 		modelValue: params.modelValue,
 		readonly: params.readonly,
@@ -68,9 +79,9 @@ export function useCaptchaValidation(params: {
 		clearValidation,
 		errors,
 		warnings,
-		successes,
+		successes: computed(() => hasExplicitSuccessSource.value ? successes.value : []),
 		hasError,
 		hasWarning,
-		hasSuccess,
+		hasSuccess: computed(() => hasExplicitSuccessSource.value && hasSuccess.value),
 	}
 }

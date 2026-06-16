@@ -95,7 +95,7 @@ export const WithError: Story = {
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
 
-const modelValue = ref('abc')
+const modelValue = ref('ytq')
 				`,
 			},
 		],
@@ -122,7 +122,7 @@ const modelValue = ref('abc')
 		}
 	},
 	args: {
-		modelValue: 'abc',
+		modelValue: 'ytq',
 		// Validation à la saisie pour que l'état (erreur/succès) se mette à jour
 		// immédiatement quand on modifie le champ, sans attendre le blur.
 		isValidateOnBlur: false,
@@ -142,7 +142,7 @@ const modelValue = ref('abc')
 	play: async ({ canvasElement }) => {
 		const input = within(canvasElement).getByRole('textbox')
 		await userEvent.clear(input)
-		await userEvent.type(input, 'abc')
+		await userEvent.type(input, 'ytq')
 		input.blur()
 	},
 }
@@ -183,7 +183,7 @@ export const WithWarning: Story = {
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
 
-const modelValue = ref('abc')
+const modelValue = ref('ytq')
 				`,
 			},
 		],
@@ -250,7 +250,7 @@ export const WithSuccess: Story = {
 import { ref } from 'vue'
 import { Captcha } from '@cnamts/synapse'
 
-const modelValue = ref('abc')
+const modelValue = ref('ytqZNq')
 				`,
 			},
 		],
@@ -279,7 +279,7 @@ const modelValue = ref('abc')
 	play: async ({ canvasElement }) => {
 		const input = within(canvasElement).getByRole('textbox')
 		await userEvent.clear(input)
-		await userEvent.type(input, 'abcdef')
+		await userEvent.type(input, 'ytqZNq')
 		input.blur()
 	},
 }
@@ -323,6 +323,7 @@ export const ValidateOnInput: Story = {
 					}
 				},
 				message: 'Le captcha est incorrect',
+				successMessage: 'Le captcha est correct'
 			}
 		}
 ]"
@@ -389,6 +390,7 @@ const verifyCaptcha = () => {
 										}
 									},
 									message: 'Le captcha est incorrect',
+									successMessage: 'Le captcha est correct',
 								}
 							},
 						]"
@@ -400,9 +402,9 @@ const verifyCaptcha = () => {
 	play: async ({ canvasElement }) => {
 		const input = within(canvasElement).getByRole('textbox')
 		await userEvent.clear(input)
-		await userEvent.type(input, 'abcdef')
-		await new Promise(resolve => setTimeout(resolve, 500))
-		await userEvent.type(input, 'abcde')
+		// Saisie de la bonne réponse : la validation se met à jour à chaque frappe
+		// (erreur tant que < 6 caractères, puis succès une fois le bon captcha saisi).
+		await userEvent.type(input, 'ytqZNq')
 	},
 }
 

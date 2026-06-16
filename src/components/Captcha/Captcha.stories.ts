@@ -179,6 +179,7 @@ type Story = StoryObj<typeof Captcha>
 
 export const Default: Story = {
 	args: {
+		'showSuccessMessages': true,
 		'onUpdate:modelValue': fn(),
 		'onUpdate:type': fn(),
 		'onImageError': fn(),
@@ -194,16 +195,51 @@ export const Default: Story = {
 					captchaValue.value = args.modelValue
 				})
 
-				return { args, captchaValue }
+				// Vérification simulée : seules ces réponses correspondent à l'image.
+				const verifyCaptcha = () => {
+					if (captchaValue.value === 'ytqZNq' || captchaValue.value === '941335') {
+						return Promise.resolve({ response: { data: { message: 'Success' } } })
+					}
+					return Promise.reject({ response: { data: { message: 'Le captcha est incorrect' } } })
+				}
+
+				const customRules = [
+					{
+						type: 'custom',
+						options: {
+							validate: (value: string) => String(value || '').length >= 6,
+							message: 'Le captcha doit contenir au moins 6 caractères.',
+						},
+					},
+					{
+						type: 'custom',
+						options: {
+							validate: async () => {
+								try {
+									const r = await verifyCaptcha()
+									return r.response.data.message === 'Success'
+								}
+								catch {
+									return false
+								}
+							},
+							message: 'Le captcha est incorrect',
+							successMessage: 'Le captcha est correct',
+						},
+					},
+				]
+
+				return { args, captchaValue, customRules }
 			},
 			template: `
                 <VCard class="pa-8" max-width="600" min-width="300">
-                    <Captcha 
+                    <Captcha
                         url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
                         url-get-image="/captcha/captcha.png"
                         url-get-audio="/captcha/captcha.mp3"
 						v-bind="args"
 						v-model="captchaValue"
+						:custom-rules="customRules"
                     />
                 </VCard>
             `,
@@ -215,12 +251,12 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
     <VCard class="pa-8" max-width="600">
-        <Captcha 
+        <Captcha
 			url-create="..."
 			url-get-image="..."
 			url-get-audio="/..."
-			@validation:success="(e) => { ... }"
-			@validation:error="(e) => { ... }"
+			:custom-rules="customRules"
+			show-success-messages
 		/>
     </VCard>
 </template>
@@ -231,6 +267,36 @@ export const Default: Story = {
 				code: `<script setup lang="ts">
 import { Captcha } from '@cnamts/Captcha'
 import { VCard } from 'vuetify/components'
+
+const verifyCaptcha = () => {
+	// Appelle l'API pour vérifier le captcha et retourne la réponse
+}
+
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value) => String(value || '').length >= 6,
+			message: 'Le captcha doit contenir au moins 6 caractères.',
+		},
+	},
+	{
+		type: 'custom',
+		options: {
+			validate: async () => {
+				try {
+					const r = await verifyCaptcha()
+					return r.response.data.message === 'Success'
+				}
+				catch {
+					return false
+				}
+			},
+			message: 'Le captcha est incorrect',
+			successMessage: 'Le captcha est correct',
+		},
+	},
+]
 </script>
                 `,
 			},
