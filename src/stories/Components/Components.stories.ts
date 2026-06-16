@@ -207,7 +207,7 @@ export const ComponentsList: StoryObj = {
 						title: 'UserMenuBtn',
 						description: 'Utilisé pour afficher un bouton de menu utilisateur avec un menu déroulant.',
 						link: '/?path=/docs/composants-boutons-usermenubtn--docs',
-						img: '/components/user-menu-btn.svg',
+						img: `/components/user-menu-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -554,6 +554,7 @@ export const ComponentsList: StoryObj = {
 					'Stepper',
 					'Captcha',
 					'Carousel',
+					'UserMenuBtn',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

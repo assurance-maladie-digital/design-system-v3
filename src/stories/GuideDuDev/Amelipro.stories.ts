@@ -373,17 +373,18 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-tabs',
 						},
 					},
-					// {
-					// 	title: 'UserMenu',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'UserMenu',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-menu',
-					// 	},
-					// }, {
+					{
+						title: 'UserMenu',
+						synapse: {
+							name: 'UserMenuBtn',
+							url: getComponentUrl({ name: 'UserMenuBtn', type: 'boutons' }),
+						},
+						amelipro: {
+							name: 'UserMenu',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-menu',
+						},
+					},
+					//  {
 					// 	title: 'UserMenuDetails',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
