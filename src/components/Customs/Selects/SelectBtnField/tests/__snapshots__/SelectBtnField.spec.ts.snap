@@ -74,17 +74,21 @@ exports[`SelectBtnField > display correctly in dark mode with an error 1`] = `
             </div>
           </li>
         </ul>
-        <p class="
-          mb-0
+        <div class="
           mt-2
-          opacity-100
           px-3
-          text-error
-          theme--light
-          v-messages
+          select-btn-field__messages
         ">
-          Test
-        </p>
+          <p class="
+            mb-0
+            opacity-100
+            select-btn-field__message
+            select-btn-field__message--error
+            v-messages
+          ">
+            Test
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -180,21 +184,25 @@ exports[`SelectBtnField > display correctly with an error 1`] = `
       </div>
     </li>
   </ul>
-  <p class="
-    mb-0
+  <div class="
     mt-2
-    opacity-100
     px-3
-    text-error
-    theme--light
-    v-messages
+    select-btn-field__messages
   ">
-    Test
-  </p>
+    <p class="
+      mb-0
+      opacity-100
+      select-btn-field__message
+      select-btn-field__message--error
+      v-messages
+    ">
+      Test
+    </p>
+  </div>
 </div>
 `;
 
-exports[`SelectBtnField > display correctly with in dark mode with an hint 1`] = `
+exports[`SelectBtnField > display correctly with in dark mode with a help text 1`] = `
 <div class="
   v-application
   v-layout
@@ -267,16 +275,18 @@ exports[`SelectBtnField > display correctly with in dark mode with an hint 1`] =
             </div>
           </li>
         </ul>
-        <p class="
-          mb-0
+        <div class="
           mt-2
-          opacity-100
           px-3
-          theme--light
-          v-messages
+          select-btn-field__messages
         ">
-          Test
-        </p>
+          <p class="
+            mb-0
+            select-btn-field__help-text
+          ">
+            Test
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -371,16 +381,18 @@ exports[`SelectBtnField > render correctly in multiple mode 1`] = `
       </div>
     </li>
   </ul>
-  <p class="
-    mb-0
+  <div class="
     mt-2
-    opacity-100
     px-3
-    theme--light
-    v-messages
+    select-btn-field__messages
   ">
-    Test
-  </p>
+    <p class="
+      mb-0
+      select-btn-field__help-text
+    ">
+      Test
+    </p>
+  </div>
 </div>
 `;
 
@@ -490,15 +502,17 @@ exports[`SelectBtnField > renders correctly with props 1`] = `
       </div>
     </li>
   </ul>
-  <p class="
-    mb-0
+  <div class="
     mt-2
-    opacity-100
     px-3
-    theme--light
-    v-messages
+    select-btn-field__messages
   ">
-    Test
-  </p>
+    <p class="
+      mb-0
+      select-btn-field__help-text
+    ">
+      Test
+    </p>
+  </div>
 </div>
 `;
