@@ -191,6 +191,9 @@
 			<div
 				class="px-6"
 				:class="{ 'sy-dialog-box-content--scrollable': props.scrollable }"
+				:tabindex="props.scrollable ? 0 : undefined"
+				:role="props.scrollable ? 'region' : undefined"
+				:aria-label="props.scrollable ? props.title : undefined"
 				v-bind="options.cardText"
 			>
 				<slot />
@@ -254,6 +257,8 @@
 
 .sy-dialog-box-title {
 	line-height: normal;
+	flex-shrink: 0;
+
 }
 
 .v-btn--icon {
