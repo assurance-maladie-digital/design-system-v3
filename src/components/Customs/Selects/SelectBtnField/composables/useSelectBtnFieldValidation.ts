@@ -49,11 +49,26 @@ export function useSelectBtnFieldValidation(props: FieldValidationProps & { mode
 		focused,
 	})
 
+	// Un champ simplement rempli n'est pas « en succès » : sans cela, le composable legacy
+	// marque succès dès qu'une valeur est saisie (successRules vides + valeur remplie),
+	// ce qui ferait passer l'item sélectionné en vert sur toutes les stories. On n'autorise
+	// donc l'état de succès que s'il existe une source explicite (règle de succès, règle
+	// portant un successMessage, message de succès injecté, ou succès forcé).
+	const hasExplicitSuccessSource = computed(() =>
+		(props.customSuccessRules?.length ?? 0) > 0
+		|| (props.customRules ?? []).some(rule => !!rule.options?.successMessage)
+		|| (props.successMessages?.length ?? 0) > 0
+		|| (props.hasSuccess ?? false),
+	)
+
+	const effectiveHasSuccess = computed(() => hasExplicitSuccessSource.value && hasSuccess.value)
+	const effectiveSuccesses = computed(() => hasExplicitSuccessSource.value ? successes.value : [])
+
 	const validationIcon = computed(() => {
 		if (props.useVuetifyValidation) return null
 		if (hasError.value) return mdiAlertCircle
 		if (hasWarning.value) return mdiAlertOutline
-		if (hasSuccess.value) return mdiCheck
+		if (effectiveHasSuccess.value) return mdiCheck
 		return null
 	})
 
@@ -63,10 +78,10 @@ export function useSelectBtnFieldValidation(props: FieldValidationProps & { mode
 		clearValidation,
 		errors,
 		warnings,
-		successes,
+		successes: effectiveSuccesses,
 		hasError,
 		hasWarning,
-		hasSuccess,
+		hasSuccess: effectiveHasSuccess,
 		validationIcon,
 	}
 }
