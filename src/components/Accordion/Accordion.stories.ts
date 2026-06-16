@@ -1,7 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { fn } from '@storybook/test'
 import Accordion from './Accordion.vue'
-import { ref } from 'vue'
+import { SyIcon } from '@/components'
+import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+import { mdiCloseCircleOutline } from '@mdi/js'
+import {
+	VStepper,
+	VStepperHeader,
+	VStepperItem,
+	VStepperWindow,
+	VStepperWindowItem,
+	VStepperActions,
+} from 'vuetify/components'
+import { computed, reactive, ref } from 'vue'
 
 const meta: Meta<typeof Accordion> = {
 	title: 'Composants/Données/Accordion',
@@ -485,6 +496,115 @@ export const PreOpened: Story = {
 				<div class="mt-4" style="font-family: monospace; color: #666;">
 					Éléments ouverts : {{ openItems }}
 				</div>
+			</div>
+		`,
+	}),
+}
+
+export const WithCustomContent: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				code: `<template>
+  <Accordion
+    :items="[
+      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
+    ]"
+    :heading-level="5"
+  />
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: defaultItems.slice(0, 1),
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: {
+			Accordion,
+			VStepper,
+			VStepperHeader,
+			VStepperItem,
+			VStepperWindow,
+			VStepperWindowItem,
+			VStepperActions,
+			SyCheckbox,
+			SyIcon,
+		},
+		setup() {
+			const steps = reactive([
+				{ id: 1, error: false, complete: true, editable: true },
+				{ id: 2, error: true, complete: false, editable: true },
+				{ id: 3, error: false, complete: false, editable: true },
+			])
+			const step = ref(2)
+
+			const close = mdiCloseCircleOutline
+
+			const hasError = computed(() =>
+				steps.some(s => s.error),
+			)
+			return { args, step, close, steps, hasError }
+		},
+		template: `
+			<div class="pa-4">
+				<Accordion v-bind="args" >
+                  <template #right-content>
+                    <SyIcon
+                        v-if="hasError"
+                        :icon="close"
+                        color="rgb(var(--v-theme-error))"
+                    />                  </template>
+                  <template #content="{ item }">
+                    <VStepper v-model="step">
+                      <template #default="{ prev, next }">
+                        <VStepperHeader>
+                          <VStepperItem
+                              v-for="stepItem in steps"
+                              :key="stepItem.id"
+                              :value="stepItem.id"
+                              :error="stepItem.error"
+                              :editable="stepItem.editable"
+                              :complete="stepItem.complete"
+                              :title="'Étape ' + stepItem.id"                        
+                              />
+                        </VStepperHeader>
+
+                        <VStepperWindow>
+                          <VStepperWindowItem
+                              v-for="(step) in steps"
+                              :key="step.id"
+                              :value="step.id"
+                          >
+                            <div style="padding: 24px;">
+                              <h3>Contenu de l'étape {{ step.id }}</h3>
+
+                              <SyCheckbox
+                                  v-model="step.error"
+                                  label="Cochez pour obtenir une erreur"
+                              />
+
+                              <p v-if="step.error" style="color: rgb(var(--v-theme-error));">
+                                Cette étape contient des erreurs.
+                              </p>
+
+                              <p v-else-if="step.complete">
+                                Cette étape est complétée.
+                              </p>
+
+                              <p v-else>
+                                Ceci est le contenu de l'étape {{ step.id }}.
+                              </p>
+                            </div>
+                          </VStepperWindowItem>
+                        </VStepperWindow>
+                      </template>
+                    </VStepper>
+                  </template>
+                </Accordion>
 			</div>
 		`,
 	}),
