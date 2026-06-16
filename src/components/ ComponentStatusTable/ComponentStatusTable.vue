@@ -365,101 +365,103 @@
 </template>
 <style>
 .quality-filters {
-  display: grid;
-  grid-template-columns: 260px 1fr auto;
-  gap: 24px;
-  align-items: start;
-  margin: 24px 0;
-  padding: 20px;
-  background: #f8f9fc;
-  border: 1px solid #dbe3f0;
-  border-radius: 12px;
+	display: grid;
+	grid-template-columns: 260px 1fr auto;
+	gap: 24px;
+	align-items: start;
+	margin: 24px 0;
+	padding: 20px;
+	background: #f8f9fc;
+	border: 1px solid #dbe3f0;
+	border-radius: 12px;
 }
 
 .filter-field {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 
 .filter-search {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 .filter-count {
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: start;
-  padding: 0 20px;
-  background: #e7ecf5;
-  border-radius: 999px;
-  font-weight: 700;
-  color: #0c419a;
-  white-space: nowrap;
+	height: 56px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-self: start;
+	padding: 0 20px;
+	background: #e7ecf5;
+	border-radius: 999px;
+	font-weight: 700;
+	color: #0c419a;
+	white-space: nowrap;
 }
+
 .component-status-page {
-  width: 100%;
-  max-width: none;
+	width: 100%;
+	max-width: none;
 }
 
 .component-status-page :deep(.v-table__wrapper) {
-  overflow-x: auto;
+	overflow-x: auto;
 }
 
 .component-status-page :deep(table) {
-  min-width: 1600px;
+	min-width: 1600px;
 }
+
 .theme-chips {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
 }
 
 .theme-chips :deep(.v-chip) {
-  min-width: 120px;
-  justify-content: center;
-  text-decoration: none;
-  font-weight: 600;
+	min-width: 120px;
+	justify-content: center;
+	text-decoration: none;
+	font-weight: 600;
 }
 
 .cnam-chip {
-  background: #e8edf7 !important;
-  color: #0c4fb5 !important;
+	background: #e8edf7 !important;
+	color: #0c4fb5 !important;
 }
 
 .amelipro-chip {
-  background: #dff0e6 !important;
-  color: #0d7a43 !important;
+	background: #dff0e6 !important;
+	color: #0d7a43 !important;
 }
 
 .test-chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
 }
 
 .test-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 700;
 }
 
 .test-chip-ok {
-  background: #dff0e6;
-  color: #0d7a43;
+	background: #dff0e6;
+	color: #0d7a43;
 }
 
 .test-chip-ko {
-  background: #fde2e2;
-  color: #c62828;
+	background: #fde2e2;
+	color: #c62828;
 }
 </style>
