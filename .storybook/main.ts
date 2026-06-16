@@ -18,7 +18,17 @@ const config: StorybookConfig = {
 	},
 	async viteFinal(baseConfig) {
 		return mergeConfig(baseConfig, {
+			esbuild: {
+				supported: {
+					destructuring: true,
+				},
+			},
 			optimizeDeps: {
+				esbuildOptions: {
+					supported: {
+						destructuring: true,
+					},
+				},
 				exclude: [
 					'@storybook/addon-docs',
 					'@storybook/addon-docs/preview',
