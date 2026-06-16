@@ -451,6 +451,56 @@ export const WithVModel: Story = {
 	}),
 }
 
+export const PreOpened: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				name: 'Template',
+				code: `<script setup lang="ts">
+  import { ref } from 'vue'
+  import { Accordion } from '@cnamts/synapse'
+
+  // Pré-ouvrir la section 2
+  const openItems = ref<string[]>(['item2'])
+</script>
+
+<template>
+  <Accordion
+    v-model="openItems"
+    :items="[
+      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
+      { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' },
+    ]"
+    :heading-level="3"
+  />
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: defaultItems,
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: { Accordion },
+		setup() {
+			const openItems = ref<string[]>(['item2'])
+			return { args, openItems }
+		},
+		template: `
+			<div class="pa-4">
+				<Accordion v-bind="args" v-model="openItems" />
+
+				<div class="mt-4" style="font-family: monospace; color: #666;">
+					Éléments ouverts : {{ openItems }}
+				</div>
+			</div>
+		`,
+	}),
+}
+
 export const WithCustomContent: Story = {
 	parameters: {
 		sourceCode: [
@@ -555,56 +605,6 @@ export const WithCustomContent: Story = {
                     </VStepper>
                   </template>
                 </Accordion>
-			</div>
-		`,
-	}),
-}
-
-export const PreOpened: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				language: 'vue',
-				name: 'Template',
-				code: `<script setup lang="ts">
-  import { ref } from 'vue'
-  import { Accordion } from '@cnamts/synapse'
-
-  // Pré-ouvrir la section 2
-  const openItems = ref<string[]>(['item2'])
-</script>
-
-<template>
-  <Accordion
-    v-model="openItems"
-    :items="[
-      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
-      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
-      { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' },
-    ]"
-    :heading-level="3"
-  />
-</template>`,
-			},
-		],
-	},
-	args: {
-		items: defaultItems,
-		headingLevel: 3,
-	},
-	render: args => ({
-		components: { Accordion },
-		setup() {
-			const openItems = ref<string[]>(['item2'])
-			return { args, openItems }
-		},
-		template: `
-			<div class="pa-4">
-				<Accordion v-bind="args" v-model="openItems" />
-
-				<div class="mt-4" style="font-family: monospace; color: #666;">
-					Éléments ouverts : {{ openItems }}
-				</div>
 			</div>
 		`,
 	}),
