@@ -398,7 +398,7 @@ export const WithCustomSlots: Story = {
             <VCarousel v-bind="args">
                 <VCarouselItem>
                     <div class="d-flex fill-height justify-center align-center pa-4">
-                        <VCard class="w-100" style="max-width: 600px;">
+                        <VCard style="width: calc(100% - 112px);">
                             <VCardTitle>Slide 1</VCardTitle>
                             <VCardText>
                                 <p class="mb-0">
@@ -417,7 +417,7 @@ export const WithCustomSlots: Story = {
 
                 <VCarouselItem>
                     <div class="d-flex fill-height justify-center align-center pa-4">
-                        <VCard class="w-100" style="max-width: 600px;">
+                        <VCard style="width: calc(100% - 112px);">
                             <VCardTitle>Slide 2</VCardTitle>
                             <VCardText>
                                 <p class="mb-0">
@@ -436,7 +436,7 @@ export const WithCustomSlots: Story = {
 
                 <VCarouselItem>
                     <div class="d-flex fill-height justify-center align-center pa-4">
-                        <VCard class="w-100" style="max-width: 600px;">
+                         <VCard style="width: calc(100% - 112px);">
                             <VCardTitle>Slide 3</VCardTitle>
                             <VCardText>
                                 <p class="mb-0">
@@ -457,7 +457,6 @@ export const WithCustomSlots: Story = {
 	}),
 	args: {
 		height: 500,
-		showArrows: 'hover',
 	},
 	parameters: {
 		docs: {
@@ -466,7 +465,7 @@ export const WithCustomSlots: Story = {
     <v-carousel :height="500" show-arrows="hover">
         <v-carousel-item>
             <div class="d-flex fill-height justify-center align-center pa-4">
-                <v-card class="w-100" style="max-width: 600px;">
+                 <v-card style="width: calc(100% - 112px);">
                     <v-card-title>Slide 1</v-card-title>
                     <v-card-text>
                         <p class="mb-0">
@@ -485,7 +484,7 @@ export const WithCustomSlots: Story = {
 
         <v-carousel-item>
             <div class="d-flex fill-height justify-center align-center pa-4">
-                <v-card class="w-100" style="max-width: 600px;">
+                 <v-card style="width: calc(100% - 112px);">
                     <v-card-title>Slide 2</v-card-title>
                     <v-card-text>
                         <p class="mb-0">
@@ -504,7 +503,7 @@ export const WithCustomSlots: Story = {
 
         <v-carousel-item>
             <div class="d-flex fill-height justify-center align-center pa-4">
-                <v-card class="w-100" style="max-width: 600px;">
+                 <v-card style="width: calc(100% - 112px);">
                     <v-card-title>Slide 3</v-card-title>
                     <v-card-text>
                         <p class="mb-0">
