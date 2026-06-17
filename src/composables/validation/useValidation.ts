@@ -1,4 +1,4 @@
-import { ref, computed, unref, type MaybeRef } from 'vue'
+import { ref, computed, unref, type MaybeRef, type Ref } from 'vue'
 import { useFieldValidation, type RuleOptions, type ValidationResult as FieldValidationResult } from '../rules/useFieldValidation'
 
 type builtInDateRuleType =
@@ -57,6 +57,9 @@ export interface ValidationResult {
  */
 export function useValidation(options: ValidationOptions = { showSuccessMessages: false }) {
 	// Set local par instance pour éviter les interférences entre composants
+	// IMPORTANT: Ce Set conserve en mémoire les champs qui ont déjà eu des messages de succès personnalisés
+	// Une fois qu'un champ est ajouté ici, il ne recevra plus jamais de message de succès par défaut
+	// Ceci est un comportement volontaire pour éviter l'incohérence visuelle
 	const fieldsWithCustomSuccess = new Set<string>()
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
@@ -81,7 +84,11 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		warnings.value = []
 		successes.value = []
 		successState.value = false
-		// Ne pas réinitialiser hasCustomSuccessMessage ici
+		// IMPORTANT: NE PAS réinitialiser fieldsWithCustomSuccess ici
+		// Raison : Une fois qu'un champ a eu un message de succès personnalisé, il ne doit JAMAIS
+		// revenir au message de succès par défaut pour éviter l'incohérence visuelle.
+		// Exemple : Si un utilisateur voit "Email valide et vérifié", il ne doit jamais voir
+		// ensuite "Champ valide" pour le même champ, même après modification.
 	}
 
 	/**
@@ -158,7 +165,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 
 	/**
 	 * Détermine si un message de succès par défaut doit être ajouté.
-	 * 
+	 *
 	 * Un message de succès par défaut est ajouté uniquement si :
 	 * - Aucune erreur de validation n'est présente
 	 * - Le champ contient une valeur (non vide)
@@ -176,7 +183,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		hasRuleSuccess: boolean,
 		hasWarningRuleWithCustomSuccessMessage: boolean,
 		fieldIdentifier: string | undefined,
-		fieldsWithCustomSuccess: Set<string>
+		fieldsWithCustomSuccess: Set<string>,
 	): boolean => {
 		return !hasValidationError
 			&& isValueFilled
@@ -216,10 +223,15 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 			// Traiter les successMessages des rules normales (uniquement si successMessage est explicitement défini quand des successRules sont présentes)
 			const ruleSuccessMessages = new Set(rules.map(r => r.options?.successMessage).filter(Boolean))
 			if (!hasValidationError) {
+				// Dédupliquer les messages de succès pour éviter les doublons (ex: required + minLength)
+				const uniqueSuccessMessages = new Set<string>()
 				for (const result of ruleResults) {
 					if (result.success && unref(options.showSuccessMessages) !== false) {
 						if (successRules.length === 0 || ruleSuccessMessages.has(result.success)) {
-							successes.value.push(result.success)
+							if (!uniqueSuccessMessages.has(result.success)) {
+								uniqueSuccessMessages.add(result.success)
+								successes.value.push(result.success)
+							}
 						}
 					}
 				}
@@ -230,6 +242,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 			const hasRuleWithCustomSuccessMessage = rules.some(rule => rule.options?.successMessage)
 			const hasWarningRuleWithCustomSuccessMessage = warningRules.some(rule => rule.options?.successMessage)
 			if ((hasRuleWithCustomSuccessMessage || hasWarningRuleWithCustomSuccessMessage) && options.fieldIdentifier) {
+				// MARQUE PERMANENTE : Ce champ ne recevra plus jamais de message de succès par défaut
+				// Même si l'utilisateur modifie la valeur, le message personnalisé reste prioritaire
 				fieldsWithCustomSuccess.add(options.fieldIdentifier)
 			}
 			// N'ajouter le message par défaut que si la valeur est remplie, aucune règle n'a de successMessage personnalisé, et aucun succès n'a été retourné
