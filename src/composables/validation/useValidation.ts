@@ -261,11 +261,16 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				const warningResolved = executeRules(warningRules, value, { isWarning: true })
 				return thenOrSync(warningResolved, token, (warningResults) => {
 					const warningSuccessMessages = new Set(warningRules.map(r => r.options?.successMessage).filter(Boolean))
+					// Dédupliquer les messages de succès des warningRules pour éviter les doublons
+					const uniqueWarningSuccessMessages = new Set<string>()
 					for (const r of warningResults) {
 						if (r.warning) warnings.value.push(r.warning)
 						if (r.success && warningSuccessMessages.has(r.success) && unref(options.showSuccessMessages) !== false) {
-							successes.value.push(r.success)
-							successState.value = true
+							if (!uniqueWarningSuccessMessages.has(r.success)) {
+								uniqueWarningSuccessMessages.add(r.success)
+								successes.value.push(r.success)
+								successState.value = true
+							}
 						}
 					}
 					return runSuccessRules(hasValidationError, value, successRules, token)
@@ -290,9 +295,14 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		return thenOrSync(successResolved, token, (successResults) => {
 			successState.value = successResults.some(result => Boolean(result.success))
 
+			// Dédupliquer les messages de succès des successRules pour éviter les doublons
+			const uniqueSuccessRuleMessages = new Set<string>()
 			for (const r of successResults) {
 				if (r.success && unref(options.showSuccessMessages) !== false) {
-					successes.value.push(r.success)
+					if (!uniqueSuccessRuleMessages.has(r.success)) {
+						uniqueSuccessRuleMessages.add(r.success)
+						successes.value.push(r.success)
+					}
 				}
 			}
 			return buildResult()
