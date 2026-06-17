@@ -104,6 +104,22 @@ const meta = {
 				},
 			},
 		},
+		'headingLevel': {
+			description: 'Niveau sémantique du titre (balise h1 à h6), pour l’intégration dans la hiérarchie de titres de la page',
+			control: {
+				type: 'select',
+			},
+			options: [1, 2, 3, 4, 5, 6],
+			table: {
+				category: 'props',
+				type: {
+					summary: '1 | 2 | 3 | 4 | 5 | 6',
+				},
+				defaultValue: {
+					summary: '2',
+				},
+			},
+		},
 		'onUpdate:modelValue': {
 			description: 'Événement déclenché lors de la mise à jour des filtres',
 			control: {

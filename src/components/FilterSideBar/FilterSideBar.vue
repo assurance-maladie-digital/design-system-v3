@@ -2,7 +2,7 @@
 	import type { FilterProp } from '@/composables/useFilterable/useFilterable'
 	import useFilterable from '@/composables/useFilterable/useFilterable'
 	import { mdiFilterVariant } from '@mdi/js'
-	import { computed, onMounted, ref, toRef, watch } from 'vue'
+	import { computed, onMounted, ref, toRef, useId, watch } from 'vue'
 	import type { VBtn } from 'vuetify/components/VBtn'
 	import type { VNavigationDrawer } from 'vuetify/components/VNavigationDrawer'
 	import ChipList from '../ChipList/ChipList.vue'
@@ -30,6 +30,9 @@
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: FilterProp): void
 	}>()
+
+	// Id du titre pour lier le nom accessible du panneau au titre visible (aria-labelledby)
+	const titleId = useId()
 
 	const {
 		filters,
@@ -138,7 +141,8 @@
 				:aria-hidden="drawer ? undefined : 'true'"
 				:inert="drawer ? undefined : 'true'"
 				:aria-modal="props.modale"
-				:aria-label="props.title || locales.modaleLabel"
+				:aria-label="props.title ? undefined : locales.modaleLabel"
+				:aria-labelledby="props.title ? titleId : undefined"
 				:style="zIndexStyle"
 				@keydown.escape.prevent="drawer = false"
 			>
@@ -148,6 +152,7 @@
 				>
 					<SyHeading
 						v-if="props.title"
+						:id="titleId"
 						class="sy-filters-side-bar__title px-4 pt-4 pb-2 text-h6 font-weight-bold"
 						:level="props.headingLevel"
 					>
