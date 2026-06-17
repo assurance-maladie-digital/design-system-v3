@@ -199,6 +199,18 @@ const meta: Meta<typeof DialogBox> = {
 				category: 'events',
 			},
 		},
+		'scrollable': {
+			control: 'boolean',
+			description: 'Rendre le contenu de la boîte de dialogue scrollable',
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof DialogBox>
 
@@ -609,9 +621,6 @@ export const TitleSlot: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -837,6 +846,101 @@ export const VuetifyOptions: Story = {
 			},
 		],
 	},
+}
+
+export const Scrollable: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+			<template>
+				<VBtn
+					color="primary"
+					@click="dialogOpen = !dialogOpen"
+				>
+					Ouvrir la DialogBox scrollable
+				</VBtn>
+
+				<DialogBox
+					v-model="dialogOpen"
+					title="DialogBox scrollable"
+					scrollable
+					width="600px"
+					@confirm="dialogOpen = false"
+					@cancel="dialogOpen = false"
+				>
+					<p
+						v-for="index in 20"
+						:key="index"
+						class="mb-4"
+					>
+						Ligne de contenu numéro {{ index }}.
+						Ce contenu permet de vérifier que seule la zone centrale
+						de la boîte de dialogue est scrollable, tandis que les boutons
+						d’action restent visibles en bas.
+					</p>
+				</DialogBox>
+			</template>
+			`,
+			},
+			{
+				name: 'Script',
+				code: `
+			<script setup lang="ts">
+				import { DialogBox } from '@cnamts/synapse'
+				import { ref } from 'vue'
+
+				const dialogOpen = ref(false)
+			</script>
+			`,
+			},
+		],
+	},
+	args: {
+		'headingLevel': 2,
+		'modelValue': false,
+		'title': 'DialogBox scrollable',
+		'scrollable': true,
+		'width': '600px',
+		'onCancel': fn(),
+		'onConfirm': fn(),
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { DialogBox, VBtn },
+		setup() {
+			return { args }
+		},
+		template: `
+			<div class="pa-4">
+				<VBtn
+					color="primary"
+					@click="args.modelValue = !args.modelValue"
+				>
+					Ouvrir la DialogBox scrollable
+				</VBtn>
+
+				<DialogBox
+					v-bind="args"
+					@update:modelValue="args.modelValue = $event"
+					@confirm="args.modelValue = false"
+					@cancel="args.modelValue = false"
+				>
+					<p
+						v-for="index in 20"
+						:key="index"
+						class="mb-4"
+					>
+						Ligne de contenu numéro {{ index }}.
+						Ce contenu permet de vérifier que seule la zone centrale
+						de la boîte de dialogue est scrollable, tandis que les boutons
+						d’action restent visibles en bas.
+					</p>
+				</DialogBox>
+			</div>
+		`,
+	}),
 }
 
 export const Draggable: Story = {

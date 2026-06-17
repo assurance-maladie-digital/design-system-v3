@@ -73,4 +73,28 @@ describe('DialogBox - Visual regression tests', () => {
 		waitForDialogTransitionEnd()
 		cy.matchImageSnapshot('dialog-box-custom-texts')
 	})
+
+	it('displays the scrollable dialog box', () => {
+		cy.mountWithVuetify(DialogBox, {
+			...dialogTransitionOptions,
+			props: {
+				'modelValue': true,
+				'title': 'Dialog scrollable',
+				'scrollable': true,
+				'onUpdate:modelValue': () => {},
+			},
+			slots: {
+				default: () => h(
+					'div',
+					Array.from({ length: 20 }, (_, index) =>
+						h('p', { class: 'mb-4' }, `Ligne de contenu numéro ${index + 1}`),
+					),
+				),
+			},
+		})
+
+		cy.get('.v-dialog').should('be.visible')
+		waitForDialogTransitionEnd()
+		cy.matchImageSnapshot('dialog-box-scrollable')
+	})
 })
