@@ -281,6 +281,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Formulaires',
 					},
 					{
+						title: 'UploadWorkflow',
+						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer plusieurs fichiers demandés.',
+						link: '/?path=/docs/composants-formulaires-uploadworkflow--docs',
+						img: `/components/upload-workflow${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
 						title: 'NirField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir un numéro de Sécurité sociale (NIR).',
 						link: '/?path=/docs/composants-formulaires-nirfield--docs',
@@ -555,6 +562,7 @@ export const ComponentsList: StoryObj = {
 					'Captcha',
 					'Carousel',
 					'UserMenuBtn',
+					'UploadWorkflow',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
