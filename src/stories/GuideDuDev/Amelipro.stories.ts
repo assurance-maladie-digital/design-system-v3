@@ -579,17 +579,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-pagination-btn',
 						},
 					},
-					// {
-					// 	title: 'AmeliproPatientBanner',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPatientBanner',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-banner',
-					// 	},
-					// },
+					{
+						title: 'AmeliproPatientBanner',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproPatientBanner',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-banner',
+						},
+					},
 					{
 						title: 'AmeliproRadioGroup',
 						synapse: {
