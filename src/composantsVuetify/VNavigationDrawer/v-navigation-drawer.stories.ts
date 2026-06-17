@@ -46,7 +46,7 @@ export const Default: Story = {
                 </VNavigationDrawer>
                 <VMain>
                     <div class="pa-4">
-                        <VBtn @click="drawer = !drawer">
+                        <VBtn @click="drawer = !drawer" color="primary">
                             Toggle Drawer
                         </VBtn>
                     </div>
@@ -81,7 +81,7 @@ export const Default: Story = {
         </v-navigation-drawer>
         <v-main>
             <div class="pa-4">
-                <v-btn @click="drawer = !drawer">
+                <v-btn @click="drawer = !drawer" color="primary">
                     Toggle Drawer
                 </v-btn>
             </div>
@@ -185,9 +185,10 @@ export const Temporary: Story = {
                 </VNavigationDrawer>
                 <VMain>
                     <div class="pa-4">
-                        <VBtn @click="drawer = !drawer">
+                        <VBtn @click="drawer = !drawer" color="primary">
                             Ouvrir le drawer
                         </VBtn>
+                        <p class="mt-4">Le drawer temporaire se superpose au contenu et se ferme en cliquant en dehors.</p>
                     </div>
                 </VMain>
             </VApp>
@@ -216,7 +217,7 @@ export const Temporary: Story = {
         </v-navigation-drawer>
         <v-main>
             <div class="pa-4">
-                <v-btn @click="drawer = !drawer">
+                <v-btn @click="drawer = !drawer" color="primary">
                     Ouvrir le drawer
                 </v-btn>
             </div>
