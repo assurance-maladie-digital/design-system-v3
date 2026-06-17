@@ -72,6 +72,7 @@ const apComponents = [
 	'composants-formulaires-sytextarea',
 	'composants-formulaires-sytextfield',
 	'composants-formulaires-passwordfield',
+	'composants-formulaires-uploadworkflow',
 	'composants-layout-pagecontainer',
 	'composants-navigation-skiplink',
 	'composants-navigation-sypagination',
