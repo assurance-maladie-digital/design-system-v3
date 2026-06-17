@@ -24,7 +24,8 @@ const ap2026OnlyStories = [
 const apOnlyStories = [
 	'composants-structure-footerbar--back-office',
 	'composants-structure-footerbar--with-phone-number',
-    'composants-données-accordion--with-custom-content'
+	'composants-données-accordion--with-custom-content',
+	'composants-boutons-usermenubtn--with-ps-info',
 ]
 
 // Components to display in AP theme
@@ -33,6 +34,7 @@ const apComponents = [
 	'composants-boutons-copybtn',
 	'composants-boutons-downloadbtn',
 	'composants-boutons-syiconbutton',
+	'composants-boutons-usermenubtn',
 	'composants-composants-vuetify',
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbreadcrumbs--docs',
