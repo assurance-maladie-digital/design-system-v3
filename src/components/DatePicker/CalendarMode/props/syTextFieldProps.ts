@@ -1,5 +1,6 @@
 import type { Ref } from 'vue'
 import type { DatePickerCommonProps } from '../../types'
+import { DATE_PICKER_MESSAGES } from '../../constants/messages'
 
 export const useSyTextFieldProps = (
 	props: DatePickerCommonProps,
@@ -9,7 +10,7 @@ export const useSyTextFieldProps = (
 	successMessages: Ref<string[]>,
 	isOnSuccess: Ref<boolean>,
 ) => ({
-	'aria-label': labelWithAsterisk.value || props.placeholder || '',
+	'aria-label': labelWithAsterisk.value || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT,
 	'aria-labelledby': undefined,
 	'append-icon': props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined,
 	'error-messages': errorMessages.value,

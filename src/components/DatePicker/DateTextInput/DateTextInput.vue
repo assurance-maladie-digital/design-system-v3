@@ -153,8 +153,12 @@
 		return await bridgeValidation.validateField(value, rules, warningRules)
 	}
 
-	// Agrégation des erreurs internes et externes
-	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
+	// Agrégation des erreurs internes et externes avec déduplication
+	// Évite les doublons quand les mêmes customRules sont exécutées par le parent et l'enfant
+	const errorMessages = computed(() => {
+		const allErrors = [...errors.value, ...props.externalErrorMessages]
+		return [...new Set(allErrors)] // Déduplication avec Set
+	})
 	const warningMessages = warnings
 	const successMessages = computed((): string[] =>
 		readonly.value ? [] : (bridgeValidation.validation.displaySuccesses.value ?? []),

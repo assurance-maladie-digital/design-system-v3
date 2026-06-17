@@ -536,6 +536,10 @@
 			displayFormattedDate.value = displayFormattedDateComputed.value
 		}
 
+		// Validation au montage pour afficher les erreurs sur les dates pré-remplies invalides
+		// Aligné sur le comportement de ComplexDatePicker
+		validateDates()
+
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
 			isInitialValidation.value = false
