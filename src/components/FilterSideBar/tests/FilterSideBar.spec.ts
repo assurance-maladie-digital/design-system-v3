@@ -370,4 +370,59 @@ describe('FilterSideBar', () => {
 		const drawer = wrapper.find('.v-navigation-drawer')
 		expect(drawer.attributes('style') ?? '').not.toContain('z-index: 2401')
 	})
+
+	const mountWithTitle = (title?: string, headingLevel?: 1 | 2 | 3 | 4 | 5 | 6) =>
+		mount(
+			defineComponent({
+				components: { VApp, FiltersSideBar: FilterSideBar },
+				data: () => ({ title, headingLevel }),
+				template: `
+					<VApp>
+						<FiltersSideBar :model-value="[]" :title="title" :heading-level="headingLevel" />
+					</VApp>
+				`,
+			}),
+			{ global: { stubs: { Teleport: true } } },
+		)
+
+	it('displays the title heading above the filters when title is provided', () => {
+		const wrapper = mountWithTitle('Filtres du tableau')
+
+		const heading = wrapper.find('.sy-filters-side-bar__title')
+		expect(heading.exists()).toBe(true)
+		expect(heading.text()).toBe('Filtres du tableau')
+		// Niveau sémantique par défaut : h2
+		expect(heading.element.tagName).toBe('H2')
+	})
+
+	it('does not render the title heading when no title is provided', () => {
+		const wrapper = mountWithTitle()
+		expect(wrapper.find('.sy-filters-side-bar__title').exists()).toBe(false)
+	})
+
+	it('renders the title with the requested heading level', () => {
+		const wrapper = mountWithTitle('Filtres', 3)
+		expect(wrapper.find('.sy-filters-side-bar__title').element.tagName).toBe('H3')
+	})
+
+	it('links the drawer accessible name to the title via aria-labelledby', () => {
+		const wrapper = mountWithTitle('Filtres du tableau')
+
+		const heading = wrapper.find('.sy-filters-side-bar__title')
+		const drawer = wrapper.find('.v-navigation-drawer')
+		const titleId = heading.attributes('id')
+
+		expect(titleId).toBeTruthy()
+		expect(drawer.attributes('aria-labelledby')).toBe(titleId)
+		// aria-label retiré au profit de aria-labelledby quand un titre est fourni
+		expect(drawer.attributes('aria-label')).toBeUndefined()
+	})
+
+	it('falls back to the default aria-label when no title is provided', () => {
+		const wrapper = mountWithTitle()
+		const drawer = wrapper.find('.v-navigation-drawer')
+
+		expect(drawer.attributes('aria-label')).toBe('Filtres')
+		expect(drawer.attributes('aria-labelledby')).toBeUndefined()
+	})
 })
