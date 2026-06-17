@@ -6,7 +6,8 @@ export function checkNIR(nir: string, nirType: string): boolean {
 
 	const nirRegexComplex = new RegExp(
 		'^'
-		+ '(?<sexe>[1-4]|7|8)'
+		// Code sexe : 1-8 (inclut 5 et 6 pour les matricules MIG « migrants de passage »)
+		+ '(?<sexe>[1-8])'
 		+ '(?<anneeNaissance>\\d{2})'
 		+ '(?<moisNaissance>0[1-9]|1[0-2]|2[0-9]|3[0-9]|4[0-2])'
 		+ '(?<departementNaissance>\\d{2}|2A|2B|96|97\\d|98\\d|99\\d)'

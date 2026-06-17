@@ -80,7 +80,7 @@ Le composant `NirField` utilise des règles de validation par défaut pour le nu
 
   - Le numéro NIR doit être composé de 13 chiffres.
   - Le numéro NIR doit respecter le format suivant :
-  - 1 chiffre pour le sexe (1-4, 7, 8)
+  - 1 chiffre pour le sexe (1 à 8). Les codes **5** et **6** correspondent aux matricules MIG (« migrants de passage » : 5 = masculin, 6 = féminin) et sont donc acceptés en `nirType="complexe"`.
   - 2 chiffres pour l'année de naissance
   - 2 chiffres pour le mois de naissance (01-12, 20-42)
   - 2 chiffres pour le département de naissance (01-99, 2A, 2B, 96, 97X, 98X)
