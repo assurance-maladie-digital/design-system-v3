@@ -236,6 +236,14 @@ const professionList = [
 	}}
 />
 
+## Titre du panneau
+
+Vous pouvez afficher un titre au-dessus des filtres via la prop `title`. C'est utile pour distinguer plusieurs `FilterSideBar` présents sur une même page (par exemple associés à des tableaux différents).
+
+Le niveau sémantique du titre est configurable via la prop `headingLevel` (`1` à `6`, défaut `2`) afin de l'intégrer correctement dans la hiérarchie de titres de la page. Le titre sert également de **nom accessible** au panneau (`aria-labelledby`).
+
+<Canvas of={FilterSideBarStories.Title} />
+
 ## Gestion du z-index
 
 Le `FilterSideBar` utilise un `VNavigationDrawer` de Vuetify dont le z-index par défaut est **1000**.
