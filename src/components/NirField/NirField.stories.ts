@@ -817,3 +817,205 @@ export const ComplexNirType: Story = {
     `,
 	}),
 }
+
+export const CustomRulesPrecedence: Story = {
+	args: {
+		modelValue: '',
+		required: false,
+		numberLabel: 'Numéro de sécurité sociale',
+		keyLabel: 'Clé',
+		displayKey: true,
+		nirType: 'complexe',
+		customNumberRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						if (value.length < 13) return true
+						
+						// Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
+						const migrantRegex = /^[1-8]\d{12}$/
+						return migrantRegex.test(value.replace(/\s/g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
+					},
+					message: 'Format du NIR invalide',
+					successMessage: 'Le numéro de sécurité sociale est valide',
+				},
+			},
+		],
+		customKeyRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						if (value.length !== 2) return true
+						return /^\d{2}$/.test(value) || 'La clé doit être composée de 2 chiffres'
+					},
+					message: 'Format de clé invalide',
+					successMessage: 'La clé de contrôle est valide',
+				},
+			},
+		],
+		customRulesPrecedence: true,
+		showSuccessMessages: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: `
+### Custom Rules Precedence - Support des NIR migrants
+
+Cette story démontre l'utilisation de la prop \`customRulesPrecedence\` pour contourner la validation standard 
+et accepter des formats de NIR non prévus initialement, comme les NIR de migrants (codes sexe 5 et 6).
+
+#### Cas d'usage
+- **NIR migrants** : Codes sexe 5 (masculin) et 6 (féminin) non supportés par la validation standard
+- **Formats spécifiques** : Besoin de valider des formats particuliers non couverts par la regex standard
+- **Migration progressive** : Accepter temporairement des formats legacy en attendant une correction native
+
+#### Fonctionnement
+1. **customRulesPrecedence="true"** : Donne priorité absolue aux règles personnalisées
+2. **Ignorer la validation standard** : La règle de validation NIR native n'est pas exécutée
+3. **Contrôle total** : Vous définissez complètement la logique de validation
+
+#### Exemples de NIR acceptés avec cette configuration :
+- \`5900175120005\` (masculin migrant)
+- \`6900175120005\` (féminin migrante)  
+- \`1900175120005\` (masculin standard)
+- \`2900175120005\` (féminin standard)
+
+#### Limitations
+- La clé de contrôle n'est pas calculée avec l'algorithme standard pour les NIR migrants
+- C'est un contournement, pas une correction native du composant
+- Nécessite de maintenir les règles personnalisées en parallèle
+
+Pour plus d'informations, voir la [documentation technique](/?path=/docs/composants-formulaires-nirfield--docs#ancre-customrulesprecedent).`,
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      :required="false"
+      numberLabel="Numéro de sécurité sociale"
+      keyLabel="Clé"
+      :displayKey="true"
+      nirType="complexe"
+      :custom-number-rules="customNumberRules"
+      :custom-key-rules="customKeyRules"
+      custom-rules-precedence
+      :show-success-messages="true"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import { NirField } from '@cnamts/synapse'
+     import { ref } from 'vue'
+
+     const value = ref('')
+
+     const customNumberRules = [
+       {
+         type: 'custom',
+         options: {
+           validate: (value: string) => {
+             if (!value) return true
+             if (value.length < 13) return true
+             
+             // Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
+             const migrantRegex = /^[1-8]\d{12}$/
+             return migrantRegex.test(value.replace(/\s/g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
+           },
+           message: 'Format du NIR invalide',
+           successMessage: 'Le numéro de sécurité sociale est valide',
+         },
+       },
+     ]
+
+     const customKeyRules = [
+       {
+         type: 'custom',
+         options: {
+           validate: (value: string) => {
+             if (!value) return true
+             if (value.length !== 2) return true
+             return /^\d{2}$/.test(value) || 'La clé doit être composée de 2 chiffres'
+           },
+           message: 'Format de clé invalide',
+           successMessage: 'La clé de contrôle est valide',
+         },
+       },
+     ]
+    </script>
+    `,
+			},
+		],
+	},
+	render: () => ({
+		components: { NirField },
+		setup() {
+			const value = ref('')
+
+			const customNumberRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value) return true
+							if (value.length < 13) return true
+							
+							// Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
+							const migrantRegex = /^[1-8]\d{12}$/
+							return migrantRegex.test(value.replace(/\s/g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
+						},
+						message: 'Format du NIR invalide',
+						successMessage: 'Le numéro de sécurité sociale est valide',
+					},
+				},
+			]
+
+			const customKeyRules = [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: string) => {
+							if (!value) return true
+							if (value.length !== 2) return true
+							return /^\d{2}$/.test(value) || 'La clé doit être composée de 2 chiffres'
+						},
+						message: 'Format de clé invalide',
+						successMessage: 'La clé de contrôle est valide',
+					},
+				},
+			]
+
+			return { value, customNumberRules, customKeyRules }
+		},
+		template: `
+          <div>
+            <p class="mt-2">Cette configuration utilise <code>customRulesPrecedence</code> pour accepter les NIR migrants (codes 5 et 6).</p>
+			<p class="mb-4">Essayez de saisir : <strong>5900175120005</strong> ou <strong>6900175120005</strong></p>
+          </div>
+           <NirField
+				v-model="value"
+				:required="false"
+				numberLabel="Numéro de sécurité sociale'
+				keyLabel="Clé"
+				:displayKey="true"
+				nirType="complexe"
+				:custom-number-rules="customNumberRules"
+				:custom-key-rules="customKeyRules"
+				custom-rules-precedence
+				:show-success-messages="true"
+			/>
+    `,
+	}),
+}

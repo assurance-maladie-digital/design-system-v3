@@ -93,24 +93,26 @@ export function useNirValidation(
 			})))
 		}
 
-		// Règle de validation standard du NIR
-		rules.push({
-			type: 'custom',
-			options: {
-				validate: (value: string) => {
-					if (!value) return true
-					// Ne valider que si tous les caractères sont saisis
-					if (value.length < 13) {
-						return customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
-					}
-					const result = checkNIR(value, nirType.value)
-					return result ? true : customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
+		// Règle de validation standard du NIR (ignorée si customRulesPrecedence est activé)
+		if (!customRulesPrecedence.value) {
+			rules.push({
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						// Ne valider que si tous les caractères sont saisis
+						if (value.length < 13) {
+							return customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
+						}
+						const result = checkNIR(value, nirType.value)
+						return result ? true : customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
+					},
+					message: customLocale.value.errorInvalidNumber || locales.errorInvalidNumber,
+					successMessage: customLocale.value.successNumberValid || locales.successNumberValid,
+					fieldIdentifier: numberLabel.value,
 				},
-				message: customLocale.value.errorInvalidNumber || locales.errorInvalidNumber,
-				successMessage: customLocale.value.successNumberValid || locales.successNumberValid,
-				fieldIdentifier: numberLabel.value,
-			},
-		})
+			})
+		}
 
 		// Ajout des règles personnalisées sans prévalence (comportement par défaut)
 		if (!customRulesPrecedence.value && customNumberRules.value && customNumberRules.value.length > 0) {
