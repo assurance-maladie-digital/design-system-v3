@@ -675,17 +675,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-text-field',
 						},
 					},
-					// {
-					// 	title: 'AmeliproTileBtn',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproTileBtn',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tile-btn',
-					// 	},
-					// },
+					{
+						title: 'AmeliproTileBtn',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproTileBtn',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tile-btn',
+						},
+					},
 					// {
 					// 	title: 'UserInformationSummary',
 					// 	synapse: {
