@@ -833,7 +833,7 @@ export const CustomRulesPrecedence: Story = {
 					validate: (value: string) => {
 						if (!value) return true
 						if (value.length < 13) return true
-						
+
 						// Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
 						const migrantRegex = /^[1-8]\d{12}$/
 						return migrantRegex.test(value.replace(/\s/g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
@@ -931,8 +931,8 @@ Pour plus d'informations, voir la [documentation technique](/?path=/docs/composa
              if (value.length < 13) return true
              
              // Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
-             const migrantRegex = /^[1-8]\d{12}$/
-             return migrantRegex.test(value.replace(/\s/g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
+             const migrantRegex = /^[1-8]{12}$/
+             return migrantRegex.test(value.replace(//g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
            },
            message: 'Format du NIR invalide',
            successMessage: 'Le numéro de sécurité sociale est valide',
@@ -947,7 +947,7 @@ Pour plus d'informations, voir la [documentation technique](/?path=/docs/composa
            validate: (value: string) => {
              if (!value) return true
              if (value.length !== 2) return true
-             return /^\d{2}$/.test(value) || 'La clé doit être composée de 2 chiffres'
+             return /^{2}$/.test(value) || 'La clé doit être composée de 2 chiffres'
            },
            message: 'Format de clé invalide',
            successMessage: 'La clé de contrôle est valide',
@@ -971,7 +971,7 @@ Pour plus d'informations, voir la [documentation technique](/?path=/docs/composa
 						validate: (value: string) => {
 							if (!value) return true
 							if (value.length < 13) return true
-							
+
 							// Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
 							const migrantRegex = /^[1-8]\d{12}$/
 							return migrantRegex.test(value.replace(/\s/g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
