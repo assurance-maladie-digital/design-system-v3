@@ -156,6 +156,37 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		successes.value.push(defaultMessage)
 	}
 
+	/**
+	 * Détermine si un message de succès par défaut doit être ajouté.
+	 * 
+	 * Un message de succès par défaut est ajouté uniquement si :
+	 * - Aucune erreur de validation n'est présente
+	 * - Le champ contient une valeur (non vide)
+	 * - Aucune règle de succès personnalisée n'est définie
+	 * - Aucun message de succès n'est déjà présent
+	 * - Aucune règle n'a retourné de succès
+	 * - Aucune règle d'avertissement n'a de message de succès personnalisé
+	 * - Le champ n'a pas déjà eu de succès personnalisé précédemment
+	 */
+	const shouldAddDefaultSuccess = (
+		hasValidationError: boolean,
+		isValueFilled: boolean,
+		successRules: ValidationRule[],
+		successes: Ref<string[]>,
+		hasRuleSuccess: boolean,
+		hasWarningRuleWithCustomSuccessMessage: boolean,
+		fieldIdentifier: string | undefined,
+		fieldsWithCustomSuccess: Set<string>
+	): boolean => {
+		return !hasValidationError
+			&& isValueFilled
+			&& successRules.length === 0
+			&& successes.value.length === 0
+			&& !hasRuleSuccess
+			&& !hasWarningRuleWithCustomSuccessMessage
+			&& !(fieldIdentifier && fieldsWithCustomSuccess.has(fieldIdentifier))
+	}
+
 	const validateField = (
 		value: unknown,
 		rules: ValidationRule[] = [],
@@ -202,7 +233,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				fieldsWithCustomSuccess.add(options.fieldIdentifier)
 			}
 			// N'ajouter le message par défaut que si la valeur est remplie, aucune règle n'a de successMessage personnalisé, et aucun succès n'a été retourné
-			if (!hasValidationError && isValueFilled && successRules.length === 0 && successes.value.length === 0 && !hasRuleSuccess && !hasWarningRuleWithCustomSuccessMessage && !(options.fieldIdentifier && fieldsWithCustomSuccess.has(options.fieldIdentifier))) {
+			if (shouldAddDefaultSuccess(hasValidationError, isValueFilled, successRules, successes, hasRuleSuccess, hasWarningRuleWithCustomSuccessMessage, options.fieldIdentifier, fieldsWithCustomSuccess)) {
 				successState.value = true
 				if (unref(options.showSuccessMessages) !== false) {
 					addDefaultSuccessMessage()
