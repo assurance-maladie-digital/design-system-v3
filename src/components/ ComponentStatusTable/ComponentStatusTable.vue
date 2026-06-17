@@ -10,18 +10,12 @@
 	const selectedCategory = ref('Toutes')
 
 	const filters = ref([
-		{
-			name: 'quality',
-			title: 'Filtres qualité',
-			value: {
-				missingProps: false,
-				missingUxPage: false,
-				missingSourceCode: false,
-				missingStories: false,
-				missingPlayground: false,
-				criticalOnly: false,
-			},
-		},
+		{ name: 'missingProps', title: 'Props / Slots non documentés', value: false },
+		{ name: 'missingUxPage', title: 'Page usages UX absente', value: false },
+		{ name: 'missingSourceCode', title: 'Onglet source code absent', value: false },
+		{ name: 'missingStories', title: 'Stories incomplètes', value: false },
+		{ name: 'missingPlayground', title: 'Playground absent', value: false },
+		{ name: 'criticalOnly', title: 'Criticité détectée', value: false },
 	])
 
 	const tableHeaders = [
@@ -109,13 +103,16 @@
 			valeurs: 'RAS / Anomalies détectées',
 		},
 	]
+	const getFilterValue = (name: string) =>
+		Boolean(filters.value.find(filter => filter.name === name)?.value)
+
 	const activeFilters = computed(() => ({
-		missingProps: filters.value[0]?.value.missingProps ?? false,
-		missingUxPage: filters.value[0]?.value.missingUxPage ?? false,
-		missingSourceCode: filters.value[0]?.value.missingSourceCode ?? false,
-		missingStories: filters.value[0]?.value.missingStories ?? false,
-		missingPlayground: filters.value[0]?.value.missingPlayground ?? false,
-		criticalOnly: filters.value[0]?.value.criticalOnly ?? false,
+		missingProps: getFilterValue('missingProps'),
+		missingUxPage: getFilterValue('missingUxPage'),
+		missingSourceCode: getFilterValue('missingSourceCode'),
+		missingStories: getFilterValue('missingStories'),
+		missingPlayground: getFilterValue('missingPlayground'),
+		criticalOnly: getFilterValue('criticalOnly'),
 	}))
 
 	const filteredComponents = computed(() =>
@@ -215,61 +212,66 @@
 			</div>
 		</div>
 
-		<FilterInline v-model="filters">
-			<template #quality="{ props }">
-				<div class="quality-filter-panel">
-					<label for="missingProps">
-						<input
-							v-model="props.modelValue.missingProps"
-							type="checkbox"
-						>
-						Props / Slots non documentés
-					</label>
+		<FilterInline
+			v-model="filters"
+		>
+			<template #missingProps="{ props }">
+				<VCheckbox
+					v-model="props.modelValue"
+					label="Afficher les composants avec props / slots non documentés"
+					hide-details
+					@update:model-value="props['onUpdate:modelValue']"
+				/>
+			</template>
 
-					<label for="missingUxPage">
-						<input
-							v-model="props.modelValue.missingUxPage"
-							type="checkbox"
-						>
-						Page usages UX absente
-					</label>
+			<template #missingUxPage="{ props }">
+				<VCheckbox
+					v-model="props.modelValue"
+					label="Afficher les composants sans page usages UX"
+					hide-details
+					@update:model-value="props['onUpdate:modelValue']"
+				/>
+			</template>
 
-					<label for="missingSourceCode">
-						<input
-							v-model="props.modelValue.missingSourceCode"
-							type="checkbox"
-						>
-						Onglet source code absent
-					</label>
+			<template #missingSourceCode="{ props }">
+				<VCheckbox
+					v-model="props.modelValue"
+					label="Afficher les composants sans onglet source code"
+					hide-details
+					@update:model-value="props['onUpdate:modelValue']"
+				/>
+			</template>
 
-					<label for="missingStories">
-						<input
-							v-model="props.modelValue.missingStories"
-							type="checkbox"
-						>
-						Stories incomplètes
-					</label>
+			<template #missingStories="{ props }">
+				<VCheckbox
+					v-model="props.modelValue"
+					label="Afficher les composants avec stories incomplètes"
+					hide-details
+					@update:model-value="props['onUpdate:modelValue']"
+				/>
+			</template>
 
-					<label for="missingPlayground">
-						<input
-							v-model="props.modelValue.missingPlayground"
-							type="checkbox"
-						>
-						Playground absent
-					</label>
+			<template #missingPlayground="{ props }">
+				<VCheckbox
+					v-model="props.modelValue"
+					label="Afficher les composants sans playground"
+					hide-details
+					@update:model-value="props['onUpdate:modelValue']"
+				/>
+			</template>
 
-					<label for="criticalOnly">
-						<input
-							v-model="props.modelValue.criticalOnly"
-							type="checkbox"
-						>
-						Criticité détectée
-					</label>
-				</div>
+			<template #criticalOnly="{ props }">
+				<VCheckbox
+					v-model="props.modelValue"
+					label="Afficher les composants avec criticité"
+					hide-details
+					@update:model-value="props['onUpdate:modelValue']"
+				/>
 			</template>
 		</FilterInline>
 
 		<SyTable
+			class="mt-4"
 			:headers="tableHeaders"
 			:items="filteredComponents"
 			suffix="component-status"
