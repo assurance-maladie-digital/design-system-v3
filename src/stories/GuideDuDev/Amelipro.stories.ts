@@ -805,17 +805,19 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'AmeliproAccordionFrieze',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-frieze',
 					// 	},
-					// }, {
-					// 	title: 'AmeliproAccordionList',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionList',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-list',
-					// 	},
-					// }, {
+					// },
+					{
+						title: 'AmeliproAccordionList',
+						synapse: {
+							name: 'SyTable',
+							url: getComponentUrl({ name: 'sytable--expandable-rows', type: 'tableaux' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionList',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-list',
+						},
+					},
+					//  {
 					// 	title: 'AmeliproAccordionResultList',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
