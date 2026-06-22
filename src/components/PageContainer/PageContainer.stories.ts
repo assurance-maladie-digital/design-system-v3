@@ -3,6 +3,7 @@ import PageContainer from './PageContainer.vue'
 import { VCard, VDivider } from 'vuetify/components'
 import HeaderBar from '../HeaderBar/HeaderBar.vue'
 import FooterBar from '../FooterBar/FooterBar.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const meta = {
 	title: 'Composants/Layout/PageContainer',
@@ -273,7 +274,7 @@ export const WithHeaderAndFooter: Story = {
                     :heading-level-title="1"
                     :width="width"
                 >
-                    <template #header-side>
+                    <template #header-side v-if="shouldShowHeaderSide">
                         <div class="d-flex align-center ga-3 text-primary">
                             <div class="text-body-2">
                                 <div class="font-weight-medium">Dr. Jean Dupont</div>
@@ -339,6 +340,23 @@ export const WithHeaderAndFooter: Story = {
 				code: `<script setup lang="ts">
     import { PageContainer, HeaderBar, FooterBar } from '@cnamts/synapse'
     import { VDivider } from 'vuetify/components'
+    import { ref, onMounted, onUnmounted } from 'vue'
+
+    const shouldShowHeaderSide = ref(true)
+
+    const updateHeaderVisibility = () => {
+        // Masquer le contenu header-side en dessous de 960px (breakpoint md de Vuetify)
+        shouldShowHeaderSide.value = window.innerWidth >= 960
+    }
+
+    onMounted(() => {
+        updateHeaderVisibility()
+        window.addEventListener('resize', updateHeaderVisibility)
+    })
+
+    onUnmounted(() => {
+        window.removeEventListener('resize', updateHeaderVisibility)
+    })
 </script>
                 `,
 			},
@@ -348,7 +366,23 @@ export const WithHeaderAndFooter: Story = {
 		return {
 			components: { PageContainer, HeaderBar, FooterBar, VDivider },
 			setup() {
-				return { args }
+				const shouldShowHeaderSide = ref(true)
+
+				const updateHeaderVisibility = () => {
+					// Masquer le contenu header-side en dessous de 960px (breakpoint md de Vuetify)
+					shouldShowHeaderSide.value = window.innerWidth >= 960
+				}
+
+				onMounted(() => {
+					updateHeaderVisibility()
+					window.addEventListener('resize', updateHeaderVisibility)
+				})
+
+				onUnmounted(() => {
+					window.removeEventListener('resize', updateHeaderVisibility)
+				})
+
+				return { args, shouldShowHeaderSide }
 			},
 			template: `
                 <div class="d-flex flex-column" style="min-height: 100vh; width: 100%;">
@@ -360,7 +394,7 @@ export const WithHeaderAndFooter: Story = {
                                 :heading-level-title="1"
                                 :width="width"
                             >
-                                <template #header-side v-if="args.size !== 'xs' && args.size !== 'sm'">
+                                <template #header-side v-if="shouldShowHeaderSide">
                                     <div class="d-flex align-center ga-3 text-primary mr-4">
                                         <div class="text-body-2">
                                             <div class="font-weight-medium">Dr. Jean Dupont</div>
