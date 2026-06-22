@@ -122,7 +122,7 @@
     "vitest": "^4.1.0",
     "vitest-axe": "^0.1.0",
     "vue": "^3.5.18",
-    "vue-component-type-helpers": "2.2.0",
+    "vue-component-type-helpers": "2.2.12",
     "vue-router": "^4.4.5",
     "vue-tsc": "^2.1.8",
     "vue3-snapshot-serializer": "^2.9.0"
