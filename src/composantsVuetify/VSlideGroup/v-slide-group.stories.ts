@@ -76,6 +76,7 @@ export const Default: Story = {
                         class="ma-2"
                         height="150"
                         width="150"
+                        :ripple="false"
                     >
                         <VCardText class="d-flex align-center justify-center h-100 text-h4">
                             {{ n }}
@@ -99,6 +100,7 @@ export const Default: Story = {
                 class="ma-2"
                 height="150"
                 width="150"
+                :ripple="false"
             >
                 <v-card-text class="d-flex align-center justify-center h-100 text-h4">
                     {{ n }}
@@ -126,6 +128,7 @@ export const WithChips: Story = {
                         color="primary"
                         :variant="isSelected ? 'flat' : 'outlined'"
                         class="ma-2"
+                        :ripple="false"
                         @click="toggle"
                     >
                         {{ tag }}
@@ -148,6 +151,7 @@ export const WithChips: Story = {
                 color="primary"
                 :variant="isSelected ? 'flat' : 'outlined'"
                 class="ma-2"
+                :ripple="false"
                 @click="toggle"
             >
                 {{ tag }}
@@ -179,6 +183,7 @@ export const CenterActive: Story = {
                         color="primary"
                         :variant="isSelected ? 'flat' : 'outlined'"
                         class="ma-2"
+                        :ripple="false"
                         @click="toggle"
                     >
                         {{ item }}
@@ -205,6 +210,7 @@ export const CenterActive: Story = {
                 color="primary"
                 :variant="isSelected ? 'flat' : 'outlined'"
                 class="ma-2"
+                :ripple="false"
                 @click="toggle"
             >
                 {{ item }}
@@ -254,6 +260,7 @@ export const Misc: Story = {
                         class="ma-2"
                         color="primary"
                         :variant="isSelected ? 'flat' : 'outlined'"
+                        :ripple="false"
                         @click="toggle"
                     >
                         {{ item.text }}
@@ -289,6 +296,7 @@ export const Misc: Story = {
                 class="ma-2"
                 color="primary"
                 :variant="isSelected ? 'flat' : 'outlined'"
+                :ripple="false"
                 @click="toggle"
             >
                 {{ item.text }}
@@ -334,6 +342,7 @@ export const MultipleSelection: Story = {
                         class="ma-2"
                         height="120"
                         width="120"
+                        :ripple="false"
                         @click="toggle"
                     >
                         <VCardText class="d-flex align-center justify-center h-100 text-h5">
@@ -360,6 +369,7 @@ export const MultipleSelection: Story = {
                 class="ma-2"
                 height="120"
                 width="120"
+                :ripple="false"
                 @click="toggle"
             >
                 <v-card-text class="d-flex align-center justify-center h-100 text-h5">
@@ -398,6 +408,7 @@ export const CustomCards: Story = {
                         class="ma-2"
                         height="180"
                         width="180"
+                        :ripple="false"
                         @click="toggle"
                     >
                         <VCardText class="d-flex align-center justify-center h-100 text-h6 text-center">
@@ -425,6 +436,7 @@ export const CustomCards: Story = {
                 class="ma-2"
                 height="180"
                 width="180"
+                :ripple="false"
                 @click="toggle"
             >
                 <v-card-text class="d-flex align-center justify-center h-100 text-h6 text-center">
