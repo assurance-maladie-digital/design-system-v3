@@ -116,13 +116,13 @@ Vous trouverez la liste des rules mises à disposition dans la section [Comment 
 
 #### 2. Regles personnalisées :
 
-Pour les regles de gestion personnalisées, vous pouvez utiliser les règles de type `custom` et définir une fonction de validation personnalisée. Cette fonction doit retourner un objet avec les propriétés `valid` (booléen) et `message` (string) :
+Pour les regles de gestion personnalisées, vous pouvez utiliser les règles de type `custom` et définir une fonction de validation personnalisée. Cette fonction doit retourner un booléen (`true` si la valeur est valide, `false` si elle est invalide) :
 
 <Source dark code={`
 {
     type: 'custom',
     options: {
-      validate: (value: string) => value.startsWith('123') || 'Le NIR doit commencer par 123.',
+      validate: (value: string) => value.startsWith('123'),
       message: 'Le NIR est invalide.',
       successMessage: 'Le NIR est valide.',
 },
@@ -175,7 +175,7 @@ const migrantNumberRules = [
         if (!value || value.length < 13) return true
         // Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
         const migrantRegex = /^[1-8]\\d{12}$/
-        return migrantRegex.test(value.replace(/\\s/g, '')) || 'Le NIR doit commencer par un chiffre entre 1 et 8'
+        return migrantRegex.test(value.replace(/\\s/g, ''))
       },
       message: 'Format du NIR invalide',
       successMessage: 'Le numéro de sécurité sociale est valide',
@@ -189,7 +189,7 @@ const migrantKeyRules = [
     options: {
       validate: (value) => {
         if (!value || value.length !== 2) return true
-        return /^\\d{2}$/.test(value) || 'La clé doit être composée de 2 chiffres'
+        return /^\\d{2}$/.test(value)
       },
       message: 'Format de clé invalide',
       successMessage: 'La clé de contrôle est valide',
@@ -228,7 +228,7 @@ const customNumberRules = [
     {
     type: 'custom',
     options: {
-      validate: (value: string) => value.startsWith('123') || 'Le NIR doit commencer par 123.',
+      validate: (value: string) => value.startsWith('123'),
       message: 'Le NIR est invalide.',
       successMessage: 'Le NIR est valide.',
     },
@@ -238,8 +238,8 @@ const customKeyRules = [
     {
     type: 'custom',
     options: {
-      validate: (value: string) => value.length === 2 || 'La clé doit faire 2 caractères.',
-      message: 'La clé est invalide.',
+      validate: (value: string) => value.length === 2,
+      message: 'La clé doit faire 2 caractères.',
       successMessage: 'La clé est valide.',
     },
   },
