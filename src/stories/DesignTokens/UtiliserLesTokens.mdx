@@ -16,16 +16,48 @@ Depuis la version **1.0.25**, les design tokens sont exposés sous forme de **va
 
 Échelle `--v-gap-N`, où `N` est un multiple de 4&nbsp;px.
 
-| Variable CSS | Valeur |
-|---|---|
-| `--v-gap-0` | 0 |
-| `--v-gap-1` | 4px |
-| `--v-gap-2` | 8px |
-| `--v-gap-3` | 12px |
-| `--v-gap-4` | 16px |
-| `--v-gap-6` | 24px |
-| `--v-gap-8` | 32px |
-| … | … (par pas de 4&nbsp;px) |
+<table>
+  <thead>
+    <tr>
+      <th>Variable CSS</th>
+      <th>Valeur</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--v-gap-0</code></td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-1</code></td>
+      <td>4px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-2</code></td>
+      <td>8px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-3</code></td>
+      <td>12px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-4</code></td>
+      <td>16px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-6</code></td>
+      <td>24px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-8</code></td>
+      <td>32px</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>… (par pas de 4&nbsp;px)</td>
+    </tr>
+  </tbody>
+</table>
 
 <Source dark language="scss" code={`
 .mon-bloc {
@@ -53,12 +85,37 @@ Catalogue complet&nbsp;: [Design Tokens → Couleurs](/docs/design-tokens-couleu
 
 ## Arrondis (`radius`)
 
-| Variable CSS | Nom | Valeur (thème cnam) |
-|---|---|---|
-| `--v-radius-rounded0` | rounded-0 | 0 |
-| `--v-radius-rounded` | rounded | 4px |
-| `--v-radius-roundedLg` | rounded-lg | 8px |
-| `--v-radius-roundedPill` | rounded-pill | 64px |
+<table>
+  <thead>
+    <tr>
+      <th>Variable CSS</th>
+      <th>Nom</th>
+      <th>Valeur (thème cnam)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--v-radius-rounded0</code></td>
+      <td>rounded-0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><code>--v-radius-rounded</code></td>
+      <td>rounded</td>
+      <td>4px</td>
+    </tr>
+    <tr>
+      <td><code>--v-radius-roundedLg</code></td>
+      <td>rounded-lg</td>
+      <td>8px</td>
+    </tr>
+    <tr>
+      <td><code>--v-radius-roundedPill</code></td>
+      <td>rounded-pill</td>
+      <td>64px</td>
+    </tr>
+  </tbody>
+</table>
 
 Les valeurs varient selon le thème (par ex. AmeliPro&nbsp;: `rounded` = 12px, `roundedLg` = 24px).
 
@@ -95,12 +152,32 @@ Pour la plupart des cas, les **classes utilitaires** Vuetify suffisent et suiven
 
 Jusqu'à la **1.0.24**, les tokens étaient disponibles via un **export SCSS** (`$gap-2`, …). Depuis la **1.0.25**, cet export est remplacé par les **variables CSS** ci-dessus&nbsp;:
 
-| Avant (SCSS, ≤ 1.0.24) | Maintenant (CSS, ≥ 1.0.25) |
-|---|---|
-| `$gap-2` | `var(--v-gap-2)` |
-| couleur primaire | `rgb(var(--v-theme-primary))` |
-| `$rounded-lg` | `var(--v-radius-roundedLg)` |
-| taille de texte | `var(--v-fontSize-…)` |
+<table>
+  <thead>
+    <tr>
+      <th>Avant (SCSS, ≤ 1.0.24)</th>
+      <th>Maintenant (CSS, ≥ 1.0.25)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>$gap-2</code></td>
+      <td><code>var(--v-gap-2)</code></td>
+    </tr>
+    <tr>
+      <td>couleur primaire</td>
+      <td><code>rgb(var(--v-theme-primary))</code></td>
+    </tr>
+    <tr>
+      <td><code>$rounded-lg</code></td>
+      <td><code>var(--v-radius-roundedLg)</code></td>
+    </tr>
+    <tr>
+      <td>taille de texte</td>
+      <td><code>var(--v-fontSize-…)</code></td>
+    </tr>
+  </tbody>
+</table>
 
 **Pourquoi ce changement&nbsp;?** Les variables CSS sont résolues au **runtime** et s'adaptent au thème actif, là où l'export SCSS produisait des valeurs **figées à la compilation**.
 
