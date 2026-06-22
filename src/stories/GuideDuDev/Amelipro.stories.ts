@@ -804,17 +804,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result',
 						},
 					},
-					// {
-					// 	title: 'AmeliproAccordionFrieze',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionFrieze',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-frieze',
-					// 	},
-					// },
+					{
+						title: 'AmeliproAccordionFrieze',
+						synapse: {
+							name: 'VSlideGroup',
+							url: getComponentUrl({ name: 'VSlideGroup', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionFrieze',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-frieze',
+						},
+					},
 					{
 						title: 'AmeliproAccordionList',
 						synapse: {
@@ -912,6 +912,10 @@ export const AmeliproComponents: StoryObj = {
 							name: 'SyTextField',
 							type: 'formulaires ',
 						}, {
+							name: 'NirField',
+							type: 'formulaires ',
+						},
+						{
 							name: 'SyIcon',
 							type: 'données',
 						}, {

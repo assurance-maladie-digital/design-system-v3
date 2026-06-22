@@ -99,6 +99,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'SlideGroup',
+						description: 'Utilisé pour afficher des informations pseudo-paginées.',
+						link: '/?path=/docs/composants-composants-vuetify-vslidegroup--docs',
+						img: `/components/slide-group${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
 						title: 'Stepper',
 						description: 'Affiche la progression par étapes numérotées.',
 						link: '/?path=/docs/composants-composants-vuetify-vstepper--docs',
@@ -571,6 +578,7 @@ export const ComponentsList: StoryObj = {
 					'UserMenuBtn',
 					'UploadWorkflow',
 					'NavigationDrawer',
+					'SlideGroup',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
