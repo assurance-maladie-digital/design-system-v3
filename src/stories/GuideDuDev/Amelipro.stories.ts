@@ -897,17 +897,29 @@ export const AmeliproComponents: StoryObj = {
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-messaging-menu-btn',
 					// 	},
 					// },
-					// {
-					// 	title: 'AmeliproPatientLogin',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPatientLogin',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-login',
-					// 	},
-					// },
+					{
+						title: 'AmeliproPatientLogin',
+						usedComponents: [{
+							name: 'VCard',
+							type: 'composants vuetify',
+						}, {
+							name: 'VBtn',
+							type: 'composants vuetify',
+						}, {
+							name: 'SyTextField',
+							type: 'formulaires ',
+						}, {
+							name: 'SyIcon',
+							type: 'données',
+						}, {
+							name: 'SySelect',
+							type: 'formulaires selects',
+						}],
+						amelipro: {
+							name: 'AmeliproPatientLogin',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-login',
+						},
+					},
 					{
 						title: 'AmeliproPatientLogged',
 						usedComponents: [{
