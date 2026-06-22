@@ -19,34 +19,14 @@ const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const outputJsonPath = resolve(rootDir, 'functional-history-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
 
-// Préfixes de commits conventionnels fonctionnels
-const functionalPrefixes = [
-	'feat',
-	'fix',
-	'refactor',
-	'perf',
-	'revert',
-]
+// Mots-clés qui signalent un commit purement a11y (à exclure du badge fonctionnel)
+const a11yOnlyRegex = /a11y|accessibilit|wcag|aria[-\s]|contraste|audit.access|rgaa/i
 
-// Mots-clés à exclure pour ne pas confondre avec des commits purement a11y/doc/chore
-const excludeOnlyKeywords = [
-	'chore',
-	'docs',
-	'test',
-	'ci',
-	'style',
-	'build',
-]
+// Mots-clés qui signalent un commit de release/ci/doc (à exclure)
+const releaseOrDocRegex = /^(chore|docs?|ci|build|release|bump|renovate|update dependency|update .* monorepo)(\([^)]+\))?[!:\s]/i
 
-const functionalPrefixRegex = new RegExp(
-	`^(${functionalPrefixes.join('|')})(\\([^)]+\\))?[!:]`,
-	'i',
-)
-
-const excludeOnlyRegex = new RegExp(
-	`^(${excludeOnlyKeywords.join('|')})(\\([^)]+\\))?[!:]`,
-	'i',
-)
+// Commits qui ne touchent que de la doc/config (message contient ces mots)
+const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|update.*changelog|run lint|improve.*doc|improve.*token/i
 
 function execFileAsync(cmd, args, options) {
 	return new Promise((res, rej) => {
@@ -84,14 +64,40 @@ function discoverComponents() {
 	}))
 }
 
+// Fichiers sources pertinents (pas de doc, pas de config)
+const sourceExtensions = ['.vue', '.ts', '.js', '.scss', '.css']
+
+async function getChangedFiles(hash) {
+	try {
+		const { stdout } = await execFileAsync(
+			'git', ['diff-tree', '--no-commit-id', '-r', '--name-only', hash],
+			{ cwd: rootDir },
+		)
+		return stdout.split('\n').filter(Boolean)
+	} catch {
+		return []
+	}
+}
+
 async function getLastFunctionalCommit(filePaths) {
 	if (!filePaths.length) return null
+
+	// On ne passe en argument que les fichiers sources réels (pas de stories, tests, .mdx)
+	const sourceFiles = filePaths.filter(p => {
+		if (!sourceExtensions.some(ext => p.endsWith(ext))) return false
+		if (p.includes('.stories.')) return false
+		if (p.includes('.spec.') || p.includes('.cy.') || p.includes('__tests__')) return false
+		return true
+	})
+	if (!sourceFiles.length) return null
+
 	const args = [
 		'log',
+		'--diff-filter=ACM',
 		'--pretty=format:%H|%ad|%s',
 		'--date=iso',
 		'--',
-		...filePaths.map(p => relative(rootDir, p)),
+		...sourceFiles.map(p => relative(rootDir, p)),
 	]
 	try {
 		const { stdout } = await execFileAsync('git', args, { cwd: rootDir })
@@ -102,12 +108,22 @@ async function getLastFunctionalCommit(filePaths) {
 
 		for (const commit of commits) {
 			const msg = commit.message.trim()
-			// Exclure les commits purement docs/chore/test/ci/style
-			if (excludeOnlyRegex.test(msg) && !functionalPrefixRegex.test(msg)) continue
-			// Garder feat/fix/refactor/perf/revert ou tout commit sans préfixe exclu
-			if (functionalPrefixRegex.test(msg) || !excludeOnlyRegex.test(msg)) {
-				return commit
-			}
+			// Exclure les commits purement a11y, release, ci, doc
+			if (a11yOnlyRegex.test(msg)) continue
+			if (releaseOrDocRegex.test(msg)) continue
+			if (docOnlyMessageRegex.test(msg)) continue
+			// Vérifier que le commit touche bien un .vue/.ts dans le dossier du composant
+			const changed = await getChangedFiles(commit.hash)
+			const toSlash = p => p.split('\\').join('/')
+			const componentDirRelative = toSlash(relative(rootDir, dirname(sourceFiles[0])))
+			const touchesComponentSource = changed.some(f => {
+				const normalized = toSlash(f)
+				// Doit être un fichier source (pas .mdx/.md/.stories/.spec)
+				if (!/\.(vue|ts|js|scss|css)$/.test(normalized)) return false
+				if (normalized.includes('.stories.') || normalized.includes('.spec.') || normalized.includes('.cy.')) return false
+				return normalized.startsWith(componentDirRelative + '/')
+			})
+			if (touchesComponentSource) return commit
 		}
 		return null
 	} catch {
