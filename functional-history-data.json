@@ -1,0 +1,1316 @@
+{
+  "Accordion": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproAccordion": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproAccordionTemplate": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionFrieze": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproAccordionGroup": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproAccordionList": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproAccordionResult": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproAccordionResultTemplate": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionResultList": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproAutoCompleteField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproBadge": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproBreadcrumb": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproBtn": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproCallback": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproCaptcha": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproCard": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproCarousel": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproCarouselItem": {
+    "version": "1.0.10",
+    "date": "20/10/2025",
+    "dateIso": "2025-10-20 14:25:16 +0200",
+    "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+  },
+  "AmeliproCheckbox": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproCheckboxGroup": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproChips": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproClickableTile": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproContentLayout": {
+    "version": "1.0.21",
+    "date": "05/03/2026",
+    "dateIso": "2026-03-05 13:57:08 +0100",
+    "message": "BugFix : Correction sur différents composant AP (#1933)"
+  },
+  "AmeliproCopyBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproCustomSelector": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproDentalChart": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproTooth": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproDialog": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproDisclosure": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproErrorTemplate": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproFilePreview": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproFilters": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproFirstLogin": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproFooter": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproHeader": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproHeaderBar": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproHeaderBrandSection": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproLogoAm": {
+    "version": "1.0.17",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
+  },
+  "AmeliproIcon": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproIconBtn": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproIllustratedDataTile": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproIllustratedRadioGroup": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproMailTile": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproMessage": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproDropdownMenu": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproDropdownMenuBtn": {
+    "version": "1.0.12",
+    "date": "24/11/2025",
+    "dateIso": "2025-11-24 09:50:51 +0100",
+    "message": "TU pour AmeliproDropdownMenuBtn (#1387)"
+  },
+  "AmeliproMessagingLayout": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproMessagingMenuBtn": {
+    "version": "1.0.12",
+    "date": "24/11/2025",
+    "dateIso": "2025-11-24 09:38:02 +0100",
+    "message": "Mise à jour des tests unitaires (#1384)"
+  },
+  "AmeliproMultipleFoldingCard": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproNumberedCard": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproOnboarding": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproPageLayout": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproPagination": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproPaginationBtn": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPatientBanner": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPatientLogged": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproPatientLogin": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproPatientLoginForm": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPostalAddressCityRow": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPostalAddressField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproRadioGroup": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproResultList": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproSelect": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproStateTile": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproStatus": {
+    "version": "1.0.17",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
+  },
+  "AmeliproStepBtn": {
+    "version": "1.0.13",
+    "date": "28/11/2025",
+    "dateIso": "2025-11-28 15:43:53 +0100",
+    "message": "feat/1411 Ajout de tests unitaires pour les derniers composants Amelipro - lot 2 (#1432)"
+  },
+  "AmeliproStepper": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproTable": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproTabBtn": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTabs": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproTextArea": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproTextField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproTileBtn": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTooltips": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AmeliproTransmission": {
+    "version": "1.0.13",
+    "date": "02/12/2025",
+    "dateIso": "2025-12-02 16:10:16 +0100",
+    "message": "feat/1412 Ajout de tests unitaires pour les derniers composants Amelipro - lot 3 (#1431)"
+  },
+  "AmeliproUpload": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "ServiceBtn": {
+    "version": "1.0.15",
+    "date": "05/12/2025",
+    "dateIso": "2025-12-05 16:04:59 +0100",
+    "message": "Mise à jour des tests unitaires (#1430)"
+  },
+  "ServiceList": {
+    "version": "1.0.15",
+    "date": "05/12/2025",
+    "dateIso": "2025-12-05 16:04:59 +0100",
+    "message": "Mise à jour des tests unitaires (#1430)"
+  },
+  "ServiceMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "ServiceMenuContent": {
+    "version": "1.0.15",
+    "date": "05/12/2025",
+    "dateIso": "2025-12-05 16:04:59 +0100",
+    "message": "Mise à jour des tests unitaires (#1430)"
+  },
+  "StructureBtn": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "StructureItem": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "StructureList": {
+    "version": "1.0.21",
+    "date": "12/03/2026",
+    "dateIso": "2026-03-12 16:22:12 +0100",
+    "message": "Update Vuetify 3.12.2 (#1951)"
+  },
+  "StructureMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "StructureTabs": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "UserInformationSummary": {
+    "version": "1.0.15",
+    "date": "05/12/2025",
+    "dateIso": "2025-12-05 16:04:59 +0100",
+    "message": "Mise à jour des tests unitaires (#1430)"
+  },
+  "UserMenu": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "UserMenuDetails": {
+    "version": "1.0.15",
+    "date": "05/12/2025",
+    "dateIso": "2025-12-05 16:04:59 +0100",
+    "message": "Mise à jour des tests unitaires (#1430)"
+  },
+  "BackBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "BackToTopBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "Captcha": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CaptchaAlert": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CaptchaBase": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CaptchaBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CaptchaForm": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CaptchaHelpdesk": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CaptchaImg": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CaptchaInformation": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "volumeUp": {
+    "version": "1.0.12",
+    "date": "14/11/2025",
+    "dateIso": "2025-11-14 11:01:33 +0100",
+    "message": "captcha (#1230)"
+  },
+  "ChipList": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CollapsibleList": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "IconSlot": {
+    "version": "1.0.19",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 08:36:45 +0100",
+    "message": "fix: pass empty object to default slot in IconSlot to prevent errors (#1813)"
+  },
+  "ContextualMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "DeepMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CookieBanner": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "CookiesInformation": {
+    "version": "1.0.25",
+    "date": "28/04/2026",
+    "dateIso": "2026-04-28 09:17:51 +0200",
+    "message": "[build] Optimisation du build (#2110)"
+  },
+  "CookiesSelection": {
+    "version": "1.0.27",
+    "date": "29/05/2026",
+    "dateIso": "2026-05-29 11:29:33 +0200",
+    "message": "Feat/add cypress test (#2203)"
+  },
+  "CookiesTable": {
+    "version": "1.0.16",
+    "date": "06/01/2026",
+    "dateIso": "2026-01-06 11:55:17 +0100",
+    "message": "Feat/add accessibility in ci (#1663)"
+  },
+  "CopyBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SelectBtnField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyAutocomplete": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyInputSelect": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SySelect": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyCheckbox": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyCheckBoxGroup": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyForm": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyIcon": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyIconAccessibility": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyIconButton": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyPagination": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyRadioGroup": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyTabs": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FieldState": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyTextField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "DataList": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "DataListLoading": {
+    "version": "1.0.10",
+    "date": "20/10/2025",
+    "dateIso": "2025-10-20 14:25:16 +0200",
+    "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+  },
+  "DataListGroup": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "DataListItem": {
+    "version": "1.0.27",
+    "date": "29/05/2026",
+    "dateIso": "2026-05-29 11:29:33 +0200",
+    "message": "Feat/add cypress test (#2203)"
+  },
+  "DatePicker": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "ComplexDatePicker": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "DateTextInput": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "BidirectionalComplexValidation": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "DatePickerBidirectionalValidation": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "DatePickerValidationExamples": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "ComplexDatePickerPlayground": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "DatePickerHolidayRule": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "DeclarationAccessibilityPage": {
+    "version": "1.0.27",
+    "date": "29/05/2026",
+    "dateIso": "2026-05-29 11:29:33 +0200",
+    "message": "Feat/add cypress test (#2203)"
+  },
+  "DiacriticPicker": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "DialogBox": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "DownloadBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "ErrorPage": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "ExternalLinks": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FileList": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "UploadItem": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "FilePreview": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FileUpload": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FileUploadContent": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FilterInline": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FilterSideBar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FooterBar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "FranceConnectBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderBar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderBurgerMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderMenuItem": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderMenuSection": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderSubMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderLogo": {
+    "version": "1.0.24",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "Logo-mobile": {
+    "version": "1.0.17",
+    "date": "29/01/2026",
+    "dateIso": "2026-01-29 18:19:39 +0100",
+    "message": "Headerbar: incoherence graphique (#1705)"
+  },
+  "Logo": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderMenuBtn": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderLoading": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HeaderNavigationBar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "HorizontalNavbar": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 18:02:55 +0200",
+    "message": "Fix build after tokens (#2200)"
+  },
+  "HeaderToolbar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "LangBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "LogoBrandSection": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "LunarCalendar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "MaintenancePage": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "MonthPicker": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "MonthPickerInput": {
+    "version": "1.1.0",
+    "date": "15/06/2026",
+    "dateIso": "2026-06-15 11:44:38 +0200",
+    "message": "[MonthPicker] Migration de la validation (#2180)"
+  },
+  "MonthPickerVisual": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "MonthSelector": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "VisualPickerFooter": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "VisualPickerHeader": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "YearSelector": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "NirField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "NotFoundPage": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "Notification": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "NotificationBar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "PageContainer": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "PaginatedTable": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "Pagination": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "PasswordField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "PeriodField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "PhoneField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "RangeField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "RangeSlider": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "Tooltip": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "EmotionPicker": {
+    "version": "1.0.25",
+    "date": "06/05/2026",
+    "dateIso": "2026-05-06 09:37:36 +0200",
+    "message": "RatingPicker: Ameliorer accessibilité (#2092)"
+  },
+  "NumberPicker": {
+    "version": "1.0.25",
+    "date": "06/05/2026",
+    "dateIso": "2026-05-06 09:37:36 +0200",
+    "message": "RatingPicker: Ameliorer accessibilité (#2092)"
+  },
+  "RatingPicker": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "StarsPicker": {
+    "version": "1.0.25",
+    "date": "06/05/2026",
+    "dateIso": "2026-05-06 09:37:36 +0200",
+    "message": "RatingPicker: Ameliorer accessibilité (#2092)"
+  },
+  "SearchListField": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SkipLink": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SocialMediaLinks": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "StatusPage": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SubHeader": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyAlert": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyBtnMenu": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyHeading": {
+    "version": "1.0.27",
+    "date": "29/05/2026",
+    "dateIso": "2026-05-29 11:29:33 +0200",
+    "message": "Feat/add cypress test (#2203)"
+  },
+  "SyTextArea": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "AutocompleteFilter": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 11:04:29 +0200",
+    "message": "Feat/improve tests (#2192)"
+  },
+  "DateFilter": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 11:04:29 +0200",
+    "message": "Feat/improve tests (#2192)"
+  },
+  "NumberFilter": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 11:04:29 +0200",
+    "message": "Feat/improve tests (#2192)"
+  },
+  "PeriodFilter": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 11:04:29 +0200",
+    "message": "Feat/improve tests (#2192)"
+  },
+  "SelectFilter": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 11:04:29 +0200",
+    "message": "Feat/improve tests (#2192)"
+  },
+  "TextFilter": {
+    "version": "1.0.26",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 11:04:29 +0200",
+    "message": "Feat/improve tests (#2192)"
+  },
+  "OrganizeColumns": {
+    "version": "1.0.19",
+    "date": "12/02/2026",
+    "dateIso": "2026-02-12 10:01:33 +0100",
+    "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+  },
+  "SyTableFilter": {
+    "version": "1.1.0",
+    "date": "11/06/2026",
+    "dateIso": "2026-06-11 15:53:58 +0200",
+    "message": "[PhoneField] Fixe et ajout de la validation (#2205)"
+  },
+  "SyTablePagination": {
+    "version": "1.1.0",
+    "date": "11/06/2026",
+    "dateIso": "2026-06-11 15:53:58 +0200",
+    "message": "[PhoneField] Fixe et ajout de la validation (#2205)"
+  },
+  "TableHeader": {
+    "version": "1.1.0",
+    "date": "11/06/2026",
+    "dateIso": "2026-06-11 15:53:58 +0200",
+    "message": "[PhoneField] Fixe et ajout de la validation (#2205)"
+  },
+  "SyServerTable": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "SyTable": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "TableToolbar": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "ToolbarContainer": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "UploadWorkflow": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  },
+  "Usages": {
+    "version": "1.0.19",
+    "date": "12/02/2026",
+    "dateIso": "2026-02-12 10:01:33 +0100",
+    "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+  },
+  "UserMenuBtn": {
+    "version": "1.1.0",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 17:02:03 +0200",
+    "message": "add version badge in docs"
+  }
+}

@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process'
-import { readdirSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -306,17 +306,22 @@ function buildMarkdown(components) {
 }
 
 async function main() {
-	const targetComponent = process.argv[2]
+	const targetNames = process.argv.slice(2).filter(Boolean).map(n => n.toLowerCase())
 
 	console.info('🔍 Découverte des composants...')
 	const allComponents = discoverComponents()
-	const components = targetComponent
-		? allComponents.filter(c => c.name.toLowerCase() === targetComponent.toLowerCase())
+	const components = targetNames.length
+		? allComponents.filter(c => targetNames.includes(c.name.toLowerCase()))
 		: allComponents
 
-	if (targetComponent && !components.length) {
-		console.error(`Composant non trouvé: ${targetComponent}`)
+	if (targetNames.length && !components.length) {
+		console.error(`Aucun composant trouvé parmi: ${targetNames.join(', ')}`)
 		process.exit(1)
+	}
+
+	const notFound = targetNames.filter(n => !components.some(c => c.name.toLowerCase() === n))
+	if (notFound.length) {
+		console.warn(`⚠️  Composants introuvables: ${notFound.join(', ')}`)
 	}
 
 	console.info(`📦 ${components.length} composant(s) à analyser`)
@@ -332,8 +337,13 @@ async function main() {
 	writeFileSync(outputPath, markdown, 'utf8')
 	console.info(`\n✅ Rapport généré: ${outputPath}`)
 
-	const jsonData = buildJsonData(results)
-	writeFileSync(outputJsonPath, JSON.stringify(jsonData, null, 2), 'utf8')
+	const newJsonData = buildJsonData(results)
+	let finalJsonData = newJsonData
+	if (targetNames.length && existsSync(outputJsonPath)) {
+		const existing = JSON.parse(readFileSync(outputJsonPath, 'utf8'))
+		finalJsonData = { ...existing, ...newJsonData }
+	}
+	writeFileSync(outputJsonPath, JSON.stringify(finalJsonData, null, 2), 'utf8')
 	console.info(`✅ Données JSON générées: ${outputJsonPath}`)
 
 	const total = results.reduce((sum, c) => sum + c.commits.length, 0)
