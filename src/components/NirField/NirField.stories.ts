@@ -16,6 +16,20 @@ const meta: Meta<typeof NirField> = {
 	},
 	argTypes: {
 		...getValidationDocumentation('string'),
+		customRulesPrecedence: {
+			description: 'Définit si les règles personnalisées ont priorité sur la validation standard du NIR. `custom` = les règles personnalisées remplacent la validation standard (utile pour les NIR migrants), `default` = la validation standard est appliquée puis les règles personnalisées.',
+			control: 'select',
+			options: ['custom', 'default'],
+			default: 'custom',
+			table: {
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'custom',
+				},
+			},
+		},
 		modelValue: {
 			description: 'La valeur du modèle pour le champ.',
 			control: 'text',
