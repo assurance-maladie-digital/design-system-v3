@@ -792,17 +792,18 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-carousel',
 						},
 					},
+					{
+						title: 'AmeliproAccordionResult',
+						synapse: {
+							name: 'Accordion',
+							url: getComponentUrl({ name: 'Accordion', type: 'données' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionResult',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result',
+						},
+					},
 					// {
-					// 	title: 'AmeliproAccordionResult',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionResult',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result',
-					// 	},
-					// }, {
 					// 	title: 'AmeliproAccordionFrieze',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
