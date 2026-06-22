@@ -1,0 +1,346 @@
+import { execFile } from 'node:child_process'
+import { readdirSync, writeFileSync } from 'node:fs'
+import { basename, dirname, relative, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
+const outputPath = resolve(rootDir, 'a11y-history-report.md')
+const outputJsonPath = resolve(rootDir, 'a11y-history-data.json')
+const componentsDir = resolve(rootDir, 'src/components')
+
+const a11yKeywords = [
+	'a11y',
+	'accessibilité',
+	'accessibility',
+	'wcag',
+	'aria',
+	'role',
+	'tabindex',
+	'focus',
+	'contraste',
+	'clavier',
+	"lecteur d'écran",
+	'screen reader',
+	'aria-label',
+	'aria-describedby',
+	'aria-live',
+	'aria-hidden',
+	'aria-expanded',
+	'aria-invalid',
+	'aria-required',
+	'keyboard navigation',
+	'focus trap',
+	'focus visible',
+	'outline',
+	'color contrast',
+]
+
+const a11yPatterns = [
+	/aria-[a-z]+/i,
+	/\brole\s*=/i,
+	/\btabindex\s*=/i,
+]
+
+const a11yPrLabels = [
+	'a11y',
+	'accessibility',
+	'accessibilité',
+	'wcag',
+	'aria',
+	'contrast',
+	'keyboard',
+	'focus',
+]
+
+const keywordRegex = new RegExp(a11yKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'i')
+
+function execFileAsync(cmd, args, options) {
+	return new Promise((resolvePromise, rejectPromise) => {
+		execFile(cmd, args, options, (error, stdout, stderr) => {
+			if (error) {
+				return rejectPromise(Object.assign(error, { stdout, stderr }))
+			}
+			resolvePromise({ stdout, stderr })
+		})
+	})
+}
+
+function findVueFiles(dir, files = []) {
+	for (const entry of readdirSync(dir, { withFileTypes: true })) {
+		const fullPath = resolve(dir, entry.name)
+		if (entry.isDirectory()) {
+			findVueFiles(fullPath, files)
+		} else if (entry.isFile() && entry.name.endsWith('.vue')) {
+			files.push(fullPath)
+		}
+	}
+	return files
+}
+
+function discoverComponents() {
+	const vueFiles = findVueFiles(componentsDir)
+	return vueFiles.map(filePath => {
+		const componentDir = dirname(filePath)
+		const componentName = basename(filePath, '.vue')
+		const allFiles = listFilesRecursive(componentDir)
+		return {
+			name: componentName,
+			dir: componentDir,
+			files: allFiles,
+		}
+	})
+}
+
+function listFilesRecursive(dir, files = []) {
+	for (const entry of readdirSync(dir, { withFileTypes: true })) {
+		const fullPath = resolve(dir, entry.name)
+		if (entry.isDirectory()) {
+			listFilesRecursive(fullPath, files)
+		} else if (entry.isFile()) {
+			files.push(fullPath)
+		}
+	}
+	return files
+}
+
+function findMigrationFiles(componentName) {
+	const migrationDirs = [resolve(rootDir, 'doc'), resolve(rootDir, '.junie')]
+	const files = []
+	for (const dir of migrationDirs) {
+		try {
+			for (const entry of readdirSync(dir, { withFileTypes: true })) {
+				if (entry.name.toLowerCase().includes(componentName.toLowerCase()) && entry.name.endsWith('.md')) {
+					files.push(resolve(dir, entry.name))
+				}
+			}
+		} catch {
+			// ignore missing dirs
+		}
+	}
+	return files
+}
+
+async function getGitLog(filePaths) {
+	if (!filePaths.length) return []
+	const args = ['log', '--pretty=format:%H|%ad|%s', '--date=iso', '--', ...filePaths.map(p => relative(rootDir, p))]
+	try {
+		const { stdout } = await execFileAsync('git', args, { cwd: rootDir })
+		return stdout.split('\n').filter(Boolean).map(line => {
+			const [hash, date, ...messageParts] = line.split('|')
+			return { hash, date, message: messageParts.join('|') }
+		})
+	} catch {
+		return []
+	}
+}
+
+async function getDiffForCommit(hash, filePaths) {
+	const paths = filePaths.map(p => relative(rootDir, p))
+	try {
+		const { stdout } = await execFileAsync('git', ['show', hash, '--format=', '-p', '--', ...paths], { cwd: rootDir })
+		return stdout
+	} catch {
+		return ''
+	}
+}
+
+function extractPRNumber(message) {
+	const match = message.match(/(?:merge pull request #|#)(\d+)/i)
+	return match ? match[1] : null
+}
+
+const prLabelCache = new Map()
+const versionCache = new Map()
+
+async function getVersionAtCommit(hash) {
+	if (versionCache.has(hash)) return versionCache.get(hash)
+	try {
+		const { stdout } = await execFileAsync('git', ['show', `${hash}:package.json`], { cwd: rootDir })
+		const parsed = JSON.parse(stdout)
+		const version = parsed.version ?? null
+		versionCache.set(hash, version)
+		return version
+	} catch {
+		versionCache.set(hash, null)
+		return null
+	}
+}
+
+async function getPRLabels(prNumber) {
+	if (!prNumber) return []
+	if (prLabelCache.has(prNumber)) return prLabelCache.get(prNumber)
+	try {
+		const { stdout } = await execFileAsync('gh', ['pr', 'view', prNumber, '--json', 'labels'], { cwd: rootDir })
+		const parsed = JSON.parse(stdout)
+		const labels = (parsed.labels || []).map(l => l.name)
+		prLabelCache.set(prNumber, labels)
+		return labels
+	} catch {
+		prLabelCache.set(prNumber, [])
+		return []
+	}
+}
+
+function hasA11yLabel(labels) {
+	return labels.some(label => a11yPrLabels.some(keyword => label.toLowerCase().includes(keyword.toLowerCase())))
+}
+
+function hasA11yPatterns(diff) {
+	return a11yPatterns.some(pattern => pattern.test(diff))
+}
+
+function hasA11yKeywords(message) {
+	return keywordRegex.test(message)
+}
+
+function isAccessibilityMdx(filePath) {
+	const normalized = filePath.replace(/\\/g, '/').toLowerCase()
+	return normalized.includes('/accessibilite/') && normalized.endsWith('.mdx')
+}
+
+function isA11yTest(filePath) {
+	const normalized = filePath.replace(/\\/g, '/').toLowerCase()
+	return normalized.includes('.a11y.') && (normalized.endsWith('.spec.ts') || normalized.endsWith('.test.ts'))
+}
+
+function isMigrationFile(filePath) {
+	const normalized = filePath.replace(/\\/g, '/').toLowerCase()
+	return normalized.includes('/doc/') || normalized.includes('/.junie/')
+}
+
+async function analyzeComponent(component) {
+	const migrationFiles = findMigrationFiles(component.name)
+	const allTrackedFiles = [...component.files, ...migrationFiles]
+	const commits = await getGitLog(allTrackedFiles)
+	const results = []
+
+	for (const commit of commits) {
+		const diff = await getDiffForCommit(commit.hash, allTrackedFiles)
+		const keywords = hasA11yKeywords(commit.message)
+		const patterns = hasA11yPatterns(diff)
+		const prNumber = extractPRNumber(commit.message)
+		const labels = await getPRLabels(prNumber)
+		const a11yLabel = hasA11yLabel(labels)
+
+		const touchedMdx = component.files.some(isAccessibilityMdx)
+		const touchedA11yTest = component.files.some(isA11yTest)
+		const touchedMigration = migrationFiles.length > 0
+		const touchedComponent = component.files.some(f => f.endsWith('.vue'))
+
+		let confidence = null
+
+		if (keywords && (touchedMdx || touchedA11yTest || a11yLabel)) {
+			confidence = 'forte'
+		} else if (keywords && (touchedComponent || touchedMigration)) {
+			confidence = 'moyenne'
+		} else if (patterns) {
+			confidence = 'faible'
+		}
+
+		if (confidence) {
+			const version = await getVersionAtCommit(commit.hash)
+			results.push({
+				...commit,
+				confidence,
+				keywords,
+				patterns,
+				a11yLabel,
+				labels: labels.length ? labels : undefined,
+				version,
+			})
+		}
+	}
+
+	return results
+}
+
+function buildJsonData(components) {
+	const data = {}
+	for (const component of components) {
+		if (!component.commits.length) continue
+		const latest = component.commits[0]
+		data[component.name] = {
+			version: latest.version ?? null,
+			date: new Date(latest.date).toLocaleDateString('fr-FR'),
+			dateIso: latest.date,
+		}
+	}
+	return data
+}
+
+function buildMarkdown(components) {
+	const lines = [
+		'# Rapport d’historique d’accessibilité par composant',
+		'',
+		`- Généré le: ${new Date().toISOString()}`,
+		'',
+	]
+
+	for (const component of components) {
+		lines.push(`## ${component.name}`)
+		lines.push('')
+
+		if (!component.commits.length) {
+			lines.push('Aucune amélioration d’accessibilité détectée.')
+			lines.push('')
+			continue
+		}
+
+		for (const commit of component.commits) {
+			const badges = []
+			if (commit.keywords) badges.push('mot-clé a11y')
+			if (commit.patterns) badges.push('pattern ARIA')
+			if (commit.a11yLabel) badges.push('label PR a11y')
+			const formattedDate = new Date(commit.date).toLocaleDateString('fr-FR')
+			const versionInfo = commit.version ? `Version: \`${commit.version}\` · ` : ''
+			lines.push(`- **${formattedDate}** — ${commit.message}  `)
+			lines.push(`  ${versionInfo}Hash: \`${commit.hash}\` | ${badges.length ? badges.join(' · ') : 'signal détecté'}`)
+			if (commit.labels) {
+				lines.push(`  Labels PR: ${commit.labels.map(l => `\`${l}\``).join(', ')}`)
+			}
+			lines.push('')
+		}
+	}
+
+	return lines.join('\n')
+}
+
+async function main() {
+	const targetComponent = process.argv[2]
+
+	console.info('🔍 Découverte des composants...')
+	const allComponents = discoverComponents()
+	const components = targetComponent
+		? allComponents.filter(c => c.name.toLowerCase() === targetComponent.toLowerCase())
+		: allComponents
+
+	if (targetComponent && !components.length) {
+		console.error(`Composant non trouvé: ${targetComponent}`)
+		process.exit(1)
+	}
+
+	console.info(`📦 ${components.length} composant(s) à analyser`)
+
+	const results = []
+	for (const component of components) {
+		console.info(`⏳ Analyse de ${component.name}...`)
+		const commits = await analyzeComponent(component)
+		results.push({ name: component.name, commits })
+	}
+
+	const markdown = buildMarkdown(results)
+	writeFileSync(outputPath, markdown, 'utf8')
+	console.info(`\n✅ Rapport généré: ${outputPath}`)
+
+	const jsonData = buildJsonData(results)
+	writeFileSync(outputJsonPath, JSON.stringify(jsonData, null, 2), 'utf8')
+	console.info(`✅ Données JSON générées: ${outputJsonPath}`)
+
+	const total = results.reduce((sum, c) => sum + c.commits.length, 0)
+	console.info(`📊 ${total} commit(s) d’accessibilité détecté(s)`)
+}
+
+main().catch(err => {
+	console.error('Erreur lors de la génération du rapport:', err)
+	process.exit(1)
+})
