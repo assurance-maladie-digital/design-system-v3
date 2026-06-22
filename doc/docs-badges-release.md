@@ -6,8 +6,8 @@ Deux badges sont affichés sur chaque page de documentation de composant :
 
 | Badge | Couleur | Signification |
 |---|---|---|
-| `Dernière mise à jour fonctionnelle : Vx.x.x - JJ/MM/AAAA` | Vert | Dernier commit feat/fix/refactor/perf |
-| `Dernière mise à jour accessibilité : Vx.x.x - JJ/MM/AAAA` | Bleu | Dernier commit a11y |
+| `Dernière mise à jour fonctionnelle : Vx.x.x - JJ/MM/AAAA` | Vert | Dernier commit touchant un `.vue`/`.ts` du composant (hors a11y, doc, CI) |
+| `Dernière mise à jour accessibilité : Vx.x.x - JJ/MM/AAAA` | Bleu | Dernier commit avec mot-clé a11y/accessibilité |
 
 ---
 
@@ -84,8 +84,8 @@ git commit -m "docs: update version badges for vX.X.X release"
 
 | Script | Description |
 |---|---|
-| `pnpm docs:update [composants]` | Analyse git + injection (fonctionnel + a11y) |
-| `pnpm docs:check <composants>` | Vérifie les changements + mise à jour si nécessaire |
+| `pnpm docs:update [composants]` | Analyse git + injection (fonctionnel + a11y) — force la mise à jour |
+| `pnpm docs:check <composants>` | Vérifie s'il y a de nouveaux commits depuis la dernière MAJ, met à jour si nécessaire |
 | `pnpm func:history [composants]` | Génère/met à jour `functional-history-data.json` |
 | `pnpm func:inject [composants]` | Injecte les badges fonctionnels dans les `.mdx` |
 | `pnpm func:inject:dry [composants]` | Dry-run du badge fonctionnel |

@@ -8,7 +8,7 @@ Chaque page de documentation d'un composant (`NomComposant.mdx`) affiche automat
 Dernière mise à jour fonctionnelle : V1.1.0 - 22/06/2026
 ```
 
-Ce badge reflète la dernière version du package au moment où un commit **fonctionnel** (`feat`, `fix`, `refactor`, `perf`, `revert`) a touché ce composant.
+Ce badge reflète la dernière version du package au moment où un commit **touchant le code source** du composant (`.vue`, `.ts`, `.scss`) a été mergé, hors commits a11y, doc, release et CI.
 
 ---
 
@@ -69,17 +69,18 @@ pnpm func:inject Accordion DatePicker
 
 ## Détection des commits fonctionnels
 
-Un commit est considéré comme "fonctionnel" s'il commence par un de ces préfixes (conventional commits) :
+Le script retient le **dernier commit** qui :
 
-| Préfixe | Description |
-|---|---|
-| `feat` | Nouvelle fonctionnalité |
-| `fix` | Correction de bug |
-| `refactor` | Refactorisation |
-| `perf` | Amélioration de performance |
-| `revert` | Annulation d'un commit |
+1. **Touche au moins un fichier source** du composant (`.vue`, `.ts`, `.js`, `.scss`, `.css`)
+   - Les `.stories.ts`, `.spec.ts`, `.cy.ts` et fichiers de test sont ignorés
+   - Les `.mdx` et `.md` sont ignorés
+2. **N'est pas** un commit purement a11y :
+   - Mots-clés exclus : `a11y`, `accessibilit`, `wcag`, `aria-`, `contraste`, `audit access`, `rgaa`
+3. **N'est pas** un commit de release/CI/doc :
+   - Préfixes exclus : `chore`, `docs`, `ci`, `build`, `release`, `bump`, `renovate`
+   - Patterns exclus : `version badge`, `update changelog`, `run lint`
 
-Sont **exclus** : `chore`, `docs`, `test`, `ci`, `style`, `build`.
+> Le repo n'utilise pas systématiquement les conventional commits — la détection est donc basée sur l'**exclusion** plutôt que sur l'inclusion de préfixes.
 
 ---
 
