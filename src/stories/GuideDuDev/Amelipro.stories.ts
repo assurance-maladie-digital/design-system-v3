@@ -753,17 +753,23 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-table',
 						},
 					},
-					// {
-					// 	title: 'AmeliproPostalAddressField',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPostalAddressField',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-postal-address-field',
-					// 	},
-					// },
+					{
+						title: 'AmeliproPostalAddressField',
+						usedComponents: [
+							{
+								name: 'SyTextField',
+								type: 'formulaires',
+							},
+							{
+								name: 'SySelect',
+								type: 'formulaires selects',
+							},
+						],
+						amelipro: {
+							name: 'AmeliproPostalAddressField',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-postal-address-field',
+						},
+					},
 					{
 						title: 'AmeliproAccordionGroup',
 						synapse: {
