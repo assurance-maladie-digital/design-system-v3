@@ -1007,8 +1007,8 @@ Pour plus d'informations, voir la [documentation technique](/?path=/docs/composa
            <NirField
 				v-model="value"
 				:required="false"
-				numberLabel="Numéro de sécurité sociale'
-				keyLabel="Clé"
+				:numberLabel="'Numéro de sécurité sociale'"
+				:keyLabel="'Clé'"
 				:displayKey="true"
 				nirType="complexe"
 				:custom-number-rules="customNumberRules"

@@ -101,11 +101,8 @@ export function useNirValidation(
 					validate: (value: string) => {
 						if (!value) return true
 						// Ne valider que si tous les caractères sont saisis
-						if (value.length < 13) {
-							return customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
-						}
-						const result = checkNIR(value, nirType.value)
-						return result ? true : customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
+						if (value.length < 13) return false
+						return checkNIR(value, nirType.value)
 					},
 					message: customLocale.value.errorInvalidNumber || locales.errorInvalidNumber,
 					successMessage: customLocale.value.successNumberValid || locales.successNumberValid,
