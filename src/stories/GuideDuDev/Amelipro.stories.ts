@@ -825,17 +825,18 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-list',
 						},
 					},
-					//  {
-					// 	title: 'AmeliproAccordionResultList',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionResultList',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result-list',
-					// 	},
-					// }, {
+					{
+						title: 'AmeliproAccordionResultList',
+						synapse: {
+							name: 'SyTable',
+							url: getComponentUrl({ name: 'sytable--expandable-rows', type: 'tableaux' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionResultList',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result-list',
+						},
+					},
+					// {
 					// 	title: 'AmeliproClickableTile',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
