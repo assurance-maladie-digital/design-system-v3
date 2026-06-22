@@ -394,17 +394,18 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'UserMenuDetails',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-menu-details',
 					// 	},
-					// }, {
-					// 	title: 'ServiceMenu',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'ServiceMenu',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/service-menu',
-					// 	},
 					// },
+					{
+						title: 'ServiceMenu',
+						synapse: {
+							name: 'VNavigationDrawer',
+							url: getComponentUrl({ name: 'VNavigationDrawer', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'ServiceMenu',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/service-menu',
+						},
+					},
 					// {
 					// 	title: 'ServiceBtn',
 					// 	synapse: {

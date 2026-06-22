@@ -64,6 +64,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Structure',
 					},
 					{
+						title: 'NavigationDrawer',
+						description: 'Utilisé pour naviguer dans l\'application.',
+						link: '/?path=/docs/composants-composants-vuetify-vnavigationdrawer--docs',
+						img: `/components/navigation-drawer${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'FooterBar',
 						description: 'Utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.',
 						link: '/?path=/docs/composants-structure-footerbar--docs',
@@ -563,6 +570,7 @@ export const ComponentsList: StoryObj = {
 					'Carousel',
 					'UserMenuBtn',
 					'UploadWorkflow',
+					'NavigationDrawer',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
