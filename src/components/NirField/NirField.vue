@@ -143,31 +143,31 @@
 
 	const container = ref<HTMLElement | null>(null)
 
-// Computed pour savoir si le comportement d'auto-focus est actif
-const shouldUseAutoFocus = computed(() => {
-	return props.displayKey && !props.disabled && !props.readonly
-})
+	// Computed pour savoir si le comportement d'auto-focus est actif
+	const shouldUseAutoFocus = computed(() => {
+		return props.displayKey && !props.disabled && !props.readonly
+	})
 
-// Computed pour le texte d'avertissement
-const autoFocusNoticeText = computed(() => {
-	if (!shouldUseAutoFocus.value) return ''
+	// Computed pour le texte d'avertissement
+	const autoFocusNoticeText = computed(() => {
+		if (!shouldUseAutoFocus.value) return ''
 
-	return 'Après la saisie des 13 caractères du numéro de sécurité sociale, le curseur sera automatiquement placé dans le champ clé de validation. Si le champ clé est vidé, le curseur reviendra automatiquement dans le champ numéro.'
-})
+		return 'Après la saisie des 13 caractères du numéro de sécurité sociale, le curseur sera automatiquement placé dans le champ clé de validation. Si le champ clé est vidé, le curseur reviendra automatiquement dans le champ numéro.'
+	})
 
-// Computed propres pour aria-describedby
-const numberDescribedBy = computed(() => [
-	shouldUseAutoFocus.value ? autoFocusNoticeId : undefined,
-	numberFieldErrorId,
-	numberFieldWarningId,
-	numberFieldSuccessId,
-].filter(Boolean).join(' '))
+	// Computed propres pour aria-describedby
+	const numberDescribedBy = computed(() => [
+		shouldUseAutoFocus.value ? autoFocusNoticeId : undefined,
+		numberFieldErrorId,
+		numberFieldWarningId,
+		numberFieldSuccessId,
+	].filter(Boolean).join(' '))
 
-const keyDescribedBy = computed(() => [
-	keyFieldErrorId,
-	keyFieldWarningId,
-	keyFieldSuccessId,
-].filter(Boolean).join(' '))
+	const keyDescribedBy = computed(() => [
+		keyFieldErrorId,
+		keyFieldWarningId,
+		keyFieldSuccessId,
+	].filter(Boolean).join(' '))
 
 	// Fonction pour gérer le focus des champs
 	const focusField = (field: typeof numberField | typeof keyField) => {
@@ -180,7 +180,6 @@ const keyDescribedBy = computed(() => [
 		})
 	}
 
-	
 	// Émission de la valeur
 	const emitValue = () => {
 		const number = unmaskedNumberValue.value
@@ -328,7 +327,7 @@ const keyDescribedBy = computed(() => [
 		const canFillKey = unmaskedKeyValue.value.length < 2
 
 		if (isNumberComplete && isDigit && canFillKey) {
-			keyValue.value = `${unmaskedKeyValue.value}${keyEvent.key}` 
+			keyValue.value = `${unmaskedKeyValue.value}${keyEvent.key}`
 
 			focusField(keyField)
 
