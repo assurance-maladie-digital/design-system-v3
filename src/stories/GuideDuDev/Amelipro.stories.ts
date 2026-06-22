@@ -955,17 +955,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-copy-btn',
 						},
 					},
-					// {
-					// 	title: 'AmeliproFirstLogin',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproFirstLogin',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-first-login',
-					// 	},
-					// },
+					{
+						title: 'AmeliproFirstLogin',
+						synapse: {
+							name: 'DialogBox',
+							url: getComponentUrl({ name: 'DialogBox', type: 'feedback' }),
+						},
+						amelipro: {
+							name: 'AmeliproFirstLogin',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-first-login',
+						},
+					},
 				]
 
 				const filteredComponents = computed(() => {
