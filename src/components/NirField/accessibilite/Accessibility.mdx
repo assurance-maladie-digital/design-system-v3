@@ -82,6 +82,18 @@ import {
         </li>
         </ul>
 </CriteriaCard>
+
+<CriteriaCard icon="📢" title="Conformité RGAA 7.4 - Changements de contexte">
+    <ul>
+        <li><strong>Avertissement utilisateur</strong> : un message caché visuellement mais accessible aux lecteurs d'écran informe l'utilisateur avant l'utilisation que le focus peut être déplacé automatiquement</li>
+        <li><strong>Message contextuel</strong> : "Après la saisie des 13 caractères du numéro de sécurité sociale, le curseur sera automatiquement placé dans le champ clé de validation. Si le champ clé est vidé, le curseur reviendra automatiquement dans le champ numéro."</li>
+        <li><strong>Association ARIA</strong> : le message d'avertissement est relié uniquement au champ numéro via <code>aria-describedby</code> pour éviter la redondance</li>
+        <li><strong>Activation conditionnelle</strong> : le comportement n'est actif que lorsque <code>displayKey</code> est <code>true</code>, <code>disabled</code> est <code>false</code> et <code>readonly</code> est <code>false</code></li>
+        <li><strong>Déclenchement utilisateur uniquement</strong> : les déplacements de focus ne sont plus déclenchés par des <code>watch</code> globaux, mais uniquement par des actions utilisateur (saisie, suppression)</li>
+        <li><strong>Protection contre les déplacements involontaires</strong> : la synchronisation externe de <code>modelValue</code> ne provoque pas de déplacement de focus</li>
+        <li><strong>Pour les lecteurs d'écran</strong> : le message d'avertissement est restitué avant la saisie, permettant à l'utilisateur d'anticiper le comportement</li>
+    </ul>
+</CriteriaCard>
 </CriteriaSection>
     <DemoSection componentName="NirField">
       <Primary />
