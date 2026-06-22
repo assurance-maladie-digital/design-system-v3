@@ -687,17 +687,18 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tile-btn',
 						},
 					},
+					{
+						title: 'UserInformationSummary',
+						synapse: {
+							name: 'PageContainer',
+							url: getComponentUrl({ name: 'PageContainer--with-header-and-footer', type: 'layout' }),
+						},
+						amelipro: {
+							name: 'UserInformationSummary',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-information-summary',
+						},
+					},
 					// {
-					// 	title: 'UserInformationSummary',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'UserInformationSummary',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-information-summary',
-					// 	},
-					// }, {
 					// 	title: 'AmeliproCustomSelector',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
