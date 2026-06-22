@@ -26,7 +26,7 @@ export const Default: Story = {
 			return { args, drawer }
 		},
 		template: `
-            <VApp style="height: 400px;">
+            <VApp style="height: 400px; overflow-y: hidden;">
                 <VNavigationDrawer v-model="drawer" v-bind="args">
                     <VList>
                         <VListItem value="home">
@@ -106,7 +106,7 @@ export const Permanent: Story = {
 			return { args }
 		},
 		template: `
-            <VApp style="height: 400px;">
+            <VApp style="height: 400px; overflow-y: hidden;">
                 <VNavigationDrawer v-bind="args" permanent>
                     <VList>
                         <VListItem value="dashboard">
@@ -169,7 +169,7 @@ export const Temporary: Story = {
 			return { args, drawer }
 		},
 		template: `
-            <VApp style="height: 400px;">
+            <VApp style="height: 400px; overflow-y: hidden;">
                 <VNavigationDrawer v-model="drawer" v-bind="args" temporary>
                     <VList>
                         <VListItem value="item1">
@@ -242,7 +242,7 @@ export const WithCustomContent: Story = {
 			return { args }
 		},
 		template: `
-            <VApp style="height: 400px;">
+            <VApp style="height: 400px; overflow-y: hidden;">
                 <VNavigationDrawer v-bind="args" permanent>
                     <div class="pa-4">
                         <h3 class="text-h6 mb-2">Menu Principal</h3>
