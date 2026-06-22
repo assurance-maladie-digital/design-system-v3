@@ -83,6 +83,39 @@ Variables de thème `--v-theme-<nom>`. ⚠️ Si elles contiennent un **triplet 
 
 Catalogue complet&nbsp;: [Design Tokens → Couleurs](/docs/design-tokens-couleurs--docs).
 
+### Nommage des variables CSS — deux familles de `on-*`
+
+Pour les couleurs de thème, deux familles de variables coexistent. **Une seule est l'API du Design System.**
+
+<table>
+  <thead>
+    <tr>
+      <th>Famille</th>
+      <th>Forme</th>
+      <th>Origine</th>
+      <th>À utiliser&nbsp;?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tokens sémantiques du DS</td>
+      <td><code>--v-theme-onSurface</code>, <code>--v-theme-onSurfaceVariant</code>, <code>--v-theme-onPrimary</code>… (<strong>camelCase</strong>)</td>
+      <td>Définis par le Design System</td>
+      <td>✅ Oui</td>
+    </tr>
+    <tr>
+      <td>Contrastes auto-générés par Vuetify</td>
+      <td><code>--v-theme-on-surface</code>, <code>--v-theme-on-surfaceBright</code>… (<strong>kebab <code>on-</code></strong>)</td>
+      <td>Générés automatiquement par Vuetify (un <code>on-&lt;couleur&gt;</code> par couleur de thème)</td>
+      <td>❌ Non (couleurs techniques, hors API)</td>
+    </tr>
+  </tbody>
+</table>
+
+> **Règle simple&nbsp;:** si la variable a un **`on-` avec un tiret**, c'est une couleur technique générée par Vuetify&nbsp;: prenez plutôt la version **camelCase `onXxx`** du Design System.
+
+Comme il n'y a plus de variables SCSS, une faute de nom ne génère **pas d'erreur de compilation** (la `var()` reste juste non résolue). En cas de doute sur le nom d'un token issu de Figma, reportez-vous à [Correspondances couleurs](/docs/design-tokens-correspondances-couleurs--docs).
+
 ## Arrondis (`radius`)
 
 <table>

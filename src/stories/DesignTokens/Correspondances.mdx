@@ -10,7 +10,7 @@ import '../styles/shared.css';
 
 Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (cnam, pa, amelipro)&nbsp;: seules sont listées celles dont la **valeur est préservée à l'identique** dans chaque thème (ancien `*Semantic.ts` → nouveau `*LightTheme.ts`). Les nouveaux tokens sont exposés comme couleurs de thème (`var(--v-theme-<token>)`, classes `text-<token>`, `bg-<token>`…).
 
-> **Non listés** (à traiter au cas par cas)&nbsp;: les tokens dont la valeur **diffère selon le thème** ou a **changé** lors de la refonte (ex. certaines nuances `*Subdued`/`accentSecondary`/`accentContrasted`, états `*OnDark`), et les tokens **interactifs** (restructurés en tokens d'`interaction`). La source de vérité reste `*LightTheme.ts`.
+> **Non listés** (à traiter au cas par cas)&nbsp;: les tokens dont la valeur **diffère selon le thème** ou a **changé** lors de la refonte (ex. certaines nuances `*Subdued`/`accentSecondary`/`accentContrasted`, états `*OnDark`), et les tokens **interactifs** (restructurés en tokens d'`interaction`).
 
 
 ## Background
@@ -74,10 +74,6 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     <tr>
       <td><code>colors.background.disabled</code></td>
       <td><code>disabled</code></td>
-    </tr>
-    <tr>
-      <td><code>colors.background.entreprise</code></td>
-      <td><code>warning</code></td>
     </tr>
   </tbody>
 </table>
@@ -221,23 +217,6 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     <tr>
       <td><code>colors.icon.disabled</code></td>
       <td><code>onDisabled</code></td>
-    </tr>
-  </tbody>
-</table>
-
-## Overlay
-
-<table>
-  <thead>
-    <tr>
-      <th>Ancien token</th>
-      <th>Nouveau token</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>colors.overlay.onLight</code></td>
-      <td><code>primary</code></td>
     </tr>
   </tbody>
 </table>
