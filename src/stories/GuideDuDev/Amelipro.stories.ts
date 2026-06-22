@@ -912,6 +912,10 @@ export const AmeliproComponents: StoryObj = {
 							name: 'SyTextField',
 							type: 'formulaires ',
 						}, {
+							name: 'NirField',
+							type: 'formulaires ',
+						},
+						{
 							name: 'SyIcon',
 							type: 'données',
 						}, {
