@@ -1,0 +1,125 @@
+import { Meta, Source } from '@storybook/blocks';
+import '../styles/shared.css';
+
+<Meta title="Design Tokens/Utilisation" />
+
+<div className="header">
+  <h1>Utilisation</h1>
+  <p>Comment consommer les design tokens (espacements, couleurs, arrondis, typographie) dans vos styles.</p>
+</div>
+
+Depuis la version **1.0.25**, les design tokens sont exposés sous forme de **variables CSS** (custom properties) `--v-…`, générées à partir du thème Vuetify de Synapse. Elles **s'adaptent automatiquement au thème actif** (cnam / pa / amelipro, clair / sombre).
+
+> Cette page remplace l'ancien **export SCSS** de tokens (`$gap-2`, variables de couleur…) disponible jusqu'à la **1.0.24**. Voir la section [Migration](#migration-depuis-lexport-scss) en bas de page.
+
+## Espacements (`gap`)
+
+Échelle `--v-gap-N`, où `N` est un multiple de 4&nbsp;px.
+
+| Variable CSS | Valeur |
+|---|---|
+| `--v-gap-0` | 0 |
+| `--v-gap-1` | 4px |
+| `--v-gap-2` | 8px |
+| `--v-gap-3` | 12px |
+| `--v-gap-4` | 16px |
+| `--v-gap-6` | 24px |
+| `--v-gap-8` | 32px |
+| … | … (par pas de 4&nbsp;px) |
+
+<Source dark language="scss" code={`
+.mon-bloc {
+  display: flex;
+  gap: var(--v-gap-2);     /* 8px */
+  padding: var(--v-gap-4); /* 16px */
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Espacements](/docs/design-tokens-espacements--docs).
+
+## Couleurs
+
+Variables de thème `--v-theme-<nom>`. ⚠️ Si elles contiennent un **triplet RVB**, à envelopper dans `rgb()` / `rgba()`&nbsp;:
+
+<Source dark language="scss" code={`
+.element {
+  color: rgb(var(--v-theme-primary));
+  background-color: rgba(var(--v-theme-primary), 0.08); /* avec opacité */
+  border: 1px solid rgb(var(--v-theme-onSurface));
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Couleurs](/docs/design-tokens-couleurs--docs).
+
+## Arrondis (`radius`)
+
+| Variable CSS | Nom | Valeur (thème cnam) |
+|---|---|---|
+| `--v-radius-rounded0` | rounded-0 | 0 |
+| `--v-radius-rounded` | rounded | 4px |
+| `--v-radius-roundedLg` | rounded-lg | 8px |
+| `--v-radius-roundedPill` | rounded-pill | 64px |
+
+Les valeurs varient selon le thème (par ex. AmeliPro&nbsp;: `rounded` = 12px, `roundedLg` = 24px).
+
+<Source dark language="scss" code={`
+.card {
+  border-radius: var(--v-radius-roundedLg); /* 8px en thème cnam */
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Arrondis](/docs/design-tokens-arrondis--docs).
+
+## Typographie
+
+`font-family: var(--v-font-family)` et les tailles `--v-fontSize-…` (`titres`, `titresAlternatifs`, `corpsDeTexte`, `liensEtLibelles`…)&nbsp;:
+
+<Source dark language="scss" code={`
+.titre {
+  font-family: var(--v-font-family);
+  font-size: var(--v-fontSize-titres);
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Styles typographiques](/docs/design-tokens-styles-typographiques--docs).
+
+## Classes utilitaires (templates)
+
+Pour la plupart des cas, les **classes utilitaires** Vuetify suffisent et suivent les mêmes échelles&nbsp;:
+
+- Espacements&nbsp;: `ga-2` (gap), `pa-4` (padding), `ma-2` (margin)…
+- Couleurs&nbsp;: `text-primary`, `bg-primary`, `border-primary`…
+- Arrondis&nbsp;: `rounded-0`, `rounded`, `rounded-lg`, `rounded-pill`.
+
+## Migration depuis l'export SCSS
+
+Jusqu'à la **1.0.24**, les tokens étaient disponibles via un **export SCSS** (`$gap-2`, …). Depuis la **1.0.25**, cet export est remplacé par les **variables CSS** ci-dessus&nbsp;:
+
+| Avant (SCSS, ≤ 1.0.24) | Maintenant (CSS, ≥ 1.0.25) |
+|---|---|
+| `$gap-2` | `var(--v-gap-2)` |
+| couleur primaire | `rgb(var(--v-theme-primary))` |
+| `$rounded-lg` | `var(--v-radius-roundedLg)` |
+| taille de texte | `var(--v-fontSize-…)` |
+
+**Pourquoi ce changement&nbsp;?** Les variables CSS sont résolues au **runtime** et s'adaptent au thème actif, là où l'export SCSS produisait des valeurs **figées à la compilation**.
+
+### Shim de compatibilité (optionnel)
+
+Pour faciliter la migration d'un projet qui consommait encore l'ancien export SCSS, un **partial SCSS optionnel** ré-expose les anciennes variables (sous leurs anciens noms) vers les variables CSS. Sont couverts&nbsp;: **espacements** (`$gap-N`, `$padding-N`, `$spacing-*`), **arrondis** (`$radius-rounded-*`) et **typographie** (`$font-size-*`).
+
+<Source dark language="scss" code={`
+// Dans votre projet
+@use '@cnamts/synapse/assets/compat/legacy-tokens' as *;
+
+.box {
+  gap: $gap-2;                       // -> var(--v-gap-2)
+  padding: $padding-4;               // -> var(--v-padding-4)
+  border-radius: $radius-rounded-lg; // -> var(--v-radius-roundedLg)
+  font-size: $font-size-title;       // -> var(--v-fontSize-titres)
+}
+`} />
+
+> ⚠️ Ces variables contiennent une `var(--…)` résolue au **runtime**&nbsp;: elles conviennent pour des affectations directes (`gap`, `padding`, `margin`, `border-radius`, `font-size`…) mais **pas** pour des opérations SCSS *compile-time* (`calc` Sass, fonctions de couleur…). C'est une aide à la transition&nbsp;: à terme, utilisez directement les variables CSS.
+
+Les **couleurs** ne sont pas ré-exposées (palette > 100 valeurs, et triplet RVB)&nbsp;: utilisez directement `rgb(var(--v-theme-<nom>))` (voir la section [Couleurs](#couleurs)).
