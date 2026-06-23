@@ -152,10 +152,9 @@
 	const autoFocusNoticeText = computed(() => {
 		if (!shouldUseAutoFocus.value) return ''
 
-		return 'Après la saisie des 13 caractères du numéro de sécurité sociale, le curseur sera automatiquement placé dans le champ clé de validation. Si le champ clé est vidé, le curseur reviendra automatiquement dans le champ numéro.'
+		return props.customLocale.autoFocusNotice
 	})
 
-	// Computed propres pour aria-describedby
 	const numberDescribedBy = computed(() => [
 		shouldUseAutoFocus.value ? autoFocusNoticeId : undefined,
 		numberFieldErrorId,
@@ -174,7 +173,10 @@
 		nextTick(() => {
 			const input = field.value?.$el?.querySelector?.('input') as HTMLInputElement | null
 
-			if (!input) return
+			if (!input) {
+				console.error('[NirField] focusField: impossible de trouver l\'élément <input> dans le champ cible.')
+				return
+			}
 
 			input.focus({ preventScroll: true })
 		})
@@ -407,7 +409,7 @@
 		<span
 			v-if="shouldUseAutoFocus"
 			:id="autoFocusNoticeId"
-			class="sr-only"
+			class="d-sr-only"
 		>
 			{{ autoFocusNoticeText }}
 		</span>
@@ -685,17 +687,5 @@
 .sy-number-success,
 .sy-key-success {
 	color: rgb(var(--v-theme-onSuccessVariant));
-}
-
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border: 0;
 }
 </style>
