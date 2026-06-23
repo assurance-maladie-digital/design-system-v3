@@ -492,27 +492,32 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-illustrated-data-tile',
 						},
 					},
-					// {
-					// 	title: 'AmeliproIllustratedRadioGroup',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproIllustratedRadioGroup',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-illustrated-radio-group',
-					// 	},
-					// }, {
-					// 	title: 'AmeliproMailTile',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproMailTile',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-mail-tile',
-					// 	},
-					// },
+					{
+						title: 'AmeliproIllustratedRadioGroup',
+						synapse: {
+							name: 'SyRadioGroup',
+							url: getComponentUrl({ name: 'SyRadioGroup', type: 'formulaires' }),
+						},
+						amelipro: {
+							name: 'AmeliproIllustratedRadioGroup',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-illustrated-radio-group',
+						},
+					},
+					{
+						title: 'AmeliproMailTile',
+						usedComponents: [{
+							name: 'VCard',
+							type: 'composants vuetify',
+						}, {
+							name: 'VBtn',
+							type: 'composants vuetify',
+						},
+						],
+						amelipro: {
+							name: 'AmeliproMailTile',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-mail-tile',
+						},
+					},
 					{
 						title: 'AmeliproMultipleFoldingCard',
 						synapse: {

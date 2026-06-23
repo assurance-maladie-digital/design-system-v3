@@ -1,0 +1,1316 @@
+{
+  "Accordion": {
+    "version": "1.0.26",
+    "date": "04/05/2026",
+    "dateIso": "2026-05-04 15:19:19 +0200",
+    "message": "migration accordion (#2160)"
+  },
+  "AmeliproAccordion": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionTemplate": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionFrieze": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionGroup": {
+    "version": "1.0.18",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
+  },
+  "AmeliproAccordionList": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionResult": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionResultTemplate": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAccordionResultList": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproAutoCompleteField": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproBadge": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproBreadcrumb": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproCallback": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproCaptcha": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100",
+    "message": "Feat/1498 renommer props ariarequired (#1535)"
+  },
+  "AmeliproCard": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproCarousel": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproCarouselItem": {
+    "version": "1.0.7",
+    "date": "03/09/2025",
+    "dateIso": "2025-09-03 16:21:33 +0200",
+    "message": "Feat/1007 ajout composant amelipro carousel (#1057)"
+  },
+  "AmeliproCheckbox": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproCheckboxGroup": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproChips": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproClickableTile": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproContentLayout": {
+    "version": "1.0.9",
+    "date": "11/09/2025",
+    "dateIso": "2025-09-11 11:42:14 +0200",
+    "message": "Feat/1008 ajout composnt amelipro content layout (#1102)"
+  },
+  "AmeliproCopyBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproCustomSelector": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproDentalChart": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTooth": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproDialog": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproDisclosure": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproErrorTemplate": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproFilePreview": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproFilters": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproFirstLogin": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproFooter": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproHeader": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproHeaderBar": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproHeaderBrandSection": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproLogoAm": {
+    "version": "1.0.18",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
+  },
+  "AmeliproIcon": {
+    "version": "1.0.20",
+    "date": "09/02/2026",
+    "dateIso": "2026-02-09 16:06:33 +0100",
+    "message": "add parameters icon (#1808)"
+  },
+  "AmeliproIconBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproIllustratedDataTile": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproIllustratedRadioGroup": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproMailTile": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproMenu": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproMessage": {
+    "version": "1.0.18",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
+  },
+  "AmeliproDropdownMenu": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproDropdownMenuBtn": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "AmeliproMessagingLayout": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproMessagingMenuBtn": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "AmeliproMultipleFoldingCard": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproNumberedCard": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproOnboarding": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPageLayout": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPagination": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPaginationBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPatientBanner": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPatientLogged": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPatientLogin": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPatientLoginForm": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPostalAddressCityRow": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproPostalAddressField": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproRadioGroup": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproResultList": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproSelect": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproStateTile": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproStatus": {
+    "version": "1.0.18",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
+  },
+  "AmeliproStepBtn": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "AmeliproStepper": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "AmeliproTable": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTabBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTabs": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTextArea": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTextField": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTileBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTooltips": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "AmeliproTransmission": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "AmeliproUpload": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "ServiceBtn": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "ServiceList": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "ServiceMenu": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "ServiceMenuContent": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "StructureBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "StructureItem": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "StructureList": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "StructureMenu": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "StructureTabs": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "UserInformationSummary": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "UserMenu": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "UserMenuDetails": {
+    "version": "1.0.3",
+    "date": "18/07/2025",
+    "dateIso": "2025-07-18 17:11:17 +0200",
+    "message": "Feat/amelipro components ok (#803)"
+  },
+  "BackBtn": {
+    "version": "1.0.22",
+    "date": "12/03/2026",
+    "dateIso": "2026-03-12 16:22:12 +0100",
+    "message": "Update Vuetify 3.12.2 (#1951)"
+  },
+  "BackToTopBtn": {
+    "version": "1.0.20",
+    "date": "12/02/2026",
+    "dateIso": "2026-02-12 10:01:33 +0100",
+    "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+  },
+  "Captcha": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "CaptchaAlert": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "CaptchaBase": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "CaptchaBtn": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "CaptchaForm": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "CaptchaHelpdesk": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "CaptchaImg": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "CaptchaInformation": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "volumeUp": {
+    "version": "1.0.13",
+    "date": "14/11/2025",
+    "dateIso": "2025-11-14 11:01:33 +0100",
+    "message": "captcha (#1230)"
+  },
+  "ChipList": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "CollapsibleList": {
+    "version": "1.0.22",
+    "date": "11/03/2026",
+    "dateIso": "2026-03-11 11:00:31 +0100",
+    "message": "Hx: replace hx to SyHeading (#1874)"
+  },
+  "IconSlot": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 08:36:45 +0100",
+    "message": "fix: pass empty object to default slot in IconSlot to prevent errors (#1813)"
+  },
+  "ContextualMenu": {
+    "version": "0.0.8-alpha",
+    "date": "08/01/2025",
+    "dateIso": "2025-01-08 17:05:15 +0100",
+    "message": "Ajout d'une configuration pour stylelint (#323)"
+  },
+  "DeepMenu": {
+    "version": "0.0.8-alpha",
+    "date": "08/01/2025",
+    "dateIso": "2025-01-08 17:05:15 +0100",
+    "message": "Ajout d'une configuration pour stylelint (#323)"
+  },
+  "CookieBanner": {
+    "version": "1.0.22",
+    "date": "11/03/2026",
+    "dateIso": "2026-03-11 11:00:31 +0100",
+    "message": "Hx: replace hx to SyHeading (#1874)"
+  },
+  "CookiesInformation": {
+    "version": "1.0.26",
+    "date": "28/04/2026",
+    "dateIso": "2026-04-28 09:17:51 +0200",
+    "message": "[build] Optimisation du build (#2110)"
+  },
+  "CookiesSelection": {
+    "version": "1.0.26",
+    "date": "28/04/2026",
+    "dateIso": "2026-04-28 09:17:51 +0200",
+    "message": "[build] Optimisation du build (#2110)"
+  },
+  "CookiesTable": {
+    "version": "0.0.6-alpha",
+    "date": "17/12/2024",
+    "dateIso": "2024-12-17 15:44:51 +0100",
+    "message": "cookies selection (#256)"
+  },
+  "CopyBtn": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "SelectBtnField": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 17:04:44 +0200",
+    "message": "SelectBtnField: add validation (#2269)"
+  },
+  "SyAutocomplete": {
+    "version": "1.0.27",
+    "date": "12/05/2026",
+    "dateIso": "2026-05-12 14:26:57 +0200",
+    "message": "SyAutocomplete: improve validation (#2169)"
+  },
+  "SyInputSelect": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "SySelect": {
+    "version": "1.0.27",
+    "date": "13/05/2026",
+    "dateIso": "2026-05-13 14:06:58 +0200",
+    "message": "Autocomplete: add prepend item slot (#2176)"
+  },
+  "SyCheckbox": {
+    "version": "1.1.1",
+    "date": "12/06/2026",
+    "dateIso": "2026-06-12 17:18:16 +0200",
+    "message": "SyCheckBox: add validation (#2265)"
+  },
+  "SyCheckBoxGroup": {
+    "version": "1.1.1",
+    "date": "12/06/2026",
+    "dateIso": "2026-06-12 11:24:26 +0200",
+    "message": "Feat/migrate sy check box group validation (#2260)"
+  },
+  "SyForm": {
+    "version": "1.0.16",
+    "date": "12/12/2025",
+    "dateIso": "2025-12-12 12:02:19 +0100",
+    "message": "Fix: add reset event and clearValidation method to SyForm (#1602)"
+  },
+  "SyIcon": {
+    "version": "1.1.0",
+    "date": "03/06/2026",
+    "dateIso": "2026-06-03 17:32:15 +0200",
+    "message": "[SySelect]: permettre un meilleur rendu du composant en l'abscence de css (#2232)"
+  },
+  "SyIconAccessibility": {
+    "version": "1.1.0",
+    "date": "03/06/2026",
+    "dateIso": "2026-06-03 17:32:15 +0200",
+    "message": "[SySelect]: permettre un meilleur rendu du composant en l'abscence de css (#2232)"
+  },
+  "SyIconButton": {
+    "version": "1.0.23",
+    "date": "23/03/2026",
+    "dateIso": "2026-03-23 10:47:55 +0100",
+    "message": "Feat/1911 migration icon button (#1969)"
+  },
+  "SyPagination": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "SyRadioGroup": {
+    "version": "1.1.0",
+    "date": "02/06/2026",
+    "dateIso": "2026-06-02 17:01:03 +0200",
+    "message": "Validation: success message false by default (#2231)"
+  },
+  "SyTabs": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "FieldState": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "SyTextField": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "DataList": {
+    "version": "1.0.16",
+    "date": "11/12/2025",
+    "dateIso": "2025-12-11 11:42:59 +0100",
+    "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
+  },
+  "DataListLoading": {
+    "version": "0.0.15-alpha",
+    "date": "14/04/2025",
+    "dateIso": "2025-04-14 09:57:10 +0200",
+    "message": "remove old classes prefix and add newest (#532)"
+  },
+  "DataListGroup": {
+    "version": "1.0.16",
+    "date": "11/12/2025",
+    "dateIso": "2025-12-11 11:42:59 +0100",
+    "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
+  },
+  "DataListItem": {
+    "version": "1.0.16",
+    "date": "11/12/2025",
+    "dateIso": "2025-12-11 11:42:59 +0100",
+    "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
+  },
+  "DatePicker": {
+    "version": "1.1.0",
+    "date": "02/06/2026",
+    "dateIso": "2026-06-02 17:01:03 +0200",
+    "message": "Validation: success message false by default (#2231)"
+  },
+  "ComplexDatePicker": {
+    "version": "1.1.0",
+    "date": "02/06/2026",
+    "dateIso": "2026-06-02 17:01:03 +0200",
+    "message": "Validation: success message false by default (#2231)"
+  },
+  "DateTextInput": {
+    "version": "1.1.0",
+    "date": "02/06/2026",
+    "dateIso": "2026-06-02 17:01:03 +0200",
+    "message": "Validation: success message false by default (#2231)"
+  },
+  "BidirectionalComplexValidation": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "DatePickerBidirectionalValidation": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "DatePickerValidationExamples": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "ComplexDatePickerPlayground": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "DatePickerHolidayRule": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "DeclarationAccessibilityPage": {
+    "version": "1.0.21",
+    "date": "25/02/2026",
+    "dateIso": "2026-02-25 16:54:31 +0100",
+    "message": "Page de declaration access (#812)"
+  },
+  "DiacriticPicker": {
+    "version": "0.0.1",
+    "date": "14/05/2025",
+    "dateIso": "2025-05-14 17:54:24 +0200",
+    "message": "Diacritic: fix key = function (#595)"
+  },
+  "DialogBox": {
+    "version": "1.1.1",
+    "date": "17/06/2026",
+    "dateIso": "2026-06-17 10:49:31 +0200",
+    "message": "dialogBox: ajout props Scrollable  (#2263)"
+  },
+  "DownloadBtn": {
+    "version": "1.0.22",
+    "date": "12/03/2026",
+    "dateIso": "2026-03-12 16:22:12 +0100",
+    "message": "Update Vuetify 3.12.2 (#1951)"
+  },
+  "ErrorPage": {
+    "version": "1.0.23",
+    "date": "25/03/2026",
+    "dateIso": "2026-03-25 16:55:31 +0100",
+    "message": "Feat/turn heading level optional (#2025)"
+  },
+  "ExternalLinks": {
+    "version": "1.0.16",
+    "date": "02/12/2025",
+    "dateIso": "2025-12-02 08:36:26 +0100",
+    "message": "ExternalLink: correction ombre et espacement caracteres (#1542)"
+  },
+  "FileList": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "UploadItem": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "FilePreview": {
+    "version": "0.0.10-alpha",
+    "date": "14/02/2025",
+    "dateIso": "2025-02-14 10:07:22 +0100",
+    "message": "Ajout de composant FilePreview (#382)"
+  },
+  "FileUpload": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "FileUploadContent": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "FilterInline": {
+    "version": "1.1.0",
+    "date": "05/06/2026",
+    "dateIso": "2026-06-05 15:07:31 +0200",
+    "message": "Filtres : corrections de bugs (#2245)"
+  },
+  "FilterSideBar": {
+    "version": "1.1.1",
+    "date": "17/06/2026",
+    "dateIso": "2026-06-17 09:38:08 +0200",
+    "message": "FilterSideBar: ajout prop title (#2264)"
+  },
+  "FooterBar": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "FranceConnectBtn": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderBar": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderBurgerMenu": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderMenuItem": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderMenuSection": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "HeaderSubMenu": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderLogo": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "Logo-mobile": {
+    "version": "1.0.18",
+    "date": "29/01/2026",
+    "dateIso": "2026-01-29 18:19:39 +0100",
+    "message": "Headerbar: incoherence graphique (#1705)"
+  },
+  "Logo": {
+    "version": "1.0.18",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
+  },
+  "HeaderMenuBtn": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderLoading": {
+    "version": "1.0.7",
+    "date": "20/08/2025",
+    "dateIso": "2025-08-20 09:06:28 +0200",
+    "message": "Feat/improve header loding after audit (#974)"
+  },
+  "HeaderNavigationBar": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HorizontalNavbar": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "HeaderToolbar": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "LangBtn": {
+    "version": "1.0.26",
+    "date": "28/04/2026",
+    "dateIso": "2026-04-28 09:17:51 +0200",
+    "message": "[build] Optimisation du build (#2110)"
+  },
+  "LogoBrandSection": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "LunarCalendar": {
+    "version": "1.1.1",
+    "date": "12/06/2026",
+    "dateIso": "2026-06-12 11:31:31 +0200",
+    "message": "Migration LunarCalendar vers validation unifiée (#2255)"
+  },
+  "MaintenancePage": {
+    "version": "1.0.23",
+    "date": "19/03/2026",
+    "dateIso": "2026-03-19 14:03:42 +0100",
+    "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
+  },
+  "MonthPicker": {
+    "version": "1.1.1",
+    "date": "16/06/2026",
+    "dateIso": "2026-06-16 14:55:28 +0200",
+    "message": "[Captcha] mise à jour de la validation (#2234)"
+  },
+  "MonthPickerInput": {
+    "version": "1.1.1",
+    "date": "15/06/2026",
+    "dateIso": "2026-06-15 11:44:38 +0200",
+    "message": "[MonthPicker] Migration de la validation (#2180)"
+  },
+  "MonthPickerVisual": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "MonthSelector": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "VisualPickerFooter": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "VisualPickerHeader": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "YearSelector": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "NirField": {
+    "version": "1.1.1",
+    "date": "22/06/2026",
+    "dateIso": "2026-06-22 11:26:47 +0200",
+    "message": "Feat/fix custom rules precedence on nirfield (#2291)"
+  },
+  "NotFoundPage": {
+    "version": "1.0.22",
+    "date": "11/03/2026",
+    "dateIso": "2026-03-11 11:00:31 +0100",
+    "message": "Hx: replace hx to SyHeading (#1874)"
+  },
+  "Notification": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "NotificationBar": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "PageContainer": {
+    "version": "1.1.1",
+    "date": "17/06/2026",
+    "dateIso": "2026-06-17 14:14:22 +0200",
+    "message": "migration ameliproPageLayout (#2259)"
+  },
+  "PaginatedTable": {
+    "version": "0.0.11-alpha",
+    "date": "18/02/2025",
+    "dateIso": "2025-02-18 14:46:46 +0100",
+    "message": "PaginatedTable (#383)"
+  },
+  "Pagination": {
+    "version": "0.0.11-alpha",
+    "date": "18/02/2025",
+    "dateIso": "2025-02-18 14:46:46 +0100",
+    "message": "PaginatedTable (#383)"
+  },
+  "PasswordField": {
+    "version": "1.1.0",
+    "date": "05/06/2026",
+    "dateIso": "2026-06-05 16:47:31 +0200",
+    "message": "[PasswordField] Migration de la Validation (#2175)"
+  },
+  "PeriodField": {
+    "version": "1.1.0",
+    "date": "02/06/2026",
+    "dateIso": "2026-06-02 17:01:03 +0200",
+    "message": "Validation: success message false by default (#2231)"
+  },
+  "PhoneField": {
+    "version": "1.1.1",
+    "date": "11/06/2026",
+    "dateIso": "2026-06-11 15:53:58 +0200",
+    "message": "[PhoneField] Fixe et ajout de la validation (#2205)"
+  },
+  "RangeField": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "RangeSlider": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "Tooltip": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "EmotionPicker": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "NumberPicker": {
+    "version": "1.0.16",
+    "date": "28/11/2025",
+    "dateIso": "2025-11-28 11:12:05 +0100",
+    "message": "Add keyboard navigation support for EmotionPicker, NumberPicker, and StarsPicker components (#1510)"
+  },
+  "RatingPicker": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "StarsPicker": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "SearchListField": {
+    "version": "1.1.0",
+    "date": "05/06/2026",
+    "dateIso": "2026-06-05 15:07:31 +0200",
+    "message": "Filtres : corrections de bugs (#2245)"
+  },
+  "SkipLink": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "SocialMediaLinks": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "StatusPage": {
+    "version": "1.1.1",
+    "date": "17/06/2026",
+    "dateIso": "2026-06-17 14:14:22 +0200",
+    "message": "migration ameliproPageLayout (#2259)"
+  },
+  "SubHeader": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "SyAlert": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "SyBtnMenu": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  },
+  "SyHeading": {
+    "version": "1.0.23",
+    "date": "25/03/2026",
+    "dateIso": "2026-03-25 16:55:31 +0100",
+    "message": "Feat/turn heading level optional (#2025)"
+  },
+  "SyTextArea": {
+    "version": "1.1.0",
+    "date": "02/06/2026",
+    "dateIso": "2026-06-02 17:01:03 +0200",
+    "message": "Validation: success message false by default (#2231)"
+  },
+  "AutocompleteFilter": {
+    "version": "1.0.26",
+    "date": "30/04/2026",
+    "dateIso": "2026-04-30 16:00:51 +0200",
+    "message": "Clean date picker and fix invalid date (#2149)"
+  },
+  "DateFilter": {
+    "version": "1.0.26",
+    "date": "30/04/2026",
+    "dateIso": "2026-04-30 16:00:51 +0200",
+    "message": "Clean date picker and fix invalid date (#2149)"
+  },
+  "NumberFilter": {
+    "version": "1.0.26",
+    "date": "30/04/2026",
+    "dateIso": "2026-04-30 16:00:51 +0200",
+    "message": "Clean date picker and fix invalid date (#2149)"
+  },
+  "PeriodFilter": {
+    "version": "1.0.26",
+    "date": "30/04/2026",
+    "dateIso": "2026-04-30 16:00:51 +0200",
+    "message": "Clean date picker and fix invalid date (#2149)"
+  },
+  "SelectFilter": {
+    "version": "1.0.26",
+    "date": "30/04/2026",
+    "dateIso": "2026-04-30 16:00:51 +0200",
+    "message": "Clean date picker and fix invalid date (#2149)"
+  },
+  "TextFilter": {
+    "version": "1.0.26",
+    "date": "30/04/2026",
+    "dateIso": "2026-04-30 16:00:51 +0200",
+    "message": "Clean date picker and fix invalid date (#2149)"
+  },
+  "OrganizeColumns": {
+    "version": "1.0.20",
+    "date": "12/02/2026",
+    "dateIso": "2026-02-12 10:01:33 +0100",
+    "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+  },
+  "SyTableFilter": {
+    "version": "1.0.1",
+    "date": "26/05/2025",
+    "dateIso": "2025-05-26 14:03:38 +0200",
+    "message": "Tables components refacto (#615)"
+  },
+  "SyTablePagination": {
+    "version": "1.0.1",
+    "date": "26/05/2025",
+    "dateIso": "2025-05-26 14:03:38 +0200",
+    "message": "Tables components refacto (#615)"
+  },
+  "TableHeader": {
+    "version": "1.0.1",
+    "date": "26/05/2025",
+    "dateIso": "2025-05-26 14:03:38 +0200",
+    "message": "Tables components refacto (#615)"
+  },
+  "SyServerTable": {
+    "version": "1.1.0",
+    "date": "29/05/2026",
+    "dateIso": "2026-05-29 09:22:51 +0200",
+    "message": "Tables : Migration Ameli pro (#2186)"
+  },
+  "SyTable": {
+    "version": "1.0.27",
+    "date": "18/05/2026",
+    "dateIso": "2026-05-18 12:58:39 +0200",
+    "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
+  },
+  "TableToolbar": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
+  },
+  "ToolbarContainer": {
+    "version": "1.0.2",
+    "date": "17/06/2025",
+    "dateIso": "2025-06-17 08:13:48 +0000",
+    "message": "Ajout du composant ToolbarContainer (#694)"
+  },
+  "UploadWorkflow": {
+    "version": "1.0.25",
+    "date": "13/04/2026",
+    "dateIso": "2026-04-13 15:39:18 +0200",
+    "message": "Fix/uploadworklist undefined map (#2084)"
+  },
+  "Usages": {
+    "version": "1.0.20",
+    "date": "12/02/2026",
+    "dateIso": "2026-02-12 10:01:33 +0100",
+    "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+  },
+  "UserMenuBtn": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:57:46 +0200",
+    "message": "Tokens simplify v2 (#2102)"
+  }
+}
