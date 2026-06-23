@@ -10,6 +10,13 @@ import '../styles/shared.css';
 
 Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (cnam, pa, amelipro)&nbsp;: seules sont listées celles dont la **valeur est préservée à l'identique** dans chaque thème (ancien `*Semantic.ts` → nouveau `*LightTheme.ts`). Les nouveaux tokens sont exposés comme couleurs de thème (`var(--v-theme-<token>)`, classes `text-<token>`, `bg-<token>`…).
 
+> **Success (`text` / `border` / `icon`)** — ces tokens correspondent à `onSuccessVariant`.
+
+> **Premier plan feedback** — `onInfoVariant`, `onSuccessVariant`, `onWarningVariant`, `onErrorVariant` sont les couleurs de **texte / icône / bordure** à poser sur les fonds `infoVariant` / `successVariant` / `warningVariant` / `errorVariant`.
+>
+> - `onSuccessVariant` et `onWarningVariant` reprennent la valeur des anciens `text/border.success` et `.warning`.
+> - `onInfoVariant` et `onErrorVariant` sont des nuances **plus foncées introduites par la refonte**, **sans équivalent ancien** (l'ancien texte info/error utilisait la couleur principale → voir `info` / `error`).
+
 ## Background
 
 <table>
@@ -107,7 +114,11 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.border.info</code></td>
-      <td><code>info</code></td>
+      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour une bordure sur fond <code>infoVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.success</code></td>
+      <td><code>onSuccessVariant</code></td>
     </tr>
     <tr>
       <td><code>colors.border.warning</code></td>
@@ -115,7 +126,7 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.border.error</code></td>
-      <td><code>error</code></td>
+      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour une bordure sur fond <code>errorVariant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.border.disabled</code></td>
@@ -152,7 +163,11 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.text.info</code></td>
-      <td><code>info</code></td>
+      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour un texte sur fond <code>infoVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.success</code></td>
+      <td><code>onSuccessVariant</code></td>
     </tr>
     <tr>
       <td><code>colors.text.warning</code></td>
@@ -160,7 +175,7 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.text.error</code></td>
-      <td><code>error</code></td>
+      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour un texte sur fond <code>errorVariant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.text.disabled</code></td>
@@ -201,11 +216,15 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.icon.info</code></td>
-      <td><code>info</code></td>
+      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour une icône sur fond <code>infoVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.success</code></td>
+      <td><code>onSuccessVariant</code></td>
     </tr>
     <tr>
       <td><code>colors.icon.error</code></td>
-      <td><code>error</code></td>
+      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour une icône sur fond <code>errorVariant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.icon.onDark</code></td>
