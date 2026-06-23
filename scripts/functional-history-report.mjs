@@ -131,17 +131,50 @@ async function getLastFunctionalCommit(filePaths) {
 	}
 }
 
-const versionCache = new Map()
+const packageVersionCache = new Map()
+let releaseTagsPromise = null
 
-async function getVersionAtCommit(hash) {
-	if (versionCache.has(hash)) return versionCache.get(hash)
+async function getReleaseTags() {
+	if (releaseTagsPromise) return releaseTagsPromise
+	releaseTagsPromise = (async () => {
+		const { stdout } = await execFileAsync('git', ['tag', '-l', '--sort=creatordate'], { cwd: rootDir })
+		const tags = stdout.split('\n').filter(Boolean)
+		const semverTags = tags.filter(tag => /^v?\d+\.\d+\.\d+/.test(tag))
+		const tagInfos = []
+		for (const tag of semverTags) {
+			try {
+				const { stdout } = await execFileAsync('git', ['log', '-1', '--format=%ad|%H', '--date=iso', `${tag}^{}`], { cwd: rootDir })
+				const [date, hash] = stdout.trim().split('|')
+				if (date && hash) tagInfos.push({ tag, date, hash })
+			} catch {
+				// ignore unreadable tags
+			}
+		}
+		return tagInfos.sort((a, b) => new Date(a.date) - new Date(b.date))
+	})()
+	return releaseTagsPromise
+}
+
+function getNextReleaseTag(commitDate, tagInfos) {
+	const commitTime = new Date(commitDate).getTime()
+	for (const tag of tagInfos) {
+		if (new Date(tag.date).getTime() > commitTime) {
+			return tag.tag
+		}
+	}
+	return null
+}
+
+async function getPackageVersionAtCommit(hash) {
+	if (packageVersionCache.has(hash)) return packageVersionCache.get(hash)
 	try {
 		const { stdout } = await execFileAsync('git', ['show', `${hash}:package.json`], { cwd: rootDir })
-		const version = JSON.parse(stdout).version ?? null
-		versionCache.set(hash, version)
+		const parsed = JSON.parse(stdout)
+		const version = parsed.version ? parsed.version.replace(/^v/i, '') : null
+		packageVersionCache.set(hash, version)
 		return version
 	} catch {
-		versionCache.set(hash, null)
+		packageVersionCache.set(hash, null)
 		return null
 	}
 }
@@ -172,7 +205,13 @@ async function main() {
 		console.info(`⏳ Analyse de ${component.name}...`)
 		const commit = await getLastFunctionalCommit(component.files)
 		if (commit) {
-			const version = await getVersionAtCommit(commit.hash)
+			const releaseTags = await getReleaseTags()
+			let version = getNextReleaseTag(commit.date, releaseTags)
+			if (!version) {
+				version = await getPackageVersionAtCommit(commit.hash)
+			} else {
+				version = version.replace(/^v/i, '')
+			}
 			newData[component.name] = {
 				version: version ?? null,
 				date: new Date(commit.date).toLocaleDateString('fr-FR'),
