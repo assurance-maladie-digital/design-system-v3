@@ -746,7 +746,7 @@ describe('NirField.vue', () => {
 
 	describe('RGAA 7.4 - Auto-focus behavior and user notification', () => {
 		it('le message d\'avertissement est présent mais caché visuellement lorsque displayKey est true', async () => {
-			const noticeWrapper = wrapper.find('.sr-only')
+			const noticeWrapper = wrapper.find('.d-sr-only')
 			expect(noticeWrapper.exists()).toBe(true)
 			expect(noticeWrapper.text()).toContain('Après la saisie des 13 caractères du numéro de sécurité sociale')
 		})
@@ -756,7 +756,7 @@ describe('NirField.vue', () => {
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
-			const noticeWrapper = wrapper.find('.sr-only')
+			const noticeWrapper = wrapper.find('.d-sr-only')
 			expect(noticeWrapper.exists()).toBe(false)
 		})
 
@@ -765,7 +765,7 @@ describe('NirField.vue', () => {
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
-			const noticeWrapper = wrapper.find('.sr-only')
+			const noticeWrapper = wrapper.find('.d-sr-only')
 			expect(noticeWrapper.exists()).toBe(false)
 		})
 
@@ -774,12 +774,12 @@ describe('NirField.vue', () => {
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
-			const noticeWrapper = wrapper.find('.sr-only')
+			const noticeWrapper = wrapper.find('.d-sr-only')
 			expect(noticeWrapper.exists()).toBe(false)
 		})
 
 		it('le champ numéro possède un aria-describedby contenant l\'ID du message d\'avertissement', async () => {
-			const noticeWrapper = wrapper.find('.sr-only')
+			const noticeWrapper = wrapper.find('.d-sr-only')
 			const noticeId = noticeWrapper.attributes('id')
 
 			const numberField = wrapper.find('.number-field input')
@@ -789,7 +789,7 @@ describe('NirField.vue', () => {
 		})
 
 		it('le champ clé ne possède pas l\'ID du message d\'avertissement dans son aria-describedby', async () => {
-			const noticeWrapper = wrapper.find('.sr-only')
+			const noticeWrapper = wrapper.find('.d-sr-only')
 			const noticeId = noticeWrapper.attributes('id')
 
 			const keyField = wrapper.find('.key-field input')
@@ -909,7 +909,7 @@ describe('NirField.vue', () => {
 			await flushPromises()
 
 			// Vérifier que le message d'avertissement est toujours présent
-			const noticeWrapper = wrapper.find('.sr-only')
+			const noticeWrapper = wrapper.find('.d-sr-only')
 			expect(noticeWrapper.exists()).toBe(true)
 
 			// Vérifier que les aria-describedby sont toujours corrects
