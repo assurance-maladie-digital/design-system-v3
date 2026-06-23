@@ -146,7 +146,7 @@ devDependencies:
     version: 4.12.1
   axios:
     specifier: ^1.14.0
-    version: 1.18.0
+    version: 1.18.1
   cross-env:
     specifier: ^10.1.0
     version: 10.1.0
@@ -164,7 +164,7 @@ devDependencies:
     version: 9.33.0(eslint@9.39.4)
   eslint-plugin-vuejs-accessibility:
     specifier: ^2.4.1
-    version: 2.5.0(eslint@9.39.4)(globals@17.6.0)
+    version: 2.5.0(eslint@9.39.4)(globals@17.7.0)
   happy-dom:
     specifier: ^20.8.8
     version: 20.10.6
@@ -3092,8 +3092,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /axios@1.18.0:
-    resolution: {integrity: sha512-E32NzpYKp++W7XRe52rHiXV2ehxmh3wbdgO7MHeFM+vqxLBYHzt0ElkiImtOBxtOmyp0yoC8C6uESVV84Y2/hw==}
+  /axios@1.18.1:
+    resolution: {integrity: sha512-3nTvFlvpn9Zu/RkHUqtc7/+al4UpRW5az71ap5zccp6e8RAYEzhMTecX8Dz1wWDYrPpUoB1HAQEGEAEvUr7S9g==}
     dependencies:
       follow-redirects: 1.16.0
       form-data: 4.0.6
@@ -4157,7 +4157,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-vuejs-accessibility@2.5.0(eslint@9.39.4)(globals@17.6.0):
+  /eslint-plugin-vuejs-accessibility@2.5.0(eslint@9.39.4)(globals@17.7.0):
     resolution: {integrity: sha512-oZ2fL4tS91Cm/ezH3BueNP+FtpbbeS627OSqqgp9/lsN//glmoPcLBT6D53xwGocLtyBybaT99tX4ThBh8+ytA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -4166,7 +4166,7 @@ packages:
     dependencies:
       aria-query: 5.3.2
       eslint: 9.39.4
-      globals: 17.6.0
+      globals: 17.7.0
       vue-eslint-parser: 10.4.1(eslint@9.39.4)
     transitivePeerDependencies:
       - supports-color
@@ -4766,8 +4766,8 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
-  /globals@17.6.0:
-    resolution: {integrity: sha512-sepffkT8stwnIYbsMBpoCHJuJM5l98FUF2AnE07hfvE0m/qp3R586hw4jF4uadbhvg1ooIdzuu7CsfD2jzCaNA==}
+  /globals@17.7.0:
+    resolution: {integrity: sha512-Czmyns5dUsq4seFBR/Kdydhmo8y9kC79hiSkPn0YcGtNnYWnrgt0vjrSjx9tspoDGWm2CMarffRuLjM4xUz8xg==}
     engines: {node: '>=18'}
     dev: true
 
