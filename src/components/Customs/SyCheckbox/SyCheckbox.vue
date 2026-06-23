@@ -353,6 +353,20 @@
 	color: rgb(var(--v-theme-error));
 }
 
+:deep(.v-input__control) {
+	width: fit-content;
+}
+
+:deep(.v-checkbox) {
+	grid-template-columns: fit-content(100%) auto fit-content(100%);
+}
+
+:deep(.v-selection-control--focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
 :deep(.v-messages__message) {
 	animation: sy-messages-in 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
