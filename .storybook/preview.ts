@@ -136,7 +136,7 @@ const preview: Preview = {
 						'Reférentiel',
 					],
 					'Design Tokens',
-					['Introduction', 'Couleurs', 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],
+					['Introduction', 'Utilisation', 'Couleurs', ['*', 'Correspondances couleurs'], 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],
 					'Composants',
 					// Use alphabetical order for components but keep categories grouped in this order
 					[

@@ -63,6 +63,20 @@ const releaseAlerts: ReleaseAlert[] = [
 		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
 	},
 	{
+		id: 'starter-kit-2-0-35',
+		releaseVersion: 'v1.0.27',
+		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.35',
+		type: 'warning',
+		variant: 'tonal',
+	},
+	{
+		id: 'starter-kit-2-0-33',
+		releaseVersion: 'v1.0.25',
+		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.33',
+		type: 'warning',
+		variant: 'tonal',
+	},
+	{
 		id: 'starter-kit-2-0-32',
 		releaseVersion: 'v1.0.24',
 		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.32',

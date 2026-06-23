@@ -123,7 +123,7 @@ export const baseColors = {
 		lighten38: 'rgba(255, 255, 255, 0.38)',
 		lighten40: 'rgba(255, 255, 255, 0.40)',
 		lighten70: 'rgba(255, 255, 255, 0.70)',
-		lighten8: 'rgba(255, 255, 255, 0.080)',
+		lighten8: 'rgba(255, 255, 255, 0.08)',
 		base: '#ffffff',
 	},
 }
