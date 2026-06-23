@@ -546,49 +546,49 @@
     "message": "SyIcon: replace VIcon to SyIcon (#1793)"
   },
   "Captcha": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "CaptchaAlert": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "CaptchaBase": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "CaptchaBtn": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "CaptchaForm": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "CaptchaHelpdesk": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "CaptchaImg": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "CaptchaInformation": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
@@ -660,7 +660,7 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "SelectBtnField": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 17:04:44 +0200",
     "message": "SelectBtnField: add validation (#2269)"
@@ -684,13 +684,13 @@
     "message": "Autocomplete: add prepend item slot (#2176)"
   },
   "SyCheckbox": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "12/06/2026",
     "dateIso": "2026-06-12 17:18:16 +0200",
     "message": "SyCheckBox: add validation (#2265)"
   },
   "SyCheckBoxGroup": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "12/06/2026",
     "dateIso": "2026-06-12 11:24:26 +0200",
     "message": "Feat/migrate sy check box group validation (#2260)"
@@ -738,13 +738,13 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "FieldState": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "SyTextField": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
@@ -834,7 +834,7 @@
     "message": "Diacritic: fix key = function (#595)"
   },
   "DialogBox": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "17/06/2026",
     "dateIso": "2026-06-17 10:49:31 +0200",
     "message": "dialogBox: ajout props Scrollable  (#2263)"
@@ -894,7 +894,7 @@
     "message": "Filtres : corrections de bugs (#2245)"
   },
   "FilterSideBar": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "17/06/2026",
     "dateIso": "2026-06-17 09:38:08 +0200",
     "message": "FilterSideBar: ajout prop title (#2264)"
@@ -1002,7 +1002,7 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "LunarCalendar": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "12/06/2026",
     "dateIso": "2026-06-12 11:31:31 +0200",
     "message": "Migration LunarCalendar vers validation unifiée (#2255)"
@@ -1014,13 +1014,13 @@
     "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
   },
   "MonthPicker": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "16/06/2026",
     "dateIso": "2026-06-16 14:55:28 +0200",
     "message": "[Captcha] mise à jour de la validation (#2234)"
   },
   "MonthPickerInput": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "15/06/2026",
     "dateIso": "2026-06-15 11:44:38 +0200",
     "message": "[MonthPicker] Migration de la validation (#2180)"
@@ -1056,7 +1056,7 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "NirField": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "22/06/2026",
     "dateIso": "2026-06-22 11:26:47 +0200",
     "message": "Feat/fix custom rules precedence on nirfield (#2291)"
@@ -1080,7 +1080,7 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "PageContainer": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "17/06/2026",
     "dateIso": "2026-06-17 14:14:22 +0200",
     "message": "migration ameliproPageLayout (#2259)"
@@ -1110,7 +1110,7 @@
     "message": "Validation: success message false by default (#2231)"
   },
   "PhoneField": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "11/06/2026",
     "dateIso": "2026-06-11 15:53:58 +0200",
     "message": "[PhoneField] Fixe et ajout de la validation (#2205)"
@@ -1176,7 +1176,7 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "StatusPage": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "date": "17/06/2026",
     "dateIso": "2026-06-17 14:14:22 +0200",
     "message": "migration ameliproPageLayout (#2259)"

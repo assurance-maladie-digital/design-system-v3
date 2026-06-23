@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-06-23T08:27:03.278Z
+- Généré le: 2026-06-23T11:42:52.636Z
 
 ## Accordion
 
@@ -1005,7 +1005,7 @@ Aucune amélioration d’accessibilité détectée.
 ## Captcha
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1040,7 +1040,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaAlert
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1075,7 +1075,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaBase
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1110,7 +1110,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaBtn
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1145,7 +1145,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaForm
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1180,7 +1180,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaHelpdesk
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1215,7 +1215,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaImg
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1250,7 +1250,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaInformation
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -1492,7 +1492,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SelectBtnField
 
 - **16/06/2026** — SelectBtnField: add validation (#2269)  
-  Release: `1.1.0` · Hash: `3b4a99c7a74f7c09dafd40f6e5ba439c8e54dac2` | pattern ARIA
+  Release: `v1.1.1` · Hash: `3b4a99c7a74f7c09dafd40f6e5ba439c8e54dac2` | pattern ARIA
 
 - **20/05/2026** — Feat/improve tests (#2192)  
   Release: `v1.0.27` · Hash: `c2b48d9293c9a62a5401fd577ca2c04894ad9539` | pattern ARIA
@@ -1650,7 +1650,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyCheckbox
 
 - **12/06/2026** — SyCheckBox: add validation (#2265)  
-  Release: `1.1.0` · Hash: `31d6229a48a205593544ecc4a2687140b148f97a` | pattern ARIA
+  Release: `v1.1.1` · Hash: `31d6229a48a205593544ecc4a2687140b148f97a` | pattern ARIA
 
 - **30/04/2026** — Fix/success state display (#2158)  
   Release: `v1.0.26` · Hash: `0e56f73833e96af70664fc19b3fd5590bdd2c7a8` | pattern ARIA
@@ -1780,10 +1780,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyIconButton
 
 - **22/06/2026** — add version badge in docs  
-  Release: `1.1.0` · Hash: `15aba00858a0d397007c7b21f0b961d827ebe4a9` | pattern ARIA
+  Release: `v1.1.1` · Hash: `d0d81780aceaa359926e7a4d5e439105a7bf67e4` | pattern ARIA
 
 - **22/06/2026** — add version badge in docs  
-  Release: `1.1.0` · Hash: `49df118586ee779081761ca6cb817480ffb87463` | pattern ARIA
+  Release: `v1.1.1` · Hash: `dfdf2b0523f151a9372bf0c6ff3cb41c1421b751` | pattern ARIA
 
 - **23/03/2026** — Feat/1911 migration icon button (#1969)  
   Release: `v1.0.23` · Hash: `733824e0e28371ab68c8e6280c6f01d0798d41c4` | pattern ARIA
@@ -2263,10 +2263,10 @@ Aucune amélioration d’accessibilité détectée.
 ## DialogBox
 
 - **17/06/2026** — dialogBox: ajout props Scrollable  (#2263)  
-  Release: `1.1.0` · Hash: `b0221cd52fae1f509f414d6bf018ddb5810af83f` | pattern ARIA
+  Release: `v1.1.1` · Hash: `b0221cd52fae1f509f414d6bf018ddb5810af83f` | pattern ARIA
 
 - **11/06/2026** — migration onboarding (#2251)  
-  Release: `1.1.0` · Hash: `af001866a5dfa51318889b7b8acc96b390c7fdc1` | pattern ARIA
+  Release: `v1.1.1` · Hash: `af001866a5dfa51318889b7b8acc96b390c7fdc1` | pattern ARIA
 
 - **30/04/2026** — DialogBox : Migration Theme AmeliPro (#2148)  
   Release: `v1.0.26` · Hash: `0dcb4fea00e4db193817438a2097778d9477bd57` | pattern ARIA
@@ -2514,7 +2514,7 @@ Aucune amélioration d’accessibilité détectée.
 ## FilterSideBar
 
 - **17/06/2026** — FilterSideBar: ajout prop title (#2264)  
-  Release: `1.1.0` · Hash: `596a998a8a033ec57791d75acf24b6d4a435be26` | pattern ARIA
+  Release: `v1.1.1` · Hash: `596a998a8a033ec57791d75acf24b6d4a435be26` | pattern ARIA
 
 - **05/06/2026** — Filtres : corrections de bugs (#2245)  
   Release: `v1.1.0` · Hash: `7e2b0765b43c851e39db9c7f7274e1b7f1ad2a79` | pattern ARIA
@@ -2982,10 +2982,10 @@ Aucune amélioration d’accessibilité détectée.
 ## MonthPicker
 
 - **16/06/2026** — [Captcha] mise à jour de la validation (#2234)  
-  Release: `1.1.0` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
+  Release: `v1.1.1` · Hash: `8cfc8188ea78ca5d067d5d4ebc73a09b395a18da` | pattern ARIA
 
 - **15/06/2026** — [MonthPicker] Migration de la validation (#2180)  
-  Release: `1.1.0` · Hash: `5608ba7dfc6c9eba99e970b597e3c422a36d1599` | pattern ARIA
+  Release: `v1.1.1` · Hash: `5608ba7dfc6c9eba99e970b597e3c422a36d1599` | pattern ARIA
 
 - **03/04/2026** — Amelioration du système de validation (#1902)  
   Release: `v1.0.24` · Hash: `3e904dddd4068d07eac77c3a97e8883573fa5758` | pattern ARIA
@@ -3070,7 +3070,7 @@ Aucune amélioration d’accessibilité détectée.
 ## NotFoundPage
 
 - **17/06/2026** — migration ameliproPageLayout (#2259)  
-  Release: `1.1.0` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
+  Release: `v1.1.1` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
 
 - **10/03/2026** — migration page not found (#1939)  
   Release: `v1.0.22` · Hash: `ba19fd9900304d113a80f9001ea094e09b5225b8` | pattern ARIA
@@ -3139,7 +3139,7 @@ Aucune amélioration d’accessibilité détectée.
 ## PageContainer
 
 - **17/06/2026** — migration ameliproPageLayout (#2259)  
-  Release: `1.1.0` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
+  Release: `v1.1.1` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
 
 - **04/03/2026** — Feat/143 migration error page (#1896)  
   Release: `v1.0.22` · Hash: `59b9490ceeac95b7c7f9a6c7117685ab7268c915` | pattern ARIA
@@ -3296,7 +3296,7 @@ Aucune amélioration d’accessibilité détectée.
 ## PhoneField
 
 - **11/06/2026** — [PhoneField] Fixe et ajout de la validation (#2205)  
-  Release: `1.1.0` · Hash: `0623c31856bc1545e6df01135176b7c4ec45bddf` | pattern ARIA
+  Release: `v1.1.1` · Hash: `0623c31856bc1545e6df01135176b7c4ec45bddf` | pattern ARIA
 
 - **10/03/2026** — PhoneField: fix errors display (#1928)  
   Release: `v1.0.22` · Hash: `5a5b5f5133c247de33640d5558ab0bcb6acebadd` | pattern ARIA
@@ -3551,7 +3551,7 @@ Aucune amélioration d’accessibilité détectée.
 ## StatusPage
 
 - **17/06/2026** — migration ameliproPageLayout (#2259)  
-  Release: `1.1.0` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
+  Release: `v1.1.1` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
 
 - **20/05/2026** — Feat/improve tests (#2192)  
   Release: `v1.0.27` · Hash: `c2b48d9293c9a62a5401fd577ca2c04894ad9539` | pattern ARIA
