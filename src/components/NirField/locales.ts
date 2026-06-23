@@ -9,4 +9,5 @@ export const locales = {
 	numberHint: '13 caractères',
 	keyLabel: 'Clé',
 	keyHint: '2 chiffres',
+	autoFocusNotice: 'Après la saisie des 13 caractères du numéro de sécurité sociale, le curseur sera automatiquement placé dans le champ clé de validation. Si le champ clé est vidé, le curseur reviendra automatiquement dans le champ numéro.',
 }

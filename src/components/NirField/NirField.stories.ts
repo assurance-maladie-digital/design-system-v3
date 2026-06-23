@@ -714,6 +714,7 @@ export const WithCustomLocale: Story = {
 			errorInvalidKey: 'La clé ne correspond pas au NIR saisi.',
 			successNumberValid: 'Numéro reconnu ✅',
 			successKeyValid: 'Clé correspondante ✅',
+			autoFocusNotice: 'Après la saisie des 13 caractères du numéro de sécurité sociale, le curseur sera automatiquement placé dans le champ clé de validation. Si le champ clé est vidé, le curseur reviendra automatiquement dans le champ numéro.',
 		},
 	},
 	parameters: {
