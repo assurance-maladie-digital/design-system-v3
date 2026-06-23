@@ -2,29 +2,37 @@
 	import type { FilterProp } from '@/composables/useFilterable/useFilterable'
 	import useFilterable from '@/composables/useFilterable/useFilterable'
 	import { mdiFilterVariant } from '@mdi/js'
-	import { computed, onMounted, ref, toRef, watch } from 'vue'
+	import { computed, onMounted, ref, toRef, useId, watch } from 'vue'
 	import type { VBtn } from 'vuetify/components/VBtn'
 	import type { VNavigationDrawer } from 'vuetify/components/VNavigationDrawer'
 	import ChipList from '../ChipList/ChipList.vue'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { locales as defaultLocales } from './locales'
 	import vLockFocus from '@/directives/lockFocus'
+	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: FilterProp
 		modale?: boolean
 		locales?: typeof defaultLocales
 		zIndex?: number
+		title?: string
+		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		modelValue: () => [],
 		modale: false,
 		locales: () => defaultLocales,
 		zIndex: undefined,
+		title: undefined,
+		headingLevel: 2,
 	})
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: FilterProp): void
 	}>()
+
+	// Id du titre pour lier le nom accessible du panneau au titre visible (aria-labelledby)
+	const titleId = useId()
 
 	const {
 		filters,
@@ -133,7 +141,8 @@
 				:aria-hidden="drawer ? undefined : 'true'"
 				:inert="drawer ? undefined : 'true'"
 				:aria-modal="props.modale"
-				:aria-label="locales.modaleLabel"
+				:aria-label="props.title ? undefined : locales.modaleLabel"
+				:aria-labelledby="props.title ? titleId : undefined"
 				:style="zIndexStyle"
 				@keydown.escape.prevent="drawer = false"
 			>
@@ -141,6 +150,14 @@
 					v-lock-focus="$props.modale"
 					@submit.prevent="applyFilters"
 				>
+					<SyHeading
+						v-if="props.title"
+						:id="titleId"
+						class="sy-filters-side-bar__title px-4 pt-4 pb-2 text-h6 font-weight-bold"
+						:level="props.headingLevel"
+					>
+						{{ props.title }}
+					</SyHeading>
 					<VExpansionPanels
 						variant="accordion"
 						tag="ul"

@@ -1,0 +1,105 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VSlideGroupStories from './v-slide-group.stories'
+
+<Meta title="Composants/Composants Vuetify/VSlideGroup" />
+
+<div className="header">
+    <h1>VSlideGroup</h1>
+Ce composant utilise directement le composant natif `v-slide-group` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-slide-group/#props).
+</div>
+
+### Composants associés
+
+- `v-slide-group-item` : Élément individuel du groupe de diapositives
+
+## Description
+
+Le composant `v-slide-group` est utilisé pour afficher une collection d'éléments défilables horizontalement. Il est particulièrement utile pour :
+- Afficher des catégories ou des filtres
+- Créer des carrousels d'éléments
+- Organiser des onglets ou des navigation horizontales
+- Permettre la sélection parmi plusieurs options
+
+## Variantes
+
+### Default
+
+Groupe de diapositives basique avec des cartes numérotées.
+
+<Canvas of={VSlideGroupStories.Default} />
+
+### Avec Chips
+
+Utilisation avec des chips pour créer un système de filtres ou de tags.
+
+<Canvas of={VSlideGroupStories.WithChips} />
+
+### Centre l'élément actif
+
+L'élément sélectionné est automatiquement centré.
+
+<Canvas of={VSlideGroupStories.CenterActive} />
+
+### Sélection multiple
+
+Permet de sélectionner plusieurs éléments à la fois.
+
+<Canvas of={VSlideGroupStories.MultipleSelection} />
+
+### Pseudo carousel
+
+Pour afficher les informations de manière créative sur les feuilles.
+
+<Canvas of={VSlideGroupStories.Misc} />
+
+### Cartes personnalisées
+
+Cartes colorées avec différentes variantes selon l'état de sélection.
+
+<Canvas of={VSlideGroupStories.CustomCards} />
+
+## Props principales
+
+- **showArrows** : Affiche les flèches de navigation
+- **centerActive** : Centre automatiquement l'élément actif
+- **multiple** : Permet la sélection multiple
+- **mandatory** : Rend la sélection obligatoire (au moins un élément doit être sélectionné)
+- **selectedClass** : Classe CSS personnalisée appliquée aux éléments sélectionnés
+- **modelValue** : Valeur(s) sélectionnée(s)
+
+## Accessibilité
+
+### Bonnes pratiques
+
+Le composant `v-slide-group` doit être utilisé de manière accessible :
+
+#### Navigation au clavier
+
+- **Tab** : Navigue entre les éléments du groupe
+- **Flèches gauche/droite** : Défile entre les éléments
+- **Enter/Espace** : Sélectionne l'élément focalisé
+- **Home** : Va au premier élément
+- **End** : Va au dernier élément
+
+#### Contraste et lisibilité
+
+- Assurez-vous que l'état sélectionné est clairement visible
+- Utilisez des couleurs avec un contraste suffisant (ratio minimum de 4.5:1)
+- Fournissez des indicateurs visuels clairs pour l'état de sélection
+- Les flèches de navigation doivent être suffisamment grandes et contrastées
+
+#### Focus visible
+
+- Assurez-vous que le focus clavier est clairement visible
+- N'utilisez pas `outline: none` sans fournir une alternative
+- Testez la navigation au clavier
+
+### Points d'attention
+
+- **Évitez trop d'éléments** : Un groupe trop long peut être difficile à naviguer
+- **Fournissez des labels clairs** : Chaque élément doit avoir un label descriptif
+- **Testez avec des lecteurs d'écran** : Vérifiez que la navigation est logique
+- **Assurez-vous que les flèches sont accessibles** : Elles doivent être utilisables au clavier
+- **Considérez l'ordre de tabulation** : L'ordre doit être logique et prévisible
+- **État de sélection clair** : L'utilisateur doit toujours savoir quel(s) élément(s) est/sont sélectionné(s)

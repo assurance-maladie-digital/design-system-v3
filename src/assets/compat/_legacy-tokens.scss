@@ -1,0 +1,91 @@
+// =============================================================================
+// Shim de compatibilité — ré-expose les anciens tokens SCSS (<= 1.0.24)
+// vers les variables CSS du thème (>= 1.0.25).
+// À utiliser UNIQUEMENT pour faciliter la migration d'un projet qui consommait
+// l'ancien export SCSS (`$gap-2`, `$radius-rounded-lg`, …). À terme, préférez
+// directement les variables CSS (`var(--v-gap-N)`, `var(--v-radius-…)`, …).
+// Usage (côté projet) :
+//   @use '@cnamts/synapse/assets/compat/legacy-tokens' as *;
+//   .box { gap: $gap-2; } // -> gap: var(--v-gap-2);
+// Limite : ces variables contiennent une `var(--…)` (résolue au runtime).
+// Elles conviennent pour des affectations directes (`gap`, `padding`, `margin`,
+// `border-radius`, `font-size`, `color`…) mais PAS pour des opérations SCSS
+// compile-time (`calc` Sass, fonctions de couleur…). Pour ces cas, utilisez
+// `calc()` CSS ou des valeurs en dur.
+// =============================================================================
+
+// --- Espacements : $gap-0 … $gap-16 -> var(--v-gap-N) ------------------------
+$gap-0: var(--v-gap-0) !default;
+$gap-1: var(--v-gap-1) !default;
+$gap-2: var(--v-gap-2) !default;
+$gap-3: var(--v-gap-3) !default;
+$gap-4: var(--v-gap-4) !default;
+$gap-5: var(--v-gap-5) !default;
+$gap-6: var(--v-gap-6) !default;
+$gap-7: var(--v-gap-7) !default;
+$gap-8: var(--v-gap-8) !default;
+$gap-9: var(--v-gap-9) !default;
+$gap-10: var(--v-gap-10) !default;
+$gap-11: var(--v-gap-11) !default;
+$gap-12: var(--v-gap-12) !default;
+$gap-13: var(--v-gap-13) !default;
+$gap-14: var(--v-gap-14) !default;
+$gap-15: var(--v-gap-15) !default;
+$gap-16: var(--v-gap-16) !default;
+
+// --- Paddings : $padding-N -> var(--v-padding-N) -----------------------------
+$padding-0: var(--v-padding-0) !default;
+$padding-2: var(--v-padding-2) !default;
+$padding-3: var(--v-padding-3) !default;
+$padding-4: var(--v-padding-4) !default;
+$padding-6: var(--v-padding-6) !default;
+$padding-8: var(--v-padding-8) !default;
+$padding-10: var(--v-padding-10) !default;
+$padding-14: var(--v-padding-14) !default;
+$padding-16: var(--v-padding-16) !default;
+
+// --- Arrondis : $radius-rounded-* -> var(--v-radius-*) -----------------------
+$radius-rounded-0: var(--v-radius-rounded0) !default;
+$radius-rounded: var(--v-radius-rounded) !default;
+$radius-rounded-md: var(--v-radius-rounded) !default; // 'md' (4px) = rounded
+$radius-rounded-lg: var(--v-radius-roundedLg) !default;
+$radius-rounded-pill: var(--v-radius-roundedPill) !default;
+
+// --- Typographie : $font-size-* -> var(--v-fontSize-*) -----------------------
+$font-size-title: var(--v-fontSize-titres) !default;
+$font-size-alt-title: var(--v-fontSize-titresAlternatifs) !default;
+$font-size-body-text: var(--v-fontSize-corpsDeTexte) !default;
+$font-size-link-label: var(--v-fontSize-liensEtLibelles) !default;
+
+// --- Espacements sémantiques : $spacing-* -> échelle gap (mêmes valeurs) ------
+// (Pas de variable CSS dédiée : on réutilise --v-gap-N de valeur identique.)
+$spacing-none: var(--v-gap-0) !default;
+$spacing-xx-small: var(--v-gap-1) !default; // 4px
+$spacing-x-small: var(--v-gap-2) !default; // 8px
+$spacing-small: var(--v-gap-4) !default; // 16px
+$spacing-medium: var(--v-gap-6) !default; // 24px
+$spacing-large: var(--v-gap-8) !default; // 32px
+$spacing-x-large: var(--v-gap-10) !default; // 40px
+$spacing-xx-large: var(--v-gap-14) !default; // 56px
+$spacing-xxx-large: var(--v-gap-16) !default; // 64px
+$spacing-huge: 80px !default; // pas d'équivalent (> gap-16) : valeur en dur
+
+$spacing-horizontal-none: var(--v-gap-0) !default;
+$spacing-horizontal-xx-small: var(--v-gap-1) !default;
+$spacing-horizontal-x-small: var(--v-gap-2) !default;
+$spacing-horizontal-small: var(--v-gap-4) !default;
+$spacing-horizontal-medium: var(--v-gap-6) !default;
+$spacing-horizontal-large: var(--v-gap-8) !default;
+$spacing-horizontal-x-large: var(--v-gap-10) !default;
+$spacing-horizontal-xx-large: var(--v-gap-14) !default;
+$spacing-horizontal-xxx-large: var(--v-gap-16) !default;
+$spacing-horizontal-huge: 80px !default;
+
+// --- Couleurs ----------------------------------------------------------------
+// Les couleurs de thème sont des triplets RVB : utilisez-les directement via
+//   color: rgb(var(--v-theme-primary));
+//   background: rgba(var(--v-theme-primary), 0.08);
+// Palette : rgb(var(--v-theme-<couleur>-<variante>)), ex. var(--v-theme-blue-base).
+// Le shim ne ré-expose volontairement pas l'ancienne palette en dur (> 100 valeurs)
+// pour rester aligné sur le thème actif. Si besoin ponctuel, aliasez côté projet :
+//   $primary: rgb(var(--v-theme-primary));

@@ -64,6 +64,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Structure',
 					},
 					{
+						title: 'NavigationDrawer',
+						description: 'Utilisé pour naviguer dans l\'application.',
+						link: '/?path=/docs/composants-composants-vuetify-vnavigationdrawer--docs',
+						img: `/components/navigation-drawer${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'FooterBar',
 						description: 'Utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.',
 						link: '/?path=/docs/composants-structure-footerbar--docs',
@@ -82,6 +89,20 @@ export const ComponentsList: StoryObj = {
 						description: 'Conteneur transparent utilisé pour afficher une page.',
 						link: '/?path=/docs/composants-composants-vuetify-vcard--docs',
 						img: `/components/card${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
+						title: 'Carousel',
+						description: 'Utilisé pour afficher un diaporama d\'images ou de contenu.',
+						link: '/?path=/docs/composants-composants-vuetify-vcarousel--docs',
+						img: `/components/carousel${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
+						title: 'SlideGroup',
+						description: 'Utilisé pour afficher des informations pseudo-paginées.',
+						link: '/?path=/docs/composants-composants-vuetify-vslidegroup--docs',
+						img: `/components/slide-group${isAp ? '-ap' : ''}.svg`,
 						category: 'Layout',
 					},
 					{
@@ -200,7 +221,7 @@ export const ComponentsList: StoryObj = {
 						title: 'UserMenuBtn',
 						description: 'Utilisé pour afficher un bouton de menu utilisateur avec un menu déroulant.',
 						link: '/?path=/docs/composants-boutons-usermenubtn--docs',
-						img: '/components/user-menu-btn.svg',
+						img: `/components/user-menu-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -271,6 +292,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer des fichiers.',
 						link: '/?path=/docs/composants-formulaires-fileupload--docs',
 						img: '/components/file-upload.svg',
+						category: 'Formulaires',
+					},
+					{
+						title: 'UploadWorkflow',
+						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer plusieurs fichiers demandés.',
+						link: '/?path=/docs/composants-formulaires-uploadworkflow--docs',
+						img: `/components/upload-workflow${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -546,6 +574,11 @@ export const ComponentsList: StoryObj = {
 					'PasswordField',
 					'Stepper',
 					'Captcha',
+					'Carousel',
+					'UserMenuBtn',
+					'UploadWorkflow',
+					'NavigationDrawer',
+					'SlideGroup',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

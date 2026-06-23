@@ -24,6 +24,9 @@ const ap2026OnlyStories = [
 const apOnlyStories = [
 	'composants-structure-footerbar--back-office',
 	'composants-structure-footerbar--with-phone-number',
+	'composants-boutons-usermenubtn--with-ps-info',
+	'composants-données-accordion--with-custom-content',
+	'composants-layout-pagecontainer--with-header-and-footer',
 ]
 
 // Components to display in AP theme
@@ -32,13 +35,17 @@ const apComponents = [
 	'composants-boutons-copybtn',
 	'composants-boutons-downloadbtn',
 	'composants-boutons-syiconbutton',
+	'composants-boutons-usermenubtn',
 	'composants-composants-vuetify',
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbreadcrumbs--docs',
 	'composants-composants-vuetify-vbtn--docs',
 	'composants-composants-vuetify-vcard--docs',
+	'composants-composants-vuetify-vcarousel--docs',
+	'composants-composants-vuetify-vnavigationdrawer--docs',
 	'composants-composants-vuetify-votpinput--docs',
 	'composants-composants-vuetify-vskeletonloader--docs',
+	'composants-composants-vuetify-vslidegroup--docs',
 	'composants-composants-vuetify-vstepper--docs',
 	'composants-composants-vuetify-vswitch--docs',
 	'composants-composants-vuetify-vtooltip--docs',
@@ -67,6 +74,7 @@ const apComponents = [
 	'composants-formulaires-sytextarea',
 	'composants-formulaires-sytextfield',
 	'composants-formulaires-passwordfield',
+	'composants-formulaires-uploadworkflow',
 	'composants-layout-pagecontainer',
 	'composants-navigation-skiplink',
 	'composants-navigation-sypagination',

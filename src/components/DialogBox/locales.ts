@@ -5,4 +5,5 @@ export const locales = {
 	draggable: 'Déplaçable',
 	dragInstruction: 'Déplacer la boîte de dialogue',
 	dragInstructionLabel: 'Déplacer la boîte de dialogue avec les flèches directionnelles',
+	scrollableContent: 'Contenu de la boîte de dialogue',
 }

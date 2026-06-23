@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { shallowMount, flushPromises } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import SyTableFilter from '../SyTableFilter.vue'
 import type { FilterOption, TableColumnHeader, FilterType } from '../types'
 
@@ -29,8 +29,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		// Need to wait for async components to load
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
@@ -52,7 +51,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
 		expect(textFilter.exists()).toBe(true)
@@ -74,7 +73,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 		const numberFilter = wrapper.findComponent({ name: 'NumberFilter' })
 		expect(numberFilter.exists()).toBe(true)
@@ -101,7 +100,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 		const selectFilter = wrapper.findComponent({ name: 'SelectFilter' })
 		expect(selectFilter.exists()).toBe(true)
@@ -124,7 +123,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 		const dateFilter = wrapper.findComponent({ name: 'DateFilter' })
 		expect(dateFilter.exists()).toBe(true)
@@ -147,7 +146,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 		const periodFilter = wrapper.findComponent({ name: 'PeriodFilter' })
 		expect(periodFilter.exists()).toBe(true)
@@ -169,7 +168,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
@@ -204,7 +203,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
@@ -241,7 +240,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 
 		const textFilter = wrapper.findComponent({ name: 'TextFilter' })
@@ -277,7 +276,7 @@ describe('SyTableFilter', () => {
 			},
 		})
 
-		await flushPromises()
+		await vi.dynamicImportSettled()
 		await wrapper.vm.$nextTick()
 
 		// Vérifier que le slot personnalisé est rendu

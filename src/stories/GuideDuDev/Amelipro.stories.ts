@@ -54,7 +54,9 @@ export const AmeliproComponents: StoryObj = {
 					const typePath = normalizedType.replace(/\s+/g, '-')
 					const namePath = item.name.trim().toLowerCase()
 
-					return `${baseUrl}${prefix}${typePath}-${namePath}--docs`
+					const suffix = item.name.includes('--') ? '' : '--docs'
+
+					return `${baseUrl}${prefix}${typePath}-${namePath}${suffix}`
 				}
 
 				const systemLabel = (component: { name: string }) => {
@@ -296,68 +298,93 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-transmission',
 						},
 					},
-					// {
-					// 	title: 'StructureMenu',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureMenu',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-menu',
-					// 	},
-					// }, {
-					// 	title: 'StructureBtn',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureBtn',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-btn',
-					// 	},
-					// }, {
-					// 	title: 'StructureItem',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureItem',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-item',
-					// 	},
-					// }, {
-					// 	title: 'StructureList',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureList',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-list',
-					// 	},
-					// },
-					// {
-					// 	title: 'StructureTabs',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'StructureTabs',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-tabs',
-					// 	},
-					// }, {
-					// 	title: 'UserMenu',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'UserMenu',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-menu',
-					// 	},
-					// }, {
+					{
+						title: 'StructureMenu',
+						usedComponents: [
+							{
+								name: 'DialogBox',
+								type: 'feedback',
+							},
+							{
+								name: 'NotificationBar',
+								type: 'feedback',
+							},
+							{
+								name: 'VSwitch',
+								type: 'composants vuetify',
+							},
+							{
+								name: 'VTooltip',
+								type: 'composants vuetify',
+							},
+						],
+						amelipro: {
+							name: 'StructureMenu',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-menu',
+						},
+					},
+					{
+						title: 'StructureBtn',
+						synapse: {
+							name: 'VBtn',
+							url: getComponentUrl({ name: 'VBtn', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'StructureBtn',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-btn',
+						},
+					},
+					{
+						title: 'StructureItem',
+						synapse: {
+							name: 'SelectBtnField',
+							url: getComponentUrl({ name: 'SelectBtnField', type: 'formulaires selects' }),
+						},
+						amelipro: {
+							name: 'StructureItem',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-item',
+						},
+					},
+					{
+						title: 'StructureList',
+						usedComponents: [
+							{
+								name: 'SyRadioGroup',
+								type: 'formulaires',
+							},
+							{
+								name: 'VBtn',
+								type: 'composants vuetify',
+							},
+						],
+						amelipro: {
+							name: 'StructureList',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-list',
+						},
+					},
+					{
+						title: 'StructureTabs',
+						synapse: {
+							name: 'SyTabs',
+							url: getComponentUrl({ name: 'SyTabs', type: 'navigation' }),
+						},
+						amelipro: {
+							name: 'StructureTabs',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/structure-tabs',
+						},
+					},
+					{
+						title: 'UserMenu',
+						synapse: {
+							name: 'UserMenuBtn',
+							url: getComponentUrl({ name: 'UserMenuBtn', type: 'boutons' }),
+						},
+						amelipro: {
+							name: 'UserMenu',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-menu',
+						},
+					},
+					//  {
 					// 	title: 'UserMenuDetails',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
@@ -367,17 +394,18 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'UserMenuDetails',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-menu-details',
 					// 	},
-					// }, {
-					// 	title: 'ServiceMenu',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'ServiceMenu',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/service-menu',
-					// 	},
 					// },
+					{
+						title: 'ServiceMenu',
+						synapse: {
+							name: 'VNavigationDrawer',
+							url: getComponentUrl({ name: 'VNavigationDrawer', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'ServiceMenu',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/service-menu',
+						},
+					},
 					// {
 					// 	title: 'ServiceBtn',
 					// 	synapse: {
@@ -484,48 +512,53 @@ export const AmeliproComponents: StoryObj = {
 					// 		name: 'AmeliproMailTile',
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-mail-tile',
 					// 	},
-					// }, {
-					// 	title: 'AmeliproMultipleFoldingCard',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproMultipleFoldingCard',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-multiple-folding-card',
-					// 	},
-					// }, {
-					// 	title: 'AmeliproNumberedCard',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproNumberedCard',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-numbered-card',
-					// 	},
-					// }, {
-					// 	title: 'AmeliproOnboarding',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproOnboarding',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-onboarding',
-					// 	},
 					// },
-					// {
-					// 	title: 'AmeliproPageLayout',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPageLayout',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-page-layout',
-					// 	},
-					// },
+					{
+						title: 'AmeliproMultipleFoldingCard',
+						synapse: {
+							name: 'Accordion',
+							url: getComponentUrl({ name: 'Accordion--with-custom-content', type: 'données' }),
+						},
+						amelipro: {
+							name: 'AmeliproMultipleFoldingCard',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-multiple-folding-card',
+						},
+					},
+					{
+						title: 'AmeliproNumberedCard',
+						usedComponents: [
+							{
+								name: 'VCard',
+								type: 'composants vuetify',
+							},
+						],
+						amelipro: {
+							name: 'AmeliproNumberedCard',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-numbered-card',
+						},
+					},
+					{
+						title: 'AmeliproOnboarding',
+						synapse: {
+							name: 'DialogBox',
+							url: getComponentUrl({ name: 'DialogBox', type: 'feedback' }),
+						},
+						amelipro: {
+							name: 'AmeliproOnboarding',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-onboarding',
+						},
+					},
+					{
+						title: 'AmeliproPageLayout',
+						synapse: {
+							name: 'PageContainer',
+							url: getComponentUrl({ name: 'PageContainer', type: 'layout' }),
+						},
+						amelipro: {
+							name: 'AmeliproPageLayout',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-page-layout',
+						},
+					},
 					{
 						title: 'AmeliproPagination',
 						synapse: {
@@ -547,17 +580,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-pagination-btn',
 						},
 					},
-					// {
-					// 	title: 'AmeliproPatientBanner',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPatientBanner',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-banner',
-					// 	},
-					// },
+					{
+						title: 'AmeliproPatientBanner',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproPatientBanner',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-banner',
+						},
+					},
 					{
 						title: 'AmeliproRadioGroup',
 						synapse: {
@@ -580,17 +613,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-select',
 						},
 					},
-					// {
-					// 	title: 'AmeliproStateTile',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproStateTile',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-state-tile',
-					// 	},
-					// },
+					{
+						title: 'AmeliproStateTile',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproStateTile',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-state-tile',
+						},
+					},
 					{
 						title: 'AmeliproStepper',
 						synapse: {
@@ -644,28 +677,29 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-text-field',
 						},
 					},
+					{
+						title: 'AmeliproTileBtn',
+						synapse: {
+							name: 'VCard',
+							url: getComponentUrl({ name: 'VCard', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproTileBtn',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tile-btn',
+						},
+					},
+					{
+						title: 'UserInformationSummary',
+						synapse: {
+							name: 'PageContainer',
+							url: getComponentUrl({ name: 'PageContainer--with-header-and-footer', type: 'layout' }),
+						},
+						amelipro: {
+							name: 'UserInformationSummary',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-information-summary',
+						},
+					},
 					// {
-					// 	title: 'AmeliproTileBtn',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproTileBtn',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tile-btn',
-					// 	},
-					// },
-					// {
-					// 	title: 'UserInformationSummary',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'UserInformationSummary',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/user-information-summary',
-					// 	},
-					// }, {
 					// 	title: 'AmeliproCustomSelector',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
@@ -720,17 +754,23 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-table',
 						},
 					},
-					// {
-					// 	title: 'AmeliproPostalAddressField',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPostalAddressField',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-postal-address-field',
-					// 	},
-					// },
+					{
+						title: 'AmeliproPostalAddressField',
+						usedComponents: [
+							{
+								name: 'SyTextField',
+								type: 'formulaires',
+							},
+							{
+								name: 'SySelect',
+								type: 'formulaires selects',
+							},
+						],
+						amelipro: {
+							name: 'AmeliproPostalAddressField',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-postal-address-field',
+						},
+					},
 					{
 						title: 'AmeliproAccordionGroup',
 						synapse: {
@@ -742,57 +782,62 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-group',
 						},
 					},
+					{
+						title: 'AmeliproCarousel',
+						synapse: {
+							name: 'VCarousel',
+							url: getComponentUrl({ name: 'VCarousel', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproCarousel',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-carousel',
+						},
+					},
+					{
+						title: 'AmeliproAccordionResult',
+						synapse: {
+							name: 'Accordion',
+							url: getComponentUrl({ name: 'Accordion', type: 'données' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionResult',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result',
+						},
+					},
+					{
+						title: 'AmeliproAccordionFrieze',
+						synapse: {
+							name: 'VSlideGroup',
+							url: getComponentUrl({ name: 'VSlideGroup', type: 'composants vuetify' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionFrieze',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-frieze',
+						},
+					},
+					{
+						title: 'AmeliproAccordionList',
+						synapse: {
+							name: 'SyTable',
+							url: getComponentUrl({ name: 'sytable--expandable-rows', type: 'tableaux' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionList',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-list',
+						},
+					},
+					{
+						title: 'AmeliproAccordionResultList',
+						synapse: {
+							name: 'SyTable',
+							url: getComponentUrl({ name: 'sytable--expandable-rows', type: 'tableaux' }),
+						},
+						amelipro: {
+							name: 'AmeliproAccordionResultList',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result-list',
+						},
+					},
 					// {
-					// 	title: 'AmeliproCarousel',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproCarousel',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-carousel',
-					// 	},
-					// }, {
-					// 	title: 'AmeliproAccordionResult',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionResult',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result',
-					// 	},
-					// }, {
-					// 	title: 'AmeliproAccordionFrieze',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionFrieze',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-frieze',
-					// 	},
-					// }, {
-					// 	title: 'AmeliproAccordionList',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionList',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-list',
-					// 	},
-					// }, {
-					// 	title: 'AmeliproAccordionResultList',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproAccordionResultList',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-result-list',
-					// 	},
-					// }, {
 					// 	title: 'AmeliproClickableTile',
 					// 	synapse: {
 					// 		name: 'Composant synapse',
@@ -855,34 +900,56 @@ export const AmeliproComponents: StoryObj = {
 					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-messaging-menu-btn',
 					// 	},
 					// },
-					// {
-					// 	title: 'AmeliproPatientLogin',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproPatientLogin',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-login',
-					// 	},
-					// },
-					// {
-					// 	title: 'AmeliproPatientLogged',
-					// 	usedComponents: [{
-					// 		name: 'Vbtn',
-					// 		type: 'composants vuetify',
-					// 	}, {
-					// 		name: 'VCard',
-					// 		type: 'composants vuetify',
-					// 	}, {
-					// 		name: 'Vbtn',
-					// 		type: 'composants vuetify',
-					// 	}],
-					// 	amelipro: {
-					// 		name: 'AmeliproPatientLogged',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-logged',
-					// 	},
-					// },
+					{
+						title: 'AmeliproPatientLogin',
+						usedComponents: [{
+							name: 'VCard',
+							type: 'composants vuetify',
+						}, {
+							name: 'VBtn',
+							type: 'composants vuetify',
+						}, {
+							name: 'SyTextField',
+							type: 'formulaires ',
+						}, {
+							name: 'NirField',
+							type: 'formulaires ',
+						},
+						{
+							name: 'SyIcon',
+							type: 'données',
+						}, {
+							name: 'SySelect',
+							type: 'formulaires selects',
+						}],
+						amelipro: {
+							name: 'AmeliproPatientLogin',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-login',
+						},
+					},
+					{
+						title: 'AmeliproPatientLogged',
+						usedComponents: [{
+							name: 'VCard',
+							type: 'composants vuetify',
+						}, {
+							name: 'VBtn',
+							type: 'composants vuetify',
+						}, {
+							name: 'VTooltip',
+							type: 'composants vuetify',
+						}, {
+							name: 'CopyBtn',
+							type: 'boutons',
+						}, {
+							name: 'SySelect',
+							type: 'formulaires selects',
+						}],
+						amelipro: {
+							name: 'AmeliproPatientLogged',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-patient-logged',
+						},
+					},
 					{
 						title: 'AmeliproCopyBtn',
 						synapse: {
@@ -894,17 +961,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-copy-btn',
 						},
 					},
-					// {
-					// 	title: 'AmeliproFirstLogin',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproFirstLogin',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-first-login',
-					// 	},
-					// },
+					{
+						title: 'AmeliproFirstLogin',
+						synapse: {
+							name: 'DialogBox',
+							url: getComponentUrl({ name: 'DialogBox', type: 'feedback' }),
+						},
+						amelipro: {
+							name: 'AmeliproFirstLogin',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-first-login',
+						},
+					},
 				]
 
 				const filteredComponents = computed(() => {
@@ -949,16 +1016,17 @@ export const AmeliproComponents: StoryObj = {
 						  <p>
 							  Pour reproduire son comportement, utilisez les composants du Design System suivants :
 						  </p>
-
-						  <p v-for="item in component.usedComponents" :key="item.name">
-							  <a
-								  :href="getComponentUrl(item)"
-				                  target="_blank"
-				                  rel="noopener noreferrer"
-							  >
-								  {{ item.name }}
-							  </a>
-						  </p>
+                        <div class="mt-2 mb-2">
+                          <p v-for="item in component.usedComponents" :key="item.name">
+                            <a
+                                :href="getComponentUrl(item)"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                              {{ item.name }}
+                            </a>
+                          </p>
+                        </div>
 
 						  <p>
 							  et implémentez la logique métier directement dans votre projet.

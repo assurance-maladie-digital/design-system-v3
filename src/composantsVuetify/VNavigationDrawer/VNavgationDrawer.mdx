@@ -1,0 +1,53 @@
+import { Meta, Canvas } from '@storybook/blocks'
+import * as VNavigationDrawerStories from './v-navigation-drawer.stories'
+
+<Meta title="Composants/Composants Vuetify/VNavigationDrawer" />
+
+<div className="header">
+    <h1>VNavigationDrawer</h1>
+Ce composant utilise directement le composant natif `v-navigation-drawer` de Vuetify avec les couleurs du thème actif du design system.
+Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-navigation-drawer/#props).
+</div>
+
+### Composants associés
+
+- `v-list` : Liste des éléments de navigation
+- `v-list-item` : Élément individuel de la liste
+- `v-list-item-title` : Titre de l'élément
+- `v-divider` : Séparateur visuel
+
+## Variantes
+
+Le composant `v-navigation-drawer` propose plusieurs variantes de style :
+
+### Default
+
+<Canvas of={VNavigationDrawerStories.Default} />
+
+### Permanent
+
+Drawer toujours visible, non repliable.
+
+<Canvas of={VNavigationDrawerStories.Permanent} />
+
+### Temporary
+
+Drawer temporaire qui se superpose au contenu.
+
+<Canvas of={VNavigationDrawerStories.Temporary} />
+
+### With Custom Content
+
+Drawer avec contenu personnalisé.
+
+<Canvas of={VNavigationDrawerStories.WithCustomContent} />
+
+## Props principales
+
+- **modelValue** : Contrôle l'ouverture/fermeture du drawer
+- **rail** : Active le mode rail (icônes seulement)
+- **permanent** : Rend le drawer permanent
+- **temporary** : Rend le drawer temporaire
+- **location** : Position du drawer (`start`, `end`, `left`, `right`, `top`, `bottom`)
+- **width** : Largeur du drawer
+- **color** : Couleur de fond du drawer

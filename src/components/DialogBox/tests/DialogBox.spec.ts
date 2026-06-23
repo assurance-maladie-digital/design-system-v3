@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest'
 import { defineComponent } from 'vue'
 import { VCard } from 'vuetify/components'
 import DialogBox from '../DialogBox.vue'
+import { locales } from '../locales'
 
 const defaultProps = {
 	modelValue: true,
@@ -639,6 +640,78 @@ describe('DialogBox', () => {
 		const newTop = parseFloat(overlayElement.style.top) || 0
 
 		expect(newTop).toBe(300 - overlayElement.offsetHeight)
+
+		wrapper.unmount()
+	})
+
+	it('adds scrollable classes when scrollable prop is true', () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				scrollable: true,
+				headingLevel: 2,
+			},
+			attachTo: document.body,
+		})
+
+		const card = wrapper.getComponent(VCard)
+
+		expect(card.classes()).toContain('sy-dialog-box--scrollable')
+		expect(card.find('.sy-dialog-box-content--scrollable').exists()).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('does not add scrollable classes when scrollable prop is false', () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				scrollable: false,
+				headingLevel: 2,
+			},
+			attachTo: document.body,
+		})
+
+		const card = wrapper.getComponent(VCard)
+
+		expect(card.classes()).not.toContain('sy-dialog-box--scrollable')
+		expect(card.find('.sy-dialog-box-content--scrollable').exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('exposes the scrollable content as a keyboard-focusable, named region', () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				scrollable: true,
+			},
+			attachTo: document.body,
+		})
+
+		const region = wrapper.getComponent(VCard).find('.sy-dialog-box-content--scrollable')
+		expect(region.attributes('role')).toBe('region')
+		expect(region.attributes('tabindex')).toBe('0')
+		// Nommée par le titre quand il est fourni
+		expect(region.attributes('aria-label')).toBe('Test title')
+
+		wrapper.unmount()
+	})
+
+	it('names the scrollable region with a default label when no title is provided', () => {
+		const wrapper = mount(DialogBox, {
+			props: {
+				...defaultProps,
+				title: undefined,
+				scrollable: true,
+			},
+			attachTo: document.body,
+		})
+
+		const region = wrapper.getComponent(VCard).find('.sy-dialog-box-content--scrollable')
+		// Une région doit toujours avoir un nom accessible (repli sur la locale)
+		expect(region.attributes('aria-label')).toBe(locales.scrollableContent)
+		expect(region.attributes('aria-label')).toBeTruthy()
 
 		wrapper.unmount()
 	})

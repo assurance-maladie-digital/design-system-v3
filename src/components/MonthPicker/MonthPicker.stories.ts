@@ -1,14 +1,14 @@
 import { fn } from '@storybook/test'
-import { nextTick, ref } from 'vue'
 import MonthPicker from './MonthPicker.vue'
 import type { Meta, StoryObj } from '@storybook/vue3'
 import type SyTextField from '../Customs/SyTextField/SyTextField.vue'
-import SyForm from '../Customs/SyForm/SyForm.vue'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker',
 	component: MonthPicker,
 	argTypes: {
+		...getValidationDocumentation('base'),
 		'modelValue': {
 			control: 'text',
 			description: 'Valeur du sélecteur de mois au format "MM/YYYY".',
@@ -19,7 +19,29 @@ const meta: Meta<typeof MonthPicker> = {
 		'locales': {
 			description: 'Objet de traduction pour le sélecteur de mois. Par défaut, les traductions françaises sont utilisées.',
 			table: {
-				type: { summary: 'object' },
+				type: {
+					summary: 'object',
+					detail: `{
+	btnLabel: string,
+	headerSelectYear: string,
+	headerSelectMonth: string,
+	yearSelectorLabel: string,
+	monthSelectorLabel: string,
+	yearBtnLabelSelected: (selectedYear: string) => string,
+	yearBtnLabelUnselected: (selectedYear: string) => string,
+	monthBtnLabelSelected: (selectedMonth: string) => string,
+	monthBtnLabelUnselected: (selectedMonth: string) => string,
+	fieldRequired: (label: string) => string,
+}`,
+				},
+			},
+		},
+		'clearable': {
+			control: 'boolean',
+			description: 'Affiche un bouton permettant de vider le champ',
+			table: {
+				type: { summary: 'boolean' },
+				category: 'props',
 			},
 		},
 		'minYear': {
@@ -85,109 +107,20 @@ const meta: Meta<typeof MonthPicker> = {
 			},
 		},
 		'hint': {
-			description: 'Texte d’aide affiché sous le champ de saisie.',
+			description: 'Texte d’aide affiché sous le champ de saisie lorsque le champ est focus.',
 			control: 'text',
 			table: {
 				type: { summary: 'string' },
 				category: 'props',
 			},
 		},
-		'customRules': {
-			description: 'Règles de validation personnalisées pour les erreurs.',
-			table: {
-				type: { summary: 'ValidationRule[]' },
-				category: 'props',
-			},
-		},
-		'customWarningRules': {
-			description: 'Règles de validation personnalisées pour les avertissements.',
-			table: {
-				type: { summary: 'ValidationRule[]' },
-				category: 'props',
-			},
-		},
-		'customSuccessRules': {
-			description: 'Règles de validation personnalisées pour les succès.',
-			table: {
-				type: { summary: 'ValidationRule[]' },
-				category: 'props',
-			},
-			category: 'validation',
-		},
-		'errorMessages': {
-			description: 'Messages d’erreur personnalisés à afficher lorsque la validation échoue. Peut être une chaîne de caractères ou un tableau de chaînes.',
+		'helpText': {
+			description: 'Texte d’aide permanent affiché sous le champ de saisie.',
 			control: 'text',
 			table: {
-				type: { summary: 'string | string[]' },
+				type: { summary: 'string' },
 				category: 'props',
 			},
-		},
-		'warningMessages': {
-			description: 'Messages d’avertissement personnalisés à afficher lorsque la validation génère un avertissement. Peut être une chaîne de caractères ou un tableau de chaînes.',
-			control: 'text',
-			table: {
-				type: { summary: 'string | string[]' },
-				category: 'props',
-			},
-		},
-		'successMessages': {
-			description: 'Messages de succès personnalisés à afficher lorsque la validation réussit. Peut être une chaîne de caractères ou un tableau de chaînes.',
-			control: 'text',
-			table: {
-				type: { summary: 'string | string[]' },
-				category: 'props',
-			},
-		},
-		'hasError': {
-			description: 'Indique si le champ est en état d’erreur. Utilisé pour forcer l’affichage des messages d’erreur.',
-			control: 'boolean',
-			table: {
-				type: { summary: 'boolean' },
-				category: 'props',
-			},
-		},
-		'hasWarning': {
-			description: 'Indique si le champ est en état d’avertissement. Utilisé pour forcer l’affichage des messages d’avertissement.',
-			control: 'boolean',
-			table: {
-				type: { summary: 'boolean' },
-				category: 'props',
-			},
-		},
-		'hasSuccess': {
-			description: 'Indique si le champ est en état de succès. Utilisé pour forcer l’affichage des messages de succès.',
-			control: 'boolean',
-			table: {
-				type: { summary: 'boolean' },
-				category: 'props',
-			},
-		},
-		'showSuccessMessages': {
-			description: 'Indique si les messages de succès doivent être affichés.',
-			control: 'boolean',
-			table: {
-				type: { summary: 'boolean' },
-				category: 'props',
-			},
-		},
-		'disabled': {
-			description: 'Indique si le champ de saisie est désactivé. Lorsqu’il est désactivé, le sélecteur de mois ne peut pas être ouvert et aucune interaction n’est possible.',
-			control: 'boolean',
-			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'false' },
-				category: 'props',
-			},
-		},
-		'readonly': {
-			description: 'Indique si le champ de saisie est en lecture seule. Lorsqu’il est en lecture seule, le sélecteur de mois peut être ouvert pour afficher la valeur sélectionnée, mais aucune modification n’est possible.',
-			control: 'boolean',
-			table: {
-				type: { summary: 'boolean' },
-				defaultValue: { summary: 'false' },
-				category: 'props',
-			},
-			category: 'props',
 		},
 		'onUpdate:modelValue': {
 			action: 'update:modelValue',
@@ -271,25 +204,15 @@ export const Default: Story = {
 	},
 }
 
-export const MonthValidation: Story = {
+export const Required: Story = {
 	args: {
-		'modelValue': '11/2025',
+		'modelValue': '',
 		'label': 'Début du projet',
+		'required': true,
+		'displayAsterisk': true,
+		'width': '400px',
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
-	},
-	play: async ({ canvasElement }) => {
-		const input = canvasElement.querySelector('input') as HTMLInputElement
-		const currentDate = new Date()
-
-		setTimeout(async () => {
-			input.focus()
-			const futureYear = currentDate.getFullYear() + 6
-			input.value = `11/${futureYear}`
-			input.dispatchEvent(new Event('input'))
-			await nextTick()
-			input.dispatchEvent(new Event('blur'))
-		}, 100)
 	},
 	parameters: {
 		sourceCode: [
@@ -300,8 +223,9 @@ export const MonthValidation: Story = {
 					<MonthPicker
 						v-model="selectedMonth"
 						label="Début du projet"
-						:custom-rules
-						:custom-warning-rules
+						width="400px"
+						required
+						display-asterisk
 					/>
 				</template>
 				`,
@@ -312,114 +236,12 @@ export const MonthValidation: Story = {
 					import { MonthPicker } from '@cnamts/synapse'
 					import { ref } from 'vue'
 
-					const selectedMonth = ref('11/2025')
-
-					const customRules = [
-						{
-							type: 'required',
-							options: {
-								message: 'Ce champ est requis.',
-							},
-						},
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									const [month] = value.split('/').map(Number)
-									if (
-										!value ||
-										!month ||
-										!/^\\d{2}\\/\\d{4}$/.test(value) ||
-										month < 1 ||
-										month > 12
-									) {
-										return false
-									}
-									return true
-								},
-								message: 'Format de mois invalide.',
-							},
-						},
-					]
-
-					const customWarningRules = [{
-						type: 'custom',
-						options: {
-							validate: (value: string) => {
-								const [month, year] = value.split('/').map(Number) as [number, number]
-								const currentDate = new Date()
-								const currentYear = currentDate.getFullYear()
-								const currentMonth = currentDate.getMonth() + 1
-								if (year > currentYear + 5 || (year === currentYear + 5 && month > currentMonth)) {
-									return false
-								}
-								return true
-							},
-							warningMessage: 'La date est plus de 5 ans dans le futur.',
-						},
-					}]
+					const selectedMonth = ref('')
 				</script>
 				`,
 			},
 		],
 	},
-	render: args => ({
-		components: { MonthPicker },
-		setup() {
-			const customRules = [
-				{
-					type: 'required',
-					options: {
-						message: 'Ce champ est requis.',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							const [month] = value.split('/').map(Number)
-							if (
-								!month
-								|| !/^\d{2}\/\d{4}$/.test(value)
-								|| month < 1
-								|| month > 12
-							) {
-								return false
-							}
-							return true
-						},
-						message: 'Format de mois invalide.',
-					},
-				},
-			]
-
-			const customWarningRules = [{
-				type: 'custom',
-				options: {
-					validate: (value: string) => {
-						const [month, year] = value.split('/').map(Number) as [number, number]
-						const currentDate = new Date()
-						const currentYear = currentDate.getFullYear()
-						const currentMonth = currentDate.getMonth() + 1
-						if (year > currentYear + 5 || (year === currentYear + 5 && month > currentMonth)) {
-							return false
-						}
-						return true
-					},
-					warningMessage: 'La date est plus de 5 ans dans le futur.',
-				},
-			}]
-			return { args, customRules, customWarningRules }
-		},
-		template: `
-			<MonthPicker
-				v-bind="args"
-				:custom-rules="customRules"
-				:custom-warning-rules="customWarningRules"
-				width="400px"
-			/>
-		`,
-	}),
 }
 
 export const CustomDisplayedYears: Story = {
@@ -459,69 +281,4 @@ export const CustomDisplayedYears: Story = {
 			},
 		],
 	},
-}
-
-export const Form: Story = {
-	args: {
-		modelValue: '',
-		label: 'Début du projet',
-		width: '400px',
-	},
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SyForm @submit="handleSubmit">
-						<MonthPicker
-							v-model="selectedMonth"
-							label="Début du projet"
-							width="400px"
-							:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
-						/>
-						<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
-					</SyForm>
-				</template>
-				`,
-			}, {
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { MonthPicker, SyForm } from '@cnamts/synapse'
-					import { ref } from 'vue'
-
-					const selectedMonth = ref('')
-
-					const handleSubmit = (e: { isValid: boolean }) => {
-						alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	render: args => ({
-		components: { MonthPicker, SyForm },
-		setup() {
-			const selectedMonth = ref('')
-
-			const handleSubmit = (e: { isValid: boolean }) => {
-				alert(e.isValid ? 'Le formulaire est valide.' : 'Le formulaire est invalide.')
-			}
-
-			return { args, selectedMonth, handleSubmit }
-		},
-		template: `
-			<SyForm @submit="handleSubmit">
-				<MonthPicker
-					v-bind="args"
-					v-model="selectedMonth"
-					width="400px"
-					:custom-rules="[{ type: 'required', options: { message: 'Ce champ est requis.' } }]"
-				/>
-				<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
-			</SyForm>
-		`,
-	}),
 }

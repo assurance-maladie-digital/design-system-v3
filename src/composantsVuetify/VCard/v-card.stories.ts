@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
-import { VCard, VCardTitle, VCardText, VCardActions, VDivider } from 'vuetify/components'
+import { VCard, VCardTitle, VCardText, VCardActions, VDivider, VAvatar } from 'vuetify/components'
 import { VBtn } from 'vuetify/components'
 
 const meta: Meta<typeof VCard> = {
@@ -462,6 +462,98 @@ export const WithCustomActions: Story = {
 
 <script setup lang="ts">
 import { VCard, VCardTitle, VCardText, VDivider, VBtn } from 'vuetify/components'
+</script>`,
+			},
+		},
+	},
+}
+
+export const WithNumber: Story = {
+	render: args => ({
+		components: { VCard, VCardText, VAvatar },
+		setup() {
+			return { args }
+		},
+		template: `
+            <div class="w-100">
+				<VCard
+					v-bind="args"
+		            variant="outlined"
+		            class="mb-6"
+		            style="
+					width: 100%;
+					border-color: #BDBDBD;
+					position: relative;
+					overflow: visible;
+					padding-top: 32px;
+				  "
+				>
+					<v-avatar
+						color="primary"
+						variant="outlined"
+			            size="32"
+			            style="
+						position: absolute;
+						background: white;
+						top: 0;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						z-index: 1;
+						"
+					>
+						1
+					</v-avatar>
+
+					<v-card-text>
+						Cette carte est numérotée.
+					</v-card-text>
+				</VCard>
+            </div>
+        `,
+	}),
+	args: {},
+	parameters: {
+		docs: {
+			source: {
+				code: `<template>
+               <div class="w-100">
+				<VCard
+					v-bind="args"
+		            variant="outlined"
+		            class="mb-6"
+		            style="
+					width: 100%;
+					border-color: #BDBDBD;
+					position: relative;
+					overflow: visible;
+					padding-top: 32px;
+				  "
+				>
+					<v-avatar
+						color="primary"
+						variant="outlined"
+			            size="32"
+			            style="
+						position: absolute;
+						background: white;
+						top: 0;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						z-index: 1;
+						"
+					>
+						1
+					</v-avatar>
+
+					<v-card-text>
+						Cette carte est numérotée.
+					</v-card-text>
+				</VCard>
+            </div>
+</template>
+
+<script setup lang="ts">
+import { VCard, VCardText, VAvatar } from 'vuetify/components'
 </script>`,
 			},
 		},

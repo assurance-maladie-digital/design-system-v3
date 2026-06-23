@@ -84,6 +84,8 @@ describe('mounthpicker', () => {
 
 			expect(wrapper.find('input').element.value).toBe('11/2025')
 
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type
 			await wrapper.setProps({ modelValue: '12/2026' })
 			expect(wrapper.find('input').element.value).toBe('12/2026')
 
@@ -434,6 +436,8 @@ describe('mounthpicker', () => {
 				await yearButton.trigger('keydown', { key: 'ArrowRight' })
 				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
 
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type
 				await wrapper.setProps({ yearsOrder: 'asc' })
 				expect(yearSelector.find('.year-2025').attributes('tabindex')).toBe('0')
 				await yearButton.trigger('keydown', { key: 'ArrowUp' })
@@ -473,6 +477,8 @@ describe('mounthpicker', () => {
 			expect(yearButtons[0]!.text()).toBe('2100')
 			expect(yearButtons[yearButtons.length - 1]!.text()).toBe('1900')
 
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore - Vue Test Utils cannot infer props from complex intersection type
 			await wrapper.setProps({ yearsOrder: 'asc' })
 
 			const newYearButtons = wrapper.findComponent({ name: 'YearSelector' }).findAll('.year-selector__year')
@@ -1162,7 +1168,7 @@ describe('mounthpicker', () => {
 						options: {
 							validate: (value: string) => {
 								const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
-								return regex.test(value) || 'Invalid month/year format. Use MM/YYYY.'
+								return regex.test(value)
 							},
 							message: 'Invalid month/year format. Use MM/YYYY.',
 						},
@@ -1171,6 +1177,7 @@ describe('mounthpicker', () => {
 			})
 
 			const input = wrapper.find('input')
+			await input.trigger('focus')
 			await input.setValue('99/2025')
 			await input.trigger('blur')
 
@@ -1189,7 +1196,7 @@ describe('mounthpicker', () => {
 						options: {
 							validate: (value: string) => {
 								const regex = /^(0[1-9]|1[0-2])\/\d{4}$/
-								return regex.test(value) || 'Invalid month/year format. Use MM/YYYY.'
+								return regex.test(value)
 							},
 							message: 'Invalid month/year format. Use MM/YYYY.',
 						},
@@ -1239,11 +1246,355 @@ describe('mounthpicker', () => {
 			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2025')
 			await yearButton.trigger('click')
 			await flushPromises()
+			await (wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean> }).validateOnSubmit()
+			await flushPromises()
 
 			expect(wrapper.find('.v-field--error').exists()).toBe(true)
 			expect(wrapper.find('.v-input__details').text()).toBe('The year must be 2026 or later.')
 
 			wrapper.unmount()
+		})
+
+		it('shows error when required field is left empty on blur', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					required: true,
+				},
+			})
+			const vm = wrapper.vm as unknown as { errors: string[] }
+
+			const input = wrapper.find('input')
+			await input.trigger('focus')
+			await wrapper.vm.$nextTick()
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			expect(vm.errors).toContain('Le champ Début du projet est requis.')
+
+			wrapper.unmount()
+		})
+
+		it('validateOnSubmit returns false for empty required field and true for valid value', async () => {
+			const emptyWrapper = mount(MonthPicker, {
+				props: { modelValue: '', required: true, label: 'Début du projet' },
+			})
+			const emptyVm = emptyWrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean>, errors: string[] }
+			const result = await emptyVm.validateOnSubmit()
+			expect(result).toBe(false)
+			expect(emptyVm.errors).toContain('Le champ Début du projet est requis.')
+			emptyWrapper.unmount()
+
+			const validWrapper = mount(MonthPicker, {
+				props: { modelValue: '03/2026', required: true, label: 'Début du projet' },
+			})
+			const validVm = validWrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean> }
+			const validResult = await validVm.validateOnSubmit()
+			expect(validResult).toBe(true)
+			validWrapper.unmount()
+		})
+
+		it('displays external errorMessages, warningMessages, successMessages injected by the parent', async () => {
+			const errorWrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '03/2026',
+					errorMessages: ['Ce mois est déjà utilisé'],
+				},
+			})
+			const errorMsg = errorWrapper.findAll('.v-messages__message')
+			expect(errorMsg[0]?.text()).toBe('Ce mois est déjà utilisé')
+			errorWrapper.unmount()
+
+			const warningWrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '03/2026',
+					warningMessages: ['Ce mois est proche d\'une échéance'],
+				},
+			})
+			const warningMsg = warningWrapper.findAll('.v-messages__message')
+			expect(warningMsg[0]?.text()).toBe('Ce mois est proche d\'une échéance')
+			warningWrapper.unmount()
+
+			const successWrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					modelValue: '03/2026',
+					successMessages: ['Mois accepté'],
+					showSuccessMessages: true,
+				},
+			})
+			const successMsg = successWrapper.findAll('.v-messages__message')
+			expect(successMsg[0]?.text()).toBe('Mois accepté')
+			successWrapper.unmount()
+		})
+
+		it('handles customWarningRules and customSuccessRules', async () => {
+			async function mountAndBlur(modelValue: string) {
+				const wrapper = mount(MonthPicker, {
+					props: {
+						label: 'Début du projet',
+						modelValue,
+						customRules: [{
+							type: 'custom',
+							options: {
+								message: 'Le format doit être MM/YYYY.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+						customWarningRules: [{
+							type: 'custom',
+							options: {
+								warningMessage: 'La date est dans le passé.',
+								validate: (value: string) => {
+									const [month, year] = value.split('/').map(Number) as [number, number]
+									const now = new Date()
+									return year > now.getFullYear() || (year === now.getFullYear() && month >= now.getMonth() + 1)
+								},
+							},
+						}],
+						customSuccessRules: [{
+							type: 'custom',
+							options: {
+								successMessage: 'Date valide.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+						showSuccessMessages: true,
+					},
+				})
+				await wrapper.find('input').trigger('focus')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('input').trigger('blur')
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+				await wrapper.vm.$nextTick()
+				return wrapper
+			}
+
+			const errorWrapper = await mountAndBlur('99/2025')
+			expect((errorWrapper.vm as unknown as { errors: string[] }).errors).toContain('Le format doit être MM/YYYY.')
+			errorWrapper.unmount()
+
+			const warningWrapper = await mountAndBlur('01/2020')
+			const warningMessages = warningWrapper.findAll('.v-messages__message')
+			expect(warningMessages[0]?.text()).toBe('La date est dans le passé.')
+			warningWrapper.unmount()
+
+			const successWrapper = await mountAndBlur('03/2030')
+			expect((successWrapper.vm as unknown as { successes: string[] }).successes).toContain('Date valide.')
+			successWrapper.unmount()
+		})
+
+		it('sets hasError, hasWarning, hasSuccess based on validation state', async () => {
+			async function mountAndBlur(modelValue: string) {
+				const wrapper = mount(MonthPicker, {
+					props: {
+						label: 'Début du projet',
+						modelValue,
+						customRules: [{
+							type: 'custom',
+							options: {
+								message: 'Le format doit être MM/YYYY.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+						customWarningRules: [{
+							type: 'custom',
+							options: {
+								warningMessage: 'La date est dans le passé.',
+								validate: (value: string) => {
+									const [month, year] = value.split('/').map(Number) as [number, number]
+									const now = new Date()
+									return year > now.getFullYear() || (year === now.getFullYear() && month >= now.getMonth() + 1)
+								},
+							},
+						}],
+						customSuccessRules: [{
+							type: 'custom',
+							options: {
+								successMessage: 'Date valide.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+					},
+				})
+				await wrapper.find('input').trigger('focus')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('input').trigger('blur')
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+				await wrapper.vm.$nextTick()
+				return wrapper.vm as unknown as { hasError: boolean, hasWarning: boolean, hasSuccess: boolean }
+			}
+
+			expect((await mountAndBlur('99/2025')).hasError).toBe(true)
+			expect((await mountAndBlur('01/2020')).hasWarning).toBe(true)
+			expect((await mountAndBlur('03/2030')).hasSuccess).toBe(true)
+		})
+
+		it('does not show errors when disableErrorHandling is true', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					required: true,
+					disableErrorHandling: true,
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('focus')
+			await wrapper.vm.$nextTick()
+			await input.trigger('blur')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(false)
+			expect((wrapper.vm as unknown as { errors: string[] }).errors).toHaveLength(0)
+
+			wrapper.unmount()
+		})
+
+		it('validates on input when isValidateOnBlur is false', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					isValidateOnBlur: false,
+					customRules: [{
+						type: 'custom',
+						options: {
+							message: 'Le format doit être MM/YYYY.',
+							validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+						},
+					}],
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.setValue('99/2025')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(true)
+			expect((wrapper.vm as unknown as { errors: string[] }).errors).toContain('Le format doit être MM/YYYY.')
+
+			wrapper.unmount()
+		})
+
+		it('sets aria-required from the required prop alone (without displaying the asterisk)', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					required: true,
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.attributes('aria-required')).toBe('true')
+			// L'astérisque ne s'affiche pas tant que displayAsterisk n'est pas activé
+			expect(wrapper.find('label').text()).not.toContain('*')
+
+			wrapper.unmount()
+		})
+
+		it('displays the asterisk only when both required and displayAsterisk are true', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					required: true,
+					displayAsterisk: true,
+				},
+			})
+
+			expect(wrapper.find('label').text()).toContain('*')
+			expect(wrapper.find('input').attributes('aria-required')).toBe('true')
+
+			wrapper.unmount()
+
+			// displayAsterisk sans required : pas d'astérisque
+			const asteriskOnlyWrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+					displayAsterisk: true,
+				},
+			})
+			expect(asteriskOnlyWrapper.find('label').text()).not.toContain('*')
+			asteriskOnlyWrapper.unmount()
+		})
+
+		it('does not set aria-required nor asterisk by default', async () => {
+			const wrapper = mount(MonthPicker, {
+				props: {
+					label: 'Début du projet',
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.attributes('aria-required')).toBeUndefined()
+			expect(wrapper.find('label').text()).not.toContain('*')
+
+			wrapper.unmount()
+		})
+
+		it('displays the validation state icon (error / warning / success)', async () => {
+			async function mountAndBlur(modelValue: string) {
+				const wrapper = mount(MonthPicker, {
+					props: {
+						label: 'Début du projet',
+						modelValue,
+						showSuccessMessages: true,
+						customRules: [{
+							type: 'custom',
+							options: {
+								message: 'Le format doit être MM/YYYY.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+						customWarningRules: [{
+							type: 'custom',
+							options: {
+								warningMessage: 'La date est dans le passé.',
+								validate: (value: string) => {
+									const [month, year] = value.split('/').map(Number) as [number, number]
+									const now = new Date()
+									return year > now.getFullYear() || (year === now.getFullYear() && month >= now.getMonth() + 1)
+								},
+							},
+						}],
+						customSuccessRules: [{
+							type: 'custom',
+							options: {
+								successMessage: 'Date valide.',
+								validate: (value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value),
+							},
+						}],
+					},
+				})
+				await wrapper.find('input').trigger('focus')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('input').trigger('blur')
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+				await wrapper.vm.$nextTick()
+				return wrapper
+			}
+
+			const errorWrapper = await mountAndBlur('99/2025')
+			expect(errorWrapper.find('.field-state-icon.error-icon').exists()).toBe(true)
+			errorWrapper.unmount()
+
+			const warningWrapper = await mountAndBlur('01/2020')
+			expect(warningWrapper.find('.field-state-icon.warning-icon').exists()).toBe(true)
+			warningWrapper.unmount()
+
+			const successWrapper = await mountAndBlur('03/2030')
+			expect(successWrapper.find('.field-state-icon.success-icon').exists()).toBe(true)
+			successWrapper.unmount()
 		})
 	})
 })
