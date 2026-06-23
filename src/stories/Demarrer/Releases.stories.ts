@@ -55,6 +55,14 @@ const releaseAlerts: ReleaseAlert[] = [
 		variant: 'tonal',
 	},
 	{
+		id: 'tokens-simplification-rappel',
+		releaseVersion: 'v1.1.0',
+		message: 'Pour rappel (depuis la v1.0.27), une simplification des tokens a été menée suite à l\'ajout du thème Amelipro, merci de vous référer à la page des ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
+	},
+	{
 		id: 'tokens-simplification',
 		releaseVersion: 'v1.0.27',
 		message: 'Nous avons procédé à une simplification des tokens contraint par l\'ajout du thème Amelipro, merci de vous référer à la page des ',
@@ -68,6 +76,14 @@ const releaseAlerts: ReleaseAlert[] = [
 		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.35',
 		type: 'warning',
 		variant: 'tonal',
+	},
+	{
+		id: 'tokens-css-variables',
+		releaseVersion: 'v1.0.25',
+		message: 'Les design tokens ne sont plus exposés via l\'export SCSS (`$gap-2`, variables de couleur…) mais sous forme de variables CSS `--v-…` (ex. `var(--v-gap-2)`, `rgb(var(--v-theme-primary))`). Pour l\'usage et la migration, voir la page ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/design-tokens-utilisation--docs', text: 'Utilisation' },
 	},
 	{
 		id: 'starter-kit-2-0-33',
