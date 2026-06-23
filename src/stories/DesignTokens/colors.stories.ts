@@ -63,7 +63,7 @@ export const TokenOptimisationWarning: StoryObj = {
 		components: { SyAlert },
 		template: `
 			<SyAlert type="warning" style="margin-bottom: 25px;">
-				Suite à l'ajout du thème Amelipro dans Synapse, nous avons dû procéder à une simplification et optimisation des tokens.
+				Suite à l'ajout du thème Amelipro dans Synapse, nous avons dû procéder à une simplification et optimisation des tokens (depuis la version 1.0.25).
 			</SyAlert>
 		`,
 	}),
