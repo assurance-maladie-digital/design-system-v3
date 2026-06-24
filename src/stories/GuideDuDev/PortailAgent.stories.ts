@@ -2,7 +2,7 @@ import { VDivider, VExpansionPanel, VExpansionPanels, VExpansionPanelText, VExpa
 import type { StoryObj } from '@storybook/vue3'
 
 export default {
-	title: 'Guide Du Dev/Migration/Équivalence des composants/Portail Agent',
+	title: 'Guide Du Dev/Convergence des DS/Équivalence des composants/Portail Agent',
 }
 
 export const PAgComponents: StoryObj = {

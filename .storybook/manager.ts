@@ -118,18 +118,14 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		'composants-structure-headerbar--usages',
 	])
 
-	// Dossier Migration : guides toujours visibles ; équivalences selon le thème
+	// Convergence des DS / Équivalence des composants : toujours visible, quel que soit le thème
+	if (itemId.startsWith('guide-du-dev-convergence-des-ds')) {
+		item.style.display = 'block'
+		return
+	}
+
+	// Dossier Migration : toujours visible quel que soit le thème
 	if (itemId.startsWith('guide-du-dev-migration')) {
-		// Équivalence Portail Agent (PAG) : masquée en thèmes AP et AP2026
-		if (itemId.includes('portail-agent')) {
-			item.style.display = (isAp || isAp2026) ? 'none' : 'block'
-			return
-		}
-		// Équivalence Amelipro : masquée en thèmes cnam/pa
-		if (itemId.includes('amelipro')) {
-			item.style.display = (theme === 'cnam' || theme === 'pa') ? 'none' : 'block'
-			return
-		}
 		item.style.display = 'block'
 		return
 	}
@@ -200,18 +196,14 @@ const applyThemeSidebar = (theme) => {
 				item.style.display = 'block'
 				const itemId = item.getAttribute('data-item-id') || ''
 
-				// Dossier Migration : guides toujours visibles ; équivalences selon le thème
+				// Convergence des DS / Équivalence des composants : toujours visible, quel que soit le thème
+				if (itemId.startsWith('guide-du-dev-convergence-des-ds')) {
+					item.style.display = 'block'
+					return
+				}
+
+				// Dossier Migration : toujours visible quel que soit le thème
 				if (itemId.startsWith('guide-du-dev-migration')) {
-					// Équivalence Portail Agent (PAG) : masquée en thèmes AP et AP2026
-					if (itemId.includes('portail-agent')) {
-						item.style.display = (isAp || isAp2026) ? 'none' : 'block'
-						return
-					}
-					// Équivalence Amelipro : masquée en thèmes cnam/pa
-					if (itemId.includes('amelipro')) {
-						item.style.display = (theme === 'cnam' || theme === 'pa') ? 'none' : 'block'
-						return
-					}
 					item.style.display = 'block'
 					return
 				}
@@ -302,6 +294,10 @@ const applyThemeSidebar = (theme) => {
 				allLinks.forEach((link) => {
 					const linkId = link.id || ''
 					const linkText = link.textContent || ''
+					// Convergence des DS (dont équivalence Amelipro) : toujours visible, ne pas masquer
+					if (linkId.startsWith('guide-du-dev-convergence-des-ds')) {
+						return
+					}
 					if (linkId.toLowerCase().includes('amelipro') || linkText.toLowerCase().includes('amelipro')) {
 						// Find the parent sidebar item and hide it
 						let parent = link.parentElement
