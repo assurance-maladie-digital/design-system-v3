@@ -737,17 +737,17 @@ export const AmeliproComponents: StoryObj = {
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-captcha',
 						},
 					},
-					// {
-					// 	title: 'AmeliproUpload',
-					// 	synapse: {
-					// 		name: 'Composant synapse',
-					// 		url: '',
-					// 	},
-					// 	amelipro: {
-					// 		name: 'AmeliproUpload',
-					// 		url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-upload',
-					// 	},
-					// },
+					{
+						title: 'AmeliproUpload',
+						synapse: {
+							name: 'FileUpload',
+							url: getComponentUrl({ name: 'FileUpload', type: 'formulaires' }),
+						},
+						amelipro: {
+							name: 'AmeliproUpload',
+							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-upload',
+						},
+					},
 					{
 						title: 'AmeliproTable',
 						synapse: {
