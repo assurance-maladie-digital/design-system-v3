@@ -1,4 +1,4 @@
-	<script lang="ts" setup>
+﻿	<script lang="ts" setup>
 	import {
 		type ComponentPublicInstance,
 		computed,
@@ -1132,6 +1132,7 @@
 					</div>
 				</template>
 
+				<!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- role="dialog" + tabindex="-1" est un pattern ARIA valide pour les modales -->
 				<div
 					tabindex="-1"
 					role="dialog"

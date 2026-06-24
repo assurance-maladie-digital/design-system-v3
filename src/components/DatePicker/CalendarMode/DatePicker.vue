@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+﻿<script lang="ts" setup>
 	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance, type Ref } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
@@ -952,8 +952,7 @@
 			>
 				<template #activator="{ props: menuProps }">
 					<div
-						role="button"
-						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
+						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': 'dialog', 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
 					>
 						<SyTextField
 							:id="`${datePickerContentId}-input`"
@@ -996,6 +995,7 @@
 						/>
 					</div>
 				</template>
+				<!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- role="dialog" + tabindex="-1" est un pattern ARIA valide pour les modales -->
 				<div
 					tabindex="-1"
 					role="dialog"
