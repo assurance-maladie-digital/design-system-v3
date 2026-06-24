@@ -64,6 +64,18 @@ Documentation des scripts utilitaires (`scripts/`).
 
 ---
 
+### ♿ [Accessibilité](./Accessibilite/README.md)
+
+Guide contributeur pour l'axe a11y/RGAA : écrire des tests axe, utiliser les directives, lire le rapport.
+
+| Sujet | Contenu |
+|---|---|
+| [Checklist & tests axe](./Accessibilite/README.md#1-écrire-un-test-axe) | Pattern `.a11y.spec.ts`, `ignoreRules`, scénarios à couvrir |
+| [Directives a11y](./Accessibilite/README.md#4-directives-a11y-disponibles) | `vRgaaSvgFix`, `vToolbar`, `vLockFocus` — quand et comment |
+| [Rapport & faux positifs](./Accessibilite/README.md#5-faux-positifs-connus-tanaguru) | Interpréter `a11y-report.md`, faux positifs Tanaguru documentés |
+
+---
+
 ### 🏷️ [Badges de version](./Badges/release-workflow.md)
 
 Documentation du système de badges automatiques affichés sur les pages de composants.
