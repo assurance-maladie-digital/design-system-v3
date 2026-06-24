@@ -36,6 +36,7 @@ const apComponents = [
 	'composants-boutons-downloadbtn',
 	'composants-boutons-syiconbutton',
 	'composants-boutons-usermenubtn',
+	'composants-boutons-backbtn',
 	'composants-composants-vuetify',
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbreadcrumbs--docs',
