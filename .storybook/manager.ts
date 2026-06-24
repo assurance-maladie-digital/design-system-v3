@@ -54,6 +54,7 @@ const apComponents = [
 	'composants-données-filepreview',
 	'composants-feedback-dialogbox',
 	'composants-feedback-notificationbar',
+	'composants-feedback-cookiebanner',
 	'composants-filtres-filtersidebar',
 	'composants-filtres-searchlistfield',
 	'composants-formulaires-captcha',

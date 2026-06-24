@@ -494,7 +494,7 @@ export const ComponentsList: StoryObj = {
 						title: 'CookieBanner',
 						description: 'Utilisé pour afficher une bannière de consentement pour les cookies.',
 						link: '/?path=/docs/composants-feedback-cookiebanner--docs',
-						img: '/components/cookie-banner.svg',
+						img: `/components/cookie-banner${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -580,6 +580,7 @@ export const ComponentsList: StoryObj = {
 					'NavigationDrawer',
 					'SlideGroup',
 					'RangeField',
+					'CookieBanner,',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
