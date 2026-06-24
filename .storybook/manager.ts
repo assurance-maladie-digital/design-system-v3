@@ -112,11 +112,6 @@ const shouldShowApComponent = (item, itemId, theme) => {
 	const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
 
 	const hiddenWhenAp = new Set([
-		'guide-du-dev-formulaires-validation-guide-des-formulaires--docs',
-		'accessibilité-design-system',
-		'accessibilité-kit-de-pré-audit-avancement',
-		'guide-du-dev-formulaires-validation-guide-technique--docs',
-		'guide-du-dev-démarrage-installation--docs',
 		'composants-structure-headerbar--prepend-slot',
 		'composants-structure-headerbar--with-header-toolbar',
 		'composants-structure-headerbar-headernavigationbar',
