@@ -333,7 +333,7 @@ export const ComponentsList: StoryObj = {
 						title: 'RangeField',
 						description: 'Utilisé pour permettre à l\'utilisateur de sélectionner un interval.',
 						link: '/?path=/docs/composants-formulaires-rangefield--docs',
-						img: '/components/range-field.svg',
+						img: `/components/range-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -579,6 +579,7 @@ export const ComponentsList: StoryObj = {
 					'UploadWorkflow',
 					'NavigationDrawer',
 					'SlideGroup',
+					'RangeField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
