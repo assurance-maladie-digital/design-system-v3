@@ -123,7 +123,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
-						img: '/components/contextual-menu.svg',
+						img: `/components/contextual-menu${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -581,6 +581,7 @@ export const ComponentsList: StoryObj = {
 					'SlideGroup',
 					'RangeField',
 					'FileUpload',
+					'ContextualMenu',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
