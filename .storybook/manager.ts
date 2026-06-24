@@ -78,6 +78,7 @@ const apComponents = [
 	'composants-formulaires-uploadworkflow',
 	'composants-formulaires-rangefield',
 	'composants-layout-pagecontainer',
+	'composants-navigation-contextualmenu',
 	'composants-navigation-skiplink',
 	'composants-navigation-sypagination',
 	'composants-navigation-sytabs',
