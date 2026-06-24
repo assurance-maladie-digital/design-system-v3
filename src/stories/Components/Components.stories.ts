@@ -291,7 +291,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FileUpload',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer des fichiers.',
 						link: '/?path=/docs/composants-formulaires-fileupload--docs',
-						img: '/components/file-upload.svg',
+						img: `/components/file-upload${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -580,6 +580,7 @@ export const ComponentsList: StoryObj = {
 					'NavigationDrawer',
 					'SlideGroup',
 					'RangeField',
+					'FileUpload',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

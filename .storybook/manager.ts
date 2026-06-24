@@ -63,6 +63,7 @@ const apComponents = [
 	'composants-formulaires-datepicker-dateinput',
 	'composants-formulaires-datepicker-validation',
 	'composants-formulaires-datepicker-usages',
+	'composants-formulaires-fileupload',
 	'composants-formulaires-nirfield',
 	'composants-formulaires-phonefield',
 	'composants-formulaires-selects-syautocomplete',
