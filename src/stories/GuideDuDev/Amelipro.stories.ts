@@ -10,7 +10,7 @@ import {
 import type { StoryObj } from '@storybook/vue3'
 
 export default {
-	title: 'Guide Du Dev/Correspondance composants Amelipro',
+	title: 'Guide Du Dev/Migration/Équivalence des composants/Amelipro',
 }
 
 export const AmeliproComponents: StoryObj = {

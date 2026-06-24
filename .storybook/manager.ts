@@ -112,18 +112,32 @@ const shouldShowApComponent = (item, itemId, theme) => {
 	const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
 
 	const hiddenWhenAp = new Set([
-		'guide-du-dev-correspondance-composants-pag--docs',
-		'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs',
+		'guide-du-dev-formulaires-validation-guide-des-formulaires--docs',
 		'accessibilité-design-system',
 		'accessibilité-kit-de-pré-audit-avancement',
-		'guide-du-dev-guide-technique-système-de-validation-règles--docs',
-		'guide-du-dev-migration',
-		'guide-du-dev-installation--docs',
+		'guide-du-dev-formulaires-validation-guide-technique--docs',
+		'guide-du-dev-démarrage-installation--docs',
 		'composants-structure-headerbar--prepend-slot',
 		'composants-structure-headerbar--with-header-toolbar',
 		'composants-structure-headerbar-headernavigationbar',
 		'composants-structure-headerbar--usages',
 	])
+
+	// Dossier Migration : guides toujours visibles ; équivalences selon le thème
+	if (itemId.startsWith('guide-du-dev-migration')) {
+		// Équivalence Portail Agent (PAG) : masquée en thèmes AP et AP2026
+		if (itemId.includes('portail-agent')) {
+			item.style.display = (isAp || isAp2026) ? 'none' : 'block'
+			return
+		}
+		// Équivalence Amelipro : masquée en thèmes cnam/pa
+		if (itemId.includes('amelipro')) {
+			item.style.display = (theme === 'cnam' || theme === 'pa') ? 'none' : 'block'
+			return
+		}
+		item.style.display = 'block'
+		return
+	}
 
 	if (itemId === 'composants-amelipro') {
 		item.style.display = hideAmelipro ? 'none' : 'block'
@@ -132,11 +146,6 @@ const shouldShowApComponent = (item, itemId, theme) => {
 
 	if (hiddenWhenAp.has(itemId)) {
 		item.style.display = isAp ? 'none' : 'block'
-		return
-	}
-
-	if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
-		item.style.display = isAp ? 'block' : 'none'
 		return
 	}
 
@@ -195,6 +204,22 @@ const applyThemeSidebar = (theme) => {
 			items.forEach((item) => {
 				item.style.display = 'block'
 				const itemId = item.getAttribute('data-item-id') || ''
+
+				// Dossier Migration : guides toujours visibles ; équivalences selon le thème
+				if (itemId.startsWith('guide-du-dev-migration')) {
+					// Équivalence Portail Agent (PAG) : masquée en thèmes AP et AP2026
+					if (itemId.includes('portail-agent')) {
+						item.style.display = (isAp || isAp2026) ? 'none' : 'block'
+						return
+					}
+					// Équivalence Amelipro : masquée en thèmes cnam/pa
+					if (itemId.includes('amelipro')) {
+						item.style.display = (theme === 'cnam' || theme === 'pa') ? 'none' : 'block'
+						return
+					}
+					item.style.display = 'block'
+					return
+				}
 
 				// Handle design tokens container page
 				if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
@@ -261,36 +286,6 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
-				// Handle the "Migration depuis Bridge" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Migration depuis Bridge')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Migration depuis Vue2" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Migration depuis Vue2')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Breaking changes" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Breaking changes')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Correspondance composants PAG" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Correspondance composants Amelipro" page - display it when AP theme is active
-				if (itemId === 'guide-du-dev-correspondance-composants-pag--docs') {
-					item.style.display = isAp ? 'none' : 'block'
-					return
-				}
-
-				if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
-					item.style.display = isAp ? 'block' : 'none'
-					return
-				}
 				// Get item ID and text content once for all checks
 				const itemText = item.textContent || ''
 
