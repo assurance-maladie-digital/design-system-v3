@@ -113,18 +113,23 @@ const shouldShowApComponent = (item, itemId, theme) => {
 	const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
 
 	const hiddenWhenAp = new Set([
-		'guide-du-dev-correspondance-composants-pag--docs',
-		'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs',
-		'accessibilité-design-system',
-		'accessibilité-kit-de-pré-audit-avancement',
-		'guide-du-dev-guide-technique-système-de-validation-règles--docs',
-		'guide-du-dev-migration',
-		'guide-du-dev-installation--docs',
 		'composants-structure-headerbar--prepend-slot',
 		'composants-structure-headerbar--with-header-toolbar',
 		'composants-structure-headerbar-headernavigationbar',
 		'composants-structure-headerbar--usages',
 	])
+
+	// Convergence des DS / Équivalence des composants : toujours visible, quel que soit le thème
+	if (itemId.startsWith('guide-du-dev-convergence-des-ds')) {
+		item.style.display = 'block'
+		return
+	}
+
+	// Dossier Migration : toujours visible quel que soit le thème
+	if (itemId.startsWith('guide-du-dev-migration')) {
+		item.style.display = 'block'
+		return
+	}
 
 	if (itemId === 'composants-amelipro') {
 		item.style.display = hideAmelipro ? 'none' : 'block'
@@ -133,11 +138,6 @@ const shouldShowApComponent = (item, itemId, theme) => {
 
 	if (hiddenWhenAp.has(itemId)) {
 		item.style.display = isAp ? 'none' : 'block'
-		return
-	}
-
-	if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
-		item.style.display = isAp ? 'block' : 'none'
 		return
 	}
 
@@ -196,6 +196,18 @@ const applyThemeSidebar = (theme) => {
 			items.forEach((item) => {
 				item.style.display = 'block'
 				const itemId = item.getAttribute('data-item-id') || ''
+
+				// Convergence des DS / Équivalence des composants : toujours visible, quel que soit le thème
+				if (itemId.startsWith('guide-du-dev-convergence-des-ds')) {
+					item.style.display = 'block'
+					return
+				}
+
+				// Dossier Migration : toujours visible quel que soit le thème
+				if (itemId.startsWith('guide-du-dev-migration')) {
+					item.style.display = 'block'
+					return
+				}
 
 				// Handle design tokens container page
 				if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
@@ -262,36 +274,6 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
-				// Handle the "Migration depuis Bridge" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Migration depuis Bridge')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Migration depuis Vue2" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Migration depuis Vue2')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Breaking changes" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Breaking changes')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Correspondance composants PAG" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Correspondance composants Amelipro" page - display it when AP theme is active
-				if (itemId === 'guide-du-dev-correspondance-composants-pag--docs') {
-					item.style.display = isAp ? 'none' : 'block'
-					return
-				}
-
-				if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
-					item.style.display = isAp ? 'block' : 'none'
-					return
-				}
 				// Get item ID and text content once for all checks
 				const itemText = item.textContent || ''
 
@@ -313,6 +295,10 @@ const applyThemeSidebar = (theme) => {
 				allLinks.forEach((link) => {
 					const linkId = link.id || ''
 					const linkText = link.textContent || ''
+					// Convergence des DS (dont équivalence Amelipro) : toujours visible, ne pas masquer
+					if (linkId.startsWith('guide-du-dev-convergence-des-ds')) {
+						return
+					}
 					if (linkId.toLowerCase().includes('amelipro') || linkText.toLowerCase().includes('amelipro')) {
 						// Find the parent sidebar item and hide it
 						let parent = link.parentElement

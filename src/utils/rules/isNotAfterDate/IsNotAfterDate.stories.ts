@@ -4,7 +4,7 @@ import { isNotAfterDateFn } from './index'
 import { ref } from 'vue'
 
 export default {
-	title: 'Guide du dev/Règles De Validation/isNotAfterDate',
+	title: 'Guide Du Dev/Utilitaires/Règles de validation/isNotAfterDate',
 	component: isNotAfterDateFn,
 }
 

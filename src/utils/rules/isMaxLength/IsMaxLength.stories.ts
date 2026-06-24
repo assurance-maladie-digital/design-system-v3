@@ -3,7 +3,7 @@ import { VTextField } from 'vuetify/components'
 import { isMaxLengthFn } from './index'
 
 export default {
-	title: 'Guide du dev/Règles De Validation/isMaxLength',
+	title: 'Guide Du Dev/Utilitaires/Règles de validation/isMaxLength',
 	component: isMaxLengthFn,
 }
 

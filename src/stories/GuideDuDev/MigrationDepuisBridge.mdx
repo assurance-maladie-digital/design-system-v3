@@ -1,92 +1,118 @@
 import {Meta, Source} from '@storybook/addon-docs/blocks';
 import '../styles/shared.css';
 
-<Meta title="Guide Du Dev/Migration/Migration depuis Bridge"/>
+<Meta title="Guide Du Dev/Migration/Depuis Bridge (Vue3)"/>
 
 
 <div className="header">
   <h1>Migrer de Bridge (Vue3) vers Synapse</h1>
 </div>
 
+> **Nouveau Starter Kit** — depuis sa dernière version, le Starter Kit Synapse (`sksn_x`) est une application **Vue 3 + Vite** (SPA). Il n'utilise **plus Nuxt**. La structure de projet, le routeur, la configuration et le chargement des styles décrits ci-dessous suivent cette nouvelle stack.
+
 ## 1 - Commencer la migration
 
 - Téléchargez la stack de migration [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/sksn_x).
 
-- Transférez les pages de votre projet du Starter Kit Bridge dans le dossier pages du projet Starter Kit Synapse, les composants peuvent être placés dans le dossier components.
+- Transférez les pages de votre projet du Starter Kit Bridge dans le dossier `src/views/` du projet Starter Kit Synapse&nbsp;; les composants peuvent être placés dans le dossier `src/components/`.
 
 - Identifier les dépendances à conserver dans la nouvelle version.
 Le package `@cnamts/synapse-bridge` a été remplacé par `@cnamts/synapse`.
 
-- Dans le fichier nuxt.config.ts, ajouter le lien vers votre fichier de style global.
+### Styles globaux
 
-<Source dark code={`
-// nuxt.config.ts
-export default defineNuxtConfig({
-	...
-	css: [
-		...
-		'@/theme/styles.scss' // chemin vers votre fichier de style global
-	],
-	...
+Il n'y a plus de `nuxt.config.ts`. Les styles globaux sont importés directement dans le point d'entrée `src/main.ts` :
+
+<Source dark language="ts" code={`
+// src/main.ts
+import 'vuetify/styles'
+import '@cnamts/synapse/synapse.css'
+import './assets/styles/index.scss' // vos styles globaux
+`}
+/>
+
+### Variables de configuration
+
+Deux mécanismes remplacent le `runtimeConfig` de Nuxt :
+
+**1. Variables de build (Vite)** — exposées via `import.meta.env`. La version du projet est par exemple injectée depuis le `package.json` dans `vite.config.ts` :
+
+<Source dark language="ts" code={`
+// vite.config.ts
+import { version } from './package.json'
+
+process.env = Object.assign(process.env, {
+  VITE_APP_VERSION: version,
 })
 `}
 />
 
-- Dans le fichier nuxt.config.ts, ajouter les variables de configurations.
-
-<Source dark code={`
-// nuxt.config.ts
-export default defineNuxtConfig({
-	runtimeConfig: {
-		public: {
-			// ajouter les variables de configuration public ici
-			version: process.env.VUE_APP_VERSION,
-		},
-		...
-	},
-	...
-})
+<Source dark language="ts" code={`
+// usage dans le code
+console.log(import.meta.env.VITE_APP_VERSION)
 `}
 />
 
-Pour modifier ces variables sans regénérer le projet, il faut les écraser dans le fichier `.output/public/json/config.env.json`.
+**2. Variables d'exécution (runtime)** — un fichier JSON chargé au démarrage, modifiable **sans rebuild** (déploiement). Il est chargé dans `src/main.ts` puis fourni à l'application via une `InjectionKey`, en remplacement du `$config.public` de Nuxt :
 
-Pour utiliser ces variables dans un composant, il faut les importer et les utiliser comme suit :
+<Source dark language="ts" code={`
+// src/var.env.ts
+import type { InjectionKey } from 'vue'
 
-<Source dark code={`
-<script lang="ts">
-  export default defineNuxtComponent({
-    mounted() {
-      console.log(this.$config.public.version)
-    }
-  })
+export type Config = {
+  title: string
+  message: string
+  // ... vos variables
+}
+
+export const CONFIG_SYMBOL = Symbol('config') as InjectionKey<Config>
+`}
+/>
+
+<Source dark language="ts" code={`
+// src/main.ts
+import { CONFIG_SYMBOL, type Config } from './var.env'
+
+// le chemin du JSON est défini dans .env.development / .env.production
+const res = await fetch(import.meta.env.VITE_JSON_FILE_NAME)
+const config = (await res.json()) as Config
+
+const app = createApp(App)
+app.provide(CONFIG_SYMBOL, config)
+`}
+/>
+
+Pour utiliser ces variables dans un composant, on les récupère avec `inject` (Composition API) :
+
+<Source dark language="vue" code={`
+<script setup lang="ts">
+import { inject } from 'vue'
+import { CONFIG_SYMBOL, type Config } from '@/var.env'
+
+const config = inject(CONFIG_SYMBOL) as Config
 </script>
 
 <template>
-  <div>
-    {{ $config.public.version }}
-  </div>
+  <div>{{ config.title }}</div>
 </template>
 `}
 />
 
 ## 2 - Migration du routeur
 
-Dans Nuxt 3, il n’est pas nécessaire de créer un fichier `router/index.ts` comme dans Vue classique. Nuxt 3 utilise un système de routing automatique basé sur les fichiers présents dans le dossier `pages/`.
-Cependant, pour ajouter un router personnalisé, voici comment faire :
+Il n'y a plus de routing automatique basé sur le dossier `pages/` (Nuxt). Le projet utilise désormais **Vue Router** déclaré explicitement dans `src/router/index.ts` :
 
-Ouvrir `router.options.ts` dans le dossier `app/` et ajoutez vos routes :
-
-<Source dark code={`
-// app/router.ts
+<Source dark language="ts" code={`
+// src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: () => import('@/pages/index.vue') },
-    { path: '/about', component: () => import('@/pages/about.vue') },
-    { path: '/contact', component: () => import('@/pages/contact.vue') },
+    { path: '/', name: 'index', component: HomeView },
+    { path: '/home', name: 'home', component: HomeView },
+    // ... vos routes
   ],
 })
 
@@ -94,9 +120,13 @@ export default router
 `}
 />
 
+Le routeur est ensuite enregistré dans `src/main.ts` (`app.use(router)`), et `<RouterView />` est placé dans `App.vue`.
+
 Voir le [guide de migration de vue-router](https://router.vuejs.org/guide/migration/) pour plus d'informations.
 
 ## 3 - Migration des stores VueX vers Pinia
+
+Le Starter Kit utilise **Pinia** (enregistré dans `src/main.ts` via `app.use(createPinia())`).
 
 Prenons un exemple de store Vuex :
 
@@ -193,7 +223,7 @@ Nb : pour la persistance des données vous pouvez utiliser le plugin [pinia-plug
 ## 4 - Migration de la syntaxe des composants
 
 La grande différence entre la version Bridge et la version Synapse est la syntaxe des composants qui passe de l'option API à la composition API.
-Voir la documentation sur la composition API [ici](https://v3.vuejs.org/guide/composition-api-introduction.html).
+Voir la documentation sur la composition API [ici](https://vuejs.org/guide/extras/composition-api-faq.html).
 
 Vue 3 introduit la Composition API qui offre plusieurs avantages :
 
@@ -313,7 +343,7 @@ export default {
   },
   watch: {
     count(newValue, oldValue) {
-      console.log(\`Count changed from \${oldValue} to \${newValue}\`)
+      console.log('Count changed', oldValue, '->', newValue)
     }
   }
 }
@@ -330,7 +360,7 @@ import { ref, watch } from 'vue'
 const count = ref(0)
 
 watch(count, (newValue, oldValue) => {
-  console.log(\`Count changed from \${oldValue} to \${newValue}\`)
+  console.log('Count changed', oldValue, '->', newValue)
 })
 </script>
 `}
@@ -394,8 +424,6 @@ Après (Composition API) :
 
 <Source dark code={`
 <script setup>
-import { defineProps } from 'vue'
-
 const props = defineProps({
   msg: String
 })
@@ -424,10 +452,7 @@ Après (Composition API) :
 
 <Source dark code={`
 <script setup>
-import { defineEmits } from '
-import '../styles/shared.css';vue'
-
-const { emit } = defineEmits()
+const emit = defineEmits(['clicked'])
 
 const handleClick = () => {
   emit('clicked')
