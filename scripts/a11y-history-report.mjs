@@ -52,6 +52,14 @@ const a11yPrLabels = [
 	'focus',
 ]
 
+// Commits / PR exclus de l'analyse : faux positifs (changements de doc ou de style
+// sans impact réel sur l'accessibilité des composants, ex. retrait d'emojis dans la doc).
+const excludedPrNumbers = new Set([
+	'2323', // Remove emoji icons from accessibility documentation and templates (doc/style)
+	'1951', // Update Vuetify 3.12.2 (bump de dépendance, pas de correction a11y ciblée)
+	'2102', // Tokens simplify v2 (refonte de tokens, pas de correction a11y ciblée)
+])
+
 const keywordRegex = new RegExp(a11yKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'i')
 
 function execFileAsync(cmd, args, options) {
@@ -251,6 +259,10 @@ async function analyzeComponent(component) {
 		const keywords = hasA11yKeywords(commit.message)
 		const patterns = hasA11yPatterns(diff)
 		const prNumber = extractPRNumber(commit.message)
+		// Ignore les PR exclus (faux positifs doc/style)
+		if (prNumber && excludedPrNumbers.has(String(prNumber))) {
+			continue
+		}
 		const labels = await getPRLabels(prNumber)
 		const a11yLabel = hasA11yLabel(labels)
 
@@ -294,11 +306,17 @@ function buildJsonData(components) {
 	const data = {}
 	for (const component of components) {
 		if (!component.commits.length) continue
-		const latest = component.commits[0]
+		// Ne retient que la dernière correction "fiable" (confiance forte ou moyenne).
+		// On ignore les commits "faible" (pattern aria-* seul : bumps de dépendance,
+		// refontes de tokens, snapshots…) qui ne sont pas de vraies corrections a11y.
+		const reliable = component.commits.find(
+			c => c.confidence === 'forte' || c.confidence === 'moyenne',
+		)
+		if (!reliable) continue
 		data[component.name] = {
-			version: latest.version ? latest.version.replace(/^v/i, '') : null,
-			date: new Date(latest.date).toLocaleDateString('fr-FR'),
-			dateIso: latest.date,
+			version: reliable.version ? reliable.version.replace(/^v/i, '') : null,
+			date: new Date(reliable.date).toLocaleDateString('fr-FR'),
+			dateIso: reliable.date,
 		}
 	}
 	return data
