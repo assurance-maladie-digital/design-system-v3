@@ -8,87 +8,112 @@ import '../styles/shared.css';
   <h1>Migrer de Vue-dot (Vue2) vers Synapse</h1>
 </div>
 
+> **Nouveau Starter Kit** — depuis sa dernière version, le Starter Kit Synapse (`sksn_x`) est une application **Vue 3 + Vite** (SPA). Il n'utilise **plus Nuxt**. La structure de projet, le routeur, la configuration, la localisation et les tests décrits ci-dessous suivent cette nouvelle stack.
+
 ## 1 - Commencer la migration
 
 Pour réaliser la migration d'un produit VueJS 2 vers VueJS 3, vous pouvez suivre les étapes suivantes :
 
 - Téléchargez la stack de migration [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/sksn_x).
 
-- Copier les pages de votre projet VueJS 2 dans le dossier pages du projet Starter Kit, les composants peuvent être placés dans le dossier components.
+- Copier les pages de votre projet VueJS 2 dans le dossier `src/views/` du projet Starter Kit&nbsp;; les composants peuvent être placés dans le dossier `src/components/`.
 
-- Identifier les dépendances à conserver dans la nouvelle version, il faut choisir la version vue3 de la librairie et la version Nuxt si elle existe. Ajouter ces dépendances dans le nouveau projet.
-Le package `@cnamts/vue-dot` a été remplacé par `@cnamts/synapse`, le package `vue-i18n` a été remplacé par `@nuxtjs/i18n`.
+- Identifier les dépendances à conserver dans la nouvelle version, en choisissant la version Vue 3 de chaque librairie. Ajouter ces dépendances dans le nouveau projet.
+Le package `@cnamts/vue-dot` a été remplacé par `@cnamts/synapse`, et `vue-i18n` passe à sa version Vue 3 (voir la section [Migration de la localisation](#7---migration-de-la-localisation)).
 
-- Dans le fichier nuxt.config.ts, ajouter le lien vers votre fichier de style global.
+### Styles globaux
 
-<Source dark code={`
-// nuxt.config.ts
-export default defineNuxtConfig({
-	...
-	css: [
-		...
-		'@/theme/styles.scss' // chemin vers votre fichier de style global
-	],
-	...
+Il n'y a plus de `nuxt.config.ts`. Les styles globaux sont importés directement dans le point d'entrée `src/main.ts` :
+
+<Source dark language="ts" code={`
+// src/main.ts
+import 'vuetify/styles'
+import '@cnamts/synapse/synapse.css'
+import './assets/styles/index.scss' // vos styles globaux
+`}
+/>
+
+### Variables de configuration
+
+Deux mécanismes remplacent le `runtimeConfig` de Nuxt :
+
+**1. Variables de build (Vite)** — exposées via `import.meta.env`. La version du projet est par exemple injectée depuis le `package.json` dans `vite.config.ts` :
+
+<Source dark language="ts" code={`
+// vite.config.ts
+import { version } from './package.json'
+
+process.env = Object.assign(process.env, {
+  VITE_APP_VERSION: version,
 })
 `}
 />
 
-- Dans le fichier nuxt.config.ts, ajouter les variables de configurations.
-
-<Source dark code={`
-// nuxt.config.ts
-export default defineNuxtConfig({
-	runtimeConfig: {
-		public: {
-			// ajouter les variables de configuration public ici
-			version: process.env.VUE_APP_VERSION,
-		},
-		...
-	},
-	...
-})
+<Source dark language="ts" code={`
+// usage dans le code
+console.log(import.meta.env.VITE_APP_VERSION)
 `}
 />
 
-Pour modifier ces variables sans regénérer le projet, il faut les écraser dans le fichier `.output/public/json/config.env.json`.
+**2. Variables d'exécution (runtime)** — un fichier JSON chargé au démarrage, modifiable **sans rebuild** (déploiement). Il est chargé dans `src/main.ts` puis fourni à l'application via une `InjectionKey`, en remplacement du `$config.public` de Nuxt :
 
-Pour utiliser ces variables dans un composant, il faut les importer et les utiliser comme suit :
+<Source dark language="ts" code={`
+// src/var.env.ts
+import type { InjectionKey } from 'vue'
 
-<Source dark code={`
-<script lang="ts">
-  export default defineNuxtComponent({
-    mounted() {
-      console.log(this.$config.public.version)
-    }
-  })
+export type Config = {
+  title: string
+  message: string
+  // ... vos variables
+}
+
+export const CONFIG_SYMBOL = Symbol('config') as InjectionKey<Config>
+`}
+/>
+
+<Source dark language="ts" code={`
+// src/main.ts
+import { CONFIG_SYMBOL, type Config } from './var.env'
+
+const res = await fetch(import.meta.env.VITE_JSON_FILE_NAME)
+const config = (await res.json()) as Config
+
+const app = createApp(App)
+app.provide(CONFIG_SYMBOL, config)
+`}
+/>
+
+Pour utiliser ces variables dans un composant, on les récupère avec `inject` (Composition API) :
+
+<Source dark language="vue" code={`
+<script setup lang="ts">
+import { inject } from 'vue'
+import { CONFIG_SYMBOL, type Config } from '@/var.env'
+
+const config = inject(CONFIG_SYMBOL) as Config
 </script>
 
 <template>
-  <div>
-    {{ $config.public.version }}
-  </div>
+  <div>{{ config.title }}</div>
 </template>
 `}
 />
 
 ## 2 - Migration du routeur
 
-Dans Nuxt 3, il n’est pas nécessaire de créer un fichier `router/index.ts` comme dans Vue classique. Nuxt 3 utilise un système de routing automatique basé sur les fichiers présents dans le dossier `pages/`.
-Cependant, pour ajouter un router personnalisé, voici comment faire :
+Il n'y a plus de routing automatique basé sur le dossier `pages/` (Nuxt). Le projet utilise désormais **Vue Router** déclaré explicitement dans `src/router/index.ts` :
 
-Ouvrir `router.options.ts` dans le dossier `app/` et ajoutez vos routes :
-
-<Source dark code={`
-// app/router.ts
+<Source dark language="ts" code={`
+// src/router/index.ts
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: () => import('@/pages/index.vue') },
-    { path: '/about', component: () => import('@/pages/about.vue') },
-    { path: '/contact', component: () => import('@/pages/contact.vue') },
+    { path: '/', name: 'index', component: HomeView },
+    { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
+    // ... vos routes
   ],
 })
 
@@ -99,6 +124,8 @@ export default router
 Voir le [guide de migration de vue-router](https://router.vuejs.org/guide/migration/) pour plus d'informations.
 
 ## 3 - Migration des stores VueX vers Pinia
+
+Le Starter Kit utilise **Pinia** (enregistré dans `src/main.ts` via `app.use(createPinia())`).
 
 Prenons un exemple de store Vuex :
 
@@ -194,23 +221,17 @@ Nb : pour la persistance des données vous pouvez utiliser le plugin [pinia-plug
 
 ## 4 - Animations des pages
 
-Si le projet utilise des transitions de page,
-
-- Retirer le composant `<transition>` dans le fichier `app.vue`
-
-- Configurer une transition de page dans le fichier `nuxt.config.ts`
+Sans Nuxt, les transitions de page se gèrent directement avec **Vue Router** et le composant `<Transition>`, en enveloppant la vue dans `App.vue` :
 
 <Source dark code={`
-// nuxt.config.ts
-export default defineNuxtConfig({
-	...
-	app: {
-		...
-		pageTransition: {
-			name: 'page',
-			mode: 'out-in'
-		}
-	}
+<!-- App.vue -->
+<template>
+  <RouterView v-slot="{ Component }">
+    <Transition name="page" mode="out-in">
+      <component :is="Component" />
+    </Transition>
+  </RouterView>
+</template>
 `}
 />
 
@@ -224,8 +245,8 @@ export default defineNuxtConfig({
 	transition-timing-function: ease;
 }
 
-.page-enter,
-.page-leave-active {
+.page-enter-from,
+.page-leave-to {
 	opacity: 0;
 }
 `}
@@ -282,39 +303,14 @@ const Props = defineComponent({
 `}
 />
 
-- Implémenter les fonctionnalités qui utilisaient des décorateurs retiré à l'étape 1 en utilisant l'option API, des mixins ou des composables.
-
-Par example : la gestion des [tag metas](https://nuxt.com/docs/migration/meta#options-api)
-
-<Source dark code={`
-@Meta
-metaInfo(): MetaInfo {
-	return {
-		title: 'Page title',
-		meta: [
-			{
-					name: 'description',
-					vmid: 'description',
-					content: 'This is my page description.'
-			}
-		]
-	};
-}
-`}
-/>
+- Implémenter les fonctionnalités qui utilisaient des décorateurs retiré à l'étape 1 en utilisant l'option API, des mixins ou des composables. La gestion des balises `<meta>` peut par exemple se faire avec [@unhead/vue](https://unhead.unjs.io/) (`useHead`) ou via `vue-router`.
 
 ## 6 - Migration des composants Vuetify
 
-Pour faciliter la migration des composants Vuetify, ce starter kit intègre le plugin [eslint-plugin-vuetify](https://github.com/vuetifyjs/eslint-plugin-vuetify).
-Il permet de faire remonter certains problèmes tels que des props qui n'existent plus ou dont le nom a changé.
-Certains changements peuvent être effectués automatiquement.
+Pour faciliter la migration des composants Vuetify (Vue 2 → Vue 3), vous pouvez ajouter le plugin [eslint-plugin-vuetify](https://github.com/vuetifyjs/eslint-plugin-vuetify) à votre configuration ESLint.
+Il permet de faire remonter certains problèmes tels que des props qui n'existent plus ou dont le nom a changé&nbsp;; certains changements peuvent être corrigés automatiquement (`--fix`).
 
-<Source dark code={`
-pnpm lint:migrate:fix
-`}
-/>
-
-Voici un aperçu des changements qui seront effectués par le script :
+Voici un aperçu des changements typiques :
 
 <Source dark code={`
 // passage de la syntaxe vue2 a vue3 pour la réactivité :
@@ -358,44 +354,38 @@ Voici un aperçu des changements qui seront effectués par le script :
 `}
 />
 
-Ces changements seront uniquement effectués sur les composants Vuetify.
+Voir aussi le [guide de migration officiel Vuetify](https://vuetifyjs.com/en/getting-started/upgrade-guide/).
 
 ## 7 - Migration de la localisation
 
-Le plugin `vue-i18n` a été remplacé par [`@nuxtjs/i18n`]( https://v8.i18n.nuxtjs.org/getting-started/basic-usage ).
+Sans Nuxt, la localisation se fait avec [`vue-i18n`](https://vue-i18n.intlify.dev/) (version Vue 3, Composition API) au lieu de `@nuxtjs/i18n`.
 
-- Mettre à jour le fichier `nuxt.config.ts` pour configurer le plugin `@nuxtjs/i18n`.
+- Installer `vue-i18n`, puis créer une instance et l'enregistrer dans `src/main.ts` :
 
-<Source dark code={`
- modules: [
-    '@nuxtjs/i18n',
-    ...
-  ],
-  i18n: {
-		vueI18n: './nuxt-i18n.ts'
-	},
+<Source dark language="ts" code={`
+// src/i18n.ts
+import { createI18n } from 'vue-i18n'
+import fr from '@/translations/fr'
+
+export const i18n = createI18n({
+  legacy: false,
+  locale: 'fr',
+  messages: { fr },
+})
 `}
 />
 
-- Créer un fichier `nuxt-i18n.ts` à la racine du projet, importer les traductions et les configurer.
+<Source dark language="ts" code={`
+// src/main.ts
+import { i18n } from './i18n'
 
-<Source dark code={`
-import translationFR from "
-import '../styles/shared.css';@/translations/fr";
-
-export default {
-	legacy: false,
-	locale: 'fr',
-	messages : {
-		fr: translationFR
-	}
-}
+app.use(i18n)
 `}
 />
 
-- Dans les composants, quand un object est importé avec la fonction `$t`, il faut le remplacer par `$tm`.
+- Dans les composants, quand un objet est récupéré via la fonction `$t`, il faut utiliser `$tm`.
 
-- Remplacer l'usage du composant `<i18n>` par`<i18n-t>`.
+- Remplacer l'usage du composant `<i18n>` par `<i18n-t>`.
 
 <Source dark code={`
 <i18n path="my.path" tag="p">My default text</i18n>
@@ -409,12 +399,24 @@ Devient :
 `}
 />
 
-plus de détails sur la page de [migration vue-i18n](https://vue-i18n.intlify.dev/guide/migration/breaking.html).
+Plus de détails sur la page de [migration vue-i18n](https://vue-i18n.intlify.dev/guide/migration/breaking.html).
 
 ## 8 - Migration des tests unitaires et de composants
 
-Les tests unitaires et de composants doivent être mis à jour pour être compatibles avec VueJS 3. Ils utilisent désormais vitest et `@nuxt/test-utils` pour les tests de composants.
+Les tests unitaires et de composants doivent être mis à jour pour être compatibles avec VueJS 3. Le Starter Kit utilise désormais **Vitest** avec [`@vue/test-utils`](https://test-utils.vuejs.org/) pour les tests de composants, et **Cypress** pour les tests e2e.
 
-L'API de Vitest est similaire à celle de Jest, pour faire des mocks il faut désormais utiliser `vi` au lieu de `jest`.
+L'API de Vitest est similaire à celle de Jest&nbsp;: pour faire des mocks il faut désormais utiliser `vi` au lieu de `jest`.
 
-Pour l'utilisation de `@nuxt/test-utils`, voir la [documentation](https://nuxt.com/docs/getting-started/testing).
+<Source dark language="ts" code={`
+import { mount } from '@vue/test-utils'
+import { describe, it, expect } from 'vitest'
+import HomeView from '@/views/HomeView.vue'
+
+describe('HomeView', () => {
+  it('monte le composant', () => {
+    const wrapper = mount(HomeView)
+    expect(wrapper.exists()).toBe(true)
+  })
+})
+`}
+/>
