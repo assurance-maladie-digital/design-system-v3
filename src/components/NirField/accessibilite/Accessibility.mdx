@@ -24,7 +24,7 @@ import {
 </div>
 
 <CriteriaSection>
-<CriteriaCard icon="🧩" title="Regroupement du NIR et de sa clé">
+<CriteriaCard title="Regroupement du NIR et de sa clé">
     <ul>
         <li><strong>Donnée logique unique</strong> : le numéro de sécurité sociale et sa clé forment un même ensemble de saisie</li>
         <li><strong>Comportement par défaut</strong> : lorsque la clé est affichée, le composant regroupe automatiquement les deux champs dans un <code>fieldset</code> avec un <code>legend</code></li>
@@ -33,7 +33,7 @@ import {
     </ul>
 </CriteriaCard>
 
-    <CriteriaCard icon="🏷️" title="Étiquettes des champs">
+    <CriteriaCard title="Étiquettes des champs">
         <ul>
             <li><strong>Libellés distincts</strong> : chaque sous-champ dispose de son propre libellé visible, par exemple <code>Numéro de sécurité sociale</code> et <code>Clé de validation</code></li>
             <li><strong>Compréhension renforcée</strong> : le <code>legend</code> apporte le contexte global, tandis que chaque <code>label</code> permet d’identifier précisément la zone en cours de saisie</li>
@@ -41,7 +41,7 @@ import {
         </ul>
     </CriteriaCard>
 
-<CriteriaCard icon="🔗" title="Messages liés automatiquement">
+<CriteriaCard title="Messages liés automatiquement">
         <ul>
             <li><strong>Messages liés aux bons champs</strong> : chaque champ génère ses propres identifiants pour les messages d’erreur, d’avertissement et de succès</li>
             <li><strong>Liaison</strong> : ces messages sont automatiquement reliés au champ concerné via <code>aria-describedby</code></li>
@@ -51,7 +51,7 @@ import {
         </ul>
     </CriteriaCard>
 
-<CriteriaCard icon="⚠️" title="Champs obligatoires et erreurs">
+<CriteriaCard title="Champs obligatoires et erreurs">
         <ul>
             <li><strong>Champ requis</strong> : lorsque la saisie est obligatoire, le composant ajoute automatiquement <code>aria-required</code></li>
             <li><strong>Champ en erreur</strong> : lorsqu’une validation échoue, le composant ajoute dynamiquement <code>aria-invalid</code> sur le ou les champs concernés</li>
@@ -61,7 +61,7 @@ import {
         </ul>
     </CriteriaCard>
 
-    <CriteriaCard icon="✍️" title="Aide à la saisie">
+    <CriteriaCard title="Aide à la saisie">
         <ul>
             <li><strong>Format spécifique</strong> : le NIR a une structure précise</li>
             <li><strong>Aide explicite recommandée</strong> : documenter ce qui est attendu pour le numéro et pour la clé, par exemple les 13 premiers chiffres puis les 2 derniers</li>
@@ -70,7 +70,7 @@ import {
         </ul>
     </CriteriaCard>
 
-    <CriteriaCard icon="⌨️" title="Navigation et focus">
+    <CriteriaCard title="Navigation et focus">
     <ul>
         <li><strong>Passage automatique</strong> : quand le NIR est complet, le focus passe automatiquement au champ de la clé</li>
         <li><strong>Retour au NIR</strong> : si la clé est supprimée, le focus revient sur le champ du numéro</li>
@@ -83,7 +83,7 @@ import {
         </ul>
 </CriteriaCard>
 
-<CriteriaCard icon="📢" title="Conformité RGAA 7.4 - Changements de contexte">
+<CriteriaCard title="Conformité RGAA 7.4 - Changements de contexte">
     <ul>
         <li><strong>Avertissement utilisateur</strong> : un message caché visuellement mais accessible aux lecteurs d'écran informe l'utilisateur avant la saisie que le focus peut être déplacé automatiquement : <em>"Après la saisie des 13 caractères du numéro de sécurité sociale, le curseur sera automatiquement placé dans le champ clé de validation. Si le champ clé est vidé, le curseur reviendra automatiquement dans le champ numéro."</em> Ce message est restitué avant la saisie, permettant à l'utilisateur d'anticiper le comportement.</li>
         <li><strong>Association ARIA</strong> : le message d'avertissement est relié uniquement au champ numéro via <code>aria-describedby</code> pour éviter la redondance</li>

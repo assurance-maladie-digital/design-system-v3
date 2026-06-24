@@ -18,7 +18,7 @@ import {
 	iconSrc={AccessibilityIcon}
 >
 	<CriteriaSection>
-		<CriteriaCard title="Structure sémantique" icon="🔍">
+		<CriteriaCard title="Structure sémantique" icon="">
 			<ul>
 				<li><strong>Rôles</strong> : Deux inputs avec <code>aria-required</code> synchronisé quand <code>required</code>.</li>
 				<li><strong>Association</strong> : Labels natifs pour chaque champ (date de début/fin) avec placeholders distinctifs "Début"/"Fin".</li>
@@ -27,7 +27,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard title="Saisie et clavier" icon="⌨️">
+		<CriteriaCard title="Saisie et clavier" icon="">
 			<ul>
 				<li><strong>Tab</strong> : Navigation séquentielle entre les deux champs sans piège de focus.</li>
 				<li><strong>Masque automatique</strong> : Formatage automatique des séparateurs sans bloquer la saisie ni les raccourcis clavier.</li>
@@ -37,7 +37,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard title="Validation croisée" icon="📣">
+		<CriteriaCard title="Validation croisée" icon="">
 			<ul>
 				<li><strong>Cohérence période</strong> : Validation automatique que début ≤ fin avec messages d'erreur croisés.</li>
 				<li><strong>Champs requis</strong> : Si required, les deux champs doivent être remplis ou aucun (logique flexible).</li>
@@ -46,7 +46,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard title="Calendrier intégré" icon="📅">
+		<CriteriaCard title="Calendrier intégré" icon="">
 			<ul>
 				<li><strong>Icône accessible</strong> : Bouton avec <code>aria-label</code> explicite ("Ouvrir le calendrier"). Les attributs <code>aria-expanded</code> et <code>aria-haspopup</code> ne sont pas appliqués directement sur les champs textes pour respecter leur rôle natif.</li>
 				<li><strong>Navigation calendrier</strong> : Flèches, Home/End, PageUp/Down, Entrée/Espace pour sélectionner dates.</li>

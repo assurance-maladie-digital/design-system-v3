@@ -19,7 +19,7 @@ import {
 >
 
 <CriteriaSection>
-	<CriteriaCard title="Structure sémantique" icon="🔍">
+	<CriteriaCard title="Structure sémantique" icon="">
 		<ul>
 			<li><strong>Champ</strong> : conteneur <code>role="combobox"</code> qui expose <code>aria-controls</code> et <code>aria-expanded</code>; champ de saisie interne en <code>textbox</code> avec libellé dynamique. À la différence du mode calendrier simple, ce mode permet la saisie libre, justifiant l'utilisation du pattern combobox.</li>
 			<li><strong>Panneau</strong> : calendrier dans un menu <code>role="presentation"</code>, grille de boutons natifs pour les jours.</li>
@@ -28,7 +28,7 @@ import {
 		</ul>
 	</CriteriaCard>
 
-	<CriteriaCard title="Ouverture et focus" icon="🧭">
+	<CriteriaCard title="Ouverture et focus" icon="">
 		<ul>
 			<li><strong>Ouverture</strong> : clic sur le champ ou l’icône; <kbd>Entrée</kbd> sur le champ ouvre; option <code>textFieldActivator</code> active toute la zone.</li>
 			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> via le piège de focus; fermeture valide et émet <code>closed</code>.</li>
@@ -37,7 +37,7 @@ import {
 		</ul>
 	</CriteriaCard>
 
-	<CriteriaCard title="Navigation clavier dans le calendrier" icon="⌨️">
+	<CriteriaCard title="Navigation clavier dans le calendrier" icon="">
 		<ul>
 			<li><strong>Jours</strong> : flèches déplacent le focus; <code>PageUp/PageDown</code> changent de mois (<kbd>Shift</kbd> + touche change d’année).</li>
 			<li><strong>Home/End</strong> : premier/dernier jour du mois affiché.</li>
@@ -46,7 +46,7 @@ import {
 		</ul>
 	</CriteriaCard>
 
-	<CriteriaCard title="Messages et annonces" icon="📣">
+	<CriteriaCard title="Messages et annonces" icon="">
 		<ul>
 			<li><strong>Statuts</strong> : erreurs/avertissements/succès affichés sous le champ; bouton « Aujourd’hui » avec <code>title</code>.</li>
 			<li><strong>Formats attendus</strong> : placeholder + hint décrivent la saisie; autoClamp optionnel sur la saisie interne.</li>
