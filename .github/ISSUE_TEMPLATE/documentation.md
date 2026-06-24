@@ -9,7 +9,7 @@ labels:
 
 ## Type d'anomalie
 
-📝 Anomalie documentaire
+ Anomalie documentaire
 
 ### Impact
 

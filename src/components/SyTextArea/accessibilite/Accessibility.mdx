@@ -19,7 +19,7 @@ import {
 >
 
 	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Structure sémantique et attributs">
+		<CriteriaCard title="Structure sémantique et attributs">
 			<ul>
 				<li><strong>Élément textarea natif</strong> : Utilisation de <code>&lt;textarea&gt;</code> via VTextarea pour une sémantique correcte adaptée aux textes multilignes.</li>
 				<li><strong>Labels explicites</strong> : Gestion automatique du <code>aria-label</code> basé sur la prop <code>label</code>. L'attribut <code>aria-required</code> est ajouté si le champ est requis.</li>
@@ -28,7 +28,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+		<CriteriaCard title="Navigation et interaction clavier">
 			<ul>
 				<li><strong>Focus natif</strong> : Le textarea est naturellement focusable via <kbd>Tab</kbd> et permet la navigation dans le contenu avec les flèches.</li>
 				<li><strong>Saisie multiligne</strong> : Support natif des sauts de ligne avec <kbd>Entrée</kbd> et navigation entre les lignes avec les flèches directionnelles.</li>
@@ -37,7 +37,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🎨" title="Styles et états visuels">
+		<CriteriaCard title="Styles et états visuels">
 			<ul>
 				<li><strong>Contrastes garantis</strong> : Couleurs distinctes pour les états erreur et validation respectant les critères WCAG.</li>
 				<li><strong>États cohérents</strong> : Changements visuels clairs entre les états normal, erreur et focus.</li>
@@ -46,7 +46,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="📝" title="Validation et contraintes">
+		<CriteriaCard title="Validation et contraintes">
 			<ul>
 				<li><strong>Champ requis</strong> : Validation automatique avec message "Ce champ est requis" lorsque <code>required</code> est true.</li>
 				<li><strong>Limite de lignes</strong> : Validation du nombre maximum de lignes avec message d'erreur spécifique via la prop <code>maxLines</code>.</li>

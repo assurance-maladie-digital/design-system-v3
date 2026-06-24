@@ -17,7 +17,7 @@ import {
 	iconSrc={AccessibilityIcon}
 >
 	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Structure sémantique">
+		<CriteriaCard title="Structure sémantique">
 			<ul>
 				<li><strong>Élément bouton</strong> : le composant repose sur un <code>v-btn</code> qui génère un élément <code>&lt;button&gt;</code> natif — il est nativement reconnu par les lecteurs d'écran et les outils d'assistance</li>
 				<li><strong>Prop <code>label</code> obligatoire</strong> : la prop <code>label</code> est requise et est portée par le bouton via <code>aria-label</code> — elle constitue le nom accessible du bouton</li>
@@ -27,7 +27,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation clavier">
+		<CriteriaCard title="Navigation clavier">
 			<ul>
 				<li><strong>Focusable</strong> : le bouton est naturellement focusable via <kbd>Tab</kbd> grâce à l'élément <code>&lt;button&gt;</code> natif</li>
 				<li><strong>Activation</strong> : le bouton peut être activé via <kbd>Entrée</kbd> ou <kbd>Espace</kbd> nativement</li>

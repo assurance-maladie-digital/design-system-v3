@@ -19,7 +19,7 @@ import {
 >
 
 <CriteriaSection>
-	<CriteriaCard title="Structure sémantique" icon="🔍">
+	<CriteriaCard title="Structure sémantique" icon="">
 		<ul>
 			<li><strong>Champ</strong> : <code>&lt;input&gt;</code> readonly (texte) sans <code>role="combobox"</code> forcé; l’ouverture se fait via clic ou clavier.</li>
 			<li>
@@ -36,7 +36,7 @@ import {
 		</ul>
 	</CriteriaCard>
 
-	<CriteriaCard title="Ouverture et focus" icon="🧭">
+	<CriteriaCard title="Ouverture et focus" icon="">
 		<ul>
 			<li><strong>Ouverture clavier</strong> : <kbd>Entrée</kbd> sur le champ ouvre le calendrier; l’icône déclenche l’ouverture avec la souris.</li>
 			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide, focus rendu au champ.</li>
@@ -44,7 +44,7 @@ import {
 		</ul>
 	</CriteriaCard>
 
-	<CriteriaCard title="Navigation clavier dans le calendrier" icon="⌨️">
+	<CriteriaCard title="Navigation clavier dans le calendrier" icon="">
 		<ul>
 			<li><strong>Jours</strong> : flèches déplacent le focus jour par jour; <code>PageUp/PageDown</code> changent de mois (<kbd>Shift</kbd> + touche change d’année).</li>
 			<li><strong>Home/End</strong> : vont au premier/dernier jour du mois affiché.</li>
@@ -53,7 +53,7 @@ import {
 		</ul>
 	</CriteriaCard>
 
-	<CriteriaCard title="Messages et annonces" icon="📣">
+	<CriteriaCard title="Messages et annonces" icon="">
 		<ul>
 			<li><strong>Live region</strong> : le mois/année affichés sont annoncés via <code>aria-live="polite"</code> (zone masquée).</li>
 			<li><strong>Statuts</strong> : erreurs/avertissements/succès sous le champ; le bouton « Aujourd’hui » a un <code>title</code> explicite.</li>

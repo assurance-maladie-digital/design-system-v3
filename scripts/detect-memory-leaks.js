@@ -14,8 +14,8 @@ import { writeFileSync } from 'fs'
 const MEMORY_THRESHOLD_MB = 10 // Seuil de fuite de mémoire en MB
 const TEST_PATTERN = process.argv[2] || '**/*.spec.ts' // Motif pour sélectionner les tests
 
-console.log(`\x1b[34m🔍 Détection des fuites de mémoire pour les tests: ${TEST_PATTERN}\x1b[0m`)
-console.log(`\x1b[34m🔍 Seuil d'alerte: ${MEMORY_THRESHOLD_MB} MB\x1b[0m\n`)
+console.log(`\x1b[34m Détection des fuites de mémoire pour les tests: ${TEST_PATTERN}\x1b[0m`)
+console.log(`\x1b[34m Seuil d'alerte: ${MEMORY_THRESHOLD_MB} MB\x1b[0m\n`)
 
 // Récupération de la liste des fichiers de test
 console.log('Recherche des fichiers de test...')
@@ -113,4 +113,4 @@ const report = {
 }
 
 writeFileSync('memory-leak-report.json', JSON.stringify(report, null, 2))
-console.log('\n\x1b[34m📝 Rapport enregistré dans memory-leak-report.json\x1b[0m')
+console.log('\n\x1b[34m Rapport enregistré dans memory-leak-report.json\x1b[0m')

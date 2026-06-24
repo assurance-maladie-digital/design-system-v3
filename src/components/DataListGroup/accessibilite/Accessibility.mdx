@@ -23,7 +23,7 @@ import {
 	</div>
 
 	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Structure sémantique des groupes">
+		<CriteriaCard title="Structure sémantique des groupes">
 			<ul>
 				<li><strong>Élément ul/li</strong> : Utilisation native de liste non ordonnée pour regrouper les DataList</li>
 				<li><strong>Composition sémantique</strong> : Chaque élément contient un DataList avec structure dl/dt/dd héritée</li>
@@ -31,7 +31,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation et interactions">
+		<CriteriaCard title="Navigation et interactions">
 			<ul>
 				<li><strong>Focus séquentiel</strong> : Navigation logique entre les différents groupes et leurs éléments</li>
 				<li><strong>Actions contextualisées</strong> : Événements <code>click:list-item</code> avec indices doubles (dataListIndex, itemIndex)</li>
@@ -39,7 +39,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🎨" title="Mise en page et responsive">
+		<CriteriaCard title="Mise en page et responsive">
 			<ul>
 				<li><strong>Layout flexbox</strong> : Utilisation de <code>d-flex</code> pour l'affichage horizontal des groupes</li>
 				<li><strong>Largeurs configurables</strong> : <code>itemWidth</code> pour contrôler la taille de chaque groupe</li>
@@ -47,7 +47,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="📱" title="États et chargement">
+		<CriteriaCard title="États et chargement">
 			<ul>
 				<li><strong>États de chargement</strong> : Propagation de <code>loading</code> à tous les DataList enfants</li>
 				<li><strong>Slots avancés</strong> : Slot <code>item</code> avec contexte enrichi (dataListIndex inclus)</li>

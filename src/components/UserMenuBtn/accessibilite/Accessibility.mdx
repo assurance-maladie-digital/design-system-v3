@@ -19,7 +19,7 @@ import {
 	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/"
 >
 	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Structure sémantique">
+		<CriteriaCard title="Structure sémantique">
 			<ul>
 				<li><strong>Rôles ARIA</strong> : <code>role="menu"</code> pour la liste et <code>role="menuitem"</code> pour chaque option (y compris le bouton de déconnexion).</li>
 				<li><strong>Attributs d'association</strong> : <code>aria-labelledby</code> relie le menu au bouton généré, <code>aria-haspopup</code>/<code>aria-expanded</code>/<code>aria-controls</code> sont gérés par <code>VMenu</code>.</li>
@@ -28,7 +28,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation clavier complète">
+		<CriteriaCard title="Navigation clavier complète">
 			<ul>
 				<li><strong>Tabulation</strong> : accès au bouton puis parcours des options.</li>
 				<li><strong>Entrée/Espace</strong> : ouverture du menu et activation d'une option.</li>
@@ -37,7 +37,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🎯" title="Gestion du focus & retours">
+		<CriteriaCard title="Gestion du focus & retours">
 			<ul>
 				<li>Focus placé sur la première option à l'ouverture, puis renvoyé vers le bouton à la fermeture.</li>
 				<li><code>aria-expanded</code> reflète l'état d'ouverture ; <code>aria-current="page"</code> sur l'élément sélectionné.</li>
@@ -45,7 +45,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="📱" title="Compatibilité mobile & personnalisation">
+		<CriteriaCard title="Compatibilité mobile & personnalisation">
 			<ul>
 				<li>Modes <code>isMobileView</code> et <code>iconOnly</code> compactent l'affichage tout en conservant un libellé pour les lecteurs d'écran.</li>
 				<li>Options <code>menu</code> / <code>btn</code> / <code>list</code> personnalisables sans dégrader les attributs ARIA.</li>

@@ -18,13 +18,13 @@ import {
 	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/"
 >
 	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Structure sémantique">
+		<CriteriaCard title="Structure sémantique">
 			<ul>
 				<li><strong>Rôle ARIA approprié</strong> : <code>role="toolbar"</code> sur le conteneur principal</li>
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation clavier complète">
+		<CriteriaCard title="Navigation clavier complète">
 			<ul>
 				<li><strong>Flèches directionnelles</strong> : Navigation entre les éléments interactifs (←, →, ↑, ↓)</li>
                 <li>Le focus boucle en fin de liste et revient au début (et inversement)</li>
@@ -33,7 +33,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="📱" title="États et retours d'information">
+		<CriteriaCard title="États et retours d'information">
 			<ul>
 				<li><strong>Focus visible</strong> : L'effet de focus possède un contraste suffisant et est cohérent avec le reste du design système</li>
 				<li><strong>État sélectionné</strong> : Utilisation de <code>aria-checked</code> ou <code>aria-pressed</code> selon le type de bouton</li>

@@ -24,7 +24,7 @@ import {
 </div>
 
     <CriteriaSection>
-        <CriteriaCard icon="🔍" title="Structure sémantique">
+        <CriteriaCard title="Structure sémantique">
             <ul>
                 <li><strong>Titre de page</strong> : rendu dans une balise <code>h1</code> via <code>StatusPage</code>, unique et descriptif — surchargeable via la prop <code>page-title</code></li>
                 <li><strong>Code d'erreur</strong> : la prop <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) est masquée visuellement via <code>d-sr-only</code> pour contextualiser le code aux lecteurs d'écran</li>
@@ -32,7 +32,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🏷️" title="Rôle et identifiant ARIA">
+        <CriteriaCard title="Rôle et identifiant ARIA">
             <ul>
                 <li><strong>Prop <code>role</code></strong> : permet de définir le rôle ARIA de la page d'erreur — deux valeurs acceptées : <code>main</code> ou <code>region</code></li>
                 <li><strong>Prop <code>uniqueId</code></strong> : permet de définir un identifiant unique sur le conteneur, facilitant le ciblage par <code>aria-labelledby</code> ou <code>aria-describedby</code> depuis d'autres éléments</li>
@@ -40,7 +40,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🔗" title="Liens et boutons">
+        <CriteriaCard title="Liens et boutons">
             <ul>
                 <li><strong>Bouton de retour</strong> : rendu via <code>btn-href</code> (balise <code>a</code>) ou <code>btn-link</code> (balise <code>router-link</code>)</li>
                 <li><strong>Texte du bouton</strong> : doit être explicite et décrire la destination, ex. <em>"Retour à l'accueil"</em></li>
@@ -49,7 +49,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🖼️" title="Illustration">
+        <CriteriaCard title="Illustration">
             <ul>
                 <li><strong>Image décorative</strong> : l'illustration par défaut possède <code>alt=""</code> et <code>aria-hidden="true"</code> car elle est purement décorative</li>
                 <li><strong>Source thémable</strong> : l'image source provient des locales du thème via <code>useThemeLocales</code></li>

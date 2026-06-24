@@ -26,7 +26,7 @@ import {
 	</AuditSection>
 
 	<CriteriaSection>
-		<CriteriaCard icon="🏷️" title="Structure et rôles">
+		<CriteriaCard title="Structure et rôles">
 			<ul>
 				<li>Le champ de recherche reste un champ texte natif (<code>SyTextField</code> sous-jacent) avec label obligatoire.</li>
 				<li>La liste est encapsulée dans un <code>fieldset</code> + <code>legend</code> (listLabel) et les résultats sont des <code>li</code> avec checkbox.</li>
@@ -34,7 +34,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation clavier">
+		<CriteriaCard title="Navigation clavier">
 			<ul>
 				<li>Tabulation : focus successif sur le champ puis chaque option ; activation par Espace/Entrée sur la checkbox.</li>
 				<li>Focus visible sur le champ et les cases à cocher ; suppression via la case déjà cochée.</li>
@@ -42,7 +42,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🎨" title="Contraste et lisibilité">
+		<CriteriaCard title="Contraste et lisibilité">
 			<ul>
 				<li>Label et texte des options utilisent les couleurs du thème avec contrastes conformes.</li>
 				<li>État sélectionné signalé par classe <code>suggestion-item--selected</code> (fond/contour) + checkbox cochée.</li>

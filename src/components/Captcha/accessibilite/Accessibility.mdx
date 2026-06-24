@@ -19,7 +19,7 @@ import {
 >
 	
 	<CriteriaSection>
-		<CriteriaCard icon="🖼️" title="Images et alternatives textuelles">
+		<CriteriaCard title="Images et alternatives textuelles">
 			<ul>
 				<li><strong>Image captcha</strong> : Attribut <code>alt</code> avec <code>locales.captchaImgAlt</code> ("Le captcha à saisir").</li>
 				<li><strong>Skeleton loader</strong> : <code>aria-label</code> avec <code>locales.captchaImgLoading</code> pendant le chargement.</li>
@@ -27,7 +27,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🎵" title="Captcha audio et contrôles">
+		<CriteriaCard title="Captcha audio et contrôles">
 			<ul>
 				<li><strong>Bouton audio</strong> : <code>aria-label</code> dynamique avec <code>locales.audio.loading</code> pendant le chargement.</li>
 				<li><strong>Icônes décoratives</strong> : <code>aria-hidden="true"</code> sur les icônes volume-up et SyIcon décoratives.</li>
@@ -35,7 +35,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="📝" title="Formulaires et champs de saisie">
+		<CriteriaCard title="Formulaires et champs de saisie">
 			<ul>
 				<li><strong>Champ de saisie</strong> : Utilise <code>SyTextField</code> avec label descriptif selon le type (image/audio).</li>
 				<li><strong>Validation</strong> : Règle personnalisée avec message <code>locales.required</code>.</li>
@@ -44,7 +44,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🔄" title="Boutons d'action et navigation">
+		<CriteriaCard title="Boutons d'action et navigation">
 			<ul>
 				<li><strong>Texte masqué</strong> : <code>&lt;p class="d-sr-only"&gt;</code> avec <code>locales.renew</code> pour le bouton de renouvellement.</li>
 				<li><strong>Icônes décoratives</strong> : Attribut <code>decorative</code> sur les SyIcon pour ne pas polluer les lecteurs d'écran.</li>
@@ -52,7 +52,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⚠️" title="Alertes et messages d'erreur">
+		<CriteriaCard title="Alertes et messages d'erreur">
 			<ul>
 				<li><strong>Composant d'alerte</strong> : Utilise <code>VAlert</code> avec couleur "error" et variant "text".</li>
 				<li><strong>Icône d'erreur</strong> : SyIcon décoratif avec <code>mdiAlertCircleOutline</code>.</li>
