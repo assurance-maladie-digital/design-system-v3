@@ -22,7 +22,7 @@
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
-	const { updateAccessibility, fixAriaAttributes } = useDatePickerAccessibility()
+	const { updateAccessibility, updateControlsAriaExpanded, fixAriaAttributes } = useDatePickerAccessibility()
 
 	// Variables pour suivre le mois et l'année actuellement affichés dans le CalendarMode
 	const currentMonth = ref<string | null>(null)
@@ -677,6 +677,12 @@
 		() => selectedDates.value,
 	)
 
+	watch(currentViewMode, (newMode) => {
+		if (isDatePickerVisible.value) {
+			updateControlsAriaExpanded(newMode)
+		}
+	})
+
 	const handleInputBlur = async () => {
 		emit('blur')
 		onblur.value = true
@@ -946,6 +952,7 @@
 			>
 				<template #activator="{ props: menuProps }">
 					<div
+						role="button"
 						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
 					>
 						<SyTextField
@@ -991,7 +998,9 @@
 				</template>
 				<div
 					tabindex="-1"
-					role="presentation"
+					role="dialog"
+					aria-modal="true"
+					aria-label="Sélectionner une date"
 					@keydown.capture="handleMenuKeydown"
 				>
 					<div

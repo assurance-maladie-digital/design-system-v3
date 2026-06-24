@@ -52,7 +52,7 @@
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
-	const { updateAccessibility } = useDatePickerAccessibility()
+	const { updateAccessibility, updateControlsAriaExpanded } = useDatePickerAccessibility()
 
 	/**
 	 * Utils
@@ -786,6 +786,12 @@
 			() => selectedDates.value,
 		)
 
+	watch(currentViewMode, (newMode) => {
+		if (isDatePickerVisible.value) {
+			updateControlsAriaExpanded(newMode)
+		}
+	})
+
 	/**
 	 * Manual input validation on blur
 	 */
@@ -1128,7 +1134,9 @@
 
 				<div
 					tabindex="-1"
-					role="presentation"
+					role="dialog"
+					aria-modal="true"
+					aria-label="Sélectionner une date"
 					@keydown.capture="handleMenuKeydown"
 				>
 					<VDatePicker
@@ -1173,6 +1181,8 @@
 						<template #header>
 							<SyHeading
 								class="mx-auto my-auto ml-5 mb-4"
+								aria-live="polite"
+								aria-atomic="true"
 								:level="headingLevel"
 							>
 								{{ selectedDates ? displayedDateString : headerDate }}
