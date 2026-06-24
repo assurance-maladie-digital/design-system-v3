@@ -64,6 +64,32 @@ Documentation des scripts utilitaires (`scripts/`).
 
 ---
 
+### 🔌 [Directives Vue](./Directives/README.md)
+
+Directives Vue disponibles dans le Design System.
+
+| Directive | Contenu |
+|---|---|
+| [`vToolbar`](./Directives/README.md#vtoolbar) | Roving tabindex pour barres d'outils accessibles |
+| [`vLockFocus`](./Directives/README.md#vlockfocus) | Piège focus pour modales et popovers |
+| [`vRgaaSvgFix`](./Directives/README.md#vrgaasvgfix) | Attributs ARIA automatiques sur les SVG |
+| [`clickOutside`](./Directives/README.md#clickoutside) | Détection de clic extérieur (interne) |
+
+---
+
+### 🛠️ [Utilitaires publics](./Utils/README.md)
+
+Fonctions utilitaires exportées par `@cnamts/synapse`.
+
+| Catégorie | Fonctions |
+|---|---|
+| Formatage | `formatDate`, `formatNir`, `calcHumanFileSize`, `convertToUnit` |
+| Dates | `parseDate`, `isDateAfter`, `isDateBefore`, `isDateInRange`, `isWeekend` |
+| DOM & Browser | `copyToClipboard`, `downloadFile` |
+| Data & Storage | `deepCopy`, `LocalStorageUtility` |
+
+---
+
 ### ♿ [Accessibilité](./Accessibilite/README.md)
 
 Guide contributeur pour l'axe a11y/RGAA : écrire des tests axe, utiliser les directives, lire le rapport.

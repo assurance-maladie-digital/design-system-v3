@@ -219,4 +219,3 @@ Ces erreurs Tanaguru ont été analysées et ne sont **pas** de vraies violation
 | Storybook — Avancement conformité DS | `Accessibilité/Design System/Avancement` |
 | Rapport a11y automatique | `pnpm a11y:report` → `a11y-report.md` |
 | Utilitaire axe | `tests/unit/accessibility/axeUtils.ts` |
-| Contact accessibilité | valentin.becquet@assurance-maladie.fr |
