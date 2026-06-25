@@ -1,0 +1,120 @@
+import { Meta } from '@storybook/blocks';
+import '../styles/shared.css';
+
+<Meta title="Éco-conception/Auto-évaluation UX" />
+
+<style>
+{`
+.eco-page h1,
+.eco-page h2,
+.eco-page h3 {
+  color: #0C419A;
+}
+
+.steps-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.steps-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.step-number {
+  background: #0C419A;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  color: #0C419A;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  height: 24px;
+  border: 1px solid #0C419A;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #0C419A !important;
+  text-decoration: none;
+  background: white;
+}
+.download-btn:hover {
+  background: #F5F8FF;
+}
+`}
+</style>
+
+<div className="eco-page">
+
+<div className="header">
+  <h1 className="eco-title">Auto-évaluation UX</h1>
+  <p className="eco-subtitle">
+    Cette démarche permet d’évaluer de façon manuelle la conformité de votre produit numérique
+    avec les bonnes pratiques d’écoconception essentielles au niveau de l’expérience utilisateur.
+  </p>
+</div>
+
+<h2 className="eco-title">L’auto-évaluation manuelle se déroule en 3 étapes :</h2>
+
+<ul className="steps-list">
+  <li><span className="step-number">1</span> Télécharger le fichier Excel de reporting</li>
+  <li><span className="step-number">2</span> Constituer l’échantillon de test</li>
+  <li><span className="step-number">3</span> Évaluer l’application des bonnes pratiques et reporter vos résultats dans l’excel pour chaque page de l’échantillon</li>
+</ul>
+
+<h2 className="step-title"><span className="step-number">1</span> Télécharger le fichier Excel de reporting</h2>
+
+Le fichier Excel vous permettra de lister des pages de votre échantillonnage et de reporter les résultats de l’analyse pour chacune des pages de l’échantillonnage.
+
+<a className="download-btn" href="#">  <span className="mdi mdi-download"></span>
+  Télécharger le fichier Excel
+</a>
+
+
+<h2 className="step-title"><span className="step-number">2</span> Constituer l’échantillonnage de votre test</h2>
+
+Pour vous aider à lister les pages de l’échantillonnage, voici les questions à se poser par ordre de priorité :
+
+**1. Quelles sont les pages concernées par des chantiers ou refontes à venir pour maximiser l’impact des préconisations techniques ?**
+
+Afin d’éviter une ré-écriture, il est important de commencer la démarche Eco-Conception par les pages à développer ou à modifier.
+
+**2. Quelles sont les pages les plus consultées ?**
+
+Vous pouvez vous aider des statistiques d’audience pour sélectionner ces pages.
+
+**3. Quels sont les parcours utilisateurs, les parcours fonctionnels représentatifs des usages majeurs du site ou de l’application ?**
+
+Mappez au moins un parcours métier complet en ciblant les pages qui structurent la navigation.
+
+<h2 className="step-title"><span className="step-number">3</span> Reporter les résultats de l’analyse dans l’Excel</h2>
+
+Pour chaque bonne pratique de l’excel, évaluer la page et reporter si le résultat est :
+
+- “Conforme”
+- “Non Conforme”
+- “Non applicable”
+
+</div>
