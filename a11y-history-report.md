@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-06-25T08:40:42.629Z
+- Généré le: 2026-06-25T08:48:04.930Z
 
 ## Accordion
 
@@ -215,6 +215,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproCheckbox
 
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
+
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
 
@@ -228,6 +231,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproCheckboxGroup
+
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -269,6 +275,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.9` · Hash: `ede2ab613c63b27a83b9ca29122cf34ec7a0fed6` | pattern ARIA
 
 ## AmeliproCustomSelector
+
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -335,6 +344,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproFilters
 
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
+
 - **04/02/2026** — Feat/sementic (#1794)  
   Release: `v1.0.19` · Hash: `b736fe5faa63d63446258fe3626e7264d60e91c4` | pattern ARIA
 
@@ -359,6 +371,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproHeader
 
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
+
 - **27/11/2025** — feat/1204 Ajout de tests unitaires pour le composant AmeliproLogoAM (#1406)  
   Release: `v1.0.16` · Hash: `7fc2124aa71772bca16672335e4c9c4ba86c2941` | pattern ARIA
 
@@ -373,6 +388,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproHeaderBar
 
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
+
 - **27/11/2025** — feat/1204 Ajout de tests unitaires pour le composant AmeliproLogoAM (#1406)  
   Release: `v1.0.16` · Hash: `7fc2124aa71772bca16672335e4c9c4ba86c2941` | pattern ARIA
 
@@ -386,6 +404,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproHeaderBrandSection
+
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
 - **24/11/2025** — feat/1199 Ajout de tests unitaires pour le composant AmeliproHeaderBrandSection (#1389)  
   Release: `v1.0.13` · Hash: `54fccd6c77f62edfa7d39a560b351c568f94d87d` | pattern ARIA
@@ -664,6 +685,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.7` · Hash: `79378a1ad34cdb07b03cf1bd220b02453cfe4229` | pattern ARIA
 
 ## AmeliproSelect
+
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
 - **22/12/2025** — AmeliProSelect - Mise à jour du contraste (#1662)  
   Release: `v1.0.17` · Hash: `4d485d126f3768208a37d91c3106ff381b349cf2` | mot-clé a11y · pattern ARIA
@@ -2716,6 +2740,9 @@ Aucune amélioration d’accessibilité détectée.
 - **20/05/2026** — Implémentation des nouveaux tokens (#2164)  
   Release: `v1.0.27` · Hash: `c5a2297435779e2698442027eaa64ec319a83ad5` | pattern ARIA
 
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
+
 - **20/04/2026** — Feat/improve sy tabs a11y (#2111)  
   Release: `v1.0.25` · Hash: `c7d5d6808a432dd319821980564f035869530c40` | mot-clé a11y
 
@@ -2741,6 +2768,9 @@ Aucune amélioration d’accessibilité détectée.
 
 - **20/05/2026** — Implémentation des nouveaux tokens (#2164)  
   Release: `v1.0.27` · Hash: `c5a2297435779e2698442027eaa64ec319a83ad5` | pattern ARIA
+
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
 - **20/04/2026** — Feat/improve sy tabs a11y (#2111)  
   Release: `v1.0.25` · Hash: `c7d5d6808a432dd319821980564f035869530c40` | mot-clé a11y
@@ -3071,6 +3101,9 @@ Aucune amélioration d’accessibilité détectée.
 - **20/05/2026** — Implémentation des nouveaux tokens (#2164)  
   Release: `v1.0.27` · Hash: `c5a2297435779e2698442027eaa64ec319a83ad5` | pattern ARIA
 
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
+
 - **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
   Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
 
@@ -3105,6 +3138,9 @@ Aucune amélioration d’accessibilité détectée.
 
 - **20/05/2026** — Implémentation des nouveaux tokens (#2164)  
   Release: `v1.0.27` · Hash: `c5a2297435779e2698442027eaa64ec319a83ad5` | pattern ARIA
+
+- **21/04/2026** — Tokens simplify v2 (#2102)  
+  Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
 - **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
   Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y

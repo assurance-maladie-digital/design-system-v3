@@ -57,7 +57,6 @@ const a11yPrLabels = [
 const excludedPrNumbers = new Set([
 	'2323', // Remove emoji icons from accessibility documentation and templates (doc/style)
 	'1951', // Update Vuetify 3.12.2 (bump de dépendance, pas de correction a11y ciblée)
-	'2102', // Tokens simplify v2 (refonte de tokens, pas de correction a11y ciblée)
 ])
 
 // Overrides manuels de version a11y : pour les composants dont la correction d'accessibilité
