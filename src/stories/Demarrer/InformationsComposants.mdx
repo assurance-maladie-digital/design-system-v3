@@ -1,0 +1,116 @@
+import { Meta } from '@storybook/addon-docs';
+import infoData from './component-info.json';
+import '../styles/shared.css';
+import { useState } from 'react';
+
+<Meta title="Démarrer/Informations composants" />
+
+<style>
+{`
+.ci-container { font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin-top: 1.5rem; }
+.ci-meta { font-size: 0.875rem; color: #525252; margin-bottom: 1.25rem; }
+.ci-search { width: 360px; max-width: 100%; height: 40px; padding: 0.5rem 0.75rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 0.875rem; box-sizing: border-box; outline: none; margin-bottom: 1rem; }
+.ci-search:focus { border-color: #0c419a; box-shadow: 0 0 0 2px rgba(12,65,154,0.15); }
+.ci-table-wrapper { width: 100%; overflow-x: auto; border: 1px solid #e0e0e0; border-radius: 4px; }
+.ci-table { width: 100%; border-collapse: collapse; text-align: left; }
+.ci-table th { background-color: #f4f4f4; color: #161616; font-weight: 600; font-size: 0.8125rem; padding: 0.75rem 1rem; border-bottom: 1px solid #e0e0e0; white-space: nowrap; }
+.ci-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #e0e0e0; font-size: 0.8125rem; vertical-align: top; }
+.ci-table tr:last-child td { border-bottom: none; }
+.ci-name a { color: #0c419a; font-weight: 600; text-decoration: none; }
+.ci-name a:hover { text-decoration: underline; }
+.ci-tag { display: inline-flex; align-items: center; padding: 0.2rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; background-color: #d0e2ff; color: #161616; white-space: nowrap; }
+.ci-tag.empty { background-color: #f4f4f4; color: #6f6f6f; }
+.ci-date { font-size: 0.6875rem; color: #6f6f6f; margin-top: 0.15rem; }
+.ci-commits { margin: 0; padding: 0; list-style: none; max-height: 180px; overflow-y: auto; }
+.ci-commits li { padding: 0.15rem 0; display: flex; gap: 0.5rem; align-items: baseline; }
+.ci-commits .c-date { color: #6f6f6f; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.75rem; }
+.ci-commits .c-msg { color: #161616; }
+`}
+</style>
+
+<div className="header">
+  <h1>Informations composants</h1>
+  <p>Pour chaque composant : sa page, sa dernière mise à jour fonctionnelle et ses 10 dernières modifications (git).</p>
+</div>
+
+{(() => {
+  const [search, setSearch] = useState('');
+
+  const slug = (title) =>
+    title.toLowerCase().replace(/[\s/'’()&,.]+/g, '-').replace(/^-+|-+$/g, '');
+
+  const getUrl = (componentName, storybookTitle) =>
+    storybookTitle
+      ? `/docs/${slug(storybookTitle)}--docs`
+      : `/docs/composants-${componentName.toLowerCase().replace(/[^a-z0-9]/g, '')}--docs`;
+
+  const rows = infoData.results.filter(
+    (item) =>
+      search === '' ||
+      item.componentName.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  return (
+    <div className="ci-container">
+      <div className="ci-meta">
+        <strong>{infoData.totalCount}</strong> composants · Dernière génération&nbsp;:{' '}
+        {new Date(infoData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </div>
+
+      <input
+        type="text"
+        className="ci-search"
+        placeholder="Rechercher un composant..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      <div className="ci-table-wrapper">
+        <table className="ci-table">
+          <thead>
+            <tr>
+              <th style={{ width: '22%' }}>Composant</th>
+              <th style={{ width: '20%' }}>Dernière mise à jour fonctionnelle</th>
+              <th>10 dernières modifications</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((item) => (
+              <tr key={item.componentName}>
+                <td className="ci-name">
+                  <a href={getUrl(item.componentName, item.storybookTitle)}>
+                    {item.componentName.split('/').pop()}
+                  </a>
+                </td>
+                <td>
+                  {item.functionalVersion ? (
+                    <>
+                      <span className="ci-tag">v{item.functionalVersion}</span>
+                      <div className="ci-date">{item.functionalDate}</div>
+                    </>
+                  ) : (
+                    <span className="ci-tag empty">—</span>
+                  )}
+                </td>
+                <td>
+                  {item.commits.length ? (
+                    <ul className="ci-commits">
+                      {item.commits.map((c, i) => (
+                        <li key={i}>
+                          <span className="c-date">{c.date}</span>
+                          <span className="c-msg">{c.message}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span className="ci-tag empty">—</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+})()}

@@ -121,7 +121,7 @@ const preview: Preview = {
 				locales: 'fr-FR',
 				order: [
 					'Démarrer',
-					['Accueil', 'Introduction', 'Politique de confidentialité', 'Releases', 'Signaler une anomalie', 'Enrichir le Design System'],
+					['Accueil', 'Introduction', 'Politique de confidentialité', 'Releases', 'Signaler une anomalie', 'Enrichir le Design System', 'Informations composants'],
 					'Accessibilité',
 					[
 						'Introduction',
