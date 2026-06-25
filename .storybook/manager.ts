@@ -127,9 +127,9 @@ const shouldShowApComponent = (item, itemId, theme) => {
 		return
 	}
 
-	// Dossier Migration : toujours visible quel que soit le thème
+	// Dossier Migration : entièrement masqué en thèmes pa, ap et ap2026 (visible uniquement en cnam).
 	if (itemId.startsWith('guide-du-dev-migration')) {
-		item.style.display = 'block'
+		item.style.display = (theme === 'pa' || theme === 'ap' || theme === 'ap2026') ? 'none' : 'block'
 		return
 	}
 
@@ -205,9 +205,9 @@ const applyThemeSidebar = (theme) => {
 					return
 				}
 
-				// Dossier Migration : toujours visible quel que soit le thème
+				// Dossier Migration : entièrement masqué en thèmes pa, ap et ap2026 (visible uniquement en cnam).
 				if (itemId.startsWith('guide-du-dev-migration')) {
-					item.style.display = 'block'
+					item.style.display = (theme === 'pa' || theme === 'ap' || theme === 'ap2026') ? 'none' : 'block'
 					return
 				}
 
