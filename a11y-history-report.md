@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-06-25T10:06:43.590Z
+- Généré le: 2026-06-25T11:17:10.493Z
 
 ## Accordion
 

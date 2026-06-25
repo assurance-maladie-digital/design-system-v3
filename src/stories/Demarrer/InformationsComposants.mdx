@@ -3,7 +3,7 @@ import infoData from './component-info.json';
 import '../styles/shared.css';
 import { useState } from 'react';
 
-<Meta title="Démarrer/Informations composants" />
+<Meta title="Démarrer/Suivi des composants" />
 
 <style>
 {`
@@ -18,19 +18,25 @@ import { useState } from 'react';
 .ci-table tr:last-child td { border-bottom: none; }
 .ci-name a { color: #0c419a; font-weight: 600; text-decoration: none; }
 .ci-name a:hover { text-decoration: underline; }
-.ci-tag { display: inline-flex; align-items: center; padding: 0.2rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; background-color: #d0e2ff; color: #161616; white-space: nowrap; }
-.ci-tag.empty { background-color: #f4f4f4; color: #6f6f6f; }
+.ci-tag { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; color: #3a5a2a; background-color: #f0fff4; border: 1px solid #b8e0c8; white-space: nowrap; }
+.ci-tag.empty { color: #6f6f6f; background-color: #f4f4f4; border-color: #e0e0e0; }
+.ci-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; white-space: nowrap; }
+.ci-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.ci-dot.actif { background-color: #24a148; }
+.ci-dot.deprecie { background-color: #f1c21b; }
 .ci-date { font-size: 0.6875rem; color: #6f6f6f; margin-top: 0.15rem; }
 .ci-commits { margin: 0; padding: 0; list-style: none; max-height: 180px; overflow-y: auto; }
 .ci-commits li { padding: 0.15rem 0; display: flex; gap: 0.5rem; align-items: baseline; }
 .ci-commits .c-date { color: #6f6f6f; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.75rem; }
 .ci-commits .c-msg { color: #161616; }
+.ci-commits .c-msg a { color: #0c419a; text-decoration: none; font-weight: 600; }
+.ci-commits .c-msg a:hover { text-decoration: underline; }
 `}
 </style>
 
 <div className="header">
-  <h1>Informations composants</h1>
-  <p>Pour chaque composant : sa page, sa dernière mise à jour fonctionnelle et ses 10 dernières modifications (git).</p>
+  <h1>Suivi des composants</h1>
+  <p>Pour chaque composant : sa page, sa dernière mise à jour fonctionnelle et ses 10 dernières modifications (hors accessibilité, release et doc).</p>
 </div>
 
 {(() => {
@@ -43,6 +49,23 @@ import { useState } from 'react';
     storybookTitle
       ? `/docs/${slug(storybookTitle)}--docs`
       : `/docs/composants-${componentName.toLowerCase().replace(/[^a-z0-9]/g, '')}--docs`;
+
+  const REPO = 'https://github.com/assurance-maladie-digital/design-system-v3';
+
+  // Transforme la référence "#1234" du message en lien vers la PR GitHub.
+  const renderMessage = (msg) => {
+    const m = msg.match(/#(\d+)/);
+    if (!m) return msg;
+    return (
+      <>
+        {msg.slice(0, m.index)}
+        <a href={`${REPO}/pull/${m[1]}`} target="_blank" rel="noopener noreferrer">
+          #{m[1]}
+        </a>
+        {msg.slice(m.index + m[0].length)}
+      </>
+    );
+  };
 
   const rows = infoData.results.filter(
     (item) =>
@@ -69,9 +92,10 @@ import { useState } from 'react';
         <table className="ci-table">
           <thead>
             <tr>
-              <th style={{ width: '22%' }}>Composant</th>
-              <th style={{ width: '20%' }}>Dernière mise à jour fonctionnelle</th>
-              <th>10 dernières modifications</th>
+              <th style={{ width: '18%' }}>Composant</th>
+              <th style={{ width: '10%' }}>Statut</th>
+              <th style={{ width: '18%' }}>Dernière mise à jour fonctionnelle</th>
+              <th>10 dernières modifications fonctionnelles</th>
             </tr>
           </thead>
           <tbody>
@@ -81,6 +105,12 @@ import { useState } from 'react';
                   <a href={getUrl(item.componentName, item.storybookTitle)}>
                     {item.componentName.split('/').pop()}
                   </a>
+                </td>
+                <td>
+                  <span className="ci-status">
+                    <span className={`ci-dot ${item.status === 'déprécié' ? 'deprecie' : 'actif'}`}></span>
+                    {item.status === 'déprécié' ? 'Déprécié' : 'Actif'}
+                  </span>
                 </td>
                 <td>
                   {item.functionalVersion ? (
@@ -98,7 +128,7 @@ import { useState } from 'react';
                       {item.commits.map((c, i) => (
                         <li key={i}>
                           <span className="c-date">{c.date}</span>
-                          <span className="c-msg">{c.message}</span>
+                          <span className="c-msg">{renderMessage(c.message)}</span>
                         </li>
                       ))}
                     </ul>
