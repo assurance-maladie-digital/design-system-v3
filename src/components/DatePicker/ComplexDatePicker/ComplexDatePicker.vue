@@ -1020,6 +1020,7 @@
 		handleDateSelected,
 		resetViewMode,
 		reset,
+		panelLiveText,
 	})
 </script>
 
@@ -1150,6 +1151,7 @@
 						aria-atomic="true"
 					>
 						{{ panelLiveText }}
+						</div>
 						<VDatePicker
 							:id="datePickerContentId"
 							ref="datePickerRef"
@@ -1222,7 +1224,6 @@
 								</div>
 							</template>
 						</VDatePicker>
-					</div>
 				</div>
 			</VMenu>
 		</template>

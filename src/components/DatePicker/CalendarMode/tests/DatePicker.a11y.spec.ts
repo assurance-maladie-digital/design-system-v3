@@ -1,7 +1,8 @@
 // @vitest-environment jsdom
 
-import { describe, it } from 'vitest'
+import { describe, it, expect, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import DatePicker from '../DatePicker.vue'
@@ -137,5 +138,62 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'DatePicker – with hint text', {
 			ignoreRules: ['region'],
 		})
+	})
+})
+
+describe('DatePicker (CalendarMode) – ARIA attributes', () => {
+	let wrapper: ReturnType<typeof mount> | null = null
+
+	afterEach(() => {
+		wrapper?.unmount()
+		wrapper = null
+	})
+
+	const mountDP = (props: Record<string, unknown> = {}) =>
+		mount(DatePicker, { props: { label: 'Date de naissance', format: 'DD/MM/YYYY', ...props } })
+
+	it('has aria-haspopup="dialog" on the activator wrapper', () => {
+		wrapper = mountDP()
+		const activator = wrapper.find('[aria-haspopup="dialog"]')
+		expect(activator.exists()).toBe(true)
+	})
+
+	it('has aria-controls pointing to the date picker content id on the activator wrapper when visible', async () => {
+		wrapper = mountDP()
+		const vm = wrapper.vm as InstanceType<typeof DatePicker>
+		vm.isDatePickerVisible = true
+		await nextTick()
+		const activator = wrapper.find('[aria-haspopup="dialog"]')
+		expect(activator.attributes('aria-controls')).toBeTruthy()
+	})
+
+	it('has no aria-controls on the activator wrapper when closed', () => {
+		wrapper = mountDP()
+		const activator = wrapper.find('[aria-haspopup="dialog"]')
+		expect(activator.attributes('aria-controls')).toBeUndefined()
+	})
+
+	it('panelLiveText is empty initially', () => {
+		wrapper = mountDP()
+		const vm = wrapper.vm as InstanceType<typeof DatePicker>
+		expect(vm.panelLiveText).toBe('')
+	})
+
+	it('panelLiveText is a reactive ref exposed by the component', async () => {
+		wrapper = mountDP()
+		const vm = wrapper.vm as InstanceType<typeof DatePicker>
+		vm.panelLiveText = 'Sélection du mois, utilisez les touches fléchées pour naviguer'
+		await nextTick()
+		expect(vm.panelLiveText).toContain('Sélection du mois')
+	})
+
+	it('panelLiveText can be cleared', async () => {
+		wrapper = mountDP()
+		const vm = wrapper.vm as InstanceType<typeof DatePicker>
+		vm.panelLiveText = 'Sélection du mois, utilisez les touches fléchées pour naviguer'
+		await nextTick()
+		vm.panelLiveText = ''
+		await nextTick()
+		expect(vm.panelLiveText).toBe('')
 	})
 })

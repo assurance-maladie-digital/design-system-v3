@@ -856,6 +856,7 @@
 		openDatePicker,
 		updateSelectedDates,
 		handleSelectToday,
+		panelLiveText,
 	})
 </script>
 
