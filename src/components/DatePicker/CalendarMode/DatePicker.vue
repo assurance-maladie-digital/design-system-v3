@@ -29,6 +29,7 @@
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
+	const panelLiveText = ref('')
 	const monthYearLiveText = computed(() => {
 		if (currentMonthName.value && currentYearName.value) return `${currentMonthName.value} ${currentYearName.value}`
 		if (currentMonthName.value) return currentMonthName.value
@@ -679,6 +680,9 @@
 
 	watch(currentViewMode, (newMode) => {
 		if (isDatePickerVisible.value) {
+			if (newMode === 'months') panelLiveText.value = 'Sélection du mois, utilisez les touches fléchées pour naviguer'
+			else if (newMode === 'year') panelLiveText.value = 'Sélection de l\'année, utilisez les touches fléchées pour naviguer'
+			else panelLiveText.value = ''
 			updateControlsAriaExpanded(newMode)
 		}
 	})
@@ -692,6 +696,12 @@
 	}
 
 	watch(isDatePickerVisible, async (isVisible) => {
+		// Mettre à jour aria-expanded sur l'input natif (le wrapper div ne peut pas le porter sans nested-interactive)
+		const inputEl = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
+		if (inputEl) {
+			inputEl.setAttribute('aria-expanded', String(isVisible))
+		}
+
 		if (isVisible) {
 			// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
 			resetViewMode()
@@ -1008,7 +1018,7 @@
 						aria-live="polite"
 						aria-atomic="true"
 					>
-						{{ monthYearLiveText }}
+						{{ panelLiveText || monthYearLiveText }}
 					</div>
 					<VDatePicker
 						v-if="isDatePickerVisible && !props.noCalendar"

@@ -579,6 +579,7 @@
 	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
+	const panelLiveText = ref('')
 
 	// Aria props for activator: only declare aria-controls when panel exists
 	const menuActivatorProps = computed(() => ({
@@ -788,6 +789,9 @@
 
 	watch(currentViewMode, (newMode) => {
 		if (isDatePickerVisible.value) {
+			if (newMode === 'months') panelLiveText.value = 'Sélection du mois, utilisez les touches fléchées pour naviguer'
+			else if (newMode === 'year') panelLiveText.value = 'Sélection de l\'année, utilisez les touches fléchées pour naviguer'
+			else panelLiveText.value = ''
 			updateControlsAriaExpanded(newMode)
 		}
 	})
@@ -1140,8 +1144,13 @@
 					aria-label="Sélectionner une date"
 					@keydown.capture="handleMenuKeydown"
 				>
+					<div
+						class="sr-only"
+						aria-live="polite"
+						aria-atomic="true"
+					>
+						{{ panelLiveText }}
 					<VDatePicker
-						v-if="isDatePickerVisible"
 						:id="datePickerContentId"
 						ref="datePickerRef"
 						v-model="selectedDates"
