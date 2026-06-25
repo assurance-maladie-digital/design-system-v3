@@ -585,6 +585,7 @@ export const ComponentsList: StoryObj = {
 					'HeaderToolbar',
 					'SubHeader',
 					'BackBtn',
+					'LangBtn',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
