@@ -9,8 +9,11 @@ import { useState } from 'react';
 {`
 .ci-container { font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin-top: 1.5rem; }
 .ci-meta { font-size: 0.875rem; color: #525252; margin-bottom: 1.25rem; }
-.ci-search { width: 360px; max-width: 100%; height: 40px; padding: 0.5rem 0.75rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 0.875rem; box-sizing: border-box; outline: none; margin-bottom: 1rem; }
+.ci-filters { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.ci-search { width: 360px; max-width: 100%; height: 40px; padding: 0.5rem 0.75rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 0.875rem; box-sizing: border-box; outline: none; }
 .ci-search:focus { border-color: #0c419a; box-shadow: 0 0 0 2px rgba(12,65,154,0.15); }
+.ci-select { height: 40px; padding: 0 2rem 0 0.75rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 0.875rem; background-color: #fff; cursor: pointer; outline: none; box-sizing: border-box; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23525252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; }
+.ci-select:focus { border-color: #0c419a; box-shadow: 0 0 0 2px rgba(12,65,154,0.15); }
 .ci-table-wrapper { width: 100%; overflow-x: auto; border: 1px solid #e0e0e0; border-radius: 4px; }
 .ci-table { width: 100%; border-collapse: collapse; text-align: left; margin: 0 !important; }
 .ci-table th { background-color: #f4f4f4; color: #161616; font-weight: 600; font-size: 0.8125rem; padding: 0.75rem 1rem; border-bottom: 1px solid #e0e0e0; white-space: nowrap; }
@@ -41,6 +44,13 @@ import { useState } from 'react';
 
 {(() => {
   const [search, setSearch] = useState('');
+  const [versionFilter, setVersionFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+
+  // Versions fonctionnelles distinctes, triées de la plus récente à la plus ancienne.
+  const versions = [...new Set(infoData.results.map((r) => r.functionalVersion).filter(Boolean))].sort(
+    (a, b) => b.localeCompare(a, undefined, { numeric: true }),
+  );
 
   const slug = (title) =>
     title.toLowerCase().replace(/[\s/'’()&,.]+/g, '-').replace(/^-+|-+$/g, '');
@@ -69,8 +79,9 @@ import { useState } from 'react';
 
   const rows = infoData.results.filter(
     (item) =>
-      search === '' ||
-      item.componentName.toLowerCase().includes(search.toLowerCase()),
+      (search === '' || item.componentName.toLowerCase().includes(search.toLowerCase())) &&
+      (versionFilter === '' || item.functionalVersion === versionFilter) &&
+      (statusFilter === '' || item.status === statusFilter),
   );
 
   return (
@@ -80,13 +91,38 @@ import { useState } from 'react';
         {new Date(infoData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
       </div>
 
-      <input
-        type="text"
-        className="ci-search"
-        placeholder="Rechercher un composant..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div className="ci-filters">
+        <input
+          type="text"
+          className="ci-search"
+          placeholder="Rechercher un composant..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <select
+          className="ci-select"
+          value={versionFilter}
+          onChange={(e) => setVersionFilter(e.target.value)}
+          aria-label="Filtrer par version"
+        >
+          <option value="">Toutes les versions</option>
+          {versions.map((v) => (
+            <option key={v} value={v}>
+              v{v}
+            </option>
+          ))}
+        </select>
+        <select
+          className="ci-select"
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          aria-label="Filtrer par statut"
+        >
+          <option value="">Tous les statuts</option>
+          <option value="actif">Actif</option>
+          <option value="déprécié">Déprécié</option>
+        </select>
+      </div>
 
       <div className="ci-table-wrapper">
         <table className="ci-table">
