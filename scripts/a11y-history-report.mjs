@@ -52,6 +52,25 @@ const a11yPrLabels = [
 	'focus',
 ]
 
+// Commits / PR exclus de l'analyse : faux positifs (changements de doc ou de style
+// sans impact réel sur l'accessibilité des composants, ex. retrait d'emojis dans la doc).
+const excludedPrNumbers = new Set([
+	'2323', // Remove emoji icons from accessibility documentation and templates (doc/style)
+	'1951', // Update Vuetify 3.12.2 (bump de dépendance, pas de correction a11y ciblée)
+])
+
+// Overrides manuels de version a11y : pour les composants dont la correction d'accessibilité
+// est réelle mais INDÉTECTABLE par l'analyse git (commits a11y squashés à la fusion, PR au titre
+// sans mot-clé a11y…). Renseigner { version, date (JJ/MM/AAAA) } ; l'override prime sur l'analyse.
+const versionOverrides = {
+	SyAutocomplete: { version: '1.0.27', date: '13/05/2026' }, // a11y faite dans la PR #2176 (squash)
+	SyCheckBoxGroup: { version: '1.0.21', date: '23/02/2026' }, // a11y faite dans la PR #1783 (squash)
+	SyIconButton: { version: '1.0.23', date: '23/03/2026' }, // a11y faite dans la PR #1969 (squash)
+	MonthPicker: { version: '1.0.23', date: '25/03/2026' }, // a11y faite dans la PR #1863 (squash)
+	DeclarationAccessibilityPage: { version: '1.0.21', date: '25/02/2026' }, // a11y faite dans la PR #812 (squash)
+	DataListItem: { version: '1.0.23', date: '30/03/2026' }, // sous-composant : hérite de l'a11y de DataList (#858 audit RGAA)
+}
+
 const keywordRegex = new RegExp(a11yKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'i')
 
 function execFileAsync(cmd, args, options) {
@@ -251,6 +270,10 @@ async function analyzeComponent(component) {
 		const keywords = hasA11yKeywords(commit.message)
 		const patterns = hasA11yPatterns(diff)
 		const prNumber = extractPRNumber(commit.message)
+		// Ignore les PR exclus (faux positifs doc/style)
+		if (prNumber && excludedPrNumbers.has(String(prNumber))) {
+			continue
+		}
 		const labels = await getPRLabels(prNumber)
 		const a11yLabel = hasA11yLabel(labels)
 
@@ -294,11 +317,25 @@ function buildJsonData(components) {
 	const data = {}
 	for (const component of components) {
 		if (!component.commits.length) continue
-		const latest = component.commits[0]
+		// Ne retient que la dernière correction "fiable" (confiance forte ou moyenne).
+		// On ignore les commits "faible" (pattern aria-* seul : bumps de dépendance,
+		// refontes de tokens, snapshots…) qui ne sont pas de vraies corrections a11y.
+		const reliable = component.commits.find(
+			c => c.confidence === 'forte' || c.confidence === 'moyenne',
+		)
+		if (!reliable) continue
 		data[component.name] = {
-			version: latest.version ? latest.version.replace(/^v/i, '') : null,
-			date: new Date(latest.date).toLocaleDateString('fr-FR'),
-			dateIso: latest.date,
+			version: reliable.version ? reliable.version.replace(/^v/i, '') : null,
+			date: new Date(reliable.date).toLocaleDateString('fr-FR'),
+			dateIso: reliable.date,
+		}
+	}
+
+	// Overrides manuels : priment sur l'analyse, mais uniquement pour les composants du périmètre
+	// analysé (sinon, en mode ciblé, le merge avec l'existant s'en charge).
+	for (const [name, ov] of Object.entries(versionOverrides)) {
+		if (components.some(c => c.name === name)) {
+			data[name] = { version: ov.version, date: ov.date, dateIso: ov.dateIso || ov.date, override: true }
 		}
 	}
 	return data

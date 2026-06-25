@@ -84,10 +84,15 @@ function injectOrUpdateBadge(content, badge) {
 	}
 
 	// Injecter après la fermeture du </div> du header (pattern <div className="header">...</div>)
-	const headerDivClose = content.indexOf('</div>', content.indexOf('<div className="header">'))
-	if (headerDivClose !== -1) {
-		const insertAt = headerDivClose + '</div>'.length
-		return content.slice(0, insertAt) + '\n\n' + badge + '\n' + content.slice(insertAt)
+	// Important : ne prendre cette branche que si le header existe réellement, sinon
+	// indexOf('</div>', -1) trouverait un </div> quelconque (ex. dans un bloc de code d'exemple).
+	const headerDivStart = content.indexOf('<div className="header">')
+	if (headerDivStart !== -1) {
+		const headerDivClose = content.indexOf('</div>', headerDivStart)
+		if (headerDivClose !== -1) {
+			const insertAt = headerDivClose + '</div>'.length
+			return content.slice(0, insertAt) + '\n\n' + badge + '\n' + content.slice(insertAt)
+		}
 	}
 
 	// Fallback : après le premier <h1>

@@ -57,10 +57,11 @@ async function step(label, script) {
 	}
 }
 
-await step('Etape 1/4 : Analyse git fonctionnelle', 'functional-history-report.mjs')
-await step('Etape 2/4 : Injection badges fonctionnels', 'inject-functional-version.mjs')
-await step('Etape 3/4 : Analyse git accessibilite', 'a11y-history-report.mjs')
-await step('Etape 4/4 : Injection badges a11y', 'inject-a11y-version.mjs')
+await step('Etape 1/5 : Analyse git fonctionnelle', 'functional-history-report.mjs')
+await step('Etape 2/5 : Injection badges fonctionnels', 'inject-functional-version.mjs')
+await step('Etape 3/5 : Analyse git accessibilite', 'a11y-history-report.mjs')
+await step('Etape 4/5 : Injection badges a11y', 'inject-a11y-version.mjs')
+await step('Etape 5/5 : Regeneration du tableau d\'avancement (a11y-status.json)', '../generate-a11y-report.mjs')
 
 const elapsed = ((Date.now() - startTime) / 1000).toFixed(1)
 console.info(`\nTermine en ${elapsed}s`)

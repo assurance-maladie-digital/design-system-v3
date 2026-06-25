@@ -26,6 +26,18 @@ function findFilesRecursively(dir, pattern, fileList = []) {
 }
 
 function analyzeComponent(componentName, componentPath) {
+  // 0. Nom du .vue principal du dossier (pour la correspondance avec l'historique a11y,
+  //    qui est clé par basename de .vue — ex. dossier CalendarMode -> DatePicker.vue).
+  const leafName = componentName.split('/').pop();
+  let mainVue = null;
+  try {
+    const vueFiles = fs.readdirSync(componentPath).filter((f) => f.endsWith('.vue'));
+    const picked = vueFiles.find((f) => f.replace('.vue', '') === leafName) || vueFiles[0];
+    mainVue = picked ? picked.replace('.vue', '') : null;
+  } catch {
+    // ignore
+  }
+
   // 1. Check for a11y tests
   const testFiles = findFilesRecursively(componentPath, /\.a11y\.(spec|test)\.ts$/);
   const hasA11yTests = testFiles.length > 0;
@@ -33,21 +45,30 @@ function analyzeComponent(componentName, componentPath) {
   // 2. Check for a11y: { disable: true } in stories and extract Storybook title
   const storyFiles = findFilesRecursively(componentPath, /\.stories\.ts$/);
   let hasA11yDisabledInStories = false;
-  let storybookTitle = null;
-  
+  const titleCandidates = [];
+
   for (const storyFile of storyFiles) {
     const content = fs.readFileSync(storyFile, 'utf-8');
-    
+
     // Extract Storybook title
     const titleMatch = content.match(/title\s*:\s*['"`]([^'"`]+)['"`]/);
-    if (titleMatch && !storybookTitle) {
-      storybookTitle = titleMatch[1];
+    if (titleMatch) {
+      titleCandidates.push({ file: path.basename(storyFile, '.stories.ts'), title: titleMatch[1] });
     }
-    
+
     // Regex to match a11y: { disable: true } with possible whitespace/newlines
     if (/a11y\s*:\s*\{\s*[\s\S]*?disable\s*:\s*true[\s\S]*?\}/.test(content)) {
       hasA11yDisabledInStories = true;
     }
+  }
+
+  // Titre de la page principale : celui du fichier <composant>.stories.ts, sinon le titre
+  // le plus court (moins de segments) pour éviter les sous-pages (ex. .../Rules, .../Usages).
+  let storybookTitle = null;
+  if (titleCandidates.length) {
+    const main = titleCandidates.find((c) => c.file === leafName)
+      || [...titleCandidates].sort((a, b) => a.title.split('/').length - b.title.split('/').length)[0];
+    storybookTitle = main.title;
   }
 
   // 3. Check accessibilite.mdx completeness and manual audit
@@ -114,7 +135,8 @@ function analyzeComponent(componentName, componentPath) {
     mdxStatus,
     isFullyCompliant,
     storybookTitle,
-    hasManualAudit
+    hasManualAudit,
+    mainVue
   };
 }
 
@@ -150,6 +172,16 @@ function generateReport() {
           results.push(analyzeComponent(`DatePicker/${dpFolder}`, dpPath));
         }
       }
+    } else if (folder === 'Tables') {
+      // Le dossier Tables regroupe plusieurs composants (SyTable, SyServerTable…) :
+      // on analyse chaque sous-dossier qui contient son propre .vue (on ignore common/tests).
+      const tablesFolders = fs.readdirSync(componentPath).filter((f) => {
+        const sub = path.join(componentPath, f);
+        return fs.statSync(sub).isDirectory() && fs.existsSync(path.join(sub, `${f}.vue`));
+      });
+      for (const tableFolder of tablesFolders) {
+        results.push(analyzeComponent(`Tables/${tableFolder}`, path.join(componentPath, tableFolder)));
+      }
     } else {
       results.push(analyzeComponent(folder, componentPath));
     }
@@ -157,6 +189,23 @@ function generateReport() {
 
   // Sort alphabetically
   results.sort((a, b) => a.componentName.localeCompare(b.componentName));
+
+  // Injecte la version & la date de dernière correction accessibilité (depuis a11y-history-data.json)
+  const historyPath = path.join(__dirname, 'a11y-history-data.json');
+  let a11yHistory = {};
+  try {
+    a11yHistory = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
+  } catch {
+    console.warn('a11y-history-data.json introuvable : colonne version non renseignée');
+  }
+  for (const res of results) {
+    const entry = a11yHistory[res.componentName]
+      || a11yHistory[res.componentName.split('/').pop()]
+      || (res.mainVue ? a11yHistory[res.mainVue] : null);
+    res.version = entry?.version ?? null;
+    res.versionDate = entry?.date ?? null;
+    delete res.mainVue;
+  }
 
   let mdReport = '# État des lieux de l\'accessibilité des composants\n\n';
   mdReport += `Généré le: ${new Date().toLocaleDateString('fr-FR')}\n\n`;
