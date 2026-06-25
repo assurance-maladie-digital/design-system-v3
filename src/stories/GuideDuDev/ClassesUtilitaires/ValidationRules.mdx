@@ -33,10 +33,12 @@ Ces règles ne sont pas liées à la validation interne du Design System&nbsp;: 
 } from '@cnamts/synapse'
 `}/>
 
-Chaque règle existe aussi sous sa forme \`…Fn\` (ex. \`isRequiredFn\`) pour **personnaliser le message** via un objet \`errorMessages\` dont la clé \`default\` est une fonction recevant les paramètres de la règle&nbsp;:
+Chaque règle existe aussi sous sa forme \`…Fn\` (ex. \`isRequiredFn\`) pour **personnaliser le message** via un objet \`errorMessages\`. La clé \`default\` accepte&nbsp;:
+- une **chaîne** pour un message fixe&nbsp;;
+- une **fonction** uniquement quand on veut injecter un paramètre de la règle (longueur, date…).
 
-<Source dark code={`isRequiredFn({ default: () => 'Ce champ est obligatoire' })
-isMinLengthFn(8, false, { default: (min) => \`Au moins \${min} caractères\` })
+<Source dark code={`isRequiredFn({ default: 'Ce champ est obligatoire' })                       // message fixe
+isMinLengthFn(8, false, { default: (min) => \`Au moins \${min} caractères\` })  // message avec paramètre
 `}/>
 
 ## Règles disponibles
@@ -46,7 +48,7 @@ isMinLengthFn(8, false, { default: (min) => \`Au moins \${min} caractères\` })
 Vérifie qu'un champ n'est pas vide.
 
 <Source dark code={`isRequired                                            // règle prête à l'emploi
-isRequiredFn({ default: () => 'Ce champ est obligatoire' })  // message personnalisé
+isRequiredFn({ default: 'Ce champ est obligatoire' })  // message personnalisé
 `}/>
 
 ### isValidEmail
@@ -54,7 +56,7 @@ isRequiredFn({ default: () => 'Ce champ est obligatoire' })  // message personna
 Vérifie qu'un champ contient une adresse email valide.
 
 <Source dark code={`isValidEmail                                       // règle prête à l'emploi
-isValidEmailFn({ default: () => 'Format d\\'email invalide' })  // message personnalisé
+isValidEmailFn({ default: 'Format d\\'email invalide' })  // message personnalisé
 `}/>
 
 ### isMinLength
@@ -97,7 +99,7 @@ Vérifie qu'un champ correspond à un motif d'expression régulière.
 <Source dark code={`doMatchPatternFn(/^[a-zA-Z]+$/)   // motif (lettres uniquement)
 
 // message personnalisé (2e arg : objet errorMessages)
-doMatchPatternFn(/^[a-zA-Z]+$/, { default: () => 'Doit contenir uniquement des lettres' })
+doMatchPatternFn(/^[a-zA-Z]+$/, { default: 'Doit contenir uniquement des lettres' })
 `}/>
 
 ### isDateValid
@@ -105,7 +107,7 @@ doMatchPatternFn(/^[a-zA-Z]+$/, { default: () => 'Doit contenir uniquement des l
 Vérifie qu'un champ contient une date valide.
 
 <Source dark code={`isDateValid                                  // règle prête à l'emploi
-isDateValidFn({ default: () => 'Date invalide' })  // message personnalisé
+isDateValidFn({ default: 'Date invalide' })  // message personnalisé
 `}/>
 
 ### isNotBeforeDate
@@ -114,8 +116,8 @@ Vérifie qu'une date n'est pas antérieure à une date spécifiée.
 
 <Source dark code={`isNotBeforeDateFn('01/01/2023')   // date de référence (format JJ/MM/AAAA)
 
-// message personnalisé
-isNotBeforeDateFn('01/01/2023', { default: () => 'La date doit être postérieure ou égale au 01/01/2023' })
+// message personnalisé (la date de référence est passée à la fonction)
+isNotBeforeDateFn('01/01/2023', { default: (date) => \`La date doit être postérieure ou égale au \${date}\` })
 `}/>
 
 ### isNotAfterDate
@@ -124,8 +126,8 @@ Vérifie qu'une date n'est pas postérieure à une date spécifiée.
 
 <Source dark code={`isNotAfterDateFn('31/12/2023')    // date de référence (format JJ/MM/AAAA)
 
-// message personnalisé
-isNotAfterDateFn('31/12/2023', { default: () => 'La date doit être antérieure ou égale au 31/12/2023' })
+// message personnalisé (la date de référence est passée à la fonction)
+isNotAfterDateFn('31/12/2023', { default: (date) => \`La date doit être antérieure ou égale au \${date}\` })
 `}/>
 
 ### isNotBeforeToday
@@ -133,7 +135,7 @@ isNotAfterDateFn('31/12/2023', { default: () => 'La date doit être antérieure 
 Vérifie qu'une date n'est pas antérieure à aujourd'hui.
 
 <Source dark code={`isNotBeforeToday                                          // règle prête à l'emploi
-isNotBeforeTodayFn({ default: () => 'La date ne peut pas être dans le passé' })  // message personnalisé
+isNotBeforeTodayFn({ default: 'La date ne peut pas être dans le passé' })  // message personnalisé
 `}/>
 
 ### isNotAfterToday
@@ -141,7 +143,7 @@ isNotBeforeTodayFn({ default: () => 'La date ne peut pas être dans le passé' }
 Vérifie qu'une date n'est pas postérieure à aujourd'hui.
 
 <Source dark code={`isNotAfterToday                                          // règle prête à l'emploi
-isNotAfterTodayFn({ default: () => 'La date ne peut pas être dans le futur' })  // message personnalisé
+isNotAfterTodayFn({ default: 'La date ne peut pas être dans le futur' })  // message personnalisé
 `}/>
 
 ### isHolidayDay
@@ -149,7 +151,7 @@ isNotAfterTodayFn({ default: () => 'La date ne peut pas être dans le futur' }) 
 Règle qui **échoue si la date est un jour férié français** : elle renvoie `true` quand la date n'est PAS un férié, sinon le message d'erreur. C'est déjà une règle complète&nbsp;: passez-la directement dans `:rules`, inutile de l'inverser avec `v => !isHolidayDay(v)`.
 
 <Source dark code={`isHolidayDay                                              // règle prête à l'emploi
-isHolidayDayFn({ default: () => 'La date ne peut pas être un jour férié' })  // message personnalisé
+isHolidayDayFn({ default: 'La date ne peut pas être un jour férié' })  // message personnalisé
 `}/>
 
 ## Exemples d'utilisation
