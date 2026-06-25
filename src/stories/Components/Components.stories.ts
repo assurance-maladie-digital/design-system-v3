@@ -39,7 +39,7 @@ export const ComponentsList: StoryObj = {
 						title: 'HeaderToolbar',
 						description: 'Utilisé pour afficher une barre d\'outils en haut de la page. Il est composé de deux zones customisables.',
 						link: '/?path=/docs/composants-structure-headertoolbar--docs',
-						img: '/components/header-toolbar.svg',
+						img: `/components/header-toolbar${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -582,6 +582,7 @@ export const ComponentsList: StoryObj = {
 					'RangeField',
 					'FileUpload',
 					'ContextualMenu',
+					'HeaderToolbar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

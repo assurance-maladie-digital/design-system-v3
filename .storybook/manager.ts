@@ -85,6 +85,7 @@ const apComponents = [
 	'composants-structure-footerbar',
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
+	'composants-structure-headertoolbar',
 	'composants-tableaux-tabletoolbar',
 	'composants-vue-d-ensemble--docs',
 	'composants-tableaux-sytable',
