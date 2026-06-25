@@ -623,52 +623,6 @@
 		document.removeEventListener('click', handleClickOutside)
 	})
 
-	useCalendarKeyboardNavigation({
-		isDatePickerVisible,
-		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
-		getCurrentDate: () => {
-			const value = selectedDates.value
-			if (value) {
-				const date = Array.isArray(value) ? value[0] ?? null : value
-				if (date && currentMonth.value !== null && currentYear.value !== null) {
-					const sameMonth = date.getMonth() === Number(currentMonth.value)
-					const sameYear = date.getFullYear() === Number(currentYear.value)
-					if (sameMonth && sameYear) {
-						return date
-					}
-				}
-			}
-
-			if (currentMonth.value !== null && currentYear.value !== null) {
-				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
-			}
-
-			return null
-		},
-		setCurrentDate: (date: Date) => {
-			preventCloseOnInternalUpdate.value = true
-			updateSelectedDates(date)
-
-			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
-			nextTick(() => {
-				if (datePickerRef.value) {
-					const newMonth = String(date.getMonth())
-					const newYear = String(date.getFullYear())
-					if (currentMonth.value !== newMonth || currentYear.value !== newYear) {
-						currentMonth.value = newMonth
-						currentYear.value = newYear
-						currentMonthName.value = dayjs(date).format('MMMM')
-						currentYearName.value = newYear
-					}
-				}
-			})
-
-			queueMicrotask(() => {
-				preventCloseOnInternalUpdate.value = false
-			})
-		},
-	})
-
 	/**
 	 * Input handling (text field)
 	 */
@@ -794,6 +748,53 @@
 			else panelLiveText.value = ''
 			updateControlsAriaExpanded(newMode)
 		}
+	})
+
+	useCalendarKeyboardNavigation({
+		isDatePickerVisible,
+		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		currentViewMode,
+		getCurrentDate: () => {
+			const value = selectedDates.value
+			if (value) {
+				const date = Array.isArray(value) ? value[0] ?? null : value
+				if (date && currentMonth.value !== null && currentYear.value !== null) {
+					const sameMonth = date.getMonth() === Number(currentMonth.value)
+					const sameYear = date.getFullYear() === Number(currentYear.value)
+					if (sameMonth && sameYear) {
+						return date
+					}
+				}
+			}
+
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
+			}
+
+			return null
+		},
+		setCurrentDate: (date: Date) => {
+			preventCloseOnInternalUpdate.value = true
+			updateSelectedDates(date)
+
+			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
+			nextTick(() => {
+				if (datePickerRef.value) {
+					const newMonth = String(date.getMonth())
+					const newYear = String(date.getFullYear())
+					if (currentMonth.value !== newMonth || currentYear.value !== newYear) {
+						currentMonth.value = newMonth
+						currentYear.value = newYear
+						currentMonthName.value = dayjs(date).format('MMMM')
+						currentYearName.value = newYear
+					}
+				}
+			})
+
+			queueMicrotask(() => {
+				preventCloseOnInternalUpdate.value = false
+			})
+		},
 	})
 
 	/**

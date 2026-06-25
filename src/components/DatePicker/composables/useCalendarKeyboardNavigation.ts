@@ -17,6 +17,9 @@ export interface CalendarKeyboardNavigationOptions {
 
 	// Applique la nouvelle date (typiquement via updateSelectedDates)
 	setCurrentDate: (date: Date) => void
+
+	// Mode d'affichage du VDatePicker (month, months, year)
+	currentViewMode?: Ref<'month' | 'months' | 'year' | undefined>
 }
 
 export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigationOptions) => {
@@ -25,6 +28,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		datePickerRef,
 		getCurrentDate,
 		setCurrentDate,
+		currentViewMode,
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
@@ -544,6 +548,26 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		isListenerAttached = false
 	}
 
+	const focusPanelActiveButton = (panelSelector: string, fallbackSelector: string) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+		if (!rootEl) return
+
+		const panel = rootEl.querySelector<HTMLElement>(panelSelector)
+		if (!panel) return
+
+		const activeButton = panel.querySelector<HTMLButtonElement>('.v-btn--active') || panel.querySelector<HTMLButtonElement>(fallbackSelector)
+		activeButton?.focus({ preventScroll: true })
+	}
+
+	const focusMonthPanelButton = () => {
+		focusPanelActiveButton('.v-date-picker-months', '.v-date-picker-months .v-btn:first-child')
+	}
+
+	const focusYearPanelButton = () => {
+		focusPanelActiveButton('.v-date-picker-years', '.v-date-picker-years .v-btn:first-child')
+	}
+
 	watch(isDatePickerVisible, (visible) => {
 		if (visible) {
 			nextTick(attachListeners)
@@ -552,6 +576,21 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			detachListeners()
 		}
 	})
+
+	if (currentViewMode) {
+		watch(currentViewMode, (newMode) => {
+			if (!isDatePickerVisible.value) return
+			// Attendre que Vuetify ait rendu le panneau et que les transitions soient terminées
+			setTimeout(() => {
+				if (newMode === 'months') {
+					focusMonthPanelButton()
+				}
+				else if (newMode === 'year') {
+					focusYearPanelButton()
+				}
+			}, 50)
+		})
+	}
 
 	onMounted(() => {
 		if (isDatePickerVisible.value) {
