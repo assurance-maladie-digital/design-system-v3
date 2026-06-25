@@ -49,14 +49,13 @@ Options de configuration pour la validation :
 
 <Source dark code={`
 interface ValidationOptions {
-  showSuccessMessages?: boolean;  // Activer/désactiver les messages de succès
+  showSuccessMessages?: boolean;  // Afficher les messages de succès (false par défaut)
   fieldIdentifier?: string;       // Nom du champ pour les messages
-  customRules?: ValidationRule[]; // Règles personnalisées
-  warningRules?: ValidationRule[]; // Règles d'avertissement
-  successRules?: ValidationRule[]; // Règles de succès
   disableErrorHandling?: boolean; // Désactiver complètement la gestion des erreurs
 }
 `}/>
+
+> **Note :** les règles d'erreur, d'avertissement et de succès ne sont **pas** des options&nbsp;: elles sont passées en **arguments** de \`validateField(value, rules, warningRules, successRules)\` (voir ci-dessous).
 
 ### Type `ValidationRule`
 
@@ -346,10 +345,9 @@ Le composable `useValidation` retourne plusieurs méthodes utiles :
 4. **Messages de succès** : Encouragez les bonnes pratiques avec des messages positifs
 5. **Identifiants de champs** : Utilisez `fieldIdentifier` pour des messages contextuels
 
-> **⚠️ Important — Ordre des règles :** placez toujours `required` en dernier dans la liste de vos règles !
-> Les règles sont évaluées dans l'ordre de leur déclaration, et la validation s'arrête dès qu'une erreur est rencontrée.
-> Si `required` est positionné en premier et que l'utilisateur saisit une valeur (même invalide), la validation s'arrêtera immédiatement.
-> En revanche, en le plaçant en dernier, si une autre règle échoue avant, l'utilisateur obtiendra le message d'erreur le plus pertinent.
+> **⚠️ Important — Ordre des règles & nombre de messages :** la validation **ne s'arrête pas** à la première erreur — toutes les règles sont évaluées et toutes les erreurs sont collectées.
+> En revanche, la prop `maxErrors` (1 par défaut) ne fait **afficher qu'un seul message** : celui de la **première règle en échec** dans l'ordre de la liste.
+> L'ordre détermine donc **quel** message s'affiche : placez en tête la règle dont le message est le plus pertinent. Pour afficher plusieurs messages à la fois, augmentez `maxErrors`.
 
 ## Exemple de validation personnalisée
 
