@@ -1151,79 +1151,79 @@
 						aria-atomic="true"
 					>
 						{{ panelLiveText }}
-						</div>
-						<VDatePicker
-							:id="datePickerContentId"
-							ref="datePickerRef"
-							v-model="selectedDates"
-							control-variant="modal"
-							color="primary"
-							:class="props.displayWeekendDays ? 'weekend' : ''"
-							:first-day-of-week="1"
-							:multiple="props.displayRange ? 'range' : false"
-							:show-adjacent-months="true"
-							:show-week="props.showWeekNumber"
-							:view-mode="currentViewMode"
-							:month="currentMonth !== null ? Number(currentMonth) : undefined"
-							:year="currentYear !== null ? Number(currentYear) : undefined"
-							:max="maxDate"
-							:min="minDate"
-							:custom-rules="props.customRules"
-							:custom-warning-rules="props.customWarningRules"
-							:display-holiday-days="props.displayHolidayDays"
-							:display-asterisk="props.displayAsterisk"
-							:is-validate-on-blur="props.isValidateOnBlur"
-							:error-messages="errorMessages"
-							:density="props.density"
-							:hint="props.hint"
-							:persistent-hint="props.persistentHint"
-							@update:model-value="updateDisplayFormattedDate"
-							@update:view-mode="handleViewModeUpdate"
-							@update:month="onUpdateMonth"
-							@update:year="onUpdateYear"
-							@click:date="updateSelectedDates"
-							@focus="props.displayHolidayDays ? markHolidayDays : undefined"
-							@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
-						>
-							<template #title>
-								<span class="date-picker-title">
-									Sélectionnez une date
-								</span>
-							</template>
-							<template #header>
-								<SyHeading
-									class="mx-auto my-auto ml-5 mb-4"
-									aria-live="polite"
-									aria-atomic="true"
-									:level="headingLevel"
-								>
-									{{ selectedDates ? displayedDateString : headerDate }}
-								</SyHeading>
-							</template>
-							<template
-								v-if="props.displayTodayButton"
-								#actions
+					</div>
+					<VDatePicker
+						:id="datePickerContentId"
+						ref="datePickerRef"
+						v-model="selectedDates"
+						control-variant="modal"
+						color="primary"
+						:class="props.displayWeekendDays ? 'weekend' : ''"
+						:first-day-of-week="1"
+						:multiple="props.displayRange ? 'range' : false"
+						:show-adjacent-months="true"
+						:show-week="props.showWeekNumber"
+						:view-mode="currentViewMode"
+						:month="currentMonth !== null ? Number(currentMonth) : undefined"
+						:year="currentYear !== null ? Number(currentYear) : undefined"
+						:max="maxDate"
+						:min="minDate"
+						:custom-rules="props.customRules"
+						:custom-warning-rules="props.customWarningRules"
+						:display-holiday-days="props.displayHolidayDays"
+						:display-asterisk="props.displayAsterisk"
+						:is-validate-on-blur="props.isValidateOnBlur"
+						:error-messages="errorMessages"
+						:density="props.density"
+						:hint="props.hint"
+						:persistent-hint="props.persistentHint"
+						@update:model-value="updateDisplayFormattedDate"
+						@update:view-mode="handleViewModeUpdate"
+						@update:month="onUpdateMonth"
+						@update:year="onUpdateYear"
+						@click:date="updateSelectedDates"
+						@focus="props.displayHolidayDays ? markHolidayDays : undefined"
+						@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
+					>
+						<template #title>
+							<span class="date-picker-title">
+								Sélectionnez une date
+							</span>
+						</template>
+						<template #header>
+							<SyHeading
+								class="mx-auto my-auto ml-5 mb-4"
+								aria-live="polite"
+								aria-atomic="true"
+								:level="headingLevel"
 							>
-								<div class="d-flex justify-center align-center w-100">
-									<v-btn
-										v-if="props.displayTodayButton"
-										size="x-small"
-										color="primary"
-										:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
-										class="date-picker__today-button my-2 pa-2 mt-2"
-										:ripple="false"
-										@click="handleSelectToday"
-									>
-										<SyIcon
-											size="16px"
-											decorative
-											:icon="mdiCalendarMonthOutline"
-										/>
-										{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
-									</v-btn>
-								</div>
-							</template>
-						</VDatePicker>
+								{{ selectedDates ? displayedDateString : headerDate }}
+							</SyHeading>
+						</template>
+						<template
+							v-if="props.displayTodayButton"
+							#actions
+						>
+							<div class="d-flex justify-center align-center w-100">
+								<v-btn
+									v-if="props.displayTodayButton"
+									size="x-small"
+									color="primary"
+									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+									class="date-picker__today-button my-2 pa-2 mt-2"
+									:ripple="false"
+									@click="handleSelectToday"
+								>
+									<SyIcon
+										size="16px"
+										decorative
+										:icon="mdiCalendarMonthOutline"
+									/>
+									{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+								</v-btn>
+							</div>
+						</template>
+					</VDatePicker>
 				</div>
 			</VMenu>
 		</template>
