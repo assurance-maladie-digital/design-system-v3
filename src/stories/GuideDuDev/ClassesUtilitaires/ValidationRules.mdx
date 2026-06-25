@@ -146,13 +146,11 @@ isNotAfterTodayFn({ default: () => 'La date ne peut pas être dans le futur' }) 
 
 ### isHolidayDay
 
-Règle qui **échoue si la date est un jour férié français** : elle renvoie `true` quand la date n'est PAS un férié, sinon le message d'erreur. C'est déjà une règle Vuetify — inutile de la négocier.
+Règle qui **échoue si la date est un jour férié français** : elle renvoie `true` quand la date n'est PAS un férié, sinon le message d'erreur. C'est déjà une règle complète&nbsp;: passez-la directement dans `:rules`, inutile de l'inverser avec `v => !isHolidayDay(v)`.
 
 <Source dark code={`isHolidayDay                                              // règle prête à l'emploi
 isHolidayDayFn({ default: () => 'La date ne peut pas être un jour férié' })  // message personnalisé
 `}/>
-
-> Pour seulement **tester** si une date est fériée (booléen), utilisez le composable \`useHolidayDay()\`, pas cette règle.
 
 ## Exemples d'utilisation
 
