@@ -743,4 +743,201 @@ describe('NirField.vue', () => {
 			expect(isValid).toBe(true)
 		})
 	})
+
+	describe('RGAA 7.4 - Auto-focus behavior and user notification', () => {
+		it('le message d\'avertissement est présent mais caché visuellement lorsque displayKey est true', async () => {
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(true)
+			expect(noticeWrapper.text()).toContain('Après la saisie des 13 caractères du numéro de sécurité sociale')
+		})
+
+		it('n\'affiche pas le message d\'avertissement lorsque displayKey est false', async () => {
+			await wrapper.setProps({ displayKey: false })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('n\'affiche pas le message d\'avertissement lorsque disabled est true', async () => {
+			await wrapper.setProps({ disabled: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('n\'affiche pas le message d\'avertissement lorsque readonly est true', async () => {
+			await wrapper.setProps({ readonly: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('le champ numéro possède un aria-describedby contenant l\'ID du message d\'avertissement', async () => {
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			const noticeId = noticeWrapper.attributes('id')
+
+			const numberField = wrapper.find('.number-field input')
+			const describedBy = numberField.attributes('aria-describedby')
+
+			expect(describedBy).toContain(noticeId)
+		})
+
+		it('le champ clé ne possède pas l\'ID du message d\'avertissement dans son aria-describedby', async () => {
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			const noticeId = noticeWrapper.attributes('id')
+
+			const keyField = wrapper.find('.key-field input')
+			const describedBy = keyField.attributes('aria-describedby')
+
+			expect(describedBy).not.toContain(noticeId)
+		})
+
+		it('le focus passe du champ numéro au champ clé lorsque le numéro atteint 13 caractères', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus revient du champ clé au champ numéro lorsque la clé est vidée', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			// D'abord remplir le numéro pour activer le comportement
+			await wrapper.find('.number-field input').setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Réinitialiser le spy pour ne compter que les appels suivants
+			focusSpy.mockClear()
+
+			// Vider la clé
+			const keyInput = wrapper.find('.key-field input')
+			await keyInput.setValue('')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus ne se déplace pas automatiquement lorsque modelValue est synchronisé depuis l\'extérieur', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			// Synchroniser modelValue depuis l'extérieur
+			await wrapper.setProps({ modelValue: '294037512000591' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier qu'aucun focus automatique n'a été déclenché
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus ne se déplace pas lorsque le composant est disabled', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			await wrapper.setProps({ disabled: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus ne se déplace pas lorsque le composant est readonly', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			await wrapper.setProps({ readonly: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('lorsque le numéro contient déjà 13 caractères et qu\'un chiffre est saisi, ce chiffre est ajouté au champ clé', async () => {
+			// Remplir d'abord le numéro
+			await wrapper.find('.number-field input').setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier la valeur de la clé avant
+			const keyInputBefore = wrapper.find('.key-field input').element as HTMLInputElement
+			const keyBefore = keyInputBefore.value
+
+			// Simuler la saisie d'un chiffre supplémentaire via keydown
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.trigger('keydown', { key: '9' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que le chiffre a été ajouté à la clé
+			const keyInputAfter = wrapper.find('.key-field input').element as HTMLInputElement
+			const keyAfter = keyInputAfter.value
+			expect(keyAfter).toBe(keyBefore + '9')
+		})
+
+		it('le comportement reste identique avec withoutFieldset', async () => {
+			await wrapper.setProps({ withoutFieldset: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que le message d'avertissement est toujours présent
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(true)
+
+			// Vérifier que les aria-describedby sont toujours corrects
+			const noticeId = noticeWrapper.attributes('id')
+			const numberField = wrapper.find('.number-field input')
+			const describedBy = numberField.attributes('aria-describedby')
+			expect(describedBy).toContain(noticeId)
+		})
+
+		it('shouldUseAutoFocus retourne false lorsque displayKey est false', async () => {
+			await wrapper.setProps({ displayKey: false })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// shouldUseAutoFocus est une propriété interne, on teste son comportement
+			// en vérifiant que le message n'est pas affiché
+			const noticeWrapper = wrapper.find('.sy-nir-focus-notice')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('autoFocusNoticeText est vide lorsque shouldUseAutoFocus est false', async () => {
+			await wrapper.setProps({ disabled: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Le computed doit retourner une chaîne vide
+			const noticeWrapper = wrapper.find('.sy-nir-focus-notice')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+	})
 })

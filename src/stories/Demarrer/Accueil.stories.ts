@@ -50,7 +50,7 @@ export const Header: StoryObj = {
 								<br/>Si vous ne connaissez pas le thème auquel votre produit est soumis veuillez consulter le dossier d’architecture du produit.
 								<br/><br/>
 								<b>Par défaut la documentation est affichée avec le thème CNAM.</b></p>
-							<VBtn color="primary" href="/?path=/docs/guide-du-dev-configuration-du-th%C3%A8me--docs">
+							<VBtn color="primary" href="/?path=/docs/guide-du-dev-d%C3%A9marrage-configuration-du-th%C3%A8me--docs">
 								Configurer le thème
 								<VIcon size="small" class="ml-2" right>{{arrowRight}}</VIcon>
 							</VBtn>
@@ -153,7 +153,7 @@ export const DesignSystem: StoryObj = {
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-installation--docs">
+						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-démarrage-installation--docs">
 							  <img src="/home-card-dev.svg" alt="Guide du dev" class="w-100" />
                               <VCardTitle><b>Guides du dev</b></VCardTitle>
                               <VCardText>Les Guides du Dev accompagnent les équipes techniques dans l'implémentation du Design System en garantissant une intégration fluide et efficace.</VCardText>

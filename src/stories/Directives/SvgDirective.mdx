@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/blocks'
 import '../styles/shared.css';
 
-<Meta title="Directives/v-rgaa-svg-fix" />
+<Meta title="Guide Du Dev/Directives/v-rgaa-svg-fix" />
 
 <style>
 {
@@ -123,7 +123,7 @@ import '../styles/shared.css';
 
 <div className="feature-grid">
   <div className="feature-card">
-    <h3>🎨 Pour les icônes décoratives (par défaut)</h3>
+    <h3> Pour les icônes décoratives (par défaut)</h3>
     <p>Les icônes décoratives sont purement esthétiques et n'apportent pas d'information essentielle. Elles doivent être ignorées par les technologies d'assistance.</p>
     <div className="info-box" style={{ margin: '1rem 0' }}>
       <p>La directive :</p>
@@ -136,7 +136,7 @@ import '../styles/shared.css';
   </div>
   
   <div className="feature-card">
-    <h3>📢 Pour les icônes fonctionnelles (informatives)</h3>
+    <h3> Pour les icônes fonctionnelles (informatives)</h3>
     <p>Les icônes fonctionnelles transmettent une information importante et doivent être annoncées par les technologies d'assistance.</p>
     <div className="info-box" style={{ margin: '1rem 0' }}>
       <p>La directive :</p>
@@ -171,7 +171,7 @@ import '../styles/shared.css';
 
 <div className="feature-grid">
   <div className="feature-card">
-    <h3>📄 Importation dans un composant individuel</h3>
+    <h3> Importation dans un composant individuel</h3>
     <p>Vous pouvez importer la directive directement dans un composant Vue où vous en avez besoin :</p>
     <div className="code-example">
       ```vue
@@ -210,7 +210,7 @@ import '../styles/shared.css';
 
 <div className="feature-grid">
   <div className="feature-card">
-    <h3>🧩 Avec les composants du Design System</h3>
+    <h3> Avec les composants du Design System</h3>
     <p>Il est recommandé d'utiliser le composant <code>SyIcon</code> qui intègre déjà cette directive, plutôt que d'appliquer manuellement la directive sur des <code>v-icon</code>.</p>
     <div className="code-example">
       ```vue
@@ -246,7 +246,7 @@ import '../styles/shared.css';
   </div>
   
   <div className="feature-card">
-    <h3>🔧 Avec les composants Vuetify</h3>
+    <h3> Avec les composants Vuetify</h3>
     <p>Si vous devez utiliser directement des composants <code>v-icon</code> de Vuetify dans votre projet, vous pouvez appliquer la directive comme suit :</p>
     <div className="code-example">
       ```vue
@@ -314,7 +314,7 @@ import '../styles/shared.css';
   </div>
   
   <div className="feature-card">
-    <h3>🔍 Détection automatique du rôle bouton</h3>
+    <h3> Détection automatique du rôle bouton</h3>
     <p>La directive peut désormais détecter automatiquement si une icône doit avoir le rôle "button" en analysant :</p>
     <div className="info-box" style={{ margin: '1rem 0' }}>
       <ul>
@@ -331,17 +331,17 @@ import '../styles/shared.css';
 
 <div className="feature-grid">
   <div className="best-practice">
-    <h3 className="best-practice-title">🔍 Identifiez correctement le type d'icône</h3>
+    <h3 className="best-practice-title"> Identifiez correctement le type d'icône</h3>
     <p>Déterminez si votre icône est purement décorative ou si elle transmet une information importante.</p>
   </div>
   
   <div className="best-practice">
-    <h3 className="best-practice-title">🏷️ Utilisez des labels explicites</h3>
+    <h3 className="best-practice-title"> Utilisez des labels explicites</h3>
     <p>Pour les icônes informatives, fournissez toujours un <code>aria-label</code> descriptif qui explique clairement la fonction de l'icône.</p>
   </div>
   
   <div className="best-practice">
-    <h3 className="best-practice-title">🔄 Évitez la redondance</h3>
+    <h3 className="best-practice-title"> Évitez la redondance</h3>
     <p>Si l'icône est accompagnée d'un texte qui explique déjà sa fonction, considérez-la comme décorative pour éviter que les lecteurs d'écran ne répètent la même information.</p>
   </div>
   
@@ -383,9 +383,9 @@ import '../styles/shared.css';
   </div>
   
   <div className="feature-card">
-    <h3>🔔 Icône de notification sans texte</h3>
+    <h3> Icône de notification sans texte</h3>
     <div className="warning-box" style={{ margin: '1rem 0' }}>
-      <h4>❌ MAUVAIS</h4>
+      <h4> MAUVAIS</h4>
       <p>L'icône serait ignorée par les lecteurs d'écran :</p>
       <div className="code-example">
         ```vue
@@ -394,7 +394,7 @@ import '../styles/shared.css';
       </div>
     </div>
     <div className="info-box" style={{ margin: '1rem 0' }}>
-      <h4>✅ BON</h4>
+      <h4>BON</h4>
       <p>L'icône est informative et a un label explicite :</p>
       <div className="code-example">
         ```vue

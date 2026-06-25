@@ -24,7 +24,7 @@ import {
 </div>
 
     <CriteriaSection>
-        <CriteriaCard icon="🔍" title="Structure sémantique">
+        <CriteriaCard title="Structure sémantique">
             <ul>
                 <li><strong>Titre de page</strong> : rendu dans une balise <code>h1</code> via <code>StatusPage</code>, sa valeur provient des locales du thème via <code>useThemeLocales</code></li>
                 <li><strong>Code d'erreur</strong> : le code est précédé du texte masqué visuellement <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) pour les lecteurs d'écran</li>
@@ -34,14 +34,14 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🔗" title="Navigation">
+        <CriteriaCard title="Navigation">
             <ul>
                 <li><strong>Bouton masqué par défaut</strong> : la prop <code>hide-btn</code> est fixée à <code>true</code> — la page de maintenance ne propose pas de navigation vers une autre page</li>
                 <li><strong>Pas de lien de retour</strong> : intentionnel car l'application est indisponible, évitant ainsi de rediriger vers une page inaccessible</li>
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🖼️" title="Illustration">
+        <CriteriaCard title="Illustration">
             <ul>
                 <li><strong>Image décorative</strong> : l'illustration par défaut possède <code>alt=""</code> et <code>aria-hidden="true"</code> car elle est purement décorative</li>
                 <li><strong>Source thémable</strong> : l'image source provient des locales du thème via <code>useThemeLocales</code></li>

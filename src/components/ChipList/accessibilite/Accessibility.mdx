@@ -25,7 +25,7 @@ import {
     </div>
   </AuditSection>
   <CriteriaSection>
-    <CriteriaCard icon="🏷️" title="Structure sémantique de liste">
+    <CriteriaCard title="Structure sémantique de liste">
       <ul>
         <li><strong>Liste native</strong> : Utilisation de <code>&lt;ul&gt;</code> et <code>&lt;li&gt;</code> pour la structure principale</li>
         <li><strong>Étiquetage</strong> : <code>aria-label</code> ou <code>aria-labelledby</code> pour la liste via les props <strong>listAriaLabel</strong> et <strong>listAriaLabelledby</strong></li>
@@ -34,7 +34,7 @@ import {
       </ul>
     </CriteriaCard>
 
-    <CriteriaCard icon="🎯" title="Chips interactifs et débordement">
+    <CriteriaCard title="Chips interactifs et débordement">
       <ul>
         <li><strong>Chips supprimables</strong> : Boutons avec <code>aria-label</code> descriptif pour chaque action de suppression</li>
         <li><strong>Chip de débordement</strong> : <code>role="button"</code>, <code>tabindex="0"</code>, et <code>aria-label</code> décrivant les éléments masqués</li>
@@ -43,7 +43,7 @@ import {
       </ul>
     </CriteriaCard>
 
-    <CriteriaCard icon="⌨️" title="Navigation et interaction clavier">
+    <CriteriaCard title="Navigation et interaction clavier">
       <ul>
         <li><strong>Navigation Tab</strong> : Parcours logique des éléments interactifs (chips → bouton débordement → boutons reset)</li>
         <li><strong>Suppression de chips</strong> : Touches Entrée/Espace sur les boutons de suppression</li>
@@ -52,7 +52,7 @@ import {
       </ul>
     </CriteriaCard>
 
-    <CriteriaCard icon="🎨" title="États et feedback visuel">
+    <CriteriaCard title="États et feedback visuel">
       <ul>
         <li><strong>États des chips</strong> : Couleurs et icônes différentes pour success, info, warning, error</li>
         <li><strong>Icônes d'état</strong> : Option <strong>displayPrependStateIcon</strong> et <strong>displayAppendStateIcon</strong> avec icônes décoratives</li>

@@ -3,7 +3,7 @@ import { VTextField } from 'vuetify/components'
 import { doMatchPatternFn } from './index'
 
 export default {
-	title: 'Guide du dev/Règles De Validation/doMatchPattern',
+	title: 'Guide Du Dev/Utilitaires/Règles de validation/doMatchPattern',
 	component: doMatchPatternFn,
 }
 

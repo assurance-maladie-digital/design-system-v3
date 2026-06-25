@@ -123,7 +123,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
-						img: '/components/contextual-menu.svg',
+						img: `/components/contextual-menu${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -291,7 +291,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FileUpload',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer des fichiers.',
 						link: '/?path=/docs/composants-formulaires-fileupload--docs',
-						img: '/components/file-upload.svg',
+						img: `/components/file-upload${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -333,7 +333,7 @@ export const ComponentsList: StoryObj = {
 						title: 'RangeField',
 						description: 'Utilisé pour permettre à l\'utilisateur de sélectionner un interval.',
 						link: '/?path=/docs/composants-formulaires-rangefield--docs',
-						img: '/components/range-field.svg',
+						img: `/components/range-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -579,6 +579,9 @@ export const ComponentsList: StoryObj = {
 					'UploadWorkflow',
 					'NavigationDrawer',
 					'SlideGroup',
+					'RangeField',
+					'FileUpload',
+					'ContextualMenu',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

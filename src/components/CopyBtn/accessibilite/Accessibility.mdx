@@ -18,7 +18,7 @@ import {
     iconSrc={AccessibilityIcon}
 >
     <CriteriaSection>
-        <CriteriaCard icon="🔍" title="Structure sémantique">
+        <CriteriaCard title="Structure sémantique">
             <ul>
                 <li><strong>Bouton natif</strong> : utilisation du composant<code>VBtn</code> qui génère un élément <code>&lt;button&gt;</code>, garantissant un comportement accessible par défaut.</li>
                 <li><strong>Nom accessible</strong> : l’attribut <code>aria-label</code>permet de fournir une description explicite de l’action (ex. « Copier le numéro de compte »).</li>
@@ -27,7 +27,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="⌨️" title="Navigation clavier">
+        <CriteriaCard title="Navigation clavier">
             <ul>
                 <li><strong>Tabulation</strong> : le bouton est accessible dans l’ordre de tabulation standard de la page.</li>
                 <li><strong>Activation</strong> : l’action de copie peut être déclenchée avec la touche <kbd>Entrée</kbd> ou <kbd>Espace</kbd>.</li>
@@ -35,7 +35,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="📢" title="Retour d’information">
+        <CriteriaCard title="Retour d’information">
             <ul>
                 <li><strong>Tooltip informatif</strong> : un message visuel indique que l’action de copie a été effectuée.</li>
                 <li><strong>Annonce aux technologies d’assistance</strong> : le message est contenu dans un élément avec <code>role="status"</code>, permettant aux lecteurs d’écran d’annoncer l’information.</li>
@@ -44,7 +44,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🧩" title="Personnalisation accessible">
+        <CriteriaCard title="Personnalisation accessible">
             <ul>
                 <li><strong>Slots personnalisables</strong> : possibilité de remplacer l’icône ou le contenu du tooltip via les slots<code>icon</code> et <code>tooltip</code>.</li>
                 <li><strong>Libellés adaptables</strong> : les propriétés<code>ariaLabel</code> et <code>ariaOwns</code> permettent d’adapter les descriptions selon le contexte.</li>

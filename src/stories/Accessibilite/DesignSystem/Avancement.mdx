@@ -333,6 +333,18 @@ import { useState } from 'react';
               </span>
             </div>
           </th>
+          <th>
+            <div className="th-content">
+              Version corrigée
+              <span className="carbon-tooltip-container">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+                </svg>
+                <span className="carbon-tooltip-content">Version du Design System dans laquelle l'accessibilité de ce composant a été corrigée / mise à jour.</span>
+              </span>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -389,20 +401,24 @@ import { useState } from 'react';
             const getStorybookUrl = (componentName, storybookTitle) => {
               // Use the actual Storybook title if available, otherwise fall back to generated path
               if (storybookTitle) {
-                // Convert Storybook title to URL format - keep slashes, only replace spaces and special chars
-                return `/?path=/docs/${storybookTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\/-]/g, '')}--docs`;
+                // Slugification façon Storybook : minuscules, séparateurs (/ espace ponctuation) -> '-', accents conservés
+                const slug = storybookTitle
+                  .toLowerCase()
+                  .replace(/[\s\/'’()&,.]+/g, '-')
+                  .replace(/^-+|-+$/g, '');
+                return `/docs/${slug}--docs`;
               }
               
               // Fallback to the old method for components without storybookTitle
               const category = getCategory(componentName);
               const formattedName = componentName.toLowerCase().replace(/[^a-z0-9]/g, '');
-              return `/?path=/docs/composants-${category}-${formattedName}--docs`;
+              return `/docs/composants-${category}-${formattedName}--docs`;
             };
 
             return (
               <tr key={item.componentName}>
                 <td className="component-name">
-                  <a href="#" className="carbon-link">{item.componentName.split('/').pop()}</a>
+                  <a href={getStorybookUrl(item.componentName, item.storybookTitle)} className="carbon-link">{item.componentName.split('/').pop()}</a>
                 </td>
                 <td>
                   <span className={`carbon-tag ${item.hasA11yTests ? 'tag-green' : 'tag-red'}`}>
@@ -421,6 +437,15 @@ import { useState } from 'react';
                   }`}>
                     {item.mdxStatus}
                   </span>
+                </td>
+                <td>
+                  {item.version ? (
+                    <span className="carbon-tag tag-blue" title={item.versionDate ? `Corrigé le ${item.versionDate}` : undefined}>
+                      v{item.version}
+                    </span>
+                  ) : (
+                    <span className="carbon-tag tag-gray">—</span>
+                  )}
                 </td>
               </tr>
             );

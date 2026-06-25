@@ -24,7 +24,7 @@ import {
     </AuditSection>
 
     <CriteriaSection>
-        <CriteriaCard icon="🏷️" title="Structure et rôles">
+        <CriteriaCard title="Structure et rôles">
             <ul>
                 <li>Le conteneur est un <code>VToolbar</code> servant de barre d’outils et non de navigation principale.</li>
                 <li>Le champ de recherche est un <code>VTextField</code> avec label explicite via <code>searchLabel</code>.</li>
@@ -34,7 +34,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="⌨️" title="Navigation clavier">
+        <CriteriaCard title="Navigation clavier">
             <ul>
                 <li>Le champ de recherche est entièrement accessible au clavier (Tab / Shift+Tab).</li>
                 <li>Le bouton d’ajout est activable via Entrée / Espace.</li>
@@ -44,7 +44,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🎨" title="Contraste et lisibilité">
+        <CriteriaCard title="Contraste et lisibilité">
             <ul>
                 <li>Le toolbar adapte son thème (clair/sombre) via <code>v-theme--dark</code>.</li>
                 <li>Le texte du compteur reste lisible avec contraste réduit en mode sombre.</li>
@@ -53,7 +53,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="📱" title="Responsive et lisibilité mobile">
+        <CriteriaCard title="Responsive et lisibilité mobile">
             <ul>
                 <li>Sur mobile, le champ de recherche passe en largeur complète (<code>flex-grow</code> ajusté).</li>
                 <li>Le texte du bouton “Ajouter” est masqué sur petit écran pour privilégier l’icône.</li>

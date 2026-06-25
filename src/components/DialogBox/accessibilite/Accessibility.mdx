@@ -22,7 +22,7 @@ import {
         </div>
     </AuditSection>
     <CriteriaSection>
-        <CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+        <CriteriaCard title="Niveau de titre configurable via la prop headingLevel">
             <ul>
                 <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h2, défini dans l’implémentation du composant.</li>
                 <code>&lt;DialogBox
@@ -38,7 +38,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🎯" title="Gestion automatique du focus à l’ouverture et à la fermeture">
+        <CriteriaCard title="Gestion automatique du focus à l’ouverture et à la fermeture">
             <ul>
                 <li>À l’ouverture de la modale, le focus est déplacé soit sur le bouton de validation (<strong>autofocusValidateBtn</strong>), soit sur la zone de titre si la modale est draggable.</li>
 
@@ -48,7 +48,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="⌨️" title="Piégeage du focus dans la boîte de dialogue">
+        <CriteriaCard title="Piégeage du focus dans la boîte de dialogue">
             <ul>
                 <li>La navigation clavier avec la touche<strong> Tab </strong>est maintenue à l’intérieur de la modale.</li>
 
@@ -60,7 +60,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🏷️" title="Association correcte du titre avec aria-labelledby">
+        <CriteriaCard title="Association correcte du titre avec aria-labelledby">
             <ul>
                 <li>Le composant utilise un identifiant unique généré avec <strong>useId() </strong>.</li>
 
@@ -72,7 +72,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="✋" title="Support clavier du mode draggable">
+        <CriteriaCard title="Support clavier du mode draggable">
             <ul>
                 <li>Lorsque la prop<strong> draggable </strong>est activée, le titre devient focusable avec <strong>tabindex="0"</strong>.</li>
 
@@ -84,7 +84,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="❌" title="Bouton de fermeture explicite et accessible">
+        <CriteriaCard title="Bouton de fermeture explicite et accessible">
             <ul>
                 <li>Le bouton de fermeture possède un<strong> aria-label </strong>explicite.</li>
 

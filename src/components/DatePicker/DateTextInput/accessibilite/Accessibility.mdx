@@ -18,7 +18,7 @@ import {
 	iconSrc={AccessibilityIcon}
 >
 	<CriteriaSection>
-		<CriteriaCard title="Structure sémantique" icon="🔍">
+		<CriteriaCard title="Structure sémantique" icon="">
 			<ul>
 				<li><strong>Rôle</strong> : input type="text" (role implicite <code>textbox</code>), <code>aria-required</code> synchronisé quand <code>required</code>.</li>
 				<li><strong>Association</strong> : label natif ou <code>aria-label</code> / <code>aria-labelledby</code> pour les champs sans libellé visible (libellé calculé dynamiquement selon label/placeholder).</li>
@@ -27,7 +27,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard title="Saisie et clavier" icon="⌨️">
+		<CriteriaCard title="Saisie et clavier" icon="">
 			<ul>
 				<li><strong>Tab</strong> : entrée et sortie du champ sans piège de focus (pas de panneau).</li>
 				<li><strong>Masque léger</strong> : l’option <code>autoClamp</code> ajoute les séparateurs mais n’empêche pas la saisie ni la navigation au clavier (retours chariot, flèches, copier/coller conservés).</li>
@@ -37,7 +37,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard title="Messages et retours" icon="📣">
+		<CriteriaCard title="Messages et retours" icon="">
 			<ul>
 				<li><strong>Statuts</strong> : erreurs/avertissements/succès affichés sous le champ (zone annoncée via <code>aria-live</code> si activé côté navigateur/lecteur).</li>
 				<li><strong>Formats attendus</strong> : placeholder et hint expliquent la structure (JJ/MM/AAAA…).</li>

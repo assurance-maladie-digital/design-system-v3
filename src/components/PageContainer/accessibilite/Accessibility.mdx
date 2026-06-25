@@ -23,7 +23,7 @@ import {
 	</div>
 
 	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Structure sémantique">
+		<CriteriaCard title="Structure sémantique">
 			<ul>
 				<li><strong>Id unique</strong> : la prop <code>uniqueId</code> génère un identifiant sur le conteneur (suffixe <code>-container</code>) et sur le contenu interne (suffixe <code>-content</code>), permettant des relations ARIA robustes</li>
 				<li><strong>Rôles ARIA disponibles via la prop <code>role</code></strong> :</li>
@@ -37,7 +37,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🏷️" title="Liaison ARIA">
+		<CriteriaCard title="Liaison ARIA">
 			<ul>
 				<li><strong>Prop <code>ariaLabelledby</code></strong> : permet de lier le conteneur à un titre via son <code>id</code>, renforçant la compréhension par les lecteurs d'écran — particulièrement utile avec <code>role="region"</code></li>
 				<li><strong>Avec <code>StatusPage</code></strong> : la liaison est gérée automatiquement via les props <code>role</code> et <code>uniqueId</code> de <code>StatusPage</code></li>
