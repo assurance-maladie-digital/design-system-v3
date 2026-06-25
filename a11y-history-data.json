@@ -568,5 +568,41 @@
     "version": "1.0.20",
     "date": "11/02/2026",
     "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SyAutocomplete": {
+    "version": "1.0.27",
+    "date": "13/05/2026",
+    "dateIso": "13/05/2026",
+    "override": true
+  },
+  "SyCheckBoxGroup": {
+    "version": "1.0.21",
+    "date": "23/02/2026",
+    "dateIso": "23/02/2026",
+    "override": true
+  },
+  "SyIconButton": {
+    "version": "1.0.23",
+    "date": "23/03/2026",
+    "dateIso": "23/03/2026",
+    "override": true
+  },
+  "MonthPicker": {
+    "version": "1.0.23",
+    "date": "25/03/2026",
+    "dateIso": "25/03/2026",
+    "override": true
+  },
+  "DeclarationAccessibilityPage": {
+    "version": "1.0.21",
+    "date": "25/02/2026",
+    "dateIso": "25/02/2026",
+    "override": true
+  },
+  "DataListItem": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "30/03/2026",
+    "override": true
   }
 }

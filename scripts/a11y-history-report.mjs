@@ -60,6 +60,18 @@ const excludedPrNumbers = new Set([
 	'2102', // Tokens simplify v2 (refonte de tokens, pas de correction a11y ciblée)
 ])
 
+// Overrides manuels de version a11y : pour les composants dont la correction d'accessibilité
+// est réelle mais INDÉTECTABLE par l'analyse git (commits a11y squashés à la fusion, PR au titre
+// sans mot-clé a11y…). Renseigner { version, date (JJ/MM/AAAA) } ; l'override prime sur l'analyse.
+const versionOverrides = {
+	SyAutocomplete: { version: '1.0.27', date: '13/05/2026' }, // a11y faite dans la PR #2176 (squash)
+	SyCheckBoxGroup: { version: '1.0.21', date: '23/02/2026' }, // a11y faite dans la PR #1783 (squash)
+	SyIconButton: { version: '1.0.23', date: '23/03/2026' }, // a11y faite dans la PR #1969 (squash)
+	MonthPicker: { version: '1.0.23', date: '25/03/2026' }, // a11y faite dans la PR #1863 (squash)
+	DeclarationAccessibilityPage: { version: '1.0.21', date: '25/02/2026' }, // a11y faite dans la PR #812 (squash)
+	DataListItem: { version: '1.0.23', date: '30/03/2026' }, // sous-composant : hérite de l'a11y de DataList (#858 audit RGAA)
+}
+
 const keywordRegex = new RegExp(a11yKeywords.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'i')
 
 function execFileAsync(cmd, args, options) {
@@ -317,6 +329,14 @@ function buildJsonData(components) {
 			version: reliable.version ? reliable.version.replace(/^v/i, '') : null,
 			date: new Date(reliable.date).toLocaleDateString('fr-FR'),
 			dateIso: reliable.date,
+		}
+	}
+
+	// Overrides manuels : priment sur l'analyse, mais uniquement pour les composants du périmètre
+	// analysé (sinon, en mode ciblé, le merge avec l'existant s'en charge).
+	for (const [name, ov] of Object.entries(versionOverrides)) {
+		if (components.some(c => c.name === name)) {
+			data[name] = { version: ov.version, date: ov.date, dateIso: ov.dateIso || ov.date, override: true }
 		}
 	}
 	return data

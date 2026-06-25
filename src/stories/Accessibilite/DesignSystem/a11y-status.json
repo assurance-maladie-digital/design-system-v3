@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-24T19:01:34.550Z",
+  "date": "2026-06-25T08:40:42.830Z",
   "compliantCount": 54,
   "totalCount": 77,
   "percentage": "70.13",
@@ -133,8 +133,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
       "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
+      "version": "1.0.27",
+      "versionDate": "13/05/2026"
     },
     {
       "componentName": "Customs/Selects/SyInputSelect",
@@ -177,8 +177,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup",
       "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
+      "version": "1.0.21",
+      "versionDate": "23/02/2026"
     },
     {
       "componentName": "Customs/SyForm",
@@ -210,8 +210,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/SyIconButton",
       "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
+      "version": "1.0.23",
+      "versionDate": "23/03/2026"
     },
     {
       "componentName": "Customs/SyPagination",
@@ -287,8 +287,8 @@
       "isFullyCompliant": false,
       "storybookTitle": null,
       "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
+      "version": "1.0.23",
+      "versionDate": "30/03/2026"
     },
     {
       "componentName": "DatePicker/CalendarMode",
@@ -331,8 +331,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Templates/DeclarationAccessibilityPage",
       "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
+      "version": "1.0.21",
+      "versionDate": "25/02/2026"
     },
     {
       "componentName": "DiacriticPicker",
@@ -573,8 +573,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/MonthPicker",
       "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
+      "version": "1.0.23",
+      "versionDate": "25/03/2026"
     },
     {
       "componentName": "NirField",
