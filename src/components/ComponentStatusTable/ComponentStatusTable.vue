@@ -103,6 +103,11 @@
 			description: 'Identifie les éléments bloquants ou incomplets impactant la qualité globale du composant.',
 			valeurs: 'RAS / Anomalies détectées',
 		},
+		{
+			critere: 'Dernière mise à jour fonctionnelle',
+			description: 'Indique la dernière version fonctionnelle du composant et sa date de mise à jour.',
+			valeurs: 'vX.X.X - JJ/MM/AAAA / -',
+		},
 	]
 	const getFilterValue = (name: string) =>
 		Boolean(filters.value.find(filter => filter.name === name)?.value)
