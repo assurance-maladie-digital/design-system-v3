@@ -20,7 +20,10 @@
 		background-color: rgb(var(--v-theme-infoVariantLighten));
 	}
 
-	caption,
+	caption {
+		background-color: rgb(var(--v-theme-infoVariant90));
+	}
+
 	table thead tr.headers,
 	table thead tr.reset {
 		background-color: rgba(var(--v-theme-infoVariant), 0.2);
