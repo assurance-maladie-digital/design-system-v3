@@ -23,7 +23,7 @@ import {
 	</div>
 
 	<CriteriaSection>
-		<CriteriaCard icon="🔍" title="Rôle ARIA et structure sémantique">
+		<CriteriaCard title="Rôle ARIA et structure sémantique">
 			<ul>
 				<li><strong>Rôle alert</strong> : Le composant utilise <code>role="alert"</code> pour annoncer automatiquement le message aux lecteurs d'écran</li>
 				<li><strong>Types sémantiques</strong> : Quatre types disponibles (<code>success</code>, <code>info</code>, <code>warning</code>, <code>error</code>) avec icônes appropriées</li>
@@ -31,7 +31,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🎨" title="Icônes et éléments décoratifs">
+		<CriteriaCard title="Icônes et éléments décoratifs">
 			<ul>
 				<li><strong>Rôle presentation</strong> : Les SVG des icônes reçoivent <code>role="presentation"</code> via <code>v-rgaa-svg-fix</code> pour éviter la lecture superflue</li>
 				<li><strong>Icône décorative</strong> : L'icône de fermeture utilise <code>decorative</code> pour être masquée aux lecteurs d'écran</li>
@@ -39,7 +39,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Interaction et fermeture">
+		<CriteriaCard title="Interaction et fermeture">
 			<ul>
 				<li><strong>Bouton natif</strong> : Utilisation de <code>VBtn</code> pour la fermeture, garantissant un comportement clavier natif</li>
 				<li><strong>Focus visible</strong> : Style <code>:focus-visible</code> avec outline clair pour la navigation au clavier</li>
@@ -47,7 +47,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="📱" title="Variantes et styles accessibles">
+		<CriteriaCard title="Variantes et styles accessibles">
 			<ul>
 				<li><strong>Deux variantes</strong> : <code>tonal</code> (fond coloré) et <code>outlined</code> (contour) avec contrastes adaptés</li>
 				<li><strong>Thème sombre</strong> : Styles spécifiques pour le mode dark avec contrastes inversés</li>

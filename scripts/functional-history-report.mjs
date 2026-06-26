@@ -182,7 +182,7 @@ async function getPackageVersionAtCommit(hash) {
 async function main() {
 	const targetNames = process.argv.slice(2).filter(Boolean).map(n => n.toLowerCase())
 
-	console.info('🔍 Découverte des composants...')
+	console.info(' Découverte des composants...')
 	const allComponents = discoverComponents()
 	const components = targetNames.length
 		? allComponents.filter(c => targetNames.includes(c.name.toLowerCase()))

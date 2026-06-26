@@ -18,7 +18,7 @@ import {
 >
 
     <CriteriaSection>
-    		<CriteriaCard icon="🧩" title="Niveau de titre configurable via la prop headingLevel">
+    		<CriteriaCard title="Niveau de titre configurable via la prop headingLevel">
   <ul>
     <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h1, défini dans l’implémentation du composant.</li>
       <code>&lt;StatusPage
@@ -27,14 +27,14 @@ import {
     <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
   </ul>
 </CriteriaCard>
-        <CriteriaCard icon="🔍" title="Structure sémantique">
+        <CriteriaCard title="Structure sémantique">
             <ul>
                 <li><strong>Titre de page</strong> : le titre est rendu dans une balise <code>h1</code>, unique et descriptif — lié au conteneur via <code>aria-labelledby</code> lorsque <code>role</code> est défini</li>
                 <li><strong>Code d'erreur</strong> : le code (ex. <code>500</code>, <code>404</code>) est précédé du texte masqué visuellement <code>codeErrorText</code> (par défaut <em>"Code d'erreur : "</em>) pour les lecteurs d'écran</li>
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🔗" title="Liens et boutons">
+        <CriteriaCard title="Liens et boutons">
             <ul>
                 <li><strong>Numéros de téléphone</strong> : les numéros de 4 ou 10 chiffres (ex. <code>3646</code>) sont automatiquement transformés en liens <code>tel:</code> cliquables et vocalisables</li>
                 <li><strong>Bouton de retour</strong> : rendu via <code>btn-href</code> (balise <code>a</code>) ou <code>btn-link</code> (balise <code>router-link</code>)</li>
@@ -43,7 +43,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🖼️" title="Illustration">
+        <CriteriaCard title="Illustration">
             <ul>
                 <li><strong>Image décorative</strong> : l'illustration doit avoir <code>alt=""</code> et <code>aria-hidden="true"</code> car elle est purement décorative</li>
                 <li><strong>Slot illustration</strong> : si une illustration personnalisée est fournie via le slot <code>#illustration</code>, les mêmes règles s'appliquent</li>
@@ -51,14 +51,14 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="📝" title="Contenu additionnel">
+        <CriteriaCard title="Contenu additionnel">
             <ul>
                 <li><strong>Slot <code>additional-content</code></strong> : destiné à du contenu textuel complémentaire (ex. identifiant de support), doit rester lisible par les lecteurs d'écran</li>
                 <li><strong>Slot <code>action</code></strong> : permet d'ajouter des actions supplémentaires accessibles au clavier</li>
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🏷️" title="Rôle et identifiant ARIA">
+        <CriteriaCard title="Rôle et identifiant ARIA">
             <ul>
                 <li><strong>Prop <code>role</code></strong> : deux valeurs acceptées: <code>main</code> ou <code>region</code> — propagé au <code>PageContainer</code></li>
                 <li><strong>Prop <code>uniqueId</code></strong> : identifiant unique du conteneur, généré automatiquement via <code>useId()</code> si non fourni — utilisé pour lier le <code>h1</code> au conteneur via <code>aria-labelledby</code> lorsque <code>role</code> est défini</li>

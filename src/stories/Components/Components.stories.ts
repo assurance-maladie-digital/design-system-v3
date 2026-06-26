@@ -39,7 +39,7 @@ export const ComponentsList: StoryObj = {
 						title: 'HeaderToolbar',
 						description: 'Utilisé pour afficher une barre d\'outils en haut de la page. Il est composé de deux zones customisables.',
 						link: '/?path=/docs/composants-structure-headertoolbar--docs',
-						img: '/components/header-toolbar.svg',
+						img: `/components/header-toolbar${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -53,7 +53,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SubHeader',
 						description: 'Utilisé pour afficher un bloc d’informations sous l’en-tête principale.',
 						link: '/?path=/docs/composants-structure-subheader--docs',
-						img: '/components/sub-header.svg',
+						img: `/components/sub-header${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -123,7 +123,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
-						img: '/components/contextual-menu.svg',
+						img: `/components/contextual-menu${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -291,7 +291,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FileUpload',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer des fichiers.',
 						link: '/?path=/docs/composants-formulaires-fileupload--docs',
-						img: '/components/file-upload.svg',
+						img: `/components/file-upload${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -580,6 +580,10 @@ export const ComponentsList: StoryObj = {
 					'NavigationDrawer',
 					'SlideGroup',
 					'RangeField',
+					'FileUpload',
+					'ContextualMenu',
+					'HeaderToolbar',
+					'SubHeader',
 					'BackBtn',
 				]
 

@@ -9,7 +9,7 @@ labels:
 
 ## Type d'ajout
 
-📝 Optimisation
+ Optimisation
 
 ### Impact
 
