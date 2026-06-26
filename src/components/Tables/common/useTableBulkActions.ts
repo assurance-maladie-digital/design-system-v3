@@ -7,7 +7,7 @@ interface UseTableBulkActionsParams {
 	/** Sélection (v-model) : tableau des valeurs de ligne (clés ou objets). */
 	model: Ref<unknown[]>
 	/** Fonction d'identité de ligne, partagée avec la sélection. */
-	getItemValue: (item: unknown) => unknown
+	getItemValue: (item: Items[number]) => unknown
 }
 
 interface UseTableBulkActionsReturn {
