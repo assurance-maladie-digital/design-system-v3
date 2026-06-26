@@ -10,6 +10,12 @@ export function useTableAccessibility({
 }) {
 	// Référence pour stocker et nettoyer les timeouts
 	const accessibilityTimeouts = ref<ReturnType<typeof setTimeout>[]>([])
+
+	function cleanupFieldAttributes(element: HTMLElement) {
+		element.removeAttribute('aria-label')
+		element.removeAttribute('aria-controls')
+	}
+
 	function setupAccessibility() {
 		onMounted(() => {
 			const captionElement = document.querySelector(`#${tableId} caption`)
@@ -25,30 +31,13 @@ export function useTableAccessibility({
 			const fields = document.querySelectorAll(`#${tableId} .v-field`)
 			fields.forEach((field) => {
 				const element = field as HTMLElement
-				element.setAttribute('tabindex', '0')
 
-				// Remove immediately if it exists
-				if (element.hasAttribute('aria-controls')) {
-					element.removeAttribute('aria-controls')
-				}
+				cleanupFieldAttributes(element)
 
-				// Check again after a delay
 				const timeoutId = setTimeout(() => {
-					if (element.hasAttribute('aria-controls')) {
-						element.removeAttribute('aria-controls')
-					}
+					cleanupFieldAttributes(element)
 				}, 500)
 				accessibilityTimeouts.value.push(timeoutId)
-			})
-
-			const fieldLabels = document.querySelectorAll(`#${tableId} .v-field`)
-			fieldLabels.forEach((fieldLabel) => {
-				(fieldLabel as HTMLElement).setAttribute('aria-label', 'items per page')
-			})
-
-			const fieldTitles = document.querySelectorAll(`#${tableId} .v-field`)
-			fieldTitles.forEach((fieldTitle) => {
-				(fieldTitle as HTMLElement).setAttribute('title', 'items per page')
 			})
 
 			const th = document.querySelectorAll(`#${tableId} th`)

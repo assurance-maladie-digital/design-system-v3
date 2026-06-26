@@ -154,6 +154,19 @@
 	width: 328px;
 }
 
+.sy-form-input :deep(input) {
+	color: rgb(var(--v-theme-on-surface)) !important;
+	-webkit-text-fill-color: rgb(var(--v-theme-on-surface)) !important;
+}
+
+.sy-form-input :deep(.v-field__input),
+.sy-form-input :deep(input),
+.sy-form-input :deep(.v-icon),
+.sy-form-input :deep(.v-field__clearable),
+.sy-form-input :deep(.v-field__append-inner) {
+	color: rgb(var(--v-theme-on-surface)) !important;
+}
+
 .sy-form-input--s {
 	z-index: 1; // Display content above the table on mobile
 	contain: none; // Allow fixed elements to be displayed properly

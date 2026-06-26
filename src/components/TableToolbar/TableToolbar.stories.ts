@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import TableToolbar from './TableToolbar.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { fn } from '@storybook/test'
 import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 
@@ -186,6 +186,29 @@ const items = [
 	},
 ]
 
+const defaultVuetifyOptions = {
+	textField: {
+		variant: 'outlined',
+		density: 'compact',
+		hideDetails: true,
+		clearable: true,
+	},
+}
+
+const createFilteredItems = (search: { value: string | undefined }) => computed(() => {
+	if (!search.value) {
+		return items
+	}
+
+	const value = search.value.toLowerCase()
+
+	return items.filter(item => (
+		item.firstname.toLowerCase().includes(value)
+		|| item.lastname.toLowerCase().includes(value)
+		|| item.email.toLowerCase().includes(value)
+	))
+})
+
 const defaultSourceCode = [
 	{
 		name: 'Template',
@@ -193,16 +216,17 @@ const defaultSourceCode = [
 <template>
 	<SyTable
 		:headers="headers"
-		:items="items"
-		:search="search"
+		:items="filteredItems"
 		:items-per-page="5"
 		hide-default-footer
-		
+		:save-state="false"
 	>
 		<template #top>
 			<TableToolbar
 				v-model:search="search"
 				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+				:vuetify-options="vuetifyOptions"
 			/>
 		</template>
 	</SyTable>
@@ -213,7 +237,7 @@ const defaultSourceCode = [
 		name: 'Script',
 		code: `
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { computed, ref } from 'vue'
 	import { SyTable, TableToolbar } from '@cnamts/synapse'
 
 	const headers = [
@@ -248,6 +272,29 @@ const defaultSourceCode = [
 	]
 
 	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) {
+			return items
+		}
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+
+	const vuetifyOptions = {
+		textField: {
+			variant: 'outlined',
+			density: 'compact',
+			hideDetails: true,
+			clearable: true,
+		},
+	}
 </script>
 `,
 	},
@@ -258,26 +305,31 @@ export const Default: Story = {
 		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
+		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
 		components: { TableToolbar, SyTable },
 		setup() {
 			const search = ref('')
-			return { args, headers, items, search }
+			const filteredItems = createFilteredItems(search)
+
+			return { args, headers, items, filteredItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				hide-default-footer
-
+				:save-state="false"
+				suffix="table-toolbar-default"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="filteredItems.length"
 					/>
 				</template>
 			</SyTable>
@@ -293,26 +345,31 @@ export const AddButton: Story = {
 		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
+		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
 		components: { TableToolbar, SyTable },
 		setup() {
 			const search = ref('')
-			return { args, headers, items, search }
+			const filteredItems = createFilteredItems(search)
+
+			return { args, headers, items, filteredItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				hide-default-footer
-				
+				:save-state="false"
+				suffix="table-toolbar-add-button"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="filteredItems.length"
 						show-add-button
 					/>
 				</template>
@@ -332,26 +389,31 @@ export const Labels: Story = {
 		'showAddButton': true,
 		'addButtonLabel': 'Ajouter un patient',
 		'searchLabel': 'Rechercher un patient',
+		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
 		components: { TableToolbar, SyTable },
 		setup() {
 			const search = ref('')
-			return { args, headers, items, search }
+			const filteredItems = createFilteredItems(search)
+
+			return { args, headers, items, filteredItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				hide-default-footer
-				
+				:save-state="false"
+				suffix="table-toolbar-labels"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="filteredItems.length"
 					/>
 				</template>
 			</SyTable>
@@ -368,27 +430,32 @@ export const Loading: Story = {
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
 		'loading': true,
+		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
 		components: { TableToolbar, SyTable },
 		setup() {
 			const search = ref('')
-			return { args, headers, items, search }
+			const filteredItems = createFilteredItems(search)
+
+			return { args, headers, items, filteredItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				loading
 				hide-default-footer
-				
+				:save-state="false"
+				suffix="table-toolbar-loading"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="filteredItems.length"
 					/>
 				</template>
 			</SyTable>
@@ -408,26 +475,31 @@ export const NbFiltered: Story = {
 		'nbFiltered': 1,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
+		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
 		components: { TableToolbar, SyTable },
 		setup() {
 			const search = ref('')
-			return { args, headers, items, search }
+			const filteredItems = createFilteredItems(search)
+
+			return { args, headers, items, filteredItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				hide-default-footer
-				
+				:save-state="false"
+				suffix="table-toolbar-nb-filtered"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="1"
 					/>
 				</template>
 			</SyTable>
@@ -443,11 +515,14 @@ export const SlotFilters: Story = {
 		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
+		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
 		components: { TableToolbar, SySelect, SyTable },
 		setup() {
 			const search = ref<string | undefined>(undefined)
+
+			const filteredItems = createFilteredItems(search)
 
 			const filterItems = ref<{ text: string, value: string }[]>(
 				items.map(item => ({
@@ -456,31 +531,33 @@ export const SlotFilters: Story = {
 				})),
 			)
 
-			return { args, headers, items, filterItems, search }
+			return { args, headers, items, filteredItems, filterItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				hide-default-footer
-				
+				:save-state="false"
+				suffix="table-toolbar-filters"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="filteredItems.length"
 					>
 						<template #filters>
-							<div class="px-4 py-4 py-sm-1">
+							<div class="px-4">
 								<SySelect
 									v-model="search"
 									:items="filterItems"
 									label="Nom"
 									density="compact"
 									width="150"
-									hide-messages
+									hide-details
 									clearable
 								/>
 							</div>
@@ -500,26 +577,31 @@ export const OtherSlots: Story = {
 		'nbTotal': 2,
 		'onAdd': fn(),
 		'onUpdate:search': fn(),
+		'vuetifyOptions': defaultVuetifyOptions,
 	},
 	render: args => ({
 		components: { TableToolbar, SyTable },
 		setup() {
 			const search = ref('')
-			return { args, headers, items, search }
+			const filteredItems = createFilteredItems(search)
+
+			return { args, headers, items, filteredItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				hide-default-footer
-				
+				:save-state="false"
+				suffix="table-toolbar-other-slots"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="filteredItems.length"
 					>
 						<template #search-left>
 							<VBtn
@@ -552,7 +634,10 @@ export const Customization: Story = {
 				class: 'py-2',
 			},
 			textField: {
+				variant: 'outlined',
 				density: 'compact',
+				hideDetails: true,
+				clearable: true,
 			},
 			addBtn: {
 				color: 'secondary',
@@ -566,21 +651,25 @@ export const Customization: Story = {
 		components: { TableToolbar, SyTable },
 		setup() {
 			const search = ref('')
-			return { args, headers, items, search }
+			const filteredItems = createFilteredItems(search)
+
+			return { args, headers, items, filteredItems, search }
 		},
 		template: `
 			<SyTable
 				:headers="headers"
-				:items="items"
-				:search="search"
+				:items="filteredItems"
 				:items-per-page="5"
 				hide-default-footer
-				
+				:save-state="false"
+				suffix="table-toolbar-customization"
 			>
 				<template #top>
 					<TableToolbar
 						v-bind="args"
 						v-model:search="search"
+						:nb-total="items.length"
+						:nb-filtered="filteredItems.length"
 					/>
 				</template>
 			</SyTable>
