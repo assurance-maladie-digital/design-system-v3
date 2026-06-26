@@ -53,7 +53,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SubHeader',
 						description: 'Utilisé pour afficher un bloc d’informations sous l’en-tête principale.',
 						link: '/?path=/docs/composants-structure-subheader--docs',
-						img: '/components/sub-header.svg',
+						img: `/components/sub-header${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
