@@ -586,7 +586,7 @@ export const Customization: Story = {
 		onCustomize: fn(),
 		vuetifyOptions: {
 			banner: {
-				color: '#ced9eb',
+				color: 'rgb(var(--v-theme-infoVariant))',
 			},
 			customizeBtn: {
 				variant: 'text',
