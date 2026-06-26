@@ -53,7 +53,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SubHeader',
 						description: 'Utilisé pour afficher un bloc d’informations sous l’en-tête principale.',
 						link: '/?path=/docs/composants-structure-subheader--docs',
-						img: '/components/sub-header.svg',
+						img: `/components/sub-header${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -165,7 +165,7 @@ export const ComponentsList: StoryObj = {
 						title: 'BackBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de revenir à la page précédente.',
 						link: '/?path=/docs/composants-boutons-backbtn--docs',
-						img: '/components/back-btn.svg',
+						img: `/components/back-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -200,7 +200,7 @@ export const ComponentsList: StoryObj = {
 						title: 'LangBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de choisir la langue de l’application.',
 						link: '/?path=/docs/composants-boutons-langbtn--docs',
-						img: '/components/lang-btn.svg',
+						img: `/components/lang-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -319,7 +319,7 @@ export const ComponentsList: StoryObj = {
 						title: 'PeriodField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir une période.',
 						link: '/?path=/docs/composants-formulaires-periodfield--docs',
-						img: '/components/period-field.svg',
+						img: `/components/period-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -494,7 +494,7 @@ export const ComponentsList: StoryObj = {
 						title: 'CookieBanner',
 						description: 'Utilisé pour afficher une bannière de consentement pour les cookies.',
 						link: '/?path=/docs/composants-feedback-cookiebanner--docs',
-						img: '/components/cookie-banner.svg',
+						img: `/components/cookie-banner${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -583,6 +583,11 @@ export const ComponentsList: StoryObj = {
 					'FileUpload',
 					'ContextualMenu',
 					'HeaderToolbar',
+					'SubHeader',
+					'BackBtn',
+					'LangBtn',
+					'CookieBanner',
+					'PeriodField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
