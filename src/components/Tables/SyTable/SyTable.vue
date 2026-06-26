@@ -560,7 +560,7 @@
 					:update="(value: unknown) => setDraftField(colKey, value)"
 				>
 					<SyTextField
-						:model-value="editDraft[colKey]"
+						:model-value="(editDraft[colKey] as string)"
 						:label="columnTitle(colKey)"
 						density="compact"
 						hide-details
@@ -587,10 +587,10 @@
 					name="item.actions"
 					v-bind="actionProps"
 					:is-editing="isRowEditing(actionProps.item)"
-					:edit="() => onEdit(actionProps.item)"
+					:edit="() => onEdit(actionProps.item as Record<string, unknown>)"
 					:save="() => onSave()"
 					:cancel="() => onCancel()"
-					:remove="() => onDelete(actionProps.item)"
+					:remove="() => onDelete(actionProps.item as Record<string, unknown>)"
 				/>
 			</template>
 

@@ -41,6 +41,7 @@ const baseItems = [
 export const Default: Story = {
 	args: {
 		suffix: 'server-bulk-actions',
+		serverItemsLength: baseItems.length,
 		showSelect: true,
 		showDeleteSelected: true,
 		selectionKey: 'id',

@@ -46,6 +46,7 @@ const baseItems = [
 export const Default: Story = {
 	args: {
 		suffix: 'server-row-editing',
+		serverItemsLength: baseItems.length,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
@@ -166,6 +167,7 @@ export const Default: Story = {
 export const CustomEditor: Story = {
 	args: {
 		suffix: 'server-row-editing-custom',
+		serverItemsLength: baseItems.length,
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,

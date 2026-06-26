@@ -1,11 +1,12 @@
 import { ref, shallowRef, type Ref } from 'vue'
+import type { Items } from './types'
 
 interface UseTableEditingParams {
 	/**
 	 * Fonction d'identité de ligne (réutilise celle de la sélection :
 	 * selectionKey, puis `id`, puis l'objet lui-même).
 	 */
-	getItemValue: (item: unknown) => unknown
+	getItemValue: (item: Items[number]) => unknown
 }
 
 interface UseTableEditingReturn {
@@ -14,7 +15,7 @@ interface UseTableEditingReturn {
 	/** Brouillon de la ligne éditée (copie, la prop `items` n'est jamais mutée). */
 	draft: Ref<Record<string, unknown>>
 	/** Indique si l'item passé est la ligne actuellement éditée. */
-	isRowEditing: (item: unknown) => boolean
+	isRowEditing: (item: Items[number]) => boolean
 	/** Démarre l'édition d'une ligne (une seule à la fois en V1). */
 	startEditing: (item: Record<string, unknown>) => void
 	/** Met à jour un champ du brouillon. */
@@ -42,7 +43,7 @@ export function useTableEditing({ getItemValue }: UseTableEditingParams): UseTab
 	const draft = ref<Record<string, unknown>>({})
 	const originalItem = shallowRef<Record<string, unknown> | null>(null)
 
-	function isRowEditing(item: unknown): boolean {
+	function isRowEditing(item: Items[number]): boolean {
 		return editingKey.value !== null && getItemValue(item) === editingKey.value
 	}
 
