@@ -2,6 +2,8 @@ import { describe, it, expect, vi, beforeAll, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { h } from 'vue'
 import SyTable from '../SyTable.vue'
+import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import DialogBox from '@/components/DialogBox/DialogBox.vue'
 
 vi.mock('@/utils/localStorageUtility')
 
@@ -120,5 +122,130 @@ describe('SyTable — actions groupées (suppression en masse)', () => {
 
 		await custom.trigger('click')
 		expect(wrapper.emitted('delete-multiple')?.[0]?.[0]).toHaveLength(1)
+	})
+
+	describe('édition groupée', () => {
+		const editableHeaders = [
+			{ title: 'Nom', key: 'lastname', editable: true },
+			{ title: 'Prénom', key: 'firstname', editable: true },
+		]
+
+		function mountEditable(props: Record<string, unknown> = {}) {
+			return mount(SyTable, {
+				props: {
+					options: {},
+					suffix: 'bulk-edit-test',
+					showSelect: true,
+					selectionKey: 'id',
+					showEditSelected: true,
+					modelValue: [1, 2],
+					...props,
+				},
+				attrs: { items: makeItems(), headers: editableHeaders },
+			})
+		}
+
+		it('affiche le bouton « Modifier la sélection »', () => {
+			const wrapper = mountEditable()
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			expect(editBtn).toBeTruthy()
+		})
+
+		it('ouvre la boîte de dialogue avec un champ par colonne éditable', async () => {
+			const wrapper = mountEditable()
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+
+			expect(wrapper.findComponent(DialogBox).props('modelValue')).toBe(true)
+			expect(wrapper.findAllComponents(SyTextField).length).toBe(2)
+		})
+
+		it('pré-remplit le formulaire avec les valeurs de la ligne (sélection unique)', async () => {
+			const wrapper = mountEditable({ modelValue: [1] })
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+
+			const fields = wrapper.findAllComponents(SyTextField)
+			expect(fields[0].props('modelValue')).toBe('Beauchesne') // lastname
+			expect(fields[1].props('modelValue')).toBe('Virginie') // firstname
+		})
+
+		it('pré-remplit avec la première ligne en sélection multiple', async () => {
+			const wrapper = mountEditable({ modelValue: [1, 2] })
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+
+			const fields = wrapper.findAllComponents(SyTextField)
+			expect(fields[0].props('modelValue')).toBe('Beauchesne') // 1re ligne (id 1)
+			expect(fields[1].props('modelValue')).toBe('Virginie')
+		})
+
+		it('affiche la navigation entre lignes en sélection multiple', async () => {
+			const wrapper = mountEditable({ modelValue: [1, 2, 3] })
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+
+			// Boutons de navigation présents (contenu téléporté par VDialog)
+			const nextBtn = wrapper.findAllComponents({ name: 'VBtn' })
+				.find(b => b.attributes('aria-label') === 'Ligne suivante')
+			expect(nextBtn).toBeTruthy()
+			expect(document.body.textContent).toContain('Ligne 1 sur 3')
+		})
+
+		it('modifier la 1re ligne n\'affecte QUE cette ligne (bug corrigé) et vide la sélection', async () => {
+			const wrapper = mountEditable({ modelValue: [1, 2, 3] })
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+
+			// Modifie le champ "lastname" de la ligne courante (id 1)
+			await wrapper.findAllComponents(SyTextField)[0].vm.$emit('update:modelValue', 'Nouveau')
+			await wrapper.findComponent(DialogBox).vm.$emit('confirm')
+
+			const saved = wrapper.emitted('save-multiple')?.[0]?.[0] as Record<string, unknown>[]
+			expect(saved).toHaveLength(1) // seule la ligne 1 est modifiée (id 2 et 3 intacts)
+			expect(saved[0]).toMatchObject({ id: 1, lastname: 'Nouveau' })
+			expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual([])
+		})
+
+		it('navigue vers la 2e ligne et n\'édite que celle-ci', async () => {
+			const wrapper = mountEditable({ modelValue: [1, 2] })
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+
+			// Va à la ligne suivante (id 2)
+			const nextBtn = wrapper.findAllComponents({ name: 'VBtn' })
+				.find(b => b.attributes('aria-label') === 'Ligne suivante')
+			await nextBtn!.trigger('click')
+
+			// Les champs reflètent la 2e ligne (Salois / Étienne)
+			const fields = wrapper.findAllComponents(SyTextField)
+			expect(fields[0].props('modelValue')).toBe('Salois')
+
+			await fields[1].vm.$emit('update:modelValue', 'Steve')
+			await wrapper.findComponent(DialogBox).vm.$emit('confirm')
+
+			const saved = wrapper.emitted('save-multiple')?.[0]?.[0] as Record<string, unknown>[]
+			expect(saved).toHaveLength(1)
+			expect(saved[0]).toMatchObject({ id: 2, firstname: 'Steve' })
+		})
+
+		it('applique les libellés personnalisés (décompte, titre, position)', async () => {
+			const wrapper = mountEditable({
+				modelValue: [1, 2],
+				bulkSelectedLabel: (count: number) => `${count} patients`,
+				bulkEditTitle: (count: number) => `Éditer ${count} patients`,
+				bulkEditPositionLabel: (current: number, total: number) => `Patient ${current}/${total}`,
+			})
+
+			// Décompte personnalisé dans la barre (non téléportée)
+			expect(wrapper.find(BAR).text()).toContain('2 patients')
+
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+
+			// Titre + position personnalisés (contenu téléporté par VDialog)
+			expect(document.body.textContent).toContain('Éditer 2 patients')
+			expect(document.body.textContent).toContain('Patient 1/2')
+		})
 	})
 })

@@ -235,6 +235,57 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
+		'editable': {
+			description: 'Active l\'édition inline des lignes. Les colonnes dont le header porte `editable: true` deviennent des champs en mode édition. Le composant n\'altère jamais `items` (il émet `save`/`cancel`).',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
+		'showDeleteSelected': {
+			description: 'Affiche un bouton de suppression en masse dans la barre d\'actions groupées (nécessite `showSelect`). Émet `delete-multiple` avec les lignes sélectionnées.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
+		'showEditSelected': {
+			description: 'Affiche un bouton d\'édition groupée (nécessite `showSelect`). Ouvre une boîte de dialogue éditant chaque ligne sélectionnée séquentiellement (navigation par flèches) et émet `save-multiple`.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
+		'bulkSelectedLabel': {
+			description: 'Personnalise le libellé de décompte de la barre d\'actions groupées (par défaut « N éléments sélectionnés »).',
+			control: false,
+			table: {
+				category: 'props',
+				type: { summary: '(count: number) => string' },
+			},
+		},
+		'bulkEditTitle': {
+			description: 'Personnalise le titre de la boîte de dialogue d\'édition groupée (par défaut « Modifier N éléments »).',
+			control: false,
+			table: {
+				category: 'props',
+				type: { summary: '(count: number) => string' },
+			},
+		},
+		'bulkEditPositionLabel': {
+			description: 'Personnalise le libellé de position en édition séquentielle (par défaut « Ligne X sur N »).',
+			control: false,
+			table: {
+				category: 'props',
+				type: { summary: '(current: number, total: number) => string' },
+			},
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
 		'header.<columnKey>': {
@@ -256,11 +307,85 @@ const meta = {
 				},
 			},
 		},
+		'item.actions': {
+			description: 'Slot d\'actions par ligne. Reçoit les helpers d\'édition `{ item, isEditing, edit, save, cancel, remove }`.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ item, isEditing: boolean, edit: () => void, save: () => void, cancel: () => void, remove: () => void }' },
+			},
+		},
+		'edit.<columnKey>': {
+			description: 'Personnalise l\'éditeur d\'une cellule en édition inline. Remplacer `<columnKey>` par la clé de la colonne. Par défaut un `SyTextField`.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ item, value: unknown, update: (value: unknown) => void }' },
+			},
+		},
+		'bulk-actions': {
+			description: 'Personnalise le contenu de la barre d\'actions groupées.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ selected: Record<string, unknown>[], count: number, clearSelection: () => void, deleteSelected: () => void, editSelected: () => void }' },
+			},
+		},
+		'bulk-edit-form': {
+			description: 'Personnalise le formulaire de la boîte de dialogue d\'édition groupée.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ draft: Record<string, unknown>, columns: string[], setField: (key, value) => void, index: number, count: number, prev: () => void, next: () => void }' },
+			},
+		},
 		'onRow-click': {
 			description: 'Émis lorsqu\'une ligne est activée alors que `clickableRow` est à `true`. Reçoit l\'objet de la ligne en paramètre. Les interactions avec des éléments déjà interactifs dans la ligne ne déclenchent pas cet événement.',
 			table: {
 				category: 'events',
 				type: { summary: '(item: Record<string, unknown>) => void' },
+			},
+		},
+		'onEdit': {
+			description: 'Émis à l\'entrée en édition inline d\'une ligne.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
+			},
+		},
+		'onSave': {
+			description: 'Émis à la validation de l\'édition inline. Reçoit la ligne mise à jour et l\'originale.',
+			table: {
+				category: 'events',
+				type: { summary: '(updated: Record<string, unknown>, original: Record<string, unknown> | null) => void' },
+			},
+		},
+		'onCancel': {
+			description: 'Émis à l\'annulation de l\'édition inline.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown> | null) => void' },
+			},
+		},
+		'onDelete': {
+			description: 'Émis au clic sur l\'action de suppression d\'une ligne.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
+			},
+		},
+		'onDelete-multiple': {
+			description: 'Émis lors d\'une suppression en masse. Reçoit les lignes sélectionnées.',
+			table: {
+				category: 'events',
+				type: { summary: '(items: Record<string, unknown>[]) => void' },
+			},
+		},
+		'onSave-multiple': {
+			description: 'Émis à la validation de l\'édition groupée. Reçoit uniquement les lignes modifiées (objets complets).',
+			table: {
+				category: 'events',
+				type: { summary: '(items: Record<string, unknown>[]) => void' },
 			},
 		},
 	},

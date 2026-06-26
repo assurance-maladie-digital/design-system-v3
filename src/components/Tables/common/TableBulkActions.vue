@@ -1,16 +1,21 @@
 <script setup lang="ts">
-	import { mdiClose, mdiDelete } from '@mdi/js'
+	import { mdiClose, mdiDelete, mdiPencil } from '@mdi/js'
 	import { locales } from './locales'
 
 	defineProps<{
 		/** Nombre de lignes sélectionnées. */
 		count: number
+		/** Libellé de décompte personnalisé (par défaut « N éléments sélectionnés »). */
+		label?: string
 		/** Affiche le bouton de suppression intégré. */
 		showDelete?: boolean
+		/** Affiche le bouton d'édition groupée intégré. */
+		showEdit?: boolean
 	}>()
 
 	defineEmits<{
 		delete: []
+		edit: []
 		clear: []
 	}>()
 </script>
@@ -25,13 +30,23 @@
 			class="text-body-2 font-weight-medium"
 			aria-live="polite"
 		>
-			{{ locales.selectedCount(count) }}
+			{{ label || locales.selectedCount(count) }}
 		</span>
 
 		<VSpacer />
 
 		<!-- Zone d'actions : surchargeable via le slot par défaut -->
 		<slot>
+			<VBtn
+				v-if="showEdit"
+				:prepend-icon="mdiPencil"
+				color="primary"
+				variant="tonal"
+				size="small"
+				@click="$emit('edit')"
+			>
+				{{ locales.editSelected }}
+			</VBtn>
 			<VBtn
 				v-if="showDelete"
 				:prepend-icon="mdiDelete"
