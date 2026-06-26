@@ -1,7 +1,8 @@
 <script setup lang="ts">
-	import { computed, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, provide, ref, toRef, useAttrs, useSlots, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
@@ -22,6 +23,7 @@
 	import { useClickableTableRow } from '../common/useClickableTableRow'
 	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
+	import { useTableEditing } from '../common/useTableEditing'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -42,10 +44,15 @@
 		clickableRow: false,
 		pageInput: false,
 		hideDefaultFooter: false,
+		editable: false,
 	})
 
 	const emit = defineEmits<{
 		'row-click': [item: Record<string, unknown>]
+		'edit': [item: Record<string, unknown>]
+		'save': [updated: Record<string, unknown>, original: Record<string, unknown> | null]
+		'cancel': [item: Record<string, unknown> | null]
+		'delete': [item: Record<string, unknown>]
 	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -139,6 +146,59 @@
 		},
 		selectionKey: toRef(props, 'selectionKey'),
 	})
+
+	// --- Édition inline des lignes -------------------------------------------
+	const slots = useSlots()
+
+	const {
+		draft: editDraft,
+		isRowEditing,
+		startEditing,
+		setDraftField,
+		saveEditing,
+		cancelEditing,
+	} = useTableEditing({ getItemValue })
+
+	// Colonnes déclarées éditables (uniquement si le tableau est `editable`)
+	const editableColumns = computed<string[]>(() =>
+		props.editable
+			? (props.headers ?? [])
+				.filter(header => header.editable && (header.key ?? header.value))
+				.map(header => String(header.key ?? header.value))
+			: [],
+	)
+
+	// Libellé d'une colonne, pour le label accessible de l'éditeur par défaut
+	function columnTitle(key: string): string {
+		const header = (props.headers ?? []).find(h => (h.key ?? h.value) === key)
+		return header?.title ?? header?.text ?? key
+	}
+
+	// Slots gérés en interne (édition) : exclus du forwarding générique pour
+	// éviter toute double définition d'un même slot sur le VDataTable
+	const forwardedSlotNames = computed<string[]>(() => {
+		const intercepted = new Set<string>([
+			'item.actions',
+			...editableColumns.value.map(key => `item.${key}`),
+		])
+		return Object.keys(slots).filter(name => !intercepted.has(name))
+	})
+
+	// Wrappers qui émettent les évènements publics
+	function onEdit(item: Record<string, unknown>): void {
+		startEditing(item)
+		emit('edit', item)
+	}
+	function onSave(): void {
+		const { updated, original } = saveEditing()
+		emit('save', updated, original)
+	}
+	function onCancel(): void {
+		emit('cancel', cancelEditing())
+	}
+	function onDelete(item: Record<string, unknown>): void {
+		emit('delete', item)
+	}
 
 	// Use the ARIA accessibility composable
 	const {
@@ -262,7 +322,6 @@
 				<caption
 					class="text-subtitle-1 text-center pa-4"
 					:class="{ 'd-sr-only': props.caption === '' }"
-					:aria-label="props.caption"
 				>
 					{{ props.caption }}
 				</caption>
@@ -440,9 +499,58 @@
 				</template>
 			</template>
 
+			<!-- Édition inline : interception des cellules des colonnes éditables -->
+			<template
+				v-for="colKey in editableColumns"
+				:key="`editable-cell-${colKey}`"
+				#[`item.${colKey}`]="cellProps"
+			>
+				<!-- Ligne en édition : éditeur (SyTextField par défaut, surchargeable via #edit.<key>) -->
+				<slot
+					v-if="isRowEditing(cellProps.item)"
+					:name="`edit.${colKey}`"
+					:item="cellProps.item"
+					:value="editDraft[colKey]"
+					:update="(value: unknown) => setDraftField(colKey, value)"
+				>
+					<SyTextField
+						:model-value="editDraft[colKey]"
+						:label="columnTitle(colKey)"
+						density="compact"
+						hide-details
+						disable-error-handling
+						@update:model-value="setDraftField(colKey, $event)"
+					/>
+				</slot>
+				<!-- Ligne normale : slot consommateur #item.<key> si fourni, sinon valeur brute -->
+				<slot
+					v-else
+					:name="`item.${colKey}`"
+					v-bind="cellProps"
+				>
+					{{ cellProps.item[colKey] }}
+				</slot>
+			</template>
+
+			<!-- Actions de ligne : on injecte les helpers d'édition dans le slot consommateur -->
+			<template
+				v-if="$slots['item.actions']"
+				#[`item.actions`]="actionProps"
+			>
+				<slot
+					name="item.actions"
+					v-bind="actionProps"
+					:is-editing="isRowEditing(actionProps.item)"
+					:edit="() => onEdit(actionProps.item)"
+					:save="() => onSave()"
+					:cancel="() => onCancel()"
+					:remove="() => onDelete(actionProps.item)"
+				/>
+			</template>
+
 			<!-- Dynamically forward all slots to maintain flexibility -->
 			<template
-				v-for="slotName in Object.keys($slots)"
+				v-for="slotName in forwardedSlotNames"
 				#[slotName]="slotProps"
 			>
 				<slot

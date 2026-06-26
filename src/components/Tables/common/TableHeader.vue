@@ -247,8 +247,9 @@
 				:class="{ 'text-primary opacity-100' : isColumnSorted }"
 				:icon="headerParams.getSortIcon(column)"
 				:title="locales.columnOrder(column.title!)"
-				:aria-label="locales.columnOrder(column.title!)"
-				decorative
+				:label="locales.columnOrder(column.title!)"
+				:decorative="false"
+				role="button"
 				@click="headerParams.toggleSort(column)"
 			/>
 			<div
