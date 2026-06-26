@@ -220,7 +220,7 @@ $list-max-height: 248px;
 }
 
 .sy-external-links-btn-text {
-  color: rgb(var(--v-theme-onPrimary))
+	color: rgb(var(--v-theme-onPrimary));
 }
 
 .sy-external-links-list-item {
