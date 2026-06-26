@@ -1,13 +1,17 @@
 import { Meta, Source } from '@storybook/addon-docs'
 import '../../styles/shared.css';
 
-<Meta title="Guide du dev/Classes utilitaires/Règles de validation" />
+<Meta title="Guide Du Dev/Utilitaires/Règles de validation" />
 
 
 <div className="header">
   <h1>Règles de validation</h1>
   <p>Le Design System fournit un ensemble complet de règles de validation prêtes à l'emploi pour les formulaires Vuetify. Ces règles facilitent la validation des champs de formulaire tout en garantissant une expérience utilisateur cohérente. </p>
 </div>
+
+Ces règles ne sont pas liées à la validation interne du Design System&nbsp;: ce sont des fonctions réutilisables, utiles à tout projet. Elles peuvent être combinées entre elles, avec d'autres règles de `synapse` ou des règles personnalisées. Voir aussi la [documentation des règles `Vuetify`](https://vuetifyjs.com/en/components/forms/#rules).
+
+> Les règles dont le nom se termine par `Fn` sont des **fonctions d'ordre supérieur**&nbsp;: elles prennent des données de configuration en paramètre et retournent une fonction de validation, utilisable comme règle d'un champ de formulaire.
 
 ## Importation
 
@@ -435,7 +439,3 @@ Vous pouvez facilement combiner les règles prédéfinies avec vos propres règl
 - Personnalisez les messages d'erreur pour qu'ils soient compréhensibles par les utilisateurs
 - Validez toujours les données côté serveur, même si vous avez une validation côté client
 - Pour les formulaires complexes, envisagez d'utiliser une bibliothèque de validation comme VeeValidate en complément
-
-## Référence complète
-
-Pour plus de détails sur l'utilisation des règles, consultez la [documentation complète des règles de validation](?path=/docs/guide-du-dev-r%C3%A8gles-de-validation-les-r%C3%A8gles-de-validation--docs).

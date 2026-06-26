@@ -23,7 +23,7 @@ import {
 	</AuditSection>
   
 	<CriteriaSection>
-		<CriteriaCard icon="🏷️" title="Structure sémantique claire">
+		<CriteriaCard title="Structure sémantique claire">
 			<ul>
 				<li>Landmark <code>&lt;nav&gt;</code> avec <code>aria-label</code> obligatoire pour annoncer la zone.</li>
 				<li>Hiérarchie native <code>ul &gt; li &gt; a</code> pour les niveaux imbriqués, sans rôles ARIA détournés.</li>
@@ -31,7 +31,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation clavier native">
+		<CriteriaCard title="Navigation clavier native">
 			<ul>
 				<li>Parcours par <kbd>Tab</kbd>/<kbd>Maj+Tab</kbd> sur des liens standards, activation par <kbd>Entrée</kbd>.</li>
 				<li>Styles de focus visibles fournis par la feuille de style partagée et conservés sur tous les niveaux.</li>
@@ -39,7 +39,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🧭" title="Repères et correspondance contenu">
+		<CriteriaCard title="Repères et correspondance contenu">
 			<ul>
 				<li>Chaque élément pointe vers une ancre <code>hash</code>; les sections ciblées doivent avoir des <code>id</code> uniques et, idéalement, <code>tabindex="-1"</code> pour recevoir le focus programmatique.</li>
 				<li>Gestion du hash : changement d'URL et état contrôlé via <code>v-model</code> pour refléter l'élément actif.</li>

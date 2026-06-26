@@ -4,7 +4,7 @@ import { isNotAfterToday, isNotAfterTodayFn } from './index'
 import { ref } from 'vue'
 
 export default {
-	title: 'Guide du dev/Règles De Validation/isNotAfterToday',
+	title: 'Guide Du Dev/Utilitaires/Règles de validation/isNotAfterToday',
 	component: isNotAfterTodayFn,
 }
 

@@ -3,7 +3,7 @@ import { VTextField } from 'vuetify/components'
 import { isMinLengthFn } from './index'
 
 export default {
-	title: 'Guide du dev/Règles De Validation/isMinLength',
+	title: 'Guide Du Dev/Utilitaires/Règles de validation/isMinLength',
 	component: isMinLengthFn,
 }
 

@@ -4,7 +4,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { useHolidayDay } from '@/composables/date/useHolidayDay'
 
 const meta: Meta<typeof DatePicker> = {
-	title: 'Guide du dev/Règles De Validation/isHolidayDay',
+	title: 'Guide Du Dev/Utilitaires/Règles de validation/isHolidayDay',
 	component: DatePicker,
 	argTypes: {
 		modelValue: {

@@ -133,6 +133,7 @@
 	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(32% - 8px)' : '0 0 calc(32% - 8px)')
 
 	const fieldId = useId()
+	const autoFocusNoticeId = `nir-autofocus-notice-${fieldId}`
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
 	const keyFieldErrorId = `nir-key-error-${fieldId}`
 	const numberFieldWarningId = `nir-number-warning-${fieldId}`
@@ -142,47 +143,44 @@
 
 	const container = ref<HTMLElement | null>(null)
 
+	// Computed pour savoir si le comportement d'auto-focus est actif
+	const shouldUseAutoFocus = computed(() => {
+		return props.displayKey && !props.disabled && !props.readonly
+	})
+
+	// Computed pour le texte d'avertissement
+	const autoFocusNoticeText = computed(() => {
+		if (!shouldUseAutoFocus.value) return ''
+
+		return props.customLocale.autoFocusNotice
+	})
+
+	const numberDescribedBy = computed(() => [
+		shouldUseAutoFocus.value ? autoFocusNoticeId : undefined,
+		numberFieldErrorId,
+		numberFieldWarningId,
+		numberFieldSuccessId,
+	].filter(Boolean).join(' '))
+
+	const keyDescribedBy = computed(() => [
+		keyFieldErrorId,
+		keyFieldWarningId,
+		keyFieldSuccessId,
+	].filter(Boolean).join(' '))
+
 	// Fonction pour gérer le focus des champs
 	const focusField = (field: typeof numberField | typeof keyField) => {
 		nextTick(() => {
-			const input = field.value?.$el?.querySelector?.('input')
-			if (input) {
-				// Focus and select all text
-				input.focus()
-				// Adding a slight delay to ensure focus is applied
-				setTimeout(() => {
-					input.click()
-				}, 50)
+			const input = field.value?.$el?.querySelector?.('input') as HTMLInputElement | null
+
+			if (!input) {
+				console.error('[NirField] focusField: impossible de trouver l\'élément <input> dans le champ cible.')
+				return
 			}
+
+			input.focus({ preventScroll: true })
 		})
 	}
-
-	// Watch sur la valeur non masquée du numéro pour gérer le focus automatique
-	watch(unmaskedNumberValue, (newValue) => {
-		if (newValue && newValue.length === 13 && props.displayKey) {
-			focusField(keyField)
-		}
-	})
-
-	watch(unmaskedKeyValue, (newValue) => {
-		if (newValue.length === 0 && props.displayKey) {
-			focusField(numberField)
-		}
-	})
-
-	// Watch pour détecter la suppression des chiffres de la clé
-	watch(keyValue, (newValue, oldValue) => {
-		if (!props.displayKey) return
-
-		// Si l'ancienne valeur avait des chiffres et la nouvelle est vide ou ne contient que des espaces
-		if (oldValue && newValue !== null && oldValue.trim() && !newValue.trim()) {
-			focusField(numberField)
-		}
-		else if (oldValue && newValue === null) {
-			// Cas où newValue est null (effacement avec clearable)
-			focusField(numberField)
-		}
-	})
 
 	// Émission de la valeur
 	const emitValue = () => {
@@ -307,28 +305,39 @@
 	const handleKeyInput = () => {
 		emitValue()
 
-		// Si on supprime le contenu de la clé, on revient au champ NIR
-		if (props.displayKey && unmaskedKeyValue.value.length === 0) {
-			nextTick(() => {
-				numberField.value?.$el?.querySelector?.('input')?.focus()
-			})
+		if (shouldUseAutoFocus.value && unmaskedKeyValue.value.length === 0) {
+			focusField(numberField)
+		}
+	}
+
+	const handleNumberInput = () => {
+		emitValue()
+
+		if (shouldUseAutoFocus.value && unmaskedNumberValue.value.length === 13) {
+			focusField(keyField)
 		}
 	}
 
 	// Gestion des touches pour le champ NIR
 	const handleNumberKeydown = (e: Event) => {
 		const keyEvent = e as KeyboardEvent
-		// Si le NIR est complet et que le champ clé est affiché
-		if (unmaskedNumberValue.value?.length === 13 && props.displayKey) {
-			// Si la touche est un chiffre
-			if (keyEvent.key && keyEvent.key.length === 1 && /[0-9]/.test(keyEvent.key)) {
-				// Ajouter le caractère à la valeur de la clé
-				keyValue.value = (keyValue.value || '') + keyEvent.key
-				// Focus sur le champ clé
-				focusField(keyField)
-				// Empêcher la saisie dans le champ NIR
-				keyEvent.preventDefault()
-			}
+
+		if (!shouldUseAutoFocus.value) return
+
+		const isDigit = keyEvent.key.length === 1 && /[0-9]/.test(keyEvent.key)
+		const isNumberComplete = unmaskedNumberValue.value.length === 13
+		const canFillKey = unmaskedKeyValue.value.length < 2
+
+		if (isNumberComplete && isDigit && canFillKey) {
+			keyValue.value = `${unmaskedKeyValue.value}${keyEvent.key}`
+
+			focusField(keyField)
+
+			nextTick(() => {
+				emitValue()
+			})
+
+			keyEvent.preventDefault()
 		}
 	}
 
@@ -397,6 +406,13 @@
 		<legend v-if="label && displayKey && !withoutFieldset">
 			{{ label }}
 		</legend>
+		<span
+			v-if="shouldUseAutoFocus"
+			:id="autoFocusNoticeId"
+			class="d-sr-only"
+		>
+			{{ autoFocusNoticeText }}
+		</span>
 		<div class="number-field-container">
 			<SyTextField
 				ref="numberField"
@@ -432,9 +448,9 @@
 					'sy-hide-detail': props.hideDetails,
 				}"
 				:display-asterisk="false"
-				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
+				:aria-describedby="numberDescribedBy"
 				:show-success-messages="false"
-				@input="emitValue"
+				@input="handleNumberInput"
 			/>
 		</div>
 		<div
@@ -475,7 +491,7 @@
 					'sy-hide-detail': props.hideDetails,
 				}"
 				:display-asterisk="false"
-				:aria-describedby="keyFieldErrorId + ' ' + keyFieldWarningId + ' ' + keyFieldSuccessId"
+				:aria-describedby="keyDescribedBy"
 				:show-success-messages="false"
 				@input="handleKeyInput"
 			/>

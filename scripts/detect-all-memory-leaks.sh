@@ -15,7 +15,7 @@ THRESHOLD_MB=10        # Seuil d'alerte en MB
 REPEAT_COUNT=2         # Nombre d'exécutions pour chaque test
 REPORT_FILE="memory-leak-report.txt"
 
-echo -e "${BLUE}🔍 Détection des fuites mémoire dans TOUS les tests${NC}"
+echo -e "${BLUE} Détection des fuites mémoire dans TOUS les tests${NC}"
 echo -e "${YELLOW}Note: Cette opération peut prendre du temps car chaque test est exécuté isolément ${REPEAT_COUNT} fois${NC}\n"
 echo -e "${YELLOW}Seuil d'alerte: ${THRESHOLD_MB} MB${NC}"
 echo -e "${YELLOW}Résultats seront enregistrés dans: ${REPORT_FILE}${NC}\n"

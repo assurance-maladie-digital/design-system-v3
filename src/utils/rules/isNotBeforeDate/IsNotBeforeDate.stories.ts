@@ -5,7 +5,7 @@ import { isNotBeforeDateFn } from './index'
 import { ref } from 'vue'
 
 export default {
-	title: 'Guide du dev/Règles De Validation/isNotBeforeDate',
+	title: 'Guide Du Dev/Utilitaires/Règles de validation/isNotBeforeDate',
 	component: isNotBeforeDateFn,
 }
 
