@@ -34,6 +34,7 @@ const apComponents = [
 	'composants-boutons-backtotopbtn',
 	'composants-boutons-copybtn',
 	'composants-boutons-downloadbtn',
+	'composants-boutons-langbtn',
 	'composants-boutons-syiconbutton',
 	'composants-boutons-usermenubtn',
 	'composants-boutons-backbtn',
